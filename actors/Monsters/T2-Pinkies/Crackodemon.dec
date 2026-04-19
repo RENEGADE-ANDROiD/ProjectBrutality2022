@@ -1,0 +1,462 @@
+//==========================================================
+//
+//        Cracko Demon
+//       
+//        made by .+:icytux:+.
+//
+//==========================================================
+ 
+ 
+ 
+ ACTOR CrackoDemon
+{
+//$Category DECORATE
+    SpawnID 175
+	Health 600
+	Speed 10
+	Radius 32
+	Height 52
+	PainChance 64
+    BloodColor "Blue"
+	bloodtype "NashGoreBlood_Blue"
+	damagefactor "Crush", 10.0
+	damagefactor "SSG", 10.0
+	damagefactor "killme", 0.0
+	damagefactor "TeleportRemover", 0.0
+	DamageFactor "CauseObjectsToSplash", 0.0
+	damagefactor "GibRemoving", 0.0
+	DamageFactor "ExtremePunches", 1.0
+	DamageFactor "Saw", 0.15
+	Mass 1000
+    Meleedamage 10
+	SeeSound "Cracko/See"
+	ActiveSound "Caco/Active"
+	PainSound "Cracko/Pain"
+	DeathSound "Caco/Death"
+    MeleeSound "Caco/Melee"
+	Obituary "%o Was Shocked By The Cracko Demon"
+    HitObituary "%o Was Crounched By The Cracko Demon"
+	MONSTER
+	+NOINFIGHTING
+    +DONTHURTSPECIES
+    +Missilemore
+    +NOGRAVITY
+	+FLOAT
+    +FLOATBOB
+	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
+	DropItem "DemonStrengthRune" 5
+	DropItem "Demonpickup2" 255
+    DropItem "Demonpickup2" 255
+    DropItem "Demonpickup2" 255
+    DropItem "Demonpickup2" 255
+    DropItem "Demonpickup2" 255
+        States 
+   { 
+   Spawn: 
+   HED9 A 10 A_Look 
+   Loop 
+   See: 
+   HED9 A 3 A_Chase 
+   Loop
+   Melee:
+   HED9 B 5 A_FaceTarget
+   HED9 C 5 bright A_FaceTarget
+   HED9 D 5 bright A_Meleeattack
+   HED9 B 5
+   Goto See
+   Missile: 
+   HED9 A 0 A_Jump(56,9)
+   HED9 A 0 A_Jump(72,13)
+   HED9 B 5 A_FaceTarget
+   HED9 C 5 bright A_FaceTarget
+   HED9 D 5 A_FaceTarget 
+   HED9 B 0 bright A_CustomMissile("CrackodemonBall", 24, 0, 0, 1)
+   HED9 B 0 bright A_CustomMissile("CrackodemonBall", 24, 0, -8, 1)
+   HED9 B 5 bright A_CustomMissile("CrackodemonBall", 24, 0, 8, 1)
+   Goto See 
+   HED9 B 5 A_FaceTarget
+   HED9 C 5 bright A_CustomMissile("Blusoul", 24, 0, 0, 1)
+   HED9 D 5 bright A_facetarget
+   HED9 B 5 bright
+   Goto See
+   HED9 B 5 A_FaceTarget
+   HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 16, 1)
+   HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 12, 1)
+   HED9 B 0 A_FaceTarget
+   HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 8, 1)
+   HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 4, 1)
+   HED9 B 0 A_FaceTarget
+   HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 0, 1)
+   HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -4, 1)
+   HED9 B 0 A_FaceTarget
+   HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -8, 1)
+   HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -12, 1)
+   HED9 B 0 A_FaceTarget
+   HED9 B 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -16, 1)
+   HED9 B 4 bright
+   Goto See
+   Pain: 
+   TNT1 AAAAAAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 50, 0, random (160, 200), 2, random (0, 50))
+   HED9 E 3 
+   HED9 E 3 A_Pain 
+   HED9 F 6 
+   Goto See 
+   
+   Death:
+   TNT1 AAAAAAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 15, 0, random (0, 360), 2, random (0, 160))
+   TNT1 AAA 0 A_CustomMissile ("BlueGuts", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 AAAAAAAA 0 A_CustomMissile ("BlueBloodmistBig", 30, 0, random (0, 360), 2, random (30, 150))
+   HED9 G 8 A_ChangeFlag(FLOATBOB,0)
+   HED9 H 8 A_Scream 
+   HED9 IJ 8
+   HED9 K 8 A_NoBlocking 
+   TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+   HED9 L -1 A_SetFloorClip
+   Stop
+   
+   XDeath:
+   Death.ExplosiveImpact:
+   TNT1 AA 0 A_CustomMissile ("BlueGuts", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 AAAAAAAA 0 A_CustomMissile ("BlueBloodmistBig", 30, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 50, 0, random (160, 200), 2, random (0, 50))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan1Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan2Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("MuchBlood3Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("CacoXDeath", 0, 0, random (0, 360), 2, random (0, 160))
+   HD9X A 4 A_ChangeFlag(FLOATBOB,0)
+   HD9X B 4 A_XScream
+   HD9X C 4
+   HD9X D 4 A_NoBlocking
+   HD9X EFGHI 4
+   TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+   HD9X J -1
+   Stop
+   
+   Death.Blackhole:
+   TNT1 A 0 A_NoBlocking
+   TNT1 A 0 A_SpawnItem("BlackHoledCacoDemon")
+   Stop
+   
+   Death.SSG:
+   Death.Railgun:
+   Death.ExtremePunches:
+   TNT1 A 0
+   CCD3 A 1 A_Pain
+   TNT1 A 0 A_FaceTarget
+   TNT1 AAA 0 A_CustomMissile ("BlueGuts", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 AAAAAAAA 0 A_CustomMissile ("BlueBloodmistBig", 30, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 50, 0, random (160, 200), 2, random (0, 50))
+   TNT1 AA 0 A_CustomMissile ("XDeathOrgan1Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 AA 0 A_CustomMissile ("XDeathOrgan2Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("MuchBlood3Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 AA 0 A_CustomMissile ("XDeath2Blue", 25, 0, random (140, 230), 2, random (30, 60))
+   TNT1 AA 0 A_CustomMissile ("XDeath3Blue", 25, 0, random (140, 230), 2, random (30, 60))
+   TNT1 AA 0 A_CustomMissile ("XDeath4Blue", 25, 0, random (140, 230), 2, random (30, 60))
+   HD9X A 4 A_ChangeFlag(FLOATBOB,0)
+   HD9X B 4 A_XScream
+   HD9X C 4
+   HD9X D 4 A_NoBlocking
+   HD9X EFGHI 4
+   TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+   HD9X J -1
+   Stop
+   
+   Death.Desintegrate:
+   TNT1 A 0 A_SetFloorClip
+   TNT1 A 0 A_SetFloorClip
+   TNT1 A 0 A_XScream
+   TNT1 A 0 A_NoBlocking
+   C4CX ab 2 A_ChangeFlag(FLOATBOB,0)
+   TNT1 AA 0 A_CustomMissile ("XDeath2Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath3Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath4Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("CacoXDeath2", 50, 0, random (160, 200), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("CacoXDeath1", 50, 0, random (160, 200), 2, random (20, 40))
+   TNT1 AA 0 A_CustomMissile ("CacoXDeath3", 50, 0, random (160, 200), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("CacoXDeath4", 50, 0, random (160, 200), 2, random (20, 40))
+   TNT1 AAA 0 A_CustomMissile ("CacoXDeath5", 50, 0, random (160, 200), 2, random (20, 40))
+   TNT1 AAAA 0 A_CustomMissile ("CacoXDeath6", 50, 0, random (160, 200), 2, random (20, 40))
+   TNT1 AAAAAA 0 A_CustomMissile ("CacoXDeath7", 50, 0, random (160, 200), 2, random (20, 40))
+   TNT1 AAAAAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   C4CX c 2 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   C4CX d 2 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   C4CX ef 2 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   C4CX g 2 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   C4CX h 2 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   C4CX ijklmnopqr 2  
+   C4CX sssssssssssssssssssssssssssssssssssssssssssssssssssssss 5 A_CustomMissile ("PlasmaSmoke", 24, 0, random (0, 180), 2, random (0, 180))
+   TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+   C4CX s -1 
+   stop
+   
+   Death.Incinerate:
+   TNT1 A 0 A_Playsound("MELT")
+   TNT1 A 0 A_NoBlocking
+   TNT1 A 0 A_SetFloorClip
+   TNT1 AAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 32, 0, random (0, 360), 2, random (0, 360))
+   TNT1 AAAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 32, 0, random (0, 360), 2, random (0, 360))
+   TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,32,0,0,0,0,SXF_NOCHECKPOSITION,0)
+   TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15))
+   TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35))
+   TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35))
+   TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("Ashes1", 28, 0, random (0, 360), 2, random (0, 180))
+   TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("Ashes2", 40, 0, random (0, 360), 2, random (0, 180))
+   TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+   C5CX AAAAA 1 A_ChangeFlag(FLOATBOB,0)   
+   C5CX AAAAA 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 36, 0, random (0, 360), 2, random (0, 160))
+   TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),28,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+   C5CX BBBBB 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 32, 0, random (0, 360), 2, random (0, 160))
+   TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),24,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+   C5CX CCCCC 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 28, 0, random (0, 360), 2, random (0, 160))
+   TNT1 A 0 A_Playsound("SZZLL", 3)
+   TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),20,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+   C5CX DDDDD 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 20, 0, random (0, 360), 2, random (0, 160))
+   TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+   C5CX EEEEE 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 12, 0, random (0, 360), 2, random (0, 160))
+   TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),12,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+   C5CX FFFF 2 BRIGHT Light("IncinerationGlow")
+   TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+   C5CX GGFFGGFFGGFFGGFF 2 BRIGHT Light("IncinerationGlow") A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
+   TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+   C5CX GGFFGGFFGGFFGGFF 2 Light("IncinerationGlow") A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
+   TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+   C5CX GGFFGGFFGGFFGGFF 2 
+   C5CX HHHHHHHHH 12 A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
+   C5CX H -1
+   Stop
+   
+   Death.fire:
+   Death.Flames:
+   Death.Burn:
+   TNT1 A 0 A_JumpIfInTargetInventory("HasIncendiaryWeapon",1,"Death.Incinerate")
+   TNT1 A 0
+   TNT1 A 0 A_Scream
+   TNT1 A 0 A_NoBlocking
+   TNT1 A 0 A_Playsound("props/redfire")
+   TNT1 A 0 A_CustomMissile ("PlasmaSmoke", 24, 0, random (0, 180), 2, random (0, 180))
+   TNT1 A 0 A_SpawnItem("BurningCacoDemon")
+   Stop
+   
+   Death.SuperPlasma:
+   Death.Plasma: Death.Plasma2:
+   TNT1 A 0
+   TNT1 A 0 A_Scream
+   TNT1 A 0 A_NoBlocking
+   EXPL AAAAA 0 A_CustomMissile ("ExplosionSmoke", 32, 0, random (0, 360), 2, random (0, 360))
+   CACB A 10 A_ChangeFlag(FLOATBOB,0)
+   CACB AA 10 A_CustomMissile ("PlasmaSmoke", 24, 0, random (0, 180), 2, random (0, 180))
+   CACB AA 0 A_CustomMissile ("XDeathBurnedBlueMeat1", 0, 0, random (0, 360), 2, random (0, 160))
+   CACB AA 0 A_CustomMissile ("XDeathBurnedBlueMeat2", 0, 0, random (0, 360), 2, random (0, 160))
+   CACB BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB 8 A_CustomMissile ("PlasmaSmoke", 16, 0, random (0, 180), 2, random (0, 180))
+   CACB B -1 
+   Stop
+   
+   Death.tear:
+   TNT1 A 0 A_Jump(12, "DeathSawed2")
+   TNT1 A 0 A_SetFloorClip
+   TNT1 A 0 A_SetFloorClip
+   TNT1 O 0 A_NoBlocking
+   TNT1 AAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath1Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath3Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath4Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 A 0 A_CustomMissile ("BlueGuts", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 AAAAAAAA 0 A_CustomMissile ("BlueBloodmistBig", 30, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 50, 0, random (160, 200), 2, random (0, 50))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan1Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan2Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("MuchBlood3Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("CacoXDeath", 0, 0, random (0, 360), 2, random (0, 160))
+   HD9X A 4 A_ChangeFlag(FLOATBOB,0)
+   HD9X B 4 A_XScream
+   HD9X C 4
+   HD9X D 4 A_NoBlocking
+   HD9X EFGHI 4
+   TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+   HD9X J -1
+   Stop
+   
+   Death.cut:
+   Death.saw:
+   TNT1 A 0 A_Jump(119, "DeathSawed2")
+   TNT1 A 0 A_SetFloorClip
+   TNT1 A 0 A_SetFloorClip
+   TNT1 O 0 A_NoBlocking
+   TNT1 AA 0 A_CustomMissile ("XDeath2Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath3Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath4Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AAA 0 A_CustomMissile ("BlueBloodmistBig", 30, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AAA 0 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan1Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan2Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("MuchBlood3Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("CacoXDeath", 0, 0, random (0, 360), 2, random (0, 160))
+   HD9X A 4 A_ChangeFlag(FLOATBOB,0)
+   HD9X B 4 A_XScream
+   HD9X C 4
+   HD9X D 4 A_NoBlocking
+   HD9X EFGHI 4
+   TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+   HD9X J -1
+   Stop
+   
+   DeathSawed2:
+   TNT1 A 0 A_SetFloorClip
+   TNT1 A 0 A_SetFloorClip
+   TNT1 O 0 A_NoBlocking
+   TNT1 AA 0 A_CustomMissile ("XDeath2Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath3Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath4Blue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AAA 0 A_CustomMissile ("BlueBloodmistBig", 30, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AAA 0 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan1Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan2Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("MuchBlood3Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("CacoXDeath", 0, 0, random (0, 360), 2, random (0, 160))
+   HD9X A 4 A_ChangeFlag(FLOATBOB,0)
+   HD9X B 4 A_XScream
+   HD9X C 4
+   HD9X D 4 A_NoBlocking
+   HD9X EFGHI 4
+   TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+   HD9X J -1
+   Stop
+   
+   Death.Blast:
+   TNT1 A 0 A_Jump(64, "Death.SSG")
+   TNT1 A 0 A_SetFloorClip
+   TNT1 A 0 A_SetFloorClip
+   TNT1 A 0 A_Scream
+   TNT1 O 0 A_NoBlocking
+   TNT1 AAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AAAAAAAA 0 A_CustomMissile ("BlueBloodmistBig", 44, 0, random (0, 360), 2, random (30, 150))
+   TNT1 A 0 A_CustomMissile ("XDeath2bBlue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath3bBlue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath2Blue", 25, 0, random (160, 210), 2, random (30, 60))
+   TNT1 A 0 A_CustomMissile ("XDeath3Blue", 25, 0, random (160, 210), 2, random (30, 60))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan1Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan2Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("MuchBlood3Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("CacoXDeath", 0, 0, random (0, 360), 2, random (0, 160))
+   HD9X A 4 A_ChangeFlag(FLOATBOB,0)
+   HD9X B 4 A_XScream
+   HD9X C 4
+   HD9X D 4 A_NoBlocking
+   HD9X EFGHI 4
+   TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+   HD9X J -1
+   Stop
+   
+   Death.Minigun:
+   TNT1 A 0 A_Jump(64, "Death.SSG")
+   TNT1 A 0 A_SetFloorClip
+   TNT1 A 0 A_SetFloorClip
+   TNT1 A 0 A_Scream
+   TNT1 O 0 A_NoBlocking
+   TNT1 AAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 47, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AAAAAAAA 0 A_CustomMissile ("BlueBloodmistBig", 44, 0, random (0, 360), 2, random (30, 150))
+   TNT1 A 0 A_CustomMissile ("XDeath2bBlue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath3bBlue", 25, 0, random (0, 360), 2, random (30, 150))
+   TNT1 AA 0 A_CustomMissile ("XDeath2Blue", 25, 0, random (160, 210), 2, random (30, 60))
+   TNT1 A 0 A_CustomMissile ("XDeath3Blue", 25, 0, random (160, 210), 2, random (30, 60))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan1Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("XDeathOrgan2Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("MuchBlood3Blue", 7, 0, random (0, 360), 2, random (20, 40))
+   TNT1 A 0 A_CustomMissile ("CacoXDeath", 0, 0, random (0, 360), 2, random (0, 160))
+   HD9X A 4 A_ChangeFlag(FLOATBOB,0)
+   HD9X B 4 A_XScream
+   HD9X C 4
+   HD9X D 4 A_NoBlocking
+   HD9X EFGHI 4
+   TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+   HD9X J -1
+   Stop
+   
+   Raise: 
+   HED9 L 8 A_UnsetFloorClip
+   HED9 KJIHG 8 
+   Goto See 
+   } 
+} 
+
+Actor CrackodemonBall
+{
+    Radius 8
+    Height 6
+    Speed 15
+    Damage 5
+    PROJECTILE
+	RENDERSTYLE ADD
+	ALPHA 0.8
+	SeeSound "Crack/see"
+	DeathSound "Crack/death"
+	Decal "smallPLASMAScorch"
+	States
+	{
+	Spawn:
+	   BAL9 AAAABBBB 1 BRIGHT A_SpawnItemEx("CrackoBallTrail", 0, 0, 0, 0, 0, 0, 0, 128)
+	   Loop
+	Death:
+	   BAL9 CDE 6 BRIGHT
+	   Stop
+	}
+}
+
+Actor CrackoBallTrail
+{
+    Radius 1
+    Height 1
+    +NOCLIP
+    +NOGRAVITY
+    +FLOAT
+    Renderstyle ADD
+    Alpha 0.5
+    States
+    {
+    Spawn:
+        BAL9 AB 2 Bright A_FadeOut (0.1)
+        loop
+    }
+}
+
+Actor Blusoul : CrackodemonBall
+{
+    Radius 12
+    Height 24
+    Speed 20
+    Damage 1
+    ExplosionDamage 1
+    ExplosionRadius 5
+    SeeSound "Blusoul/see"
+    DeathSound "Blusoul/death"
+	Decal "PLASMAScorch"
+    States
+    {
+    Spawn:
+       SKUD CCCCDDDD 1 BRIGHT A_SpawnItemEx("BlusoulTrail", 0, 0, 16, 0, 0, 0, 0, 128)
+       Loop
+    Death:
+       SKUD H 4 BRIGHT A_Mushroom("CrackodemonBall", 8)
+       SKUD I 4 BRIGHT A_Explode
+       SKUD JK 4 BRIGHT
+       stop
+    }
+}
+
+Actor BlusoulTrail
+{
+    Radius 1
+    Height 1
+    +NOCLIP
+    +NOGRAVITY
+    +FLOAT
+    Renderstyle ADD
+    Alpha 0.5
+    States
+    {
+    Spawn:
+        BAL9 A 0 A_CStaffMissileSlither
+        BAL9 AB 4 BRIGHT A_FadeOut (0.1)
+        loop
+    }
+}

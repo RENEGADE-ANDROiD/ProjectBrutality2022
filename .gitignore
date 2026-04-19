@@ -1,0 +1,28 @@
+# Smoketest / test logs
+smoketest_baseline.log
+smoketest_*.log
+
+# Build artifacts
+*.pk3
+*.pk7
+*.ipk3
+*.ipk7
+build/
+dist/
+
+# Editor / OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+.DS_Store
+
+# SLADE / editing backups
+*.bak
+*.backup
+*.orig
+*.tmp

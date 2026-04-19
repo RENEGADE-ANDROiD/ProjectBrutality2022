@@ -1,0 +1,115 @@
+////////////////////////////////////////////////////////
+//        Glory Kills Add-On sound definitions        //
+//  (ported from D4D / BrutalDoom Black Edition)      //
+////////////////////////////////////////////////////////
+
+BONECR1 BONECR1
+BONECR2 BONECR2
+CYBPAIN CYBPAIN
+
+items/armor/Sshard			armrshrd
+
+Health_Small		"Sounds/SOULCUBE/HealthSmall.ogg"
+Health_Med				"Sounds/SOULCUBE/HealthMed.ogg"
+
+LOWHEALTH	"sounds/Player/LowHealth.ogg"
+AmmoBig			"sounds/Pickups/AmmoBigger.ogg"
+AmmoSmall			"sounds/Pickups/Ammo.ogg"
+Beep				"sounds/Player/Beep.ogg"
+
+Glorykill				"sounds/Glorykill/GloryKillDing.ogg"
+Bloodpunch				"sounds/Glorykill/fistblod.ogg"
+BpunchReady				"sounds/Glorykill/BPCharge.ogg"
+
+Equip_notready				"sounds/FlameBelch/equipnotready.ogg"
+Flame_belch1				"sounds/FlameBelch/flamebelch1.ogg"
+Flame_belch2				"sounds/FlameBelch/flamebelch2.ogg"
+Flame_belch3				"sounds/FlameBelch/flamebelch3.ogg"
+Flame_belch4				"sounds/FlameBelch/flamebelch4.ogg"
+
+//==============================================================================
+// Crucible
+//==============================================================================
+Crucible_Deselect		"Sounds/Crucible/Deselect.ogg"
+Crucible_Deploy			"Sounds/Crucible/Deploy.ogg"
+Crucible_Select			"Sounds/Crucible/Select.ogg"
+Crucible_Pickup			"Sounds/Crucible/Pickup.ogg"
+Crucible_Idle				"Sounds/Crucible/Idle.ogg"
+Crucible_AmmoPickup		"Sounds/Crucible/AmmoPickup.ogg"
+
+Eternal/Crucible/Swing1			"Sounds/Crucible/Swing1.ogg"
+Eternal/Crucible/Swing2			"Sounds/Crucible/Swing2.ogg"
+Eternal/Crucible/Swing3			"Sounds/Crucible/Swing3.ogg"
+Eternal/Crucible/Swing4			"Sounds/Crucible/Swing4.ogg"
+Eternal/Crucible/Swing5			"Sounds/Crucible/Swing5.ogg"
+Eternal/Crucible/Swing6			"Sounds/Crucible/Swing6.ogg"
+Eternal/Crucible/Swing7			"Sounds/Crucible/Swing7.ogg"
+Eternal/Crucible/Return1		"Sounds/Crucible/Return1.ogg"
+Eternal/Crucible/Return2		"Sounds/Crucible/Return2.ogg"
+Eternal/Crucible/Return3		"Sounds/Crucible/Return3.ogg"
+Eternal/Crucible/Return4		"Sounds/Crucible/Return4.ogg"
+Eternal/Crucible/Return5		"Sounds/Crucible/Return5.ogg"
+Eternal/Crucible/Slice1			"Sounds/Crucible/Slice1.ogg"
+Eternal/Crucible/Slice2			"Sounds/Crucible/Slice2.ogg"
+Eternal/Crucible/Slice3			"Sounds/Crucible/Slice3.ogg"
+Eternal/Crucible/Slice4			"Sounds/Crucible/Slice4.ogg"
+Eternal/Crucible/Slice5			"Sounds/Crucible/Slice5.ogg"
+Eternal/Crucible/Slice6			"Sounds/Crucible/Slice6.ogg"
+
+Eternal/Crucible/Hit1			"Sounds/Crucible/cruciblehit1.ogg"
+Eternal/Crucible/Hit2			"Sounds/Crucible/cruciblehit2.ogg"
+Eternal/Crucible/Hit3			"Sounds/Crucible/cruciblehit3.ogg"
+
+$random Crucible_Slice
+{
+	Eternal/Crucible/Slice1
+	Eternal/Crucible/Slice2
+	Eternal/Crucible/Slice3
+	Eternal/Crucible/Slice4
+	Eternal/Crucible/Slice5
+	Eternal/Crucible/Slice6
+}
+
+$random Crucible_Swing
+{
+	Eternal/Crucible/Swing1	Eternal/Crucible/Swing2	Eternal/Crucible/Swing3
+	Eternal/Crucible/Swing4	Eternal/Crucible/Swing5	Eternal/Crucible/Swing6
+	Eternal/Crucible/Swing7
+}
+
+$random Crucible_Return
+{
+	Eternal/Crucible/Return1
+	Eternal/Crucible/Return2
+	Eternal/Crucible/Return3
+	Eternal/Crucible/Return4
+	Eternal/Crucible/Return5
+}
+
+$random Crucible_Lighting
+{
+	PZPCHR2	
+	LGEnd1 
+	LGEnd2	
+	STNBOMB	
+	LGBOMB
+}
+
+$random Crucible_Hit
+{
+	Eternal/Crucible/Hit1
+	Eternal/Crucible/Hit2
+	Eternal/Crucible/Hit3
+}
+
+$random Flamebelch
+{
+	Flame_belch1
+	Flame_belch2
+	Flame_belch3
+	Flame_belch4
+}
+
+$limit Crucible_Swing 0
+$limit Crucible_Slice 0
+$limit Eternal/Crucible/Return 0

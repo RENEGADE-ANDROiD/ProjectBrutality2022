@@ -1,0 +1,36 @@
+// Ported from Monster Pack Add-On/Actors/Monsters/Aracnorb/Aracnorb.dec (lines 313-342).
+// Only the Aracnorbpassivespawn actor is carried over; the rest of MP's Aracnorb.dec
+// duplicates classes already defined in T3-Arachnos/Aracnorb.dec and is intentionally
+// skipped per MERGE_MANIFEST.md §3.1. Required by PinkySpawner / SpectreSpawner
+// (A_SpawnItemEx("Aracnorbpassivespawn", ...)) after Phase 7.
+
+Actor Aracnorbpassivespawn
+{
+	Speed 100
+	Radius 20
+    Height 56
+	Mass 40
+	+THRUACTORS
+	-COUNTKILL
+	States
+	{
+	Spawn:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Wander
+		TNT1 A 5 A_Wander
+		TNT1 A 0 A_CheckSight ("Create")
+		TNT1 A 5 A_Wander
+		TNT1 A 0 A_CheckSight ("Create")
+		TNT1 A 5 A_Wander
+		TNT1 A 0 A_CheckSight ("Create")
+		TNT1 A 5 A_Wander
+		TNT1 A 0 A_CheckSight ("Create")
+		TNT1 A 0 A_Jump(50,"Die")
+		Loop
+	Create:
+		TNT1 A 0 A_SpawnItemEx("aracnorb")
+		Stop
+	Die:
+		TNT1 A 0
+		Stop	
+	}
+}

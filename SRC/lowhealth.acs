@@ -1,0 +1,31 @@
+#library "lowhealth.acs"
+#include "zcommon.acs"
+
+#define MAX_VOLUME 127
+#define MAX_PLAYER_HEALTH 200
+
+
+//lowhealth scripts - from BoA
+script "lowhealth" ENTER
+{
+	bool LowHP;
+
+	while(true)
+	{
+		int health = GetActorProperty(0, APROP_HEALTH);
+
+		if (health <= 30)
+		{
+			if (!LowHP)
+			{
+				LocalAmbientSound("LOWHEALTH", MAX_VOLUME);
+				LowHP = true;
+			}
+		}
+		else
+		{
+			LowHP = false;
+		}
+		Delay(1);
+	}
+}
