@@ -1,0 +1,36 @@
+////////////////////////////////////////////////////////
+//			Project Brutality Monsters Sounds		  //
+////////////////////////////////////////////////////////
+//ARCHVILES
+archvile/sit            dsvilsit
+archvile/active         dsvilact
+archvile/pain           dsvipain
+archvile/death          dsvildth
+//HELL NOBLES
+//BARON OF HELL
+baron/sight	            dsbrssit
+baron/death	            dsbrsdth
+//HELL KNIGHT
+knight/sight			dskntsit
+knight/active			dsdmact
+knight/pain			    dsdmpain
+//CACODEMONS
+//CACODEMON
+caco/death			    cacodth
+//INFERNAL CACODEMON
+monster/infsit          sinfsit
+monster/infpai          dsinfpai     
+monster/infact          dsinfact    
+//LOST SOULS
+//LOST SOUL
+skull/active			dsdmact
+//MANCUBI
+MANCUBUS
+Mancubus/pain           dsmnpain
+//BOSSES
+//MASTERMIND
+spider/active			dsdmact
+spider/pain			    dsdmpain
+spider/attack			dsshotgn
+spider/death			dsspidth
+spider/walk			    dsmetal

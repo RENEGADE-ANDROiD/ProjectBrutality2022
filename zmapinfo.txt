@@ -16,7 +16,7 @@ Skill baby
    Textcolor = Green
    //DisableCheats
    Name = "Power Fantasy"
-   MustConfirm = "The recommended difficulty for the dead. Press Y to Continue or N to Select Other Skill."
+   MustConfirm = "The Recommended Difficulty For The Dead. Press Y to Continue or N to Select Other Skill?"
 }
 
 Skill easy
@@ -25,10 +25,10 @@ Skill easy
    DamageFactor = 0.75
    MonsterHealth = 0.75
    SpawnFilter = Easy
-   Textcolor = Green
+   Textcolor = Purple
    //DisableCheats
    Name = "Can I Play Daddy?"
-   MustConfirm = "The recommended difficulty for kids. Press Y to Continue or N to Select Other Skill."
+   MustConfirm = "The Recommended Difficulty For The Weak. Press Y to Continue or N to Select Other Skill?"
 }
 
 Skill normal
@@ -37,10 +37,10 @@ Skill normal
    DamageFactor = 0.90
    MonsterHealth = 0.90
    SpawnFilter = Normal
-   Textcolor = Gold
+   Textcolor = White
    //DisableCheats
    Name = "Harsh"
-   MustConfirm = "The recommended difficulty for newcomers to Project Brutality. Press Y to Continue or N to Select Other Skill."
+   MustConfirm = "The Recommended Difficulty For Slayers. Press Y to Continue or N to Select Other Skill?"
 }
 
 Skill Hard
@@ -49,10 +49,10 @@ Skill Hard
    DamageFactor = 1.0
  //  Aggressiveness = .10
    SpawnFilter = Hard
-   Textcolor = Yellow
+   Textcolor = Brown
    //DisableCheats
-   Name = "Brutal"
-   MustConfirm = "The true Project Brutality experiece. Press Y to Continue or N to Select Other Skill."
+   Name = "Project Brutality"
+   MustConfirm = "The Recommended Project Brutality Experience. Press Y to Continue or N to Select Other Skill."
 }
 
 Skill Brutal
@@ -64,7 +64,7 @@ Skill Brutal
    //DisableCheats
    Textcolor = "Orange"
    Name = "Man and a Half"
-   MustConfirm = "Your enemies are significantly more aggressive, inflict more damage, and are very proficient. Press Y to Continue or N to Select Other Skill."
+   MustConfirm = "Demons Are More Aggressive, Inflict More Damage To The Slayer, and are very proficient. Press Y to Continue or N to Select Other Skill."
 
 }
 
@@ -74,10 +74,10 @@ Skill Superbad
    DamageFactor = 1.0
    FastMonsters
    SpawnFilter = Nightmare
-   Textcolor = "Dark Red"
+   Textcolor = "Blue"
    //DisableCheats
    Name = "12 on 10 Point Scale of Bad"
-   MustConfirm = "Your enemies are significantly faster. Press Y to Continue or N to Select Other Skill."
+   MustConfirm = "Demons Are Faster. Press Y to Continue or N to Select Other Skill."
 }
 
 Skill BlackMetal
@@ -89,8 +89,8 @@ Skill BlackMetal
    Aggressiveness = 0.15
    //DisableCheats
    Name = "I AM THE PAINKILLER!!!"
-   Textcolor = "Reddish Brick"
-   MustConfirm = "Your enemies have 20% more health, are extremely aggressive, and inflict more damage.  Press Y if you can take it!"
+   Textcolor = "Gold"
+   MustConfirm = "Demons Have More Health, Extremely Aggressive, Inflict More Damage To The Slayer. Press Y to Continue if you can take it or N to Select Other Skill."
 }
 
 Skill HELL
@@ -105,7 +105,7 @@ Skill HELL
    //DisableCheats
   // PicName = "M_NMARE"
    name = "Last Man on Earth"
-   mustconfirm = "The monsters you will face came straight out of the depths of hell. You will learn to fear and respect what true terror is. Press Y to start your death wish."
+   mustconfirm = "You Shall Die And Taste The Fear Of Demonic Terror In The Depths Of Hell, Slayer!. Press Y to start your death wish or N to Select Other Skill?"
 }
 
 
