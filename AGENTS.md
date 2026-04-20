@@ -139,6 +139,8 @@ titlemap.wad, TitleMap     Title-screen content
 6. Add sprites/graphics and any `TEXTURES.*` patches.
 7. If the weapon needs ZScript-side hooks (overlays, laser, execution), extend/reuse `PB_WeaponBase` in `zscript/Weapons/BaseWeapon.zc`.
 
+**Port a newer-PB weapon add-on.** See `PORTING_ADDONS.md` for the compatibility map between 4.11.x-era PB add-ons and this 4.5.0-era codebase, plus the Lever Action port as a worked example.
+
 **Add a CVar / menu option**
 1. Declare it in `CVARINFO` (prefer the `pb_`, `cl_`, or `fs_` prefix matching existing conventions).
 2. Expose it in `MENUDEF.txt` under the relevant submenu.
