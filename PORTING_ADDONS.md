@@ -114,6 +114,14 @@ Mirror the conventions from AGENTS.md section 5, with these add-on-specific note
 - **Sprites** → `SPRITES/WEAPONS/<Name>/**`. Preserve whatever subfolder layout the add-on shipped — GZDoom does not care about paths under `SPRITES/`; it matches by the 4-character frame prefix in the filename (`LVR2`, `LVR4`, etc.), so frame names pass straight through.
 - **Sounds** → `SOUNDS/COMBAT/WEAPONS/<Name>/*.ogg` (or whatever extension the add-on ships), with the paths matching the `sounds/...` strings you put in SNDINFO.
 - **SNDINFO** → append to [SNDINFO.PBWeapons](SNDINFO.PBWeapons). GZDoom auto-loads every `SNDINFO*` lump (AGENTS.md section 2) — there is no master include list to update.
+- **SBARINFO** → append a per-weapon `IsSelected <WeaponClass> { ... }` block to [SBARINFO.txt](SBARINFO.txt). **This is mandatory for any weapon that should show up on the fullscreen HUD** — without it, the HUD silently falls through to the "no ammo panel" default and the player sees no magazine / reserve readout while the weapon is ready. Use the actual DECORATE class name (no automatic `PB_` prefix — e.g. `Paingiver`, `OldHMG` are unprefixed; `PB_MetalSniper` is prefixed). Pick the layout by ammo family, not by slot:
+    - **Rifle / `NewClip`** → mirror `PB_LMG` (yellow: `BARBACY1/2`, `BAMBAR1`, `CURBAR1`, `AMMOIC1`, `RESBAR1`).
+    - **Pistol / SMG** → mirror `PB_SMG` (tan: `BARBACT1/2`, `BAMBAR2`, `CURBAR2`, `AMMOIC2`, `RESBAR2`).
+    - **Shotgun** → mirror `PB_Shotgun` / `PB_SSG`.
+    - **Rocket / explosive** → mirror `PB_RocketLauncher` / `Paingiver` (red: `BARBACR1/2`, `BAMBAR4`, `CURBAR4`, `AMMOIC4`, `RESBAR4`).
+    - **Plasma / BFG** → mirror `PB_M1Plasma` / `PB_BFG9000`.
+
+    If the weapon has no magazine (single-pool weapons like `PB_Minigun` / `PB_MG42`), omit the `ammo2` lines and draw only `ammo1`. Insert the new block next to the existing weapons in the same ammo family so the file stays grouped.
 - **DoomEdNum** → append one line to the `DoomEdNums` block in [zmapinfo.txt](zmapinfo.txt), picking the next free number in the reserved **23000-range**. As of the Lever Action port the last assignment is `23133 = LeverAction`, so new ports should take `23134` and up. Do not reuse numbers. AGENTS.md section 4 calls out the range as 23000–23133 — extend it, don't overwrite.
 - **Drop, don't stub, the following add-on files**:
   - The add-on's own `ZSCRIPT.zc` (its version pin will conflict and it pulls in missing classes).
