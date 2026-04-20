@@ -1004,3 +1004,12 @@ MS/Grenade			"sounds/combat/weapons/MetalSniper/msGrenFire.ogg"
 MS/GrenOpen			"sounds/combat/weapons/MetalSniper/msGrenOpen.ogg"
 MS/GrenClose		"sounds/combat/weapons/MetalSniper/msGrenClose.ogg"
 MS/Up				"sounds/combat/weapons/MetalSniper/msRaise.ogg"
+
+////////////////////////////////////////////////////////
+//			Paingiver (Slot 6)                         //
+////////////////////////////////////////////////////////
+
+weapons/paingiver/fire1		"sounds/combat/weapons/paingiver/fire1.ogg"
+weapons/paingiver/fire2		"sounds/combat/weapons/paingiver/fire2.ogg"
+weapons/paingiver/sweet		"sounds/combat/weapons/paingiver/sweet.ogg"
+weapons/paingiver/boom		"sounds/combat/weapons/paingiver/boom.ogg"
