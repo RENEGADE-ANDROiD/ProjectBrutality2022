@@ -1144,3 +1144,15 @@ OptionMenu "Glorykills"
 	Slider  "Glory Hud X","sv_fuelhud_x",-1024 ,1024, 1
 	Slider  "Glory Hud Y","sv_fuelhud_y",-768 ,768, 1
 }
+
+AddOptionMenu "OptionsMenu"
+{
+	SubMenu "Riot Shield Settings", "ShieldAxe_Settings"
+}
+
+OptionMenu "ShieldAxe_Settings"
+{
+	StaticText "-----------------RiotShield Addon Settings-----------------", 1
+	StaticText "-----------------Allows The Player To Decide To Wait Until An Axe Is Found To Use This Mode-----------------", 1
+	Option "Require Axe For Axe Mode", "RS_AxeCheck", "OnOff"
+}

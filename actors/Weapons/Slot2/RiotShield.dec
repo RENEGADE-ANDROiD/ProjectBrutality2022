@@ -1,0 +1,574 @@
+// ============================================================================
+// Riot Shield - ported from "Addon - RiotShield" into Project Brutality 2022.
+// Source: Addon - RiotShield/RiotShield.txt + Decorate.Shields.
+// Patches vs. the upstream addon (see plans/port_riotshield_addon_*.plan.md
+// and PORTING_ADDONS.md):
+//   * BrutalAxe -> PB_Axe so the axe gate checks PB 2022's actual axe weapon.
+//   * WeaponSpecial honours the RS_AxeCheck CVar: when the CVar is 0, the axe
+//     requirement is bypassed and the mode toggles unconditionally.
+//   * skeleton/swing -> AXSWING (the addon's swing sound isn't in SNDINFO).
+//   * RespectItem -> respectItem to match the spelling dominant across PB 2022.
+//   * Super_Shield_Melee is dropped (defined upstream, never referenced).
+// ============================================================================
+
+Actor RespectRiotShield : Inventory { Inventory.MaxAmount 1 }
+Actor RiotShieldUnloaded : Inventory { Inventory.MaxAmount 1 }
+Actor RiotShieldBlocking : Inventory { Inventory.MaxAmount 1 }
+Actor ShieldAxeMode : Inventory { Inventory.MaxAmount 1 }
+Actor ShieldModeA : Inventory { Inventory.MaxAmount 1 }
+
+Actor RiotShieldPickup : PB_UpgradeItem Replaces RiotShieldDrop
+{
+    Game Doom
+    Inventory.PickupSound "barrel/pain"
+    Inventory.PickupMessage "\ciYou Got The UAC-33 Ballistic Riot Shield (Slot 2)!"
+    Inventory.Icon "5L1DI0"
+    +INVENTORY.RESTRICTABSOLUTELY
+    States
+    {
+    Spawn:
+        5L1D I 0 NoDelay
+        5L1D I 10 A_PbvpFramework("5L1D")
+        "####" I 0 A_PbvpInterpolate()
+        Loop
+    Pickup:
+        TNT1 A 0 A_GiveInventory("RiotShield",1)
+        Stop
+    }
+}
+
+Actor RiotShield : PB_Weapon
+{
+    Game Doom
+    Weapon.BobRangeX 0.3
+    Weapon.BobRangeY 0.5
+    Weapon.BobStyle InverseSmooth
+    Weapon.BobSpeed 2.0
+    Weapon.KickBack 200
+    Weapon.AmmoUse1 0
+    Weapon.AmmoGive1 5
+    Weapon.AmmoUse2 0
+    Weapon.AmmoGive2 0
+    Weapon.AmmoType1 "PistolBullets"
+    Weapon.AmmoType2 "PrimaryPistolAmmo"
+    Obituary "Stood no chance against Riot Shield"
+    Inventory.PickupSound "barrel/pain"
+    Inventory.PickupMessage "\ciYou Got The UAC-33 Ballistic Riot Shield (Slot 2)!"
+    +WEAPON.NOALERT
+    +WEAPON.NOAUTOAIM
+    +WEAPON.NOAUTOFIRE
+    +WEAPON.WIMPY_WEAPON
+    +INVENTORY.RESTRICTABSOLUTELY
+    +BLOODSPLATTER
+    +DONTGIB
+    +FLOORCLIP
+    Weapon.SlotNumber 2
+    Weapon.SlotPriority 1
+    Weapon.SelectionOrder 3400
+    Scale 1.0
+    Tag "Riot Shield"
+    Inventory.AltHudIcon "5L1DI0"
+    PB_WeaponBase.respectItem "RespectRiotShield"
+    PB_WeaponBase.UnloaderToken "RiotShieldUnloaded"
+    FloatBobStrength 0.5
+
+    States
+    {
+    Spawn:
+        5L1D I -1
+        Stop
+
+    Steady:
+        TNT1 A 1
+        Goto Ready
+
+    Select:
+        TNT1 A 0
+        Goto SelectFirstPersonLegs
+    SelectContinue:
+        TNT1 A 0 PB_WeapTokenSwitch("HandgunSelected")
+        TNT1 A 0 A_TakeInventory("RiotShieldUnloaded",1)
+        TNT1 A 0 A_Raise
+        Goto SelectAnimation
+    SelectAnimation:
+        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
+        TNT1 A 0 A_JumpIfInventory("ShieldAxeMode",1,"SelectAnimationAxe")
+        RSWR F 1 Offset(0,102)
+        RSWR G 1 Offset(0,92)
+        RSWR H 1 Offset(0,82)
+        RSWR I 1 Offset(0,72)
+        RSWR J 1 Offset(0,62)
+        RSWR K 1 Offset(0,52)
+        RSWF C 1 Offset(0,42)
+        RSWG A 1 Offset(0,32)
+        TNT1 A 0 A_GunFlash
+        Goto Ready3
+    SelectAnimationAxe:
+        RSWR F 1 Offset(0,102)
+        RSWY G 1 Offset(0,92)
+        RSWY H 1 Offset(0,82)
+        RSWY I 1 Offset(0,72)
+        RSWY J 1 Offset(0,62)
+        RSWY K 1 Offset(0,52)
+        RSWA A 1 Offset(0,42)
+        TNT1 A 0 A_GunFlash
+        Goto ReadyAxe
+
+    Deselect:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_JumpIfInventory("GotMeatShield",1,"GrabEnemy")
+        TNT1 A 0 A_JumpIfInventory("ShieldAxeMode",1,"DeselectAxe")
+        TNT1 A 0 A_JumpIfInventory("ShieldModeA",1,"DeselectShieldMode")
+        RSWG A 1 Offset(0,32)
+        RSWF C 1 Offset(0,42)
+        RSWR K 1 Offset(0,52)
+        RSWR J 1 Offset(0,62)
+        RSWR I 1 Offset(0,72)
+        RSWR H 1 Offset(0,82)
+        RSWR G 1 Offset(0,92)
+        RSWR F 1 Offset(0,102)
+        TNT1 A 0 A_Lower
+        Wait
+    DeselectAxe:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        RSWA A 1 Offset(0,32)
+        RSWA A 1 Offset(0,42)
+        RSWY K 1 Offset(0,52)
+        RSWY J 1 Offset(0,62)
+        RSWY I 1 Offset(0,72)
+        RSWY H 1 Offset(0,82)
+        RSWY G 1 Offset(0,92)
+        RSWR F 1 Offset(0,102)
+        TNT1 A 0 A_Lower
+        Wait
+    DeselectShieldMode:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_TakeInventory("ShieldModeA",1)
+        RSWT F 1
+        RSWT E 1
+        RSWB FEDCBA 1
+        RSWG A 1 Offset(0,32)
+        RSWF C 1 Offset(0,42)
+        RSWR K 1 Offset(0,52)
+        RSWR J 1 Offset(0,62)
+        RSWR I 1 Offset(0,72)
+        RSWR H 1 Offset(0,82)
+        RSWR G 1 Offset(0,92)
+        RSWR F 1 Offset(0,102)
+        TNT1 A 0 A_Lower
+        Wait
+
+    WeaponRespect:
+        TNT1 A 0 A_GiveInventory("RespectRiotShield",1)
+        TNT1 A 0 A_PlaySound("barrel/pain")
+        TNT1 A 0 A_PlaySound("weapons/pistolup")
+        RSWR F 1 Offset(0,102)
+        RSWR G 1 Offset(0,92)
+        RSWR H 1 Offset(0,82)
+        RSWR I 1 Offset(0,72)
+        RSWR J 1 Offset(0,62)
+        RSWR K 1 Offset(0,52)
+        RSWF C 1 Offset(0,42)
+        RSWG A 1 Offset(0,32)
+        Goto Ready3
+
+    Ready3:
+        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
+        TNT1 A 0 A_JumpIfInventory("ShieldAxeMode",1,"ReadyAxe")
+        TNT1 A 0 A_JumpIfInventory("ShieldModeA",1,"ReadyShield")
+        TNT1 A 0 PB_HandleCrosshair(43)
+        RSWG A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("RiotShieldUnloaded"))
+        Loop
+
+    ReadyAxe:
+        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
+        TNT1 A 0 PB_HandleCrosshair(90)
+        RSWA A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("RiotShieldUnloaded"))
+        Loop
+
+    ReadyShield:
+        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
+        TNT1 A 0 A_GiveInventory("RiotShieldBlocking",1)
+        RSWT A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        Loop
+
+    Fire:
+        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
+        TNT1 A 0 A_JumpIfInventory("ShieldModeA",1,"ShieldMeele")
+        TNT1 A 0 A_JumpIfInventory("ShieldAxeMode",1,"AxeEquipped")
+        TNT1 A 0 A_JumpIfInventory("PrimaryPistolAmmo",1,1)
+        Goto NoAmmo
+        RSWF AB 1 Bright
+        {
+            A_FireBullets(0.1,0.1,-1,15,"HitPuff",FBF_NORANDOM,8192,"Tracer",-1,4);
+            A_FireCustomMissile("YellowFlareSpawn",0,0,4,0);
+            A_FireCustomMissile("ShakeYourAssMinor",0,0,4,0);
+            A_FireCustomMissile("GunFireSmoke",0,0,4,0);
+            A_AlertMonsters;
+            A_Overlay(-6,"RightFlash",1);
+            A_GunFlash;
+            A_FireCustomMissile("PistolCasingSpawner",0,0,11,-1);
+            A_ZoomFactor(0.985);
+            A_TakeInventory("PrimaryPistolAmmo",1);
+            A_PlaySoundEx("weapons/pistol","Weapon");
+            PB_WeaponRecoil(-0.84,-1.2);
+        }
+        RSWF C 1 { A_ZoomFactor(0.99); }
+        RSWF C 1 { A_ZoomFactor(1.0); }
+        RSWF D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWF E 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWG A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        TNT1 A 0 A_Refire("Fire")
+        Goto Ready3
+
+    AxeEquipped:
+        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
+        TNT1 A 0 A_JumpIfInventory("AxeSequence1",1,"Swing2")
+    Swing1:
+        TNT1 A 0
+        {
+            A_PlaySound("AXSWING");
+            A_GiveInventory("AxeSequence1",1);
+        }
+        AX10 ABC 1
+        {
+            A_Saw("","",15,"AxePuffs",0,120,0,16);
+            A_FireCustomMissile("AxeAttack",0,0,0,0);
+            A_SetRoll(roll-1.0);
+            A_SetAngle(angle+0.5);
+        }
+        AX10 DEF 1
+        {
+            A_SetRoll(roll-1.0);
+            A_SetAngle(angle+0.5);
+        }
+        TNT1 AAA 1
+        {
+            A_SetRoll(roll+1.0);
+            A_SetAngle(angle-0.5);
+        }
+        TNT1 A 0 A_Refire("Fire")
+        Goto ReadyAxe
+    Swing2:
+        TNT1 A 0
+        {
+            A_PlaySound("AXSWING");
+            A_TakeInventory("AxeSequence1",1);
+            A_GiveInventory("AxeSequence2",1);
+        }
+        AX20 ABC 1
+        {
+            A_Saw("","",15,"AxePuffs",0,120,0,16);
+            A_FireCustomMissile("AxeAttack",0,0,0,0);
+            A_SetRoll(roll+1.0);
+            A_SetAngle(angle-0.5);
+        }
+        AX20 DEF 1
+        {
+            A_SetRoll(roll+1.0);
+            A_SetAngle(angle-0.5);
+        }
+        TNT1 AAA 1
+        {
+            A_SetRoll(roll-1.0);
+            A_SetAngle(angle+0.5);
+        }
+        TNT1 A 0 A_Refire("Fire")
+        Goto ReadyAxe
+
+    ShieldMeele:
+        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
+        TNT1 A 0 A_PlaySound("AXSWING")
+        TNT1 A 0 A_CustomPunch(random(20,40),1,1,"Shield_melee",150)
+        RSWT C 1
+        RSWT D 1
+        RSWT E 1
+        RSWT F 1
+        RSWT A 1
+        Goto ReadyShield
+
+    AltFire:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
+        TNT1 A 0 A_JumpIfInventory("ShieldModeA",1,"UnShield")
+        TNT1 A 0 A_GiveInventory("ShieldModeA",1)
+        RSWB ABCDEF 1
+        RSWT F 1
+        RSWT F 1
+        Goto ReadyShield
+    UnShield:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_TakeInventory("ShieldModeA",1)
+        TNT1 A 0 A_TakeInventory("RiotShieldBlocking",1)
+        RSWT F 1
+        RSWT F 1
+        TNT1 A 0 A_JumpIfInventory("ShieldAxeMode",1,"UnShieldAxe")
+        RSWB FEDCBA 1
+        Goto Ready3
+    UnShieldAxe:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        RSWX FEDCBA 1
+        Goto ReadyAxe
+
+    Reload:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
+        TNT1 A 0 A_JumpIfInventory("PrimaryPistolAmmo",16,"Ready3")
+        TNT1 A 0 A_JumpIfInventory("PistolBullets",1,1)
+        Goto Ready3
+        TNT1 A 0 A_PlaySoundEx("PSRLOUT","Auto")
+        D5GB A 1 A_SetRoll(roll+0.5)
+        TNT1 A 0 A_FireCustomMissile("EmptyClipMP40",-5,0,-6,-20)
+        D5GB BCD 1 A_SetRoll(roll+0.5)
+        D5GB EFGHI 1 A_SetRoll(roll-0.5)
+        TNT1 A 0 A_PlaySoundEx("PSRLIN","Auto")
+        D5GB KKLMNOPQRS 1 A_SetRoll(roll-0.1)
+        D5GB TUVWX 1 A_SetRoll(roll+0.2)
+        TNT1 A 0 A_SetRoll(0)
+        TNT1 A 0 A_TakeInventory("RiotShieldUnloaded",1)
+    InsertBullets:
+        TNT1 A 0 A_JumpIfInventory("PrimaryPistolAmmo",16,"Ready3")
+        TNT1 A 0 A_JumpIfInventory("PistolBullets",1,1)
+        Goto Ready3
+        TNT1 A 0
+        {
+            A_GiveInventory("PrimaryPistolAmmo",1);
+            A_TakeInventory("PistolBullets",1);
+        }
+        Loop
+
+    Unload:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_JumpIfInventory("RiotShieldUnloaded",1,"Ready3")
+        TNT1 A 0 A_JumpIfInventory("PrimaryPistolAmmo",1,1)
+        Goto Ready3
+        TNT1 A 0 A_PlaySoundEx("PSRLOUT","Auto")
+        RSWF D 2
+        RSWR ABCDEEFFFF 1
+        RSWR F 32
+        RSWR EEDCB 1
+        RSWR A 2
+        RSWF CD 2
+    RemoveBullets:
+        TNT1 A 0 A_JumpIfInventory("PrimaryPistolAmmo",1,1)
+        Goto FinishUnload
+        TNT1 A 0
+        {
+            A_TakeInventory("PrimaryPistolAmmo",1);
+            A_GiveInventory("PistolBullets",1);
+        }
+        Loop
+    FinishUnload:
+        TNT1 A 0 A_GiveInventory("RiotShieldUnloaded",1)
+        TNT1 A 0 A_TakeInventory("Unloading",1)
+        Goto Ready3
+
+    NoAmmo:
+        RSWG A 5
+        {
+            A_ZoomFactor(1.0);
+            A_TakeInventory("Zoomed",1);
+            A_TakeInventory("ADSmode",1);
+            A_PlaySound("weapons/empty");
+        }
+        Goto Ready3
+
+    WeaponSpecial:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
+        TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility",1)
+        TNT1 A 0
+        {
+            if (!GetCvar("RS_AxeCheck"))
+            {
+                return state("ShieldAxeMode");
+            }
+            return state(0);
+        }
+        TNT1 A 0 A_JumpIfInventory("PB_Axe",1,"ShieldAxeMode")
+        TNT1 A 0 A_Print("\cdFire Axe Required. To Disable, Check Weapon Settings")
+        Goto Ready3
+    ShieldAxeMode:
+        TNT1 A 0 A_JumpIfInventory("ShieldAxeMode",1,"ShieldPistolMode")
+        RSWG A 1 Offset(0,32)
+        RSWF C 1 Offset(0,42)
+        RSWR K 1 Offset(0,52)
+        RSWR J 1 Offset(0,62)
+        RSWR I 1 Offset(0,72)
+        RSWR H 1 Offset(0,82)
+        RSWR G 1 Offset(0,92)
+        RSWR F 1 Offset(0,102)
+        TNT1 A 0 A_PlaySound("KNIFUP",1)
+        RSWY G 1 Offset(0,92)
+        RSWY H 1 Offset(0,82)
+        RSWY I 1 Offset(0,72)
+        RSWY J 1 Offset(0,62)
+        RSWY K 1 Offset(0,52)
+        RSWA A 1 Offset(0,42)
+        TNT1 A 0 A_GiveInventory("ShieldAxeMode",1)
+        TNT1 A 0 A_Print("\ciSwitched To Fire Axe")
+        Goto ReadyAxe
+    ShieldPistolMode:
+        RSWA A 1 Offset(0,42)
+        RSWY K 1 Offset(0,52)
+        RSWY J 1 Offset(0,62)
+        RSWY I 1 Offset(0,72)
+        RSWY H 1 Offset(0,82)
+        RSWY G 1 Offset(0,92)
+        RSWR F 1 Offset(0,102)
+        TNT1 A 0 A_PlaySoundEx("PSRLFIN","Auto")
+        RSWR G 1 Offset(0,92)
+        RSWR H 1 Offset(0,82)
+        RSWR I 1 Offset(0,72)
+        RSWR J 1 Offset(0,62)
+        RSWR K 1 Offset(0,52)
+        RSWF C 1 Offset(0,42)
+        RSWG A 1 Offset(0,32)
+        TNT1 A 0 A_TakeInventory("ShieldAxeMode",1)
+        TNT1 A 0 A_Print("\cdSwitched To Pistol")
+        Goto Ready3
+
+    FlashKicking:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_JumpIfInventory("ShieldModeA",1,"RiotShieldModeFlashKicking")
+        RSWG A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB C 6 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWG A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        Goto Ready3
+    RiotShieldModeFlashKicking:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        RSWU A 1 A_DoPBWeaponAction
+        RSWU B 1 A_DoPBWeaponAction
+        RSWU C 1 A_DoPBWeaponAction
+        RSWU D 3 A_DoPBWeaponAction
+        RSWU E 3 A_DoPBWeaponAction
+        RSWU F 3 A_DoPBWeaponAction
+        RSWU E 1 A_DoPBWeaponAction
+        RSWU D 1 A_DoPBWeaponAction
+        RSWU C 1 A_DoPBWeaponAction
+        RSWU B 1 A_DoPBWeaponAction
+        RSWU A 1 A_DoPBWeaponAction
+        RSWT A 1 A_DoPBWeaponAction
+        Goto ReadyShield
+
+    FlashAirKicking:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_JumpIfInventory("ShieldModeA",1,"RiotShieldModeFlashAirKicking")
+        RSWG A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB C 7 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWG A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        Goto Ready3
+    RiotShieldModeFlashAirKicking:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        RSWU A 1 A_DoPBWeaponAction
+        RSWU B 1 A_DoPBWeaponAction
+        RSWU C 1 A_DoPBWeaponAction
+        RSWU D 3 A_DoPBWeaponAction
+        RSWU E 3 A_DoPBWeaponAction
+        RSWU F 3 A_DoPBWeaponAction
+        RSWU E 1 A_DoPBWeaponAction
+        RSWU D 1 A_DoPBWeaponAction
+        RSWU C 1 A_DoPBWeaponAction
+        RSWU B 1 A_DoPBWeaponAction
+        RSWU A 1 A_DoPBWeaponAction
+        RSWT A 1 A_DoPBWeaponAction
+        Goto ReadyShield
+
+    FlashSlideKicking:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_JumpIfInventory("ShieldModeA",1,"RiotShieldModeFlashSlideKicking")
+        RSWG A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB C 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB E 14 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB C 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWB A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        RSWG A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+        Goto Ready3
+    RiotShieldModeFlashSlideKicking:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        RSWU A 1 A_DoPBWeaponAction
+        RSWU B 1 A_DoPBWeaponAction
+        RSWU C 1 A_DoPBWeaponAction
+        RSWU D 3 A_DoPBWeaponAction
+        RSWU E 3 A_DoPBWeaponAction
+        RSWU F 3 A_DoPBWeaponAction
+        RSWU E 1 A_DoPBWeaponAction
+        RSWU D 1 A_DoPBWeaponAction
+        RSWU C 1 A_DoPBWeaponAction
+        RSWU B 1 A_DoPBWeaponAction
+        RSWU A 1 A_DoPBWeaponAction
+        RSWT A 1 A_DoPBWeaponAction
+        Goto ReadyShield
+
+    FlashSlideKickingStop:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_JumpIfInventory("ShieldModeA",1,"RiotShieldModeFlashSlideKickingStop")
+        RSWG A 1 A_DoPBWeaponAction
+        Goto Ready3
+    RiotShieldModeFlashSlideKickingStop:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        RSWT A 1 A_DoPBWeaponAction
+        Goto ReadyShield
+
+    FlashPunching:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        TNT1 A 0 A_JumpIfInventory("ShieldModeA",1,"RiotShieldModeFlashPunching")
+        TNT1 A 15
+        Stop
+    RiotShieldModeFlashPunching:
+        TNT1 A 0 A_ClearOverlays(10,11)
+        RSWU A 1 A_DoPBWeaponAction
+        RSWU B 1 A_DoPBWeaponAction
+        RSWU C 1 A_DoPBWeaponAction
+        RSWU D 1 A_DoPBWeaponAction
+        RSWU E 1 A_DoPBWeaponAction
+        RSWU F 4 A_DoPBWeaponAction
+        RSWU E 1 A_DoPBWeaponAction
+        RSWU D 1 A_DoPBWeaponAction
+        RSWU C 1 A_DoPBWeaponAction
+        RSWU B 1 A_DoPBWeaponAction
+        RSWU A 1 A_DoPBWeaponAction
+        RSWT A 1 A_DoPBWeaponAction
+        Goto ReadyShield
+
+    RightFlash:
+        TNT1 A 0 A_Jump(256,"RightFlash1","RightFlash2")
+        Stop
+    RightFlash1:
+        D2RM A 1 Bright
+        TNT1 A 0 A_Jump(256,"RightBigFlash1","RightBigFlash2","RightBigFlash3")
+        Stop
+    RightFlash2:
+        D2RM C 1 Bright
+        TNT1 A 0 A_Jump(256,"RightBigFlash1","RightBigFlash2","RightBigFlash3")
+        Stop
+    RightBigFlash1:
+        D2RM B 1 Bright
+        Stop
+    RightBigFlash2:
+        D2RM D 1 Bright
+        Stop
+    RightBigFlash3:
+        D2RM E 1 Bright
+        Stop
+    }
+}
+
+Actor Shield_Melee : KickAttack
+{
+    Damage 10
+    SelfDamageFactor 0
+}

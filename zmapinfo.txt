@@ -277,6 +277,7 @@ DoomEdNums
 	23131 = PB_Juggernaut
 	23132 = PB_Nazi
 	23133 = LeverAction
+	23134 = RiotShield
 
 	//Glory Kills
 	17003 = CyberdemonLegsFatality
