@@ -1,5 +1,7 @@
 NOTHING "SOUNDS/Misc/Nothing.wav"
 
+hud/shieldbreak "sounds/shieldbreak.ogg"
+
 ////////////////////////////////////////////////////////PROJECT BRUTALITY SOUNDS
 menu/activate		"sounds/Menu/Select.ogg"	// Activate a new menu
 menu/backup			"sounds/Menu/Back.ogg"	// Backup to previous menu

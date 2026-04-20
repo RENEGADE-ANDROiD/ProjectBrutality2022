@@ -1056,7 +1056,7 @@ ACTOR PB_Carbine : PB_Weapon
     FlashKicking:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashKickingDW")
-		CB01 ABCDEEEEFFEEDCBA 1 
+		C1KI ABCDEEEEFFEEDCBA 1 
 		Goto Ready3
 	FlashKickingDW:
 		CB01 ABCDEEEEFFEEDCBA 1
@@ -1071,7 +1071,7 @@ ACTOR PB_Carbine : PB_Weapon
 		C1KI ABCDEEEEEEFFFFFFEEEEEEEDCBA 1
 		Goto Ready3
 	FlashSlideKickingDW:
-		C1KI ABCDEEEEEEFFFFFFEEEEEEEDCBA 1
+		CB01 ABCDEEEEEEFFFFFFEEEEEEEDCBA 1
 		Goto Ready3
 	FlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11)
@@ -1079,7 +1079,7 @@ ACTOR PB_Carbine : PB_Weapon
 		C1KI FEEDCBA 1 
 		Goto Ready3
 	FlashSlideKickingStopDW:
-		C1KI FEEDCBA 1
+		CB01 FEEDCBA 1
 		Goto Ready3
 		
 	FlashPunching:

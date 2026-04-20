@@ -35,8 +35,12 @@ const MAXITERATIONS = 32676;
 #include "zscript/Gore/PBGore.zc"
 #include "zscript/Gore/PBGoreEffects.zc"
 #include "zscript/Decorations/PBDeadGeneric.zc"
-
 #include "zscript/Decorations/PBKeys.zc"
+
+//HitFeedback
+#include "zscript/pb_hitfeedback/sharedmath.zs"
+#include "zscript/pb_hitfeedback/handler.zs"
+#include "zscript/pb_hitfeedback/inventory.zs"
 
 //Monsters
 #include "zscript/Monsters/PBMonster.zc"
