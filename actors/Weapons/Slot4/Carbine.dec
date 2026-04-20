@@ -92,36 +92,37 @@ ACTOR PB_Carbine : PB_Weapon
 				A_GiveInventory("RespectCarbine");
 				A_PlaySoundEx("weapons/carbine/up", "Auto");
 			}
-			4A11 ABCDEFGHIJKLMNOPQRSTUVWXYZ 1 A_DoPBWeaponAction
-			4A12 ABCDEFGHIJKLMNOPQRSTUVWXYZ 1 A_DoPBWeaponAction
-			4A13 ABCDEFGHIJ 1 A_DoPBWeaponAction
+			4A11 ABCDEFJKL 1 A_DoPBWeaponAction
+			4A12 ABCD 1 A_DoPBWeaponAction
+			4A12 PQRST 1 A_DoPBWeaponAction
 			TNT1 A 0 A_PlaySoundEx("weapons/carbine/magout", "Auto")
-			4A13 KLMNOPQRSTUVWXYZ 1 A_DoPBWeaponAction
-			4A14 ABCDEFGHIJKL 1 A_DoPBWeaponAction
+			4A12 UVWXYZ 1 A_DoPBWeaponAction
+			4A13 JKLMNO 1 A_DoPBWeaponAction
 			TNT1 A 0 A_PlaySoundEx("IronSights", "Auto")
-			4A14 MNOPQRSTUVWXYZ 1 A_DoPBWeaponAction
+			4A13 PQRSTUVWXYZ 1 A_DoPBWeaponAction
 			TNT1 A 0 A_PlaySoundEx("LIGHTON", "Auto")
-			4A15 ABCDEFGHIJ 1 A_DoPBWeaponAction
+			4A14 ABCDEF 1 A_DoPBWeaponAction
 			TNT1 A 0 A_PlaySoundEx("LIGHTON", "Auto")
-			4A15 KLMNOPQRSTU 1 A_DoPBWeaponAction
+			4A15 NOPQR 1 A_DoPBWeaponAction
 			TNT1 A 0 A_PlaySoundEx("LIGHTON", "Auto")
-			4A15 VWXYZ 1 A_DoPBWeaponAction
-			4A16 ABCDE 1 A_DoPBWeaponAction
+			4A15 STUVW 1 A_DoPBWeaponAction
+
+			4A17 ADEFG 1 A_DoPBWeaponAction
 			TNT1 A 0 A_PlaySoundEx("IronSights", "Auto")
-			4A16 FGHIJKLMNOPQ 1 A_DoPBWeaponAction
+			4A17 KLMN 1 A_DoPBWeaponAction
 			TNT1 A 0 A_PlaySoundEx("weapons/carbine/fancybutton", "Auto")
-			4A16 RSTUVWXYZ 1 A_DoPBWeaponAction
-			4A17 ABCDEFGHIJKLMNOPQRSTU 1 A_DoPBWeaponAction
+			4A17 STUVW 1 A_DoPBWeaponAction
+			4A18 RSTU 1 A_DoPBWeaponAction
 			TNT1 A 0 A_PlaySoundEx("weapons/carbine/magin", "Auto")
-			4A17 VWXYZ 1 A_DoPBWeaponAction
-			4A18 AB 1 A_DoPBWeaponAction
+			4A18 VW 1 A_DoPBWeaponAction
+			4A12 AB 1 A_DoPBWeaponAction
 			TNT1 A 0 A_PlaySoundEx("weapons/riflemagslap", "Auto")
-			4A18 CDEFGHIJKLMNOP 1 A_DoPBWeaponAction
+			4A12 CD 1 A_DoPBWeaponAction
 			TNT1 A 0 {
 				A_PlaySoundEx("weapons/carbine/down", "Auto");
 				A_Setroll(0);
+				A_DoPBWeaponAction;
 				}
-			4A18 QRSTUVWX 1 A_DoPBWeaponAction
 			Goto Ready3
 		
 		SelectAnimation:
@@ -137,7 +138,7 @@ ACTOR PB_Carbine : PB_Weapon
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyDualWield")
 		ReadyToFire:
 		TNT1 A 0 A_JumpIfInventory("RifleWasEmpty",1,"LoadChamber")
-		4AFG A 1 
+		4A1S E 1 
 		{
 			A_SetInventory("CarbineBurstCounter",0);
 			if (CountInv("CarbineBarrelHeat") >= 60) {A_Gunflash("BarrelSmoke1");}
@@ -734,7 +735,7 @@ ACTOR PB_Carbine : PB_Weapon
 			A_Giveinventory("GoSpecial",1);
 			A_Giveinventory("ADSmode",1);
 		}
-        4AFZ ABCDE 1
+        4AFZ ABCDEF 1
 		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY)
         Goto Ready2
 		
@@ -750,7 +751,7 @@ ACTOR PB_Carbine : PB_Weapon
         Goto Ready3
 		
 	NoAmmo:
-	4AFG A 1 {
+	4A1S E 1 {
 			A_ZoomFactor(1.0);
 			A_PlaySoundEx("weapons/empty", "Auto");
 			A_Takeinventory("Zoomed",1);
@@ -894,12 +895,12 @@ ACTOR PB_Carbine : PB_Weapon
 		4A21 TUV 1 A_SetRoll(roll-0.5)
 		TNT1 A 0 A_PlaySoundEx("weapons/riflemagslap", "Auto")
 		4A21 WXYZ 1 A_SetRoll(roll+1.5)
-        4A22 ABCDEFGH 1 A_SetRoll(roll-1.5)
+        4A22 ABCDEF 1 A_SetRoll(roll-1.5)
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "InsertBulletsRight")
         4A22 IJ 1 A_SetRoll(roll-1.5)
 		TNT1 A 0 A_SetRoll(0)
 		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,5)//30+1 effect
-		4A22 KLMN 1
+		4A22 KL 1
 		TNT1 A 0 A_Takeinventory("CarbineHasUnloaded",1)
 		TNT1 A 0 A_SetCrosshair(0)
 		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,"InsertBullets2")//30+1 effect
@@ -929,22 +930,22 @@ ACTOR PB_Carbine : PB_Weapon
 		TNT1 A 0 A_SetCrosshair(5)
 		TNT1 A 0 A_Takeinventory("RifleWasEmpty",1)
 		TNT1 A 0 A_PlaySoundEx("weapons/magpull", "Auto")
-		4AFA RSTTU 1 A_SetRoll(roll-.6, SPF_INTERPOLATE)
-		4AFR BA 1 A_SetRoll(roll+1.5, SPF_INTERPOLATE)
+		4A23 BDEFGHI 1 A_SetRoll(roll-.6, SPF_INTERPOLATE)
+		4A23 JKLMNO 1 A_SetRoll(roll+1.5, SPF_INTERPOLATE)
 		TNT1 A 0 A_SetCrosshair(0)
 		Goto Ready3
 		
 	ReloadUnloadedStart:
-		4A21 A 1 Offset(-4,34) A_SetRoll(roll-0.6)
+		4A21 TUV 1 Offset(-4,34) A_SetRoll(roll-0.6)
 		4A21 A 0 A_WeaponOffset(0,32)
-		4A21 A 1 A_SetRoll(roll-0.1)
+		4A21 WX 1 A_SetRoll(roll-0.1)
 		GOTO ReloadFromUnload
 	AlreadyUnloaded:
 		TNT1 A 0 A_Takeinventory("Unloading",1)
 		Goto Ready3
-		
+
 	UnLoadDualWieldStart:
-		CB01 ABCDE 1 
+		4A20 ABCDEF 1 
 		Goto UnloadCheckPoint
 		
 	
@@ -1017,10 +1018,10 @@ ACTOR PB_Carbine : PB_Weapon
 		TNT1 A 0 A_PlaySoundEx("weapons/carbine/magout", "Auto")
 		4B20 Z 1 A_SetRoll(roll-0.6)
         4B21 AB 1 A_SetRoll(roll-0.6)
-		4B21 CDEF 1
-		4B21 GHIJK 1
+		4B21 ABC 1
+		4B21 DE 1
 		4B21 K 5
-		4B22 F 1 Offset(10,32) A_SetRoll(roll-1.5)
+		4B21 E 1 Offset(10,32) A_SetRoll(roll-1.5)
 		4A22 G 0 A_WeaponOffset(0,32) 
 		4B22 G 1 A_SetRoll(roll-1.5)
 		4B22 H 1 A_SetRoll(roll-1.5)
@@ -1055,36 +1056,36 @@ ACTOR PB_Carbine : PB_Weapon
     FlashKicking:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashKickingDW")
-		4A1K ABCDEFGHIJKLMNNN 1 
+		CB01 ABCDEEEEFFEEDCBA 1 
 		Goto Ready3
 	FlashKickingDW:
-		CB01 ABCDEEEEEEDCBA 1
+		CB01 ABCDEEEEFFEEDCBA 1
 		Goto Ready3
 	FlashAirKickingDW:
-		CB01 ABCDEEEEEEEEDCBA 1
+		CB01 ABCDEEEEFFEEDCBA 1
 		Goto Ready3
 		
 	FlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingDW")
-		4A1K ABCDEFGPQRSTUTSRQGHIJKLMNNN 1
+		C1KI ABCDEEEEEEFFFFFFEEEEEEEDCBA 1
 		Goto Ready3
 	FlashSlideKickingDW:
-		CB01 ABCDEEEEEEEEEEEEEEEEEEEDCBA 1
+		C1KI ABCDEEEEEEFFFFFFEEEEEEEDCBA 1
 		Goto Ready3
 	FlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingStopDW")
-		4A1K GHIJKLM 1 
+		C1KI FEEDCBA 1 
 		Goto Ready3
 	FlashSlideKickingStopDW:
-		CB01 EEEDCBA 1
+		C1KI FEEDCBA 1
 		Goto Ready3
 		
 	FlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashPunchingDW")
-		4A1Q ABCDEFGHFEDCBA 1
+		C1KI ABCDEFEDCBA 1
 		Stop
 	FlashPunchingDW:
 		TNT1 A 15
