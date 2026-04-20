@@ -989,3 +989,18 @@ weapons/leveraction/rechamber		"sounds/combat/weapons/leveraction/lever_action_r
 weapons/leveraction/loadshell		"sounds/combat/weapons/leveraction/lever_action_loadshell.ogg"
 weapons/leveraction/fire			"sounds/combat/weapons/leveraction/lever_action_fire.ogg"
 weapons/leveraction/magfire			"sounds/combat/weapons/leveraction/lever_action_magfire.ogg"
+
+////////////////////////////////////////////////////////
+//			Metal Sniper (Slot 4)                      //
+////////////////////////////////////////////////////////
+
+MS/Fire				"sounds/combat/weapons/MetalSniper/msFire.ogg"
+MS/Button			"sounds/combat/weapons/MetalSniper/msButton.ogg"
+MS/InsertMag		"sounds/combat/weapons/MetalSniper/msMagIn.ogg"
+MS/TakeMag			"sounds/combat/weapons/MetalSniper/msMagOut.ogg"
+MS/BoltDown			"sounds/combat/weapons/MetalSniper/msBoltDown.ogg"
+MS/BoltUp			"sounds/combat/weapons/MetalSniper/msBoltUp.ogg"
+MS/Grenade			"sounds/combat/weapons/MetalSniper/msGrenFire.ogg"
+MS/GrenOpen			"sounds/combat/weapons/MetalSniper/msGrenOpen.ogg"
+MS/GrenClose		"sounds/combat/weapons/MetalSniper/msGrenClose.ogg"
+MS/Up				"sounds/combat/weapons/MetalSniper/msRaise.ogg"

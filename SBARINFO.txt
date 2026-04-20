@@ -205,6 +205,17 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
+			IsSelected PB_MetalSniper {
+				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR1", -149, -30;
+				DrawImage "BAMBAR1", -149, -48;
+				DrawBar "CURBAR1", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 
 			IsSelected PB_LMG { //yes
 				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22; 

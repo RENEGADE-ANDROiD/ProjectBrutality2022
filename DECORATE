@@ -257,6 +257,7 @@ Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
 #include "actors/Weapons/Slot4/Nailgun.dec"
 #include "actors/Weapons/Slot4/LMG.dec"
 #include "actors/Weapons/Slot4/LeverAction.dec"
+#include "actors/Weapons/Slot4/MetalSniper.dec"
 #include "actors/Weapons/Slot5/SUPERGL.dec"
 #include "actors/Weapons/Slot7/FREEZER.dec"
 #include "actors/Weapons/Slot6/M2PLASMA.dec"

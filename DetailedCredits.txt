@@ -390,3 +390,8 @@ Item Collecting Mechanics - D4D Teams
 CYBERDEMON FATALITY - SgtMarkIV (BrutalDoom)
 MATSTERMIND FATALITY - SgtMarkIV (BrutalDoom)
 Flamethrower Crucible Mod - a90doomguy , Tunasz & Officer_D
+
+Metal Sniper
+Sprites - Metalman
+Animations / code - Jaih1r0
+Sounds - Ravik
