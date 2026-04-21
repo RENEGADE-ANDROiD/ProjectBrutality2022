@@ -2244,3 +2244,15 @@ BrightMap Sprite HELNK5{Map "brightmaps/doom/monsters/Hellion/HELNK5.png"Disable
 BrightMap Sprite HELNK6{Map "brightmaps/doom/monsters/Hellion/HELNK6.png"DisableFullBright}
 BrightMap Sprite HELNK7{Map "brightmaps/doom/monsters/Hellion/HELNK7.png"DisableFullBright}
 BrightMap Sprite HELNK8{Map "brightmaps/doom/monsters/Hellion/HELNK8.png"DisableFullBright}
+
+//PB_Marauder (ported from PB3.0 Marauder .../DOOMDEFS.MarauderSSG).
+//Shield glow reuses a single MASHA0 brightmap across all four frames; axe
+//sprites are MAAT* (frames A-C) while their brightmap PNGs ship as MAAB* -
+//that's an asset naming quirk from the original addon, not a bug.
+BrightMap Sprite MASHA0 {Map "brightmaps/monsters/Marauder/MASHA0.png" DisableFullBright}
+BrightMap Sprite MASHB0 {Map "brightmaps/monsters/Marauder/MASHA0.png" DisableFullBright}
+BrightMap Sprite MASHC0 {Map "brightmaps/monsters/Marauder/MASHA0.png" DisableFullBright}
+BrightMap Sprite MASHD0 {Map "brightmaps/monsters/Marauder/MASHA0.png" DisableFullBright}
+BrightMap Sprite MAATA0 {Map "brightmaps/monsters/Marauder/MAABA0.png" DisableFullBright}
+BrightMap Sprite MAATB0 {Map "brightmaps/monsters/Marauder/MAABB0.png" DisableFullBright}
+BrightMap Sprite MAATC0 {Map "brightmaps/monsters/Marauder/MAABC0.png" DisableFullBright}

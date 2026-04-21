@@ -1,0 +1,24 @@
+#library "Marauder"
+#include "zcommon.acs"
+
+// Marauder addon — support scripts.
+//
+// The MarauderSSG classic-reload toggle was previously driven by the
+// "SSGEnableClassic"/"SSGEnableEternal" named scripts (giving/taking the
+// SSGUseClassicReload inventory token). That mechanism has been retired in
+// favor of the pb_marauderssg_classicreload user cvar, so those two scripts
+// have been removed. If you edit this file, rebuild with:
+//   acc.exe -i <acc-dir> SRC/Marauder.acs ACS/Marauder.o
+
+script 1346 (void) {
+	while (true) {
+		TakeInventory("ShieldUp", 1);
+		TakeInventory("CanBeStunned", 1);
+		TakeInventory("CantUseShotgun", 1);
+		TakeInventory("CantUseAxe", 1);
+			if (CheckInventory("MarauderDied") == 1) {
+				terminate;
+			}
+		delay (1);
+	}
+}

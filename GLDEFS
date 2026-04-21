@@ -2752,6 +2752,13 @@ hardwareshader sprite NGZIG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NGZIG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NGZIG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//PB_MARAUDER
+hardwareshader sprite MAUKG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite MAUKG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite MAUKG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite MAUKG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite MAUKG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+
 //===========================================================================
 // Monster Pack lights
 // Merged from Monster Pack Add-On/GLDEFS.txt (dynamic lights, objects,

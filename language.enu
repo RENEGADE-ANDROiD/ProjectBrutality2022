@@ -6,6 +6,8 @@ GOTMEDPAKNEED = "Picked up a medipack that you DESPERATELY needed!";
 // Glory Kills pinata pickups
 GOTPINATAHEALTH = "Picked up some Health.";
 GOTPINATAARMOR = "Picked up some Armor.";
+// Marauder SSG (Peacekeeper)
+OPTMNU_MarauderSSGClassicReload = "Marauder SSG classic reload";
 // Tilt Screen
 OPTMNU_TILTPLUSPLUS = "Customize Tilt++";
 

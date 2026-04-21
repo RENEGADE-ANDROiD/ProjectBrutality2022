@@ -1,0 +1,458 @@
+﻿//==============================================================================
+// Marauder / Peacekeeper SSG addon (PB3.0 port)
+// Original addon: ikdfa (Marauder addon for PB)
+// Sprites: Craneo (Marauder), TypicalSF (Doom Eternal SSG), PB Team (doomguy/chaingunguy sprites)
+// Reload / fatality / death / gore sprites + code + revenge idea: DarthSeeth
+// Additional code: Dox, Headshot_Ev (Glory-kill addon / Brutal Doom BE)
+// PB3.0 build update: Jeniffer / Jenny (2023-05-14)
+// Ported into Project Brutality 2022 tree on 2026-04-20.
+//
+// Source: Decorate.GoreMarauder -- XDeath / gib chunks (head, arm, leg).
+//==============================================================================
+
+//Updates to be added to GORE.txt in main mod
+//Right skin colored Arm added (2 green arms were being spawned, Marauder has one skin colored Arm and one Armored Green Arm)
+Actor XDeathMarauderArm2: FlyingGibBase
+{
+    Radius 8
+    Height 8
+    Scale 1.2
+	Speed 8
+	Mass 1
+    gravity 0.5
+	Decal BrutalBloodSplat
+	BounceFactor 0.4
+	BounceCount 3
+	+DOOMBOUNCE
+    +MOVEWITHSECTOR
+    +CLIENTSIDEONLY
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +MISSILE
+	+EXPLODEONWATER
+	+SKYEXPLODE
+	-DONTSPLASH
+    seesound "bloood"
+    deathsound "bloood"
+    States
+    {
+    	Spawn:
+        TNT1 A 0 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		RHM4 ABCDEFGH 5 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+	Loop
+	Death:
+		RHM4 A 1
+		TNT1 A 0 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+		RHM4 A 0 A_SpawnItem("Gib_MarauderArm2")
+        Stop
+    }
+}
+
+
+actor Gib_MarauderArm2: LimbBase
+{
+    Scale 1.2
+    States
+    {
+    Spawn:
+	    TNT1 A 0
+		TNT1 A 0 A_QueueCorpse
+	    RHM4 E 1 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
+		TNT1 A 0 A_Jump (128, "Spawn2")
+		RHM4 E -1
+        Stop
+	Spawn2:
+		RHM4 A 1
+		RHM4 A -1
+       Stop
+    Death:    
+		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+	Stop
+    Death.plasma: Death.Burn: Death.Flames: Death.Fire: Death.GloryFire:   
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_CustomMissile ("XDeathBurnedArm", 2, 0, random (0, 360), 2, 270)     
+		Stop	
+	Death.Kick:
+	Death.Melee:
+	Death.SuperPunch:
+	    RHM4 A 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile ("XDeathMarauderArm2", 5, 0, random (170, 190), 1, random (20, 40))
+		Stop
+	Pain:
+	TNT1 A 0
+	TNT1 A 0 ThrustThingZ(0,20,0,1)
+	RHM4 ABCD 3
+	Goto Spawn
+	
+	Death.ExplosiveImpact:
+	TNT1 A 0
+	TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 0)
+	TNT1 A 0 ThrustThingZ(0,50,0,1)
+	RHM4 A 6
+	RHM4 ABCDABCDABCD 6 A_CheckFloor("Landz")
+	Goto Landz
+	Landz:
+	RHM4 E 0 A_SpawnItem("Gib_MarauderArm2")
+	Stop
+	}
+}
+
+
+
+ACTOR MarauderXDeath
+{
+    Radius 1
+    Height 1
+    Scale 0.8
+	Speed 0
+	Mass 1
+	Decal BloodSuper
+	BounceFactor 0.5
+	+DOOMBOUNCE
+	+MISSILE
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +MOVEWITHSECTOR
+    +NOGRAVITY
+    +NOCLIP
+    +DONTSPLASH
+    States
+    {
+    Spawn:
+	     TNT1 AAAAAA 0 bright A_CustomMissile ("SuperGoreSpawner", 5, 0, random (0, 360), 2, random (30, 180))
+         TNT1 AAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLong", 0, 0, random (0, 360), 2, random (50, 130))
+		 TNT1 AA 0 A_CustomMissile ("XDeathMarauderArm", 32, 0, random (0, 360), 1, random (10, 90))
+		 TNT1 AA 0 A_CustomMissile ("XDeathMarauderArm2", 32, 0, random (0, 360), 1, random (10, 90))
+		 TNT1 AA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AA 0 A_CustomMissile ("XDeath2", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 A 0 A_CustomMissile ("XDeathMarauderHeadOnXDeath", 42, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AAAA 0 A_CustomMissile ("XDeath2b", 15, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AAAA 0 A_CustomMissile ("XDeath3b", 15, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AA 0 A_CustomMissile ("XDeathSkinPiece2", 15, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AA 0 A_CustomMissile ("XDeathSkinPiece1", 15, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AAA 0 A_CustomMissile ("SuperGoreSpawner", 30, 0, random (0, 360), 2, random (30, 60))
+		 //TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (0, 360), 2, random (10, 90))
+		 //TNT1 A 0 A_CustomMissile ("XDeath3", 32, 0, random (0, 360), 2, random (10, 90))
+		 //TNT1 A 0 A_CustomMissile ("XDeath4", 32, 0, random (0, 360), 2, random (10, 90))
+		 //TNT1 A 0 A_CustomMissile ("XDeath5", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 A 0 A_SpawnItem("BigBloodSpot")
+		 TNT1 AAAAAAAA 0 A_CustomMissile ("BloodMistExtraBig", 30, 0, random (0, 360), 2, random (40, 90))
+		 TNT1 A 1
+		 TNT1 A 0 ACS_NamedExecuteAlways("DetermineUserBloodAmount", 0, 0, 0, 0)//Check Blood density
+		 TNT1 A 2
+		 Stop
+		 
+	LowBlood:
+	    TNT1 A 2
+		Stop
+
+	LotsOfBlood:
+		TNT1 AAAAAAAAAAAAAA 0 A_CustomMissile ("BloodMistExtraBig", 30, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AAAAAA 0 A_CustomMissile ("SuperGoreSpawner2", 64, 0, random (0, 360), 2, random (20, 40))
+		Stop
+
+	AbsurdBlood:
+		TNT1 AAAAAAAAAAAAAA 0 A_CustomMissile ("BloodMistExtraBig", 30, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("SuperGoreMist", 24, 0, random (0, 360), 2, random (30, 90))
+		TNT1 AAAAAAAA 0 A_CustomMissile ("SuperGoreSpawner2", 64, 0, random (0, 360), 2, random (20, 40))
+		Stop
+    }
+}
+
+ACTOR MarauderHeadExplode: ZombieXDeath
+{
+    States
+    {
+    Spawn:
+	    TNT1 A 0
+		TNT1 A 0 A_PlaySound("misc/xdeath4")
+	    TNT1 AA 0 A_CustomMissile ("BloodMist", 0, 0, random (0, 360), 2, random (60, 90))
+		TNT1 AAAA 0 A_CustomMissile ("BloodmistSmall", 0, 0, random (0, 360), 2, random (30, 90))
+		TNT1 AAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 0, 0, random (0, 360), 2, random (30, 90))
+		TNT1 A 0 A_CustomMissile ("Brains3", 0, 0, random (0, 360), 2, random (10, 90))
+		TNT1 A 0 A_CustomMissile ("Brains6", 0, 0, random (0, 360), 2, random (10, 90))
+		TNT1 A 0 A_CustomMissile ("Brains7", 0, 0, random (0, 360), 2, random (10, 90))
+		TNT1 A 0 A_CustomMissile ("BrainsImpHeadPiece", 0, 0, random (0, 360), 2, random (10, 90))
+		TNT1 AAA 0 A_CustomMissile ("SmallBrainPieceFast", 0, 0, random (0, 360), 2, random (10, 20))
+		TNT1 AAAAA 0 A_CustomMissile ("SmallBrainPiece", 0, 0, random (0, 360), 2, random (10, 90))
+		TNT1 AAA 0 A_CustomMissile ("Teeth", 0, 0, random (0, 360), 2, random (10, 90))
+		TNT1 AAA 0 A_CustomMissile ("XDeath1", 0, 0, random (0, 360), 2, random (10, 90))
+		TNT1 A 0 A_CustomMissile ("XDeath3b", 10, 0, random (0, 360), 2, random (50, 90))
+		TNT1 A 10
+	    Stop
+	}
+}
+
+//Limbs.txt
+Actor XDeathMarauderLeg: XDeathArm1
+{
+    Speed 8
+	Gravity 0.4
+	BounceFactor 0.4
+    States
+    {
+    Spawn:
+        TNT1 A 0 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
+	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		LEGM ABCDEFGH 5
+		Loop
+	Death:
+	    LEGM A 1
+	    LEGM A 0 A_SpawnItem("Gib_MarauderLeg")
+        Stop
+    }
+}
+
+Actor Gib_MarauderLeg: LimbBase
+{
+    States
+    {
+    Spawn:
+		TNT1 A 0
+		TNT1 A 0 
+	    LEGM I 1 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+	    LEGM I -1
+        Stop
+    Death.plasma: Death.Burn: Death.Flames: Death.Fire: Death.GloryFire:   
+	TNT1 A 0 A_CustomMissile ("XDeathBurnedLeg", 32, 0, random (0, 360), 2, random (0, 160))        Stop
+    Death:    
+    TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+Stop
+	Death.Kick:
+	Death.Melee:
+	Death.SuperPunch:
+	    LEGM A 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile ("XDeathMarauderLeg", 5, 0, random (170, 190), 2, random (20, 40))
+		Stop}}
+
+ACTOR XDeathMarauderArm: FlyingGibBase
+{
+    Radius 8
+    Height 8
+    Scale 1.2
+	Speed 8
+	Mass 1
+    gravity 0.5
+	Decal BrutalBloodSplat
+	BounceFactor 0.4
+	BounceCount 3
+	+DOOMBOUNCE
+    +MOVEWITHSECTOR
+    +CLIENTSIDEONLY
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +MISSILE
+	+EXPLODEONWATER
+	+SKYEXPLODE
+	-DONTSPLASH
+    seesound "bloood"
+    deathsound "bloood"
+    States
+    {
+    Spawn:
+        TNT1 A 0 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		HNDM ABCDEFGH 5 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+		Loop
+	Death:
+	    HNDM A 1
+		TNT1 A 0 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+	    HNDM A 0 A_SpawnItem("Gib_MarauderArm")
+        Stop
+    }
+}
+
+actor Gib_MarauderARm: LimbBase
+{
+    Scale 1.2
+    States
+    {
+    Spawn:
+	    TNT1 A 0
+		TNT1 A 0 A_QueueCorpse
+	    HNDM E 1 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
+		TNT1 A 0 A_Jump (128, "Spawn2")
+		HNDM E -1
+        Stop
+	Spawn2:
+		HNDM A 1
+		HNDM A -1
+       Stop
+    Death:    
+		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+	Stop
+    Death.plasma: Death.Burn: Death.Flames: Death.Fire: Death.GloryFire:
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_CustomMissile ("XDeathBurnedArm", 2, 0, random (0, 360), 2, 270)     
+		Stop	
+	Death.Kick:
+	Death.Melee:
+	Death.SuperPunch:
+	    HNDM A 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile ("XDeathMarauderArm", 5, 0, random (170, 190), 1, random (20, 40))
+		Stop
+	Pain:
+	TNT1 A 0
+	TNT1 A 0 ThrustThingZ(0,20,0,1)
+	HNDM ABCD 3
+	Goto Spawn
+	
+	Death.ExplosiveImpact:
+	TNT1 A 0
+	TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 0)
+	TNT1 A 0 ThrustThingZ(0,50,0,1)
+	HNDM A 6
+	HNDM ABCDABCDABCD 6 A_CheckFloor("Landz")
+	Goto Landz
+	Landz:
+	HNDM E 0 A_SpawnItem("Gib_MarauderArm")
+	Stop
+	}
+}
+
+ACTOR XDeathMarauderHead: XDeathArm1
+{
+	-CLIENTSIDEONLY
+	BounceCount 3
+	SeeSound "HEDBON"
+	DeathSound "HEDBON"
+	PainSound "HEDBON"
+	Radius 6
+	Scale 1.0
+	States
+    {
+	Spawn:
+	Spawn1:
+        TNT1 A 0 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
+	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		TNT1 A 0 A_JumpIf(momz == 0, "Death")
+		MHED AB 3// A_CustomMissile("ShortWallRedBlood", 0, 0, 0, 2)//
+		TNT1 A 0 A_ChangeFlag("THRUSPECIES", 0)
+		MHED CDEFGH 3// A_CustomMissile("ShortWallRedBlood", 0, 0, 0, 2)//
+		Loop
+   	Death:
+	    MHED E 0
+        MHED E 0 A_SpawnItem("MarauderHead",0,0,0,1)
+        Stop
+	}
+}
+
+Actor XDeathMarauderHeadBeheaded: XDeathMarauderHead
+{
+Speed 5
+Gravity 0.5
+}
+
+Actor XDeathMarauderHeadOnXDeath: XDeathMarauderHead
+{
+States
+	{
+	Spawn:
+	TNT1 A 1
+	TNT1 A 0 A_jump(96, "ExplodeOnAir")
+	Goto Spawn1
+	ExplodeOnAir:
+	TNT1 A 0
+	TNT1 A 0 A_SpawnItem("MarauderHeadExplode")
+	Stop
+	}
+}
+
+actor MarauderHead: ZombiemanHead
+{
+	damagefactor "Kick", 9.0
+	damagefactor "Melee", 9.0
+	damagefactor "SuperPunch", 9.0
+	-CLIENTSIDEONLY
+	+SHOOTABLE
+	+SOLID
+	+THRUACTORS
+	damagefactor "Crush", 50.0
+	Radius 10
+	Mass 60
+	Health 40
+    Scale 1.1
+    States
+    {
+    Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_QueueCorpse
+		TNT1 A 0 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
+		TNT1 A 0 A_Jump(256, "Spawn1", "SPawn2")
+	Spawn1:
+	   MHED A -1
+       Stop
+	Spawn2:  
+	   MHED E -1
+       Stop
+    Death:
+        TNT1 A 0
+		TNT1 A 0 A_SpawnItem("MarauderHeadExplode")
+		Stop
+    Death.Trample:
+	Crush:
+	    TNT1 A 0 A_GiveToTarget("BootsSmearedWithRedBlood", 6)
+        TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail5", 0, 0, random (0, 360), 2, random (60, 140))
+        TNT1 A 0 A_PlaySound("misc/xdeath5")
+        CRS1 B 5
+        CRS1 B 9009
+        Stop
+    Death.plasma:
+        TNT1 A 0
+	    TNT1 A 0 A_CustomMissile ("XDeathBurnedSkull", 32, 0, random (0, 360), 2, random (0, 160))
+		EXPL A 0 A_CustomMissile ("ExplosionSmoke", 32, 0, random (0, 360), 2, random (0, 360))
+        TNT1 A 0
+        Stop
+	Death.Melee:
+	Death.SuperPunch:
+	Death.Kick:
+	    MHED EE 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile ("XDeathMarauderHeadKicked", 5, 0, random (170, 190), 2, random (20, 40))
+		TNT1 A 0 A_PlaySound("misc/xdeath5", 1)
+		TNT1 A 0 A_PlaySound("FOOTWALL", 3)
+		TNT1 A 20
+		Stop
+		
+		
+	Death.Headkick:
+		TNT1 A 0
+		TNT1 A 0 A_NoBlocking
+	   	MHED EE 0 A_FaceTarget
+		TNT1 A 0 A_CustomMissile ("XDeathMarauderHeadKicked2", 5, 0, random (170, 190), 2, random (20, 30))
+		TNT1 A 0 A_PlaySound("misc/xdeath5", 1)
+		TNT1 A 0 A_PlaySound("FOOTWALL", 3)
+		TNT1 A 20
+		Stop	
+	
+	Pain:
+		TNT1 A 0
+		TNT1 A 0 ThrustThingZ(0,20,0,1)
+		MHED ABCDEFGH 2
+		Goto Spawn
+	
+	Death.ExplosiveImpact:
+		TNT1 A 0
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 0)
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+		MHED ABCDEFGH 3
+		MHED I 0 A_SpawnItem("MarauderHead")
+		Stop
+
+	}
+}
+
+ACTOR XDeathMarauderHeadKicked: XDeathMarauderHead
+{
+-BOUNCEONACTORS
+Damage 4
+Speed 13
+}
+
+ACTOR XDeathMarauderHeadKicked2: XDeathMarauderHeadKicked
+{
+Damagetype "HeadKick"
+Speed 8
+}

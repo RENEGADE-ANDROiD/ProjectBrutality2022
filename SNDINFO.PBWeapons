@@ -1031,3 +1031,39 @@ HMGSTCH HMGSTCH
 weapons/oldhmg/spin		"sounds/combat/weapons/hmg/HMG_MOTOR.ogg"
 weapons/oldhmg/stop		"sounds/combat/weapons/hmg/HMG_WINDD.ogg"
 weapons/oldhmg/start	"sounds/combat/weapons/hmg/HMG_WINDU.ogg"
+
+////////////////////////////////////////////////////////
+//			Marauder SSG / Peacekeeper (Slot 3)       //
+////////////////////////////////////////////////////////
+// Ported from PB3.0_Marauder_Hound .../SNDINFO.MarauderGun Sound and Marauder Sounds.
+// Monster-side Marauder / wolf entries live in SNDINFO.PBMonsters.
+
+MSSCL1 MSSCL1
+MSSCL2 MSSCL2
+MSSCL3 MSSCL3
+
+$random MSSCL {
+	MSSCL1
+	MSSCL2
+	MSSCL3
+}
+
+MSSFR1 MSSFR1
+MSSFR2 MSSFR2
+MSSFR3 MSSFR3
+MSSFR4 MSSFR4
+MSSFR5 MSSFR5
+MSSFR6 MSSFR6
+
+$random MSSFR {
+	MSSFR1
+	MSSFR2
+	MSSFR3
+	MSSFR4
+	MSSFR5
+	MSSFR6
+}
+
+MSSLD MSSLD
+MSSOP MSSOP
+MSWING MSWING

@@ -326,6 +326,13 @@ OptionMenu "GameplaySettings"
 	StaticText "Pump shotgun from hip when you have berserk or a box magazine upgrade is in inventory"
 	
  StaticText " "
+
+  StaticText "Marauder SSG Settings"
+	StaticText " "
+	Option "$OPTMNU_MarauderSSGClassicReload",	"pb_marauderssg_classicreload", "OnOff"
+	StaticText "Use the classic break-action reload instead of the Eternal-style one"
+
+ StaticText " "
 	
  StaticText "Rail Gun Settings"
 	StaticText " "
