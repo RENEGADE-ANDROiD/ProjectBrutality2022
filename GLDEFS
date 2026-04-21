@@ -21,6 +21,8 @@
 #include "models/nashgore/CorpseBlood/_materials.txt"
 #include "models/nashgore/Footprint/_materials.txt"
 #include "GLDEFS.Overlord" //For the Overlord projectiles, to prevent this file from being flooded
+#include "GLDEFS.MetalSniper" //Brightmap sprite bindings for the Metal Sniper add-on port
+#include "GLDEFS.OldHMG" //Brightmap sprite bindings for the Old HMG add-on port
 
 flickerlight2 FT_GroundFire
 {
@@ -2749,6 +2751,13 @@ hardwareshader sprite NGZIG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NGZIG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NGZIG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NGZIG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+
+//PB_MARAUDER
+hardwareshader sprite MAUKG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite MAUKG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite MAUKG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite MAUKG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite MAUKG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
 //===========================================================================
 // Monster Pack lights

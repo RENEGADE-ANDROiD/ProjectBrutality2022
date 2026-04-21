@@ -17,7 +17,7 @@ These are the first files GZDoom reads when loading the mod. Any new feature usu
 | File | Role |
 | --- | --- |
 | `gameinfo.txt` | `STARTUPTITLE`, `STARTUPCOLORS`, locks player class. |
-| `zmapinfo.txt` | `TITLEMAP`, skill definitions, `GameInfo { AddEventHandlers ... }`, and the `DoomEdNums` table reserving editor numbers **23000–23132**. |
+| `zmapinfo.txt` | `TITLEMAP`, skill definitions, `GameInfo { AddEventHandlers ... }`, and the `DoomEdNums` table reserving editor numbers **23000–23133**. |
 | `KEYCONF.txt` | `addplayerclass PB_Doomer`, custom keybinds, netevent aliases (`PBWeaponSpecialOn/Off`, `PBEquipSpecialOn/Off`, `EV_ClearGore`, etc.). |
 | `CVARINFO` | All `pb_*`, `cl_*`, `fs_*`, `py_*`, `be_*`, `sv_*` cvars. Check here before inventing a new one. The `be_*` and `sv_fuelhud_*` / `sv_bonusrange` / `sv_ammorange` block (bottom of file, from `be_ExecutionsON` to `sv_fuelhud_y`) is the Glory Kills settings — read and written by the pinata + stagger system. |
 | `MENUDEF.txt` | Options-menu structure for everything declared in `CVARINFO`. Includes the `Glorykill Options` submenu (`OptionMenu "Glorykills"`, reachable from the main options list) plus the shared `OptionValue "MaxStat"` / `"FHudsize"` / `"BackStyle"` definitions used by that submenu. |
@@ -102,7 +102,7 @@ titlemap.wad, TitleMap     Title-screen content
 - **Event handlers are registered via MAPINFO**, not in ZScript. See the `GameInfo { AddEventHandlers = ... }` block in `zmapinfo.txt`. Currently registered:
   `pb_ExecutionHandler`, `PB_EventHandler`, `MBlurHandler`, `NashGoreHandler`, `TiltPlusPlusHandler`, `DeathFadeBootstrap`, `DEDashJumpHandler`, `GrapplingHookHandler`, `SpeedoMeterHandler`, `WallSlideHandler`, `PB_SpecialWheelHandler`, `HatExtravaganza`.
   Adding a handler requires both a ZScript class **and** a new `AddEventHandlers` line.
-- **Editor numbers** come from the reserved **23000–23132** range in the `DoomEdNums` block of `zmapinfo.txt`. Add a new entry there when introducing a placeable actor; do not reuse numbers.
+- **Editor numbers** come from the reserved **23000–23133** range in the `DoomEdNums` block of `zmapinfo.txt`. Add a new entry there when introducing a placeable actor; do not reuse numbers.
 - **ACS workflow.** Edit `.acs` in `SRC/`, recompile to `.o` in `ACS/` with ACC (matching the GZDoom version), and make sure the lump name is listed in `LOADACS.txt`. Never hand-edit `.o` files.
 - **Player class is fixed** to `PB_Doomer`. It is defined in `actors/Player/PLAYER.dec` and extended by `PlayerPawnBase : PlayerPawn` in `zscript/PlayerPawn.zc`. `gameinfo.txt` enforces `NoRandomPlayerClass = True`.
 - **Custom weapon flags** live in `EPBWeaponFlags` (inside `ZSCRIPT.zc`): `PBWEAP_KEEPYOFFSET`, `PBWEAP_ISPISTOLSILENCERSTATE`, `PBWEAP_UNLOADED`. Weapons extend `PB_Weapon` (DECORATE) on top of `PB_WeaponBase` (ZScript).
@@ -125,7 +125,7 @@ titlemap.wad, TitleMap     Title-screen content
 **Add a new monster (DECORATE path)**
 1. Create `actors/Monsters/<Tier>/<Name>.dec` extending `PB_Monster` (or an appropriate sibling).
 2. Add `#include "actors/Monsters/<Tier>/<Name>.dec"` near the other monsters in `DECORATE`.
-3. Reserve a `DoomEdNum` in `zmapinfo.txt` (next free in 23000–23132 range).
+3. Reserve a `DoomEdNum` in `zmapinfo.txt` (next free in 23000–23133 range).
 4. Register sounds in `SNDINFO.PBMonsters`.
 5. Add sprites under `SPRITES/`, brightmaps in `BMAP/` + bindings in `doommonsters.bm`, and any dynamic lights in `GLDEFS`.
 6. If the monster should spawn in vanilla levels, either use `Replaces` on the actor or hook into the appropriate spawner under `actors/SPAWNERS/MonsterSpawners/`.
@@ -138,6 +138,8 @@ titlemap.wad, TitleMap     Title-screen content
 5. Register sounds in `SNDINFO.PBWeapons`.
 6. Add sprites/graphics and any `TEXTURES.*` patches.
 7. If the weapon needs ZScript-side hooks (overlays, laser, execution), extend/reuse `PB_WeaponBase` in `zscript/Weapons/BaseWeapon.zc`.
+
+**Port a newer-PB weapon add-on.** See `PORTING_ADDONS.md` for the compatibility map between 4.11.x-era PB add-ons and this 4.5.0-era codebase, plus the Lever Action port as a worked example.
 
 **Add a CVar / menu option**
 1. Declare it in `CVARINFO` (prefer the `pb_`, `cl_`, or `fs_` prefix matching existing conventions).

@@ -976,3 +976,94 @@ ironsight1	IRONSIT1
 ironsight2	IRONSIT2
 ironsight3	IRONSIT3
 ironsight4	IRONSIT4
+
+////////////////////////////////////////////////////////
+//			Lever Action (Slot 4)                      //
+////////////////////////////////////////////////////////
+
+weapons/leveraction/raise			"sounds/combat/weapons/leveraction/lever_action_raise.ogg"
+weapons/leveraction/inspect			"sounds/combat/weapons/leveraction/lever_action_inspect.ogg"
+weapons/leveraction/flip			"sounds/combat/weapons/leveraction/lever_action_flip.ogg"
+weapons/leveraction/openchamber		"sounds/combat/weapons/leveraction/lever_action_openchamber.ogg"
+weapons/leveraction/rechamber		"sounds/combat/weapons/leveraction/lever_action_rechamber.ogg"
+weapons/leveraction/loadshell		"sounds/combat/weapons/leveraction/lever_action_loadshell.ogg"
+weapons/leveraction/fire			"sounds/combat/weapons/leveraction/lever_action_fire.ogg"
+weapons/leveraction/magfire			"sounds/combat/weapons/leveraction/lever_action_magfire.ogg"
+
+////////////////////////////////////////////////////////
+//			Metal Sniper (Slot 4)                      //
+////////////////////////////////////////////////////////
+
+MS/Fire				"sounds/combat/weapons/MetalSniper/msFire.ogg"
+MS/Button			"sounds/combat/weapons/MetalSniper/msButton.ogg"
+MS/InsertMag		"sounds/combat/weapons/MetalSniper/msMagIn.ogg"
+MS/TakeMag			"sounds/combat/weapons/MetalSniper/msMagOut.ogg"
+MS/BoltDown			"sounds/combat/weapons/MetalSniper/msBoltDown.ogg"
+MS/BoltUp			"sounds/combat/weapons/MetalSniper/msBoltUp.ogg"
+MS/Grenade			"sounds/combat/weapons/MetalSniper/msGrenFire.ogg"
+MS/GrenOpen			"sounds/combat/weapons/MetalSniper/msGrenOpen.ogg"
+MS/GrenClose		"sounds/combat/weapons/MetalSniper/msGrenClose.ogg"
+MS/Up				"sounds/combat/weapons/MetalSniper/msRaise.ogg"
+
+////////////////////////////////////////////////////////
+//			Paingiver (Slot 6)                         //
+////////////////////////////////////////////////////////
+
+weapons/paingiver/fire1		"sounds/combat/weapons/paingiver/fire1.ogg"
+weapons/paingiver/fire2		"sounds/combat/weapons/paingiver/fire2.ogg"
+weapons/paingiver/sweet		"sounds/combat/weapons/paingiver/sweet.ogg"
+weapons/paingiver/boom		"sounds/combat/weapons/paingiver/boom.ogg"
+
+////////////////////////////////////////////////////////
+//			Old HMG (Slot 4)                           //
+////////////////////////////////////////////////////////
+// Ported from "Addon - HMG"/SNDINFO.txt. Skipped as already declared elsewhere:
+//   HMGUP / HMGHEAT              -> main SNDINFO (lines 167-168)
+//   hmgun HMGFIRE / $volume hmgun -> main SNDINFO (lines 179, 181)
+//   emgun emgun                  -> main SNDINFO:182 and this file:458
+//   Weapons/NailMGFire NAILFIRE  -> would override this file's $random at line 443
+//                                   (Nailfire1/2/3 random pick is preferred)
+
+9HAINAMO 9HAINAMO
+9HAINAM1 9HAINAM1
+HMGSTCH HMGSTCH
+
+weapons/oldhmg/spin		"sounds/combat/weapons/hmg/HMG_MOTOR.ogg"
+weapons/oldhmg/stop		"sounds/combat/weapons/hmg/HMG_WINDD.ogg"
+weapons/oldhmg/start	"sounds/combat/weapons/hmg/HMG_WINDU.ogg"
+
+////////////////////////////////////////////////////////
+//			Marauder SSG / Peacekeeper (Slot 3)       //
+////////////////////////////////////////////////////////
+// Ported from PB3.0_Marauder_Hound .../SNDINFO.MarauderGun Sound and Marauder Sounds.
+// Monster-side Marauder / wolf entries live in SNDINFO.PBMonsters.
+
+MSSCL1 MSSCL1
+MSSCL2 MSSCL2
+MSSCL3 MSSCL3
+
+$random MSSCL {
+	MSSCL1
+	MSSCL2
+	MSSCL3
+}
+
+MSSFR1 MSSFR1
+MSSFR2 MSSFR2
+MSSFR3 MSSFR3
+MSSFR4 MSSFR4
+MSSFR5 MSSFR5
+MSSFR6 MSSFR6
+
+$random MSSFR {
+	MSSFR1
+	MSSFR2
+	MSSFR3
+	MSSFR4
+	MSSFR5
+	MSSFR6
+}
+
+MSSLD MSSLD
+MSSOP MSSOP
+MSWING MSWING

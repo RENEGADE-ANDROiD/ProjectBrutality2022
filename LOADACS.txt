@@ -30,3 +30,5 @@ lowhealth
 GloryMelee
 GloryHUD
 BloodPunch
+// Marauder add-on
+Marauder

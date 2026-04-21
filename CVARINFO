@@ -224,6 +224,7 @@ user int pb_UpgradeGL = 0;
 user int pb_RestoreCarbines = 0;
 user int pb_SGAltAmmoSwap = 0;
 user int pb_SGPumpFromHip = 0;
+user bool pb_marauderssg_classicreload = false;
 user int pb_RLOverloadCell = 0;
 server int pb_UnifiedExplosives = 0;
 
@@ -555,3 +556,5 @@ server int sv_fuelhud_background = 0;
 server int sv_fuelhud_size = 0;
 server int sv_fuelhud_x = 0;
 server int sv_fuelhud_y = 0;
+
+Server Bool RS_AxeCheck = True;

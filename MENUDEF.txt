@@ -326,6 +326,13 @@ OptionMenu "GameplaySettings"
 	StaticText "Pump shotgun from hip when you have berserk or a box magazine upgrade is in inventory"
 	
  StaticText " "
+
+  StaticText "Marauder SSG Settings"
+	StaticText " "
+	Option "$OPTMNU_MarauderSSGClassicReload",	"pb_marauderssg_classicreload", "OnOff"
+	StaticText "Use the classic break-action reload instead of the Eternal-style one"
+
+ StaticText " "
 	
  StaticText "Rail Gun Settings"
 	StaticText " "
@@ -1143,4 +1150,16 @@ OptionMenu "Glorykills"
 	Option "Glory Hud Size", "sv_fuelhud_size", "FHudsize"
 	Slider  "Glory Hud X","sv_fuelhud_x",-1024 ,1024, 1
 	Slider  "Glory Hud Y","sv_fuelhud_y",-768 ,768, 1
+}
+
+AddOptionMenu "OptionsMenu"
+{
+	SubMenu "Riot Shield Settings", "ShieldAxe_Settings"
+}
+
+OptionMenu "ShieldAxe_Settings"
+{
+	StaticText "-----------------RiotShield Addon Settings-----------------", 1
+	StaticText "-----------------Allows The Player To Decide To Wait Until An Axe Is Found To Use This Mode-----------------", 1
+	Option "Require Axe For Axe Mode", "RS_AxeCheck", "OnOff"
 }

@@ -13,6 +13,10 @@ dist/
 # Editor / OS files
 .vscode/
 .idea/
+
+# Cursor local-only agent instructions (machine-specific paths, never commit)
+.cursor/rules/local-paths.mdc
+.cursor/rules/*.local.mdc
 *.swp
 *.swo
 *~

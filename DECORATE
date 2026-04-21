@@ -147,6 +147,7 @@ Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
 #include "actors/Gore/STICKY.dec"
 #include "actors/Gore/Underwaterblood.dec"
 #include "actors/Gore/BlackHoleDeaths.dec"
+#include "actors/Gore/MarauderGib.dec"
 
 //Hitboxes
 #include "actors/Hitboxes/HEAD_SYS.dec"
@@ -251,11 +252,23 @@ Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
 #include "actors/Weapons/Slot2/REVOLVER.dec"
 #include "actors/Weapons/Slot2/UACSMG.dec"
 #include "actors/Weapons/Slot2/MP40.dec"
+#include "actors/Weapons/Slot2/RiotShield.dec"
 #include "actors/Weapons/Slot3/AUTOSHOTGUN.dec"
+// Marauder SSG + monster load here (after AUTOSHOTGUN and PUFF are known,
+// so StunnerShotgunPuff : KickPuff and MarauderChunk1-4 : Chunk1-4 resolve).
+// Weapon include must precede monster include so DropItem "MarauderSSG" /
+// DropItem "MSSGUpgrade" resolve on PB_Marauder.
+#include "actors/Weapons/Slot3/MarauderSSG.dec"
+#include "actors/Monsters/T4-Viles/Marauder.dec"
+#include "actors/Monsters/T4-Viles/MarauderGore.dec"
 #include "actors/Weapons/Slot4/Carbine.dec"
 #include "actors/Weapons/Slot4/Nailgun.dec"
 #include "actors/Weapons/Slot4/LMG.dec"
+#include "actors/Weapons/Slot4/LeverAction.dec"
+#include "actors/Weapons/Slot4/MetalSniper.dec"
+#include "actors/Weapons/Slot4/OldHMG.dec"
 #include "actors/Weapons/Slot5/SUPERGL.dec"
+#include "actors/Weapons/Slot5/Paingiver.dec"
 #include "actors/Weapons/Slot7/FREEZER.dec"
 #include "actors/Weapons/Slot6/M2PLASMA.dec"
 #include "actors/Weapons/Slot8/BFGMKIV.dec"

@@ -1,5 +1,7 @@
 NOTHING "SOUNDS/Misc/Nothing.wav"
 
+hud/shieldbreak "sounds/shieldbreak.ogg"
+
 ////////////////////////////////////////////////////////PROJECT BRUTALITY SOUNDS
 menu/activate		"sounds/Menu/Select.ogg"	// Activate a new menu
 menu/backup			"sounds/Menu/Back.ogg"	// Backup to previous menu
@@ -559,6 +561,57 @@ BHITDIR2 BHITDIR2
 BHITDIR3 BHITDIR3
 BHITDIR4 BHITDIR4
 BHITDIR5 BHITDIR5
+
+// Player Pain Sounds
+// 100 Pain
+$random player/pain100	{ pp10 pp11 pp12 pp13 }
+pp10 pain1
+pp11 pain1-2
+pp12 pain1-3
+pp13 pain1-4
+$playeralias    player  male    *pain100    player/pain100
+// 75 Pain
+$random player/pain75	{ pp20 pp21 }
+pp20 pain2
+pp21 pa1n2
+$playeralias    player  male    *pain75    player/pain75
+// 50 Pain
+$random player/pain50	{ pp30 pp31 }
+pp30 pain3
+pp31 pain4
+$playeralias    player  male    *pain50    player/pain50
+// 25 Pain
+$random player/pain25	{ pp40 pp41 pp42 pp43 }
+pp40 pain5
+pp41 pain6
+pp42 pa1n5
+pp43 pa1n6
+$playeralias    player male *pain25 player/pain25
+
+$playeralias	player	male	*jump  jump
+$random jump { jump1 jump2 jump3 jump4 }
+jump1 dsjump1
+jump2 dsjump2
+jump3 dsjump3
+jump4 dsjump4
+
+// Player Land Sounds
+$playeralias player	male *land land
+$random land { land1 land2 land3 land4 land5 land6 }
+land1	jmpland1
+land2	jmpland2
+land3	jmpland3
+land4	jmpland4
+land5	jmpland5
+land6   jmpland6
+
+$random pl_death { player/death1 player/death2 player/death3 }
+
+player/death1 BIGSCREA
+player/death2 DSFDTHG
+player/death3 DSFDTHE
+
+$playeralias           player  male    *death          pl_death
 
 ////////////////////////////////////////////////////////
 //	  	Project Brutality Environment                 //
