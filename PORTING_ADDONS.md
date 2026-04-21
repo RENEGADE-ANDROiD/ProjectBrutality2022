@@ -71,10 +71,11 @@ Authoritative reference files for the 2022 idiom:
 3. Decide, per missing symbol, whether to **faithfully reimplement** it (rare — only when the weapon's identity depends on it) or **collapse it into the 2022 idiom** (default — what the Lever Action port does).
 4. Pick file destinations inside the mod folder (section 6).
 5. Translate DECORATE and SNDINFO first. Drop any add-on ZScript that depends on missing base classes (`PBInjector`, `PB_Projectile`, `PB_EventHandler` helpers) rather than trying to stub them.
-6. Reserve a `DoomEdNum` in [zmapinfo.txt](zmapinfo.txt).
-7. Wire spawning through an existing DECORATE spawner under [actors/SPAWNERS/WeaponSpawners/](actors/SPAWNERS/WeaponSpawners/). There is no runtime registry to call into — it's all dice branches.
-8. Copy sprites into `SPRITES/WEAPONS/<Name>/` and sounds into `SOUNDS/COMBAT/WEAPONS/<Name>/`.
-9. Launch GZDoom / UZDoom and fix any startup ZScript compile errors. Compile errors are fatal — nothing else matters until the mod boots.
+6. Prepend the mandatory `GoFatality` Fire-state freeze guard (`if(CountInv("GoFatality") >= 1) SetPlayerProperty(0,1,0); else SetPlayerProperty(0,0,0);`) to every fire entry point on the ported weapon — see section 5 for the full rationale and template.
+7. Reserve a `DoomEdNum` in [zmapinfo.txt](zmapinfo.txt).
+8. Wire spawning through an existing DECORATE spawner under [actors/SPAWNERS/WeaponSpawners/](actors/SPAWNERS/WeaponSpawners/). There is no runtime registry to call into — it's all dice branches.
+9. Copy sprites into `SPRITES/WEAPONS/<Name>/` and sounds into `SOUNDS/COMBAT/WEAPONS/<Name>/`.
+10. Launch GZDoom / UZDoom and fix any startup ZScript compile errors. Compile errors are fatal — nothing else matters until the mod boots.
 
 ---
 
@@ -101,6 +102,20 @@ Concrete substitutions. Treat this as a lookup table — whenever you hit one of
 - **Inherited states are already defined.** `PB_Weapon` provides `ReadyObject`, `DeselectObject`, `SelectFirstPersonLegs`, `SelectContinue`, plus the barrel-grab family: `ThrowBarrel`, `PlaceBarrel`, `IdleBarrel`, `FlashBarrelPunching`, `FlashBarrelKicking`, `FlashBarrelAirKicking`, `FlashBarrelSlideKicking`, `FlashBarrelSlideKickingStop`. If the add-on `Goto`s any of these, leave the references alone — **do not redefine them locally**, or you'll silently shadow the base-class behavior.
 - **UnloaderToken naming must match everywhere.** The string on `PB_WeaponBase.UnloaderToken "<Name>"` must exactly match the `Actor <Name> : Inventory { … }` you define for the weapon **and** the argument passed to every `CheckUnloaded("<Name>")` in the weapon's state sequence. Name drift silently breaks the unload flow without raising a compile error. This was a bug in the original Lever Action add-on (it used `"PBLeverActionHasUnloaded"` on the property but `"LeverActionHasUnloaded"` on the actor + `CheckUnloaded`) and had to be normalized on port. Check all three sites when porting.
 - **Inventory "boolean" tokens already exist.** The top of [DECORATE](DECORATE) defines a large block of 1-count `Inventory` actors used as flags: `Unloading`, `Zoomed`, `ADSmode`, `PB_LockScreenTilt`, `EquippedObject`, `GrabbedBarrel`, `GoFatality`, etc. Before adding any new inventory "flag" from the add-on, grep [DECORATE](DECORATE) — AGENTS.md section 4 calls this out specifically.
+- **`GoFatality` Fire-state freeze guard is mandatory.** Every ported weapon **must** prepend the following guard to the top of its primary `Fire:` label (and any other fire entry points — `AltFire`, `Fire2`, `Hold`, `AltHold`, burst / akimbo / zoomed variants):
+
+    ```
+    TNT1 A 0 {
+        if(CountInv("GoFatality") >= 1) {
+            SetPlayerProperty(0,1,0);
+        }
+        else {
+            SetPlayerProperty(0,0,0);
+        }
+    }
+    ```
+
+    Where the Fire state already opens with a `TNT1 A 0 { A_WeaponOffset(0,32); … }` initializer block, merge the `if/else` into that block before `A_WeaponOffset`. Where it doesn't, add the guard as a new state line at the very top of `Fire:`, above any `JumpIfInventory` redirects. **Why:** the central `A_DoPBWeaponAction` check in [zscript/Weapons/BaseWeapon.zc](zscript/Weapons/BaseWeapon.zc) that routes to `Steady` on `GoFatality` only runs from `Ready`-style tics; inside `Fire:`, none of that plumbing runs, so on the first tic of firing a freshly-set `GoFatality` (from a monster's `A_GiveToTarget("GoFatality", 1)`) slips past and the player keeps moving while the `Fatality*` cutscene in [actors/Player/PLAYER.dec](actors/Player/PLAYER.dec) is spinning up. The guard sets `PROP_FROZEN` (`SetPlayerProperty` property index `0`) directly from the weapon side to close that window, and defensively clears it on the non-fatality branch in case a previous fatality exited abnormally. Canonical template: [actors/Weapons/Slot3/AUTOSHOTGUN.dec](actors/Weapons/Slot3/AUTOSHOTGUN.dec) `Fire:` (line ~595). Idiom reference: the `Fatality*` labels in [actors/Player/PLAYER.dec](actors/Player/PLAYER.dec) bookend themselves with the exact same `SetPlayerProperty(0,1,0)` / `SetPlayerProperty(0,0,0)` pair. Already applied to every addon-ported weapon in-tree: [Slot2/RiotShield.dec](actors/Weapons/Slot2/RiotShield.dec), [Slot3/MarauderSSG.dec](actors/Weapons/Slot3/MarauderSSG.dec), [Slot4/Carbine.dec](actors/Weapons/Slot4/Carbine.dec), [Slot4/LeverAction.dec](actors/Weapons/Slot4/LeverAction.dec), [Slot4/MetalSniper.dec](actors/Weapons/Slot4/MetalSniper.dec), [Slot5/Paingiver.dec](actors/Weapons/Slot5/Paingiver.dec) — mirror their placement on any new port.
 - **Cvars the add-on may read are mostly already present.** `pb_toggle_aim_hold`, `pb_alttracer`, `pb_nodeagle`, and the other `pb_*` cvars an add-on is likely to consume already live in [CVARINFO](CVARINFO). If the add-on only reads them, it will work as-is; only add new cvars if the add-on declares its own.
 
 ---

@@ -165,6 +165,14 @@ ACTOR Paingiver : PB_Weapon
 
 	Fire:
 		TNT1 A 0 {
+			if(CountInv("GoFatality") >= 1) {
+				SetPlayerProperty(0,1,0);
+			}
+			else {
+				SetPlayerProperty(0,0,0);
+			}
+		}
+		TNT1 A 0 {
 				A_AlertMonsters;
 				A_GunFlash;
 				}
