@@ -432,6 +432,17 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawBar "RESBAR2", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;		
 					}
 			}
+			IsSelected RiotShield {
+				drawimage "BARBACT1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACT2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR2", -149, -30;
+				DrawImage "BAMBAR2", -149, -48;
+				DrawBar "CURBAR2", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC2", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Tan, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Tan, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR2", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 
 			//Shotgun Ammo
 			IsSelected PB_Chainsaw {
