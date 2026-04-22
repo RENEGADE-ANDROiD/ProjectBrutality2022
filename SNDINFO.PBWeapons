@@ -1067,3 +1067,85 @@ $random MSSFR {
 MSSLD MSSLD
 MSSOP MSSOP
 MSWING MSWING
+
+// Ballista (CRASH / add-on port)
+BALIST "sounds/combat/weapons/Ballista/BALIST.wav"
+UNMKHUM "sounds/combat/weapons/Ballista/UNMKHUM.ogg"
+UNMKUP "sounds/combat/weapons/Ballista/UNMKUP.ogg"
+BLSTAI "sounds/combat/weapons/Ballista/BLSTAI.ogg"
+BLSTBP "sounds/combat/weapons/Ballista/BLSTBP.ogg"
+BLSTDE "sounds/combat/weapons/Ballista/BLSTDE.ogg"
+
+// BDP Battle Rifle — audio lumps from PBX-Weapons (Slot-4/BattleRifle)
+weapons/battlerifle/fire		"sounds/combat/weapons/BattleRifle/BR45FIR2.ogg"
+weapons/battlerifle/firealt		"sounds/combat/weapons/BattleRifle/BR45FIRE"
+weapons/battlerifle/magout		"sounds/combat/weapons/BattleRifle/BR45OPEN"
+weapons/battlerifle/magin		"sounds/combat/weapons/BattleRifle/BR45LOAD"
+weapons/battlerifle/up		"sounds/combat/weapons/BattleRifle/BR45PICK.ogg"
+weapons/battlerifle/ping		"sounds/combat/weapons/BattleRifle/BR45PING"
+weapons/battlerifle/switch		"sounds/combat/weapons/BattleRifle/BR45SWCH"
+weapons/battlerifle/bon1		"sounds/combat/weapons/BattleRifle/BR45BON1.ogg"
+weapons/battlerifle/bon2		"sounds/combat/weapons/BattleRifle/BR45BON2.ogg"
+weapons/battlerifle/bon3		"sounds/combat/weapons/BattleRifle/BR45BON3.ogg"
+weapons/battlerifle/bon4		"sounds/combat/weapons/BattleRifle/BR45BON4.ogg"
+$random weapons/battlerifle/dry {
+	weapons/battlerifle/bon1
+	weapons/battlerifle/bon2
+	weapons/battlerifle/bon3
+	weapons/battlerifle/bon4
+}
+
+// Demon-Tech (CRASH) — see sounds/combat/weapons/DemonTech/ (Pistol, Shotgun, Blaster, Minigun)
+weapons/demontechload HRPCK
+DemonTechMGFire "sounds/combat/weapons/DemonTech/Minigun/DTPSFIRE.ogg"
+weapons/expmgunspin 8FGGSPIN
+weapons/expmgunspinstop 8FGGDOWN
+DTP/Draw "sounds/combat/weapons/DemonTech/Pistol/DTPUP.ogg"
+DTP/Reload "sounds/combat/weapons/DemonTech/Pistol/DTPUP.ogg"
+DTP/Fire "sounds/combat/weapons/DemonTech/Pistol/DTPFI.ogg"
+DTP/Magout "sounds/combat/weapons/DemonTech/Pistol/DTPMOUT.ogg"
+DTP/Magin "sounds/combat/weapons/DemonTech/Pistol/DTPMIN.ogg"
+DTP/Snap "sounds/combat/weapons/DemonTech/Pistol/DTPSNAP.ogg"
+TechBlaster/LoadIn "sounds/combat/weapons/DemonTech/Blaster/TBINJECT.ogg"
+TechBlaster/Online "sounds/combat/weapons/DemonTech/Blaster/TBONLINE.ogg"
+TechBlaster/Unload "sounds/combat/weapons/DemonTech/Blaster/TBUNJECT.ogg"
+TechBlaster/Steam "sounds/combat/weapons/DemonTech/Blaster/TBRSTEAM.ogg"
+TechBlaster/Fire "sounds/combat/weapons/DemonTech/Blaster/TBSRFIRE.ogg"
+TechBlaster/Explode "sounds/combat/weapons/DemonTech/Blaster/TBSRPEXP.ogg"
+TechBlaster/PickUp "sounds/combat/weapons/DemonTech/Blaster/TBONLINE.ogg"
+TechBlaster/Idle "sounds/combat/weapons/DemonTech/Blaster/TBIDLEBZ.ogg"
+TechBlaster/Tsss "sounds/combat/weapons/DemonTech/Blaster/TBTSSSSS.ogg"
+toolbox/off "sounds/combat/weapons/DemonTech/Blaster/TBUNJECT.ogg"
+weapons/click2 DEAGMG3
+// Shotgun fire layers (for $random)
+CRSH_DTSFI1 "sounds/combat/weapons/DemonTech/Shotgun/DTSFI1.ogg"
+CRSH_DTSFI2 "sounds/combat/weapons/DemonTech/Shotgun/DTSFI2.ogg"
+CRSH_DTSFI3 "sounds/combat/weapons/DemonTech/Shotgun/DTSFI3.ogg"
+CRSH_DTSPAMB1 "sounds/combat/weapons/DemonTech/Shotgun/DTSPAMB1.ogg"
+CRSH_DTSPAMB2 "sounds/combat/weapons/DemonTech/Shotgun/DTSPAMB2.ogg"
+CRSH_DTSPAMB3 "sounds/combat/weapons/DemonTech/Shotgun/DTSPAMB3.ogg"
+CRSH_DTSAFI1 "sounds/combat/weapons/DemonTech/Shotgun/DTSAFI1.ogg"
+CRSH_DTSAFI2 "sounds/combat/weapons/DemonTech/Shotgun/DTSAFI2.ogg"
+CRSH_DTSAFI3 "sounds/combat/weapons/DemonTech/Shotgun/DTSAFI3.ogg"
+CRSH_DTSAAMB1 "sounds/combat/weapons/DemonTech/Shotgun/DTSAAMB1.ogg"
+CRSH_DTSAAMB2 "sounds/combat/weapons/DemonTech/Shotgun/DTSAAMB2.ogg"
+CRSH_DTSAAMB3 "sounds/combat/weapons/DemonTech/Shotgun/DTSAAMB3.ogg"
+CRSH_DTSGPKUP "sounds/combat/weapons/DemonTech/Shotgun/DTSGPKUP.ogg"
+$random DTechShotty/Fire { CRSH_DTSFI1 CRSH_DTSFI2 CRSH_DTSFI3 }
+$random DTechShotty/PrimaryAmb { CRSH_DTSPAMB1 CRSH_DTSPAMB2 CRSH_DTSPAMB3 }
+$random DTechShotty/AltFire { CRSH_DTSAFI1 CRSH_DTSAFI2 CRSH_DTSAFI3 }
+$random DTechShotty/AlternateAmb { CRSH_DTSAAMB1 CRSH_DTSAAMB2 CRSH_DTSAAMB3 }
+DTShotgun/Pickup CRSH_DTSGPKUP
+DTSG/Pump CRSH_DTSPAMB1
+
+// NeoHMG (CRASH)
+weapon/HMG/Fire "sounds/combat/weapons/NeoHMG/HMGFIRE.ogg"
+weapon/HMG/Stop "sounds/combat/weapons/NeoHMG/DIBSTOP.ogg"
+weapon/HMG/Reload1 "sounds/combat/weapons/NeoHMG/9HAINAM1.ogg"
+
+// M41A (CRASH — SFX re-use from existing PB lumps; copy raw files from CRASH to extend)
+M41A/Fire		4AFLFIR1
+M41A/MagTake	CBMGOUT
+M41A/MagIn		CBMGINN
+M41A/Bolt		RIFCL_CK
+M41A/PickUp		RFMAGUP

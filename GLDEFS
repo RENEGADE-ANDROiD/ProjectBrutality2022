@@ -23,6 +23,7 @@
 #include "GLDEFS.Overlord" //For the Overlord projectiles, to prevent this file from being flooded
 #include "GLDEFS.MetalSniper" //Brightmap sprite bindings for the Metal Sniper add-on port
 #include "GLDEFS.OldHMG" //Brightmap sprite bindings for the Old HMG add-on port
+#include "GLDEFS.NeoHMG" //Brightmap sprite bindings for NeoHMG (CRASH pack port)
 
 flickerlight2 FT_GroundFire
 {
@@ -5107,4 +5108,37 @@ BrightMap Sprite HELEP0
 {
 Map "brightmaps/monsters/Helemental/BMHELEP0"
 DisableFullBright
-}		
+}
+
+// Ballista (CRASH pack port) — lights + brightmaps
+FlickerLight Ballista
+{
+Color 0.7 0.4 0.0
+Size 30
+SecondarySize 40
+Chance 0.2
+Offset 0 24 0
+}
+
+brightmap sprite BLEMA0 { map "brightmaps/WEAPONS/Ballista/BLEMA0.png" }
+
+brightmap sprite BLREA0 { map "brightmaps/WEAPONS/Ballista/BLREA0.png" }
+brightmap sprite BLREB0 { map "brightmaps/WEAPONS/Ballista/BLREB0.png" }
+brightmap sprite BLREC0 { map "brightmaps/WEAPONS/Ballista/BLREC0.png" }
+brightmap sprite BLRED0 { map "brightmaps/WEAPONS/Ballista/BLRED0.png" }
+brightmap sprite BLREE0 { map "brightmaps/WEAPONS/Ballista/BLREE0.png" }
+brightmap sprite BLREF0 { map "brightmaps/WEAPONS/Ballista/BLREF0.png" }
+brightmap sprite BLREG0 { map "brightmaps/WEAPONS/Ballista/BLREG0.png" }
+brightmap sprite BLREH0 { map "brightmaps/WEAPONS/Ballista/BLREH0.png" }
+brightmap sprite BLREI0 { map "brightmaps/WEAPONS/Ballista/BLREI0.png" }
+brightmap sprite BLREJ0 { map "brightmaps/WEAPONS/Ballista/BLREJ0.png" }
+brightmap sprite BLREK0 { map "brightmaps/WEAPONS/Ballista/BLREK0.png" }
+brightmap sprite BLREL0 { map "brightmaps/WEAPONS/Ballista/BLREL0.png" }
+brightmap sprite BLREM0 { map "brightmaps/WEAPONS/Ballista/BLREM0.png" }
+brightmap sprite BLREN0 { map "brightmaps/WEAPONS/Ballista/BLREN0.png" }
+brightmap sprite BLREO0 { map "brightmaps/WEAPONS/Ballista/BLREO0.png" }
+
+Object Ballistagun
+{
+Frame BALS { Light Ballista }
+}

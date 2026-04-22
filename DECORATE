@@ -131,6 +131,7 @@ Actor ZombiePlasmaTankExplosion
 #include "actors/Items/Ammo/Bulletkit.dec"
 #include "actors/Items/Ammo/SpecialGrenadeBox.dec"
 #include "actors/Items/Ammo/Cellpack.dec"
+#include "actors/Items/Ammo/PB_DTech_Ammo.dec"
 
 //Powerups
 #include "actors/Items/Powerups/GenericPowerups.dec"
@@ -318,6 +319,9 @@ Actor ZombiePlasmaTankExplosion
 #include "actors/Weapons/Slot4/LeverAction.dec"
 #include "actors/Weapons/Slot4/MetalSniper.dec"
 #include "actors/Weapons/Slot4/OldHMG.dec"
+#include "actors/Weapons/Slot4/NeoHMG.dec"
+#include "actors/Weapons/Slot4/M41A.dec"
+#include "actors/Weapons/Slot4/BattleRifleCRASH.dec"
 #include "actors/Weapons/Slot5/SUPERGL.dec"
 #include "actors/Weapons/Slot5/Paingiver.dec"
 #include "actors/Weapons/Slot7/FREEZER.dec"
@@ -327,12 +331,18 @@ Actor ZombiePlasmaTankExplosion
 #include "actors/Weapons/Slot8/BLACKHOLE.dec"
 #include "actors/Weapons/Slot8/BFGPickups.dec"
 #include "actors/Weapons/Slot9/DemonTech.dec"
+#include "actors/Weapons/Slot9/DTechDemonPistol.dec"
 #include "actors/Weapons/Slot9/Unmaker.dec"
 #include "actors/Weapons/Slot9/Flamethrower.dec"
+#include "actors/Weapons/Slot9/DemonExterminator.dec"
+#include "actors/Weapons/Slot9/Ballista.dec"
+#include "actors/Weapons/Slot9/DTechDemonMinigun.dec"
+#include "actors/Weapons/Slot9/DTechDemonBlaster.dec"
 
 
 
 #include "actors/Weapons/Slot3/QUADBARREL.dec"
+#include "actors/Weapons/Slot9/DTechDemonShotgun.dec"
 #include "actors/Weapons/Slot6/PulseCannon.dec"
 #include "actors/Weapons/Slot6/DUALPULSECANNON.dec"
 #include "actors/Weapons/Slot4/ChexRifle.dec" //This is only TEMPORARY. This can be removed when the Chex Quest patch is completed.

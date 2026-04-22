@@ -19,7 +19,7 @@ Actor ChaingunWeaponSpawner Replaces Chaingun
 		TNT1 A 1
 		loop
 	DiceRandom:
-		TNT1 A 0 A_Jump(256, "SpawnPBCarbine", "SpawnPBNailgun", "SpawnSMG", "SpawnPBMinigun", "SpawnLMG", "SpawnTriMinigun", "SpawnHDMR", "SpawnMetalSniper", "SpawnOldHeavyMachinegun")
+		TNT1 A 0 A_Jump(256, "SpawnPBCarbine", "SpawnPBNailgun", "SpawnSMG", "SpawnPBMinigun", "SpawnLMG", "SpawnTriMinigun", "SpawnHDMR", "SpawnMetalSniper", "SpawnOldHeavyMachinegun", "SpawnPB_NeoHMG", "SpawnPB_M41A", "SpawnBDPBattleRifle")
 		Stop	
 	DiceMain:	// Default spawn preset with a slight difficulty curve. Tier 1-4 Monster presets are contained here to provide more variety.
 		EarlyLevelMob:
@@ -49,6 +49,10 @@ Actor ChaingunWeaponSpawner Replaces Chaingun
 			TNT1 A 0 A_Jump(256, "SpawnPBMinigun")
 		HighLevelMob:
 			TNT1 A 0 A_Jump(50, "SpawnPBCarbine")
+			TNT1 A 0 A_Jump(1, "SpawnBDPBattleRifle")
+			TNT1 A 0 A_Jump(1, "SpawnPB_M41A")
+			TNT1 A 0 A_Jump(2, "SpawnPB_NeoHMG")
+			TNT1 A 0 A_Jump(4, "SpawnDemonTechMinigun")
 			TNT1 A 0 A_Jump(62, "SpawnPBNailgun", "SpawnHDMR")
 			TNT1 A 0 A_Jump(58, "SpawnSMG")
 			TNT1 A 0 A_Jump(24, "SpawnTriMinigun", "SpawnLMG")
@@ -63,6 +67,7 @@ Actor ChaingunWeaponSpawner Replaces Chaingun
 			TNT1 A 0 A_Jump(32, "SpawnMetalSniper")
 			TNT1 A 0 A_Jump(256, "SpawnPBMinigun")
 		DiceTier3:
+			TNT1 A 0 A_Jump(3, "SpawnDemonTechMinigun")
 			TNT1 A 0 A_Jump(8, "SpawnPBCarbine")
 			TNT1 A 0 A_Jump(10, "SpawnSMG", "SpawnHDMR")
 			TNT1 A 0 A_Jump(48, "SpawnPBNailgun")
@@ -70,6 +75,8 @@ Actor ChaingunWeaponSpawner Replaces Chaingun
 			TNT1 A 0 A_Jump(48, "SpawnOldHeavyMachinegun")
 			TNT1 A 0 A_Jump(256, "SpawnPBMinigun")
 		DiceTier4:
+			TNT1 A 0 A_Jump(2, "SpawnPB_NeoHMG")
+			TNT1 A 0 A_Jump(4, "SpawnDemonTechMinigun")
 			TNT1 A 0 A_Jump(32, "SpawnPBNailgun", "SpawnHDMR")
 			TNT1 A 0 A_Jump(10, "SpawnSMG")
 			TNT1 A 0 A_Jump(18, "SpawnTriMinigun", "SpawnLMG")
@@ -77,6 +84,8 @@ Actor ChaingunWeaponSpawner Replaces Chaingun
 			TNT1 A 0 A_Jump(32, "SpawnOldHeavyMachinegun")
 			TNT1 A 0 A_Jump(256, "SpawnPBMinigun")
 		DiceDeathWish:
+			TNT1 A 0 A_Jump(2, "SpawnPB_NeoHMG")
+			TNT1 A 0 A_Jump(3, "SpawnDemonTechMinigun")
 			TNT1 A 0 A_Jump(40, "SpawnPBNailgun", "SpawnHDMR")
 			TNT1 A 0 A_Jump(18, "SpawnSMG")
 			TNT1 A 0 A_Jump(22, "SpawnTriMinigun", "SpawnLMG")
@@ -117,11 +126,27 @@ Actor ChaingunWeaponSpawner Replaces Chaingun
 		TNT1 A 1 A_RadiusGive("IsNearHighCalWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 		TNT1 A 0 A_SpawnItemEx("PB_MetalSniper",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
-	SpawnOldHeavyMachinegun:
+		SpawnOldHeavyMachinegun:
 		TNT1 A 1 A_RadiusGive("IsNearHighCalWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 		TNT1 A 0 A_SpawnItemEx("OldHMG",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
-	SpawnPBMinigun:
+		SpawnDemonTechMinigun:
+		TNT1 A 1 A_RadiusGive("IsNearHighCalWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		TNT1 A 0 A_SpawnItemEx("DemonTechMinigun",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+		SpawnPB_NeoHMG:
+		TNT1 A 1 A_RadiusGive("IsNearHighCalWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		TNT1 A 0 A_SpawnItemEx("PB_NeoHMG",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+		SpawnPB_M41A:
+		TNT1 A 1 A_RadiusGive("IsNearHighCalWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		TNT1 A 0 A_SpawnItemEx("PB_M41A",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+		SpawnBDPBattleRifle:
+		TNT1 A 1 A_RadiusGive("IsNearHighCalWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		TNT1 A 0 A_SpawnItemEx("BDPBattleRifle",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+		SpawnPBMinigun:
 		
 		ReplaceVanilla:
 		ReplaceVanilla:
