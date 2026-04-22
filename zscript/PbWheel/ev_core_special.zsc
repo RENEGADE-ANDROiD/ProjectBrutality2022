@@ -1032,12 +1032,20 @@ Class PB_SpecialWheelHandler : EventHandler
 				carbine_semi.specialPriority = 4;
 				carbine_semi.iconScale = iconScale;
 				
+				PB_SpecialWheel_Mode carbine_sights = new ("PB_SpecialWheel_Mode");
+				carbine_sights.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Semi.png",TexMan.Type_Any);
+				carbine_sights.specialName = "SelectCarbine_Sights";
+				carbine_sights.specialAlias = "Toggle Sight";
+				carbine_sights.specialPriority = 5;
+				carbine_sights.iconScale = iconScale;
+				
 				
 				
 				
 				wheelSpecials.Push(carbine_fullauto);
 				wheelSpecials.Push(carbine_burst);
 				wheelSpecials.Push(carbine_semi);
+				wheelSpecials.Push(carbine_sights);
 				
 				
 				specialWheel_handleMouse();
