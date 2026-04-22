@@ -4233,30 +4233,6 @@ brightmap sprite DUKEC3
 {
     map "brightmaps/monsters/Hellduke/DUKEC3.png"
 }	
-brightmap sprite DUKEC7
-{
-    map "brightmaps/monsters/Hellduke/DUKEC7.png"
-}	
-brightmap sprite DUKEC8
-{
-    map "brightmaps/monsters/Hellduke/DUKEC8.png"
-}
-brightmap sprite DUKED1
-{
-    map "brightmaps/monsters/Hellduke/DUKED1.png"
-}	
-brightmap sprite DUKED2
-{
-    map "brightmaps/monsters/Hellduke/DUKED2.png"
-}	
-brightmap sprite DUKED3
-{
-    map "brightmaps/monsters/Hellduke/DUKED3.png"
-}	
-	brightmap sprite DUKED7
-{
-    map "brightmaps/monsters/Hellduke/DUKED7.png"
-}	
 brightmap sprite DUKED8
 {
     map "brightmaps/monsters/Hellduke/DUKED8.png"

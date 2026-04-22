@@ -31,6 +31,57 @@ Actor HeightTIDIndicator : Inventory
 }
 Actor IsDead : Inventory {}
 Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
+Actor GrabbedFlameBarrel : Inventory { Inventory.MaxAmount 1 }
+Actor HasFlameBarrel : Inventory { Inventory.MaxAmount 1 }
+Actor EquippedObject : Inventory { Inventory.MaxAmount 1 }
+Actor CryoRifleSelected : Inventory { Inventory.MaxAmount 1 }
+Actor DisintegratedHuman
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_SpawnItem("XDeath1")
+		Stop
+	}
+}
+Actor RailNullPuff : BulletPuff
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		Stop
+	}
+}
+Actor OrangeShockwave : BulletPuff
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	RenderStyle Add
+	Alpha 0.85
+	Scale 1.4
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_SpawnItem("WhiteShockwave")
+		Stop
+	}
+}
+Actor ZombiePlasmaTankExplosion
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_SpawnItem("ZombieTankExplosion")
+		Stop
+	}
+}
 
 
 #include "actors/Brutality/BrutalitiesZombieman.dec"
