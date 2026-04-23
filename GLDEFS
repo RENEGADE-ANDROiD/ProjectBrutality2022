@@ -3219,7 +3219,8 @@ SecondarySize 104
 Chance 0.3
 }
 
-Object ZombieTankMissile
+// ZMIS* was for a cut class; missiles use Rocket family sprites — attach to zombie tank rocket
+Object ZombieRocket2
 {
 Frame ZMISA { Light ZombieTankMissile1 }
 Frame ZMISB { Light ZombieTankMissile2 }
@@ -5142,3 +5143,13 @@ Object Ballistagun
 {
 Frame BALS { Light Ballista }
 }
+
+// Baalgar Demon (CyberdemonBoss) — stagger / GK highlight (weapons pack)
+hardwareshader sprite HXBDV1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV4 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }

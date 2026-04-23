@@ -1,0 +1,53 @@
+Actor MegaSphereSpawner replaces Megasphere
+{
+	+LOOKALLAROUND
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1 ACS_NamedExecuteAlways("SpawnerScript",0)
+	Deciding:
+		TNT1 A 1
+		loop
+	DiceRandom:
+		TNT1 A 0 A_Jump(256, "SpawnUltraSphere", "SpawnMegaSphere")
+		Stop
+	DiceMain:
+		EarlyLevelMob:
+			TNT1 A 0 A_Jump(40,"SpawnUltraSphere")
+			TNT1 A 0 A_Jump(256,"SpawnMegaSphere")
+		LowLevelMob:
+			TNT1 A 0 A_Jump(60,"SpawnUltraSphere")
+			TNT1 A 0 A_Jump(256,"SpawnMegaSphere")
+		MidLevelMob:
+			TNT1 A 0 A_Jump(130,"SpawnUltraSphere")
+			TNT1 A 0 A_Jump(256,"SpawnMegaSphere")
+		HighLevelMob:
+			TNT1 A 0 A_Jump(172,"SpawnUltraSphere")
+			TNT1 A 0 A_Jump(256,"SpawnMegaSphere")
+	DiceProg:
+		DiceTier1:
+			TNT1 A 0 A_Jump(30,"SpawnUltraSphere")
+			TNT1 A 0 A_Jump(256,"SpawnMegaSphere")
+		DiceTier2:
+			TNT1 A 0 A_Jump(50,"SpawnUltraSphere")
+			TNT1 A 0 A_Jump(256,"SpawnMegaSphere")
+		DiceTier3:
+			TNT1 A 0 A_Jump(96,"SpawnUltraSphere")
+			TNT1 A 0 A_Jump(256,"SpawnMegaSphere")
+		DiceTier4:
+			TNT1 A 0 A_Jump(124,"SpawnUltraSphere")
+			TNT1 A 0 A_Jump(256,"SpawnMegaSphere")
+		DiceDeathWish:
+			TNT1 A 0 A_Jump(156,"SpawnUltraSphere")
+			TNT1 A 0 A_Jump(256,"SpawnMegaSphere")
+	SpawnUltraSphere:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWolvusItemMutators",0)
+		TNT1 A 0 A_SpawnItemEx("UltraSphere",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+		Stop
+	SpawnMegaSphere:
+	ReplaceVanilla:
+		TNT1 A 0 A_SpawnItemEx("EnergySphere",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+		Stop
+	}
+}

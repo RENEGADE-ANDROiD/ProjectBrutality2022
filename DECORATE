@@ -166,6 +166,7 @@ Actor ZombiePlasmaTankExplosion
 #include "actors/Monsters/T3-Floaters/PAIN.dec"
 #include "actors/Monsters/T4-Viles/ARCHVILE.dec"
 #include "actors/Monsters/Tz-Bosses/CYBERDEMON.dec"
+#include "actors/Monsters/Tz-Bosses/CYBERDEMON_BOSS.dec"
 #include "actors/Monsters/Tz-Bosses/MASTERMIND.dec"
 
 //ST Monsters
@@ -321,7 +322,7 @@ Actor ZombiePlasmaTankExplosion
 #include "actors/Weapons/Slot4/OldHMG.dec"
 #include "actors/Weapons/Slot4/NeoHMG.dec"
 #include "actors/Weapons/Slot4/M41A.dec"
-#include "actors/Weapons/Slot4/BattleRifleCRASH.dec"
+#include "actors/Weapons/Slot4/BDPBattleRifle.dec"
 #include "actors/Weapons/Slot5/SUPERGL.dec"
 #include "actors/Weapons/Slot5/Paingiver.dec"
 #include "actors/Weapons/Slot7/FREEZER.dec"
@@ -336,13 +337,11 @@ Actor ZombiePlasmaTankExplosion
 #include "actors/Weapons/Slot9/Flamethrower.dec"
 #include "actors/Weapons/Slot9/DemonExterminator.dec"
 #include "actors/Weapons/Slot9/Ballista.dec"
-#include "actors/Weapons/Slot9/DTechDemonMinigun.dec"
 #include "actors/Weapons/Slot9/DTechDemonBlaster.dec"
 
 
 
 #include "actors/Weapons/Slot3/QUADBARREL.dec"
-#include "actors/Weapons/Slot9/DTechDemonShotgun.dec"
 #include "actors/Weapons/Slot6/PulseCannon.dec"
 #include "actors/Weapons/Slot6/DUALPULSECANNON.dec"
 #include "actors/Weapons/Slot4/ChexRifle.dec" //This is only TEMPORARY. This can be removed when the Chex Quest patch is completed.
@@ -403,6 +402,7 @@ Actor ZombiePlasmaTankExplosion
 
 //Smart Scavenger Health
 #include "actors/Items/Health/GenericHealth.dec"
+#include "actors/Items/Health/WolvusMutatorItems.dec"
 #include "actors/Items/Health/Stimpack.dec"
 #include "actors/Items/Health/Medikit.dec"
 #include "actors/Items/Health/Medipack.dec"

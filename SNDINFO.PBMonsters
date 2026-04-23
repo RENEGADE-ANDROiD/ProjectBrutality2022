@@ -83,6 +83,13 @@ CYBRLZR CYBRLZR
 $rolloff CYBRLZR 1500 2500
 CYBTAT CYBTAT
 $rolloff CYBTAT 50 8000
+// Baalgar Demon (CyberdemonBoss / Doom1-style) — from weapons pack
+cyber/charge "sounds/combat/monsters/CyberdemonBoss/CYBCHG.wav"
+cyber/melee "sounds/combat/monsters/CyberdemonBoss/CYBSWG.wav"
+cyber/impact "sounds/combat/monsters/CyberdemonBoss/CYBIMP.wav"
+$rolloff cyber/charge 200 5000
+$rolloff cyber/melee 200 5000
+$rolloff cyber/impact 200 5000
 CLAP CLAP
 DSCANFIR DSCANFIR
 $rolloff DSCANFIR 600 2400

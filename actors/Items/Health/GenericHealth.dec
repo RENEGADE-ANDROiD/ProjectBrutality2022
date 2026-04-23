@@ -53,102 +53,13 @@ Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 	}
 }
 
-// Green armor
-Actor LightArmor : BasicArmorPickup //Replaces GreenArmor
-{
-	//$Title Light Armor
-	//$Category Health and Armor
-	Game Doom
-	Scale 1.30
-	SpawnID 7060
-	Radius 20
-	Height 20
-	+FLOORCLIP
-	+DONTGIB
-	Inventory.Pickupmessage "Picked up the Light Recon Armor"
-	Inventory.Icon "4RM1A0"
-	Armor.SavePercent 40
-	Armor.SaveAmount 100
-    Inventory.PickupSound "ARMOR"
-	States
-	{
-	Spawn:
-		TNT1 A 0 A_CheckSight ("Spawn2")
-		4RM1 AA 6 bright 
-		4RM1 BBCCBB 3
-		TNT1 A 0 A_SpawnItem("GreenFlareMedium",0,10)
-		loop
-	Spawn2:	
-		4RM1 ABC 10
-		Goto Spawn
-	}
-}
-
-// Blue armor 
-Actor HeavyArmor : BasicArmorPickup Replaces BlueArmor
-{
-	//$Title Heavy Armor
-	Game Doom
-	SpawnID 7070
-	Radius 20
-	Height 20
-	Scale 1.30
-	+FLOORCLIP
-	+DONTGIB
-	Inventory.Pickupmessage "Picked up the Heavy Assault Armor"
-	Inventory.Icon "4RM2A0"
-	Armor.Savepercent 70
-	Armor.Saveamount 200
-    Inventory.PickupSound "ARMOR"
-	States
-	{
-	Spawn:
-		TNT1 A 0 A_CheckSight ("Spawn2")
-		4RM2 AA 6 bright 
-		4RM2 BBCCBB 3
-		TNT1 A 0 A_SpawnItem("BlueFlareMedium3",0,10)
-		loop
-	Spawn2:	
-		4RM2 ABC 10
-		Goto Spawn
-	}
-}
+// Green / blue / red armor: ZScript (PBHP_*ZSC) + States in PBHP_Bridges_Armor.dec
+#include "actors/Items/PBHPArcade/PBHP_Bridges_Armor.dec"
 
 Actor HeavyArmorForMegaSphere : HeavyArmor
 {
 Armor.SavePercent 70
 Armor.Saveamount 200
-}
-
-//Red armor 
-Actor MediumArmor : BasicArmorPickup
-{
-	//$Title Standard Armor
-	//$Category Health and Armor
-	Game Doom
-	SpawnID 7080
-	Radius 20
-	Height 20
-	Scale 1.30
-	+FLOORCLIP
-	+DONTGIB
-	Inventory.Pickupmessage "Picked up the Medium Combat Armor"
-	Inventory.PickupSound "ARMOR"
-	Inventory.Icon "4RM3A0"
-	Armor.Savepercent 60
-	Armor.Saveamount 150
-	States
-	{
-		Spawn:
-			TNT1 A 0 A_CheckSight ("Spawn2")
-			4RM3 AA 6 bright 
-			4RM3 BBCCBB 3
-			TNT1 A 0 A_SpawnItem("RedFlareArmor",0,10)
-			loop
-		Spawn2:	
-			4RM3 ABC 10
-			Goto Spawn
-	}
 }
 
 Actor GiveHealth : Health

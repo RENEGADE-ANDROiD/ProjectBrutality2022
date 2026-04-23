@@ -14,7 +14,7 @@ Actor SSGWeaponSpawner replaces SuperShotgun
 		TNT1 A 1
 		loop
 	DiceRandom:
-		TNT1 A 0 A_Jump(256, "SpawnSSG", "SpawnQuadSSG", "SpawnASGDrumMag", "SpawnDemonTechShotgun", "SpawnPB_M41A")
+		TNT1 A 0 A_Jump(256, "SpawnSSG", "SpawnQuadSSG", "SpawnASGDrumMag", "SpawnPB_M41A")
 		Stop	
 	DiceMain:	// Default spawn preset with a slight difficulty curve. Tier 1-4 Monster presets are contained here to provide more variety.
 		EarlyLevelMob:
@@ -27,7 +27,6 @@ Actor SSGWeaponSpawner replaces SuperShotgun
 			TNT1 A 0 A_Jump(16,"SpawnQuadSSG", "SpawnASGDrumMag")
 			TNT1 A 0 A_Jump(256,"SpawnSSG")
 		HighLevelMob:
-			TNT1 A 0 A_Jump(3, "SpawnDemonTechShotgun")
 			TNT1 A 0 A_Jump(32,"SpawnQuadSSG", "SpawnASGDrumMag")
 			TNT1 A 0 A_Jump(256,"SpawnSSG")
 	DiceProg:	// Progressive spawn preset enforces strict spawning rules by excluding monsters until they are presented in later levels.
@@ -37,15 +36,12 @@ Actor SSGWeaponSpawner replaces SuperShotgun
 			TNT1 A 0 A_Jump(256,"SpawnSSG")
 		DiceTier3:
 			TNT1 A 0 A_Jump(1, "SpawnPB_M41A")
-			TNT1 A 0 A_Jump(1, "SpawnDemonTechShotgun")
 			TNT1 A 0 A_Jump(2,"SpawnQuadSSG")
 			TNT1 A 0 A_Jump(256,"SpawnSSG")
 		DiceTier4:
-			TNT1 A 0 A_Jump(2, "SpawnDemonTechShotgun")
 			TNT1 A 0 A_Jump(24,"SpawnQuadSSG", "SpawnASGDrumMag")
 			TNT1 A 0 A_Jump(256,"SpawnSSG")	
 		DiceDeathWish:
-			TNT1 A 0 A_Jump(2, "SpawnDemonTechShotgun")
 			TNT1 A 0 A_Jump(32,"SpawnQuadSSG", "SpawnASGDrumMag")
 			TNT1 A 0 A_Jump(256,"SpawnSSG")	
 	SpawnQuadSSG:
@@ -64,14 +60,12 @@ Actor SSGWeaponSpawner replaces SuperShotgun
 		BackpackSpawn: //For the upgrade spawner because I'm lazy
 	
 		ReplaceVanilla:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponCSSG",0)
 		TNT1 A 0 A_SpawnItemEx("DropedPB_SSG",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		TNT1 A 0 A_RadiusGive("IsNearShotgun", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 		Stop
-	SpawnDemonTechShotgun:
-		TNT1 A 1 A_RadiusGive("IsNearShotgun", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
-		TNT1 A 0 A_SpawnItemEx("DemonTechShotgun",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		Stop
 	SpawnPB_M41A:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponM41A",0)
 		TNT1 A 1 A_RadiusGive("IsNearHighCalWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 		TNT1 A 0 A_SpawnItemEx("PB_M41A",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop

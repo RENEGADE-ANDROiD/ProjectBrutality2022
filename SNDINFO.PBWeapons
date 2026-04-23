@@ -759,6 +759,8 @@ weapons/freezer/respect1 FRZRRS1
 weapons/freezer/respect2 FRZRRS2
 weapons/freezer/respect3 FRZRRS3
 weapons/freezer/idle FRZRHUM
+// Marauder SSG cryo alt (alias for addon-style logical name; same as freezer primary)
+weapons/CryoRifle/missile FRZRFR1
 weapons/freezer/fire FRZRFR1
 weapons/freezer/up FRZRUP
 weapons/freezer/reload1 FRZRRL1
@@ -1095,11 +1097,7 @@ $random weapons/battlerifle/dry {
 	weapons/battlerifle/bon4
 }
 
-// Demon-Tech (CRASH) — see sounds/combat/weapons/DemonTech/ (Pistol, Shotgun, Blaster, Minigun)
-weapons/demontechload HRPCK
-DemonTechMGFire "sounds/combat/weapons/DemonTech/Minigun/DTPSFIRE.ogg"
-weapons/expmgunspin 8FGGSPIN
-weapons/expmgunspinstop 8FGGDOWN
+// Demon-Tech (CRASH) — Pistol & Blaster (sounds in sounds/combat/weapons/DemonTech/)
 DTP/Draw "sounds/combat/weapons/DemonTech/Pistol/DTPUP.ogg"
 DTP/Reload "sounds/combat/weapons/DemonTech/Pistol/DTPUP.ogg"
 DTP/Fire "sounds/combat/weapons/DemonTech/Pistol/DTPFI.ogg"
@@ -1117,35 +1115,15 @@ TechBlaster/Idle "sounds/combat/weapons/DemonTech/Blaster/TBIDLEBZ.ogg"
 TechBlaster/Tsss "sounds/combat/weapons/DemonTech/Blaster/TBTSSSSS.ogg"
 toolbox/off "sounds/combat/weapons/DemonTech/Blaster/TBUNJECT.ogg"
 weapons/click2 DEAGMG3
-// Shotgun fire layers (for $random)
-CRSH_DTSFI1 "sounds/combat/weapons/DemonTech/Shotgun/DTSFI1.ogg"
-CRSH_DTSFI2 "sounds/combat/weapons/DemonTech/Shotgun/DTSFI2.ogg"
-CRSH_DTSFI3 "sounds/combat/weapons/DemonTech/Shotgun/DTSFI3.ogg"
-CRSH_DTSPAMB1 "sounds/combat/weapons/DemonTech/Shotgun/DTSPAMB1.ogg"
-CRSH_DTSPAMB2 "sounds/combat/weapons/DemonTech/Shotgun/DTSPAMB2.ogg"
-CRSH_DTSPAMB3 "sounds/combat/weapons/DemonTech/Shotgun/DTSPAMB3.ogg"
-CRSH_DTSAFI1 "sounds/combat/weapons/DemonTech/Shotgun/DTSAFI1.ogg"
-CRSH_DTSAFI2 "sounds/combat/weapons/DemonTech/Shotgun/DTSAFI2.ogg"
-CRSH_DTSAFI3 "sounds/combat/weapons/DemonTech/Shotgun/DTSAFI3.ogg"
-CRSH_DTSAAMB1 "sounds/combat/weapons/DemonTech/Shotgun/DTSAAMB1.ogg"
-CRSH_DTSAAMB2 "sounds/combat/weapons/DemonTech/Shotgun/DTSAAMB2.ogg"
-CRSH_DTSAAMB3 "sounds/combat/weapons/DemonTech/Shotgun/DTSAAMB3.ogg"
-CRSH_DTSGPKUP "sounds/combat/weapons/DemonTech/Shotgun/DTSGPKUP.ogg"
-$random DTechShotty/Fire { CRSH_DTSFI1 CRSH_DTSFI2 CRSH_DTSFI3 }
-$random DTechShotty/PrimaryAmb { CRSH_DTSPAMB1 CRSH_DTSPAMB2 CRSH_DTSPAMB3 }
-$random DTechShotty/AltFire { CRSH_DTSAFI1 CRSH_DTSAFI2 CRSH_DTSAFI3 }
-$random DTechShotty/AlternateAmb { CRSH_DTSAAMB1 CRSH_DTSAAMB2 CRSH_DTSAAMB3 }
-DTShotgun/Pickup CRSH_DTSGPKUP
-DTSG/Pump CRSH_DTSPAMB1
 
 // NeoHMG (CRASH)
 weapon/HMG/Fire "sounds/combat/weapons/NeoHMG/HMGFIRE.ogg"
 weapon/HMG/Stop "sounds/combat/weapons/NeoHMG/DIBSTOP.ogg"
 weapon/HMG/Reload1 "sounds/combat/weapons/NeoHMG/9HAINAM1.ogg"
 
-// M41A (CRASH — SFX re-use from existing PB lumps; copy raw files from CRASH to extend)
-M41A/Fire		4AFLFIR1
-M41A/MagTake	CBMGOUT
-M41A/MagIn		CBMGINN
-M41A/Bolt		RIFCL_CK
-M41A/PickUp		RFMAGUP
+// M41A — SFX: sounds/combat/weapons/M41A/ (M41AFIRE, M41PICUP, mags, bolt)
+M41A/Fire		"sounds/combat/weapons/M41A/M41AFIRE"
+M41A/MagTake	"sounds/combat/weapons/M41A/CBMGOUT"
+M41A/MagIn		"sounds/combat/weapons/M41A/CBMGINN"
+M41A/Bolt		"sounds/combat/weapons/M41A/ALIEN_CK"
+M41A/PickUp		"sounds/combat/weapons/M41A/M41PICUP"
