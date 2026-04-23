@@ -2,6 +2,14 @@ ACTOR TheShieldSaw : Weapon
 {
     +WEAPON.NOAUTOAIM
     Weapon.Kickback 0
+    Weapon.SlotNumber 1
+    Weapon.SlotPriority 0
+    Weapon.SelectionOrder 320
+    Weapon.AmmoType1 "ShieldSaw_token"
+    Weapon.AmmoUse1 1
+    Weapon.AmmoGive1 1
+    Inventory.PickupMessage "You got the ShieldSaw! (Slot 1)"
+    Tag "ShieldSaw"
     States
     {
     Select:
