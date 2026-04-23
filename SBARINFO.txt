@@ -666,6 +666,17 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Red, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR4", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
+			IsSelected MastermindChaingun {
+				drawimage "BARBACR1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACR2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR4", -149, -30;
+				DrawImage "BAMBAR4", -149, -48;
+				DrawBar "CURBAR4", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC4", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Red, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Red, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR4", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 			
 			//Plasma Ammo
 			IsSelected PB_M1Plasma {
@@ -893,7 +904,8 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 			IsSelected not PB_Shotgun, MarauderSSG {
 			IsSelected not PB_SSG, PB_Autoshotgun {
 			IsSelected not PB_QuadSG, PB_RocketLauncher {
-			IsSelected not PB_SuperGL, Paingiver {
+			IsSelected not PB_SuperGL, MastermindChaingun {
+			IsSelected not Paingiver, PB_M1Plasma {
 			IsSelected not PB_M1Plasma, DemonTechPistol {
 			IsSelected not MarauderSSG, PB_M2Plasma {
 			IsSelected not PB_PulseCannon, PB_DualPulseCannons {
@@ -903,7 +915,6 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 			IsSelected not Hell_Rifle, PB_Unmaker {
 			IsSelected not PB_DemonExterminator, ChexRifle {
 			IsSelected not LeverAction, BDPBattleRifle {
-			IsSelected not DemonTechBlaster, PB_BFGBeam {
 			IsSelected not CarbineZombieShield, SavageImpShield {
 			IsSelected not PB_NailgunGuyShield, SguyShield {
 			IsSelected not DarkImpShield, ASGguyShield {

@@ -97,3 +97,22 @@ brightmap sprite DPRFA0 { map "brightmaps/Items/DPRFAB.png" fullbright}
 brightmap sprite DPRFB0 { map "brightmaps/Items/DPRFAB.png" fullbright}
 brightmap sprite DPRFC0 { map "brightmaps/Items/DPRFAB.png" fullbright}
 
+// Mastermind Chaingun
+brightmap sprite RMNGA0 { map "brightmaps/weapons/MastermindChaingun/RMNGA0.png" DisableFullBright }
+brightmap sprite RMNGB0 { map "brightmaps/weapons/MastermindChaingun/RMNGB0.png" DisableFullBright }
+brightmap sprite RMNGC0 { map "brightmaps/weapons/MastermindChaingun/RMNGC0.png" DisableFullBright }
+brightmap sprite RMNGD0 { map "brightmaps/weapons/MastermindChaingun/RMNGD0.png" DisableFullBright }
+brightmap sprite RMNGE0 { map "brightmaps/weapons/MastermindChaingun/RMNGE0.png" DisableFullBright }
+brightmap sprite RMNGF0 { map "brightmaps/weapons/MastermindChaingun/RMNGF0.png" DisableFullBright }
+brightmap sprite RMNGG0 { map "brightmaps/weapons/MastermindChaingun/RMNGG0.png" DisableFullBright }
+brightmap sprite RMNGH0 { map "brightmaps/weapons/MastermindChaingun/RMNGH0.png" DisableFullBright }
+brightmap sprite RMNGI0 { map "brightmaps/weapons/MastermindChaingun/RMNGI0.png" DisableFullBright }
+brightmap sprite RMNGJ0 { map "brightmaps/weapons/MastermindChaingun/RMNGJ0.png" DisableFullBright }
+brightmap sprite RMNGK0 { map "brightmaps/weapons/MastermindChaingun/RMNGK0.png" DisableFullBright }
+brightmap sprite RMNGL0 { map "brightmaps/weapons/MastermindChaingun/RMNGL0.png" DisableFullBright }
+brightmap sprite RMNGO0 { map "brightmaps/weapons/MastermindChaingun/RMNGO0.png" DisableFullBright }
+brightmap sprite RMNGP0 { map "brightmaps/weapons/MastermindChaingun/RMNGP0.png" DisableFullBright }
+brightmap sprite RMNGQ0 { map "brightmaps/weapons/MastermindChaingun/RMNGQ0.png" DisableFullBright }
+brightmap sprite RMNGR0 { map "brightmaps/weapons/MastermindChaingun/RMNGR0.png" DisableFullBright }
+brightmap sprite RMNGS0 { map "brightmaps/weapons/MastermindChaingun/RMNGS0.png" DisableFullBright }
+

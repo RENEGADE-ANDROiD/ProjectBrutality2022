@@ -24,6 +24,7 @@
 #include "GLDEFS.MetalSniper" //Brightmap sprite bindings for the Metal Sniper add-on port
 #include "GLDEFS.OldHMG" //Brightmap sprite bindings for the Old HMG add-on port
 #include "GLDEFS.NeoHMG" //Brightmap sprite bindings for NeoHMG (CRASH pack port)
+#include "GLDEFS.ShieldSaw" //Dynamic lights for ShieldSaw addon port
 
 flickerlight2 FT_GroundFire
 {

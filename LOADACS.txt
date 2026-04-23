@@ -32,3 +32,5 @@ GloryHUD
 BloodPunch
 // Marauder add-on
 Marauder
+// ShieldSaw add-on
+Shield_saw

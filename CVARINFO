@@ -272,6 +272,8 @@ server int pb_NoDemonTechPistolWeapon = 0;
 server int pb_NoTechBlasterUpgradeWeapon = 0;
 server int pb_NoDemonExterminatorWeapon = 0;
 server int pb_NoMG42Weapon = 0;
+server int pb_NoMastermindChaingunWeapon = 0;
+server int pb_NoShieldSawWeapon = 0;
 
 server int pb_NoHelmetAnimation = 0;
 

@@ -382,11 +382,31 @@ LLIDCL LLIDCL
 LFEED LFEED
 LINSP LINSP1
 
+// ShieldSaw
+shieldsaw/ripper "SOUNDS/weapons/ShieldSaw/SHLDRIPR.wav"
+$random ShieldSawBounce { ShieldSawBounce1 ShieldSawBounce2 ShieldSawBounce3 ShieldSawBounce4 ShieldSawBounce5 }
+ShieldSawBounce1 "SOUNDS/weapons/ShieldSaw/Bounce1.ogg"
+ShieldSawBounce2 "SOUNDS/weapons/ShieldSaw/Bounce2.ogg"
+ShieldSawBounce3 "SOUNDS/weapons/ShieldSaw/Bounce3.ogg"
+ShieldSawBounce4 "SOUNDS/weapons/ShieldSaw/Bounce4.ogg"
+ShieldSawBounce5 "SOUNDS/weapons/ShieldSaw/Bounce5.ogg"
+$random ShieldSawHit { ShieldSawHit1 ShieldSawHit2 ShieldSawHit3 }
+ShieldSawHit1 "SOUNDS/weapons/ShieldSaw/Hit1.ogg"
+ShieldSawHit2 "SOUNDS/weapons/ShieldSaw/Hit2.ogg"
+ShieldSawHit3 "SOUNDS/weapons/ShieldSaw/Hit3.ogg"
+ShieldSawBash "SOUNDS/weapons/ShieldSaw/Bash.ogg"
+ShieldSawBack "SOUNDS/weapons/ShieldSaw/Back.ogg"
+ShieldSawFlying "SOUNDS/weapons/ShieldSaw/Flying.ogg"
+ShieldSawThrow "SOUNDS/weapons/ShieldSaw/aThrow.ogg"
+ShieldSawing "SOUNDS/weapons/ShieldSaw/Firing.ogg"
+ShieldSawSwing "SOUNDS/weapons/ShieldSaw/Swing.ogg"
+
 //Slot 5 - MINIGUN AND NAILGUN
 //MINIGUN
 weapons/minigunfire2 DSMINIGL
 weapons/minigunfire DSMINIGN
 weapons/minigunfirefast DSMINIGF
+RMNGSHOT RMNGSHOT
 CHAINSTA CHAINSTA
 CHAINSPI CHAINSPI
 CHAINSTO CHAINSTO
