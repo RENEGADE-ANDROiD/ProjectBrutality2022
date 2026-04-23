@@ -295,6 +295,8 @@ DoomEdNums
 	23149 = PB_M41A
 	23150 = BDPBattleRifle
 	23151 = PB_DemonExterminator
+	23152 = MastermindChaingun
+	23153 = ShieldSaw_token
 
 	//Glory Kills
 	17003 = CyberdemonLegsFatality
