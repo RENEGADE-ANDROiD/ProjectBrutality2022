@@ -78,6 +78,7 @@ const MAXITERATIONS = 32676;
 //Spawners
 #include "zscript/Spawner/PB_SpawnerBase.zc"
 #include "zscript/Spawner/Weapons/PB_ShotgunSpawner.zc"
+#include "zscript/Items/HPArcade/PBHPArcade.zc"
 
 //Le Funny Hat Simulator
 #include "zscript/SpecialShit/HatExtravaganza.zc"

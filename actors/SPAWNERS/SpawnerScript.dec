@@ -34,8 +34,11 @@
 //ItemSpawners
 #include "actors/Spawners/ItemSpawners/ItemTokens.dec"
 #include "actors/Spawners/ItemSpawners/ArmorSpawners.dec"
+#include "actors/Spawners/ItemSpawners/BonusSpawners.dec"
 #include "actors/Spawners/ItemSpawners/BackPackSpawner.dec"
 //HealthSpawners
 #include "actors/Spawners/ItemSpawners/BerserkSpawner.dec"
 #include "actors/Spawners/ItemSpawners/StimpackSpawner.dec"
 #include "actors/Spawners/ItemSpawners/MedikitSpawner.dec"
+#include "actors/Spawners/ItemSpawners/SoulsphereSpawner.dec"
+#include "actors/Spawners/ItemSpawners/MegasphereSpawner.dec"

@@ -79,6 +79,8 @@ user float cl_step_delaymul = 1.0;
 
 //Gameplay Option
 user int SingleDualFire = 1;
+server bool pb_hp_arcade = true;
+server bool pb_wolvus_item_mutators = false;
 server int donotsidestep = 0;
 server int donotdoublejump = 0;
 server int donotclimb = 0;
@@ -198,6 +200,7 @@ server int pb_NoJuggernaut = 0;
 
 //Cyber Demon Variants
 server int pb_NoAnnihilator = 0;
+server int pb_NoBaalgarDemon = 0;
 
 //Weapon Toggles
 server int pb_NoLMG = 0;
@@ -234,7 +237,7 @@ server int pb_LuckyBarrels = 1;
 server int pb_NoSMGWeapon = 0;
 server int pb_NoRevolverWeapon = 0;
 server int pb_NoASGWeapon = 0;
-server int pb_NoCSSGWeapon = 1;
+server int pb_NoCSSGWeapon = 0;
 server int pb_NoNailgunWeapon = 0;
 server int pb_NoCarbineWeapon = 0;
 server int pb_NoSuperGLWeapon = 0;
@@ -244,6 +247,31 @@ server int pb_NoFreezerWeapon = 0;
 server int pb_NoRailgunWeapon = 0;
 server int pb_NoBFGBeamWeapon = 0;
 server int pb_NoBlackholeWeapon = 0;
+server int pb_NoLeverActionWeapon = 0;
+server int pb_NoPaingiverWeapon = 0;
+server int pb_NoShotgunWeapon = 0;
+server int pb_NoRocketLauncherWeapon = 0;
+server int pb_NoPlasmaRifleWeapon = 0;
+server int pb_NoBFGWeapon = 0;
+server int pb_NoChainsawWeapon = 0;
+server int pb_NoFlamethrowerWeapon = 0;
+server int pb_NoFlamethrowerUpgrade = 0;
+server int pb_NoMinigunWeapon = 0;
+server int pb_NoLMGWeapon = 0;
+server int pb_NoHDMRWeapon = 0;
+server int pb_NoMinigunUpgradeWeapon = 0;
+server int pb_NoMetalSniperWeapon = 0;
+server int pb_NoOldHMGWeapon = 0;
+server int pb_NoNeoHMGWeapon = 0;
+server int pb_NoM41AWeapon = 0;
+server int pb_NoBattleRifleWeapon = 0;
+server int pb_NoBallistaWeapon = 0;
+server int pb_NoPulseCannonWeapon = 0;
+server int pb_NoDemonTechBlasterWeapon = 0;
+server int pb_NoDemonTechPistolWeapon = 0;
+server int pb_NoTechBlasterUpgradeWeapon = 0;
+server int pb_NoDemonExterminatorWeapon = 0;
+server int pb_NoMG42Weapon = 0;
 
 server int pb_NoHelmetAnimation = 0;
 

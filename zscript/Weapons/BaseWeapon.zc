@@ -680,6 +680,9 @@ class PB_WeaponBase : DoomWeapon
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready4"))||
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReallyReady"))||
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready3"))||
+			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("BDReady3"))||
+			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("BDReadyADS"))||
+			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready_ADS"))|| // e.g. PB_MetalSniper scope idle
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("JavelinReady3"))|| //Nailgun Gavelin Mode
 			   InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyToFire2")) //Hell Rifle Green mode
 			 ) 
@@ -883,6 +886,36 @@ class PB_WeaponBase : DoomWeapon
 			return invoker.A_Jump(256,"SelectAnimation");
 		}
 	}
+
+	// Shims for add-on weapons that expect newer-PB helper actions (e.g. Ballista from CRASH pack)
+	action void PB_IncrementHeat(int amount, bool secondBarrel = false) {}
+	// Transfers from reserve pool into magazine in steps of "per" until mag reaches "magMax" (CRASH Tech Blaster reload)
+	action void PB_AmmoIntoMag(name mag, name pool, int magMax, int per)
+	{
+		int n;
+		for (n = 0; n < 512 && CountInv(mag) < magMax && CountInv(pool) >= per; n++)
+		{
+			A_TakeInventory(pool, per);
+			A_GiveInventory(mag, per);
+		}
+	}
+	// Magazine dump back to pool (e.g. NeoHMG Unload) — per-unit to stay consistent with AmmoIntoMag
+	action void PB_DumpMagToPool(name mag, name pool, int per)
+	{
+		int n;
+		for (n = 0; n < 512 && CountInv(mag) > 0; n++)
+		{
+			A_TakeInventory(mag, per);
+			A_GiveInventory(pool, per);
+		}
+	}
+	action void PB_FireOffset() {}
+	action void PB_DynamicTail(string a, string b) {}
+	action void PB_GunSmoke(double x, double y, double z)
+	{
+		A_FireCustomMissile("GunFireSmoke", x, y, 0, 0, 0, 0);
+	}
+	action void PB_VisualLaser(int mode) {}
 	
 	States
 	{	

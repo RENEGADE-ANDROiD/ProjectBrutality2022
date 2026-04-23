@@ -23,6 +23,7 @@
 #include "GLDEFS.Overlord" //For the Overlord projectiles, to prevent this file from being flooded
 #include "GLDEFS.MetalSniper" //Brightmap sprite bindings for the Metal Sniper add-on port
 #include "GLDEFS.OldHMG" //Brightmap sprite bindings for the Old HMG add-on port
+#include "GLDEFS.NeoHMG" //Brightmap sprite bindings for NeoHMG (CRASH pack port)
 
 flickerlight2 FT_GroundFire
 {
@@ -3218,7 +3219,8 @@ SecondarySize 104
 Chance 0.3
 }
 
-Object ZombieTankMissile
+// ZMIS* was for a cut class; missiles use Rocket family sprites — attach to zombie tank rocket
+Object ZombieRocket2
 {
 Frame ZMISA { Light ZombieTankMissile1 }
 Frame ZMISB { Light ZombieTankMissile2 }
@@ -4233,30 +4235,6 @@ brightmap sprite DUKEC3
 {
     map "brightmaps/monsters/Hellduke/DUKEC3.png"
 }	
-brightmap sprite DUKEC7
-{
-    map "brightmaps/monsters/Hellduke/DUKEC7.png"
-}	
-brightmap sprite DUKEC8
-{
-    map "brightmaps/monsters/Hellduke/DUKEC8.png"
-}
-brightmap sprite DUKED1
-{
-    map "brightmaps/monsters/Hellduke/DUKED1.png"
-}	
-brightmap sprite DUKED2
-{
-    map "brightmaps/monsters/Hellduke/DUKED2.png"
-}	
-brightmap sprite DUKED3
-{
-    map "brightmaps/monsters/Hellduke/DUKED3.png"
-}	
-	brightmap sprite DUKED7
-{
-    map "brightmaps/monsters/Hellduke/DUKED7.png"
-}	
 brightmap sprite DUKED8
 {
     map "brightmaps/monsters/Hellduke/DUKED8.png"
@@ -5131,4 +5109,47 @@ BrightMap Sprite HELEP0
 {
 Map "brightmaps/monsters/Helemental/BMHELEP0"
 DisableFullBright
-}		
+}
+
+// Ballista (CRASH pack port) — lights + brightmaps
+FlickerLight Ballista
+{
+Color 0.7 0.4 0.0
+Size 30
+SecondarySize 40
+Chance 0.2
+Offset 0 24 0
+}
+
+brightmap sprite BLEMA0 { map "brightmaps/WEAPONS/Ballista/BLEMA0.png" }
+
+brightmap sprite BLREA0 { map "brightmaps/WEAPONS/Ballista/BLREA0.png" }
+brightmap sprite BLREB0 { map "brightmaps/WEAPONS/Ballista/BLREB0.png" }
+brightmap sprite BLREC0 { map "brightmaps/WEAPONS/Ballista/BLREC0.png" }
+brightmap sprite BLRED0 { map "brightmaps/WEAPONS/Ballista/BLRED0.png" }
+brightmap sprite BLREE0 { map "brightmaps/WEAPONS/Ballista/BLREE0.png" }
+brightmap sprite BLREF0 { map "brightmaps/WEAPONS/Ballista/BLREF0.png" }
+brightmap sprite BLREG0 { map "brightmaps/WEAPONS/Ballista/BLREG0.png" }
+brightmap sprite BLREH0 { map "brightmaps/WEAPONS/Ballista/BLREH0.png" }
+brightmap sprite BLREI0 { map "brightmaps/WEAPONS/Ballista/BLREI0.png" }
+brightmap sprite BLREJ0 { map "brightmaps/WEAPONS/Ballista/BLREJ0.png" }
+brightmap sprite BLREK0 { map "brightmaps/WEAPONS/Ballista/BLREK0.png" }
+brightmap sprite BLREL0 { map "brightmaps/WEAPONS/Ballista/BLREL0.png" }
+brightmap sprite BLREM0 { map "brightmaps/WEAPONS/Ballista/BLREM0.png" }
+brightmap sprite BLREN0 { map "brightmaps/WEAPONS/Ballista/BLREN0.png" }
+brightmap sprite BLREO0 { map "brightmaps/WEAPONS/Ballista/BLREO0.png" }
+
+Object Ballistagun
+{
+Frame BALS { Light Ballista }
+}
+
+// Baalgar Demon (CyberdemonBoss) — stagger / GK highlight (weapons pack)
+hardwareshader sprite HXBDV1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV4 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+hardwareshader sprite HXBDV8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }

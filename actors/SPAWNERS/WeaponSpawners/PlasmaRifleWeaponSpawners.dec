@@ -14,7 +14,7 @@ Actor PlasmaWeaponSpawner replaces PlasmaRifle
 		TNT1 A 1
 		loop
 	DiceRandom:
-		TNT1 A 0 A_Jump(256, "SpawnPB_Railgun", "SpawnPB_FreezerRifle", "SpawnPB_M2Plasma", "SpawnPB_PlasmaRifle", "SpawnPB_LightningGun")
+		TNT1 A 0 A_Jump(256, "SpawnPB_Railgun", "SpawnPB_FreezerRifle", "SpawnPB_M2Plasma", "SpawnPB_PlasmaRifle", "SpawnPB_LightningGun", "SpawnBallistagun", "SpawnDemonTechBlaster", "SpawnDemonTechPistol")
 		Stop	
 	DiceMain:	// Default spawn preset with a slight difficulty curve. Tier 1-4 Monster presets are contained here to provide more variety.
 		EarlyLevelMob:
@@ -39,6 +39,10 @@ Actor PlasmaWeaponSpawner replaces PlasmaRifle
 			TNT1 A 0 A_Jump(84, "SpawnPB_M2Plasma")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		HighLevelMob:
+			TNT1 A 0 A_Jump(2, "SpawnDemonTechPistol")
+			TNT1 A 0 A_Jump(3, "SpawnDemonTechBlaster")
+			TNT1 A 0 A_Jump(5, "SpawnPB_PulseCannon")
+			TNT1 A 0 A_Jump(10, "SpawnBallistagun")
 			TNT1 A 0 A_Jump(32, "SpawnPB_LightningGun")
 			TNT1 A 0 A_Jump(64, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(75, "SpawnPB_Flamethrower")
@@ -52,11 +56,19 @@ Actor PlasmaWeaponSpawner replaces PlasmaRifle
 			TNT1 A 0 A_Jump(96, "SpawnPB_M2Plasma")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		DiceTier3:
+			TNT1 A 0 A_Jump(1, "SpawnDemonTechPistol")
+			TNT1 A 0 A_Jump(2, "SpawnDemonTechBlaster")
+			TNT1 A 0 A_Jump(5, "SpawnPB_PulseCannon")
+			TNT1 A 0 A_Jump(8, "SpawnBallistagun")
 			TNT1 A 0 A_Jump(32, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(64, "SpawnPB_FreezerRifle")
 			TNT1 A 0 A_Jump(128, "SpawnPB_M2Plasma")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		DiceTier4:
+			TNT1 A 0 A_Jump(1, "SpawnDemonTechPistol")
+			TNT1 A 0 A_Jump(3, "SpawnDemonTechBlaster")
+			TNT1 A 0 A_Jump(6, "SpawnPB_PulseCannon")
+			TNT1 A 0 A_Jump(12, "SpawnBallistagun")
 			TNT1 A 0 A_Jump(32, "SpawnPB_LightningGun")
 			TNT1 A 0 A_Jump(100, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(96, "SpawnPB_FreezerRifle")
@@ -64,6 +76,10 @@ Actor PlasmaWeaponSpawner replaces PlasmaRifle
 			TNT1 A 0 A_Jump(128, "SpawnPB_M2Plasma")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		DiceDeathWish:
+			TNT1 A 0 A_Jump(1, "SpawnDemonTechPistol")
+			TNT1 A 0 A_Jump(2, "SpawnDemonTechBlaster")
+			TNT1 A 0 A_Jump(4, "SpawnPB_PulseCannon")
+			TNT1 A 0 A_Jump(8, "SpawnBallistagun")
 			TNT1 A 0 A_Jump(108, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(90, "SpawnPB_Flamethrower")
 			TNT1 A 0 A_Jump(88, "SpawnPB_FreezerRifle")
@@ -91,6 +107,7 @@ Actor PlasmaWeaponSpawner replaces PlasmaRifle
 		TNT1 A 0 A_SpawnItemEx("PB_M2Upgrade",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnPB_Flamethrower:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponFlamethrower",0)
 		TNT1 A 1 A_RadiusGive("IsNearPlasmaWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 		TNT1 A 0 A_SpawnItemEx("PB_Flamethrower",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
@@ -99,8 +116,29 @@ Actor PlasmaWeaponSpawner replaces PlasmaRifle
 		ReplaceToggle:
 	
 	ReplaceVanilla:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponPlasmaRifle",0)
 		TNT1 A 1 A_RadiusGive("IsNearPlasmaWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 		TNT1 A 0 A_SpawnItemEx("DropedPlasma",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnBallistagun:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponBallista",0)
+		TNT1 A 1 A_RadiusGive("IsNearPlasmaWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		TNT1 A 0 A_SpawnItemEx("Ballistagun",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnPB_PulseCannon:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponPulseCannon",0)
+		TNT1 A 1 A_RadiusGive("IsNearPlasmaWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		TNT1 A 0 A_SpawnItemEx("PB_PulseCannon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnDemonTechBlaster:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponDemonTechBlaster",0)
+		TNT1 A 1 A_RadiusGive("IsNearPlasmaWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		TNT1 A 0 A_SpawnItemEx("DemonTechBlaster",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnDemonTechPistol:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponDemonTechPistol",0)
+		TNT1 A 1 A_RadiusGive("IsNearPlasmaWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		TNT1 A 0 A_SpawnItemEx("DemonTechPistol",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	}
 }

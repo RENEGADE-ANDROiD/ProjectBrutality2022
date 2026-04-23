@@ -239,6 +239,50 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
+			IsSelected PB_NeoHMG {
+				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR1", -149, -30;
+				DrawImage "BAMBAR1", -149, -48;
+				DrawBar "CURBAR1", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
+			IsSelected PB_M41A {
+				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR1", -149, -30;
+				DrawImage "BAMBAR1", -149, -48;
+				DrawBar "CURBAR1", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
+			IsSelected BDPBattleRifle {
+				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR1", -149, -30;
+				DrawImage "BAMBAR1", -149, -48;
+				DrawBar "CURBAR1", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
+			IsSelected LeverAction {
+				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR1", -149, -30;
+				DrawImage "BAMBAR1", -149, -48;
+				DrawBar "CURBAR1", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 			
 			IsSelected PB_MG42 {
 				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
@@ -481,6 +525,9 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -150, -32;
 				DrawNumber 3, AANUM3, Orange, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR3", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+				InInventory MarauderCryoMode {
+					drawstring SMALLFONT, Cyan, "CRYO", -145, -64, 0, alignment(left)|drawshadow(1,1);
+				}
 			}
 			IsSelected PB_SSG {
 				InInventory DualWieldingSSG {
@@ -655,6 +702,17 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 					DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 				}
 			}
+			IsSelected DemonTechPistol {
+				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACP2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR5", -149, -30;
+				DrawImage "BAMBAR5", -149, -48;
+				DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Purple, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 			IsSelected PB_M2Plasma {
 				InInventory DualWieldingM2Plasma {
 					drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
@@ -751,6 +809,13 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
 				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;	
 			}
+			IsSelected Ballistagun {
+				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+				DrawImage "BAMBAR5", -149, -30;
+				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
+				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;	
+			}
 			IsSelected BHGen {
 				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
 				DrawImage "BAMBAR5", -149, -30;
@@ -803,8 +868,98 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, DarkRed, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
-			
-			
+			IsSelected PB_DemonExterminator {
+				drawimage "BARBACD1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACZ2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR6", -149, -30;
+				DrawImage "BAMBAR7", -149, -48;
+				DrawBar "RESBAR7", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC7", -66, -37, centerbottom, 17, 17;
+				Drawimage "AMMOIC6", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, DarkRed, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
+
+			IsSelected not Rifle, PB_Carbine {
+			IsSelected not PB_Nailgun, PB_MetalSniper {
+			IsSelected not PB_LMG, OldHMG {
+			IsSelected not PB_NeoHMG, PB_M41A {
+			IsSelected not BDPBattleRifle, PB_MG42 {
+			IsSelected not PB_Minigun, PB_Pistol {
+			IsSelected not PB_Revolver, PB_SMG {
+			IsSelected not PB_Deagle, PB_MP40 {
+			IsSelected not RiotShield, PB_Chainsaw {
+			IsSelected not PB_Shotgun, MarauderSSG {
+			IsSelected not PB_SSG, PB_Autoshotgun {
+			IsSelected not PB_QuadSG, PB_RocketLauncher {
+			IsSelected not PB_SuperGL, Paingiver {
+			IsSelected not PB_M1Plasma, DemonTechPistol {
+			IsSelected not MarauderSSG, PB_M2Plasma {
+			IsSelected not PB_PulseCannon, PB_DualPulseCannons {
+			IsSelected not PB_Freezer, PB_Railgun {
+			IsSelected not PB_BFG9000, Ballistagun {
+			IsSelected not BHGen, PB_Flamethrower {
+			IsSelected not Hell_Rifle, PB_Unmaker {
+			IsSelected not PB_DemonExterminator, ChexRifle {
+			IsSelected not LeverAction, BDPBattleRifle {
+			IsSelected not DemonTechBlaster, PB_BFGBeam {
+			IsSelected not CarbineZombieShield, SavageImpShield {
+			IsSelected not PB_NailgunGuyShield, SguyShield {
+			IsSelected not DarkImpShield, ASGguyShield {
+			IsSelected not ZMANShield, CommandoShield {
+			IsSelected not PlasmaZombieShield, ImpShield {
+			IsSelected not TriclopsImpShield, ZombieScientistShield {
+				// Generic: future weapons (yellow dual/single, PB_Nailgun family)
+				usessecondaryammo
+				{
+					drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
+					drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
+					DrawImage "BAMBAR1", -149, -30;
+					DrawImage "BAMBAR1", -149, -48;
+					DrawBar "CURBAR1", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+					Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
+					DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
+					DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
+					DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+				}
+				else
+				{
+					drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
+					DrawImage "BAMBAR1", -149, -30;
+					Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
+					DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
+					DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+				}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
+			}
 			//secondary ammo and inventory
 			usessecondaryammo
 			{

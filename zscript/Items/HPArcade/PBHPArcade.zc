@@ -1,0 +1,47 @@
+// HP Arcade armor. DECORATE `replaces` uses actors/Items/PBHPArcade/PBHP_Bridges_Armor.dec.
+// CVar: use CVar.FindCVar (server bool) — not CVar.GetCVar(name, playerpawn), which UZDoom 4.14.x rejects.
+// BasicArmorPickup has no Armor.MaxSaveAmount in ZScript; cap is the `cap` field below.
+class PBHP_ArmorArcade : BasicArmorPickup
+{
+	int cap;
+
+	override void PostBeginPlay()
+	{
+		cap = 500;
+		Super.PostBeginPlay();
+	}
+
+	double Pct01() { return clamp(SavePercent, 0, 100) / 100.0; }
+
+	override bool TryPickup(in out Actor toucher)
+	{
+		let cv = CVar.FindCVar("pb_hp_arcade");
+		if (cv == null || !cv.GetBool()) return Super.TryPickup(toucher);
+		let armor = BasicArmor(toucher.FindInventory("BasicArmor", true));
+		if (armor == null) return Super.TryPickup(toucher);
+		if (armor.Amount >= cap && armor.SavePercent >= Pct01()) return false;
+		return Super.TryPickup(toucher);
+	}
+
+	override bool Use(bool pickup)
+	{
+		if (Owner == null) return false;
+		let cv = CVar.FindCVar("pb_hp_arcade");
+		if (cv == null || !cv.GetBool()) return Super.Use(pickup);
+		bool ok = Super.Use(pickup);
+		if (ok)
+		{
+			let a = BasicArmor(Owner.FindInventory("BasicArmor", true));
+			if (a)
+			{
+				a.Amount    = min(a.Amount, cap);
+				a.MaxAmount = min(a.MaxAmount, cap);
+			}
+		}
+		return ok;
+	}
+}
+
+class PBHP_LightArmorZSC  : PBHP_ArmorArcade { default { armor.savepercent 40;  armor.saveamount 100; } }
+class PBHP_HeavyArmorZSC  : PBHP_ArmorArcade { default { armor.savepercent 70;  armor.saveamount 200; } }
+class PBHP_MediumArmorZSC : PBHP_ArmorArcade { default { armor.savepercent 60;  armor.saveamount 150; } }

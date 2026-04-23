@@ -31,6 +31,57 @@ Actor HeightTIDIndicator : Inventory
 }
 Actor IsDead : Inventory {}
 Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
+Actor GrabbedFlameBarrel : Inventory { Inventory.MaxAmount 1 }
+Actor HasFlameBarrel : Inventory { Inventory.MaxAmount 1 }
+Actor EquippedObject : Inventory { Inventory.MaxAmount 1 }
+Actor CryoRifleSelected : Inventory { Inventory.MaxAmount 1 }
+Actor DisintegratedHuman
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_SpawnItem("XDeath1")
+		Stop
+	}
+}
+Actor RailNullPuff : BulletPuff
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		Stop
+	}
+}
+Actor OrangeShockwave : BulletPuff
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	RenderStyle Add
+	Alpha 0.85
+	Scale 1.4
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_SpawnItem("WhiteShockwave")
+		Stop
+	}
+}
+Actor ZombiePlasmaTankExplosion
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_SpawnItem("ZombieTankExplosion")
+		Stop
+	}
+}
 
 
 #include "actors/Brutality/BrutalitiesZombieman.dec"
@@ -80,6 +131,7 @@ Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
 #include "actors/Items/Ammo/Bulletkit.dec"
 #include "actors/Items/Ammo/SpecialGrenadeBox.dec"
 #include "actors/Items/Ammo/Cellpack.dec"
+#include "actors/Items/Ammo/PB_DTech_Ammo.dec"
 
 //Powerups
 #include "actors/Items/Powerups/GenericPowerups.dec"
@@ -114,6 +166,7 @@ Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
 #include "actors/Monsters/T3-Floaters/PAIN.dec"
 #include "actors/Monsters/T4-Viles/ARCHVILE.dec"
 #include "actors/Monsters/Tz-Bosses/CYBERDEMON.dec"
+#include "actors/Monsters/Tz-Bosses/CYBERDEMON_BOSS.dec"
 #include "actors/Monsters/Tz-Bosses/MASTERMIND.dec"
 
 //ST Monsters
@@ -267,6 +320,9 @@ Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
 #include "actors/Weapons/Slot4/LeverAction.dec"
 #include "actors/Weapons/Slot4/MetalSniper.dec"
 #include "actors/Weapons/Slot4/OldHMG.dec"
+#include "actors/Weapons/Slot4/NeoHMG.dec"
+#include "actors/Weapons/Slot4/M41A.dec"
+#include "actors/Weapons/Slot4/BDPBattleRifle.dec"
 #include "actors/Weapons/Slot5/SUPERGL.dec"
 #include "actors/Weapons/Slot5/Paingiver.dec"
 #include "actors/Weapons/Slot7/FREEZER.dec"
@@ -276,8 +332,12 @@ Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
 #include "actors/Weapons/Slot8/BLACKHOLE.dec"
 #include "actors/Weapons/Slot8/BFGPickups.dec"
 #include "actors/Weapons/Slot9/DemonTech.dec"
+#include "actors/Weapons/Slot9/DTechDemonPistol.dec"
 #include "actors/Weapons/Slot9/Unmaker.dec"
 #include "actors/Weapons/Slot9/Flamethrower.dec"
+#include "actors/Weapons/Slot9/DemonExterminator.dec"
+#include "actors/Weapons/Slot9/Ballista.dec"
+#include "actors/Weapons/Slot9/DTechDemonBlaster.dec"
 
 
 
@@ -342,6 +402,7 @@ Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
 
 //Smart Scavenger Health
 #include "actors/Items/Health/GenericHealth.dec"
+#include "actors/Items/Health/WolvusMutatorItems.dec"
 #include "actors/Items/Health/Stimpack.dec"
 #include "actors/Items/Health/Medikit.dec"
 #include "actors/Items/Health/Medipack.dec"

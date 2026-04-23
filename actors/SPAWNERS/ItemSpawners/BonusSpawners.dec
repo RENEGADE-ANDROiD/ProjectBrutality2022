@@ -1,0 +1,134 @@
+Actor HealthBonusSpawner replaces HealthBonus
+{
+	+LOOKALLAROUND
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1 ACS_NamedExecuteAlways("SpawnerScript",0)
+	Deciding:
+		TNT1 A 1
+		loop
+	DiceRandom:
+		TNT1 A 0 A_Jump(256, "SpawnRegular", "SpawnStrong", "SpawnSuper", "SpawnPristine")
+		Stop
+	DiceMain:
+		EarlyLevelMob:
+		LowLevelMob:
+			TNT1 A 0 A_Jump(1,"SpawnPristine")
+			TNT1 A 0 A_Jump(79,"SpawnSuper")
+			TNT1 A 0 A_Jump(158,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+		MidLevelMob:
+			TNT1 A 0 A_Jump(2,"SpawnPristine")
+			TNT1 A 0 A_Jump(158,"SpawnSuper")
+			TNT1 A 0 A_Jump(222,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+		HighLevelMob:
+			TNT1 A 0 A_Jump(4,"SpawnPristine")
+			TNT1 A 0 A_Jump(206,"SpawnSuper")
+			TNT1 A 0 A_Jump(238,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+	DiceProg:
+		DiceTier1:
+		DiceTier2:
+			TNT1 A 0 A_Jump(1,"SpawnPristine")
+			TNT1 A 0 A_Jump(63,"SpawnSuper")
+			TNT1 A 0 A_Jump(126,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+		DiceTier3:
+			TNT1 A 0 A_Jump(2,"SpawnPristine")
+			TNT1 A 0 A_Jump(126,"SpawnSuper")
+			TNT1 A 0 A_Jump(158,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+		DiceTier4:
+		DiceDeathWish:
+			TNT1 A 0 A_Jump(4,"SpawnPristine")
+			TNT1 A 0 A_Jump(158,"SpawnSuper")
+			TNT1 A 0 A_Jump(190,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+	SpawnSuper:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWolvusItemMutators",0)
+		TNT1 A 0 A_SpawnItemEx("SuperHealthPlus",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+		Stop
+	SpawnStrong:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWolvusItemMutators",0)
+		TNT1 A 0 A_SpawnItemEx("StrongHealthPlus",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+		Stop
+	SpawnPristine:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWolvusItemMutators",0)
+		TNT1 A 0 A_SpawnItemEx("PristineHealthPlus",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+		Stop
+	SpawnRegular:
+	ReplaceVanilla:
+		TNT1 A 0 A_SpawnItemEx("HealthPlus",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+		Stop
+	}
+}
+
+Actor ArmorBonusSpawner replaces ArmorBonus
+{
+	+LOOKALLAROUND
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1 ACS_NamedExecuteAlways("SpawnerScript",0)
+	Deciding:
+		TNT1 A 1
+		loop
+	DiceRandom:
+		TNT1 A 0 A_Jump(256, "SpawnRegular", "SpawnStrong", "SpawnSuper", "SpawnPristine")
+		Stop
+	DiceMain:
+		LowLevelMob:
+			TNT1 A 0 A_Jump(4,"SpawnPristine")
+			TNT1 A 0 A_Jump(79,"SpawnSuper")
+			TNT1 A 0 A_Jump(158,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+		MidLevelMob:
+			TNT1 A 0 A_Jump(16,"SpawnPristine")
+			TNT1 A 0 A_Jump(158,"SpawnSuper")
+			TNT1 A 0 A_Jump(222,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+		HighLevelMob:
+			TNT1 A 0 A_Jump(32,"SpawnPristine")
+			TNT1 A 0 A_Jump(206,"SpawnSuper")
+			TNT1 A 0 A_Jump(238,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+	DiceProg:
+		DiceTier1:
+		DiceTier2:
+			TNT1 A 0 A_Jump(2,"SpawnPristine")
+			TNT1 A 0 A_Jump(63,"SpawnSuper")
+			TNT1 A 0 A_Jump(126,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+		DiceTier3:
+			TNT1 A 0 A_Jump(4,"SpawnPristine")
+			TNT1 A 0 A_Jump(126,"SpawnSuper")
+			TNT1 A 0 A_Jump(158,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+		DiceTier4:
+		DiceDeathWish:
+			TNT1 A 0 A_Jump(8,"SpawnPristine")
+			TNT1 A 0 A_Jump(158,"SpawnSuper")
+			TNT1 A 0 A_Jump(190,"SpawnStrong")
+			TNT1 A 0 A_Jump(256,"SpawnRegular")
+	SpawnSuper:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWolvusItemMutators",0)
+		TNT1 A 0 A_SpawnItemEx("SuperArmorShard",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+		Stop
+	SpawnStrong:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWolvusItemMutators",0)
+		TNT1 A 0 A_SpawnItemEx("StrongArmorShard",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+		Stop
+	SpawnPristine:
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWolvusItemMutators",0)
+		TNT1 A 0 A_SpawnItemEx("PristineArmorShard",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+		Stop
+	SpawnRegular:
+	ReplaceVanilla:
+		TNT1 A 0 A_SpawnItemEx("ArmorShard",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+		Stop
+	}
+}

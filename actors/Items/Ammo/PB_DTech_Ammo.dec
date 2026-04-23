@@ -1,0 +1,10 @@
+// Shared “Demon power cell” pool for CRASH-port Demon Tech add-on weapons (pistol, blaster, exterminator, etc.).
+ACTOR PB_DTech : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 500
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 500
+	+INVENTORY.IGNORESKILL
+	Inventory.Icon "CELLA0"
+}

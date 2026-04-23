@@ -759,6 +759,8 @@ weapons/freezer/respect1 FRZRRS1
 weapons/freezer/respect2 FRZRRS2
 weapons/freezer/respect3 FRZRRS3
 weapons/freezer/idle FRZRHUM
+// Marauder SSG cryo alt (alias for addon-style logical name; same as freezer primary)
+weapons/CryoRifle/missile FRZRFR1
 weapons/freezer/fire FRZRFR1
 weapons/freezer/up FRZRUP
 weapons/freezer/reload1 FRZRRL1
@@ -1067,3 +1069,61 @@ $random MSSFR {
 MSSLD MSSLD
 MSSOP MSSOP
 MSWING MSWING
+
+// Ballista (CRASH / add-on port)
+BALIST "sounds/combat/weapons/Ballista/BALIST.wav"
+UNMKHUM "sounds/combat/weapons/Ballista/UNMKHUM.ogg"
+UNMKUP "sounds/combat/weapons/Ballista/UNMKUP.ogg"
+BLSTAI "sounds/combat/weapons/Ballista/BLSTAI.ogg"
+BLSTBP "sounds/combat/weapons/Ballista/BLSTBP.ogg"
+BLSTDE "sounds/combat/weapons/Ballista/BLSTDE.ogg"
+
+// BDP Battle Rifle — audio lumps from PBX-Weapons (Slot-4/BattleRifle)
+weapons/battlerifle/fire		"sounds/combat/weapons/BattleRifle/BR45FIR2.ogg"
+weapons/battlerifle/firealt		"sounds/combat/weapons/BattleRifle/BR45FIRE"
+weapons/battlerifle/magout		"sounds/combat/weapons/BattleRifle/BR45OPEN"
+weapons/battlerifle/magin		"sounds/combat/weapons/BattleRifle/BR45LOAD"
+weapons/battlerifle/up		"sounds/combat/weapons/BattleRifle/BR45PICK.ogg"
+weapons/battlerifle/ping		"sounds/combat/weapons/BattleRifle/BR45PING"
+weapons/battlerifle/switch		"sounds/combat/weapons/BattleRifle/BR45SWCH"
+weapons/battlerifle/bon1		"sounds/combat/weapons/BattleRifle/BR45BON1.ogg"
+weapons/battlerifle/bon2		"sounds/combat/weapons/BattleRifle/BR45BON2.ogg"
+weapons/battlerifle/bon3		"sounds/combat/weapons/BattleRifle/BR45BON3.ogg"
+weapons/battlerifle/bon4		"sounds/combat/weapons/BattleRifle/BR45BON4.ogg"
+$random weapons/battlerifle/dry {
+	weapons/battlerifle/bon1
+	weapons/battlerifle/bon2
+	weapons/battlerifle/bon3
+	weapons/battlerifle/bon4
+}
+
+// Demon-Tech (CRASH) — Pistol & Blaster (sounds in sounds/combat/weapons/DemonTech/)
+DTP/Draw "sounds/combat/weapons/DemonTech/Pistol/DTPUP.ogg"
+DTP/Reload "sounds/combat/weapons/DemonTech/Pistol/DTPUP.ogg"
+DTP/Fire "sounds/combat/weapons/DemonTech/Pistol/DTPFI.ogg"
+DTP/Magout "sounds/combat/weapons/DemonTech/Pistol/DTPMOUT.ogg"
+DTP/Magin "sounds/combat/weapons/DemonTech/Pistol/DTPMIN.ogg"
+DTP/Snap "sounds/combat/weapons/DemonTech/Pistol/DTPSNAP.ogg"
+TechBlaster/LoadIn "sounds/combat/weapons/DemonTech/Blaster/TBINJECT.ogg"
+TechBlaster/Online "sounds/combat/weapons/DemonTech/Blaster/TBONLINE.ogg"
+TechBlaster/Unload "sounds/combat/weapons/DemonTech/Blaster/TBUNJECT.ogg"
+TechBlaster/Steam "sounds/combat/weapons/DemonTech/Blaster/TBRSTEAM.ogg"
+TechBlaster/Fire "sounds/combat/weapons/DemonTech/Blaster/TBSRFIRE.ogg"
+TechBlaster/Explode "sounds/combat/weapons/DemonTech/Blaster/TBSRPEXP.ogg"
+TechBlaster/PickUp "sounds/combat/weapons/DemonTech/Blaster/TBONLINE.ogg"
+TechBlaster/Idle "sounds/combat/weapons/DemonTech/Blaster/TBIDLEBZ.ogg"
+TechBlaster/Tsss "sounds/combat/weapons/DemonTech/Blaster/TBTSSSSS.ogg"
+toolbox/off "sounds/combat/weapons/DemonTech/Blaster/TBUNJECT.ogg"
+weapons/click2 DEAGMG3
+
+// NeoHMG (CRASH)
+weapon/HMG/Fire "sounds/combat/weapons/NeoHMG/HMGFIRE.ogg"
+weapon/HMG/Stop "sounds/combat/weapons/NeoHMG/DIBSTOP.ogg"
+weapon/HMG/Reload1 "sounds/combat/weapons/NeoHMG/9HAINAM1.ogg"
+
+// M41A — SFX: sounds/combat/weapons/M41A/ (M41AFIRE, M41PICUP, mags, bolt)
+M41A/Fire		"sounds/combat/weapons/M41A/M41AFIRE"
+M41A/MagTake	"sounds/combat/weapons/M41A/CBMGOUT"
+M41A/MagIn		"sounds/combat/weapons/M41A/CBMGINN"
+M41A/Bolt		"sounds/combat/weapons/M41A/ALIEN_CK"
+M41A/PickUp		"sounds/combat/weapons/M41A/M41PICUP"

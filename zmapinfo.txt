@@ -287,6 +287,14 @@ DoomEdNums
 	23139 = PB_Marauder
 	23140 = MarauderWolfSummon
 	23141 = MSSGUpgrade
+	23142 = Ballistagun
+	23144 = DemonTechBlaster
+	23145 = TechBlasterUpgrade
+	23146 = DemonTechPistol
+	23148 = PB_NeoHMG
+	23149 = PB_M41A
+	23150 = BDPBattleRifle
+	23151 = PB_DemonExterminator
 
 	//Glory Kills
 	17003 = CyberdemonLegsFatality
@@ -303,4 +311,6 @@ DoomEdNums
 	30109 = Hellsmith
 	30130 = Helemental
 	30135 = Hierophant
+	// Weapons pack — Baalgar Demon (Doom1-style cyber boss, separate from PB_Cyberdemon)
+	2546  = CyberdemonBoss
 }
