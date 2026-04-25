@@ -54,30 +54,14 @@ Useful cvars if you want to tweak or bisect behavior:
 - `pb_disablenewenemies`, `pb_disablenewguns`, `pb_disabledecorations`, `pb_disablemapenhancements` — gate large feature blocks on or off.
 - `pb_lowgraphicsmode`, `pb_bloodamount`, `zdoombrutalblood`, `zdoombrutaljanitor`, `zdoombrutaljanitorcasings` — performance and gore-density knobs.
 
-## Add-ons and other mods
-
-If you want add-ons, start at the upstream [Project Brutality Discord server](https://discord.gg/2hJxXPc), the [Project Brutality website](https://projectbrutality.com/), and [The Brutal Repository](https://brutalrepository.pl/). Treat Project Brutality 2022 itself as the base you load on top of an IWAD; individual add-on compatibility will vary because the Glory Kills and Monster Pack content is already baked in here.
-
-When using third-party PB add-ons, please respect the usual modder etiquette:
-
-- Ask the original modder for permission where possible. If they say no, respect it.
-- If the author cannot be reached, always credit them by name; never claim someone else's work as your own.
-- Remove content on request from its original author.
-- If the Project Brutality dev team asks for something to be removed, please comply.
-
-## Known quirks
-
-- On first launch UZDoom will print a handful of console warnings about missing classes (`PB_RifleCommando`, `RailNullPuff`, `OrangeShockwave`, `ZombieTankMissile`, `ZombiePlasmaTankExplosion`) and a missing Hellduke brightmap set. These are pre-existing issues inherited from the original Monster Pack spawner files — the game boots and plays fine.
-- Some `#include` and lump paths are case-sensitive on Linux. If you hand-edit files, preserve the existing casing.
-
 ## Feedback and bug reporting
 
-For bugs specific to **this** build, please use the Issues tab on this repository. Please make sure:
+For bugs specific to **this** build, please surface issues on the [Project Brutality Discord server](https://discord.gg/2hJxXPc). Please make sure:
 
 - The bug is with Project Brutality 2022 itself, not a third-party add-on you are loading alongside it.
 - The issue has not already been reported.
 
-General suggestions, opinions, and questions are best directed to the upstream [Project Brutality Discord server](https://discord.gg/2hJxXPc). Check the rules, FAQ, and channel pins first.
+Check the rules, FAQ, and channel pins first.
 
 ## Credits
 
