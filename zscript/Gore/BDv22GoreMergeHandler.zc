@@ -24,33 +24,43 @@ class BDv22GoreMergeHandler : EventHandler
 
 		PlayerPawn k = BDv22_ResolveKillerMonsterDeath(e);
 		if (!k || !k.player) return;
-		if (CVar.GetCVar("pb_lowgraphicsmode", k.player).GetInt() > 0) return;
-		if (CVar.GetCVar("pb_bloodamount", k.player).GetInt() < 2) return;
+
+		let cvLow = CVar.GetCVar("pb_lowgraphicsmode", k.player);
+		if (!cvLow || cvLow.GetInt() > 0) return;
+		let cvBloodAmt = CVar.GetCVar("pb_bloodamount", k.player);
+		if (!cvBloodAmt || cvBloodAmt.GetInt() < 2) return;
 		if (!nashgore_splat) return;
 		if (t.waterlevel > 0) return;
-		int mix = CVar.GetCVar("bdv22_gore_mix", k.player).GetInt();
+
+		let cvMix = CVar.GetCVar("bdv22_gore_mix", k.player);
+		int mix = cvMix ? cvMix.GetInt() : 0;
 		if (mix < 0) mix = 0;
 		if (mix > 100) mix = 100;
 
-		bool doGuts = CVar.GetCVar("bdv22_corpse_meat", k.player).GetBool();
-		bool doFly = CVar.GetCVar("bdv22_flying_meat", k.player).GetBool();
-		bool doOrg = CVar.GetCVar("bdv22_organs", k.player).GetBool();
+		let cvGuts = CVar.GetCVar("bdv22_corpse_meat", k.player);
+		let cvFly  = CVar.GetCVar("bdv22_flying_meat", k.player);
+		let cvOrg  = CVar.GetCVar("bdv22_organs", k.player);
+		bool doGuts = cvGuts && cvGuts.GetBool();
+		bool doFly  = cvFly  && cvFly.GetBool();
+		bool doOrg  = cvOrg  && cvOrg.GetBool();
 		if (!doGuts && !doFly && !doOrg) return;
 
 		if (doGuts && random(0, 255) <= 200)
 		{
-			if (!t) return;
 			bool useBD = random(1, 100) <= mix;
 			String cname = useBD
 				? (random(0, 1) == 0 ? "BDv22_Guts" : "BDv22_Guts2")
 				: (random(0, 1) == 0 ? "Guts" : "Guts2");
-			vector3 p = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.4);
-			Actor a = Actor.Spawn(cname, p, NO_REPLACE);
-			if (a) a.vel = (frandom(-5, 5), frandom(-5, 5), frandom(1, 8));
+			Class<Actor> cls = cname;
+			if (cls)
+			{
+				vector3 p = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.4);
+				Actor a = Actor.Spawn(cls, p, NO_REPLACE);
+				if (a) a.vel = (frandom(-5, 5), frandom(-5, 5), frandom(1, 8));
+			}
 		}
 		if (doFly && random(0, 255) <= 32)
 		{
-			if (!t) return;
 			String c;
 			if (random(1, 100) <= mix)
 			{
@@ -80,13 +90,16 @@ class BDv22GoreMergeHandler : EventHandler
 					p == 5 ? "XDeath5" :
 					p == 6 ? "XDeathOrgan1" : "XDeathOrgan2";
 			}
-			vector3 p2 = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.5);
-			Actor a2 = Actor.Spawn(c, p2, NO_REPLACE);
-			if (a2) a2.vel = (frandom(-8, 8), frandom(-8, 8), frandom(2, 10));
+			Class<Actor> cls2 = c;
+			if (cls2)
+			{
+				vector3 p2 = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.5);
+				Actor a2 = Actor.Spawn(cls2, p2, NO_REPLACE);
+				if (a2) a2.vel = (frandom(-8, 8), frandom(-8, 8), frandom(2, 10));
+			}
 		}
 		if (doOrg && random(0, 255) <= 28)
 		{
-			if (!t) return;
 			String co;
 			if (random(1, 100) <= mix)
 			{
@@ -106,9 +119,13 @@ class BDv22GoreMergeHandler : EventHandler
 					p4 == 3 ? "SmallBrainPiece" :
 					p4 == 4 ? "SmallBrainPieceFast" : "SmallBrainPieceSlow";
 			}
-			vector3 pos = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.5);
-			Actor a3 = Actor.Spawn(co, pos, NO_REPLACE);
-			if (a3) a3.vel = (frandom(-6, 6), frandom(-6, 6), frandom(2, 9));
+			Class<Actor> cls3 = co;
+			if (cls3)
+			{
+				vector3 pos = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.5);
+				Actor a3 = Actor.Spawn(cls3, pos, NO_REPLACE);
+				if (a3) a3.vel = (frandom(-6, 6), frandom(-6, 6), frandom(2, 9));
+			}
 		}
 	}
 }

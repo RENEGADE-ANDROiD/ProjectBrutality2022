@@ -3,6 +3,9 @@ class CSSGEvent : EventHandler
 	//basically, just type in console "NetEvent CM_AllShells" and voila, you got all the upgrades of this
 	override void NetworkProcess(ConsoleEvent e)
 	{
+		if (!e) return;
+		if (e.player < 0 || e.player >= MAXPLAYERS) return;
+		if (!playeringame[e.player]) return;
 		let pm = players[e.player].mo;
 		if(!pm)
 			return;

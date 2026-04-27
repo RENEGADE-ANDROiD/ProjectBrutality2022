@@ -51,11 +51,13 @@ class HelmetDropHandler : EventHandler
 
 		if (hasHelmet)
 		{
+			Class<Actor> helmCls = "PB_DroppedHelmet";
+			if (!helmCls) return;
 			double xvel = frandom(-8, 8);
 			double yvel = frandom(-8, 8);
 			double zvel = frandom(5, 10);
 			vector3 p = (dead.pos.x, dead.pos.y, dead.pos.z + dead.Default.Height * 0.9);
-			Actor helm = Actor.Spawn("PB_DroppedHelmet", p);
+			Actor helm = Actor.Spawn(helmCls, p);
 			if (!helm) return;
 			helm.angle = frandom(0, 359);
 			helm.vel = (xvel, yvel, zvel);

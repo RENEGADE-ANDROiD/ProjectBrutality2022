@@ -41,9 +41,12 @@ class PB_KillstreakHandler : EventHandler
 
 	override void WorldThingDied(WorldEvent e)
 	{
-		if (e.Thing && e.Thing is "PlayerPawn")
+		if (!e) return;
+		Actor t = e.Thing;
+		if (t && t is "PlayerPawn")
 		{
-			let dead = PlayerPawn(e.Thing);
+			let dead = PlayerPawn(t);
+			if (!dead) return;
 			int pnum = dead.PlayerNumber();
 			if (pnum >= 0 && pnum < MAXPLAYERS)
 			{
@@ -53,9 +56,9 @@ class PB_KillstreakHandler : EventHandler
 			}
 			return;
 		}
-		if (!e.Thing || !e.Thing.bIsMonster) return;
-		if (e.Thing is "SwitchableDecoration") return;
-		if (e.Thing.player) return;
+		if (!t || !t.bIsMonster) return;
+		if (t is "SwitchableDecoration") return;
+		if (t.player) return;
 
 		PlayerPawn killer = GetKillerPlayer(e);
 		if (!killer || !killer.player) return;
@@ -139,9 +142,11 @@ class PB_KillstreakRareFlare : EventHandler
 
 	override void WorldThingDied(WorldEvent e)
 	{
+		if (!e) return;
 		if (usedThisMap) return;
-		if (!e.Thing || !e.Thing.bIsMonster) return;
-		if (e.Thing is "SwitchableDecoration") return;
+		Actor t = e.Thing;
+		if (!t || !t.bIsMonster) return;
+		if (t is "SwitchableDecoration") return;
 		let cEn = CVar.FindCVar("pb_ks_enable");
 		if (cEn != null && !cEn.GetBool()) return;
 		let cR = CVar.FindCVar("pb_ks_rare");
@@ -151,7 +156,9 @@ class PB_KillstreakRareFlare : EventHandler
 		chance = clamp(chance, 0, 100);
 		// Chance once per level: bonus globe to activate kill streaks
 		if (random(1, 100) > chance) return;
-		if (Actor.Spawn("PB_KillstreakFlare", e.Thing.Vec3Offset(0, 0, 8), NO_REPLACE) != null)
+		Class<Actor> flareCls = "PB_KillstreakFlare";
+		if (!flareCls) return;
+		if (Actor.Spawn(flareCls, t.Vec3Offset(0, 0, 8), NO_REPLACE) != null)
 			usedThisMap = true;
 	}
 }

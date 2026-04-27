@@ -6,7 +6,12 @@ class PB_HitFeedback_Handler : EventHandler
 {
     override void PlayerEntered( PlayerEvent e )
 	{
-		PlayerPawn player = PlayerPawn( players[e.PlayerNumber].mo );
+		if (!e) return;
+		int pn = e.PlayerNumber;
+		if (pn < 0 || pn >= MAXPLAYERS || !playeringame[pn]) return;
+		let pmo = players[pn].mo;
+		if (!pmo) return;
+		PlayerPawn player = PlayerPawn( pmo );
 
         if( player )
             player.GiveInventoryType( "PB_HitFeedback_Inventory" );

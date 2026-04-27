@@ -9,11 +9,13 @@ class PB_WheelBSSBlurHandler : StaticEventHandler
 		if (gamestate == GS_LEVEL)
 		{
 			PlayerInfo plr = players[consoleplayer];
-			if (plr && plr.mo
-				&& CVar.GetCVar("pb_wheelbackgroundblur", plr).GetBool()
-				&& plr.mo.FindInventory("PlayerWheelOpen"))
+			if (plr && plr.mo)
 			{
-				on = true;
+				let cv = CVar.GetCVar("pb_wheelbackgroundblur", plr);
+				if (cv && cv.GetBool() && plr.mo.FindInventory("PlayerWheelOpen"))
+				{
+					on = true;
+				}
 			}
 		}
 		PPShader.SetEnabled("gb_blur", on);

@@ -244,8 +244,10 @@ class PB_KillstreakMessageHandler : EventHandler
 	{
 		for (int i = 0; i < queue.size(); i++)
 		{
-			if (queue[i].timestamp >= gametic)
-				queue[i].AddSelf();
+			let q = queue[i];
+			if (!q) continue;
+			if (q.timestamp >= gametic)
+				q.AddSelf();
 		}
 	}
 
@@ -253,7 +255,14 @@ class PB_KillstreakMessageHandler : EventHandler
 	{
 		for (int i = 0; i < queue.size(); i++)
 		{
-			if (queue[i].timestamp >= gametic) continue;
+			let q = queue[i];
+			if (!q)
+			{
+				queue.Delete(i);
+				i--;
+				continue;
+			}
+			if (q.timestamp >= gametic) continue;
 			queue.Delete(i);
 			i--;
 		}

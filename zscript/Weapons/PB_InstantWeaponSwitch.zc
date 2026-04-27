@@ -8,6 +8,7 @@ class PB_InstantWeaponSwitchHandler : StaticEventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
+		if (!e) return;
 		// New game / map: ensure per-player cvar edge tracking
 		if (m_LastCvarOn.Size() != MAXPLAYERS)
 		{

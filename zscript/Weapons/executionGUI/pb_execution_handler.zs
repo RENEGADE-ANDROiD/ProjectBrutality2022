@@ -34,6 +34,7 @@ class pb_ExecutionHandler : EventHandler
   override
   void playerEntered(PlayerEvent event)
   {
+    if (!event) return;
     if (level.mapName == "TITLEMAP")
     {
       destroy();
@@ -49,6 +50,7 @@ class pb_ExecutionHandler : EventHandler
   override
   void renderOverlay(RenderEvent event)
   {
+    if (!event) return;
     if (!_isInitialized || automapActive || players[consolePlayer].mo == NULL)
     {
       return;
@@ -64,6 +66,7 @@ class pb_ExecutionHandler : EventHandler
   
 	
 	CVar experimental_settings = CVar.FindCVar('pb_experimental');
+	if (!experimental_settings) return;
 	if(experimental_settings.GetBool()){
   
 		Actor target = getTarget();
@@ -105,7 +108,9 @@ class pb_ExecutionHandler : EventHandler
   private ui
   void drawFrame(RenderEvent event, Actor target)
   {
+    if (!event || !target) return;
     PlayerInfo player = players[consolePlayer];
+    if (!player || !player.mo) return;
     Vector2 centerPos = makeDrawPos(event, target, target.height / 2.0);
     double   distance = player.mo.distance3D(target);
     if (distance == 0) return;
@@ -164,6 +169,7 @@ class pb_ExecutionHandler : EventHandler
   {
     PlayerInfo player = players[consolePlayer];
     if (player.mo == NULL) return NULL;
+    if (!_translator) return NULL;
 
     // try an easy way to get a target (also works with autoaim)
 
@@ -180,6 +186,7 @@ class pb_ExecutionHandler : EventHandler
   
     PlayerInfo player = players[consolePlayer];
     if (player.mo == NULL) return 0;
+    if (!_translator) return 0;
 	
     double targDist  = _translator.getTargetDistanceWrapper(player.mo);
 	return targDist;

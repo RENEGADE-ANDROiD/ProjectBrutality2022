@@ -235,7 +235,8 @@ class PB_EventHandler : EventHandler
 		if (!playeringame[consoleplayer]) { return; }
 		let p = players[consoleplayer];
 		if (!p || !p.mo || !p.ReadyWeapon) { return; }
-		if (!CVar.GetCVar("pb_weaponhud_enable", p).GetBool()) { return; }
+		let cvEnable = CVar.GetCVar("pb_weaponhud_enable", p);
+		if (!cvEnable || !cvEnable.GetBool()) { return; }
 
 		Weapon weap = p.ReadyWeapon;
 		Name weaponClass = weap.GetClassName();
@@ -254,10 +255,14 @@ class PB_EventHandler : EventHandler
 		TextureID iconID = weap.AltHUDIcon.IsValid() ? weap.AltHUDIcon : weap.Icon;
 		if (!iconID) { return; }
 
-		double alpha = clamp(CVar.GetCVar("pb_weaponhud_alpha", p).GetFloat(), 0.0, 1.0);
-		double scale = max(0.1, CVar.GetCVar("pb_weaponhud_scale", p).GetFloat());
-		int offX = CVar.GetCVar("pb_weaponhud_x", p).GetInt();
-		int offY = CVar.GetCVar("pb_weaponhud_y", p).GetInt();
+		let cvAlpha = CVar.GetCVar("pb_weaponhud_alpha", p);
+		let cvScale = CVar.GetCVar("pb_weaponhud_scale", p);
+		let cvOffX  = CVar.GetCVar("pb_weaponhud_x", p);
+		let cvOffY  = CVar.GetCVar("pb_weaponhud_y", p);
+		double alpha = cvAlpha ? clamp(cvAlpha.GetFloat(), 0.0, 1.0) : 1.0;
+		double scale = cvScale ? max(0.1, cvScale.GetFloat()) : 1.0;
+		int offX = cvOffX ? cvOffX.GetInt() : 0;
+		int offY = cvOffY ? cvOffY.GetInt() : 0;
 
 		Vector2 texSize = TexMan.GetScaledSize(iconID);
 		double drawW = texSize.x * scale;
@@ -322,7 +327,8 @@ class PB_EventHandler : EventHandler
 		if (!playeringame[consoleplayer]) { return; }
 		let p = players[consoleplayer];
 		if (!p || !p.mo || !p.ReadyWeapon) { return; }
-		if (!CVar.GetCVar("pb_weaponmodehud_enable", p).GetBool()) { return; }
+		let cvEnable = CVar.GetCVar("pb_weaponmodehud_enable", p);
+		if (!cvEnable || !cvEnable.GetBool()) { return; }
 
 		Weapon weap = p.ReadyWeapon;
 		Name weaponClass = weap.GetClassName();
@@ -331,10 +337,14 @@ class PB_EventHandler : EventHandler
 		TextureID modeIcon = PB2022GetModeIcon(p, weaponClass, modeScaleAdjust, modeOffX, modeOffY);
 		if (!modeIcon) { return; }
 
-		double alpha = clamp(CVar.GetCVar("pb_weaponmodehud_alpha", p).GetFloat(), 0.0, 1.0);
-		double scale = max(0.1, CVar.GetCVar("pb_weaponmodehud_scale", p).GetFloat()) * modeScaleAdjust;
-		int offX = CVar.GetCVar("pb_weaponmodehud_x", p).GetInt();
-		int offY = CVar.GetCVar("pb_weaponmodehud_y", p).GetInt();
+		let cvAlpha = CVar.GetCVar("pb_weaponmodehud_alpha", p);
+		let cvScale = CVar.GetCVar("pb_weaponmodehud_scale", p);
+		let cvOffX  = CVar.GetCVar("pb_weaponmodehud_x", p);
+		let cvOffY  = CVar.GetCVar("pb_weaponmodehud_y", p);
+		double alpha = cvAlpha ? clamp(cvAlpha.GetFloat(), 0.0, 1.0) : 1.0;
+		double scale = (cvScale ? max(0.1, cvScale.GetFloat()) : 1.0) * modeScaleAdjust;
+		int offX = cvOffX ? cvOffX.GetInt() : 0;
+		int offY = cvOffY ? cvOffY.GetInt() : 0;
 
 		Vector2 texSize = TexMan.GetScaledSize(modeIcon);
 		double drawW = texSize.x * scale;
@@ -348,30 +358,35 @@ class PB_EventHandler : EventHandler
 	}
 	override void WorldThingDamaged(WorldEvent e)
 	{
-		if (e.thing is "DoomImp" 
-		&& e.thing.target
-		&& e.thing.bCOUNTKILL
-		&& e.thing.bISMONSTER
+		if (!e) return;
+		Actor t = e.Thing;
+		if (!t) return;
+		if (t is "DoomImp" 
+		&& t.target
+		&& t.bCOUNTKILL
+		&& t.bISMONSTER
 		&& e.DamageType == "Melee"
-		&& !e.thing.target.player)
+		&& !t.target.player)
 		{
-			e.thing.A_TakeInventory("SKImp",1); // Make sure it does not disappear.
-			e.thing.A_TakeInventory("SKImp2",1); 
-			e.thing.A_TakeInventory("SKImp3",1); 
-			e.thing.A_TakeInventory("SKDarkImpNami",1);
-			e.thing.A_TakeInventory("SKDarkImpNether",1);
-			e.thing.A_TakeInventory("SKDarkImpST",1);
-			e.thing.A_TakeInventory("SKDarkImpVoid",1);
+			t.A_TakeInventory("SKImp",1); // Make sure it does not disappear.
+			t.A_TakeInventory("SKImp2",1); 
+			t.A_TakeInventory("SKImp3",1); 
+			t.A_TakeInventory("SKDarkImpNami",1);
+			t.A_TakeInventory("SKDarkImpNether",1);
+			t.A_TakeInventory("SKDarkImpST",1);
+			t.A_TakeInventory("SKDarkImpVoid",1);
 		}
 	}
 	override void WorldThingDied(WorldEvent e)
 	{
-		if (e.thing && e.thing.target
-		&& e.thing.target.player
-		&& e.thing.bCOUNTKILL
-		&& e.thing.bISMONSTER)
+		if (!e) return;
+		Actor t = e.Thing;
+		if (t && t.target
+		&& t.target.player
+		&& t.bCOUNTKILL
+		&& t.bISMONSTER)
 		{
-			//e.thing.target.player.mo.A_SetBlend("RoyalBlue",0.1,17);
+			//t.target.player.mo.A_SetBlend("RoyalBlue",0.1,17);
 		}
 	}
 	ui void UpdateDesc()
@@ -381,9 +396,12 @@ class PB_EventHandler : EventHandler
 	}
 	ui bool CheckBaseWeapon(string weapname)
 	{
-		for (uint i = 0; i < PlayerPawnBase(players[consoleplayer].mo).baseWeapons.Size(); i++)
+		if (!playeringame[consoleplayer]) { return false; }
+		let pmo = PlayerPawnBase(players[consoleplayer].mo);
+		if (!pmo) { return false; }
+		for (uint i = 0; i < pmo.baseWeapons.Size(); i++)
 		{
-			if (weapname == PlayerPawnBase(players[consoleplayer].mo).baseWeapons[i])
+			if (weapname == pmo.baseWeapons[i])
 			{
 				return true;
 			}
@@ -540,8 +558,14 @@ class PB_EventHandler : EventHandler
 	}
 	override void PlayerEntered(PlayerEvent e)
 	{
-		PlayerPawnBase(players[e.Playernumber].mo).baseweaponpda = false;
-		players[e.Playernumber].mo.A_SetBlend("black",1.0,35);
+		if (!e) return;
+		if (e.PlayerNumber < 0 || e.PlayerNumber >= MAXPLAYERS) return;
+		if (!playeringame[e.PlayerNumber]) return;
+		let pmo = players[e.PlayerNumber].mo;
+		if (!pmo) return;
+		let ppb = PlayerPawnBase(pmo);
+		if (ppb) { ppb.baseweaponpda = false; }
+		pmo.A_SetBlend("black",1.0,35);
 	}
 	override void WorldTick()
 	{
@@ -557,16 +581,19 @@ class PB_EventHandler : EventHandler
 		{
 			if (a.player && a.player.morphTics <= 5)
 			{
-				switch(a.player.mo.GetClassName())
+				let amo = a.player.mo;
+				if (!amo) { continue; }
+				switch(amo.GetClassName())
 				{
-					case 'RevenantPlayer': a.player.mo.ACS_NamedExecuteAlways("RevenantMorphModeDisable");break;
-					case 'BaronPlayer': a.player.mo.ACS_NamedExecuteAlways("BaronMorphModeDisable");break;
+					case 'RevenantPlayer': amo.ACS_NamedExecuteAlways("RevenantMorphModeDisable");break;
+					case 'BaronPlayer': amo.ACS_NamedExecuteAlways("BaronMorphModeDisable");break;
 				}
 			}
 		}
 	}
 	override void NetworkProcess(ConsoleEvent e)
 	{
+		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
 		if (HeldDownTics <= 0) mouseclicked = false;
 		if (e.Name ~== "netgametrue")
@@ -642,6 +669,8 @@ class PB_EventHandler : EventHandler
 		if (e.Name ~== "openpda")
 		{
 			if (isnetgame) return;
+			if (e.Player < 0 || e.Player >= MAXPLAYERS) return;
+			if (!playeringame[e.Player]) return;
 			SetPlayerProperty(1,1,4);
 			int freezemask = 1 << e.Player;
 			players[e.Player].timefreezer |= freezemask;
@@ -680,6 +709,7 @@ class PB_EventHandler : EventHandler
 	}
 	override void WorldLoaded(WorldEvent e)
 	{
+		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
 		if (e.IsSaveGame)
 		{
@@ -696,6 +726,7 @@ class PB_EventHandler : EventHandler
 	}
 	override void InterfaceProcess(ConsoleEvent e)
 	{
+		if (!e) return;
 		if (e.Name ~== "PB_DashWhatchamacallit")
 		{
 			dashAlpha = 1.0;
@@ -709,10 +740,17 @@ class PB_EventHandler : EventHandler
 	}
 	override void RenderOverlay(RenderEvent e)
 	{
+		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
 		DrawPB2022WeaponPickupOverlay();
 		DrawPB2022WeaponModeOverlay();
-		if (dashAlpha > 0 && CVar.GetCVar("pb_dasheffect", players[consoleplayer]).GetBool())
+		bool dashEffectOn = false;
+		if (playeringame[consoleplayer])
+		{
+			let cvDash = CVar.GetCVar("pb_dasheffect", players[consoleplayer]);
+			if (cvDash) { dashEffectOn = cvDash.GetBool(); }
+		}
+		if (dashAlpha > 0 && dashEffectOn)
 		{
 			TextureID dashTex = TexMan.CheckForTexture("graphics/hud/fullscrn/pb_dashoverlay.png", TexMan.Type_Any);
 			if (dashTex)
@@ -738,7 +776,7 @@ class PB_EventHandler : EventHandler
 			PDAWeaponTextVSize.Clear();
 			PDAWeaponTextHSize.Clear();
 			UiObjects.Clear();
-			DescriptionDialog.Destroy();
+			if (DescriptionDialog) { DescriptionDialog.Destroy(); }
 			DescriptionDialog = null;
 		}
 		if (uiObjects.Size() < 1)
@@ -830,7 +868,11 @@ class PB_EventHandler : EventHandler
 	}
 	ui void InitializeUiObjects()
 	{
-		PB_PDAWeaponContainer weaptextcontainer = PB_PDAWeaponContainer(players[consoleplayer].mo.FindInventory("PB_PDAWeaponContainer",true));
+		if (!playeringame[consoleplayer]) { return; }
+		let pmo = players[consoleplayer].mo;
+		if (!pmo) { return; }
+		PB_PDAWeaponContainer weaptextcontainer = PB_PDAWeaponContainer(pmo.FindInventory("PB_PDAWeaponContainer",true));
+		if (!weaptextcontainer) { return; }
 		PDAWeaponExtraTexts.Copy(weaptextcontainer.PDAWeaponExtraTexts);
 		PDAWeaponHeaders.Copy(weaptextcontainer.PDAWeaponHeaders);
 		PDAWeaponTexts.Copy(weaptextcontainer.PDAWeaponTexts);
@@ -942,6 +984,7 @@ class PB_EventHandler : EventHandler
 		// Fixing this bug from GZDoom's side has been left on hold so this is necessary.
 		// Note: PDA will be always disabled when at title screen.
 		if (gamestate == GS_TITLELEVEL || gametic <= 1) return false;
+		if (!e) return false;
 		int mouseinput = 0;
 		if (e.KeyScan == InputEvent.Key_Mouse1 && e.Type == InputEvent.Type_KeyDown) mouseinput = 1;
 		if (e.KeyScan == InputEvent.Key_Mouse1 && e.Type == InputEvent.Type_KeyUp) mouseinput = 2;

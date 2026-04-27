@@ -40,7 +40,12 @@ class TiltPlusPlusHandler : EventHandler
 {
 	override void PlayerEntered(PlayerEvent e)
 	{
-		players[e.PlayerNumber].mo.A_GiveInventory("Z_TiltMe", 1);
+		if (!e) return;
+		int pn = e.PlayerNumber;
+		if (pn < 0 || pn >= MAXPLAYERS || !playeringame[pn]) return;
+		let pmo = players[pn].mo;
+		if (!pmo) return;
+		pmo.A_GiveInventory("Z_TiltMe", 1);
 	}
 }
 

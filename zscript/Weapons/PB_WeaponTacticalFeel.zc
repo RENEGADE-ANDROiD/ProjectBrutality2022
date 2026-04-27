@@ -385,6 +385,9 @@ class PB_TacticalFeelHandler : EventHandler
 {
 	override void PlayerEntered(PlayerEvent e)
 	{
+		if (!e) return;
+		if (e.PlayerNumber < 0 || e.PlayerNumber >= MAXPLAYERS) return;
+		if (!playeringame[e.PlayerNumber]) return;
 		if (players[e.PlayerNumber].mo)
 		{
 			players[e.PlayerNumber].mo.GiveInventory("PB_WeaponTilterInventory", 1);
@@ -393,7 +396,8 @@ class PB_TacticalFeelHandler : EventHandler
 
 	override void NetworkProcess(ConsoleEvent e)
 	{
-		if (e.Player < 0 || !playeringame[e.Player] || !players[e.Player].mo) { return; }
+		if (!e) return;
+		if (e.Player < 0 || e.Player >= MAXPLAYERS || !playeringame[e.Player] || !players[e.Player].mo) { return; }
 		let mo = players[e.Player].mo;
 		if (e.Name ~== "pb_lean_toggle")
 		{

@@ -12,6 +12,7 @@ class DamNumEventHandler : StaticEventHandler
 	 */
 	override void WorldThingDamaged(WorldEvent e)
 	{
+		if (!e) return;
 		if (dam_enabled && self.ShouldSpawn(e.Thing) && dam_spray && e.DamageType != 'Massacre')
 		{
 			// Since WorldThingDamaged is (oddly) called after the actor's officially dead,
@@ -27,6 +28,7 @@ class DamNumEventHandler : StaticEventHandler
 	 */
 	override void WorldThingSpawned(WorldEvent e)
 	{
+		if (!e) return;
 		if (self.ShouldSpawn(e.Thing))
 		{
 			DamNumCourier.Create(e.thing);
@@ -34,6 +36,7 @@ class DamNumEventHandler : StaticEventHandler
 	}
 	override void WorldThingRevived(WorldEvent e)
 	{
+		if (!e) return;
 		if (self.ShouldSpawn(e.Thing))
 		{
 			DamNumCourier.Create(e.thing);

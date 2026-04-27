@@ -16,19 +16,27 @@ class BDv22GoreHandler : EventHandler
 
 	override void WorldThingDamaged(WorldEvent e)
 	{
-		if (!e.Thing || e.Damage < 1) return;
-		if (e.Thing.bNoBlood) return;
-		if (!e.Thing.bIsMonster) return;
-		if (!(e.Thing is "PB_Monster")) return;
-		if (e.Thing.waterlevel > 0) return;
+		if (!e) return;
+		Actor t = e.Thing;
+		if (!t || e.Damage < 1) return;
+		if (t.bNoBlood) return;
+		if (!t.bIsMonster) return;
+		if (!(t is "PB_Monster")) return;
+		if (t.waterlevel > 0) return;
 
 		PlayerPawn ppl = BDv22_ResolveAttacker(e.DamageSource);
 		if (!ppl || !ppl.player) return;
-		if (!CVar.GetCVar("bdv22_mist", ppl.player).GetBool()) return;
-		if (CVar.GetCVar("pb_lowgraphicsmode", ppl.player).GetInt() > 0) return;
-		if (CVar.GetCVar("pb_bloodamount", ppl.player).GetInt() < 2) return;
+
+		let cvMist = CVar.GetCVar("bdv22_mist", ppl.player);
+		if (!cvMist || !cvMist.GetBool()) return;
+		let cvLow = CVar.GetCVar("pb_lowgraphicsmode", ppl.player);
+		if (!cvLow || cvLow.GetInt() > 0) return;
+		let cvBloodAmt = CVar.GetCVar("pb_bloodamount", ppl.player);
+		if (!cvBloodAmt || cvBloodAmt.GetInt() < 2) return;
 		if (!nashgore_splat) return;
-		int mix = CVar.GetCVar("bdv22_gore_mix", ppl.player).GetInt();
+
+		let cvMix = CVar.GetCVar("bdv22_gore_mix", ppl.player);
+		int mix = cvMix ? cvMix.GetInt() : 0;
 		if (mix < 0) mix = 0;
 		if (mix > 100) mix = 100;
 
@@ -38,12 +46,21 @@ class BDv22GoreHandler : EventHandler
 		if (w > 255) w = 255;
 		if (random(0, 255) > w) return;
 
-		Actor t = e.Thing;
-		String mist = random(1, 100) <= mix ? "BDv22GoreMist" : "PB_Bloodmist";
-		t.A_SpawnItemEx(mist, frandom(-6, 6), frandom(-6, 6), frandom(20, 44),
-			frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(1.0, 6.0), random(0, 359), SXF_TRANSFERTRANSLATION, 0);
+		String mistName = random(1, 100) <= mix ? "BDv22GoreMist" : "PB_Bloodmist";
+		Class<Actor> mistCls = mistName;
+		if (mistCls)
+		{
+			t.A_SpawnItemEx(mistCls, frandom(-6, 6), frandom(-6, 6), frandom(20, 44),
+				frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(1.0, 6.0), random(0, 359), SXF_TRANSFERTRANSLATION, 0);
+		}
 		if (e.Damage >= 8 && random(0, 2) == 0)
-			t.A_SpawnProjectile("NashGoreBloodSpurt", 0, 0, random(0, 360),
-				CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+		{
+			Class<Actor> spurtCls = "NashGoreBloodSpurt";
+			if (spurtCls)
+			{
+				t.A_SpawnProjectile(spurtCls, 0, 0, random(0, 360),
+					CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+			}
+		}
 	}
 }
