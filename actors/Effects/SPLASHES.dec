@@ -82,7 +82,6 @@ Actor LiquidParticleX
   RenderStyle Add
   Scale 4.0
   Alpha 0.4
-  //Speed 2
   decal watersplash
   Speed 7
   States
@@ -109,8 +108,6 @@ Actor WaterParticleXSpawner
 	Projectile
 	+RANDOMIZE
 +FORCEXYBILLBOARD
-  //+NOINTERACTION
- // +NOGRAVITY
   +THRUACTORS
   +NODAMAGETHRUST
   Mass 9999999
@@ -165,8 +162,6 @@ Actor SlimeParticleXSpawner
 	Projectile
 	+RANDOMIZE
 +FORCEXYBILLBOARD
-  //+NOINTERACTION
- // +NOGRAVITY
   +THRUACTORS
   +NODAMAGETHRUST
   Mass 9999999
@@ -264,8 +259,6 @@ Actor BloodParticleXSpawner
 	Projectile
 	+RANDOMIZE
 +FORCEXYBILLBOARD
-  //+NOINTERACTION
-  //+NOGRAVITY
   +THRUACTORS
   +NODAMAGETHRUST
   Mass 9999999
@@ -318,8 +311,6 @@ Actor BloodSplashWaves
 			BSPH DEFHI 6 
 			TNT1 A 1 A_SetScale(2.8, 0.8)
 			BSPH DEFHI 8
-			//TNT1 A 1 A_SetScale(2.8, 0.5)
-			//SPSH DEFHI 16
 			Stop
 			}
 }
@@ -344,8 +335,6 @@ Actor SludgeParticleXSpawner
 	Projectile
 	+RANDOMIZE
 +FORCEXYBILLBOARD
- // +NOINTERACTION
-  //+NOGRAVITY
   +THRUACTORS
   +NODAMAGETHRUST
   Mass 9999999
@@ -414,7 +403,6 @@ Actor SludgeParticleX
   Scale 1.5
   Alpha 0.4
 //Translation "179:191=144:151"
-  //Speed 2
   Speed 7
   States
   {
@@ -726,7 +714,6 @@ Actor LiquidParticleXSmall
   RenderStyle Add
   Scale 1.5
   Alpha 0.4
-  //Speed 2
   Speed 7
   States
   {
@@ -764,7 +751,6 @@ Actor SlimeParticleXNEW
   RenderStyle Add
   Scale 1.5
   Alpha 0.4
-  //Speed 2
   Speed 7
   States
   {
@@ -813,7 +799,6 @@ Actor BloodParticleXNEW
   RenderStyle Add
   Scale 1.5
   Alpha 0.4
-  //Speed 2
   Speed 7
   States
   {
@@ -862,7 +847,6 @@ Actor LavaParticleX
   RenderStyle Add
   Scale 1.5
   Alpha 0.4
-  //Speed 2
   Speed 7
   States
   {
@@ -971,7 +955,6 @@ actor WaterSplashBase2
   alpha .6
   Scale 1.1
   +DONTSPLASH
- // +NOGRAVITY
   +THRUACTORS
   +SHOOTABLE
   +NOBLOOD
@@ -1034,7 +1017,6 @@ actor WaterSplashBaseSmall
   alpha .6
   Scale 0.7
   +DONTSPLASH
-  //+NOGRAVITY
   +THRUACTORS
   +SHOOTABLE
   +NOBLOOD

@@ -19,3 +19,11 @@ Script 6004 (VOID) NET
 {
 	TakeInventory("DoShoulderCannon",1);
 }
+
+// Select Glory shoulder cryo, then queue the same shoulder-cannon action as the generic "Shoulder Cannon" bind (script 6003)
+Script 6005 (VOID) NET
+{
+	while (CheckInventory("FlameBelchSelected") > 0) TakeInventory("FlameBelchSelected", 1);
+	GiveInventory("IceBombSelected", 1);
+	GiveInventory("DoShoulderCannon", 1);
+}

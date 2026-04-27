@@ -47,7 +47,6 @@ ACTOR PB_Revolver : PB_Weapon
 	Weapon.AmmoType2 "RevolverAmmo"
 	Inventory.MaxAmount 3
 	Inventory.Amount 1
-	//Weapon.Kickback 100
 	+FLOORCLIP
 	+DONTGIB
 	Obituary "%o was shot down by %k's revolver."
@@ -57,7 +56,6 @@ ACTOR PB_Revolver : PB_Weapon
     +WEAPON.NOAUTOAIM
     +WEAPON.NOALERT
     +WEAPON.NOAUTOFIRE
-	//+WEAPON.NO_AUTO_SWITCH
 	Tag "Revolver"
     Scale 0.4
 	PB_WeaponBase.UnloaderToken "RevolverHasUnloaded"
@@ -328,7 +326,7 @@ ACTOR PB_Revolver : PB_Weapon
 		Goto IdleRight_Overlay
 		
 	WeaponSpecial:
-		TNT1 A 0 A_Print("\ct Weapon Special: Toggle dual wield")
+		TNT1 A 0 A_Print("\ctWeapon Special:\c- \cgtoggle \c-dual-wield \c-")
 		TNT1 A 0 {
 			A_GiveInventory("PB_LockScreenTilt",1);
 			A_Takeinventory("GoWeaponSpecialAbility",1);
@@ -720,6 +718,7 @@ ACTOR PB_Revolver : PB_Weapon
 		LOOP
 		
     FlashKicking:
+		Goto FlashAirKicking
 	FlashAirKicking:
 		TNT1 A 0 A_JumpIF(A_CheckAkimbo(), "DualFlashKicking")
 		R8V1 ABCDEFGHHIJKLMN 1 A_DoPBWeaponAction
@@ -745,7 +744,7 @@ ACTOR PB_Revolver : PB_Weapon
 	DualFlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 AAAAAAAAAAAAAAA 1
-		Goto Ready3
+		Stop
 	DualFlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		44V2 ABCDEFGHIJKLMNONOPQRSTUVWX 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE)

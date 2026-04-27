@@ -1,0 +1,84 @@
+decal pgBloodSplat1
+{
+	pic BSPLAT1
+	shade "BloodDefault"
+	randomflipx
+	randomflipy
+}
+
+decal pgBloodSplat2
+{
+	pic BSPLAT2
+	shade "BloodDefault"
+	randomflipx
+	randomflipy
+}
+
+decal pgBloodSplat3
+{
+	pic BSPLAT3
+	shade "BloodDefault"
+	randomflipx
+	randomflipy
+}
+
+decal pgBloodSplat4
+{
+	pic BSPLAT4
+	shade "BloodDefault"
+	randomflipx
+	randomflipy
+}
+
+decal pgBloodSplat5
+{
+	pic BSPLAT5
+	shade "BloodDefault"
+	randomflipx
+	randomflipy
+}
+
+decal pgBloodSplat6
+{
+	pic BSPLAT6
+	shade "BloodDefault"
+	randomflipx
+	randomflipy
+}
+
+decal pgBloodSplat7
+{
+	pic BSPLAT7
+	shade "BloodDefault"
+	randomflipx
+	randomflipy
+}
+
+decal pgBloodSmear1
+{
+	pic BSMEAR1
+	shade "BloodDefault"
+	randomflipx
+	animator BloodSmearer
+}
+
+decal pgBloodSmear2
+{
+	pic BSMEAR1
+	shade "BloodDefault"
+	randomflipx
+	animator BloodSmearer
+}
+
+decalgroup pgBloodSplat
+{
+	pgBloodSplat1	1
+	pgBloodSplat2	1
+	pgBloodSplat3	1
+	pgBloodSplat4	1
+	pgBloodSplat5	1
+	pgBloodSplat6	1
+	pgBloodSplat7	1
+	pgBloodSmear1	1
+	pgBloodSmear2	1
+}

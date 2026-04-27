@@ -41,7 +41,6 @@ ACTOR PB_BeamRevGK : PB_BeamRev Replaces PB_BeamRev
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		R4GK L 5
 		Goto StagLooper
 	
@@ -101,8 +100,6 @@ ACTOR PB_BeamRevGK : PB_BeamRev Replaces PB_BeamRev
         TNT1 A 0 A_NoBlocking
 		TNT1 A 0
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
         TNT1 A 0 A_GiveToTarget("BeamRevenantFatality1", 1)
         Stop	
@@ -152,7 +149,6 @@ ACTOR PB_DraugrGK : PB_Draugr Replaces PB_Draugr
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		SKG2 M 5
 		Goto StagLooper
 	
@@ -212,11 +208,9 @@ ACTOR PB_DraugrGK : PB_Draugr Replaces PB_Draugr
         TNT1 A 0 A_NoBlocking
 		TNT1 A 0
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-        TNT1 A 0 A_GiveToTarget("DraugrFatality", 1)
-        Stop	
+		TNT1 A 0 A_Jump(256, "DraugrF1", "DraugrF1", "DraugrF1", "DraugrF1", "DraugrF2", "DraugrF2", "DraugrF2", "DraugrF2", "DraugrF3", "DraugrF3", "DraugrF3", "DraugrF3")
+		Stop
 	}
 }
 
@@ -264,7 +258,6 @@ ACTOR PB_RevenantGK : PB_Revenant Replaces PB_Revenant
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		SKGL L 0
 		Goto StagLooper
 	
@@ -324,16 +317,8 @@ ACTOR PB_RevenantGK : PB_Revenant Replaces PB_Revenant
         TNT1 A 0 A_NoBlocking
 		TNT1 A 0
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-        TNT1 A 0 A_Jump(128,5)
-        TNT1 A 0 A_GiveToTarget("RevenantFatality", 1)
-        Stop
-        TNT1 AAAAAAA 0
-        TNT1 A 0 A_GiveToTarget("RevenantFatality2", 1)
-        TNT1 A 1
-        TNT1 A 0
+		TNT1 A 0 A_Jump(256, "RevenF1", "RevenF1", "RevenF1", "RevenF2", "RevenF2", "RevenF2", "RevenF3", "RevenF3", "RevenF3", "RevenF4", "RevenF4", "RevenF4")
 		Stop
 	}
 }

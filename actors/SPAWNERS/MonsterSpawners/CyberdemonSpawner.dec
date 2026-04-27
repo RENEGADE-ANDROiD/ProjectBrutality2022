@@ -64,13 +64,17 @@ Actor CyberBoss replaces Cyberdemon
 	TNT1 AA 0
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleAnnihilator",0)
 	TNT1 A 0 A_SpawnItemEx("PB_Annihilator",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoHellSmith") == 1, "Annihilator2Done")
 	TNT1 A 0 A_SpawnItemEx("Lordofdestructionpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Annihilator2Done:
 	stop
 	SpawnAnnihilator3:
 	TNT1 AA 0
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleAnnihilator",0)
 	TNT1 A 0 A_SpawnItemEx("PB_Annihilator",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoHellduke") == 1, "Annihilator3Done")
 	TNT1 A 0 A_SpawnItemEx("Lordofdestructionpassivespawn2",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Annihilator3Done:
 	stop
 	SpawnNormalCyberDemon:
 	ReplaceVanilla:
@@ -87,12 +91,16 @@ Actor CyberBoss replaces Cyberdemon
 	SpawnNormalCyberDemon2:
 	TNT1 A 0
 	TNT1 A 0 A_SpawnItemEx("PB_Cyberdemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoHellSmith") == 1, "NCD2Done")
 	TNT1 A 0 A_SpawnItemEx("Lordofdestructionpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	NCD2Done:
 	stop
 	SpawnNormalCyberDemon3:
 	TNT1 A 0
 	TNT1 A 0 A_SpawnItemEx("PB_Cyberdemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoHellduke") == 1, "NCD3Done")
 	TNT1 A 0 A_SpawnItemEx("Lordofdestructionpassivespawn2",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	NCD3Done:
 	stop
 	}
 }

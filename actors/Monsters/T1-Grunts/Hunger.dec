@@ -61,22 +61,18 @@ Actor Hunger
     ZHUN AA 1
 	{
 	A_Chase;
-	//A_Recoil(-0.1);
 	}
 	ZHUN BB 1
 	{
 	A_Chase;
-	//A_Recoil(-0.1);
 	}
 	ZHUN CC 1
 	{
 	A_Chase;
-	//A_Recoil(-0.1);
 	}
 	ZHUN DD 1
 	{
 	A_Chase;
-	//A_Recoil(-0.1);
 	}
 	TNT1 A 0 A_Jump(2,"Lunge")
     Loop

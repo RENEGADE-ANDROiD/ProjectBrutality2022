@@ -1,0 +1,135 @@
+ACTOR FusionCyberImp
+{
+  Health 100
+  Radius 20
+  Height 56
+  Mass 200
+  Speed 8
+  PainChance 150
+  Monster
+  +FLOORCLIP
+  SeeSound "CIMPSIT"
+  PainSound "CIMPPAIN"
+  DeathSound "CIMPDTH"
+  ActiveSound "CIMPACT"
+  HitObituary "%o was torn apart by a fusion cyber imp"
+  Obituary "%o was blown apart by a fusion cyber imp"
+  States
+  {
+  Spawn:
+    UCIM AB 10 A_Look
+    Loop
+  See:
+    UCIM AABBCCDD 3 A_Chase
+    Loop
+  Melee:
+    UCIM EF 8 A_FaceTarget
+    UCIM F 6 A_Custommeleeattack(3 * random(3, 10), "imp/melee") 
+    Goto See
+  Missile:
+	PRIM E 0 A_JumpIfCloser(256, "Missile2")
+    UCIM EF 8 A_FaceTarget
+    UCIM G 6 A_Custommissile("FusionCyberImpPlasmaBall",36,4) 
+    Goto See
+  Missile2:
+    UCIM E 6 A_FaceTarget
+    UCIM W 5 
+	UCIM X 5 BRIGHT A_CustomMissile("FusionCyberImpRocket")
+	UCIM W 6 A_FaceTarget
+    UCIM X 5 BRIGHT A_CustomMissile("FusionCyberImpRocket")
+	UCIM WE 5
+    Goto See
+  Pain:
+    UCIM H 2
+    UCIM H 2 A_Pain
+    Goto See
+  Death:
+    UCIM I 8
+    UCIM J 8 A_Scream
+    UCIM K 6
+    UCIM L 6 A_NoBlocking
+    UCIM M -1
+    Stop
+  XDeath:
+    UCIM N 5 A_CustomMissile("FusionCyberArm",32,-10,270)
+    UCIM O 5 A_PlaySound("Rocketimp/xdie")
+    UCIM P 5 A_CustomMissile("FusionCyberRocketArm",30,10,93)
+    UCIM Q 5 A_NoBlocking
+    UCIM RSTU 5
+    UCIM V -1
+    Stop
+  Raise:
+    UCIM MLKJI 8
+    Goto See
+  }
+}
+
+ACTOR FusionCyberImpPlasmaBall: PlasmaBall
+{
+   Speed 20
+}
+
+ACTOR FusionCyberImpRocket
+{
+  Radius 11
+  Height 8
+  Speed 15
+  Damage 6
+  Projectile
+  +RANDOMIZE
+  +DEHEXPLOSION
+  +ROCKETTRAIL
+  SeeSound "Rocketimp/Fire"
+  DeathSound "Rocketimp/Explode"
+  Obituary "%o rode %k's rocket."
+  Decal RocketImpScorch
+  States
+  {
+  Spawn:
+    IMIS A 1 Bright
+    Loop
+  Death:
+    IMIS B 6 Bright A_Explode(8,64)
+    IMIS C 5 Bright
+    IMIS D 5 Bright
+    Stop
+  }
+}
+
+ACTOR FusionCyberArm
+{
+	Radius 8
+	Height 8
+	Speed 4
+	+DOOMBOUNCE
+	+DROPOFF
+	+Missile
+      States
+	{
+	Spawn:
+         CARM ABCDE 3
+         Loop
+	Death:
+	 CARM F -1
+	 Loop
+	}
+}
+
+ACTOR FusionCyberRocketArm
+{
+	Radius 12
+	Height 10
+	Speed 4
+	+DOOMBOUNCE
+	+DROPOFF
+	+Missile
+      States
+	{
+	Spawn:
+     IARM ABCD 3
+     Loop
+	Death:
+	 IARM E -1
+	 Loop
+	}
+} 

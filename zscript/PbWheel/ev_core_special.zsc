@@ -126,7 +126,6 @@ Class PB_SpecialWheelHandler : EventHandler
 									{
 										wheelSpecials[i].iconScale *= doubleHold;
 									}
-									//Console.Printf(""..doubleHold);
 								}
 							}
 						}
@@ -426,8 +425,13 @@ Class PB_SpecialWheelHandler : EventHandler
 	
 	override void WorldLoaded(WorldEvent e)
 	{
+		if (!e) return;
 		currentSelection = 1;
-		musicFadeEnabled = CVar.GetCVar("py_weaponwheel_musicfade", players[consoleplayer]).GetBool();
+		if (playeringame[consoleplayer])
+		{
+			let cv = CVar.GetCVar("py_weaponwheel_musicfade", players[consoleplayer]);
+			musicFadeEnabled = cv ? cv.GetBool() : false;
+		}
 	}
 	
 	double outQuad(int t, double b, double c, double d)
@@ -459,6 +463,9 @@ Class PB_SpecialWheelHandler : EventHandler
 	
 	override void WorldTick()
 	{
+		if (!playeringame[consoleplayer]) return;
+		let pmo = players[consoleplayer].mo;
+		if (!pmo) return;
 
 		if (players[consoleplayer].ReadyWeapon == NULL) 
                 {
@@ -468,12 +475,12 @@ Class PB_SpecialWheelHandler : EventHandler
 			return;
 		}
 		
-		if(players[consoleplayer].mo.FindInventory("CantWeaponSpecial") || 
+		if(pmo.FindInventory("CantWeaponSpecial") || 
 			players[consoleplayer].readyweapon.InStateSequence(players[consoleplayer].readyweapon.curstate, players[consoleplayer].readyweapon.resolvestate("Deselect")))
 
 		{
-			oldPitch = players[consoleplayer].mo.pitch;
-			oldYaw = players[consoleplayer].mo.angle;
+			oldPitch = pmo.pitch;
+			oldYaw = pmo.angle;
 			wheelShow.Clear();
 			wheelIsOpen = false;
 			noWheel = true;
@@ -489,11 +496,13 @@ Class PB_SpecialWheelHandler : EventHandler
 			return;
 		}
 		
-		if(CVar.GetCVar("py_weaponwheel_freeze", players[consoleplayer]).GetInt()==true)
+		let cvFreeze = CVar.GetCVar("py_weaponwheel_freeze", players[consoleplayer]);
+		if(cvFreeze && cvFreeze.GetInt()==true)
 		{
 			Level.setFrozen(wheelIsOpen);
 		}
-		invertControls = CVar.GetCVar("py_weaponwheel_invert", players[consoleplayer]).GetInt();
+		let cvInvert = CVar.GetCVar("py_weaponwheel_invert", players[consoleplayer]);
+		invertControls = cvInvert ? cvInvert.GetInt() : 0;
 		if(musicFadeEnabled&&musicFade>0)
 		{
 			SetMusicVolume(1.0-musicFade/2);
@@ -510,7 +519,7 @@ Class PB_SpecialWheelHandler : EventHandler
 			}
 			if(Level.isFrozen())
 			{
-				players[consoleplayer].viewz = players[consoleplayer].mo.pos.z+players[consoleplayer].viewheight;
+				players[consoleplayer].viewz = pmo.pos.z+players[consoleplayer].viewheight;
 				players[consoleplayer].bob = 0;
 			}
 			if(oldSelection!=currentSelection)
@@ -570,14 +579,13 @@ Class PB_SpecialWheelHandler : EventHandler
 					break;
 				}
 			}
-			if(players[consoleplayer].mo!=null)
 			{
-				players[consoleplayer].mo.pitch = oldPitch;
-				players[consoleplayer].mo.angle = oldYaw;
-				players[consoleplayer].mo.angle -= 1;
-				players[consoleplayer].mo.pitch -= 1;
-				players[consoleplayer].mo.A_SetAngle(players[consoleplayer].mo.angle + 1, SPF_INTERPOLATE);
-				players[consoleplayer].mo.A_SetPitch(players[consoleplayer].mo.pitch + 1, SPF_INTERPOLATE);
+				pmo.pitch = oldPitch;
+				pmo.angle = oldYaw;
+				pmo.angle -= 1;
+				pmo.pitch -= 1;
+				pmo.A_SetAngle(pmo.angle + 1, SPF_INTERPOLATE);
+				pmo.A_SetPitch(pmo.pitch + 1, SPF_INTERPOLATE);
 				
 				if(Level.isFrozen()&&oldPTics.Size()==0)
 				{
@@ -597,7 +605,7 @@ Class PB_SpecialWheelHandler : EventHandler
 						for (int i = 0; i < AllActorClasses.Size(); i++)
 						{
 							let type = (Class<Powerup>)(AllActorClasses[i]);
-							let item = Powerup(players[consoleplayer].mo.FindInventory(type));
+							let item = Powerup(pmo.FindInventory(type));
 								
 							if (item)
 							{
@@ -611,7 +619,7 @@ Class PB_SpecialWheelHandler : EventHandler
 						for (int i = 0; i < AllActorClasses.Size(); i++)
 						{
 							let type = (Class<Powerup>)(AllActorClasses[i]);
-							let item = Powerup(players[consoleplayer].mo.FindInventory(type));
+							let item = Powerup(pmo.FindInventory(type));
 								
 							if (item)
 							{
@@ -626,7 +634,6 @@ Class PB_SpecialWheelHandler : EventHandler
 		}
 		else
 		{
-			if(players[consoleplayer].mo!=null)
 			{
 				if(oldPTics.Size()>0)
 				{
@@ -643,7 +650,7 @@ Class PB_SpecialWheelHandler : EventHandler
 					for (int i = 0; i < AllActorClasses.Size(); i++)
 					{
 						let type = (Class<Powerup>)(AllActorClasses[i]);
-						let item = Powerup(players[consoleplayer].mo.FindInventory(type));
+						let item = Powerup(pmo.FindInventory(type));
 								
 						if (item && oldPUTics.Size()>0)
 						{
@@ -667,12 +674,34 @@ Class PB_SpecialWheelHandler : EventHandler
 	
 	void specialWheel_handleMouse()
 	{
+			if (!playeringame[consoleplayer]) { return; }
+			let pmo = players[consoleplayer].mo;
+			if (!pmo) { return; }
+
+			// Safety pass: fold duplicate wheel entries by action token.
+			// This prevents duplicate slices (e.g. proximity mine) when multiple providers add same specialName.
+			for (int i = wheelSpecials.Size() - 1; i >= 0; i--)
+			{
+				string modeName = wheelSpecials[i].specialName;
+				if (modeName == "") { continue; }
+				for (int j = 0; j < i; j++)
+				{
+					if (wheelSpecials[j].specialName == modeName)
+					{
+						wheelSpecials.Delete(i);
+						break;
+					}
+				}
+			}
+
 			wheelShow.Clear();
 
-			players[consoleplayer].mo.A_GiveInventory("PlayerWheelOpen");
-			selectedWeapon = players[consoleplayer].ReadyWeapon.GetClassName();
+			pmo.A_GiveInventory("PlayerWheelOpen");
+			if (players[consoleplayer].ReadyWeapon)
+			{
+				selectedWeapon = players[consoleplayer].ReadyWeapon.GetClassName();
+			}
     
-			//Console.Printf(""..selectedWeapon);
 			wheelIsOpen = true;
 			S_StartSound("menu/clear",5);
 			if(point_distance(0,0,realMouse.x,realMouse.y)>32)
@@ -681,14 +710,32 @@ Class PB_SpecialWheelHandler : EventHandler
 			}
 			fakeMouse = realMouse;
 
-			if(players[consoleplayer].mo!=null)
-			{
-				oldPitch = players[consoleplayer].mo.pitch;
-				oldYaw = players[consoleplayer].mo.angle;
-			}
+			oldPitch = pmo.pitch;
+			oldYaw = pmo.angle;
 	}
 	
 
+	void specialWheel_Excavator()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.55, 0.55);
+		PB_SpecialWheel_Mode ex_drop = new ("PB_SpecialWheel_Mode");
+		ex_drop.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Excavator/DropAlt.png", TexMan.Type_Any);
+		ex_drop.specialName = "EX_Select_DropMode";
+		ex_drop.specialAlias = "Drop charge mode";
+		ex_drop.specialPriority = 1;
+		ex_drop.iconScale = iconScale;
+		wheelSpecials.Push(ex_drop);
+		PB_SpecialWheel_Mode ex_drill = new ("PB_SpecialWheel_Mode");
+		ex_drill.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Excavator/DrillAlt.png", TexMan.Type_Any);
+		ex_drill.specialName = "EX_Select_DrillMode";
+		ex_drill.specialAlias = "Drill charge mode";
+		ex_drill.specialPriority = 2;
+		ex_drill.iconScale = iconScale;
+		wheelSpecials.Push(ex_drill);
+		specialWheel_handleMouse();
+	}
+	
 	void specialWheel_SGL()
 	{
 			
@@ -1084,6 +1131,111 @@ Class PB_SpecialWheelHandler : EventHandler
 				}
 				specialWheel_handleMouse();
 	}
+
+	void specialWheel_DTechMinigun()
+	{
+				wheelSpecials.Clear();
+				iconScale = (0.8, 0.8);
+
+				PB_SpecialWheel_Mode dtech_plasma = new ("PB_SpecialWheel_Mode");
+				dtech_plasma.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+				dtech_plasma.specialName = "Select_DTechMG_Plasma";
+				dtech_plasma.specialAlias = "Plasma Volley";
+				dtech_plasma.specialPriority = 1;
+				dtech_plasma.iconScale = iconScale;
+				wheelSpecials.Push(dtech_plasma);
+
+				PB_SpecialWheel_Mode dtech_shrink = new ("PB_SpecialWheel_Mode");
+				dtech_shrink.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_1.png", TexMan.Type_Any);
+				dtech_shrink.specialName = "Select_DTechMG_Shrink";
+				dtech_shrink.specialAlias = "Shrink Beam";
+				dtech_shrink.specialPriority = 2;
+				dtech_shrink.iconScale = iconScale;
+				wheelSpecials.Push(dtech_shrink);
+
+				PB_SpecialWheel_Mode dtech_acid = new ("PB_SpecialWheel_Mode");
+				dtech_acid.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_acid.png", TexMan.Type_Any);
+				dtech_acid.specialName = "Select_DTechMG_Acid";
+				dtech_acid.specialAlias = "Acid Glob";
+				dtech_acid.specialPriority = 3;
+				dtech_acid.iconScale = iconScale;
+				wheelSpecials.Push(dtech_acid);
+
+				PB_SpecialWheel_Mode dtech_danmaku = new ("PB_SpecialWheel_Mode");
+				dtech_danmaku.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Danmaku.png", TexMan.Type_Any);
+				dtech_danmaku.specialName = "Select_DTechMG_Danmaku";
+				dtech_danmaku.specialAlias = "Danmaku Spiral";
+				dtech_danmaku.specialPriority = 4;
+				dtech_danmaku.iconScale = iconScale;
+				wheelSpecials.Push(dtech_danmaku);
+
+				specialWheel_handleMouse();
+	}
+
+	void specialWheel_NeoHMG()
+	{
+				wheelSpecials.Clear();
+				iconScale = (0.8, 0.8);
+				PB_SpecialWheel_Mode neohmg_heated = new ("PB_SpecialWheel_Mode");
+				neohmg_heated.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png",TexMan.Type_Any);
+				neohmg_heated.specialName = "HMG_Select_Heated";
+				neohmg_heated.specialAlias = "Heated Rounds";
+				neohmg_heated.specialPriority = 1;
+				neohmg_heated.iconScale = iconScale;
+				wheelSpecials.Push(neohmg_heated);
+
+				PB_SpecialWheel_Mode neohmg_charged = new ("PB_SpecialWheel_Mode");
+				neohmg_charged.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png",TexMan.Type_Any);
+				neohmg_charged.specialName = "HMG_Select_Charged";
+				neohmg_charged.specialAlias = "Charged Rounds";
+				neohmg_charged.specialPriority = 2;
+				neohmg_charged.iconScale = iconScale;
+				wheelSpecials.Push(neohmg_charged);
+
+				specialWheel_handleMouse();
+	}
+
+	void specialWheel_M41A()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.6, 0.6);
+		PB_SpecialWheel_Mode a = new ("PB_SpecialWheel_Mode");
+		a.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
+		a.specialName = "SelectM41A_12Gauge";
+		a.specialAlias = "12ga Alt-Fire";
+		a.specialPriority = 1;
+		a.iconScale = iconScale;
+		wheelSpecials.Push(a);
+		PB_SpecialWheel_Mode b = new ("PB_SpecialWheel_Mode");
+		b.specialIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
+		b.specialName = "SelectM41A_30mmGrenade";
+		b.specialAlias = "30mm Grenade";
+		b.specialPriority = 2;
+		b.iconScale = iconScale;
+		wheelSpecials.Push(b);
+		specialWheel_handleMouse();
+	}
+
+	void specialWheel_XM21()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.65, 0.65);
+		PB_SpecialWheel_Mode xb = new ("PB_SpecialWheel_Mode");
+		xb.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png", TexMan.Type_Any);
+		xb.specialName = "SelectXM21_Ballistic";
+		xb.specialAlias = "Underbarrel Ballistics";
+		xb.specialPriority = 1;
+		xb.iconScale = iconScale;
+		wheelSpecials.Push(xb);
+		PB_SpecialWheel_Mode xh = new ("PB_SpecialWheel_Mode");
+		xh.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Slug.png", TexMan.Type_Any);
+		xh.specialName = "SelectXM21_HighCaliber";
+		xh.specialAlias = "High-Caliber 7.62";
+		xh.specialPriority = 2;
+		xh.iconScale = iconScale;
+		wheelSpecials.Push(xh);
+		specialWheel_handleMouse();
+	}
 	
 	
 	//Beginning of part 1 of 2 of pump shotgun changes.  Seems for more than just myself this file is where a lot of issues come from
@@ -1135,7 +1287,172 @@ Class PB_SpecialWheelHandler : EventHandler
 				specialWheel_handleMouse();
 	}
 	
-	
+	void specialWheel_CSSG()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.7, 0.7);
+		let pl = players[consoleplayer].mo;
+		if (!pl) {
+			specialWheel_handleMouse();
+			return;
+		}
+		PB_SpecialWheel_Mode csg_buck = new ("PB_SpecialWheel_Mode");
+		csg_buck.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Buck.png", TexMan.Type_Any);
+		csg_buck.specialName = "SelectCSG_Buckshot";
+		csg_buck.specialAlias = "Buckshot";
+		csg_buck.specialPriority = 1;
+		csg_buck.iconScale = iconScale;
+		wheelSpecials.Push(csg_buck);
+		PB_SpecialWheel_Mode csg_slug = new ("PB_SpecialWheel_Mode");
+		csg_slug.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Slug.png", TexMan.Type_Any);
+		csg_slug.specialName = "SelectCSG_Slugshot";
+		csg_slug.specialAlias = "Slug";
+		csg_slug.specialPriority = 2;
+		csg_slug.iconScale = iconScale;
+		wheelSpecials.Push(csg_slug);
+		PB_SpecialWheel_Mode csg_flech = new ("PB_SpecialWheel_Mode");
+		csg_flech.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Flechette.png", TexMan.Type_Any);
+		csg_flech.specialName = "SelectCSG_Flechette";
+		csg_flech.specialAlias = "Flechette";
+		csg_flech.specialPriority = 3;
+		csg_flech.iconScale = iconScale;
+		wheelSpecials.Push(csg_flech);
+		PB_SpecialWheel_Mode csg_flak = new ("PB_SpecialWheel_Mode");
+		csg_flak.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Flak.png", TexMan.Type_Any);
+		csg_flak.specialName = "SelectCSG_Flak";
+		csg_flak.specialAlias = "Flak";
+		csg_flak.specialPriority = 4;
+		csg_flak.iconScale = iconScale;
+		wheelSpecials.Push(csg_flak);
+		if (pl.FindInventory("DragonBreathUpgrade")) {
+			PB_SpecialWheel_Mode csg_db = new ("PB_SpecialWheel_Mode");
+			csg_db.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_DB.png", TexMan.Type_Any);
+			csg_db.specialName = "SelectCSG_Dragonsbreath";
+			csg_db.specialAlias = "Dragon's Breath";
+			csg_db.specialPriority = 5;
+			csg_db.iconScale = iconScale;
+			wheelSpecials.Push(csg_db);
+		}
+		if (pl.FindInventory("ExplosiveUpgrade")) {
+			PB_SpecialWheel_Mode csg_ex = new ("PB_SpecialWheel_Mode");
+			csg_ex.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Explosive.png", TexMan.Type_Any);
+			csg_ex.specialName = "SelectCSG_Explosive";
+			csg_ex.specialAlias = "Explosive";
+			csg_ex.specialPriority = 6;
+			csg_ex.iconScale = iconScale;
+			wheelSpecials.Push(csg_ex);
+		}
+		if (pl.FindInventory("WhitePhosphorusUpgrade")) {
+			PB_SpecialWheel_Mode csg_wp = new ("PB_SpecialWheel_Mode");
+			csg_wp.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_WPhosphorus.png", TexMan.Type_Any);
+			csg_wp.specialName = "SelectCSG_WPhosphorus";
+			csg_wp.specialAlias = "White Phosphorus";
+			csg_wp.specialPriority = 7;
+			csg_wp.iconScale = iconScale;
+			wheelSpecials.Push(csg_wp);
+		}
+		if (pl.FindInventory("TripleDoomUpgrade")) {
+			PB_SpecialWheel_Mode csg_doom = new ("PB_SpecialWheel_Mode");
+			csg_doom.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Doom.png", TexMan.Type_Any);
+			csg_doom.specialName = "SelectCSG_Doom";
+			csg_doom.specialAlias = "Triple Doom";
+			csg_doom.specialPriority = 8;
+			csg_doom.iconScale = iconScale;
+			wheelSpecials.Push(csg_doom);
+		}
+		if (pl.FindInventory("DanmakuUpgrade")) {
+			PB_SpecialWheel_Mode csg_dan = new ("PB_SpecialWheel_Mode");
+			csg_dan.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Danmaku.png", TexMan.Type_Any);
+			csg_dan.specialName = "SelectCSG_Danmaku";
+			csg_dan.specialAlias = "Danmaku";
+			csg_dan.specialPriority = 9;
+			csg_dan.iconScale = iconScale;
+			wheelSpecials.Push(csg_dan);
+		}
+		specialWheel_handleMouse();
+	}
+
+	void specialWheel_HASG()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.7, 0.7);
+		let pl = players[consoleplayer].mo;
+		if (!pl) {
+			specialWheel_handleMouse();
+			return;
+		}
+		PB_SpecialWheel_Mode hasg_buck = new ("PB_SpecialWheel_Mode");
+		hasg_buck.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Buck.png", TexMan.Type_Any);
+		hasg_buck.specialName = "HASG_SelectBuck";
+		hasg_buck.specialAlias = "Buckshot";
+		hasg_buck.specialPriority = 1;
+		hasg_buck.iconScale = iconScale;
+		wheelSpecials.Push(hasg_buck);
+		PB_SpecialWheel_Mode hasg_slug = new ("PB_SpecialWheel_Mode");
+		hasg_slug.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Slug.png", TexMan.Type_Any);
+		hasg_slug.specialName = "HASG_SelectSlug";
+		hasg_slug.specialAlias = "Slug";
+		hasg_slug.specialPriority = 2;
+		hasg_slug.iconScale = iconScale;
+		wheelSpecials.Push(hasg_slug);
+		PB_SpecialWheel_Mode hasg_flech = new ("PB_SpecialWheel_Mode");
+		hasg_flech.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Flechette.png", TexMan.Type_Any);
+		hasg_flech.specialName = "HASG_SelectFlech";
+		hasg_flech.specialAlias = "Flechette";
+		hasg_flech.specialPriority = 3;
+		hasg_flech.iconScale = iconScale;
+		wheelSpecials.Push(hasg_flech);
+		PB_SpecialWheel_Mode hasg_db = new ("PB_SpecialWheel_Mode");
+		hasg_db.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_DB.png", TexMan.Type_Any);
+		hasg_db.specialName = "HASG_SelectDRBT";
+		hasg_db.specialAlias = "Dragon's Breath";
+		hasg_db.specialPriority = 4;
+		hasg_db.iconScale = iconScale;
+		wheelSpecials.Push(hasg_db);
+		PB_SpecialWheel_Mode hasg_ex = new ("PB_SpecialWheel_Mode");
+		hasg_ex.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Explosive.png", TexMan.Type_Any);
+		hasg_ex.specialName = "HASG_SelectExplosive";
+		hasg_ex.specialAlias = "Explosive";
+		hasg_ex.specialPriority = 5;
+		hasg_ex.iconScale = iconScale;
+		wheelSpecials.Push(hasg_ex);
+		PB_SpecialWheel_Mode hasg_dan = new ("PB_SpecialWheel_Mode");
+		hasg_dan.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Danmaku.png", TexMan.Type_Any);
+		hasg_dan.specialName = "HASG_SelectDanmaku";
+		hasg_dan.specialAlias = "Danmaku";
+		hasg_dan.specialPriority = 6;
+		hasg_dan.iconScale = iconScale;
+		wheelSpecials.Push(hasg_dan);
+		PB_SpecialWheel_Mode hasg_wp = new ("PB_SpecialWheel_Mode");
+		hasg_wp.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_WPhosphorus.png", TexMan.Type_Any);
+		hasg_wp.specialName = "HASG_SelectWPhos";
+		hasg_wp.specialAlias = "White Phosphorus";
+		hasg_wp.specialPriority = 7;
+		hasg_wp.iconScale = iconScale;
+		wheelSpecials.Push(hasg_wp);
+		specialWheel_handleMouse();
+	}
+
+
+	// Same resource rules as BaseWeapon "WheelCancelEquipment" / throw states â€” hide wheel slices you cannot use.
+	bool WheelSliceIsUsable(PlayerPawn pl, String specialName)
+	{
+		if (pl == null) { return true; }
+		if (specialName == "WW_FragGrenadeSelected") { return pl.CountInv("HandGrenadeAmmo") > 0; }
+		if (specialName == "WW_ProximityMineSelected") { return pl.CountInv("MineAmmo") > 0; }
+		if (specialName == "WW_StunGrenadeSelected") { return pl.CountInv("StunGrenadeAmmo") > 0; }
+		if (specialName == "WW_MolotovSelected") { return pl.CountInv("HandMolotovAmmo") > 0; }
+		if (specialName == "WW_LeechSelected") { return pl.CountInv("HasLeech") > 0; }
+		if (specialName == "WW_RevGunSelected") { return pl.CountInv("MiniHellRocketAmmo") > 0; }
+		if (specialName == "GK_FlamebelchSelected" || specialName == "GK_IcebombSelected")
+		{
+			if (!playeringame[consoleplayer]) { return false; }
+			let cv = CVar.GetCVar("be_ExecutionsON", players[consoleplayer]);
+			return cv ? cv.GetBool() : false;
+		}
+		return true;
+	}
+
 	void specialWheel_RocketLauncher()
 	{
 			
@@ -1161,24 +1478,18 @@ Class PB_SpecialWheelHandler : EventHandler
 			rocket_laser.specialPriority = 3;
 			rocket_laser.iconScale = iconScale;
 			
-// 			if(players[consoleplayer].mo.FindInventory("RL_ScopeMode")) {
 // 				PB_SpecialWheel_Mode rocket_multi = new ("PB_SpecialWheel_Mode");
 // 				rocket_multi.specialIcon = TexMan.CheckForTexture("graphics/pywheel/multirocket.png",TexMan.Type_Any);
 // 				rocket_multi.specialName = "RocketLauncher_Multi";
 // 				rocket_multi.specialAlias = "Multi Rocket Mode";
 // 				rocket_multi.specialPriority = 3;
 // 				rocket_multi.iconScale = iconScale;
-// 				wheelSpecials.Push(rocket_multi);
-// 			}
-// 			else {
 // 				PB_SpecialWheel_Mode rocket_scope = new ("PB_SpecialWheel_Mode");
 // 				rocket_scope.specialIcon = TexMan.CheckForTexture("graphics/pywheel/rocketscope.png",TexMan.Type_Any);
 // 				rocket_scope.specialName = "RocketLauncher_Scope";
 // 				rocket_scope.specialAlias = "Scope Mode";
 // 				rocket_scope.specialPriority = 3;
 // 				rocket_scope.iconScale = iconScale;
-// 				wheelSpecials.Push(rocket_scope);
-// 			}
 			
 			wheelSpecials.Push(rocket_standard);
 			wheelSpecials.Push(rocket_homing);
@@ -1189,82 +1500,105 @@ Class PB_SpecialWheelHandler : EventHandler
 	
 	void specialWheel_Equipment() {
 				wheelSpecials.Clear();
+				let pl = PlayerPawn(players[consoleplayer].mo);
+				if (pl == null) { return; }
+
 				iconScale = (1.3, 1.3);
 				
 				PB_SpecialWheel_Mode equip_frag = new ("PB_SpecialWheel_Mode");
-				equip_frag.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Equip_Frag.png",TexMan.Type_Any);
+				equip_frag.specialIcon = TexMan.CheckForTexture("HFRAGY",TexMan.Type_Any);
 				equip_frag.specialName = "WW_FragGrenadeSelected";
 				equip_frag.specialAlias = "Frag Grenade";
 				equip_frag.specialPriority = 1;
 				equip_frag.iconScale = iconScale;
-				wheelSpecials.Push(equip_frag);
+				if (WheelSliceIsUsable(pl, equip_frag.specialName)) { wheelSpecials.Push(equip_frag); }
 				
 				PB_SpecialWheel_Mode equip_mine = new ("PB_SpecialWheel_Mode");
-				equip_mine.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Equip_Mine.png",TexMan.Type_Any);
+				equip_mine.specialIcon = TexMan.CheckForTexture("HMINEY",TexMan.Type_Any);
 				equip_mine.specialName = "WW_ProximityMineSelected";
 				equip_mine.specialAlias = "Prox. Mine";
 				equip_mine.specialPriority = 2;
 				equip_mine.iconScale = iconScale;
-				wheelSpecials.Push(equip_mine);
+				if (WheelSliceIsUsable(pl, equip_mine.specialName)) { wheelSpecials.Push(equip_mine); }
 				
 				PB_SpecialWheel_Mode equip_stun = new ("PB_SpecialWheel_Mode");
-				equip_stun.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Equip_Stun.png",TexMan.Type_Any);
+				equip_stun.specialIcon = TexMan.CheckForTexture("HSTUNY",TexMan.Type_Any);
 				equip_stun.specialName = "WW_StunGrenadeSelected";
 				equip_stun.specialAlias = "Stun Grenade";
 				equip_stun.specialPriority = 3;
 				equip_stun.iconScale = iconScale;
-				wheelSpecials.Push(equip_stun);
+				if (WheelSliceIsUsable(pl, equip_stun.specialName)) { wheelSpecials.Push(equip_stun); }
+				
+		let cvNoMolotov = CVar.GetCVar("pb_NoMolotov", players[consoleplayer]);
+				if (cvNoMolotov && cvNoMolotov.GetInt() == 0) {
+				PB_SpecialWheel_Mode equip_molotov = new ("PB_SpecialWheel_Mode");
+					equip_molotov.specialIcon = TexMan.CheckForTexture("MOLOV0",TexMan.Type_Any);
+					equip_molotov.specialName = "WW_MolotovSelected";
+					equip_molotov.specialAlias = "Molotov Cocktail";
+					equip_molotov.specialPriority = 4;
+					equip_molotov.iconScale = iconScale;
+					if (WheelSliceIsUsable(pl, equip_molotov.specialName)) { wheelSpecials.Push(equip_molotov); }
+				}
 				
 				PB_SpecialWheel_Mode equip_leech = new ("PB_SpecialWheel_Mode");
-				equip_leech.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Equip_Leech.png",TexMan.Type_Any);
+				equip_leech.specialIcon = TexMan.CheckForTexture("HLECHY",TexMan.Type_Any);
 				equip_leech.specialName = "WW_LeechSelected";
 				equip_leech.specialAlias = "Leech";
-				equip_leech.specialPriority = 4;
+				equip_leech.specialPriority = 5;
 				equip_leech.iconScale = iconScale;
-				wheelSpecials.Push(equip_leech);
+				if (WheelSliceIsUsable(pl, equip_leech.specialName)) { wheelSpecials.Push(equip_leech); }
 				
 				iconScale = (0.2, 0.2);
 				PB_SpecialWheel_Mode flame_belch = new ("PB_SpecialWheel_Mode");
 				flame_belch.specialIcon = TexMan.CheckForTexture("graphics/HUD/Flame_Belch.png",TexMan.Type_Any);
 				flame_belch.specialName = "GK_FlamebelchSelected";
 				flame_belch.specialAlias = "Flame Belch";
-				flame_belch.specialPriority = 5;
+				flame_belch.specialPriority = 6;
 				flame_belch.iconScale = iconScale;
-				wheelSpecials.Push(flame_belch);
+				if (WheelSliceIsUsable(pl, flame_belch.specialName)) { wheelSpecials.Push(flame_belch); }
 				
 				PB_SpecialWheel_Mode ice_bomb = new ("PB_SpecialWheel_Mode");
 				ice_bomb.specialIcon = TexMan.CheckForTexture("graphics/HUD/Ice_Bomb.png",TexMan.Type_Any);
 				ice_bomb.specialName = "GK_IcebombSelected";
 				ice_bomb.specialAlias = "Ice Bomb";
-				ice_bomb.specialPriority = 6;
+				ice_bomb.specialPriority = 7;
 				ice_bomb.iconScale = iconScale;
-				wheelSpecials.Push(ice_bomb);
+				if (WheelSliceIsUsable(pl, ice_bomb.specialName)) { wheelSpecials.Push(ice_bomb); }
 				
-				iconScale = (1.3, 1.3);
-				if(players[consoleplayer].mo.FindInventory("HasRevGun")) {
+			iconScale = (1.3, 1.3);
+			if(pl.FindInventory("HasRevGun")) {
 					PB_SpecialWheel_Mode equip_revgun = new ("PB_SpecialWheel_Mode");
-					equip_revgun.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Equip_RevGun.png",TexMan.Type_Any);
+					equip_revgun.specialIcon = TexMan.CheckForTexture("HREVCY",TexMan.Type_Any);
 					equip_revgun.specialName = "WW_RevGunSelected";
 					equip_revgun.specialAlias = "Quick Launcher";
-					equip_revgun.specialPriority = 5;
+					equip_revgun.specialPriority = 8;
 					equip_revgun.iconScale = iconScale;
-					wheelSpecials.Push(equip_revgun);
-				
+					if (WheelSliceIsUsable(pl, equip_revgun.specialName)) { wheelSpecials.Push(equip_revgun); }
 				}
 				
+				if (wheelSpecials.Size() < 1)
+				{
+					pl.A_Print("\cgNo \ctequipment \c-to select");
+					return;
+				}
+
 				specialWheel_handleMouse();
 	}
 
 	Override Void NetworkProcess(ConsoleEvent e)
 	{
-if (players[consoleplayer].ReadyWeapon == NULL) 
+		if (!e) return;
+		if (!playeringame[consoleplayer]) return;
+		let pmo = players[consoleplayer].mo;
+		if (!pmo) return;
+		if (players[consoleplayer].ReadyWeapon == NULL) 
          {
              return;
          }
 			if(e.name == 'PBEquipSpecialOn')
 		{
 
-			if (players[consoleplayer].mo.FindInventory("CantWeaponSpecial"))
+			if (pmo.FindInventory("CantWeaponSpecial"))
 			{
 				wheelShow.Clear();
 				wheelIsOpen = false;
@@ -1277,7 +1611,7 @@ if (players[consoleplayer].ReadyWeapon == NULL)
             if (wheelIsOpen) { return; }
 			
 
-			if (players[consoleplayer].mo.FindInventory("Melee_Attacks")){
+			if (pmo.FindInventory("Melee_Attacks")){
 				specialWheel_Equipment();
 				return;
 			}
@@ -1288,25 +1622,24 @@ if (players[consoleplayer].ReadyWeapon == NULL)
 		
 		else if(!noWheel && e.name == 'PBEquipSpecialOff' || players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon)
 		{
-			if(players[consoleplayer].mo!=null && !(players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon))
+			if(!(players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon))
 			{
 				if(wheelShow.Size()>0)
 				{
 					int curSelMod = wheelShow[currentSelection];
-					players[consoleplayer].mo.A_GiveInventory(wheelSpecials[curSelMod].specialName);
-					players[consoleplayer].mo.A_GiveInventory("ToggleEquipment");
+					pmo.A_GiveInventory(wheelSpecials[curSelMod].specialName);
+					pmo.A_GiveInventory("ToggleEquipment");
 					S_StartSound("menu/choose",5);
-					//Console.Printf(""..wheelSpecials[curSelMod].specialName);
 				}
 			}
-			players[consoleplayer].mo.A_TakeInventory("PlayerWheelOpen");
+			pmo.A_TakeInventory("PlayerWheelOpen");
 			wheelSort = false;
 			wheelIsOpen = false;
 		}
 	
 	if(e.name == 'PBWeaponSpecialOn')
 		{
-			if (players[consoleplayer].mo.FindInventory("CantWeaponSpecial"))
+			if (pmo.FindInventory("CantWeaponSpecial"))
 
 			{
 				wheelShow.Clear();
@@ -1321,7 +1654,6 @@ if (players[consoleplayer].ReadyWeapon == NULL)
 			
 			//Check if equipped valid wheel-based weapon
 			
-			//string current_weapon = players[consoleplayer].ReadyWeapon.GetClassName();
 			 
 			switch(players[consoleplayer].ReadyWeapon.GetClassName()) {
 					
@@ -1332,18 +1664,22 @@ if (players[consoleplayer].ReadyWeapon == NULL)
 				case 'PB_SuperGL':
 					specialWheel_SGL();
 					return;
+
+				case 'PB_Excavator':
+					specialWheel_Excavator();
+					return;
 					
 				case 'PB_QuadSG':
 				specialWheel_QSG();
 				return;
 
 				case 'Rifle':
-					if (players[consoleplayer].mo.FindInventory("DMRUpgraded")) {
+					if (pmo.FindInventory("DMRUpgraded")) {
 						specialWheel_Rifle();
 						return;
 					}
 					else {
-						players[consoleplayer].mo.A_GiveInventory("GoWeaponSpecialAbility");
+						pmo.A_GiveInventory("GoWeaponSpecialAbility");
 						selectedWeapon = players[consoleplayer].ReadyWeapon.GetClassName();
 						wheelShow.Clear();
 						wheelIsOpen = false;
@@ -1360,8 +1696,8 @@ if (players[consoleplayer].ReadyWeapon == NULL)
 					return;
 					
 				case 'PB_Shotgun':
-					if (players[consoleplayer].mo.FindInventory("Zoomed")) {
-						players[consoleplayer].mo.A_GiveInventory("GoWeaponSpecialAbility");
+					if (pmo.FindInventory("Zoomed")) {
+						pmo.A_GiveInventory("GoWeaponSpecialAbility");
 						selectedWeapon = players[consoleplayer].ReadyWeapon.GetClassName();
 						wheelShow.Clear();
 						wheelIsOpen = false;
@@ -1372,17 +1708,51 @@ if (players[consoleplayer].ReadyWeapon == NULL)
 						specialWheel_Shotgun();
 						return;
 					}
+				case 'PB_CSSG':
+					specialWheel_CSSG();
+					return;
+
+				case 'HASG':
+					specialWheel_HASG();
+					return;
 				
 				case 'PB_Minigun':
 					specialWheel_Minigun();
+					return;
+
+				case 'DemonTechMinigun':
+					specialWheel_DTechMinigun();
+					return;
+
+				case 'PB_NeoHMG':
+					specialWheel_NeoHMG();
 					return;
 					
 				case 'PB_RocketLauncher':
 					specialWheel_RocketLauncher();
 					return;
+
+				case 'PB_M41A':
+					specialWheel_M41A();
+					return;
+
+				case 'PB_XM21':
+					if (pmo.FindInventory("XM21RifleUpgrade"))
+					{
+						specialWheel_XM21();
+					}
+					else
+					{
+						pmo.A_GiveInventory("GoWeaponSpecialAbility");
+						selectedWeapon = players[consoleplayer].ReadyWeapon.GetClassName();
+						wheelShow.Clear();
+						wheelIsOpen = false;
+						noWheel = true;
+					}
+					return;
 					
 				default:
-					players[consoleplayer].mo.A_GiveInventory("GoWeaponSpecialAbility");
+					pmo.A_GiveInventory("GoWeaponSpecialAbility");
 					selectedWeapon = players[consoleplayer].ReadyWeapon.GetClassName();
 					wheelShow.Clear();
 					wheelIsOpen = false;
@@ -1395,18 +1765,17 @@ if (players[consoleplayer].ReadyWeapon == NULL)
 		else if(!noWheel && e.name == 'PBWeaponSpecialOff' || players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon)
 		{
 			
-			if(players[consoleplayer].mo!=null && !(players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon))
+			if(!(players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon))
 			{
 				if(wheelShow.Size()>0)
 				{
 					int curSelMod = wheelShow[currentSelection];
-					players[consoleplayer].mo.A_GiveInventory(wheelSpecials[curSelMod].specialName);
-					players[consoleplayer].mo.A_GiveInventory("GoWeaponSpecialAbility");
+					pmo.A_GiveInventory(wheelSpecials[curSelMod].specialName);
+					pmo.A_GiveInventory("GoWeaponSpecialAbility");
 					S_StartSound("menu/choose",5);
-					//Console.Printf(""..wheelSpecials[curSelMod].specialName);
 				}
 			}
-			players[consoleplayer].mo.A_TakeInventory("PlayerWheelOpen");
+			pmo.A_TakeInventory("PlayerWheelOpen");
 			wheelSort = false;
 			wheelIsOpen = false;
 		}

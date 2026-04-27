@@ -1,0 +1,6 @@
+Code: DeVloek
+GLDefs: DeVloek
+Sounds: Raven Software, 3D Realms, DeVloek
+Sprites: Amuscaria, id Software
+Sprite Edit: DeVloek
+Idea Base: Jumping spiders, Mite from Hellforged 2

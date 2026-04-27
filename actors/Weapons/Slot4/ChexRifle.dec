@@ -43,7 +43,6 @@ Actor LaserShot : FastProjectile
 	+RANDOMIZE
 	+FORCEXYBILLBOARD
 	+DONTSPLASH
-	//+BLOODSPLATTER 
 	+NOEXTREMEDEATH
 
 	radius 2
@@ -63,7 +62,6 @@ Actor LaserShot : FastProjectile
 	Death:
 		TNT1 A 0 //A_CustomMissile ("Flametrails", 0, 0, random (0, 180), 2, random (0, 360))
 		TNT1 A 0 A_SpawnItem("HellRifle_Puff",0)
-		//TNT1 A 0 A_SpawnItem("HitPuffLightRifle")
 		TNT1 AAA 0 A_SpawnItemEx("ExplosionParticleVerySlow", random(-8, 8), random(-8, 8), random(-2,2), 0, 0, 0, 0, 128, 0)
 		TNT1 AAA 0 A_SpawnItemEx("ObeliskTrailSpark", random(-8, 8), random(-8, 8), random(-2,2), 0, 0, 0, 0, 128, 0)
 		TNT1 A 4
@@ -71,7 +69,6 @@ Actor LaserShot : FastProjectile
 		Stop
 	XDeath:
 		TNT1 A 0 A_SpawnItem("HellRifle_Puff2",0)
-		//TNT1 A 0 A_SpawnItem("HitPuffLightRifle")
 		TNT1 A 0 A_SpawnItemEx("ExplosionParticleVerySlow", random(-8, 8), random(-8, 8), random(-2,2), 0, 0, 0, 0, 128, 0)
 		TNT1 AA 0 A_SpawnItemEx("BurningEmberParticlesFloating_Bigger", random(19,-19), random(19,-19), random(4,-4), 0, 0, 0, 0, 128, 0)
 		TNT1 AAA 0 A_SpawnItemEx("ObeliskTrailSpark", random(-8, 8), random(-8, 8), random(-2,2), 0, 0, 0, 0, 128, 0)
@@ -131,7 +128,6 @@ Actor ChexParticleS
   Gravity 0.8
   RenderStyle Add
   Scale 0.035
-  //Speed 2
   Speed 12
   States
   {
@@ -164,14 +160,9 @@ States
 		TNT1 A 0 A_SpawnItemEx("PurpleTrailSparksSmall", 0, 0, 0, 0, 0, 0, 0, 128)
 		TNT1 AA 0 A_SpawnItem("RedFlare",0,0)
 		PBAL E 1 BRIGHT light("TracerGlowChexRed")
-		//Loop
 
 	Xdeath:
 		TNT1 A 0 
-		//TNT1 B 1 A_Explode(6,50,1)
-		//TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		//TNT1 A 0 A_SpawnItemEx ("DetectCeilCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		//TNT1 A 0 A_CustomMissile ("PurplePlasmaFire", 0, 0, random (0, 360), 2, random (0, 360))
 		TNT1 AAAAA 0 A_CustomMissile ("ChexParticleS", 0, 0, random (0, 360), 2, random (0, 360))
 		TNT1 B 4 light("TracerGlowChexRed")
 		TNT2 AAAAAAAAA 9 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
@@ -182,10 +173,6 @@ States
 
 	Death:
 		TNT1 A 0 
-		//TNT1 B 1 A_Explode(6,50,1)
-		//TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		//TNT1 A 0 A_SpawnItemEx ("DetectCeilCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		//TNT1 A 0 A_CustomMissile ("PurplePlasmaFire", 0, 0, random (0, 360), 2, random (0, 360))
 		TNT1 AAAAA 0 A_CustomMissile ("ChexParticleS", 0, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 0 A_SpawnItemEx ("ChexImpact",5,0,0,5,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 B 4 light("TracerGlowChexRed")
@@ -210,7 +197,6 @@ Actor ChexLightningModeProjectile
   RenderStyle Add
   DamageType "Saw"
   Scale 0.04
-  //Speed 2
   Speed 50
   States
   {
@@ -335,10 +321,12 @@ ACTOR ChexRifle : PB_Weapon
 		Goto RealReady
 	Ready3:
 	RealReady: 
+		TNT1 A 0 PB_HandleCrosshair(58)
 		TNT1 A 0 A_JumpIfInventory("UnloadedChexRifle",1,"Unloaded")
 		CHRE EEEEEEAABBCCCDDDDCCCBBAAEEEEEE 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
 		Loop
 	Unloaded:
+		TNT1 A 0 PB_HandleCrosshair(58)
 		CRR2 N 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
 		loop
 	/*
@@ -377,7 +365,6 @@ ACTOR ChexRifle : PB_Weapon
 		TNT1 A 0 A_AlertMonsters
 		TNT1 A 0 A_ZoomFactor(.985)
 		TNT1 A 0 A_RailAttack(0, -5, 0, none,none, RGF_SILENT|RGF_NOPIERCING|RGF_EXPLICITANGLE, 0,"ChexProjectile",0,0,2000,0,1,1.0,"Tracer_Trail_ChexRed",-6,0,0)
-		//TNT1 A 0 A_FireCustomMissile("ChexProjectile", 0, 1, 0, 0)
 		TNT1 A 0 A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0)
 		TNT1 A 0 A_SpawnItem("PinkIonFlare",14,30,0,0)
 		CHRE F 1 BRIGHT
@@ -413,7 +400,6 @@ ACTOR ChexRifle : PB_Weapon
 		TNT1 A 0 A_TakeInventory ("Reloading")
 		TNT1 A 0 A_JumpIfInventory ("ChexRifleAmmo", 42, "RealReady")
 		TNT1 A 0 A_JumpIf(CountInv("Cell") <= 0, "RealReady")
-		//Goto RealReady
 	ReloadAnimation:
 		TNT1 A 0 A_JumpIfInventory ("UnloadedChexRifle",1,"ReloadAnimationIfUnloaded")
 		TNT1 A 0 A_TakeInventory ("UnloadedChexRifle")
@@ -497,7 +483,7 @@ ACTOR ChexRifle : PB_Weapon
 		CXR1 BCDEFG 1
 		CXR1 H 2
 		CXR1 GFEDCB 1
-		Stop
+		Goto Ready3
 		
 	FlashAirKicking:
 	    TNT1 A 0 A_WeaponOffset(0,32)
@@ -514,20 +500,20 @@ ACTOR ChexRifle : PB_Weapon
 		CRR4 L 1 
 		CRR4 M 1 
 		CRR4 N 1 
-		Stop
+		Goto Ready3
 		
 	FlashSlideKicking:
 	    TNT1 A 0 A_WeaponOffset(0,32)
 		CRR4 ML 2
 		CRR4 JIIIIIII 2 A_WeaponOffset(random(-2,2),random(32,34)) 
-		Stop
+		Goto Ready3
 		
 	FlashSlideKickingStop:
 		TNT1 A 0 A_WeaponOffset(0,32)
 		CRR4 I 2
 		CRR4 JKLM 1 
 		CRR4 N 1
-		Stop
+		Goto Ready3
 		
 	FlashPunching:
 		TNT1 A 0 A_WeaponOffset(0,32)

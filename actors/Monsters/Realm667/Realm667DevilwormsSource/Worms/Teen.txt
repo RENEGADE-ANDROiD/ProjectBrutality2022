@@ -1,0 +1,335 @@
+ACTOR TeenWormH 11111
+
+{
+  //$Category Worms
+  Scale 0.3
+  MONSTER
+  -Shootable
+  -Countkill
+	States
+	{
+	Spawn:
+		TNT1 A 1 A_Look
+		TNT1 A 0 A_ChangeFlag("NOTAUTOAIMED", TRUE)
+		TNT1 A 0 A_Changeflag("Solid",False)
+		loop
+	See:
+		TNT1 A 1 A_JumpIfCloser(128, "Breach")
+		Wait
+   	Breach:
+    	TNT1 A 0 A_SpawnItemEx("Roc1", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc2", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc3", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc4", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc5", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc6", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_PlaySound("Worm/Digging")
+		TNT1 A 16
+		TNT1 A 0 A_SpawnItemEx("Roc1", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc2", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc3", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc4", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc5", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc6", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_PlaySound("Worm/Digging")
+		TNT1 A 14
+		TNT1 A 0 A_SpawnItemEx("Roc1", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc2", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc3", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc4", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc5", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc6", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_PlaySound("Worm/Digging")
+		TNT1 A 12
+		TNT1 A 0 A_SpawnItemEx("Roc1", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc2", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc3", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc4", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc5", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc6", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_PlaySound("Worm/Digging")
+		TNT1 A 10
+		TNT1 A 0 A_SpawnItemEx("Roc1", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc2", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc3", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc4", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc5", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("Roc6", 0, 0, 0, 5, 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_PlaySound("Worm/Digging")
+		TNT1 A 1 A_SpawnItemEx("TeenWorm", 0, 0, 13, 0, 0, 5, 0, SXF_NOCHECKPOSITION)
+        Stop
+	}
+}
+
+ACTOR TeenWorm 11112
+
+{
+  //$Category Worms
+  Obituary "%o was chewed up by a Worm." 
+  health 300
+  radius 25
+  height 25
+  mass 200
+  speed 5
+  Damage 5
+  Meleerange 55
+  painchance 150
+  bloodcolor "brown"
+  attacksound "TWorm/Bite"
+  seesound "TWorm/Sight"
+  activesound "TWorm/Idle"
+  painsound "Worm/Hurt"
+  Gravity 0.3
+  Scale 0.5
+  MONSTER
+  +DONTHURTSPECIES
+  +NOINFIGHTING
+	States
+	{
+	Spawn:
+		TWRM A 10 A_Look
+		loop
+	See:
+		TWRM A 1 A_Chase
+		TWRM A 1 A_Chase
+		TWRM A 1 A_Chase
+		TWRM A 0 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+		loop
+	Missile:
+			TNT1 A 0 A_Jump(256,"NormalJump","Lunge","SurpriseAttack","RockSpit")
+			Goto See
+	NormalJump:
+			TWRM A 0 A_jumpIfCloser(60,"Melee")
+    		TWRM A 1 A_FaceTarget
+			TNT1 A 0 A_PlaySound("Worm/Hurt")
+			TWRM A 0 ThrustThingZ (0, random(6,18), 0, 0)
+			TNT1 A 0 ThrustThing(angle*256/360, 4, 0, 0)
+		MidLeap:
+			TWRM A 0 A_SpawnItemEx("TTail1",-22,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItem ("Fix")
+			TNT1 A 0 A_CheckFloor ("Land")
+			loop
+		Land:
+			TWRM A 1 A_Stop
+			goto See
+	Lunge:
+			TWRM A 0 A_jumpIfCloser(60,"Melee")
+    		TWRM A 1 A_FaceTarget
+			TNT1 A 0 A_PlaySound("Worm/Hurt")
+			TWRM A 0 ThrustThingZ (0, random(6,18), 0, 0)
+			TNT1 A 0 ThrustThing(angle*256/360, 16, 0, 0)
+		MidLeap:
+			TWRM A 0 A_SpawnItemEx("TTail1",-22,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItem ("Fix")
+			TNT1 A 0 A_CheckFloor ("Land")
+			loop
+		Land:
+			TWRM A 1 A_Stop
+			goto See
+	SurpriseAttack:
+			TWRM A 0 A_jumpIfCloser(60,"Melee")
+    		TWRM A 1 A_FaceTarget
+			TNT1 A 0 A_PlaySound("Worm/Hurt")
+			TWRM A 0 ThrustThingZ (0, 20, 0, 0)
+			TNT1 A 0 ThrustThing(angle*256/360, 4, 0, 0)
+		MidLeap:
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 0 A_FaceTarget
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SkullAttack
+		MidLeap2:
+			TWRM A 0 A_SpawnItemEx("TTail1",-22,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItem ("Fix")
+			TNT1 A 0 A_CheckFloor ("Land")
+			loop
+		Land:
+			TWRM A 1 A_Stop
+			Goto See
+	RockSpit:
+			TWRM A 0 A_jumpIfCloser(60,"Melee")
+    		TWRM A 1 A_FaceTarget
+			TWRM A 0 ThrustThingZ (0, 20, 0, 0)
+			TNT1 A 0 ThrustThing(angle*256/360, 4, 0, 0)
+		MidLeap:
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 0 A_FaceTarget
+			TNT1 A 0 A_PlaySound("Worm/Hurt")
+			TNT1 A 0 A_CustomMissile("RockSpit", 0, 0, random(5,-5), CMF_OFFSETPITCH, random(0,10))
+			TNT1 A 0 A_CustomMissile("RockSpit", 0, 0, random(5,-5), CMF_OFFSETPITCH, random(0,10))
+			TNT1 A 0 A_CustomMissile("RockSpit", 0, 0, random(5,-5), CMF_OFFSETPITCH, random(0,10))
+			TNT1 A 0 A_CustomMissile("RockSpit", 0, 0, random(5,-5), CMF_OFFSETPITCH, random(0,10))
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+		MidLeap2:
+			TWRM A 0 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItem ("Fix")
+			TNT1 A 0 A_CheckFloor ("Land")
+			loop
+		Land:
+			TWRM A 1 A_Stop
+			Goto See
+    	Melee:
+    		TWRM B 5 A_FaceTarget
+    		TWRM A 1 A_CustomMeleeAttack(random(5,10),0,0,0,0)
+			TWRM A 10
+    		Goto See
+    	Pain:
+    		TWRM A 1
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM A 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+    		TWRM B 1 A_Pain
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TWRM B 1 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+    		Goto AfterPain
+		AfterPain:
+			TWRM B 1
+			TWRM A 0 A_SpawnItemEx("TTail1",-10,0,0,0,0,0,0,0,0)
+			TNT1 A 0 A_CheckFloor ("Land")
+			loop
+        Death:
+			TWTA ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut1", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TWTA ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut2", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TWTA ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut3", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_PlaySound("TWorm/Flinch")
+			TWTB ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut4", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TWTB ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut1", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TWTB ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut2", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TWTA ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut3", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_PlaySound("TWorm/Flinch")
+			TWTB ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut4", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TWTB ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut1", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TWTA ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut2", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_PlaySound("BWorm/Flinch")
+			TWTB ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut3", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TWTB ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut4", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TWTA ABAC 1
+			TNT1 A 0 A_SpawnItemEx("TGut1", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_PlaySound("Worm/Death")
+			TWTA ABACABACABACABAC 1
+			DEAT AAAA 1
+			DEAT BBBB 1
+			DEAD A 0 A_SpawnItem("TJawB",0,0,0)
+			DEAD A 0 A_SpawnItemEx("TJawU", 0, 0, 30, 1, 0, 0, Random(0, 360), 0)
+			TNT1 A 0 A_SpawnItemEx("TGut1", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("TGut2", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("TGut3", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("TGut4", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("TGut1", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("TGut2", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("TGut3", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("TGut4", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+        	Stop
+	}
+}
+
+///////////////
+//////Jaw//////
+///////////////
+
+actor TJawU
+{
+    PROJECTILE
+    -NOGRAVITY
+    -NOBLOCKMAP
+    -NOTELEPORT
+	Gravity 0.2
+    Radius 2
+    Damage 0
+	Scale 0.5
+    States
+    {
+    Spawn:
+		JAWT A 0 A_SetGravity (0.2)
+        JAWT A 0 ThrustThingZ (0, 20, 0, 1)
+        goto See 
+    See:
+        JAWT ABCDEFGH 3
+        loop
+    Death:
+        JAWT A 1 A_SpawnItem("TJawLand",0,0,0)
+        Stop
+    }
+}
+
+actor TJawLand
+{
+    -NOBLOCKMAP
+    Radius 2
+	Scale 0.5
+    States
+    {
+    Spawn:
+		JATL A 1
+		TNT1 A 0 A_PlaySound("Worm/Splat")
+        goto Splat
+	Splat:
+		JATL A 1
+        loop
+    }
+}
+
+actor TJawB
+{
+    -NOBLOCKMAP
+    Radius 2
+	Scale 0.5
+    States
+    {
+    Spawn:
+        JAWY A 1
+        goto Spawn
+    }
+}

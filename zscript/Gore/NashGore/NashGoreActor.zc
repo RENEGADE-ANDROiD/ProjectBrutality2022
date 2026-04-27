@@ -95,7 +95,6 @@ class NashGoreActor : NashGorePlugin
 						[result, footprint] =
 						lastCorpseBlood.target.A_SpawnItemEx("NashGoreFootprint", angle: ang, flags);
 
-						//Console.Printf("%s", lastCorpseBlood.target.GetClassName());
 
 						if (footprint)
 						{

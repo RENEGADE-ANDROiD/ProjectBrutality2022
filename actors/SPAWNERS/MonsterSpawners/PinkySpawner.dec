@@ -89,7 +89,9 @@ Actor PinkyPackSpawner : Demonpickup
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleBloodDemons",0)
 	TNT1 A 0 A_SpawnItemEx("PB_MeanDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "BD2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	BD2Done:
 	stop
 	SpawnMechPinky:
 	TNT1 A 0 A_Jump(256, "SpawnMechPinky1", "SpawnMechPinky2")
@@ -103,7 +105,9 @@ Actor PinkyPackSpawner : Demonpickup
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleMechDemons",0)
 	TNT1 A 0 A_SpawnItemEx("PB_MechDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "MP2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	MP2Done:
 	stop
 	SpawnPinky:
 	ReplaceToggle:
@@ -116,7 +120,9 @@ Actor PinkyPackSpawner : Demonpickup
 	SpawnPinky2:
 	TNT1 A 0 A_SpawnItemEx("PB_Demon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "PK2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	PK2Done:
 	stop
 	}
 }

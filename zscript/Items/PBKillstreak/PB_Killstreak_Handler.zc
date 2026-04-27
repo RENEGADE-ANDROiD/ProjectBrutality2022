@@ -1,0 +1,164 @@
+// Streak count + 5-kill reward + optional rare “flare” globe in the map.
+
+class PB_KillstreakHandler : EventHandler
+{
+	int currentStreak[MAXPLAYERS];
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			currentStreak[i] = 0;
+			if (players[i].mo) ClearKSTokens(players[i].mo);
+		}
+	}
+
+	static bool PB_CvarEnabled(PlayerPawn p)
+	{
+		if (!p || !p.player) return true;
+		let c = CVar.GetCVar("pb_ks_enable", p.player);
+		return c == null || c.GetBool();
+	}
+
+	static bool PB_AnnouncerEnabled(PlayerPawn p)
+	{
+		if (!p || !p.player) return true;
+		let c = CVar.GetCVar("pb_ks_announcer", p.player);
+		return c == null || c.GetBool();
+	}
+
+	// 0..100 -> 0(low) / 1(mid) / 2(high)
+	static int PB_AnnouncerBucket(PlayerPawn p)
+	{
+		if (!p || !p.player) return 2;
+		let c = CVar.GetCVar("pb_ks_announcer_volume", p.player);
+		int v = c ? c.GetInt() : 100;
+		if (v <= 0) return -1;
+		if (v <= 33) return 0;
+		if (v <= 66) return 1;
+		return 2;
+	}
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (!e) return;
+		Actor t = e.Thing;
+		if (t && t is "PlayerPawn")
+		{
+			let dead = PlayerPawn(t);
+			if (!dead) return;
+			int pnum = dead.PlayerNumber();
+			if (pnum >= 0 && pnum < MAXPLAYERS)
+			{
+				currentStreak[pnum] = 0;
+				dead.A_StartSound("dspldeth", CHAN_AUTO);
+				ClearKSTokens(dead);
+			}
+			return;
+		}
+		if (!t || !t.bIsMonster) return;
+		if (t is "SwitchableDecoration") return;
+		if (t.player) return;
+
+		PlayerPawn killer = GetKillerPlayer(e);
+		if (!killer || !killer.player) return;
+		if (!PB_CvarEnabled(killer)) return;
+		if (!killer.FindInventory("PB_KillstreakMode")) return;
+		int pnum = killer.PlayerNumber();
+		if (pnum < 0 || pnum >= MAXPLAYERS) return;
+		currentStreak[pnum]++;
+		int st = currentStreak[pnum];
+		String snd = PBStreakLine(killer, st);
+		if (snd != "") killer.A_StartSound(snd, CHAN_AUTO);
+		if (st % 5 == 0) GiveKSReward(killer, st);
+	}
+
+	void ClearKSTokens(Actor who)
+	{
+		if (!who) return;
+		Inventory t;
+		while ((t = who.FindInventory("PB_KillstreakMode"))) t.Destroy();
+		while ((t = who.FindInventory("PB_KillstreakFlare"))) t.Destroy();
+	}
+
+	PlayerPawn GetKillerPlayer(WorldEvent e)
+	{
+		if (e.Inflictor && e.Inflictor is "PlayerPawn") return PlayerPawn(e.Inflictor);
+		if (e.Inflictor && e.Inflictor.target && e.Inflictor.target is "PlayerPawn")
+			return PlayerPawn(e.Inflictor.target);
+		if (e.DamageSource && e.DamageSource is "PlayerPawn") return PlayerPawn(e.DamageSource);
+		if (e.Thing && e.Thing.target && e.Thing.target is "PlayerPawn")
+			return PlayerPawn(e.Thing.target);
+		return null;
+	}
+
+	String PBStreakLine(PlayerPawn p, int count)
+	{
+		if (!PB_AnnouncerEnabled(p)) return "";
+		int bucket = PB_AnnouncerBucket(p);
+		if (bucket < 0) return "";
+		// 8 short hooks in 3 volume tiers.
+		if (count < 1) return "";
+		return String.Format("pb_ks/ann%d_v%d", (count - 1) % 8, bucket);
+	}
+
+	void GiveKSReward(PlayerPawn plr, int count)
+	{
+		plr.GiveInventory("PB_KSFreeze", 1);
+		plr.GiveInventory("PB_KillStreakPowerUp", 1);
+		if (!PB_KillstreakMessageHandler.PB_BigmsgOn())
+		{
+			plr.A_Print(PBStreakTitle(count), 2.0);
+			return;
+		}
+		PB_KillstreakMessageHandler.PB_KsWaggleMsg(
+			plr.PlayerNumber(), "BIGFONT2", PBStreakTitle(count), (240, 120), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
+			(0.2, 3, 0.5), 0.5, 2.0, 1.0, 0, 11, BaseStatusBar.HUDMSGLayer_OverHUD);
+		PB_KillstreakMessageHandler.PB_KsPlainMsg(
+			plr.PlayerNumber(), "CONFONT", "-  Kill streak reward!  -", (240, 140), (480, 360), -1, (0, 0), Font.CR_GOLD,
+			(0.2, 3, 0.5), 0, 12, BaseStatusBar.HUDMSGLayer_OverHUD);
+	}
+
+	String PBStreakTitle(int c)
+	{
+		switch (c)
+		{
+		case 5:  return "Multikill!";
+		case 10: return "Unstoppable!!";
+		case 15: return "Rampage!!!";
+		case 20: return "Dominating!!";
+		case 25: return "WICKED SICK";
+		case 30: return "GODLIKE";
+		}
+		return "Kill Streak !";
+	}
+}
+
+class PB_KillstreakRareFlare : EventHandler
+{
+	bool usedThisMap;
+
+	override void WorldLoaded(WorldEvent e) { usedThisMap = false; }
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (!e) return;
+		if (usedThisMap) return;
+		Actor t = e.Thing;
+		if (!t || !t.bIsMonster) return;
+		if (t is "SwitchableDecoration") return;
+		let cEn = CVar.FindCVar("pb_ks_enable");
+		if (cEn != null && !cEn.GetBool()) return;
+		let cR = CVar.FindCVar("pb_ks_rare");
+		if (cR != null && !cR.GetBool()) return;
+		let cChance = CVar.FindCVar("pb_ks_rare_chance");
+		int chance = cChance ? cChance.GetInt() : 15;
+		chance = clamp(chance, 0, 100);
+		// Chance once per level: bonus globe to activate kill streaks
+		if (random(1, 100) > chance) return;
+		Class<Actor> flareCls = "PB_KillstreakFlare";
+		if (!flareCls) return;
+		if (Actor.Spawn(flareCls, t.Vec3Offset(0, 0, 8), NO_REPLACE) != null)
+			usedThisMap = true;
+	}
+}

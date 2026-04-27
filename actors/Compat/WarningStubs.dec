@@ -1,0 +1,166 @@
+// Compatibility stubs for optional merged add-ons that reference classes not present in this tree.
+// Keep these minimal and non-invasive; they exist to suppress parser warnings and avoid hard failures.
+
+ACTOR PB_RocketAmmo : RocketAmmo {}
+
+ACTOR DTechBurningPiece2
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 2
+		Stop
+	}
+}
+
+ACTOR RazorjackEmpower : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR SNGUnloaded : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR HasFreezerWeapon : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR Freezenades : Inventory
+{
+	Inventory.MaxAmount 200
+}
+
+ACTOR AlreadyHaveMeatHook : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR MaxLostSoulRange : Inventory
+{
+	Inventory.MaxAmount 999
+}
+
+ACTOR BDExplosionparticlesSmall
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 2
+		Stop
+	}
+}
+
+ACTOR SmallFreezerBall
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOGRAVITY
+	Speed 14
+	Scale 0.4
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Stop
+	}
+}
+
+ACTOR HorizontalShockwave2
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOGRAVITY
+	RenderStyle Add
+	Alpha 0.6
+	Scale 0.8
+	States
+	{
+	Spawn:
+		TNT1 A 2
+		Stop
+	}
+}
+
+ACTOR ExplosionSmokeHD
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 3
+		Stop
+	}
+}
+
+ACTOR DetectFloorCraterBigIce
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Stop
+	}
+}
+
+ACTOR DetectFloorIce2 : DetectFloorCraterBigIce {}
+
+ACTOR IceShardSmallSG
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOGRAVITY
+	Scale 0.45
+	Speed 16
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Stop
+	}
+}
+
+ACTOR PurpleShockWave_Flat
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOGRAVITY
+	RenderStyle Add
+	Alpha 0.6
+	Scale 0.8
+	States
+	{
+	Spawn:
+		TNT1 A 2
+		Stop
+	}
+}
+
+ACTOR BlueFlareRed
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOGRAVITY
+	RenderStyle Add
+	Alpha 0.7
+	Scale 0.6
+	States
+	{
+	Spawn:
+		TNT1 A 2
+		Stop
+	}
+}

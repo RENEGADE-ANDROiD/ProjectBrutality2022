@@ -1,0 +1,64 @@
+// Basislisk Fireball
+pointlight BASILISKBALL
+{
+	color 1.0 0.7 0.4
+	size 64
+	attenuate 1
+}
+
+flickerlight BASILISKBALL_X1
+{
+	color 0.7 0.4 0.25
+	size 80
+	secondarySize 90
+	chance 0.25
+	attenuate 1
+}
+
+flickerlight BASILISKBALL_X2
+{
+	color 0.4 0.2 0.1
+	size 96
+	secondarySize 120
+	chance 0.25
+	attenuate 1
+}
+
+flickerlight BASILISKBALL_X3
+{
+	color 0.2 0.1 0.0
+	size 120
+	secondarySize 132
+	chance 0.25
+	attenuate 1
+}
+
+object BasiliskMissile
+{
+	frame BMISA { light BASILISKBALL    }
+	frame BMISB { light BASILISKBALL    }
+	frame BMISC { light BASILISKBALL    }
+
+	frame BMISD { light BASILISKBALL_X1 }
+	frame BMISE { light BASILISKBALL_X2 }
+	frame BMISF { light BASILISKBALL_X3 }
+}
+
+object BasiliskFire
+{
+	frame BMISA { light BASILISKBALL    }
+	frame BMISB { light BASILISKBALL    }
+	frame BMISC { light BASILISKBALL    }
+
+	frame BMISD { light BASILISKBALL_X1 }
+	frame BMISE { light BASILISKBALL_X2 }
+	frame BMISF { light BASILISKBALL_X3 }
+}
+
+object BasiliskPuff
+{
+	frame OPUFA { light BASILISKBALL_X1 }
+	frame OPUFB { light BASILISKBALL_X2 }
+	frame OPUFC { light BASILISKBALL_X3 }
+	frame OPUFD { light BASILISKBALL_X3 }
+}

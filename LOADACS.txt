@@ -27,6 +27,7 @@ ExecutionsACS
 Reticle //This is for ACS DMR reticle
 // Glory Kills
 lowhealth
+EquipCooldown
 GloryMelee
 GloryHUD
 BloodPunch

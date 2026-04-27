@@ -1,0 +1,556 @@
+ACTOR PB_Realm667_FusionCyberImpGK : PB_Realm667_FusionCyberImp Replaces PB_Realm667_FusionCyberImp
+{
+	WoundHealth 30
+	States
+	{
+	Wound:
+		"####" "#" 0 A_TakeInventory("IsOnCeiling")
+		"####" "#" 0 A_ChangeFlag("NOGRAVITY", 0)
+		"####" "#" 0 A_ChangeFlag("CEILINGHUGGER", 0)
+		"####" "#" 0 A_ChangeFlag("GHOST", 0)
+		"####" "#" 0 A_ChangeFlag("FORCEXYBILLBOARD", 0)
+		"####" "#" 1
+		{
+			if(GetCvar("be_ExecutionsON"))
+			{
+				if(countinv("FinisherToken") == 0)
+				{
+					A_SpawnItemEx("ImpHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
+				}
+				if(GetCvar("be_MonsterStagger")==1)
+				{
+					return state("Stagger");
+				}
+				else
+				{
+					return state(0);
+				}
+			}
+			return state(0);
+		}
+		Goto See
+	Stagger:
+		UCIM H 0
+		{
+			if(getcvar("be_ExecutionHighlight")==1)
+			{
+				return state("StagLooper");
+			}
+			else
+			{
+				return state("StagLooper");
+			}
+		}
+		Goto StagLooper
+	StagLooper:
+		"####" "#" 4
+		{
+			if(!countinv("FinisherToken"))
+			{
+				return state("See");
+			}
+			if (getcvar("be_NoisyStagger") && countinv("PainSoundToken"))
+			{
+				A_Pain;
+				A_TakeInventory("PainSoundToken");
+			}
+			return state(0);
+		}
+		"####" "#" 0 { A_SpawnItem("HeadshotTarget4", 0, 48,0); A_SpawnItem("LegTarget4", 10); }
+		"####" "#" 0
+		Loop
+	Death.GloryKill:
+		TNT1 A 0 A_GiveToTarget("BPtoken",2)
+		Goto Death.Fatality
+	Death.Crucible:
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataLow",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.cut
+	Death.GloryFire:
+		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.Flames
+	Pain.GloryFire:
+		TNT1 A 0 A_Jump(192, "See")
+		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto See
+	Death.BloodPunch:
+		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave",0,0,Height/2,0,0,0,0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave",0,0,Height/2,0,0,0,0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave",0,0,Height/2,0,0,0,0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave",0,0,Height/2,0,0,0,0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataLow",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.ExtremePunches
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_Jump(255, "CFF1","CFF1","CFF2","CFF2","CFF3","CFF3")
+	CFF1:
+		TNT1 A 0 A_GiveToTarget("ImpFatality6",1)
+		Stop
+	CFF2:
+		TNT1 A 0 A_GiveToTarget("ImpFatality7",1)
+		Stop
+	CFF3:
+		TNT1 A 0 A_GiveToTarget("Realm667_FatalityFP1",1)
+		Stop
+	}
+}
+
+ACTOR PB_Realm667_VulgarGK : PB_Realm667_Vulgar Replaces PB_Realm667_Vulgar
+{
+	WoundHealth 32
+	States
+	{
+	Wound:
+		"####" "#" 0 A_TakeInventory("IsOnCeiling")
+		"####" "#" 0 A_ChangeFlag("GHOST", 0)
+		"####" "#" 1
+		{
+			if(GetCvar("be_ExecutionsON"))
+			{
+				if(countinv("FinisherToken") == 0)
+				{
+					A_SpawnItemEx("ImpHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
+				}
+				if(GetCvar("be_MonsterStagger")==1)
+				{
+					return state("Stagger");
+				}
+				else
+				{
+					return state(0);
+				}
+			}
+			return state(0);
+		}
+		Goto See
+	Stagger:
+		VULG H 0
+		{
+			if(getcvar("be_ExecutionHighlight")==1)
+			{
+				return state("StagLooper");
+			}
+			else
+			{
+				return state("StagLooper");
+			}
+		}
+		Goto StagLooper
+	StagLooper:
+		"####" "#" 4
+		{
+			if(!countinv("FinisherToken"))
+			{
+				return state("See");
+			}
+			if (getcvar("be_NoisyStagger") && countinv("PainSoundToken"))
+			{
+				A_Pain;
+				A_TakeInventory("PainSoundToken");
+			}
+			return state(0);
+		}
+		"####" "#" 0 { A_SpawnItem("HeadshotTarget4", 0, 48,0); A_SpawnItem("LegTarget4", 10); }
+		"####" "#" 0
+		Loop
+	Death.GloryKill:
+		TNT1 A 0 A_GiveToTarget("BPtoken",2)
+		Goto Death.Fatality
+	Death.Crucible:
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataLow",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.cut
+	Death.GloryFire:
+		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.Flames
+	Death.BloodPunch:
+		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave",0,0,Height/2,0,0,0,0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave",0,0,Height/2,0,0,0,0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave",0,0,Height/2,0,0,0,0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave",0,0,Height/2,0,0,0,0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataLow",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.ExtremePunches
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_Jump(255, "VGF1","VGF1","VGF2","VGF2","VGF3")
+	VGF1:
+		TNT1 A 0 A_GiveToTarget("ImpFatality6",1)
+		Stop
+	VGF2:
+		TNT1 A 0 A_GiveToTarget("ImpFatality7",1)
+		Stop
+	VGF3:
+		TNT1 A 0 A_GiveToTarget("Realm667_FatalityFP2",1)
+		Stop
+	}
+}
+
+ACTOR PB_Realm667_BehemothGK : PB_Realm667_Behemoth Replaces PB_Realm667_Behemoth
+{
+	WoundHealth 400
+	States
+	{
+	Wound:
+		"####" "#" 1
+		{
+			if(GetCvar("be_ExecutionsON"))
+			{
+				if(countinv("FinisherToken") == 0)
+				{
+					A_SpawnItemEx("FatsoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
+				}
+				if(GetCvar("be_MonsterStagger")==1)
+				{
+					return state("Stagger");
+				}
+				else
+				{
+					return state(0);
+				}
+			}
+			return state(0);
+		}
+		Goto See
+	Stagger:
+		LARD J 0
+		{ return state("StagLooper"); }
+		Goto StagLooper
+	StagLooper:
+		"####" "#" 4
+		{
+			if(!countinv("FinisherToken"))
+			{
+				return state("See");
+			}
+			if (getcvar("be_NoisyStagger") && countinv("PainSoundToken"))
+			{
+				A_Pain;
+				A_TakeInventory("PainSoundToken");
+			}
+			return state(0);
+		}
+		"####" "#" 0 A_SpawnItem("HeadshotTarget4", 24, 62,0)
+		"####" "#" 0
+		Loop
+	Death.GloryKill:
+		TNT1 A 0 A_GiveToTarget("BPtoken",3)
+		Goto Death.Fatality
+	Death.Crucible:
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataHight",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.cut
+	Death.GloryFire:
+		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.Fire
+	Death.BloodPunch:
+		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1)
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataMed",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.ExplosiveImpact
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_Jump(256, "BHF1","BHF1","BHF2","BHF2")
+	BHF1:
+		TNT1 A 0 A_GiveToTarget("OtherFatsoFatality2",1)
+		TNT1 A 0 A_BossDeath
+		Stop
+	BHF2:
+		TNT1 A 0 A_GiveToTarget("Realm667_FatalityFP3",1)
+		TNT1 A 0 A_BossDeath
+		Stop
+	}
+}
+
+ACTOR PB_Realm667_BabyCacoGK : PB_Realm667_BabyCaco Replaces PB_Realm667_BabyCaco
+{
+	WoundHealth 50
+	States
+	{
+	Wound:
+		"####" "#" 1
+		{
+			if(GetCvar("be_ExecutionsON"))
+			{
+				if(countinv("FinisherToken") == 0)
+				{
+					A_SpawnItemEx("CacoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
+				}
+				if(GetCvar("be_MonsterStagger")==1)
+				{
+					A_ChangeFlag("NOGRAVITY", 0);
+					return state("Stagger");
+				}
+				return state(0);
+			}
+			return state(0);
+		}
+		Goto See
+	Stagger:
+		CACB D 0
+		{ return state("StagLooper"); }
+		Goto StagLooper
+	StagLooper:
+		"####" "#" 1
+		{
+			if(!countinv("FinisherToken"))
+			{
+				A_ChangeFlag("NOGRAVITY",1);
+				return state("See");
+			}
+			if (getcvar("be_NoisyStagger") && countinv("PainSoundToken"))
+			{
+				A_Pain;
+				A_TakeInventory("PainSoundToken");
+			}
+			return state(0);
+		}
+		Loop
+	Death.GloryKill:
+		TNT1 A 0 A_GiveToTarget("BPtoken",2)
+		Goto Death.Fatality
+	Death.Crucible:
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataHight",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.cut
+	Death.GloryFire:
+		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.Flames
+	Death.BloodPunch:
+		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1)
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataHight",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.ExtremePunches
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_Jump(256, "BCF1","BCF1","BCF2")
+	BCF1:
+		TNT1 A 0 A_GiveToTarget("CacoDemonFatality3",1)
+		Stop
+	BCF2:
+		TNT1 A 0 A_GiveToTarget("CacoDemonFatality4",1)
+		Stop
+	}
+}
+
+ACTOR PB_Realm667_SlayerKnightGK : PB_Realm667_SlayerKnight Replaces PB_Realm667_SlayerKnight
+{
+	WoundHealth 120
+	States
+	{
+	Wound:
+		"####" "#" 1
+		{
+			if(GetCvar("be_ExecutionsON"))
+			{
+				if(countinv("FinisherToken") == 0)
+				{
+					A_SpawnItemEx("BaronHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
+				}
+				if(GetCvar("be_MonsterStagger")==1)
+				{
+					return state("Stagger");
+				}
+				else
+				{
+					return state(0);
+				}
+			}
+			return state(0);
+		}
+		Goto See
+	Stagger:
+		SLKN H 0
+		{ return state("StagLooper"); }
+		Goto StagLooper
+	StagLooper:
+		"####" "#" 4
+		{
+			if(!countinv("FinisherToken"))
+			{
+				return state("See");
+			}
+			if (getcvar("be_NoisyStagger") && countinv("PainSoundToken"))
+			{
+				A_Pain;
+				A_TakeInventory("PainSoundToken");
+			}
+			return state(0);
+		}
+		"####" "#" 0 { A_SpawnItem("HeadshotTarget4", 0, 48,0); A_SpawnItem("LegTarget4", 10); }
+		"####" "#" 0
+		Loop
+	Death.GloryKill:
+		TNT1 A 0 A_GiveToTarget("BPtoken",3)
+		Goto Death.Fatality
+	Death.Crucible:
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataMed",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.cut
+	Death.BloodPunch:
+		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1)
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataMed",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.ExtremePunches
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_Jump(256, "SKF1","SKF1","SKF2","SKF2")
+	SKF1:
+		TNT1 A 0 A_GiveToTarget("BaronFatality3",1)
+		Stop
+	SKF2:
+		TNT1 A 0 A_GiveToTarget("BaronFatality4",1)
+		Stop
+	}
+}
+
+ACTOR PB_Realm667_DroneGK : PB_Realm667_Drone Replaces PB_Realm667_Drone
+{
+	WoundHealth 50
+	States
+	{
+	Wound:
+		"####" "#" 1
+		{
+			if(GetCvar("be_ExecutionsON"))
+			{
+				if(countinv("FinisherToken") == 0)
+				{
+					A_SpawnItemEx("RevenantHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
+				}
+				if(GetCvar("be_MonsterStagger")==1)
+				{
+					return state("Stagger");
+				}
+				else
+				{
+					return state(0);
+				}
+			}
+			return state(0);
+		}
+		Goto See
+	Stagger:
+		HDRN A 0
+		{ return state("StagLooper"); }
+		Goto StagLooper
+	StagLooper:
+		"####" "#" 4
+		{
+			if(!countinv("FinisherToken"))
+			{
+				return state("See");
+			}
+			if (getcvar("be_NoisyStagger") && countinv("PainSoundToken"))
+			{
+				A_Pain;
+				A_TakeInventory("PainSoundToken");
+			}
+			return state(0);
+		}
+		"####" "#" 0 { A_SpawnItem("HeadshotTarget4", 0, 24,0); }
+		"####" "#" 0
+		Loop
+	Death.GloryKill:
+		TNT1 A 0 A_GiveToTarget("BPtoken",2)
+		Goto Death.Fatality
+	Death.Crucible:
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataMed",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.cut
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_Jump(256, "DGF1","DGF1","DGF2","DGF2","DGF3")
+	DGF1:
+		TNT1 A 0 A_GiveToTarget("RevenantFatality3",1)
+		Stop
+	DGF2:
+		TNT1 A 0 A_GiveToTarget("RevenantFatality4",1)
+		Stop
+	DGF3:
+		TNT1 A 0 A_GiveToTarget("ComandoFatality3",1)
+		Stop
+	}
+}
+
+ACTOR PB_Realm667_BlotGK : PB_Realm667_Blot Replaces PB_Realm667_Blot
+{
+	WoundHealth 6
+	States
+	{
+	Wound:
+		"####" "#" 1
+		{
+			if(GetCvar("be_ExecutionsON"))
+			{
+				if(countinv("FinisherToken") == 0)
+				{
+					A_SpawnItemEx("ImpHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
+				}
+				if(GetCvar("be_MonsterStagger")==1)
+				{
+					return state("Stagger");
+				}
+				else
+				{
+					return state(0);
+				}
+			}
+			return state(0);
+		}
+		Goto See
+	Stagger:
+		EYES A 0
+		{ return state("StagLooper"); }
+		Goto StagLooper
+	StagLooper:
+		"####" "#" 4
+		{
+			if(!countinv("FinisherToken"))
+			{
+				return state("See");
+			}
+			return state(0);
+		}
+		"####" "#" 0
+		Loop
+	Death.GloryKill:
+		TNT1 A 0 A_GiveToTarget("BPtoken",1)
+		Goto Death.Fatality
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,4,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_Jump(256, "BLF1","BLF1","BLF2","BLF2")
+	BLF1:
+		TNT1 A 0 A_GiveToTarget("Realm667_FatalityFP1",1)
+		Stop
+	BLF2:
+		TNT1 A 0 A_GiveToTarget("Realm667_FatalityFP2",1)
+		Stop
+	}
+}

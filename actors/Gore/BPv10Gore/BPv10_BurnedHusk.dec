@@ -1,0 +1,84 @@
+// Burned husk on burn / fire / FlameBelch / Napalm deaths.
+// BDT1 A-D are 8-rotation frames covering the active burning loop;
+// BDT1 E-O are single-rotation cooldown frames; BDT2 / BDT3 are static husks.
+// Original sprites by AWEZ (Brutal Pack V10).
+
+ACTOR BPv10_BurnedHusk
+{
+    Radius 12
+    Height 8
+    Mass 200
+    Scale 0.55
+    +CLIENTSIDEONLY
+    +CORPSE
+    +DONTSPLASH
+    +NOTELEPORT
+    +MOVEWITHSECTOR
+    +FORCEXYBILLBOARD
+    -SOLID
+    RenderStyle Translucent
+    Alpha 1.0
+    States
+    {
+    Spawn:
+        TNT1 A 0 NoDelay A_Jump(256, "Burn1", "Burn2", "Burn3", "Burn4")
+        Stop
+    Burn1:
+        BDT1 ABCD 4
+        Loop
+    Burn2:
+        BDT1 BCDA 4
+        Loop
+    Burn3:
+        BDT1 CDAB 4
+        Loop
+    Burn4:
+        BDT1 DABC 4
+        Loop
+    Death:
+        BDT1 E 8 Bright A_SpawnItemEx("PlasmaSmoke", 0, 0, 4, frandom(-0.3, 0.3), frandom(-0.3, 0.3), frandom(0.5, 1.5))
+        BDT1 FGHIJ 6 Bright
+        BDT1 KLMNO 6
+        Goto Settle
+    Settle:
+        TNT1 A 0 A_Jump(128, "Husk2", "Husk3")
+        BDT2 ABCD 16
+        Loop
+    Husk2:
+        BDT3 ABCD 16
+        Loop
+    Husk3:
+        BDT2 BDAC 16
+        Loop
+    }
+}
+
+// Variant 2 starts directly on the static husk (used when the killing damage
+// type was not a burn / fire / FlameBelch / Napalm hit but the handler still
+// rolls in the ash variation pool).
+ACTOR BPv10_BurnedHusk2
+{
+    Radius 12
+    Height 6
+    Mass 200
+    Scale 0.55
+    +CLIENTSIDEONLY
+    +CORPSE
+    +DONTSPLASH
+    +NOTELEPORT
+    +MOVEWITHSECTOR
+    +FORCEXYBILLBOARD
+    -SOLID
+    RenderStyle Translucent
+    Alpha 1.0
+    States
+    {
+    Spawn:
+        TNT1 A 0 NoDelay A_Jump(128, "Pose2")
+        BDT2 ABCD 64
+        Loop
+    Pose2:
+        BDT3 ABCD 64
+        Loop
+    }
+}

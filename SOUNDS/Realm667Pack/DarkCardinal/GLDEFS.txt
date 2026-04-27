@@ -1,0 +1,373 @@
+/*If you want to use it on Zandronum, comment out the "Attenuate" property from the lights*/
+
+PointLight DCardinal1
+{
+Color 0.4 0.7 0.4
+Size 128
+Attenuate 1
+}
+
+PointLight DCardinal2
+{
+Color 0.7 1.0 0.7
+Size 172
+Attenuate 1
+}
+
+PointLight DCardinal3
+{
+Color 0.3 0.6 0.3
+Size 136
+Attenuate 1
+}
+
+PointLight DCardinal4
+{
+Color 0.2 0.5 0.2
+Size 144
+Attenuate 1
+}
+
+PointLight DCardinal5
+{
+Color 0.2 0.5 0.2
+Size 152
+Attenuate 1
+}
+
+PointLight DCardinal6
+{
+Color 0.1 0.3 0.1
+Size 160
+Attenuate 1
+}
+
+PointLight DCardinal7
+{
+Color 0.1 0.2 0.1
+Size 168
+Attenuate 1
+}
+
+Object Cardinal
+{
+	Frame CARDA { Light DCardinal1 }
+	Frame CARDB { Light DCardinal1 }
+	Frame CARDC { Light DCardinal1 }
+	Frame CARDD { Light DCardinal2 }
+	Frame CARDE { Light DCardinal1 }
+	Frame CARDF { Light DCardinal1 }
+	Frame CARDG { Light DCardinal3 }
+	Frame CARDH { Light DCardinal4 }
+	Frame CARDI { Light DCardinal5 }
+	Frame CARDJ { Light DCardinal6 }
+	Frame CARDK { Light DCardinal7 }
+	Frame CARDP { Light DCardinal1 }
+}
+
+Object DeathBall
+{
+	Frame BAL7A { Light BARONBALL }
+	Frame BAL7B { Light BARONBALL }
+	Frame BAL7C { Light BARONBALL_X1 }
+	Frame BAL7D { Light BARONBALL_X2 }
+	Frame BAL7E { Light BARONBALL_X3 }
+}
+
+PointLight DC_Plasma
+{
+Color 0.2 0.4 0.2
+Size 80
+Subtractive 1
+}
+
+PointLight DC_Plasma_X1
+{
+Color 0.2 0.4 0.2
+Size 60
+Subtractive 1
+}
+
+PointLight DC_Plasma_X2
+{
+Color 0.2 0.4 0.2
+Size 40
+Subtractive 1
+}
+
+PointLight DC_Plasma_X3
+{
+Color 0.2 0.4 0.2
+Size 20
+Subtractive 1
+}
+
+
+Object CardinalPlasma
+{
+	Frame CRTAI { Light DC_Plasma }
+	Frame TNT1A { Light DC_Plasma_X1 }
+	Frame TNT1B { Light DC_Plasma_X2 }
+	Frame TNT1C { Light DC_Plasma_X3 }
+}
+
+PointLight DC_GreenRocket
+{
+Color 0.0 1.0 0.0
+Size 84
+Attenuate 1
+}
+
+FlickerLight DC_GreenRocket_X1
+{
+Color 0.6 0.9 0.6
+Size 96
+SecondarySize 108
+Chance 0.3
+Attenuate 1
+}
+
+FlickerLight DC_GreenRocket_X2
+{
+Color 0.45 0.6 0.45
+Size 120
+SecondarySize 132
+Chance 0.3
+Attenuate 1
+}
+
+FlickerLight DC_GreenRocket_X3
+{
+Color 0.2 0.3 0.2
+Size 144
+SecondarySize 156
+Chance 0.3
+Attenuate 1
+}
+
+Object CardinalRocket
+{
+	Frame CROCA { Light DC_GreenRocket }
+	Frame CROCB { Light DC_GreenRocket }
+	Frame CROCC { Light DC_GreenRocket_X1 }
+	Frame CROCD { Light DC_GreenRocket_X2 }
+	Frame CROCE { Light DC_GreenRocket_X3 }
+}
+
+PointLight PGasmBall
+{
+Color 0.0 0.0 1.0
+Size 96
+Attenuate 1
+}
+
+FlickerLight PGasmBall_X1
+{
+Color 0.6 0.6 0.9
+Size 120
+SecondarySize 132
+Chance 0.25
+Attenuate 1
+}
+
+FlickerLight PGasmBall_X2
+{
+Color 0.45 0.45 0.6
+Size 144
+SecondarySize 156
+Chance 0.25
+Attenuate 1
+}
+
+FlickerLight PGasmBall_X3
+{
+Color 0.2 0.2 0.3
+Size 168
+SecondarySize 180
+Chance 0.25
+Attenuate 1
+}
+
+Object PaingasmBall
+{
+	Frame BAL7A { Light PGasmBall }
+	Frame BAL7B { Light PGasmBall }
+	Frame BAL7C { Light PGasmBall_X1 }
+	Frame BAL7D { Light PGasmBall_X2 }
+	Frame BAL7E { Light PGasmBall_X3 }
+}
+
+FlickerLight CacoEggFire1
+{
+Color 0.5 1.0 0.5
+Size 36
+SecondarySize 48
+Chance 0.3
+Offset 0 8 0
+Attenuate 1
+}
+
+FlickerLight CacoEggFire2
+{
+Color 0.5 1.0 0.5
+Size 60
+SecondarySize 72
+Chance 0.3
+Offset 0 24 0
+Attenuate 1
+}
+
+FlickerLight CacoEggFire3
+{
+Color 0.5 1.0 0.5
+Size 96
+SecondarySize 108
+Chance 0.3
+Offset 0 32 0
+Attenuate 1
+}
+
+FlickerLight CacoEggFire4
+{
+Color 0.4 0.8 0.4
+Size 96
+SecondarySize 108
+Chance 0.3
+Offset 0 40 0
+Attenuate 1
+}
+
+FlickerLight CacoEggFire5
+{
+Color 0.4 0.8 0.4
+Size 96
+SecondarySize 108
+Chance 0.3
+Offset 0 48 0
+Attenuate 1
+}
+
+FlickerLight CacoEggFire6
+{
+Color 0.3 0.6 0.3
+Size 72
+SecondarySize 84
+Chance 0.3
+Offset 0 64 0
+Attenuate 1
+}
+
+FlickerLight CacoEggFire7
+{
+Color 0.2 0.4 0.2
+Size 48
+SecondarySize 60
+Chance 0.3
+Offset 0 72 0
+Attenuate 1
+}
+
+FlickerLight CacoEggFire8
+{
+Color 0.1 0.2 0.1
+Size 24
+SecondarySize 36
+Chance 0.3
+Offset 0 80 0
+Attenuate 1
+}
+
+Object PainGrenade
+{
+	Frame CEGGA { Light BARONBALL }
+	Frame FIREA { Light CacoEggFire1 }
+	Frame FIREB { Light CacoEggFire2 }
+	Frame FIREC { Light CacoEggFire3 }
+	Frame FIRED { Light CacoEggFire4 }
+	Frame FIREE { Light CacoEggFire5 }
+	Frame FIREF { Light CacoEggFire6 }
+	Frame FIREG { Light CacoEggFire7 }
+	Frame FIREH { Light CacoEggFire8 }
+}
+
+Object Paingasm
+{
+	Frame HEADA { Light BARONBALL }
+	Frame HEADB { Light BARONBALL }
+	Frame HEADC { Light BARONBALL }
+	Frame HEADD { Light BARONBALL }
+	Frame HEADE { Light BARONBALL }
+	Frame HEADF { Light BARONBALL }
+	Frame HEADG { Light BARONBALL_X1 }
+	Frame HEADH { Light BARONBALL_X2 }
+	Frame HEADI { Light BARONBALL_X2 }
+	Frame HEADJ { Light BARONBALL_X3 }
+	Frame HEADK { Light BARONBALL_X3 }
+}
+
+/*Because auto assignment doesn't force "DisableFullBright"*/
+BrightMap Sprite CARDA1 { Map "Materials/Brightmaps/Cardinal/CARDA1.png" DisableFullBright }
+BrightMap Sprite CARDA2 { Map "Materials/Brightmaps/Cardinal/CARDA2.png" DisableFullBright }
+BrightMap Sprite CARDA3 { Map "Materials/Brightmaps/Cardinal/CARDA3.png" DisableFullBright }
+BrightMap Sprite CARDA4 { Map "Materials/Brightmaps/Cardinal/CARDA4.png" DisableFullBright }
+BrightMap Sprite CARDA5 { Map "Materials/Brightmaps/Cardinal/CARDA5.png" DisableFullBright }
+BrightMap Sprite CARDA6 { Map "Materials/Brightmaps/Cardinal/CARDA6.png" DisableFullBright }
+BrightMap Sprite CARDA7 { Map "Materials/Brightmaps/Cardinal/CARDA7.png" DisableFullBright }
+BrightMap Sprite CARDA8 { Map "Materials/Brightmaps/Cardinal/CARDA8.png" DisableFullBright }
+
+BrightMap Sprite CARDB1 { Map "Materials/Brightmaps/Cardinal/CARDB1.png" DisableFullBright }
+BrightMap Sprite CARDB2 { Map "Materials/Brightmaps/Cardinal/CARDB2.png" DisableFullBright }
+BrightMap Sprite CARDB3 { Map "Materials/Brightmaps/Cardinal/CARDB3.png" DisableFullBright }
+BrightMap Sprite CARDB4 { Map "Materials/Brightmaps/Cardinal/CARDB4.png" DisableFullBright }
+BrightMap Sprite CARDB5 { Map "Materials/Brightmaps/Cardinal/CARDB5.png" DisableFullBright }
+BrightMap Sprite CARDB6 { Map "Materials/Brightmaps/Cardinal/CARDB6.png" DisableFullBright }
+BrightMap Sprite CARDB7 { Map "Materials/Brightmaps/Cardinal/CARDB7.png" DisableFullBright }
+BrightMap Sprite CARDB8 { Map "Materials/Brightmaps/Cardinal/CARDB8.png" DisableFullBright }
+
+BrightMap Sprite CARDC1 { Map "Materials/Brightmaps/Cardinal/CARDC1.png" DisableFullBright }
+BrightMap Sprite CARDC2 { Map "Materials/Brightmaps/Cardinal/CARDC2.png" DisableFullBright }
+BrightMap Sprite CARDC3 { Map "Materials/Brightmaps/Cardinal/CARDC3.png" DisableFullBright }
+BrightMap Sprite CARDC4 { Map "Materials/Brightmaps/Cardinal/CARDC4.png" DisableFullBright }
+BrightMap Sprite CARDC5 { Map "Materials/Brightmaps/Cardinal/CARDC5.png" DisableFullBright }
+BrightMap Sprite CARDC6 { Map "Materials/Brightmaps/Cardinal/CARDC6.png" DisableFullBright }
+BrightMap Sprite CARDC7 { Map "Materials/Brightmaps/Cardinal/CARDC7.png" DisableFullBright }
+BrightMap Sprite CARDC8 { Map "Materials/Brightmaps/Cardinal/CARDC8.png" DisableFullBright }
+
+BrightMap Sprite CARDD1 { Map "Materials/Brightmaps/Cardinal/CARDD1.png" DisableFullBright }
+BrightMap Sprite CARDD2 { Map "Materials/Brightmaps/Cardinal/CARDD2.png" DisableFullBright }
+BrightMap Sprite CARDD3 { Map "Materials/Brightmaps/Cardinal/CARDD3.png" DisableFullBright }
+BrightMap Sprite CARDD4 { Map "Materials/Brightmaps/Cardinal/CARDD4.png" DisableFullBright }
+BrightMap Sprite CARDD5 { Map "Materials/Brightmaps/Cardinal/CARDD5.png" DisableFullBright }
+BrightMap Sprite CARDD6 { Map "Materials/Brightmaps/Cardinal/CARDD6.png" DisableFullBright }
+BrightMap Sprite CARDD7 { Map "Materials/Brightmaps/Cardinal/CARDD7.png" DisableFullBright }
+BrightMap Sprite CARDD8 { Map "Materials/Brightmaps/Cardinal/CARDD8.png" DisableFullBright }
+
+BrightMap Sprite CARDE0 { Map "Materials/Brightmaps/Cardinal/CARDE0.png" DisableFullBright }
+BrightMap Sprite CARDF0 { Map "Materials/Brightmaps/Cardinal/CARDF0.png" DisableFullBright }
+BrightMap Sprite CARDG0 { Map "Materials/Brightmaps/Cardinal/CARDG0.png" DisableFullBright }
+BrightMap Sprite CARDH0 { Map "Materials/Brightmaps/Cardinal/CARDH0.png" DisableFullBright }
+BrightMap Sprite CARDI0 { Map "Materials/Brightmaps/Cardinal/CARDI0.png" DisableFullBright }
+BrightMap Sprite CARDJ0 { Map "Materials/Brightmaps/Cardinal/CARDJ0.png" DisableFullBright }
+BrightMap Sprite CARDK0 { Map "Materials/Brightmaps/Cardinal/CARDK0.png" DisableFullBright }
+BrightMap Sprite CARDL0 { Map "Materials/Brightmaps/Cardinal/CARDL0.png" DisableFullBright }
+
+BrightMap Sprite CARDP1 { Map "Materials/Brightmaps/Cardinal/CARDP1.png" DisableFullBright }
+BrightMap Sprite CARDP2 { Map "Materials/Brightmaps/Cardinal/CARDP2.png" DisableFullBright }
+BrightMap Sprite CARDP3 { Map "Materials/Brightmaps/Cardinal/CARDP3.png" DisableFullBright }
+BrightMap Sprite CARDP4 { Map "Materials/Brightmaps/Cardinal/CARDP4.png" DisableFullBright }
+BrightMap Sprite CARDP5 { Map "Materials/Brightmaps/Cardinal/CARDP5.png" DisableFullBright }
+BrightMap Sprite CARDP6 { Map "Materials/Brightmaps/Cardinal/CARDP6.png" DisableFullBright }
+BrightMap Sprite CARDP7 { Map "Materials/Brightmaps/Cardinal/CARDP7.png" DisableFullBright }
+BrightMap Sprite CARDP8 { Map "Materials/Brightmaps/Cardinal/CARDP8.png" DisableFullBright }
+
+BrightMap Sprite CROCA1 { Map "Materials/Brightmaps/Cardinal/CROCA1.png" DisableFullBright }
+BrightMap Sprite CROCA2A8 { Map "Materials/Brightmaps/Cardinal/CROCA2A8.png" DisableFullBright }
+BrightMap Sprite CROCA3A7 { Map "Materials/Brightmaps/Cardinal/CROCA3A7.png" DisableFullBright }
+BrightMap Sprite CROCA4A6 { Map "Materials/Brightmaps/Cardinal/CROCA4A6.png" DisableFullBright }
+BrightMap Sprite CROCA5 { Map "Materials/Brightmaps/Cardinal/CROCA5.png" DisableFullBright }
+
+BrightMap Sprite CROCB1 { Map "Materials/Brightmaps/Cardinal/CROCB1.png" DisableFullBright }
+BrightMap Sprite CROCB2B8 { Map "Materials/Brightmaps/Cardinal/CROCB2B8.png" DisableFullBright }
+BrightMap Sprite CROCB3B7 { Map "Materials/Brightmaps/Cardinal/CROCB3B7.png" DisableFullBright }
+BrightMap Sprite CROCB4B6 { Map "Materials/Brightmaps/Cardinal/CROCB4B6.png" DisableFullBright }
+BrightMap Sprite CROCB5 { Map "Materials/Brightmaps/Cardinal/CROCB5.png" DisableFullBright }

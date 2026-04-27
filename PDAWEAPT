@@ -70,4 +70,40 @@ RPM: N/A - Single shot
 Recoil: High
 Alt-Fire: Varies by shell type
 Firemodes: Pump-action
-Akimbo: X
+Akimbo: X#
+Sawn-Off Double-Barrel ‘Super’ Shotgun$The venerable double-barrel: two triggers’ worth of stopping power, sawn down for tight corridors and hot breaches. Favored when magazine depth matters less than immediate volume of lead. $PB_SSG$Manufacturer: UAC (field modification)
+Tube Capacity: 2 shells
+Ammunition: 12-gauge shotshells
+Effective Range: 50-75m
+RPM: N/A
+Recoil: High
+Alt-Fire: Fires per barrel
+Firemodes: Double-barrel
+Akimbo: X#
+Sawn-Off Quad-Barrel Shotgun$A panic weapon for the cornered: four barrels, four quick answers. Built from surplus hunting shotguns, these cut-down quad barrels trade accuracy for a wall of shot that clears rooms when finesse is not an option. $PB_QuadSG$Manufacturer: UAC (improvised / converted)
+Tube Capacity: 4 shells
+Ammunition: 12-gauge shotshells
+Effective Range: 30-50m
+RPM: N/A
+Recoil: Very high
+Alt-Fire: Fires in patterns per barrel
+Firemodes: Multi-barrel break-open
+Akimbo: X#
+UAC-AS-16 ‘Party Crasher’ Assault Shotgun$A magazine-fed, semi-automatic riot-control shotgun built for security teams. Delivers fast follow-up shots in Mars City hallways. Best paired with breaching slugs or buckshot, depending on whether doors or crowds are the obstacle. $PB_Autoshotgun$Manufacturer: UAC
+Magazine Capacity: 10+1 shells
+Ammunition: 12-gauge shotshells
+Effective Range: 40-80m
+RPM: N/A
+Recoil: High
+Alt-Fire: Fires as marked on shell
+Firemodes: Semi-automatic
+Akimbo: X#
+UAC-M2 Excavator Launcher$The UAC-M2 Excavator is a dual-mode rocket system for demolitions and anti-armor work. “Drill” fire embeds a burrowing charge; “drop shot” lobs a slower floating charge. Alt-fire can prime remote detonation when a detonator interface is available; weapon special or the equipment wheel can swap modes before pulling the trigger. $PB_Excavator$Manufacturer: UAC Ballistic Firearms Research Division
+Tube/Mag: 5 chambered + rocket reserve
+Ammunition: Rockets + Excavator submunitions
+Effective Range: 50-300m+ (varies by mode)
+RPM: Limited by reload
+Recoil: High
+Alt-Fire: Detonation / arming (mode-dependent)
+Firemodes: Drill charge / drop shot
+Akimbo: X#

@@ -1,0 +1,12 @@
+drone/see		DRONSND
+drone/idle		DRONSND
+drone/fire		DRONFIRE
+$limit drone/fire 0
+
+$RANDOM drone/pain {drone/pain1 drone/pain2 drone/pain3}
+drone/pain1 	DRONPAN1
+drone/pain2 	DRONPAN2
+drone/pain3 	DRONPAN3
+$volume drone/pain 0.6
+
+drone/die		DRONDIE

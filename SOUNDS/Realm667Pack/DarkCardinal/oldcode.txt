@@ -1,0 +1,322 @@
+//=================================================
+// based on the Afrit by Nanami
+// base sprites by Jimmy91 and Nanami
+// decorate and sprite edit by zrrion the insect
+//=================================================
+
+Actor Cardinal 3120
+{
+//$Category Realm667 Monsters
+//$Sprite CARDA1
+//$Title "Dark Cardinal"
+Monster
+Health 4500
+Speed 10
+Radius 24
+Height 112
+PainChance 50
+Mass 700
+SeeSound "DarkCardinal/sight" //"cyber/sight"
+ActiveSound "DarkCardinal/active" //"cyber/active"
+PainSound "DarkCardinal/pain" //"brain/pain"
+DeathSound "DarkCardinal/death" //"cyber/death"
++BOSS
++NORADIUSDMG
++NOGRAVITY
++FLOAT
++DONTFALL
++FLOATBOB
+Bloodcolor "Green"
+Obituary "%o was blessed by the Dark Cardinal."  
+States 
+	{ 
+	Spawn:
+		CARD AB 4 Bright A_Look
+		Loop
+	See:
+		CARD AABB 2 Bright A_Chase 
+		loop
+	Missile:
+		CARD A 0 A_jump(25,"GrenadeAttack")
+		CARD A 0 A_jump(100,"PlasmaAttack")
+		CARD C 4 Bright A_FaceTarget
+		CARD D 5 Bright A_CustomMissile("CardinalRocket",42,-30,0)
+		CARD C 4 Bright A_FaceTarget
+		CARD D 5 Bright A_CustomMissile("CardinalRocket",42,-30,0)
+		CARD C 4 Bright
+		Goto See
+	GrenadeAttack:
+		CARD C 4 Bright A_FaceTarget
+		CARD D 5 Bright A_CustomMissile("PainGrenade",42,-30,0)
+		CARD C 4 Bright
+		Goto See
+	PlasmaAttack:
+		CARD C 4 Bright A_FaceTarget
+		CARD D 5 Bright A_CustomMissile("CardinalPlasma",42,-30,0)
+		CARD C 4 Bright A_FaceTarget
+		CARD D 5 Bright A_CustomMissile("CardinalPlasma",42,-30,0)
+		CARD C 4 Bright A_FaceTarget
+		CARD D 5 Bright A_CustomMissile("CardinalPlasma",42,-30,0)
+		CARD C 4 Bright A_FaceTarget
+		CARD D 5 Bright A_CustomMissile("CardinalPlasma",42,-30,0)
+		CARD C 4 Bright A_FaceTarget
+		CARD D 5 Bright A_CustomMissile("CardinalPlasma",42,-30,0)
+		CARD C 4 Bright A_FaceTarget
+		CARD D 5 Bright A_CustomMissile("CardinalPlasma",42,-30,0)
+		Goto See
+	Pain: 
+		CARD P 2 Bright A_Stop
+		CARD P 0 A_custommissile("DeathBall",42,0,0,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,20,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,40,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,60,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,80,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,100,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,120,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,140,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,160,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,180,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,200,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,220,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,240,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,260,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,280,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,300,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,320,2,0)
+		CARD P 0 A_custommissile("DeathBall",42,0,340,2,0)
+		CARD P 4 Bright A_Pain
+		Goto See
+	Death: 
+		CARD E 8 Bright A_ChangeFlag("FLOATBOB",false)
+		CARD F 8 Bright A_Scream
+		CARD G 8 Bright A_NoBlocking
+		CARD H 8 Bright A_Explode
+		CARD IJKL 8 Bright
+		Stop 
+	} 
+}
+//====================
+Actor CardinalRocket
+{
+Projectile
+Radius 11
+Height 8
+Speed 20
+Damage 24
++RANDOMIZE
++DEHEXPLOSION
++ROCKETTRAIL
+SeeSound "weapons/rocklf"
+DeathSound "weapons/rocklx"
+States
+	{
+	Spawn:
+		CROC AB 4 Bright
+		Loop
+	Death:
+		CROC C 8 Bright A_Explode
+		CROC D 6 Bright
+		CROC E 4 Bright
+		Stop
+	}
+}
+//====================
+Actor CardinalPlasma  
+{
+Projectile
+Radius 11
+Height 8
+Speed 20
+Damage 16
++FLOATBOB
+SeeSound "imp/attack"
+DeathSound ""
+States
+	{
+	Spawn:
+		CRTA I 1 Bright A_SpawnItemEx("PlasmaTail")
+		Loop
+	Death:
+		TNT1 ABC 4
+		Stop
+	}
+}
+//====================
+Actor PlasmaTail
+{
++NOINTERACTION
++FLOATBOB
+Renderstyle Translucent
+States
+	{
+	Spawn:
+		CRTA IHGFEDCBABCDEFGHI 2 Bright A_fadeout(0.08)
+		Stop
+	}
+}
+//====================
+Actor DeathBall : BaronBall
+{
+Damage 1
++SEEKERMISSILE 
+Scale 0.8
+SeeSound "DeathBall/spawn"
+States
+	{
+	Spawn:
+		TNT1 A 0 A_SpawnItemEx("BallTail")
+		BAL7 A 2 Bright A_Tracer
+		BAL7 B 2 Bright A_SpawnItemEx("BallTail")
+		Loop
+	Death:
+		BAL7 CDE 6 Bright
+		Stop
+	}
+}
+//====================
+Actor BallTail
+{
++NOINTERACTION
+RenderStyle Translucent
+Alpha 0.9
+Scale 0.6
+States
+	{
+	Spawn:
+		BAL7 AABBAABB 2 Bright A_fadeout(0.1)
+		Stop
+	}
+}
+//====================
+Actor PainGrenade
+{
+Projectile
+Radius 11
+Height 8
+Speed 20
+Damage 5
+Bouncetype Doom
+-NOGRAVITY
+Translation "168:191=112:127","160:167=112:125"
+SeeSound "PainGrenade/fire"
+BounceSound "PainGrenade/bounce"
+DeathSound "PainGrenade/explode"
+States
+	{
+	Spawn:
+		CEGG A 2 Bright A_SpawnItemEx("faintGhost1")
+		Loop
+	Death:
+		TNT1 A 0 A_SetTranslucent(1.0,1)
+		TNT1 A 0 A_NoGravity
+		FIRE A 3 Bright
+		FIRE B 3 Bright A_SpawnItemEx("Paingasm",0,0,0,0,0,0,0,SXF_SETMASTER)
+		FIRE CDEFGH 3 Bright
+		Stop
+	}
+}
+//====================
+Actor Paingasm 10004
+{
+//$Category Realm667 Monsters
+//$Sprite HEADA1
+//$Title "Paingasm"
+Monster
+Health 500
+Radius 31
+Height 56
+Mass 400
+Speed 25
+PainChance 128
+Bloodcolor "Blue"
++FLOAT
++NOGRAVITY
++DONTGIB
+SeeSound "caco/sight"
+PainSound "caco/pain"
+DeathSound "caco/death"
+ActiveSound "caco/active"
+Obituary "%o was removed from life by a Paingasm."
+HitObituary "%o's face got tore off by a Paingasm."
+Translation "168:191=112:127"
+RenderStyle Translucent
+Alpha 0.5
+States
+	{
+	Spawn:
+		HEAD A 10 Bright A_Look
+		Loop
+	See:
+		HEAD A 0 A_SetTranslucent(0.5,0)
+		HEAD A 3 Bright A_Chase
+		HEAD A 0 A_SpawnItemEx("faintGhost2")
+		Loop
+	Missile:
+		HEAD B 0 A_SetTranslucent(1.0,0)
+		HEAD BC 5 Bright A_FaceTarget
+		HEAD D 5 Bright A_CustomMissile("PaingasmBall",24,0,0)
+		Goto See
+	Melee:
+		HEAD D 0 A_SetTranslucent(1.0,0)
+		HEAD D 0 A_PlaySound("Paingasm/chomp",7)
+		HEAD DC 4 Bright A_FaceTarget
+		HEAD B 4 Bright A_CustomMeleeAttack(4)
+		HEAD E 8 Bright A_FaceTarget
+		Goto See
+	Pain:
+		HEAD E 0 A_SetTranslucent(0.5,0)
+		HEAD E 3 Bright
+		HEAD E 3 Bright A_Pain
+		HEAD F 6 Bright
+		Goto See
+	Death:
+		HEAD G 0 A_SetTranslucent(0.5,0)
+		HEAD G 8
+		HEAD G 8 A_Scream
+		HEAD I 8
+		HEAD J 8
+		HEAD K 8 A_NoBlocking
+		HEAD L 300 A_SetFloorClip
+		HEAD L 6 A_FadeOut(0.1)
+		Wait
+	}
+}
+//====================
+Actor faintGhost1
+{
++NOINTERACTION
+Translation "168:191=112:127"
+RenderStyle Translucent
+Alpha 0.8
+States
+	{
+	Spawn:
+		CEGG A 2 Bright A_fadeout(0.1)
+		Wait
+	}
+}
+//====================
+Actor faintGhost2 : faintGhost1
+{
+States
+	{
+	Spawn:
+		HEAD A 2 Bright A_fadeout(0.1)
+		Wait
+	}
+}
+//====================
+Actor PaingasmBall : BaronBall
+{
+Translation "112:127=192:207"
+States
+	{
+	Spawn:
+		BAL7 AB 4 Bright
+		Loop
+	Death:
+		BAL7 CDE 6 Bright
+		Stop
+	}
+}
+//====================

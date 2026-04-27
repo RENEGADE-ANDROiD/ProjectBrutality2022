@@ -39,7 +39,6 @@ Class PB_ZombieScientistGK : PB_ZombieScientist Replaces PB_ZombieScientist
 		}
 		Goto StagLooper;
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		SCGA G 6;
 		Goto StagLooper;
 	
@@ -92,7 +91,7 @@ Class PB_ZombieScientistGK : PB_ZombieScientist Replaces PB_ZombieScientist
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1);
-		TNT1 A 0 A_Jump(256,"Death.Fatality1", "Death.Fatality2", "Death.Fatality3");
+		TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7", "Death.Fatality8");
 		Goto Super::Death.Fatality1;	
 	}
 }
@@ -138,7 +137,6 @@ Class PB_ZombieScientistChainsawGK : PB_ZombieScientistChainsaw Replaces PB_Zomb
 		}
 		Goto StagLooper;
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		5CGA I 6;
 		Goto StagLooper;
 	
@@ -192,7 +190,7 @@ Class PB_ZombieScientistChainsawGK : PB_ZombieScientistChainsaw Replaces PB_Zomb
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1);
-		TNT1 A 0 A_Jump(256,"Death.Fatality1");
+		TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7", "Death.Fatality8");
 		Goto Death.Fatality1;
 	
 	}

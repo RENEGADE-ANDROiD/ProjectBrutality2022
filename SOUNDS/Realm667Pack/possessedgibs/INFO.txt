@@ -1,0 +1,19 @@
+Name: Possessed Gibs
+Difficulty: medium
+Connections: none
+Summon: PossessedGibs, GibbedZombieMan, GibbedShotgunGuy, GibbedDoomImp, GibbedChaingunGuy
+Melee: no
+Distance: projectile
+Type: Demon, Spirit
+Brightmaps: no
+Actor modification: no
+ACS: no
+
+Description:
+A demonic entity that has possessed the gibbed remains of an Imp. Once alerted, it will start possessing other nearby gibbed corpses.
+Once possessed, these extra gibs hover around the Possessed Gibs in the middle and shoot bloody body parts at their target.
+Those gibbed corpses also protect the monster, this allows it to quickly increase damage output and sturdiness.
+
+For this monster to be effective, make sure there are enough gibbed corpses to possess in the vicinity.
+You can set the amount of extra gibs to spawn around it, place more gibbed corpses on the map, or gib some monsters during gameplay.
+Gibbed corpses must be either in their XDeath state, or be on the list of allowed actors (see config section in possessedgibs.txt).

@@ -1282,7 +1282,7 @@ Class PB_ShotgunGuyHelmet : PB_ShotgunGuy
 				TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1);
 				Goto Death.ExplosiveImpact;
 				TNT1 A 0 A_GiveToTarget("GoFatality", 1);
-				TNT1 A 0 A_Jump(256,"Death.Fatality1", "Death.Fatality2", "Death.Fatality3");
+				TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7", "Death.Fatality8");
 				Goto Death.Fatality1;
 
 		Death.Fatality1:
@@ -1293,6 +1293,21 @@ Class PB_ShotgunGuyHelmet : PB_ShotgunGuy
 			Stop;
 		Death.Fatality3:
 			TNT1 A 0 A_GiveToTarget("HelmetSergeantFatality3", 1);
+			Stop;
+		Death.Fatality4:
+			TNT1 A 0 A_GiveToTarget("SergeantFatality4", 1);
+			Stop;
+		Death.Fatality5:
+			TNT1 A 0 A_GiveToTarget("SergeantFatality5", 1);
+			Stop;
+		Death.Fatality6:
+			TNT1 A 0 A_GiveToTarget("SergeantFatality6", 1);
+			Stop;
+		Death.Fatality7:
+			TNT1 A 0 A_GiveToTarget("SergeantFatality7", 1);
+			Stop;
+		Death.Fatality8:
+			TNT1 A 0 A_GiveToTarget("SergeantFatality8", 1);
 			Stop;
 			
 		Death.HelperMarineFatallity:
@@ -1328,9 +1343,7 @@ Class PB_ShotgunGuyHelmet : PB_ShotgunGuy
 			
 		
 		 Death.Stomp:
-		//	TNT1 A 0 A_Scream();
 			TNT1 A 0 A_NoBlocking();
-			//POSS IJK 2;
 			TNT1 A 1 A_XScream();
 			TNT1 A 0 {
 				NashGoreGibs.SpawnGibs(self);

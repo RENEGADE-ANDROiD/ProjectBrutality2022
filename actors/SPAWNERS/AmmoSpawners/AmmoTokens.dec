@@ -31,7 +31,6 @@ Actor IsNearPlasmaWeapon : AmmoCounter { }
 Actor IsRocketAmmo : AmmoCounter { }
 Actor IsSpecialGrenadeAmmo : AmmoCounter { }
 Actor IsExcavatorAmmo : AmmoCounter { }
-//Actor IsHEGrenadeAmmo : AmmoCounter {}
 Actor IsComboBoxAmmo : AmmoCounter {}
 
 Actor MustBeRocketBoxes : AmmoCounter { }	//Special Exceptions to prevent large clumps of things from becoming the rare subtypes

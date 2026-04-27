@@ -1,0 +1,8 @@
+DoomEdNums
+{
+	22500 = PossessedGibs
+	22501 = GibbedZombieMan
+	22502 = GibbedShotgunGuy
+	22503 = GibbedDoomImp
+	22504 = GibbedChaingunGuy
+}

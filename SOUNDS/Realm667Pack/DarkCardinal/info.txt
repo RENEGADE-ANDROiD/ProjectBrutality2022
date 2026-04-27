@@ -1,0 +1,10 @@
+Name: Dark Cardinal
+Difficulty: Hard
+Connections: uses Baron Ball, Cacodemon, Bullet Puff and Archvile Fire sprites
+Summon: Cardinal, Paingasm
+Melee: Yes, for the Paingasm
+Distance: Projectile, Tracer, Summon
+Type: Demon, Cybernetic, Magical
+Brightmaps: Yes
+Actor modification: No
+ACS: No

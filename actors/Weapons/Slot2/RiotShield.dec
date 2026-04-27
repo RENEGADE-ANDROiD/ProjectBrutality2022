@@ -10,11 +10,17 @@
 //   * RespectItem -> respectItem to match the spelling dominant across PB 2022.
 //   * Super_Shield_Melee is dropped (defined upstream, never referenced).
 //   * RiotShieldModeFlashPunching terminates with Stop instead of
-//     Goto ReadyShield. The state is dispatched on overlay layer 4
-//     via A_Overlay(4,"FlashPunching") in BaseWeapon.dec, so falling
-//     into ReadyShield's RSWT A loop on that overlay produced a
-//     duplicate raised-shield sprite that survived AltFire's
-//     A_ClearOverlays(10,11) release.
+//     layer (PSP_FLASH) via A_Overlay(PSP_FLASH,"FlashPunching") in
+//     BaseWeapon.dec, so falling into ReadyShield's RSWT A loop on
+//     that overlay would produce a duplicate raised-shield sprite
+//     stacked on top of the main weapon layer. The base QuickMelee
+//     exit now does A_ClearOverlays(PSP_FLASH,PSP_FLASH,false) so
+//     either Stop or Goto Ready3 are both safe terminators, but
+//     jumping back into ReadyShield (which is a *loop*) on PSP_FLASH
+//     would still stick, so Stop is preserved here. Note the third
+//     `false` argument is REQUIRED â€” A_ClearOverlays defaults to
+//     safety=true, which silently skips PSP_FLASH/PSP_WEAPON. See
+//     docs/punch_flash_psp_flash.md Â§4a.
 //   * Fire: state split 'RSWF AB 1 Bright { <fire block> }' into a
 //     per-frame 'RSWF A 1 Bright { <fire block> }' + 'RSWF B 1 Bright'
 //     animation tic. The compound AB form ran the anonymous action
@@ -407,7 +413,7 @@ Actor RiotShield : PB_Weapon
             return state(0);
         }
         TNT1 A 0 A_JumpIfInventory("PB_Axe",1,"ShieldAxeMode")
-        TNT1 A 0 A_Print("\cdFire Axe Required. To Disable, Check Weapon Settings")
+        TNT1 A 0 A_Print("\cg\ctFire axe \c-required \c-â€” \cocheck weapon settings \c-to disable")
         Goto Ready3
     ShieldAxeMode:
         TNT1 A 0 A_JumpIfInventory("ShieldAxeMode",1,"ShieldPistolMode")
@@ -427,7 +433,7 @@ Actor RiotShield : PB_Weapon
         RSWY K 1 Offset(0,52)
         RSWA A 1 Offset(0,42)
         TNT1 A 0 A_GiveInventory("ShieldAxeMode",1)
-        TNT1 A 0 A_Print("\ciSwitched To Fire Axe")
+        TNT1 A 0 A_Print("\ctLoadout:\c- \chFire axe \c-")
         Goto ReadyAxe
     ShieldPistolMode:
         RSWA A 1 Offset(0,42)
@@ -446,7 +452,7 @@ Actor RiotShield : PB_Weapon
         RSWF C 1 Offset(0,42)
         RSWG A 1 Offset(0,32)
         TNT1 A 0 A_TakeInventory("ShieldAxeMode",1)
-        TNT1 A 0 A_Print("\cdSwitched To Pistol")
+        TNT1 A 0 A_Print("\ctLoadout:\c- \ccPistol \c-")
         Goto Ready3
 
     FlashKicking:

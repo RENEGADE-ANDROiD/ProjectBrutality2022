@@ -1,0 +1,109 @@
+pointlight DroneFire1
+{
+    color 0.0 0.8 0.0
+    size 15
+}
+
+pointlight DroneFire2
+{
+    color 0.1 1.0 0.0
+    size 17
+}
+
+pointlight DroneDeath1
+{
+    color 0.0 0.7 0.0
+    size 10
+}
+
+pointlight DroneDeath2
+{
+    color 0.1 0.9 0.0
+    size 15
+}
+
+pointlight DroneDeath3
+{
+    color 0.1 1.0 0.0
+    size 18
+}
+
+pointlight DroneDeath4
+{
+    color 0.0 0.9 0.0
+    size 18
+}
+
+pointlight DroneDeath5
+{
+    color 0.0 0.7 0.0
+    size 16
+}
+
+pointlight DroneDeath6
+{
+    color 0.0 0.5 0.0
+    size 14
+}
+
+pointlight DroneDeath7
+{
+    color 0.0 0.4 0.0
+    size 12
+}
+
+object Drone
+{
+	frame HDRNB { light DroneFire1 }
+    frame HDRNC { light DroneFire2 }
+    frame HDRND { light DroneFire2 }
+	frame DRONE { light DroneDeath1 }
+    frame DRONF { light DroneDeath2 }
+    frame DRONG { light DroneDeath3 }
+	frame DRONH { light DroneDeath4 }
+    frame DRONI { light DroneDeath5 }
+    frame DRONJ { light DroneDeath6 }
+	frame DRONK { light DroneDeath7 }
+}
+
+pointlight DroneShotLight
+{
+    color 0.1 1.0 0.0
+    size 10
+}
+
+pointlight DroneShotLightD1
+{
+    color 0.0 0.9 0.0
+    size 12
+}
+
+pointlight DroneShotLightD2
+{
+    color 0.0 0.7 0.0
+    size 8
+}
+
+pointlight DroneShotLightD3
+{
+    color 0.0 0.5 0.0
+    size 6
+}
+
+pointlight DroneShotLightD4
+{
+    color 0.0 0.3 0.0
+    size 4
+}
+
+object DroneShot
+{
+    frame DROSA { light DroneShotLight }
+    frame DROSB { light DroneShotLight }
+    frame DROSC { light DroneShotLightD1 }
+    frame DROSD { light DroneShotLightD1 }
+    frame DROSE { light DroneShotLightD1 }
+	frame DROSF { light DroneShotLightD2 }
+	frame DROSG { light DroneShotLightD3 }
+	frame DROSH { light DroneShotLightD4 }
+}

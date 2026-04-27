@@ -57,7 +57,6 @@ ACTOR PB_Unmaker : PB_Weapon
 	Tag "Unmaker"
     +WEAPON.NOAUTOAIM
 	+WEAPON.NOAUTOFIRE
-	//+POWERED_UP
 	//Weapon.SisterWeapon PB_Flamethrower
 	Inventory.PickupMessage "You got the sinister Unmaker, the penultimate wrath of Hell itself. (Slot 9)"
 	States
@@ -71,7 +70,7 @@ ACTOR PB_Unmaker : PB_Weapon
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
 		TNT1 A 0 A_Playsound("UNMSWTC")
 		TNT1 A 0 A_JumpIfInventory("UnmakerFireSelected",1, "SwitchToNormal")
-		TNT1 A 0 A_Print("Inferno Mode")
+		TNT1 A 0 A_Print("\ctUnmaker mode:\c- \ciInferno \c-")
 		TNT1 A 0 A_GiveInventory("UnmakerFireSelected",1)
 		TNT1 A 0 A_TakeInventory("HasIncendiaryWeapon",1)
 		UNHF ABCD 2
@@ -83,7 +82,7 @@ ACTOR PB_Unmaker : PB_Weapon
 		Goto Ready3
 		
 	SwitchToNormal:
-		TNT1 A 0 A_Print("Incineration Mode")
+		TNT1 A 0 A_Print("\ctUnmaker mode:\c- \ckIncineration \c-")
 		TNT1 A 0 A_TakeInventory("UnmakerFireSelected",1)
 		TNT1 A 0 A_GiveInventory("HasIncendiaryWeapon",1)
 		UNHF ABCD 2
@@ -100,6 +99,7 @@ ACTOR PB_Unmaker : PB_Weapon
 		 TNT1 A 0 A_GiveInventory("HasIncendiaryWeapon", 1)
 	 	 TNT1 A 0 A_PlaySound("UNMIDL", 6,1,1)
 	Ready3:
+		 TNT1 A 0 PB_HandleCrosshair(39)
 		 TNT1 A 0
 		 UNHG ABCDE 4 A_DoPBWeaponAction
 		 Goto Ready
@@ -268,8 +268,6 @@ ACTOR PB_Unmaker : PB_Weapon
 		TNT1 A 0 A_TakeInventory("Demonpower", 4)
 		UNHF Q 1 BRIGHT
 		TNT1 A 0 PB_WeaponRecoil(-0.5,random(1, -1))
-		//TNT1 A 0 A_SetAngle(random(1, -1) + angle)
-		//TNT1 A 0 A_SetPitch(-0.5 + pitch)
 		UNHF JIHGF 1 BRIGHT
 		TNT1 A 0 A_Refire("Althold")
 	StopDoomSeeker:

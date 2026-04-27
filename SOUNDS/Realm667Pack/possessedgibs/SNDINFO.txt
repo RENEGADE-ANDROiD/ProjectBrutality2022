@@ -1,0 +1,27 @@
+PossessedGibs/active VPGACT
+PossessedGibs/splat VPGSPLAT
+PossessedGibs/death VPGDEATH
+$random PossessedGibs/gibs { vpggib1 vpggib2 }
+vpggib1 VPGGIBS1
+vpggib2 VPGGIBS2
+$random PossessedGibs/shot { vpgshot1 vpgshot2 }
+vpgshot1 VPGSHOT1
+vpgshot2 VPGSHOT2
+
+$pitchset PossessedGibs/active 0.8 0.8
+$pitchset PossessedGibs/death 0.7 0.9
+$pitchset PossessedGibs/splat 1.0 1.2
+$pitchset vpggib1 0.9 1.1
+$pitchset vpggib2 0.9 1.1
+$pitchset vpgactive1 0.9 1.1
+$pitchset vpgactive2 0.9 1.1
+$pitchset vpgshot1 0.8 1.2
+$pitchset vpgshot2 0.8 1.2
+
+$volume PossessedGibs/shot 0.6
+$volume PossessedGibs/gibs 0.4
+
+$limit PossessedGibs/shot 0
+$limit PossessedGibs/splat 0
+$limit PossessedGibs/gibs 0
+$limit PossessedGibs/death 1

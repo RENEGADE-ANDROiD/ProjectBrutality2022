@@ -103,7 +103,6 @@ class PB_PDAWeaponContainer : Inventory
 			{
 				string linestring = WeaponTextLines.StringAt(lineCounter);
 				if (LargestStringWidth < SmallFont.StringWidth(WeaponTextLines.StringAt(lineCounter))*CleanYFac) largestStringWidth = WeaponTextLines.StringWidth(linecounter) * CleanXFac;
-				//linestring.AppendCharacter(10);
 				linestring.AppendFormat("\n");
 				NewWeaponText = NewWeaponText..Linestring;
 			}
@@ -228,32 +227,166 @@ class PB_EventHandler : EventHandler
 	transient ui Array<PB_PDAUi_Object> UiObjects;
 	transient ui PB_PDAUi_Object descriptiondialog;
 	transient ui PB_PDAWeaponContainer weaptextcontainer;
+	// Full-screen dash vignette (from PBv0.3+ staging: PB_EventHandler + PB_DashOverlay; toggled with pb_dasheffect)
+	ui double dashAlpha;
+	ui double dashScale;
+	ui void DrawPB2022WeaponPickupOverlay()
+	{
+		if (!playeringame[consoleplayer]) { return; }
+		let p = players[consoleplayer];
+		if (!p || !p.mo || !p.ReadyWeapon) { return; }
+		let cvEnable = CVar.GetCVar("pb_weaponhud_enable", p);
+		if (!cvEnable || !cvEnable.GetBool()) { return; }
+
+		Weapon weap = p.ReadyWeapon;
+		Name weaponClass = weap.GetClassName();
+
+		// Auto-draw exception list (these are better handled manually by dedicated overlays).
+		if (weaponClass == 'PB_Pistol' || weaponClass == 'PB_SMG' || weaponClass == 'PB_Revolver' || weaponClass == 'PB_Deagle'
+			|| weaponClass == 'PB_Shotgun' || weaponClass == 'PB_Autoshotgun' || weaponClass == 'PB_QuadSG' || weaponClass == 'PB_SSG'
+			|| weaponClass == 'PB_Carbine' || weaponClass == 'PB_DMR'
+			|| weaponClass == 'PB_Minigun'
+			|| weaponClass == 'PB_M1Plasma' || weaponClass == 'PB_M2Plasma'
+			|| weaponClass == 'PB_Flamethrower')
+		{
+			return;
+		}
+
+		TextureID iconID = weap.AltHUDIcon.IsValid() ? weap.AltHUDIcon : weap.Icon;
+		if (!iconID) { return; }
+
+		let cvAlpha = CVar.GetCVar("pb_weaponhud_alpha", p);
+		let cvScale = CVar.GetCVar("pb_weaponhud_scale", p);
+		let cvOffX  = CVar.GetCVar("pb_weaponhud_x", p);
+		let cvOffY  = CVar.GetCVar("pb_weaponhud_y", p);
+		double alpha = cvAlpha ? clamp(cvAlpha.GetFloat(), 0.0, 1.0) : 1.0;
+		double scale = cvScale ? max(0.1, cvScale.GetFloat()) : 1.0;
+		int offX = cvOffX ? cvOffX.GetInt() : 0;
+		int offY = cvOffY ? cvOffY.GetInt() : 0;
+
+		Vector2 texSize = TexMan.GetScaledSize(iconID);
+		double drawW = texSize.x * scale;
+		double drawH = texSize.y * scale;
+		double drawX = (Screen.GetWidth() - (drawW / 2.0)) + offX;
+		double drawY = (Screen.GetHeight() - (drawH / 2.0)) + offY;
+
+		Screen.DrawTexture(iconID, false, drawX, drawY,
+			DTA_DestWidth, int(drawW + 0.5), DTA_DestHeight, int(drawH + 0.5),
+			DTA_Alpha, alpha, DTA_CenterOffset, true);
+	}
+	ui TextureID PB2022GetModeIcon(PlayerInfo p, Name weaponClass, out double localScale, out double localOffX, out double localOffY)
+	{
+		localScale = 1.0;
+		localOffX = 0.0;
+		localOffY = 0.0;
+
+		TextureID modeIcon;
+		modeIcon = TexMan.CheckForTexture("", TexMan.Type_Any);
+		switch (weaponClass)
+		{
+			case 'PB_Shotgun':
+				localScale = 0.9;
+				if (p.mo.CountInv("SelectShotgun_Dragonsbreath") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png", TexMan.Type_Any);
+				else if (p.mo.CountInv("SelectShotgun_Slugshot") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Slug.png", TexMan.Type_Any);
+				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
+				break;
+			case 'PB_Carbine':
+				localScale = 0.9;
+				if (p.mo.CountInv("SelectCarbine_DualWield") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_dualwield.png", TexMan.Type_Any);
+				else if (p.mo.CountInv("SelectCarbine_FullAutoFire") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_fulla.png", TexMan.Type_Any);
+				else if (p.mo.CountInv("SelectCarbine_BurstFire") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_burst.png", TexMan.Type_Any);
+				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_semifire.png", TexMan.Type_Any);
+				break;
+			case 'PB_Minigun':
+				localScale = 0.9;
+				if (p.mo.CountInv("SelectMinigun_Triple") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_3.png", TexMan.Type_Any);
+				else if (p.mo.CountInv("SelectMinigun_Gatling") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_1.png", TexMan.Type_Any);
+				break;
+			case 'PB_NeoHMG':
+				localScale = 0.9;
+				if (p.mo.CountInv("HMG_Select_Charged") >= 1 || p.mo.CountInv("HMGModeCharged") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png", TexMan.Type_Any);
+				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
+				break;
+			case 'PB_M41A':
+				localScale = 0.85;
+				if (p.mo.CountInv("M41ChangeCart") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
+				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
+				break;
+			case 'PB_XM21':
+				localScale = 0.85;
+				if (p.mo.CountInv("XM21HasBallistics") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png", TexMan.Type_Any);
+				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Slug.png", TexMan.Type_Any);
+				break;
+		}
+
+		return modeIcon;
+	}
+	ui void DrawPB2022WeaponModeOverlay()
+	{
+		if (!playeringame[consoleplayer]) { return; }
+		let p = players[consoleplayer];
+		if (!p || !p.mo || !p.ReadyWeapon) { return; }
+		let cvEnable = CVar.GetCVar("pb_weaponmodehud_enable", p);
+		if (!cvEnable || !cvEnable.GetBool()) { return; }
+
+		Weapon weap = p.ReadyWeapon;
+		Name weaponClass = weap.GetClassName();
+
+		double modeScaleAdjust, modeOffX, modeOffY;
+		TextureID modeIcon = PB2022GetModeIcon(p, weaponClass, modeScaleAdjust, modeOffX, modeOffY);
+		if (!modeIcon) { return; }
+
+		let cvAlpha = CVar.GetCVar("pb_weaponmodehud_alpha", p);
+		let cvScale = CVar.GetCVar("pb_weaponmodehud_scale", p);
+		let cvOffX  = CVar.GetCVar("pb_weaponmodehud_x", p);
+		let cvOffY  = CVar.GetCVar("pb_weaponmodehud_y", p);
+		double alpha = cvAlpha ? clamp(cvAlpha.GetFloat(), 0.0, 1.0) : 1.0;
+		double scale = (cvScale ? max(0.1, cvScale.GetFloat()) : 1.0) * modeScaleAdjust;
+		int offX = cvOffX ? cvOffX.GetInt() : 0;
+		int offY = cvOffY ? cvOffY.GetInt() : 0;
+
+		Vector2 texSize = TexMan.GetScaledSize(modeIcon);
+		double drawW = texSize.x * scale;
+		double drawH = texSize.y * scale;
+		double drawX = (Screen.GetWidth() - (drawW / 2.0)) + offX + modeOffX;
+		double drawY = (Screen.GetHeight() - (drawH / 2.0)) + offY + modeOffY;
+
+		Screen.DrawTexture(modeIcon, false, drawX, drawY,
+			DTA_DestWidth, int(drawW + 0.5), DTA_DestHeight, int(drawH + 0.5),
+			DTA_Alpha, alpha, DTA_CenterOffset, true);
+	}
 	override void WorldThingDamaged(WorldEvent e)
 	{
-		if (e.thing is "DoomImp" 
-		&& e.thing.target
-		&& e.thing.bCOUNTKILL
-		&& e.thing.bISMONSTER
+		if (!e) return;
+		Actor t = e.Thing;
+		if (!t) return;
+		if (t is "DoomImp" 
+		&& t.target
+		&& t.bCOUNTKILL
+		&& t.bISMONSTER
 		&& e.DamageType == "Melee"
-		&& !e.thing.target.player)
+		&& !t.target.player)
 		{
-			e.thing.A_TakeInventory("SKImp",1); // Make sure it does not disappear.
-			e.thing.A_TakeInventory("SKImp2",1); 
-			e.thing.A_TakeInventory("SKImp3",1); 
-			e.thing.A_TakeInventory("SKDarkImpNami",1);
-			e.thing.A_TakeInventory("SKDarkImpNether",1);
-			e.thing.A_TakeInventory("SKDarkImpST",1);
-			e.thing.A_TakeInventory("SKDarkImpVoid",1);
+			t.A_TakeInventory("SKImp",1); // Make sure it does not disappear.
+			t.A_TakeInventory("SKImp2",1); 
+			t.A_TakeInventory("SKImp3",1); 
+			t.A_TakeInventory("SKDarkImpNami",1);
+			t.A_TakeInventory("SKDarkImpNether",1);
+			t.A_TakeInventory("SKDarkImpST",1);
+			t.A_TakeInventory("SKDarkImpVoid",1);
 		}
 	}
 	override void WorldThingDied(WorldEvent e)
 	{
-		if (e.thing && e.thing.target
-		&& e.thing.target.player
-		&& e.thing.bCOUNTKILL
-		&& e.thing.bISMONSTER)
+		if (!e) return;
+		Actor t = e.Thing;
+		if (t && t.target
+		&& t.target.player
+		&& t.bCOUNTKILL
+		&& t.bISMONSTER)
 		{
-			//e.thing.target.player.mo.A_SetBlend("RoyalBlue",0.1,17);
+			//t.target.player.mo.A_SetBlend("RoyalBlue",0.1,17);
 		}
 	}
 	ui void UpdateDesc()
@@ -263,9 +396,12 @@ class PB_EventHandler : EventHandler
 	}
 	ui bool CheckBaseWeapon(string weapname)
 	{
-		for (uint i = 0; i < PlayerPawnBase(players[consoleplayer].mo).baseWeapons.Size(); i++)
+		if (!playeringame[consoleplayer]) { return false; }
+		let pmo = PlayerPawnBase(players[consoleplayer].mo);
+		if (!pmo) { return false; }
+		for (uint i = 0; i < pmo.baseWeapons.Size(); i++)
 		{
-			if (weapname == PlayerPawnBase(players[consoleplayer].mo).baseWeapons[i])
+			if (weapname == pmo.baseWeapons[i])
 			{
 				return true;
 			}
@@ -341,7 +477,6 @@ class PB_EventHandler : EventHandler
 						case 3:
 							for (int counter = 0; counter < PDAWeaponHeaders.Size(); ++counter)
 							{
-								//Console.Printf(PDAWeaponHeaders[counter]);
 								if (uiObjects[i].entrynumber == counter)
 								{
 									currentindex = uiObjects[i].entrynumber;
@@ -383,7 +518,6 @@ class PB_EventHandler : EventHandler
 						uiObjects[i].Clicked = true;
 						//SendNetworkEvent("releasemouse");
 					}
-					//else SendNetworkEvent("ReleaseMouse");
 				}
 				if (uiObjects[i].usefont != NULL)
 				{
@@ -409,9 +543,13 @@ class PB_EventHandler : EventHandler
 				uiObjects[i].MouseOvered = false;
 				uiObjects[i].fontcolor = Font.CR_UNTRANSLATED;
 				//SendNetworkEvent("releasemouse");
-				//self.MouseHeldDown = false;
 			}
 			
+		}
+		if (dashAlpha > 0)
+		{
+			dashAlpha = max(0, dashAlpha - 0.2);
+			dashScale += 0.05;
 		}
 	}
 	override void NewGame()
@@ -420,8 +558,14 @@ class PB_EventHandler : EventHandler
 	}
 	override void PlayerEntered(PlayerEvent e)
 	{
-		PlayerPawnBase(players[e.Playernumber].mo).baseweaponpda = false;
-		players[e.Playernumber].mo.A_SetBlend("black",1.0,35);
+		if (!e) return;
+		if (e.PlayerNumber < 0 || e.PlayerNumber >= MAXPLAYERS) return;
+		if (!playeringame[e.PlayerNumber]) return;
+		let pmo = players[e.PlayerNumber].mo;
+		if (!pmo) return;
+		let ppb = PlayerPawnBase(pmo);
+		if (ppb) { ppb.baseweaponpda = false; }
+		pmo.A_SetBlend("black",1.0,35);
 	}
 	override void WorldTick()
 	{
@@ -437,16 +581,19 @@ class PB_EventHandler : EventHandler
 		{
 			if (a.player && a.player.morphTics <= 5)
 			{
-				switch(a.player.mo.GetClassName())
+				let amo = a.player.mo;
+				if (!amo) { continue; }
+				switch(amo.GetClassName())
 				{
-					case 'RevenantPlayer': a.player.mo.ACS_NamedExecuteAlways("RevenantMorphModeDisable");break;
-					case 'BaronPlayer': a.player.mo.ACS_NamedExecuteAlways("BaronMorphModeDisable");break;
+					case 'RevenantPlayer': amo.ACS_NamedExecuteAlways("RevenantMorphModeDisable");break;
+					case 'BaronPlayer': amo.ACS_NamedExecuteAlways("BaronMorphModeDisable");break;
 				}
 			}
 		}
 	}
 	override void NetworkProcess(ConsoleEvent e)
 	{
+		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
 		if (HeldDownTics <= 0) mouseclicked = false;
 		if (e.Name ~== "netgametrue")
@@ -488,48 +635,22 @@ class PB_EventHandler : EventHandler
 			self.WeaponFound = true;
 		}
 		if (MouseHeldDown == false && MouseClicked == true && !(HeldDownTics <= 0) ) HeldDownTics--;
-// 		if (e.Name ~== "input")
-// 		{
-// 			if (e.Args[2] == 1)
-// 			{
 // 				//Console.Printf("Mouse Event Detected");
-// 				if (MouseClicked == true && !MouseHeldDown)
-// 				{
 // 					MouseHeldDown = true;
 // 					HeldDownTics++;
-// 				}
-// 				else
-// 				{
 // 					MouseClicked = true;
 // 					MouseHeldDown = true;
-// 					if (HeldDownTics < 2) HeldDownTics++;
-// 				}
-// 			}
-// 			else if (e.Args[2] == 2)
-// 			{
-// 				if (HeldDownTics <= 0) mouseclicked = false;
 // 				MouseHeldDown = false;
-// 			}
-// 			if (players[e.Player].cmd.buttons & BT_USER1)
-// 			{
-// 				if (isnetgame) return;
 // 				SetPlayerProperty(1,1,4);
-// 				int freezemask = 1 << e.Player;
 // 				players[e.Player].timefreezer |= freezemask;
-// 				Level.SetFrozen(true);
 // 				S_StartSound("PDAOPEN",CHAN_AUTO);
 // 				PDAMode = true;
-// 			}
-// 			if (PDAMode == true && MousePositionSet == true)
-// 			{
 // 				DeltaMouseX = e.Args[0] / 2;
 // 				DeltaMouseY = e.Args[1];
 // 				MouseX += DeltaMouseX;
 // 				MouseY -= DeltaMouseY;
 // 				MouseX = clamp(MouseX, 0, Screen.GetWidth());
 // 				MouseY = clamp(MouseY, 0, Screen.GetHeight());
-// 			}
-// 		}
 		if (e.Name ~== "exitpda")
 		{
 			SetPlayerProperty(1,0,4);
@@ -548,6 +669,8 @@ class PB_EventHandler : EventHandler
 		if (e.Name ~== "openpda")
 		{
 			if (isnetgame) return;
+			if (e.Player < 0 || e.Player >= MAXPLAYERS) return;
+			if (!playeringame[e.Player]) return;
 			SetPlayerProperty(1,1,4);
 			int freezemask = 1 << e.Player;
 			players[e.Player].timefreezer |= freezemask;
@@ -586,6 +709,7 @@ class PB_EventHandler : EventHandler
 	}
 	override void WorldLoaded(WorldEvent e)
 	{
+		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
 		if (e.IsSaveGame)
 		{
@@ -600,6 +724,15 @@ class PB_EventHandler : EventHandler
 		MouseY = 1;
 		PDAMode = false;
 	}
+	override void InterfaceProcess(ConsoleEvent e)
+	{
+		if (!e) return;
+		if (e.Name ~== "PB_DashWhatchamacallit")
+		{
+			dashAlpha = 1.0;
+			dashScale = 1.0;
+		}
+	}
 	clearscope Vector2 GetTextureCenterPosition(TextureID tex)
 	{
 		if (!tex) return (0,0);
@@ -607,7 +740,30 @@ class PB_EventHandler : EventHandler
 	}
 	override void RenderOverlay(RenderEvent e)
 	{
+		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
+		DrawPB2022WeaponPickupOverlay();
+		DrawPB2022WeaponModeOverlay();
+		bool dashEffectOn = false;
+		if (playeringame[consoleplayer])
+		{
+			let cvDash = CVar.GetCVar("pb_dasheffect", players[consoleplayer]);
+			if (cvDash) { dashEffectOn = cvDash.GetBool(); }
+		}
+		if (dashAlpha > 0 && dashEffectOn)
+		{
+			TextureID dashTex = TexMan.CheckForTexture("graphics/hud/fullscrn/pb_dashoverlay.png", TexMan.Type_Any);
+			if (dashTex)
+			{
+				Screen.DrawTexture(dashTex, false,
+					Screen.GetWidth() / 2.0, Screen.GetHeight() / 2.0,
+					DTA_DestWidth, Screen.GetWidth(), DTA_DestHeight, Screen.GetHeight(),
+					DTA_Alpha, dashAlpha,
+					DTA_CenterOffset, true,
+					DTA_ScaleX, dashScale, DTA_ScaleY, dashScale
+				);
+			}
+		}
 		if (MouseX == 1 && MouseY == 1 && !MousePositionSet)
 		{
 			SendNetworkEvent("modifymousepos",Screen.GetWidth() / 2,Screen.GetHeight() / 2);
@@ -620,7 +776,7 @@ class PB_EventHandler : EventHandler
 			PDAWeaponTextVSize.Clear();
 			PDAWeaponTextHSize.Clear();
 			UiObjects.Clear();
-			DescriptionDialog.Destroy();
+			if (DescriptionDialog) { DescriptionDialog.Destroy(); }
 			DescriptionDialog = null;
 		}
 		if (uiObjects.Size() < 1)
@@ -699,15 +855,12 @@ class PB_EventHandler : EventHandler
 					else UiObjects[i].notdrawn = true;
 				}
 			}
-			//if (MonsterMenuButton != null && !MonsterMenuOpened) Screen.DrawText(MonsterMenuButton.usefont,MonsterMenuButton.fontcolor,MonsterMenuButton.ImagePos.x,MonsterMenuButton.ImagePos.y,MonsterMenuButton.toDraw,DTA_CleanNoMove_1,true);
 			if (descriptiondialog != null && NonMainMenu == true)
 			{
 				Screen.dim(color(75,75,75),globalPDAAlpha,descriptiondialog.ImagePos.X,descriptiondialog.descClipY,UpArrowPos.X - descriptiondialog.ImagePos.X,DownArrowPos.Y - UpArrowPos.Y);
 				Screen.DrawText(descriptiondialog.usefont,Font.CR_UNTRANSLATED,descriptiondialog.ImagePos.x,descriptiondialog.ImagePos.y,descriptiondialog.todraw,DTA_CleanNoMove_1,true,DTA_ClipTop,descriptiondialog.descClipY,DTA_ClipBottom,descriptiondialog.descClipH,DTA_Alpha,globalPDAAlpha);
 			}
-			//Screen.DrawShape(TexMan.CheckForTexture("BLOOD1",TexMan.Type_Any),false,UpArrow);
 			Screen.DrawTexture(cursortex,false,MouseX,MouseY);
-			//Screen.DrawText(SmallFont,Font.CR_YELLOW,MouseX+12,MouseY+12,""..MouseX.."/"..MouseY);
 			if (UiObjects.Size() >= 1) return;
 			//Initialize the objects.
 			InitializeUiObjects();
@@ -715,7 +868,11 @@ class PB_EventHandler : EventHandler
 	}
 	ui void InitializeUiObjects()
 	{
-		PB_PDAWeaponContainer weaptextcontainer = PB_PDAWeaponContainer(players[consoleplayer].mo.FindInventory("PB_PDAWeaponContainer",true));
+		if (!playeringame[consoleplayer]) { return; }
+		let pmo = players[consoleplayer].mo;
+		if (!pmo) { return; }
+		PB_PDAWeaponContainer weaptextcontainer = PB_PDAWeaponContainer(pmo.FindInventory("PB_PDAWeaponContainer",true));
+		if (!weaptextcontainer) { return; }
 		PDAWeaponExtraTexts.Copy(weaptextcontainer.PDAWeaponExtraTexts);
 		PDAWeaponHeaders.Copy(weaptextcontainer.PDAWeaponHeaders);
 		PDAWeaponTexts.Copy(weaptextcontainer.PDAWeaponTexts);
@@ -815,7 +972,6 @@ class PB_EventHandler : EventHandler
 		weapondialog.InitializeUiObject();
 		weapondialog.ImagePos = (MonsterDialog.ImagePos.x,MonsterDialog.ImagePos.y + MonsterDialog.ImageSize.y);
 		uiObjects.Push(weapondialog);
-		//self.MonsterMenuButton = monsterDialog;
 		dialog.ImagePos = ((Screen.GetWidth() ) - Screen.GetWidth()/4, (Screen.GetHeight() ) - Screen.GetHeight()/4);
 		UiObjects.Push(dialog);
 		SendNetworkEvent("addbaseweapons");
@@ -828,6 +984,7 @@ class PB_EventHandler : EventHandler
 		// Fixing this bug from GZDoom's side has been left on hold so this is necessary.
 		// Note: PDA will be always disabled when at title screen.
 		if (gamestate == GS_TITLELEVEL || gametic <= 1) return false;
+		if (!e) return false;
 		int mouseinput = 0;
 		if (e.KeyScan == InputEvent.Key_Mouse1 && e.Type == InputEvent.Type_KeyDown) mouseinput = 1;
 		if (e.KeyScan == InputEvent.Key_Mouse1 && e.Type == InputEvent.Type_KeyUp) mouseinput = 2;

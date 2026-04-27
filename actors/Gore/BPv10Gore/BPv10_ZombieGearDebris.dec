@@ -1,0 +1,49 @@
+// Zombie gear debris (helmet shards / belt buckles / boot bits) on humanoid
+// x-death only. ZGEA, ZGEB, ZGEC, ZGED are four 4-rotation strips; the
+// dispatcher picks one and treats A-D as the rotation set. Skipped for imps.
+// Original sprites by AWEZ (Brutal Pack V10).
+
+ACTOR BPv10_ZombieGearDebris
+{
+    Radius 3
+    Height 3
+    Mass 4
+    Speed 0
+    Scale 0.5
+    Gravity 0.85
+    BounceFactor 0.45
+    BounceType "Doom"
+    +CLIENTSIDEONLY
+    +DOOMBOUNCE
+    +DONTSPLASH
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +THRUACTORS
+    +CORPSE
+    +FORCEXYBILLBOARD
+    -SOLID
+    RenderStyle Translucent
+    Alpha 0.95
+    States
+    {
+    Spawn:
+        TNT1 A 0 NoDelay A_Jump(256, "GearA", "GearB", "GearC", "GearD")
+        Stop
+    GearA:
+        ZGEA ABCD 2
+        Loop
+    GearB:
+        ZGEB ABCD 2
+        Loop
+    GearC:
+        ZGEC ABCD 2
+        Loop
+    GearD:
+        ZGED ABCD 2
+        Loop
+    Death:
+        ZGEA A 70
+        ZGEA A 1 A_FadeOut(0.004)
+        Wait
+    }
+}

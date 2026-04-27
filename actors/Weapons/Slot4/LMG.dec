@@ -95,7 +95,6 @@ ACTOR MicroMissileProjectile
 			MICR AAABBBCCCAAABBBCCC 1 Bright Light("ROCKET")
 			{
 				if(waterlevel < 1) {
-// 					A_SpawnItemEx("OldschoolRocketSmokeTrail2",-3,0,0,-1,0,0);
 					A_SpawnItemEx("RocketTrailSparks",-10,0,0,-5,0,0);
 				}
 			}
@@ -105,7 +104,6 @@ ACTOR MicroMissileProjectile
 				A_Weave(5,5,frandom(-5,5),frandom(-5,5));
 				if(waterlevel < 1)
 				{
-// 					A_SpawnItemEx("OldschoolRocketSmokeTrail2",-3,0,0,-1,0,0);
 					A_SpawnItemEx("RocketTrailSparks",-10,0,0,-5,0,0);
 				}
 			}
@@ -115,7 +113,6 @@ ACTOR MicroMissileProjectile
 		TNT1 A 0 A_Explode(75, 42)
 		TNT1 A 0
 		{
-// 			A_SpawnItemEx ("RocketExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 			A_StopSound(CHAN_BODY);
 			A_StartSound("FAREXPL", CHAN_AUTO,CHANF_OVERLAP,0.5,0,1.1);
 			Radius_Quake (2, 4, 0, 7, 0);
@@ -125,7 +122,6 @@ ACTOR MicroMissileProjectile
 			A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 			A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 			A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-			//A_SpawnItemEx("NewRocketExploFX", 0, 0, 0);
 			A_SpawnItemEx ("LiquidExplosionEffectSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 			A_CustomMissile ("ExplosionSmokeFast22", 0, 0, random (0, 360), 2, random (0, 360));
 			A_CustomMissile ("MediumExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360));
@@ -702,7 +698,6 @@ States
 		TNT1 A 0 A_StartSound("LMISFIR")
 		TNT1 A 0 A_Overlay(-2, "MuzzleFlashRocketZoom")
 		TNT1 A 0 A_Overlay(4, "BeltFireMissileZoom")
-// 		 TNT1 A 0 A_FireBullets (1.45, 1.45, -1, random(70,75), "LMGMicroMissilePuff")
 		TNT1 A 0 PB_SpawnCasing("LMGCasingRocket",17.5, 0.5, 32,frandom(0,2),frandom(3,5),frandom(4,7))
 		TNT1 A 0 PB_SpawnCasing("LMGMissileBeltLink",17.5, 0.5, 32,frandom(0,2),frandom(3,5),frandom(4,7))
  		TNT1 A 0 A_FireCustomMissile("MicroMissileProjectile", frandom(-1.5,1.5), 0, 0, 0, 0, frandom(-1.5,1.5))
@@ -752,7 +747,6 @@ States
 		TNT1 A 0 A_Overlay(-2, "MuzzleFlashBulletZoom")
 		TNT1 A 0 A_Overlay(-3, "BeltFireBulletZoom")
 		TNT1 A 0 A_FireBullets (0.1, 0.1, -1, 27, "MachineGunBulletPuff", FBF_NORANDOM,8192,"Tracer", -2,0)
-//		TNT1 A 0 A_Firecustommissile("LMGCaseSpawnStandard",0,0,24,-20, 0, -50)
 		TNT1 A 0 PB_SpawnCasing("LMGCasingStandard",17.5, 0.5, 32,frandom(0,2),frandom(3,5),frandom(4,7))
 		TNT1 A 0 PB_SpawnCasing("LMGBeltLink",17.5, 0.5, 32,frandom(0,2),frandom(3,5),frandom(4,7))
         TNT1 A 0 A_FireCustomMissile("Tracer", random(-1,1), 0, -1, 0)
@@ -893,7 +887,6 @@ States
 		TNT1 A 0 A_StartSound("LMISFIR")
 		TNT1 A 0 A_Overlay(-2, "MuzzleFlashRocket")
 		TNT1 A 0 A_Overlay(4, "BeltFireMissile")
-// 		 TNT1 A 0 A_FireBullets (1.45, 1.45, -1, random(70,75), "LMGMicroMissilePuff")
 		TNT1 A 0 PB_SpawnCasing("LMGCasingRocket",29,-2,19.65,frandom(0,2),frandom(3,5),frandom(6,9))
 		TNT1 A 0 PB_SpawnCasing("LMGMissileBeltLink",29,-2,19.65,frandom(0,2),frandom(3,5),frandom(6,9))
 		TNT1 A 0 A_FireCustomMissile("MicroMissileProjectile", frandom(-1.5,1.5), 0, 0, 0, 0, frandom(-1.5,1.5))
@@ -1270,13 +1263,6 @@ States
 	ReloadBulletLess8:
 // 		"####" A 0 {
 // 			IF (CountInv("LMGAmmo") >= 1) {
-// 				return state ("");
-// 				}
-// 			else if {
-// 				return state ("ReloadNormally");
-// 			}
-// 				return state ("");
-// 		}
 		"####" A 0
 		"####" A 0 A_Overlay(2, "BeltReloadBulletGet7")
 		LLBU AAABCDEFGHHHH 1
@@ -1303,7 +1289,6 @@ States
 		LLBU EDCBARSTUV 1
 		Goto ReloadLidClosing
 	ReloadBulletLess8GoNormal:
-// 		LLBU HGFEDCBAAAA 1
 		LLBU IJKLLL 1
 		"####" A 0 A_StartSound("weapons/sgl/detach", 3)
 		LLBU MNOPQ 1
@@ -1317,7 +1302,6 @@ States
 		"####" A 0 A_JumpIfInventory("LMGAmmo", 21, "ReloadNormally")
 	ReloadMissileLess6:
 // 		"####" A 0 A_JumpIfInventory("LMGAmmo", 3, 2)
-// 		Goto ReloadNormally
 		"####" A 0
 		LLMU AAABCDEFGHHHH 1
 		//ENTER the LMGAmmo -> NewClip sequence here
@@ -1336,7 +1320,6 @@ States
 		LLMU EDCBARSTUV 1
 		Goto ReloadLidClosing
 	ReloadRocketLess6GoNormal:
-// 		LLMU HGFEDCBAAAA 1
 		LLMU IJKLLL 1
 		"####" A 0 A_StartSound("weapons/sgl/detach", 3)
 		LLMU MNOPQ 1 

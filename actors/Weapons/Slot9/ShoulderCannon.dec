@@ -3,6 +3,10 @@ Actor IceBombSelected : Inventory {inventory.maxamount 1}
 Actor GK_FlamebelchSelected : Inventory {inventory.maxamount 1}
 Actor GK_IcebombSelected : Inventory {inventory.maxamount 1}
 Actor DoShoulderCannon : Inventory {inventory.maxamount 1}
+Actor CoolFlameBelch : Inventory { inventory.maxamount 60 }
+Actor CoolIceBomb : Inventory { inventory.maxamount 60 }
+Actor FlameBelchReady : Inventory { inventory.maxamount 1 }
+Actor IceBombReady : Inventory { inventory.maxamount 1 }
 
 ACTOR SC_CryoGrenade: PB_FragGrenade
 {
@@ -25,9 +29,26 @@ ACTOR SC_CryoGrenade: PB_FragGrenade
 			GRNP A 1 Bright Light("SGL_CRYO") A_JumpIfInventory("GrenadeDetonator",1,"Detonate",AAPTR_TARGET) 
 			Loop
 		
+		Bounce:
+			TNT1 A 0
+			{
+				if (GetCvar("pb_sglgrenadeimpact") == 1) { return ResolveState("Death"); }
+				if (GetCvar("pb_sglgrenadeimpact") >= 2) { A_Stop(); return ResolveState("Rest"); }
+				return ResolveState("");
+			}
+			Goto Spawn
+		
+		Rest:
+			GRNP A 35 BRIGHT Light("SGL_CRYO")
+		DetonateGKCryoGrenade:
+			TNT1 A 0
+			TNT1 A 0 A_Scream
+			Goto Death
+		
 		Detonate:
 			TNT1 A 0
 			TNT1 A 0 A_Playsound("weapons/cryobowhit")
+			Goto Death
 		Death:
 		XDeath:
 			TNT1 A 0 Bright A_StopSound(CHAN_BODY)

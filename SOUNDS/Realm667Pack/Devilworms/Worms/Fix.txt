@@ -1,0 +1,12 @@
+actor Fix
+{
+  Radius 2
+  Height 2
+  Speed 0
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    stop
+  }
+}

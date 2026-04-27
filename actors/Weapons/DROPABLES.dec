@@ -57,7 +57,6 @@ ACTOR PlayerDropedCarbine
   +DONTGIB
     +NOBLOCKMAP
     +NOTELEPORT
-   // +MISSILE
     States
     {
     Spawn:
@@ -87,7 +86,6 @@ ACTOR PlayerDropedRifle
    +DONTGIB
     +NOBLOCKMAP
     +NOTELEPORT
-   // +MISSILE
     States
     {
 
@@ -153,8 +151,12 @@ ACTOR DropedPB_SSG
     Spawn:
 		TNT1 AA 1
 	Death:
+		TNT1 A 0 A_JumpIf(GetCVar("pb_NoCSSGWeapon") == 0, "SpawnCSSG")
         TNT1 A 0 A_SpawnItemEx("PB_SSG",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_NOCHECKPOSITION | 288)
         Stop
+	SpawnCSSG:
+		TNT1 A 0 A_SpawnItemEx("PB_CSSG",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_NOCHECKPOSITION | 288)
+		Stop
 	
     }
 }

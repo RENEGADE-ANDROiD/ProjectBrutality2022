@@ -28,7 +28,6 @@ ACTOR PB_Backpack : CustomInventory
 				A_GiveInventory("NewShell",1);
 				A_GiveInventory("CellPack", 1);
 				A_GiveInventory("RocketBox", 2);
-//				A_GiveInventory("Gas",200);
 				A_GiveInventory("HandGrenadeAmmo", 2);
 				A_GiveInventory("StunGrenadeAmmo",1);
 				A_GiveInventory("MiniHellRocketAmmo", 3);

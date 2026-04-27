@@ -1,0 +1,10 @@
+Name: Obsidian Ravager
+Difficulty: medium - hard
+Connections: uses BaronBall sprites
+Summon: ObsidianRavager
+Melee: yes
+Distance: projectile, homing projectile, trap
+Type: Demon, Ch’thonic
+Brightmaps: yes
+Actor modification: no
+ACS: no

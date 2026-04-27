@@ -1,0 +1,48 @@
+////////////////
+//////Baby//////
+////////////////
+
+Actor BTail1
+
+{
+  Scale 0.25
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    BTAI A 5
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("BTail2",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor BTail2
+
+{
+  Scale 0.20
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    BTAI A 5
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("BTail3",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor BTail3
+
+{
+  Scale 0.15
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    BTAI A 5
+	Stop
+  }
+}

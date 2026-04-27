@@ -58,7 +58,6 @@ ACTOR LockOnIndicator
 {
   RenderStyle "Add"
 	Scale 1.0
- // +ISMONSTER
 	+NOINTERACTION
     +NOBLOCKMAP
     +NOGRAVITY
@@ -256,7 +255,6 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 	Speed 20
 	Damage 20
 	Scale .49
-	//Weapon.SelectionOrder 2500
 	Weapon.AmmoUse1 0
 	Weapon.AmmoUse2 0
 	Weapon.AmmoGive2 0
@@ -556,7 +554,6 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 			RL06 A 1 BRIGHT {
 				A_StartSound("0SRFIRE");
 				A_AlertMonsters;
-				//A_ZoomFactor(0.980)
 				A_FireCustomMissile("Alerter", 0, 0, 0, 0);
 				A_FireCustomMissile("RedFlareSpawn",-5,0,0,0);
 				A_FireCustomMissile("RocketGlassBreaker", 0, 0, 0, -3);
@@ -659,7 +656,6 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 		LockOn_Overlay:
 			TNT1 A 1 {
 				if(A_JumpIfTargetInLOS("NULL",0,JLOSF_NOAUTOAIM)) {
-					//A_SetWeaponSprite("RL98");
 					A_GunFlash("LockOn_LaserFlash");
 					
 					// Target Painted
@@ -672,7 +668,6 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 							Thing_Remove(30001);
 							Thing_Remove(30002);
 							Thing_Remove(30003);
-							//A_TakeInventory("RocketLauncher_LockOnTargets", 4);
 							A_FireBullets(0,0,1,0,"LockOnPuff_Painted_1", FBF_NORANDOMPUFFZ);
 							A_FireBullets(0,0,1,0,"LockOnPuff_Painted_2", FBF_NORANDOMPUFFZ);
 							A_FireBullets(0,0,1,0,"LockOnPuff_Painted_3", FBF_NORANDOMPUFFZ);
@@ -698,7 +693,6 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 					
 				}
 				else {
- 					//A_SetWeaponSprite("RL09");
 					A_GunFlash("LockOn_LaserFlash");
 					if(CountInv("RocketLauncher_LockSound") == 1) {
 						A_StartSound("weapons/rocket/seeker_lost", CHAN_AUTO, CHANF_OVERLAP);
@@ -777,7 +771,6 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 					A_SetWeaponSprite("RL61");
 				}
 			}
-			//TNT1 A 0 A_JumpIf(PressingAltFire(),"LockOn_Scan2")
 			Goto LockOn_Scan2
 		LockOn_LoadRocket_Triple:
 			TNT1 A 0 {
@@ -802,28 +795,12 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 					A_SetWeaponSprite("RL60");
 				}
 			}
-			//TNT1 A 0 A_JumpIf(PressingAltFire(),"LockOn_Scan3")
 			Goto LockOn_Scan3
 			
 		Scoped_LockOn_Overlay:
 			TNT1 A 1 {
 			
 					A_FireBullets(0,0,1,0,"LockOnPuff_Painted_1", FBF_NORANDOMPUFFZ);
-// 					if(CountInv("RocketLauncher_TargetPainted") == 0)
-// 					{
-// 						A_StartSound("weapons/rocket/seeker_painted", CHAN_AUTO, CHANF_OVERLAP);
-// 						A_TakeInventory("RocketLauncher_TargetPainted");
-// 						A_GiveInventory("RocketLauncher_LockOnTargets");
-// 					}
-// 					else
-// 					{
-// 						A_FireBullets(0,0,1,0,"LockOnPuff", FBF_NORANDOMPUFFZ);
-// 						if(CountInv("RocketLauncher_LockSound") == 0) {
-// 							A_StartSound("weapons/rocket/seeker_lock", CHAN_AUTO, CHANF_OVERLAP);
-// 							A_GiveInventory("RocketLauncher_LockSound");
-// 						}
-// 					}
-//				}
 			}
 			TNT1 A 0 A_Jumpif(CountInv("Zoomed") != 0,"Scoped_LockOn_Overlay")
 			Stop
@@ -1067,7 +1044,6 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 			RL88 H 1 BRIGHT {
 				A_StartSound("0SRFIRE");
 				A_AlertMonsters;
-				//A_ZoomFactor(0.980)
 				A_FireCustomMissile("Alerter", 0, 0, 0, 0);
 				A_FireCustomMissile("RedFlareSpawn",-5,0,0,0);
 				A_FireCustomMissile("RocketGlassBreaker", 0, 0, 0, -3);
@@ -1218,7 +1194,6 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 		RL29 Y 1 BRIGHT {
 			A_StartSound("RLSHOT2");
 			A_AlertMonsters;
-			//A_ZoomFactor(0.980)
 			A_FireCustomMissile("RedFlareSpawn",-5,0,0,0);
 			A_FireCustomMissile("RocketGlassBreaker", 0, 0, 0, -3);
 			A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
@@ -1367,7 +1342,6 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 		RL31 Y 1 BRIGHT {
 			A_StartSound("RLSHOT2");
 			A_AlertMonsters;
-			//A_ZoomFactor(0.980)
 			A_FireCustomMissile("RedFlareSpawn",-5,0,0,0);
 			A_FireCustomMissile("RocketGlassBreaker", 0, 0, 0, -3);
 			A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);

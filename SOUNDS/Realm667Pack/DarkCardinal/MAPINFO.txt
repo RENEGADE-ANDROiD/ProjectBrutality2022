@@ -1,0 +1,11 @@
+DoomEdNums
+{
+	3120 = Cardinal
+	10004 = PainGrenade
+}
+
+SpawnNums
+{
+	3120 = Cardinal
+	10004 = PainGrenade
+}

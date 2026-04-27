@@ -1,0 +1,23 @@
+// PB 0.3+ staging: shaders/mfx_bss_blur.fp → GLDEFS "gb_blur" (MariENB / m8f) + PPShader (Gearbox pattern).
+// Enables a light fullscreen blur while the weapon special wheel is open (PlayerWheelOpen). Toggle: pb_wheelbackgroundblur.
+
+class PB_WheelBSSBlurHandler : StaticEventHandler
+{
+	override void UiTick()
+	{
+		bool on = false;
+		if (gamestate == GS_LEVEL)
+		{
+			PlayerInfo plr = players[consoleplayer];
+			if (plr && plr.mo)
+			{
+				let cv = CVar.GetCVar("pb_wheelbackgroundblur", plr);
+				if (cv && cv.GetBool() && plr.mo.FindInventory("PlayerWheelOpen"))
+				{
+					on = true;
+				}
+			}
+		}
+		PPShader.SetEnabled("gb_blur", on);
+	}
+}

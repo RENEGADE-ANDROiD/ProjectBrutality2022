@@ -59,12 +59,16 @@ Actor SpiderMastermindDice replaces SpiderMastermind
 	ReplaceToggle2:
 	TNT1 AA 0
 	TNT1 A 0 A_SpawnItemEx("PB_Mastermind",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorbQueen") == 1, "RT2Done")
 	TNT1 A 0 A_SpawnItemEx("MastermindsQueenpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	RT2Done:
 	Stop
 	ReplaceToggle3:
 	TNT1 AA 0
 	TNT1 A 0 A_SpawnItemEx("PB_Mastermind",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoDirector") == 1, "RT3Done")
 	TNT1 A 0 A_SpawnItemEx("Directorpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	RT3Done:
 	Stop
 	Demolisher:
 	TNT1 AA 0
@@ -79,13 +83,17 @@ Actor SpiderMastermindDice replaces SpiderMastermind
 	TNT1 AA 0
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleDemonlisher",0)
 	TNT1 A 0 A_SpawnItemEx("PB_Demolisher",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorbQueen") == 1, "Dem2Done")
 	TNT1 A 0 A_SpawnItemEx("MastermindsQueenpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Dem2Done:
 	Stop
 	Demolisher3:
 	TNT1 AA 0
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleDemonlisher",0)
 	TNT1 A 0 A_SpawnItemEx("PB_Demolisher",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoDirector") == 1, "Dem3Done")
 	TNT1 A 0 A_SpawnItemEx("Directorpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Dem3Done:
 	Stop
 	Juggernaut:
 	TNT1 AA 0
@@ -100,13 +108,17 @@ Actor SpiderMastermindDice replaces SpiderMastermind
 	TNT1 AA 0
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleJuggernaut",0)
 	TNT1 A 0 A_SpawnItemEx("PB_Juggernaut",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorbQueen") == 1, "Jug2Done")
 	TNT1 A 0 A_SpawnItemEx("MastermindsQueenpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Jug2Done:
 	Stop
 	Juggernaut3:
 	TNT1 AA 0
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleJuggernaut",0)
 	TNT1 A 0 A_SpawnItemEx("PB_Juggernaut",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoDirector") == 1, "Jug3Done")
 	TNT1 A 0 A_SpawnItemEx("Directorpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Jug3Done:
 	Stop
 	}
 }

@@ -11,13 +11,19 @@ const MAXITERATIONS = 32676;
 #include "zscript/PbWheel/parse.zsc"
 #include "zscript/PbWheel/ev_core_special.zsc"
 #include "zscript/PbWheel/ev_drawer_special.zsc"
+#include "zscript/PbWheel/wheel_bss_postblur.zsc"
 #include "zscript/DeathFader.zc"
 #include "zscript/PlayerPawn.zc"
+#include "zscript/Weapons/PB_InstantWeaponSwitch.zc"
 #include "zscript/ZMoveMenu.ZMV"
 #include "zscript/PBHitbox.zc"
 #include "zscript/TiltPlus/TiltPlusPlus.zc"
 #include "zscript/TiltPlus/TiltPlusPlusMenu.zc"
 #include "zscript/PBPDA.zc"
+#include "zscript/Items/PBKillstreak/PB_Killstreak_Messages.zc"
+#include "zscript/Items/PBKillstreak/PB_Killstreak_Items.zc"
+#include "zscript/Items/PBKillstreak/PB_Killstreak_Handler.zc"
+#include "zscript/Items/PBKillstreak/PB_UnlessYouHavePowah_Powerups.zs"
 #include "zscript/Gore/NashGore/NashGoreCommon.zc"
 #include "zscript/Gore/NashGore/NashGoreStatics.zc"
 #include "zscript/Gore/NashGore/NashGoreHandler.zc"
@@ -32,15 +38,45 @@ const MAXITERATIONS = 32676;
 #include "zscript/Gore/NashGore/NashGoreActor.zc"
 #include "zscript/Gore/NashGore/NashGoreMenu.zc"
 #include "zscript/Gore/PBBlood.zc"
+#include "zscript/Gore/BDv22GoreHandler.zc"
+// BDv22GoreMist (Brutal Doom 22; extends PB_Bloodmist): after PBBlood, before PBGore
+#include "zscript/Gore/BDv22Gore/BDv22GoreMist.zc"
+#include "zscript/Gore/BDv22GoreMergeHandler.zc"
+#include "zscript/Gore/BPv10Gore/BPv10GoreHandler.zc"
 #include "zscript/Gore/PBGore.zc"
 #include "zscript/Gore/PBGoreEffects.zc"
 #include "zscript/Decorations/PBDeadGeneric.zc"
+#include "zscript/Monsters/Realm667/possessedgibs/giblets.zc"
+#include "zscript/Monsters/Realm667/possessedgibs/possessedgibs.zc"
 #include "zscript/Decorations/PBKeys.zc"
 
 //HitFeedback
 #include "zscript/pb_hitfeedback/sharedmath.zs"
 #include "zscript/pb_hitfeedback/handler.zs"
 #include "zscript/pb_hitfeedback/inventory.zs"
+
+//DamNums
+#include "zscript/damnums/constants.txt"
+#include "zscript/damnums/damnum.txt"
+#include "zscript/damnums/events.txt"
+#include "zscript/damnums/fonts/base.txt"
+#include "zscript/damnums/fonts/doomclassic.txt"
+#include "zscript/damnums/fonts/doomsmall.txt"
+#include "zscript/damnums/fonts/doommodern.txt"
+#include "zscript/damnums/fonts/ravenbig.txt"
+#include "zscript/damnums/fonts/ravensmall.txt"
+#include "zscript/damnums/fonts/raventory.txt"
+#include "zscript/damnums/fonts/strife.txt"
+#include "zscript/damnums/fonts/chex.txt"
+#include "zscript/damnums/fonts/hacx.txt"
+#include "zscript/damnums/fonts/harmony.txt"
+#include "zscript/damnums/fonts/square.txt"
+#include "zscript/damnums/fonts/urbanbrawl.txt"
+#include "zscript/damnums/fonts/borderlands.txt"
+#include "zscript/damnums/fonts/gamedefaults.txt"
+
+// PB_HelmetDrops (ZScript event: spawn 3BON on helmeted deaths)
+#include "zscript/Items/HelmetDrops/HelmetDropHandler.zc"
 
 //Monsters
 #include "zscript/Monsters/PBMonster.zc"
@@ -74,9 +110,33 @@ const MAXITERATIONS = 32676;
 
 //Weapons
 #include "zscript/Weapons/BaseWeapon.zc"
+// Staging-parity helper back-fill on PB_WeaponBase (chamber/mag tracking,
+// PB_WeaponRaise, PB_CheckReload, PB_jumpIfNoAmmo, upgrade handoff, etc.)
+// so future ZScript weapon drops from PB Staging (Deagle, Revolver, Shotgun,
+// SuperGL, PlasmaM1, ...) compile without per-weapon re-implementation.
+#include "zscript/Weapons/BaseWeapon_StagingShim.zsc"
+#include "zscript/Weapons/Slot4/BattleRifle/BDPBattleRifle_helpers.zs"
+#include "zscript/Weapons/Slot4/BattleRifle/BDPBattleRifle.zs"
+#include "zscript/Weapons/Slot4/NeoHMG/NeoHMG.zs"
+#include "zscript/Weapons/Slot1/ArgentSith_Weapon.zs"
+#include "zscript/Weapons/Slot1/BeamKatana_Weapon.zs"
+#include "zscript/Weapons/Slot1/VorpalBlade.zc"
+#include "zscript/Weapons/Slot2/Deagle/Deagle.zs"
+#include "zscript/Weapons/PB_WeaponTacticalFeel.zc"
+#include "zscript/Weapons/ShieldSaw.zc"
+#include "zscript/Weapons/Slot3/CSSG/CSSG_Upgrades.zs"
+#include "zscript/Weapons/Slot3/CSSG/CSSG_PBProjectile.zs"
+#include "zscript/Weapons/Slot3/CSSG/CSSG_Casings.zs"
+#include "zscript/Weapons/Slot6/Excavator/Excavator_helpers.zs"
+#include "zscript/Weapons/Slot6/Excavator/PB_Excavator.zs"
+#include "zscript/Weapons/Slot6/CyberdemonRL/CyberdemonRL_helpers.zs"
+#include "zscript/Weapons/Slot6/CyberdemonRL/PB_CyberdemonRL.zs"
+#include "zscript/Weapons/Slot3/CSSG/CSSG.zs"
+#include "zscript/Weapons/Slot3/CSSG/CSSGEvent.zs"
 
 //Spawners
 #include "zscript/Spawner/PB_SpawnerBase.zc"
+#include "zscript/Spawner/PB_HorrorPassiveController.zc"
 #include "zscript/Spawner/Weapons/PB_ShotgunSpawner.zc"
 #include "zscript/Items/HPArcade/PBHPArcade.zc"
 
@@ -119,7 +179,6 @@ class Demonpickup: CustomInventory
     Pickup:
        TNT1 A 0 A_GiveInventory("Demonpower",10);
        TNT1 A 0 A_GiveInventory("Armorshard", 1) ;
-      //  TNT1 A 0 A_GiveInventory("Healthplus", 1) - too easy!
         Stop;
 	}
 }
@@ -336,7 +395,6 @@ class CameraRunner : Inventory
 			let anglevalue = linepuff.angle;
 			let pitchvalue = linepuff.pitch;
 			linepuff.bINVISIBLE = true;
-			//linepuff.Destroy();
 			return vec3, anglevalue, pitchvalue,linepuff;
 		}
 		return a.pos, a.angle, a.pitch, null;
@@ -369,7 +427,6 @@ class CameraRunner : Inventory
 		{
 			Actor cameraactor = CheckForCameraActor("ChaseCam2",C_TID + plrnum);
 			cameraactor.SetOrigin(campos,true);
-			//cameraactor.Warp(owner,0,0,0,0,WARPF_INTERPOLATE);
 			self.SetActorAngle (C_TID + plrnum, anglevalue);
 			self.SetActorPitch (C_TID + plrnum, actualpitch);
 			self.SetActorRoll  (C_TID + plrnum, owner.roll);

@@ -1,0 +1,11 @@
+DarkCardinal/sight DCARDSEE
+DarkCardinal/active DCARDACT
+DarkCardinal/pain DCARDPAI
+DarkCardinal/death DCARDDTH
+
+PainGrenade/fire DCARPGFR
+PainGrenade/bounce DCARPGBN
+PainGrenade/explode DCARPGXP
+
+DeathBall/spawn DCARPNPR
+Paingasm/chomp PGSMCHMP
