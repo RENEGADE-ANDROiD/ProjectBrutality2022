@@ -3,6 +3,7 @@ class BDv22GoreMergeHandler : EventHandler
 {
 	clearscope static PlayerPawn BDv22_ResolveKillerMonsterDeath(WorldEvent e)
 	{
+		if (!e) return null;
 		if (e.Inflictor && e.Inflictor is "PlayerPawn") return PlayerPawn(e.Inflictor);
 		if (e.Inflictor && e.Inflictor.target && e.Inflictor.target is "PlayerPawn")
 			return PlayerPawn(e.Inflictor.target);
@@ -14,17 +15,19 @@ class BDv22GoreMergeHandler : EventHandler
 
 	override void WorldThingDied(WorldEvent e)
 	{
-		if (!e.Thing || e.Thing.bNoBlood) return;
-		if (!e.Thing.bIsMonster) return;
-		if (e.Thing is "PlayerPawn") return;
-		if (!(e.Thing is "PB_Monster")) return;
+		if (!e) return;
+		Actor t = e.Thing;
+		if (!t || t.bNoBlood) return;
+		if (!t.bIsMonster) return;
+		if (t is "PlayerPawn") return;
+		if (!(t is "PB_Monster")) return;
 
 		PlayerPawn k = BDv22_ResolveKillerMonsterDeath(e);
 		if (!k || !k.player) return;
 		if (CVar.GetCVar("pb_lowgraphicsmode", k.player).GetInt() > 0) return;
 		if (CVar.GetCVar("pb_bloodamount", k.player).GetInt() < 2) return;
 		if (!nashgore_splat) return;
-		if (e.Thing.waterlevel > 0) return;
+		if (t.waterlevel > 0) return;
 		int mix = CVar.GetCVar("bdv22_gore_mix", k.player).GetInt();
 		if (mix < 0) mix = 0;
 		if (mix > 100) mix = 100;
@@ -36,16 +39,18 @@ class BDv22GoreMergeHandler : EventHandler
 
 		if (doGuts && random(0, 255) <= 200)
 		{
+			if (!t) return;
 			bool useBD = random(1, 100) <= mix;
 			String cname = useBD
 				? (random(0, 1) == 0 ? "BDv22_Guts" : "BDv22_Guts2")
 				: (random(0, 1) == 0 ? "Guts" : "Guts2");
-			vector3 p = (e.Thing.pos.x, e.Thing.pos.y, e.Thing.pos.z + e.Thing.height * 0.4);
+			vector3 p = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.4);
 			Actor a = Actor.Spawn(cname, p, NO_REPLACE);
 			if (a) a.vel = (frandom(-5, 5), frandom(-5, 5), frandom(1, 8));
 		}
 		if (doFly && random(0, 255) <= 32)
 		{
+			if (!t) return;
 			String c;
 			if (random(1, 100) <= mix)
 			{
@@ -75,12 +80,13 @@ class BDv22GoreMergeHandler : EventHandler
 					p == 5 ? "XDeath5" :
 					p == 6 ? "XDeathOrgan1" : "XDeathOrgan2";
 			}
-			vector3 p2 = (e.Thing.pos.x, e.Thing.pos.y, e.Thing.pos.z + e.Thing.height * 0.5);
+			vector3 p2 = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.5);
 			Actor a2 = Actor.Spawn(c, p2, NO_REPLACE);
 			if (a2) a2.vel = (frandom(-8, 8), frandom(-8, 8), frandom(2, 10));
 		}
 		if (doOrg && random(0, 255) <= 28)
 		{
+			if (!t) return;
 			String co;
 			if (random(1, 100) <= mix)
 			{
@@ -100,7 +106,7 @@ class BDv22GoreMergeHandler : EventHandler
 					p4 == 3 ? "SmallBrainPiece" :
 					p4 == 4 ? "SmallBrainPieceFast" : "SmallBrainPieceSlow";
 			}
-			vector3 pos = (e.Thing.pos.x, e.Thing.pos.y, e.Thing.pos.z + e.Thing.height * 0.5);
+			vector3 pos = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.5);
 			Actor a3 = Actor.Spawn(co, pos, NO_REPLACE);
 			if (a3) a3.vel = (frandom(-6, 6), frandom(-6, 6), frandom(2, 9));
 		}
