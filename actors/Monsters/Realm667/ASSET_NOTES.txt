@@ -1,0 +1,22 @@
+Realm667 monster pack (ported community resources) — asset expectations
+
+Graphics (4-char sprite prefixes used in decorate)
+- Fusion cyber imp: UCIM, CARM, IARM, IMIS
+- Behemoth: LARD, BMIS, OPUF
+- Blot: EYES, BLOT, TNT1
+- Drone: HDRN, DRON, DROS
+- Baby caco: CACB, BCAB
+- Slayer Knight: SLKN, SKFB
+- Vulgar: VULG, FVUL, GHFX
+- **Possessed Gibs** (integrated: `ZSCRIPT.zc` + `zscript/Monsters/Realm667/possessedgibs/`, `ImpPackSpawner`, `DoomEdNum` 23159): `VPSG` (main), `VGAR` `VGBO` `VGEY` `VGHE` `VGTO` `VGCH` (gib props), `VBLO` / `VBLS` (floor blood), `VBSH` (projectile chunk), decal pics `BSPLAT1`–`BSPLAT7` `BSMEAR1` (pgBlood* in `DECALDEF`). `Gibbed*` corpses reuse vanilla `POSS` / `SPOS` / `TROO` / `CPOS` U/T frames. Copy missing art from the upstream Realm 667 WAD (or the reference tree under `SOUNDS/Realm667Pack/possessedgibs/`) into `SPRITES/`.
+
+This repository clone may not contain all of the above. If any are missing, `summon PossessedGibs` / the imp spawner branch can show errors or invis frames — add lumps with correct 8.3 names (case-sensitive on Linux).
+
+Sounds
+- In-mod defaults use existing PB/iwad logical names (imp/*, demon/*, caco/*, BREATHOF, fatso/shotx, Mancubus/pain, revenant/shotx, weapons/rlaunch, etc.).
+- **PossessedGibs** logical names are in the main `SNDINFO.txt` block (VPGACT, VPGSPLAT, VPGDEATH, VPGGIBS*, VPGSHOT*). Add matching audio lumps at the mod root or under `sounds/` with those base names, or copy from the upstream pack.
+- `SOUNDS/Realm667Pack/` holds additional **unmerged** upstream reference trees (loose `GLDEFS`, `DECORATE`, `ZSCRIPT` shards, etc.); only subpaths documented as integrated are loaded. Nested folders are **not** auto-loaded as engine lumps.
+
+Source-only / not yet integrated
+- Realm667DevilwormsSource/ — DECORATE + Worms/*.txt (not in DECORATE).
+- Other folders under `SOUNDS/Realm667Pack/` (DarkCardinal, Nitromite, Venor, ObsidianRavager, Behemoth, etc.) — reference only unless folded into `actors/` + `ZSCRIPT.zc` like Possessed Gibs.

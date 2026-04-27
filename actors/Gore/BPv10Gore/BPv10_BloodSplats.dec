@@ -1,0 +1,140 @@
+// Big animated blood splat. BL00 A-R, BL01 A-Q (skips G), BL02 A-R,
+// BL03 A-Z, BL04 A-N. Plays once, drops a Brutal_BloodSpot decal, then
+// fades out. Original sprites by AWEZ (Brutal Pack V10).
+
+ACTOR BPv10_BloodSplat0
+{
+    Radius 1
+    Height 1
+    Scale 0.6
+    +CLIENTSIDEONLY
+    +DONTSPLASH
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +NOGRAVITY
+    +THRUACTORS
+    +FORCEXYBILLBOARD
+    +MOVEWITHSECTOR
+    RenderStyle Translucent
+    Alpha 0.85
+    States
+    {
+    Spawn:
+        BL00 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        BL00 BCDEFGHIJKLMNOPQR 2
+        Goto Linger
+    Linger:
+        BL00 R 1 A_FadeOut(0.004)
+        Loop
+    }
+}
+
+ACTOR BPv10_BloodSplat1
+{
+    Radius 1
+    Height 1
+    Scale 0.6
+    +CLIENTSIDEONLY
+    +DONTSPLASH
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +NOGRAVITY
+    +THRUACTORS
+    +FORCEXYBILLBOARD
+    +MOVEWITHSECTOR
+    RenderStyle Translucent
+    Alpha 0.85
+    States
+    {
+    Spawn:
+        BL01 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        BL01 BCDEF 2
+        BL01 HIJKLMNOPQ 2
+        Goto Linger
+    Linger:
+        BL01 Q 1 A_FadeOut(0.004)
+        Loop
+    }
+}
+
+ACTOR BPv10_BloodSplat2
+{
+    Radius 1
+    Height 1
+    Scale 0.6
+    +CLIENTSIDEONLY
+    +DONTSPLASH
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +NOGRAVITY
+    +THRUACTORS
+    +FORCEXYBILLBOARD
+    +MOVEWITHSECTOR
+    RenderStyle Translucent
+    Alpha 0.85
+    States
+    {
+    Spawn:
+        BL02 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        BL02 BCDEFGHIJKLMNOPQR 2
+        Goto Linger
+    Linger:
+        BL02 R 1 A_FadeOut(0.004)
+        Loop
+    }
+}
+
+ACTOR BPv10_BloodSplat3
+{
+    Radius 1
+    Height 1
+    Scale 0.6
+    +CLIENTSIDEONLY
+    +DONTSPLASH
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +NOGRAVITY
+    +THRUACTORS
+    +FORCEXYBILLBOARD
+    +MOVEWITHSECTOR
+    RenderStyle Translucent
+    Alpha 0.85
+    States
+    {
+    Spawn:
+        BL03 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        BL03 BCDEFGHIJKLMN 2
+        BL03 OPQRSTWXYZ 2
+        Goto Linger
+    Linger:
+        BL03 Z 1 A_FadeOut(0.004)
+        Loop
+    }
+}
+
+ACTOR BPv10_BloodSplat4
+{
+    Radius 1
+    Height 1
+    Scale 0.6
+    +CLIENTSIDEONLY
+    +DONTSPLASH
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +NOGRAVITY
+    +THRUACTORS
+    +FORCEXYBILLBOARD
+    +MOVEWITHSECTOR
+    RenderStyle Translucent
+    Alpha 0.85
+    States
+    {
+    Spawn:
+        BL04 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        BL04 BCDEFGHIJKLMN 2
+        Goto Linger
+    Linger:
+        BL04 N 1 A_FadeOut(0.004)
+        Loop
+    }
+}

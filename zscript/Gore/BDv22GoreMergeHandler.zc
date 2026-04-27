@@ -1,0 +1,108 @@
+// Spawns Brutal Doom 22 (BDv22) gut props, flying meat, and optional organs/small brain on some player kills.
+class BDv22GoreMergeHandler : EventHandler
+{
+	clearscope static PlayerPawn BDv22_ResolveKillerMonsterDeath(WorldEvent e)
+	{
+		if (e.Inflictor && e.Inflictor is "PlayerPawn") return PlayerPawn(e.Inflictor);
+		if (e.Inflictor && e.Inflictor.target && e.Inflictor.target is "PlayerPawn")
+			return PlayerPawn(e.Inflictor.target);
+		if (e.DamageSource && e.DamageSource is "PlayerPawn") return PlayerPawn(e.DamageSource);
+		if (e.Thing && e.Thing.target && e.Thing.target is "PlayerPawn")
+			return PlayerPawn(e.Thing.target);
+		return null;
+	}
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (!e.Thing || e.Thing.bNoBlood) return;
+		if (!e.Thing.bIsMonster) return;
+		if (e.Thing is "PlayerPawn") return;
+		if (!(e.Thing is "PB_Monster")) return;
+
+		PlayerPawn k = BDv22_ResolveKillerMonsterDeath(e);
+		if (!k || !k.player) return;
+		if (CVar.GetCVar("pb_lowgraphicsmode", k.player).GetInt() > 0) return;
+		if (CVar.GetCVar("pb_bloodamount", k.player).GetInt() < 2) return;
+		if (!nashgore_splat) return;
+		if (e.Thing.waterlevel > 0) return;
+		int mix = CVar.GetCVar("bdv22_gore_mix", k.player).GetInt();
+		if (mix < 0) mix = 0;
+		if (mix > 100) mix = 100;
+
+		bool doGuts = CVar.GetCVar("bdv22_corpse_meat", k.player).GetBool();
+		bool doFly = CVar.GetCVar("bdv22_flying_meat", k.player).GetBool();
+		bool doOrg = CVar.GetCVar("bdv22_organs", k.player).GetBool();
+		if (!doGuts && !doFly && !doOrg) return;
+
+		if (doGuts && random(0, 255) <= 200)
+		{
+			bool useBD = random(1, 100) <= mix;
+			String cname = useBD
+				? (random(0, 1) == 0 ? "BDv22_Guts" : "BDv22_Guts2")
+				: (random(0, 1) == 0 ? "Guts" : "Guts2");
+			vector3 p = (e.Thing.pos.x, e.Thing.pos.y, e.Thing.pos.z + e.Thing.height * 0.4);
+			Actor a = Actor.Spawn(cname, p, NO_REPLACE);
+			if (a) a.vel = (frandom(-5, 5), frandom(-5, 5), frandom(1, 8));
+		}
+		if (doFly && random(0, 255) <= 32)
+		{
+			String c;
+			if (random(1, 100) <= mix)
+			{
+				int pick = random(0, 13);
+				c = pick == 0 ? "BDv22_MeatChunk2" :
+					pick == 1 ? "BDv22_MeatChunk2b" :
+					pick == 2 ? "BDv22_MeatChunk3" :
+					pick == 3 ? "BDv22_MeatChunk3b" :
+					pick == 4 ? "BDv22_RibCageA" :
+					pick == 5 ? "BDv22_RibCageB" :
+					pick == 6 ? "BDv22_RibCageC" :
+					pick == 7 ? "BDv22_RibCageBBig" :
+					pick == 8 ? "BDv22_RibCageCBig" :
+					pick == 9 ? "BDv22_LimbChunkArm" :
+					pick == 10 ? "BDv22_LimbChunkLeg" :
+					pick == 11 ? "BDv22_LimbChunkTorso" :
+					pick == 12 ? "BDv22_MicroGib0" : "BDv22_TeethBits0";
+			}
+			else
+			{
+				int p = random(0, 7);
+				c = p == 0 ? "XDeath2" :
+					p == 1 ? "XDeath2b" :
+					p == 2 ? "XDeath3" :
+					p == 3 ? "XDeath3b" :
+					p == 4 ? "XDeath4" :
+					p == 5 ? "XDeath5" :
+					p == 6 ? "XDeathOrgan1" : "XDeathOrgan2";
+			}
+			vector3 p2 = (e.Thing.pos.x, e.Thing.pos.y, e.Thing.pos.z + e.Thing.height * 0.5);
+			Actor a2 = Actor.Spawn(c, p2, NO_REPLACE);
+			if (a2) a2.vel = (frandom(-8, 8), frandom(-8, 8), frandom(2, 10));
+		}
+		if (doOrg && random(0, 255) <= 28)
+		{
+			String co;
+			if (random(1, 100) <= mix)
+			{
+				int p3 = random(0, 5);
+				co = p3 == 0 ? "BDv22_Organ0" :
+					p3 == 1 ? "BDv22_Organ1" :
+					p3 == 2 ? "BDv22_Organ1b" :
+					p3 == 3 ? "BDv22_SmallBrain0" :
+					p3 == 4 ? "BDv22_SmallBrainFast" : "BDv22_SmallBrainSlow";
+			}
+			else
+			{
+				int p4 = random(0, 5);
+				co = p4 == 0 ? "XDeathOrgan1" :
+					p4 == 1 ? "XDeathOrgan1b" :
+					p4 == 2 ? "XDeathOrgan2" :
+					p4 == 3 ? "SmallBrainPiece" :
+					p4 == 4 ? "SmallBrainPieceFast" : "SmallBrainPieceSlow";
+			}
+			vector3 pos = (e.Thing.pos.x, e.Thing.pos.y, e.Thing.pos.z + e.Thing.height * 0.5);
+			Actor a3 = Actor.Spawn(co, pos, NO_REPLACE);
+			if (a3) a3.vel = (frandom(-6, 6), frandom(-6, 6), frandom(2, 9));
+		}
+	}
+}

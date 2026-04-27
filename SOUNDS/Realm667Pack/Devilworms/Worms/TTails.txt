@@ -1,0 +1,112 @@
+////////////////
+//////Teen//////
+////////////////
+
+Actor TTail1
+
+{
+  Scale 0.45
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    TTAI A 5
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("TTail2",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor TTail2
+
+{
+  Scale 0.40
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    TTAI A 5
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("TTail3",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor TTail3
+
+{
+  Scale 0.35
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    TTAI A 5
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("TTail4",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor TTail4
+
+{
+  Scale 0.30
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    TTAI A 5
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("TTail5",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor TTail5
+
+{
+  Scale 0.25
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    TTAI A 5
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("TTail6",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor TTail6
+
+{
+  Scale 0.20
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    TTAI A 5
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("TTail7",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor TTail7
+
+{
+  Scale 0.15
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    TTAI A 5
+	Stop
+  }
+}

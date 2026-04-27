@@ -1,0 +1,14 @@
+/*
+ * Optional Brutal Pack V10 (BPv10) gore add-on. All new actors are BPv10_*
+ * (separate from PB stock gore). Sprites land in SPRITES/GORE/ and its
+ * BURNINGMAN/ + CARBONIZED/ subfolders. Spawned by
+ * zscript/Gore/BPv10Gore/BPv10GoreHandler.zc on humanoid grunt + imp deaths,
+ * gated by bpv10_* cvars. Does not edit BLOOD.dec / GORE!!!.dec / GORE2-4.
+ * Original sprites by AWEZ (Brutal Pack V10).
+ */
+#include "actors/Gore/BPv10Gore/BPv10_BurnedHusk.dec"
+#include "actors/Gore/BPv10Gore/BPv10_CarbonizedBody.dec"
+#include "actors/Gore/BPv10Gore/BPv10_FlopOrgans.dec"
+#include "actors/Gore/BPv10Gore/BPv10_ZombieGearDebris.dec"
+#include "actors/Gore/BPv10Gore/BPv10_BloodSplats.dec"
+#include "actors/Gore/BPv10Gore/BPv10_FlyingTorso.dec"

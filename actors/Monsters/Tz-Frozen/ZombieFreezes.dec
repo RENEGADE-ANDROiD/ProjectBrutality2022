@@ -67,7 +67,6 @@ ACTOR FrozenZombieman
 		TNT1 AAAAAA 0 A_CustomMissile ("MuchBlood", 48, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_SpawnItem("Rifle")
 		FZD1 C -1
-		//FZD1 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01)
 		Stop
 	Death.Freeze:
 	Death.Ice:
@@ -701,7 +700,6 @@ ACTOR FrozenCarbineZombie : FrozenZombieman
 		TNT1 AAAAAA 0 A_CustomMissile ("MuchBlood", 48, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_SpawnItem("Rifle")
 		FZD1 C -1
-		//FZD1 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01)
 		Stop
 	Death.Freeze:
 	Death.Ice:

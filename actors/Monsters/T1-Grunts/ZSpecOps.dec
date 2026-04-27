@@ -660,7 +660,6 @@ Actor PB_ZSpecOps : PB_QSGZombie Replaces ChaingunGuy
 		 TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
         TNT1 A 0 ThrustThingZ(0,35,0,1)
 		TNT1 A 0 A_ChangeFlag("NOPAIN", 1)
-		//ID11 E 1 A_Chase ("","")
 		ZID9 A 1 A_facetarget
         ZID9 A 3 ThrustThing(angle*256/360+128, 13, 0, 0)
         ZID9 ABBCC 3
@@ -680,7 +679,6 @@ Actor PB_ZSpecOps : PB_QSGZombie Replaces ChaingunGuy
 		TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 1)
 		TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
 		TNT1 A 0 A_ChangeFlag("SOLID", 0)
-		//TNT1 A 0 A_ChangeFLag("GHOST", 1)
 		TNT1 A 0 A_JumpIfInventory ("FallingHeight", 4, "FallingDie")
 		ZID9 DDDDDDD 5 A_JumpIf(momz < 0, "FallingAfterImpact")
 		TNT1 A 0 A_TakeInventory("FallingHeight", 100)
@@ -1082,7 +1080,6 @@ Actor PB_ZSpecOps : PB_QSGZombie Replaces ChaingunGuy
     Death.SSG:
 	    QZD1 E 1 A_Pain
 		QZD1 E 1 A_FaceTarget
-        //TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 AAAA 0 A_CustomMissile ("XDeath2", 32, 0, random (0, 360), 2, random (0, 160))
@@ -1397,7 +1394,6 @@ Actor PB_ZSpecOps : PB_QSGZombie Replaces ChaingunGuy
 		TNT1 AA 0 A_CustomMissile ("SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40))
         TNT1 AAAAAAAAAAA 0 A_CustomMissile ("BrainBlood", 50, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 A_CustomMissile ("XDeathHFQSZLeg1", 32, 0, random (0, 360), 2, random (0, 160))
-	//TNT1 A 0 A_CustomMissile ("GibHand", 42, 0, random (0, 360), 2, random (0, 160))
     TNT1 AAAA 0 A_CustomMissile ("XDeath1", 40, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 ThrustThingZ(0,50,0,1)
 	IQ16 A 1 A_Scream
@@ -1757,7 +1753,6 @@ Death.Shotgun:
 		TNT1 A 0 A_StopSound(4)
 		QZD1 F 1 A_Pain
 		QZD1 F 1 A_FaceTarget
-        //TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 A 0 A_CustomMissile ("XDeath3", 32, 0, random (170, 190), 2, random (0, 40))
@@ -1943,7 +1938,6 @@ Death.Shotgun:
 	Death.SSG:
 		TNT1 A 0
 		TNT1 A 0 A_StopSound(4)
-        //TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 A 0 A_CustomMissile ("XDeath3", 32, 0, random (170, 190), 2, random (0, 40))

@@ -272,7 +272,6 @@ ACTOR Brutal_FlyingBlood
     States
     {
 	Spawn:
-		//BLOD ABCD 2
 		TNT1 A 0
 		TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
 		BLOD ABCD 1
@@ -445,7 +444,7 @@ actor VeryGiantBloodSpot: Brutal_BloodSpot
 			TNT1 A 0 A_SetAngle(random(0,360))
 			TNT1 A 0 A_SetScale(frandom(1.45,1.5),frandom(1.45,1.5))
 			TNT1 A 0 
-			TNT1 A 0 //A_SpawnItemEx ("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 			TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2")
 			TNT1 A 1
 			Spawn1:
@@ -475,7 +474,7 @@ actor GiantBloodSpot: Brutal_BloodSpot
 			TNT1 A 0 A_SetAngle(random(0,360))
 			TNT1 A 0 A_SetScale(frandom(1.05,1.11),frandom(1.05,1.1))
 			TNT1 A 0 
-			TNT1 A 0 //A_SpawnItemEx ("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 			TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2")
 			TNT1 A 1
 			Spawn1:
@@ -504,7 +503,7 @@ actor BigBloodSpot: Brutal_BloodSpot
 			TNT1 A 0 A_SetAngle(random(0,360))
 			TNT1 A 0 A_SetScale(frandom(0.66,0.72),frandom(0.66,0.72))
 			TNT1 A 0 
-			TNT1 A 0 //A_SpawnItemEx ("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 			TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2")
 			TNT1 A 1
 			Spawn1:
@@ -534,7 +533,7 @@ Scale 0.4
 			TNT1 A 0 A_SetAngle(random(0,360))
 			TNT1 A 0 A_SetScale(frandom(0.36,0.42),frandom(0.36,0.42))
 			TNT1 A 0 
-			TNT1 A 0 //A_SpawnItemEx ("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 			TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2")
 			TNT1 A 1
 			Spawn1:
@@ -564,7 +563,7 @@ Scale 0.41
 			TNT1 A 0 A_SetAngle(random(0,360))
 			TNT1 A 0 A_SetScale(frandom(0.32,0.42),frandom(0.36,0.42))
 			TNT1 A 0 
-			TNT1 A 0 //A_SpawnItemEx ("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 			TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2")
 			TNT1 A 1
 			Spawn1:
@@ -721,14 +720,12 @@ Spawn:
   TNT1 A 0
   TNT1 A 1 
   TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "DontSpawnOnSky")
-  //BPDL A 1
   BBSP A 1
   TNT1 A 0 A_SpawnItem ("DripingBloodLeavesSmallPool")
   TNT1 A 0 A_SpawnItem ("CeilBloodTinyBloodSpawner") 
   Rest:
   TNT1 A 0
   TNT1 A 0 
-  //BPDL A 800
   BBSP A 800
   TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "FadeA")
   //BBPL A -1
@@ -736,7 +733,6 @@ Spawn:
   stop
   
   FadeA:
-  //BPDL AAAA 1 A_FadeOut(0.05)
   BBSP AAAA 1 A_FadeOut(0.05)
   Stop
   
@@ -758,14 +754,12 @@ TNT1 A 1
 Goto Crash
 Death:
 Crash:
-  //BPDL A 1
   BBSP B 1
   TNT1 A 0 A_SpawnItem ("DripingBloodLeavesSmallPool")
   TNT1 B 0 A_SpawnItem ("CeilBloodLargeBloodSpawner")
   Rest:
   TNT1 A 0
   TNT1 A 0 
-  //BPDL A 800
   BBSP B 1
   TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "FadeA")
   //BPDL A-1
@@ -773,7 +767,6 @@ Crash:
   stop
   
   FadeA:
-  //BPDL AAAA 1 A_FadeOut(0.05)
   BBSP BBBB 1 A_FadeOut(0.05)
   Stop
   
@@ -972,7 +965,6 @@ Speed 2
  {
   Spawn:
   TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
-  //BTRL ABCD 4
 BLOD FFFFFFFFFF 4 A_JumpIf(waterlevel > 1, "Splash")
   stop
 Death:
@@ -1106,7 +1098,6 @@ Speed 4
  {
   Spawn:
   TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
-  //BTRL ABCD 6
   BLOD ABCDEFFFFFF 3
   stop
  }
@@ -1774,7 +1765,6 @@ Decal BrutalBloodSplat
 	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
   Spawn:
         TNT1 A 0
-        //TNT1 A 0 A_JumpIf (floorz > 10, "SpawnLeg")
         TNT1 AAAAAAAAAAAAAAAA 0 A_CustomMissile ("BloodTr255", 0, 0, random (0, 360), 2, random (0, 360))
         TNT1 A 0 A_CustomMissile ("Brutal_FlyingBlood", 7, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_SpawnItem ("BloodHit")
@@ -1998,7 +1988,6 @@ ACTOR Brutal_FlyingBloodSaw: Brutal_FlyingBlood
     States
     {
      Spawn:
-	 //BLOD ABCD 2
 	 TNT1 A 0
 	 TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
 	 BLOD BC 2
@@ -2040,7 +2029,6 @@ Decal BrutalBloodSplat
  {
  Spawn:
  TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
- //XDT1 ABCD 8 
   //loop
  Death:
  Crash:
@@ -2122,7 +2110,6 @@ Decal BrutalBloodSplat
  {
  Spawn:
  TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
- //XDT1 ABCD 8 
   //loop
  Death:
  Crash:
@@ -2306,7 +2293,6 @@ Speed 0
 		TNT1 A 0 A_CustomMissile ("Brutal_FlyingBlood", 7, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 0 A_CustomMissile ("SmallSuperGore", 10, 0, random (0, 360), 2, random (10, 170))
 		TNT1 A 0 A_SpawnItem ("RicoChet")
-		//TNT1 A 0 A_SpawnItem ("BloodHit")
         BLOD BCD 0
         stop
 	Splash:
@@ -2415,7 +2401,7 @@ scale    0.35
 			TNT1 A 0 A_SetAngle(random(0,360))
 			TNT1 A 0 A_SetScale(frandom(0.33,0.42),frandom(0.33,0.42))
 			TNT1 A 0 
-			TNT1 A 0 //A_SpawnItemEx ("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 			TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2")
 			TNT1 A 1
 			Spawn1:
@@ -2445,7 +2431,7 @@ scale    0.72
 			TNT1 A 0 A_SetAngle(random(0,360))
 			TNT1 A 0 A_SetScale(frandom(0.72,0.81),frandom(0.72,0.81))
 			TNT1 A 0 
-			TNT1 A 0 //A_SpawnItemEx ("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 			TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2")
 			TNT1 A 1
 			Spawn1:
@@ -2573,7 +2559,6 @@ Height 0
  {
  Spawn:
  TNT1 A 0
- //TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
  TNT1 A 1 A_Look
  Goto See
   
@@ -2586,7 +2571,11 @@ Height 0
 	Stop
 SmearBootsWithRedBlood:
 	TNT1 A 0 A_Playsound("BloodPoolStep", 0)
-	TNT1 A 0 A_GiveToTarget("BootsSmearedWithBlueBlood", 12)
+	TNT1 A 0
+	"####" "#" 0
+	{
+		if (GetCvar("pb_red_footprints_only") == 1) { A_GiveToTarget("BootsSmearedWithRedBlood", 12); } else { A_GiveToTarget("BootsSmearedWithBlueBlood", 12); }
+	}
 	BPDL A 0
 	Stop
  }
@@ -2607,7 +2596,6 @@ Height 0
  {
  Spawn:
  TNT1 A 0
- //TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
  TNT1 A 1 A_Look
  Goto See
   
@@ -2620,7 +2608,11 @@ Height 0
 	Stop
 SmearBootsWithRedBlood:
 	TNT1 A 0 A_Playsound("BloodPoolStep", 0)
-	TNT1 A 0 A_GiveToTarget("BootsSmearedWithGreenBlood", 12)
+	TNT1 A 0
+	"####" "#" 0
+	{
+		if (GetCvar("pb_red_footprints_only") == 1) { A_GiveToTarget("BootsSmearedWithRedBlood", 12); } else { A_GiveToTarget("BootsSmearedWithGreenBlood", 12); }
+	}
 	BPDL A 0
 	Stop
  }

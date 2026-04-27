@@ -1,0 +1,49 @@
+// Optional on-hit blood mist: spawns BDv22GoreMist (P22M in SPRITES/BDv22/). Brutal Doom 22 content.
+
+class BDv22GoreHandler : EventHandler
+{
+	clearscope static PlayerPawn BDv22_ResolveAttacker(Actor a)
+	{
+		for (int n = 0; a && n < 10; n++)
+		{
+			if (a.player) return PlayerPawn(a);
+			if (a.master) a = a.master;
+			else if (a.target) a = a.target;
+			else break;
+		}
+		return null;
+	}
+
+	override void WorldThingDamaged(WorldEvent e)
+	{
+		if (!e.Thing || e.Damage < 1) return;
+		if (e.Thing.bNoBlood) return;
+		if (!e.Thing.bIsMonster) return;
+		if (!(e.Thing is "PB_Monster")) return;
+		if (e.Thing.waterlevel > 0) return;
+
+		PlayerPawn ppl = BDv22_ResolveAttacker(e.DamageSource);
+		if (!ppl || !ppl.player) return;
+		if (!CVar.GetCVar("bdv22_mist", ppl.player).GetBool()) return;
+		if (CVar.GetCVar("pb_lowgraphicsmode", ppl.player).GetInt() > 0) return;
+		if (CVar.GetCVar("pb_bloodamount", ppl.player).GetInt() < 2) return;
+		if (!nashgore_splat) return;
+		int mix = CVar.GetCVar("bdv22_gore_mix", ppl.player).GetInt();
+		if (mix < 0) mix = 0;
+		if (mix > 100) mix = 100;
+
+		int w = 18 + e.Damage * 2;
+		w = (w * nashgore_bloodamount) / 96;
+		if (w < 0) w = 0;
+		if (w > 255) w = 255;
+		if (random(0, 255) > w) return;
+
+		Actor t = e.Thing;
+		String mist = random(1, 100) <= mix ? "BDv22GoreMist" : "PB_Bloodmist";
+		t.A_SpawnItemEx(mist, frandom(-6, 6), frandom(-6, 6), frandom(20, 44),
+			frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(1.0, 6.0), random(0, 359), SXF_TRANSFERTRANSLATION, 0);
+		if (e.Damage >= 8 && random(0, 2) == 0)
+			t.A_SpawnProjectile("NashGoreBloodSpurt", 0, 0, random(0, 360),
+				CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+	}
+}

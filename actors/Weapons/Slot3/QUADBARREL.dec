@@ -80,7 +80,6 @@ States
 		DB54 H 1 BRIGHT A_SpawnItem("RedFlareSmall", 0, 0)
 		DB54 I 1 
 		DB54 J 1 BRIGHT A_SpawnItem("RedFlareSmall", 0, 0)
-// 		EXPL A 0 A_CustomMissile ("FlamethrowerFireParticles", 6, 0, 0, 2, random (10, 20))
 		DB54 KL 1 BRIGHT A_SpawnItem("RedFlare", 0, 0)
 		TNT1 A 0 A_Playsound("Afrit/Hellfire")
 		Stop
@@ -108,7 +107,6 @@ States {
 		DB54 H 1 BRIGHT A_SpawnItem("RedFlareSmall", 0, 0)
 		DB54 I 1 
 		DB54 J 1 BRIGHT A_SpawnItem("RedFlareSmall", 0, 0)
-// 		EXPL A 0 A_CustomMissile ("FlamethrowerFireParticles", 6, 0, 0, 2, random (10, 20))
 		DB54 L 1 BRIGHT A_SpawnItem("RedFlare", 0, 0)
 		TNT1 A 0 A_Playsound("Afrit/Hellfire")
 		Stop
@@ -144,7 +142,6 @@ States
 		TNT1 A 0 A_CustomMissile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360))
 		Loop
 	Death:
-// 			TNT1 A 0 A_Explode(175,125, XF_HURTSOURCE, 1, 0, 0, 0, "Fire")
 			TNT1 A 0 {
 				if(GetCvar("pb_realdamage")) {
 				A_Explode(175,125);
@@ -157,7 +154,6 @@ States
 			TNT1 A 0 A_PlaySound("FAREXPL", 1)
 			TNT1 A 0 A_SpawnItem("WhiteShockwave")
 			EXPL A 0 Radius_Quake (5, 10, 0, 15, 0)
-// 			TNT1 A 0 A_SpawnItemEx("RailgunImpactExplosionSFX", 0, 0, 0, 0, 0, 0, 0, 128)
 			TNT1 AAAAA 0 A_CustomMissile ("PBExplosionparticles", 0, 0, random (0, 360), 2, random (40, 90))
 			TNT1 AAAA 0 A_CustomMissile ("PBExplosionparticles2", 0, 0, random (0, 360), 2, random (40, 90))
 			TNT1 AAAA 0 A_CustomMissile ("PBExplosionparticles3", 10, 0, random (0, 360), 2, random (40, 90))
@@ -229,7 +225,6 @@ States
 			TNT1 A 0 A_PlaySound("FAREXPL", 1)
 			TNT1 A 0 A_SpawnItem("WhiteShockwave")
 			EXPL A 0 Radius_Quake (5, 10, 0, 15, 0)
-// 			TNT1 A 0 A_SpawnItemEx("RailgunImpactExplosionSFX", 0, 0, 0, 0, 0, 0, 0, 128)
 			TNT1 AAAAA 0 A_CustomMissile ("PBExplosionparticles", 0, 0, random (0, 360), 2, random (40, 90))
 			TNT1 AAAA 0 A_CustomMissile ("PBExplosionparticles2", 0, 0, random (0, 360), 2, random (40, 90))
 			TNT1 AAAA 0 A_CustomMissile ("PBExplosionparticles3", 10, 0, random (0, 360), 2, random (40, 90))
@@ -257,7 +252,6 @@ Death:
 			TNT1 A 0 A_PlaySound("FAREXPL", 1)
 			TNT1 A 0 A_SpawnItem("WhiteShockwave")
 			EXPL A 0 Radius_Quake (5, 10, 0, 15, 0)
-// 			TNT1 A 0 A_SpawnItemEx("RailgunImpactExplosionSFX", 0, 0, 0, 0, 0, 0, 0, 128)
 			TNT1 AAAAA 0 A_CustomMissile ("PBExplosionparticles", 0, 0, random (0, 360), 2, random (40, 90))
 			TNT1 AAAA 0 A_CustomMissile ("PBExplosionparticles2", 0, 0, random (0, 360), 2, random (40, 90))
 			TNT1 AAAA 0 A_CustomMissile ("PBExplosionparticles3", 10, 0, random (0, 360), 2, random (40, 90))
@@ -361,7 +355,6 @@ ACTOR PB_QuadSG : PB_Weapon
 		}
 		Goto SelectFirstPersonLegs
 	SelectContinue:
-//		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand")
 		TNT1 A 0
 		TNT1 A 0 PB_WeapTokenSwitch("QSGSelected")
 		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Raise
@@ -614,7 +607,6 @@ ACTOR PB_QuadSG : PB_Weapon
 						A_FireCustomMissile("GunFireSmoke", 0, 0, -2, 0, 0, 0);
 						}
 					}
-			//	}
 			return state ("");
 		}
 		TNT1 A 0 A_JumpIfInventory("NewShell",1,1)
@@ -897,7 +889,7 @@ ACTOR PB_QuadSG : PB_Weapon
 			A_Takeinventory("BreathToggle",1);
 		}
 		TNT1 A 0 A_JumpIfInventory("PB_QuadSG", 2, "DualWieldSelect")
-		TNT1 A 0 A_Print("You need two Quad Shotguns to dual wield!")
+		TNT1 A 0 A_Print("\ckNeed two \ctquad shotguns \c-to dual-wield")
 		goto ready3
 	DualWieldSelect:
 		TNT1 A 0 {
@@ -934,7 +926,7 @@ ACTOR PB_QuadSG : PB_Weapon
 		TNT1 A 0 A_JumpIfInventory("BreathMode", 1,"ToggleStandardMode")
 		TNT1 A 0 A_Giveinventory("BreathMode",1)
 		QSMS ABCDEFGH 1
-		TNT1 A 0 A_Print("Demonic breath mode")
+		TNT1 A 0 A_Print("\ctMode:\c- \ckDemonic breath \c-")
 		TNT1 A 0 A_Playsound("CLIPINQS")
 		QSMS KLMNNMLKJGFEDCBA 1
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
@@ -943,7 +935,7 @@ ACTOR PB_QuadSG : PB_Weapon
 	ToggleStandardMode:
 		TNT1 A 0 A_Takeinventory("BreathMode",1)
 		QSMS ABCDEFGH 1
-		TNT1 A 0 A_Print("Shells mode")
+		TNT1 A 0 A_Print("\ctMode:\c- \cdShells \c-")
 		TNT1 A 0 A_Playsound("CLIPINQS")
 		QSMS KLMNNMLKJGFEDCBA 1
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
@@ -953,7 +945,7 @@ ACTOR PB_QuadSG : PB_Weapon
 		TNT1 A 0 A_JumpIfInventory("BreathMode", 1,"ToggleStandardModeAkimbo")
 		TNT1 A 0 A_Giveinventory("BreathMode",1)
 		QS2M CDEFGGGG 1
-		TNT1 A 0 A_Print("Demonic breath mode")
+		TNT1 A 0 A_Print("\ctMode:\c- \ckDemonic breath \c-")
 		TNT1 A 0 A_Playsound("CLIPINQS")
 		QS2M HIJJJIHGGFEDC 1
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
@@ -962,7 +954,7 @@ ACTOR PB_QuadSG : PB_Weapon
 	ToggleStandardModeAkimbo:
 		TNT1 A 0 A_Takeinventory("BreathMode",1)
 		QS2M CDEFGGGG 1
-		TNT1 A 0 A_Print("Shells mode")
+		TNT1 A 0 A_Print("\ctMode:\c- \cdShells \c-")
 		TNT1 A 0 A_Playsound("CLIPINQS")
 		QS2M HIJJJIHGGFEDC 1
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
@@ -978,7 +970,7 @@ ACTOR PB_QuadSG : PB_Weapon
 		TNT1 A 0 A_JumpIfInventory("FullBlastMode", 1,"ToggleHalfBlastMode")
 		TNT1 A 0 A_Giveinventory("FullBlastMode",1)
 		QSMS ABCDEFGH 1
-		TNT1 A 0 A_Print("Full Blast Mode")
+		TNT1 A 0 A_Print("\ctChoke:\c- \ciFull \c-blast \c-")
 		TNT1 A 0 A_Playsound("CLIPINQS")
 		QSMS KLMNNMLKJGFEDCBA 1
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
@@ -988,7 +980,7 @@ ACTOR PB_QuadSG : PB_Weapon
 		TNT1 A 0 A_JumpIfInventory("FullBlastMode", 1,"ToggleHalfModeAkimbo")
 		TNT1 A 0 A_Giveinventory("FullBlastMode",1)
 		QS2M CDEFGGGG 1
-		TNT1 A 0 A_Print("Full blast mode")
+		TNT1 A 0 A_Print("\ctChoke:\c- \ciFull \c-blast \c-")
 		TNT1 A 0 A_Playsound("CLIPINQS")
 		QS2M HIJJJIHGGFEDC 1
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
@@ -997,7 +989,7 @@ ACTOR PB_QuadSG : PB_Weapon
 	ToggleHalfBlastMode:
 		TNT1 A 0 A_Takeinventory("FullBlastMode",1)
 		QSMS ABCDEFGH 1
-		TNT1 A 0 A_Print("Half Blast Mode")
+		TNT1 A 0 A_Print("\ctChoke:\c- \cdHalf \c-blast \c-")
 		TNT1 A 0 A_Playsound("CLIPINQS")
 		QSMS KLMNNMLKJGFEDCBA 1
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
@@ -1006,7 +998,7 @@ ACTOR PB_QuadSG : PB_Weapon
 	ToggleHalfModeAkimbo:
 		TNT1 A 0 A_takeinventory("FullBlastMode",1)
 		QS2M CDEFGGGG 1
-		TNT1 A 0 A_Print("Half blast mode")
+		TNT1 A 0 A_Print("\ctChoke:\c- \cdHalf \c-blast \c-")
 		TNT1 A 0 A_Playsound("CLIPINQS")
 		QS2M HIJJJIHGGFEDC 1
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)

@@ -14,6 +14,7 @@
 #include BMAP/AutoShotgun.txt
 #include "BMAP/Weapons/Slot 3/QuadShotgun.txt"
 #include BMAP/Shotgun.txt
+#include "BMAP/Weapons/Slot 3/X12.txt"
 //Slot 4
 #include BMAP/Carbine.txt
 #include BMAP/LMG.txt

@@ -38,7 +38,6 @@ ACTOR ASGGuyGK : ASGGuy Replaces ASGGuy
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		ASGG G 3
 		Goto StagLooper
 	
@@ -134,7 +133,6 @@ ACTOR PB_ClassicCommandoGK: PB_ClassicCommando Replaces PB_ClassicCommando
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		MPGS G 0
 		Goto StagLooper
 	
@@ -186,16 +184,9 @@ ACTOR PB_ClassicCommandoGK: PB_ClassicCommando Replaces PB_ClassicCommando
 		TNT1 A 0 A_StopSound(2)
 	    TNT1 A 0 A_Pain
         TNT1 A 0 A_NoBlocking
-		//TNT1 A 0 A_SpawnItem ("NewChain_Gun", 1)
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-        TNT1 A 0 A_Jump(130,5)
-        TNT1 A 0 A_GiveToTarget("ComandoFatality", 1)
-        Stop
-        TNT1 AAAAAAA 0
-        TNT1 A 0 A_GiveToTarget("ComandoFatality2", 1)
-        TNT1 A 1
-        TNT1 A 0
+		TNT1 A 0 A_Jump(256, "ComandoF1", "ComandoF1", "ComandoF1", "ComandoF2", "ComandoF2", "ComandoF2", "ComandoF3", "ComandoF3", "ComandoF3", "ComandoF4", "ComandoF4", "ComandoF4")
 		Stop
 	}		
 }
@@ -239,7 +230,6 @@ ACTOR PB_CommandoGK: PB_Commando Replaces PB_Commando
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		MPGS G 0
 		Goto StagLooper
 	
@@ -293,13 +283,7 @@ ACTOR PB_CommandoGK: PB_Commando Replaces PB_Commando
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
 		TNT1 A 0 A_SpawnItem ("DropedMinigun", 0, 5,0)
-        TNT1 A 0 A_Jump(130,5)
-        TNT1 A 0 A_GiveToTarget("ComandoFatality", 1)
-        Stop
-        TNT1 AAAAAAA 0
-        TNT1 A 0 A_GiveToTarget("ComandoFatality2", 1)
-        TNT1 A 1
-        TNT1 A 0
+		TNT1 A 0 A_Jump(256, "ComandoF1", "ComandoF1", "ComandoF1", "ComandoF2", "ComandoF2", "ComandoF2", "ComandoF3", "ComandoF3", "ComandoF3", "ComandoF4", "ComandoF4", "ComandoF4")
 		Stop
 	}
 }
@@ -343,7 +327,6 @@ ACTOR PB_DemonTechZombieGK : PB_DemonTechZombie Replaces PB_DemonTechZombie
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		HGPA A 3
 		Goto StagLooper
 	
@@ -396,8 +379,7 @@ ACTOR PB_DemonTechZombieGK : PB_DemonTechZombie Replaces PB_DemonTechZombie
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_CustomMissile ("TossedHellRifle", 25, 0, random (0, 360), 2, random (50, 130))
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-        TNT1 A 0 A_Jump(256, "Death.Fatality2", "Death.Fatality3") //"Death.Fatality1",
-		Goto Super::Death.Fatality2
+        TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality2", "Death.Fatality3")
 	}
 }
 
@@ -440,7 +422,6 @@ ACTOR PB_HelmetCommandoGK: PB_HelmetCommando Replaces PB_HelmetCommando
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		MP2G G 3
 		Goto StagLooper
 	
@@ -544,7 +525,6 @@ ACTOR PB_NaziGK : PB_Nazi Replaces PB_Nazi
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		NGZI G 0
 		Goto StagLooper
 	
@@ -597,7 +577,7 @@ ACTOR PB_NaziGK : PB_Nazi Replaces PB_Nazi
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_SetInventory("GoFatality",1, AAPTR_TARGET)
 		TNT1 A 0 A_NoBlocking
-		TNT1 A 0 A_Jump(256, "Fatality1", "Fatality2", "Fatality3")
+		TNT1 A 0 A_Jump(256, "Fatality1", "Fatality2", "Fatality3", "Fatality4", "Fatality5")
 		Stop
 	}	
 }
@@ -640,7 +620,6 @@ Actor PB_NailgunMajorGK : PB_NailgunMajor Replaces PB_NailgunMajor
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		CPG2 G 3
 		Goto StagLooper
 	
@@ -739,7 +718,6 @@ Actor PB_QSGZombieGK: PB_QSGZombie Replaces PB_QSGZombie
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		QSGM G 3
 		Goto StagLooper
 	
@@ -838,7 +816,6 @@ ACTOR PB_RocketZombieGK: PB_RocketZombie Replaces PB_RocketZombie
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		MP0G G 3
 		Goto StagLooper
 	
@@ -890,7 +867,7 @@ ACTOR PB_RocketZombieGK: PB_RocketZombie Replaces PB_RocketZombie
 		TNT1 A 0 A_Pain
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(256,"Death.Fatality1", "Death.Fatality2", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6")
+		TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7", "Death.Fatality8")
 		Goto Super::Death.Fatality1
 	}
 }
@@ -935,7 +912,6 @@ Actor PB_ZSpecOpsGK : PB_ZSpecOps Replaces PB_ZSpecOps
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		ZSG2 G 4
 		Goto StagLooper
 	

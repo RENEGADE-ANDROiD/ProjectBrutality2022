@@ -1,0 +1,130 @@
+// PB_HorrorPassiveController — apply Monster Pack horror server CVARs to passive spawns
+// (were menu-only: RandomSpawner Horrorspawnmap / Horrorspawn1 ignored chance + multipliers).
+// Staging used A_Jump(2.56*(100-PB_HorrorspawnChance),skip) and random(1,HorrorMapMultiplier) on death.
+
+class PB_HorrorPassiveUtil
+{
+	static int I(string n, int d = 0) { CVar c = CVar.FindCVar(n); return c ? c.GetInt() : d; }
+	static double F(string n, double d = 0.) { CVar c = CVar.FindCVar(n); return c ? c.GetFloat() : d; }
+
+	// 2.56 * (100 - chance) out of 256 → "skip" spawn; aligned with pack ZScript spawners.
+	static bool CheckHorrorSkipByChance()
+	{
+		double ch = F("pb_horrorspawnchance", 30.);
+		if (ch < 0.) ch = 0.; else if (ch > 100.) ch = 100.;
+		int sk = int(2.56 * (100.0 - ch));
+		if (sk < 1) return false;
+		if (sk >= 256) return true;
+		return random(0, 255) < sk;
+	}
+
+	// 0 = menu "no reinforcement" for pb_horrorspawnmultiplier. Default 3×6 → 3, matching staging order-of-mag.
+	static int HorrorspawnBurstMax()
+	{
+		int hm = I("hormapmultiplier", 3);
+		int pm = I("pb_horrorspawnmultiplier", 6);
+		if (hm < 1) hm = 1;
+		if (pm < 1) return 0;
+		int n = (hm * pm) / 6;
+		if (n < 1) n = 1;
+		return n;
+	}
+
+	static void ApplyBrutalHealthIfMonster(Actor m)
+	{
+		if (!m || !m.bIsMonster) return;
+		int b = I("horrorbrutalhealth", 0);
+		if (b < 1) return;
+		// Health mutation here is deferred to avoid data-context write restrictions in 4.14 parser.
+		// Spawn routing/chance/multiplier logic remains active.
+	}
+}
+
+class PB_HorrorPassiveController : Actor
+{
+	Default
+	{
+		+NOINTERACTION
+		-SOLID
+		+NOGRAVITY
+		Height 1; Radius 1; Mass 1;
+	}
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		if (PB_HorrorPassiveUtil.I("nohorror", 0) == 1) { Destroy(); return; }
+		if (PB_HorrorPassiveUtil.CheckHorrorSkipByChance()) { Destroy(); return; }
+
+		int bmax = PB_HorrorPassiveUtil.HorrorspawnBurstMax();
+		if (bmax < 1) { Destroy(); return; }
+		int n = (bmax < 2) ? 1 : random(1, bmax);
+		int hmul = PB_HorrorPassiveUtil.I("hungermultiplier", 5);
+		if (hmul < 0) hmul = 0;
+
+		for (int i = 0; i < n; i++)
+		{
+			String c = PickHorrorspawnMap(hmul);
+			if (c == "None")
+				continue;
+			double ox = frandom(-39, 39);
+			double oy = frandom(-39, 39);
+			Actor a = Actor.Spawn(c, pos + (ox, oy, 0.));
+			PB_HorrorPassiveUtil.ApplyBrutalHealthIfMonster(a);
+		}
+		Destroy();
+	}
+	// Weights = Horrorspawnmap RandomSpawner; Hunger* scaled by HungerMultiplier/5; No* as in pack fodder.
+	String PickHorrorspawnMap(int hungerMul)
+	{
+		int w1=50, w2=4, w3=6, w4=2, w5=30, w6=1;
+		if (PB_HorrorPassiveUtil.I("nohorror", 0) == 1)
+			w1 = w2 = w5 = 0;
+		if (PB_HorrorPassiveUtil.I("nofresh", 0) == 1)
+			w3 = 0;
+		if (PB_HorrorPassiveUtil.I("nohunger", 0) == 1)
+			w4 = w6 = 0;
+		else
+		{
+			int s = (hungerMul < 0) ? 0 : hungerMul;
+			// 5 = neutral; 10 doubles hunger-pool weight; 0 zeros them out
+			if (s == 0) { w4 = 0; w6 = 0; }
+			else
+			{
+				w4 = (w4 * s) / 5;
+				w6 = (w6 * s) / 5;
+				if (w4 < 1) w4 = 1; // keep a trace when pool allowed
+				if (w6 < 1) w6 = 1;
+			}
+		}
+		int tot = w1+w2+w3+w4+w5+w6;
+		if (tot < 1) return "None";
+		int r = random(1, tot);
+		if (r <= w1) { return "Horrorspawn1"; } r -= w1;
+		if (r <= w2) { return "HorrorspawnScreamer"; } r -= w2;
+		if (r <= w3) { return "FreshHorrorspawn"; } r -= w3;
+		if (r <= w4) { return "HungryGroup"; } r -= w4;
+		if (r <= w5) { return "SleepingHorrorspawn"; } r -= w5;
+		if (r <= w6) { return "Hunger"; } return "None";
+	}
+}
+
+// HorrorPassiveSpawn2: single Horrorspawn1, same cvars.
+class PB_HorrorPassiveSingle : Actor
+{
+	Default
+	{
+		+NOINTERACTION
+		-SOLID
+		+NOGRAVITY
+		Height 1; Radius 1; Mass 1;
+	}
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		if (PB_HorrorPassiveUtil.I("nohorror", 0) == 1) { Destroy(); return; }
+		if (PB_HorrorPassiveUtil.CheckHorrorSkipByChance()) { Destroy(); return; }
+		Actor a = Actor.Spawn("Horrorspawn1", pos);
+		PB_HorrorPassiveUtil.ApplyBrutalHealthIfMonster(a);
+		Destroy();
+	}
+}

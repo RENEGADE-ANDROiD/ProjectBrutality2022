@@ -1,0 +1,19 @@
+nitromite/see		NTMTSEE					
+nitromite/act		NTMTACT
+nitromite/jump		NTMTJUMP
+nitromite/thud		NTMTTHUD
+nitromite/death		NTMTDETH
+nitromite/explode	NTMTEXPL
+
+$random nitromite/gibs { ntmtgib1 ntmtgib2 }
+ntmtgib1 NTMTGIB1
+ntmtgib2 NTMTGIB2
+
+$pitchset nitromite/act		1.0 1.1
+$pitchset nitromite/thud	0.9 1.3
+$pitchset nitromite/explode	1.0 1.1
+$pitchset ntmtgib1			1.0 1.3
+$pitchset ntmtgib2			1.0 1.3
+
+$limit nitromite/act 1
+$limit nitromite/explode 0

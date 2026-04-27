@@ -35,7 +35,6 @@ ACTOR PB_Annihilator: Cyberdemon Replaces Cyberdemon
 	+MISSILEMORE
 	+MISSILEEVENMORE
     +DONTRIP
-   // +NORADIUSDMG
 	Speed 12
 	Obituary "%o was destroyed by an Annihilator"
 	FastSpeed 18
@@ -322,6 +321,12 @@ DamageFactor "Blood", 0.0 DamageFactor "BlueBlood", 0.0 DamageFactor "GreenBlood
 		4NNI G 5 A_FaceTarget 
 		TNT1 A 0 A_Pain
 		Goto See
+
+	Death.ExeCution:
+      TNT1 A 0 A_Pain
+      TNT1 A 0 A_GiveToTarget ("GoExecution", 1)
+		4NNI H 30 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Goto Death
 	
 	Death:
 		4NNI HHHHH 2 A_CustomMissile ("ExplosionSpawner", 90, 0, random (0, 360), 2, random (0, 180))

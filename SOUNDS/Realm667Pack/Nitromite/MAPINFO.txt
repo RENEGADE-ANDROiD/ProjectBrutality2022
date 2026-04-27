@@ -1,0 +1,4 @@
+DoomEdNums
+	{
+	23100 = Nitromite
+	}

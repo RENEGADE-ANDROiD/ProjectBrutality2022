@@ -1,0 +1,11 @@
+Name: Behemoth
+Difficulty: Hard
+Summon: Behemoth
+Melee: No
+Connections: fatso
+Distance: Projectile (close and long)
+Type: Demon/Mechanical
+Brightmaps: no
+ACS: No
+
+A mancubus further enlarged and toughened up through the best of hell's rapidly advancing genetic and mechanical engineering. Instead of a couple crude flame thrower, it's armed with a pair of heavy basilisk cannons, being able to scorch hordes at close range, and blast them away at range with a mix of accuracy, speed, and power never seen before. It doesn't help demons have finally figured out how armor works. 

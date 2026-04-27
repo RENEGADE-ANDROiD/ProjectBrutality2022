@@ -87,6 +87,7 @@ class PlayerPawnBase : PlayerPawn
 	//WallSlideMove
 	bool	CanWSlide;
 	int		CheckForWSlide;
+	int		WSlideBlockTics;
 	vector2	WSlideVelocity;
 	
 	//Crouch Slide
@@ -196,6 +197,7 @@ class PlayerPawnBase : PlayerPawn
 	{
 		let player = self.player;
 		UserCmd cmd = player.cmd;
+		if(WSlideBlockTics > 0) { WSlideBlockTics--; }
 		
 		//Set some basic parameters
 		ActualSpeed = Speed * GetPowerSpeed();
@@ -216,6 +218,47 @@ class PlayerPawnBase : PlayerPawn
 		
 		//Old values for comparisons
 		OldRealFloorZ = RealFloorZ;
+	}
+
+	Override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		int ret = Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+		// Let explosive/missile knockback break wall-slide lock so wall rocket-jumps can push away.
+		if(mod == 'Explosive' || mod == 'Rocket' || (inflictor && inflictor.bMISSILE))
+		{
+			StopWSlide();
+			WSlideBlockTics = max(WSlideBlockTics, 8);
+			ApplyWallBlastEscape();
+		}
+		return ret;
+	}
+
+	void ApplyWallBlastEscape()
+	{
+		if(!player || player.OnGround || WaterLevel >= 2) { return; }
+		
+		FLineTraceData wallCheck;
+		double nearestDist = 0;
+		double nearestAngle = 0;
+		double checkDist = max(24.0, Radius * 2.2);
+		
+		for(int i = 0; i < 8; i++)
+		{
+			double a = i * 45;
+			LineTrace(a, checkDist, 0, TRF_THRUACTORS, offsetz: Height * 0.5, data: wallCheck);
+			if(wallCheck.HitType == TRACE_HitWall && (!nearestDist || wallCheck.Distance < nearestDist))
+			{
+				nearestDist = wallCheck.Distance;
+				nearestAngle = a;
+			}
+		}
+		
+		if(nearestDist > 0 && nearestDist <= checkDist)
+		{
+			Vector2 away = AngleToVector(nearestAngle + 180);
+			Vel.XY += away * max(Vel.XY.Length() * 0.40, 14.0);
+			if(Vel.Z < 0) { Vel.Z = max(Vel.Z, 4.0); }
+		}
 	}
 	
 	float GetAlphaFade()
@@ -483,28 +526,13 @@ class PlayerPawnBase : PlayerPawn
 			
 // 			/////////////////////////////////////////
 // 			//Acrobatics triggers
-// 			if(CVar.GetCVar("pb_doubletap", Player).GetBool()) { DoubleTapCheck(); }
 // 			//Dashing parameters reset
-// 			if(DashCooler == 100 && (Player.OnGround || WaterLevel >= 2 || bNOGRAVITY))
-// 			{
 // 				WJumpSpeed = DashNumber = 0;
 // 				DashCooler = 18;
-// 				A_TakeInventory("PlayerDashed", 1);
 					
-// 			}
-// 			else if(DashCooler && DashCooler <= 18)
-// 			{
 // 				DashCooler--;
-// 				if(alphaFade < 1.0) {
 // 					alphaFade += 0.1;
-// 				}
-// 			}
 			//Air Dash
-// 			if(pb_airdash)
-// 			{
-// 				if(ADashCooler) { ADashCooler--; }
-// 				if(ADashTargetSpeed) { AirDashFriction(); }
-// 			}
 			//Wall Jumping
 			if(CheckForWJump) { DashInitiator(); }
 			//Crouchsliding
@@ -942,6 +970,8 @@ class PlayerPawnBase : PlayerPawn
 		
 		Bool DashMove;
 		if((DashNumber || Grappled) && MaxAirSpeed > MaxGroundSpeed) { DashMove = True; }
+		// DEDashJump (BT_USER3) sets high XY speed + PlayerDashed; without this, DoomAirMove's cap to MaxGroundSpeed erases the evade in the same tic.
+		Bool evadeDashing = CheckInventory("PlayerDashed", 1);
 		
 		///////////////////////////////////////////
 		//Actual Movement
@@ -954,7 +984,11 @@ class PlayerPawnBase : PlayerPawn
 		Vel.XY += Acceleration;
 		
 		//Limiter
-		Vel.XY = min(Vel.XY.Length(), DashMove ? MaxAirSpeed : MaxGroundSpeed) * SafeUnit2(Vel.XY);
+		Float capXY;
+		if (DashMove) capXY = MaxAirSpeed;
+		else if (evadeDashing) capXY = max(pb_maxhopspeed, 50.0f);
+		else capXY = MaxGroundSpeed;
+		Vel.XY = min(Vel.XY.Length(), capXY) * SafeUnit2(Vel.XY);
 		
 		//Sprite Animation
 		AirSpriteAnimation();
@@ -1225,8 +1259,9 @@ class PlayerPawnBase : PlayerPawn
 					QuakeAcceleration((SafeUnit2(Acceleration), 0), MaxGroundSpeed, q_3airaccel);
 			}
 			
-			//Limiter
-			Vel.XY = min(Vel.XY.Length(), pb_maxhopspeed) * SafeUnit2(Vel.XY);
+			//Limiter (DEDashJump / PlayerDashed evade is ~50; do not clamp to pb_maxhopspeed alone)
+			Float qCap = CheckInventory("PlayerDashed", 1) ? max(pb_maxhopspeed, 50.0f) : pb_maxhopspeed;
+			Vel.XY = min(Vel.XY.Length(), qCap) * SafeUnit2(Vel.XY);
 		}
 		
 		//Sprite Animation
@@ -1742,7 +1777,7 @@ class PlayerPawnBase : PlayerPawn
 		if(Vel.XY.Length() <= MaxGroundSpeed)
 		{
 			Vel.XY = (MaxGroundSpeed + pb_adashboost) * AngleToVector(Angle - VectorAngle(cmd.forwardmove , cmd.sidemove)); //this way the air dash always grants a satisfying boost
-			ADashTargetSpeed = MaxGroundSpeed + (pb_movetype == 2 && pb_movetype == 3 && pb_movetype == 4 ? (Vel.XY.Length() - MaxGroundSpeed) / 4 : 0);
+			ADashTargetSpeed = MaxGroundSpeed + ((pb_movetype == 2 || pb_movetype == 3 || pb_movetype == 4) ? (Vel.XY.Length() - MaxGroundSpeed) / 4 : 0);
 			ADashFrictionDelay = 8;
 		}
 		else
@@ -1750,7 +1785,7 @@ class PlayerPawnBase : PlayerPawn
 			Float PreAirDashSpeed = Vel.XY.Length();
 			Vel.XY += pb_adashboost * AngleToVector(Angle - VectorAngle(cmd.forwardmove , cmd.sidemove));
 			
-			ADashTargetSpeed = min(PreAirDashSpeed + (pb_movetype == 2 && pb_movetype == 3 && pb_movetype == 4 ? (Vel.XY.Length() - PreAirDashSpeed) / 4 : 0), pb_maxhopspeed);
+			ADashTargetSpeed = min(PreAirDashSpeed + ((pb_movetype == 2 || pb_movetype == 3 || pb_movetype == 4) ? (Vel.XY.Length() - PreAirDashSpeed) / 4 : 0), pb_maxhopspeed);
 			
 			//if going above the speed limit your speed will start decaying immediately
 			Float Velocity = Vel.XY.Length();
@@ -1831,6 +1866,7 @@ class PlayerPawnBase : PlayerPawn
 	{
 		Let Player = Self.Player;
 		UserCmd cmd = player.cmd;
+		if(WSlideBlockTics > 0) { return; }
 		
 		if(Player.OnGround || WaterLevel >= 2 || bNOGRAVITY || LedgeGrabbed)
 		{
@@ -2022,7 +2058,6 @@ class PlayerPawnBase : PlayerPawn
 		*/
 		
 		//Credit Cherno
-		//Console.Printf("Num: %f", LedgeHeight);
 		
 		velz = 8;
 		LedgeCheck = True;
@@ -2639,7 +2674,6 @@ class PlayerPawnBase : PlayerPawn
 			double velang = atan2(vel.y, vel.x);
 			vector2 dir = (sin(-angle), cos(-angle));
 			vector2 velunit = vel.xy; //.unit()
-			//double delta = absAngle(velang, angle);
 			currentroll += (velunit dot dir) * rollvel;
 			currentroll *= rolldrag;
 			A_OverlayRotate(PSP_WEAPON, currentroll);
@@ -2685,47 +2719,23 @@ Class SpeedoMeterHandler : EventHandler
 }
 
 // Class DashHandler : EventHandler
-// {
 // 	float getPlayerAlpha()
-// 	{
 // 		Let DashPlayer = PlayerPawnBase(Players[consoleplayer].Mo);
-// 		return DashPlayer.GetAlphaFade();
-// 	}
 	
 // 	Override void renderOverlay(RenderEvent e)
-// 	{
 //         Let DashPlayer = players[consoleplayer].mo;
 // 		//TextureID dashTex = TexMan.CheckForTexture("graphics/DASHSCREEN.png",TexMan.Type_Any);
 // 		TextureID dashTex = TexMan.CheckForTexture("DASHSCREEN",TexMan.Type_Any);
 // 		Vector2 imageScale = TexMan.GetScaledSize(dashTex);
 		
-// 		if(DashPlayer != NULL && PlayerInGame[consoleplayer])
-// 		{
 			
-// 			if(DashPlayer.FindInventory("PlayerDashed") && CVar.FindCVar("pb_dasheffect").GetBool() == true) {
-// 					screen.DrawTexture (dashTex, true, 0, 0,
 // 					DTA_FULLSCREEN, true,
 //                     DTA_KeepRatio, true);
 // 					//DTA_SRCWIDTH breaks GZ4.3.3 compatibility, a more compatible way of handling this might be useful
-// 			}
 	
-// 		}
-// 	}
 
 //     Override void NetworkProcess(ConsoleEvent e)
-//     {
-//         if(e.Player >= 0 && PlayerInGame[e.Player] && Players[e.Player].Mo)
-//         {
-//             if(e.Name == "Dash")
-//             {
 //                 Let DashPlayer = PlayerPawnBase(Players[e.Player].Mo);
-//                 if(DashPlayer) {
-// 					DashPlayer.DashInitiator();
-// 				}
-//             }
-//         }
-//     }
-// }
 
 Class WallSlideHandler : EventHandler
 {
@@ -3103,24 +3113,20 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 		
 		If(!Waiting && (BT & BT_USER3) && DashCharge>=DashMaxCharge/2 && !DashTics && !Owner.CheckInventory("IsSlideKicking", 1))
 		{
-			DashDir=0;
-			If(BT & BT_FORWARD) DashDir=0;
-			If(BT & BT_BACK) DashDir=180;
-			If(BT & BT_MOVELEFT) DashDir=90;
-			If(BT & BT_MOVERIGHT) DashDir=-90;
-			If((BT & BT_FORWARD) && (BT & BT_MOVELEFT)) DashDir=45;
-			If((BT & BT_FORWARD) && (BT & BT_MOVERIGHT)) DashDir=-45;
-			If((BT & BT_BACK) && (BT & BT_MOVELEFT)) DashDir=180-45;
-			If((BT & BT_BACK) && (BT & BT_MOVERIGHT)) DashDir=180+45;
-			DashDir+=Owner.Angle;
+			// Analog-friendly dash direction (malingo / 0.3+ staging: atan2 of cmd move vs. pure 8-way keys)
+			if (P.cmd.forwardmove == 0 && P.cmd.sidemove == 0)
+				DashDir = Owner.Angle;
+			else
+				DashDir = DeltaAngle(atan2(P.cmd.sidemove, P.cmd.forwardmove), Owner.Angle);
 			If(DashCharge<DashMaxCharge) { Waiting=True; DashCharge=0; }
 			DashCharge=Max(0,DashCharge-DashMaxCharge/2);
-			DashSpeed=70;//35;
+			DashSpeed=50; // PBv0.3 PlayerPawn: dashSpeed = 50
 			DashTics=10;
 			Owner.A_SetBlend("White",0.05,20);
 			Owner.A_StartSound("player/dash",69,CHANF_OVERLAP);
-			//Owner.A_QuakeEx(2,2,2,15,0,1,"",QF_SCALEDOWN);
-			Owner.A_QuakeEx(1,1,1,5,0,1,"",QF_SCALEDOWN);
+			Owner.A_QuakeEx(2,2,2,10,0,1,"",QF_SCALEDOWN, rollintensity:0.2);
+			Owner.A_GiveInventory("PlayerDashed",1);
+			EventHandler.SendInterfaceEvent(Owner.PlayerNumber(), "PB_DashWhatchamacallit");
 			Actor C=Spawn("DashCollisionChecker",Owner.Pos);
 			C.bSolid=True;
 			C.Master=Self;
@@ -3138,20 +3144,19 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 				TakeInventory("EvadeHold", 2);
 			}
 		
+		// While dashing: match PBv0.3 PlayerPawn (VelFromAngle, no per-tic vel*0.5; one speed drop at tics==3)
 		If(DashTics)
 		{
-			//If(P.OnGround) {P.OnGround=False; Owner.AddZ(1); }
-			
-			
-			
-			
 			DashTics--;
-			Owner.VelFromAngle(DashSpeed,DashDir);
-			If(DashTics<=5) DashSpeed*=0.65;//0.8;
-			Owner.Vel.Z=0;
+			if (DashTics == 3)
+			{
+				DashSpeed *= 0.4;
+				Owner.A_TakeInventory("PlayerDashed",1);
+			}
+			Owner.VelFromAngle(DashSpeed, DashDir);
+			// Keep jump arc in air; ground evade still purely horizontal
+			if (P.onGround) Owner.Vel.Z = 0;
 			level.airControl = 0.25;
-			Owner.vel.x *= 0.50;
-			Owner.vel.y *= 0.50;
 			GiveInventory("EvadeHold", 1);
 		}
 		If(P.onGround)
@@ -3161,16 +3166,13 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 			level.airControl = 0.00390625;
 		}
 		//Else If(!(Owner.GetPlayerInput(MODINPUT_OLDBUTTONS) & BT_JUMP) && (Owner.GetPlayerInput(MODINPUT_BUTTONS) & BT_JUMP) && DJump && AirTics>=5)
-		//{
 		
 			//Owner.Vel.Z=Max(Owner.Vel.Z+8,8);
 			//Float DoubleJumpVelZ = /*5.5*/7.4 * 1.2;
 			//Owner.Vel.Z = DoubleJumpVelZ;
-			//Owner.A_StartSound("JMPBOOT",69,CHANF_OVERLAP);
 			
 			//DJump=False;
 			
-		//}
 		Else AirTics++;
 		If(DashCharge<DashMaxCharge)
 		{

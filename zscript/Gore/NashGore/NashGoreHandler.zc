@@ -196,7 +196,6 @@ class NashGoreHandler : EventHandler
 	override void NetworkProcess(ConsoleEvent e)
 	{
 		//let p = players[e.Player].mo;
-		//if (!p) return;
 
 		if (e.Name == 'EV_ClearGore')
 		{
@@ -238,10 +237,8 @@ class NashGoreHandler : EventHandler
 			}
 
 			// [lolhack] remove the last line because it's usually blank
-			//bloodTypes.Delete(bloodTypes.Size() - 1, 1);
 		}
 
-		//Console.Printf("size: %d", bloodTypes.Size());
 		for (int i = 0; i < bloodTypes.Size(); i++)
 		{
 			// delete that weird character that gets added at the end
@@ -280,7 +277,6 @@ class NashGoreHandler : EventHandler
 
 	void DoThingRevive(Actor mo)
 	{
-		//Console.Printf("%s lives again!", mo.GetClassName());
 		let a = NashGoreActor(mo.FindInventory("NashGoreActor", true));
 		if (a)
 		{

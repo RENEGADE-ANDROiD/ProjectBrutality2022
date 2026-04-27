@@ -76,11 +76,7 @@ class NashGoreSquishyGibs : RealGibs
 		// destroy it if the corpse was too far off from the center of the
 		// ceiling
 		double ch = abs(Pos.Z + CeilingZ);
-		//if (ch > 16)
-		//{
 	//		Destroy();
-	//		return;
-	//	}
 
 		/*
 		Vector2 v1, v2, v3, v4;

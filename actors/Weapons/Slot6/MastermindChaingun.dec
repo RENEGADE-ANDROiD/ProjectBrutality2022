@@ -40,6 +40,14 @@ Actor MastermindChaingun : PB_Weapon
 
     Ready:
         TNT1 A 0
+        {
+            if (CountInv("PB_DemonExterminator") >= 1)
+            {
+                return state("");
+            }
+            return state("");
+        }
+        TNT1 A 0
     SelectAnimation:
         TNT1 A 0
         {
@@ -73,6 +81,26 @@ Actor MastermindChaingun : PB_Weapon
         }
         TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
         Loop
+    ChooseUpgradePath:
+        TNT1 A 0 A_PrintBold("\cfChoose your path:\n\caFIRE = CACOTROLL 1\n\ciALTFIRE = CACOTROLL 2")
+        TNT1 A 1
+        TNT1 A 1
+        ChooseUpgradePathDebounce:
+        TNT1 A 2
+        ChooseUpgradePathLoop:
+        TNT1 A 0 A_JumpIf(JustPressed(BT_ATTACK), "KeepDemonExPath")
+        TNT1 A 0 A_JumpIf(JustPressed(BT_ALTATTACK), "KeepMastermindPath")
+        TNT1 A 1
+        TNT1 A 1
+    KeepDemonExPath:
+        TNT1 A 0 A_TakeInventory("MastermindChaingun", 1)
+        TNT1 A 0 A_PrintBold("\caPath selected: CACOTROLL 1")
+        TNT1 A 0 A_SelectWeapon("PB_DemonExterminator")
+        Stop
+    KeepMastermindPath:
+        TNT1 A 0 A_TakeInventory("PB_DemonExterminator", 1)
+        TNT1 A 0 A_PrintBold("\ciPath selected: CACOTROLL 2")
+        Goto MastermindChaingunReadyToFire
     MastermindChaingunBarrelSmoke:
         TNT1 A 0
         {
@@ -238,7 +266,7 @@ Actor MastermindChaingun : PB_Weapon
             A_TakeInventory("PB_LockScreenTilt",1);
             A_TakeInventory("GoWeaponSpecialAbility",1);
         }
-        TNT1 A 0 A_Print("No Mastermind Chaingun Special Available")
+        TNT1 A 0 A_Print("\coNo \ctMastermind Chaingun \c-special \c-available")
         Goto MastermindChaingunReadyToFire
 
     FlashKicking:
@@ -346,7 +374,7 @@ Actor MinigunExplosion
         TNT1 A 0
         TNT1 A 0 A_SpawnItem("WhiteShockwave")
         TNT1 A 3
-        TNT1 A 0 A_Explode(120,140)
+		TNT1 A 0 A_Explode(120,140,XF_NOSPLASH)
         Stop
     }
 }

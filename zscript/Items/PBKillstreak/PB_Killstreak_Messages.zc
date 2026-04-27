@@ -1,0 +1,288 @@
+// Project Brutality 2022 — kill streak on-screen text (play→UI message queue).
+// Port of Universal Kill Streaks message path; class names use PB_Killstreak* / PB_Ks*.
+
+class PB_KsHudMessage : HUDMessageBase
+{
+	transient BrokenLines lines;
+	transient Font rFont;
+	Name fnt;
+	double alpha;
+	int wrap, talign, tics, holdtics, intics, outtics, color, layer, targetplayer;
+	Vector2 balign, pos, vsize, bsize;
+	String txt;
+
+	Vector2 CalculateBoxAlignment()
+	{
+		Vector2 base;
+		if (balign.x < 0) base.x = pos.x;
+		else if (balign.x > 0) base.x = pos.x - bsize.x;
+		else base.x = pos.x - bsize.x / 2.0;
+		if (balign.y < 0) base.y = pos.y;
+		else if (balign.y > 0) base.y = pos.y - bsize.y;
+		else base.y = pos.y - bsize.y / 2.0;
+		return base;
+	}
+
+	virtual void DrawLine(double x, double y, String line)
+	{
+		double vw = (vsize.x > 0) ? vsize.x : Screen.GetWidth();
+		double vh = (vsize.y > 0) ? vsize.y : Screen.GetHeight();
+		Screen.DrawText(rFont, color, x, y, line, DTA_VirtualWidthF, vw, DTA_VirtualHeightF, vh, DTA_Alpha, alpha);
+	}
+
+	override void Draw(int bottom, int visibility)
+	{
+		if (visibility & layer) return;
+		if (targetplayer > -1 && targetplayer != consoleplayer) return;
+		Vector2 base = CalculateBoxAlignment();
+		if (!lines) Setup();
+		double linex, liney = base.y, len;
+		String line;
+		for (int i = 0; i < lines.Count(); i++)
+		{
+			line = lines.StringAt(i);
+			len = rFont.StringWidth(line);
+			if (talign < 0) linex = base.x;
+			else if (talign > 0) linex = base.x + (bsize.x - len);
+			else linex = base.x + (bsize.x - len) / 2.0;
+			DrawLine(linex, liney, line);
+			liney += rFont.GetHeight();
+		}
+	}
+
+	virtual bool DoTick()
+	{
+		if (holdtics < 0)
+		{
+			if (tics < intics)
+				alpha = min(1.0, (1.0 / intics) * tics);
+			else
+			{
+				alpha = 1.0;
+				tics = intics;
+			}
+			return false;
+		}
+
+		int total = holdtics + intics + outtics;
+		if (total && tics > total) return true;
+		int inhold = holdtics + intics;
+		if (total <= 0) alpha = 1.0;
+		else if (tics < intics) alpha = min(1.0, (1.0 / intics) * tics);
+		else if (outtics > 0 && tics > inhold && tics <= total)
+			alpha = 1.0 - (1.0 / outtics) * (tics - inhold);
+		else alpha = 1.0;
+		return false;
+	}
+
+	override bool Tick()
+	{
+		tics++;
+		return DoTick();
+	}
+
+	virtual void Setup()
+	{
+		rFont = Font.GetFont(fnt);
+		lines = rFont.BreakLines(txt, (wrap <= 0) ? int.max : wrap);
+		double longest = 0, len;
+		for (int i = 0; i < lines.Count(); i++)
+		{
+			len = rFont.StringWidth(lines.StringAt(i));
+			if (len > longest) longest = len;
+		}
+		bsize = (longest, rFont.GetHeight() * lines.Count());
+	}
+
+	void Init() { tics = 0; }
+
+	static clearscope PB_KsMsgQueued Create(
+		int targetplayer, Name fnt, String txt, Vector2 pos, Vector2 vsize = (0, 0), int talign = -1, Vector2 balign = (0, 0), int color = Font.CR_UNTRANSLATED,
+		Vector3 time = (0, 0, 0), int wrap = 0, uint id = 0, int layer = BaseStatusBar.HUDMSGLayer_OverHUD)
+	{
+		let q = new("PB_KsMsgQueued");
+		q.targetplayer = targetplayer;
+		q.fnt = fnt;
+		q.txt = txt;
+		q.pos = pos;
+		q.vsize = vsize;
+		q.talign = talign;
+		q.balign = balign;
+		q.color = color;
+		q.intics = int(time.x * Thinker.TICRATE);
+		q.holdtics = int(time.y * Thinker.TICRATE);
+		q.outtics = int(time.z * Thinker.TICRATE);
+		q.wrap = wrap;
+		q.id = id;
+		q.layer = layer;
+		q.timestamp = gametic;
+		return q;
+	}
+}
+
+class PB_KsHudMessageWaggle : PB_KsHudMessage
+{
+	double phase, speed, strength, frequency;
+
+	override void DrawLine(double x, double y, String line)
+	{
+		double vw = (vsize.x > 0) ? vsize.x : Screen.GetWidth();
+		double vh = (vsize.y > 0) ? vsize.y : Screen.GetHeight();
+		double cphase = phase;
+		for (uint i = 0; i < line.length(); i++)
+		{
+			Screen.DrawChar(rFont, color, x, y + sin(cphase) * strength, line.ByteAt(i), DTA_VirtualWidthF, vw, DTA_VirtualHeightF, vh, DTA_Alpha, alpha);
+			x += rFont.GetCharWidth(line.ByteAt(i));
+			cphase += frequency;
+		}
+	}
+
+	override bool DoTick() { phase += speed; return Super.DoTick(); }
+
+	override void Setup() { Super.Setup(); phase = 0; }
+
+	static clearscope PB_KsMsgQueuedWaggle Create(
+		int targetplayer, Name fnt, String txt, Vector2 pos, Vector2 vsize = (0, 0), int talign = -1, Vector2 balign = (0, 0), int color = Font.CR_UNTRANSLATED,
+		Vector3 time = (0, 0, 0), double speed = 1.0, double strength = 1.0, double frequency = 1.0, int wrap = 0, uint id = 0, int layer = BaseStatusBar.HUDMSGLayer_OverHUD)
+	{
+		let q = new("PB_KsMsgQueuedWaggle");
+		q.targetplayer = targetplayer;
+		q.fnt = fnt;
+		q.txt = txt;
+		q.pos = pos;
+		q.vsize = vsize;
+		q.talign = talign;
+		q.balign = balign;
+		q.color = color;
+		q.intics = int(time.x * Thinker.TICRATE);
+		q.holdtics = int(time.y * Thinker.TICRATE);
+		q.outtics = int(time.z * Thinker.TICRATE);
+		q.speed = speed * Thinker.TICRATE;
+		q.strength = strength;
+		q.frequency = frequency;
+		q.wrap = wrap;
+		q.id = id;
+		q.layer = layer;
+		q.timestamp = gametic;
+		return q;
+	}
+}
+
+class PB_KsMsgQueued
+{
+	int targetplayer;
+	Name fnt;
+	TextureID tex;
+	String txt;
+	Vector2 pos, vsize, balign;
+	int holdtics, intics, outtics;
+	int layer, color, wrap, talign;
+	int timestamp;
+	uint id;
+
+	virtual ui void AddSelf()
+	{
+		let msg = new("PB_KsHudMessage");
+		msg.targetplayer = targetplayer;
+		msg.fnt = fnt;
+		msg.txt = txt;
+		msg.pos = pos;
+		msg.vsize = vsize;
+		msg.talign = talign;
+		msg.balign = balign;
+		msg.color = color;
+		msg.intics = intics;
+		msg.holdtics = holdtics;
+		msg.outtics = outtics;
+		msg.wrap = wrap;
+		msg.layer = layer;
+		msg.Init();
+		StatusBar.AttachMessage(msg, id, layer);
+	}
+}
+
+class PB_KsMsgQueuedWaggle : PB_KsMsgQueued
+{
+	double speed, strength, frequency;
+
+	override void AddSelf()
+	{
+		let msg = new("PB_KsHudMessageWaggle");
+		msg.targetplayer = targetplayer;
+		msg.fnt = fnt;
+		msg.txt = txt;
+		msg.pos = pos;
+		msg.vsize = vsize;
+		msg.talign = talign;
+		msg.balign = balign;
+		msg.color = color;
+		msg.intics = intics;
+		msg.holdtics = holdtics;
+		msg.outtics = outtics;
+		msg.wrap = wrap;
+		msg.layer = layer;
+		msg.speed = speed;
+		msg.strength = strength;
+		msg.frequency = frequency;
+		msg.Init();
+		StatusBar.AttachMessage(msg, id, layer);
+	}
+}
+
+// Time: x = fade in, y = hold, z = fade out (seconds).
+class PB_KillstreakMessageHandler : EventHandler
+{
+	Array<PB_KsMsgQueued> queue;
+
+	static bool PB_BigmsgOn()
+	{
+		let c = CVar.FindCVar("pb_ks_bigmsg");
+		return c == null || c.GetBool();
+	}
+
+	override void PostUiTick()
+	{
+		for (int i = 0; i < queue.size(); i++)
+		{
+			if (queue[i].timestamp >= gametic)
+				queue[i].AddSelf();
+		}
+	}
+
+	override void WorldTick()
+	{
+		for (int i = 0; i < queue.size(); i++)
+		{
+			if (queue[i].timestamp >= gametic) continue;
+			queue.Delete(i);
+			i--;
+		}
+	}
+
+	static play void QueueMsg(PB_KsMsgQueued tosend)
+	{
+		PB_KillstreakMessageHandler h = PB_KillstreakMessageHandler(EventHandler.Find("PB_KillstreakMessageHandler"));
+		if (!h) return;
+		h.queue.Push(tosend);
+	}
+
+	static bool CheckFont(Name fnt) { return Font.GetFont(fnt) != null; }
+
+	static void PB_KsPlainMsg(
+		int targetplayer, Name fnt, String txt, Vector2 pos, Vector2 vsize = (0, 0), int talign = -1, Vector2 balign = (0, 0), int color = Font.CR_UNTRANSLATED,
+		Vector3 time = (0, 0, 0), int wrap = 0, uint id = 0, int layer = BaseStatusBar.HUDMSGLayer_OverHUD)
+	{
+		if (!CheckFont(fnt)) return;
+		QueueMsg(PB_KsHudMessage.Create(targetplayer, fnt, txt, pos, vsize, talign, balign, color, time, wrap, id, layer));
+	}
+
+	static void PB_KsWaggleMsg(
+		int targetplayer, Name fnt, String txt, Vector2 pos, Vector2 vsize = (0, 0), int talign = -1, Vector2 balign = (0, 0), int color = Font.CR_UNTRANSLATED,
+		Vector3 time = (0, 0, 0), double speed = 1.0, double strength = 1.0, double frequency = 1.0, int wrap = 0, uint id = 0, int layer = BaseStatusBar.HUDMSGLayer_OverHUD)
+	{
+		if (!CheckFont(fnt)) return;
+		PB_KsMsgQueuedWaggle wq = PB_KsHudMessageWaggle.Create(
+			targetplayer, fnt, txt, pos, vsize, talign, balign, color, time, speed, strength, frequency, wrap, id, layer);
+		QueueMsg(wq);
+	}
+}

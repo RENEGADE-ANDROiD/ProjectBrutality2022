@@ -209,12 +209,10 @@ actor PB_ZombieFlyer : PB_Monster
     PainChance 50
 	SpawnID 1295
     MONSTER 
-	//+NOINFIGHTING
     +NOGRAVITY
     +NOBLOOD
 	+FLOATBOB
 	+SPAWNCEILING
-	//+DONTHARMSPECIES
     SeeSound "grunt/see"
     PainSound "grunt/pain"
     DeathSound "grunt/death"
@@ -330,7 +328,6 @@ Actor ZombieFlyerFriendly : PB_ZombieFlyer
 actor heavyplasmaHitsProjectiles
 {
     Scale 1.0
-    //+SHOOTABLE
 	+NOBLOOD
 	MONSTER
 	-COUNTKILL
@@ -395,6 +392,7 @@ ACTOR Zombieflyerpassivespawn
 		TNT1 A 0 A_Jump(50,"Die")
 		Loop
 	Create:
+		TNT1 A 0 A_JumpIf(GetCvar("NoZombieFlyer") == 1, "Die")
 		TNT1 A 0 A_SpawnItemEx("PB_ZombieFlyer")
 		Stop
 	Die:

@@ -106,10 +106,8 @@ Class PyWheel_Tokenizer
 		if(currentPos>lumpString.Length())
 		{
 			tk.type = PTK_EOF;
-			//Console.Printf("~ END OF FILE ~");
 			return tk;
 		}
-		//Console.Printf("\ctRead "..lumpString.ByteAt(currentPos));
 		switch(lumpString.ByteAt(currentPos))
 		{
 			case 123:
@@ -181,7 +179,6 @@ Class PyWheel_Tokenizer
 				}
 				break;
 		}
-		//Console.Printf(currentPos..". "..tk.value.." ("..tk.type..")");
 		currentPos++;
 		return tk;
 	}

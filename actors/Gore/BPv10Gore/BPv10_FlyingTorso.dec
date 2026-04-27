@@ -1,0 +1,96 @@
+// Flying torso x-deaths. XMT1 A-N and XMT2 A-O are mid-air tumble strips.
+// Spawned with an upward + lateral velocity, leaves Brutal_FlyingBloodFake
+// trail, then plays a wet splat + big BL smear at the end of the tumble and
+// fades out. Using a fixed tumble length keeps the sequence framework-free
+// (no missile / collision detection needed). Original sprites by AWEZ
+// (Brutal Pack V10).
+
+ACTOR BPv10_FlyingTorso1
+{
+    Radius 6
+    Height 8
+    Mass 60
+    Scale 0.8
+    Gravity 0.85
+    Decal BrutalBloodSuper
+    +CLIENTSIDEONLY
+    +DONTSPLASH
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +THRUACTORS
+    +FORCEXYBILLBOARD
+    +CORPSE
+    -SOLID
+    RenderStyle Translucent
+    Alpha 1.0
+    States
+    {
+    Spawn:
+        XMT1 A 2 NoDelay A_SpawnItemEx("Brutal_FlyingBloodFake", 0, 0, 0, frandom(-1, 1), frandom(-1, 1), frandom(0, 1.5), 0, SXF_NOCHECKPOSITION)
+        XMT1 BCDEFGHIJKL 2 A_SpawnItemEx("Brutal_FlyingBloodFake", 0, 0, 0, frandom(-1, 1), frandom(-1, 1), frandom(0, 1.5), 0, SXF_NOCHECKPOSITION)
+        XMT1 MN 4 A_SpawnItemEx("Brutal_FlyingBloodFake", 0, 0, 0, frandom(-1, 1), frandom(-1, 1), frandom(0, 1.5), 0, SXF_NOCHECKPOSITION)
+        XMT1 N 0 A_PlaySound("nashgore/bloodsplash", CHAN_AUTO, 0.7)
+        XMT1 N 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        XMT1 N 0 A_Jump(256, "Smear0", "Smear1", "Smear2")
+        Stop
+    Smear0:
+        BL00 ABCDEFGHIJKLMNOPQR 3
+        Goto Settle
+    Smear1:
+        BL02 ABCDEFGHIJKLMNOPQR 3
+        Goto Settle
+    Smear2:
+        BL04 ABCDEFGHIJKLMN 3
+        Goto Settle
+    Settle:
+        XMT1 N 350
+        XMT1 N 1 A_FadeOut(0.005)
+        Wait
+    }
+}
+
+ACTOR BPv10_FlyingTorso2
+{
+    Radius 6
+    Height 8
+    Mass 60
+    Scale 0.8
+    Gravity 0.85
+    Decal BrutalBloodSuper
+    +CLIENTSIDEONLY
+    +DONTSPLASH
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +THRUACTORS
+    +FORCEXYBILLBOARD
+    +CORPSE
+    -SOLID
+    RenderStyle Translucent
+    Alpha 1.0
+    States
+    {
+    Spawn:
+        XMT2 A 2 NoDelay A_SpawnItemEx("Brutal_FlyingBloodFake", 0, 0, 0, frandom(-1, 1), frandom(-1, 1), frandom(0, 1.5), 0, SXF_NOCHECKPOSITION)
+        XMT2 BCDEFGHIJKLM 2 A_SpawnItemEx("Brutal_FlyingBloodFake", 0, 0, 0, frandom(-1, 1), frandom(-1, 1), frandom(0, 1.5), 0, SXF_NOCHECKPOSITION)
+        XMT2 NO 4 A_SpawnItemEx("Brutal_FlyingBloodFake", 0, 0, 0, frandom(-1, 1), frandom(-1, 1), frandom(0, 1.5), 0, SXF_NOCHECKPOSITION)
+        XMT2 O 0 A_PlaySound("nashgore/bloodsplash", CHAN_AUTO, 0.7)
+        XMT2 O 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        XMT2 O 0 A_Jump(256, "Smear0", "Smear1", "Smear2")
+        Stop
+    Smear0:
+        BL01 ABCDEF 3
+        BL01 HIJKLMNOPQ 3
+        Goto Settle
+    Smear1:
+        BL03 ABCDEFGHIJKLMN 3
+        BL03 OPQRSTWXYZ 3
+        Goto Settle
+    Smear2:
+        BL04 ABCDEFGHIJKLMN 3
+        Goto Settle
+    Settle:
+        XMT2 O 350
+        XMT2 O 1 A_FadeOut(0.005)
+        Wait
+    }
+}

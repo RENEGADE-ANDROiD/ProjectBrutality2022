@@ -1,0 +1,10 @@
+Name: Fusion Cyber Imp
+Difficulty: Medium
+Connections: Cyber Imp, Rocket Imp
+Summon: FusionCyberImp
+Melee: Yes
+Distance: Projectile
+Type: Demon, Cybernetic
+Brightmaps: No
+Actor modification: No
+ACS: No

@@ -250,10 +250,8 @@ class Z_TiltMe : CustomInventory
 			r *= deathTiltAngle;
 		}
 		else
-	//	{
 	//		deathTiltOsc = 0;
 	//		deathTiltAngle = 0;
-		//}
 
 		// tilt!
 		lastRoll += r;

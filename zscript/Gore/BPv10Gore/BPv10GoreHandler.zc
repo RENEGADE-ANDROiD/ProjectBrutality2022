@@ -1,0 +1,144 @@
+// Brutal Pack V10 (BPv10) gore add-on handler. Sibling to BDv22GoreMergeHandler.
+// Hooks WorldThingDied, gated by bpv10_* cvars, and only spawns extra gore when
+// the dead actor is one of our humanoid grunts (ZombieMan, ShotgunGuy, Commando,
+// Nazi, ZombieScientist, RifleCommando) or an Imp variant. Imps skip the
+// gear-debris path. All spawned actors live in actors/Gore/BPv10Gore/*.dec.
+// Original sprites by AWEZ (Brutal Pack V10).
+//
+// Burn deaths roll BPv10_BurnedHusk; plasma/disintegrate roll BPv10_CarbonizedBody;
+// x-death rolls flying torso + flop organs + zombie-gear debris + a big blood splat.
+
+class BPv10GoreHandler : EventHandler
+{
+	clearscope static PlayerPawn BPv10_ResolveKiller(WorldEvent e)
+	{
+		if (e.Inflictor && e.Inflictor is "PlayerPawn") return PlayerPawn(e.Inflictor);
+		if (e.Inflictor && e.Inflictor.target && e.Inflictor.target is "PlayerPawn")
+			return PlayerPawn(e.Inflictor.target);
+		if (e.DamageSource && e.DamageSource is "PlayerPawn") return PlayerPawn(e.DamageSource);
+		if (e.Thing && e.Thing.target && e.Thing.target is "PlayerPawn")
+			return PlayerPawn(e.Thing.target);
+		return null;
+	}
+
+	clearscope static bool IsHumanoidGrunt(Actor t)
+	{
+		if (!t) return false;
+		return t is "PB_ZombieMan"
+			|| t is "PB_ShotgunGuy"
+			|| t is "PB_Commando"
+			|| t is "PB_ClassicCommando"
+			|| t is "PB_Nazi"
+			|| t is "PB_ZombieScientist";
+	}
+
+	clearscope static bool IsImp(Actor t)
+	{
+		if (!t) return false;
+		return t is "PB_Imp"
+			|| t is "PB_IceImp"
+			|| t is "PB_InfectedImp"
+			|| t is "PB_DarkImpNami"
+			|| t is "PB_DarkImpNether"
+			|| t is "PB_DarkImpST"
+			|| t is "PB_DarkImpVoid"
+			|| t is "DNImpVariant1"
+			|| t is "DNImpVariant2"
+			|| t is "DNImpVariant3";
+	}
+
+	clearscope static bool IsBurnDamage(Name dt)
+	{
+		return dt == 'Burn'
+			|| dt == 'Fire'
+			|| dt == 'Flame'
+			|| dt == 'Flames'
+			|| dt == 'FlameBelch'
+			|| dt == 'Napalm';
+	}
+
+	clearscope static bool IsPlasmaDamage(Name dt)
+	{
+		return dt == 'Plasma'
+			|| dt == 'Disintegrate'
+			|| dt == 'Lightning'
+			|| dt == 'Electric'
+			|| dt == 'BFG';
+	}
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (!e.Thing || e.Thing.bNoBlood) return;
+		if (!e.Thing.bIsMonster) return;
+		if (e.Thing is "PlayerPawn") return;
+
+		bool grunt = IsHumanoidGrunt(e.Thing);
+		bool imp = IsImp(e.Thing);
+		if (!grunt && !imp) return;
+
+		PlayerPawn k = BPv10_ResolveKiller(e);
+		if (!k || !k.player) return;
+
+		if (!CVar.GetCVar("bpv10_enable", k.player).GetBool()) return;
+		if (CVar.GetCVar("pb_lowgraphicsmode", k.player).GetInt() > 0) return;
+		if (CVar.GetCVar("pb_bloodamount", k.player).GetInt() < 1) return;
+		if (e.Thing.waterlevel > 0) return;
+
+		Actor t = e.Thing;
+		Name dt = e.DamageType;
+		bool burn = IsBurnDamage(dt);
+		bool plasma = IsPlasmaDamage(dt);
+		bool xdeath = (t.health <= -t.SpawnHealth());
+
+		vector3 base = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.4);
+
+		if (burn && CVar.GetCVar("bpv10_burn_corpse", k.player).GetBool() && random(0, 99) < 60)
+		{
+			String c = random(0, 1) == 0 ? "BPv10_BurnedHusk" : "BPv10_BurnedHusk2";
+			Actor a = Actor.Spawn(c, (t.pos.x, t.pos.y, t.pos.z), NO_REPLACE);
+			if (a) a.angle = random(0, 359);
+		}
+		else if (plasma && CVar.GetCVar("bpv10_carbonized", k.player).GetBool() && random(0, 99) < 70)
+		{
+			Actor a = Actor.Spawn("BPv10_CarbonizedBody", (t.pos.x, t.pos.y, t.pos.z), NO_REPLACE);
+			if (a) a.angle = random(0, 359);
+		}
+
+		if (!xdeath) return;
+
+		if (CVar.GetCVar("bpv10_xdeath_torso", k.player).GetBool() && random(0, 99) < 35)
+		{
+			String c = random(0, 1) == 0 ? "BPv10_FlyingTorso1" : "BPv10_FlyingTorso2";
+			Actor a = Actor.Spawn(c, (base.x, base.y, base.z + 6), NO_REPLACE);
+			if (a) a.vel = (frandom(-7, 7), frandom(-7, 7), frandom(4, 9));
+		}
+		if (CVar.GetCVar("bpv10_flop_organs", k.player).GetBool() && random(0, 99) < 45)
+		{
+			int n = random(1, 2);
+			for (int i = 0; i < n; i++)
+			{
+				Actor a = Actor.Spawn("BPv10_FlopOrgans", (base.x, base.y, base.z), NO_REPLACE);
+				if (a) a.vel = (frandom(-5, 5), frandom(-5, 5), frandom(3, 7));
+			}
+		}
+		if (grunt && CVar.GetCVar("bpv10_zgear", k.player).GetBool() && random(0, 99) < 50)
+		{
+			int n = random(1, 3);
+			for (int i = 0; i < n; i++)
+			{
+				Actor a = Actor.Spawn("BPv10_ZombieGearDebris", (base.x, base.y, base.z + 4), NO_REPLACE);
+				if (a) a.vel = (frandom(-6, 6), frandom(-6, 6), frandom(3, 8));
+			}
+		}
+		if (CVar.GetCVar("bpv10_blood_splat", k.player).GetBool() && random(0, 99) < 40)
+		{
+			int p = random(0, 4);
+			String c = p == 0 ? "BPv10_BloodSplat0" :
+				p == 1 ? "BPv10_BloodSplat1" :
+				p == 2 ? "BPv10_BloodSplat2" :
+				p == 3 ? "BPv10_BloodSplat3" : "BPv10_BloodSplat4";
+			Actor a = Actor.Spawn(c, (t.pos.x, t.pos.y, t.pos.z + 1), NO_REPLACE);
+			if (a) a.angle = random(0, 359);
+		}
+	}
+}

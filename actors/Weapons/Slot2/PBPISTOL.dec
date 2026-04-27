@@ -1451,7 +1451,6 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 			A_Giveinventory("PB_LockScreenTilt",1);
 			}
 		TNT1 A 0 A_JumpIfInventory("PrimaryPistolAmmo",1,1)
-		//Goto ReloadFromEmpty
 		TNT1 AA 0
 		D5GD ABCDEFGHIJKLMNOPQRSTUVWXY 0
         D5GB A 1  {
@@ -1462,7 +1461,6 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 			A_WeaponReady(WRF_NOFIRE);
 		}	
 		TNT1 A 0 A_JumpIfInventory("PB_PistolHasUnloaded",1,"ReloadFromEmpty")
-		//TNT1 A 0 A_JumpIfInventory("PB_PistolHasUnloaded", 1, 18)
 		D5GB BCD 1 {
 			if (CountInv("SilencerEquipped") == 1 ) {
 					A_SetWeaponSprite("D5GD");

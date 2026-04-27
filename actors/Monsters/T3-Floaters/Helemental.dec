@@ -453,6 +453,7 @@ ACTOR Helementalpassivespawn
 		TNT1 A 0 A_Jump(50,"Die")
 		Loop
 	Create:
+		TNT1 A 0 A_JumpIf(GetCvar("NoHelemental") == 1, "Die")
 		TNT1 A 0 A_SpawnItemEx("Helemental")
 		Stop
 	Die:

@@ -1,0 +1,40 @@
+// Compatibility aliases for PBWP-folded weapons that still reference PB ammo class names.
+// Keep these lightweight so existing PB2022 ammo economy remains intact.
+
+ACTOR PB_HighCalMag : NewClip
+{
+}
+
+ACTOR PB_Shell : NewShell
+{
+}
+
+ACTOR PB_Cell : NewCell
+{
+}
+
+ACTOR PB_CellPack : NewCellPack
+{
+}
+
+ACTOR PB_Fuel : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 500
+	Ammo.BackpackAmount 25
+	Ammo.BackpackMaxAmount 500
+	Inventory.Icon "CELLA0"
+	Inventory.PickupMessage "Picked up Fuel."
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PBWP_ComplexAmmo : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 500
+	Ammo.BackpackAmount 25
+	Ammo.BackpackMaxAmount 500
+	Inventory.Icon "CELLA0"
+	Inventory.PickupMessage "Picked up Complex Ammo."
+	+INVENTORY.IGNORESKILL
+}

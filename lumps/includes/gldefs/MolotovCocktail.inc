@@ -1,0 +1,20 @@
+// Molotov Cocktail (PB3 v15 brightmaps — PNGs in Brightmaps/)
+Brightmap Sprite MOLOA0 { map "Brightmaps/MOLOA0.png" }
+Brightmap Sprite MOLOB0 { map "Brightmaps/MOLOB0.png" }
+Brightmap Sprite MOLOC0 { map "Brightmaps/MOLOC0.png" }
+Brightmap Sprite MOLOD0 { map "Brightmaps/MOLOD0.png" }
+Brightmap Sprite MOLOE0 { map "Brightmaps/MOLOE0.png" }
+Brightmap Sprite MOLOF0 { map "Brightmaps/MOLOF0.png" }
+Brightmap Sprite MOLOG0 { map "Brightmaps/MOLOG0.png" }
+Brightmap Sprite MOLOH0 { map "Brightmaps/MOLOH0.png" }
+Brightmap Sprite MOLOI0 { map "Brightmaps/MOLOI0.png" }
+Brightmap Sprite MOLOJ0 { map "Brightmaps/MOLOI0.png" }
+Brightmap Sprite MOLOK0 { map "Brightmaps/MOLOI0.png" }
+Brightmap Sprite MOLPA0 { map "Brightmaps/MOLPA0.png" }
+Brightmap Sprite MOLPB0 { map "Brightmaps/MOLPB0.png" }
+Brightmap Sprite MOLPC0 { map "Brightmaps/MOLPC0.png" }
+Brightmap Sprite MOLPD0 { map "Brightmaps/MOLPD0.png" }
+Brightmap Sprite MOLPE0 { map "Brightmaps/MOLPE0.png" }
+Brightmap Sprite MOLPF0 { map "Brightmaps/MOLPF0.png" }
+Brightmap Sprite MOLPG0 { map "Brightmaps/MOLPG0.png" }
+Brightmap Sprite MOLPH0 { map "Brightmaps/MOLPH0.png" }

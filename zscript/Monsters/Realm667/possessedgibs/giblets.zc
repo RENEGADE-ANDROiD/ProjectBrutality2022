@@ -1,0 +1,281 @@
+class GibbedZombieMan : GibbedMarine
+{
+ 	States
+	{
+	Spawn:
+		POSS U -1;
+		Stop;
+	}
+}
+class GibbedShotgunGuy : GibbedMarine
+{
+ 	States
+	{
+	Spawn:
+		SPOS U -1;
+		Stop;
+	}
+}
+class GibbedDoomImp : GibbedMarine
+{
+ 	States
+	{
+	Spawn:
+		TROO U -1;
+		Stop;
+	}
+}
+class GibbedChaingunGuy : GibbedMarine
+{
+ 	States
+	{
+	Spawn:
+		CPOS T -1;
+		Stop;
+	}
+}
+			
+//================================== Giblets ==================================
+class PGGiblet : Actor
+{
+	int rolldir;
+	override void PostBeginPlay()
+	{
+		rolldir = randompick(-20,-15,15,20);
+		frame = random(0,7);
+		Super.PostBeginPlay();
+	}
+	Default
+	{
+		+NOTONAUTOMAP
+		+RANDOMIZE;
+		+ROLLSPRITE;
+		+ROLLCENTER;
+		DeathSound "PossessedGibs/splat";
+	}
+	States
+	{
+	FadeGib:
+		#### # 1
+		{
+			A_FadeOut(0.1);
+		}
+		Loop;
+	}
+
+	action void rollgibs()
+	{
+		invoker.roll += invoker.rolldir;
+		if (invoker.pos.z == invoker.floorz)
+		{
+			invoker.A_SpawnDebris("PGbloodDebris");
+			invoker.destroy();
+		}
+	}
+}
+
+class PGGibArm : PGGiblet
+{
+	Default
+	{
+		Health 2;
+	}
+	States
+	{
+	Spawn:
+		VGAR # 1 rollgibs();
+		Loop;
+	}
+}
+
+class PGGibHead : PGGiblet
+{
+	Default
+	{
+		Health 1;
+		scale 0.7;
+	}
+	States
+	{
+	Spawn:
+		VGHE # 1 rollgibs();
+		Loop;
+	}
+}
+
+class PGGibTorso : PGGiblet
+{
+	Default
+	{
+		Health 1;
+	}
+	States
+	{
+	Spawn:
+		VGTO # 1 rollgibs();
+		Loop;
+	}
+}
+
+class PGGibBone : PGGiblet
+{
+	Default
+	{
+		Health 2;
+	}
+	States
+	{
+	Spawn:
+		VGBO # 1 rollgibs();
+		Loop;
+	}
+}
+
+class PGGibEye : PGGiblet
+{
+	Default
+	{
+		Health 2;
+		scale 0.5;
+	}
+	States
+	{
+	Spawn:
+		VGEY # 1 rollgibs();
+		Loop;
+	}
+}
+
+class PGGibChunk : PGGiblet
+{
+	Default
+	{
+		Health 2;
+		+RANDOMIZE;
+	}
+	States
+	{
+	Spawn:
+		VGCH AABBCCDD 1 rollgibs();
+		Loop;
+	}
+
+}
+
+//=================================== Blood ===================================
+class PGblood : Actor
+{
+	Default
+	{
+		+NOTONAUTOMAP
+		+NOBLOCKMAP;
+		+NOTELEPORT;
+		+RANDOMIZE;
+		-ALLOWPARTICLES;
+		scale 0.667;
+		DeathSound "PossessedGibs/splat";
+	}
+	States
+	{
+	Spawn:
+		VBLO ABCD 2 A_JumpIf(pos.z <= floorz, "Death");
+		Loop;
+	Death:
+		VBLS A 0 
+		{
+			for (int i = 0; i < 360; i += 30)
+			{
+				if (GetZAt(24, 0, i) != floorz)	destroy();
+			}
+			vel = (0,0,0);
+			bNOINTERACTION = true;
+			bFLATSPRITE = true;
+			frame = random(0,6);
+			scale = (1.4,1.4);
+		}
+		#### # 0 A_Jump(256,"FadeS","FadeS","FadeS","FadeS","FadeM","FadeM","FadeM","FadeL");
+	FadeS:
+		#### # 5
+		{
+			A_FadeOut(0.01);
+		}
+		Loop;
+	FadeM:
+		#### # 10
+		{
+			A_FadeOut(0.01);
+		}
+		Loop;
+	FadeL:
+		#### # 15
+		{
+			A_FadeOut(0.01);
+		}
+		Loop;
+	}
+}
+
+class PGbloodDebris : PGblood
+{
+	Default
+	{
+		Health 3;
+	}
+}
+
+class PGbloodDebrisXL : PGblood
+{
+	Default
+	{
+		Health 9;
+	}
+}
+
+//============================== Gibs Projectile ==============================
+class PGProjectile : Actor
+{
+	static const Name gibsprites[] = { "VGTO", "VGBO", "VGAR", "VGHE" };
+	int rolldir;
+	override void PostBeginPlay() 
+    {
+		Super.PostBeginPlay();
+		rolldir = randompick(-25,-15,15,25);
+		sprite = GetSpriteIndex(gibsprites[random(0, gibsprites.Size() - 1)]);
+		frame = random(0,7);
+    }
+	
+	Default
+	{
+		Radius 6;
+		Height 8;
+		Speed 20;
+		FastSpeed 30;
+		Damage 3;
+		Projectile;
+		Species "PossessedGibs";
+		+THRUSPECIES;
+		+ROLLSPRITE;
+		+ROLLCENTER;
+		SeeSound "PossessedGibs/shot";
+		DeathSound "PossessedGibs/gibs";
+		Decal "pgBloodSplat";
+	}
+	States
+	{
+	Spawn:
+		#### # 0 Nodelay A_Jump(128,"Chunk");
+	Gibs:
+		#### # 1
+		{
+			roll += rolldir;
+		}
+		Loop;
+	Chunk:
+		VBSH AB 4;
+		Loop;
+	Death:
+		VBSH C 4 A_SpawnDebris("PGbloodDebris");
+		VBSH D 4;
+		Stop;
+	}
+}

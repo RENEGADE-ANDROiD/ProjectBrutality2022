@@ -1262,29 +1262,9 @@ Script "ToggleWeaponBattleRifle" (VOID) NET
 if	(GetCvar("pb_NoBattleRifleWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
 }
 
-Script "ToggleWeaponBallista" (VOID) NET
-{
-if	(GetCvar("pb_NoBallistaWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
-}
-
 Script "ToggleWeaponPulseCannon" (VOID) NET
 {
 if	(GetCvar("pb_NoPulseCannonWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
-}
-
-Script "ToggleWeaponDemonTechBlaster" (VOID) NET
-{
-if	(GetCvar("pb_NoDemonTechBlasterWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
-}
-
-Script "ToggleWeaponDemonTechPistol" (VOID) NET
-{
-if	(GetCvar("pb_NoDemonTechPistolWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
-}
-
-Script "ToggleWeaponTechBlasterUpgradeSpawn" (VOID) NET
-{
-if	(GetCvar("pb_NoTechBlasterUpgradeWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
 }
 
 Script "ToggleWeaponDemonExterminator" (VOID) NET

@@ -47,13 +47,11 @@ class PB_HitFeedback_Handler : EventHandler
 
         if( animationTime > 0 ) animationTime--;
 
-        //console.printf("%i, %f, %f", animationTime, animationProgress[1], animationProgress[0]);
     }
 
     override void RenderUnderlay( RenderEvent e )
     {
         double i_animationProgress = GetTicFracInterpolation( animationProgress[1], animationProgress[0], e.FracTic );
-        // console.printf("%f", i_animationProgress);
         vector2 i_shake = overlayPos[0];
         //( GetTicFracInterpolation( overlayPos[1].x, overlayPos[0].x, e.FracTic ), GetTicFracInterpolation( overlayPos[1].y, overlayPos[0].y, 1 ) );
 
@@ -65,9 +63,7 @@ class PB_HitFeedback_Handler : EventHandler
 
         double overlayAlpha, overlay2Alpha, overlay3Alpha;
 
-        //if( i_animationProgress < 0.5 )
         //    overlayAlpha = PB_HitFeedback_Math.LinearMapClamped( i_animationProgress, 0.0, 0.1, 0.f, 1.f, 0.f, 1.f );
-        //if( i_animationProgress > 0.5 )
             overlayAlpha = PB_HitFeedback_Math.LinearMapClamped( i_animationProgress, 0.26, 1.f, 1.f, 0.f, 0.f, 1.f );
 
         /*if(i_animationProgress <= 0.07 || ( i_animationProgress >= 0.2 && i_animationProgress <= 0.26 ) || i_animationProgress > 0.3 )

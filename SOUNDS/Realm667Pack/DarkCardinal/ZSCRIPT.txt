@@ -1,0 +1,334 @@
+class Cardinal : Actor
+{
+Default
+	{
+	//$Category Realm667 Monsters
+	//$Sprite CARDA1
+	//$Title "Dark Cardinal"
+	Monster;
+	Health 4500;
+	Speed 10;
+	Radius 24;
+	Height 112;
+	PainChance 50;
+	Mass 700;
+	SeeSound "DarkCardinal/sight"; //"cyber/sight";
+	ActiveSound "DarkCardinal/active"; //"cyber/active";
+	PainSound "DarkCardinal/pain"; //"brain/pain";
+	DeathSound "DarkCardinal/death"; //"cyber/death";
+	Bloodcolor "Green";
+	Obituary "%o was blessed by the Dark Cardinal.";
+	+BOSS
+	+NORADIUSDMG
+	+NOGRAVITY
+	+FLOAT
+	+DONTFALL
+	+FLOATBOB
+	}
+States 
+	{ 
+	Spawn:
+		CARD AB 4 Bright A_Look();
+		Loop;
+	See:
+		CARD AABB 2 Bright A_Chase();
+		Loop;
+	Missile:
+		TNT1 A 0 A_Jump(25,"GrenadeAttack");
+		TNT1 A 0 A_Jump(100,"PlasmaAttack");
+		CARD C 4 Bright A_FaceTarget();
+		CARD D 5 Bright A_SpawnProjectile("CardinalRocket",42,-30,0);
+		CARD C 4 Bright A_FaceTarget();
+		CARD D 5 Bright A_SpawnProjectile("CardinalRocket",42,-30,0);
+		CARD C 4 Bright;
+		Goto See;
+	GrenadeAttack:
+		CARD C 4 Bright A_FaceTarget();
+		CARD D 5 Bright A_SpawnProjectile("PainGrenade",42,-30,0);
+		CARD C 4 Bright;
+		Goto See;
+	PlasmaAttack:
+		CARD C 4 Bright A_FaceTarget();
+		CARD D 5 Bright A_SpawnProjectile("CardinalPlasma",42,-30,0);
+		CARD C 4 Bright A_FaceTarget();
+		CARD D 5 Bright A_SpawnProjectile("CardinalPlasma",42,-30,0);
+		CARD C 4 Bright A_FaceTarget();
+		CARD D 5 Bright A_SpawnProjectile("CardinalPlasma",42,-30,0);
+		CARD C 4 Bright A_FaceTarget();
+		CARD D 5 Bright A_SpawnProjectile("CardinalPlasma",42,-30,0);
+		CARD C 4 Bright A_FaceTarget();
+		CARD D 5 Bright A_SpawnProjectile("CardinalPlasma",42,-30,0);
+		CARD C 4 Bright A_FaceTarget();
+		CARD D 5 Bright A_SpawnProjectile("CardinalPlasma",42,-30,0);
+		Goto See;
+	Pain: 
+		CARD P 2 Bright A_Stop();
+		CARD P 4 Bright CA_CardinalPain();
+		Goto See;
+	Death:
+		CARD E 8 Bright { bFLOATBOB = false; }
+		CARD F 8 Bright A_ScreamandUnblock();
+		CARD G 8 Bright;
+		CARD H 8 Bright A_Explode();
+		CARD IJKL 8 Bright;
+		Stop;
+	}
+void CA_CardinalPain()
+	{
+	A_Pain();
+	for( int ang = 0; ang < 341; ang+=20)
+		{ A_SpawnProjectile("DeathBall",42,0,ang,2,0); }
+	}
+}
+
+class CardinalRocket : Actor
+{
+Default
+	{
+	Projectile;
+	Radius 11;
+	Height 8;
+	Speed 20;
+	Damage 24;
+	SeeSound "weapons/rocklf";
+	DeathSound "weapons/rocklx";
+	Decal "Scorch";
+	+RANDOMIZE
+	+DEHEXPLOSION
+	}
+States
+	{
+	Spawn:
+		CROC AB 4 Bright;
+		Loop;
+	Death:
+		CROC C 8 Bright A_Explode();
+		CROC D 6 Bright;
+		CROC E 4 Bright;
+		Stop;
+	}
+override void Tick()
+	{
+		if(!isFrozen() && InStateSequence(self.Curstate,self.ResolveState("Spawn")) && GetCVar("cl_rockettrails")>0 )
+		{
+			A_SpawnParticle("Green",SPF_FULLBRIGHT|SPF_RELPOS|SPF_RELVEL|SPF_RELANG,TICRATE,frandom(5,6),180,10,0,4,frandom(1,2),frandom(-2,2),frandom(0,1),0,0,0.03,0.7);
+			A_SpawnParticle("Green",SPF_FULLBRIGHT|SPF_RELPOS|SPF_RELVEL|SPF_RELANG,TICRATE,frandom(5,6),180,10,0,4,frandom(1,2),frandom(-2,2),frandom(0,1),0,0,0.03,0.7);
+			A_SpawnParticle("Yellow",SPF_FULLBRIGHT|SPF_RELPOS|SPF_RELVEL|SPF_RELANG,TICRATE,4,180,10,0,4,frandom(1,2),frandom(-0.5,0.5),0,0,0,-0.03,0.7);
+		}
+	super.Tick();
+	}
+}
+
+class CardinalPlasma : Actor
+{
+Default
+	{
+	Projectile;
+	Radius 11;
+	Height 8;
+	Speed 20;
+	Damage 16;
+	SeeSound "imp/attack";
+	+FLOATBOB
+	}
+States
+	{
+	Spawn:
+		CRTA I 1 Bright A_SpawnItemEx("PlasmaTail");
+		Loop;
+	Death:
+		TNT1 ABC 4;
+		Stop;
+	}
+}
+
+class PlasmaTail : Actor
+{
+Default
+	{
+	Renderstyle "Translucent";
+	+NOINTERACTION
+	+FLOATBOB
+	}
+States
+	{
+	Spawn:
+		CRTA IHGFEDCBABCDEFGHI 2 Bright A_FadeOut(0.08);
+		Stop;
+	}
+}
+
+class DeathBall : BaronBall
+{
+Default
+	{
+	Damage 1;
+	Scale 0.8;
+	SeeSound "DeathBall/spawn";
+	Translation "64:79=112:127","160:167=112:127","80:111=112:127","137:137=124:124","3:3=124:124";
+	+SEEKERMISSILE
+	}
+States
+	{
+	Spawn:
+		BAL7 A 2 Bright { CA_GreenTracer(); A_SpawnItemEx("BallTail",0,0,0,0,0,0,0,SXF_TRANSFERSPRITEFRAME); }
+		BAL7 B 2 Bright A_SpawnItemEx("BallTail",0,0,0,0,0,0,0,SXF_TRANSFERSPRITEFRAME);
+		Loop;
+	Death:
+		BAL7 CDE 6 Bright;
+		Stop;
+	}
+void CA_GreenTracer()
+	{
+		if (level.maptime & 3) return;
+		A_SpawnItemEx("RevenantTracerSmoke",0,0,0,0,0,0.6,0,SXF_TRANSFERTRANSLATION);
+		A_SpawnItemEx("RevenantTracerSmoke",0,0,0,0,0,-0.6,0,SXF_TRANSFERTRANSLATION);
+		A_Tracer2(16.875);
+	}
+}
+
+class BallTail : Actor
+{
+Default
+	{
+	RenderStyle "Add";
+	Alpha 0.9;
+	Scale 0.6;
+	+NOINTERACTION
+	}
+States
+	{
+	Spawn:
+		"####" "#" 2 Bright A_FadeOut(0.1);
+		Wait;
+	}
+}
+
+class PainGrenade : Actor
+{
+Default
+	{
+	Projectile;
+	Radius 11;
+	Height 8;
+	Speed 20;
+	Damage 5;
+	Bouncetype "Doom";
+	Translation "168:191=112:127","160:167=112:125";
+	SeeSound "PainGrenade/fire";
+	BounceSound "PainGrenade/bounce";
+	DeathSound "PainGrenade/explode";
+	-NOGRAVITY
+	}
+States
+	{
+	Spawn:
+		CEGG A 2 Bright A_SpawnItemEx("FaintGhost",0,0,0,0,0,0,0,SXF_TRANSFERTRANSLATION|SXF_TRANSFERSPRITEFRAME);
+		Loop;
+	Death:
+		FIRE A 3 Bright { A_NoGravity(); A_SetRenderStyle(1.0,STYLE_Add); }
+		FIRE B 3 Bright A_SpawnItemEx("Paingasm",0,0,0,0,0,0,0,SXF_SETMASTER);
+		FIRE CDEFGH 3 Bright;
+		Stop;
+	}
+}
+
+class Paingasm : Actor
+{
+Default
+	{
+	//$Category Realm667 Monsters
+	//$Sprite HEADA1
+	//$Title "Paingasm"
+	Monster;
+	Health 500;
+	Radius 31;
+	Height 56;
+	Mass 400;
+	Speed 25;
+	PainChance 128;
+	Bloodcolor "Blue";
+	SeeSound "caco/sight";
+	PainSound "caco/pain";
+	DeathSound "caco/death";
+	ActiveSound "caco/active";
+	Obituary "%o was removed from life by a Paingasm.";
+	HitObituary "%o's face got tore off by a Paingasm.";
+	Translation "168:191=112:127";
+	RenderStyle "Translucent";
+	Alpha 0.5;
+	+FLOAT
+	+NOGRAVITY
+	+DONTGIB
+	}
+States
+	{
+	Spawn:
+		HEAD A 10 Bright A_Look();
+		Loop;
+	See:
+		HEAD A 3 Bright { A_Chase(); A_SpawnItemEx("FaintGhost",0,0,0,0,0,0,0,SXF_TRANSFERTRANSLATION|SXF_TRANSFERSPRITEFRAME); }
+		Loop;
+	Missile:
+		HEAD BC 5 Bright A_FaceTarget();
+		HEAD D 5 Bright { A_FaceTarget(); A_SpawnProjectile("PaingasmBall",24,0,0); }
+		Goto See;
+	Melee:
+		HEAD D 4 Bright { A_FaceTarget(); A_StartSound("Paingasm/chomp",7); }
+		HEAD C 4 Bright A_FaceTarget();
+		HEAD B 4 Bright { A_FaceTarget();A_CustomMeleeAttack(4); }
+		HEAD E 8 Bright A_FaceTarget();
+		Goto See;
+	Pain:
+		HEAD E 3 Bright;
+		HEAD E 3 Bright A_Pain();
+		HEAD F 6 Bright;
+		Goto See;
+	Death:
+		HEAD G 8 A_SetRenderStyle(0.5,STYLE_Translucent);
+		HEAD G 8 A_ScreamandUnblock();
+		HEAD IJK 8;
+		HEAD L 300 A_SetFloorClip();
+		HEAD L 6 A_FadeOut(0.1);
+		Wait;
+	}
+override void Tick()
+	{
+		if(InStateSequence(self.curstate,self.ResolveState("Spawn")) || InStateSequence(self.curstate,self.ResolveState("See")) || InStateSequence(self.curstate,self.ResolveState("Pain")) )
+		{ A_SetRenderStyle(0.5,STYLE_Translucent); }
+		else if(InStateSequence(self.curstate,self.ResolveState("Missile")) || InStateSequence(self.curstate,self.ResolveState("Melee")))
+		{ A_SetRenderStyle(1.0,STYLE_Translucent); }
+	super.Tick();
+	}
+}
+
+class FaintGhost : Actor
+{
+Default
+	{
+	RenderStyle "Translucent";
+	Alpha 0.8;
+	+NOINTERACTION
+	}
+States
+	{
+	Spawn:
+		"####" "#" 2 Bright A_FadeOut(0.1);
+		Wait;
+	}
+}
+
+class PaingasmBall : BaronBall
+{
+Default
+	{ Translation "112:127=192:207"; }
+States
+	{
+	Spawn:
+		BAL7 AB 4 Bright;
+		Loop;
+	Death:
+		BAL7 CDE 6 Bright;
+		Stop;
+	}
+}

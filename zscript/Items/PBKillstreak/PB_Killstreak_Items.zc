@@ -1,0 +1,148 @@
+// Pickup: find a PB "Killstreak" globe in the map, then your streak counts.
+// Power-up token: every 5 kills, random reward from pool (per-CVar toggles).
+
+class PB_KillstreakMode : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.AUTOACTIVATE;
+		+INVENTORY.HUBPOWER;
+	}
+}
+
+class PB_KillstreakFlare : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		Inventory.PickupSound "misc/p_pkup";
+		+FLOATBOB;
+		+INVENTORY.AUTOACTIVATE;
+		floatbobstrength 1.2;
+		Scale 0.2;
+		StencilColor "Yellow";
+	}
+
+	override bool Use(bool pickup)
+	{
+		if (pickup && Owner && Owner is "PlayerPawn")
+		{
+			let plr = PlayerPawn(Owner);
+			if (plr && !plr.FindInventory("PB_KillstreakMode"))
+			{
+				plr.GiveInventory("PB_KillstreakMode", 1);
+				if (PB_KillstreakMessageHandler.PB_BigmsgOn())
+					PB_KillstreakMessageHandler.PB_KsPlainMsg(
+						plr.PlayerNumber(), "BIGFONT", "Kill streak active!", (240, 120), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
+						(0.2, 3, 0.5), 0, 11, BaseStatusBar.HUDMSGLayer_OverHUD);
+				else plr.A_Print("Kill streak active!", 2.0);
+			}
+		}
+		return true;
+	}
+
+	States
+	{
+	Spawn:
+		KIST ABCDEFGHIJKLMNOPQRST 2 bright;
+		Loop;
+	}
+}
+
+// Random power-up in the PB 2022 pool; does not replace any map item.
+class PB_KillstreakPowerUp : Inventory
+{
+	Default
+	{
+		+INVENTORY.ALWAYSPICKUP;
+		+INVENTORY.AUTOACTIVATE;
+		Inventory.PickupSound "misc/p_pkup";
+		Inventory.PickupMessage "Kill streak reward!";
+		Inventory.MaxAmount 100;
+	}
+
+	override bool Use(bool pickup)
+	{
+		if (!Owner || !(Owner is "PlayerPawn")) return true;
+		let plr = PlayerPawn(Owner);
+		String className, msg;
+		PBRollReward(plr, className, msg);
+		plr.GiveInventory(className, 1);
+		plr.A_Print(msg, 2.0);
+		return true;
+	}
+
+	States
+	{
+	Spawn:
+		MEGA A 6 bright;
+		MEGA B 6 bright;
+		Loop;
+	}
+
+	static bool PBCvarItem(PlayerPawn p, String n)
+	{
+		if (!p || !p.player) return true;
+		let c = CVar.GetCVar(n, p.player);
+		return c == null || c.GetBool();
+	}
+
+	static void PushIf(Array<String> a, String itemCvar, String className, PlayerPawn p)
+	{
+		if (PBCvarItem(p, itemCvar)) a.Push(className);
+	}
+
+	static void PBRollReward(PlayerPawn plr, out String outClass, out String outMsg)
+	{
+		Array<String> pool;
+		PushIf(pool, "pb_ks_r_haste",     "HasteSphere",         plr);
+		PushIf(pool, "pb_ks_r_double",    "DoubleSphere",         plr);
+		PushIf(pool, "pb_ks_r_invuln",   "InvulnerabilitySphere_", plr);
+		PushIf(pool, "pb_ks_r_mega",     "EnergySphere",         plr);
+		PushIf(pool, "pb_ks_r_megaberserk", "MegaBerserk",        plr);
+		PushIf(pool, "pb_ks_r_life",     "LifeSphere",           plr);
+		PushIf(pool, "pb_ks_r_medi",     "Medikit2",             plr);
+		PushIf(pool, "pb_ks_r_melee",    "DemonStrengthRune",    plr);
+		PushIf(pool, "pb_ks_r_coffee",   "CoffeeTime",           plr);
+		PushIf(pool, "pb_ks_r_timesphere","TFST",                plr);
+		PushIf(pool, "pb_ks_r_familiar", "FamiliarSummon",       plr);
+		PushIf(pool, "pb_ks_r_guardsphere","GuardsphereST",      plr);
+		PushIf(pool, "pb_ks_r_crucifix", "Crucifix",             plr);
+		PushIf(pool, "pb_ks_r_regensphere","RegenSphere",        plr);
+		PushIf(pool, "pb_ks_r_deflectionsphere","DeflectionSphere", plr);
+		PushIf(pool, "pb_ks_r_lifeshield","LifeshieldSphere",    plr);
+		PushIf(pool, "pb_ks_r_electricsphere","ElectricAuraSphere", plr);
+		PushIf(pool, "pb_ks_r_legendsphere","LegendSphere",      plr);
+
+		if (pool.size() < 1)
+		{
+			outClass = "Stimpack2";
+			outMsg   = "Kill streak reward: stimpack (pool empty or all off).";
+			return;
+		}
+		int i  = random(0, pool.size() - 1);
+		String pick = pool[i];
+		outClass = pick;
+		// Flavor
+		if (pick == "HasteSphere") outMsg   = "Kill streak: Haste!";
+		else if (pick == "DoubleSphere") outMsg = "Kill streak: Doom sphere (double damage)!";
+		else if (pick == "InvulnerabilitySphere_") outMsg = "Kill streak: Invulnerability!";
+		else if (pick == "EnergySphere") outMsg = "Kill streak: Energy sphere (mega) !!";
+		else if (pick == "MegaBerserk") outMsg  = "Kill streak: MEGA BERSERK !";
+		else if (pick == "LifeSphere") outMsg  = "Kill streak: Life sphere !";
+		else if (pick == "Medikit2") outMsg    = "Kill streak: Medikit !!";
+		else if (pick == "DemonStrengthRune") outMsg = "Kill streak: Demon strength !";
+		else if (pick == "CoffeeTime") outMsg = "Kill streak: COFFEE TIME!";
+		else if (pick == "TFST") outMsg = "Kill streak: TIME SPHERE!";
+		else if (pick == "FamiliarSummon") outMsg = "Kill streak: Familiar summon!";
+		else if (pick == "GuardsphereST") outMsg = "Kill streak: Guard sphere!";
+		else if (pick == "Crucifix") outMsg = "Kill streak: Crucifix!";
+		else if (pick == "RegenSphere") outMsg = "Kill streak: Regen sphere!";
+		else if (pick == "DeflectionSphere") outMsg = "Kill streak: Deflection sphere!";
+		else if (pick == "LifeshieldSphere") outMsg = "Kill streak: Lifeshield!";
+		else if (pick == "ElectricAuraSphere") outMsg = "Kill streak: Electric aura!";
+		else if (pick == "LegendSphere") outMsg = "Kill streak: LEGEND SPHERE!";
+		else outMsg = "Kill streak power-up!";
+	}
+}

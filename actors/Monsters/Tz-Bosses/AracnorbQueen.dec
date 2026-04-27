@@ -116,7 +116,6 @@ actor AracnorbQueen
     ARNQ D 0 BRIGHT A_FaceTarget
     ARNQ E 5 BRIGHT A_CustomMissile ("QueenPlasmaBlast", 40, 0, random(-4,4))
     ARNQ D 5 A_FaceTarget
-    //ARNQ D 5
 	Goto See
   SpreadFire:
     ARNQ BCD 8 A_FaceTarget
@@ -329,6 +328,7 @@ Actor MastermindsQueenpassivespawn
 		TNT1 A 0 A_Jump(50,"Die")
 		Loop
 	Create:
+		TNT1 A 0 A_JumpIf(GetCvar("NoAracnorbQueen") == 1, "Die")
 		TNT1 A 0 A_SpawnItemEx("AracnorbQueen")
 		Stop
 	Die:

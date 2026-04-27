@@ -150,7 +150,6 @@ ACTOR BurningEmberParticlesFloating_EvenBigger: BurningEmberParticlesFloating_Bi
 
 ACTOR BurningEmberParticlesSpawner//: ExplosionParticleHeavy
 {
-//Speed 0
  States
  {
 	Spawn:
@@ -513,7 +512,6 @@ Actor BluePlasmaParticle
   Gravity 0.8
   RenderStyle Add
   Scale 0.035
-  //Speed 2
   Speed 12
   States
   {
@@ -642,7 +640,6 @@ Actor PlasmaParticleX
   Gravity 0.4
   RenderStyle Add
   Scale 1.0
-  //Speed 2
   Speed 2
   States
   {

@@ -72,8 +72,6 @@ class pb_ExecutionHandler : EventHandler
 			int targetMaxHealth = target.spawnHealth();//ts_ActorInfo.getActorMaxHealth(target);
 			int targetHealth = target.health;
 
-		//     int percent = 10;
-		//     if (percent < 0) { percent = 0; }
 			
 			if((targetHealth <= targetMaxHealth*0.2 || targetHealth < 65) && target is "PB_Monster" && getTargetDistance() < 250)
 			{
@@ -168,7 +166,6 @@ class pb_ExecutionHandler : EventHandler
     if (player.mo == NULL) return NULL;
 
     // try an easy way to get a target (also works with autoaim)
-//     return player.mo.aimTarget();
 
 
     Actor target   = _translator.aimTargetWrapper(player.mo);

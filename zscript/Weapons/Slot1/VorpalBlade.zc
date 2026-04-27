@@ -1,0 +1,371 @@
+// VorpalBlade (Tiberium's Soulblade, Slot 1)
+// Original: Insanity's Requiem Mk.2 by the late TiberiumSoul. Sprites by Eriance.
+// PB 0.4.2+ rework by Renegade Android. Folded into PB 2022 from PB_VorpalBlade_from_Insanitys_Requiem-MK2.wad.
+// BDPmelee logic (lunge-on-attack), Berserker BladeStorm, healing-on-hit kept verbatim.
+
+class VorpalBlade : PB_WeaponBase
+{
+	// ----- Internal Math Helpers (from original) -----
+	static vector3 VecFromAngles(double angle, double pitch, double mag = 1.)
+	{
+		double cosp = cos(pitch);
+		return (cos(angle)*cosp, sin(angle)*cosp, -sin(pitch)) * mag;
+	}
+
+	static double GetInertia(double emass, double smallmass = 200)
+	{
+		double m = smallmass;
+		double d = 0.15;
+		double x = (1. - (emass / m));
+		double y = -d * (x * x) + 1;
+		return clamp(y * 0.75, 0.1, 1.0);
+	}
+
+	// ----- Melee Functions (BDPmelee, ported from original) -----
+	Action void A_BDPMeleeStart(double range = 200)
+	{
+		FLineTraceData lt;
+		LineTrace(angle, range, pitch, 0, player.viewheight, data:lt);
+		if (lt.hitActor && lt.hitActor.bSOLID)
+		{
+			A_Face(lt.hitActor);
+			A_Recoil3D(-20);
+		}
+	}
+
+	Action double A_CheckMeleeRange(double maxrange = 512, bool skipWalls = false)
+	{
+		FLineTraceData lt;
+		LineTrace(angle, maxrange, pitch, 0, player.viewheight, data:lt);
+		return (skipWalls && !lt.hitActor) ? maxrange : lt.distance;
+	}
+
+	Action void A_Recoil3D(double amt)
+	{
+		vel += VecFromAngles(angle, pitch, -amt);
+	}
+
+	Action Actor A_BDPMelee(double range = 200, name projectile = "MeleeAttack", double spawnheight = -7, bool doHitThrust = true)
+	{
+		Actor victim;
+		FLineTraceData lt;
+		double aimz = player ? player.viewheight : (height * 0.5);
+		LineTrace(angle, range, pitch, 0, aimz, data:lt);
+		victim = lt.hitActor;
+		int aimCheck = -6;
+		while (aimCheck++ < 6 && !victim)
+		{
+			LineTrace(angle + (aimCheck * 8), range, pitch, 0, aimz, data:lt);
+			victim = lt.hitActor;
+		}
+		if (victim && victim.bSHOOTABLE)
+		{
+			A_Face(victim);
+			if (doHitThrust && victim.bSOLID)
+			{
+				vel = (0,0,0);
+				vel += VecFromAngles(angle, pitch, -12);
+			}
+		}
+		actor proj = A_FireProjectile(projectile, 0, 0, 0, spawnheight);
+		if (proj && victim && victim.bSHOOTABLE)
+		{
+			proj.SetOrigin(victim.pos, false);
+		}
+		return victim;
+	}
+
+	// ----- Sweep attack (lifesteal sword swing, from original) -----
+	Action void hxa_CustomRollAttack(int damage = 0, double healfactor = 1, bool PierceEnemies = false,
+		double roll = 0, int area = 90, int dist = 1024,
+		name PuffActor = "null", sound HitActorSound = "null", sound HitWallSound = "null")
+	{
+		if (!player) return;
+
+		bool PlaySoundEnemy = false;
+		bool PlaySoundWall = false;
+		Array<Actor> Targets;
+		for (int i = 0; i < area; i++)
+		{
+			double horAng = angle - area*cos(roll)/2;
+			double pit = pitch - area*sin(roll)/2;
+			int hdif = 10;
+			LineAttack(horAng+(i*cos(roll)), dist, pit+(i*sin(roll)), 0, 'Melee', PuffActor, true, offsetz: height-hdif);
+			FLineTraceData h;
+			LineTrace(horAng+(i*cos(roll)), dist, pit+(i*sin(roll)), offsetz: height-hdif, data:h);
+			if (h.hitActor != null && h.hitActor.bSHOOTABLE)
+			{
+				PlaySoundEnemy = true;
+				h.hitActor.DamageMobj(self, self, damage, 'damagetype', DMG_THRUSTLESS);
+				A_DamageSelf(-damage * healfactor);
+				if (PierceEnemies)
+				{
+					h.hitActor.bSHOOTABLE = false;
+					Targets.Push(h.hitActor);
+				}
+			}
+			else if ((h.HitType == TRACE_HitWall || h.HitType == TRACE_HitCeiling || h.HitType == TRACE_HitFloor) &&
+				(pitch > 20 || pit+(i*sin(roll)) < 10))
+			{
+				PlaySoundWall = true;
+			}
+		}
+		if (PlaySoundEnemy) A_StartSound(HitActorSound, pitch:frandom(.9,1.1));
+		if (PlaySoundWall)  A_StartSound(HitWallSound, pitch:frandom(.9,1.1));
+		for (int z = 0; z < Targets.Size(); z++)
+			Targets[z].bSHOOTABLE = true;
+	}
+
+	// ----- Weapon definition -----
+	Default
+	{
+		Weapon.SlotNumber 1;
+		Weapon.SelectionOrder 2200;
+		Weapon.AmmoUse 0;
+		Weapon.AmmoUse2 0;
+		Weapon.BobStyle "InverseSmooth";
+		Weapon.BobRangeX 0.4;
+		Weapon.BobRangeY 0.6;
+		Weapon.BobSpeed 2.5;
+		+WEAPON.AMMO_OPTIONAL
+		+WEAPON.MELEEWEAPON
+		+WEAPON.NOALERT
+		+WEAPON.NOAUTOAIM
+		+DONTGIB
+		+INVENTORY.ALWAYSPICKUP
+		Tag "Tiberium's Soulblade";
+		Inventory.PickupMessage "$PB_PICKUP_VorpalBlade";
+		Inventory.PickupSound "misc/w_pkup";
+		Inventory.AltHUDIcon "WVRPA0";
+		AttackSound "Sword/Hit";
+		Weapon.UpSound "Sword/Draw";
+		Obituary "%o was relieved of %p head by %k's sword.";
+		Scale 0.5;
+	}
+
+	States
+	{
+	Spawn:
+		VORX A -1;
+		Stop;
+
+	Steady:
+		TNT1 A 1;
+		Goto Ready;
+
+	Select:
+		TNT1 A 0
+		{
+			A_WeaponOffset(0,32);
+			A_SetRoll(0);
+			A_TakeInventory("PB_LockScreenTilt", 1);
+		}
+		TNT1 A 0 A_StopSound(1);
+		TNT1 A 0 A_StopSound(5);
+		TNT1 A 0 A_StopSound(6);
+		TNT1 A 0 A_TakeInventory("Spin",1);
+		TNT1 A 0 A_TakeInventory("CantWeaponSpecial",1);
+		TNT1 A 0 A_TakeInventory("MG42Selected",1);
+		TNT1 A 0 A_SetInventory("Grabbing_A_Ledge", 0);
+		TNT1 A 0 A_TakeInventory("RandomHeadExploder",1);
+		TNT1 A 0 A_TakeInventory("DualFireReload",2);
+		TNT1 A 0 A_Overlay(-777, "Melee_Equipment_Handler_Overlay");
+		TNT1 A 0 A_Overlay(-778, "KickHandler_Overlay");
+		TNT1 A 0 A_Overlay(-779, "Equipment_Toggle_Handler_Overlay");
+		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand");
+		TNT1 A 0 PB_WeaponRaise("Sword/Draw");
+		TNT1 A 0 A_Jump(255, "SelectContinue");
+
+	SelectContinue:
+		TNT1 A 0 PB_RespectIfNeeded();
+	SelectAnimation:
+		VORS EDCBA 1;
+		Goto Ready3;
+
+	Deselect:
+		VORS ABCDE 1;
+		TNT1 A 0 A_Lower();
+		Wait;
+
+	WeaponRespect:
+		VORS EDCBA 1 A_DoPBWeaponAction();
+		Goto Ready3;
+
+	Ready:
+	Ready3:
+		TNT1 A 0 PB_HandleCrosshair(1);
+		TNT1 A 0 PB_CoolDownBarrel();
+		VORP A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		Loop;
+
+	Fire:
+		TNT1 A 0
+		{
+			A_WeaponOffset(0,32);
+			A_SetRoll(0);
+			A_SetInventory("PB_LockScreenTilt", 0);
+			PB_HandleCrosshair(1);
+			A_BDPMeleeStart(200);
+			PB_Execute();
+		}
+		TNT1 A 0 A_Jump(256, "SwingRighty", "SwingLefty");
+		Goto Ready3;
+
+	SwingRighty:
+		VORR A 0 Offset(15,32);
+		VORR A 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 A_PlaySound("Sword/Swing", CHAN_WEAPON, 1.0, 0, 2);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: 45, area: 45, dist: 48,
+			PuffActor: "KyreiPuffRight",
+			HitActorSound: "Sword/HitMeat",
+			HitWallSound: "Sword/HitWall");
+		TNT1 A 0 A_FireCustomMissile("RedParticleSpawner");
+		VORR B 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORR C 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORR D 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORR E 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 3 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 A_Refire("Fire");
+		Goto PreReady;
+
+	SwingLefty:
+		VORL A 0 Offset(15,32);
+		VORL A 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 A_PlaySound("Sword/Swing", CHAN_WEAPON, 1.0, 0, 2);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: -45, area: 45, dist: 48,
+			PuffActor: "KyreiPuffLeft",
+			HitActorSound: "Sword/HitMeat",
+			HitWallSound: "Sword/HitWall");
+		TNT1 A 0 A_FireCustomMissile("RedParticleSpawner");
+		VORL B 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORL C 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORL D 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORL E 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 3 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 A_Refire("Fire");
+		Goto PreReady;
+
+	PreReady:
+		VORS EDCBA 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		Goto Ready3;
+
+	AltFire:
+		TNT1 A 0 A_JumpIfHealthLower(50, "Fire");
+		TNT1 A 0 A_Jump(256, "SwingRightyZerked", "SwingLeftyZerked");
+		Goto Ready3;
+
+	SwingRightyZerked:
+		VORR A 0 Offset(15,32);
+		TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, "SwingRightyBladeStorm");
+		VORR A 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 A_PlaySound("Sword/Swing", CHAN_WEAPON, 1.0, 0, 2);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: 45, area: 45, dist: 48,
+			PuffActor: "KyreiPuffRight",
+			HitActorSound: "Sword/HitMeat",
+			HitWallSound: "Sword/HitWall");
+		TNT1 A 0 A_FireCustomMissile("RedParticleSpawner");
+		VORR B 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORR C 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash1",0,1,0,0);
+		VORR D 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORR E 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 10 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		Goto PreReady;
+
+	SwingLeftyZerked:
+		VORL A 0 Offset(15,32);
+		TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, "SwingLeftyBladeStorm");
+		VORL A 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 A_PlaySound("Sword/Swing", CHAN_WEAPON, 1.0, 0, 2);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: -45, area: 45, dist: 48,
+			PuffActor: "KyreiPuffLeft",
+			HitActorSound: "Sword/HitMeat",
+			HitWallSound: "Sword/HitWall");
+		TNT1 A 0 A_FireCustomMissile("RedParticleSpawner");
+		VORL B 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORL C 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash2",0,1,0,0);
+		VORL D 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORL E 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 10 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		Goto PreReady;
+
+	SwingRightyBladeStorm:
+		TNT1 A 0 A_SpawnItemEx("DamageNoArmor10");
+		VORR A 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 A_PlaySound("Sword/Swing", CHAN_WEAPON, 1.0, 0, 2);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash1",0,1,0,0);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: 45, area: 45, dist: 48,
+			PuffActor: "KyreiPuffRight",
+			HitActorSound: "Sword/HitMeat",
+			HitWallSound: "Sword/HitWall");
+		TNT1 A 0 A_FireCustomMissile("RedParticleSpawner");
+		VORR B 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash1",0,1,0,0);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: 45, area: 45, dist: 48);
+		VORR C 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash1",0,1,0,0);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: 45, area: 45, dist: 48);
+		VORR D 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash1",0,1,0,0);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: 45, area: 45, dist: 48);
+		VORR E 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash1",0,1,0,0);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: 45, area: 45, dist: 48);
+		Goto PreReady;
+
+	SwingLeftyBladeStorm:
+		TNT1 A 0 A_SpawnItemEx("DamageNoArmor10");
+		VORL A 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 A_PlaySound("Sword/Swing", CHAN_WEAPON, 1.0, 0, 2);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash2",0,1,0,0);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: -45, area: 45, dist: 48,
+			PuffActor: "KyreiPuffLeft",
+			HitActorSound: "Sword/HitMeat",
+			HitWallSound: "Sword/HitWall");
+		TNT1 A 0 A_FireCustomMissile("RedParticleSpawner");
+		VORL B 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash2",0,1,0,0);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: -45, area: 45, dist: 48);
+		VORL C 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash2",0,1,0,0);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: -45, area: 45, dist: 48);
+		VORL D 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash2",0,1,0,0);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: -45, area: 45, dist: 48);
+		VORL E 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 Bright A_FireProjectile("BladeSlash2",0,1,0,0);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: -45, area: 45, dist: 48);
+		Goto PreReady;
+
+	FlashPunching:
+		VORP AAAAAAAAAAAAAA 1;
+		Goto Ready3;
+	FlashKicking:
+		VORP AAAAAAAAAAAAAAA 1;
+		Goto Ready3;
+	FlashAirKicking:
+		VORP AAAAAAAAAAAAAAAA 1;
+		Goto Ready3;
+	FlashSlideKicking:
+		VORP AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1;
+		Goto Ready3;
+	FlashSlideKickingStop:
+		VORP AAAAAAA 1;
+		Goto Ready3;
+	}
+}

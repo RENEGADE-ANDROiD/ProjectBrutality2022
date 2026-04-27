@@ -1,0 +1,374 @@
+class PossessedGibs : Actor
+{
+	int rolldir;
+	int startcorpses;
+	int possradius;
+	int maxcorpses;
+	array<string> corpselist;
+	Array<Actor> corpses;
+	array<int> spriteroll;
+	array<int> lastframe;
+	array<int> nextframe;
+	array<int> animrange;
+	array<int> warpdist;
+	array<int> warpspeed;
+	array<int> warpang;
+	array<double> warpz;
+	array<double> wvamp;
+	array<double> wvspeed;
+	array<double> wvmod;
+	bool stealthy;
+	bool alerted;
+//=================================== Config ===================================
+	override void PostBeginPlay()
+	{
+		stealthy = false;		// If true, the Possessed Gibs initially won't hover or emit a light, perfect for ambushes
+		possradius = 128;		// Radius for various functions such as detection range, warp distance, dynamic light size
+		maxcorpses = 20;		// Maximum amount of gibbed corpses that can hover around the Possessed Gibs
+		startcorpses = 10;		// Amount of additional gibbed corpses spawned around the spawn position
+		corpselist.pushV("GibbedMarine",		// Classnames for the additional gibbed corpses
+						"GibbedMarineExtra",	// These can also be placed on the map as "reinforcements"
+						"GibbedZombieMan",
+						"GibbedShotgunGuy",
+						"GibbedDoomImp",
+						"GibbedChaingunGuy");
+//==============================================================================
+		rolldir = randompick(-10,-8,-6,-4,4,6,8,10);
+		corpses.reserve(maxcorpses);	
+		spriteroll.reserve(maxcorpses);
+		lastframe.reserve(maxcorpses);
+		nextframe.reserve(maxcorpses);
+		animrange.reserve(maxcorpses);
+		warpdist.reserve(maxcorpses);
+		warpspeed.reserve(maxcorpses);
+		warpang.reserve(maxcorpses);
+		warpz.reserve(maxcorpses);
+		wvmod.reserve(maxcorpses);
+		wvamp.reserve(maxcorpses);
+		wvspeed.reserve(maxcorpses);
+		for (int i = 0; i < maxcorpses; i++)
+		{
+			spriteroll[i] = randompick(-10,-8,-6,-4,4,6,8,10);
+			warpspeed[i] = randompick(-5,-4,-3,-2,2,3,4,5);
+			wvamp[i] = frandom(3.0,4.0);
+			wvspeed[i] = frandom(0.2,0.3);
+			warpz[i] = 0;
+			wvmod[i] = 0;
+		}
+		for (int i = 0; i < startcorpses; i++)
+		{
+			String cstr = corpselist[random(0, corpselist.Size() - 1)];
+			class<Actor> csp = (class<Actor>)(cstr);
+			if (!csp) { continue; }
+			Vector3 spawnpos = self.Vec3Offset(frandom(possradius/2, -possradius/2), frandom(possradius/2, -possradius/2), 0);
+			if (level.IsPointInLevel(spawnpos))
+			{
+				Actor gp = Actor.Spawn(csp, spawnpos, NO_REPLACE);
+				if (gp) { if (random(0, 1)) { gp.scale.x = -1; } }
+			}
+			else
+			{
+				i--;
+			}
+		}
+		if (!stealthy) A_AttachLight("PGL", DynamicLight.PulseLight, "400000", int(possradius*0.5), int(possradius*0.7), 0, (0,0,0), 1);
+		Super.PostBeginPlay();
+	}
+
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		if (damage < 1)
+		{
+			return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+		}
+		if (CheckCorpse()) { damage = (damage * 25) / 100; }
+		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+	}
+
+	Default
+	{
+		//$Category Monsters
+		//$Color red
+		//$Title "Possessed Gibs"
+		//$Sprite "VPSGF0"
+		Tag "Possessed Gibs";
+		Health 150;
+		Radius 20;
+		Height 40;
+		Mass 1000;
+		Speed 5;
+		PainChance 100;
+		Monster;
+		DamageFactor 1.0;
+		RadiusDamageFactor 0.25;
+		+DONTMORPH;
+		+NOGRAVITY;
+		+FLOAT;
+		+FLOORCLIP;
+		+DONTFALL;
+		+THRUSPECIES;
+		+MOVEWITHSECTOR;
+		+ROLLSPRITE;
+		+ROLLCENTER;
+		SeeSound "misc/gibbed";
+		DeathSound "PossessedGibs/death";
+		Obituary "%o was killed by Possessed Gibs.";
+	}
+	States
+	{
+	Spawn:
+		VPSG A 1 
+		{
+			if (alerted) SetStateLabel("Look");
+			A_Look();
+			if (!stealthy) A_Weave(0,1,0.0,0.5);
+		}
+		Loop;
+	Look:
+		VPSG BBBBCCCCDDDDEEEEFFFFGGGGFFFFEEEEDDDDCCCC 1
+		{
+			roll += rolldir;
+			A_Weave(1,1,1.0,1.0);
+			A_Look();
+			Possession();
+		}
+	See:
+		TNT1 A 0
+		{
+			A_StartSound("PossessedGibs/active", 22500, CHANF_LOOPING);
+			if (stealthy) A_AttachLight("PGL", DynamicLight.PulseLight, "400000", int(possradius*0.5), int(possradius*0.7), 0, (0,0,0), 1);
+			alerted = true;
+			stealthy = false;
+			if (pos.z <= floorz+16) vel.z = 0.1;
+			if (pos.z >= floorz+48 || pos.z >= ceilingz-height-48) vel.z = -0.2;
+			Scan();
+		}
+		VPSG BBBBCCCCDDDDEEEEFFFFGGGGFFFFEEEEDDDDCCCC 1
+		{
+			roll += rolldir;
+			A_Weave(1,1,1.0,1.0);
+			A_Chase(null,null);
+			Possession();
+		}
+		TNT1 A 0
+		{
+			if (target && CheckSight(target) && !random(0,2)) { A_SpawnProjectile("PGProjectile"); }		
+		}
+		Loop;
+	Death:
+		TNT1 A 0
+		{
+			A_StopSound(22500);
+			A_Scream();
+			A_NoBlocking();
+			for (int i = 0; i < maxcorpses; i++)
+			{
+				if (corpses[i])
+				{
+					let obj = corpses[i];
+					obj.A_Die();
+				}
+			}
+		}
+		VPSG EEEDDD 1
+		{
+			roll += rolldir*3;
+		}
+		TNT1 A 0
+		{
+			bNOGRAVITY = false;
+		}
+		VPSG CCCDDD 1
+		{
+			roll += rolldir*3;
+		}
+		Stop;
+	Crash:
+		#### # 0
+		{
+			A_RemoveLight("PGL");
+			A_SpawnDebris("PGbloodDebrisXL");
+			A_SpawnDebris("PGGibChunk");
+			A_SpawnDebris("PGGibBone");
+			A_SpawnDebris("PGGibArm");
+			A_SpawnDebris("PGGibEye");
+		}
+		Stop;
+	}
+	
+	bool CheckObj(Actor obj, int index)
+	{
+		if (obj.bISMONSTER
+		&& obj.InStateSequence(obj.CurState, obj.ResolveState("XDeath")) 
+		&& !obj.InStateSequence(obj.CurState, obj.ResolveState("Death"))
+		&& obj.CurState.tics < 0)
+		{
+			state xstate = obj.FindState("XDeath");
+			animrange[index] = obj.frame - xstate.frame - 1;
+			return true;
+		}
+		for (int i = 0; i < corpselist.Size(); i++)
+		{
+			class<Actor> acls = (class<Actor>)(corpselist[i]);
+			if (acls && (obj is acls))
+			{
+				animrange[index] = 5;
+				return true;
+			}
+		}
+		return false;
+	}
+	bool CheckCorpse()
+	{
+		for (int i = 0; i < maxcorpses; i++)
+		{
+			if (corpses[i])
+			{
+				let obj = corpses[i];
+				if (obj.health > 0) return true;
+			}
+		}
+		return false;
+	}
+
+	action void Scan()
+	{
+		let me = PossessedGibs(invoker);
+		for (int i = 0; i < me.maxcorpses; i++)
+		{
+			if (!me.corpses[i])
+			{
+				BlockThingsIterator it = BlockThingsIterator.Create(me, me.possradius);
+				while (it.Next())
+				{
+					let obj = it.thing;
+					if (me.Distance3D(obj) <= me.possradius && me.corpses.Find(obj) == me.corpses.Size() && me.CheckObj(obj, i))
+					{
+						class<Actor> peg = "PossessedGibsExtra";
+						Actor gp = Actor.Spawn(peg, obj.pos, NO_REPLACE);
+						if (gp)
+						{
+							me.corpses[i] = gp;
+							me.warpdist[i] = me.Distance2D(gp);
+							me.warpang[i] = me.AngleTo(gp);
+							double aimangle = gp.AngleTo(me);
+							double gspeed = me.Distance2D(gp) * 0.1;
+							double zdiff = me.pos.z - gp.pos.z;
+							gp.vel = (gspeed * cos(aimangle), gspeed * sin(aimangle), zdiff * 0.25);
+							gp.master = me;
+							gp.sprite = obj.sprite;
+							{
+								double mag = gp.scale.x < 0 ? -gp.scale.x : gp.scale.x;
+								if (mag < 0.0001) { mag = 1.; }
+								gp.scale.x = (obj.scale.x < 0) ? -mag : mag;
+							}
+							me.lastframe[i] = obj.frame;
+							if (obj.frame >= 4)
+							{
+								gp.frame = obj.frame - random(2, 3);
+								me.nextframe[i] = 1;
+							}
+							gp.A_StartSound("misc/gibbed", CHAN_BODY);
+							obj.destroy();
+							break;
+						}
+					}	
+				}
+			}
+		}
+	}
+	
+	action void Possession()
+	{
+		let me = PossessedGibs(invoker);
+		for (int i = 0; i < me.maxcorpses; i++)
+		{
+			if (me.corpses[i])
+			{
+				let obj = me.corpses[i];
+				obj.roll += me.spriteroll[i];
+				int dist = me.Distance2D(obj);
+				if (!obj.bNOGRAVITY && dist < me.possradius * 0.667 && obj.health > 0)
+				{
+					obj.vel = (0, 0, 0);
+					obj.bNOGRAVITY = true;
+					me.warpdist[i] = dist + random(-32, 0);
+				}
+				if (obj.bNOGRAVITY)
+				{
+					if ((level.maptime & 3) == 0)
+					{
+						if (obj.frame >= me.lastframe[i] - 1 || obj.frame <= me.lastframe[i] - me.animrange[i]) me.nextframe[i] = -me.nextframe[i];
+						obj.frame += me.nextframe[i];
+						if (me.target && me.CheckSight(me.target) && !random(0, 69))
+						{
+							obj.target = me.target;
+							obj.A_FaceTarget();
+							let gp = obj.A_SpawnProjectile("PGProjectile");
+							if (gp) gp.target = me;
+						}
+					}
+					if (me.wvmod[i] > me.wvamp[i])
+					{
+						me.wvspeed[i] = -me.wvspeed[i];
+						me.wvmod[i] = me.wvamp[i];
+					}
+					if (me.wvmod[i] < -me.wvamp[i])
+					{
+						me.wvspeed[i] = -me.wvspeed[i];
+						me.wvmod[i] = -me.wvamp[i];
+					}
+					me.wvmod[i] += me.wvspeed[i];
+					me.warpz[i] += me.wvmod[i];
+					me.warpang[i] += me.warpspeed[i];
+					if (me.warpz[i] > me.possradius || dist > me.possradius)
+					{
+						obj.warp(me, 0, 0, 0, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE);
+					}
+					if (obj.warp(me, me.warpdist[i], 0, me.warpz[i], me.warpang[i], WARPF_ABSOLUTEANGLE|WARPF_INTERPOLATE) == false)
+					{
+						obj.warp(me, me.radius, 0, me.warpz[i], me.warpang[i], WARPF_NOCHECKPOSITION|WARPF_ABSOLUTEANGLE|WARPF_INTERPOLATE);
+					}
+				}
+			}
+		}
+	}
+}
+
+//--------------------------------- gibs dummy ---------------------------------
+class PossessedGibsExtra : Actor 
+{
+	Default
+	{
+		Health 75;
+		Radius 20;
+		Height 40;
+		+DONTMORPH;
+		+SHOOTABLE;
+		+THRUSPECIES;
+		+ROLLSPRITE;
+		+ROLLCENTER;
+		RadiusDamageFactor 0.25;
+		Species "PossessedGibs";
+		Tag "Gib minion";
+		DeathSound "PossessedGibs/death";
+		Obituary "%o was killed by Possessed Gibs.";
+		}
+	States
+	{
+	Spawn:
+		#### # 1;
+		Loop;
+	Death:
+		#### # 1
+		{
+			A_Scream();
+			A_SpawnDebris("PGbloodDebrisXL");
+			A_SpawnDebris("PGGibChunk");
+			A_SpawnDebris("PGGibBone");
+			A_SpawnDebris("PGGibArm");
+			A_SpawnDebris("PGGibEye");
+		}
+		Stop;
+	}
+}
