@@ -1740,7 +1740,7 @@ SeeContinuePart36Continue:
 	Death.MonsterMinigun:
 	Death.Arm:
 	     TNT1 A 0
-		 TNT1 A 0 A_JumpIfInTargetInventory("CryoRifleSelected", 1, "Death.Freeze")
+		 TNT1 A 0 A_JumpIfInTargetInventory("FreezerSelected", 1, "Death.Freeze")
 	     TNT1 AA 0 A_CustomMissile ("BloodMist", 40, 0, random (0, 360), 2, random (30, 90))
 		 TNT1 A 0 A_CustomMissile ("XDeathMarauderArm", 45, 0, random (0, 360), 1, random (0, 160))
 		 TNT1 A 0 A_CustomMissile ("XDeath1", 45, 0, random (0, 360), 2, random (0, 160))
@@ -1908,11 +1908,11 @@ Actor MarauderDamaged : PB_Marauder
 	States
 	{
 	Death.Head:
-	    TNT1 A 0 A_JumpIfInTargetInventory("CryoRifleSelected", 1, "Death.Freeze")
+	    TNT1 A 0 A_JumpIfInTargetInventory("FreezerSelected", 1, "Death.Freeze")
 		Goto Super::Death.Head
 	
 	Death.Arm:
-		TNT1 A 0 A_JumpIfInTargetInventory("CryoRifleSelected", 1, "Death.Freeze")
+		TNT1 A 0 A_JumpIfInTargetInventory("FreezerSelected", 1, "Death.Freeze")
 		Goto Super::Death.Arm
 	
 	}

@@ -33,8 +33,6 @@ Actor IsDead : Inventory {}
 Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
 Actor GrabbedFlameBarrel : Inventory { Inventory.MaxAmount 1 }
 Actor HasFlameBarrel : Inventory { Inventory.MaxAmount 1 }
-Actor EquippedObject : Inventory { Inventory.MaxAmount 1 }
-Actor CryoRifleSelected : Inventory { Inventory.MaxAmount 1 }
 Actor DisintegratedHuman
 {
 	+NOBLOCKMAP
@@ -108,19 +106,6 @@ Actor CameraShake : Actor
 		Stop
 	}
 }
-Actor Guts2 : Actor
-{
-	+NOBLOCKMAP
-	+NOINTERACTION
-	+NOGRAVITY
-	States
-	{
-	Spawn:
-		TNT1 A 8
-		Stop
-	}
-}
-
 // Regret Elemental compatibility drops.
 Actor ShieldSphere : ArmorBonus
 {
@@ -161,6 +146,15 @@ Actor RageSphere : Berserk
 #include "actors/Weapons/Slot1/ShieldSaw.dec"
 #include "actors/Weapons/Slot4/PBRIFLE.dec"
 #include "actors/Weapons/Slot3/SHOTGUN.dec"
+// PB_Shell (and other PBWP ammo aliases) must be parsed before X12Shotgun/HASG
+// reference them in state-action args. PBWP_CompatAmmo.dec defines
+//   PB_Shell : NewShell, PB_HighCalMag : NewClip, PB_Cell : NewCell, PB_CellPack : NewCellPack
+// so the three parent-providing ammo includes (ShellBox/Clipbox/Cellpack) must come
+// immediately before it; the rest of the ammo block stays at its original location below.
+#include "actors/Items/Ammo/ShellBox.dec"
+#include "actors/Items/Ammo/Clipbox.dec"
+#include "actors/Items/Ammo/Cellpack.dec"
+#include "actors/Items/Ammo/PBWP_CompatAmmo.dec"
 #include "actors/Weapons/Slot3/X12Shotgun.dec"
 #include "actors/Weapons/Slot3/HASG.dec"
 #include "actors/Weapons/Slot3/SSG.dec"
@@ -195,13 +189,12 @@ Actor RageSphere : Berserk
 #include "actors/Items/Ammo/GenericAmmo.dec"
 #include "actors/Items/Ammo/HandGrenadeBox.dec"
 #include "actors/Items/Ammo/RocketBox.dec"
-#include "actors/Items/Ammo/ShellBox.dec"
-#include "actors/Items/Ammo/Clipbox.dec"
 #include "actors/Items/Ammo/Bulletkit.dec"
 #include "actors/Items/Ammo/SpecialGrenadeBox.dec"
-#include "actors/Items/Ammo/Cellpack.dec"
 #include "actors/Items/Ammo/PB_DTech_Ammo.dec"
-#include "actors/Items/Ammo/PBWP_CompatAmmo.dec"
+// ShellBox.dec, Clipbox.dec, Cellpack.dec, and PBWP_CompatAmmo.dec are included earlier
+// (above X12Shotgun/HASG) so PB_Shell / PB_HighCalMag / PB_Cell / PB_CellPack parent
+// classes resolve before Slot 3 shotgun states reference them.
 
 //Powerups
 #include "actors/Items/Powerups/GenericPowerups.dec"
@@ -274,6 +267,7 @@ Actor RageSphere : Berserk
 #include "actors/Gore/Underwaterblood.dec"
 #include "actors/Gore/BlackHoleDeaths.dec"
 #include "actors/Gore/MarauderGib.dec"
+#include "actors/Gore/PBGoreAliases.dec"
 
 //Hitboxes
 #include "actors/Hitboxes/HEAD_SYS.dec"

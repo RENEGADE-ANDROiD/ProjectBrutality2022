@@ -1790,7 +1790,7 @@ OptionMenu "MonsterPackSettings"
 	Option "T4 — Overlord (same as Advanced Monster Spawns)", "pb_NoOverlord", "OffOn"
 	StaticText " "
 	StaticText "---------------Commando---------------", gold
-	Option "T3 — Rifle Commando (PB_RifleCommando line)", "NoRifleCommando", "OffOn"
+	Option "T3 — Rifle Commando (PB_ClassicCommando line)", "NoRifleCommando", "OffOn"
 	StaticText " "
 	StaticText "---------------Cyberdemon variants---------------", gold
 	Option "T2 — Hellduke", "NoHellduke", "OffOn"
