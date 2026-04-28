@@ -276,16 +276,26 @@ class Z_TiltMe : CustomInventory
 			lastRoll *= 0.75;
 		}
 
-		// Apply the sum of all rolling routines
-		// (including after stabilization)
-		Owner.A_SetRoll((Owner.Roll + lastRoll) * 0.5, SPF_INTERPOLATE);
+		// Apply Nash Tilt++ roll together with PB tactical camera lean (one Owner.Roll; see PB_WeaponTilterInventory).
+		double strippedRoll = Owner.Roll;
+		double tacLean = 0;
+		let tacInv = PB_WeaponTilterInventory(Owner.FindInventory("PB_WeaponTilterInventory"));
+		if (tacInv)
+		{
+			strippedRoll = tacInv.StripPriorLeanFromRoll(Owner.Roll);
+			tacLean = tacInv.GetCameraLeanRollForMerge();
+		}
+		Owner.A_SetRoll((strippedRoll + lastRoll + tacLean) * 0.5, SPF_INTERPOLATE);
+		if (tacInv)
+			tacInv.SetAppliedCameraLean(tacLean);
 	}
 
 	override void Tick(void)
 	{
-		if (Owner && Owner is "PlayerPawn") //&& !Owner.CheckInventory("PB_LockScreenTilt",1)) always do viewroll stuff
+		if (Owner && Owner is "PlayerPawn")
 		{
-			Tilt_CalcViewRoll();
+			if (!Owner.CheckInventory("PB_LockScreenTilt", 1))
+				Tilt_CalcViewRoll();
 		}
 
 		Super.Tick();

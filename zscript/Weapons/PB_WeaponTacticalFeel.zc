@@ -16,6 +16,9 @@ class PB_WeaponTilterInventory : Inventory
 	double neutralWeaponY;
 	bool hasNeutralWeaponY;
 
+	// Merged into camera roll inside Tilt++ so Nash Tilt++ and PB lean share one Owner.Roll.
+	double lastAppliedCameraLean;
+
 	double cvRollResistance;
 	double cvRollVelocity;
 	double cvRollCap;
@@ -63,6 +66,35 @@ class PB_WeaponTilterInventory : Inventory
 		Inventory.MaxAmount 1;
 	}
 
+	void ResetCameraLeanMergeState()
+	{
+		lastAppliedCameraLean = 0;
+		leanRoll = 0;
+	}
+
+	double GetCameraLeanRollForMerge()
+	{
+		if (!owner || !owner.player || !cvEnabled)
+			return 0;
+		Weapon weap = owner.player.ReadyWeapon;
+		let psp = owner.player.FindPSprite(PSP_WEAPON);
+		if (!weap || !psp)
+			return 0;
+		if (ShouldBlockForSafety(owner, weap, psp))
+			return 0;
+		return leanRoll;
+	}
+
+	double StripPriorLeanFromRoll(double ownerRoll)
+	{
+		return ownerRoll - lastAppliedCameraLean;
+	}
+
+	void SetAppliedCameraLean(double v)
+	{
+		lastAppliedCameraLean = v;
+	}
+
 	private bool IsOnFloor()
 	{
 		return owner && owner.Pos.Z <= owner.FloorZ + 0.01;
@@ -89,19 +121,25 @@ class PB_WeaponTilterInventory : Inventory
 		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
 		st = weap.FindState("Ready3");
 		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
+		st = weap.FindState("Ready4");
+		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
 		st = weap.FindState("ReadyLoop");
 		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
 		st = weap.FindState("ReadyAim");
 		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
 		st = weap.FindState("Ready_ADS");
 		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
+		st = weap.FindState("ReadyToFire");
+		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
+		st = weap.FindState("Ready2");
+		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
 		st = weap.FindState("BDReady3");
 		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
 		st = weap.FindState("BDReadyADS");
 		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
 
-		// Unknown weapon style: don't hard-block tactical feel just because labels differ.
-		return true;
+		// Select / Respect / Upgrade paths use other labels; do not treat them as ready (avoids PSP jump).
+		return false;
 	}
 
 	private bool IsScopedWeapon(Weapon weap)
@@ -151,6 +189,7 @@ class PB_WeaponTilterInventory : Inventory
 		if (plr.CountInv("Kicking") > 0 || plr.CountInv("UseEquipment") > 0 || plr.CountInv("ToggleEquipment") > 0) { return true; }
 		if (plr.CountInv("PlayerIsThrowingAGrenade") > 0 || plr.CountInv("PlayerIsThrowingAMolotovCocktail") > 0) { return true; }
 		if (plr.CountInv("DoShoulderCannon") > 0 || plr.CountInv("DoGloryMelee") > 0 || plr.CountInv("PB_LockScreenTilt") > 0) { return true; }
+		if (plr.CountInv("PlayerWheelOpen") > 0) { return true; }
 		return false;
 	}
 
@@ -264,7 +303,7 @@ class PB_WeaponTilterInventory : Inventory
 		{
 			ResetAppliedOffset(psp);
 			psp.Rotation = 0;
-			owner.A_SetRoll(0, SPF_INTERPOLATE);
+			ResetCameraLeanMergeState();
 			return;
 		}
 
@@ -348,36 +387,45 @@ class PB_WeaponTilterInventory : Inventory
 			}
 		}
 		leanRoll += (targetLean - leanRoll) * cvLeanSmoothing;
-		owner.A_SetRoll(leanRoll, SPF_INTERPOLATE);
+		// Camera lean is merged in Tilt++ (Z_TiltMe) with Nash Tilt++ so both systems share Owner.Roll.
 
-		psp.Rotation = currentRoll;
-		double baseY = psp.Y - appliedYOffset;
-		if (!hasNeutralWeaponY)
+		bool holdBlend = (ready || reloading) && !blocked && !excluded;
+		if (holdBlend)
 		{
-			neutralWeaponY = baseY;
-			hasNeutralWeaponY = true;
+			psp.Rotation = currentRoll;
+			double baseY = psp.Y - appliedYOffset;
+			if (!hasNeutralWeaponY)
+			{
+				neutralWeaponY = baseY;
+				hasNeutralWeaponY = true;
+			}
+			// Refresh neutral baseline during idle-ready or reload (not during raise/respect labels).
+			if ((ready || reloading) && !blocked)
+			{
+				neutralWeaponY += (baseY - neutralWeaponY) * 0.12;
+			}
+			// In PB's HUD setup, negative Y offset moves the sprite downward.
+			// Keep lowering strictly downward-only so movement never lifts weapons.
+			double extraLowerPixels = 5.0;
+			double targetYOffset = - (loweringAmount + (landingKick * 0.45) + (reloading ? 0.8 : 0) + extraLowerPixels);
+			targetYOffset = clamp(targetYOffset, -28.0, 0.0);
+			// Smooth Y offset to avoid bob/tilt feedback oscillation when movement starts/stops.
+			double newYOffset = appliedYOffset + (targetYOffset - appliedYOffset) * 0.20;
+			double finalY = baseY + newYOffset;
+			// Hard cap upward raise to avoid exposing cropped weapon bottoms.
+			double maxRaisePixels = 1.0;
+			if (finalY < neutralWeaponY - maxRaisePixels)
+			{
+				finalY = neutralWeaponY - maxRaisePixels;
+			}
+			psp.Y = finalY;
+			appliedYOffset = finalY - baseY;
 		}
-		// Refresh neutral baseline only during stable ready loops.
-		if (ready && !blocked)
+		else
 		{
-			neutralWeaponY += (baseY - neutralWeaponY) * 0.12;
+			ResetAppliedOffset(psp);
+			psp.Rotation = 0;
 		}
-		// In PB's HUD setup, negative Y offset moves the sprite downward.
-		// Keep lowering strictly downward-only so movement never lifts weapons.
-		double extraLowerPixels = 5.0;
-		double targetYOffset = - (loweringAmount + (landingKick * 0.45) + (reloading ? 0.8 : 0) + extraLowerPixels);
-		targetYOffset = clamp(targetYOffset, -28.0, 0.0);
-		// Smooth Y offset to avoid bob/tilt feedback oscillation when movement starts/stops.
-		double newYOffset = appliedYOffset + (targetYOffset - appliedYOffset) * 0.20;
-		double finalY = baseY + newYOffset;
-		// Hard cap upward raise to avoid exposing cropped weapon bottoms.
-		double maxRaisePixels = 1.0;
-		if (finalY < neutralWeaponY - maxRaisePixels)
-		{
-			finalY = neutralWeaponY - maxRaisePixels;
-		}
-		psp.Y = finalY;
-		appliedYOffset = finalY - baseY;
 	}
 }
 
