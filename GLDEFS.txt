@@ -1357,6 +1357,8 @@ pulselight BLUEITEM
     offset 0 5 0
 }
 
+#include "lumps/includes/gldefs/WolvusMutator.inc"
+
 
 
 

@@ -12,7 +12,7 @@ ACTOR HealthPlus : Health Replaces HealthBonus
 	Inventory.Amount 2
 	Inventory.MaxAmount 9999
 	Inventory.PickupMessage "$GOTHTHBONUS"
-	Inventory.PickUpSound "misc/hbonus_PickUp"
+	Inventory.PickUpSound "items/bonus1"
 	Health.LowMessage 25, "$GOTHTHNEED"
 	States
 	{
@@ -40,7 +40,7 @@ Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 	+FLOORCLIP
 	+DONTGIB
 	+INVENTORY.ALWAYSPICKUP
-	Inventory.PickUpSound "misc/abonus_PickUp"
+	Inventory.PickUpSound "items/bonus2"
 	States
 	{
 	Spawn:

@@ -4724,3 +4724,28 @@ DryFire/Shotgun DRYFIRE
 $pitchset weapons/golide/fire 0.95 1.05
 $pitchset weapons/golide/pump 0.9 1.1
 $volume weapons/golide/drumpickup 0.9
+
+// --- Wolvexus mutator item fold (logical names + lumps under sounds/items/) ---
+items/bonus1				HBONUS1
+items/bonus2				ABONUS1
+items/bonus3				HBONUS2
+items/bonus4				ABONUS2
+items/bonus5				HBONUS3
+items/bonus6				ABONUS3
+items/bonus7				HBONUS4
+items/bonus8				ABONUS4
+items/armor1				GARM
+items/armor2				YARM
+items/armor3				BARM
+items/armor4				RARM
+items/armor5				PARM
+items/sphere1				GODS
+items/sphere2				LIFES
+items/sphere3				MEGAS
+items/sphere4				LIFES2
+items/sphere5				ULTRAS
+items/sphere6				2DAMAGE
+items/sphere7				RAGES
+items/sphere8				TIMESPH
+items/rune					DRUNE
+Items/MegaBerserk			MEGAZERK

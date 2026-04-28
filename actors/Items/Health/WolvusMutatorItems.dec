@@ -1,4 +1,4 @@
-// Wolvus mutator-compatible bonus tiers, adapted to PB2022 assets.
+// Wolvexus mutator tier pickups — sprite/audio fold from Wolvexus_Mutator (items only).
 
 ACTOR StrongHealthPlus : Health
 {
@@ -10,11 +10,11 @@ ACTOR StrongHealthPlus : Health
 	Inventory.Amount 4
 	Inventory.MaxAmount 9999
 	Inventory.PickupMessage "Picked up a strong health bonus."
-	Inventory.PickUpSound "misc/hbonus_PickUp"
+	Inventory.PickUpSound "items/bonus3"
 	States
 	{
 	Spawn:
-		BON1 ABCD 4
+		BON3 ABCD 4
 		Loop
 	}
 }
@@ -29,11 +29,11 @@ ACTOR SuperHealthPlus : Health
 	Inventory.Amount 6
 	Inventory.MaxAmount 9999
 	Inventory.PickupMessage "Picked up a super health bonus."
-	Inventory.PickUpSound "misc/hbonus_PickUp"
+	Inventory.PickUpSound "items/bonus5"
 	States
 	{
 	Spawn:
-		BON1 ABCD 4
+		BON5 ABCD 4
 		Loop
 	}
 }
@@ -48,11 +48,11 @@ ACTOR PristineHealthPlus : Health
 	Inventory.Amount 8
 	Inventory.MaxAmount 9999
 	Inventory.PickupMessage "Picked up an ultra health bonus."
-	Inventory.PickUpSound "misc/hbonus_PickUp"
+	Inventory.PickUpSound "items/bonus7"
 	States
 	{
 	Spawn:
-		BON1 ABCD 4
+		BON7 ABCD 4
 		Loop
 	}
 }
@@ -63,7 +63,7 @@ Actor StrongArmorShard : BasicArmorBonus
 	Radius 20
 	Height 16
 	Inventory.Pickupmessage "Picked up a strong armor bonus."
-	Inventory.Icon "BON2A0"
+	Inventory.Icon "BON4D0"
 	Armor.Savepercent 33.335
 	Armor.Saveamount 4
 	Armor.Maxsaveamount 9999
@@ -71,11 +71,11 @@ Actor StrongArmorShard : BasicArmorBonus
 	+FLOORCLIP
 	+DONTGIB
 	+INVENTORY.ALWAYSPICKUP
-	Inventory.PickUpSound "misc/abonus_PickUp"
+	Inventory.PickUpSound "items/bonus4"
 	States
 	{
 	Spawn:
-		BON2 AAABCDB 2
+		BON4 AAABCDB 2
 		Loop
 	}
 }
@@ -86,7 +86,7 @@ Actor SuperArmorShard : BasicArmorBonus
 	Radius 20
 	Height 16
 	Inventory.Pickupmessage "Picked up a super armor bonus."
-	Inventory.Icon "BON2A0"
+	Inventory.Icon "BON6D0"
 	Armor.Savepercent 33.335
 	Armor.Saveamount 6
 	Armor.Maxsaveamount 9999
@@ -94,11 +94,11 @@ Actor SuperArmorShard : BasicArmorBonus
 	+FLOORCLIP
 	+DONTGIB
 	+INVENTORY.ALWAYSPICKUP
-	Inventory.PickUpSound "misc/abonus_PickUp"
+	Inventory.PickUpSound "items/bonus6"
 	States
 	{
 	Spawn:
-		BON2 AAABCDB 2
+		BON6 AAABCDB 2
 		Loop
 	}
 }
@@ -109,7 +109,7 @@ Actor PristineArmorShard : BasicArmorBonus
 	Radius 20
 	Height 16
 	Inventory.Pickupmessage "Picked up an ultra armor bonus."
-	Inventory.Icon "BON2A0"
+	Inventory.Icon "BON8D0"
 	Armor.Savepercent 33.335
 	Armor.Saveamount 8
 	Armor.Maxsaveamount 9999
@@ -117,11 +117,11 @@ Actor PristineArmorShard : BasicArmorBonus
 	+FLOORCLIP
 	+DONTGIB
 	+INVENTORY.ALWAYSPICKUP
-	Inventory.PickUpSound "misc/abonus_PickUp"
+	Inventory.PickUpSound "items/bonus8"
 	States
 	{
 	Spawn:
-		BON2 AAABCDB 2
+		BON8 AAABCDB 2
 		Loop
 	}
 }
@@ -129,21 +129,28 @@ Actor PristineArmorShard : BasicArmorBonus
 Actor EliteArmor : BasicArmorPickup
 {
 	Game Doom
+	SpawnID 7090
 	Radius 20
 	Height 20
 	Scale 1.30
 	+FLOORCLIP
 	+DONTGIB
 	Inventory.Pickupmessage "Picked up the Elite Recon Armor"
-	Inventory.PickupSound "ARMOR"
-	Inventory.Icon "4RM3A0"
+	Inventory.PickupSound "items/armor4"
+	Inventory.Icon "4RM4A0"
 	Armor.Savepercent 75
 	Armor.Saveamount 300
 	States
 	{
 	Spawn:
-		4RM3 ABC 10
-		Loop
+		TNT1 A 0 A_CheckSight("Spawn2")
+		4RM4 AA 6 bright
+		4RM4 BBCCBB 3
+		TNT1 A 0 A_SpawnItem("RedFlareArmor", 0, 10)
+		loop
+	Spawn2:
+		4RM4 ABC 10
+		Goto Spawn
 	}
 }
 
@@ -156,21 +163,28 @@ Actor EliteArmorForUltraSphere : EliteArmor
 Actor PristineArmor : BasicArmorPickup
 {
 	Game Doom
+	SpawnID 7091
 	Radius 20
 	Height 20
 	Scale 1.30
 	+FLOORCLIP
 	+DONTGIB
 	Inventory.Pickupmessage "Picked up the Golden Power Armor"
-	Inventory.PickupSound "ARMOR"
-	Inventory.Icon "4RM3A0"
+	Inventory.PickupSound "items/armor5"
+	Inventory.Icon "4RM5A0"
 	Armor.Savepercent 90
 	Armor.Saveamount 400
 	States
 	{
 	Spawn:
-		4RM3 ABC 10
-		Loop
+		TNT1 A 0 A_CheckSight("Spawn2")
+		4RM5 AA 6 bright
+		4RM5 BBCCBB 3
+		TNT1 A 0 A_SpawnItem("YellowFlareMedium", 0, 10)
+		loop
+	Spawn2:
+		4RM5 ABC 10
+		Goto Spawn
 	}
 }
 
@@ -182,13 +196,18 @@ ACTOR NewLifeSphere : CustomInventory
 	+FloatBob
 	+NoGravity
 	Inventory.PickupMessage "Greater Soulsphere!"
-	Inventory.PickupSound "SSPH"
+	Inventory.PickupSound "items/sphere4"
 	States
 	{
 	Spawn:
-		SOUL ABCDEFGHIJ 3
+		TNT1 A 0 A_CheckSight("Spawn2")
+		GZUL ABCD 2 Bright A_SpawnItem("RedFlareSmall", 0, 35)
 		Loop
+	Spawn2:
+		GZUL ABCD 2 BRIGHT
+		Goto Spawn
 	Pickup:
+		TNT1 AAAAAAAAAAAAA 0 A_CustomMissile("ShinnySmoke", 0, 0, random(0, 360), 2, random(0, 360))
 		TNT1 A 0 A_GiveInventory("GreaterSoulSphereHealth", 1)
 		Stop
 	}
@@ -209,15 +228,20 @@ ACTOR UltraSphere : CustomInventory
 	+NoGravity
 	+INVENTORY.ALWAYSPICKUP
 	Inventory.PickupMessage "Ultrasphere"
-	Inventory.PickupSound "MEGASPH"
+	Inventory.PickupSound "items/sphere5"
 	States
 	{
 	Spawn:
-		MEGA ABCDEFGHIJ 3
+		TNT1 A 0 A_CheckSight("Spawn2")
+		ULTR ABCD 2 BRIGHT A_SpawnItem("LensFlare", 0, 35)
 		Loop
+	Spawn2:
+		ULTR ABCD 2 BRIGHT
+		Goto Spawn
 	Pickup:
+		TNT1 AAAAAAAAAAAAA 0 A_CustomMissile("ShinnySmoke", 0, 0, random(0, 360), 2, random(0, 360))
 		TNT1 A 0 A_GiveInventory("EliteArmorForUltraSphere", 1)
-		TNT1 A 0 A_GiveInventory("GreaterSoulSphereHealth", 1)
+		TNT1 AA 0 A_GiveInventory("GreaterSoulSphereHealth", 1)
 		Stop
 	}
 }

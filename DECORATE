@@ -119,18 +119,6 @@ Actor ShieldSphere : ArmorBonus
 		Stop
 	}
 }
-Actor RageSphere : Berserk
-{
-	Inventory.PickupMessage "$GOTBERSERK"
-	States
-	{
-	Spawn:
-		PSTR A -1
-		Stop
-	}
-}
-
-
 #include "actors/Compat/WarningStubs.dec"
 
 #include "actors/Brutality/BrutalitiesZombieman.dec"

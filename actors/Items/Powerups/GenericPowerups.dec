@@ -83,7 +83,7 @@ ACTOR DemonStrengthRune : Custominventory//Berserl1
 	+DONTGIB
 	+INVENTORY.ALWAYSPICKUP
 	Inventory.PickupMessage "You got the Demon Strength Rune. RIP AND TEAR!"
-	Inventory.PickupSound "misc/p_pkup"
+	Inventory.PickupSound "items/rune"
 	States
 	{
 	Spawn:
