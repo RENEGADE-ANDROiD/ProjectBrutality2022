@@ -251,8 +251,11 @@ class PB_XDeath1 : Actor
 		DeathSound "misc/xdeath1";
 		Decal "BrutalBloodSuper";
 	}
-	
-	
+
+	bool gibSpinFrozen;
+	double gibSpinSnapYaw;
+	int gibSpinStableCt;
+
 	override void BeginPlay(void)
 	{
 		ChangeStatNum(STAT_NashGore_Gore);
@@ -272,6 +275,7 @@ class PB_XDeath1 : Actor
 		Super.Tick();
 		if (!bNoTimeFreeze && (isFrozen() || Level.isFrozen())) return;
 		if (NashGoreStatics.CheckSky(self)) { Destroy(); return; }
+		NashGoreStatics.TickStabilizeMissileGibSprite(self, gibSpinFrozen, gibSpinSnapYaw, gibSpinStableCt);
 	}
 	
     States
@@ -645,7 +649,11 @@ class PB_XDeathBurnedMeat : Actor
 		+DONTSPLASH;
 		+MOVEWITHSECTOR;
 	}
-	
+
+	bool gibSpinFrozen;
+	double gibSpinSnapYaw;
+	int gibSpinStableCt;
+
 	override void BeginPlay(void)
 	{
 		ChangeStatNum(STAT_NashGore_Gore);
@@ -665,8 +673,9 @@ class PB_XDeathBurnedMeat : Actor
 		Super.Tick();
 		if (!bNoTimeFreeze && (isFrozen() || Level.isFrozen())) return;
 		if (NashGoreStatics.CheckSky(self)) { Destroy(); return; }
+		NashGoreStatics.TickStabilizeMissileGibSprite(self, gibSpinFrozen, gibSpinSnapYaw, gibSpinStableCt);
 	}
-	
+
     States
     {
 		Spawn:
@@ -805,7 +814,11 @@ class PB_XDeathArm1 : FlyingGibBase
 		seesound "bloood";
 		deathsound "bloood";
 	}
-	
+
+	bool gibSpinFrozen;
+	double gibSpinSnapYaw;
+	int gibSpinStableCt;
+
 	override void BeginPlay(void)
 	{
 		ChangeStatNum(STAT_NashGore_Gore);
@@ -825,8 +838,9 @@ class PB_XDeathArm1 : FlyingGibBase
 		Super.Tick();
 		if (!bNoTimeFreeze && (isFrozen() || Level.isFrozen())) return;
 		if (NashGoreStatics.CheckSky(self)) { Destroy(); return; }
+		NashGoreStatics.TickStabilizeMissileGibSprite(self, gibSpinFrozen, gibSpinSnapYaw, gibSpinStableCt);
 	}
-	
+
     States
     {
 		Spawn:

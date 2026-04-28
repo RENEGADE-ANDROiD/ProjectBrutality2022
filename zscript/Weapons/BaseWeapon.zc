@@ -540,6 +540,19 @@ class PB_WeaponBase : DoomWeapon
 		invoker.rocketLauncherMode = type;
 	}
 
+	// BDP-style airborne melee lunge: add horizontal speed along view yaw (Vel.Z checked inside).
+	action void A_PB_AirMeleeLunge(double xyBoost)
+	{
+		if (!player || !player.mo)
+			return;
+		let pl = PlayerPawn(player.mo);
+		if (!pl || abs(pl.Vel.Z) < 1.)
+			return;
+		Vector2 f = AngleToVector(pl.angle);
+		pl.Vel.X += f.X * xyBoost;
+		pl.Vel.Y += f.Y * xyBoost;
+	}
+
 //I know that two functions are messy but hey, they work like wonders.	
 //Also, a HUGE thank you to both A_D_M_E_R_A_L and DoomKrakken for showing
 //their examples on making the plasma ammo counter! Thanks guys!
@@ -1241,6 +1254,7 @@ class PB_WeaponBase : DoomWeapon
 				// states can end with `Goto Ready3` just like FlashKicking.
 				// An explicit clear at the end of QuickMelee (below) wipes
 				// any leftover flash psprite regardless of termination.
+				A_PB_AirMeleeLunge(10);
 				A_Overlay(PSP_FLASH, "FlashPunching");
 				A_GiveInventory("HasCutingWeapon", 1);
 				A_TakeInventory("Zoomed", 1);
@@ -1426,6 +1440,7 @@ class PB_WeaponBase : DoomWeapon
 		AirKick:
 			TNT1 A 0 {
 				A_PlaySound("KICK", 6);
+				A_PB_AirMeleeLunge(20);
 				A_Recoil(-6);
 				if (PB_WeaponIsInReadyState())
 				{

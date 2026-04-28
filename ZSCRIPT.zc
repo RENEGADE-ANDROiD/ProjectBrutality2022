@@ -110,6 +110,7 @@ const MAXITERATIONS = 32676;
 
 //Weapons
 #include "zscript/Weapons/BaseWeapon.zc"
+#include "zscript/Weapons/Slot1/KatanaUpgradeChoiceHelpers.zc"
 // Staging-parity helper back-fill on PB_WeaponBase (chamber/mag tracking,
 // PB_WeaponRaise, PB_CheckReload, PB_jumpIfNoAmmo, upgrade handoff, etc.)
 // so future ZScript weapon drops from PB Staging (Deagle, Revolver, Shotgun,

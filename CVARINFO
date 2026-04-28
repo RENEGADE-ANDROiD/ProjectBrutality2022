@@ -337,7 +337,6 @@ server int pb_NoMancubusFlameCannonWeapon = 0;
 server int pb_NoDTechMinigunWeapon = 0;
 server int pb_NoArgentSithWeapon = 0;
 server int pb_NoBeamKatanaWeapon = 0;
-server int pb_NoRazorjackWeapon = 0;
 server int pb_NoVorpalBladeWeapon = 0;
 server int pb_NoMolotov = 0;
 

@@ -3455,7 +3455,7 @@ hookshot/loop DSPULCHN
 hookshot/hit/terrain DSMTALHT
 hookshot/hit/flesh DSMEATHT
 
-// Beam Katana / Argent Sith / Razorjack / equipment fold
+// Beam Katana / Argent Sith / equipment fold
 CybKatana/Activate "sounds/combat/weapons/BeamKatana/DSKatAct"
 $random CybKatana/Hit {
 	"sounds/combat/weapons/BeamKatana/DSZAPHT1"
@@ -3481,27 +3481,6 @@ ArgentBarrier/On "sounds/combat/weapons/ArgentSith/DVFRCON.ogg"
 ArgentBarrier/Loop "sounds/combat/weapons/ArgentSith/DVFRCLOP.ogg"
 ArgentBarrier/Off "sounds/combat/weapons/ArgentSith/DVFRCOFF.ogg"
 ArgentBarrier/Hit "sounds/combat/weapons/ArgentSith/DVKatHit.ogg"
-
-Razorjack/Gun "sounds/combat/weapons/Razorjack/RAZRGUN.ogg"
-Razorjack/Idle "sounds/combat/weapons/Razorjack/RAZRIDLE.ogg"
-Razorjack/IEnd "sounds/combat/weapons/Razorjack/RAZRIEND.ogg"
-Razorjack/Up "sounds/combat/weapons/Razorjack/RAZRUP.ogg"
-Razorjack/Loop "sounds/combat/weapons/Razorjack/RAZRLOOP.ogg"
-Razorjack/Down "sounds/combat/weapons/Razorjack/RAZRDOWN.ogg"
-$random Razorjack/Fire {
-	"sounds/combat/weapons/Razorjack/RAZRFIR1.ogg"
-	"sounds/combat/weapons/Razorjack/RAZRFIR2.ogg"
-	"sounds/combat/weapons/Razorjack/RAZRFIR3.ogg"
-}
-$random Razorjack/Hit {
-	"sounds/combat/weapons/Razorjack/RAZRHIT1.ogg"
-	"sounds/combat/weapons/Razorjack/RAZRHIT2.ogg"
-	"sounds/combat/weapons/Razorjack/RAZRHIT3.ogg"
-	"sounds/combat/weapons/Razorjack/RAZRHIT4.ogg"
-}
-Razorjack/Flesh "sounds/combat/weapons/Razorjack/RAZRFLS0.ogg"
-Razorjack/BladeWall "sounds/combat/weapons/Razorjack/RAZRWALL.ogg"
-Razorjack/BladeBounce "sounds/combat/weapons/Razorjack/RAZRBNC.ogg"
 
 grenade/beep/void "sounds/combat/grenades/Grenade_Beep_Void.ogg"
 FRZIDLE "sounds/combat/Anothers/CMRDBNC.ogg"

@@ -50,6 +50,10 @@ class NashGoreGibs : Actor
 		-SOLID
 	}
 
+	bool gibSpinFrozen;
+	double gibSpinSnapYaw;
+	int gibSpinStableCt;
+
 	//===========================================================================
 	//
 	//
@@ -75,6 +79,7 @@ class NashGoreGibs : Actor
 		Super.Tick();
 		if (!bNoTimeFreeze && (isFrozen() || Level.isFrozen())) return;
 		if (NashGoreStatics.CheckSky(self)) { Destroy(); return; }
+		NashGoreStatics.TickStabilizeMissileGibSprite(self, gibSpinFrozen, gibSpinSnapYaw, gibSpinStableCt);
 	}
 
 	//===========================================================================

@@ -77,15 +77,4 @@ brightmap sprite C0XRO0 { map "brightmaps/WEAPONS/CSSG/BMC0XRO0.png" disablefull
 brightmap sprite C0XRP0 { map "brightmaps/WEAPONS/CSSG/BMC0XRP0.png" disablefullbright }
 brightmap sprite C0XRQ0 { map "brightmaps/WEAPONS/CSSG/BMC0XRQ0.png" disablefullbright }
 brightmap sprite C0XRR0 { map "brightmaps/WEAPONS/CSSG/BMC0XRR0.png" disablefullbright }
-brightmap sprite RAZEA0 { map "brightmaps/WEAPONS/Razorjack/RAZEA0.png" disablefullbright }
-brightmap sprite RAZEB0 { map "brightmaps/WEAPONS/Razorjack/RAZEB0.png" disablefullbright }
-brightmap sprite RAZFA0 { map "brightmaps/WEAPONS/Razorjack/RAZFA0.png" disablefullbright }
-brightmap sprite RAZFB0 { map "brightmaps/WEAPONS/Razorjack/RAZFB0.png" disablefullbright }
-brightmap sprite RAZFC0 { map "brightmaps/WEAPONS/Razorjack/RAZFC0.png" disablefullbright }
-brightmap sprite RAZFD0 { map "brightmaps/WEAPONS/Razorjack/RAZFD0.png" disablefullbright }
-brightmap sprite RAZGA0 { map "brightmaps/WEAPONS/Razorjack/RAZGA0.png" disablefullbright }
-brightmap sprite RAZGB0 { map "brightmaps/WEAPONS/Razorjack/RAZGB0.png" disablefullbright }
-brightmap sprite RAZKW0 { map "brightmaps/WEAPONS/Razorjack/RAZKW0.png" disablefullbright }
-brightmap sprite RAZRA0 { map "brightmaps/WEAPONS/Razorjack/RAZRA0.png" disablefullbright }
-brightmap sprite RAZRB0 { map "brightmaps/WEAPONS/Razorjack/RAZRB0.png" disablefullbright }
 

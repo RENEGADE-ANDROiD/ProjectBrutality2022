@@ -62,6 +62,7 @@ class PB_BeamKatana : PB_WeaponBase
 	    Loop;
 
 	ChooseUpgradePath:
+		TNT1 A 0 PB_KatanaUpgradeFreeze(true);
 		TNT1 A 0 A_PrintBold(
 			"\c-You have both the \ciJEDI MASTER\c- and \caSITH LORD\c- in inventory.\n\cdFIRE\ci: Keep \ciJEDI MASTER (current)\ci  |  \chALTFIRE\ci: Equip \caSITH LORD\ci (drop JEDI, use pickup as replacement)\c-"
 		);
@@ -78,6 +79,8 @@ class PB_BeamKatana : PB_WeaponBase
 		Goto ChooseUpgradePathLoop;
 
 	KeepArgentPath:
+		TNT1 A 0 PB_KatanaUpgradeFreeze(false);
+		TNT1 A 0 PB_KatanaUpgradeClearAttackButtons();
 		TNT1 A 0 A_PrintBold("\cdSwitched to: \caSITH LORD");
 		TNT1 A 0 A_SelectWeapon("PB_ArgentSith");
 		TNT1 A 0 A_TakeInventory("PB_BeamKatana", 1);
@@ -86,7 +89,14 @@ class PB_BeamKatana : PB_WeaponBase
 	KeepBeamPath:
 		TNT1 A 0 A_TakeInventory("PB_ArgentSith", 1);
 		TNT1 A 0 A_PrintBold("\cdKept: \cIJEDI MASTER");
-		Goto KatanaReadyToCut;
+		Goto ReleaseKatanaButtons;
+
+	ReleaseKatanaButtons:
+		TNT1 A 0 PB_KatanaUpgradeFreeze(false);
+		TNT1 A 0 PB_KatanaUpgradeClearAttackButtons();
+		TNT1 A 0 PB_KatanaUpgradeResolveReadyWhenReleased();
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH | WRF_NOBOB);
+		Goto ReleaseKatanaButtons;
 
 	Deselect:
         TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel");
@@ -242,6 +252,7 @@ class PB_BeamKatana : PB_WeaponBase
 		"####" AAA 0 PB_Execute();
 	GoMeleeInstead:
 		TNT1 A 0 {
+			A_PB_AirMeleeLunge(10);
 			A_Overlay(PSP_FLASH, "FlashPunching");
 			A_TakeInventory("Zoomed",1);
 			A_ZoomFactor(1.0);

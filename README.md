@@ -39,51 +39,97 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 
 ### Weapon roster (spawn and options)
 
+Canonical cycle weapons match **`PLAYER.dec`** `WeaponSlot` entries (what **`PB_Doomer`** can equip outside scripted cheats). Glory Kill gear (**Crucible**, shoulder cannon, etc.) lives outside normal weapon slots—see Glory Kill options, not this list.
+
+**Slot 1 — melee / specials**
+
+- Melee (`Melee_Attacks`)  
+- Axe  
+- Chainsaw  
+- Argent Sith Beam Katana  
+- Beam Katana (Nanotech)  
+- Vorpal Blade  
+- Shield Saw  
+
+**Slot 2 — pistols / PDWs**
+
+- Pistol  
 - Revolver  
-- Submachine Gun  
+- MP40  
+- Submachine Gun (UAC SMG)  
+- Riot Shield  
+- Deagle  
+- Hell Pistoler  
+
+**Slot 3 — shotguns**
+
+- Shotgun (pump)  
 - Autoshotgun  
-- Combat Shotgun  
+- Super shotgun (`PB_SSG`)  
+- Combat shotgun (`PB_CSSG`)  
+- HASG (“Lady Golide”)  
+- X12 shotgun  
+- Quad-barrel shotgun  
+- Marauder super shotgun  
+
+**Slot 4 — rifles / precision**
+
+- DMR / Rifle (dual wield when unlocked; **HDMR** modes via upgrades—spawn/menu **`pb_NoHDMRWeapon`**)  
 - Carbine  
+- Chex rifle *(temporary Chex Quest hook)*  
+- XM-21 Sniper  
+- LMG  
+- Metal sniper  
+- Old HMG  
+- Lever Action rifle  
+- Pro-Surv Ballista  
+- M41A  
+- Battle Rifle (BDP Battle Rifle)  
+
+**Slot 5 — heavy bullet hoses**
+
+- Minigun (triple-barrel upgrade—spawn/menu **`pb_NoMinigunUpgradeWeapon`** alongside **`pb_NoMinigunUpgrade`**)  
 - Nailgun  
+- MG42  
+- Demon Tech Minigun  
+
+**Slot 6 — launchers**
+
+- Super grenade launcher  
+- Rocket Launcher  
+- Paingiver  
 - Excavator Launcher  
-- Super Grenade Launcher  
+- Mastermind Chaingun  
+- Cyberdemon rocket launcher  
+
+**Slot 7 — energy rifles**
+
+- M1 Plasma Rifle  
 - M2 Plasma Rifle  
+- Pulse Cannon  
+- Dual Pulse Cannons  
+
+**Slot 8 — specials**
+
 - Freezer Rifle  
 - Rail Gun  
-- BFG 11K Beam  
-- Blackhole Generator  
-- Lever Action  
-- Paingiver  
-- Shotgun  
-- CSSG
-- Rocket Launcher  
-- Plasma Rifle  
-- BFG 9000  
-- Chainsaw  
-- Flamethrower  
-- Minigun  
-- LMG  
-- HDMR Upgrade  
-- Minigun Upgrade  
-- Metal Sniper  
-- XM-21 Sniper  
-- Old HMG  
-- NeoHMG  
-- M41A  
-- Battle Rifle  
-- Pro-Surv Ballista  
-- Pulse Cannon  
-- Demon Exterminator  
-- MG42  
-- Mastermind Chaingun  
-- ShieldSaw  
-- Hell Pistoler  
 - Bio Acid Launcher  
 - Mancubus Flame Cannon  
-- Demon Tech Minigun  
-- Argent Sith  
-- Beam Katana  
-- Razorjack  
+
+**Slot 9 — super-weapons**
+
+- Blackhole Generator (`BHGen`)  
+- Unmaker  
+- BFG 9000  
+- BFG MKIV beam (**PB_BFGBeam**)  
+- Demon Exterminator  
+
+**Slot 0 — Demon Tech pair**
+
+- Flamethrower  
+- Hell rifle (`Hell_rifle` pickup alongside Demon Tech)  
+
+Glory Kill–adjacent actors (**Crucible**, pinata pickups under **`SoulCube`**, shoulder cannon FX) are separate from normal **`WeaponSlot`** cycling—see **`AGENTS.md`**.
 
 ### Equipment
 

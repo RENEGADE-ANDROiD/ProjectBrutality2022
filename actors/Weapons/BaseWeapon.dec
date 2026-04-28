@@ -1211,6 +1211,7 @@ States
 			// main weapon layer. A belt-and-suspenders clear at the exit
 			// of QuickMelee (below) wipes any lingering flash psprite
 			// regardless of how FlashPunching itself terminates.
+			A_PB_AirMeleeLunge(10);
 			A_Overlay(PSP_FLASH, "FlashPunching");
 			A_GiveInventory("HasCutingWeapon", 1);
 			A_TakeInventory("Zoomed",1);
@@ -1424,6 +1425,7 @@ States
 	AirKick:
 		TNT1 A 0 {
 			A_PlaySound("KICK", 6);
+			A_PB_AirMeleeLunge(20);
 			A_Recoil (-6);
 			if(PB_WeaponIsInReadyState())
 			{

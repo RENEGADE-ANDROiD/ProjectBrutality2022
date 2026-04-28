@@ -403,12 +403,10 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot9/DemonTech.dec"
 // HellPistoler projectiles extend Hellbullet (DemonTech); must load after DemonTech.dec
 #include "actors/Weapons/Slot2/HellPistoler.dec"
-// Beam Katana / Argent Sith / Razorjack: require PARTICLES (BluePlasmaFire), PLASMA (Plasma_Ball), DemonTech (Hellbullet)
+// Beam Katana / Argent Sith: require PARTICLES (BluePlasmaFire), PLASMA (Plasma_Ball), DemonTech (Hellbullet)
 #include "actors/Weapons/Slot1/BeamKatana.dec"
 #include "actors/Weapons/Slot1/ArgentSith.dec"
-#include "actors/Weapons/Slot1/Razorjack.dec"
 #include "actors/Weapons/Slot1/VorpalBlade.dec"
-#include "actors/Weapons/Special/RazorjackProjectile.dec"
 #include "actors/Weapons/Slot9/Unmaker.dec"
 #include "actors/Weapons/Slot9/Flamethrower.dec"
 #include "actors/Weapons/Slot9/DemonExterminator.dec"

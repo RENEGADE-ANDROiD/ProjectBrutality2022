@@ -42,7 +42,7 @@ Gameplay and content in this release
   build). Special thanks in upstream: Nemesis_Vampy, Popguy12, Jaih1ro.
 - Project Brutality Weapons Pack (weapons in this build include): Hell
   Pistoler, Bio Acid Launcher, Mancubus Flame Cannon, Demon
-  Tech Minigun, Argent Sith, Beam Katana, Razorjack, **Pro-Surv Ballista**
+  Tech Minigun, Argent Sith, Beam Katana, **Pro-Surv Ballista**
   (The Pope of Dope), with supporting projectiles and tokens. Equipment: Freeze Nade, Hook, Void Grenade,
   Freezebot, ElecPod. Naming, spawners, menu toggles, and HUD: RENEGADE ANDROID
   and doc.
