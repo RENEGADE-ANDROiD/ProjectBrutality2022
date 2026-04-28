@@ -5,7 +5,8 @@ class PB_LeanToggle : Inventory {}
 class PB_WeaponTilterInventory : Inventory
 {
 	double currentRoll;
-	double loweringAmount;
+	double movementLoweringAmount;
+	double wallLoweringAmount;
 	double landingKick;
 	double leanRoll;
 	double previousVelZ;
@@ -66,7 +67,7 @@ class PB_WeaponTilterInventory : Inventory
 
 	// Multipliers stack on top of global pb_tac_* cvars. Defaults = neutral.
 	// loweringMul — movement-only lowering input (before wall bonus); wall lowering is added after so heavies still get wall-aware dip.
-	// pspDynamicYOffsetMul — scales loweringAmount + step/recoil + reload dip in final PSP Y (kill jitter without removing sprite-bottom hide).
+	// pspDynamicYOffsetMul — scales movement lowering + step/recoil + reload dip only; wall near-field uses wallLoweringAmount and is not scaled down by this (see MG/minigun).
 	// pspEdgeHideMul — scales extraLowerPixels only (constant downward nudge to keep cropped bottoms off-screen).
 	private void ResolveTacticalWeaponProfile(Name cls, out double rollMul, out double loweringMul, out double leanMul, out double pspDynamicYOffsetMul, out double pspEdgeHideMul, out bool syncDualOverlays)
 	{
@@ -382,7 +383,8 @@ class PB_WeaponTilterInventory : Inventory
 			ClearAllTacticalRoll(pi);
 			ResetAppliedOffset(psp);
 			currentRoll = 0;
-			loweringAmount = 0;
+			movementLoweringAmount = 0;
+			wallLoweringAmount = 0;
 			landingKick = 0;
 			hasNeutralWeaponY = false;
 			lastWeaponClass = weaponClass;
@@ -429,25 +431,25 @@ class PB_WeaponTilterInventory : Inventory
 			currentRoll *= 0.75;
 		}
 
-		double targetLower = 0;
+		double moveTargetLower = 0;
 		if (allowMotion)
 		{
-			// Blend strafe component + overall horizontal speed + sidemove intent
-			// so forward movement also lowers the weapon a bit.
 			double speedXY = owner.Vel.XY.Length();
 			double sidewaysInput = abs(cmd.sidemove);
 			double baseLower = (abs(strafeDot) * 1.8) + (speedXY * 0.45) + (sidewaysInput * 0.03);
-			targetLower = min(30.0, baseLower) * cvLoweringScale;
+			moveTargetLower = min(30.0, baseLower) * cvLoweringScale;
 		}
-		targetLower *= tacLoweringMul;
-		// Wall bonus after loweringMul so per-weapon movement suppression (e.g. heavies) does not zero wall-aware lowering.
+		moveTargetLower *= tacLoweringMul;
+		movementLoweringAmount += (moveTargetLower - movementLoweringAmount) * 0.20;
+
+		double wallTargetLower = 0;
 		bool allowWallDetect = !blocked && !excluded;
 		if (cvEnableReadyOnly) { allowWallDetect = allowWallDetect && ready; }
 		if (cvWallDetect && allowWallDetect && FacingWall(cvWallDistance))
 		{
-			targetLower = min(32.0, targetLower + cvWallLowering);
+			wallTargetLower = cvWallLowering;
 		}
-		loweringAmount += (targetLower - loweringAmount) * 0.20;
+		wallLoweringAmount += (wallTargetLower - wallLoweringAmount) * 0.20;
 
 		bool onFloor = IsOnFloor();
 		if (cvEnableStepRecoil && previousOnFloor == false && onFloor == true && previousVelZ < -2.0)
@@ -524,8 +526,8 @@ class PB_WeaponTilterInventory : Inventory
 			// In PB's HUD setup, negative Y offset moves the sprite downward.
 			// Keep lowering strictly downward-only so movement never lifts weapons.
 			double extraLowerPixels = 5.0;
-			double dynStack = loweringAmount + (landingKick * 0.45) + (reloading ? 0.8 : 0);
-			dynStack *= tacPspDynamicYOffsetMul;
+			double moveDyn = movementLoweringAmount + (landingKick * 0.45) + (reloading ? 0.8 : 0);
+			double dynStack = moveDyn * tacPspDynamicYOffsetMul + wallLoweringAmount;
 			double edgeStack = extraLowerPixels * tacPspEdgeHideMul;
 			double targetYOffset = - (dynStack + edgeStack);
 			targetYOffset = clamp(targetYOffset, -28.0, 0.0);
