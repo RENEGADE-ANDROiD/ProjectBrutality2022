@@ -53,11 +53,11 @@ addmenukey "Crucible" +glorysaw
 addmenukey "Shoulder Cannon" shouldercannon
 addmenukey "Shoulder cryo (ice bomb)" glorycryo
 
-alias +glorysaw "puke 6000"
-alias -glorysaw "puke 6001"
+alias +glorysaw "netevent pb_glorysaw_on"
+alias -glorysaw "netevent pb_glorysaw_off"
 
-alias shouldercannon "puke 6003"
-alias glorycryo "puke 6005"
+alias shouldercannon "netevent pb_shouldercannon"
+alias glorycryo "netevent pb_glorycryo"
 
 addkeysection "Throw ShieldSaw" ShieldSaw
 addmenukey "Shield_saw" TShieldsaw

@@ -686,8 +686,8 @@ server bool be_holdablesaw = true;
 server bool be_fuelhud = true;
 server int sv_fuelhud_background = 0;
 server int sv_fuelhud_size = 2;
-server int sv_fuelhud_x = 360;
-server int sv_fuelhud_y = -210;
+server int sv_fuelhud_x = 0;
+server int sv_fuelhud_y = 0;
 
 // Glory Kills (staging / equipment options)
 server bool be_GKHard = false;
