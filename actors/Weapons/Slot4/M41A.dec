@@ -68,6 +68,33 @@ ACTOR M41AGrenade : FastProjectile
 	}
 }
 
+// Shared 7.62x51mm rifle bullet used by PB_M41A primary and BDPBattleRifle.
+// Defined here because M41A.dec is included one line before BDPBattleRifle.dec
+// in DECORATE, so this name resolves for both weapons.
+Actor PB_762x51mm : FastProjectile
+{
+	Projectile
+	Radius 2
+	Height 2
+	Speed 250
+	Damage 40
+	DamageType Bullet
+	Decal "BulletChip"
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Loop
+	Death:
+		TNT1 A 0 A_SpawnItem("HitPuff")
+		Stop
+	}
+}
+
+// 12-gauge pellet alias for the M41A underbarrel shotgun. Forwarded to HASG's
+// ASG variant (defined in Slot3/HASG.dec, included earlier in DECORATE).
+Actor PB_12GAPellet : PB_12GAPellet_ASG {}
+
 ACTOR PB_M41A : PB_Weapon
 {
 	//$Title M41A Pulse Rifle

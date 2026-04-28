@@ -354,15 +354,7 @@ ACTOR PB_MetalSniper : PB_Weapon
         // Insert bullets (refill magazine)
         Goto InsertBullets
     InsertBullets:
-        TNT1 A 0 A_JumpIfInventory("SniperAmmo",10,"InsertSniper_Full")
-        TNT1 A 0 A_JumpIfInventory("NewClip",1,1)
-        Goto Ready3
-        TNT1 A 0
-        {
-            A_GiveInventory("SniperAmmo",1);
-            A_TakeInventory("NewClip",1);
-        }
-        Goto InsertBullets
+        TNT1 A 0 PB_AmmoIntoMag("SniperAmmo", "NewClip", 10, 1)
     InsertSniper_Full:
         TNT1 A 0 A_JumpIfInventory("MetalSniperEmptyReload",1,"FinishSniperRechamber")
         Goto Ready3

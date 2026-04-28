@@ -4677,7 +4677,20 @@ weapons/golide/pumpup        ASGPU
 weapons/golide/drumopen      BDOPEN
 weapons/golide/drumclose     BDLOAD
 weapons/golide/drumpickup    A48PKUP2
-weapons/golide/fire          SHOTGUN
+
+// Per-ammo-type fire variations (sounds/hasg/Fire/*.ogg).
+// Default fire is a 4-way randomized buckshot blast; per-mode logical
+// names are loaded by the corresponding ammo branches in HASG.dec.
+$random weapons/golide/fire { HASG_FIRE1 HASG_FIRE2 HASG_FIRE3 HASG_FIRE4 }
+HASG_FIRE1                   "sounds/hasg/Fire/Buckshot1.ogg"
+HASG_FIRE2                   "sounds/hasg/Fire/Buckshot2.ogg"
+HASG_FIRE3                   "sounds/hasg/Fire/Buckshot3.ogg"
+HASG_FIRE4                   "sounds/hasg/Fire/Buckshot4.ogg"
+weapons/golide/fire_slug     "sounds/hasg/Fire/Slug.ogg"
+weapons/golide/fire_db       "sounds/hasg/Fire/DragonsBreath.ogg"
+weapons/golide/fire_flech    "sounds/hasg/Fire/Flechette.ogg"
+weapons/golide/fire_expl     "sounds/hasg/Fire/Explosive.ogg"
+weapons/golide/fire_wp       "sounds/hasg/Fire/WhitePhosphorus.ogg"
 
 $random weapons/golide/reload { weapons/golide/reload1 weapons/golide/reload2 weapons/golide/reload3 weapons/golide/reload4 weapons/golide/reload5 }
 weapons/golide/reload1       ASRL1
