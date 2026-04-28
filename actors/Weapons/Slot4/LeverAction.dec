@@ -28,6 +28,9 @@ Actor LeverActionMarlin: Inventory
 Inventory.maxamount 1
 }
 
+Actor Select_LeverAction_357 : Inventory { Inventory.MaxAmount 1 }
+Actor Select_LeverAction_Marlin : Inventory { Inventory.MaxAmount 1 }
+
 Actor JustFiredLeverAction: Inventory
 {
 Inventory.maxamount 200
@@ -255,7 +258,27 @@ ACTOR LeverAction : PB_Weapon
 				PB_HandleCrosshair(76);
 			A_ClearOverlays(10,11);
 			}
+			TNT1 A 0 A_JumpIfInventory("Select_LeverAction_357", 1, "LeverW_To357")
+			TNT1 A 0 A_JumpIfInventory("Select_LeverAction_Marlin", 1, "LeverW_ToMarlin")
 			TNT1 A 0 A_JumpIfInventory("LeverActionMarlin",1,"Normal")
+			TNT1 A 0 A_Print("\ctCaliber:\c- \cd.444 Marlin \c-")
+			TNT1 A 0 A_GiveInventory("LeverActionMarlin", 1)
+			Goto ChangingCartridge
+
+		LeverW_To357:
+			TNT1 A 0 {
+				A_TakeInventory("Select_LeverAction_357", 1);
+				A_TakeInventory("Select_LeverAction_Marlin", 1);
+			}
+			TNT1 A 0 A_JumpIfInventory("LeverActionMarlin", 1, "Normal")
+			Goto Ready3
+
+		LeverW_ToMarlin:
+			TNT1 A 0 {
+				A_TakeInventory("Select_LeverAction_357", 1);
+				A_TakeInventory("Select_LeverAction_Marlin", 1);
+			}
+			TNT1 A 0 A_JumpIfInventory("LeverActionMarlin", 1, "Ready3")
 			TNT1 A 0 A_Print("\ctCaliber:\c- \cd.444 Marlin \c-")
 			TNT1 A 0 A_GiveInventory("LeverActionMarlin", 1)
 			Goto ChangingCartridge

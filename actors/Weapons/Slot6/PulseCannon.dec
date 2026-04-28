@@ -18,6 +18,9 @@ ACTOR PulseCannonMod : Inventory
 	Inventory.MaxAmount 1
 }
 
+Actor Select_PulseCannon_Gravity : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PulseCannon_Super : Inventory { Inventory.MaxAmount 1 }
+
 // --------------------------------------------------------------------------
 
 // Pulse Cannon (Dark Matter Rifle)
@@ -110,9 +113,37 @@ ACTOR PB_PulseCannon : PB_M1Plasma
 		Loop
 
 	WeaponSpecial:
+		TNT1 A 0 A_JumpIfInventory("Select_PulseCannon_Gravity", 1, "PulseW_Grav")
+		TNT1 A 0 A_JumpIfInventory("Select_PulseCannon_Super", 1, "PulseW_Super")
 		TNT1 A 0 A_JumpIfInventory("PulseCannonMod",1,"Normal")
 		TNT1 A 0 A_GiveInventory("PulseCannonMod", 1)
 		TNT1 A 0 A_Print("\ctAlt fire:\c- \chGravity bomb \c-")
+		TNT1 A 0 A_PlaySound("BEPBEP")
+		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
+		Goto Ready+6
+
+	PulseW_Grav:
+		TNT1 A 0 {
+			A_TakeInventory("Select_PulseCannon_Gravity", 1);
+			A_TakeInventory("Select_PulseCannon_Super", 1);
+		}
+		TNT1 A 0 A_JumpIfInventory("PulseCannonMod", 1, "Ready3")
+		TNT1 A 0 A_GiveInventory("PulseCannonMod", 1)
+		TNT1 A 0 A_Print("\ctAlt fire:\c- \chGravity bomb \c-")
+		TNT1 A 0 A_PlaySound("BEPBEP")
+		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
+		Goto Ready+6
+
+	PulseW_Super:
+		TNT1 A 0 {
+			A_TakeInventory("Select_PulseCannon_Gravity", 1);
+			A_TakeInventory("Select_PulseCannon_Super", 1);
+		}
+		TNT1 A 0 A_JumpIfInventory("PulseCannonMod", 1, "PulseW_SuperDo")
+		Goto Ready3
+	PulseW_SuperDo:
+		TNT1 A 0 A_TakeInventory("PulseCannonMod", 1)
+		TNT1 A 0 A_Print("\ctAlt fire:\c- \ciSuper ball \c-")
 		TNT1 A 0 A_PlaySound("BEPBEP")
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
 		Goto Ready+6
