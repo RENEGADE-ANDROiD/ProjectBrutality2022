@@ -1,6 +1,7 @@
 // Zombie gear debris (helmet shards / belt buckles / boot bits) on humanoid
 // x-death only. ZGEA, ZGEB, ZGEC, ZGED are four 4-rotation strips; the
-// dispatcher picks one and treats A-D as the rotation set. Skipped for imps.
+// dispatcher picks one strip and one of A–D as a static frame (looping all four
+// looked like the gear was constantly spinning). Skipped for imps.
 // Original sprites by AWEZ (Brutal Pack V10).
 
 ACTOR BPv10_ZombieGearDebris
@@ -30,20 +31,48 @@ ACTOR BPv10_ZombieGearDebris
         TNT1 A 0 NoDelay A_Jump(256, "GearA", "GearB", "GearC", "GearD")
         Stop
     GearA:
-        ZGEA ABCD 2
-        Loop
+        TNT1 A 0 NoDelay A_Jump(256, "GA0", "GA1", "GA2", "GA3")
+    GA0:
+        ZGEA A -1
+    GA1:
+        ZGEA B -1
+    GA2:
+        ZGEA C -1
+    GA3:
+        ZGEA D -1
     GearB:
-        ZGEB ABCD 2
-        Loop
+        TNT1 A 0 NoDelay A_Jump(256, "GB0", "GB1", "GB2", "GB3")
+    GB0:
+        ZGEB A -1
+    GB1:
+        ZGEB B -1
+    GB2:
+        ZGEB C -1
+    GB3:
+        ZGEB D -1
     GearC:
-        ZGEC ABCD 2
-        Loop
+        TNT1 A 0 NoDelay A_Jump(256, "GC0", "GC1", "GC2", "GC3")
+    GC0:
+        ZGEC A -1
+    GC1:
+        ZGEC B -1
+    GC2:
+        ZGEC C -1
+    GC3:
+        ZGEC D -1
     GearD:
-        ZGED ABCD 2
-        Loop
+        TNT1 A 0 NoDelay A_Jump(256, "GD0", "GD1", "GD2", "GD3")
+    GD0:
+        ZGED A -1
+    GD1:
+        ZGED B -1
+    GD2:
+        ZGED C -1
+    GD3:
+        ZGED D -1
     Death:
-        ZGEA A 70
-        ZGEA A 1 A_FadeOut(0.004)
+        "####" A 70
+        "####" A 1 A_FadeOut(0.004)
         Wait
     }
 }
