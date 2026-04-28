@@ -31,27 +31,27 @@ TILTPLUSPLUSMNU_SCALAR = "Intensity";
 TILTPLUSPLUSMNU_INVERT = "Invert";
 
 
-// Help text
-TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT = "Enable strafe tilting.";
-TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_INVERT = "Invert the strafe tilting direction.";
-TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_SPEED = "How fast strafe tilting occurs.";
-TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_ANGLE = "Maximum angle to tilt the view while strafing.";
+// Help text (\\n splits multi-line tooltips where the menu supports it)
+TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT = "Enable Strafe Tilting.";
+TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_INVERT = "Invert Strafe Tilt Direction.";
+TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_SPEED = "How Fast Strafe Tilt Ramps.";
+TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_ANGLE = "Max Tilt Angle\nWhile Strafing.";
 
-TILTPLUSPLUSMNU_HELPTEXT_MOVETILT = "Enable movement tilting.";
-TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SPEED = "How fast to tilt the view while moving.";
-TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_ANGLE = "Maximum movement tilting angle.";
-TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SCALAR = "Overall movement tilting intensity.";
+TILTPLUSPLUSMNU_HELPTEXT_MOVETILT = "Enable Movement Tilting.";
+TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SPEED = "How Fast Movement Tilt Ramps.";
+TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_ANGLE = "Max Movement\nTilting Angle.";
+TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SCALAR = "Movement Tilt Intensity\n(Overall Gain).";
 
-TILTPLUSPLUSMNU_HELPTEXT_TURNTILT = "Enable horizontal-look tilting.";
-TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_INVERT = "Invert the turn tilting direction.";
-TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_SCALAR = "Overall turn tilting intensity.";
+TILTPLUSPLUSMNU_HELPTEXT_TURNTILT = "Tilt While Turning View\n(Horizontal Look).";
+TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_INVERT = "Invert Turn-Tilt Direction.";
+TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_SCALAR = "Turn Tilt Intensity\n(Overall Gain).";
 
-TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT = "Enable slow tilting while submerged underwater.";
-TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SPEED = "How fast to tilt the view while underwater.";
-TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_ANGLE = "Maximum underwater tilting angle.";
-TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SCALAR = "Overall underwater tilting intensity.";
+TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT = "Underwater Tilt (When Submerged).";
+TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SPEED = "How Fast Underwater Tilt Ramps.";
+TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_ANGLE = "Max Underwater\nTilting Angle.";
+TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SCALAR = "Underwater Tilt Intensity\n(Overall Gain).";
 
-TILTPLUSPLUSMNU_HELPTEXT_DEATHTILT = "Tilt the view when player is dead.";
+TILTPLUSPLUSMNU_HELPTEXT_DEATHTILT = "Tilt View After Death.";
 
 
 //NashGore
@@ -71,31 +71,31 @@ NASHGOREMNU_BLOOD_AMOUNT = "Blood Amount";
 NASHGOREMNU_BLOOD_SPRITES = "Blood Spot Type";
 NASHGOREMNU_BLOOD_SPURTS = "Blood Spurts";
 BDV22GOREMNU_MIST = "Brutal Doom 22: extra hit mist";
-BDV22GOREMNU_MIST_TIP = "Content from Brutal Doom 22: spawns the BDv22GoreMist effect (P22M sprites) and can add Nash spurts on some hits. Sprites: SPRITES/BDv22/. Off by default. Needs pb_bloodamount 2+, not low graphics, and Fall Splat (nashgore_splat) on.";
+BDV22GOREMNU_MIST_TIP = "BDv22 hit mist (P22M); may add Nash spurts on some hits.\nNeeds pb_bloodamount 2+, normal graphics, Fall Splat on.\nSprites under SPRITES/BDv22/. Default off.";
 
 BDV22GOREMNU_CORPSEMEAT = "Brutal Doom 22: gut props";
-BDV22GOREMNU_CORPSEMEAT_TIP = "Content from Brutal Doom 22: on some player kills, can spawn an extra BDv22_Guts or BDv22_Guts2 (B22G) on the corpse, on top of normal Project Brutality gore. Default on. Same gore gating as the mist option. Turn off to skip.";
+BDV22GOREMNU_CORPSEMEAT_TIP = "Extra BDv22_Guts / BDv22_Guts2 (B22G) on some corpses, on top of PB gore.\nUses the same gates as mist (blood amount, splat, etc.).\nDefault on; turn off to skip.";
 BDV22GOREMNU_FLYINGMEAT = "Brutal Doom 22: flying meat / ribs / gibs";
-BDV22GOREMNU_FLYINGMEAT_TIP = "Content from Brutal Doom 22: on some player kills, can spawn BDv22_MeatChunk2/3, ribs, or B22E/B22P gibs. Default on. Respects the same gating as gut props (e.g. pb_bloodamount 2+, nashgore_splat). Turn off to skip.";
+BDV22GOREMNU_FLYINGMEAT_TIP = "BDv22 meat chunks, ribs, or B22E/B22P gibs on some kills.\nSame gates as gut props (e.g. pb_bloodamount 2+, nashgore_splat).\nDefault on; turn off to skip.";
 BDV22GOREMNU_ORGANS = "Brutal Doom 22: organs and small brain";
-BDV22GOREMNU_ORGANS_TIP = "Content from Brutal Doom 22: on rarer player kills, can spawn BDv22 organ props (B22O) or a small brain chunk (B22U) with smear/ceil. Default on. Turn off to skip. Same gore gating as the other Brutal Doom 22 gore options.";
+BDV22GOREMNU_ORGANS_TIP = "Rare organs (B22O) or small brain chunk (B22U) with smear/ceil.\nSame BDv22 gates as the other options here.\nDefault on; turn off to skip.";
 BDV22GOREMNU_MIX = "Brutal Doom 22/PB gore mix";
-BDV22GOREMNU_MIX_TIP = "Randomizes extra gore between PB and Brutal Doom 22. 50 is balanced (default), left values favor PB, right values favor BDv22.";
+BDV22GOREMNU_MIX_TIP = "Randomizes extra gore between PB and Brutal Doom 22.\n50 is balanced default.\nLower favors PB; higher favors BDv22.";
 
 BPV10GOREMNU_ENABLE = "Brutal Pack V10: enable extra gore";
-BPV10GOREMNU_ENABLE_TIP = "Master toggle for the optional Brutal Pack V10 (BPv10) gore add-on. Adds burned husks, carbonized chars, flopping organs, flying torsos, zombie gear debris, and big animated blood splats on humanoid grunt + imp deaths. Off by default. Original sprites by AWEZ (Brutal Pack V10).";
+BPV10GOREMNU_ENABLE_TIP = "Master toggle for optional BPv10 gore (sprites by AWEZ).\nHusks, carbon chars, organs, torsos, gear debris, splats on humanoids/imps.\nDefault off.";
 BPV10GOREMNU_BURNCORPSE = "Brutal Pack V10: burn corpse husk";
-BPV10GOREMNU_BURNCORPSE_TIP = "Brutal Pack V10: spawns a BPv10_BurnedHusk on burn / fire / FlameBelch / Napalm deaths (BDT1 + NJEX sprites). Requires the master toggle.";
+BPV10GOREMNU_BURNCORPSE_TIP = "Burn / fire / FlameBelch / Napalm deaths.\nBPv10_BurnedHusk (BDT1 + NJEX).\nRequires BPv10 enabled.";
 BPV10GOREMNU_CARBONIZED = "Brutal Pack V10: carbonized body";
-BPV10GOREMNU_CARBONIZED_TIP = "Brutal Pack V10: spawns a BPv10_CarbonizedBody on plasma / disintegrate / BFG / lightning deaths (CARB sprites). Requires the master toggle.";
+BPV10GOREMNU_CARBONIZED_TIP = "Plasma / disintegrate / BFG / lightning deaths.\nBPv10_CarbonizedBody (CARB sprites).\nRequires BPv10 enabled.";
 BPV10GOREMNU_XDTORSO = "Brutal Pack V10: flying torso x-deaths";
-BPV10GOREMNU_XDTORSO_TIP = "Brutal Pack V10: on x-deaths, can spawn BPv10_FlyingTorso1/2 with blood trails that lands and smears (XMT1/XMT2 sprites). Requires the master toggle.";
+BPV10GOREMNU_XDTORSO_TIP = "On x-deaths: BPv10_FlyingTorso1/2 with trails (XMT1/XMT2).\nBlood lands and smears.\nRequires BPv10 enabled.";
 BPV10GOREMNU_FLOP = "Brutal Pack V10: flopping organs";
-BPV10GOREMNU_FLOP_TIP = "Brutal Pack V10: on x-deaths, can spawn BPv10_FlopOrgans (MANA sprites) which bounce and leave blood spots. Requires the master toggle.";
+BPV10GOREMNU_FLOP_TIP = "On x-deaths: BPv10_FlopOrgans (MANA).\nBounce and leave blood spots.\nRequires BPv10 enabled.";
 BPV10GOREMNU_ZGEAR = "Brutal Pack V10: zombie gear debris";
-BPV10GOREMNU_ZGEAR_TIP = "Brutal Pack V10: on humanoid x-deaths only, can spawn BPv10_ZombieGearDebris (ZGEA-D sprites) that bounce and settle. Skipped for imps. Requires the master toggle.";
+BPV10GOREMNU_ZGEAR_TIP = "Humanoid x-deaths only; BPv10_ZombieGearDebris (ZGEA-D).\nSkipped for imps.\nRequires BPv10 enabled.";
 BPV10GOREMNU_SPLAT = "Brutal Pack V10: big animated blood splat";
-BPV10GOREMNU_SPLAT_TIP = "Brutal Pack V10: on x-deaths, can spawn one of five BPv10_BloodSplat# variants (BL00-04 sprites) at the corpse. Requires the master toggle.";
+BPV10GOREMNU_SPLAT_TIP = "On x-deaths: one of five BPv10_BloodSplat# (BL00–04) at the corpse.\nRequires BPv10 enabled.";
 
 NASHGOREMNU_GIB_TYPE = "Gib Type";
 NASHGOREMNU_GIB_AMOUNT = "Gib Amount";
@@ -125,23 +125,23 @@ NASHGOREMNU_BLOOD_SPRITE_DECALS = "Decals";
 NASHGOREMNU_BLOOD_SPRITE_SPRITES = "Sprites";
 
 // Help text
-NASHGOREMNU_HELPTEXT_BLOOD_TYPE = "Hitscan blood effect type.";
-NASHGOREMNU_HELPTEXT_BLOOD_AMOUNT = "Adjusts amount of blood.";
-NASHGOREMNU_HELPTEXT_BLOOD_SPRITES = "Use decals or sprites for blood spots.";
-NASHGOREMNU_HELPTEXT_BLOOD_SPURTS = "Enable blood spurts on corpses.";
-NASHGOREMNU_HELPTEXT_GIB_TYPE = "Gib effect type.";
-NASHGOREMNU_HELPTEXT_GIB_AMOUNT = "Adjusts amount of gibs.";
-NASHGOREMNU_HELPTEXT_MISC_MAXGORE = "Maximum number of blood & gore objects to spawn.";
-NASHGOREMNU_HELPTEXT_MISC_MAXCASINGS = "Maximum number of spent casings to spawn.";
-NASHGOREMNU_HELPTEXT_MISC_CORPSEBLOOD = "Enable pool of blood under corpses.";
-NASHGOREMNU_HELPTEXT_MISC_FOOTPRINTS = "Enable bloody footprints.";
-NASHGOREMNU_HELPTEXT_MISC_DEATHFLIP = "Randomly flip sprite upon death.";
-NASHGOREMNU_HELPTEXT_MISC_SQUISH = "Enable squishy flesh when corpse is crushed.";
-NASHGOREMNU_HELPTEXT_MISC_ICEDEATH = "Enhanced effects upon breaking a frozen enemy.";
-NASHGOREMNU_HELPTEXT_MISC_SPLAT = "Enable splat effect when corpse falls from tall height.";
-NASHGOREMNU_HELPTEXT_MISC_CLEARGORENOW = "Removes all gore effects immediately.";
+NASHGOREMNU_HELPTEXT_BLOOD_TYPE = "Hitscan Blood Effect Style.";
+NASHGOREMNU_HELPTEXT_BLOOD_AMOUNT = "Blood Quantity Scaler.";
+NASHGOREMNU_HELPTEXT_BLOOD_SPRITES = "Blood Spots: Decals vs Sprites.";
+NASHGOREMNU_HELPTEXT_BLOOD_SPURTS = "Corpse Blood Spurts On / Off.";
+NASHGOREMNU_HELPTEXT_GIB_TYPE = "Gib / Sticky Behavior Style.";
+NASHGOREMNU_HELPTEXT_GIB_AMOUNT = "Gib Quantity Scaler.";
+NASHGOREMNU_HELPTEXT_MISC_MAXGORE = "Cap on Blood & Gib Actors.\nLower Helps Performance.";
+NASHGOREMNU_HELPTEXT_MISC_MAXCASINGS = "Cap on Shell Casings.\nLower Helps Performance.";
+NASHGOREMNU_HELPTEXT_MISC_CORPSEBLOOD = "Blood Pool Under Corpses.";
+NASHGOREMNU_HELPTEXT_MISC_FOOTPRINTS = "Bloody Footprints.";
+NASHGOREMNU_HELPTEXT_MISC_DEATHFLIP = "Random Death Sprite Flip.";
+NASHGOREMNU_HELPTEXT_MISC_SQUISH = "Squish FX When Corpses\nAre Crushed.";
+NASHGOREMNU_HELPTEXT_MISC_ICEDEATH = "Extra FX When Shattering\nFrozen Enemies.";
+NASHGOREMNU_HELPTEXT_MISC_SPLAT = "Impact Splat When Corpses\nFall From Height.";
+NASHGOREMNU_HELPTEXT_MISC_CLEARGORENOW = "Instant Clear:\nAll Active Gore FX.";
 
-NASHGOREMNU_HELPTEXT_CONTROLS_CLEARGORE = "Key bind to remove all gore objects.";
+NASHGOREMNU_HELPTEXT_CONTROLS_CLEARGORE = "Bind: Wipe Spawned Gore\nObjects & Decals.";
 
 // Footsteps V4
 // Language Definitions
@@ -379,157 +379,157 @@ CM_DNMKULD = "\cd\c[DanmakuYellow]Danmaku \c-shells \cdloaded";
 
 //Gameplay Settings
 PB_DISABLE_PRONE = "Disable Prone Attacks";
-PB_DISABLE_PRONE_DESC = "Prohibit sergents from using their prone attacks";
+PB_DISABLE_PRONE_DESC = "Sergeants Cannot Enter Prone\nShooting Attacks.";
 
 PB_RECOIL_HORIZONTAL = "Horizontal Recoil";
 PB_RECOIL_VERTICAL = "Vertical Recoil";
-PB_RECOIL_DESC = "Adjust recoil. 1.0 is normal recoil. Set to 0 to disable or higher for higher recoil";
+PB_RECOIL_DESC = "Recoil Strength Multiplier.\n1.0 = Normal; 0 = Off; Higher = Stronger.";
 PB_RECOIL_EXTRA = "Add Recoil to more Weapons";
-PB_RECOIL_EXTRA_DESC = "Adds recoil to the Rocket Launcher, Railgun Laser mode, BFG slot weapons, Mancubus Flame and Unmaker";
+PB_RECOIL_EXTRA_DESC = "Adds Kick to Rocket Launcher, Railgun Laser,\nBFG-Slot Guns, Mancubus Flame, Unmaker.";
 
 //No M1 Plasma Rifle cooldown
 PB_NO_M1PLASMACOOLDOWN = "No M1 Plasma Rifle cooldown";
-PB_NO_M1PLASMACOOLDOWN_DESC = "Disables the M1 Plasma Rifle cooldown after firing." ;
-PB_NO_M1PLASMACOOLDOWN_NOTICE = "This only applies to the primary fire.";
-PB_NO_M1PLASMACOOLDOWN_EXTRA = "This option also applies to the Pulse Cannon upgrade.";
+PB_NO_M1PLASMACOOLDOWN_DESC = "Skips Post-Shot Cooldown\non M1 Plasma Primary Fire.";
+PB_NO_M1PLASMACOOLDOWN_NOTICE = "Primary Fire Only.";
+PB_NO_M1PLASMACOOLDOWN_EXTRA = "Also Affects Pulse Cannon\nUpgrade When Equipped.";
 
 //Quiet marines
 PB_SILENCE_MARINES = "Silence Marine Chatter";
-PB_SILENCE_MARINES_DESC = "Completely silence any marine idle and attack chatter.";
-PB_SILENCE_MARINES_DESC2 = "Pain and death sounds are not affected";
+PB_SILENCE_MARINES_DESC = "Mutes Idle & Attack Voice Lines\nFrom Marine Allies.";
+PB_SILENCE_MARINES_DESC2 = "Pain & Death Sounds Unchanged.";
 
 //Weapon Respect animations
 PB_RESPECT = "Weapon Respect animations";
 
 //Dual Wielding Style
 PB_DUALSTYLE = "Dual-Wield Fire Mode";
-PB_DUALSTYLE_SIN = "Single Button - Primary fire button fires both weapons, similar to BDv21.";
-PB_DUALSTYLE_DEF = "Default - Primary fire: Fire left weapon, Alt-fire: Fire right weapon.";
+PB_DUALSTYLE_SIN = "Single Button: Primary Fire Shoots Both Guns.\n(Similar to Brutal Doom v21 Dual Style.)";
+PB_DUALSTYLE_DEF = "Default: Primary Fire = Left Weapon;\nAlt-Fire = Right Weapon.";
 PB_DUALOPT_SN = "Single Button";
 PB_DUALOPT_DEF = "Default";
 
 // Molotov (melee equipment; pb_NoMolotov)
 PB_OPT_Molotov = "Molotov cocktails";
-PB_WHEELTIP_WW_MolotovSelected = "Equip molotov bottles. User1 throws with the usual equipment animation; starts fires on impact.";
+PB_WHEELTIP_WW_MolotovSelected = "Molotov Equipment Slot.\nUser1 Throws; Fire Spreads on Impact.";
 
 // Pickup / wheel hint system (Gameplay Settings)
 PB_PICKUP_HINTS = "Weapon pickup hints";
-PB_PICKUP_HINTS_DESC = "When enabled, picking up a PB weapon shows a short inventory tip (weapon special wheel, alt-fire).";
+PB_PICKUP_HINTS_DESC = "Brief Inventory Tip for Project Brutality Guns.\n(Weapon Special Wheel & Alt-Fire Hints.)";
 
 PB_WPNBASEPICKUP_TheShieldSaw = "You got the ShieldSaw! (Slot 1)";
-PB_WPNHINT_TheShieldSaw = "Thrown ricochet blade; returns on hit. Check Customize Controls for throw and alt-fire.";
+PB_WPNHINT_TheShieldSaw = "Thrown Ricochet Blade; Recall on Hit.\nThrow / Alt-Fire: Customize Controls.";
 
 PB_PICKUP_VorpalBlade = "You picked up Tiberium's Soulblade! (Slot 1)";
-PB_WPNHINT_VorpalBlade = "Lifesteal sword: each Fire/Alt-Fire BDP-lunges to lock onto a target. Berserk Alt-Fire unleashes BladeStorm.";
+PB_WPNHINT_VorpalBlade = "Lifesteal Sword: Lunges Lock Targets.\nBerserk Alt-Fire: BladeStorm.";
 
 PB_PICKUP_HASG = "UAC XHAS-SP -;{The Lady Golide};- (Slot 3)";
 PB_PICKUP_HASGDrum = "UAC XHAS-SP Magazine Drum. -;{The Lady Golide};- (Slot 3, Upgrade)";
-PB_WPNHINT_HASG = "Heavy auto-shotgun: Weapon Special wheel cycles 7 shell types (Buck/Slug/Flechette/Dragon's Breath/Explosive/Danmaku/W. Phosphorus). Pick up the Drum upgrade for the larger 25-round mag.";
+PB_WPNHINT_HASG = "Heavy Auto-Shotgun: Weapon Special Wheel Picks Shell Type\n(Buck / Slug / Flechette / Dragon's Breath / Explosive / Danmaku / WP).\nDrum Upgrade Unlocks 25-Round Magazine.";
 
-PB_WPNHINT_GENERIC = "Added to inventory. Use Weapon Special (wheel on supported guns) and Alt-Fire for secondary modes; check Customize Controls.";
+PB_WPNHINT_GENERIC = "Added to Inventory.\nWeapon Special & Alt-Fire Per Gun;\nCheck Customize Controls.";
 
-PB_WHEELTIP_GrenadeTypeImpact = "Super GL: impact-detonating frag grenades. Primary throws; Alt-Fire uses grenade throw / detonate options.";
-PB_WHEELTIP_GrenadeTypeSticky = "Super GL: sticky bombs attach to surfaces or targets, then detonate.";
-PB_WHEELTIP_GrenadeTypeIncendiary = "Super GL: incendiary grenades that ignite an area on detonation.";
-PB_WHEELTIP_GrenadeTypeCryo = "Super GL: cryo grenades for slowing and freezing groups.";
-PB_WHEELTIP_GrenadeTypeAcid = "Super GL: acid grenades that leave corrosive pools.";
+PB_WHEELTIP_GrenadeTypeImpact = "Super Grenade Launcher: Impact Frags.\nPrimary Throw; Alt-Fire Throw / Detonate Modes.";
+PB_WHEELTIP_GrenadeTypeSticky = "Super Grenade Launcher: Sticks to Surfaces or Targets,\nThen Detonates.";
+PB_WHEELTIP_GrenadeTypeIncendiary = "Super Grenade Launcher: Incendiary — Area Burn\non Detonation.";
+PB_WHEELTIP_GrenadeTypeCryo = "Super Grenade Launcher: Cryo — Slow / Freeze Groups.";
+PB_WHEELTIP_GrenadeTypeAcid = "Super Grenade Launcher: Acid Pools\nAfter Splash.";
 
-PB_WHEELTIP_SelectDualWieldRifles = "DMR: switch between single rifle and akimbo DMRs (ammo and reload rules apply to both).";
-PB_WHEELTIP_SelectHDMRGrenade = "DMR: choose whether Alt-Fire launches the underbarrel grenade or uses iron-sight aim.";
-PB_WHEELTIP_SelectHDMRMode = "DMR: toggle between marksman DMR fire and heavy anti-materiel sniper configuration.";
+PB_WHEELTIP_SelectDualWieldRifles = "DMR / HDMR: Single or Akimbo.\nAmmo / Reload Rules Apply to Both.";
+PB_WHEELTIP_SelectHDMRGrenade = "DMR Alt-Fire: Underbarrel Grenade Launcher\nor Iron Sights.";
+PB_WHEELTIP_SelectHDMRMode = "DMR / HDMR: Marksman vs Anti-Materiel.";
 
-PB_WHEELTIP_SelectDualWieldQuads = "Quad Shotgun: single weapon or dual-wield quad barrels.";
-PB_WHEELTIP_BlastToggle = "Quad Shotgun: toggle half-blast spread vs full four-barrel blast.";
-PB_WHEELTIP_BreathToggle = "Quad Shotgun: swap between shell-based shot and demonic breath alt-ammo behavior.";
+PB_WHEELTIP_SelectDualWieldQuads = "Quad Shotgun: One Gun or Dual Barrels.";
+PB_WHEELTIP_BlastToggle = "Quad Shotgun: Half Spread vs Full Blast.";
+PB_WHEELTIP_BreathToggle = "Quad Shotgun: Shells vs Breath Alt-Ammo.";
 
-PB_WHEELTIP_SelectDualWieldSMG = "SMG: single SMG or akimbo pair.";
-PB_WHEELTIP_SelectLaserSight = "SMG: toggle laser sight for hipfire reference.";
+PB_WHEELTIP_SelectDualWieldSMG = "SMG: Single or Akimbo.";
+PB_WHEELTIP_SelectLaserSight = "SMG: Hipfire Laser Dot.";
 
-PB_WHEELTIP_SelectPistolSuppressor = "Pistol: attach or detach suppressor (stealth vs raw power tradeoffs).";
-PB_WHEELTIP_SelectDualWieldPistols = "Pistol: single sidearm or akimbo pistols.";
-PB_WHEELTIP_SelectPistolBurstFire = "Pistol: semi-auto vs burst fire mode.";
+PB_WHEELTIP_SelectPistolSuppressor = "Pistol: Suppressor On / Off.";
+PB_WHEELTIP_SelectDualWieldPistols = "Pistol: One Gun or Akimbo.";
+PB_WHEELTIP_SelectPistolBurstFire = "Pistol: Semi-Auto vs Burst.";
 
-PB_WHEELTIP_SelectCarbine_DualWield = "Carbine: single rifle or akimbo carbines.";
-PB_WHEELTIP_SelectCarbine_FullAutoFire = "Carbine: enable full-auto primary.";
-PB_WHEELTIP_SelectCarbine_SemiFire = "Carbine: switch to semi-auto primary.";
-PB_WHEELTIP_SelectCarbine_BurstFire = "Carbine: switch to burst primary.";
-PB_WHEELTIP_SelectCarbine_Sights = "Carbine: toggle optics / sight picture for aiming.";
+PB_WHEELTIP_SelectCarbine_DualWield = "Carbine: Single or Akimbo.";
+PB_WHEELTIP_SelectCarbine_FullAutoFire = "Carbine: Full-Auto Primary.";
+PB_WHEELTIP_SelectCarbine_SemiFire = "Carbine: Semi-Auto Primary.";
+PB_WHEELTIP_SelectCarbine_BurstFire = "Carbine: Burst Primary.";
+PB_WHEELTIP_SelectCarbine_Sights = "Carbine: Optics / Sight Picture.";
 
-PB_WHEELTIP_SelectMinigun_Chaingun = "Minigun: classic high-RPM chaingun spin-up.";
-PB_WHEELTIP_SelectMinigun_Gatling = "Minigun: gatling-style sustained fire profile.";
-PB_WHEELTIP_SelectMinigun_Triple = "Minigun (upgraded): triple-barrel rotary mode for extreme volume of fire.";
+PB_WHEELTIP_SelectMinigun_Chaingun = "Minigun: Classic Chaingun Spin-Up.";
+PB_WHEELTIP_SelectMinigun_Gatling = "Minigun: Sustained Gatling Profile.";
+PB_WHEELTIP_SelectMinigun_Triple = "Minigun Upgrade: Triple Barrel\n(High Volume).";
 
-PB_WHEELTIP_SelectShotgun_Dragonsbreath = "Pump Shotgun: Dragon's Breath shells (upgrade) — short-range incendiary pellets.";
-PB_WHEELTIP_SelectShotgun_No = "Dragon's Breath upgrade not installed; find the upgrade to unlock this shell type.";
-PB_WHEELTIP_SelectShotgun_Buckshot = "Pump Shotgun: standard buckshot for general use.";
-PB_WHEELTIP_SelectShotgun_Slugshot = "Pump Shotgun: slug rounds for tight groups and penetration."
-PB_WHEELTIP_SelectM41A_12Gauge = "M41A: 12-gauge underbarrel alt fire (pump action shell behavior)."
-PB_WHEELTIP_SelectM41A_30mmGrenade = "M41A: 30mm grenade launcher mode for explosive alt fire."
-PB_WHEELTIP_SelectXM21_Ballistic = "XM-21: underbarrel ballistic (explosive) rounds when upgraded — 2 NewClip per shot."
-PB_WHEELTIP_SelectXM21_HighCaliber = "XM-21: high-caliber AP 7.62; standard precision rifle fire when upgraded.";
+PB_WHEELTIP_SelectShotgun_Dragonsbreath = "Pump Shotgun (Upgrade): Dragon's Breath.\nClose-Range Fire Pellets.";
+PB_WHEELTIP_SelectShotgun_No = "Dragon's Breath Not Installed.\nFind Upgrade for This Shell.";
+PB_WHEELTIP_SelectShotgun_Buckshot = "Pump Shotgun: Buckshot.";
+PB_WHEELTIP_SelectShotgun_Slugshot = "Pump Shotgun: Slugs.";
+PB_WHEELTIP_SelectM41A_12Gauge = "M41A: 12ga Underbarrel Alt-Fire.";
+PB_WHEELTIP_SelectM41A_30mmGrenade = "M41A: 30mm Grenade Launcher Alt-Fire.";
+PB_WHEELTIP_SelectXM21_Ballistic = "XM-21 Upgrade: Explosive Ballistics.\n2 NewClip per Shot.";
+PB_WHEELTIP_SelectXM21_HighCaliber = "XM-21 Upgrade: AP Precision Fire.";
 
-PB_WHEELTIP_RocketLauncher_Standard = "Rocket Launcher: dumb-fire rockets — fast, flexible, manual leading.";
-PB_WHEELTIP_RocketLauncher_Homing = "Rocket Launcher: lock-on seekers that track the painted target.";
-PB_WHEELTIP_RocketLauncher_Laser = "Rocket Launcher: laser-guided rocket follows your beam point.";
+PB_WHEELTIP_RocketLauncher_Standard = "Rocket Launcher: Dumb Rockets.";
+PB_WHEELTIP_RocketLauncher_Homing = "Rocket Launcher: Lock-On Seekers.";
+PB_WHEELTIP_RocketLauncher_Laser = "Rocket Launcher: Beam-Guided Rocket.";
 
-PB_WHEELTIP_WW_FragGrenadeSelected = "Equipment wheel: select frag grenades for quick-throw.";
-PB_WHEELTIP_WW_ProximityMineSelected = "Equipment wheel: select proximity mines.";
-PB_WHEELTIP_WW_StunGrenadeSelected = "Equipment wheel: select stun grenades.";
-PB_WHEELTIP_WW_LeechSelected = "Equipment wheel: select the demon-tech leech beam (held-button drain, uses PB_DTech).";
+PB_WHEELTIP_WW_FragGrenadeSelected = "Equipment Wheel: Frag Grenades.";
+PB_WHEELTIP_WW_ProximityMineSelected = "Equipment Wheel: Proximity Mines.";
+PB_WHEELTIP_WW_StunGrenadeSelected = "Equipment Wheel: Stun Grenades.";
+PB_WHEELTIP_WW_LeechSelected = "Leech Beam Equipment.\nHold to Drain; Costs Demon Tech.";
 PB_PICKUP_LeechGrenade = "\cdDemon Tech: \coLeech device acquired \c-(+20 DTech).";
-PB_WHEELTIP_WW_RevGunSelected = "Equipment wheel: select compact quick-launcher.";
-PB_WHEELTIP_GK_FlamebelchSelected = "Glory Kill equipment: Flame Belch for area denial.";
-PB_WHEELTIP_GK_IcebombSelected = "Glory Kill equipment: Ice Bomb to freeze crowds.";
+PB_WHEELTIP_WW_RevGunSelected = "Equipment Wheel: Compact Launcher.";
+PB_WHEELTIP_GK_FlamebelchSelected = "Glory Kill Equipment: Flame Belch.";
+PB_WHEELTIP_GK_IcebombSelected = "Glory Kill Equipment: Ice Bomb.";
 
-PB_WPNHINT_ASGguyShield = "Meat shield / captured weapon. Block with fire; bash or throw with alt and special moves per control bind.";
-PB_WPNHINT_ProSurv_Ballista = "Pro-Surv Ballista: high-cal + bolt magazine. Alt-Fire spends rockets; Weapon Special toggles demonic mode when upgraded.";
-PB_WPNHINT_BarrelThrower = "Improvised barrel launcher. Primary tosses; Alt-Fire and melee keys often chain explosions.";
-PB_WPNHINT_BDPBattleRifle = "Battle rifle: mid-range power. Alt-Fire grenade or sight modes; reload manages magazine.";
-PB_WPNHINT_BHGen = "Black hole generator: charge and place singularity fields. Alt-Fire adjusts yield or self-safety.";
-PB_WPNHINT_CarbineZombieShield = "Captured carbine zombie shield. Primary blocks; alt attacks with shield bash.";
-PB_WPNHINT_ChexRifle = "Chex-themed rifle. Alt-Fire uses Chex-specific secondary; Weapon Special toggles fire mode.";
-PB_WPNHINT_CommandoShield = "Commando meat shield. Block with fire; alt/special perform shield strikes.";
-PB_WPNHINT_DarkImpShield = "Dark imp shield weapon. Fire holds guard; alt throws demonic slash.";
-PB_WPNHINT_Hell_rifle = "Hell rifle: hybrid human/demon fire. Alt toggles alt ammo; special opens upgrade wheel.";
-PB_WPNHINT_ImpShield = "Imp meat shield. Primary block; alt shield punch; movement slows while raised.";
-PB_WPNHINT_LeverAction = "Lever-action rifle: tube reload. Alt-Fire melee bash or secondary shot per upgrade.";
-PB_WPNHINT_X12Shotgun = "X12 shotgun: tube + magazine reload. Alt-Fire toggles high-power semi vs full-auto; uses PB_Shells and a 12-round mag.";
-PB_WPNHINT_MarauderSSG = "Marauder super shotgun: aggressive spread. Alt-Fire dash-shot / cryo mine; special toggles Eternal vs classic reload (menu).";
-PB_WPNHINT_MastermindChaingun = "Mancubus-style heavy flamer cannon. Sustained fire alt for flame sweep.";
-PB_WPNHINT_Melee_Attacks = "Fists / melee: combos on fire; kicks and equipment on User keys; glory kills when prompted.";
-PB_WPNHINT_OldHMG = "Classic heavy machine gun: bipod alt; sustained suppression.";
-PB_WPNHINT_Paingiver = "Pain Elemental arm cannon: primary lob souls; alt detonates or charges volley.";
-PB_WPNHINT_PB_Autoshotgun = "Auto-shotgun: semi/full auto drum. Alt-Fire alt ammo or slam fire; upgrade adds drum mag.";
-PB_WPNHINT_PB_Axe = "Axe: heavy melee swings; alt throws or chops depending on state; special executes.";
-PB_WPNHINT_PB_BFG9000 = "BFG 11K: charge ball lightning. Alt-Fire safety vent or alt discharge pattern.";
-PB_WPNHINT_PB_BFGBeam = "BFG beam rifle: sustained beam alt; special toggles overload (see HUD warnings).";
-PB_WPNHINT_PB_Carbine = "Carbine: Weapon Special opens wheel (fire modes, akimbo, sights). Alt-Fire grenade launcher or secondary per loadout.";
-PB_WPNHINT_PB_Chainsaw = "Chainsaw: grind damage on fire; alt vertical cut; berserk fuels healing saw attacks.";
-PB_WPNHINT_PB_Deagle = "Desert Eagle: high-caliber hand cannon. Alt-Fire aim / fan hammer per upgrade.";
-PB_WPNHINT_PB_DemonExterminator = "Demon exterminator cannon: wide alt blasts; special selects fuel profile.";
-PB_WPNHINT_PB_DualPulseCannons = "Dual pulse cannons: twin magazines; alt charges combined super shot; reload both sides.";
-PB_WPNHINT_PB_DualWeapon = "Dual-wield weapon pair: primary left / alt right (unless single-button dual style in menu).";
-PB_WPNHINT_PB_Flamethrower = "Flamethrower: sustained cone; alt napalm or short burst; watch heat meter.";
-PB_WPNHINT_PB_Freezer = "Freezer rifle: cryo primary; alt freeze bomb or beam depending on capacitor.";
-PB_WPNHINT_PB_LMG = "LMG: belt fed; alt underbarrel micro-missiles when upgraded; bipod alt on some stances.";
-PB_WPNHINT_PB_M1Plasma = "M1 plasma rifle: fast bolts; alt overcharge burst; special toggles fire mode.";
-PB_WPNHINT_PB_M2Plasma = "M2 lightning gun: alt lightning arc; upgrade adds chain modes (see wheel if enabled).";
-PB_WPNHINT_PB_M41A = "M41A pulse rifle: alt grenade launcher tube; special selects round type.";
-PB_WPNHINT_PB_MetalSniper = "Anti-materiel sniper: alt scope stages; bolt cycle on reload.";
-PB_WPNHINT_PB_XM21 = "XM-21 DMR: alt zoom; Weapon Special toggles high-cal / explosive once you have the upgrade. Reserve uses NewClip; mag is internal.";
-PB_WPNHINT_PB_MG42 = "MG42: insane RoF; alt quick barrel swap or bipod deploy.";
-PB_WPNHINT_PB_Minigun = "Minigun: Weapon Special opens barrel mode wheel. Alt-Fire spins barrels / alt spin behavior.";
-PB_WPNHINT_PB_MP40 = "MP40: classic SMG; alt bayonet stab or low-ready.";
-PB_WPNHINT_PB_Nailgun = "Nailgun: stake alt fire; upgrade adds airburst nails.";
-PB_WPNHINT_PB_NailgunGuyShield = "Nailgun zombie shield; block and return spikes.";
-PB_WPNHINT_PB_NeoHMG = "Neo heavy MG: hold alt for a front shield; special toggles fire groups.";
-PB_WPNHINT_PB_Pistol = "Pistol: Weapon Special opens suppressor / akimbo / burst wheel. Alt-Fire flashlight or alt function.";
-PB_WPNHINT_PB_PulseCannon = "Pulse cannon: alt gravity shot or super ball; upgrade unlocks dual cannons via special.";
-PB_WPNHINT_PB_QuadSG = "Quad shotgun: Weapon Special handles akimbo, blast width, shell vs breath. Alt-Fire alt shot patterns.";
-PB_WPNHINT_PB_Railgun = "Railgun: alt laser tripwire or overload cell (menu option); zoom stages on secondary.";
-PB_WPNHINT_PB_Revolver = "Revolver: alt fan hammer / single action; upgrade paths in PDA.";
-PB_WPNHINT_PB_RocketLauncher = "Rocket Launcher: Weapon Special selects standard / homing / laser rockets. Alt-Fire scope or detonate per mode.";
-PB_WPNHINT_PB_Excavator = "Excavator: drill shot burrows; drop shot floats. Weapon Special picks next mode. Alt detonates charges in flight.";
+PB_WPNHINT_ASGguyShield = "Meat Shield: Block With Primary Fire;\nBash / Throw With Alt-Fire & Weapon Special.";
+PB_WPNHINT_ProSurv_Ballista = "Pro-Surv Ballista: Bolts + Rockets Alt-Fire.\nWeapon Special: Demonic Mode When Upgraded.";
+PB_WPNHINT_BarrelThrower = "Barrel Toss Primary Fire;\nAlt-Fire / Melee Chain Blasts.";
+PB_WPNHINT_BDPBattleRifle = "Mid-Range Battle Rifle.\nAlt-Fire: Grenade or Sights.";
+PB_WPNHINT_BHGen = "Black Hole Generator.\nAlt-Fire Adjusts Yield / Safety.";
+PB_WPNHINT_CarbineZombieShield = "Carbine Zombie Shield:\nBlock Primary Fire; Alt-Fire Bash.";
+PB_WPNHINT_ChexRifle = "Chex Rifle.\nAlt-Fire Secondary; Weapon Special Fire Mode.";
+PB_WPNHINT_CommandoShield = "Commando Shield:\nBlock Primary Fire; Alt-Fire / Weapon Special Strikes.";
+PB_WPNHINT_DarkImpShield = "Dark Imp Shield:\nGuard Primary Fire; Alt-Fire Slash.";
+PB_WPNHINT_Hell_rifle = "Hell Rifle: Alt-Fire Ammo;\nWeapon Special Upgrade Wheel.";
+PB_WPNHINT_ImpShield = "Imp Shield: Block / Alt-Fire Punch;\nSlower While Raised.";
+PB_WPNHINT_LeverAction = "Lever-Action Rifle: Tube Feed.\nAlt-Fire Bash or Alt Shot (Upgrade).";
+PB_WPNHINT_X12Shotgun = "X12: Tube + Magazine Reload.\nAlt-Fire Semi vs Full-Auto;\nPB_Shells, 12-Round Magazine.";
+PB_WPNHINT_MarauderSSG = "Marauder Super Shotgun: Alt-Fire Dash / Cryo Mine;\nWeapon Special Eternal vs Classic (Menu).";
+PB_WPNHINT_MastermindChaingun = "Heavy Flame Cannon:\nSustained Alt-Fire Sweep.";
+PB_WPNHINT_Melee_Attacks = "Melee: Combos / Kicks /\nEquipment Keys; Glory Kill Prompts.";
+PB_WPNHINT_OldHMG = "Classic HMG: Bipod Alt-Fire.";
+PB_WPNHINT_Paingiver = "Pain Elemental Arm Cannon:\nLob Souls; Alt-Fire Detonate.";
+PB_WPNHINT_PB_Autoshotgun = "Auto-Shotgun: Drum Semi / Full.\nAlt-Fire Alt-Ammo / Slam Fire.";
+PB_WPNHINT_PB_Axe = "Axe: Chops / Alt-Fire Throw;\nWeapon Special Executes.";
+PB_WPNHINT_PB_BFG9000 = "BFG 11K: Charge Ball.\nAlt-Fire Vent / Alt Pattern.";
+PB_WPNHINT_PB_BFGBeam = "BFG Beam Rifle: Sustained Alt-Fire;\nWeapon Special Overload (HUD).";
+PB_WPNHINT_PB_Carbine = "Carbine: Weapon Special Wheel\n(Modes, Akimbo, Sights).\nAlt-Fire Grenade Launcher / Secondary.";
+PB_WPNHINT_PB_Chainsaw = "Chainsaw: Grind Primary Fire;\nAlt-Fire Vertical; Berserk Heals.";
+PB_WPNHINT_PB_Deagle = "Desert Eagle: Alt-Fire Aim / Fan Hammer.";
+PB_WPNHINT_PB_DemonExterminator = "Flame Cannon: Alt-Fire Wide Blast;\nWeapon Special Fuel.";
+PB_WPNHINT_PB_DualPulseCannons = "Dual Pulse Cannons: Twin Magazines;\nAlt-Fire Combined Blast.";
+PB_WPNHINT_PB_DualWeapon = "Dual Wield: Primary Left / Alt-Fire Right.\nSingle-Button Dual Mode in Menu Overrides.";
+PB_WPNHINT_PB_Flamethrower = "Flamethrower: Cone Primary Fire;\nAlt-Fire Napalm / Burst; Heat Meter.";
+PB_WPNHINT_PB_Freezer = "Freeze Rifle:\nCryo Primary Fire; Alt-Fire Bomb / Beam.";
+PB_WPNHINT_PB_LMG = "LMG: Belt Fed; Alt-Fire Micro-Missiles\nWhen Upgraded.";
+PB_WPNHINT_PB_M1Plasma = "M1 Plasma Rifle: Bolts;\nAlt-Fire Overcharge; Weapon Special Mode.";
+PB_WPNHINT_PB_M2Plasma = "M2 Lightning Gun:\nAlt-Fire Arc; Upgrade Chain Modes.";
+PB_WPNHINT_PB_M41A = "M41A: Alt-Fire Grenade Launcher Tube;\nWeapon Special Round.";
+PB_WPNHINT_PB_MetalSniper = "Anti-Materiel Sniper:\nAlt-Fire Scope Stages.";
+PB_WPNHINT_PB_XM21 = "XM-21 DMR: Alt-Fire Zoom;\nWeapon Special Caliber / Explosive (Upgrade).\nAmmo: NewClip Reserve.";
+PB_WPNHINT_PB_MG42 = "MG42: Alt-Fire Barrel Swap / Bipod.";
+PB_WPNHINT_PB_Minigun = "Minigun: Weapon Special Barrel Wheel;\nAlt-Fire Spins Barrels.";
+PB_WPNHINT_PB_MP40 = "MP40: Alt-Fire Bayonet / Low-Ready.";
+PB_WPNHINT_PB_Nailgun = "Nailgun: Stake Alt-Fire;\nUpgrade Airburst.";
+PB_WPNHINT_PB_NailgunGuyShield = "Nailgun Zombie Shield:\nBlock; Spike Alt-Fire.";
+PB_WPNHINT_PB_NeoHMG = "Neo Heavy MG: Hold Alt-Fire Shield;\nWeapon Special Fire Groups.";
+PB_WPNHINT_PB_Pistol = "Pistol: Weapon Special Suppressor /\nAkimbo / Burst Wheel.\nAlt-Fire Flashlight / Secondary.";
+PB_WPNHINT_PB_PulseCannon = "Pulse Cannon: Alt-Fire Gravity / Super Ball;\nUpgrade Dual via Weapon Special.";
+PB_WPNHINT_PB_QuadSG = "Quad Shotgun: Weapon Special Akimbo / Blast /\nShell vs Breath;\nAlt-Fire Patterns.";
+PB_WPNHINT_PB_Railgun = "Railgun: Alt-Fire Tripwire / Overload;\nSecondary Zoom.";
+PB_WPNHINT_PB_Revolver = "Revolver: Alt-Fire Fan Hammer / Single-Action;\nSee PDA Upgrades.";
+PB_WPNHINT_PB_RocketLauncher = "Rocket Launcher: Weapon Special Rocket Mode;\nAlt-Fire Scope / Detonate.";
+PB_WPNHINT_PB_Excavator = "Excavator: Drill Shot Burrows;\nDrop Shot Floats. Weapon Special Mode;\nAlt-Fire Mid-Air Detonate.";
 PB_EXC_PICKUP = "You picked up the UAC-M2 Excavator!";
 PB_EXC_TAG = "UAC-M2 Excavator Launcher";
 PB_EXC_MODE_DRILL = "\ctDrill \cdcharge \c-mode";
@@ -537,21 +537,21 @@ PB_EXC_MODE_DROP = "\ctDrop \cdcharge \c-mode";
 PB_EXC_ALREADY = "\coMode already active";
 PB_PICKUP_PB_CyberdemonRL = "You picked up the Cyberdemon Missile Launcher!";
 PB_TAG_PB_CyberdemonRL = "Cyberdemon Missile Launcher";
-PB_WPNHINT_PB_CyberdemonRL = "Cyberdemon missile launcher: tap-fires a single cyber missile; alt unloads a short barrage. Each shot burns two rockets.";
-PB_WPNHINT_PB_Shotgun = "Pump shotgun: Weapon Special picks shell type (buck / slug / dragon if upgraded). Alt-Fire melee bash or alt pump.";
-PB_WPNHINT_PB_SMG = "SMG: Weapon Special for akimbo and laser. Alt-Fire grenade launcher when equipped.";
-PB_WPNHINT_PB_SSG = "Super shotgun: dual wield alt reloads; fire both barrels; respect mode uses alt animations.";
-PB_WPNHINT_PB_SuperGL = "Super grenade launcher: Weapon Special picks grenade element. Alt-Fire cook / detonate / sticky behaviors.";
-PB_WPNHINT_PB_Unmaker = "Unmaker: demon laser; alt demon energy spenders; upgrade paths alter beam.";
-PB_WPNHINT_PB_Weapon = "Generic PB weapon slot; use Weapon Special and Alt-Fire per slot bind.";
-PB_WPNHINT_PlasmaZombieShield = "Plasma zombie shield; blocks energy; alt shoves plasma.";
-PB_WPNHINT_Rifle = "DMR / HDMR: Weapon Special opens wheel when upgraded (akimbo, grenade alt, sniper mode). Alt-Fire grenade or aim.";
-PB_WPNHINT_RiotShield = "Riot shield + sidearm: block with alt; bash on fire; weapon switches with inventory.";
-PB_WPNHINT_SavageImpShield = "Savage imp shield; aggressive alt spikes.";
-PB_WPNHINT_SguyShield = "Shotgun guy shield; buckshot bash alt.";
-PB_WPNHINT_TriclopsImpShield = "Triclops shield; triple-eye alt blast.";
-PB_WPNHINT_ZMANShield = "Zombieman shield; pistol fire through alt windows.";
-PB_WPNHINT_ZombieScientistShield = "Scientist shield; chemical alt splash.";
+PB_WPNHINT_PB_CyberdemonRL = "Cyberdemon Rocket Launcher: Tap Single Missile;\nAlt-Fire Burst Barrage.\n2 Rockets per Shot.";
+PB_WPNHINT_PB_Shotgun = "Pump Shotgun: Weapon Special Shells;\nAlt-Fire Bash / Pump.";
+PB_WPNHINT_PB_SMG = "SMG: Weapon Special Akimbo / Laser;\nAlt-Fire Grenade Launcher When Equipped.";
+PB_WPNHINT_PB_SSG = "Super Shotgun: Dual Reload Alt-Fire;\nBoth Barrels; Weapon Respect Alt-Fire.";
+PB_WPNHINT_PB_SuperGL = "Super Grenade Launcher: Weapon Special Element;\nAlt-Fire Cook / Detonate / Sticky.";
+PB_WPNHINT_PB_Unmaker = "Unmaker: Demon Beam;\nAlt-Fire Spends Energy.";
+PB_WPNHINT_PB_Weapon = "Project Brutality Weapon:\nWeapon Special + Alt-Fire Per Bind.";
+PB_WPNHINT_PlasmaZombieShield = "Plasma Zombie Shield:\nBlock Beams; Alt-Fire Shove.";
+PB_WPNHINT_Rifle = "DMR / HDMR: Weapon Special Wheel\nWhen Upgraded.\nAlt-Fire Grenade Launcher / Aim.";
+PB_WPNHINT_RiotShield = "Riot Shield + Sidearm:\nAlt-Fire = Block; Primary Fire = Bash;\nSwap Weapons via Inventory.";
+PB_WPNHINT_SavageImpShield = "Savage Imp Shield; Aggressive Alt-Fire Spikes.";
+PB_WPNHINT_SguyShield = "Shotgun Guy Shield; Buckshot Bash Alt-Fire.";
+PB_WPNHINT_TriclopsImpShield = "Triclops Shield; Triple-Eye Alt-Fire Blast.";
+PB_WPNHINT_ZMANShield = "Zombieman Shield; Pistol Fire Through Alt-Fire Windows.";
+PB_WPNHINT_ZombieScientistShield = "Scientist Shield; Chemical Alt-Fire Splash.";
 
 [enu default]
 DAMNUM_TYPECOLOR_STEEL        = "DamWhite";
