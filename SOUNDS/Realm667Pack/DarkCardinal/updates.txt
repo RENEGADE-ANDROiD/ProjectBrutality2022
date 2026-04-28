@@ -1,0 +1,11 @@
+May 2nd, 2024 - Gothic
+
+-Converted wad to pk3.
+-Added pain sprites for the Cardinal, made by Tsran908.
+-New sounds, taken from Doom, Doom 64 and Diablo, and mixed by Gothic.
+-Edited the Cardinal Rocket sprites, and added a new sprite for the Pain Grenade.
+-Added GLDEFS and Brightmaps.
+-Converted the code to ZScript. Old code was modified to remove unused functions and redundant actors, and modified some visual details. Still works on Zandronum.
+-Added a few new visual effects for the ZScript version:
+	-Cardinal Rockets now spawn green particles instead of Rocket trails.
+	-Tracer Balls spawn green puffs instead of regular Revenant trails.

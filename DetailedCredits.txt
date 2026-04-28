@@ -1,4 +1,14 @@
-(NEEDS TO BE UPDATED BY FINAL RELEASE)
+Project Brutality 2022 — maintainers RENEGADE ANDROID and doc — supplements this
+archival list. For third-party work merged after the original file froze, see
+README “Sources and important third-party lineage” and CREDITS.txt, especially:
+Realm667 (community bases), Monster Pack / Glory Kills lines, **Brutal Doom
+*El Diablo* Edition** first-person finisher art (eld_eld_* paths + related),
+**Project Brutality Legacy** execution / stagger handoff behavior folded into core
+actors, **Brutal Pack**-line fragments (selective only; pack not distributed whole),
+and optional **Brutal Doom 22 (BDv22)** gore (`bdv22_*`, `actors/Gore/BDv22Gore/`,
+`SPRITES/BDv22/`). The list below is retained verbatim for per-sprite history.
+
+---------------------------------------------------------------------------
 
 Extra rotations for PLAY  A - G
 John Romero

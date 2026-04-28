@@ -1,0 +1,176 @@
+////////////////
+//////Adult/////
+////////////////
+
+Actor ATail1
+
+{
+  Scale 0.65
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("ATail2",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor ATail2
+
+{
+  Scale 0.60
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("ATail3",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor ATail3
+
+{
+  Scale 0.55
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("ATail4",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor ATail4
+
+{
+  Scale 0.50
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("ATail5",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor ATail5
+
+{
+  Scale 0.45
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("ATail6",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor ATail6
+
+{
+  Scale 0.40
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("ATail7",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor ATail7
+
+{
+  Scale 0.35
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("ATail8",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor ATail8
+
+{
+  Scale 0.30
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("ATail9",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor ATail9
+
+{
+  Scale 0.25
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("ATail10",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor ATail10
+
+{
+  Scale 0.20
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+    Goto Death
+  Death:
+	TNT1 A 0 A_SpawnItemEx("ATail11",0,0,0,0,0,0,0,0,0)
+	Stop
+  }
+}
+
+Actor ATail11
+
+{
+  Scale 0.15
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    ATAI A 6
+	Stop
+  }
+}

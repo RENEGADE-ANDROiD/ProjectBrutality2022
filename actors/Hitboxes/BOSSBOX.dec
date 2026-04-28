@@ -1,6 +1,5 @@
 actor MasterMindHitBox
 {
-//+NOTARGET
 damagefactor "Taunt", 0.0
 damagefactor "Desintegrate", 1.80
 damagefactor "Blood", 0.0

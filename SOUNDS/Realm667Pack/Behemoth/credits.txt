@@ -1,0 +1,4 @@
+Code: Amuscaria
+GLDefs: SkyMarshall, SamVision
+Sounds: DBThanatos, 3DRealms, id Software
+Sprites: Amuscaria

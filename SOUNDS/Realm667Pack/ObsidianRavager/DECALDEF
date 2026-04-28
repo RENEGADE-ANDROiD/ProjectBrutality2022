@@ -1,0 +1,52 @@
+decal ChaosBallScorch1
+{
+	pic BAL7SCR1
+	shade "18 00 00"
+	x-scale 0.8
+	y-scale 0.8
+	randomflipx
+	randomflipy
+}
+
+decal ChaosBallScorch2
+{
+	pic BAL7SCR2
+	shade "18 00 00"
+	x-scale 0.8
+	y-scale 0.8
+	randomflipx
+	randomflipy
+}
+
+decal ChaosBarrageScorch1
+{
+	pic BAL7SCR1
+	shade "18 00 00"
+	x-scale 0.3
+	y-scale 0.3
+	randomflipx
+	randomflipy
+}
+
+decal ChaosBarrageScorch2
+{
+	pic BAL7SCR2
+	shade "18 00 00"
+	x-scale 0.3
+	y-scale 0.3
+	randomflipx
+	randomflipy
+}
+
+
+decalgroup ChaosBallScorch
+{
+	ChaosBallScorch1	1
+	ChaosBallScorch2	1
+}
+
+decalgroup ChaosBarrageScorch
+{
+	ChaosBarrageScorch1	1
+	ChaosBarrageScorch2	1
+}

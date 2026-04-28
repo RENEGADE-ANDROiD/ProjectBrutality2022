@@ -1,0 +1,278 @@
+// Molotov Cocktail (ported from PB3.0 Molotov Cocktail v15 — requires sounds/sprites; see AGENTS.md)
+
+// Molotov Explosion
+Actor MolotovExplosion : RocketExplosion
+{
+	+FORCERADIUSDMG
+	States
+	{
+		Spawn:
+			Goto Death
+		Death:
+			TNT1 A 0
+			TNT1 A 0 A_SpawnItem("WhiteShockwaveBig")
+			TNT1 A 0 A_Explode(160, 200, XF_HURTSOURCE, 0, 70, 0, 0, "BulletPuff", "Fire")
+			Stop
+	}
+}
+
+Actor HandMolotovAmmo : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 6
+	Ammo.BackPackAmount 2
+	Ammo.BackPackMaxAmount 12
+	Inventory.PickupMessage "You got a Molotov cocktail."
+	Inventory.PickupSound "MOLPKUP"
+	Inventory.Icon MOLOV0
+	+INVENTORY.IGNORESKILL
+	Scale 0.45
+	States
+	{
+		Spawn:
+			MOLO V -1
+			Stop
+	}
+}
+
+Actor HandMolotov : CustomInventory
+{
+	Game Doom
+	Scale 0.45
+	Height 30
+	Radius 10
+	Health 40
+	-NOBLOCKMAP
+	+DONTGIB
+	+FLOORCLIP
+	+NOBLOOD
+	Inventory.PickupMessage "You got a Molotov cocktail."
+	Inventory.PickupSound "MOLPKUP"
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			MOLO V 1
+			Loop
+		Pickup:
+			TNT1 A 0 A_GiveInventory("HandMolotovAmmo", 1)
+			TNT1 A 20
+			Stop
+	}
+}
+
+Actor ThrownMolotov
+{
+	Radius 2
+	Height 3
+	Health 5
+	Speed 30
+	Scale 0.2
+	Damage 0
+	Projectile
+	Gravity 0.7
+	Species "Marine"
+	+MISSILE
+	-NOGRAVITY
+	-BLOODSPLATTER
+	-EXTREMEDEATH
+	+EXPLODEONWATER
+	+SKYEXPLODE
+	-DOOMBOUNCE
+	+FLOORCLIP
+	+DONTGIB
+	+MTHRUSPECIES
+	+THRUSPECIES
+	+DontHurtSpecies
+	+DontHarmSpecies
+	+NoExtremeDeath
+	DamageType "Fire"
+	BounceFactor 0.5
+	WallBounceFactor 0.25
+	SeeSound "molotov/toss"
+	DeathSound "Molotov/Break"
+	Obituary "\ci%o was burned by %k's Molotov cocktail."
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			Goto Spawn1
+		Spawn1:
+		SpawnSpin:
+			MOLP AABBCCDDEEFFGGHH 1 Bright
+			{
+				A_CustomMissile("FlameTrails", 15, 0, Random(0, 360), 2, Random(50, 130));
+				A_CustomMissile("MolotovEmberParticles", 15, 0, Random(0, 360), 2, Random(50, 130));
+			}
+			TNT1 A 0
+			Loop
+		Death:
+			TNT1 A 0
+			TNT1 A 0 A_PlaySound("weapons/sgl/incendiary", CHAN_AUTO, 1.0, false, ATTN_NONE, false)
+			TNT1 A 0 Bright
+			{
+				A_CustomMissile("MolotovGlassParticle", Random(5, 60), Random(-3, 3), Random(0, 360), 2, Random(20, 70));
+				A_Explode(150, 150, XF_HURTSOURCE, false, 75, 0, 0, "BulletPuff", "Fire");
+				A_NoBlocking;
+				A_AlertMonsters;
+			}
+			TNT1 A 0 Bright
+			{
+				A_SpawnItemEx("ExplosionFlareSpawner", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+				A_SpawnItemEx("DetectFloorCrater", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+				A_SpawnItemEx("DetectCeilCrater", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+				A_SpawnItemEx("IncendiaryGrenadeFX", 0, 0, 0);
+				A_CustomMissile("FireworkSFXType2", 64, 0, Random(0, 360), 2, Random(30, 60));
+				A_CustomMissile("FireballExplosionFlamesBig", 6, 0, Random(0, 360), 2, Random(0, 360));
+				A_CustomMissile("MolotovFlamesTinyBurningPiece2", 8, 0, Random(0, 360), 2, Random(30, 80));
+				A_CustomMissile("MolotovFlamesTinyBurningPiece1", 8, 0, Random(0, 360), 2, Random(30, 80));
+				A_CustomMissile("MolotovFlamesTinyBurningPiece2", 8, 0, Random(0, 360), 2, Random(30, 80));
+				A_SpawnItemEx("MolotovFlamesTinyBurningPiece3", Random(-5, 5), Random(-5, 5));
+				A_CustomMissile("FireworkSFXType2", 16, 0, Random(0, 360), 2, Random(30, 60));
+				A_CustomMissile("MolotovFireParticles", 6, 0, 0, 2, Random(10, 20));
+				A_CustomMissile("MolotovFireParticles", 6, 0, Random(0, 360), 2, Random(10, 90));
+			}
+			FRFX ZZZ 0 Bright
+			{
+				A_CustomMissile("BigNeoSmoke", 2, 0, Random(0, 360), 2, Random(0, 360));
+				A_CustomMissile("FT_GroundFireSpawner", 12, 0, Random(0, 360), 2, Random(40, 60));
+				A_CustomMissile("FT_GroundFireSpawner", 12, 0, Random(0, 360), 2, Random(50, 130));
+			}
+			TNT1 A 0
+			Stop
+	}
+}
+
+Actor MolotovFlamesTinyBurningPiece1 : TinyBurningPiece
+{
+	DamageType "Fire"
+}
+
+Actor MolotovFlamesTinyBurningPiece2 : TinyBurningPiece2
+{
+	DamageType "Fire"
+}
+
+Actor MolotovFlamesTinyBurningPiece3 : TinyBurningPiece3
+{
+	DamageType "Fire"
+}
+
+Actor MolotovEmberParticles
+{
+	Game Doom
+	Radius 1
+	Height 1
+	Speed 2
+	Damage 0
+	+NOBLOCKMAP
+	+NOTELEPORT
+	+DONTSPLASH
+	+MISSILE
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	+NOCLIP
+	+FORCEXYBILLBOARD
+	DamageType "Fire"
+	RenderStyle Add
+	Scale 1.25
+	Alpha 1.0
+	Gravity 0
+	States
+	{
+		Spawn:
+			TNT1 A 0 Bright
+			{
+				A_SpawnItem("RedFlare", 0, 10);
+			}
+			TNT1 A 0 Bright
+			{
+				A_SpawnItem("RedFlare", 0, 10);
+				A_SpawnItemEx("BurningEmberParticlesFloating_Bigger_Faster", Random(-16, 16), Random(-16, 16), Random(-16, 16), 0, 0, 0, 0, 128, 0);
+			}
+			TNT1 A 0 Bright
+			Stop
+	}
+}
+
+Actor MolotovFireParticles
+{
+	Game Doom
+	Radius 1
+	Height 1
+	Speed 2
+	Damage 0
+	+NOBLOCKMAP
+	+NOTELEPORT
+	+DONTSPLASH
+	+MISSILE
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	+NOCLIP
+	+FORCEXYBILLBOARD
+	DamageType "Fire"
+	RenderStyle Add
+	Scale 1.25
+	Alpha 1.0
+	Gravity 0
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			DB54 ABCD 2 Bright
+			{
+				A_SpawnItem("RedFlare", 0, 10);
+				A_CustomMissile("BigBlackSmoke", 40, 0, Random(0, 360), 2, Random(40, 160));
+			}
+			DB54 EFGHIJKLMNO 2 Bright
+			{
+				A_SpawnItem("RedFlare", 0, 10);
+				A_SpawnItemEx("BurningEmberParticlesFloating_Bigger_Faster", Random(-16, 16), Random(-16, 16), Random(-16, 16), 0, 0, 0, 0, 128, 0);
+			}
+			DB54 PQR 2 Bright
+			Stop
+	}
+}
+
+Actor MolotovGlassParticle : LargeGlassParticle1
+{
+	Radius 5
+	Speed 1
+	Mass 50
+	+NOBLOCKMAP
+	+MISSILE
+	+NOTELEPORT
+	+MOVEWITHSECTOR
+	+CLIENTSIDEONLY
+	-DONTSPLASH
+	+THRUGHOST
+	+THRUACTORS
+	+SLIDESONWALLS
+	+BOUNCEAUTOOFFFLOORONLY
+	+ALLOWBOUNCEONACTORS
+	+BOUNCEONWALLS
+	+BOUNCEONFLOORS
+	+BOUNCEONCEILINGS
+	+CANBOUNCEWATER
+	+DONTBOUNCEONSKY
+	+CASTSPRITESHADOW
+	+INTERPOLATEANGLES
+	+DOOMBOUNCE
+	+WINDTHRUST
+	+ROLLSPRITE
+	+FORCEXYBILLBOARD
+	BounceType "Doom"
+	BounceFactor 0.6
+	States
+	{
+		Spawn:
+			MOLG ABCDEFGH 3
+			Loop
+		Death:
+			MOLG C 1
+			MOLG C -1
+			MOLG G 1
+			MOLG G -1
+			Stop
+	}
+}

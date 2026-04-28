@@ -1,0 +1,13 @@
+credit to go: Id Software
+ Virtue(cyber imp)
+ Skelegant(rocket imp)
+ Ganbare-Lucifer(original concept)
+ Tsran
+
+Submitted: Ganbare-Lucifer
+Code: Ganbare-Lucifer, Virtue, Skelegant
+GLDEFs: Ganbare-Lucifer, Skelegant
+Sounds: id Software, Virtue
+Sprites: id Software
+Sprite Edit: Tsran908, Virtue, Skelegant
+Idea Base: Cyber Imp and Rocket Imp

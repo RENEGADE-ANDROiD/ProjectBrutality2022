@@ -61,21 +61,29 @@ Actor LostSoulPackSpawner : Demonpickup
     {
 	Spawn:	// Checks for the tokens distributed above and spawns the correct monster accordingly
 		TNT1 A 3
+		TNT1 A 0 A_Jump(2, "SpawnRealm667Drone")
 		TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 		TNT1 A 0 A_JumpIfInventory("IsPhantasm", 1, "Phantasm")
 		TNT1 A 0 A_JumpIfInventory("IsNormalSoul", 1, "LostSoul")
 		Loop
+	SpawnRealm667Drone:
+		TNT1 A 0 A_SpawnItemEx("PB_Realm667_DroneGK",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
 	RandomSpawn:
 		TNT1 A 0 A_Jump(256, "LostSoul", "Phantasm")
     Phantasm:
 		TNT1 A 1 ACS_NamedExecuteAlways("TogglePhantasm",0)
         TNT1 A 0 A_SpawnItemEx("PB_Phantasm",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		TNT1 A 0 A_JumpIf(GetCvar("NoESoul") == 1, "PhantasmNoEsoul")
 		TNT1 A 0 A_SpawnItemEx("Esoul",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	PhantasmNoEsoul:
         Stop
     LostSoul:
 		ReplaceToggle:
         TNT1 A 0 A_SpawnItemEx("PB_LostSoul",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		TNT1 A 0 A_JumpIf(GetCvar("NoESoul") == 1, "LSNoEsoul")
 		TNT1 A 0 A_SpawnItemEx("Esoul",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	LSNoEsoul:
         Stop
     }
 }

@@ -1,0 +1,10 @@
+Name: Baby Cacodemon
+Difficulty: Easy
+Connection: Doom IWAD projecile sounds
+Summon: BabyCaco
+Melee: Yes
+Distance: Projectile
+Type: Demon
+Brightmaps: Yes (colored)
+Added States: No
+ACS: No

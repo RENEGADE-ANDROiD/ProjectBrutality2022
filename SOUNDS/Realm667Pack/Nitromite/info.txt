@@ -1,0 +1,17 @@
+Name: Nitromite
+Difficulty: easy
+Connections: none
+Summon: Nitromite
+Melee: Explosion
+Distance: no
+Type: Demon, Explosive
+Brightmaps: yes
+Actor modification: no
+ACS: no
+
+Description:
+This evil critter is a cross between a jumping spider and a landmine.
+By some demonic machinations, the Nitromite is full of nitroglycerin and ready to detonate any moment.
+It can easily traverse any terrain by jumping over ledges and moving on ceilings.
+Once close enough to the target, it will sacrifice itself and explode.
+If killed before detonating itself, the volatile nitro in its body will explode after a short delay.

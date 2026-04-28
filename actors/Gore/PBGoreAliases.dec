@@ -1,0 +1,7 @@
+// PB gore aliases — restore PB-branch spawns from BDv22GoreMergeHandler.zc.
+// The handler picks names like "Guts" / "Guts2" / "SmallBrainPieceSlow" for
+// the non-BDv22 path; without these aliases the null-guarded handler silently
+// no-ops and visible gore disappears at low bdv22_gore_mix values.
+ACTOR Guts                : XDeathGuts      {}
+ACTOR Guts2               : XDeath2         {}
+ACTOR SmallBrainPieceSlow : SmallBrainPiece {}

@@ -80,12 +80,10 @@ ACTOR Green_Instestin : PB_TinyGibBase
 	
 	Water1:
 	GUTS GH 10
-	//TNT1 A 0 A_JumpIf(waterlevel == 0, "Death")
 	Loop
 	
 	Water2:
 	GUTS IJ 10
-	//TNT1 A 0 A_JumpIf(waterlevel == 0, "Death")
 	Loop
     }
 }
@@ -170,7 +168,6 @@ Decal GreenBloodSplat
 states
 {
      Death:
-  	    //TNT1 A 0 A_CustomMissile ("SmallBloodSplasher", 0, 0, random (0, 360), 2, random (0, 160))
        TNT1 A 1 A_SpawnItem("Green_BloodSpot",0,0,0,1)
         XDT1 EFGHIJKL 3
        Stop
@@ -186,7 +183,6 @@ Decal GreenBloodSplat
 states
 {
      Death:
-  	    //TNT1 A 0 A_CustomMissile ("SmallBloodSplasher", 0, 0, random (0, 360), 2, random (0, 160))
        TNT1 A 1 A_SpawnItem("Green_BloodSpot",0,0,0,1)
         XDT1 EFGHIJKL 3
        Stop
@@ -200,7 +196,6 @@ Decal GreenBloodSplat
 states
 {
      Death:
-  	    //TNT1 A 0 A_CustomMissile ("SmallBloodSplasher", 0, 0, random (0, 360), 2, random (0, 160))
        TNT1 A 1 A_SpawnItem("Green_BloodSpot",0,0,0,1)
         XDT1 EFGHIJKL 3
        Stop
@@ -254,6 +249,7 @@ Decal GreenBloodSplat
 			TNT1 A 0 A_JumpIfInventory("IsOverWater", 1, "Disappear")
 			TNT1 A 0 A_JumpIfInventory("IsOverNukage", 1, "Disappear")
 			TNT1 A 0 A_JumpIfInventory("IsOverLava", 1, "Disappear")
+			TNT1 A 0 A_SpawnItemEx("BootSmearerGreen",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 			TNT1 A 0 A_SetAngle(random(0,360))
 			TNT1 A 0 A_SetScale(frandom(0.38,0.42),frandom(0.38,0.42))
 			TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4")
@@ -424,12 +420,10 @@ ACTOR GreenGuts
 	
 	Water1:
 	GUTS GH 10
-	//TNT1 A 0 A_JumpIf(waterlevel == 0, "Death")
 	Loop
 	
 	Water2:
 	GUTS IJ 10
-	//TNT1 A 0 A_JumpIf(waterlevel == 0, "Death")
 	Loop
     }
 }
@@ -577,7 +571,6 @@ damagetype Blood
         BLOD A 0
         stop
      Death:
-  	    //TNT1 A 0 A_CustomMissile ("SmallBloodSplasher", 0, 0, random (0, 360), 2, random (0, 160))
        TNT1 A 0 A_CustomMissile ("CeilGreenBloodChecker", -15, 0, 90, 2, 90)
         TNT1 A 0
         stop
@@ -713,7 +706,6 @@ Spawn:
   TNT1 A 0
   TNT1 A 1 
   TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "DontSpawnOnSky")
-  //BPDL A 1
   BSTH A 1
   TNT1 A 0 A_SpawnItem ("DripingGreenBloodLeavesSmallPool")
   TNT1 A 0 A_SpawnItem ("CeilGreenBloodTinyBloodSpawner")
@@ -723,12 +715,10 @@ Spawn:
   Rest:
   TNT1 A 0 //A_JumpIf(ACS_NamedExecuteWithResult("PerformanceMode")==1,"FadeA")
   TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "FadeA")
-  //BPDL A 2 ThrustThingZ(0,300,0,1)
   BSTH A 2 ThrustThingz(0,300,0,01)
   Loop
   
   FadeA:
-  //BPDL AAAA 1 A_FadeOut(0.05)
   BSTH AAAA 1 A_FadeOut(0.05)
   Stop
   
@@ -751,7 +741,6 @@ TNT1 A 1
 Goto Crash
 Death:
 Crash:
-  //BPDL A 1
   BSTH B 1 
   TNT1 A 0 A_SpawnItem ("DripingGreenBloodLeavesSmallPool")
   TNT1 A 0 A_SpawnItem ("CeilGreenBloodLargeBloodSpawner")
@@ -761,12 +750,10 @@ Crash:
   Rest:
   TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "FadeA")
   TNT1 A 0 //A_JumpIf(ACS_NamedExecuteWithResult("PerformanceMode")==1,"FadeA")
-  //BPDL B 2 ThrustThingZ(0,300,0,1)
   BSTH B 2 ThrustThingZ(0,300,0,1)
   Loop
   
   FadeA:
-  //BPDL AAAA 1 A_FadeOut(0.05)
   BSTH BBBB 1 A_FadeOut(0.05)
   Stop
   
@@ -1489,7 +1476,6 @@ Decal BrutalBloodSplat
  {
  Spawn:
  TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
- //XDT1 ABCD 8 
   //loop
  Death:
  Crash:
@@ -1563,7 +1549,6 @@ ACTOR SmallAcidSpot : AcidSpot
  {
  Spawn:
  TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
- //XDT1 ABCD 8 
   //loop
  Death:
  Crash:
@@ -1788,7 +1773,6 @@ Loop
   	   TNT1 A 0 A_PlaySound("blooddrip", 6)
 	   TNT1 A 0 A_Explode(random(2,4), 12, 1)
 	   TNT1 AA 0 A_SpawnItemEx("PlasmaParticleSpawner", 0, 0, 0, 6, 6, 6, 0, 128)
-	  // TNT1 A 0 A_SpawnItemEx("SmallAcidSpot", 0, 0, 0, 0, 0, 0, 0, 0)
 	   XDT1 FGHIJKL 2 
 	   TNT1 A 0
        Stop

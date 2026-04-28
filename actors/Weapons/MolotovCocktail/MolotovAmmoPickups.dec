@@ -1,0 +1,32 @@
+// World pickups for Molotov stocks (cvar: pb_NoMolotov hides map spawns)
+
+Actor PB_MolotovAmmoPickup : CustomInventory
+{
+	//$Title Molotov resupply (3)
+	//$Category Ammunition
+	Game Doom
+	Scale 0.45
+	+COUNTITEM
+	Inventory.PickupMessage "\ciYou got Molotov cocktails\cd — burn it down."
+	Inventory.PickupSound "MOLPKUP"
+	States
+	{
+		Spawn:
+			TNT1 A 0 A_JumpIf(GetCvar("pb_NoMolotov") == 1, "CvarOff")
+			MOL0 Z -1
+			Stop
+		CvarOff:
+			TNT1 A 0 A_Remove(AAPTR_DEFAULT)
+			Stop
+		Pickup:
+			TNT1 A 0 A_GiveInventory("HandMolotovAmmo", 3)
+			Stop
+	}
+}
+
+// Optional mapper/random use: 75% molotov pickup, 25% upgrade spawner (matches original add-on weights)
+Actor PB_MolotovOrUpgradeSpawner : RandomSpawner
+{
+	DropItem "PB_MolotovAmmoPickup", 255, 75
+	DropItem "UpgradeSpawner", 255, 25
+}

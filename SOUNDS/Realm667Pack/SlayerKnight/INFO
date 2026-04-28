@@ -1,0 +1,9 @@
+Name: Slayer Knight
+Difficulty: Medium
+Connection: None
+Summon: SlayerKnight
+Melee: Yes
+Distance: Projectile
+Type: Demon, Undead
+Brightmaps: Yes
+GLDefs: Yes

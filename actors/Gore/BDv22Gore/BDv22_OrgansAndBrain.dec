@@ -1,0 +1,219 @@
+// Brutal Doom 22 (BDv22) organs and small brain; sprites B22O* / B22U* in SPRITES/BDv22/ (from BD XME8 / XDB5).
+// Spawns (when bdv22_organs) from BDv22GoreMergeHandler. Uses PB XDeath1, BDv22_MeatChunk2, Brutal_LiquidBloodTrail.
+
+// --- Organs (B22O) ----------------------------------------------------------
+
+ACTOR BDv22_Organ0 : XDeath1
+{
+	+CLIENTSIDEONLY
+	+DONTSPLASH
+	-RIPPER
+	-BLOODLESSIMPACT
+	Scale 0.9
+	Speed 4
+	DeathSound "misc/xdeath3"
+	Decal "BrutalBloodSuper"
+	States
+	{
+		Spawn:
+			TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
+			B22O A 4 A_CustomMissile ("Brutal_LiquidBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+			Loop
+		Death:
+			B22O A 1
+			TNT1 A 0 A_QueueCorpse
+			B22O A -1
+			Stop
+	}
+}
+
+ACTOR BDv22_Organ1 : BDv22_Organ0
+{
+	States
+	{
+		Spawn:
+			TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
+			B22O B 4 A_CustomMissile ("Brutal_LiquidBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+			Loop
+		Death:
+			B22O B 1
+			TNT1 A 0 A_QueueCorpse
+			B22O B -1
+			Stop
+	}
+}
+
+ACTOR BDv22_Organ1b : BDv22_Organ0
+{
+	XScale -0.7
+	YScale 0.5
+}
+
+// --- Small brain (B22U) — based on Brutal Doom 22 SmallBrainPiece chain ----------------
+
+ACTOR BDv22_SmallBrain0 : BDv22_MeatChunk2
+{
+	Speed 10
+	Scale 0.4
+	Decal "None"
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Fly")
+		Spawn1:
+			TNT1 A 0
+			TNT1 A 0 A_SetScale(0.2, 0.2)
+			Goto Fly
+		Spawn2:
+			TNT1 A 0
+			TNT1 A 0 A_SetScale(-0.5, 0.5)
+			Goto Fly
+		Spawn3:
+			TNT1 A 0
+			TNT1 A 0 A_SetScale(-0.3, 0.3)
+			Goto Fly
+		Spawn4:
+			TNT1 A 0
+			TNT1 A 0 A_SetScale(-0.2, 0.2)
+			Goto Fly
+		Fly:
+			B22U ABCDEFGH 2
+			Loop
+		Death:
+			TNT1 A 0
+			TNT1 A 0 A_CheckFloor("Rest")
+			TNT1 A 0 A_CheckCeiling("SpawnCeil")
+			TNT1 A 0 A_SpawnItemEx("BDv22_SmearingBrain", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERSCALE)
+			Stop
+		SpawnCeil:
+			TNT1 A 0
+			TNT1 A 0 A_SpawnItemEx("BDv22_SmallBrainCeil", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERSCALE)
+			Stop
+		Rest:
+			TNT1 A 0
+			TNT1 A 0 A_QueueCorpse
+			B22U O 1
+			B22U O -1
+			Stop
+		DoNothing:
+			TNT1 A 0
+			Stop
+	}
+}
+
+ACTOR BDv22_SmallBrainFast : BDv22_SmallBrain0
+{
+	Speed 12
+}
+
+ACTOR BDv22_SmallBrainSlow : BDv22_SmallBrain0
+{
+	Speed 5
+	Gravity 0.5
+}
+
+actor BDv22_SmallBrainCeil : BDv22_CeilB22M2
+{
+	Scale 0.4
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_JUmp (255, "Live1", "Live2", "Live3")
+			Goto Live1
+		Live1:
+			B22U JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ 4 ThrustThingZ(0, 20, 0, 1)
+			Goto Fall
+		Live2:
+			B22U JJJJJJJJJJJJJJJJJJJJJJJJJJJJJ 4 ThrustThingZ(0, 20, 0, 1)
+			Goto Fall
+		Live3:
+			B22U JJJJJJJJJJJJJJJ 4 ThrustThingZ(0, 20, 0, 1)
+			Goto Fall
+		Fall:
+			TNT1 A 0 A_SpawnItemEx("BDv22_SmallBrainFalling", 0, 0, 0, 0, 0, -2, SXF_TRANSFERSCALE)
+			Stop
+		Splash:
+			BLOD A 0
+			Stop
+	}
+}
+
+ACTOR BDv22_SmallBrainFalling : BDv22_SmallBrain0
+{
+	States
+	{
+		Spawn:
+			B22U P 1
+			B22U P -1
+			Loop
+		Death:
+			TNT1 A 0
+			TNT1 A 0 A_QueueCorpse
+			B22U O 1
+			B22U O -1
+			Stop
+	}
+}
+
+ACTOR BDv22_SmearingBrain
+{
+	Radius 2
+	Height 2
+	Speed 10
+	Mass 1
+	Scale 0.4
+	+NOBLOCKMAP
+	+NOTELEPORT
+	+THRUGHOST
+	+CLIENTSIDEONLY
+	+DONTSPLASH
+	+MOVEWITHSECTOR
+	+FORCEXYBILLBOARD
+	+QUARTERGRAVITY
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_ChangeFlag("NOGRAVITY", 1)
+			TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Spawn4")
+			Goto Spawn1
+		Spawn1:
+			B22U PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP 2 A_CheckFloor("Rest")
+			Goto Death
+		Spawn2:
+			B22U PPPPPPPPPPPPPPPPPPPPPPPPPPPPP 2 A_CheckFloor("Rest")
+			Goto Death
+		Spawn3:
+			B22U PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP 2 A_CheckFloor("Rest")
+			Goto Death
+		Spawn4:
+			B22U PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP 2 A_CheckFloor("Rest")
+			Goto Death
+		Death:
+		Rest:
+			TNT1 A 0
+			TNT1 A 0 A_QueueCorpse
+			TNT1 A 0 A_ChangeFlag("QUARTERGRAVITY", 0)
+			B22U P 2 ThrustThingZ(0,-2,0,1)
+			TNT1 A 0 A_CheckFloor("Sleep")
+			B22U P 2 ThrustThingZ(0,-2,0,1)
+			TNT1 A 0 A_CheckFloor("Sleep")
+			B22U P 2 ThrustThingZ(0,-2,0,1)
+			TNT1 A 0 A_CheckFloor("Sleep")
+			B22U P 2 ThrustThingZ(0,-2,0,1)
+			TNT1 A 0 A_CheckFloor("Sleep")
+			B22U P 2 ThrustThingZ(0,-2,0,1)
+			TNT1 A 0 A_CheckFloor("Sleep")
+			B22U P 2 ThrustThingZ(0,-2,0,1)
+			Loop
+		Sleep:
+			B22U K 1
+			B22U K -1
+			Stop
+		DoNothing:
+			TNT1 A 0
+			Stop
+	}
+}

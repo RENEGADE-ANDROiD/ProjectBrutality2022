@@ -41,7 +41,6 @@ ACTOR PB_ArachnophyteGK: PB_Arachnophyte replaces PB_Arachnophyte
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		MARG E 0
 		Goto StagLooper
 	
@@ -101,7 +100,6 @@ ACTOR PB_ArachnophyteGK: PB_Arachnophyte replaces PB_Arachnophyte
 		TNT1 A 0 A_BossDeath
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
         TNT1 A 0 A_NoBlocking
-		//TNT1 A 0 A_BossDeath
         TNT1 A 0 A_GiveToTarget("ArachnophyteFatality", 1)
         Stop
 	}
@@ -151,7 +149,6 @@ ACTOR PB_ArachnotronGK: PB_Arachnotron replaces PB_Arachnotron
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		BGPI I 0
 		Goto StagLooper
 	
@@ -209,13 +206,7 @@ ACTOR PB_ArachnotronGK: PB_Arachnotron replaces PB_Arachnotron
 	    TNT1 A 1 A_BossDeath
 		TNT1 A 0 A_Pain
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death
-	    TNT1 A 0 A_Jump(128, "Death.Fatality2")
-	    TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-        TNT1 A 0 A_GiveToTarget("ArachnotronFatality", 1)
-        TNT1 A 1 A_BossDeath
-        TNT1 A 0 
+	    TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality3", "Death.Fatality3")
 		Stop
 	}
 }
@@ -262,7 +253,6 @@ actor AracnorbGK: Aracnorb replaces Aracnorb
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		ACNG I 2
 		Goto StagLooper
 	
@@ -377,7 +367,6 @@ ACTOR PB_EliteArachnotronGK: PB_EliteArachnotron replaces PB_EliteArachnotron
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		ARGC I 3
 		Goto StagLooper
 	
@@ -436,11 +425,7 @@ ACTOR PB_EliteArachnotronGK: PB_EliteArachnotron replaces PB_EliteArachnotron
 		TNT1 A 0 A_Pain
 		TNT1 A 0	
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,32,random(0,8),0,random(0,8),random(0,360))
-	    TNT1 A 0 A_Jump(128, "Death.Fatality2")
-	    TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-        TNT1 A 0 A_GiveToTarget("Arachnotron2FatalityA", 1)
-        TNT1 A 1 A_BossDeath
-        TNT1 A 0 
+	    TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2")
 		Stop
 	}
 }
@@ -492,7 +477,6 @@ ACTOR PB_InfernalArachnotronGK: PB_InfernalArachnotron replaces PB_InfernalArach
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		RSGI I 0
 		Goto StagLooper
 	
@@ -553,11 +537,7 @@ ACTOR PB_InfernalArachnotronGK: PB_InfernalArachnotron replaces PB_InfernalArach
 		TNT1 A 0 //A_GiveToTarget("FatalityCounter", 50)	
 		TNT1 A 0// A_JumpIfInTargetInventory("FatalityCounter", 51, "Death.XDeath")
 		TNT1 A 0	
-		TNT1 A 0 A_Jump(128, "Death.Fatality2")
-		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_GiveToTarget("ArachnotronXFatality", 1)
-		TNT1 A 1 A_BossDeath
-		TNT1 A 0 
+		TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2")
 		Stop
 	}
 }

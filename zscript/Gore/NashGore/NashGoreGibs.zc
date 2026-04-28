@@ -94,7 +94,6 @@ class NashGoreGibs : Actor
 		// get monster's "size" and cap it to something sensible
 		int size = int(mo.Mass * 0.2);
 		size = clamp(size, 0, 50);
-		//Console.Printf("%d", size);
 
 		for (int i = 0; i < size; i++)
 		{

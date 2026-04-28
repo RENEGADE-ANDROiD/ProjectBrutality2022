@@ -1,0 +1,5 @@
+BabyCaco/Sight	CACOBSIT
+BabyCaco/Pain	CACOBPAI
+BabyCaco/Death	CACOBDTH
+BabyCaco/Active	BABYACT
+BabyCaco/Melee	BABYBITE

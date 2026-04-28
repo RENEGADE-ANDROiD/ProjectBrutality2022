@@ -1,0 +1,44 @@
+// Slayer Knight
+pointlight SLAYERKNIGHTFLAME
+{
+    color 1.0 0.0 0.0
+    size 96
+	attenuate 1
+}
+
+flickerlight SLAYERKNIGHTFLAME_X1
+{
+    color 0.9 0.6 0.6
+    size 120
+    secondarySize 132
+    chance 0.25
+	attenuate 1
+}
+
+flickerlight SLAYERKNIGHTFLAME_X2
+{
+    color 0.6 0.45 0.45
+    size 144
+    secondarySize 156
+    chance 0.25
+	attenuate 1
+}
+
+flickerlight SLAYERKNIGHTFLAME_X3
+{
+    color 0.3 0.2 0.2
+    size 168
+    secondarySize 180
+    chance 0.25
+	attenuate 1
+}
+
+object SlayerKnightFlame
+{
+    frame SKFBA { light SLAYERKNIGHTFLAME }
+    frame SKFBB { light SLAYERKNIGHTFLAME }
+
+    frame SKFBC { light SLAYERKNIGHTFLAME_X1 }
+    frame SKFBD { light SLAYERKNIGHTFLAME_X2 }
+    frame SKFBE { light SLAYERKNIGHTFLAME_X3 }
+}

@@ -1,0 +1,54 @@
+// Targeted BDv22 limb subset using already-folded B22 sprite sets.
+// This avoids fragile dependencies from full Limbs.dec while adding readable "limb chunk" variety.
+
+ACTOR BDv22_LimbChunkArm : BDv22_MeatChunk2
+{
+	Scale 0.95
+	Speed 7
+	Radius 3
+	Height 2
+	States
+	{
+		Spawn:
+			TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
+			B22M ABCDEFG 2 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+			Loop
+		Death:
+			TNT1 AAA 0 A_CustomMissile ("Brutal_FlyingBloodFaster", 0, 0, random (0, 360), 2, random (40, 90))
+			B22M K 1
+			TNT1 A 0 A_QueueCorpse
+			B22M K -1
+			Stop
+	}
+}
+
+ACTOR BDv22_LimbChunkLeg : BDv22_MeatChunk3
+{
+	Scale 1.0
+	Speed 6
+	Radius 3
+	Height 2
+	States
+	{
+		Spawn:
+			TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
+			B22T ABCDEFG 2 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+			Loop
+		Death:
+			TNT1 AAA 0 A_CustomMissile ("Brutal_FlyingBloodFaster", 0, 0, random (0, 360), 2, random (40, 90))
+			B22T K 1
+			TNT1 A 0 A_QueueCorpse
+			B22T K -1
+			Stop
+	}
+}
+
+ACTOR BDv22_LimbChunkTorso : BDv22_RibCageA
+{
+	Scale 1.15
+	Speed 5
+	Radius 5
+	Height 4
+	+DOOMBOUNCE
+	BounceFactor 0.08
+}

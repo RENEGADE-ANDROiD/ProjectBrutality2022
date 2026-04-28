@@ -96,7 +96,9 @@ Actor ArachnotronPackSpawner : Demonpickup
 	Stop
 	SpawnArachnotron2:
 	TNT1 A 0 A_SpawnItemEx("PB_Arachnotron",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoZombieTank") == 1, "Arachn2Done")
 	TNT1 A 0 A_SpawnItemEx("ZombieTank",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Arachn2Done:
 	Stop
 	SpawnInfernalArachnotron:
 	TNT1 A 0 A_Jump(256, "SpawnInfernalArachnotron1", "SpawnInfernalArachnotron2")
@@ -108,7 +110,9 @@ Actor ArachnotronPackSpawner : Demonpickup
 	SpawnInfernalArachnotron2:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleInfernoSpider",0)
 	TNT1 A 0 A_SpawnItemEx("PB_InfernalArachnotron",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoZombieplasmatank") == 1, "Infernal2Done")
 	TNT1 A 0 A_SpawnItemEx("ZombieplasmaTank",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Infernal2Done:
 	Stop
 	SpawnEliteArachnotron:
 	TNT1 A 0 A_Jump(256, "SpawnEliteArachnotron1", "SpawnEliteArachnotron2")
@@ -120,7 +124,9 @@ Actor ArachnotronPackSpawner : Demonpickup
 	SpawnEliteArachnotron2:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleArachnotron2",0)
 	TNT1 A 0 A_SpawnItemEx("PB_EliteArachnotron",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoZombiemissiletank") == 1, "Elite2Done")
 	TNT1 A 0 A_SpawnItemEx("ZombieMissileTank",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Elite2Done:
 	stop
 	SpawnArachnophyte:
 	TNT1 A 0 A_Jump(256, "SpawnArachnophyte1", "SpawnArachnophyte2")
@@ -132,7 +138,9 @@ Actor ArachnotronPackSpawner : Demonpickup
 	SpawnArachnophyte2:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleArachnophyte",0)
 	TNT1 A 0 A_SpawnItemEx("PB_Arachnophyte",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_JumpIf(GetCvar("NoZombietankelite") == 1, "ArachnoPh2Done")
 	TNT1 A 0 A_SpawnItemEx("ZombieTankelite",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	ArachnoPh2Done:
 	Stop
 	}
 }

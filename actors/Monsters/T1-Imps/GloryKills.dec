@@ -41,7 +41,6 @@ ACTOR PB_ImpGK: PB_Imp Replaces PB_Imp
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		TRGO H 0
 		Goto StagLooper
 	
@@ -94,7 +93,7 @@ ACTOR PB_ImpGK: PB_Imp Replaces PB_Imp
         TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5")
+		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7")
 		Goto Super::Death.Fatality1
 	}	
 }
@@ -142,7 +141,6 @@ actor PB_DarkImpNamiGK : PB_DarkImpNami Replaces PB_DarkImpNami
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		DRGI H 2
 		Goto StagLooper
 	
@@ -194,10 +192,8 @@ actor PB_DarkImpNamiGK : PB_DarkImpNami Replaces PB_DarkImpNami
 		TNT1 A 0 A_Pain
         TNT1 A 0 //A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death.ExplosiveImpact
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality2")
+		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7")
 		Goto Super::Death.Fatality1
 	}
 }
@@ -245,7 +241,6 @@ actor PB_DarkImpNetherGK : PB_DarkImpNether Replaces PB_DarkImpNether
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		DRGF H 2
 		Goto StagLooper
 	
@@ -297,10 +292,8 @@ actor PB_DarkImpNetherGK : PB_DarkImpNether Replaces PB_DarkImpNether
 		TNT1 A 0 A_Pain
         TNT1 A 0 //A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death.ExplosiveImpact
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality2")
+		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7")
 		Goto Super::Death.Fatality1	
 	}
 }
@@ -348,7 +341,6 @@ actor PB_DarkImpSTGK : PB_DarkImpST Replaces PB_DarkImpST
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		DRGS H 2
 		Goto StagLooper
 	
@@ -400,10 +392,8 @@ actor PB_DarkImpSTGK : PB_DarkImpST Replaces PB_DarkImpST
 		TNT1 A 0 A_Pain
         TNT1 A 0 //A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death.ExplosiveImpact
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality2")
+		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7")
 		Goto Super::Death.Fatality1
 	}
 }
@@ -451,7 +441,6 @@ actor PB_DarkImpVoidGK : PB_DarkImpVoid Replaces PB_DarkImpVoid
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		DRGV H 2
 		Goto StagLooper
 	
@@ -503,10 +492,8 @@ actor PB_DarkImpVoidGK : PB_DarkImpVoid Replaces PB_DarkImpVoid
 		TNT1 A 0 A_Pain
         TNT1 A 0 //A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death.ExplosiveImpact
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality2")
+		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7")
 		Goto Super::Death.Fatality1
 	}
 }
@@ -554,7 +541,6 @@ Actor DNImpVariant1GK : DNImpVariant1 Replaces DNImpVariant1
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		TRG5 H 2
 		Goto StagLooper
 	
@@ -606,10 +592,8 @@ Actor DNImpVariant1GK : DNImpVariant1 Replaces DNImpVariant1
 		TNT1 A 0 A_Pain
         TNT1 A 0 //A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death.ExplosiveImpact
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality2")
+		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7")
 		Goto Super::Death.Fatality1	
 	}
 }
@@ -657,7 +641,6 @@ Actor DNImpVariant2GK : DNImpVariant2 Replaces DNImpVariant2
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		TRG3 H 2
 		Goto StagLooper
 	
@@ -709,10 +692,8 @@ Actor DNImpVariant2GK : DNImpVariant2 Replaces DNImpVariant2
 		TNT1 A 0 A_Pain
         TNT1 A 0 //A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death.ExplosiveImpact
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality2")
+		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7")
 		Goto Super::Death.Fatality1		
 	}
 }
@@ -760,7 +741,6 @@ Actor DNImpVariant3GK : DNImpVariant3 Replaces DNImpVariant3
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		TRG4 H 2
 		Goto StagLooper
 	
@@ -812,10 +792,8 @@ Actor DNImpVariant3GK : DNImpVariant3 Replaces DNImpVariant3
 		TNT1 A 0 A_Pain
         TNT1 A 0 //A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	//	TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
-	//	Goto Death.ExplosiveImpact
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality2")
+		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7")
 		Goto Super::Death.Fatality1
 	}	
 }
@@ -864,7 +842,6 @@ ACTOR PB_InfectedImpGK: PB_InfectedImp Replaces PB_InfectedImp
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		1RGO H 3
 		Goto StagLooper
 	
@@ -917,7 +894,7 @@ ACTOR PB_InfectedImpGK: PB_InfectedImp Replaces PB_InfectedImp
         TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality2")
+		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7")
 		Goto Super::Death.Fatality1	
 	}
 }

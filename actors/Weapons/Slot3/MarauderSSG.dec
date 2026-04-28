@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 // Marauder / Peacekeeper SSG addon (PB3.0 port)
 // Original addon: ikdfa (Marauder addon for PB)
 // Sprites: Craneo (Marauder), TypicalSF (Doom Eternal SSG), PB Team (doomguy/chaingunguy sprites)
@@ -81,7 +81,7 @@ Actor ColdKeeperUpgrade : CustomInventory
 		MSU8 BBBBBBBB 2 BRIGHT Light("WeaponUpgradeSpawner")
 		Loop
 	Pickup:
-		TNT1 A 0 A_Print("Marauder's Sawed-Off Shotgun Cryo mode is now available via WeaponSpecial key!", 4)
+		TNT1 A 0 A_Print("\ctMarauder SSG:\c- \chCryo \c-mode \cd— use \ctWeapon Special", 4)
 		Stop
 	}
 }
@@ -244,6 +244,14 @@ Actor MarauderSSG : PB_Weapon
 
     Ready:
 	    TNT1 A 0
+		TNT1 A 0
+		{
+			if (CountInv("PB_SSG") >= 1)
+			{
+				return state("");
+			}
+			return state("");
+		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
 	    TNT1 A 0 PB_RespectIfNeeded
 	WeaponRespect:
@@ -425,6 +433,27 @@ Actor MarauderSSG : PB_Weapon
 		     A_TakeInventory("PB_LockScreenTilt",1);
 		     }
 	    TNT1 A 0
+	    Goto MarauderShotgunReadyToFire
+	ChooseUpgradePath:
+		TNT1 A 0 A_PrintBold("\cfChoose your path:\n\caFIRE = MARAUDER\n\ciALTFIRE = SSG")
+		TNT1 A 1
+		TNT1 A 1
+		ChooseUpgradePathDebounce:
+		TNT1 A 2
+		ChooseUpgradePathLoop:
+		TNT1 A 0 A_JumpIf(JustPressed(BT_ATTACK), "KeepMarauderPath")
+		TNT1 A 0 A_JumpIf(JustPressed(BT_ALTATTACK), "KeepSSGPath")
+		TNT1 A 1
+		TNT1 A 1
+	KeepMarauderPath:
+		TNT1 A 0 A_TakeInventory("PB_SSG", 1)
+		TNT1 A 0 A_PrintBold("\caPath selected: MARAUDER")
+		Goto Ready3
+	KeepSSGPath:
+		TNT1 A 0 A_TakeInventory("MarauderSSG", 1)
+		TNT1 A 0 A_PrintBold("\ciPath selected: SSG")
+		TNT1 A 0 A_SelectWeapon("PB_SSG")
+		Stop
   MarauderShotgunReadyToFire:
 	    MSSG A 1 {
 		     if (CountInv("MarauderShotgunBarrelHeat") >= 60) { A_GunFlash("MarauderShotgunBarrelSmoke");
@@ -859,12 +888,12 @@ Actor MarauderSSG : PB_Weapon
 			if (CountInv("MarauderCryoMode") == 1)
 			{
 				A_TakeInventory("MarauderCryoMode", 1);
-				A_Print("\chCryo Hell \c-Mode: Disabled");
+				A_Print("\ctCryo Hell:\c- \c-off");
 			}
 			else
 			{
 				A_GiveInventory("MarauderCryoMode", 1);
-				A_Print("\chCryo Hell \c-Mode: Enabled");
+				A_Print("\ctCryo Hell:\c- \cdon");
 			}
 		}
 		MSSG MNO 1

@@ -1,0 +1,65 @@
+object FusionCyberImpPlasmaBall
+{
+    frame PLSSA { light PLASMABALL }
+    frame PLSSB { light PLASMABALL }
+    frame PLSEA { light PLASMA_X1 }
+    frame PLSEB { light PLASMA_X2 }
+    frame PLSEC { light PLASMA_X2 }
+    frame PLSED { light PLASMA_X3 }
+    frame PLSEE { light PLASMA_X4 }
+}
+
+PointLight FusCybImplight1
+{
+Color 0.0 0.0 1.0
+Size 84
+}
+
+PointLight FusCybImplight2
+{
+Color 1.0 1.0 0.0
+Size 84
+}
+Object FusionCyberImp
+{
+	Frame UCIMG { Light FusCybImplight1 }
+	Frame UCIMX { Light FusCybImplight2 }
+}
+
+pointlight IMPROCKET
+{
+    color 1.0 0.7 0.0
+    size 36
+}
+
+flickerlight IMPROCKET_X1
+{
+    color 1.0 0.7 0.0
+    size 44
+    secondarySize 72
+    chance 0.3
+}
+
+flickerlight IMPROCKET_X2
+{
+    color 0.5 0.1 0.0
+    size 60
+    secondarySize 88
+    chance 0.3
+}
+
+flickerlight IMPROCKET_X3
+{
+    color 0.3 0.0 0.0
+    size 76
+    secondarySize 104
+    chance 0.3
+}
+
+object FusionCyberImpRocket
+{
+    frame IMISA { light IMPROCKET    }
+    frame IMISB { light IMPROCKET_X1 }
+    frame IMISC { light IMPROCKET_X2 }
+    frame IMISD { light IMPROCKET_X3 }
+}

@@ -471,7 +471,6 @@ ACTOR RicoChet
   +NOGRAVITY
   +NODAMAGETHRUST
   +DONTTHRUST
-  //Mass 9999999
 	Obituary "%o ate bullet shrapnel."
   //damagetype "Shrapnel"
   Scale 0.09

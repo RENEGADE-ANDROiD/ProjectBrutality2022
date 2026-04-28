@@ -1,0 +1,46 @@
+// Flopping organ chunk for x-deaths. MANA A-H is the floppy animation cycle.
+// Bounces a few times leaving Brutal_BloodSpot decals once per cycle, then
+// settles. Original sprites by AWEZ (Brutal Pack V10).
+
+ACTOR BPv10_FlopOrgans
+{
+    Radius 4
+    Height 4
+    Mass 6
+    Speed 0
+    Scale 0.45
+    Gravity 0.85
+    BounceFactor 0.35
+    BounceType "Doom"
+    +CLIENTSIDEONLY
+    +DOOMBOUNCE
+    +DONTSPLASH
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +THRUACTORS
+    +CORPSE
+    +FORCEXYBILLBOARD
+    -SOLID
+    RenderStyle Translucent
+    Alpha 0.95
+    States
+    {
+    Spawn:
+        TNT1 A 0 NoDelay A_Jump(256, "Flop1", "Flop2")
+        Stop
+    Flop1:
+        MANA A 2 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        MANA BCDEFGH 2
+        Loop
+    Flop2:
+        MANA E 2 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        MANA FGHABCD 2
+        Loop
+    Death:
+        MANA A 35 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        Goto Linger
+    Linger:
+        MANA A 1 A_FadeOut(0.004)
+        Loop
+    }
+}

@@ -72,7 +72,6 @@ class pb_ProjScreen {
 // 	virtual void Reorient (vector3 world_view_pos, vector3 world_ang) {
 // 		view_ang = world_ang;
 // 		view_pos = world_view_pos;
-// 	}
 	
 	void Reorient (vector3 world_view_pos, vector3 world_ang) {
 	
@@ -83,7 +82,6 @@ class pb_ProjScreen {
 			sin(world_ang.y) * pixel_stretch);
 		
 		
-// 		super.Reorient(world_view_pos, world_ang);
 		view_ang = world_ang;
 		view_pos = world_view_pos;
 		

@@ -46,7 +46,6 @@ Class PB_Imp1GK : PB_Imp1 Replaces PB_Imp1
 		}
 		Goto StagLooper;
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		TRGO H 0;
 		Goto StagLooper;
 	
@@ -99,7 +98,7 @@ Class PB_Imp1GK : PB_Imp1 Replaces PB_Imp1
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1);
-		TNT1 A 0 A_Jump(255, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality5");
+		TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7");
 		Goto Death.Fatality1;
  
         Death.Fatality1:
@@ -117,6 +116,12 @@ Class PB_Imp1GK : PB_Imp1 Replaces PB_Imp1
 		Stop;
 		Death.Fatality5:
 		TNT1 A 0 A_GiveToTarget("ImpFatality5", 1);
+		Stop;
+		Death.Fatality6:
+		TNT1 A 0 A_GiveToTarget("ImpFatality6", 1);
+		Stop;
+		Death.Fatality7:
+		TNT1 A 0 A_GiveToTarget("ImpFatality7", 1);
 		Stop;
 	}
 }

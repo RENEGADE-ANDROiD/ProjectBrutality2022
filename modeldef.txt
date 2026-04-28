@@ -23,3 +23,6 @@
 
 // Monster Pack models
 #include "actors/Monsters/T1-Grunts/laserTracer.txt"
+
+// Optional Brutal Doom 22 (included from lumps/includes; keep out of extra modeldef* root lumps)
+#include "lumps/includes/bdv22_modeldef.inc"

@@ -2,30 +2,80 @@
 #include "zcommon.acs"
 
 #define MAX_VOLUME 127
-#define MAX_PLAYER_HEALTH 200
 
-
-//lowhealth scripts - from BoA
+// Low health — BoA / Glory Kills add-on: thresholds from menu cvars
 script "lowhealth" ENTER
 {
-	bool LowHP;
-
-	while(true)
+	while (1)
 	{
-		int health = GetActorProperty(0, APROP_HEALTH);
+		if (GetCVar("be_LowHealthAlert") == 0)
+		{
+			Delay(35);
+			continue;
+		}
+		bool lowhp = false;
+		int threshold = GetCVar("sv_LowHealthValue");
+		if (threshold < 0) threshold = 0;
+		if (threshold > 200) threshold = 200;
 
-		if (health <= 30)
+		while (GetCVar("be_LowHealthAlert") != 0)
 		{
-			if (!LowHP)
+			int h = GetActorProperty(0, APROP_HEALTH);
+			if (h <= threshold)
 			{
-				LocalAmbientSound("LOWHEALTH", MAX_VOLUME);
-				LowHP = true;
+				if (!lowhp)
+				{
+					LocalAmbientSound("LOWHEALTH", MAX_VOLUME);
+					lowhp = true;
+				}
 			}
+			else
+			{
+				lowhp = false;
+			}
+			Delay(1);
 		}
-		else
+	}
+}
+
+// Low armor — from GloryKills add-on; plays once when dropping below threshold after being above
+script "lowarmor" ENTER
+{
+	while (1)
+	{
+		if (GetCVar("be_LowArmorAlert") == 0)
 		{
-			LowHP = false;
+			Delay(35);
+			continue;
 		}
-		Delay(1);
+		bool lowArmor = false;
+		bool wasEquipped = false;
+
+		while (GetCVar("be_LowArmorAlert") != 0)
+		{
+			int a = CheckInventory("Armor");
+			int threshold = GetCVar("sv_LowArmorValue");
+			if (threshold < 0) threshold = 0;
+			if (threshold > 100) threshold = 100;
+
+			if (a > threshold)
+			{
+				wasEquipped = true;
+			}
+			if (a <= threshold)
+			{
+				if (!lowArmor && wasEquipped)
+				{
+					LocalAmbientSound("LOWARMOR", MAX_VOLUME);
+					lowArmor = true;
+					wasEquipped = false;
+				}
+			}
+			else
+			{
+				lowArmor = false;
+			}
+			Delay(1);
+		}
 	}
 }

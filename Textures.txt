@@ -820,3 +820,13 @@ Graphic "EQUPCO", 37, 37
 
 //HDMR HD Sniper Scope
 remap H4F6G0 H4F6G0HD
+
+// Shards (merged under lumps/includes; .inc so they are not second TEXTURES* lumps)
+#include "lumps/includes/textures/FX.inc"
+#include "lumps/includes/textures/DamNums.inc"
+#include "lumps/includes/textures/BloodyBarrels.inc"
+#include "lumps/includes/textures/Plasma.inc"
+#include "lumps/includes/textures/Retical.inc"
+#include "lumps/includes/textures/SGLDrums.inc"
+#include "lumps/includes/textures/ExecutionIndicator.inc"
+#include "lumps/includes/textures/PBVP.inc"

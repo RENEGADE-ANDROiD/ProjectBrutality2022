@@ -1,0 +1,10 @@
+28/03/2024 -- Ozymandias81
+
+Added colored brightmaps and put them into materials/brightmaps/auto folder without the need to define them under GLDEFS
+Crushed all sprites, reduce their size from 76kb to 37kb
+Optimized ogg sounds, saved from 35kb to 28kb
+Converted the actor to ZSCRIPT and put some advices for modders
+Applied BRIGHT flag to BabyCacoBall and removed it from BabyCaco attack (to not override bmaps)
+Applied Attenuate on GLDEFS for better light effects on modern ports (GZDoom and VKDoom mainly)
+Updated INFO and CREDITS lumps
+Converted the whole thing to pk3 format

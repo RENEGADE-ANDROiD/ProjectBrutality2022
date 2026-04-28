@@ -34,6 +34,9 @@ addplayerclass PB_Doomer
 	alias +User4
 	defaultbind Q +User4
 
+	addmenukey "Lean Toggle" PBLeanToggle
+	alias PBLeanToggle "netevent pb_lean_toggle"
+
 //Needs to actually be finished.    
 //    AddMenuKey "Open PDA" openpda
 //    alias openpda "netevent openpda"
@@ -48,13 +51,18 @@ defaultbind L "netevent EV_ClearGore"
 addkeysection "Glory kill" GloryKill
 addmenukey "Crucible" +glorysaw
 addmenukey "Shoulder Cannon" shouldercannon
+addmenukey "Shoulder cryo (ice bomb)" glorycryo
 
 alias +glorysaw "puke 6000"
 alias -glorysaw "puke 6001"
 
 alias shouldercannon "puke 6003"
+alias glorycryo "puke 6005"
 
 addkeysection "Throw ShieldSaw" ShieldSaw
 addmenukey "Shield_saw" TShieldsaw
 alias TShieldsaw "pukename Shield_saw"
 defaultbind T TShieldsaw
+
+weaponsection "PB_RocketLauncher"
+addslotdefault 6 PB_RocketLauncher

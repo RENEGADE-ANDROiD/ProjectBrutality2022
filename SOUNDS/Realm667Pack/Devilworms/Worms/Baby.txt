@@ -1,0 +1,234 @@
+ACTOR BabyWorm 11110
+
+{
+  //$Category Worms
+  Obituary "%o was biten by a Baby Worm." 
+  health 30
+  radius 15
+  height 15
+  mass 100
+  speed 6
+  Meleerange 50
+  painchance 200
+  bloodcolor "brown"
+  attacksound "BWorm/Bite"
+  seesound "BWorm/Sight"
+  activesound "BWorm/Idle"
+  painsound "Worm/Hurt"
+  Gravity 0.3
+  Scale 0.3
+  MONSTER
+  +DONTHURTSPECIES
+  +NOINFIGHTING
+	States
+	{
+	Spawn:
+		BWRM A 8 A_Look
+		loop
+	See:
+		BWRM A 1 A_Chase
+		BWRM A 0 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+		loop
+	Missile:
+			TNT1 A 0 A_Jump(256,"NormalJump","Lunge")
+			Goto See
+	NormalJump:
+			BWRM A 0 A_jumpIfCloser(60,"Melee")
+    		BWRM A 1 A_FaceTarget
+			TNT1 A 0 A_PlaySound("Worm/Hurt")
+			BWRM A 0 ThrustThingZ (0, random(6,18), 0, 0)
+			TNT1 A 0 ThrustThing(angle*256/360, 4, 0, 0)
+		MidLeap:
+			BWRM A 0 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+			BWRM B 1 A_SpawnItem ("Fix")
+			TNT1 A 0 A_CheckFloor ("Land")
+			loop
+		Land:
+			BWRM A 0 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+			BWRM A 1 A_Stop
+			goto See
+	Lunge:
+			BWRM A 0 A_jumpIfCloser(60,"Melee")
+    		BWRM A 1 A_FaceTarget
+			TNT1 A 0 A_PlaySound("Worm/Hurt")
+			BWRM A 0 ThrustThingZ (0, random(6,18), 0, 0)
+			TNT1 A 0 ThrustThing(angle*256/360, 16, 0, 0)
+		MidLeap:
+			BWRM A 0 A_SpawnItemEx("BTail1",-17,0,0,0,0,0,0,0,0)
+			BWRM B 1 A_SpawnItem ("Fix")
+			TNT1 A 0 A_CheckFloor ("Land")
+			loop
+		Land:
+			BWRM A 0 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+			BWRM A 1 A_Stop
+			goto See
+    	Melee:
+    		BWRM B 5 A_FaceTarget
+    		BWRM A 1 A_CustomMeleeAttack(random(1,3),0,0,0,0)
+			BWRM A 10
+    		Goto See
+    	Pain:
+    		BWRM A 1
+			BWRM A 1 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+			BWRM A 1 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+			BWRM A 1 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+    		BWRM B 1 A_Pain
+			BWRM B 1 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+			BWRM B 1 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+			BWRM B 1 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+    		Goto AfterPain
+		AfterPain:
+			BWRM B 1
+			BWRM A 0 A_SpawnItemEx("BTail1",-5,0,0,0,0,0,0,0,0)
+			TNT1 A 0 A_CheckFloor ("See")
+			loop
+        Death:
+			TWBA ABCB 1
+			TNT1 A 0 A_PlaySound("Worm/Death")
+			TWBA ABCBABCBABCBABCB 1
+			DEAD AAAA 1
+			DEAD BBBB 1
+			DEAD A 0 A_SpawnItem("BJawB",0,0,0)
+			DEAD A 0 A_SpawnItemEx("BJawU", 0, 0, 20, 1, 0, 0, Random(0, 360), 0)
+			TNT1 A 0 A_SpawnItemEx("BGut1", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("BGut2", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("BGut3", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("BGut4", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("BGut1", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("BGut2", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("BGut3", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+			TNT1 A 0 A_SpawnItemEx("BGut4", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+        	Stop
+	}
+}
+
+
+///////////////
+//////Jaw//////
+///////////////
+
+
+actor BJawU
+{
+    PROJECTILE
+    -NOGRAVITY
+    -NOBLOCKMAP
+    -NOTELEPORT
+	Gravity 0.2
+    Radius 2
+    Damage 0
+	Scale 0.3
+    States
+    {
+    Spawn:
+		JAWU A 0 A_SetGravity (0.2)
+        JAWU A 0 ThrustThingZ (0, 20, 0, 1)
+        goto See 
+    See:
+        JAWU ABCDEFGH 3
+        loop
+    Death:
+        JAWU A 1 A_SpawnItem("BJawLand",0,0,0)
+        Stop
+    }
+}
+
+actor BJawLand
+{
+    -NOBLOCKMAP
+    Radius 2
+	Scale 0.3
+    States
+    {
+    Spawn:
+		JAWJ A 1
+		TNT1 A 0 A_PlaySound("Worm/Splat")
+        goto Splat
+	Splat:
+		JAWJ A 1
+        loop
+    }
+}
+
+actor BJawB
+{
+    -NOBLOCKMAP
+    Radius 2
+	Scale 0.3
+    States
+    {
+    Spawn:
+        JAWX A 1
+        goto Spawn
+    }
+}
+
+//Egg
+ACTOR WormEgg 10999
+
+{
+  //$Category Worms
+  health 10
+  radius 10
+  height 10
+  mass 255
+  Meleerange 200
+  painchance 200
+  bloodcolor "brown"
+  Scale 0.3
+  MONSTER
+	States
+	{
+	Spawn:
+		EGGG A 1 A_LookEx(LOF_NOSIGHTCHECK, 0, 0, 400, 360, "See")
+		loop
+	See:
+		EGGG A 1 A_JumpIfCloser(400, "Hatching")
+		Wait
+   	Hatching:
+    	EGGG BBBCCCCC 1
+		EGGG C 1 A_SpawnItemEx("BabyWorm", 0, 0, 11, 0, 0, 3, 0, SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_PlaySound("Worm/Splat")
+		Goto Hatched
+	Hatched:
+		EGGG C 1 A_SpawnItemEx("Egghatched")
+    	Stop
+    Death:
+		TNT1 A 0 A_SpawnItemEx("BGut1", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("BGut2", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("BGut3", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("BGut4", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+		EGGG DDEEF 2
+		TNT1 A 0 A_SpawnItemEx("BGut1", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("BGut2", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("BGut3", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+		TNT1 A 0 A_SpawnItemEx("BGut4", 0, 0, 5, random(1,5), 0, 3, Random(0, 360), 128)
+		EGGG FGGHH 2
+		TNT1 A 0 A_SpawnItemEx("Eggdead")
+        Stop
+	}
+}
+
+ACTOR Egghatched
+
+{
+  Scale 0.3
+  States
+  {
+  Spawn:
+    EGGG C 1
+    loop
+  }
+}
+
+ACTOR Eggdead
+
+{
+  Scale 0.3
+  States
+  {
+  Spawn:
+    EGGG H 1
+    loop
+  }
+}

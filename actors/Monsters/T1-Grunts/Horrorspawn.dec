@@ -1881,7 +1881,8 @@ Actor HorrorPassiveSpawn
 		TNT1 A 0 A_Jump(50,"Die")
 		Loop
 	Create:
-		TNT1 A 0 A_SpawnItemEx("Horrorspawnmap")
+		TNT1 A 0 A_JumpIf(GetCvar("NoHorror") == 1, "Die")
+		TNT1 A 0 A_SpawnItemEx("PB_HorrorPassiveController",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
 		Stop
 	Die:
 		TNT1 A 0
@@ -1922,7 +1923,8 @@ Actor HorrorPassiveSpawn2
 		TNT1 A 0 A_Jump(50,"Die")
 		Loop
 	Create:
-		TNT1 A 0 A_SpawnItemEx("Horrorspawn1")
+		TNT1 A 0 A_JumpIf(GetCvar("NoHorror") == 1, "Die")
+		TNT1 A 0 A_SpawnItemEx("PB_HorrorPassiveSingle",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
 		Stop
 	Die:
 		TNT1 A 0

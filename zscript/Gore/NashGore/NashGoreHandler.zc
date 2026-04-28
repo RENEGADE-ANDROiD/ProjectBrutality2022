@@ -47,7 +47,11 @@ class NashGoreHandler : EventHandler
 
 	override void PlayerEntered(PlayerEvent e)
 	{
-		PlayerPawn plr = players[e.PlayerNumber].mo;
+		if (!e) return;
+		int pn = e.PlayerNumber;
+		if (pn < 0 || pn >= MAXPLAYERS || !playeringame[pn]) return;
+		PlayerPawn plr = players[pn].mo;
+		if (!plr) return;
 		if (!plr.CountInv("NashGoreActor"))
 		{
 			plr.A_GiveInventory("NashGoreActor", 1);
@@ -56,7 +60,11 @@ class NashGoreHandler : EventHandler
 
 	override void PlayerRespawned(PlayerEvent e)
 	{
-		PlayerPawn plr = players[e.PlayerNumber].mo;
+		if (!e) return;
+		int pn = e.PlayerNumber;
+		if (pn < 0 || pn >= MAXPLAYERS || !playeringame[pn]) return;
+		PlayerPawn plr = players[pn].mo;
+		if (!plr) return;
 		DoThingRevive(plr);
 	}
 
@@ -98,20 +106,22 @@ class NashGoreHandler : EventHandler
 
 	override void WorldThingSpawned(WorldEvent e)
 	{
-		if (!e.Thing) return;
+		if (!e) return;
+		Actor t = e.Thing;
+		if (!t) return;
 
 		// monster?
-		bool isMonster = e.Thing.bIsMonster;
+		bool isMonster = t.bIsMonster;
 		
 		// plug in generic monster behaviour
-		if ((e.Thing is "PB_Monster") && isMonster && !e.Thing.CountInv("NashGoreActor"))
+		if ((t is "PB_Monster") && isMonster && !t.CountInv("NashGoreActor"))
 		{
-			e.Thing.A_GiveInventory("NashGoreActor", 1);
+			t.A_GiveInventory("NashGoreActor", 1);
 
-			let a = NashGoreActor(e.Thing.FindInventory("NashGoreActor", true));
+			let a = NashGoreActor(t.FindInventory("NashGoreActor", true));
 			if (a)
 			{
-				a.bCanBleed = !e.Thing.bNoBlood;
+				a.bCanBleed = !t.bNoBlood;
 			}
 		}
 	}
@@ -133,15 +143,19 @@ class NashGoreHandler : EventHandler
 
 	override void WorldThingDied(WorldEvent e)
 	{
-		if (!e.Thing) return;
+		if (!e) return;
+		Actor t = e.Thing;
+		if (!t) return;
 
-		DoThingDie(e.Thing);
+		DoThingDie(t);
 	}
 
 	override void WorldThingRevived(WorldEvent e)
 	{
-		if (!e.Thing) return;
-		DoThingRevive(e.Thing);
+		if (!e) return;
+		Actor t = e.Thing;
+		if (!t) return;
+		DoThingRevive(t);
 	}
 
 	//===========================================================================
@@ -152,6 +166,8 @@ class NashGoreHandler : EventHandler
 
 	override void CheckReplacement(ReplaceEvent e)
 	{
+		if (!e) return;
+
 		// blood stuff
 		for (int i = 0; i < bloodTypes.Size(); i++)
 		{
@@ -184,7 +200,7 @@ class NashGoreHandler : EventHandler
 
 		// other stuff
 		if (e.Replacee == "RealGibs") e.Replacement = "NashGoreRealGibs";
-		if (nashgore_icedeath == true && e.replacee == "IceChunk") e.Replacement = "NashGoreIceChunk";
+		if (nashgore_icedeath == true && e.Replacee == "IceChunk") e.Replacement = "NashGoreIceChunk";
 	}
 
 	//===========================================================================
@@ -195,8 +211,8 @@ class NashGoreHandler : EventHandler
 
 	override void NetworkProcess(ConsoleEvent e)
 	{
+		if (!e) return;
 		//let p = players[e.Player].mo;
-		//if (!p) return;
 
 		if (e.Name == 'EV_ClearGore')
 		{
@@ -238,10 +254,8 @@ class NashGoreHandler : EventHandler
 			}
 
 			// [lolhack] remove the last line because it's usually blank
-			//bloodTypes.Delete(bloodTypes.Size() - 1, 1);
 		}
 
-		//Console.Printf("size: %d", bloodTypes.Size());
 		for (int i = 0; i < bloodTypes.Size(); i++)
 		{
 			// delete that weird character that gets added at the end
@@ -280,7 +294,6 @@ class NashGoreHandler : EventHandler
 
 	void DoThingRevive(Actor mo)
 	{
-		//Console.Printf("%s lives again!", mo.GetClassName());
 		let a = NashGoreActor(mo.FindInventory("NashGoreActor", true));
 		if (a)
 		{

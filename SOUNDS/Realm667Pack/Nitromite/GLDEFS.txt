@@ -1,0 +1,86 @@
+Pointlight Nitromitelight
+{
+	color 0.2 0.0 0.0
+	size 40
+	offset 0 20 0
+	dontlightself 0
+}
+
+Pointlight NitromitelightK
+{
+	color 0.8 0.7 0.6
+	size 60
+	offset 0 20 0
+}
+
+Pointlight NitromitelightX
+{
+	color 0.8 0.6 0.4
+	size 70
+	offset 0 20 0
+}
+
+Pointlight NitromitelightY
+{
+	color 0.8 0.4 0.2
+	size 80
+	offset 0 20 0
+}
+
+Pointlight NitromitelightZ
+{
+	color 0.6 0.2 0.1
+	size 90
+	offset 0 20 0
+}
+
+object Nitromite
+{
+	frame NTMTK { light NitromitelightK }
+	frame NTMTX { light NitromitelightX }
+	frame NTMTY { light NitromitelightY }
+	frame NTMTZ { light NitromitelightZ }
+}
+
+Pulselight NitromiteGibslight
+{
+	color 0.2 0.0 0.0
+	size 20
+	secondarysize 30
+	offset 0 10 0
+	interval 0.5
+}
+
+object NitromiteGibs
+{
+	frame NTMTT { light NitromiteGibslight }
+}
+
+BrightMap Sprite NTMTA1D1	{ Map NTMTA1D1 }
+BrightMap Sprite NTMTA2D8	{ Map NTMTA2D8 }
+BrightMap Sprite NTMTA8D2	{ Map NTMTA8D2 }
+BrightMap Sprite NTMTB1E1	{ Map NTMTB1E1 }
+BrightMap Sprite NTMTB2E8	{ Map NTMTB2E8 }
+BrightMap Sprite NTMTB8E2	{ Map NTMTB8E2 }
+BrightMap Sprite NTMTC1F1	{ Map NTMTC1F1 }
+BrightMap Sprite NTMTC2F8	{ Map NTMTC2F8 }
+BrightMap Sprite NTMTC8F2	{ Map NTMTC8F2 }
+BrightMap Sprite NTMTG1		{ Map NTMTG1 }
+BrightMap Sprite NTMTG8G2	{ Map NTMTG8G2 }
+BrightMap Sprite NTMTH1		{ Map NTMTH1 }
+BrightMap Sprite NTMTI1		{ Map NTMTI1 }
+BrightMap Sprite NTMTI8I2	{ Map NTMTI8I2 }
+BrightMap Sprite NTMTJ1		{ Map NTMTJ1 }
+BrightMap Sprite NTMTJ2		{ Map NTMTJ2 }
+BrightMap Sprite NTMTJ8		{ Map NTMTJ8 }
+BrightMap Sprite NTMTK1		{ Map NTMTK1 Disablefullbright }
+BrightMap Sprite NTMTK5		{ Map NTMTK5 Disablefullbright }
+BrightMap Sprite NTMTK6K4	{ Map NTMTK6K4 Disablefullbright }
+BrightMap Sprite NTMTK7K3	{ Map NTMTK7K3 Disablefullbright }
+BrightMap Sprite NTMTK8K2	{ Map NTMTK8K2 Disablefullbright }
+BrightMap Sprite NTMTL1		{ Map NTMTL1 }
+BrightMap Sprite NTMTL8L2	{ Map NTMTL8L2 }
+BrightMap Sprite NTMTM1		{ Map NTMTM1 }
+BrightMap Sprite NTMTM8M2	{ Map NTMTM8M2 }
+BrightMap Sprite NTMTN0		{ Map NTMTN0 }
+BrightMap Sprite NTMTO0		{ Map NTMTO0 }

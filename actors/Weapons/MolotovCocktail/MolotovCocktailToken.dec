@@ -1,0 +1,6 @@
+// Molotov equipment tokens (melee equipment wheel + throw state)
+Actor PlayerIsThrowingAMolotovCocktail : Inventory { Inventory.MaxAmount 1 }
+
+Actor MolotovSelected : Inventory { Inventory.MaxAmount 1 }
+
+Actor WW_MolotovSelected : Inventory { Inventory.MaxAmount 1 }

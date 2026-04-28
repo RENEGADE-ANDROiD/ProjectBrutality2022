@@ -327,7 +327,6 @@ class PB_XDeath2: PB_XDeath1
         TNT1 AAAAAAA 0 A_SpawnProjectile ("NashGoreClassicBloodTrail", 0, 0, random (0, 180), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 180));
 	    TNT1 A 0 {
 			A_CheckFloor("SpawnFloor");
-			//A_SpawnItemEx ("DetectCeilBloodSimplerLarge",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 			A_SpawnItemEx ("PB_DetectCeilXDeath2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		}
 		Stop;
@@ -370,7 +369,6 @@ class PB_XDeath3: PB_XDeath2
         TNT1 AAAAAAA 0 A_SpawnProjectile ("NashGoreClassicBloodTrail", 0, 0, random (0, 180), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 180));
 	    TNT1 A 0 {
 			A_CheckFloor("SpawnFloor");
-			//A_SpawnItemEx ("DetectCeilBloodSimplerLarge",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 			A_SpawnItemEx ("PB_DetectCeilXDeath2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		}
 		Stop;
@@ -3353,7 +3351,6 @@ Class PB_Gib_HalfPlasmaZombie2: PB_GibBase
 	{
 		ChangeStatNum(STAT_NashGore_Gore);
 		NashGoreStatics.QueueGore();
-		//NashGoreStatics.RandomXFlip(self);
 		Super.BeginPlay();
 	}
 

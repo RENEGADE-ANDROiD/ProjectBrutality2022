@@ -1,0 +1,14 @@
+actor Realm667_FatalityFP1 : Inventory
+{
+	Inventory.maxamount 1
+}
+
+actor Realm667_FatalityFP2 : Inventory
+{
+	Inventory.maxamount 1
+}
+
+actor Realm667_FatalityFP3 : Inventory
+{
+	Inventory.maxamount 1
+}

@@ -1,0 +1,4 @@
+Code: DeVloek
+Sounds: id Software, 3D Realms, Valve
+Sprites: id Software, 3D Realms, Randi
+Idea Base: flesh golem, poltergeist folklore

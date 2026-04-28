@@ -1,0 +1,9 @@
+/*
+ * Optional Brutal Doom 22 (BDv22) gore add-on: actors are BDv22_* (separate from vanilla PB class names).
+ * ZScript: zscript/Gore/BDv22Gore/BDv22GoreMist.zc; sprites: SPRITES/BDv22/P22M*0, B22G*, B22M*, etc.
+ * Add new #include lines here for DECORATE-only BDv22 work; do not edit BLOOD.dec / GORE!!!.dec / GORE2–4 in place.
+ */
+#include "actors/Gore/BDv22Gore/BDv22_GutsMeat.dec"
+#include "actors/Gore/BDv22Gore/BDv22_FlyingMeatMain.dec"
+#include "actors/Gore/BDv22Gore/BDv22_OrgansAndBrain.dec"
+#include "actors/Gore/BDv22Gore/BDv22_LimbSubset.dec"

@@ -38,7 +38,6 @@ ACTOR PB_CyberdemonGK: PB_Cyberdemon Replaces PB_Cyberdemon
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		CYGR G 4
 		Goto StagLooper
 	
@@ -177,7 +176,6 @@ ACTOR PB_AnnihilatorGK: PB_Annihilator Replaces PB_Annihilator
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		ANNF G 4
 		Goto StagLooper
 	
@@ -277,7 +275,6 @@ ACTOR PB_MastermindGK: PB_Mastermind Replaces PB_Mastermind
 		}
 		Goto StagLooper
 	PrepareStaggerHighlight:
-		//RFTR X 0
 		SPFG ABC 4
 		Goto StagLooper
 	

@@ -96,6 +96,11 @@ ACTOR SGLSelected: Inventory
 Inventory.MaxAmount 1
 }
 
+ACTOR ExcavatorSelected: Inventory
+{
+Inventory.MaxAmount 1
+}
+
 ACTOR PlasmaGunSelected: Inventory
 {
 Inventory.MaxAmount 1

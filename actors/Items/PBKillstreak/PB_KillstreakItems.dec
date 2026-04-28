@@ -1,0 +1,24 @@
+// Short speed tick granted with every 5-kill reward (stack with random power-up).
+actor PB_KSFreeze : PowerupGiver
+{
+	//$Title Kill streak haste
+	Game Doom
+	-COUNTITEM
+	+FLOATBOB
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	Inventory.MaxAmount 0
+	Powerup.Type Speed
+	Powerup.Duration -3
+	Powerup.Color "FF FF 00", 0.05
+	Inventory.PickupSound "DEM"
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Stop
+	Pickup:
+		TNT1 A 0
+		Stop
+	}
+}

@@ -14,7 +14,6 @@ ACTOR DyingZombieman : SwitchableDecoration
 	damagefactor "killme", 0.0
 	+SHOOTABLE
     +FLOORCLIP
-	//+NOBLOCKMAP
     +LOOKALLAROUND
 	+FRIGHTENED
 	+SOLID
@@ -349,7 +348,6 @@ ACTOR VeryMuckedBrutalizedZombieManLeg: BrutalizedZombieMan1
 		TNT1 AAAA 0 A_CustomMissile ("PB_SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
 		TNT1 AAAA 0 A_CustomMissile ("PB_SmallBrainPiece", 50, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("PB_SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40))
-        //TNT1 AAAAAAAA 0 A_CustomMissile ("BrainBlood", 50, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 A_CustomMissile ("PB_XDeathArm1", 35, 0, random (0, 360), 2, random (0, 160))
     TNT1 AAA 0 A_CustomMissile ("PB_XDeath1", 40, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 ThrustThingZ(0,30,0,1)
@@ -544,7 +542,6 @@ ACTOR DyingSergeantNoLeg : SwitchableDecoration
 	+SHOOTABLE
 	+DONTSPLASH
     +FLOORCLIP
-	//+NOBLOCKMAP
     +LOOKALLAROUND
 	+FRIGHTENED
 	+SOLID
@@ -785,7 +782,6 @@ Death.Shotgun:
    Death.SuperPunch:
 	Death.Blast:
 	Death.SSG:
-        //TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		
 		TNT1 AAAA 0 A_CustomMissile ("PB_XDeath1", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 A 0 A_CustomMissile ("PB_XDeath2", 32, 0, random (170, 190), 2, random (0, 40))
@@ -1031,7 +1027,6 @@ ACTOR VeryMuckedBrutalizedSergeantLeg: BrutalizedSergeant1
 		TNT1 AAAA 0 A_CustomMissile ("PB_SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
 		TNT1 AAAA 0 A_CustomMissile ("PB_SmallBrainPiece", 50, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("PB_SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40))
-        //TNT1 AAAAAAAA 0 A_CustomMissile ("BrainBlood", 50, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 A_CustomMissile ("PB_XDeathArm1", 35, 0, random (0, 360), 2, random (0, 160))
     TNT1 AAA 0 A_CustomMissile ("PB_XDeath1", 40, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 ThrustThingZ(0,30,0,1)
@@ -2299,7 +2294,6 @@ Height 36
 		CP05 DDDDD 2 A_CustomMissile ("PB_SquirtingBloodTrail", 30, 0, 90, 2, random (0, 45))
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 36,0)
 		
-       // TNT1 A 0 A_Jump(32, "LastStand")		    
 		
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 36,0)
 		TNT1 A 0 A_FaceTarget
@@ -2321,7 +2315,6 @@ Height 36
 		CP05 DDDDD 2 A_CustomMissile ("PB_SquirtingBloodTrail", 30, 0, 90, 2, random (0, 45))
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 36,0)
 		
-		//TNT1 A 0 A_Jump(32, "LastStand")
 		Goto Death
 		
 	Death.Cut:
@@ -2666,7 +2659,6 @@ Height 36
 		C405 DDDDD 2 A_CustomMissile ("PB_SquirtingBloodTrail", 30, 0, 90, 2, random (0, 45))
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 36,0)
 		
-       // TNT1 A 0 A_Jump(32, "LastStand")		    
 		
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 36,0)
 		TNT1 A 0 A_FaceTarget
@@ -2688,7 +2680,6 @@ Height 36
 		C405 DDDDD 2 A_CustomMissile ("PB_SquirtingBloodTrail", 30, 0, 90, 2, random (0, 45))
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 36,0)
 		
-		//TNT1 A 0 A_Jump(32, "LastStand")
 		Goto Death
 		
 	Death.Cut:
@@ -5575,7 +5566,6 @@ ACTOR BrutalizedARZombieMan3: BrutalizedZombieMan1
 	    TNT1 A 0
 		TNT1 A 0 A_Recoil(2)
 		TNT1 A 0 A_SpawnItem("BloodSplasher2")
-	    //TNT1 AAA 0 bright A_CustomMissile ("SuperGoreSpawner", 35, 0, random (0, 360), 2, random (30, 180))
 		TNT1 AAA 0 A_CustomMissile ("Instestin", 32, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_CustomMissile ("PB_XDeath1", 40, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("XDeath3b", 40, 0, random (0, 360), 2, random (0, 160))
@@ -5723,7 +5713,6 @@ Death.Shotgun:
 	Death.Blast:
 	Death.SSG:
 	TNT1 A 0 A_SpawnItem ("CrueltyBonus10Armor")
-        //TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAAA 0 A_CustomMissile ("PB_XDeath1", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 A 0 A_CustomMissile ("XDeath3", 32, 0, random (170, 190), 2, random (0, 40))
@@ -5762,7 +5751,6 @@ ACTOR DyingHFQSZNoLeg : SwitchableDecoration
 	DeathSound "monsters/zombieman/death"
 	+SHOOTABLE
     +FLOORCLIP
-	//+NOBLOCKMAP
     +LOOKALLAROUND
 	+FRIGHTENED
 	+SOLID
@@ -6012,7 +6000,6 @@ Death.Shotgun:
 	Death.SSG:
 		TNT1 A 0
 		TNT1 A 0 A_StopSound(4)
-        //TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAAA 0 A_CustomMissile ("PB_XDeath1", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 A 0 A_CustomMissile ("XDeath3", 32, 0, random (170, 190), 2, random (0, 40))
@@ -6256,7 +6243,6 @@ ACTOR BrutalizedHFQSZLeg: BrutalizedHFQSZ1
 		TNT1 AAAA 0 A_CustomMissile ("PB_SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
 		TNT1 AAAA 0 A_CustomMissile ("PB_SmallBrainPiece", 50, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("PB_SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40))
-        //TNT1 AAAAAAAA 0 A_CustomMissile ("BrainBlood", 50, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 A_CustomMissile ("XDeathHFQSZArm1", 35, 0, random (0, 360), 2, random (0, 160))
     TNT1 AAA 0 A_CustomMissile ("PB_XDeath1", 40, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 ThrustThingZ(0,30,0,1)
@@ -6953,7 +6939,6 @@ ACTOR VeryMuckedBrutalizedFormerScientistLeg: BrutalizedFormerScientist1
 		TNT1 AAAA 0 A_CustomMissile ("SmallBrainPiece", random (45, 55), random (5, -5), random (170, 190), 2, random (0, 40))
 		TNT1 AAAA 0 A_CustomMissile ("SmallBrainPiece", 50, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40))
-        //TNT1 AAAAAAAA 0 A_CustomMissile ("BrainBlood", 50, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 A_CustomMissile ("XDeathLabGuyArm", 35, 0, random (0, 360), 2, random (0, 160))
     TNT1 AAA 0 A_CustomMissile ("XDeath1", 40, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 ThrustThingZ(0,30,0,1)

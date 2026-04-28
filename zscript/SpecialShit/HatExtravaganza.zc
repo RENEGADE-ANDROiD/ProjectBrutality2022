@@ -2,18 +2,23 @@ Class HatExtravaganza : EventHandler
 {
 	Override Void WorldThingSpawned(WorldEvent e)
 	{
-		if(!e.Thing.bCORPSE && !e.Thing.bFRIENDLY && e.thing is 'PB_Monster') //e.thing is 'PB_Monster'
+		if (!e) return;
+		Actor t = e.Thing;
+		if (!t) return;
+		if(!t.bCORPSE && !t.bFRIENDLY && t is 'PB_Monster') //e.thing is 'PB_Monster'
 		{
 			CVar HatsEnabled = Cvar.FindCvar("PB_HatExtravaganza");
 			if(HatsEnabled)
 			{
 				if(HatsEnabled.GetInt() == 1)
 				{
-					vector3 spawnPos = (0,0,0);
-					Actor LeFunnyHat = Actor.Spawn("FunnyHat",SpawnPos);
+					Class<Actor> hatCls = "FunnyHat";
+					if (!hatCls) return;
+					vector3 spawnPos = t.pos;
+					Actor LeFunnyHat = Actor.Spawn(hatCls, spawnPos);
 					if(LeFunnyHat)
 					{
-						LeFunnyHat.master = e.Thing;
+						LeFunnyHat.master = t;
 					}
 				}
 			}

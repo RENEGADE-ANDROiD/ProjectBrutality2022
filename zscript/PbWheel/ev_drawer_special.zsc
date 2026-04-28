@@ -1,5 +1,21 @@
 Extend Class PB_SpecialWheelHandler
 {
+	ui bool WheelSliceIsUsableOverlay(PlayerPawn pl, String specialName)
+	{
+		if (pl == null) { return true; }
+		if (specialName == "WW_FragGrenadeSelected") { return pl.CountInv("HandGrenadeAmmo") > 0; }
+		if (specialName == "WW_ProximityMineSelected") { return pl.CountInv("MineAmmo") > 0; }
+		if (specialName == "WW_StunGrenadeSelected") { return pl.CountInv("StunGrenadeAmmo") > 0; }
+		if (specialName == "WW_MolotovSelected") { return pl.CountInv("HandMolotovAmmo") > 0; }
+		if (specialName == "WW_LeechSelected") { return pl.CountInv("HasLeech") > 0; }
+		if (specialName == "WW_RevGunSelected") { return pl.CountInv("MiniHellRocketAmmo") > 0; }
+		if (specialName == "GK_FlamebelchSelected" || specialName == "GK_IcebombSelected")
+		{
+			return CVar.GetCVar("be_ExecutionsON", players[consoleplayer]).GetBool();
+		}
+		return true;
+	}
+
 	override void RenderOverlay(RenderEvent e)
 	{
 		int circleX = 640*0.75;
@@ -26,14 +42,13 @@ Extend Class PB_SpecialWheelHandler
 		for(int i = 0;i<wheelShow.Size();i++)
 		{
 			Vector2 textPos = (cos(((double(i+1)/wheelShow.Size())*360)+180)*128, sin((double(i+1)/wheelShow.Size())*360)*128);
-			//Console.Printf(""..);
 			TextureID specIcon = wheelSpecials[wheelShow[i]].specialIcon;
 			int screenPosX = (circleX+textPos.x);//wheelScaleX[i];
 			int screenPosY = (circleY+textPos.y);//wheelScaleY[i];
 			Vector2 imageScale = TexMan.GetScaledSize(specIcon);
 			imageScale.x *= wheelSpecials[wheelShow[i]].iconScale.x;
 			imageScale.y *= wheelSpecials[wheelShow[i]].iconScale.y*1.2;
-			bool actuallyHas = true;//players[0].mo.FindInventory(wheelSpecials[wheelShow[i]].weaponClass);
+			bool actuallyHas = WheelSliceIsUsableOverlay(PlayerPawn(players[0].mo), wheelSpecials[wheelShow[i]].specialName);
 			bool noIcon = specIcon==crowbarTex;
 			string specName = wheelSpecials[wheelShow[i]].specialAlias;
 			
@@ -58,12 +73,10 @@ Extend Class PB_SpecialWheelHandler
 					screen.DrawText (SmallFont, Font.CR_WHITE, screenPosX-SmallFont.StringWidth(specName)/2, screenPosY, specName, DTA_VirtualWidth, 640, DTA_VirtualHeight, 480, DTA_Alpha, actuallyHas&&noIcon ? 1.0*alphaFade : 0.0);
 				}
 			
-			//screen.DrawText (SmallFont, Font.CR_UNTRANSLATED, circleX+textPos.x-SmallFont.StringWidth(wepName)/2, circleY+textPos.y, wepName, DTA_VirtualWidth, 640, DTA_VirtualHeight, 480);
 			
 		}
 		circleX/=2;
 		circleY/=2;
-		//int curSelMod = wheelShow[currentSelection];
 		Font fnt = "SmallFont";
 		if( true )
 		{
@@ -89,6 +102,22 @@ Extend Class PB_SpecialWheelHandler
 						y-=fnt.GetHeight()/2;
 					}
 				}
+				String tipKey = String.Format("$PB_WHEELTIP_%s", wheelSpecials[curSelMod].specialName);
+				String tipFull = StringTable.Localize(tipKey);
+				if (tipFull != tipKey && tipFull.Length() > 0)
+				{
+					BrokenLines tipLines = fnt.BreakLines(tipFull, 140);
+					if (tipLines != NULL)
+					{
+						int tipY = circleY + y + 6;
+						int tc = tipLines.Count();
+						for (int ti = 0; ti < tc; ti++)
+						{
+							screen.DrawText (fnt, Font.CR_GOLD, circleX-fnt.StringWidth(tipLines.StringAt(ti))/2, tipY, tipLines.StringAt(ti), DTA_VirtualWidth,320,DTA_VirtualHeight,240, DTA_Alpha, 0.95*alphaFade);
+							tipY += fnt.GetHeight();
+						}
+					}
+				}
 			}
 		}
 		else
@@ -96,9 +125,7 @@ Extend Class PB_SpecialWheelHandler
 			screen.DrawText (SmallFont, Font.CR_BLACK, circleX-SmallFont.StringWidth("???")/2, circleY-fnt.GetHeight()/2, "???", DTA_VirtualWidth, 320, DTA_VirtualHeight, 240, DTA_Alpha, 1.0*alphaFade);
 		}
 		
-		//screen.DrawTexture(TexMan.CheckForTexture("UNKNA0",TexMan.Type_MiscPatch), true, circleX+realMouse.x*0.8, circleY+realMouse.y*0.8, DTA_VirtualWidth, 320, DTA_VirtualHeight, 240, DTA_CenterOffset, true, DTA_Alpha, 0.5);
 		screen.DrawTexture (selTex, true, circleX+realMouse.x*0.8, circleY+realMouse.y*0.8, DTA_VirtualWidth, 320, DTA_VirtualHeight, 240, DTA_Alpha, 0.5*alphaFade);//, DTA_DestWidth, 32, DTA_DestHeight, 32);
 		screen.DrawTexture (selTex, true, circleX+fakeMouse.x*0.8, circleY+fakeMouse.y*0.8, DTA_VirtualWidth, 320, DTA_VirtualHeight, 240, DTA_Alpha, 0.5*alphaFade/*, DTA_DestWidth, 32, DTA_DestHeight, 32*/, DTA_TranslationIndex, Translation.GetID('reddenwep'));
-		//screen.DrawText (SmallFont, Font.CR_BLUE, 0, 0, fakeMouse.x.."", DTA_VirtualWidth, 320, DTA_VirtualHeight, 240);
 	}
 }
