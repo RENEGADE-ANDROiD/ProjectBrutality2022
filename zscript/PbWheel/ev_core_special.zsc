@@ -1145,19 +1145,11 @@ Class PB_SpecialWheelHandler : EventHandler
 				dtech_plasma.iconScale = iconScale;
 				wheelSpecials.Push(dtech_plasma);
 
-				PB_SpecialWheel_Mode dtech_shrink = new ("PB_SpecialWheel_Mode");
-				dtech_shrink.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_1.png", TexMan.Type_Any);
-				dtech_shrink.specialName = "Select_DTechMG_Shrink";
-				dtech_shrink.specialAlias = "Shrink Beam";
-				dtech_shrink.specialPriority = 2;
-				dtech_shrink.iconScale = iconScale;
-				wheelSpecials.Push(dtech_shrink);
-
 				PB_SpecialWheel_Mode dtech_acid = new ("PB_SpecialWheel_Mode");
 				dtech_acid.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_acid.png", TexMan.Type_Any);
 				dtech_acid.specialName = "Select_DTechMG_Acid";
 				dtech_acid.specialAlias = "Acid Glob";
-				dtech_acid.specialPriority = 3;
+				dtech_acid.specialPriority = 2;
 				dtech_acid.iconScale = iconScale;
 				wheelSpecials.Push(dtech_acid);
 
@@ -1165,9 +1157,41 @@ Class PB_SpecialWheelHandler : EventHandler
 				dtech_danmaku.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Danmaku.png", TexMan.Type_Any);
 				dtech_danmaku.specialName = "Select_DTechMG_Danmaku";
 				dtech_danmaku.specialAlias = "Danmaku Spiral";
-				dtech_danmaku.specialPriority = 4;
+				dtech_danmaku.specialPriority = 3;
 				dtech_danmaku.iconScale = iconScale;
 				wheelSpecials.Push(dtech_danmaku);
+
+				specialWheel_handleMouse();
+	}
+
+	void specialWheel_HellPistoler()
+	{
+				wheelSpecials.Clear();
+				iconScale = (0.75, 0.75);
+
+				PB_SpecialWheel_Mode hp_hell = new ("PB_SpecialWheel_Mode");
+				hp_hell.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+				hp_hell.specialName = "Select_HP_Hellfire";
+				hp_hell.specialAlias = "Hell Rounds";
+				hp_hell.specialPriority = 1;
+				hp_hell.iconScale = iconScale;
+				wheelSpecials.Push(hp_hell);
+
+				PB_SpecialWheel_Mode hp_shrink = new ("PB_SpecialWheel_Mode");
+				hp_shrink.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_1.png", TexMan.Type_Any);
+				hp_shrink.specialName = "Select_HP_Shrink";
+				hp_shrink.specialAlias = "Shrink Beam";
+				hp_shrink.specialPriority = 2;
+				hp_shrink.iconScale = iconScale;
+				wheelSpecials.Push(hp_shrink);
+
+				PB_SpecialWheel_Mode hp_rof = new ("PB_SpecialWheel_Mode");
+				hp_rof.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Semi.png", TexMan.Type_Any);
+				hp_rof.specialName = "Select_HP_ToggleROF";
+				hp_rof.specialAlias = "Semi / Full Toggle";
+				hp_rof.specialPriority = 3;
+				hp_rof.iconScale = iconScale;
+				wheelSpecials.Push(hp_rof);
 
 				specialWheel_handleMouse();
 	}
@@ -1722,6 +1746,10 @@ Class PB_SpecialWheelHandler : EventHandler
 
 				case 'DemonTechMinigun':
 					specialWheel_DTechMinigun();
+					return;
+
+				case 'HellPistoler':
+					specialWheel_HellPistoler();
 					return;
 
 				case 'PB_NeoHMG':
