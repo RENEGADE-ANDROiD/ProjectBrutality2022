@@ -1132,38 +1132,6 @@ Class PB_SpecialWheelHandler : EventHandler
 				specialWheel_handleMouse();
 	}
 
-	void specialWheel_DTechMinigun()
-	{
-				wheelSpecials.Clear();
-				iconScale = (0.8, 0.8);
-
-				PB_SpecialWheel_Mode dtech_plasma = new ("PB_SpecialWheel_Mode");
-				dtech_plasma.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
-				dtech_plasma.specialName = "Select_DTechMG_Plasma";
-				dtech_plasma.specialAlias = "Plasma Volley";
-				dtech_plasma.specialPriority = 1;
-				dtech_plasma.iconScale = iconScale;
-				wheelSpecials.Push(dtech_plasma);
-
-				PB_SpecialWheel_Mode dtech_acid = new ("PB_SpecialWheel_Mode");
-				dtech_acid.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_acid.png", TexMan.Type_Any);
-				dtech_acid.specialName = "Select_DTechMG_Acid";
-				dtech_acid.specialAlias = "Acid Glob";
-				dtech_acid.specialPriority = 2;
-				dtech_acid.iconScale = iconScale;
-				wheelSpecials.Push(dtech_acid);
-
-				PB_SpecialWheel_Mode dtech_danmaku = new ("PB_SpecialWheel_Mode");
-				dtech_danmaku.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Danmaku.png", TexMan.Type_Any);
-				dtech_danmaku.specialName = "Select_DTechMG_Danmaku";
-				dtech_danmaku.specialAlias = "Danmaku Spiral";
-				dtech_danmaku.specialPriority = 3;
-				dtech_danmaku.iconScale = iconScale;
-				wheelSpecials.Push(dtech_danmaku);
-
-				specialWheel_handleMouse();
-	}
-
 	void specialWheel_HellPistoler()
 	{
 				wheelSpecials.Clear();
@@ -1805,10 +1773,6 @@ Class PB_SpecialWheelHandler : EventHandler
 				
 				case 'PB_Minigun':
 					specialWheel_Minigun();
-					return;
-
-				case 'DemonTechMinigun':
-					specialWheel_DTechMinigun();
 					return;
 
 				case 'HellPistoler':

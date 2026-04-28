@@ -329,13 +329,6 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
-			IsSelected DemonTechMinigun {
-				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
-				DrawImage "BAMBAR1", -149, -30;
-				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
-				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
-				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
-			}
 			
 			//Light Bullet Ammo
 			IsSelected PB_Pistol {

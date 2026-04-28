@@ -334,7 +334,6 @@ server int pb_NoPB_CyberdemonRLWeapon = 0;
 server int pb_NoHellPistolerWeapon = 0;
 server int pb_NoBioAcidLauncherWeapon = 0;
 server int pb_NoMancubusFlameCannonWeapon = 0;
-server int pb_NoDTechMinigunWeapon = 0;
 server int pb_NoArgentSithWeapon = 0;
 server int pb_NoBeamKatanaWeapon = 0;
 server int pb_NoVorpalBladeWeapon = 0;

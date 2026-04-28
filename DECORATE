@@ -412,7 +412,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot9/DemonExterminator.dec"
 #include "actors/Weapons/Slot4/ProSurv_Ballista.dec"
 #include "actors/Weapons/Slot9/MancubusFlameCannon.dec"
-#include "actors/Weapons/Slot9/DTechMinigun.dec"
+// #include "actors/Weapons/Slot9/DTechMinigun.dec"  // disabled: weapon broken, hidden from player
 #include "actors/Weapons/Grenades/freeze_Grenade.dec"
 #include "actors/Equipments/FreezeNade.dec"
 #include "actors/Equipments/hook.dec"
