@@ -47,9 +47,6 @@ Gameplay and content in this release
   Freezebot, ElecPod. Naming, spawners, menu toggles, and HUD: RENEGADE ANDROID
   and doc.
 - Credit to BeefRice for PBX HUD elements and many weapon improvements and systems.
-- Legacy of Rust Calamity Blade: design and PB-oriented notes (xxHeavySwagxx
-  / xxSwag Masterxx, rework notes by Renegade Android). Shipped inert in this
-  build until a full public sprite/sound set is available.
 - Rocket jump, plasma wall climb, and instant weapon switch: included as
   configurable options with PB cvar names.
 
