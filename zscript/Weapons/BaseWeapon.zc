@@ -602,6 +602,8 @@ class PB_WeaponBase : DoomWeapon
 	
 	// Used for interrupting the hand animation when kicking with melee attacks
 	action bool PB_MeleeKickInterruptCheck() {
+		if(!invoker.owner || !invoker.owner.player)
+			return false;
 		if( InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("LeftJab")) ||
 			InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("LeftHook")) ||
 			InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("LeftUpperCut")) ||
@@ -618,7 +620,8 @@ class PB_WeaponBase : DoomWeapon
 	
 	action bool PB_MeleeAttackKickCheck() 
 	{
-	
+		if(!invoker.owner || !invoker.owner.player)
+			return true;
 		if( InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("LeftJab")) ||
 			InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("LeftHook")) ||
 			InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("LeftUpperCut")) ||
@@ -645,6 +648,8 @@ class PB_WeaponBase : DoomWeapon
 	
 	action bool PB_WeaponIsInReadyState()
 	{
+		if(!invoker.owner || !invoker.owner.player)
+			return false;
 		if ( (InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready")) || 
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReallyReady")) ||
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyToFire"))||
@@ -736,7 +741,7 @@ class PB_WeaponBase : DoomWeapon
 			return ResolveState("Unload");
 		}
 		else A_TakeInventory("Unloading", CountInv("Unloading"));
-		if (CountInv(invoker.UnloaderToken) >= 1 && !(pbFlags & PBWEAP_UNLOADED) && !InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("GunEmpty")))
+		if (CountInv(invoker.UnloaderToken) >= 1 && !(pbFlags & PBWEAP_UNLOADED) && invoker.owner && invoker.owner.player && !InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("GunEmpty")))
 		{
 			return ResolveState("GunEmpty");
 		}
@@ -833,15 +838,18 @@ class PB_WeaponBase : DoomWeapon
 		else if (dontRespect)
 		{
 			own.GiveInventory(invoker.respectInventoryItem,1);
-			if(self.player.ReadyWeapon.GetClassName() == "PB_MG42") {
+			if(!invoker.owner || !invoker.owner.player || !invoker.owner.player.ReadyWeapon)
+				return invoker.A_Jump(256,"SelectAnimation");
+			let rw = invoker.owner.player.ReadyWeapon;
+			if(rw.GetClassName() == "PB_MG42") {
 				own.SetInventory("MG42HeatLevel",0);
 				return invoker.A_Jump(256,"SelectAnimation");
 			}
-			if(self.player.ReadyWeapon.GetClassName() == "PB_SuperGL"){ //Thanks to 7Soul on the ZDoom Forums for posting on getting a selected weapon
+			if(rw.GetClassName() == "PB_SuperGL"){ //Thanks to 7Soul on the ZDoom Forums for posting on getting a selected weapon
 				A_SetCurrentGrenadeType("Impact");
 				return invoker.A_Jump(256,"SelectAnimation");
 				}
-			if(self.player.ReadyWeapon.GetClassName() == "PB_RocketLauncher"){
+			if(rw.GetClassName() == "PB_RocketLauncher"){
 				PB_SetCurrentRocketMode("Standard");
 				return invoker.A_Jump(256,"SelectAnimation");
 				}

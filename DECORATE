@@ -121,6 +121,11 @@ Actor ShieldSphere : ArmorBonus
 }
 #include "actors/Compat/WarningStubs.dec"
 
+Actor PBBlastMomentum : Inventory
+{
+	inventory.maxamount 120
+}
+
 #include "actors/Brutality/BrutalitiesZombieman.dec"
 #include "actors/Brutality/BrutalitiesShotgunGuy.dec"
 #include "actors/Brutality/BrutalitiesImp.dec"

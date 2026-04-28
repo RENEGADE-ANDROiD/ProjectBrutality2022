@@ -137,7 +137,7 @@ class PB_WeaponTilterInventory : Inventory
 
 	private bool ShouldBlockForSafety(Actor plr, Weapon weap, PSprite psp)
 	{
-		if (!plr || !weap || !psp) { return true; }
+		if (!plr || !weap || !psp || !plr.player) { return true; }
 		if (IsScopedNow(plr, weap, psp)) { return true; }
 		let ov10 = plr.player.GetPSprite(10);
 		let ov11 = plr.player.GetPSprite(11);

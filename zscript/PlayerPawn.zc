@@ -196,6 +196,11 @@ class PlayerPawnBase : PlayerPawn
 	Override void PlayerThink()
 	{
 		let player = self.player;
+		if(!player)
+		{
+			Super.PlayerThink();
+			return;
+		}
 		UserCmd cmd = player.cmd;
 		if(WSlideBlockTics > 0) { WSlideBlockTics--; }
 		
@@ -235,7 +240,8 @@ class PlayerPawnBase : PlayerPawn
 
 	void ApplyWallBlastEscape()
 	{
-		if(!player || player.OnGround || WaterLevel >= 2) { return; }
+		if(!player || WaterLevel >= 2) { return; }
+		if(player.OnGround && CountInv("PBBlastMomentum") < 1) { return; }
 		
 		FLineTraceData wallCheck;
 		double nearestDist = 0;
@@ -298,6 +304,11 @@ class PlayerPawnBase : PlayerPawn
 	Override void CalcHeight()
 	{
 		let player = self.player;
+		if(!player)
+		{
+			Super.CalcHeight();
+			return;
+		}
 		UserCmd cmd = player.cmd;
 		
 		double HeightAngle;
@@ -446,6 +457,11 @@ class PlayerPawnBase : PlayerPawn
 	Override void CheckPitch()
 	{
 		let player = self.player;
+		if(!player)
+		{
+			Super.CheckPitch();
+			return;
+		}
 		
 		int clook = player.cmd.pitch;
 		if(clook != 0)
@@ -489,7 +505,12 @@ class PlayerPawnBase : PlayerPawn
 	Override void HandleMovement()
 	{
 		let player = self.player;
-		UserCmd cmd = Player.cmd;
+		if(!player)
+		{
+			Super.HandleMovement();
+			return;
+		}
+		UserCmd cmd = player.cmd;
 		
 		//Slime Dissolving sound effect
 		CheckSlime();
@@ -510,6 +531,9 @@ class PlayerPawnBase : PlayerPawn
 		}
 		else
 		{	
+			if (CountInv("PBBlastMomentum") > 0)
+				TakeInventory("PBBlastMomentum", 1);
+
 			ViewAngleDelta = cmd.Yaw * (360.0 / 65536.0); //needed for two other things
 			ViewPitchDelta = cmd.Pitch * (90.0 / 65536.0);
 			
@@ -811,7 +835,9 @@ class PlayerPawnBase : PlayerPawn
 	float ZMScale()
 	{
 		Let Player = self.Player;
-		UserCmd cmd = player.cmd;
+		if(!Player)
+			return 1.f;
+		UserCmd cmd = Player.cmd;
 		
 		Bool 	IsWalking = (CVar.GetCVar("cl_run", Player).GetBool() && (cmd.buttons & BT_SPEED)) || (!CVar.GetCVar("cl_run", Player).GetBool() && !(cmd.buttons & BT_SPEED));
 		Float 	MoveMulti;
@@ -937,7 +963,10 @@ class PlayerPawnBase : PlayerPawn
 		else
 		{
 			Acceleration *= pb_friction;
-			Vel.XY *= 1 - pb_friction / 10.f;
+			float fr = pb_friction / 10.f;
+			if (CountInv("PBBlastMomentum") > 0)
+				fr *= 0.38;
+			Vel.XY *= 1 - fr;
 		}
 	}
 	
@@ -972,6 +1001,7 @@ class PlayerPawnBase : PlayerPawn
 		if((DashNumber || Grappled) && MaxAirSpeed > MaxGroundSpeed) { DashMove = True; }
 		// DEDashJump (BT_USER3) sets high XY speed + PlayerDashed; without this, DoomAirMove's cap to MaxGroundSpeed erases the evade in the same tic.
 		Bool evadeDashing = CheckInventory("PlayerDashed", 1);
+		Bool blastMom = CountInv("PBBlastMomentum") > 0;
 		
 		///////////////////////////////////////////
 		//Actual Movement
@@ -987,6 +1017,7 @@ class PlayerPawnBase : PlayerPawn
 		Float capXY;
 		if (DashMove) capXY = MaxAirSpeed;
 		else if (evadeDashing) capXY = max(pb_maxhopspeed, 50.0f);
+		else if (blastMom) capXY = max(max(MaxGroundSpeed * 2.f, pb_maxhopspeed), Vel.XY.Length());
 		else capXY = MaxGroundSpeed;
 		Vel.XY = min(Vel.XY.Length(), capXY) * SafeUnit2(Vel.XY);
 		
@@ -1261,6 +1292,8 @@ class PlayerPawnBase : PlayerPawn
 			
 			//Limiter (DEDashJump / PlayerDashed evade is ~50; do not clamp to pb_maxhopspeed alone)
 			Float qCap = CheckInventory("PlayerDashed", 1) ? max(pb_maxhopspeed, 50.0f) : pb_maxhopspeed;
+			if (CountInv("PBBlastMomentum") > 0)
+				qCap = max(qCap, Vel.XY.Length());
 			Vel.XY = min(Vel.XY.Length(), qCap) * SafeUnit2(Vel.XY);
 		}
 		

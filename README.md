@@ -92,6 +92,16 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 - Freezebot  
 - ElecPod  
 
+### Rocket jump & plasma wall boost
+
+Rocket Launcher explosions and plasma-ball impacts can be used for **movement tech**, not only damage:
+
+- **Options → Brutality 2022 Additions → Explosive Movement**
+  - **Rocket Jumping** (`pb_rocketjump`) — Player rockets (`PB_Rocket` line) use a dedicated explosion actor (`PB_PlayerRocketExplosion`) with **`A_RadiusThrust`** rocket-jump push. When **On**, your own explosion splash does **not** self-damage; when **Off**, you take normal self-splash again (`XF_HURTSOURCE` on that path). Other actors still use the generic **`RocketExplosion`** so monster/boss rockets are not tied to your menu toggle.
+  - **Plasma Wall Climbing** (`pb_plasma_wallclimb`) — Supported plasma weapons split climb vs non-climb death states; when **On**, impacts apply thrust without self-splash on the tech path; when **Off**, small self-splash returns so careless shots hurt.
+
+You do **not** need to jump first for these to apply thrust — sprinting and shooting **behind you** (floor/wall) still pushes you forward. To avoid movement code **clamping** sprint speed after a blast, the player briefly gains **`PBBlastMomentum`** (inventory stack, consumed over tics in `PlayerPawn`): it relaxes **air** horizontal caps, **softens ground friction**, and allows **`ApplyWallBlastEscape`** wall‑scrape nudges while grounded when momentum is active.
+
 **Note:** Balance and feel are highly option-driven. Spend a few minutes in the Project Brutality menus before changing difficulty expectations — movement, recoil, spawns, rewards, and visual intensity are all user-configurable.
 
 ## Settings and controls
@@ -100,6 +110,7 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 - **Options → Project Brutality Settings** — Main `pb_*` cvars, rendering, blood, recoil, feature toggles, and submenus such as **Gore/Debris** (with a link to the same **Brutal Doom 22 gore** screen).  
 - **Options → Glory Kill Options** — Glory Kills: range, HUD, fuel HUD placement, and related settings.  
 - **Options → Customize Controls** — **Project Brutality** and **Project Brutality - Interactions** sections, plus **Glory kill** for the Crucible (`+glorysaw`) and shoulder-cannon actions.
+- **Options → Brutality 2022 Additions → Explosive Movement** — **`pb_rocketjump`** (Rocket Jumping) and **`pb_plasma_wallclimb`** (Plasma Wall Climbing); see **Rocket jump & plasma wall boost** above.
 
 **Useful cvars for testing or performance:**
 
@@ -107,6 +118,7 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 - `pb_disablenewenemies`, `pb_disablenewguns`, `pb_disabledecorations`, `pb_disablemapenhancements` — turn major blocks on or off.  
 - `pb_lowgraphicsmode`, `pb_bloodamount`, `zdoombrutalblood`, `zdoombrutaljanitor`, `zdoombrutaljanitorcasings` — lighter visuals and gore.  
 - `bdv22_mist`, `bdv22_corpse_meat`, `bdv22_flying_meat`, `bdv22_organs`, `bdv22_gore_mix` — optional **Brutal Doom 22** gore (menus: **Brutality 2022 Additions** or **Gore/Debris**).  
+- `pb_rocketjump`, `pb_plasma_wallclimb` — rocket/plasma movement tech toggles (**Brutality 2022 Additions → Explosive Movement**).
 
 ## Feedback and bug reports
 

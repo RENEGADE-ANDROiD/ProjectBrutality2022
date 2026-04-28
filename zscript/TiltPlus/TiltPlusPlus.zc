@@ -73,27 +73,28 @@ class Z_TiltMe : CustomInventory
 
 	bool bIsOnFloor (void)
 	{
-		return (Owner.Pos.Z == Owner.FloorZ) || (Owner.bOnMObj);
+		return Owner && ((Owner.Pos.Z == Owner.FloorZ) || (Owner.bOnMObj));
 	}
 
 	bool bIsCrouching (void)
 	{
-		return Owner.GetCameraHeight() <= (Owner.player.mo.ViewHeight / 2);
+		return Owner && Owner.player && Owner.player.mo
+			&& Owner.GetCameraHeight() <= (Owner.player.mo.ViewHeight / 2);
 	}
 
 	double GetVelocity (void)
 	{
-		return Owner.Vel.Length();
+		return Owner ? Owner.Vel.Length() : 0.;
 	}
 
 	int GetWaterLevel (void)
 	{
-		return Owner.WaterLevel;
+		return Owner ? Owner.WaterLevel : 0;
 	}
 
 	bool bIsPlayerAlive (void)
 	{
-		return Owner.Health > 0;
+		return Owner && Owner.Health > 0;
 	}
 
 	//===========================================================================
@@ -103,6 +104,8 @@ class Z_TiltMe : CustomInventory
 	//===========================================================================
 	void Tilt_CalcViewRoll (void)
 	{
+		if (!Owner || !Owner.player)
+			return;
 		// CVARS ///////////////////////////////////////////////////////////////
 		bool strafeTiltEnabled = sv_strafetilt;
 		bool moveTiltEnabled = sv_movetilt;
