@@ -29,107 +29,107 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 
 ## What you get
 
-- **Player and systems:** The `PB_Doomer` player class, movement (dash, slide, ledge grab, and related options), **Explosive Movement** rocket-jump / plasma-boost tech (toggle under **Options → Brutality 2022 Additions → Explosive Movement** — **`pb_rocketjump`**, **`pb_plasma_wallclimb`**), tactical weapon feel, gore, executions, and integrated HUD / PDA / wheel flows.
-- **Combat depth:** Brutality-style damage, gore layers, and Glory Kill content with its own options menu.
-- **Content breadth:** A large weapon roster, extra monsters, kill streaks and power-up reward hooks, and announcer support, all tied into Project Brutality cvars and menus.
-- **Configuration:** Most systems can be toggled or tuned under **Options → Project Brutality Settings**, **Options → Brutality 2022 Additions** (includes **Explosive Movement** next to UI blocks like instant weapon switch), **Options → Weapon Settings**, and **Options → Glory Kill Options**.
-- **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. On top of that, two optional add-on stacks share one menu screen (**Options → Brutality 2022 Additions → Brutal Doom 22 gore**, also linked from **Project Brutality Settings → Visual → Gore/Debris**):
-  - **Brutal Doom 22** (`bdv22_*`) — hit mist, corpse guts, flying meat, organs, and a **PB/BDv22 gore mix** slider. Content under `actors/Gore/BDv22Gore/`, `zscript/Gore/`, and `SPRITES/BDv22/`.
-  - **Brutal Pack V10** (`bpv10_*`) — optional extras adapted from **Brutal Pack V10** sprites (AWEZ): burned husks, carbonized corpses, X-death torso bits, flop organs, zombie gear debris, and blood splats. Applies to **humanoid grunts and imps** only; master toggle **`bpv10_enable`** defaults **off**, with per-feature **`bpv10_burn_corpse`**, **`bpv10_carbonized`**, **`bpv10_xdeath_torso`**, **`bpv10_flop_organs`**, **`bpv10_zgear`**, **`bpv10_blood_splat`**. Content under `actors/Gore/BPv10Gore/` and `SPRITES/GORE/` (see **Credits**). Respect upstream licensing if you redistribute any of this.
+- **Player and systems:** The **PB_Doomer** player class, movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump & plasma climb — **Options → Brutality 2022 Additions → Explosive Movement**), tactical weapon feel, gore, executions, and HUD / PDA / wheel flows.
+- **Combat depth:** Brutality-style damage, layered gore, and Glory Kills with their own menu.
+- **Content breadth:** A large weapon roster, extra monsters, kill streaks, power-up hooks, and announcer support — most knobs live under Project Brutality menus.
+- **Configuration:** Tune almost everything under **Options → Project Brutality Settings**, **Options → Brutality 2022 Additions**, **Options → Weapon Settings**, and **Options → Glory Kill Options**.
+- **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. Two **optional** stacks share one menu (**Brutality 2022 Additions → Brutal Doom 22 gore**, also under **Visual → Gore/Debris**):
+  - **Brutal Doom 22** — extra mist, guts, organs, and a mix slider vs. core PB gore.
+  - **Brutal Pack V10** — optional corpse and splat extras from Brutal Pack–style sprites (humanoids & imps); off by default. More detail and credits in **Credits**.
 
-### Weapon roster (spawn and options)
+### Weapon roster
 
-Canonical cycle weapons match **`PLAYER.dec`** `WeaponSlot` entries (what **`PB_Doomer`** can equip outside scripted cheats). Glory Kill gear (**Crucible**, shoulder cannon, etc.) lives outside normal weapon slots—see Glory Kill options, not this list.
+Big lineup by weapon slot — turn individual spawns on or off in **Weapon Settings** / **Add-On Toggles** where it applies. Glory Kill tools (**Crucible**, shoulder cannon, related pickups) use separate options, not these numbered slots.
 
-**Slot 1 — melee / specials**
+**Slot 1 — Melee & heavy tools**
 
-- Melee (`Melee_Attacks`)  
-- Axe  
-- Chainsaw  
-- Argent Sith Beam Katana  
-- Beam Katana (Nanotech)  
-- Vorpal Blade  
-- Shield Saw  
+- **Fists / Melee**  
+- **Axe**  
+- **Chainsaw**  
+- **Argent Sith** Beam Katana  
+- **Nanotech Beam Katana**  
+- **Vorpal Blade**  
+- **Shield Saw**  
 
-**Slot 2 — pistols / PDWs**
+**Slot 2 — Sidearms**
 
-- Pistol  
-- Revolver  
-- MP40  
-- Submachine Gun (UAC SMG)  
-- Riot Shield  
-- Deagle  
-- Hell Pistoler  
+- **Pistol**  
+- **Revolver**  
+- **MP40**  
+- **SMG**  
+- **Riot Shield**  
+- **Desert Eagle**  
+- **Hell Pistoler**  
 
-**Slot 3 — shotguns**
+**Slot 3 — Shotguns**
 
-- Shotgun (pump)  
-- Autoshotgun  
-- Super shotgun (`PB_SSG`)  
-- Combat shotgun (`PB_CSSG`)  
-- HASG (“Lady Golide”)  
-- X12 shotgun  
-- Quad-barrel shotgun  
-- Marauder super shotgun  
+- **Pump Shotgun**  
+- **Auto Shotgun**  
+- **Super Shotgun**  
+- **Combat Shotgun**  
+- **Lady Golide** (heavy auto shotgun)  
+- **X12 Shotgun**  
+- **Quad-Barrel Shotgun**  
+- **Marauder Super Shotgun**  
 
-**Slot 4 — rifles / precision**
+**Slot 4 — Rifles & precision**
 
-- DMR / Rifle (dual wield when unlocked; **HDMR** modes via upgrades—spawn/menu **`pb_NoHDMRWeapon`**)  
-- Carbine  
-- Chex rifle *(temporary Chex Quest hook)*  
-- XM-21 Sniper  
-- LMG  
-- Metal sniper  
-- Old HMG  
-- Lever Action rifle  
-- Pro-Surv Ballista  
-- M41A  
-- Battle Rifle (BDP Battle Rifle)  
+- **DMR / Marksman Rifle** (dual wield & HDMR-style upgrades when unlocked)  
+- **Carbine**  
+- **Chex Rifle** (optional Chex crossover)  
+- **XM-21 Sniper**  
+- **LMG**  
+- **Metal Sniper**  
+- **Old Heavy Machine Gun**  
+- **Lever-Action Rifle**  
+- **Pro-Surv Ballista**  
+- **M41A Pulse Rifle**  
+- **Battle Rifle**  
 
-**Slot 5 — heavy bullet hoses**
+**Slot 5 — Heavy automatics**
 
-- Minigun (triple-barrel upgrade—spawn/menu **`pb_NoMinigunUpgradeWeapon`** alongside **`pb_NoMinigunUpgrade`**)  
-- Nailgun  
-- MG42  
-- Demon Tech Minigun  
+- **Minigun** (includes triple-barrel upgrade paths — optional spawn toggles in menus)  
+- **Nailgun**  
+- **MG42**  
+- **Demon Tech Minigun**  
 
-**Slot 6 — launchers**
+**Slot 6 — Launchers**
 
-- Super grenade launcher  
-- Rocket Launcher  
-- Paingiver  
-- Excavator Launcher  
-- Mastermind Chaingun  
-- Cyberdemon rocket launcher  
+- **Super Grenade Launcher**  
+- **Rocket Launcher**  
+- **Paingiver**  
+- **Excavator**  
+- **Mastermind Chaingun**  
+- **Cyberdemon Rocket Launcher**  
 
-**Slot 7 — energy rifles**
+**Slot 7 — Energy rifles**
 
-- M1 Plasma Rifle  
-- M2 Plasma Rifle  
-- Pulse Cannon  
-- Dual Pulse Cannons  
+- **M1 Plasma Rifle**  
+- **M2 Plasma Rifle**  
+- **Pulse Cannon**  
+- **Dual Pulse Cannons**  
 
-**Slot 8 — specials**
+**Slot 8 — Special primaries**
 
-- Freezer Rifle  
-- Rail Gun  
-- Bio Acid Launcher  
-- Mancubus Flame Cannon  
+- **Freezer Rifle**  
+- **Railgun**  
+- **Bio Acid Launcher**  
+- **Mancubus Flame Cannon**  
 
-**Slot 9 — super-weapons**
+**Slot 9 — Super-weapons**
 
-- Blackhole Generator (`BHGen`)  
-- Unmaker  
-- BFG 9000  
-- BFG MKIV beam (**PB_BFGBeam**)  
-- Demon Exterminator  
+- **Blackhole Generator**  
+- **Unmaker**  
+- **BFG 9000**  
+- **BFG Mk IV Beam**  
+- **Demon Exterminator**  
 
 **Slot 0 — Demon Tech pair**
 
-- Flamethrower  
-- Hell rifle (`Hell_rifle` pickup alongside Demon Tech)  
+- **Flamethrower**  
+- **Hell Rifle**  
 
-Glory Kill–adjacent actors (**Crucible**, pinata pickups under **`SoulCube`**, shoulder cannon FX) are separate from normal **`WeaponSlot`** cycling—see **`AGENTS.md`**.
+Modders: exact actor lists live in **`PLAYER.dec`** `WeaponSlot` blocks; Glory Kill–adjacent actors are described in **`AGENTS.md`**.
 
 ### Equipment
 
@@ -148,14 +148,11 @@ Glory Kill–adjacent actors (**Crucible**, pinata pickups under **`SoulCube`**,
 | **Rocket Jumping** | `pb_rocketjump` | Player rocket explosions launch you from floors/walls/ceilings without self-splash when **On**; vanilla-style self-splash when **Off**. |
 | **Plasma Wall Climbing** | `pb_plasma_wallclimb` | Plasma-ball impacts can thrust you along the same idea; **Off** restores small self-damage on those hits. |
 
-Rocket Launcher explosions and supported plasma-ball impacts can drive **movement tech**, not only damage:
+Rockets and certain plasma shots can double as **movement tools**, not just damage. With **Rocket Jumping** / **Plasma Wall Climbing** on, those player weapons skip harsh self-damage so you can blast-jump or scrape along surfaces without punishing yourself every time.
 
-- Player rockets use **`PB_PlayerRocketExplosion`** (radius thrust + **`PBBlastMomentum`**) instead of tying **`pb_rocketjump`** to generic **`RocketExplosion`** used by monsters and barrels.
-- When **Rocket Jumping** is **On**, your own explosion splash does **not** self-damage; when **Off**, you take normal self-splash (`XF_HURTSOURCE`). **Plasma Wall Climbing** follows the same philosophy on its weapon paths (**On** = thrust tech without self-splash on that branch; **Off** = self-splash returns).
+You do **not** need to jump first — firing behind you into floors or walls still shoves you forward. A brief **blast momentum** helper keeps that push from dying instantly to friction.
 
-You do **not** need to jump first for thrust — sprinting and shooting **behind you** (floor/wall) still pushes you forward. **`PBBlastMomentum`** (short-lived inventory stack, ticks down in `PlayerPawn`) keeps knockback from being erased by caps/friction: it relaxes **air** horizontal limits, **softens ground friction**, and enables **`ApplyWallBlastEscape`** wall nudges when momentum is active.
-
-**Note:** Balance and feel are highly option-driven. Spend a few minutes in the Project Brutality menus before changing difficulty expectations — movement, recoil, spawns, rewards, and visual intensity are all user-configurable.
+**Tip:** Most combat feel lives in the menus (movement, recoil, spawns, visuals). Skim **Project Brutality Settings** before judging difficulty.
 
 ## Settings and controls
 
