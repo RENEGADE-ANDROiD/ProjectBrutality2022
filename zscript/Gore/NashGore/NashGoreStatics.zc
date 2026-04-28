@@ -290,7 +290,7 @@ class NashGoreStatics play
 			self.Vel = (0, 0, 0);
 			return;
 		}
-		double lv = self.Vel.LengthXY();
+		double lv = self.Vel.XY.Length();
 		double av = abs(self.Vel.Z);
 		if (lv < 1.5 && av < 2.0 && NashGoreStatics.bIsOnFloor(self))
 			stableCt++;

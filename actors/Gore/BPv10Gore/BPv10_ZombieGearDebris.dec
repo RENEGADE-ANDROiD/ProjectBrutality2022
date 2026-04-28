@@ -31,7 +31,7 @@ ACTOR BPv10_ZombieGearDebris
         TNT1 A 0 NoDelay A_Jump(256, "GearA", "GearB", "GearC", "GearD")
         Stop
     GearA:
-        TNT1 A 0 NoDelay A_Jump(256, "GA0", "GA1", "GA2", "GA3")
+        TNT1 A 0 A_Jump(256, "GA0", "GA1", "GA2", "GA3")
     GA0:
         ZGEA A -1
     GA1:
@@ -41,7 +41,7 @@ ACTOR BPv10_ZombieGearDebris
     GA3:
         ZGEA D -1
     GearB:
-        TNT1 A 0 NoDelay A_Jump(256, "GB0", "GB1", "GB2", "GB3")
+        TNT1 A 0 A_Jump(256, "GB0", "GB1", "GB2", "GB3")
     GB0:
         ZGEB A -1
     GB1:
@@ -51,7 +51,7 @@ ACTOR BPv10_ZombieGearDebris
     GB3:
         ZGEB D -1
     GearC:
-        TNT1 A 0 NoDelay A_Jump(256, "GC0", "GC1", "GC2", "GC3")
+        TNT1 A 0 A_Jump(256, "GC0", "GC1", "GC2", "GC3")
     GC0:
         ZGEC A -1
     GC1:
@@ -61,7 +61,7 @@ ACTOR BPv10_ZombieGearDebris
     GC3:
         ZGEC D -1
     GearD:
-        TNT1 A 0 NoDelay A_Jump(256, "GD0", "GD1", "GD2", "GD3")
+        TNT1 A 0 A_Jump(256, "GD0", "GD1", "GD2", "GD3")
     GD0:
         ZGED A -1
     GD1:
