@@ -232,12 +232,17 @@ class BDPBattleRifle : PB_WeaponBase
 			}
 			TNT1 A 0 A_JumpIfInventory("Zoomed", 1, "FireADS");
 			TNT1 A 0 A_JumpIfInventory("BR_Ammo", 1, "FireHip");
+			TNT1 A 0 A_JumpIf(CountInv(invoker.ammotype1) >= 1, "Reload");
 			TNT1 A 0 A_StartSound("weapons/battlerifle/dry", CHAN_WEAPON);
 			goto Ready3;
 		FireHip:
 			TNT1 A 0 { invoker.burstCount = 0; }
 			BR4F C 1 BRIGHT { BDP_ShotHip(); }
+			BR45 D 1;
+			BR4F C 1;
 			BR4F C 1 BRIGHT { BDP_ShotHip(); }
+			BR45 D 1;
+			BR4F C 1;
 			BR4F C 1 BRIGHT { BDP_ShotHip(); }
 			BR45 D 1
 			{
@@ -253,10 +258,13 @@ class BDPBattleRifle : PB_WeaponBase
 			goto Ready3;
 
 		FireADS:
+			TNT1 A 0 A_JumpIf(CountInv("BR_Ammo") < 1 && CountInv(invoker.ammotype1) >= 1, "ReloadFromADS");
 			TNT1 A 0 A_JumpIf(CountInv("BR_Ammo") < 1, "FireADSDry");
 			TNT1 A 0 { invoker.burstCount = 0; }
 			BR4Z D 1 BRIGHT { BDP_ShotADS(); }
+			BR4Z D 2 BRIGHT;
 			BR4Z D 1 BRIGHT { BDP_ShotADS(); }
+			BR4Z D 2 BRIGHT;
 			BR4Z D 1 BRIGHT { BDP_ShotADS(); }
 			BR4Z D 1 BRIGHT
 			{
