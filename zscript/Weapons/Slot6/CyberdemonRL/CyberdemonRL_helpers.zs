@@ -11,7 +11,7 @@ class CyberBallsPlayer : PB_Projectile
 		Radius 10;
 		Height 8;
 		Speed 90;
-		Damage 200;
+		Damage 220;
 		DamageType "ExplosiveImpact";
 		Gravity 0.00;
 		Decal "Scorch";

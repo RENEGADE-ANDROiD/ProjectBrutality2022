@@ -67,7 +67,6 @@ Actor ChainsawWeaponSpawner replaces Chainsaw
 				TNT1 A 0 A_SpawnItemEx("PB_FlamethrowerUpgrade",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 				Stop
 			SpawnShieldSawToken:
-				TNT1 A 0 A_JumpIf(GetCVar("pb_NoShieldSawWeapon"), "SpawnChainsaw")
 				TNT1 A 0 A_SpawnItemEx("ShieldSaw_token",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 				Stop
 			SpawnArgentSith:

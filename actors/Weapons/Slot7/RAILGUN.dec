@@ -74,6 +74,8 @@ ACTOR PB_Railgun : PB_Weapon
 	Obituary "%o was pierced by %k's Railgun."
     Inventory.PickupSound "PLSDRAW"
 	Inventory.Pickupmessage "You got the UAC-MKIII Railgun! (Slot 8)"
+	Weapon.SlotNumber 8
+	Weapon.SlotPriority 0.05
 	+WEAPON.NOAUTOAIM
     +WEAPON.NOAUTOFIRE
 	+WEAPON.NOALERT
@@ -507,7 +509,7 @@ ACTOR PB_Railgun : PB_Weapon
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 				A_FireCustomMissile("DoomerRailShot", 0, 0, 0, 0);
-				A_RailAttack(200, 0, 0, "Green","Cyan", RGF_SILENT, 0, "RAILGUNPUFF1",0,0,0,0,5,1.0,"RailGunTrail");
+				A_RailAttack(220, 0, 0, "Green","Cyan", RGF_SILENT, 0, "RAILGUNPUFF1",0,0,0,0,5,1.0,"RailGunTrail");
 				A_ZoomFactor(0.96);
 				A_GunFlash;
 				PB_WeaponRecoil(-2.5,-0.2);
@@ -664,16 +666,16 @@ ACTOR PB_Railgun : PB_Weapon
 				if(CountInv("RailgunLaserCharge") == 60) {
 					A_StartSound("weapons/railgun/laser_huge", 5, CHANF_OVERLAP);
 					A_FireCustomMissile("RailgunLaserBlast1", 0, 0, 0, 0);
-					A_RailAttack(9*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 2);
+					A_RailAttack(10*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 2);
 				}
 				if(CountInv("RailgunLaserCharge") < 15) {
 					//Does not pierce more than 2 targets
 					A_StartSound("weapons/railgun/laser_small", 5, CHANF_OVERLAP);
-					A_RailAttack(9*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 2);
+					A_RailAttack(10*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 2);
 				}
 				else {
 					A_StartSound("weapons/railgun/laser_big", 5, CHANF_OVERLAP);
-					A_RailAttack(9*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 0);
+					A_RailAttack(10*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 0);
 				}
 				if (pb_weapon_recoil_extra_weapons) //only add recoil in the "extra" weapons case
 				{
@@ -706,7 +708,7 @@ ACTOR PB_Railgun : PB_Weapon
 				A_GiveInventory("RailgunCooldown", 25);
 				A_Overlay(20, "Railgun_Cooldown");
 				A_FireCustomMissile("DoomerRailShot", 0, 0, 0, 0);
-				A_RailAttack(200, 0, 0, "Green","Cyan", RGF_SILENT, 0, "RAILGUNPUFF1",0,0,0,0,5,1.0,"RailGunTrail");
+				A_RailAttack(220, 0, 0, "Green","Cyan", RGF_SILENT, 0, "RAILGUNPUFF1",0,0,0,0,5,1.0,"RailGunTrail");
 				PB_WeaponRecoil(-2.5,-0.2);
 				
 			}
@@ -863,16 +865,16 @@ ACTOR PB_Railgun : PB_Weapon
 				if(CountInv("RailgunLaserCharge") == 60) {
 					A_StartSound("weapons/railgun/laser_huge", 5, CHANF_OVERLAP);
 					A_FireCustomMissile("RailgunLaserBlast1", 0, 0, 0, 0);
-					A_RailAttack(9*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 0);
+					A_RailAttack(10*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 0);
 				}
 				if(CountInv("RailgunLaserCharge") < 15) {
 					//Does not pierce more than 2 targets
 					A_StartSound("weapons/railgun/laser_small", 5, CHANF_OVERLAP);
-					A_RailAttack(9*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 2);
+					A_RailAttack(10*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 2);
 				}
 				else {
 					A_StartSound("weapons/railgun/laser_big", 5, CHANF_OVERLAP);
-					A_RailAttack(9*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 0);
+					A_RailAttack(10*(5*CountInv("RailgunLaserCharge")), 0, 0, "Orange","Red", RGF_SILENT, 0, "MicrowavePuff",0,0,0,0,5,1.0,"MicrowaveTrail", 0, 0, 0);
 				}
 				if (pb_weapon_recoil_extra_weapons) //only add recoil in the "extra" weapons case
 				{
@@ -1348,7 +1350,8 @@ ACTOR PB_Railgun : PB_Weapon
 				if (CountInv("RailgunLaserMode") == 1) { A_SetFlashWeaponSprite("R093");}
 				if (CountInv("RailgunLaserMode") == 1 && CountInv("RailgunAmmo") == 0) { A_SetFlashWeaponSprite("R094");}
 		}
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 	}
 }
 

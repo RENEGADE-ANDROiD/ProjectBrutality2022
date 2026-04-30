@@ -122,6 +122,7 @@ GameInfo
 	AddEventHandlers = "BDv22GoreHandler"
 	AddEventHandlers = "BDv22GoreMergeHandler"
 	AddEventHandlers = "BPv10GoreHandler"
+	AddEventHandlers = "PB_DeathGoreBoostHandler"
 	AddEventHandlers = "TiltPlusPlusHandler"
 	AddEventHandlers = "DeathFadeBootstrap"
 	AddEventHandlers = "DEDashJumpHandler"
@@ -317,6 +318,7 @@ DoomEdNums
 	23161 = VorpalBlade
 	23162 = HASG
 	23163 = HASGDrum
+	23164 = PossessedGibsSlither
 
 	//Glory Kills
 	17003 = CyberdemonLegsFatality

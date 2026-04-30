@@ -353,7 +353,7 @@ class BDPBattleRifle : PB_WeaponBase
 				if (getBRMag() > 0)
 					PB_SpawnCasing("EmptyCarbineMag", 0, 0, -14, 0, frandom(1, 3), frandom(1, 3));
 			}
-			TNT1 A 0 PB_DumpMagToPool("BR_Ammo", "NewClip", 1);
+			TNT1 A 0 { PB_DumpMagToPool("BR_Ammo", "NewClip", 1, "PB_HighCalUnloadProp"); }
 			BR4R S 1;
 			BR4R R 1;
 			BR4R Q 1;
@@ -370,6 +370,7 @@ class BDPBattleRifle : PB_WeaponBase
 			BR4K C 1;
 			BR4K D 1;
 			BR4K E 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashKicking:
 			goto FlashAirKicking;

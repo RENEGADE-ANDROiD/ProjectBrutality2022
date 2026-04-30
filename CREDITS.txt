@@ -32,21 +32,23 @@ Gameplay and content in this release
 - UT announcer: kill-streak announcer audio, menu routing, and volume
   handling wired to the project cvars and options.
 - Metal Sniper, XM-21, ShieldSaw, Molotov: weapon packages included in the
-  supported weapon and equipment set (see per-file notes).
+  supported weapon and equipment set (see per-file notes). Shield Saw behavior
+  traces to **GK_ShieldSaw** (**HUNG**).
 - Commander Shotgun (Combat Shotgun, CSSG, `PB_CSSG`): ZScript stack — special
   wheel, magazine flow, upgrade tokens, projectiles — on `PB_WeaponBase`, with
   spawners, status bar, spawn toggles, and test utilities. RENEGADE ANDROID, doc,
   and repository contributors.
 - Excavator (UAC-M2) launcher: based on the PBX-Weapons / Project Brutality
   X Excavator (ThePopeofDope, BeefRice; ZScript on `PB_WeaponBase` in this
-  build). Special thanks in upstream: Nemesis_Vampy, Popguy12, Jaih1ro.
+  build). Special thanks in upstream: Nemesis_Vampy, Popguy12, Jaih1r0.
 - Project Brutality Weapons Pack (weapons in this build include): Hell
   Pistoler, Bio Acid Launcher, Mancubus Flame Cannon, Demon
   Tech Minigun, Argent Sith, Beam Katana, **Pro-Surv Ballista**
   (The Pope of Dope), with supporting projectiles and tokens. Equipment: Freeze Nade, Hook, Void Grenade,
   Freezebot, ElecPod. Naming, spawners, menu toggles, and HUD: RENEGADE ANDROID
   and doc.
-- Credit to BeefRice for PBX HUD elements and many weapon improvements and systems.
+- Credit to BeefRice and **Jaih1r0** for PBX HUD elements and many weapon improvements and systems.
+- **Shield Saw** (GK_ShieldSaw lineage): **HUNG** — folded as quick-melee **`ShieldSaw_token`** + recall; see **`AGENTS.md`**.
 - Rocket jump, plasma wall climb, and instant weapon switch: included as
   configurable options with PB cvar names.
 
@@ -62,6 +64,9 @@ Code systems and libraries
   see shader / staging path notes.
 
 Selected weapons and equipment (authors)
+- **M41A Pulse Rifle (`PB_M41A`)** — ZScript in `zscript/Weapons/Slot4/PB_M41A.zs`;
+  folded from the **PB_M41A** / Aliens pulse-rifle add-on: sprites **Mike12**;
+  animations & code **Jaih1r0** (see upstream `credits.txt` in that package).
 - Metal Sniper — Sprites: Metalman; animation/code: Jaih1r0; sounds: Ravik
   (actors/Weapons/Slot4/MetalSniper.dec).
 - Riot Shield — add-on source noted in actors/Weapons/Slot2/RiotShield.dec.

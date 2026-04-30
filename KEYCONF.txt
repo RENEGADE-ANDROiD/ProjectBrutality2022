@@ -59,9 +59,9 @@ alias -glorysaw "netevent pb_glorysaw_off"
 alias shouldercannon "netevent pb_shouldercannon"
 alias glorycryo "netevent pb_glorycryo"
 
-addkeysection "Throw ShieldSaw" ShieldSaw
-addmenukey "Shield_saw" TShieldsaw
-alias TShieldsaw "pukename Shield_saw"
+addkeysection "Shield Saw" ShieldSaw
+addmenukey "Recall Shield Saw (FastCall)" TShieldsaw
+alias TShieldsaw "use FastCall"
 defaultbind T TShieldsaw
 
 weaponsection "PB_RocketLauncher"

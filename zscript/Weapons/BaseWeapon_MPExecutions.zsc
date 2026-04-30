@@ -1,0 +1,5088 @@
+extend class PB_WeaponBase
+{
+	States
+	{
+	//Generic Execution (For placeholders)
+		Execution_Generic:
+			TNT1 A 0  {
+				//A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.1);
+			}	
+			TNT1 A 0 A_Jump(256, "Generic1", "Generic2", "Generic3");
+		
+		Generic1:
+			// Load blood variation sprites into virtual memory
+			P2NK ABCDEFGHIJKLMNOPQRSTUV 0;
+			P3NK ABCDEFGHIJKLMNOPQRSTUV 0;
+			P4NK ABCDEFGHIJKLMNOPQRSTUV 0;
+			P2NO ABCDEFGHIJKLMNOPQRSTUVW 0;
+			P3NO ABCDEFGHIJKLMNOPQRSTUVW 0;
+			P4NO ABCDEFGHIJKLMNOPQRSTUVW 0;
+			
+			P1NK ABCDEE 1 {  
+				A_SetPitch(pitch-1.5);
+				A_SetRoll(roll-5);
+				A_SetAngle(angle-7.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			
+			P1NK FG 1 {
+				A_SetPitch(pitch+7.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+16.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.25);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+10);
+				A_SetAngle(angle+3);
+				A_SetPitch(pitch+2);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+				
+					
+			}
+			
+			P2NK PQRS 1 {
+				A_SetRoll(roll-18);
+				A_SetAngle(angle-2);
+				A_SetPitch(pitch-4);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.3);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-34);
+				A_SetAngle(angle-15.0);
+				A_SetPitch(pitch+5.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			//28
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll+3);
+				A_SetAngle(angle+5);
+				A_SetPitch(pitch+2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+6);
+				A_SetPitch(pitch-15);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			
+			TNT1 A 2;
+			TNT1 A 1 PB_UnsetPlayerExecutionProperties();
+			TNT1 A 0 A_SetInventory("CantWeaponSpecial",0);
+			Goto GoingToReady2;
+		Generic2:
+			TNT1 AAA 1 {
+				A_ZoomFactor(1.26);
+				A_SetRoll(roll+20);
+				A_SetAngle(angle+15);
+				A_SetPitch(pitch+11);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			}
+			P1NH DEF 1 {
+				A_SetRoll(roll-25);
+				A_SetAngle(angle-17);
+				A_SetPitch(pitch-18);
+			}
+			P1NH G 1 {
+				A_SetRoll(roll-6);
+				A_SetAngle(angle-2);
+				A_SetPitch(pitch-1);
+				A_ZoomFactor(1.1);
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+			}
+			P1NH HIJKL 1 {
+				A_ZoomFactor(1.0);
+				A_SetRoll(roll+5);
+				A_SetAngle(angle+9);
+				A_SetPitch(pitch+8);
+			}
+			P1NH M 1;
+			TNT1 A 4;
+			TNT1 A 0 {
+				A_Overlay(-9,"Generic2_Overlay");
+				A_SetRoll(0,SPF_INTERPOLATE);
+				A_StartSound("KICK", CHAN_AUTO );
+				A_OverlayFlags(-9,PSPF_PLAYERTRANSLATED, true);
+			}
+			TNT1 A 7;
+			TNT1 A 2;
+			TNT1 A 6;
+			TNT1 A 3;
+			TNT1 A 1 PB_UnsetPlayerExecutionProperties();
+			TNT1 A 0 A_SetInventory("CantWeaponSpecial",0);
+			Goto GoingToReady2;
+		Generic2_Overlay:
+			KIC5 AB 1 {
+				A_SetRoll(roll+9);
+				A_SetAngle(angle-9);
+				A_SetPitch(pitch-2);
+			}
+			KIC5 CD 1 {
+				A_SetRoll(roll+9);
+				A_SetAngle(angle-8);
+				A_SetPitch(pitch-2);
+			}
+			KIC5 DDD 1 {
+				A_ZoomFactor(1.3);
+				A_SetRoll(roll + 14);
+				A_SetAngle(angle-14);
+				A_SetPitch(pitch+8);
+			}
+			KIC5 EF 1 {
+				A_SetRoll(roll+5);
+				A_SetPitch(pitch-5);
+				A_SetAngle(angle+4);
+			}
+			KIC5 G 1 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+			}
+			KIC5 H 1 A_ZoomFactor(1.1);
+			KIC5 JKLM 1 {
+				A_SetRoll(roll-10);
+				A_SetAngle(angle+13);
+				A_SetPitch(pitch-15);
+				}
+			Stop;
+		Generic3:
+			TNT1 AAA 1 {
+				A_SetRoll(roll+12);
+				A_SetAngle(angle+6);
+				A_SetPitch(pitch+2);
+				A_ZoomFactor(0.9);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			}
+			P1NI DEFG 1 {
+				A_SetRoll(roll-14);
+				A_SetAngle(angle-9);
+				A_SetPitch(pitch-3);
+				A_ZoomFactor(0.8);
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+			}
+			P1NI HIJKL 1 {
+				A_ZoomFactor(1.1);
+				A_SetRoll(roll-10);
+				A_SetAngle(angle-8);
+				A_SetPitch(pitch+1);
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+			}
+			P1NI M 1;
+			TNT1 AAA 1 {
+				A_SetRoll(roll+2);
+				A_SetAngle(angle+1);
+				A_SetPitch(pitch+1);
+			}
+			TNT1 A 0 {
+				A_Overlay(-9,"Generic3_Overlay");
+				A_SetRoll(0,SPF_INTERPOLATE);
+				A_StartSound("KICK", CHAN_AUTO );
+				A_OverlayFlags(-9,PSPF_PLAYERTRANSLATED, true);
+			}
+			TNT1 A 7;
+			TNT1 A 2;
+			TNT1 A 6;
+			TNT1 A 3;
+			TNT1 A 1 PB_UnsetPlayerExecutionProperties();
+			TNT1 A 0 A_SetInventory("CantWeaponSpecial",0);
+			Goto GoingToReady2;
+		Generic3_Overlay:
+			KIC4 AB 1 {
+				A_ZoomFactor(1.19);
+				A_SetRoll(roll+18);
+				A_SetAngle(angle+14);
+				A_SetPitch(pitch+5);
+			}
+			KIC4 CD 1 {
+				A_SetRoll(roll+12);
+				A_SetAngle(angle+14);
+				A_SetPitch(pitch+2);
+			}
+			KIC4 DDD 1 {
+				A_SetRoll(roll-9);
+				A_SetPitch(pitch+1);
+			}
+			KIC4 EF 1 {
+				A_ZoomFactor(1.2);
+				A_SetRoll(roll-5);
+				A_SetPitch(pitch-6);
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+			}
+			KIC4 G 1 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+			}
+			KIC4 H 1 A_ZoomFactor(1.15);
+			KIC4 JKLM 1;
+			Stop;
+		Execution_Cricoso: //Cricoso is a "funny" (note the quotes) way of saying drug addicts in Latin America.
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_CrackoDemon_Execution", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.35);
+			}
+			TNT1 AAAA 0 A_SetPitch(pitch+2, SPF_INTERPOLATE);
+			//LLego
+			PHON ABBC 1 ;
+			TNT1 AAAA 0 A_SetPitch(pitch+2, SPF_INTERPOLATE);
+			PHON DDEE 1 ;
+			TNT1 AAAA 0 A_SetPitch(pitch+0, SPF_INTERPOLATE);
+			//L
+			PHON FG 2;
+			PHON HI 2;
+			PHON FG 2;
+			PHON HI 2;
+			PHON FG 2;
+			PHON HI 2;
+			PHON FG 2;
+			PHON HI 2;
+			PHON FG 2;
+			PHON HI 2;
+			PHON FG 2;
+			PHON HI 2;
+			//Fuera
+			PHON JIJ 1 ;
+			PHON JJIJJ 1 ;
+			TNT1 AAAA 0 A_SetPitch(pitch-5, SPF_INTERPOLATE);
+			PHON KKL 1 ;
+			PHON LMN 1 ;
+			TNT1 AAAA 0 A_SetPitch(pitch-6, SPF_INTERPOLATE);
+			PHON NOO 1;
+			TNT1 AAAA 0 A_SetPitch(pitch-7, SPF_INTERPOLATE);
+			PHON PP 1 ;
+			TNT1 AAAA 0 A_SetPitch(pitch-7, SPF_INTERPOLATE);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+
+		Execution_HellDuke:
+		//hands
+		"####" AAAAAA 1 ;
+			tttt a 0 A_SpawnItemEx("PB_HellDuke_Execution_1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+			TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(0.8);
+				ThrustThingZ(0,18,0,0);
+				A_SetAngle(Angle+40);
+			}
+			PKUP ABC 3 {
+			A_SetAngle(Angle+5);
+			A_SetPitch(pitch-5);
+			A_SetRoll(roll-5);
+			}
+		//Grab!
+			PKUP D 10 ;
+			TNT1 A 0 A_StartSound("NECK_BRK",6);
+			TNT1 A 0 A_SetRoll(roll-5);
+			PKUP DE 4 ;
+			TNT1 A 0 A_StartSound("NECK_BRK",6);
+			TNT1 A 0 A_SetRoll(roll+5);
+			PKUP DE 4 ;
+			TNT1 A 0 A_StartSound("misc/xdeath2",6);
+			TNT1 A 0 A_SetRoll(roll-5);
+			PKUP D 10 ;
+			TNT1 A 0 {
+					A_SetRoll(roll+5);
+					A_ZoomFactor(0.7);
+					}
+			PKUP DEF 2 {
+			A_SetAngle(Angle-12);
+			A_SetPitch(pitch+3);
+			}
+			P1NH LKJ 3 {
+			A_SetAngle(Angle+20);
+			A_SetPitch(pitch-15);
+			A_SetRoll(roll-5);
+			}
+			TNT1 A 0
+					{
+					A_SetRoll(roll-5);
+					A_ZoomFactor(0.9);
+					A_Recoil(4);
+					}
+			THEF BCD 3 {
+			A_SetAngle(Angle-20);
+			A_SetPitch(pitch+15);
+			A_SetRoll(roll+5);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+		Goto GoingToReady2;
+
+		Execution_ObsidianRavager:
+		//hands
+		"####" AAAAAA 1 ;
+		    tttt a 0 A_SpawnItemEx("PB_ObsidianRavager_Execution", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+			CL1M ABCD 1 {
+				A_SetPitch(Pitch-12.0, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 A_StartSound("ledgeclimb",6);
+			//TNT1 A 0 ThrustThingZ(0,35,0,0);
+			CL1M EFGH 1 {
+				ThrustThingZ(0,18,0,0);
+				}
+			CL1M IJKL 1 {
+				ThrustThingZ(0,18,0,0);
+				A_SetPitch(Pitch+12.0, SPF_INTERPOLATE);
+				}
+			
+			HNDF ABCDE 1 A_SetRoll(roll+2.0, SPF_INTERPOLATE);
+			HNDF FGHI 1 {
+				A_SetRoll(roll+2.0, SPF_INTERPOLATE);
+				ThrustThingZ(0,1,0,0);
+				}
+			TNT1 A 0 A_StartSound("OPNGRN",0);
+			HNDF JKLMNOPQR 1 {
+				A_SetRoll(roll+2.0, SPF_INTERPOLATE);
+				ThrustThingZ(0,1,0,0);
+				}
+		    00HK PQRSTUVW 1 {
+				ThrustThingZ(0,1,0,0);
+				}
+			TNT1 A 0 {
+			A_SetRoll(0, SPF_INTERPOLATE);
+			A_Recoil(7);
+			//ThrustThingZ(0,34,0,0);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+		Execution_Director:
+		//hands
+		"####" AAAAAA 1 ;
+			tttt a 0 A_SpawnItemEx("PB_Director_Execution", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+
+			//12 ticks for climb
+
+			TNT1 A 0 {
+				A_SetPitch(Pitch+12.0);
+			}
+			CL1M ABCD 1 {
+				A_SetPitch(Pitch-3.0, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 A_StartSound("ledgeclimb",6);
+			CL1M EFGH 1 {
+				ThrustThingZ(0,30,0,0);
+				}
+			CL1M IJKL 1 {
+				ThrustThingZ(0,30,0,0);
+				}
+
+			TNT1 AAAA 0 A_SetPitch(pitch+3, SPF_INTERPOLATE);
+
+			//8 ticks to tighten your arms
+
+			PHON ABBC 1 {
+				ThrustThingZ(0,2,0,0);
+				}
+			TNT1 AAAA 0 A_SetPitch(pitch+2, SPF_INTERPOLATE);
+			PHON DDEE 1 {
+				ThrustThingZ(0,2,0,0);
+				}
+			TNT1 AAAA 0 A_SetPitch(pitch+0, SPF_INTERPOLATE);
+
+			TNT1 A 0 A_ZoomFactor(1.5);
+			//48 ticks
+			PHON FGHIFGHIFGHIFGHIFGHIFGHI 2 {
+				ThrustThingZ(0,2,0,0);
+				}
+
+			//8 ticks
+			PHON JIJ 1 {
+				ThrustThingZ(0,2,0,0);
+				}
+			PHON JJIJJ 1 {
+				ThrustThingZ(0,2,0,0);
+				}
+			TNT1 AAAA 0 A_SetPitch(pitch-5, SPF_INTERPOLATE);
+
+
+			TNT1 A 0 A_ZoomFactor(1.0);
+			//11 ticks
+			PHON KKLLMN 1 {
+				ThrustThingZ(0,2,0,0);
+				}
+			TNT1 AAAA 0 A_SetPitch(pitch-6, SPF_INTERPOLATE);
+			PHON NOO 1 {
+				ThrustThingZ(0,2,0,0);
+				}
+			TNT1 AAAA 0 A_SetPitch(pitch-7, SPF_INTERPOLATE);
+			PHON PP 1 {
+				ThrustThingZ(0,2,0,0);
+				}
+
+			TNT1 A 1 {A_SetPitch(pitch+39, SPF_INTERPOLATE);}
+			TNT1 A 1 {A_SetPitch(pitch+39, SPF_INTERPOLATE);}
+
+			STNG BCDEF 1 {
+				ThrustThingZ(0,2,0,0);
+				}
+			STNG F 1 {
+				ThrustThingZ(0,2,0,0);
+				}
+			TNT1 A 0 A_StartSound("StunGrenadeArm", 2);
+			STNG GIJJJIHGKLMNOP 1 {
+				ThrustThingZ(0,2,0,0);
+				}
+			TNT1 A 0 A_ZoomFactor(1.3);
+
+		    00HK PQRSTUVW 1 {
+				ThrustThingZ(0,1,0,0);
+				}
+
+			TNT1 A 0 A_ZoomFactor(1.0);
+
+			TNT1 A 0 A_SetPitch(0, SPF_INTERPOLATE);
+			TNT1 A 0 A_Recoil(4);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+		Execution_DarkLord:
+		//hands
+		"####" AAAAAA 1 ;
+		    TNT1 A 0 A_SpawnItemEx("PB_DarkLord_Execution_1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+			TNT1 A 0 {
+				A_SetPitch(Pitch+12.0);
+			}
+			CL1M ABCD 1 {
+				A_SetPitch(Pitch-3.0, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 A_StartSound("ledgeclimb",6);
+			//TNT1 A 0 ThrustThingZ(0,35,0,0);
+			CL1M EFGH 1 {
+				ThrustThingZ(0,20,0,0);
+				}
+			CL1M IJKL 1 {
+				ThrustThingZ(0,20,0,0);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+				ThrustThingZ(0,2,0,0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+				ThrustThingZ(0,2,0,0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				ThrustThingZ(0,2,0,0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}	
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+				ThrustThingZ(0,2,0,0);
+			}
+			
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+				ThrustThingZ(0,2,0,0);
+			}
+
+
+
+
+			TNT1 A 0 {
+				A_SetPitch(Pitch+20.0, SPF_INTERPOLATE);
+				A_SetAngle(Angle-8.8, SPF_INTERPOLATE);
+				A_SetRoll(roll+96, SPF_INTERPOLATE);
+			}
+
+
+
+
+			MC3S ABCD 1 {
+				//A_SetRoll(roll+6);
+				A_SetPitch(pitch+1);
+				//A_SetAngle(angle-4);
+				ThrustThingZ(0,2,0,0);
+			}
+			// Frame 2: 4 Ticks
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+			MC3S EFGHIJ 1 {
+				//A_SetRoll(roll+6);
+				A_SetPitch(pitch+2);
+				//A_SetAngle(angle-6);
+			}
+
+			TNT1 A 0 {
+			A_SetRoll(0, SPF_INTERPOLATE);
+			A_Recoil(4);
+			//ThrustThingZ(0,34,0,0);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+		Execution_ESoul:
+		//hands
+		"####" AAAAAA 1 ;
+			tttt a 0 A_SpawnItemEx("PB_ESoul_Execution", 41, 0,30,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+
+			TNT1 A 0 {
+				A_SetPitch(Pitch+12.0);
+			}
+			P2NK ABCDEFGHIJKLMNOPQRSTUV 0;
+			P3NK ABCDEFGHIJKLMNOPQRSTUV 0;
+			P4NK ABCDEFGHIJKLMNOPQRSTUV 0;
+			P2NO ABCDEFGHIJKLMNOPQRSTUVW 0;
+			P3NO ABCDEFGHIJKLMNOPQRSTUVW 0;
+			P4NO ABCDEFGHIJKLMNOPQRSTUVW 0;
+			
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+				
+					
+			}
+			
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-32);
+				A_SetAngle(angle-1.0);
+				A_SetPitch(pitch+4.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			//28
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-0.04);
+				A_SetPitch(pitch+0.05);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.09);
+				A_SetPitch(pitch-0.12);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			
+			TNT1 A 2;
+			TNT1 A 1 PB_UnsetPlayerExecutionProperties();
+			TNT1 A 0 A_SetInventory("CantWeaponSpecial",0);
+			Goto GoingToReady2;
+
+
+		Execution_IceDemon1:
+		//hands
+		//"####" AAAAAA 1 ;
+		    tttt a 0 A_SpawnItemEx("PB_IceDemon_Execution_1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+		    TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				A_Overlay(19, "YOmmaa");
+				A_OverlayFlags(19,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", 6);
+				A_ZoomFactor(0.95);
+				A_OverlayFlags(-999,PSPF_PLAYERTRANSLATED, true);
+				a_Recoil(-5);
+				ThrustThingZ(0,22,0,0);
+			}
+			//kick
+			AKCK ABC 1 A_SetRoll(roll-2, SPF_INTERPOLATE);
+			AKCK DEFG 1 ;
+			//RIFF aAAAAAA 0 a_Recoil(-10);
+			RIFF A 0 {
+				A_ZoomFactor(0.975);
+			}
+			AKCK HIJ 1 {
+				a_Recoil(-1);
+			}
+			AKCK K 1 {
+				A_ZoomFactor(0.995);
+				a_Recoil(-2);
+			}
+			tttt aA 0 {
+			a_Recoil(-2);
+			}
+			RIFF aAAAAAA 0 a_Recoil(-3);
+			AKCK LM 1;
+			AKCK NO 1 {
+				A_SetRoll(roll+2, SPF_INTERPOLATE);
+				A_SetPitch(Pitch+5.0);
+				}
+			TNT1 AA 1 {
+				A_SetRoll(roll+2, SPF_INTERPOLATE);
+				A_SetPitch(Pitch-5.0);
+				A_ZoomFactor(1.0);
+			}
+			TTTT A 1;
+			TTTT A 0 {
+			A_ZoomFactor(1.0);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+
+		Execution_Marauder1:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_MarauderExecution1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2, ZOOM_INSTANT);
+				A_StartSound("KNIFUP", CHAN_AUTO);
+			}
+			TNT1 A 0 A_SetPitch(pitch+5);
+			// Frame 1: 9 Ticks
+			TNT1 AAA 1 {
+				A_SetRoll(roll-75);
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+9);
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(1.4, ZOOM_INSTANT);
+				A_StartSound("KNIFSWNG", CHAN_AUTO);
+			}
+			MC3S ABCDEF 1 {
+				A_SetRoll(roll+6);
+				A_SetPitch(pitch+1);
+				A_SetAngle(angle-4);
+			}
+			// Frame 2: 4 Ticks
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+			MC3S GHIJ 1 {
+				A_SetRoll(roll+6);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-6);
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(1.15, ZOOM_INSTANT);
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", CHAN_AUTO);
+			}
+			// Frame 3: 12 Ticks
+			KIC4 ABCDE 1 {
+				A_SetRoll(roll-3);
+				A_SetPitch(pitch-1);
+				A_SetAngle(angle+2);
+			}
+			TNT1 A 0 A_ZoomFactor(1.05, ZOOM_INSTANT);
+			KIC4 FFFF 1 {
+				A_SetPitch(pitch-3);
+				A_SetAngle(angle+4);
+			}
+			TNT1 A 0 A_ZoomFactor(1.5, ZOOM_INSTANT);
+			KIC4 GHI 1 {
+				A_SetRoll(roll+6);
+				A_SetPitch(pitch-3);
+				A_SetAngle(angle-3);
+			}
+			TNT1 A 0 {
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_FireProjectile("ShakeYourAss");
+			}
+			TNT1 A 0 A_ZoomFactor(1.1);
+			KIC4 JKLM 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			TNT1 A 0 A_SetInventory("CantWeaponSpecial",0);
+		Goto GoingToReady2;
+
+		  Execution_Marauder2:
+		    TNT1 A 0 A_SpawnItemEx("PB_MarauderExecution2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+			TNT1 A 0  {
+				A_ZoomFactor(1.3);
+				A_SetPitch(pitch-3);
+				}
+			01HK ABCD 2;
+			01HK DD 2;
+			01HK DDD 2;
+			TNT1 A 0 A_StartSound("KNUCKLED", CHAN_AUTO);
+			TNT1 A 0 A_FireProjectile("ShakeYourAssDouble");
+			00HK XXX 2;
+			00HK YZ 2;
+			TNT1 A 0  {
+				A_ZoomFactor(1.0);
+				A_SetPitch(pitch+15, SPF_INTERPOLATE);
+				A_StartSound("KICK", CHAN_AUTO);
+			     }
+			KIC2 ABC 1 A_SetRoll(roll+32, SPF_INTERPOLATE);
+			KIC2 DEFG 1 ;
+			TNT1 A 0 {
+				A_ZoomFactor(0.905);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_FireProjectile("ShakeYourAss");
+				}
+			KIC2 HIJ 1;
+			TNT1 A 0 ;
+			KIC2 KL 1;
+			TNT1 AAA 1 {
+				A_SetRoll(roll-32, SPF_INTERPOLATE);
+				A_SetPitch(Pitch-3.0, SPF_INTERPOLATE);
+				A_ZoomFactor(0.975);
+			}
+			TNT1 A 0 {
+			A_ZoomFactor(1.0);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+		  Execution_Marauder3:
+		    TNT1 A 0 A_SpawnItemEx("PB_MarauderExecution3", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+			TNT1 A 0  {
+				A_ZoomFactor(1.0);
+				A_SetAngle(angle-12);
+				A_SetPitch(Pitch+12);
+				A_StartSound("player/cyborg/fist", CHAN_AUTO);
+				}
+			G001 HIJKLM 2  {
+				A_ZoomFactor(1.4);
+				A_SetAngle(angle+2);
+				A_SetPitch(Pitch+2);
+				}
+			TNT1 A 0  {
+				A_StartSound("gore/headshot", CHAN_AUTO);
+				A_FireProjectile("ShakeYourAss");
+				}
+			TNT1 A 0  A_SetPitch(Pitch+12, SPF_INTERPOLATE);
+			016E KKK 5;
+			
+			TNT1 A 0 A_StartSound("misc/xdeath4", CHAN_AUTO);
+			P2NF HGHG 5;
+
+			P2NF GF 2  {
+				A_ZoomFactor(1.4);
+				A_SetAngle(angle-3);
+				A_SetPitch(Pitch-11, SPF_INTERPOLATE);
+				}
+			P2NF ED 2  {
+				A_ZoomFactor(1.0);
+				A_SetAngle(angle-3);
+				A_SetPitch(Pitch-7, SPF_INTERPOLATE);
+				}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+		  Execution_FleshWizard1:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_FleshWizard_Execution_1", 38, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.05);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			PBFT A 1 {
+				A_ZoomFactor(1.25, ZOOM_INSTANT);
+				A_SetPitch(pitch-11);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-5);
+			}
+			PBFT B 1 {
+				A_ZoomFactor(1.35, ZOOM_INSTANT);
+				A_SetPitch(pitch-11);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT C 1 {
+				A_ZoomFactor(1.45, ZOOM_INSTANT);
+				A_SetPitch(pitch-11);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT D 1 {
+				A_ZoomFactor(1.55, ZOOM_INSTANT);
+				A_SetPitch(pitch-11);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-5);
+			}
+			PBFT E 1 {
+				A_ZoomFactor(1.65, ZOOM_INSTANT);
+				A_SetPitch(pitch-11);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll-5);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_StartSound("NECK_BRK", CHAN_AUTO);
+				A_StartSound("EYEPULL", CHAN_AUTO);
+			}
+			TNT1 A 0 A_StartSound("gore/tension", CHAN_BODY);
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.67, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.68, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT IJKL 1 {
+				A_ZoomFactor(1.69, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+				A_FireProjectile("ShakeYourAss");
+			}
+			PBFT MNOP 1 {
+				A_ZoomFactor(1.70, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT QRST 1 {
+				A_ZoomFactor(1.71, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			TNT1 A 0 A_StartSound("NeckSnap", CHAN_AUTO);
+			PBFT UVWXY 1 {
+				A_ZoomFactor(1.72, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT Z 1 {
+				A_FireProjectile("ShakeYourAss");
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+				A_StopSound(CHAN_BODY);
+				A_StartSound("misc/gibbed", CHAN_AUTO);
+			}
+			PBF1 A 1 {
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll+10);
+			}
+			PBF1 BCD 1 {
+				A_SetPitch(pitch+3);
+				A_SetAngle(angle-2);
+				A_SetRoll(roll+8);
+			}
+			TNT1 A 0 A_ZoomFactor(1.2);
+			TNT1 AA 1 A_SetPitch(pitch+1);
+			TNT1 AA 1;
+			TNT1 AAAAA 1 {
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-9);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+
+		  Execution_D3Seeker1:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_D3Seeker_Execution_1", 38, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.05);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			PBFT A 1 {
+				A_ZoomFactor(1.25, ZOOM_INSTANT);
+				A_SetPitch(pitch-1);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-5);
+			}
+			PBFT B 1 {
+				A_ZoomFactor(1.35, ZOOM_INSTANT);
+				A_SetPitch(pitch-1);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT C 1 {
+				A_ZoomFactor(1.45, ZOOM_INSTANT);
+				A_SetPitch(pitch-1);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT D 1 {
+				A_ZoomFactor(1.55, ZOOM_INSTANT);
+				A_SetPitch(pitch-1);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-5);
+			}
+			PBFT E 1 {
+				A_ZoomFactor(1.65, ZOOM_INSTANT);
+				A_SetPitch(pitch-1);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll-5);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_StartSound("NECK_BRK", CHAN_AUTO);
+				A_StartSound("EYEPULL", CHAN_AUTO);
+			}
+			TNT1 A 0 A_StartSound("gore/tension", CHAN_BODY);
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.67, ZOOM_INSTANT);
+				A_SetPitch(pitch+1);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.68, ZOOM_INSTANT);
+				A_SetPitch(pitch-1);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT IJKL 1 {
+				A_ZoomFactor(1.69, ZOOM_INSTANT);
+				A_SetPitch(pitch+0.41);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+				A_FireProjectile("ShakeYourAss");
+			}
+			PBFT MNOP 1 {
+				A_ZoomFactor(1.70, ZOOM_INSTANT);
+				A_SetPitch(pitch+0.41);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT QRST 1 {
+				A_ZoomFactor(1.71, ZOOM_INSTANT);
+				A_SetPitch(pitch+0.41);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			TNT1 A 0 A_StartSound("NeckSnap", CHAN_AUTO);
+			PBFT UVWXY 1 {
+				A_ZoomFactor(1.72, ZOOM_INSTANT);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT Z 1 {
+				A_FireProjectile("ShakeYourAss");
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+				A_StopSound(CHAN_BODY);
+				A_StartSound("misc/gibbed", CHAN_AUTO);
+			}
+			PBF1 A 1 {
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll+10);
+			}
+			PBF1 BCD 1 {
+				A_SetPitch(pitch+3);
+				A_SetAngle(angle-2);
+				A_SetRoll(roll+8);
+			}
+			TNT1 A 0 A_ZoomFactor(1.2);
+			TNT1 AA 1 A_SetPitch(pitch+1);
+			TNT1 AA 1;
+			TNT1 AAAAA 1 {
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-9);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+
+		  Execution_CyberSatyr1:
+		P8NA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1, 4);
+		P7NA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1, 3);
+		P6NA A 0 A_JumpIfInventory("PowerBloodOnVisor",1, 2);
+		P5NA A 0;
+		//hands
+		"####" AAAAAA 1 ;
+		    tttt a 0 A_SpawnItemEx("PB_CyberSatyr_Execution_1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+		    TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				A_Overlay(19, "YOmmaa");
+				A_OverlayFlags(19,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", 6);
+				A_ZoomFactor(0.95);
+				A_OverlayFlags(-999,PSPF_PLAYERTRANSLATED, true);
+				a_Recoil(-7);
+				ThrustThingZ(0,32,0,0);
+			}
+			//kick
+			AKCK ABC 1 A_SetRoll(roll-2, SPF_INTERPOLATE);
+			AKCK DEFG 1 ;
+			//RIFF aAAAAAA 0 a_Recoil(-10);
+			RIFF A 0 {
+				A_ZoomFactor(0.975);
+			}
+			AKCK HIJ 1 {
+				a_Recoil(-4);
+			}
+			AKCK K 1 {
+				A_ZoomFactor(0.995);
+				a_Recoil(-9);
+			}
+			tttt aA 0 {
+			a_Recoil(-9);
+			}
+			RIFF aAAAAAA 0 a_Recoil(-10);
+			AKCK LM 1;
+			AKCK NO 1 A_SetRoll(roll+2, SPF_INTERPOLATE);
+			TNT1 A 1 {
+				A_SetRoll(roll+2, SPF_INTERPOLATE);
+				A_ZoomFactor(1.0);
+			}
+			TTTT A 1 A_SetPitch(Pitch+10.0);
+			TTTT AAAAAA 0 A_SetPitch(Pitch+10.0);
+			TNT1 A 0 {
+				A_ZoomFactor(1.3);
+				A_StartSound("KNIFSWNG", 1);
+			}
+			TTTT AAAaaa 2 {
+			A_ZoomFactor(1.5);
+			}
+			//Machete
+			MC3S AB 1 {
+			A_ZoomFactor(1.7);
+			}
+			MC3S C 1 {
+			A_ZoomFactor(2.4);
+			}
+			MC3S D 1 {
+			A_ZoomFactor(2.4);
+			}
+			MC3S EFGH 1 {
+			A_ZoomFactor(2.4);
+			} 
+			MC3S IJ 1 {
+			A_ZoomFactor(1.5);
+			} 
+			TTTT A 0 {
+			A_ZoomFactor(1.0);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+		  Execution_CyberSatyr2:
+		    TNT1 A 0 A_SpawnItemEx("PB_CyberSatyr_Execution_2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(2.5);
+				}
+			TTTT AAAA 0 A_SetPitch(-6, SPF_INTERPOLATE);
+			016E ABCDE 1;
+			016E EEEE 2 {
+			A_SpawnItemEx("ShakeShakeShake");
+			}
+			016E FGHIJ 1 ;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_CyberSatyr3:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_CyberSatyr_Execution_3", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.35);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			THRF ABCDEF 1 {
+				A_SetRoll(roll-6);
+				A_Setpitch(pitch+2);
+				A_SetAngle(angle+4);
+			}
+			TNT1 A 6 {
+				A_SetRoll(roll+36,SPF_INTERPOLATE);
+				A_SetAngle(angle-24);
+			}
+			TNT1 AA 2 A_Recoil(-2);
+			TNT1 A 0 A_Stop;
+			TNT1 A 0 {
+				A_Overlay(-9,"Execution_Zombieman3_Overlay1");
+				A_OverlayFlags(-9,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", CHAN_AUTO );
+				A_ZoomFactor(1.85, ZOOM_INSTANT);
+			}
+			P5NA ABCDEFG 1 {
+				A_SetRoll(roll+10);
+				A_SetAngle(angle-1);
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(2.2, ZOOM_INSTANT);
+				A_FireProjectile("ShakeYourAss");
+				A_SetPitch(pitch-2);
+			}
+			P5NA HH 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+3);
+			}
+			TNT1 A 0 A_ZoomFactor(1.48);
+			P5NA HIJKLMN 1 A_SetRoll(roll-10);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+		
+		Execution_Satyr1:
+		P8NA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1, 4);
+		P7NA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1, 3);
+		P6NA A 0 A_JumpIfInventory("PowerBloodOnVisor",1, 2);
+		P5NA A 0;
+		//hands
+		"####" AAAAAA 1 ;
+		    tttt a 0 A_SpawnItemEx("PB_Satyr_Execution_1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+		    TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				A_Overlay(19, "YOmmaa");
+				A_OverlayFlags(19,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", 6);
+				A_ZoomFactor(0.95);
+				A_OverlayFlags(-999,PSPF_PLAYERTRANSLATED, true);
+				a_Recoil(-7);
+				ThrustThingZ(0,32,0,0);
+			}
+			//kick
+			AKCK ABC 1 A_SetRoll(roll-2, SPF_INTERPOLATE);
+			AKCK DEFG 1 ;
+			//RIFF aAAAAAA 0 a_Recoil(-10);
+			RIFF A 0 {
+				A_ZoomFactor(0.975);
+			}
+			AKCK HIJ 1 {
+				a_Recoil(-4);
+			}
+			AKCK K 1 {
+				A_ZoomFactor(0.995);
+				a_Recoil(-9);
+			}
+			tttt aA 0 {
+			a_Recoil(-9);
+			}
+			RIFF aAAAAAA 0 a_Recoil(-10);
+			AKCK LM 1;
+			AKCK NO 1 A_SetRoll(roll+2, SPF_INTERPOLATE);
+			TNT1 A 1 {
+				A_SetRoll(roll+2, SPF_INTERPOLATE);
+				A_ZoomFactor(1.0);
+			}
+			TTTT A 1 A_SetPitch(Pitch+10.0);
+			TTTT AAAAAA 0 A_SetPitch(Pitch+10.0);
+			TNT1 A 0 {
+				A_ZoomFactor(1.3);
+				A_StartSound("KNIFSWNG", 1);
+			}
+			TTTT AAAaaa 2 {
+			A_ZoomFactor(1.5);
+			}
+			//Machete
+			MC3S AB 1 {
+			A_ZoomFactor(1.7);
+			}
+			MC3S C 1 {
+			A_ZoomFactor(2.4);
+			}
+			MC3S D 1 {
+			A_ZoomFactor(2.4);
+			}
+			MC3S EFGH 1 {
+			A_ZoomFactor(2.4);
+			} 
+			MC3S IJ 1 {
+			A_ZoomFactor(1.5);
+			} 
+			TTTT A 0 {
+			A_ZoomFactor(1.0);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+		  Execution_Satyr2:
+		    TNT1 A 0 A_SpawnItemEx("PB_Satyr_Execution_2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(2.5);
+				}
+			TTTT AAAA 0 A_SetPitch(-6, SPF_INTERPOLATE);
+			P1NA ABCC 1;
+			P2NA CCCC 2 {
+			A_SpawnItemEx("ShakeShakeShake");
+			}
+			P2NA DEFGH 1 ;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+		  Execution_Satyr3:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Satyr_Execution_3", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.35);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			THRF ABCDEF 1 {
+				A_SetRoll(roll-6);
+				A_Setpitch(pitch+2);
+				A_SetAngle(angle+4);
+			}
+			TNT1 A 6 {
+				A_SetRoll(roll+36,SPF_INTERPOLATE);
+				A_SetAngle(angle-24);
+			}
+			TNT1 AA 2 A_Recoil(-2);
+			TNT1 A 0 A_Stop;
+			TNT1 A 0 {
+				A_Overlay(-9,"Execution_Zombieman3_Overlay1");
+				A_OverlayFlags(-9,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", CHAN_AUTO );
+				A_ZoomFactor(1.85, ZOOM_INSTANT);
+			}
+			P5NA ABCDEFG 1 {
+				A_SetRoll(roll+10);
+				A_SetAngle(angle-1);
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(2.2, ZOOM_INSTANT);
+				A_FireProjectile("ShakeYourAss");
+				A_SetPitch(pitch-2);
+			}
+			P5NA HH 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+3);
+			}
+			TNT1 A 0 A_ZoomFactor(1.48);
+			P5NA HIJKLMN 1 A_SetRoll(roll-10);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+		  Execution_Zombiefresh:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Fresh_Execution_1", 8, 2,-20,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(35);
+				A_ZoomFactor(2.6,ZOOM_INSTANT);
+				A_StartSound("player/cyborg/fist", CHAN_AUTO);
+				A_Overlay(9,"Execution_Imp3_Overlay1");
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_FireProjectile("ShakeYourAss");
+			 }
+			SLDK ABCDE 1 {
+				A_SetPitch(pitch+6);
+				ThrustThingZ(0,25, 1,0);
+				A_SetRoll(roll-4);
+			}
+			SLDK FGHI 1 { 	
+				A_SetRoll(roll+5);
+				A_SetPitch(pitch+9);
+			}
+			SLDK O 1 {
+				A_ZoomFactor(2.5,ZOOM_INSTANT);
+				A_StartSound("NECK_BRK", CHAN_AUTO );
+				A_StartSound("BODYF", CHAN_AUTO );
+				A_FireProjectile("ShakeYourAss");
+			}
+			SLDK P 1 {
+				A_SetPitch(pitch-3);
+				A_ZoomFactor(2.25, ZOOM_INSTANT);
+			}
+			SLDK Q 1 {
+				A_SetPitch(pitch-3);
+			}
+			SLDK R 1 {
+				A_SetPitch(pitch-4);
+				A_ZoomFactor(2.10, ZOOM_INSTANT);
+			}
+			SLDK S 1 {
+				A_SetPitch(pitch-4);
+			}
+			SLDK T 1 {
+				A_SetPitch(pitch-5);
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+			}
+			SLDK U 1 {
+				A_SetPitch(pitch-5);
+				A_ZoomFactor(1.6, ZOOM_INSTANT);
+			}
+			TNT1 A 0 Offset(0,32);
+			TNT1 A 1 {
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_ZoomFactor(1.86);
+			}
+			PUNS JIH 1;
+			TNT1 A 0 A_StartSound("weapons/fistwhoosh", CHAN_AUTO);
+			P1NN ABC 1 {
+				A_SetAngle(angle+3);
+				A_SetPitch(pitch-2);
+			}
+			TNT1 A 0 A_StartSound("execution/impact", CHAN_AUTO);
+			P2NN DE 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch+4);
+			}
+			TNT1 AAAA 1 {
+				A_SetAngle(angle-1);
+				A_SetPitch(pitch-3);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			P2NK ABCD 1 {
+				A_SetAngle(angle-1);
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+			}
+			P2NK EF 1 {
+				A_SetAngle(angle+4);
+				A_SetPitch(pitch+6);
+				A_SetRoll(roll-1);
+			}
+			TNT1 A 0 A_StartSound("execution/impact", CHAN_AUTO);
+			P2NK GHIJ 1 {
+				A_SetAngle(angle-3);
+				A_SetPitch(pitch+3);
+				A_SetRoll(roll+4);
+			}
+			P2NK KLMNO 1 {
+				A_SetAngle(angle-3);
+				A_SetPitch(pitch+2);
+				A_SetRoll(roll+2);
+			}
+			P2NK P 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.7, ZOOM_INSTANT);
+			}
+			P2NK Q 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.6, ZOOM_INSTANT);
+			}
+			P2NK R 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.5, ZOOM_INSTANT);
+			}
+			P2NK S 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.4, ZOOM_INSTANT);
+			}
+			TNT1 A 0 {
+				A_Overlay(9,"Execution_Imp3_Overlay2");
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+			}
+			TNT1 A 0 {
+				A_SetPitch(pitch-3);
+				A_StartSound("KICK", CHAN_AUTO);
+			}
+			KIC1 A 1 {
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-1);
+				A_Zoomfactor(1.35, ZOOM_INSTANT);
+			}
+			KIC1 B 1 {
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-1);
+				A_Zoomfactor(1.3, ZOOM_INSTANT);
+			}
+			KIC1 C 1 {
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+				A_Zoomfactor(1.25, ZOOM_INSTANT);
+			}
+			KIC1 D 1 {
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+				A_Zoomfactor(1.2, ZOOM_INSTANT);
+			}
+			KIC1 EE 1 A_Zoomfactor(1.1, ZOOM_INSTANT);
+			KIC1 E 1 {
+				A_SetPitch(pitch+5);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-3);
+				A_ZoomFactor(1.8);
+			}
+			KIC1 FG 1 {
+				A_SetPitch(pitch+5);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-3);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_SpawnItemEx("BigBloodSpot", 15, 0, 25);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+			}
+			KIC1 HHHHHHHH 1;
+			TNT1 A 0 A_Zoomfactor(1.2);
+			KIC1 HIJKL 1 {
+				A_SetPitch(pitch-1);
+				A_SetRoll(roll+1);
+			}
+			TNT1 AAAAAAAA 1 A_SetPitch(pitch-10, SPF_INTERPOLATE);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_ZombieFresh2:
+		    TNT1 A 0 A_SpawnItemEx("PB_Fresh_Execution_2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-4.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}	
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-32);
+				A_SetAngle(angle-1.0);
+				A_SetPitch(pitch+4.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-0.04);
+				A_SetPitch(pitch+0.05);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.09);
+				A_SetPitch(pitch-0.12);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}	
+			PINP ABCDDD 1 {
+			A_SetRoll(roll+2);
+			}
+			P1NP EE 1 {
+			A_SetRoll(roll-2);
+			}
+			P1NP FGHH 1 {
+			A_SetRoll(roll-2);
+			}
+		    P1NP IJ 1;
+		    P1NP KLM 1;
+		    TNT1 A 0 A_SetRoll(0)  ;   
+		    TNT1 A 0 {
+		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+		    }
+		    TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+		  Execution_ZoZ_Overlay1:
+			P5NA ABCDEFGHIJklmn 1;
+			Stop;
+          
+		  Execution_ZombieFresh3:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Fresh_Execution_3", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.35);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			THRF ABCDEF 1 {
+				A_SetRoll(roll-6);
+				A_Setpitch(pitch+2);
+				A_SetAngle(angle+4);
+			}
+			TNT1 A 6 {
+				A_SetRoll(roll+36,SPF_INTERPOLATE);
+				A_SetAngle(angle-24);
+			}
+			TNT1 AA 2 A_Recoil(-2);
+			TNT1 A 0 A_Stop;
+			TNT1 A 0 {
+				A_Overlay(-9,"Execution_Zombieman3_Overlay1");
+				A_OverlayFlags(-9,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", CHAN_AUTO );
+				A_ZoomFactor(1.85, ZOOM_INSTANT);
+			}
+			P5NA ABCDEFG 1 {
+				A_SetRoll(roll+10);
+				A_SetAngle(angle-1);
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(2.2, ZOOM_INSTANT);
+				A_FireProjectile("ShakeYourAss");
+				A_SetPitch(pitch-2);
+			}
+			P5NA HH 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+3);
+			}
+			TNT1 A 0 A_ZoomFactor(1.48);
+			P5NA HIJKLMN 1 A_SetRoll(roll-10);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_ZombieFresh4:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Fresh_Execution_4", 38, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.1);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			PBFT A 1 {
+				A_ZoomFactor(1.25, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-5);
+			}
+			PBFT B 1 {
+				A_ZoomFactor(1.35, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT C 1 {
+				A_ZoomFactor(1.45, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT D 1 {
+				A_ZoomFactor(1.55, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-5);
+			}
+			PBFT E 1 {
+				A_ZoomFactor(1.65, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll-5);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_StartSound("NECK_BRK", CHAN_AUTO);
+				A_StartSound("EYEPULL", CHAN_AUTO);
+			}
+			TNT1 A 0 A_StartSound("gore/tension", CHAN_BODY);
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.67, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.68, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT IJKL 1 {
+				A_ZoomFactor(1.69, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+				A_FireProjectile("ShakeYourAss");
+			}
+			PBFT MNOP 1 {
+				A_ZoomFactor(1.70, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT QRST 1 {
+				A_ZoomFactor(1.71, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			TNT1 A 0 A_StartSound("NeckSnap", CHAN_AUTO);
+			PBFT UVWXY 1 {
+				A_ZoomFactor(1.72, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT Z 1 {
+				A_FireProjectile("ShakeYourAss");
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+				A_StopSound(CHAN_BODY);
+				A_StartSound("misc/gibbed", CHAN_AUTO);
+			}
+			PBF1 A 1 {
+				A_SetPitch(pitch+6);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll+10);
+			}
+			PBF1 BCD 1 {
+				A_SetPitch(pitch+3);
+				A_SetAngle(angle-2);
+				A_SetRoll(roll+8);
+			}
+			TNT1 A 0 A_ZoomFactor(1.2);
+			TNT1 AA 1 A_SetPitch(pitch+1);
+			TNT1 AA 1;
+			TNT1 AAAAA 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-9);
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1
+			{
+			A_SetAngle(angle+2.4);
+			A_SetPitch(Pitch-2.4);
+			}
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_ZombieFresh5:
+		    TNT1 A 0 A_SpawnItemEx("PB_Fresh_Execution_5", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(1.4, ZOOM_INSTANT);
+				A_StartSound("KNIFSWNG", CHAN_AUTO);
+			}
+			MC3S ABCDEF 1 A_SetPitch(pitch+1);
+				
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+			MC3S GHIJ 1 A_SetPitch(pitch+2);
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle-0.9);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.9);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_ZombieFodder:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Fodder_Execution_1", 8, 2,-20,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(35);
+				A_ZoomFactor(2.6,ZOOM_INSTANT);
+				A_StartSound("player/cyborg/fist", CHAN_AUTO);
+				A_Overlay(9,"Execution_Imp3_Overlay1");
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_FireProjectile("ShakeYourAss");
+			 }
+			SLDK ABCDE 1 {
+				A_SetPitch(pitch+6);
+				ThrustThingZ(0,25, 1,0);
+				A_SetRoll(roll-4);
+			}
+			SLDK FGHI 1 { 	
+				A_SetRoll(roll+5);
+				A_SetPitch(pitch+9);
+			}
+			SLDK O 1 {
+				A_ZoomFactor(2.5,ZOOM_INSTANT);
+				A_StartSound("NECK_BRK", CHAN_AUTO );
+				A_StartSound("BODYF", CHAN_AUTO );
+				A_FireProjectile("ShakeYourAss");
+			}
+			SLDK P 1 {
+				A_SetPitch(pitch-3);
+				A_ZoomFactor(2.25, ZOOM_INSTANT);
+			}
+			SLDK Q 1 {
+				A_SetPitch(pitch-3);
+			}
+			SLDK R 1 {
+				A_SetPitch(pitch-4);
+				A_ZoomFactor(2.10, ZOOM_INSTANT);
+			}
+			SLDK S 1 {
+				A_SetPitch(pitch-4);
+			}
+			SLDK T 1 {
+				A_SetPitch(pitch-5);
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+			}
+			SLDK U 1 {
+				A_SetPitch(pitch-5);
+				A_ZoomFactor(1.6, ZOOM_INSTANT);
+			} 
+			TNT1 A 0 Offset(0,32);
+			TNT1 A 1 {
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_ZoomFactor(1.86);
+			}
+			PUNS JIH 1;
+			TNT1 A 0 A_StartSound("weapons/fistwhoosh", CHAN_AUTO);
+			P1NN ABC 1 {
+				A_SetAngle(angle+3);
+				A_SetPitch(pitch-2);
+			}
+			TNT1 A 0 A_StartSound("execution/impact", CHAN_AUTO);
+			P2NN DE 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch+4);
+			}
+			TNT1 AAAA 1 {
+				A_SetAngle(angle-1);
+				A_SetPitch(pitch-3);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			P2NK ABCD 1 {
+				A_SetAngle(angle-1);
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+			}
+			P2NK EF 1 {
+				A_SetAngle(angle+4);
+				A_SetPitch(pitch+6);
+				A_SetRoll(roll-1);
+			}
+			TNT1 A 0 A_StartSound("execution/impact", CHAN_AUTO);
+			P2NK GHIJ 1 {
+				A_SetAngle(angle-3);
+				A_SetPitch(pitch+3);
+				A_SetRoll(roll+4);
+			}
+			P2NK KLMNO 1 {
+				A_SetAngle(angle-3);
+				A_SetPitch(pitch+2);
+				A_SetRoll(roll+2);
+			}
+			P2NK P 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.7, ZOOM_INSTANT);
+			}
+			P2NK Q 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.6, ZOOM_INSTANT);
+			}
+			P2NK R 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.5, ZOOM_INSTANT);
+			}
+			P2NK S 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.4, ZOOM_INSTANT);
+			}
+			TNT1 A 0 {
+				A_Overlay(9,"Execution_Imp3_Overlay2");
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+			}
+			TNT1 A 0 {
+				A_SetPitch(pitch-3);
+				A_StartSound("KICK", CHAN_AUTO);
+			}
+			KIC1 A 1 {
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-1);
+				A_Zoomfactor(1.35, ZOOM_INSTANT);
+			}
+			KIC1 B 1 {
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-1);
+				A_Zoomfactor(1.3, ZOOM_INSTANT);
+			}
+			KIC1 C 1 {
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+				A_Zoomfactor(1.25, ZOOM_INSTANT);
+			}
+			KIC1 D 1 {
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+				A_Zoomfactor(1.2, ZOOM_INSTANT);
+			}
+			KIC1 EE 1 A_Zoomfactor(1.1, ZOOM_INSTANT);
+			KIC1 E 1 {
+				A_SetPitch(pitch+5);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-3);
+				A_ZoomFactor(1.8);
+			}
+			KIC1 FG 1 {
+				A_SetPitch(pitch+5);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-3);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_SpawnItemEx("BigBloodSpot", 15, 0, 25);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+			}
+			KIC1 HHHHHHHH 1;
+			TNT1 A 0 A_Zoomfactor(1.2);
+			KIC1 HIJKL 1 {
+				A_SetPitch(pitch-1);
+				A_SetRoll(roll+1);
+			}
+			TNT1 AAAAAAAA 1 A_SetPitch(pitch-10, SPF_INTERPOLATE);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_ZombieFodder2:
+		    TNT1 A 0 A_SpawnItemEx("PB_Fodder_Execution_2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-4.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}	
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-32);
+				A_SetAngle(angle-1.0);
+				A_SetPitch(pitch+4.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-0.04);
+				A_SetPitch(pitch+0.05);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.09);
+				A_SetPitch(pitch-0.12);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}	
+			PINP ABCDDD 1 {
+			A_SetRoll(roll+2);
+			}
+			P1NP EE 1 {
+			A_SetRoll(roll-2);
+			}
+			P1NP FGHH 1 {
+			A_SetRoll(roll-2);
+			}
+		    P1NP IJ 1;
+		    P1NP KLM 1;
+		    TNT1 A 0 A_SetRoll(0)  ;   
+		    TNT1 A 0 {
+		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+		    }
+		    TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_ZombieFodder3:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Fodder_Execution_3", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.35);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			THRF ABCDEF 1 {
+				A_SetRoll(roll-6);
+				A_Setpitch(pitch+2);
+				A_SetAngle(angle+4);
+			}
+			TNT1 A 6 {
+				A_SetRoll(roll+36,SPF_INTERPOLATE);
+				A_SetAngle(angle-24);
+			}
+			TNT1 AA 2 A_Recoil(-2);
+			TNT1 A 0 A_Stop;
+			TNT1 A 0 {
+				A_Overlay(-9,"Execution_Zombieman3_Overlay1");
+				A_OverlayFlags(-9,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", CHAN_AUTO );
+				A_ZoomFactor(1.85, ZOOM_INSTANT);
+			}
+			P5NA ABCDEFG 1 {
+				A_SetRoll(roll+10);
+				A_SetAngle(angle-1);
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(2.2, ZOOM_INSTANT);
+				A_FireProjectile("ShakeYourAss");
+				A_SetPitch(pitch-2);
+			}
+			P5NA HH 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+3);
+			}
+			TNT1 A 0 A_ZoomFactor(1.48);
+			P5NA HIJKLMN 1 A_SetRoll(roll-10);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_ZombieFodder4:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Fodder_Execution_4", 38, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.1);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			PBFT A 1 {
+				A_ZoomFactor(1.25, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-5);
+			}
+			PBFT B 1 {
+				A_ZoomFactor(1.35, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT C 1 {
+				A_ZoomFactor(1.45, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT D 1 {
+				A_ZoomFactor(1.55, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-5);
+			}
+			PBFT E 1 {
+				A_ZoomFactor(1.65, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll-5);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_StartSound("NECK_BRK", CHAN_AUTO);
+				A_StartSound("EYEPULL", CHAN_AUTO);
+			}
+			TNT1 A 0 A_StartSound("gore/tension", CHAN_BODY);
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.67, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.68, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT IJKL 1 {
+				A_ZoomFactor(1.69, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+				A_FireProjectile("ShakeYourAss");
+			}
+			PBFT MNOP 1 {
+				A_ZoomFactor(1.70, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT QRST 1 {
+				A_ZoomFactor(1.71, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			TNT1 A 0 A_StartSound("NeckSnap", CHAN_AUTO);
+			PBFT UVWXY 1 {
+				A_ZoomFactor(1.72, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT Z 1 {
+				A_FireProjectile("ShakeYourAss");
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+				A_StopSound(CHAN_BODY);
+				A_StartSound("misc/gibbed", CHAN_AUTO);
+			}
+			PBF1 A 1 {
+				A_SetPitch(pitch+6);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll+10);
+			}
+			PBF1 BCD 1 {
+				A_SetPitch(pitch+3);
+				A_SetAngle(angle-2);
+				A_SetRoll(roll+8);
+			}
+			TNT1 A 0 A_ZoomFactor(1.2);
+			TNT1 AA 1 A_SetPitch(pitch+1);
+			TNT1 AA 1;
+			TNT1 AAAAA 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-9);
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1
+			{
+			A_SetAngle(angle+2.4);
+			A_SetPitch(Pitch-2.4);
+			}
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_ZombieFodder5:
+		    TNT1 A 0 A_SpawnItemEx("PB_Fodder_Execution_5", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(1.4, ZOOM_INSTANT);
+				A_StartSound("KNIFSWNG", CHAN_AUTO);
+			}
+			MC3S ABCDEF 1 A_SetPitch(pitch+1);
+				
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+			MC3S GHIJ 1 A_SetPitch(pitch+2);
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle-0.9);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.9);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+
+		  Execution_PB_HorrorspawnDecap:
+		    TNT1 A 0 A_SpawnItemEx("PB_HorrorspawnDecap_Execution", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			TNT1 A 0 A_ZoomFactor(1.2);
+			TNT1 AA 1 A_SetPitch(pitch+1);
+			TNT1 AA 1;
+			TNT1 AAAAA 1 {
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-9);
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+	      Execution_Unwilling:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Unwilling_Execution_1", 8, 2,-20,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(35);
+				A_ZoomFactor(2.6,ZOOM_INSTANT);
+				A_StartSound("player/cyborg/fist", CHAN_AUTO);
+				A_Overlay(9,"Execution_Imp3_Overlay1");
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_FireProjectile("ShakeYourAss");
+			 }
+			SLDK ABCDE 1 {
+				A_SetPitch(pitch+6);
+				ThrustThingZ(0,25, 1,0);
+				A_SetRoll(roll-4);
+			}
+			SLDK FGHI 1 { 	
+				A_SetRoll(roll+5);
+				A_SetPitch(pitch+9);
+			}
+			SLDK O 1 {
+				A_ZoomFactor(2.5,ZOOM_INSTANT);
+				A_StartSound("NECK_BRK", CHAN_AUTO );
+				A_StartSound("BODYF", CHAN_AUTO );
+				A_FireProjectile("ShakeYourAss");
+			}
+			SLDK P 1 {
+				A_SetPitch(pitch-3);
+				A_ZoomFactor(2.25, ZOOM_INSTANT);
+			}
+			SLDK Q 1 {
+				A_SetPitch(pitch-3);
+			}
+			SLDK R 1 {
+				A_SetPitch(pitch-4);
+				A_ZoomFactor(2.10, ZOOM_INSTANT);
+			}
+			SLDK S 1 {
+				A_SetPitch(pitch-4);
+			}
+			SLDK T 1 {
+				A_SetPitch(pitch-5);
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+			}
+			SLDK U 1 {
+				A_SetPitch(pitch-5);
+				A_ZoomFactor(1.6, ZOOM_INSTANT);
+			}
+			TNT1 A 0 Offset(0,32);
+			TNT1 A 1 {
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_ZoomFactor(1.86);
+			}
+			PUNS JIH 1;
+			TNT1 A 0 A_StartSound("weapons/fistwhoosh", CHAN_AUTO);
+			P1NN ABC 1 {
+				A_SetAngle(angle+3);
+				A_SetPitch(pitch-2);
+			}
+			TNT1 A 0 A_StartSound("execution/impact", CHAN_AUTO);
+			P2NN DE 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch+4);
+			}
+			TNT1 AAAA 1 {
+				A_SetAngle(angle-1);
+				A_SetPitch(pitch-3);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			P2NK ABCD 1 {
+				A_SetAngle(angle-1);
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+			}
+			P2NK EF 1 {
+				A_SetAngle(angle+4);
+				A_SetPitch(pitch+6);
+				A_SetRoll(roll-1);
+			}
+			TNT1 A 0 A_StartSound("execution/impact", CHAN_AUTO);
+			P2NK GHIJ 1 {
+				A_SetAngle(angle-3);
+				A_SetPitch(pitch+3);
+				A_SetRoll(roll+4);
+			}
+			P2NK KLMNO 1 {
+				A_SetAngle(angle-3);
+				A_SetPitch(pitch+2);
+				A_SetRoll(roll+2);
+			}
+			P2NK P 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.7, ZOOM_INSTANT);
+			}
+			P2NK Q 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.6, ZOOM_INSTANT);
+			}
+			P2NK R 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.5, ZOOM_INSTANT);
+			}
+			P2NK S 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.4, ZOOM_INSTANT);
+			}
+			TNT1 A 0 {
+				A_Overlay(9,"Execution_Imp3_Overlay2");
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+			}
+			TNT1 A 0 {
+				A_SetPitch(pitch-3);
+				A_StartSound("KICK", CHAN_AUTO);
+			}
+			KIC1 A 1 {
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-1);
+				A_Zoomfactor(1.35, ZOOM_INSTANT);
+			}
+			KIC1 B 1 {
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-1);
+				A_Zoomfactor(1.3, ZOOM_INSTANT);
+			}
+			KIC1 C 1 {
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+				A_Zoomfactor(1.25, ZOOM_INSTANT);
+			}
+			KIC1 D 1 {
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+				A_Zoomfactor(1.2, ZOOM_INSTANT);
+			}
+			KIC1 EE 1 A_Zoomfactor(1.1, ZOOM_INSTANT);
+			KIC1 E 1 {
+				A_SetPitch(pitch+5);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-3);
+				A_ZoomFactor(1.8);
+			}
+			KIC1 FG 1 {
+				A_SetPitch(pitch+5);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-3);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_SpawnItemEx("BigBloodSpot", 15, 0, 25);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+			}
+			KIC1 HHHHHHHH 1;
+			TNT1 A 0 A_Zoomfactor(1.2);
+			KIC1 HIJKL 1 {
+				A_SetPitch(pitch-1);
+				A_SetRoll(roll+1);
+			}
+			TNT1 AAAAAAAA 1 A_SetPitch(pitch-10, SPF_INTERPOLATE);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Unwilling2:
+		    TNT1 A 0 A_SpawnItemEx("PB_Unwilling_Execution_2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-4.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}	
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-32);
+				A_SetAngle(angle-1.0);
+				A_SetPitch(pitch+4.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-0.04);
+				A_SetPitch(pitch+0.05);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.09);
+				A_SetPitch(pitch-0.12);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}	
+			PINP ABCDDD 1 {
+			A_SetRoll(roll+2);
+			}
+			P1NP EE 1 {
+			A_SetRoll(roll-2);
+			}
+			P1NP FGHH 1 {
+			A_SetRoll(roll-2);
+			}
+		    P1NP IJ 1;
+		    P1NP KLM 1;
+		    TNT1 A 0 A_SetRoll(0)  ;   
+		    TNT1 A 0 {
+		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+		    }
+		    TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Unwilling3:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Unwilling_Execution_3", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.35);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			THRF ABCDEF 1 {
+				A_SetRoll(roll-6);
+				A_Setpitch(pitch+2);
+				A_SetAngle(angle+4);
+			}
+			TNT1 A 6 {
+				A_SetRoll(roll+36,SPF_INTERPOLATE);
+				A_SetAngle(angle-24);
+			}
+			TNT1 AA 2 A_Recoil(-2);
+			TNT1 A 0 A_Stop;
+			TNT1 A 0 {
+				A_Overlay(-9,"Execution_Zombieman3_Overlay1");
+				A_OverlayFlags(-9,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", CHAN_AUTO );
+				A_ZoomFactor(1.85, ZOOM_INSTANT);
+			}
+			P5NA ABCDEFG 1 {
+				A_SetRoll(roll+10);
+				A_SetAngle(angle-1);
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(2.2, ZOOM_INSTANT);
+				A_FireProjectile("ShakeYourAss");
+				A_SetPitch(pitch-2);
+			}
+			P5NA HH 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+3);
+			}
+			TNT1 A 0 A_ZoomFactor(1.48);
+			P5NA HIJKLMN 1 A_SetRoll(roll-10);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Unwilling4:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Unwilling_Execution_4", 38, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.1);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			PBFT A 1 {
+				A_ZoomFactor(1.25, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-5);
+			}
+			PBFT B 1 {
+				A_ZoomFactor(1.35, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT C 1 {
+				A_ZoomFactor(1.45, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT D 1 {
+				A_ZoomFactor(1.55, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-5);
+			}
+			PBFT E 1 {
+				A_ZoomFactor(1.65, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll-5);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_StartSound("NECK_BRK", CHAN_AUTO);
+				A_StartSound("EYEPULL", CHAN_AUTO);
+			}
+			TNT1 A 0 A_StartSound("gore/tension", CHAN_BODY);
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.67, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.68, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT IJKL 1 {
+				A_ZoomFactor(1.69, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+				A_FireProjectile("ShakeYourAss");
+			}
+			PBFT MNOP 1 {
+				A_ZoomFactor(1.70, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT QRST 1 {
+				A_ZoomFactor(1.71, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			TNT1 A 0 A_StartSound("NeckSnap", CHAN_AUTO);
+			PBFT UVWXY 1 {
+				A_ZoomFactor(1.72, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT Z 1 {
+				A_FireProjectile("ShakeYourAss");
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+				A_StopSound(CHAN_BODY);
+				A_StartSound("misc/gibbed", CHAN_AUTO);
+			}
+			PBF1 A 1 {
+				A_SetPitch(pitch+6);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll+10);
+			}
+			PBF1 BCD 1 {
+				A_SetPitch(pitch+3);
+				A_SetAngle(angle-2);
+				A_SetRoll(roll+8);
+			}
+			TNT1 A 0 A_ZoomFactor(1.2);
+			TNT1 AA 1 A_SetPitch(pitch+1);
+			TNT1 AA 1;
+			TNT1 AAAAA 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-9);
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1
+			{
+			A_SetAngle(angle+2.4);
+			A_SetPitch(Pitch-2.4);
+			}
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Unwilling5:
+		    TNT1 A 0 A_SpawnItemEx("PB_Unwilling_Execution_5", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(1.4, ZOOM_INSTANT);
+				A_StartSound("KNIFSWNG", CHAN_AUTO);
+			}
+			MC3S ABCDEF 1 A_SetPitch(pitch+1);
+				
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+			MC3S GHIJ 1 A_SetPitch(pitch+2);
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle-0.9);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.9);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+	      Execution_Hunger:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Hunger_Execution_1", 8, 2,-20,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(35);
+				A_ZoomFactor(2.6,ZOOM_INSTANT);
+				A_StartSound("player/cyborg/fist", CHAN_AUTO);
+				A_Overlay(9,"Execution_Imp3_Overlay1");
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_FireProjectile("ShakeYourAss");
+			 }
+			SLDK ABCDE 1 {
+				A_SetPitch(pitch+6);
+				ThrustThingZ(0,25, 1,0);
+				A_SetRoll(roll-4);
+			}
+			SLDK FGHI 1 { 	
+				A_SetRoll(roll+5);
+				A_SetPitch(pitch+9);
+			}
+			SLDK O 1 {
+				A_ZoomFactor(2.5,ZOOM_INSTANT);
+				A_StartSound("NECK_BRK", CHAN_AUTO );
+				A_StartSound("BODYF", CHAN_AUTO );
+				A_FireProjectile("ShakeYourAss");
+			}
+			SLDK P 1 {
+				A_SetPitch(pitch-3);
+				A_ZoomFactor(2.25, ZOOM_INSTANT);
+			}
+			SLDK Q 1 {
+				A_SetPitch(pitch-3);
+			}
+			SLDK R 1 {
+				A_SetPitch(pitch-4);
+				A_ZoomFactor(2.10, ZOOM_INSTANT);
+			}
+			SLDK S 1 {
+				A_SetPitch(pitch-4);
+			}
+			SLDK T 1 {
+				A_SetPitch(pitch-5);
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+			}
+			SLDK U 1 {
+				A_SetPitch(pitch-5);
+				A_ZoomFactor(1.6, ZOOM_INSTANT);
+			}
+			TNT1 A 0 Offset(0,32);
+			TNT1 A 1 {
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_ZoomFactor(1.86);
+			}
+			PUNS JIH 1;
+			TNT1 A 0 A_StartSound("weapons/fistwhoosh", CHAN_AUTO);
+			P1NN ABC 1 {
+				A_SetAngle(angle+3);
+				A_SetPitch(pitch-2);
+			}
+			TNT1 A 0 A_StartSound("execution/impact", CHAN_AUTO);
+			P2NN DE 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch+4);
+			}
+			TNT1 AAAA 1 {
+				A_SetAngle(angle-1);
+				A_SetPitch(pitch-3);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			P2NK ABCD 1 {
+				A_SetAngle(angle-1);
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+			}
+			P2NK EF 1 {
+				A_SetAngle(angle+4);
+				A_SetPitch(pitch+6);
+				A_SetRoll(roll-1);
+			}
+			TNT1 A 0 A_StartSound("execution/impact", CHAN_AUTO);
+			P2NK GHIJ 1 {
+				A_SetAngle(angle-3);
+				A_SetPitch(pitch+3);
+				A_SetRoll(roll+4);
+			}
+			P2NK KLMNO 1 {
+				A_SetAngle(angle-3);
+				A_SetPitch(pitch+2);
+				A_SetRoll(roll+2);
+			}
+			P2NK P 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.7, ZOOM_INSTANT);
+			}
+			P2NK Q 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.6, ZOOM_INSTANT);
+			}
+			P2NK R 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.5, ZOOM_INSTANT);
+			}
+			P2NK S 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.4, ZOOM_INSTANT);
+			}
+			TNT1 A 0 {
+				A_Overlay(9,"Execution_Imp3_Overlay2");
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+			}
+			TNT1 A 0 {
+				A_SetPitch(pitch-3);
+				A_StartSound("KICK", CHAN_AUTO);
+			}
+			KIC1 A 1 {
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-1);
+				A_Zoomfactor(1.35, ZOOM_INSTANT);
+			}
+			KIC1 B 1 {
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-1);
+				A_Zoomfactor(1.3, ZOOM_INSTANT);
+			}
+			KIC1 C 1 {
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+				A_Zoomfactor(1.25, ZOOM_INSTANT);
+			}
+			KIC1 D 1 {
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+				A_Zoomfactor(1.2, ZOOM_INSTANT);
+			}
+			KIC1 EE 1 A_Zoomfactor(1.1, ZOOM_INSTANT);
+			KIC1 E 1 {
+				A_SetPitch(pitch+5);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-3);
+				A_ZoomFactor(1.8);
+			}
+			KIC1 FG 1 {
+				A_SetPitch(pitch+5);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-3);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_SpawnItemEx("BigBloodSpot", 15, 0, 25);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+			}
+			KIC1 HHHHHHHH 1;
+			TNT1 A 0 A_Zoomfactor(1.2);
+			KIC1 HIJKL 1 {
+				A_SetPitch(pitch-1);
+				A_SetRoll(roll+1);
+			}
+			TNT1 AAAAAAAA 1 A_SetPitch(pitch-10, SPF_INTERPOLATE);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Hunger2:
+		    TNT1 A 0 A_SpawnItemEx("PB_Hunger_Execution_2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-4.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}	
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-32);
+				A_SetAngle(angle-1.0);
+				A_SetPitch(pitch+4.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-0.04);
+				A_SetPitch(pitch+0.05);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.09);
+				A_SetPitch(pitch-0.12);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}	
+			PINP ABCDDD 1 {
+			A_SetRoll(roll+2);
+			}
+			P1NP EE 1 {
+			A_SetRoll(roll-2);
+			}
+			P1NP FGHH 1 {
+			A_SetRoll(roll-2);
+			}
+		    P1NP IJ 1;
+		    P1NP KLM 1;
+		    TNT1 A 0 A_SetRoll(0)  ;   
+		    TNT1 A 0 {
+		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+		    }
+		    TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Hunger3:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Hunger_Execution_3", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.35);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			THRF ABCDEF 1 {
+				A_SetRoll(roll-6);
+				A_Setpitch(pitch+2);
+				A_SetAngle(angle+4);
+			}
+			TNT1 A 6 {
+				A_SetRoll(roll+36,SPF_INTERPOLATE);
+				A_SetAngle(angle-24);
+			}
+			TNT1 AA 2 A_Recoil(-2);
+			TNT1 A 0 A_Stop;
+			TNT1 A 0 {
+				A_Overlay(-9,"Execution_Zombieman3_Overlay1");
+				A_OverlayFlags(-9,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", CHAN_AUTO );
+				A_ZoomFactor(1.85, ZOOM_INSTANT);
+			}
+			P5NA ABCDEFG 1 {
+				A_SetRoll(roll+10);
+				A_SetAngle(angle-1);
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(2.2, ZOOM_INSTANT);
+				A_FireProjectile("ShakeYourAss");
+				A_SetPitch(pitch-2);
+			}
+			P5NA HH 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+3);
+			}
+			TNT1 A 0 A_ZoomFactor(1.48);
+			P5NA HIJKLMN 1 A_SetRoll(roll-10);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Hunger4:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_Hunger_Execution_4", 38, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.1);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			PBFT A 1 {
+				A_ZoomFactor(1.25, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-5);
+			}
+			PBFT B 1 {
+				A_ZoomFactor(1.35, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT C 1 {
+				A_ZoomFactor(1.45, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT D 1 {
+				A_ZoomFactor(1.55, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-5);
+			}
+			PBFT E 1 {
+				A_ZoomFactor(1.65, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll-5);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_StartSound("NECK_BRK", CHAN_AUTO);
+				A_StartSound("EYEPULL", CHAN_AUTO);
+			}
+			TNT1 A 0 A_StartSound("gore/tension", CHAN_BODY);
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.67, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.68, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT IJKL 1 {
+				A_ZoomFactor(1.69, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+				A_FireProjectile("ShakeYourAss");
+			}
+			PBFT MNOP 1 {
+				A_ZoomFactor(1.70, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT QRST 1 {
+				A_ZoomFactor(1.71, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			TNT1 A 0 A_StartSound("NeckSnap", CHAN_AUTO);
+			PBFT UVWXY 1 {
+				A_ZoomFactor(1.72, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT Z 1 {
+				A_FireProjectile("ShakeYourAss");
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+				A_StopSound(CHAN_BODY);
+				A_StartSound("misc/gibbed", CHAN_AUTO);
+			}
+			PBF1 A 1 {
+				A_SetPitch(pitch+6);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll+10);
+			}
+			PBF1 BCD 1 {
+				A_SetPitch(pitch+3);
+				A_SetAngle(angle-2);
+				A_SetRoll(roll+8);
+			}
+			TNT1 A 0 A_ZoomFactor(1.2);
+			TNT1 AA 1 A_SetPitch(pitch+1);
+			TNT1 AA 1;
+			TNT1 AAAAA 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-9);
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1
+			{
+			A_SetAngle(angle+2.4);
+			A_SetPitch(Pitch-2.4);
+			}
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Hunger5:
+		    TNT1 A 0 A_SpawnItemEx("PB_Hunger_Execution_5", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(1.4, ZOOM_INSTANT);
+				A_StartSound("KNIFSWNG", CHAN_AUTO);
+			}
+			MC3S ABCDEF 1 A_SetPitch(pitch+1);
+				
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+			MC3S GHIJ 1 A_SetPitch(pitch+2);
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle-0.9);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.9);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_CyberFodder:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_CyberF_Execution_1", 8, 4,-20,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(35);
+				A_ZoomFactor(2.6,ZOOM_INSTANT);
+				A_StartSound("player/cyborg/fist", CHAN_AUTO);
+				A_Overlay(9,"Execution_Imp3_Overlay1");
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_FireProjectile("ShakeYourAss");
+			 }
+			SLDK ABCDE 1 {
+				A_SetPitch(pitch+6);
+				ThrustThingZ(0,25, 1,0);
+				A_SetRoll(roll-4);
+			}
+			SLDK FGHI 1 { 
+				A_SetRoll(roll+5);
+				A_SetPitch(pitch+9);
+			}
+			SLDK O 1 {
+				A_ZoomFactor(2.5,ZOOM_INSTANT);
+				A_StartSound("NECK_BRK", CHAN_AUTO );
+				A_StartSound("BODYF", CHAN_AUTO );
+				A_FireProjectile("ShakeYourAss");
+			}
+			SLDK P 1 {
+				A_SetPitch(pitch-3);
+				A_ZoomFactor(2.25, ZOOM_INSTANT);
+			}
+			SLDK Q 1 {
+				A_SetPitch(pitch-3);
+			}
+			SLDK R 1 {
+				A_SetPitch(pitch-4);
+				A_ZoomFactor(2.10, ZOOM_INSTANT);
+			}
+			SLDK S 1 {
+				A_SetPitch(pitch-4);
+			}
+			SLDK T 1 {
+				A_SetPitch(pitch-5);
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+			}
+			SLDK U 1 {
+				A_SetPitch(pitch-5);
+				A_ZoomFactor(1.6, ZOOM_INSTANT);
+			}
+			TNT1 A 0 Offset(0,32);
+			TNT1 A 1 {
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+				A_ZoomFactor(1.86);
+			}
+			PUNS JIH 1;
+			TNT1 A 0 A_StartSound("weapons/fistwhoosh", CHAN_AUTO);
+			P1NN ABC 1 {
+				A_SetAngle(angle+3);
+				A_SetPitch(pitch-2);
+			}
+			TNT1 A 0 A_StartSound("execution/impact", CHAN_AUTO);
+			P2NN DE 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch+4);
+			}
+			TNT1 AAAA 1 {
+				A_SetAngle(angle-1);
+				A_SetPitch(pitch-3);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			P2NK ABCD 1 {
+				A_SetAngle(angle-1);
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-2);
+			}
+			P2NK EF 1 {
+				A_SetAngle(angle+4);
+				A_SetPitch(pitch+6);
+				A_SetRoll(roll-1);
+			}
+			TNT1 A 0 A_StartSound("execution/impact", CHAN_AUTO);
+			P2NK GHIJ 1 {
+				A_SetAngle(angle-3);
+				A_SetPitch(pitch+3);
+				A_SetRoll(roll+4);
+			}
+			P2NK KLMNO 1 {
+				A_SetAngle(angle-3);
+				A_SetPitch(pitch+2);
+				A_SetRoll(roll+2);
+			}
+			P2NK P 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.7, ZOOM_INSTANT);
+			}
+			P2NK Q 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.6, ZOOM_INSTANT);
+			}
+			P2NK R 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.5, ZOOM_INSTANT);
+			}
+			P2NK S 1 {
+				A_SetAngle(angle+2);
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-9);
+				A_Zoomfactor(1.4, ZOOM_INSTANT);
+			}
+			TNT1 A 0 {
+				A_Overlay(9,"Execution_Imp3_Overlay2");
+				A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+			}
+			TNT1 A 0 {
+				A_SetPitch(pitch-3);
+				A_StartSound("KICK", CHAN_AUTO);
+			}
+			KIC1 A 1 {
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-2);
+				A_Zoomfactor(1.35, ZOOM_INSTANT);
+			}
+			KIC1 B 1 {
+				A_SetPitch(pitch-2);
+				A_SetRoll(roll-2);
+				A_Zoomfactor(1.3, ZOOM_INSTANT);
+			}
+			KIC1 C 1 {
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-3);
+				A_Zoomfactor(1.25, ZOOM_INSTANT);
+			}
+			KIC1 D 1 {
+				A_SetPitch(pitch-4);
+				A_SetRoll(roll-3);
+				A_Zoomfactor(1.2, ZOOM_INSTANT);
+			}
+			KIC1 EE 1 A_Zoomfactor(1.1, ZOOM_INSTANT);
+			KIC1 E 1 {
+				A_SetPitch(pitch+5);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-4);
+				A_ZoomFactor(1.8);
+			}
+			KIC1 FG 1 {
+				A_SetPitch(pitch+5);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-4);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_SpawnItemEx("BigBloodSpot", 15, 0, 25);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+			}
+			KIC1 HHHHHHHH 1;
+			TNT1 A 0 A_Zoomfactor(1.2);
+			KIC1 HIJKL 1 {
+				A_SetPitch(pitch-1);
+				A_SetRoll(roll+1);
+			}
+			TNT1 AAAAAAAA 1 A_SetPitch(pitch-10, SPF_INTERPOLATE);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_CyberFodder2:
+		    TNT1 A 0 A_SpawnItemEx("PB_CyberF_Execution_2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-4.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}	
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-32);
+				A_SetAngle(angle-1.0);
+				A_SetPitch(pitch+4.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-0.04);
+				A_SetPitch(pitch+0.05);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.09);
+				A_SetPitch(pitch-0.12);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}	
+			PINP ABCDDD 1 {
+			A_SetRoll(roll+2);
+			}
+			P1NP EE 1 {
+			A_SetRoll(roll-2);
+			}
+			P1NP FGHH 1 {
+			A_SetRoll(roll-2);
+			}
+		    P1NP IJ 1;
+		    P1NP KLM 1;
+		    TNT1 A 0 A_SetRoll(0)  ;   
+		    TNT1 A 0 {
+		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+		    }
+		    TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_CyberFodder3:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_CyberF_Execution_3", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.35);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			THRF ABCDEF 1 {
+				A_SetRoll(roll-6);
+				A_Setpitch(pitch+2);
+				A_SetAngle(angle+4);
+			}
+			TNT1 A 6 {
+				A_SetRoll(roll+36,SPF_INTERPOLATE);
+				A_SetAngle(angle-24);
+			}
+			TNT1 AA 2 A_Recoil(-2);
+			TNT1 A 0 A_Stop;
+			TNT1 A 0 {
+				A_Overlay(-9,"Execution_Zombieman3_Overlay1");
+				A_OverlayFlags(-9,PSPF_PLAYERTRANSLATED, true);
+				A_StartSound("KICK", CHAN_AUTO );
+				A_ZoomFactor(1.85, ZOOM_INSTANT);
+			}
+			P5NA ABCDEFG 1 {
+				A_SetRoll(roll+10);
+				A_SetAngle(angle-1);
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(2.2, ZOOM_INSTANT);
+				A_FireProjectile("ShakeYourAss");
+				A_SetPitch(pitch-2);
+			}
+			P5NA HH 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+3);
+			}
+			TNT1 A 0 A_ZoomFactor(1.48);
+			P5NA HIJKLMN 1 A_SetRoll(roll-10);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_CyberFodder4:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_CyberF_Execution_4", 38, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.1);
+			}
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			PBFT A 1 {
+				A_ZoomFactor(1.25, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-5);
+			}
+			PBFT B 1 {
+				A_ZoomFactor(1.35, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT C 1 {
+				A_ZoomFactor(1.45, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+2);
+				A_SetRoll(roll-5);
+			}
+			PBFT D 1 {
+				A_ZoomFactor(1.55, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+3);
+				A_SetRoll(roll-5);
+			}
+			PBFT E 1 {
+				A_ZoomFactor(1.65, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll-5);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_StartSound("NECK_BRK", CHAN_AUTO);
+				A_StartSound("EYEPULL", CHAN_AUTO);
+			}
+			TNT1 A 0 A_StartSound("gore/tension", CHAN_BODY);
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.67, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.68, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT IJKL 1 {
+				A_ZoomFactor(1.69, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+				A_FireProjectile("ShakeYourAss");
+			}
+			PBFT MNOP 1 {
+				A_ZoomFactor(1.70, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT QRST 1 {
+				A_ZoomFactor(1.71, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			TNT1 A 0 A_StartSound("NeckSnap", CHAN_AUTO);
+			PBFT UVWXY 1 {
+				A_ZoomFactor(1.72, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT Z 1 {
+				A_FireProjectile("ShakeYourAss");
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+				A_StopSound(CHAN_BODY);
+				A_StartSound("misc/gibbed", CHAN_AUTO);
+			}
+			PBF1 A 1 {
+				A_SetPitch(pitch+6);
+				A_SetAngle(angle-8);
+				A_SetRoll(roll+10);
+			}
+			PBF1 BCD 1 {
+				A_SetPitch(pitch+3);
+				A_SetAngle(angle-2);
+				A_SetRoll(roll+8);
+			}
+			TNT1 A 0 A_ZoomFactor(1.2);
+			TNT1 AA 1 A_SetPitch(pitch+1);
+			TNT1 AA 1;
+			TNT1 AAAAA 1 {
+				A_SetPitch(pitch-4);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-9);
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1
+			{
+			A_SetAngle(angle+2.4);
+			A_SetPitch(Pitch-2.4);
+			}
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_CyberFodder5:
+		    TNT1 A 0 A_SpawnItemEx("PB_CyberF_Execution_5", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 {
+				A_ZoomFactor(1.4, ZOOM_INSTANT);
+				A_StartSound("KNIFSWNG", CHAN_AUTO);
+			}
+			MC3S ABCDEF 1 A_SetPitch(pitch+1);
+				
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+			MC3S GHIJ 1 A_SetPitch(pitch+2);
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle-0.9);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.9);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+	      Execution_helemental:
+			TNT1 A 0  {
+				A_SpawnItemEx("PB_helemental_Execution", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				} 
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}	
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-32);
+				A_SetAngle(angle-1.0);
+				A_SetPitch(pitch+4.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-0.04);
+				A_SetPitch(pitch+0.05);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.09);
+				A_SetPitch(pitch-0.12);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}	
+		    TNT1 A 0 ;
+			00HK AABBCCC 2 ;
+			00HK CCCCCC 1 A_FireProjectile("ShakeYourAssDouble");
+			TNT1 A 0 A_FireProjectile("ShakeYourAssDouble");
+			00HK DEFG 1 ;
+			TNT1 A 0 {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				}
+			00HK GGGG 2 ;
+			00HK HHIJKLMNO 2 ;
+			TNT1 A 0 A_FireProjectile("ShakeYourAssQuad");
+			TNT1 AAAAAAAA 1 ;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Darkdisciple1:
+	        TNT1 A 0  {
+				A_SpawnItemEx("PB_DarkDisciple_Execution", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-32);
+				A_SetAngle(angle-1.0);
+				A_SetPitch(pitch+4.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-0.04);
+				A_SetPitch(pitch+0.05);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.09);
+				A_SetPitch(pitch-0.12);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			HNDF ABCDE 1 A_SetRoll(roll+2.0, SPF_INTERPOLATE);
+			HNDF FGHI 1 {
+				A_SetRoll(roll+2.0, SPF_INTERPOLATE);
+				}
+			TNT1 A 0 A_StartSound("OPNGRN",0);
+			HNDF JKLMNOPQR 1 {
+				A_SetRoll(roll+2.0, SPF_INTERPOLATE);
+				}
+		    00HK PQRSTUVW 1 ;
+			TNT1 A 0 {
+			A_SetRoll(0, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Darkdisciple2:
+	        TNT1 A 0  {
+				A_SpawnItemEx("PB_DarkDisciple_Execution2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}	
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			PINP ABCDDD 1 {
+			A_SetRoll(roll+2);
+			}
+			P1NP EE 1 {
+			A_SetRoll(roll-2);
+			}
+			P1NP FGHH 1 {
+			A_SetRoll(roll-2);
+			}
+		    P1NP IJ 1;
+		    P1NP KLM 1;
+		    TNT1 A 0 A_SetRoll(0)  ;   
+		    TNT1 A 0 {
+		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+		    }
+			TNT1 A 0  {
+			A_Overlay(9,"Execution_Darkdisciple_Overlay1");
+			A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+			}
+	        TNT1 ABCDEFGHIJKLMNOPQRSTU 1;
+			TNT1 UVWXYZ 1;
+			TNT1 A 0 A_StartSound("plspnch3");
+			TNT1 A 0 A_FireProjectile("ShakeYourAssDouble");
+			KIC5 ABCDERFGHIJK 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+	      Execution_Darkdisciple_Overlay1:
+	        TNT1 A 0 A_StartSound("sawswing", 6, 0);
+			C7S1 ABCDEFGHIJklMNOPQRSTU 1;
+			TNT1 A 0 A_StartSound("Machete/Yum");
+			C7S4 UVWXYZ 1;
+			CSK4 EDCBAAAAAAAABCDE 1;
+			Stop;
+			
+		  Execution_PyroDemon1:
+	        TNT1 A 0  {
+				A_SpawnItemEx("PB_PyroDemon_Execution", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-32);
+				A_SetAngle(angle-1.0);
+				A_SetPitch(pitch+4.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-0.04);
+				A_SetPitch(pitch+0.05);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.09);
+				A_SetPitch(pitch-0.12);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			HNDF ABCDE 1 A_SetRoll(roll+2.0, SPF_INTERPOLATE);
+			HNDF FGHI 1 {
+				A_SetRoll(roll+2.0, SPF_INTERPOLATE);
+				}
+			TNT1 A 0 A_StartSound("OPNGRN",0);
+			HNDF JKLMNOPQR 1 {
+				A_SetRoll(roll+2.0, SPF_INTERPOLATE);
+				}
+		    00HK PQRSTUVW 1 ;
+			TNT1 A 0 {
+			A_SetRoll(0, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_PyroDemon2:
+	        TNT1 A 0  {
+				A_SpawnItemEx("PB_PyroDemon_Execution2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				}
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}	
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			PINP ABCDDD 1 {
+			A_SetRoll(roll+2);
+			}
+			P1NP EE 1 {
+			A_SetRoll(roll-2);
+			}
+			P1NP FGHH 1 {
+			A_SetRoll(roll-2);
+			}
+		    P1NP IJ 1;
+		    P1NP KLM 1;
+		    TNT1 A 0 A_SetRoll(0)  ;   
+		    TNT1 A 0 {
+		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+		    }
+			TNT1 A 0  {
+			A_Overlay(9,"Execution_Darkdisciple_Overlay1");
+			A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
+			}
+	        TNT1 ABCDEFGHIJKLMNOPQRSTU 1;
+			TNT1 UVWXYZ 1;
+			TNT1 A 0 A_StartSound("plspnch3");
+			TNT1 A 0 A_FireProjectile("ShakeYourAssDouble");
+			KIC5 ABCDERFGHIJK 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Terminator:
+		    TNT1 A 0 A_SpawnItemEx("PB_Terminator_Execution", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}	
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NO ABCD 1 {
+				A_SetRoll(roll+4);
+				A_SetAngle(angle+0.5);
+				A_SetPitch(pitch-2.0);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P2NO EF 1 {
+				A_SetRoll(roll-32);
+				A_SetAngle(angle-1.0);
+				A_SetPitch(pitch+4.0);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("gore/heavyimpact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NO GHIJKLMN 1 {
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-0.04);
+				A_SetPitch(pitch+0.05);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			P2NO OPQ 1 {
+				A_SetRoll(0, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.09);
+				A_SetPitch(pitch-0.12);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NO");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NO");}
+			}
+			TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				}
+			01HK ABCD 2 A_SetPitch(pitch-8);
+			01HK DD 2;
+			01HK DDD 2;
+			TNT1 A 0 A_StartSound("KNUCKLED", CHAN_AUTO);
+			TNT1 A 0 A_FireProjectile("ShakeYourAssDouble");
+			00HK XXX 2;
+			00HK YZ 2;
+			TNT1 AAAAAAAA 1 A_SetPitch(pitch+10, SPF_INTERPOLATE);
+			TNT1 A 0  {
+			A_ZoomFactor(1.2);
+			A_SetPitch(pitch+8);
+			A_ZoomFactor(1.2);
+			     }
+			KIC5 ABCDERFGHIJK 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+			
+		  Execution_Terminator2:
+		    TNT1 A 0 A_SpawnItemEx("PB_Terminator_Execution2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.5);
+				}  
+			TNT1 AAAAA 0 A_SetPitch(pitch-3, SPF_INTERPOLATE);
+			01HK EFGHI 2 ;
+			01HK JKL 2;
+			01HK LLL 3;
+			01HK MMNN 2;
+			01HK OOPPQQRSSTU 2;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+		Execution_Behemoth:
+	        TNT1 A 0  { 
+				A_SpawnItemEx("PB_Behemoth_Execution", 56, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				}  
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			TNT1 AAAAA 1 {
+				A_SetPitch(pitch-1.9, SPF_INTERPOLATE);
+				A_SetRoll(roll+2, SPF_INTERPOLATE);
+				A_SetAngle(angle-6.4, SPF_INTERPOLATE);
+			}
+			003S ABCDEF 1 {
+				A_SetPitch(pitch+0.2, SPF_INTERPOLATE);
+				A_SetRoll(roll+0.2, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.3, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 {
+			A_FireProjectile("ShakeYourAss");
+			A_StartSound("player/cyborg/fist", CHAN_AUTO);
+			}
+			003S GHIJ 1 {
+				A_SetPitch(pitch+0.2, SPF_INTERPOLATE);
+				A_SetRoll(roll+0.2, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.3, SPF_INTERPOLATE);
+			}
+			TNT1 a 0 a_SetAngle(Angle-8.4,SPF_INTERPOLATE);
+			TNT1 A 0 A_SetRoll(0, SPF_INTERPOLATE);
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			TNT1 a 0 a_SetAngle(Angle-8.4,SPF_INTERPOLATE);
+			TNT1 AAAAA 1 {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_SetRoll(roll+2, SPF_INTERPOLATE);
+			}
+			TNT1 a 0 a_SetAngle(Angle-8.4,SPF_INTERPOLATE);
+			003S ABCDEF 1 {
+				A_SetPitch(pitch+0.2, SPF_INTERPOLATE);
+				A_SetRoll(roll+0.2, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.3, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 {
+			A_FireProjectile("ShakeYourAss");
+			A_StartSound("player/cyborg/fist", CHAN_AUTO);
+			}
+			003S GHIJ 1 {
+				A_SetPitch(pitch+0.2, SPF_INTERPOLATE);
+				A_SetRoll(roll+0.2, SPF_INTERPOLATE);
+				A_SetAngle(angle+0.3, SPF_INTERPOLATE);
+			}
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaA 0 A_SetPitch(0, SPF_INTERPOLATE);
+			
+			TNT1 AAAAAAAAAAAAAAA 1 a_SetAngle(Angle+3.11,SPF_INTERPOLATE);
+			TNT1 AA 5;
+			
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			013S ABCD 1 {
+				A_SetPitch(Pitch-15, SPF_INTERPOLATE);
+				A_ZoomFactor(1.3, ZOOM_INSTANT);
+				a_SetAngle(Angle+0.6,SPF_INTERPOLATE);
+				}
+            013S E 2 A_ZoomFactor(1.41, ZOOM_INSTANT);
+			013S F 2 A_ZoomFactor(1.43, ZOOM_INSTANT);
+			013S G 2 A_ZoomFactor(1.46, ZOOM_INSTANT);
+			013S H 2 A_ZoomFactor(1.49, ZOOM_INSTANT);
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			013S IJK 1 A_ZoomFactor(1.5, ZOOM_INSTANT);
+			TNT1 A 0 A_StartSound("gore/tension", CHAN_AUTO);
+			013S L 1 A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+			013S L 1 A_ZoomFactor(1.68, ZOOM_INSTANT);
+			013S L 1 A_ZoomFactor(1.64, ZOOM_INSTANT);
+			013S L 1 A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+			013S L 1 A_ZoomFactor(1.60, ZOOM_INSTANT);
+			013S L 1 A_ZoomFactor(1.57, ZOOM_INSTANT);
+			013S L 1 A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+			013S L 1 A_ZoomFactor(1.55, ZOOM_INSTANT);
+			013S L 1 A_ZoomFactor(1.51, ZOOM_INSTANT);
+			013S L 1 A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+			013S L 1 A_ZoomFactor(1.49, ZOOM_INSTANT);
+			013S L 1 A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+			TNT1 A 0 {
+				A_StartSound("gore/break", CHAN_AUTO);
+			}
+			013S MN 1 {A_SetRoll(roll+10);A_SetPitch(Pitch+2);}
+			013S N 0 {
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_SetRoll(0,SPF_INTERPOLATE);
+				}
+			013S N 2 PB_UnsetPlayerExecutionProperties();
+			TNT1 A 0 A_SetInventory("CantWeaponSpecial",0);
+			Goto GoingToReady2;
+
+
+
+		Execution_D3HellGuardian1:
+	        TNT1 A 0  { 
+				A_SpawnItemEx("PB_D3HellGuardian_Execution1", 56, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2, ZOOM_INSTANT);
+				A_StartSound("KNIFUP", CHAN_AUTO);
+			}
+
+//Normal, 12 frames
+	        TNT1 AAAAAA 1  { 
+				A_SetPitch(pitch-6, SPF_INTERPOLATE);
+				A_SetRoll(roll-26, SPF_INTERPOLATE);
+			}
+
+			MC3S ABCDEF 1 {
+				A_SetRoll(roll-26);
+			}
+
+//No head, 13 frames
+
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+			MC3S GHIJ 1 {
+				A_SetRoll(roll-26);
+				A_SetPitch(pitch+1);
+				A_SetAngle(angle-6);
+			}
+
+
+	        TNT1 A 0  { 
+				A_ZoomFactor(1.6, ZOOM_INSTANT);
+			}
+
+			TNT1 AAAAAA 1 {
+				A_SetAngle(angle+8);
+				A_SetRoll(roll+26);
+				A_SetPitch(pitch-3, SPF_INTERPOLATE);
+			}
+
+			TNT1 A 0 A_StartSound("KNIFUP", CHAN_AUTO);
+
+			MC1S ABC 1 {
+				A_SetRoll(roll+26);
+			}
+
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+
+//No right arm, 15 frames
+
+			MC1S DEF 1 {
+				A_SetRoll(roll+26);
+				A_SetAngle(angle+8);
+			}
+
+
+	        TNT1 AAAAAA 1  { 
+				A_SetAngle(angle-8);
+				//A_SetRoll(roll-26, SPF_INTERPOLATE);
+			}
+
+			MC3S ABCDEF 1 {
+				A_SetAngle(angle-8);
+				//A_SetRoll(roll-26, SPF_INTERPOLATE);
+			}
+
+
+//No left arm, 38 frames
+
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+			MC3S GHIJ 1 {
+				//A_SetRoll(roll-26);
+				//A_SetAngle(angle-8);
+			}
+
+	        TNT1 A 0  {
+				A_ZoomFactor(1.0, SPF_INTERPOLATE);
+			}
+
+	        TNT1 AAAAAA 1  {
+				A_SetAngle(angle+4);
+				A_SetRoll(0.0, SPF_INTERPOLATE);
+			}
+
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			TNT1 A 0 A_SetInventory("CantWeaponSpecial",0);
+			Goto GoingToReady2;
+
+
+
+		Execution_D3Maledict1:
+		//await 12
+		"####" AAAAAA 1 ;
+			tttt a 0 A_SpawnItemEx("PB_D3Maledict_Execution1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+
+
+			P1NK ABC 1 {
+				A_SetPitch(pitch-4.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-4.0);
+			}
+
+			TNT1 A 0 {A_ZoomFactor(1.15);}
+
+			P1NK DEE 1 {
+				A_SetPitch(pitch-4.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-4.0);
+			}
+
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			}
+		//pain	12
+
+			P1NK FG 1 {
+
+				A_SetRoll(roll+3);
+				A_SetAngle(angle+4.0);
+			}
+
+			TNT1 AA 1 {A_ZoomFactor(0.8);}
+
+
+
+			TNT1 AAAAAAAA 1 {
+				A_SetAngle(angle+2.0);
+				}
+		//angle is 0 here
+		//back and prepare attack
+
+			TNT1 AAAAAAAA 1 {
+				A_SetAngle(angle+1.0);
+				}
+
+			TNT1 A 0 {A_ZoomFactor(1.6);}
+
+			PKUP ABC 3 {
+			A_SetAngle(Angle+4);
+			A_SetPitch(pitch+12);
+			A_SetRoll(roll-5);
+			}
+		//Grab!
+			PKUP D 16;
+			TNT1 A 0 A_StartSound("NECK_BRK",6);
+			TNT1 A 0 A_SetRoll(roll-5);
+			PKUP DE 4 ;
+			TNT1 A 0 A_StartSound("NECK_BRK",6);
+			TNT1 A 0 A_SetRoll(roll+5);
+			PKUP DE 4 ;
+			TNT1 A 0 A_StartSound("misc/xdeath2",6);
+			TNT1 A 0 A_SetRoll(roll-5);
+			PKUP D 5 ;
+
+		//Prof
+			PKUP CBA 3 {
+			A_ZoomFactor(0.8);
+			A_SetAngle(Angle-1);
+			A_SetPitch(pitch-1);
+			A_SetRoll(roll+5);
+			}
+
+			TNT1 AAAAAAAAA 1
+			{
+			
+			A_SetAngle(Angle-2.0);
+			A_SetPitch(pitch+0.5);
+			A_SetRoll(roll+5);
+			}
+
+
+		//Prof wait
+
+			G000 ABCDEFGHI 2  {
+				A_ZoomFactor(1.8);
+				//A_SetPitch(Pitch+1);
+				//A_SetAngle(angle-1.0);
+				}
+			//Pull!
+			TNT1 A 0 A_StartSound("EYEPULL", 5);
+			//TNT1 A 0 A_SetRoll(roll-5);
+			P2NI FGHIJKLMN 1
+				{
+				A_ZoomFactor(0.7);
+				A_SetAngle(Angle-10);
+				A_SetPitch(Pitch-0.5);
+				}
+
+			TNT1 AAAAAA 1
+			{
+			A_SetAngle(Angle+6);
+			A_SetPitch(pitch-5);
+			A_SetRoll(roll-5);
+			}
+
+			TNT1 AAAAAA 1
+			{
+			A_ZoomFactor(1.5, SPF_INTERPOLATE);
+			A_SetAngle(Angle+6);
+			A_SetPitch(pitch-5);
+			A_SetRoll(roll-5);
+			}
+
+
+
+			TNT1 A 0 A_StartSound("Machete/Yum", CHAN_AUTO);
+			MC3S GHIJ 1 {
+				A_ZoomFactor(1.5);
+				A_SetRoll(roll+26);
+				A_SetPitch(pitch-5);
+				//A_SetAngle(angle-6);
+			}
+
+
+
+			//camera back
+			TNT1 A 0
+				{
+				A_ZoomFactor(1.0, SPF_INTERPOLATE);
+				}		
+			
+			TNT1 AAAAAAAAA 1
+				{
+				A_SetAngle(Angle+2.2);
+				A_SetPitch(Pitch+5);
+				}
+
+
+
+
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+		Goto GoingToReady2;
+
+
+		Execution_Rahovart1:
+		//hands
+			TNT1 a 0 A_SpawnItemEx("PB_Rahovart_Execution1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+			TNT1 A 0;
+			TNT1 A 0 
+				{
+				A_SetAngle(Angle+3);
+				A_SetPitch(Pitch-8);
+				A_StartSound("player/cyborg/fist", CHAN_AUTO);
+				}
+			G000 ABCDEFGHI 2  {
+				A_ZoomFactor(1.3, SPF_INTERPOLATE);
+				A_SetPitch(Pitch+1);
+				}
+			//Pull!
+			TNT1 A 0 A_StartSound("EYEPULL", 5);
+			//TNT1 A 0 A_SetRoll(roll-5);
+			P2NI FGHIJKLMN 1
+				{
+				A_SetAngle(Angle-4);
+				A_SetPitch(Pitch-4);
+				}
+			//camera back
+			TNT1 A 0
+				{
+				A_ZoomFactor(1.0, SPF_INTERPOLATE);
+				}
+			
+			TNT1 AAAAAAAAA 1
+				{
+				A_SetAngle(Angle+4);
+				A_SetPitch(Pitch+4);
+				}
+
+			TNT1 A 1 A_SetAngle(Angle-4);
+
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+
+
+
+		Execution_Rahovart2:
+			TNT1 a 0 A_SpawnItemEx("PB_Rahovart_Execution2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+	        TNT1 A 0  {
+				A_SetPitch(Pitch-3);
+				A_ZoomFactor(2.5, SPF_INTERPOLATE);
+				}
+			P1NA ABCC 1;
+			P2NA CCCC 2 {
+			A_SpawnItemEx("ShakeShakeShake");
+			}
+			TNT1 A 0 A_ZoomFactor(1.0, SPF_INTERPOLATE);
+			P2NA DEFGH 1;
+
+			//tear
+			TNT1 A 0 A_SetPitch(Pitch-4, SPF_INTERPOLATE);
+			TNT1 A 0 A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+			PBFT ABCDE 1 {
+				A_ZoomFactor(1.25, ZOOM_INSTANT);
+				A_SetRoll(roll-5);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss");
+				A_StartSound("NECK_BRK", 5);
+				A_StartSound("EYEPULL", 6);
+			}
+			TNT1 A 0 A_StartSound("gore/tension", CHAN_BODY);
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.67, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			PBFT EFGH 1 {
+				A_ZoomFactor(1.68, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT IJKL 1 {
+				A_ZoomFactor(1.69, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+				A_FireProjectile("ShakeYourAss");
+			}
+			PBFT MNOP 1 {
+				A_ZoomFactor(1.70, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT QRST 1 {
+				A_ZoomFactor(1.71, ZOOM_INSTANT);
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			TNT1 A 0 A_StartSound("NeckSnap", CHAN_AUTO);
+			PBFT UVWXY 1 {
+				A_ZoomFactor(1.72, ZOOM_INSTANT);
+				A_SetPitch(pitch-2);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+			PBFT Z 1 {
+				A_FireProjectile("ShakeYourAss");
+				A_ZoomFactor(1.8, ZOOM_INSTANT);
+				A_StopSound(CHAN_BODY);
+				A_StartSound("misc/gibbed", CHAN_AUTO);
+			}
+			PBF1 A 1 {
+				A_SetPitch(pitch+2);
+				A_SetAngle(angle-1);
+				A_SetRoll(roll+2);
+			}
+			PBF1 BCD 1 {
+				A_SetPitch(pitch+3);
+				A_SetAngle(angle+1);
+				A_SetRoll(roll-2);
+			}
+
+			TNT1 A 0 A_SetPitch(pitch-31, SPF_INTERPOLATE);
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+		Goto GoingToReady2;
+
+
+	      Execution_OverLord:
+	        TNT1 A 0  {
+				A_SpawnItemEx("PB_OverLord_Execution", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SetPitch(0, SPF_INTERPOLATE);
+				A_ZoomFactor(1.2);
+				}  
+			02HK ABCDEFFF 2;
+			TNT1 A 0 A_FireProjectile("ShakeYourAssDouble");
+			02HK GH 2;
+			P1NK ABCDEE 1 {
+				A_SetPitch(pitch+1.0);
+				A_SetRoll(roll-3);
+				A_SetAngle(angle-3.0);
+			}
+			TNT1 A 0 {
+				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				A_ZoomFactor(1.15);
+			}
+			P1NK FG 1 {
+				A_SetPitch(pitch-6.0);
+				A_SetRoll(roll+9);
+				A_SetAngle(angle+12.0);
+			}
+			TNT1 A 0 {
+				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
+				A_StartSound("execution/impact", CHAN_AUTO);
+				A_ZoomFactor(1.0);
+			}
+			P2NK HIJKLMNO 1 {
+				A_SetRoll(roll+8);
+				A_SetAngle(angle+0.2);
+				A_SetPitch(pitch+0.1);
+				
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}		
+			}
+			P2NK PQRS 1 {
+				A_SetRoll(roll-16);
+				A_SetAngle(angle-0.4);
+				A_SetPitch(pitch-0.2);
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			P2NK TU 1 {
+				if(PB_GetExecutionBlueBlood()) {A_SetWeaponSprite("P3NK");}
+				if(PB_GetExecutionGreenBlood()) {A_SetWeaponSprite("P4NK");}
+			}
+			TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
+		    KIC2 ABCDEF 1;
+		    TNT1 A 0 A_StartSound("gore/heavyimpact", CHAN_AUTO);
+		    KIC2 GHIJkL 1;
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady2;
+	}
+}

@@ -45,6 +45,7 @@ Weapon.AmmoUse2 0
 Inventory.PickupSound "CBOXPKUP"
 Inventory.PickupMessage "You got the UAC-320 Heavy Machine Gun! (Slot 4)"
 Weapon.SlotNumber 4
+Weapon.SlotPriority 0.1
 Obituary "%o was became a leaking piece of meat by %k's heavy machine gun"
 AttackSound "none"
 Tag "UAC-320 Heavy Machine Gun"
@@ -226,10 +227,10 @@ Prompt2:
 		TNT1 A 0 A_ZoomFactor(0.95)
 		TNT1 A 0 A_Takeinventory("OldHMGAmmo",1)
 		TNT1 A 0 A_Jump(96, 4)
-        HMAF A 1 BRIGHT A_FireBullets(2.85, 3.1, 1, random(18,20), "MachineGunBulletPuff", 1)
+        HMAF A 1 BRIGHT A_FireBullets(2.85, 3.1, 1, random(20,22), "MachineGunBulletPuff", 1)
         TNT1 A 0 A_FireCustomMissile("WallPenetrationHitscan", random(-3,3), 0, -1, 0, 0, random(-3,3))
         TNT1 A 0 A_Jump(256, 6)
-        HMAF A 1 BRIGHT A_FireBullets(2.85, 3.1, 1, random(18,20), "HMGPuff", 1)
+        HMAF A 1 BRIGHT A_FireBullets(2.85, 3.1, 1, random(20,22), "HMGPuff", 1)
 		TNT1 AAAA 0
 		TNT1 A 0 A_FireCustomMissile("Tracer", random(-2,3), 0, -1, random(-3,3))
 		TNT1 A 0 PB_WeaponRecoil(frandom(-0.36, -0.38), +0.2)
@@ -500,7 +501,8 @@ Prompt2:
 		HMAS C 1 
 		HMAS BA 1 
 		HMAG AAAA 1
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 		
 	NailGunFlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11)
@@ -513,6 +515,7 @@ Prompt2:
 		NLGS C 1 
 		NLGS BA 1 
 		NLGN AAAA 1
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 	}
 }

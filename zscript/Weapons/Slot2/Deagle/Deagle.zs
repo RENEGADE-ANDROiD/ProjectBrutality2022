@@ -1056,10 +1056,12 @@ class PB_Deagle : PB_WeaponBase
 		FlashPunching:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashPunchingDual");
 			D8E0 ABCDEFGGFEDCBA 1 PB_SetSpriteIfUnload("D8E1");
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashPunchingDual:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 ABCDEFGGFEDCBA 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashKicking:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashKickingDual");

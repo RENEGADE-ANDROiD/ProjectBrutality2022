@@ -74,7 +74,7 @@ Actor PB_12GAPellet_ASG : DragonsBreathTracer
 
 Actor PB_12GASlug : DragonsBreathTracer
 {
-    Damage 22
+    Damage 24
     DamageType Bullet
     PoisonDamage 0
     -ADDITIVEPOISONDURATION

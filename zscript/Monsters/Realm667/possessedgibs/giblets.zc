@@ -242,6 +242,7 @@ class PGProjectile : Actor
 		rolldir = randompick(-25,-15,15,25);
 		sprite = GetSpriteIndex(gibsprites[random(0, gibsprites.Size() - 1)]);
 		frame = random(0,7);
+		A_StartSound("PossessedGibs/throw", CHAN_WEAPON, CHANF_OVERLAP);
     }
 	
 	Default

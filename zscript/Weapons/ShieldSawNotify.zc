@@ -1,0 +1,12 @@
+// Clears ShieldSawThrown when the projectile returns the token (map-enter refund uses this flag).
+class ShieldSawNotifyReturned : Inventory
+{
+	Default { Inventory.MaxAmount 1; }
+
+	override void AttachToOwner(Actor other)
+	{
+		Super.AttachToOwner(other);
+		if (other) other.TakeInventory("ShieldSawThrown", 1);
+		Destroy();
+	}
+}

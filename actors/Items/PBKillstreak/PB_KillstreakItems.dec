@@ -10,7 +10,7 @@ actor PB_KSFreeze : PowerupGiver
 	Inventory.MaxAmount 0
 	Powerup.Type Speed
 	Powerup.Duration -3
-	Powerup.Color "FF FF 00", 0.05
+	Powerup.Color "FF FF 00", 0.012
 	Inventory.PickupSound "DEM"
 	States
 	{

@@ -203,6 +203,11 @@ class PB_WeaponTilterInventory : Inventory
 		return false;
 	}
 
+	private bool UsesAuthoredFireOffset(Name weaponClass, Weapon weap, PSprite psp)
+	{
+		return weaponClass == 'PB_NeoHMG' && IsFiringState(weap, psp);
+	}
+
 	private bool IsReloadState(Weapon weap, PSprite psp)
 	{
 		State st;
@@ -228,7 +233,11 @@ class PB_WeaponTilterInventory : Inventory
 	{
 		if (psp && appliedYOffset != 0)
 		{
-			psp.Y -= appliedYOffset;
+			double expectedY = hasNeutralWeaponY ? neutralWeaponY + appliedYOffset : psp.Y;
+			if (!hasNeutralWeaponY || abs(psp.Y - expectedY) <= 2.0)
+			{
+				psp.Y -= appliedYOffset;
+			}
 		}
 		appliedYOffset = 0;
 	}
@@ -290,12 +299,14 @@ class PB_WeaponTilterInventory : Inventory
 		bool moving = owner.Vel.XY.Length() > 0.75;
 		bool reloading = IsReloadState(weap, psp);
 		bool excluded = IsExcludedWeapon(weap);
-		bool nailgunFireSuppressed = (weaponClass == 'PB_Nailgun') && IsFiringState(weap, psp);
+		bool authoredFireOffset = UsesAuthoredFireOffset(weaponClass, weap, psp);
+		bool fireSuppressed = IsFiringState(weap, psp) && weaponClass == 'PB_Nailgun';
 
 		bool allowMotion = !blocked && !excluded;
 		if (cvEnableReadyOnly) { allowMotion = allowMotion && ready; }
 		if (cvEnableMoveOnly) { allowMotion = allowMotion && moving; }
-		if (nailgunFireSuppressed) { allowMotion = false; }
+		if (fireSuppressed) { allowMotion = false; }
+		if (authoredFireOffset) { allowMotion = false; }
 
 		Vector2 strafeDir = (sin(-owner.angle), cos(-owner.angle));
 		double strafeDot = (owner.Vel.X * strafeDir.X) + (owner.Vel.Y * strafeDir.Y);
@@ -324,7 +335,7 @@ class PB_WeaponTilterInventory : Inventory
 			targetLower = min(30.0, baseLower) * cvLoweringScale;
 		}
 		// Wall detection should not depend on movement-only lowering gates.
-		bool allowWallDetect = !blocked && !excluded;
+		bool allowWallDetect = !blocked && !excluded && !fireSuppressed;
 		if (cvEnableReadyOnly) { allowWallDetect = allowWallDetect && ready; }
 		if (cvWallDetect && allowWallDetect && FacingWall(cvWallDistance))
 		{
@@ -367,7 +378,23 @@ class PB_WeaponTilterInventory : Inventory
 		leanRoll += (targetLean - leanRoll) * cvLeanSmoothing;
 		owner.A_SetRoll(leanRoll, SPF_INTERPOLATE);
 
+		if (authoredFireOffset)
+		{
+			psp.Rotation = 0;
+			appliedYOffset = 0;
+			neutralWeaponY = psp.Y;
+			hasNeutralWeaponY = true;
+			return;
+		}
 		psp.Rotation = currentRoll;
+		if (hasNeutralWeaponY && appliedYOffset != 0)
+		{
+			double expectedY = neutralWeaponY + appliedYOffset;
+			if (abs(psp.Y - expectedY) > 2.0 && abs(psp.Y - neutralWeaponY) < abs(psp.Y - expectedY))
+			{
+				appliedYOffset = 0;
+			}
+		}
 		double baseY = psp.Y - appliedYOffset;
 		if (!hasNeutralWeaponY)
 		{

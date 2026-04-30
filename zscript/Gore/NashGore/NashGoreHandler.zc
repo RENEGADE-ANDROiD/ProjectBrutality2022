@@ -50,7 +50,7 @@ class NashGoreHandler : EventHandler
 		if (!e) return;
 		int pn = e.PlayerNumber;
 		if (pn < 0 || pn >= MAXPLAYERS || !playeringame[pn]) return;
-		PlayerPawn plr = players[pn].mo;
+		PlayerPawn plr = PlayerPawn(players[pn].mo);
 		if (!plr) return;
 		if (!plr.CountInv("NashGoreActor"))
 		{
@@ -63,7 +63,7 @@ class NashGoreHandler : EventHandler
 		if (!e) return;
 		int pn = e.PlayerNumber;
 		if (pn < 0 || pn >= MAXPLAYERS || !playeringame[pn]) return;
-		PlayerPawn plr = players[pn].mo;
+		PlayerPawn plr = PlayerPawn(players[pn].mo);
 		if (!plr) return;
 		DoThingRevive(plr);
 	}
@@ -259,6 +259,7 @@ class NashGoreHandler : EventHandler
 		for (int i = 0; i < bloodTypes.Size(); i++)
 		{
 			// delete that weird character that gets added at the end
+			if (bloodTypes[i].Length() <= 0) continue;
 			bloodTypes[i].Truncate(bloodTypes[i].Length() - 1);
 
 			/*
@@ -278,6 +279,7 @@ class NashGoreHandler : EventHandler
 
 	void DoThingDie(Actor mo)
 	{
+		if (!mo) return;
 		bool isMonster = mo.bIsMonster;
 		bool isPlayer = (mo is "PlayerPawn");
 
@@ -294,6 +296,7 @@ class NashGoreHandler : EventHandler
 
 	void DoThingRevive(Actor mo)
 	{
+		if (!mo) return;
 		let a = NashGoreActor(mo.FindInventory("NashGoreActor", true));
 		if (a)
 		{

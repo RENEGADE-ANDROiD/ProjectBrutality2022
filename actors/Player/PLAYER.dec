@@ -779,7 +779,7 @@ ACTOR Doomer : PlayerPawnBase Replaces DoomPlayer
 	
 	//WEAPON SLOTS FOR THIS PLAYER CLASS
 	
-	Player.WeaponSlot 1, PB_Axe, PB_Chainsaw, Melee_Attacks, PB_BeamKatana, PB_ArgentSith, VorpalBlade, TheShieldSaw
+	Player.WeaponSlot 1, PB_Axe, PB_Chainsaw, Melee_Attacks, PB_BeamKatana, PB_ArgentSith, VorpalBlade
 	Player.WeaponSlot 2, PB_Pistol, PB_Revolver, PB_MP40, PB_SMG, RiotShield, HellPistoler, PB_Deagle
 	Player.WeaponSlot 3, PB_Shotgun, PB_AutoShotgun, PB_SSG, PB_CSSG, HASG, X12Shotgun, PB_QuadSG, MarauderSSG
 	Player.WeaponSlot 4, Rifle, PB_Carbine, ChexRifle, PB_XM21, PB_LMG, PB_MetalSniper, OldHMG, LeverAction, ProSurv_Ballista, PB_M41A, BDPBattleRifle

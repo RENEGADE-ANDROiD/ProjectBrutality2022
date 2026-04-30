@@ -148,7 +148,7 @@ ACTOR DoubleSphere : PowerupGiver
 	Powerup.Type "PowerDoubleDamage"
 	Powerup.Duration -30
 	Translation "0:255=%[0,0,0]:[1,0,1]"
-	Powerup.Color 255, 0, 255, 0.150
+	Powerup.Color 255, 0, 255, 0.042
 	Inventory.PickupSound "items/sphere6"
   Inventory.PickupMessage "You got the Doom sphere. Your arsenal craves blood..."
 	States
@@ -178,7 +178,7 @@ actor HasteSphere : PowerupGiver
 	inventory.pickupmessage "You got the Haste Sphere. Your body trembles with energy..."
 	inventory.maxamount 0
 	powerup.duration -30
-	powerup.color "FF FF 00", 0.1
+	powerup.color "FF FF 00", 0.03
 	powerup.type Speed
 	-COUNTITEM
 	+FloatBob
@@ -265,7 +265,7 @@ Actor TimeSphere : PowerupGiver
 	+Inventory.AlwaysPickup
 	Inventory.MaxAmount 0
 	Inventory.PickupSound "items/sphere8"
-	Powerup.Type TimeFreezer
+	Powerup.Type "PB_PowerTimeSlow"
 	Powerup.Color GoldMap
 	Powerup.Duration -10
 	States

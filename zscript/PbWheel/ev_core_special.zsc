@@ -5,7 +5,7 @@ Class PB_SpecialWheelHandler : EventHandler
 	array<string> useTheseSpecials;
 	array<string> avoidTheseSpecials;
 	
-	array<bool > wheelShow;
+	array<int > wheelShow;
 	int wheelIt;
 	int currentSelection;
 	int oldSelection;
@@ -427,6 +427,18 @@ Class PB_SpecialWheelHandler : EventHandler
 	{
 		if (!e) return;
 		currentSelection = 1;
+		oldSelection = 0;
+		wheelIsOpen = false;
+		wheelSort = false;
+		noWheel = false;
+		wheelShow.Clear();
+		actualList.Clear();
+		fakeMouse = realMouse = (0, 0);
+		alphaFade = 0;
+		musicFade = 0;
+		oldPTics.Clear();
+		oldPUTics.Clear();
+		Level.setFrozen(false);
 		if (playeringame[consoleplayer])
 		{
 			let cv = CVar.GetCVar("py_weaponwheel_musicfade", players[consoleplayer]);
@@ -1132,6 +1144,41 @@ Class PB_SpecialWheelHandler : EventHandler
 				specialWheel_handleMouse();
 	}
 
+	void specialWheel_MetalSniper()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.7, 0.7);
+		PB_SpecialWheel_Mode ms_std = new ("PB_SpecialWheel_Mode");
+		ms_std.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Slug.png", TexMan.Type_Any);
+		ms_std.specialName = "Select_MS_Standard";
+		ms_std.specialAlias = "7.62 AP Magazine";
+		ms_std.specialPriority = 1;
+		ms_std.iconScale = iconScale;
+		wheelSpecials.Push(ms_std);
+		PB_SpecialWheel_Mode ms_rs = new ("PB_SpecialWheel_Mode");
+		ms_rs.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+		ms_rs.specialName = "Select_MS_Resonance";
+		ms_rs.specialAlias = "Resonance Rounds";
+		ms_rs.specialPriority = 2;
+		ms_rs.iconScale = iconScale;
+		wheelSpecials.Push(ms_rs);
+		PB_SpecialWheel_Mode ms_aim = new ("PB_SpecialWheel_Mode");
+		ms_aim.specialIcon = TexMan.CheckForTexture("graphics/pywheel/hdmr_sniper.png", TexMan.Type_Any);
+		ms_aim.specialName = "MS_Select_AimMode";
+		ms_aim.specialAlias = "Scope Secondary";
+		ms_aim.specialPriority = 3;
+		ms_aim.iconScale = iconScale;
+		wheelSpecials.Push(ms_aim);
+		PB_SpecialWheel_Mode ms_gr = new ("PB_SpecialWheel_Mode");
+		ms_gr.specialIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
+		ms_gr.specialName = "MS_Select_GrenMode";
+		ms_gr.specialAlias = "Underslung Grenade";
+		ms_gr.specialPriority = 4;
+		ms_gr.iconScale = iconScale;
+		wheelSpecials.Push(ms_gr);
+		specialWheel_handleMouse();
+	}
+
 	void specialWheel_HellPistoler()
 	{
 				wheelSpecials.Clear();
@@ -1773,6 +1820,10 @@ Class PB_SpecialWheelHandler : EventHandler
 				
 				case 'PB_Minigun':
 					specialWheel_Minigun();
+					return;
+
+				case 'PB_MetalSniper':
+					specialWheel_MetalSniper();
 					return;
 
 				case 'HellPistoler':

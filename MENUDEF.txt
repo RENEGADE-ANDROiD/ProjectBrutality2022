@@ -269,40 +269,60 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText "Shortcuts to Folded Add-Ons & New 2022 Systems.", teal
 	StaticText "Full Menus (Glory Kills, Weapons, Spawns) Stay Below.", teal
 	StaticText " ", teal
-	StaticText "-----------------Finishers and Taunts-----------------", gold
+	StaticText " ", teal
+	StaticText "-----------------Finishers, Gore, Taunts-----------------", gold
 	Option "Auto-Fatality On Primary Fire", "pb_auto_fatality_fire", YesNo
+	StaticText " ", teal
 	Slider "Auto-Fatality Distance", "pb_auto_fatality_dist", 64, 400, 4
+	StaticText " ", teal
 	StaticText "Requires Glory Kills On: Finisher Attempt", teal
 	StaticText "When Firing at Staggered Target in Range.", teal
 	StaticText " ", teal
+	StaticText " ", teal
+	NashGoreOption "$BDV22GOREMNU_ENHANCED2022",	"$BDV22GOREMNU_ENHANCED2022_TIP",	"pb_enhanced_brutality_2022",	"OnOff"
+	StaticText " ", teal
+	StaticText "One switch for the folded BDv22 / BPv10 gore mix.", teal
+	StaticText "Nash and PB base blood/gib/casing settings: ", teal
+	StaticText "Project Brutality Settings, Visual, Gore/Debris.", teal
+	StaticText " ", teal
+	StaticText "On: full BDv22 mist/meat/organs + BPv10 death extras.", teal
+	StaticText "Off: standard Project Brutality / Nash gore only.", teal
+	StaticText " ", teal
+	StaticText " ", teal
 	Option "Enable Voice-Line Taunts", "pb_voicetaunts", YesNo
+	StaticText " ", teal
 	StaticText "Taunt / Fatality Voice Lines.", teal
 	StaticText "(Separate from Idle Doomguy Quips.)", teal
 	StaticText " ", teal
-	StaticText "-----------------Gore: Brutal Doom 22 (2022)-----------------", gold
-	Submenu "Brutal Doom 22 gore", "PB_2022_BDv22GoreMenu"
-	StaticText "Optional BDv22 Mist / Guts / Gibs / Organs / Mix.", teal
-	StaticText "Base Gore: Project Brutality Settings → Visual → Gore/Debris.", teal
 	StaticText " ", teal
 	StaticText "-----------------UI and Feel-----------------", gold
 	Submenu "Damage Numbers", "DamNumsOptions"
 	Submenu "Tactical Weapon Motion", "PBTacticalMotionOptions"
 	Submenu "PBX 2022 Weapon HUD", "PBWeaponHudOptions"
 	Submenu "Kill Streaks & Power-Up Rewards", "PB_KillstreakOptions"
+	StaticText " ", teal
+	StaticText " ", teal
 	Option "Instant Weapon Switch", "pb_instantweaponswitch", "OnOff"
+	StaticText " ", teal
 	StaticText "Doom-Style Instant Weapon Raise/Lower.", teal
-	StaticText "Not the Same as RandomWeapSwtch (rw_*).", teal
+	StaticText " ", teal
 	StaticText " ", teal
 	StaticText "-----------------Explosive Movement-----------------", gold
 	Option "Rocket Jumping", "pb_rocketjump", "OnOff"
+	StaticText " ", teal
 	StaticText "Rocket Splash Can Launch From Floors,", teal
 	StaticText "Walls, or Ceilings.", teal
+	StaticText " ", teal
+	StaticText " ", teal
 	Option "Plasma Wall Climbing", "pb_plasma_wallclimb", "OnOff"
+	StaticText " ", teal
 	StaticText "Plasma Blast Knockback From Floors,", teal
 	StaticText "Walls, Ceilings.", teal
 	StaticText " ", teal
+	StaticText " ", teal
 	StaticText "-----------------Content Packs-----------------", gold
 	Submenu "Monster Pack Settings (Horrorspawn, Summons, etc.)", "MonsterPackSettings"
+	StaticText " ", teal
 	StaticText " ", teal
 }
 
@@ -592,8 +612,6 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Mastermind Chaingun", "pb_NoMastermindChaingunWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn ShieldSaw", "pb_NoShieldSawWeapon", "SpawnOnOff"
-	StaticText " "
 	Option "Spawn Cyberdemon Missile Launcher", "pb_NoPB_CyberdemonRLWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Hell Pistoler", "pb_NoHellPistolerWeapon", "SpawnOnOff"
@@ -700,8 +718,6 @@ OptionMenu "AddOnToggles"
 	Option "Spawn MG42", "pb_NoMG42Weapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Mastermind Chaingun", "pb_NoMastermindChaingunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn ShieldSaw", "pb_NoShieldSawWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Cyberdemon Missile Launcher", "pb_NoPB_CyberdemonRLWeapon", "SpawnOnOff"
 	StaticText " "
@@ -1531,33 +1547,6 @@ OptionValue "Speedometer"
 	2, "Quake Units"
 }
 
-OptionMenu "PB_2022_BDv22GoreMenu"
-{
-	Class "NashGoreMenu"
-	Title "Brutal Doom 22 gore (2022 add-on)"
-	Position -32
-	StaticText "Optional content for Project Brutality & Nash gore.", teal
-	StaticText "Nash and PB base blood/gib/casing settings: ", teal
-	StaticText "Project Brutality Settings, Visual, Gore/Debris.", teal
-	StaticText " "
-
-	NashGoreOption "$BDV22GOREMNU_MIST",		"$BDV22GOREMNU_MIST_TIP",			"bdv22_mist",	"OnOff"
-	NashGoreOption "$BDV22GOREMNU_CORPSEMEAT",		"$BDV22GOREMNU_CORPSEMEAT_TIP",		"bdv22_corpse_meat",	"OnOff"
-	NashGoreOption "$BDV22GOREMNU_FLYINGMEAT",		"$BDV22GOREMNU_FLYINGMEAT_TIP",		"bdv22_flying_meat",	"OnOff"
-	NashGoreOption "$BDV22GOREMNU_ORGANS",		"$BDV22GOREMNU_ORGANS_TIP",		"bdv22_organs",	"OnOff"
-	NashGoreSlider "$BDV22GOREMNU_MIX",		"$BDV22GOREMNU_MIX_TIP",		"bdv22_gore_mix",	0, 100, 1, 0
-
-	StaticText " "
-	StaticText "Brutal Pack V10 gore (humanoid grunts + imps only):", teal
-	NashGoreOption "$BPV10GOREMNU_ENABLE",		"$BPV10GOREMNU_ENABLE_TIP",		"bpv10_enable",			"OnOff"
-	NashGoreOption "$BPV10GOREMNU_BURNCORPSE",	"$BPV10GOREMNU_BURNCORPSE_TIP",	"bpv10_burn_corpse",	"OnOff"
-	NashGoreOption "$BPV10GOREMNU_CARBONIZED",	"$BPV10GOREMNU_CARBONIZED_TIP",	"bpv10_carbonized",		"OnOff"
-	NashGoreOption "$BPV10GOREMNU_XDTORSO",		"$BPV10GOREMNU_XDTORSO_TIP",	"bpv10_xdeath_torso",	"OnOff"
-	NashGoreOption "$BPV10GOREMNU_FLOP",			"$BPV10GOREMNU_FLOP_TIP",		"bpv10_flop_organs",	"OnOff"
-	NashGoreOption "$BPV10GOREMNU_ZGEAR",		"$BPV10GOREMNU_ZGEAR_TIP",		"bpv10_zgear",			"OnOff"
-	NashGoreOption "$BPV10GOREMNU_SPLAT",		"$BPV10GOREMNU_SPLAT_TIP",		"bpv10_blood_splat",	"OnOff"
-}
-
 OptionMenu "GoreDebrisMenu"
 {
 	Class "NashGoreMenu"
@@ -1572,9 +1561,10 @@ OptionMenu "GoreDebrisMenu"
 	NashGoreOption "$NASHGOREMNU_BLOOD_SPRITES",	"$NASHGOREMNU_HELPTEXT_BLOOD_SPRITES",		"nashgore_spriteblood",	"NashGoreBloodSpriteValues"
 	NashGoreOption "$NASHGOREMNU_BLOOD_SPURTS",		"$NASHGOREMNU_HELPTEXT_BLOOD_SPURTS",		"nashgore_bloodspurt",	"OnOff"
 	StaticText ""
-	StaticText "Brutal Doom 22 (2022) — optional gore", 1
-	Submenu "Open Brutal Doom 22 gore options", "PB_2022_BDv22GoreMenu"
-	StaticText "Placed under Options, Brutality 2022 Additions for visibility.", teal
+	StaticText "2022 Enhanced Brootality", 1
+	Submenu "Open 2022 Enhanced Brootality options", "PB_2022_BDv22GoreMenu"
+	NashGoreOption "$BDV22GOREMNU_ENHANCED2022",	"$BDV22GOREMNU_ENHANCED2022_TIP",	"pb_enhanced_brutality_2022",	"OnOff"
+	StaticText "Single master switch for folded BDv22 / BPv10 gore extras.", teal
 	StaticText ""
 
 	StaticText "$NASHGOREMNU_GIB_TITLE", 1

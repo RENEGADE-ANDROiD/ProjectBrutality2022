@@ -5,7 +5,7 @@ ACTOR XM21BalisticProjectile : FastProjectile
 	+BLOODSPLATTER 
 	+NOGRAVITY
 	speed 1000
-	damage 300
+	damage 330
 	scale .35
 	radius 3
 	height 3
@@ -19,7 +19,7 @@ ACTOR XM21BalisticProjectile : FastProjectile
 		Loop
 	Death:
 	Xdeath:
-		EXPL A 0 A_Explode (150,128,XF_HURTSOURCE|RTF_THRUSTZ, 0, 64)
+		EXPL A 0 A_Explode (165,128,XF_HURTSOURCE|RTF_THRUSTZ, 0, 64)
 		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 1 A_SpawnItem("ShotgunPuff")
         TNT1 A 0 A_CustomMissile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))	
@@ -38,7 +38,7 @@ ACTOR XM21_762x51mmAP : FastProjectile
 	+FORCEXYBILLBOARD
 	+BLOODSPLATTER
 	Speed 1000
-	Damage 300
+	Damage 330
 	Scale 0.35
 	Radius 3
 	Height 3
@@ -56,6 +56,8 @@ ACTOR XM21_762x51mmAP : FastProjectile
 		Stop
 	}
 }
+
+ACTOR PB_762x51mmAP : XM21_762x51mmAP {}
 
 Actor PB_XM21Upgrade : Custominventory
 {
@@ -769,14 +771,16 @@ ACTOR PB_XM21 : PB_Weapon
 		X21S H 1
 		X21S G 1
 		X21S F 1
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 
 	FlashPunchingStop:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelPunching")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching")
 		X21G A 1 A_DoPBWeaponAction
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 	}
 }
 

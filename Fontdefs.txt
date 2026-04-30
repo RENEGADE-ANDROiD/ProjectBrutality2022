@@ -14,80 +14,80 @@ AANUM3
 	/ AASLAS
 }
 
-// Glory Kill NewHud: graphics in graphics/hud/glorykills/newhud/ (ACS: SRC/GloryHUD.acs, cvar be_fuelhud)
+// Glory Kill HUD fonts: ship with graphics/hud/glorykills/newhud/ for art. When those lumps
+// are missing, map glyphs to TNT1A0 so FONTDEFS still parses (HUD icons are invisible).
 // Letter "A" = 65 (HudMessage full-sprite draw)
 
 FUELPA01
 {
-	65 SCFLM00
+	65 TNT1A0
 }
 CRUCPA01
 {
-	65 SCFLM01
+	65 TNT1A0
 }
 CRUCPA02
 {
-	65 SCICB01
+	65 TNT1A0
 }
 CRUCPA03
 {
-	65 CRUCRY01
+	65 TNT1A0
 }
 CRAMMO00
 {
-	65 CRUCRY00
+	65 TNT1A0
 }
 CRAMMO01
 {
-	65 CRUCAM01
+	65 TNT1A0
 }
 CRAMMO02
 {
-	65 CRUCAM02
+	65 TNT1A0
 }
 CRAMMO03
 {
-	65 CRUCAM03
+	65 TNT1A0
 }
 BPAMMO00
 {
-	65 BPAMMO10
+	65 TNT1A0
 }
 BPAMMO01
 {
-	65 BPAMMO11
+	65 TNT1A0
 }
 BPAMMO02
 {
-	65 BPAMMO12
+	65 TNT1A0
 }
 BPAMMO03
 {
-	65 BPAMMO13
+	65 TNT1A0
 }
 BPAMMO04
 {
-	65 BPAMMO14
+	65 TNT1A0
 }
 BPAMMO05
 {
-	65 BPAMMO14
+	65 TNT1A0
 }
 
 // Glory Kill Eternal-style HUD (sv_fuelhud_background == 3): direct-named single-character
-// fonts so SRC/GloryHUD.acs can SetFont("CRUCRY00")/SetFont("SCFLM01") etc. without relying
-// on engine auto-promotion. Each maps ASCII 'A' (65) to the matching graphic.
-CRUCRY00 { 65 CRUCRY00 }
-CRUCRY01 { 65 CRUCRY01 }
-CRUCAM01 { 65 CRUCAM01 }
-CRUCAM02 { 65 CRUCAM02 }
-CRUCAM03 { 65 CRUCAM03 }
-SCFLM00  { 65 SCFLM00  }
-SCFLM01  { 65 SCFLM01  }
-SCICB00  { 65 SCICB00  }
-SCICB01  { 65 SCICB01  }
-BPAMMO10 { 65 BPAMMO10 }
-BPAMMO11 { 65 BPAMMO11 }
-BPAMMO12 { 65 BPAMMO12 }
-BPAMMO13 { 65 BPAMMO13 }
-BPAMMO14 { 65 BPAMMO14 }
+// fonts so SRC/GloryHUD.acs can SetFont("CRUCRY00")/SetFont("SCFLM01") etc.
+CRUCRY00 { 65 TNT1A0 }
+CRUCRY01 { 65 TNT1A0 }
+CRUCAM01 { 65 TNT1A0 }
+CRUCAM02 { 65 TNT1A0 }
+CRUCAM03 { 65 TNT1A0 }
+SCFLM00  { 65 TNT1A0 }
+SCFLM01  { 65 TNT1A0 }
+SCICB00  { 65 TNT1A0 }
+SCICB01  { 65 TNT1A0 }
+BPAMMO10 { 65 TNT1A0 }
+BPAMMO11 { 65 TNT1A0 }
+BPAMMO12 { 65 TNT1A0 }
+BPAMMO13 { 65 TNT1A0 }
+BPAMMO14 { 65 TNT1A0 }

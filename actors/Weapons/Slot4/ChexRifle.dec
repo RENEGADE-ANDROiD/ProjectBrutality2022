@@ -47,7 +47,7 @@ Actor LaserShot : FastProjectile
 
 	radius 2
 	height 2
-	damage 7
+	damage 8
 	damagetype Fire
 	speed 125
 	renderstyle ADD
@@ -139,7 +139,7 @@ Actor ChexParticleS
 }
 
 ACTOR ChexProjectile : PulseCannonBall {
-Damage 30
+Damage 33
 Speed 200
 +AlwaysPuff
 //decal zorcheffect
@@ -193,7 +193,7 @@ Actor ChexLightningModeProjectile
   +NOGRAVITY
   +FORCEXYBILLBOARD
   BounceFactor 0.2
-  Damage 3
+  Damage 4
   RenderStyle Add
   DamageType "Saw"
   Scale 0.04
@@ -229,6 +229,8 @@ ACTOR ChexRifle : PB_Weapon
 	+WEAPON.NOAUTOFIRE
 	+WEAPON.AMMO_OPTIONAL
 	+WEAPON.CHEATNOTWEAPON
+	Weapon.SlotNumber 4
+	Weapon.SlotPriority 0.35
 	States
 	{
 	Spawn:
@@ -523,9 +525,10 @@ ACTOR ChexRifle : PB_Weapon
 		S4T2 E 7
 		S4T2 D 1 
 		S4T2 C 1 
-		S4T2 B 1
+		S4T2 B 1 
 		S4T2 A 1 
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 }
 }
 		

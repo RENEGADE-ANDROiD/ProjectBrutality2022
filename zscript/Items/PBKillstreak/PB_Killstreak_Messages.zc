@@ -25,6 +25,7 @@ class PB_KsHudMessage : HUDMessageBase
 
 	virtual void DrawLine(double x, double y, String line)
 	{
+		if (!rFont || line.length() <= 0) return;
 		double vw = (vsize.x > 0) ? vsize.x : Screen.GetWidth();
 		double vh = (vsize.y > 0) ? vsize.y : Screen.GetHeight();
 		Screen.DrawText(rFont, color, x, y, line, DTA_VirtualWidthF, vw, DTA_VirtualHeightF, vh, DTA_Alpha, alpha);
@@ -35,7 +36,8 @@ class PB_KsHudMessage : HUDMessageBase
 		if (visibility & layer) return;
 		if (targetplayer > -1 && targetplayer != consoleplayer) return;
 		Vector2 base = CalculateBoxAlignment();
-		if (!lines) Setup();
+		if (!rFont || !lines) Setup();
+		if (!rFont || !lines) return;
 		double linex, liney = base.y, len;
 		String line;
 		for (int i = 0; i < lines.Count(); i++)
@@ -84,7 +86,9 @@ class PB_KsHudMessage : HUDMessageBase
 	virtual void Setup()
 	{
 		rFont = Font.GetFont(fnt);
+		if (!rFont) return;
 		lines = rFont.BreakLines(txt, (wrap <= 0) ? int.max : wrap);
+		if (!lines) return;
 		double longest = 0, len;
 		for (int i = 0; i < lines.Count(); i++)
 		{
@@ -126,6 +130,7 @@ class PB_KsHudMessageWaggle : PB_KsHudMessage
 
 	override void DrawLine(double x, double y, String line)
 	{
+		if (!rFont || line.length() <= 0) return;
 		double vw = (vsize.x > 0) ? vsize.x : Screen.GetWidth();
 		double vh = (vsize.y > 0) ? vsize.y : Screen.GetHeight();
 		double cphase = phase;

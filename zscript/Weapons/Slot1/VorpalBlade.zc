@@ -403,6 +403,7 @@ class VorpalBlade : PB_WeaponBase
 
 	FlashPunching:
 		VORP AAAAAAAAAAAAAA 1;
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 		Goto Ready3;
 	FlashKicking:
 		VORP AAAAAAAAAAAAAAA 1;

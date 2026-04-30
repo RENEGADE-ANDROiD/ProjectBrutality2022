@@ -130,6 +130,25 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Brutality/BrutalitiesShotgunGuy.dec"
 #include "actors/Brutality/BrutalitiesImp.dec"
 #include "actors/Brutality/BrutalitiesCacodemon.dec"
+#include "actors/Execution/ExecutionHellDuke.dec"
+#include "actors/Execution/ExecutionDirector.dec"
+#include "actors/Execution/ExecutionDarkLord.dec"
+#include "actors/Execution/ExecutionEtheralSoul.dec"
+#include "actors/Execution/ExecutionObsidianRavager.dec"
+#include "actors/Execution/ExecutionIceDemon.dec"
+#include "actors/Execution/ExecutionMarauder.dec"
+#include "actors/Execution/ExecutionFleshWizard.dec"
+#include "actors/Execution/ExecutionD3Seeker.dec"
+#include "actors/Execution/ExecutionSatyr.dec"
+#include "actors/Execution/ExecutionZombieFodder.dec"
+#include "actors/Execution/ExecutionHelemental.dec"
+#include "actors/Execution/ExecutionDarkDisciple.dec"
+#include "actors/Execution/ExecutionTerminator.dec"
+#include "actors/Execution/ExecutionBehemoth.dec"
+#include "actors/Execution/ExecutionD3HellGuardian.dec"
+#include "actors/Execution/ExecutionD3Maledict.dec"
+#include "actors/Execution/ExecutionRahovart.dec"
+#include "actors/Execution/ExecutionOverLord.dec"
 
 //Guns Guns Guns
 #include "actors/Weapons/BaseWeapon.dec"
@@ -248,6 +267,9 @@ Actor PBBlastMomentum : Inventory
 
 //Gore N' Blood
 #include "actors/Gore/GORE!!!.dec"
+// Crackodemon / CyberSatyr execution gibs extend XDeathArm1 (defined in GORE!!!.dec).
+#include "actors/Execution/ExecutionCrackodemon.dec"
+#include "actors/Execution/ExecutionCyberSatyr.dec"
 #include "actors/Gore/GORE2.dec"
 #include "actors/Gore/GORE3.dec"
 #include "actors/Gore/GORE4.dec"
@@ -487,6 +509,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Items/Health/GenericHealth.dec"
 #include "actors/Items/Health/CrueltyPhysicalBonuses.dec" // PB_PhysicalBonuses: 1BON bouncy Cruelty drops
 #include "actors/Items/Health/WolvusMutatorItems.dec"
+#include "actors/Spawners/ItemSpawners/BonusSpawners.dec" // After GenericHealth + Wolvus tiers so HealthBonusSpawner/ArmorBonusSpawner replace HealthBonus/ArmorBonus last.
 #include "actors/Items/Health/Stimpack.dec"
 #include "actors/Items/Health/Medikit.dec"
 #include "actors/Items/Health/Medipack.dec"

@@ -2,6 +2,7 @@ Actor DoGloryMelee : Inventory {inventory.maxamount 1}
 Actor CrucibleToken : Inventory {inventory.maxamount 1}
 Actor CrucibleEnergy : Inventory {inventory.maxamount 3}
 
+// Glory-kill gear only: this is a pickup (CrucibleEnergy), not a slotted Weapon; blade animation is in PB_Weapon via GK bind.
 ACTOR Crucible : Custominventory 
 {
     Game Doom

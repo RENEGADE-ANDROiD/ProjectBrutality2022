@@ -68,6 +68,12 @@ class PB_KillstreakPowerUp : Inventory
 		let plr = PlayerPawn(Owner);
 		String className, msg;
 		PBRollReward(plr, className, msg);
+		Class<Inventory> rewardClass = className;
+		if (!rewardClass)
+		{
+			className = "Stimpack2";
+			msg = "Kill streak reward: stimpack (reward unavailable).";
+		}
 		plr.GiveInventory(className, 1);
 		plr.A_Print(msg, 2.0);
 		return true;
@@ -90,7 +96,8 @@ class PB_KillstreakPowerUp : Inventory
 
 	static void PushIf(Array<String> a, String itemCvar, String className, PlayerPawn p)
 	{
-		if (PBCvarItem(p, itemCvar)) a.Push(className);
+		Class<Inventory> cls = className;
+		if (PBCvarItem(p, itemCvar) && cls) a.Push(className);
 	}
 
 	static void PBRollReward(PlayerPawn plr, out String outClass, out String outMsg)
@@ -107,7 +114,7 @@ class PB_KillstreakPowerUp : Inventory
 		PushIf(pool, "pb_ks_r_coffee",   "CoffeeTime",           plr);
 		PushIf(pool, "pb_ks_r_timesphere","TFST",                plr);
 		PushIf(pool, "pb_ks_r_familiar", "FamiliarSummon",       plr);
-		PushIf(pool, "pb_ks_r_guardsphere","GuardsphereST",      plr);
+		PushIf(pool, "pb_ks_r_guardsphere","PB_GuardsphereST",   plr);
 		PushIf(pool, "pb_ks_r_crucifix", "Crucifix",             plr);
 		PushIf(pool, "pb_ks_r_regensphere","RegenSphere",        plr);
 		PushIf(pool, "pb_ks_r_deflectionsphere","DeflectionSphere", plr);
@@ -136,7 +143,7 @@ class PB_KillstreakPowerUp : Inventory
 		else if (pick == "CoffeeTime") outMsg = "Kill streak: COFFEE TIME!";
 		else if (pick == "TFST") outMsg = "Kill streak: TIME SPHERE!";
 		else if (pick == "FamiliarSummon") outMsg = "Kill streak: Familiar summon!";
-		else if (pick == "GuardsphereST") outMsg = "Kill streak: Guard sphere!";
+		else if (pick == "PB_GuardsphereST") outMsg = "Kill streak: Guard sphere!";
 		else if (pick == "Crucifix") outMsg = "Kill streak: Crucifix!";
 		else if (pick == "RegenSphere") outMsg = "Kill streak: Regen sphere!";
 		else if (pick == "DeflectionSphere") outMsg = "Kill streak: Deflection sphere!";

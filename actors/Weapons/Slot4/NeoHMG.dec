@@ -26,6 +26,68 @@ ACTOR HMGModeCharged : Inventory
 	Inventory.MaxAmount 1
 }
 
+// PBX NeoHMG primary projectiles (PB_FireBullets). Folded for overheat + round-mode behavior.
+ACTOR PB_792x57mm : FastProjectile
+{
+	Projectile
+	Radius 2
+	Height 2
+	Speed 250
+	Damage 44
+	DamageType Bullet
+	Decal "BulletChip"
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Loop
+	Death:
+		TNT1 A 0 A_SpawnItem("HitPuff")
+		Stop
+	}
+}
+
+ACTOR PB_792x57mm_Heated : FastProjectile
+{
+	Projectile
+	Radius 2
+	Height 2
+	Speed 260
+	Damage 50
+	DamageType Fire
+	+RIPPER
+	Decal "BulletChip"
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Loop
+	Death:
+		TNT1 A 0 A_SpawnItem("HitPuff")
+		Stop
+	}
+}
+
+ACTOR PB_792x57mm_Charged : FastProjectile
+{
+	Projectile
+	Radius 2
+	Height 2
+	Speed 250
+	Damage 44
+	DamageType Plasma
+	Decal "BulletChip"
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Loop
+	Death:
+		TNT1 A 0 A_SpawnItem("HitPuff")
+		Stop
+	}
+}
+
 ACTOR HMGChamberAmmo : Ammo
 {
 	Inventory.Amount 0

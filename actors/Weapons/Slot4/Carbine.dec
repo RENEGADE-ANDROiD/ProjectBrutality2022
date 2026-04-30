@@ -87,6 +87,8 @@ ACTOR PB_Carbine : PB_Weapon
 	Inventory.AltHUDIcon "CB00Z0"
 	PB_WeaponBase.respectItem "RespectCarbine"
 	FloatBobStrength 0.5
+	Weapon.SlotNumber 4
+	Weapon.SlotPriority 0.45
 	States
 	{
 		Steady:
@@ -310,7 +312,7 @@ ACTOR PB_Carbine : PB_Weapon
 			A_AlertMonsters;
 			A_GiveInventory("FiringCarbineL",1);
 			A_PlaySoundEx("Weapons/Rifle/SFire", "SoundSlot7");
-			A_FireBullets (0.1, 0.1, -1, 20, "HitPuff", FBF_NORANDOM,8192,"Tracer", -4,-8);
+			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM,8192,"Tracer", -4,-8);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,-4,0);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, -4, 0, 0, 0);
 			A_FireCustomMissile("RifleCaseSpawn",5,0,-14,-6);
@@ -342,7 +344,7 @@ ACTOR PB_Carbine : PB_Weapon
 			A_AlertMonsters;
 			A_GiveInventory("FiringCarbineR",1);
 			A_PlaySoundEx("Weapons/Rifle/SFire", "SoundSlot6");
-			A_FireBullets (0.1, 0.1, -1, 20, "HitPuff", FBF_NORANDOM,8192,"Tracer", -4, 8);
+			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM,8192,"Tracer", -4, 8);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,4,0);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 4, 0, 0, 0);
 			A_FireCustomMissile("RifleCaseSpawn",5,0,16,-5);
@@ -663,7 +665,7 @@ ACTOR PB_Carbine : PB_Weapon
 			if (CountInv("CarbineMuzzleFlash2") >= 1 ) { A_SetWeaponSprite("4BFF");}
 			if (CountInv("CarbineMuzzleFlash3") >= 1 ) { A_SetWeaponSprite("4CFF");}
 			A_GunFlash;
-			A_FireBullets (0.1, 0.1, -1, 20, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -730,7 +732,7 @@ ACTOR PB_Carbine : PB_Weapon
 		4A2F A 1 BRIGHT {
 			if(CountInv("CarbineScope")==1) { A_SetWeaponSprite("TNT1"); A_ZoomFactor(3.0); }
 			A_GunFlash;
-			A_FireBullets (0.1, 0.1, -1, 20, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -803,7 +805,7 @@ ACTOR PB_Carbine : PB_Weapon
 		4A3F A 1 BRIGHT {
 			if(CountInv("CarbineScope")==1) { A_SetWeaponSprite("TNT1"); A_ZoomFactor(3.0); }
 			A_GunFlash;
-			A_FireBullets (0.1, 0.1, -1, 20, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -1267,10 +1269,12 @@ ACTOR PB_Carbine : PB_Weapon
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashPunchingDW")
 		C1KI ABCDEFEDCBA 1
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 	FlashPunchingDW:
 		TNT1 A 15
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 		
 	}
 }

@@ -10,6 +10,8 @@ Class PB_CSSG : PB_WeaponBase
 		Tag "Commander Shotgun";
 		Inventory.AltHUDIcon "SGN2A0";
 		scale 0.5;
+		weapon.slotnumber 3;
+		weapon.slotpriority 0.4;
 		weapon.ammotype2 "CSSGShellsIn";
 		weapon.ammotype1 "PB_Shell";
 		weapon.ammogive1 4;
@@ -314,7 +316,7 @@ Class PB_CSSG : PB_WeaponBase
 			TNT1 A 4;
 			C0RB JI 1;
 			C0RB HGFEDCB 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM');
-			TNT1 A 0 PB_UnloadMag("CSSGShellsIn","PB_Shell",1);
+			TNT1 A 0 { PB_UnloadMag("CSSGShellsIn","PB_Shell",1, 0, 6, 14, "PB_ShellUnloadProp"); }
 			TNT1 A 0 A_Startsound("weapons/ssg/inspect2",26);
 			C0RB A 1;
 			C0RO PON 1;
@@ -364,6 +366,7 @@ Class PB_CSSG : PB_WeaponBase
 		
 		FlashPunching:
 			C0MO ABCDEFFFFEDCBA 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		
 		FlashKicking:
@@ -1012,7 +1015,7 @@ class ExplosiveProjectile : PB_Projectile
 		SeeSound "weapons/RLL";
 		Obituary "$OB_MPROCKET";
 		+nogravity;
-		damage 12;
+		damage 13;
 		damagetype "ExplosiveImpact";
 	}
 	
@@ -1035,7 +1038,7 @@ class ExplosiveProjectile : PB_Projectile
 			TNT1 A 0;
 			TNT1 A 0
 			{
-				A_Explode(60,128,XF_HURTSOURCE|RTF_THRUSTZ, 0, 64);
+				A_Explode(66,128,XF_HURTSOURCE|RTF_THRUSTZ, 0, 64);
 				A_StopSound(105);
 				A_StartSound("FAREXPL", CHAN_AUTO,CHANF_OVERLAP,0.5,0,1.1);
 				A_QuakeEx (2,2,2,4,0,100,"");
@@ -1091,7 +1094,7 @@ Class WPhosphorusProjectile : PB_Projectile
 	{
 		+FORCEXYBILLBOARD;
 		+DONTSPLASH;
-		damagefunction (15*frandom(2.0,3.0));
+		damagefunction (17*frandom(2.0,3.0));
 		Decal "SmallerScorch";
 		PROJECTILE;
 		gravity 0.6;
@@ -1354,7 +1357,7 @@ Class DanmakuProjectile : Actor
 		radius 5;
 		height 5;
 		projectilekickback 900;
-		damage (10);
+		damage (11);
 		renderstyle "add";
 		+CANBOUNCEWATER;
 		+BOUNCEAUTOOFF;

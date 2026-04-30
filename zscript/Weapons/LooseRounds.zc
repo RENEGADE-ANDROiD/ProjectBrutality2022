@@ -1,0 +1,185 @@
+// Harmless clientside magazine-unload debris (no pickup / not Ammo).
+// PB_LooseRound* = generic brass fallbacks (BRAS strip).
+// PB_*UnloadProp = staging-parity world sprites (Clipbox / Shellbox / rocket lumps).
+
+class PB_LooseRoundBrass : Inventory
+{
+	default
+	{
+		+NOBLOCKMAP;
+		+NOTELEPORT;
+		+CLIENTSIDEONLY;
+		+THRUACTORS;
+		Radius 1;
+		Height 1;
+		Mass 1;
+		Gravity 0.4;
+		BounceType "Doom";
+		BounceFactor 0.3;
+		WallBounceFactor 0.2;
+		Scale 0.35;
+	}
+	states
+	{
+	Spawn:
+		BRAS ABCDEF 3;
+		goto Death;
+	Death:
+		BRAS F 175;
+		stop;
+	}
+}
+
+class PB_LooseRoundRifle : PB_LooseRoundBrass
+{
+	default { Scale 0.42; }
+}
+
+class PB_LooseRoundResonance : PB_LooseRoundBrass
+{
+	default
+	{
+		Scale 0.38;
+		RenderStyle "Add";
+		Alpha 0.82;
+	}
+}
+
+// --- Unload props: Actor + NOINTERACTION (not touch-pickup like Ammo subclasses) ---
+
+class PB_UnloadPropBase : Actor
+{
+	default
+	{
+		+MISSILE;
+		-NOGRAVITY;
+		+NOBLOCKMAP;
+		+NOTELEPORT;
+		+CLIENTSIDEONLY;
+		+NOINTERACTION;
+		+MOVEWITHSECTOR;
+		+FORCEXYBILLBOARD;
+		+ROLLSPRITE;
+		-DROPOFF;
+		Radius 2;
+		Height 2;
+		Mass 1;
+		Gravity 0.45;
+		BounceType "Doom";
+		BounceFactor 0.35;
+		WallBounceFactor 0.25;
+		BounceCount 8;
+	}
+}
+
+// Live buckshot shell frame (matches LiveShellRed_* / staging ShotgunCasingRedLive settle).
+class PB_ShellUnloadProp : PB_UnloadPropBase
+{
+	default { Scale 0.15; }
+	states
+	{
+	Spawn:
+		CAS2 K 1;
+		loop;
+	Death:
+		CAS2 K 400;
+		stop;
+	}
+}
+
+class PB_ShellSlugUnloadProp : PB_UnloadPropBase
+{
+	default { Scale 0.15; }
+	states
+	{
+	Spawn:
+		CAS5 K 1;
+		loop;
+	Death:
+		CAS5 K 400;
+		stop;
+	}
+}
+
+class PB_ShellDragonUnloadProp : PB_UnloadPropBase
+{
+	default { Scale 0.15; }
+	states
+	{
+	Spawn:
+		CAS6 K 1;
+		loop;
+	Death:
+		CAS6 K 400;
+		stop;
+	}
+}
+
+// Low / pistol scavengers (GenericAmmo NewBullets / Bulletkit).
+class PB_LowCalUnloadProp : PB_UnloadPropBase
+{
+	default { Scale 0.11; }
+	states
+	{
+	Spawn:
+		MBLK A 1;
+		loop;
+	Death:
+		MBLK A 400;
+		stop;
+	}
+}
+
+// High-caliber magazine round (Clipbox NewClip world sprite).
+class PB_HighCalUnloadProp : PB_UnloadPropBase
+{
+	default { Scale 0.11; }
+	states
+	{
+	Spawn:
+		CLIP A 1;
+		loop;
+	Death:
+		CLIP A 400;
+		stop;
+	}
+}
+
+// Heavier strip / DMR-LMG unload chunk visual (staging PB_HigherCalRound pair tone).
+class PB_HighCalHeavyUnloadProp : PB_UnloadPropBase
+{
+	default { Scale 0.14; }
+	states
+	{
+	Spawn:
+		CLIP A 1;
+		loop;
+	Death:
+		CLIP A 400;
+		stop;
+	}
+}
+
+class PB_HighCalResonanceUnloadProp : PB_HighCalHeavyUnloadProp
+{
+	default
+	{
+		RenderStyle "Add";
+		Alpha 0.82;
+	}
+}
+
+// Explosive round (RocketBox NewRocketAmmo).
+class PB_RocketRoundUnloadProp : PB_UnloadPropBase
+{
+	default { Scale 0.35; }
+	states
+	{
+	Spawn:
+		R0CK A 1;
+		loop;
+	Death:
+		R0CK A 400;
+		stop;
+	}
+}

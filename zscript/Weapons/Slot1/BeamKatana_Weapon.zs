@@ -467,6 +467,7 @@ class PB_BeamKatana : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 15;
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 		Goto Ready3;
 	}
 }

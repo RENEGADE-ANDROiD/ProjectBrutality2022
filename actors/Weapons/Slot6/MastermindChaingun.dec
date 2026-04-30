@@ -26,7 +26,7 @@ Actor MastermindChaingun : PB_Weapon
     Inventory.PickupMessage "You got the Mastermind's Chaingun! (Slot 6)"
     AttackSound "None"
     Weapon.SlotNumber 6
-    Weapon.SlotPriority 0
+    Weapon.SlotPriority 0.15
     Weapon.SelectionOrder 3500
     Scale 0.9
     Tag "Mastermind's Chaingun"
@@ -347,7 +347,8 @@ Actor MastermindChaingun : PB_Weapon
         RMNG P 1
         RMNG O 1
         RMNG F 1
-        Stop
+        TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+        Goto Ready3
 
     FlashPunchingStop:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelPunching")
@@ -355,7 +356,8 @@ Actor MastermindChaingun : PB_Weapon
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelPunching")
         TNT1 A 0 A_ClearOverlays(10,11)
         RMNG F 1 A_DoPBWeaponAction
-        Stop
+        TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+        Goto Ready3
     }
 }
 
@@ -418,7 +420,7 @@ Actor MastermindTracerDoomguy : FastProjectile
     -DONTSPLASH
     +FORCERADIUSDMG
     Speed 280
-    Damage (random(310,310))
+    Damage (random(341,341))
     Scale 1.0
     RenderStyle Add
     Alpha 0.9

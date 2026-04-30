@@ -2616,7 +2616,7 @@ $random weapons/pistol {2PFIRE1 2PFIRE2 2PFIRE3}
 2PFIRE1 2XPFIRE1
 2PFIRE2 2XPFIRE2
 2PFIRE3 2XPFIRE3
-$volume weapons/pistol 0.8
+$volume weapons/pistol 1.0
 $rolloff weapons/pistol 100 2200
 $random weapons/smcasebounce { brc1 brc2 brc3 brc4 brc5 }
 brc1 brass_c1
@@ -2694,6 +2694,7 @@ weapons/smg_magfly2 DSRAICV
 //MP40
 weapons/MP40_up	MP40SELE
 weapons/MP40_fire	MP40FIRE
+$volume weapons/MP40_fire 1.0
 weapons/MP40_striswhoosh	MP40THRO
 MP4DGT MP4DGT
 MP4DGG MP4DGG
@@ -2742,9 +2743,12 @@ $random weapons/sg	 { 3AWFIRE1 3AWFIRE2 3AWFIRE3 3AWFIRE4 }
 3AWFIRE3 3AWFIRE3
 3AWFIRE4 3AWFIRE4
 $rolloff Weapons/sg 100 2200
+$volume weapons/sg 1.0
 SlugShot SlugSS1
 $rolloff SlugShot 100 2200
+$volume SlugShot 1.0
 DRBTFIRE DRBTFIRE
+$volume DRBTFIRE 1.0
 $random insertshell { shellin1 shellin2 shellin3 shellin4 }
 shellin1 shtload1
 shellin2 shtload2
@@ -2822,7 +2826,7 @@ weapons/carbine/magout CBMGOUT
 weapons/carbine/magin CBMGINN
 weapons/riflemagslap RFLMSLP
 weapons/magpull RFMAGPL
-$volume ASLTSTOP 0.7
+$volume ASLTSTOP 1.0
 $volume ASLTLOOP 1.0
 $random BloodPoolStep {blodr1 blodr2 blodr3 blodr4 blodr5 blodr6 blodr7 blodr8 blodr9 blodr10 }
 blodr1 dsdrip1
@@ -2864,7 +2868,7 @@ RFGLLCH RFGLLCH
 
 //LMG
 LMGFIRE LMGFIRE
-$volume LMGFIRE 0.65
+$volume LMGFIRE 1.0
 LMGOUT LMGOUT
 LMGIN LMGIN
 LMGCLK LMGCLK
@@ -2902,11 +2906,14 @@ ShieldSawSwing "SOUNDS/weapons/ShieldSaw/Swing.ogg"
 weapons/minigunfire2 DSMINIGL
 weapons/minigunfire DSMINIGN
 weapons/minigunfirefast DSMINIGF
+$volume weapons/minigunfire 1.0
+$volume weapons/minigunfire2 1.0
+$volume weapons/minigunfirefast 1.0
 RMNGSHOT RMNGSHOT
 CHAINSTA CHAINSTA
 CHAINSPI CHAINSPI
+$volume CHAINSPI 1.0
 CHAINSTO CHAINSTO
-//$volume CHAINSPI 0.65
 8HAINFIR 8HAINFIR
 DTHDLRST DTHDLRST
 DTHDLRSP DTHDLRSP
@@ -2920,6 +2927,7 @@ $random weapons/minigun/chaingunmode/fire { CGGUN02 CGGUN03 CGGUN04 }
 CGGUN02 CGGUN02
 CGGUN03 CGGUN03
 CGGUN04 CGGUN04
+$volume weapons/minigun/chaingunmode/fire 1.0
 weapons/minigun/respect1 MGRSPC1
 weapons/minigun/respect2 MGRSPC2
 weapons/minigun/respect3 MGRSPC3
@@ -2970,7 +2978,6 @@ weapons/chagan/spin CG_MOTOR
 weapons/chaingun/stop CG_WINDD
 weapons/chagan/stop CG_WINDD
 weapons/chagan/start CG_WINDU
-//$volume hmgun .6
 emgun emgun
 
 //MG42
@@ -2980,6 +2987,7 @@ MG42FIR1 MG42FIR1
 MG42FIR2 MG42FIR2
 MG42FIR3 MG42FIR3
 MG42FIR4 MG42FIR4
+$volume MG42FIR 1.0
 MG42OP MG42OP
 MG42RE MG42RE
 MG42IN MG42IN
@@ -3013,6 +3021,7 @@ $rolloff excavator/explode 1300 1800
 //ROCKET LAUNCHER
 misc/rockboxa rockboxa
 RLSHOT2 RLSHOT2
+$volume RLSHOT2 1.0
 RLCYC RLCYCLE
 RLCYCLE RLCYCLE
 RLCYCLE2 RLCYCLE2
@@ -3038,6 +3047,7 @@ RLSPCL2 RLSPCL2
 $random 0SRFIRE { 0SRFIRE1 0SRFIRE2 }
 0SRFIRE1 0SRFIRE1
 0SRFIRE2 0SRFIRE2
+$volume 0SRFIRE 1.0
 RLANDRAW RLANDRAW
 ROCKPKUP ROCKPKUP
 Rocket/Launch DSRLAUN
@@ -3092,6 +3102,7 @@ PLSM2RL PLSM2RL
 $random m2plasma { PLSM21 PLSM22 }
 PLSM21 PLSM21
 PLSM22 PLSM22
+$volume m2plasma 1.0
 plamersh PLAMER
 plameren PLAMSTOP
 weapons/m2plasma/screenon M2SCRN
@@ -3120,7 +3131,7 @@ PLSULT PLSULT
 weapons/plasmarifle PLASMA
 $limit weapons/plasmarifle 0
 $rolloff weapons/plasmarifle 100 2200
-$volume weapons/plasmarifle 0.9
+$volume weapons/plasmarifle 1.0
 PLASMA PLASM
 PLSALTFR PLSALTFR
 PLSFULL PLSFULL
@@ -3152,7 +3163,7 @@ CHGX2 CHGX2
 $random CHRGA {  CHRGA1 CHRGA2 }
 CHRGA1 CHRGA1
 CHRGA2 CHRGA2
-$volume BFGAR 0.85
+$volume BFGAR 1.0
 $random BFGAR {  BFFAR BFFAR2 }
 BFFAR BFFAR
 BFFAR2 BFFAR2
@@ -3278,6 +3289,7 @@ weapons/freezer/idle FRZRHUM
 // Marauder SSG cryo alt (alias for addon-style logical name; same as freezer primary)
 weapons/CryoRifle/missile FRZRFR1
 weapons/freezer/fire FRZRFR1
+$volume weapons/freezer/fire 1.0
 weapons/freezer/up FRZRUP
 weapons/freezer/reload1 FRZRRL1
 weapons/freezer/reload2 FRZRRL2
@@ -3286,6 +3298,7 @@ weapons/freezer/reload3 FRZRRL3
 //Slot 9 - BFGs
 //BFG
 BFG_FIRE BFG_FIRE
+$volume BFG_FIRE 1.0
 mbfgsh mbfgsh
 BFGALPP BFGALPP
 BFGPICK BFGPICK
@@ -3308,6 +3321,7 @@ weapons/StachanovCharge		STCHCHRG
 $random Weapons/StachanovAddFire { Weapons/StachanovFire1 Weapons/StachanovFire2 }
 Weapons/StachanovFire1		STCHFIR1
 Weapons/StachanovFire2		STCHFIR2
+$volume Weapons/StachanovAddFire 1.0
 Weapons/StachanovFly		STCHFLY
 weapons/StachanovHit		STCHHIT
 BFGRA1S BFGRA1S
@@ -3316,6 +3330,7 @@ BFGCHAFF BFGCHAFF
 $rolloff BFGEXPLO 2000 1500
 BFGCHARGE BFGCHARG
 BFGFIRE BFGFIRE
+$volume BFGFIRE 1.0
 GENREADY GENREADY
 
 //BFG 11K
@@ -3327,6 +3342,7 @@ Weapons/BFSG/Fire 8FSGFIRE
 Weapons/BFGG/Up 8FGGSPIN
 Weapons/BFGG/Down 8FGGDOWN
 Weapons/BFGG/Fire 8FGGFIRE
+$volume Weapons/BFGG/Fire 1.0
 Weapons/BFGG/Explode 8FGGEXPL
 DSREPSTM DSREPSTM
 Leech/Fire	DSLEECH
@@ -3447,6 +3463,7 @@ FLMSWTC FLMSWTC
 weapons/expmgunspin CHAINSPI
 weapons/expmgunspinstop 8HAINAM1
 DemonTechMGFire "sounds/combat/weapons/DTechMinigun/DTPSFIRE.ogg"
+$volume DemonTechMGFire 1.0
 
 // Hook equipment (addon fold)
 hookshot/fire "sounds/combat/hook/HookLaunch.ogg"
@@ -3576,6 +3593,8 @@ weapons/paingiver/fire1		"sounds/combat/weapons/paingiver/fire1.ogg"
 weapons/paingiver/fire2		"sounds/combat/weapons/paingiver/fire2.ogg"
 weapons/paingiver/sweet		"sounds/combat/weapons/paingiver/sweet.ogg"
 weapons/paingiver/boom		"sounds/combat/weapons/paingiver/boom.ogg"
+$volume weapons/paingiver/fire1 1.0
+$volume weapons/paingiver/fire2 1.0
 
 ////////////////////////////////////////////////////////
 //			Old HMG (Slot 4)                           //
@@ -3626,6 +3645,7 @@ $random MSSFR {
 	MSSFR5
 	MSSFR6
 }
+$volume MSSFR 1.0
 
 MSSLD MSSLD
 MSSOP MSSOP
@@ -3653,6 +3673,8 @@ weapons/ballista/boltinoutdemonic "sounds/combat/weapons/ProSurvBallista/ballist
 // BDP Battle Rifle — audio lumps from PBX-Weapons (Slot-4/BattleRifle)
 weapons/battlerifle/fire		"sounds/combat/weapons/BattleRifle/BR45FIR2.ogg"
 weapons/battlerifle/firealt		"sounds/combat/weapons/BattleRifle/BR45FIRE"
+$volume weapons/battlerifle/fire 1.0
+$volume weapons/battlerifle/firealt 1.0
 weapons/battlerifle/magout		"sounds/combat/weapons/BattleRifle/BR45OPEN"
 weapons/battlerifle/magin		"sounds/combat/weapons/BattleRifle/BR45LOAD"
 weapons/battlerifle/up		"sounds/combat/weapons/BattleRifle/BR45PICK.ogg"
@@ -3677,6 +3699,7 @@ TechBlaster/Online "sounds/combat/weapons/DemonTech/Blaster/TBONLINE.ogg"
 TechBlaster/Unload "sounds/combat/weapons/DemonTech/Blaster/TBUNJECT.ogg"
 TechBlaster/Steam "sounds/combat/weapons/DemonTech/Blaster/TBRSTEAM.ogg"
 TechBlaster/Fire "sounds/combat/weapons/DemonTech/Blaster/TBSRFIRE.ogg"
+$volume TechBlaster/Fire 1.0
 TechBlaster/Explode "sounds/combat/weapons/DemonTech/Blaster/TBSRPEXP.ogg"
 TechBlaster/PickUp "sounds/combat/weapons/DemonTech/Blaster/TBONLINE.ogg"
 TechBlaster/Idle "sounds/combat/weapons/DemonTech/Blaster/TBIDLEBZ.ogg"
@@ -3686,6 +3709,7 @@ weapons/click2 DEAGMG3
 
 // NeoHMG (CRASH)
 weapon/HMG/Fire "sounds/combat/weapons/NeoHMG/HMGFIRE.ogg"
+$volume weapon/HMG/Fire 1.0
 weapon/HMG/Stop "sounds/combat/weapons/NeoHMG/DIBSTOP.ogg"
 weapon/HMG/Reload1 "sounds/combat/weapons/NeoHMG/9HAINAM1.ogg"
 // NeoHMG shield — PBX Slot-5 lumps (same names as PBX SNDINFO.slot5)
@@ -3701,6 +3725,7 @@ PLGRNHT3 "sounds/combat/weapons/NeoHMG/PLGRNHT3.ogg"
 
 // M41A — SFX: sounds/combat/weapons/M41A/ (M41AFIRE, M41PICUP, mags, bolt)
 M41A/Fire		"sounds/combat/weapons/M41A/M41AFIRE"
+$volume M41A/Fire 1.0
 M41A/MagTake	"sounds/combat/weapons/M41A/CBMGOUT"
 M41A/MagIn		"sounds/combat/weapons/M41A/CBMGINN"
 M41A/Bolt		"sounds/combat/weapons/M41A/ALIEN_CK"
@@ -3709,6 +3734,8 @@ M41A/PickUp		"sounds/combat/weapons/M41A/M41PICUP"
 // PB3 XM-21 Sniper — sounds in sounds/combat/weapons/XM21/
 M14FIRE "sounds/combat/weapons/XM21/M14FIRE.ogg"
 M14FIR2 "sounds/combat/weapons/XM21/M14FIR2.mp3"
+$volume M14FIRE 1.0
+$volume M14FIR2 1.0
 DMRIN "sounds/combat/weapons/XM21/DMRIN.ogg"
 DMROUT "sounds/combat/weapons/XM21/DMROUT.ogg"
 RELO1 "sounds/combat/weapons/XM21/RELO1.ogg"
@@ -3753,6 +3780,7 @@ weapons/cssg/in "sounds/combat/weapons/CSSG/CSSGIN.ogg"
 
 // PB X12 Shotgun — sounds in sounds/combat/weapons/X12/
 X12FIRE "sounds/combat/weapons/X12/X12FIRE"
+$volume X12FIRE 1.0
 X12PMP "sounds/combat/weapons/X12/X12PMP"
 X12PMP1 "sounds/combat/weapons/X12/X12PMP1"
 X12PMP2 "sounds/combat/weapons/X12/X12PMP2"
@@ -3973,9 +4001,12 @@ weapons/rocketloop		rktloop
 weapons/minigunfire2 DSMINIGL
 weapons/minigunfire DSMINIGN
 weapons/minigunfirefast DSMINIGF
+$volume weapons/minigunfire 1.0
+$volume weapons/minigunfire2 1.0
+$volume weapons/minigunfirefast 1.0
 CHAINSPI CHAINSPI
+$volume CHAINSPI 1.0
 CHA1NSPI CHA1NSPI
-//$volume CHAINSPI 0.65
 8HAINFIR 8HAINFIR
 DTHDLRST DTHDLRST
 DTHDLRSP DTHDLRSP
@@ -3996,13 +4027,14 @@ weapons/chagan/stop CG_WINDD
 weapons/chagan/start CG_WINDU
 
 hmgun HMGFIRE
+$volume hmgun 1.0
 
-//$volume hmgun .6
 emgun emgun
 
 
 //Carbine
 Weapons/Rifle/SFire 4AFLFIR1
+$volume Weapons/Rifle/SFire 1.0
 
 //Autoshotgun
 $random FLAKFIRE { SSALT1 SSALT2 SSALT3}
@@ -4115,7 +4147,7 @@ Weapons/StickyBombTick		SBMBTICK
 
 
 weapons/rifle/up RIFCL_UP
-$volume weapons/rifle 0.7
+$volume weapons/rifle 1.0
 $rolloff weapons/rifle 100 2200
 
 RIFCL_OU RIFCL_OU
@@ -4140,7 +4172,7 @@ $random weapons/pistol {2PFIRE1 2PFIRE2 2PFIRE3}
 2PFIRE1 2XPFIRE1
 2PFIRE2 2XPFIRE2
 2PFIRE3 2XPFIRE3
-$volume weapons/pistol 0.8
+$volume weapons/pistol 1.0
 $rolloff weapons/pistol 100 2200
 
 $random weapons/smcasebounce { brc1 brc2 brc3 brc4 }
@@ -4614,6 +4646,7 @@ meltingice2	ICEMLT2
 meltingice3	ICEMLT3
 
 // Realm667 — Possessed Gibs (place VPG*.lmp or OGG at sounds/ per logical names, or add extensionless lumps)
+PossessedGibs/noodles monsters/possessedgibs/noodles
 PossessedGibs/active VPGACT
 PossessedGibs/splat VPGSPLAT
 PossessedGibs/death VPGDEATH
@@ -4623,6 +4656,19 @@ vpggib2 VPGGIBS2
 $random PossessedGibs/shot { vpgshot1 vpgshot2 }
 vpgshot1 VPGSHOT1
 vpgshot2 VPGSHOT2
+// Launch / throw: varied wet splats + stock VPG + Nash gore (PGProjectile plays on spawn)
+$random PossessedGibs/throw {
+	PossessedGibs/splat
+	PossessedGibs/gibs
+	PossessedGibs/shot
+	nashgore/bloodsplash
+	nashgore/gibsmall
+	nashgore/gibbounce
+}
+$pitchset PossessedGibs/throw 0.82 1.18
+$volume PossessedGibs/throw 0.5
+$limit PossessedGibs/throw 4
+$pitchset PossessedGibs/noodles 0.85 0.95
 $pitchset PossessedGibs/active 0.8 0.8
 $pitchset PossessedGibs/death 0.7 0.9
 $pitchset PossessedGibs/splat 1.0 1.2
@@ -4632,6 +4678,7 @@ $pitchset vpgshot1 0.8 1.2
 $pitchset vpgshot2 0.8 1.2
 $volume PossessedGibs/shot 0.6
 $volume PossessedGibs/gibs 0.4
+$limit PossessedGibs/noodles 0
 $limit PossessedGibs/shot 0
 $limit PossessedGibs/splat 0
 $limit PossessedGibs/gibs 0
