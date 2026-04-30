@@ -1,5 +1,7 @@
 const neohmgFullAmmo = 80;
 const neohmgShieldAmmo = 100;
+// World shield uses sector floor + lift; PSprite HMGShield is unrelated (not weapon/HUD offsets).
+const neohmgShieldFloorLift = 36;
 
 class HMGShield : Inventory
 {
@@ -32,7 +34,7 @@ class NeoHMGDeployedShield : Actor
 		Vector3 right = (cos(angle + 90), sin(angle + 90), 0);
 		for (int i = 0; i < count; i++)
 		{
-			Vector3 sparkPos = pos + forward * frandom(16, 28) + right * frandom(-18, 18) + (0, 0, frandom(10, 54));
+			Vector3 sparkPos = pos + forward * frandom(14, 24) + right * frandom(-15, 15) + (0, 0, frandom(8, 48));
 			Actor spark = Actor.Spawn("GreenTrailSparks", sparkPos, NO_REPLACE);
 			if (spark)
 			{
@@ -41,7 +43,7 @@ class NeoHMGDeployedShield : Actor
 		}
 		if (random(0, 2) == 0)
 		{
-			Actor flare = Actor.Spawn("GreenFlareSmall", pos + forward * 24 + right * frandom(-12, 12) + (0, 0, frandom(18, 48)), NO_REPLACE);
+			Actor flare = Actor.Spawn("GreenFlareSmall", pos + forward * 20 + right * frandom(-10, 10) + (0, 0, frandom(15, 42)), NO_REPLACE);
 			if (flare)
 			{
 				flare.vel = forward * frandom(speed * 0.25, speed * 0.55) + right * frandom(-0.7, 0.7) + (0, 0, frandom(0.2, 1.4));
@@ -51,15 +53,16 @@ class NeoHMGDeployedShield : Actor
 
 	Default
 	{
-		Radius 18;
-		Height 50;
+		Radius 16;
+		Height 46;
 		Health neohmgShieldAmmo;
 		Mass 999999;
-		XScale 0.42;
-		YScale 0.52;
+		XScale 0.38;
+		YScale 0.48;
 		RenderStyle "Add";
 		Alpha 0.62;
-		SpriteRotation 90;
+		// 90° with +WALLSPRITE lays the wall in the floor plane (rug); 0 keeps a vertical barrier.
+		SpriteRotation 0;
 		+SOLID;
 		+SHOOTABLE;
 		+WALLSPRITE;
@@ -77,7 +80,7 @@ class NeoHMGDeployedShield : Actor
 		{
 			double burstAngle = angle + frandom(-70, 70);
 			Vector3 dir = (cos(burstAngle), sin(burstAngle), 0);
-			Actor spark = Actor.Spawn("GreenTrailSparks", pos + dir * frandom(10, 24) + (0, 0, frandom(8, 58)), NO_REPLACE);
+			Actor spark = Actor.Spawn("GreenTrailSparks", pos + dir * frandom(8, 21) + (0, 0, frandom(7, 52)), NO_REPLACE);
 			if (spark)
 			{
 				spark.vel = dir * frandom(2.5, 8.0) + (0, 0, frandom(0.4, 5.8));
@@ -88,7 +91,7 @@ class NeoHMGDeployedShield : Actor
 		{
 			double flareAngle = angle + frandom(-85, 85);
 			Vector3 flareDir = (cos(flareAngle), sin(flareAngle), 0);
-			Actor flare = Actor.Spawn("GreenFlareSmall", pos + flareDir * frandom(8, 20) + (0, 0, frandom(18, 54)), NO_REPLACE);
+			Actor flare = Actor.Spawn("GreenFlareSmall", pos + flareDir * frandom(7, 18) + (0, 0, frandom(15, 48)), NO_REPLACE);
 			if (flare)
 			{
 				flare.vel = flareDir * frandom(1.6, 4.5) + (0, 0, frandom(0.5, 3.0));
@@ -132,11 +135,8 @@ class NeoHMGDeployedShield : Actor
 		Roll = 0;
 
 		vel = (0, 0, 0);
-		let sec = Level.PointInSector((pos.X, pos.Y));
-		double floorZHere = FloorZ;
-		if (sec)
-			floorZHere = sec.FloorPlane.ZatPoint((pos.X, pos.Y));
-		double standZ = floorZHere + 2;
+		FindFloorCeiling();
+		double standZ = floorz + neohmgShieldFloorLift;
 		if (pos.Z < standZ - 1 || pos.Z > standZ + 24)
 			SetOrigin((pos.X, pos.Y, standZ), false);
 		// Every other game tic + smaller bursts — constant per-tic spawns can choke FPS.
@@ -416,10 +416,12 @@ class PB_NeoHMG : PB_WeaponBase
 		double fz = Owner.FloorZ;
 		if (sec)
 			fz = sec.FloorPlane.ZatPoint(xy);
-		Vector3 shieldPos = (xy.X, xy.Y, fz + 2);
+		Vector3 shieldPos = (xy.X, xy.Y, fz + neohmgShieldFloorLift);
 		Actor spawned = Actor.Spawn("NeoHMGDeployedShield", shieldPos, NO_REPLACE);
 		let shield = NeoHMGDeployedShield(spawned);
 		if (!shield) return;
+		shield.FindFloorCeiling();
+		shield.SetZ(shield.floorz + neohmgShieldFloorLift);
 
 		double deployAng = Owner.Angle;
 		shield.lockYaw = deployAng;
