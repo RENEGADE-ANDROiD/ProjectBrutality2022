@@ -776,8 +776,15 @@ States    {
 	TNT1 A 0
 	TNT1 A 0 A_SpawnItem("WhiteShockwaveBig")
 	TNT1 A 2
+	TNT1 A 0 A_JumpIf(GetCvar("pb_rocketjump"), "ExcavatorRJ")
 	TNT1 A 0 A_Explode(200, 100, xf_hurtsource, 0, 90,0,0,"None","Explosive")
 	TNT1 A 0 A_Explode(125,140, xf_hurtsource, 0, 100)
+        Stop
+	ExcavatorRJ:
+	TNT1 A 0 A_Explode(200, 100, 0, 0, 90,0,0,"None","Explosive")
+	TNT1 A 0 A_Explode(125,140, 0, 0, 100)
+	TNT1 A 0 A_RadiusThrust(1800, 180, RTF_AFFECTSOURCE|RTF_THRUSTZ|RTF_NOIMPACTDAMAGE)
+	TNT1 A 0 A_RadiusGive("PBBlastMomentum", 320, RGF_PLAYERS|RGF_CUBE, 35)
         Stop}}
 
 
@@ -807,6 +814,68 @@ States    {
 	TNT1 A 2
 	TNT1 A 0 A_Explode(198,198)
         Stop}}
+
+Actor PB_PlayerHandGrenadeExplosion : HandGrenadeExplosion
+{
+States
+{
+	Spawn:
+	Goto Death
+	Death:
+	TNT1 A 0
+	TNT1 A 0 A_SpawnItem("WhiteShockwave")
+	TNT1 A 2
+	TNT1 A 0 A_JumpIf(GetCvar("pb_rocketjump"), "PBHandGrenadeRJ")
+	TNT1 A 0 A_Explode(180,220, XF_NOSPLASH|XF_HURTSOURCE)
+	Stop
+	PBHandGrenadeRJ:
+	TNT1 A 0 A_Explode(180,220, XF_NOSPLASH)
+	TNT1 A 0 A_RadiusThrust(1800, 180, RTF_AFFECTSOURCE|RTF_THRUSTZ|RTF_NOIMPACTDAMAGE)
+	TNT1 A 0 A_RadiusGive("PBBlastMomentum", 320, RGF_PLAYERS|RGF_CUBE, 35)
+	Stop
+}}
+
+Actor PB_PlayerImpactGrenadeExplosion : ImpactGrenadeExplosion
+{
+States
+{
+	Spawn:
+	Goto Death
+	Death:
+	TNT1 A 0
+	TNT1 A 0 A_SpawnItem("WhiteShockwave")
+	TNT1 A 2
+	TNT1 A 0 A_JumpIf(GetCvar("pb_rocketjump"), "PBImpactGrenadeRJ")
+	TNT1 A 0 A_Explode(198,198, XF_NOSPLASH|XF_HURTSOURCE)
+	Stop
+	PBImpactGrenadeRJ:
+	TNT1 A 0 A_Explode(198,198, XF_NOSPLASH)
+	TNT1 A 0 A_RadiusThrust(1800, 180, RTF_AFFECTSOURCE|RTF_THRUSTZ|RTF_NOIMPACTDAMAGE)
+	TNT1 A 0 A_RadiusGive("PBBlastMomentum", 320, RGF_PLAYERS|RGF_CUBE, 35)
+	Stop
+}}
+
+Actor PB_PlayerStickyExplosion : StickyExplosion
+{
+States
+{
+	Spawn:
+	Goto Death
+	Death:
+	TNT1 A 0
+	TNT1 A 0 A_SpawnItem("WhiteShockwaveBig")
+	TNT1 A 2
+	TNT1 A 0 A_JumpIf(GetCvar("pb_rocketjump"), "PBStickyRJ")
+	TNT1 A 0 A_Explode(175, 10, 0, 0,0,0,0,"BulletPuff","Explosive")
+	TNT1 A 1 A_Explode(160,150, XF_NOSPLASH|XF_HURTSOURCE)
+	Stop
+	PBStickyRJ:
+	TNT1 A 0 A_Explode(175, 10, 0, 0,0,0,0,"BulletPuff","Explosive")
+	TNT1 A 1 A_Explode(160,150, XF_NOSPLASH)
+	TNT1 A 0 A_RadiusThrust(1800, 180, RTF_AFFECTSOURCE|RTF_THRUSTZ|RTF_NOIMPACTDAMAGE)
+	TNT1 A 0 A_RadiusGive("PBBlastMomentum", 320, RGF_PLAYERS|RGF_CUBE, 35)
+	Stop
+}}
 
 actor CustomBarrelExplosion: RocketExplosion
 {
@@ -856,7 +925,7 @@ ACTOR GrenadeMissileHE
 	
 	Death:
         TNT1 A 0
-        TNT1 A 0 A_SpawnItemEx ("HandGrenadeExplosion",0,0,30,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("PB_PlayerHandGrenadeExplosion",0,0,30,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_SpawnItem ("BigRicoChet", 0, -15)
 		TNT1 A 0 A_CustomMissile("BigRicoChet")
 		TNT1 A 0 A_SpawnItem("WhiteShockwave")
@@ -879,7 +948,7 @@ ACTOR GrenadeMissileHE
 		
 	XDeath:
         TNT1 A 0
-        TNT1 A 0 A_SpawnItemEx ("HandGrenadeExplosion",0,0,30,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("PB_PlayerHandGrenadeExplosion",0,0,30,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_SpawnItem ("BigRicoChet", 0, -15)
 		TNT1 A 0 A_CustomMissile("BigRicoChet")
 		TNT1 A 0 A_SpawnItem("WhiteShockwave")
@@ -929,7 +998,7 @@ ACTOR BouncingGrenadeHE: GrenadeMissileHE
 	
 	Death:
         TNT1 A 0
-        TNT1 A 0 A_SpawnItemEx ("HandGrenadeExplosion",0,0,30,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("PB_PlayerHandGrenadeExplosion",0,0,30,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_SpawnItem ("BigRicoChet", 0, -15)
 		TNT1 A 0 A_CustomMissile("BigRicoChet")
 		TNT1 A 0 A_SpawnItem("WhiteShockwave")
@@ -952,7 +1021,7 @@ ACTOR BouncingGrenadeHE: GrenadeMissileHE
 		
 	XDeath:
         TNT1 A 0
-        TNT1 A 0 A_SpawnItemEx ("HandGrenadeExplosion",0,0,30,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("PB_PlayerHandGrenadeExplosion",0,0,30,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_SpawnItem ("BigRicoChet", 0, -15)
 		TNT1 A 0 A_CustomMissile("BigRicoChet")
 		TNT1 A 0 A_SpawnItem("WhiteShockwave")

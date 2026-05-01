@@ -40,6 +40,7 @@ All notable changes for this working tree are documented here. Earlier history l
 - **Weapon slot cycling:** **PlayerPawnBase** overrides **PickNextWeapon** / **PickPrevWeapon** (higher wrap budget; fallback when the ready weapon is missing from the slot table).
 - **Pump shotgun:** states use **SH0G** sprite prefix to match shipped **PumpShotgun** lumps; full PB Staging **PumpShotgun** sprite tree synced to the repo.
 - **Flamethrower** / **hell rifle:** **Weapon.SlotNumber** and **Player.WeaponSlot** set to slot **9** for consistent next/prev cycling with the updated slot logic.
+- **Explosive movement:** **`pb_rocketjump`** now gates player **grenade** family explosions the same way as **PB_PlayerRocketExplosion** (no self-splash + **`PBBlastMomentum`** thrust when **On**; **`XF_HURTSOURCE`** self-splash when **Off**): hand **frag** (`ThrownGrenade1` + **`PB_PlayerHandGrenadeExplosion`**), **Super GL** impact / sticky / incendiary / cryo / acid fog, **M41A** grenade, **Ballista** sticky, **Excavator**, equipment **Molotov**, and **Paingiver** seeker (**`PB_PlayerRocketExplosion`**).
 
 ### Fixed
 

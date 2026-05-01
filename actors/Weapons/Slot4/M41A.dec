@@ -45,7 +45,7 @@ ACTOR M41AGrenade : FastProjectile
 		TNT1 A 0 A_SpawnItemEx("DetectFloorCrater", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 		TNT1 A 0 A_SpawnItemEx("DetectCeilCrater", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 		TNT1 A 0 A_SpawnItemEx("ExplosionFlareSpawner", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
-		TNT1 A 0 A_SpawnItemEx("ImpactGrenadeExplosion", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 0 A_SpawnItemEx("PB_PlayerImpactGrenadeExplosion", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 		TNT1 A 0 A_SpawnItemEx("NewRocketExploFX", 0, 0, 0)
 		TNT1 A 1
 		XXXX A 0 A_SpawnProjectile("ExplosionQuake", 1, 0, random(0, 360), 2, random(0, 160))
