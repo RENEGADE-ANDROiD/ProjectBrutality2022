@@ -29,10 +29,10 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 
 ## What you get
 
-- **Player and systems:** The **PB_Doomer** player class, movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump & plasma climb — **Options → Brutality 2022 Additions → Explosive Movement**), tactical weapon feel, gore, executions, and HUD / PDA / wheel flows.
+- **Player and systems:** The **PB_Doomer** player class, movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump & plasma climb — **PB 2022 Enhanced → Explosive Movement**), tactical weapon feel, gore, executions, and HUD / PDA / wheel flows.
 - **Combat depth:** Brutality-style damage, layered gore, and Glory Kills with their own menu.
 - **Content breadth:** A large weapon roster, extra monsters, kill streaks, power-up hooks, and announcer support — most knobs live under Project Brutality menus.
-- **Configuration:** Tune almost everything under **Options → Project Brutality Settings**, **Options → Brutality 2022 Additions**, **Options → Weapon Settings**, and **Options → Glory Kill Options**.
+- **Configuration:** Use **Options → PB 2022 Enhanced** (same screen is **PB 2022 Enhanced** on the main menu, bound to **P** when available). That hub groups **Gameplay Settings**, **Weapon Settings**, **Global Settings**, **Visual Settings**, finisher/Glory Kill toggles, **Explosive Movement**, UI/feel (damage numbers, tactical motion, PBX HUD, kill streaks), and **Content Packs**. Deeper monster/spawn work also lives under **Global Settings** and **Monster Pack Settings**.
 - **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** is the one-switch folded gore mix for BDv22 mist/meat/organs, BPv10 death extras, and extra death pools/trails.
 - **Shield Saw:** Standard equipment—you start every new game with it. Quick Melee throws the ricocheting saw at range (close targets still get normal melee), and **Recall Shield Saw** brings it back.
 
@@ -144,7 +144,7 @@ Modders: `PLAYER.dec` is the source of truth for slotted weapons. The disabled *
 
 ### Explosive Movement (rocket jump & plasma wall boost)
 
-**Explosive Movement** is the 2022 submenu where you turn **Rocket Jumping** and **Plasma Wall Climbing** on or off. Open **Options → Brutality 2022 Additions** and scroll to the **Explosive Movement** section (same screen as **Instant Weapon Switch**, damage numbers, tactical weapon motion, PBX HUD, kill streaks, etc.). Both options are **On/Off** toggles:
+**Explosive Movement** is where you turn **Rocket Jumping** and **Plasma Wall Climbing** on or off. Open **Options → PB 2022 Enhanced** (or **PB 2022 Enhanced** from the title menu) and scroll to the **Explosive Movement** section. Both options are **On/Off** toggles:
 
 | Menu label | CVar | Role |
 | --- | --- | --- |
@@ -155,13 +155,13 @@ Rockets and certain plasma shots **and the Mastermind chaingun's explosive trace
 
 You do **not** need to jump first — firing behind you into floors or walls still shoves you forward. A brief **blast momentum** helper keeps that push from dying instantly to friction.
 
-**Tip:** Most combat feel lives in the menus (movement, recoil, spawns, visuals). Skim **Project Brutality Settings** before judging difficulty.
+**Tip:** Most combat feel lives in **PB 2022 Enhanced** and its submenus (gameplay, weapons, global spawns, visuals/gore). Skim those before judging difficulty.
 
 ### 2022 Enhanced Brootality
 
 **2022 Enhanced Brootality** is the single switch for the folded 2022 gore mix. It keeps the normal Project Brutality and Nash Gore stack in place, then layers in the extra BDv22, BPv10, and PB death-boost effects when `pb_enhanced_brutality_2022` is on.
 
-Turn it on from the gore menus when you want the full mixed presentation:
+Turn it on from **Options → PB 2022 Enhanced** (the **2022 Enhanced Brootality** row under *Finishers, Gore, Taunts*) when you want the full mixed presentation. Nash Gore and classic PB blood/gib options remain under **Visual Settings** → **Gore/Debris Settings** (see the on-screen hint in PB 2022 Enhanced).
 
 - **BDv22 gore:** hit mist plus guts, flying meat, ribs, organs, and brain chunks.
 - **BPv10 gore:** burned and carbonized bodies, flying torsos, flopping organs, zombie gear, and extra blood splats.
@@ -183,19 +183,28 @@ The vanilla **chainsaw** spawn point no longer rolls a Shield Saw drop—the saw
 
 ## Settings and controls
 
-- **Options → Brutality 2022 Additions** — Merged 2022 systems: finishers/taunts, **2022 Enhanced Brootality**, UI (damage numbers, tactical weapon motion, PBX HUD, kill streaks), **Instant Weapon Switch**, and **Explosive Movement** (**`pb_rocketjump`**, **`pb_plasma_wallclimb`** — see **Explosive Movement** below).
-- **Options → Project Brutality Settings** — Main `pb_*` cvars, rendering, blood, recoil, feature toggles, and submenus such as **Gore/Debris** (with a link to **2022 Enhanced Brootality**).
-- **Options → Glory Kill Options** — Glory Kills: range, HUD, fuel HUD placement, and related settings.  
+- **Options → PB 2022 Enhanced** — Primary hub (title **PB 2022 Enhanced**). Contains shortcuts to **Gameplay Settings**, **Advanced Weapon Spawns**, **Weapon Settings**, **Global Settings**, **Visual Settings**, the **Finishers, Gore, Taunts** block (auto-fatality, **Glory Kill**, **2022 Enhanced Brootality**), **Explosive Movement**, **UI and Feel** (taunts, damage numbers, tactical weapon motion, PBX weapon HUD, kill streaks, instant weapon switch, optional arcade/mutator rows), and **Content Packs** (monster pack options, festive hats). The same entry appears on the **main menu** for quick access.
+- **PB 2022 Enhanced → Glorykill Options** — Glory Kills: protection/fear, range, execution key mode, Crucible/Blood Punch behavior, fuel HUD layout, shoulder-cannon helpers, and related `be_*` / `sv_fuelhud_*` options.
+- **PB 2022 Enhanced → Visual Settings** — Rendering, motion blur, Tilt++, weapon bob/sway, **Gore/Debris Settings**, voxel pack options, and other presentation toggles.
+- **PB 2022 Enhanced → Global Settings** — Spawn presets, advanced monster/weapon spawn lists, monster abilities, add-on compatibility toggles.
 - **Options → Customize Controls** — **Project Brutality** and **Project Brutality - Interactions** sections, plus **Glory kill** for the Crucible (`+glorysaw`) and shoulder-cannon actions.
-- **Options → Brutality 2022 Additions → Explosive Movement** — Same submenu title as in-game (**Explosive Movement**): **Rocket Jumping** (`pb_rocketjump`) and **Plasma Wall Climbing** (`pb_plasma_wallclimb`). Full behavior: section **Explosive Movement (rocket jump & plasma wall boost)** above.
+
+### Experimental weapon executions (`pb_experimental`)
+
+**`pb_experimental`** is a **server** boolean in **`CVARINFO`** (toggle from the console: `pb_experimental 0` / `pb_experimental 1`). It is **not** mirrored on an options row; treat it as a power-user / server flag.
+
+When **on**, **Quick Melee** and **User2** branches on supported weapons can call **`PB_Execute()`**: if your aim target is a nearby, visible **`PB_Monster`** under about **20% max health** (or **below 65** HP), the weapon jumps into **`Execution_*`** states and spawns the first-person **`PB_*_Execution_*`** actor chains (plus the Monster Pack execution table in **`BaseWeapon_MPExecutionHelpers`** / **`BaseWeapon_MPExecutions`**). That path is **separate** from Glory Kill stagger / **`FatalityChecker`** token finishers in **`NEWPLAYE.dec`**—those still come from the Glory Kill death pools and inventory tokens.
+
+When **off**, **`PB_Execute()`** no-ops and normal melee/punch flow continues.
 
 **Useful cvars for testing or performance:**
 
 - `pb_classicmonsters` — classic vs. Brutality-style monsters.  
 - `pb_disablenewenemies`, `pb_disablenewguns`, `pb_disabledecorations`, `pb_disablemapenhancements` — turn major blocks on or off.  
 - `pb_lowgraphicsmode`, `pb_bloodamount`, `zdoombrutalblood`, `zdoombrutaljanitor`, `zdoombrutaljanitorcasings` — lighter visuals and gore.  
-- `pb_enhanced_brutality_2022` — one-switch full mix for the folded BDv22 / BPv10 / extra death-pool gore behavior. Legacy `bdv22_*` and `bpv10_*` cvars remain declared for old configs, but are no longer exposed as tuning options.
-- `pb_rocketjump`, `pb_plasma_wallclimb` — **Explosive Movement**: rocket-jump and plasma climb/boost toggles (**Options → Brutality 2022 Additions**, section **Explosive Movement**). Both default **On** in **`CVARINFO`**; set either **Off** for vanilla-style self-splash on that weapon path.
+- `pb_enhanced_brutality_2022` — one-switch full mix for the folded BDv22 / BPv10 / extra death-pool gore behavior (**PB 2022 Enhanced**). Legacy `bdv22_*` and `bpv10_*` cvars remain declared for old configs, but are no longer exposed as tuning options.
+- `pb_experimental` — enables weapon-initiated **`PB_Execute`** finishers on wounded monsters (see **Experimental weapon executions** above). Default follows **`CVARINFO`** in your build.
+- `pb_rocketjump`, `pb_plasma_wallclimb` — **Explosive Movement**: rocket-jump and plasma climb/boost toggles (**PB 2022 Enhanced**, section **Explosive Movement**). Both default **On** in **`CVARINFO`**; set either **Off** for vanilla-style self-splash on that weapon path.
 
 ## Feedback and bug reports
 
