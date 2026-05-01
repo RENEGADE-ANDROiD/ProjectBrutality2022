@@ -134,7 +134,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot1/BeamKatana_Weapon.zs"
 #include "zscript/Weapons/Slot1/VorpalBlade.zc"
 #include "zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc"
-#include "zscript/Weapons/MeleeWeaponPack/Stormcast.zc"
+//#include "zscript/Weapons/MeleeWeaponPack/Stormcast.zc" // disabled — pair with DECORATE Stormcast.dec
 #include "zscript/Weapons/ShieldSawNotify.zc"
 #include "zscript/Weapons/Slot2/Deagle/Deagle.zs"
 #include "zscript/Weapons/PB_WeaponTacticalFeel.zc"

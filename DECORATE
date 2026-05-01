@@ -397,7 +397,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot6/M2PLASMA.dec"
 // DragonSlayer / Stormcast (ZAPR trail: StormcastElectroBlastTrail; DLI trail: ElectroBlastTrail in M2PLASMA; PlasmaFlare from FLARES)
 #include "actors/Weapons/MeleeWeaponPack/DragonSlayer.dec"
-#include "actors/Weapons/MeleeWeaponPack/Stormcast.dec"
+//#include "actors/Weapons/MeleeWeaponPack/Stormcast.dec" // disabled for now — re-enable with ZSCRIPT.zc, PLAYER slot 9, BFG spawner, SBARINFO, wheel case
 #include "actors/Weapons/Slot8/BFGMKIV.dec"
 //#include "actors/Weapons/Slot8/BFGBEAM.dec"
 #include "actors/Weapons/Slot8/BLACKHOLE.dec"

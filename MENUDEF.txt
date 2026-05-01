@@ -281,6 +281,9 @@ OptionMenu "PB_2022AdditionsMenu"
 	Slider "Auto-Fatality Distance", "pb_auto_fatality_dist", 64, 400, 4
 	StaticText "Requires Glory Kills On: Finisher Attempt", teal
 	StaticText " ", teal
+	Option "$PB_EXPERIMENTAL_EXECUTIONS", "pb_experimental", "OnOff"
+	StaticText "$PB_EXPERIMENTAL_EXECUTIONS_DESC", teal
+	StaticText " ", teal
 	Option "Glory Kill.", "be_ExecutionsON", YesNo
 	Submenu "Glorykill Options",		"Glorykills"
 	StaticText " ", teal
@@ -604,8 +607,8 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Dragon Slayer", "pb_NoDragonSlayerWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Stormcast", "pb_NoStormcastWeapon", "SpawnOnOff"
-	StaticText " "
+	// Option "Spawn Stormcast", "pb_NoStormcastWeapon", "SpawnOnOff" — weapon disabled; re-enable DECORATE/ZSCRIPT + slot + spawner + wheel + SBARINFO
+	// StaticText " "
 }
 
 
