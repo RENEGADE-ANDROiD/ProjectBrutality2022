@@ -81,7 +81,9 @@ Actor MastermindChaingun : PB_Weapon
         RMNG F 1
         {
             if (!PressingFire())
+            {
                 A_SetInventory("MastermindChainBurstShots", 0);
+            }
             if (CountInv("MastermindChaingunFired") >= 60) { A_GunFlash("MastermindChaingunBarrelSmoke"); }
             if (PressingFire() && CountInv("RocketAmmo") > 0) { return state("Fire"); }
             return A_DoPBWeaponAction;

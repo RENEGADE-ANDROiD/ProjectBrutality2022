@@ -29,9 +29,11 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 
 ## What you get
 
-- **Player and systems:** The **PB_Doomer** player class, movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump & plasma climb — **PB 2022 Enhanced → Explosive Movement**), tactical weapon feel, gore, executions, and HUD / PDA / wheel flows.
-- **Combat depth:** Brutality-style damage, layered gore, and Glory Kills with their own menu.
-- **Content breadth:** A large weapon roster, extra monsters, kill streaks, power-up hooks, and announcer support — most knobs live under Project Brutality menus.
+**Glory Kills and finishers** are a major part of the fantasy: when enemies are weak enough, you can **stagger** them and rip into **cinematic kills**—many in **first person**, with different animations for a **wide** swath of the roster (vanilla-style demons, Brutality variants, and a lot of **extra / Monster Pack** cast). Layered on top are the **Crucible**, **Blood Punch**, **shoulder cannon** burn and freeze shots, **pinata**-style rewards, and a **Glory HUD** so you can see fuel, punch charges, and launcher cooldowns. Turn the system on or off and open the main tuning from **Options → PB 2022 Enhanced**; use **Glorykill Options** for HUD, range, and finer behavior.
+
+- **Player and systems:** The **PB_Doomer** player class, movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump & plasma climb — **PB 2022 Enhanced → Explosive Movement**), tactical weapon feel, layered gore, and HUD / PDA / weapon-special wheel flows.
+- **Combat depth:** Brutality-style damage and reactions, plus the weapon and monster variety below—all adjustable from **PB 2022 Enhanced** and related submenus.
+- **Content breadth:** Large weapon roster, extra monsters, kill streaks, power-up hooks, and announcer support.
 - **Configuration:** Use **Options → PB 2022 Enhanced** (same screen is **PB 2022 Enhanced** on the main menu, bound to **P** when available). That hub groups **Gameplay Settings**, **Weapon Settings**, **Global Settings**, **Visual Settings**, finisher/Glory Kill toggles, **Explosive Movement**, UI/feel (damage numbers, tactical motion, PBX HUD, kill streaks), and **Content Packs**. Deeper monster/spawn work also lives under **Global Settings** and **Monster Pack Settings**.
 - **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** is the one-switch folded gore mix for BDv22 mist/meat/organs, BPv10 death extras, and extra death pools/trails.
 - **Shield Saw:** Standard equipment—you start every new game with it. Quick Melee throws the ricocheting saw at range (close targets still get normal melee), and **Recall Shield Saw** brings it back.
