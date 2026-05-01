@@ -19,6 +19,9 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Changed
 
+- **PB_SSG** / **PB_QuadSG** (dual SSG + quad respect): sprites synced from **`PB Old SSG Skin But Better`** (`Downloads\PB_Old SSG Skin But Better\SPRITES\WEAPONS\Slot 3`) into **`SPRITES/WEAPONS/Slot 3/SSG`** and **`SPRITES/WEAPONS/Slot 3/Quad-Shotgun`**.
+
+- **Metal Sniper** / **MarauderSSG**: louder primary-fire audio (**MetalSniper** `MS_FireActual` **1.44**; **MarauderSSG** `MSSFR` **`A_PlaySoundEx`** **1.5**).
 - **Carbine**: weapon-select fixes; obsolete Carbine sprite lumps removed (`e0076241d`).
 - **NeoHMG** deployed shield: floor sampling / `ZatPoint` `Vector2`, no player tracking, locked deploy yaw, `damageCredit` for shield-death burst, wall-facing presentation and scale (`0b3ae6a04`); follow-up **deployment position** tweak (`fef269dba`).
 - **PB_WeaponTacticalFeel**: suppress tactical tilt/roll on NeoHMG fire so state-authored offsets stay stable (`0b3ae6a04`).
@@ -35,7 +38,7 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Fixed
 
-- **Riot shield**: HUD ammo, duplicate shield sprite, double-fire (`5db3cd00b`).
+- **Pump shotgun** buckshot: **Fire** / **PumpFromHip2** used **SHTF** for muzzle frames while **PumpShotgun** only ships **SH0FA0–SH0FG0** (not **SHTFA0–SHTFG0**); states and **`BMAP/Shotgun.txt`** now use **SH0F** with matching brightmaps.
 - **UZDoom startup**: `NoDelay`, `Vel.LengthXY`, `A_RadiusGive` compatibility (`a3a7ede64`).
 - **HASG** sound, **Metal Sniper** reload, **M41A** / Battle Rifle damage (`c70971995`).
 - **Metal Sniper**: infinite reload loop and **SniperAmmo** backpack overflow (`4d8c11fd0`).

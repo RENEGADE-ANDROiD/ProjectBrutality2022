@@ -719,12 +719,12 @@ class PB_MetalSniper : PB_WeaponBase
         if (isResonance())
         {
             PB_FireBullets("MS_ResonanceAmmo", 1, frandom(-0.1, 0.1), 0, 0, frandom(-0.1, 0.1));
-            A_StartSound("weapons/railgf", 20, CHANF_OVERLAP, 1.2);
+            A_StartSound("weapons/railgf", 20, CHANF_OVERLAP, 1.44);
         }
         else
         {
             PB_FireBullets("PB_762x51mmAP", 1, frandom(-0.1, 0.1), 0, 0, frandom(-0.1, 0.1));
-            A_StartSound("MS/Fire", 20, CHANF_OVERLAP, 1.2);
+            A_StartSound("MS/Fire", 20, CHANF_OVERLAP, 1.44);
         }
     }
 

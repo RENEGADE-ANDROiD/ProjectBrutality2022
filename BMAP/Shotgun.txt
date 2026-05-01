@@ -35,6 +35,15 @@ brightmap sprite SH1FB0{map "Brightmaps/WEAPONS/Shotgun/Fire/SHTFB0.png" DISABLE
 brightmap sprite SH2FA0{map "Brightmaps/WEAPONS/Shotgun/Fire/SHTFA0.png" DISABLEFULLBRIGHT}
 brightmap sprite SH2FB0{map "Brightmaps/WEAPONS/Shotgun/Fire/SHTFB0.png" DISABLEFULLBRIGHT}
 
+// Buckshot hip/fire (SH0FA–SH0FG lumps)
+brightmap sprite SH0FA0{map "Brightmaps/WEAPONS/Shotgun/Fire/SHTFA0.png" DISABLEFULLBRIGHT}
+brightmap sprite SH0FB0{map "Brightmaps/WEAPONS/Shotgun/Fire/SHTFB0.png" DISABLEFULLBRIGHT}
+brightmap sprite SH0FC0{map "Brightmaps/WEAPONS/Shotgun/SHTFC.png"}
+brightmap sprite SH0FD0{map "Brightmaps/WEAPONS/Shotgun/SHTFD.png"}
+brightmap sprite SH0FE0{map "Brightmaps/WEAPONS/Shotgun/SHTFE.png"}
+brightmap sprite SH0FF0{map "Brightmaps/WEAPONS/Shotgun/SHTFF.png"}
+brightmap sprite SH0FG0{map "Brightmaps/WEAPONS/Shotgun/SHTFG.png"}
+
 //FIRE ANIMATION
 brightmap sprite SHTFC0{map "Brightmaps/WEAPONS/Shotgun/SHTFC.png"}
 brightmap sprite SHTFD0{map "Brightmaps/WEAPONS/Shotgun/SHTFD.png"}
