@@ -22,6 +22,8 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Changed
 
+- **Stormcast** re-enabled (slot 9): folded melee-pack ZScript + DECORATE are loaded again; BFG spawner can pick **Stormcast**; HUD + **Weapon Spawns** menu use **`pb_NoStormcastWeapon`**. Alt-fire spell branches match **Project-Brutality-Weapons-Pack** behavior (hold **Fire** while charging for orbs, **User1**/equipment for stunwalls, **Weapon Special** held for Arc of Death tiers, **Reload** tap during charge for warper, **Alt-Fire** while airborne for air lightning)—not weapon-special **wheel** `Select_SC_*` / `SCMode_*` tokens (those actors were removed).
+
 - **PB_SSG** / **PB_QuadSG** (dual SSG + quad respect): sprites synced from **`PB Old SSG Skin But Better`** (`Downloads\PB_Old SSG Skin But Better\SPRITES\WEAPONS\Slot 3`) into **`SPRITES/WEAPONS/Slot 3/SSG`** and **`SPRITES/WEAPONS/Slot 3/Quad-Shotgun`**.
 
 - **Metal Sniper** / **MarauderSSG**: louder primary-fire audio (**MetalSniper** `MS_FireActual` **1.44**; **MarauderSSG** `MSSFR` **`A_PlaySoundEx`** **1.5**).
@@ -41,7 +43,9 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Fixed
 
-- **Argent Sith** / **Beam Katana**: melee swing audio—**BeamKatana** lumps were extensionless OGGs (now **`.ogg`** + **SNDINFO** paths), **ArgKatana/Swing** aligned to **`.ogg`**, windup **A_StartSound** added for primary/alt/berserk slashes.
+- **Stormcast**: ZScript state action blocks used **`return state("")`** (string → state type error); use **`return ResolveState(null)`** for normal fall-through so UZDoom compiles.
+- **Stormcast** stunwall (equipment while holding alt-fire charge): removed **`A_SetPitch`** kick frames that never restored view pitch cleanly; after stunwall, **`Goto Ready3`** when alt-fire is released, or **`Goto AltHold`** when still held so charge tier routing matches **`PowerChargeStorm`** instead of **`Ready` → full `AltFire` restart** (fixes missing sprites / stuck feel and post-fx shake).
+- **Marauder SSG**: primary **`MSSFR`** uses **`A_StartSound(..., CHAN_WEAPON, CHANF_DEFAULT, 1.5, ATTN_NORM)`** instead of **`A_PlaySoundEx`** (avoids volume truncation warning on `1.5`).
 - **Pump shotgun** buckshot: **Fire** / **PumpFromHip2** used **SHTF** for muzzle frames while **PumpShotgun** only ships **SH0FA0–SH0FG0** (not **SHTFA0–SHTFG0**); states and **`BMAP/Shotgun.txt`** now use **SH0F** with matching brightmaps.
 - **UZDoom startup**: `NoDelay`, `Vel.LengthXY`, `A_RadiusGive` compatibility (`a3a7ede64`).
 - **HASG** sound, **Metal Sniper** reload, **M41A** / Battle Rifle damage (`c70971995`).

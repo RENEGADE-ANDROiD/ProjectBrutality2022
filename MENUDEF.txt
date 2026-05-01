@@ -607,8 +607,8 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Dragon Slayer", "pb_NoDragonSlayerWeapon", "SpawnOnOff"
 	StaticText " "
-	// Option "Spawn Stormcast", "pb_NoStormcastWeapon", "SpawnOnOff" — weapon disabled; re-enable DECORATE/ZSCRIPT + slot + spawner + wheel + SBARINFO
-	// StaticText " "
+	Option "Spawn Stormcast", "pb_NoStormcastWeapon", "SpawnOnOff"
+	StaticText " "
 }
 
 

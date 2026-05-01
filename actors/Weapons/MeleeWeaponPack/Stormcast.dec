@@ -3,6 +3,8 @@
 // Dreo & Lord Lothar (Schism). PB 0.4.2+ rework: Renegade Android. PB 2022 fold.
 //
 // Weapon class: zscript/Weapons/MeleeWeaponPack/Stormcast.zc
+// Alt-fire modes follow Project-Brutality-Weapons-Pack: simultaneous inputs while
+// charging (Fire, User1/equipment, Weapon Special, Reload), not wheel tokens.
 
 // Ammmo Test
 actor IsUsingStormcast : Inventory{Inventory.maxamount 1}
@@ -73,20 +75,6 @@ Actor QuickLightningSpellSelected: Inventory
 {
 Inventory.Maxamount 1
 }
-
-// Weapon Special wheel: exactly one SCMode_* is active; Select_SC_* are one-shot from the wheel.
-Actor SCMode_ChargedOrbs : Inventory { Inventory.MaxAmount 1 }
-Actor SCMode_Stunwall : Inventory { Inventory.MaxAmount 1 }
-Actor SCMode_Thunderstorm : Inventory { Inventory.MaxAmount 1 }
-Actor SCMode_LightningWarper : Inventory { Inventory.MaxAmount 1 }
-Actor SCMode_QuickFlight : Inventory { Inventory.MaxAmount 1 }
-
-Actor Select_SC_ChargedOrbs : Inventory { Inventory.MaxAmount 1 }
-Actor Select_SC_Stunwall : Inventory { Inventory.MaxAmount 1 }
-Actor Select_SC_Thunderstorm : Inventory { Inventory.MaxAmount 1 }
-Actor Select_SC_LightningWarper : Inventory { Inventory.MaxAmount 1 }
-Actor Select_SC_QuickFlight : Inventory { Inventory.MaxAmount 1 }
-Actor Select_SC_FistCombo : Inventory { Inventory.MaxAmount 1 }
 
 ACTOR ArcOfDeath_Fake : PB_Weapon
 {

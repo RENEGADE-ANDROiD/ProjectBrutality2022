@@ -50,126 +50,13 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel");
             TNT1 A 0 A_TakeInventory("Punching", 1);
             TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-            TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
-            TNT1 A 0 A_JumpIfInventory("Select_SC_FistCombo", 1, "WSpec_SC_FistCombo");
-            TNT1 A 0 A_JumpIfInventory("Select_SC_ChargedOrbs", 1, "WSpec_SC_ChargedOrbs");
-            TNT1 A 0 A_JumpIfInventory("Select_SC_Stunwall", 1, "WSpec_SC_Stunwall");
-            TNT1 A 0 A_JumpIfInventory("Select_SC_Thunderstorm", 1, "WSpec_SC_Thunderstorm");
-            TNT1 A 0 A_JumpIfInventory("Select_SC_LightningWarper", 1, "WSpec_SC_LightningWarper");
-            TNT1 A 0 A_JumpIfInventory("Select_SC_QuickFlight", 1, "WSpec_SC_QuickFlight");
-            Goto Ready3;
-
-        WSpec_SC_FistCombo:
-            TNT1 A 0
-            {
-                A_TakeInventory("Select_SC_FistCombo", 1);
-                A_TakeInventory("Select_SC_ChargedOrbs", 1);
-                A_TakeInventory("Select_SC_Stunwall", 1);
-                A_TakeInventory("Select_SC_Thunderstorm", 1);
-                A_TakeInventory("Select_SC_LightningWarper", 1);
-                A_TakeInventory("Select_SC_QuickFlight", 1);
-            }
             PUNS E 2;
             PUNS F 2 A_PlaySoundEx("KNUCKLED", "Auto");
             PUNS GFEK 2;
             PUNS L 2 A_PlaySoundEx("KNUCKLED", "Auto");
             PUNS MLK 2;
+            TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
             Goto Ready;
-
-        WSpec_SC_ChargedOrbs:
-            TNT1 A 0
-            {
-                A_TakeInventory("Select_SC_FistCombo", 1);
-                A_TakeInventory("Select_SC_ChargedOrbs", 1);
-                A_TakeInventory("Select_SC_Stunwall", 1);
-                A_TakeInventory("Select_SC_Thunderstorm", 1);
-                A_TakeInventory("Select_SC_LightningWarper", 1);
-                A_TakeInventory("Select_SC_QuickFlight", 1);
-                A_TakeInventory("SCMode_ChargedOrbs", 1);
-                A_TakeInventory("SCMode_Stunwall", 1);
-                A_TakeInventory("SCMode_Thunderstorm", 1);
-                A_TakeInventory("SCMode_LightningWarper", 1);
-                A_TakeInventory("SCMode_QuickFlight", 1);
-                A_GiveInventory("SCMode_ChargedOrbs", 1);
-                A_PlaySound("menu/choose", CHAN_AUTO);
-            }
-            Goto Ready3;
-
-        WSpec_SC_Stunwall:
-            TNT1 A 0
-            {
-                A_TakeInventory("Select_SC_FistCombo", 1);
-                A_TakeInventory("Select_SC_ChargedOrbs", 1);
-                A_TakeInventory("Select_SC_Stunwall", 1);
-                A_TakeInventory("Select_SC_Thunderstorm", 1);
-                A_TakeInventory("Select_SC_LightningWarper", 1);
-                A_TakeInventory("Select_SC_QuickFlight", 1);
-                A_TakeInventory("SCMode_ChargedOrbs", 1);
-                A_TakeInventory("SCMode_Stunwall", 1);
-                A_TakeInventory("SCMode_Thunderstorm", 1);
-                A_TakeInventory("SCMode_LightningWarper", 1);
-                A_TakeInventory("SCMode_QuickFlight", 1);
-                A_GiveInventory("SCMode_Stunwall", 1);
-                A_PlaySound("menu/choose", CHAN_AUTO);
-            }
-            Goto Ready3;
-
-        WSpec_SC_Thunderstorm:
-            TNT1 A 0
-            {
-                A_TakeInventory("Select_SC_FistCombo", 1);
-                A_TakeInventory("Select_SC_ChargedOrbs", 1);
-                A_TakeInventory("Select_SC_Stunwall", 1);
-                A_TakeInventory("Select_SC_Thunderstorm", 1);
-                A_TakeInventory("Select_SC_LightningWarper", 1);
-                A_TakeInventory("Select_SC_QuickFlight", 1);
-                A_TakeInventory("SCMode_ChargedOrbs", 1);
-                A_TakeInventory("SCMode_Stunwall", 1);
-                A_TakeInventory("SCMode_Thunderstorm", 1);
-                A_TakeInventory("SCMode_LightningWarper", 1);
-                A_TakeInventory("SCMode_QuickFlight", 1);
-                A_GiveInventory("SCMode_Thunderstorm", 1);
-                A_PlaySound("menu/choose", CHAN_AUTO);
-            }
-            Goto Ready3;
-
-        WSpec_SC_LightningWarper:
-            TNT1 A 0
-            {
-                A_TakeInventory("Select_SC_FistCombo", 1);
-                A_TakeInventory("Select_SC_ChargedOrbs", 1);
-                A_TakeInventory("Select_SC_Stunwall", 1);
-                A_TakeInventory("Select_SC_Thunderstorm", 1);
-                A_TakeInventory("Select_SC_LightningWarper", 1);
-                A_TakeInventory("Select_SC_QuickFlight", 1);
-                A_TakeInventory("SCMode_ChargedOrbs", 1);
-                A_TakeInventory("SCMode_Stunwall", 1);
-                A_TakeInventory("SCMode_Thunderstorm", 1);
-                A_TakeInventory("SCMode_LightningWarper", 1);
-                A_TakeInventory("SCMode_QuickFlight", 1);
-                A_GiveInventory("SCMode_LightningWarper", 1);
-                A_PlaySound("menu/choose", CHAN_AUTO);
-            }
-            Goto Ready3;
-
-        WSpec_SC_QuickFlight:
-            TNT1 A 0
-            {
-                A_TakeInventory("Select_SC_FistCombo", 1);
-                A_TakeInventory("Select_SC_ChargedOrbs", 1);
-                A_TakeInventory("Select_SC_Stunwall", 1);
-                A_TakeInventory("Select_SC_Thunderstorm", 1);
-                A_TakeInventory("Select_SC_LightningWarper", 1);
-                A_TakeInventory("Select_SC_QuickFlight", 1);
-                A_TakeInventory("SCMode_ChargedOrbs", 1);
-                A_TakeInventory("SCMode_Stunwall", 1);
-                A_TakeInventory("SCMode_Thunderstorm", 1);
-                A_TakeInventory("SCMode_LightningWarper", 1);
-                A_TakeInventory("SCMode_QuickFlight", 1);
-                A_GiveInventory("SCMode_QuickFlight", 1);
-                A_PlaySound("menu/choose", CHAN_AUTO);
-            }
-            Goto Ready3;
 
         Ready:
             TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
@@ -183,7 +70,7 @@ class Stormcast : PB_WeaponBase
             {
                 return A_DoPBWeaponAction(WRF_NOFIRE);
             }
-            // In original, there was a loop here. We'll emulate with a simple state.
+            TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "InitializeThunderstorm");
             Goto Ready3;
 
         Ready3:
@@ -277,6 +164,13 @@ class Stormcast : PB_WeaponBase
 
         // The main Fire state (left click) – lightning channel
         Fire:
+            TNT1 A 0
+            {
+                if (CountInv("GoFatality") >= 1)
+                    SetPlayerProperty(0, 1, 0);
+                else
+                    SetPlayerProperty(0, 0, 0);
+            }
             TNT1 A 0 A_JumpIf(vel.z != 0, "Fly");
             TNT1 A 0 A_JumpIfInventory("PowerChargeStorm", 15, 2);
             Goto Ready;
@@ -386,13 +280,25 @@ class Stormcast : PB_WeaponBase
             Goto Depletion;
             TNT1 A 0;
             MEDI E 2 BRIGHT A_ChangeVelocity(cos(pitch)-1, 0, -sin(pitch)+2.2, CVF_RELATIVE);
-            TNT1 A 0 A_JumpIfInventory("SCMode_QuickFlight", 1, "QuickLightning");
+            TNT1 A 0
+            {
+                if (PressingAltfire())
+                    return ResolveState("QuickLightning");
+                return ResolveState(null);
+            }
             TNT1 A 0 PB_ReFire("Fly");
             MEDI F 4;
             Goto Ready;
 
         // AltFire (right click) – charge ball
         AltFire:
+            TNT1 A 0
+            {
+                if (CountInv("GoFatality") >= 1)
+                    SetPlayerProperty(0, 1, 0);
+                else
+                    SetPlayerProperty(0, 0, 0);
+            }
             TNT1 A 0 A_PlaySound("PZAPCHR2");
             SCST ABCD 1;
             SCST EFGH 1 BRIGHT;
@@ -406,9 +312,14 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_GiveInventory("PowerChargeStorm", 2);
             TNT1 A 0 A_PlaySound("PZAPHUM", CHAN_WEAPON, 2, 1);
             SCC1 ABCDE 1 BRIGHT A_GiveInventory("PowerChargeStorm", 1);
-            TNT1 A 0 BRIGHT A_JumpIfInventory("SCMode_ChargedOrbs", 1, "CastPulseBall");
-            TNT1 A 0 BRIGHT A_JumpIfInventory("SCMode_Stunwall", 1, "InitializeStunwallXS");
-            TNT1 A 0 A_JumpIfInventory("SCMode_Thunderstorm", 1, "InitializeThunderstorm2");
+            TNT1 A 0
+            {
+                if (PressingFire())
+                    return ResolveState("CastPulseBall");
+                return ResolveState(null);
+            }
+            TNT1 A 0 BRIGHT A_JumpIfInventory("UseEquipment", 1, "InitializeStunwallXS");
+            TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "InitializeThunderstorm2");
             TNT1 A 0 PB_ReFire("AltHold");
             Goto Discharge;
 
@@ -419,23 +330,39 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_JumpIfInventory("PowerChargeStorm", 25, "AltHold4");
             TNT1 A 0 A_JumpIfInventory("PowerChargeStorm", 20, "AltHold3");
             TNT1 A 0 A_GiveInventory("PowerChargeStorm", 4);
-            TNT1 A 0 BRIGHT A_JumpIfInventory("SCMode_ChargedOrbs", 1, "CastStunBall");
-            TNT1 A 0 BRIGHT A_JumpIfInventory("SCMode_Stunwall", 1, "InitializeStunwallSmall");
-            TNT1 A 0 A_JumpIfInventory("SCMode_Thunderstorm", 1, "InitializeThunderstorm2");
+            TNT1 A 0
+            {
+                if (PressingFire())
+                    return ResolveState("CastStunBall");
+                return ResolveState(null);
+            }
+            TNT1 A 0 BRIGHT A_JumpIfInventory("UseEquipment", 1, "InitializeStunwallSmall");
+            TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "InitializeThunderstorm2");
             TNT1 A 0 A_PlaySound("PZAPHUM", CHAN_WEAPON, 2, 1);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
             SCC2 ABCDEFGH 1 BRIGHT A_FireCustomMissile("PlasmaFlareSpawn", 25, 0, 0, 0);
             TNT1 A 0 A_GiveInventory("PowerChargeStorm", 8);
-            TNT1 A 0 A_JumpIfInventory("SCMode_LightningWarper", 1, "StartWarp");
+            TNT1 A 0
+            {
+                if (JustPressed(BT_RELOAD))
+                    return ResolveState("StartWarp");
+                return ResolveState(null);
+            }
             TNT1 A 0 PB_ReFire("AltHold2");
             Goto Discharge;
 
         AltHold3:
             TNT1 A 0 A_JumpIfInventory("PowerChargeStorm", 25, "AltHold4");
             TNT1 A 0 A_GiveInventory("PowerChargeStorm", 6);
-            SCC3 D 1 BRIGHT A_JumpIfInventory("SCMode_ChargedOrbs", 1, "CastBallLightning");
-            TNT1 A 0 BRIGHT A_JumpIfInventory("SCMode_Stunwall", 1, "InitializeStunwallSmall");
-            TNT1 A 0 A_JumpIfInventory("SCMode_Thunderstorm", 1, "InitializeThunderstorm2");
+            TNT1 A 0
+            {
+                if (PressingFire())
+                    return ResolveState("CastBallLightning");
+                return ResolveState(null);
+            }
+            SCC3 D 1 BRIGHT A_WeaponOffset(0, 32);
+            TNT1 A 0 BRIGHT A_JumpIfInventory("UseEquipment", 1, "InitializeStunwallSmall");
+            TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "InitializeThunderstorm2");
             TNT1 A 0 A_PlaySound("CHRGEBL", CHAN_WEAPON, 2, 1);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
             SCC3 A 1 BRIGHT A_GiveInventory("PowerChargeStorm", 1);
@@ -451,7 +378,12 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_FireCustomMissile("LightningFlareSpawn", 25, 0, 0, 0);
             SCC3 F 1 BRIGHT A_GiveInventory("PowerChargeStorm", 1);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
-            TNT1 A 0 A_JumpIfInventory("SCMode_LightningWarper", 1, "StartWarp2");
+            TNT1 A 0
+            {
+                if (JustPressed(BT_RELOAD))
+                    return ResolveState("StartWarp2");
+                return ResolveState(null);
+            }
             TNT1 A 0 PB_ReFire("AltHold3");
             Goto Discharge;
 
@@ -460,9 +392,15 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_JumpIfInventory("PowerChargeStorm", 25, "AltHold5");
             TNT1 A 0 A_FireCustomMissile("PlasmaFlareSpawn", 20, 0, 0, 0);
             TNT1 A 0 A_PlaySound("Stormcast/PortalLoop", CHAN_WEAPON, 2, 1);
-            SCC4 A 1 BRIGHT A_JumpIfInventory("SCMode_ChargedOrbs", 1, "CastBallLightning");
-            TNT1 A 0 A_JumpIfInventory("SCMode_Stunwall", 1, "InitializeStunwall");
-            TNT1 A 0 A_JumpIfInventory("SCMode_Thunderstorm", 1, "InitializeThunderstorm3");
+            TNT1 A 0
+            {
+                if (PressingFire())
+                    return ResolveState("CastBallLightning");
+                return ResolveState(null);
+            }
+            SCC4 A 1 BRIGHT A_WeaponOffset(0, 32);
+            TNT1 A 0 A_JumpIfInventory("UseEquipment", 1, "InitializeStunwall");
+            TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "InitializeThunderstorm3");
             TNT1 A 0 A_FireCustomMissile("StormFlareSpawn", 25, 0, 0, 0);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
             SCC4 B 1 BRIGHT A_GiveInventory("PowerChargeStorm", 1);
@@ -474,7 +412,12 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
             SCC4 E 1 BRIGHT A_GiveInventory("PowerChargeStorm", 1);
             TNT1 A 0 A_FireCustomMissile("StormFlareSpawn", 25, 0, 0, 0);
-            TNT1 A 0 A_JumpIfInventory("SCMode_LightningWarper", 1, "StartWarp2");
+            TNT1 A 0
+            {
+                if (JustPressed(BT_RELOAD))
+                    return ResolveState("StartWarp2");
+                return ResolveState(null);
+            }
             TNT1 A 0 PB_ReFire("AltHold4");
             Goto Discharge;
 
@@ -482,9 +425,15 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_GiveInventory("PowerChargeStorm", 10);
             TNT1 A 0 A_FireCustomMissile("PlasmaFlareSpawn", 20, 0, 0, 0);
             TNT1 A 0 A_PlaySound("Stormcast/PortalLoop", CHAN_WEAPON, 2, 1);
-            SCC4 A 1 BRIGHT A_JumpIfInventory("SCMode_ChargedOrbs", 1, "CastMorgenstern");
-            TNT1 A 0 BRIGHT A_JumpIfInventory("SCMode_Stunwall", 1, "InitializeStunwall");
-            TNT1 A 0 A_JumpIfInventory("SCMode_Thunderstorm", 1, "InitializeThunderstorm4");
+            TNT1 A 0
+            {
+                if (PressingFire())
+                    return ResolveState("CastMorgenstern");
+                return ResolveState(null);
+            }
+            SCC4 A 1 BRIGHT A_WeaponOffset(0, 32);
+            TNT1 A 0 BRIGHT A_JumpIfInventory("UseEquipment", 1, "InitializeStunwall");
+            TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "InitializeThunderstorm4");
             TNT1 A 0 A_FireCustomMissile("StormFlareSpawn", 25, 0, 0, 0);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
             SCC4 B 1 BRIGHT A_GiveInventory("PowerChargeStorm", 1);
@@ -496,7 +445,12 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
             SCC4 E 1 BRIGHT A_GiveInventory("PowerChargeStorm", 1);
             TNT1 A 0 A_FireCustomMissile("StormFlareSpawn", 25, 0, 0, 0);
-            TNT1 A 0 A_JumpIfInventory("SCMode_LightningWarper", 1, "StartWarp3");
+            TNT1 A 0
+            {
+                if (JustPressed(BT_RELOAD))
+                    return ResolveState("StartWarp3");
+                return ResolveState(null);
+            }
             TNT1 A 0 PB_ReFire("AltHold5");
             Goto Discharge;
 
@@ -527,6 +481,7 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_GiveInventory("LightningImmunity", 1);
             SCBA ABCDE 2;
             TNT1 A 0 A_TakeInventory("PowerChargeStorm", 10);
+            TNT1 A 0 A_TakeInventory("Reloading", 1);
             TNT1 A 0 A_TakeInventory("PowerChargeStorm", 10);
             SCBA F 5;
             Goto Ready;
@@ -688,33 +643,55 @@ class Stormcast : PB_WeaponBase
             SCLA EFGHI 2 BRIGHT;
             TNT1 A 0 A_PlaySound("Stormcast/PortalAppear");
             TNT1 A 0 A_FireCustomMissile("StunwallProj", 0, 1, 0, 0);
-            TNT1 A 0 A_SetPitch(-4.0 + pitch);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
-            SCLA BA 3 A_SetPitch(+2.0 + pitch);
+            SCLA BA 3;
             SCLA AAAAA 3;
-            Goto Ready;
+            TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+            TNT1 A 0
+            {
+                if (!invoker.owner || !invoker.owner.player)
+                    return ResolveState("Ready3");
+                if (PressingAltfire())
+                    return ResolveState("AltHold");
+                return ResolveState("Ready3");
+            }
 
         InitializeStunwallSmall:
             SCLA EFGHI 2 BRIGHT;
             TNT1 A 0 A_PlaySound("Stormcast/PortalAppear");
             TNT1 A 0 A_FireCustomMissile("StunwallProjSmall", 0, 1, 0, 0);
-            TNT1 A 0 A_SetPitch(-4.0 + pitch);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
-            SCLA BA 3 A_SetPitch(+2.0 + pitch);
+            SCLA BA 3;
             SCLA AAAAA 3;
-            Goto Ready;
+            TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+            TNT1 A 0
+            {
+                if (!invoker.owner || !invoker.owner.player)
+                    return ResolveState("Ready3");
+                if (PressingAltfire())
+                    return ResolveState("AltHold");
+                return ResolveState("Ready3");
+            }
 
         InitializeStunwallXS:
             SCLA EFGHI 2 BRIGHT;
             TNT1 A 0 A_PlaySound("Stormcast/PortalAppear");
             TNT1 A 0 A_FireCustomMissile("StunwallProjXS", 0, 1, 0, 0);
-            TNT1 A 0 A_SetPitch(-4.0 + pitch);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
-            SCLA BA 3 A_SetPitch(+2.0 + pitch);
+            SCLA BA 3;
             SCLA AAAAA 3;
-            Goto Ready;
+            TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+            TNT1 A 0
+            {
+                if (!invoker.owner || !invoker.owner.player)
+                    return ResolveState("Ready3");
+                if (PressingAltfire())
+                    return ResolveState("AltHold");
+                return ResolveState("Ready3");
+            }
 
         InitializeThunderstorm:
+            TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAssQuad", 0, 0, 0, 0);
             TNT1 A 10;
             TNT1 A 0 A_SelectWeapon("ArcOfDeath_Fake");
@@ -722,6 +699,7 @@ class Stormcast : PB_WeaponBase
             Goto Ready;
 
         InitializeThunderstorm2:
+            TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAssQuad", 0, 0, 0, 0);
             TNT1 A 0 A_GiveInventory("CastingArcOfDeath", 1);
             TNT1 A 0 A_SelectWeapon("ArcOfDeath_Fake");
@@ -729,6 +707,7 @@ class Stormcast : PB_WeaponBase
             Goto Ready;
 
         InitializeThunderstorm3:
+            TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAssQuad", 0, 0, 0, 0);
             TNT1 A 0 A_GiveInventory("CastingArcOfDeath", 2);
             TNT1 A 0 A_SelectWeapon("ArcOfDeath_Fake");
@@ -736,6 +715,7 @@ class Stormcast : PB_WeaponBase
             Goto Ready;
 
         InitializeThunderstorm4:
+            TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
             TNT1 A 0 A_FireCustomMissile("ShakeYourAssQuad", 0, 0, 0, 0);
             TNT1 A 0 A_GiveInventory("CastingArcOfDeath", 3);
             TNT1 A 0 A_SelectWeapon("ArcOfDeath_Fake");
@@ -783,13 +763,6 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_Jump(255, "SelectContinue");
         SelectContinue:
             TNT1 A 0 PB_RespectIfNeeded();
-            TNT1 A 0
-            {
-                int sm = CountInv("SCMode_ChargedOrbs") + CountInv("SCMode_Stunwall") + CountInv("SCMode_Thunderstorm")
-                    + CountInv("SCMode_LightningWarper") + CountInv("SCMode_QuickFlight");
-                if (sm == 0)
-                    A_GiveInventory("SCMode_ChargedOrbs", 1);
-            }
             CONE A 0 A_GiveInventory("PowerChargeStorm", 200);
             TNT1 A 0 A_TakeInventory("CastingArcOfDeath", 1);
             CONE AAAAAAAAAAAAAAAAAA 0 A_Raise;
