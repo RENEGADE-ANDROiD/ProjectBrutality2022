@@ -184,7 +184,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVAT A 0 A_JumpIfInventory("ArgentSithSwitchHands", 1, "NormalCutAlt");
 		BVAT A 1 BRIGHT;
 		BVAT C 1 BRIGHT;
-		BVAT D 1 BRIGHT;
+		BVAT D 1 BRIGHT A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
 		BVAT A 0 A_GiveInventory("KatanaSequence1");
 		BVAT A 0 A_JumpIfInventory("PowerStrength", 1, "BerserkerCut");
 		BVAT E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"ArgSithSawPuff",140,1,150,"ArmorShard","ArgKatana/Hit","ArgKatana/Swing");
@@ -192,7 +192,7 @@ class PB_ArgentSith : PB_WeaponBase
 	    Goto FinishCuttingAnimation;
 
 	BerserkerCut:
-		BVAT E 0;
+		BVAT E 0 A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
 		BVAT E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"ArgSithSawPuff",140,1,250,"ArmorShard","ArgKatana/Hit","ArgKatana/Swing");
 		BVAT E 1 BRIGHT A_CustomPunch(110,true,0,"ArgSithSawPuff",180,0,0,"none","ArgKatana/Hit","ArgKatana/Swing");
 		Goto FinishCuttingAnimation;
@@ -215,7 +215,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVT2 A 1 BRIGHT;
 		BVT2 B 1 BRIGHT;
 		BVT2 C 1 BRIGHT;
-		BVT2 D 1 BRIGHT;
+		BVT2 D 1 BRIGHT A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
 		BVAT A 0 A_GiveInventory("KatanaSequence2");
 		BVT2 A 0 A_JumpIfInventory("PowerStrength", 1, "BerserkerCutAlt");
 		BVT2 E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"ArgSithSawPuff",140,1,150,"ArmorShard","ArgKatana/Hit","ArgKatana/Swing");
@@ -223,6 +223,7 @@ class PB_ArgentSith : PB_WeaponBase
 	    Goto FinishCuttingAnimationAlt;
 
 	BerserkerCutAlt:
+		BVT2 E 0 A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
 		BVT2 E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"ArgSithSawPuff",140,1,250,"ArmorShard","ArgKatana/Hit","ArgKatana/Swing");
 		BVT2 E 1 BRIGHT A_CustomPunch(110,true,0,"ArgSithSawPuff",180,0,0,"none","ArgKatana/Hit","ArgKatana/Swing");
 		Goto FinishCuttingAnimationAlt;

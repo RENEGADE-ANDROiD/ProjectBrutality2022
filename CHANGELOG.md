@@ -41,6 +41,7 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Fixed
 
+- **Argent Sith** / **Beam Katana**: melee swing audio—**BeamKatana** lumps were extensionless OGGs (now **`.ogg`** + **SNDINFO** paths), **ArgKatana/Swing** aligned to **`.ogg`**, windup **A_StartSound** added for primary/alt/berserk slashes.
 - **Pump shotgun** buckshot: **Fire** / **PumpFromHip2** used **SHTF** for muzzle frames while **PumpShotgun** only ships **SH0FA0–SH0FG0** (not **SHTFA0–SHTFG0**); states and **`BMAP/Shotgun.txt`** now use **SH0F** with matching brightmaps.
 - **UZDoom startup**: `NoDelay`, `Vel.LengthXY`, `A_RadiusGive` compatibility (`a3a7ede64`).
 - **HASG** sound, **Metal Sniper** reload, **M41A** / Battle Rifle damage (`c70971995`).

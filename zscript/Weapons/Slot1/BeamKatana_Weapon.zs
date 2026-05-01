@@ -183,13 +183,14 @@ class PB_BeamKatana : PB_WeaponBase
 		BKAT A 0 A_JumpIfInventory("KatanaSwitchHands", 1, "NormalCutAlt");
 		BKAT A 1 Bright;
 		BKAT C 1 Bright;
-		BKAT D 1 Bright;
+		BKAT D 1 Bright A_StartSound("CybKatana/Swing", CHAN_WEAPON);
 		BKAT A 0 A_JumpIfInventory("PowerStrength", 1, "BerserkerCut");
 		BKAT E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"BeamKatanaSSawPuff4",140,1,150,"ArmorShard","CybKatana/Hit","CybKatana/Swing");
 		BKAT E 1 Bright A_CustomPunch(70,true,0,"BeamKatanaSSawPuff4",180,0,0,"none","CybKatana/Hit","CybKatana/Swing");
 	    Goto FinishCuttingAnimation;
 
 	BerserkerCut:
+		BKAT E 0 A_StartSound("CybKatana/Swing", CHAN_WEAPON);
 		BKAT E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"BeamKatanaSSawPuff4",140,1,250,"ArmorShard","CybKatana/Hit","CybKatana/Swing");
 		BKAT E 1 Bright A_CustomPunch(110,true,0,"BeamKatanaSSawPuff4",180,0,0,"none","CybKatana/Hit","CybKatana/Swing");
 		Goto FinishCuttingAnimation;
@@ -212,13 +213,14 @@ class PB_BeamKatana : PB_WeaponBase
 		BKT2 A 1 Bright;
 		BKT2 B 1 Bright;
 		BKT2 C 1 Bright;
-		BKT2 D 1 Bright;
+		BKT2 D 1 Bright A_StartSound("CybKatana/Swing", CHAN_WEAPON);
 		BKT2 A 0 A_JumpIfInventory("PowerStrength", 1, "BerserkerCutAlt");
 		BKT2 E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"BeamKatanaSSawPuff4",140,1,150,"ArmorShard","CybKatana/Hit","CybKatana/Swing");
 		BKT2 E 1 Bright A_CustomPunch(70,true,0,"BeamKatanaSSawPuff4",180,0,0,"none","CybKatana/Hit","CybKatana/Swing");
 	    Goto FinishCuttingAnimationAlt;
 
 	BerserkerCutAlt:
+		BKT2 E 0 A_StartSound("CybKatana/Swing", CHAN_WEAPON);
 		BKT2 E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"BeamKatanaSSawPuff4",140,1,250,"ArmorShard","CybKatana/Hit","CybKatana/Swing");
 		BKT2 E 1 Bright A_CustomPunch(110,true,0,"BeamKatanaSSawPuff4",180,0,0,"none","CybKatana/Hit","CybKatana/Swing");
 		Goto FinishCuttingAnimationAlt;
