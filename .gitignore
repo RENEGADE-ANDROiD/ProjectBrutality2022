@@ -2,6 +2,9 @@
 smoketest_baseline.log
 smoketest_*.log
 
+# Local maintainer / CI scripts (not part of the mod payload)
+tools/
+
 # Build artifacts
 *.pk3
 *.pk7

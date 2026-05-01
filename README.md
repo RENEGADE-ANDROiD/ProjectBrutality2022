@@ -134,7 +134,7 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 
 Modders: `PLAYER.dec` is the source of truth for slotted weapons. The disabled **Demon-Tech Minigun** source remains on disk for possible future repair, but it is not part of the active player roster.
 
-**`GRAPHICS/`** (committed **uppercase**, hundreds of PNGs: wheel icons, blood decals, dash overlay, Glory Kill NewHud art, etc.) must remain in your working copy. If the folder is missing, restore it from version control (e.g. **`git restore GRAPHICS`**). After editing **`SRC/GloryHUD.acs`** or other ACS sources, recompile with **`tools/compile_acs.ps1`** or **`tools/compile_gloryhud.cmd`** (set **`PB_ACC`** to **`acc.exe`** if needed).
+**`GRAPHICS/`** (committed **uppercase**, hundreds of PNGs: wheel icons, blood decals, dash overlay, Glory Kill NewHud art, etc.) must remain in your working copy. If the folder is missing, restore it from version control (e.g. **`git restore GRAPHICS`**). After editing **`SRC/GloryHUD.acs`** or other ACS sources, recompile with **ACC** to the matching **`ACS/*.o`** lump (see **`LOADACS.txt`**; use an **`-i`** include path to **`zcommon.acs`**).
 
 ### Equipment
 

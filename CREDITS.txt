@@ -19,11 +19,6 @@ Maintainers (this distribution)
 - doc
 - Wintermute
 
-Dev tooling (this repository)
-- **`tools/compile_acs.ps1`** / **`tools/compile_gloryhud.cmd`** — ACC wrapper for recompiling
-  `SRC/*.acs` to `ACS/*.o` (GloryHUD, GloryChain→GloryMelee, etc.); set **`PB_ACC`** to your
-  **`acc.exe`** (e.g. SLADE-bundled ACC) if auto-detection fails.
-
 Gameplay and content in this release
 - DarkShadow’s Monster Sounds Overhaul: monster SFX (based on Ravik’s Soundpack, with
   content from multiple Doom games) — integrated by replacing matching files under

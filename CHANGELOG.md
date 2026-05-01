@@ -4,6 +4,10 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ## [Unreleased]
 
+### Removed
+
+- Tracked **`tools/`** directory (smoke tests, ACC wrappers, zip sync helpers); keep any local build scripts **outside** the tree or in an untracked **`tools/`** folder — see **`.gitignore`**.
+
 ### Added
 
 - Peacekeeper / Marauder **SSG** fold-in from PB3.0 (`d6bbe88db`).
@@ -13,7 +17,6 @@ All notable changes for this working tree are documented here. Earlier history l
 - **Metal Sniper** ZScript implementation and helpers (`0b3ae6a04`, fixes in `c70971995`, `4d8c11fd0`).
 - **M41A** ZScript port and related DECORATE support (`0b3ae6a04`, `c70971995`).
 - **LooseRounds** and related weapon plumbing (`0b3ae6a04`).
-- Smoke / verification tooling: `tools/smoke_run_gzdoom*.ps1`, `smoke_update_tc_zip.ps1`, `verify_zip_baseweapon.ps1`, `list_baseweapon_zip.ps1` (`0b3ae6a04`).
 - **Explosive movement** (`pb_rocketjump` / `pb_plasma_wallclimb` patterns) and **WolvusMutator** fold (`ed7f66dd2`, `910d1d46e`, `0b8eef3c4`).
 - **Pump shotgun** / **auto shotty** pickup sprites **SHTCA0** / **AUSCA0** (PB Staging) under **PumpShotgun** / **AUTOSHOTTY** asset paths.
 
