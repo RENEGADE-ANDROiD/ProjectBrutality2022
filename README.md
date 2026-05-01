@@ -1,6 +1,6 @@
-# Project Brutality 2022
+# Project Brutality 2022 Enhanced
 
-Project Brutality 2022 is a full gameplay and content overhaul for *Doom* and *Doom II*, built for [UZDoom](https://github.com/UZDoom/UZDoom). It centers on a dedicated player class, deep weapon and monster variety, Brutality-style combat, and a wide set of menu options so you can tune intensity, spawns, and presentation.
+Project Brutality 2022 Enhanced is a full gameplay and content overhaul for *Doom* and *Doom II*, built for [UZDoom](https://github.com/UZDoom/UZDoom). It centers on a dedicated player class, deep weapon and monster variety, Brutality-style combat, and a wide set of menu options so you can tune intensity, spawns, and presentation.
 
 The project is derived from the long-running [Project Brutality](https://github.com/pa1nki113r/Project_Brutality) line and ships as a **self-contained** package: Glory Kills, Monster Pack–style content, and the main weapon roster are all included in this folder. Load **only** this directory with UZDoom; no extra companion wads are required for the full feature set.
 
@@ -29,7 +29,7 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 
 ## What you get
 
-**Glory Kills and finishers** are a major part of the fantasy: when enemies are weak enough, you can **stagger** them and rip into **cinematic kills**—many in **first person**, with different animations for a **wide** swath of the roster (vanilla-style demons, Brutality variants, and a lot of **extra / Monster Pack** cast). Layered on top are the **Crucible**, **Blood Punch**, **shoulder cannon** burn and freeze shots, **pinata**-style rewards, and a **Glory HUD** so you can see fuel, punch charges, and launcher cooldowns. Turn the system on or off and open the main tuning from **Options → PB 2022 Enhanced**; use **Glorykill Options** for HUD, range, and finer behavior.
+**Glory Kills and finishers** are a major part of the fantasy: when enemies are weak enough, you can **stagger** them and rip into **cinematic kills**—in **first AND third person**, with different animations for a **wide** swath of the roster (vanilla-style demons, Brutality variants, and a lot of **extra / Monster Pack** cast). Layered on top are the **Crucible**, **Blood Punch**, **shoulder cannon** burn and freeze shots, **pinata**-style rewards, and a **Glory HUD** so you can see fuel, punch charges, and launcher cooldowns. Turn the system on or off and open the main tuning from **Options → PB 2022 Enhanced**; use **Glorykill Options** for HUD, range, and finer behavior.
 
 - **Player and systems:** The **PB_Doomer** player class, movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump & plasma climb — **PB 2022 Enhanced → Explosive Movement**), tactical weapon feel, layered gore, and HUD / PDA / weapon-special wheel flows.
 - **Combat depth:** Brutality-style damage and reactions, plus the weapon and monster variety below—all adjustable from **PB 2022 Enhanced** and related submenus.
