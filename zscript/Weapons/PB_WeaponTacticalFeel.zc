@@ -203,13 +203,19 @@ class PB_WeaponTilterInventory : Inventory
 		return false;
 	}
 
+	private bool UsesExtraMoveLowering(Name weaponClass)
+	{
+		return weaponClass == 'PB_RocketLauncher';
+	}
+
 	private bool UsesAuthoredFireOffset(Name weaponClass, Weapon weap, PSprite psp)
 	{
 		if (weaponClass != 'PB_NeoHMG' || !weap || !psp || !psp.CurState)
 			return false;
 		// Fire only matches the preamble; DoFireHMG is a jump target and is not
-		// in InStateSequence(Fire, ...) — without this, tilter roll/Y fights
-		// fireHMG()'s A_WeaponOffset / zoom / recoil every tic.
+		// in InStateSequence(Fire, ...) — without Y suppression, tactical lowering
+		// fights fireHMG()'s A_WeaponOffset / zoom / recoil every tic. Strafe roll
+		// still applies (psp.Rotation) via currentRoll.
 		if (IsFiringState(weap, psp))
 			return true;
 		State st = weap.FindState("DoFireHMG");
@@ -314,7 +320,7 @@ class PB_WeaponTilterInventory : Inventory
 		if (cvEnableReadyOnly) { allowMotion = allowMotion && ready; }
 		if (cvEnableMoveOnly) { allowMotion = allowMotion && moving; }
 		if (fireSuppressed) { allowMotion = false; }
-		if (authoredFireOffset) { allowMotion = false; }
+		bool allowLowering = allowMotion && !authoredFireOffset;
 
 		Vector2 strafeDir = (sin(-owner.angle), cos(-owner.angle));
 		double strafeDot = (owner.Vel.X * strafeDir.X) + (owner.Vel.Y * strafeDir.Y);
@@ -333,19 +339,26 @@ class PB_WeaponTilterInventory : Inventory
 		}
 
 		double targetLower = 0;
-		if (allowMotion)
+		if (allowLowering)
 		{
 			// Blend strafe component + overall horizontal speed + sidemove intent
 			// so forward movement also lowers the weapon a bit.
 			double speedXY = owner.Vel.XY.Length();
 			double sidewaysInput = abs(cmd.sidemove);
 			double baseLower = (abs(strafeDot) * 1.8) + (speedXY * 0.45) + (sidewaysInput * 0.03);
-			targetLower = min(30.0, baseLower) * cvLoweringScale;
+			double lowerCap = 30.0;
+			if (UsesExtraMoveLowering(weaponClass))
+			{
+				baseLower *= 1.28;
+				baseLower += abs(currentRoll) * 0.22;
+				lowerCap = 38.0;
+			}
+			targetLower = min(lowerCap, baseLower) * cvLoweringScale;
 		}
 		// Wall detection should not depend on movement-only lowering gates.
 		bool allowWallDetect = !blocked && !excluded && !fireSuppressed;
 		if (cvEnableReadyOnly) { allowWallDetect = allowWallDetect && ready; }
-		if (cvWallDetect && allowWallDetect && FacingWall(cvWallDistance))
+		if (cvWallDetect && allowWallDetect && !authoredFireOffset && FacingWall(cvWallDistance))
 		{
 			targetLower = min(32.0, targetLower + cvWallLowering);
 		}
@@ -388,7 +401,7 @@ class PB_WeaponTilterInventory : Inventory
 
 		if (authoredFireOffset)
 		{
-			psp.Rotation = 0;
+			psp.Rotation = currentRoll;
 			appliedYOffset = 0;
 			neutralWeaponY = psp.Y;
 			hasNeutralWeaponY = true;
@@ -416,9 +429,10 @@ class PB_WeaponTilterInventory : Inventory
 		}
 		// In PB's HUD setup, negative Y offset moves the sprite downward.
 		// Keep lowering strictly downward-only so movement never lifts weapons.
-		double extraLowerPixels = 5.0;
+		double extraLowerPixels = UsesExtraMoveLowering(weaponClass) ? 7.0 : 5.0;
 		double targetYOffset = - (loweringAmount + (landingKick * 0.45) + (reloading ? 0.8 : 0) + extraLowerPixels);
-		targetYOffset = clamp(targetYOffset, -28.0, 0.0);
+		double yLowerCap = UsesExtraMoveLowering(weaponClass) ? -36.0 : -28.0;
+		targetYOffset = clamp(targetYOffset, yLowerCap, 0.0);
 		// Smooth Y offset to avoid bob/tilt feedback oscillation when movement starts/stops.
 		double newYOffset = appliedYOffset + (targetYOffset - appliedYOffset) * 0.20;
 		double finalY = baseY + newYOffset;

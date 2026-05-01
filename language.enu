@@ -411,6 +411,7 @@ PB_EXPERIMENTAL_EXECUTIONS_DESC = "Enables a mix of modern first person executio
 PB_DUALSTYLE = "Dual-Wield Fire Mode";
 PB_DUALSTYLE_SIN = "Single Button: Primary Fire Shoots Both Guns.\n(Similar to Brutal Doom v21 Dual Style.)";
 PB_DUALSTYLE_DEF = "Default: Primary Fire = Left Weapon;\nAlt-Fire = Right Weapon.";
+PB_DUALSTYLE_SINEXTRA = "(Extra) Single-button dual details.\nSee PB_DUALSTYLE_SIN.";
 PB_DUALOPT_SN = "Single Button";
 PB_DUALOPT_DEF = "Default";
 
@@ -494,6 +495,49 @@ PB_WHEELTIP_WW_RevGunSelected = "Equipment Wheel: Compact Launcher.";
 PB_WHEELTIP_GK_FlamebelchSelected = "Glory Kill Equipment: Flame Belch.";
 PB_WHEELTIP_GK_IcebombSelected = "Glory Kill Equipment: Ice Bomb.";
 
+PB_WHEELTIP_EX_Select_DropMode = "Excavator: Drop shot — burrowing charge on impact.";
+PB_WHEELTIP_EX_Select_DrillMode = "Excavator: Drill shot — tunneling primary blast.";
+
+PB_WHEELTIP_Select_MS_Standard = "Metal Sniper: Standard magazines.";
+PB_WHEELTIP_Select_MS_Resonance = "Metal Sniper: Resonance / anti-armor load.";
+PB_WHEELTIP_MS_Select_AimMode = "Metal Sniper: Scope / high-zoom aim.";
+PB_WHEELTIP_MS_Select_GrenMode = "Metal Sniper: Underslung grenade launcher.";
+
+PB_WHEELTIP_Select_HP_Hellfire = "Hell Pistoler: Hellfire rounds active.";
+PB_WHEELTIP_Select_HP_Shrink = "Hell Pistoler: Shrink beam (uses alt shell).";
+PB_WHEELTIP_Select_HP_ToggleROF = "Hell Pistoler: Semi-auto vs full-auto.";
+
+PB_WHEELTIP_HMG_Select_Heated = "Neo HMG: Heated ballistic rounds when hot.";
+PB_WHEELTIP_HMG_Select_Charged = "Neo HMG: Charged plasma bolts when hot.";
+
+PB_WHEELTIP_SelectCSG_Buckshot = "Brutal Shotgun: Buckshot.";
+PB_WHEELTIP_SelectCSG_Slugshot = "Brutal Shotgun: Flechette slugs.";
+PB_WHEELTIP_SelectCSG_Flechette = "Brutal Shotgun: Flechette cloud.";
+PB_WHEELTIP_SelectCSG_Flak = "Brutal Shotgun: Flak spread.";
+PB_WHEELTIP_SelectCSG_Dragonsbreath = "Brutal Shotgun: Dragon's breath.";
+PB_WHEELTIP_SelectCSG_Explosive = "Brutal Shotgun: Explosive shells.";
+PB_WHEELTIP_SelectCSG_WPhosphorus = "Brutal Shotgun: White phosphorus.";
+PB_WHEELTIP_SelectCSG_Doom = "Brutal Shotgun: DOOM-shaped payload.";
+PB_WHEELTIP_SelectCSG_Danmaku = "Brutal Shotgun: Danmaku pattern shot.";
+
+PB_WHEELTIP_HASG_SelectBuck = "XHAS Auto-Shotgun: Buck.";
+PB_WHEELTIP_HASG_SelectSlug = "XHAS Auto-Shotgun: Slug.";
+PB_WHEELTIP_HASG_SelectFlech = "XHAS Auto-Shotgun: Flechette.";
+PB_WHEELTIP_HASG_SelectDRBT = "XHAS Auto-Shotgun: Dragon's breath.";
+PB_WHEELTIP_HASG_SelectExplosive = "XHAS Auto-Shotgun: Explosive.";
+PB_WHEELTIP_HASG_SelectDanmaku = "XHAS Auto-Shotgun: Danmaku.";
+PB_WHEELTIP_HASG_SelectWPhos = "XHAS Auto-Shotgun: White phosphorus.";
+
+PB_WHEELTIP_Select_LeverAction_357 = "Lever Action: .357 tube.";
+PB_WHEELTIP_Select_LeverAction_Marlin = "Lever Action: Marlin heavy caliber.";
+
+PB_WHEELTIP_Select_M1Plasma_Single = "M1 Plasma Rifle: Single gun.";
+PB_WHEELTIP_Select_M1Plasma_Dual = "M1 Plasma Rifle: Dual wield (upgrade).";
+
+PB_WHEELTIP_Select_PulseCannon_Gravity = "Pulse Cannon: Gravity well alt-fire.";
+PB_WHEELTIP_Select_PulseCannon_Super = "Pulse Cannon: Super sphere alt-fire.";
+
+PB_PICKUP_PB_Deagle = "You found the UAC .50 Caliber Hand Cannon! (Slot 2, Upgrade)";
 PB_WPNHINT_ASGguyShield = "Meat Shield: Block With Primary Fire;\nBash / Throw With Alt-Fire & Weapon Special.";
 PB_WPNHINT_ProSurv_Ballista = "Pro-Surv Ballista: Bolts + Rockets Alt-Fire.\nWeapon Special: Demonic Mode When Upgraded.";
 PB_WPNHINT_BarrelThrower = "Barrel Toss Primary Fire;\nAlt-Fire / Melee Chain Blasts.";
@@ -560,6 +604,9 @@ PB_TAG_PB_CyberdemonRL = "Cyberdemon Missile Launcher";
 PB_WPNHINT_PB_CyberdemonRL = "Cyberdemon Rocket Launcher: Tap Single Missile;\nAlt-Fire Burst Barrage.\n2 Rockets per Shot.";
 PB_WPNHINT_PB_Shotgun = "Pump Shotgun: Weapon Special Shells;\nAlt-Fire Bash / Pump.";
 PB_WPNHINT_PB_SMG = "SMG: Weapon Special Akimbo / Laser;\nAlt-Fire Grenade Launcher When Equipped.";
+PB_SSG_PICKUP = "Double-Barrel Shotgun (Slot 3)";
+PB_SSG_TAG = "Sawn-Off Double-Barrel Shotgun";
+PB_SSG_NOAKIMBO = "Need another double-barrel shotgun for akimbo.";
 PB_WPNHINT_PB_SSG = "Super Shotgun: Dual Reload Alt-Fire;\nBoth Barrels; Weapon Respect Alt-Fire.";
 PB_WPNHINT_PB_SuperGL = "Super Grenade Launcher: Weapon Special Element;\nAlt-Fire Cook / Detonate / Sticky.";
 PB_WPNHINT_PB_Unmaker = "Unmaker: Demon Beam;\nAlt-Fire Spends Energy.";
@@ -572,6 +619,72 @@ PB_WPNHINT_SguyShield = "Shotgun Guy Shield; Buckshot Bash Alt-Fire.";
 PB_WPNHINT_TriclopsImpShield = "Triclops Shield; Triple-Eye Alt-Fire Blast.";
 PB_WPNHINT_ZMANShield = "Zombieman Shield; Pistol Fire Through Alt-Fire Windows.";
 PB_WPNHINT_ZombieScientistShield = "Scientist Shield; Chemical Alt-Fire Splash.";
+
+// Main menu / IWAD-style pickup labels (ensures clean loads without base LANGUAGE merge)
+MNU_NEWGAME = "NEW GAME";
+MNU_OPTIONS = "OPTIONS";
+MNU_GAMEFILES = "GAME FILES";
+MNU_INFO = "INFO";
+MNU_QUITGAME = "QUIT GAME";
+
+// DamNums color preset labels (MENUDEF OptionValue)
+C_DEFAULT = "Default";
+C_BLACK = "Black";
+C_BLUE = "Blue";
+C_BRICK = "Brick";
+C_BROWN = "Brown";
+C_CREAM = "Cream";
+C_CYAN = "Cyan";
+C_DARKBROWN = "Dark Brown";
+C_DARKGRAY = "Dark Gray";
+C_DARKGREEN = "Dark Green";
+C_DARKRED = "Dark Red";
+C_GOLD = "Gold";
+C_GRAY = "Gray";
+C_GREEN = "Green";
+C_LIGHTBLUE = "Light Blue";
+C_OLIVE = "Olive";
+C_ORANGE = "Orange";
+C_PURPLE = "Purple";
+C_RED = "Red";
+C_TAN = "Tan";
+C_WHITE = "White";
+C_YELLOW = "Yellow";
+
+// Pickups referencing classic $GOT* / inventory tags
+GOTARMBONUS = "Picked up an armor bonus.";
+GOTBACKPACK = "Picked up a backpack full of ammo!";
+GOTBERSERK = "Berserk!";
+GOTBLUESKUL = "Picked up a blue skull key.";
+GOTHTHBONUS = "Picked up a health bonus.";
+GOTINVUL = "Invulnerability!";
+GOTMEDIKIT = "Picked up a medikit.";
+GOTMEDINEED = "Picked up a medikit that you REALLY need!";
+GOTREDSKUL = "Picked up a red skull key.";
+GOTSTIM = "Picked up a stimpack.";
+GOTVISOR = "Light Amplification Visor!";
+GOTYELWSKUL = "Picked up a yellow skull key.";
+
+// Multiplayer / vanilla-style obituaries used by Brutality weapons
+OB_MPCHAINSAW = "%o was shredded by %k's chainsaw.";
+OB_MPPLASMARIFLE = "%o was melted by %k's plasma gun.";
+OB_MPROCKET = "%o rode %k's rocket.";
+OB_MPSHOTGUN = "%o was perforated by %k's shotgun.";
+OB_SPIDER = "%o stood in awe of %k's BFG.";
+OB_IMPHIT = "%o was burned by an imp.";
+OB_IMP = "%o was incinerated by %k.";
+OB_UNDEAD = "%o was splattered by %k's shotgun.";
+OB_UNDEADHIT = "%o almost had his head blown off by %k's shotgun.";
+OB_CACO = "%o was smitten by %k.";
+OB_CACOHIT = "%o was immolated by %k.";
+OB_CYBORG = "%o was splattered by %k's BFG.";
+OB_BARREL = "%o was splattered by %k's rocket.";
+OB_BABY = "%o was too young to die.";
+OB_SKULL = "%o tried to use %k as a wall decoration.";
+
+TAG_CLIPOFBULLETS = "Pistol clip";
+TAG_HEGRENADES = "High explosive grenades";
+TAG_PHGRENADES = "Phosphorus grenades";
 
 [enu default]
 DAMNUM_TYPECOLOR_STEEL        = "DamWhite";

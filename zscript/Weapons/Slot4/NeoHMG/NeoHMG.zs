@@ -2,6 +2,8 @@ const neohmgFullAmmo = 80;
 const neohmgShieldAmmo = 100;
 // World shield uses sector floor + lift; PSprite HMGShield is unrelated (not weapon/HUD offsets).
 const neohmgShieldFloorLift = 36;
+// PSHL WALLSPRITE art sits left of the actor origin; nudge render only (+hitbox unchanged).
+const neohmgShieldRenderSideNudge = 24.;
 
 class HMGShield : Inventory
 {
@@ -53,8 +55,8 @@ class NeoHMGDeployedShield : Actor
 
 	Default
 	{
-		Radius 16;
-		Height 46;
+		Radius 40;
+		Height 88;
 		Health neohmgShieldAmmo;
 		Mass 999999;
 		XScale 0.38;
@@ -133,6 +135,9 @@ class NeoHMGDeployedShield : Actor
 		Angle = lockYaw;
 		Pitch = 0;
 		Roll = 0;
+		double cr = cos(Angle - 90);
+		double sr = sin(Angle - 90);
+		WorldOffset = (cr, sr, 0) * neohmgShieldRenderSideNudge;
 
 		vel = (0, 0, 0);
 		FindFloorCeiling();
@@ -343,7 +348,6 @@ class PB_NeoHMG : PB_WeaponBase
 			A_SetRoll(0);
 			A_TakeInventory("PB_LockScreenTilt", 1);
 			HMG_fireBullet();
-			A_Overlay(-7, "MuzzleFlash");
 			PB_WeaponRecoil(-1.1, frandom(-0.82, 0.82));
 			PB_ModifyOverheat(2);
 			PB_GunSmoke(0, 0, 0);
@@ -731,15 +735,6 @@ class PB_NeoHMG : PB_WeaponBase
 			TNT1 A 8;
 			TNT1 A 4 PB_ModifyOverheat(-5);
 			Wait;
-		MuzzleFlash:
-			TNT1 A 0 A_OverlayFlags(overlayID(), PSPF_MIRROR | PSPF_FLIP, random(0, 1));
-			TNT1 A 0 A_Jump(256, "NeoMuzzle1", "NeoMuzzle2");
-		NeoMuzzle1:
-			HG0F B 1 Bright;
-			Stop;
-		NeoMuzzle2:
-			HG0F C 1 Bright;
-			Stop;
 		Unload:
 			TNT1 A 0 A_TakeInventory("Unloading", 1);
 			HG0R ABCD 1;

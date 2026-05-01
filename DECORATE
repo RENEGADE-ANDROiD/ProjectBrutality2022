@@ -148,6 +148,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Items/Ammo/Clipbox.dec"
 #include "actors/Items/Ammo/Cellpack.dec"
 #include "actors/Items/Ammo/PBWP_CompatAmmo.dec"
+#include "actors/Items/Ammo/PB_SingleShell.dec"
 #include "actors/Weapons/Slot3/X12Shotgun.dec"
 #include "actors/Weapons/Slot3/HASG.dec"
 #include "actors/Weapons/Slot3/SSG.dec"

@@ -15,6 +15,7 @@ All notable changes for this working tree are documented here. Earlier history l
 - **LooseRounds** and related weapon plumbing (`0b3ae6a04`).
 - Smoke / verification tooling: `tools/smoke_run_gzdoom*.ps1`, `smoke_update_tc_zip.ps1`, `verify_zip_baseweapon.ps1`, `list_baseweapon_zip.ps1` (`0b3ae6a04`).
 - **Explosive movement** (`pb_rocketjump` / `pb_plasma_wallclimb` patterns) and **WolvusMutator** fold (`ed7f66dd2`, `910d1d46e`, `0b8eef3c4`).
+- **Pump shotgun** / **auto shotty** pickup sprites **SHTCA0** / **AUSCA0** (PB Staging) under **PumpShotgun** / **AUTOSHOTTY** asset paths.
 
 ### Changed
 
@@ -28,6 +29,9 @@ All notable changes for this working tree are documented here. Earlier history l
 - Wall-detection lowering and **Tilt++** / tactical motion (`5b67a2849`, `6dc1cd6c1`, `1edce0b20`, `eb942028f`).
 - Gore handlers (BDv22 merge, BPv10, Nash, death-boost) and **pb_enhanced_brutality_2022** integration touches (`960e3aa36`, `fc291df83`, `08cde24c6`, `79140dc1c`).
 - Branding: killstreak icon **UAC** instead of UT-style (`e0fdfaa8e`); title / logo assets (`4e9f42267`, `2a288a08d`, `4eb7ae9bc`).
+- **Weapon slot cycling:** **PlayerPawnBase** overrides **PickNextWeapon** / **PickPrevWeapon** (higher wrap budget; fallback when the ready weapon is missing from the slot table).
+- **Pump shotgun:** states use **SH0G** sprite prefix to match shipped **PumpShotgun** lumps; full PB Staging **PumpShotgun** sprite tree synced to the repo.
+- **Flamethrower** / **hell rifle:** **Weapon.SlotNumber** and **Player.WeaponSlot** set to slot **9** for consistent next/prev cycling with the updated slot logic.
 
 ### Fixed
 
@@ -38,6 +42,9 @@ All notable changes for this working tree are documented here. Earlier history l
 - General error/warning cleanup passes (`4926d43ba`, `79140dc1c`).
 - **Carbine** reticle and related issues (`761e502d7`).
 - **ShieldSaw.dec** / ACS callback flow maintenance (`07d57f6b7`).
+- **First-person legs:** **PB_WeaponRaise** uses legs overlay **-10** (matches **SelectFirstPersonLegs**) instead of **-1000**.
+- **SSG / quad shotgun:** removed invalid **PB_WeaponBase.Upgrade** from **SSG.dec**; **PB_jumpIfNoAmmo()** DECORATE empty-paren fixes in **SSG.dec** / **QUADBARREL.dec**; removed dead **HasNotPickedUpSSG** line; quad ammo HUD uses **SGN3A0** when **QSGSA0** is absent; dropped stray **SSG_Staging** paths list lump.
+- **PB_Freezer:** **UnloaderToken** handling aligned with unload / slot-cycle behavior.
 
 ### Removed
 

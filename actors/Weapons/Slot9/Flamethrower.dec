@@ -182,7 +182,7 @@ Actor PB_FlamethrowerUpgrade : CustomInventory
 +INVENTORY.ALWAYSPICKUP
 Inventory.PickupSound "FLMDRAW"
 Scale 0.5
-Inventory.PickupMessage "You got the UAC-M3 Flamethrower upgrade! (Slot 0)"
+Inventory.PickupMessage "You got the UAC-M3 Flamethrower upgrade! (Slot 9)"
 States
 {
 Spawn:
@@ -231,9 +231,9 @@ ACTOR PB_Flamethrower : PB_Weapon
      +WEAPON.NOAUTOAIM
 	+FLOORCLIP
 	+DONTGIB
-	Inventory.PickupMessage "You got the UAC-M3 Flamethrower! (Slot 0)"
-	Weapon.SlotNumber 0
-	Weapon.SlotPriority 0
+	Inventory.PickupMessage "You got the UAC-M3 Flamethrower! (Slot 9)"
+	Weapon.SlotNumber 9
+	Weapon.SlotPriority 10
 	Tag "UAC-M3 Flamethrower"
 	States
 	{

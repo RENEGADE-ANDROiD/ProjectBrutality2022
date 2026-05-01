@@ -77,5 +77,32 @@ Actor PB_762x51mm : FastProjectile
 	}
 }
 
-// 12-gauge pellet for M41A underbarrel (HASG ASG variant).
-Actor PB_12GAPellet : PB_12GAPellet_ASG {}
+Actor PB_12GAPellet : FastProjectile
+{
+	Projectile
+	+RANDOMIZE
+	+FORCEXYBILLBOARD
+	+DONTSPLASH
+	+NOEXTREMEDEATH
+	+NODAMAGETHRUST
+	Damage 4
+	DamageType Bullet
+	radius 2
+	height 2
+	speed 80
+	Gravity 0.4
+	renderstyle ADD
+	alpha 0.6
+	scale 0.18
+	Decal "SmallerScorch"
+	States
+	{
+	Spawn:
+		DBAC A 3 BRIGHT
+		Loop
+	Death:
+	XDeath:
+		TNT1 A 0 A_SpawnItem("HitPuff")
+		Stop
+	}
+}

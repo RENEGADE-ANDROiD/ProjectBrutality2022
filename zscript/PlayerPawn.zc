@@ -192,6 +192,127 @@ class PlayerPawnBase : PlayerPawn
 		if(VecToUnit.Length()) { VecToUnit /= VecToUnit.Length(); }
 		return VecToUnit;
 	}
+
+	//===========================================================================
+	// Weapon cycle: PB uses many weapons per slot; empty slot 0 makes the stock
+	// slotschecked <= NUM_WEAPON_SLOTS (10) cap exit early — no wrap. Off-list
+	// ready weapons skipped cycling entirely when LocateWeapon fails. Mirrors
+	// GZDoom's PlayerPawn::PickNextWeapon / PickPrevWeapon with a wider cap +
+	// off-list anchors (see wadsrc/.../player/player.zs).
+	//===========================================================================
+
+	const PB_NUM_WP_SLOTS = 10;
+	const PB_WEAPON_CYCLE_WRAP_CAP = 128;
+
+	override Weapon PickNextWeapon()
+	{
+		let player = self.player;
+		if(!player) return null;
+
+		bool found;
+		int startslot, startindex;
+		let ReadyWeapon = player.ReadyWeapon;
+
+		if(player.PendingWeapon != WP_NOCHANGE)
+			[found, startslot, startindex] = player.weapons.LocateWeapon(player.PendingWeapon.GetClass());
+		else if(ReadyWeapon != null)
+		{
+			[found, startslot, startindex] = player.weapons.LocateWeapon(ReadyWeapon.GetClass());
+			if(!found && ReadyWeapon.bPOWERED_UP && ReadyWeapon.SisterWeaponType != null)
+				[found, startslot, startindex] = player.weapons.LocateWeapon(ReadyWeapon.SisterWeaponType);
+		}
+		else
+		{
+			found = false;
+			startslot = 0;
+			startindex = 0;
+		}
+
+		if(ReadyWeapon == null || found ||
+			(ReadyWeapon != null && !found && player.PendingWeapon == WP_NOCHANGE))
+		{
+			if(ReadyWeapon == null || (!found && ReadyWeapon != null && player.PendingWeapon == WP_NOCHANGE))
+			{
+				startslot = PB_NUM_WP_SLOTS - 1;
+				startindex = player.weapons.SlotSize(startslot) - 1;
+			}
+
+			int slot = startslot;
+			int index = startindex;
+			int slotschecked = 0;
+			do
+			{
+				if(++index >= player.weapons.SlotSize(slot))
+				{
+					index = 0;
+					slotschecked++;
+					if(++slot >= PB_NUM_WP_SLOTS)
+						slot = 0;
+				}
+				let wt = player.weapons.GetWeapon(slot, index);
+				let weap = Weapon(FindInventory(wt));
+				if(weap != null && weap.CheckAmmo(Weapon.EitherFire, false))
+					return weap;
+			} while((slot != startslot || index != startindex) && slotschecked <= PB_WEAPON_CYCLE_WRAP_CAP);
+		}
+
+		return ReadyWeapon;
+	}
+
+	override Weapon PickPrevWeapon()
+	{
+		let player = self.player;
+		if(!player) return null;
+
+		bool found;
+		int startslot, startindex;
+		let ReadyWeapon = player.ReadyWeapon;
+
+		if(player.PendingWeapon != WP_NOCHANGE)
+			[found, startslot, startindex] = player.weapons.LocateWeapon(player.PendingWeapon.GetClass());
+		else if(ReadyWeapon != null)
+		{
+			[found, startslot, startindex] = player.weapons.LocateWeapon(ReadyWeapon.GetClass());
+			if(!found && ReadyWeapon.bPOWERED_UP && ReadyWeapon.SisterWeaponType != null)
+				[found, startslot, startindex] = player.weapons.LocateWeapon(ReadyWeapon.SisterWeaponType);
+		}
+		else
+		{
+			found = false;
+			startslot = 0;
+			startindex = 0;
+		}
+
+		if(ReadyWeapon == null || found ||
+			(ReadyWeapon != null && !found && player.PendingWeapon == WP_NOCHANGE))
+		{
+			if(ReadyWeapon == null || (!found && ReadyWeapon != null && player.PendingWeapon == WP_NOCHANGE))
+			{
+				startslot = 0;
+				startindex = 0;
+			}
+
+			int slot = startslot;
+			int index = startindex;
+			int slotschecked = 0;
+			do
+			{
+				if(--index < 0)
+				{
+					slotschecked++;
+					if(--slot < 0)
+						slot = PB_NUM_WP_SLOTS - 1;
+					index = player.weapons.SlotSize(slot) - 1;
+				}
+				let wt = player.weapons.GetWeapon(slot, index);
+				let weap = Weapon(FindInventory(wt));
+				if(weap != null && weap.CheckAmmo(Weapon.EitherFire, false))
+					return weap;
+			} while((slot != startslot || index != startindex) && slotschecked <= PB_WEAPON_CYCLE_WRAP_CAP);
+		}
+
+		return ReadyWeapon;
+	}
 	
 	Override void PlayerThink()
 	{

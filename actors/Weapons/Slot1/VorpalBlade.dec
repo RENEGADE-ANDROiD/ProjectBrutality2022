@@ -35,7 +35,6 @@ Actor KyreiPuffRight : MeleePuff
     SeeSound "Sword/HitMeat"
     AttackSound "Sword/HitMeat"
     +PUFFGETSOWNER
-    +ALWAYSPUFF
 }
 
 Actor KyreiPuffLeft : MeleePuff
@@ -44,7 +43,6 @@ Actor KyreiPuffLeft : MeleePuff
     SeeSound "Sword/HitMeat"
     AttackSound "Sword/HitMeat"
     +PUFFGETSOWNER
-    +ALWAYSPUFF
 }
 
 Actor BladeSlash1 : FastProjectile

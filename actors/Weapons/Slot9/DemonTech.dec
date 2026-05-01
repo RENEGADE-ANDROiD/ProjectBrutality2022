@@ -121,9 +121,9 @@ ACTOR Hell_rifle : PB_Weapon
 	Weapon.AmmoType1 "Demonpower"
 	Weapon.AmmoType2 "HellAmmo"
 	Tag "Demon-Tech Rifle"
-	Weapon.SlotNumber 0
-	Weapon.SlotPriority 0.1
-	Inventory.PickupMessage "You got the Demon Tech Rifle! (Slot 0)"
+	Weapon.SlotNumber 9
+	Weapon.SlotPriority 10.1
+	Inventory.PickupMessage "You got the Demon Tech Rifle! (Slot 9)"
     +WEAPON.NOAUTOAIM
 	Scale 0.48
 	Inventory.AltHUDIcon "HRPUA0"

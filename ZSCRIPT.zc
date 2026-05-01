@@ -140,6 +140,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/PB_WeaponTacticalFeel.zc"
 #include "zscript/Weapons/Slot3/CSSG/CSSG_Upgrades.zs"
 #include "zscript/Weapons/Slot3/CSSG/CSSG_PBProjectile.zs"
+#include "zscript/Weapons/Slot3/SSG_PB10GA_Pellets.zs"
 #include "zscript/Weapons/Slot3/CSSG/CSSG_Casings.zs"
 #include "zscript/Weapons/Slot6/Excavator/Excavator_helpers.zs"
 #include "zscript/Weapons/Slot6/Excavator/PB_Excavator.zs"

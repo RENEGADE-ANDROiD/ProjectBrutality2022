@@ -3984,7 +3984,91 @@ X12PMP "sounds/combat/weapons/X12/X12PMP"
 X12PMP1 "sounds/combat/weapons/X12/X12PMP1"
 X12PMP2 "sounds/combat/weapons/X12/X12PMP2"
 
-//==============================================================================
+// --- Folded weapons: logical names -> assets under sounds/combat/... or sounds/hasg/ ---
+// Battle Rifle (BDPBattleRifle.zs) — SOUNDS/combat/WEAPONS/BattleRifle
+weapons/battlerifle/up "sounds/combat/weapons/BattleRifle/BR45PICK.ogg"
+weapons/battlerifle/fire "sounds/combat/weapons/BattleRifle/BR45FIRE"
+weapons/battlerifle/magout "sounds/combat/weapons/BattleRifle/BR45OPEN"
+weapons/battlerifle/magin "sounds/combat/weapons/BattleRifle/BR45LOAD"
+weapons/battlerifle/dry "sounds/combat/weapons/BattleRifle/BR45PING"
+weapons/battlerifle/switch "sounds/combat/weapons/BattleRifle/BR45SWCH"
+// Lever Action (LeverAction.dec) — SOUNDS/combat/WEAPONS/LeverAction
+weapons/leveraction/rechamber "sounds/combat/weapons/LeverAction/Lever_Action_Rechamber.ogg"
+weapons/leveraction/inspect "sounds/combat/weapons/LeverAction/Lever_Action_Inspect.ogg"
+weapons/leveraction/flip "sounds/combat/weapons/LeverAction/Lever_Action_Flip.ogg"
+weapons/leveraction/openchamber "sounds/combat/weapons/LeverAction/Lever_Action_OpenChamber.ogg"
+weapons/leveraction/loadshell "sounds/combat/weapons/LeverAction/Lever_Action_LoadShell.ogg"
+weapons/leveraction/magfire "sounds/combat/weapons/LeverAction/Lever_Action_Magfire.ogg"
+weapons/leveraction/fire "sounds/combat/weapons/LeverAction/Lever_Action_Fire.ogg"
+// Paingiver (Paingiver.dec)
+weapons/paingiver/fire1 "sounds/combat/weapons/Paingiver/fire1.ogg"
+weapons/paingiver/fire2 "sounds/combat/weapons/Paingiver/fire2.ogg"
+weapons/paingiver/sweet "sounds/combat/weapons/Paingiver/sweet.ogg"
+weapons/paingiver/boom "sounds/combat/weapons/Paingiver/boom.ogg"
+// Metal Sniper (MetalSniper.zs)
+MS/Up "sounds/combat/weapons/MetalSniper/msRaise.ogg"
+MS/Fire "sounds/combat/weapons/MetalSniper/msFire.ogg"
+MS/BoltDown "sounds/combat/weapons/MetalSniper/msBoltDown.ogg"
+MS/BoltUp "sounds/combat/weapons/MetalSniper/msBoltUp.ogg"
+MS/InsertMag "sounds/combat/weapons/MetalSniper/msMagIn.ogg"
+MS/Grenade "sounds/combat/weapons/MetalSniper/msGrenFire.ogg"
+MS/GrenOpen "sounds/combat/weapons/MetalSniper/msGrenOpen.ogg"
+MS/GrenClose "sounds/combat/weapons/MetalSniper/msGrenClose.ogg"
+MS/Button "sounds/combat/weapons/MetalSniper/msButton.ogg"
+MS/TakeMag "sounds/combat/weapons/MetalSniper/msMagOut.ogg"
+// Marauder SSG (MarauderSSG.dec) — Peacekeeper folder (MSS* rips)
+MSSFR1 "sounds/combat/weapons/Peacekeeper/MSSFR1"
+MSSFR2 "sounds/combat/weapons/Peacekeeper/MSSFR2"
+MSSFR3 "sounds/combat/weapons/Peacekeeper/MSSFR3"
+MSSFR4 "sounds/combat/weapons/Peacekeeper/MSSFR4"
+MSSFR5 "sounds/combat/weapons/Peacekeeper/MSSFR5"
+MSSFR6 "sounds/combat/weapons/Peacekeeper/MSSFR6"
+MSSCL1 "sounds/combat/weapons/Peacekeeper/MSSCL1"
+MSSCL2 "sounds/combat/weapons/Peacekeeper/MSSCL2"
+MSSCL3 "sounds/combat/weapons/Peacekeeper/MSSCL3"
+$random MSSFR { MSSFR1 MSSFR2 MSSFR3 MSSFR4 MSSFR5 MSSFR6 }
+$random MSSCL { MSSCL1 MSSCL2 MSSCL3 }
+MSSOP "sounds/combat/weapons/Peacekeeper/MSSOP"
+MSSLD "sounds/combat/weapons/Peacekeeper/MSSLD"
+// Cyberdemon Missile Launcher (PB_CyberdemonRL.zs)
+BFGREADY "sounds/combat/weapons/CyberdemonRL/BFGREADY.ogg"
+// UAC-320 OldHMG (OldHMG.dec) — folded HMG bank (blue HMG + drum); Neo spin/stop stay on NeoHMG lumps
+9HAINAMO "sounds/combat/weapons/HMG/9HAINAMO.ogg"
+9HAINAM1 "sounds/combat/weapons/HMG/9HAINAM1.ogg"
+OldHMGUP "sounds/combat/weapons/HMG/HMGUP.ogg"
+HMGSTCH "sounds/combat/weapons/HMG/HMGSTCH.ogg"
+weapons/oldhmg/start "sounds/combat/weapons/HMG/HMG_WINDU.ogg"
+weapons/oldhmg/stop "sounds/combat/weapons/HMG/HMG_WINDD.ogg"
+// Argent Sith + Beam Katana
+ArgKatana/Activate "sounds/combat/weapons/ArgentSith/DVKatAct.ogg"
+ArgKatana/Swing "sounds/combat/weapons/ArgentSith/DVKatMis"
+ArgKatana/Thrust "sounds/combat/weapons/ArgentSith/MODESWIT.ogg"
+ArgKatana/Hit "sounds/combat/weapons/ArgentSith/DVKatHit.ogg"
+CybKatana/Activate "sounds/combat/weapons/BeamKatana/DSKatAct"
+CybKatana/Swing "sounds/combat/weapons/BeamKatana/DSKatMis"
+CybKatana/Hit "sounds/combat/weapons/BeamKatana/DSKatHit"
+CybKatana/SwitchMode "sounds/combat/weapons/BeamKatana/MODESWIT"
+Katana/DeSelect "sounds/combat/weapons/ArgentSith/KTSQ01.wav"
+ArgentBarrier/On "sounds/combat/weapons/ArgentSith/DVFRCON.ogg"
+ArgentBarrier/Loop "sounds/combat/weapons/ArgentSith/DVFRCLOP.ogg"
+ArgentBarrier/Off "sounds/combat/weapons/ArgentSith/DVFRCOFF.ogg"
+DVZABH1 "sounds/combat/weapons/ArgentSith/DVZAPHT1.ogg"
+DVZABH2 "sounds/combat/weapons/ArgentSith/DVZAPHT2.ogg"
+DVZABH3 "sounds/combat/weapons/ArgentSith/DVZAPHT3.ogg"
+$random ArgentBarrier/Hit { DVZABH1 DVZABH2 DVZABH3 }
+// Shield Saw (ShieldSaw.dec) — SOUNDS/combat/ShieldSaw
+ShieldSawSwing "sounds/combat/ShieldSaw/Swing.ogg"
+ShieldSawThrow "sounds/combat/ShieldSaw/aThrow.ogg"
+ShieldSawing "sounds/combat/ShieldSaw/Firing.ogg"
+ShieldSawFlying "sounds/combat/ShieldSaw/Flying.ogg"
+ShieldSawBack "sounds/combat/ShieldSaw/Back.ogg"
+ShSaBn1 "sounds/combat/ShieldSaw/Bounce1.ogg"
+ShSaBn2 "sounds/combat/ShieldSaw/Bounce2.ogg"
+ShSaBn3 "sounds/combat/ShieldSaw/Bounce3.ogg"
+ShSaBn4 "sounds/combat/ShieldSaw/Bounce4.ogg"
+ShSaBn5 "sounds/combat/ShieldSaw/Bounce5.ogg"
+$random ShieldSawBounce { ShSaBn1 ShSaBn2 ShSaBn3 ShSaBn4 ShSaBn5 }
+ShieldSawBash "sounds/combat/ShieldSaw/Bash.ogg"
 // SNDINFO.WeaponVolumeBalancing (PB 0.3.x staging)
 //==============================================================================
 $volume weapons/deagle/fire 1.0
@@ -4219,6 +4303,16 @@ Weapons/PistolHolster PSTHOLS
 Weapons/DeadMansClick DMANC
 weapons/cryobowflyby    FRZSTRM
 DSBOWREL DSBOWREL
+// Path-style freezer cues (FREEZER.dec, BaseWeapon.dec) — SOUNDS/combat/WEAPONS/Freezer
+weapons/freezer/up "sounds/combat/weapons/Freezer/FRZRUP.ogg"
+weapons/freezer/idle "sounds/combat/weapons/Freezer/FRZRHUM.ogg"
+weapons/freezer/fire "sounds/combat/weapons/Freezer/FRZRFR1.ogg"
+weapons/freezer/respect1 "sounds/combat/weapons/Freezer/FRZRRS1.ogg"
+weapons/freezer/respect2 "sounds/combat/weapons/Freezer/FRZRRS2.ogg"
+weapons/freezer/respect3 "sounds/combat/weapons/Freezer/FRZRRS3.ogg"
+weapons/freezer/reload1 "sounds/combat/weapons/Freezer/FRZRRL1.ogg"
+weapons/freezer/reload2 "sounds/combat/weapons/Freezer/FRZRRL2.ogg"
+weapons/freezer/reload3 "sounds/combat/weapons/Freezer/FRZRRL3.ogg"
 
 //Rocket Launcher
 misc/rockboxa rockboxa
@@ -4244,7 +4338,7 @@ DTHDRSN DTHDRSN
 CHGNPKUP CHGNPKUP
 
 //Heavy Machine Gun
-HMGUP HMGUP
+HMGUP "sounds/combat/weapons/HMG/HMGUP.ogg"
 HMGHEAT HMGHEAT
 8HAINAMO 8HAINAMO
 8HAINAM1 8HAINAM1
@@ -4256,7 +4350,7 @@ weapons/chaingun/stop CG_WINDD
 weapons/chagan/stop CG_WINDD
 weapons/chagan/start CG_WINDU
 
-hmgun HMGFIRE
+hmgun "sounds/combat/weapons/HMG/HMGFIRE.ogg"
 $volume hmgun 1.0
 
 emgun emgun
@@ -4944,48 +5038,47 @@ Sword/SWave4       SHOKWAV4
 Sword/SWave5       SHOKWAV5
 
 
-// --- HASG (Lady Golide / Insanity's Heavy Auto Shotgun) ---
-// Lumps live in SOUNDS/hasg/PBWP/
-weapons/golide/select        ASG_GOLI
-weapons/golide/pump          PUMP
-weapons/golide/pumpup        ASGPU
-weapons/golide/drumopen      BDOPEN
-weapons/golide/drumclose     BDLOAD
-weapons/golide/drumpickup    A48PKUP2
+// --- HASG (Lady Golide / Insanity's Heavy Auto Shotgun) — SOUNDS/hasg
+PUMP "sounds/hasg/PBWP/PUMP"
+BDOPEN "sounds/hasg/PBWP/BDOPEN.ogg"
+BDLOAD "sounds/hasg/PBWP/BDLOAD.ogg"
+A48PKUP2 "sounds/hasg/PBWP/A48PKUP2.wav"
+weapons/golide/select "sounds/hasg/PBWP/ASG_GOLI"
+weapons/golide/pump "sounds/hasg/PBWP/PUMP"
+weapons/golide/pumpup "sounds/hasg/PBWP/ASGPU"
+weapons/golide/drumopen "sounds/hasg/PBWP/BDOPEN.ogg"
+weapons/golide/drumclose "sounds/hasg/PBWP/BDLOAD.ogg"
+weapons/golide/drumpickup "sounds/hasg/Pickup.ogg"
 
-// Per-ammo-type fire variations (sounds/hasg/Fire/*.ogg).
-// Default fire is a 4-way randomized buckshot blast; per-mode logical
-// names are loaded by the corresponding ammo branches in HASG.dec.
 $random weapons/golide/fire { HASG_FIRE1 HASG_FIRE2 HASG_FIRE3 HASG_FIRE4 }
-HASG_FIRE1                   "sounds/hasg/Fire/Buckshot1.ogg"
-HASG_FIRE2                   "sounds/hasg/Fire/Buckshot2.ogg"
-HASG_FIRE3                   "sounds/hasg/Fire/Buckshot3.ogg"
-HASG_FIRE4                   "sounds/hasg/Fire/Buckshot4.ogg"
-weapons/golide/fire_slug     "sounds/hasg/Fire/Slug.ogg"
-weapons/golide/fire_db       "sounds/hasg/Fire/DragonsBreath.ogg"
-weapons/golide/fire_flech    "sounds/hasg/Fire/Flechette.ogg"
-weapons/golide/fire_expl     "sounds/hasg/Fire/Explosive.ogg"
-weapons/golide/fire_wp       "sounds/hasg/Fire/WhitePhosphorus.ogg"
+HASG_FIRE1 "sounds/hasg/Fire/Buckshot1.ogg"
+HASG_FIRE2 "sounds/hasg/Fire/Buckshot2.ogg"
+HASG_FIRE3 "sounds/hasg/Fire/Buckshot3.ogg"
+HASG_FIRE4 "sounds/hasg/Fire/Buckshot4.ogg"
+weapons/golide/fire_slug "sounds/hasg/Fire/Slug.ogg"
+weapons/golide/fire_db "sounds/hasg/Fire/DragonsBreath.ogg"
+weapons/golide/fire_flech "sounds/hasg/Fire/Flechette.ogg"
+weapons/golide/fire_expl "sounds/hasg/Fire/Explosive.ogg"
+weapons/golide/fire_wp "sounds/hasg/Fire/WhitePhosphorus.ogg"
 
-$random weapons/golide/reload { weapons/golide/reload1 weapons/golide/reload2 weapons/golide/reload3 weapons/golide/reload4 weapons/golide/reload5 }
-weapons/golide/reload1       ASRL1
-weapons/golide/reload2       ASRL2
-weapons/golide/reload3       ASRL3
-weapons/golide/reload4       ASRL4
-weapons/golide/reload5       ASRL5
+ASRL1 "sounds/hasg/PBWP/ASRL1"
+ASRL2 "sounds/hasg/PBWP/ASRL2"
+ASRL3 "sounds/hasg/PBWP/ASRL3"
+ASRL4 "sounds/hasg/PBWP/ASRL4"
+ASRL5 "sounds/hasg/PBWP/ASRL5"
+$random weapons/golide/reload { ASRL1 ASRL2 ASRL3 ASRL4 ASRL5 }
 
-$random weapons/golide/add { weapons/golide/add1 weapons/golide/add2 weapons/golide/add3 weapons/golide/add4 }
-weapons/golide/add1          ASGADD1
-weapons/golide/add2          ASGADD2
-weapons/golide/add3          ASGADD3
-weapons/golide/add4          ASGADD4
+ASGADD1 "sounds/hasg/PBWP/ASGADD1"
+ASGADD2 "sounds/hasg/PBWP/ASGADD2"
+ASGADD3 "sounds/hasg/PBWP/ASGADD3"
+ASGADD4 "sounds/hasg/PBWP/ASGADD4"
+$random weapons/golide/add { ASGADD1 ASGADD2 ASGADD3 ASGADD4 }
 
-// Direct aliases so canonical Lady_Golide.dec sound names resolve
 $random ASG/RL { ASRL1 ASRL2 ASRL3 ASRL4 ASRL5 }
 $random ASG/Add { ASGADD1 ASGADD2 ASGADD3 ASGADD4 }
-ASGLUP ASGPU
-APPKUP A48PKUP2
-RANEQ BDLOAD
+ASGLUP "sounds/hasg/PBWP/ASGPU"
+APPKUP "sounds/hasg/PBWP/A48PKUP2.wav"
+RANEQ "sounds/hasg/PBWP/BDLOAD.ogg"
 DryFire/Shotgun DRYFIRE
 
 $pitchset weapons/golide/fire 0.95 1.05

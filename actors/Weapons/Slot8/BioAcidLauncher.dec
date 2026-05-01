@@ -4,7 +4,7 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 	Weapon.AmmoType1 "PB_DTech"
 	Weapon.AmmoGive1 300
 	Weapon.AmmoUse1 0
-	Weapon.SlotNumber 8
+	Weapon.SlotNumber 7
 	Weapon.SlotPriority 3.2
 	+WEAPON.NOAUTOAIM
 	+WEAPON.NOALERT
@@ -12,7 +12,7 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 	+WEAPON.AMMO_OPTIONAL
 	+WEAPON.NO_AUTO_SWITCH
 	Inventory.PickupSound "BFGPICKUP"
-	Inventory.Pickupmessage "Undefined Weapons. (Slot 8)"
+	Inventory.Pickupmessage "Undefined Weapons. (Slot 7)"
 	Obituary "%o was decapitated by %k's Unknown Weapon."
 	AttackSound "None"
 	Scale 0.8

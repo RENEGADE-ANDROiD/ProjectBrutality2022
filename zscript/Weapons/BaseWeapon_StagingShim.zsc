@@ -585,7 +585,7 @@ Extend class PB_WeaponBase
 		A_Overlay(-777,  "Melee_Equipment_Handler_Overlay");
 		A_Overlay(-778,  "KickHandler_Overlay");
 		A_Overlay(-779,  "Equipment_Toggle_Handler_Overlay");
-		A_Overlay(-1000, "FirstPersonLegsStand");
+		A_Overlay(-10, "FirstPersonLegsStand");
 
 		PB_SetUsingKick(false);
 		PB_SetUsingMelee(false);

@@ -2177,7 +2177,7 @@ pointlight PulseC
 	dontlightself 1
 }
 
-object PB_Pulsecannon
+object PB_PulseCannon
 {
 	frame PLCU { light PulseC }
 }
