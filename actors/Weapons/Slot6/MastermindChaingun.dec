@@ -3,6 +3,11 @@ Actor MastermindChaingunFired : Inventory
     Inventory.MaxAmount 200
 }
 
+Actor MastermindChainBurstShots : Inventory
+{
+    Inventory.MaxAmount 200
+}
+
 Actor MastermindChaingun : PB_Weapon
 {
     Game Doom
@@ -75,6 +80,8 @@ Actor MastermindChaingun : PB_Weapon
     MastermindChaingunReadyToFire:
         RMNG F 1
         {
+            if (!PressingFire())
+                A_SetInventory("MastermindChainBurstShots", 0);
             if (CountInv("MastermindChaingunFired") >= 60) { A_GunFlash("MastermindChaingunBarrelSmoke"); }
             if (PressingFire() && CountInv("RocketAmmo") > 0) { return state("Fire"); }
             return A_DoPBWeaponAction;
@@ -111,6 +118,7 @@ Actor MastermindChaingun : PB_Weapon
         Stop
 
     Deselect:
+        TNT1 A 0 A_SetInventory("MastermindChainBurstShots", 0)
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel")
@@ -168,7 +176,7 @@ Actor MastermindChaingun : PB_Weapon
             A_AlertMonsters;
             A_FireCustomMissile("YellowFlareSpawn", 15, 0, 0, 0);
             A_FireCustomMissile("YellowFlareSpawn", -15, 0, 0, 0);
-            A_FireCustomMissile("ShakeYourAssMedium", 0, 0, 0, 0);
+            A_MastermindChaingunShake();
             A_FireCustomMissile("MastermindTracerDoomguy",random(-2,2),0,0,-12,random(3,-3));
             A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
             A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -195,7 +203,7 @@ Actor MastermindChaingun : PB_Weapon
             A_AlertMonsters;
             A_FireCustomMissile("YellowFlareSpawn", 15, 0, 0, 0);
             A_FireCustomMissile("YellowFlareSpawn", -15, 0, 0, 0);
-            A_FireCustomMissile("ShakeYourAssMedium", 0, 0, 0, 0);
+            A_MastermindChaingunShake();
             A_FireCustomMissile("MastermindTracerDoomguy",random(-2,2),0,0,-12,random(3,-3));
             A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
             A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -238,6 +246,7 @@ Actor MastermindChaingun : PB_Weapon
         Goto NoAmmo
 
     NoAmmo:
+        TNT1 A 0 A_SetInventory("MastermindChainBurstShots", 0)
         RMNG A 0
         RMNG A 0 A_ZoomFactor(1.0)
         RMNG A 0 A_TakeInventory("Zoomed",1)

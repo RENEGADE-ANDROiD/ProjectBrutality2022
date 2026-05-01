@@ -566,6 +566,22 @@ class PB_WeaponBase : DoomWeapon
 		pl.Vel.Y += f.Y * xyBoost;
 	}
 
+	// Mastermind's Chaingun: ramp screen shake while fire is held (Minor → Medium → full).
+	action void A_MastermindChaingunShake()
+	{
+		PlayerPawn plr = PlayerPawn(invoker.Owner);
+		if (!plr)
+			return;
+		int shots = plr.CountInv("MastermindChainBurstShots");
+		if (shots <= 0)
+			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
+		else if (shots == 1)
+			A_FireCustomMissile("ShakeYourAssMedium", 0, 0, 0, 0);
+		else
+			A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
+		plr.A_GiveInventory("MastermindChainBurstShots", 1);
+	}
+
 //I know that two functions are messy but hey, they work like wonders.	
 //Also, a HUGE thank you to both A_D_M_E_R_A_L and DoomKrakken for showing
 //their examples on making the plasma ammo counter! Thanks guys!
