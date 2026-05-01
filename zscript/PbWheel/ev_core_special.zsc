@@ -1241,17 +1241,24 @@ Class PB_SpecialWheelHandler : EventHandler
 		PB_SpecialWheel_Mode a = new ("PB_SpecialWheel_Mode");
 		a.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
 		a.specialName = "SelectM41A_12Gauge";
-		a.specialAlias = "12ga Alt-Fire";
+		a.specialAlias = "12ga Underbarrel";
 		a.specialPriority = 1;
 		a.iconScale = iconScale;
 		wheelSpecials.Push(a);
 		PB_SpecialWheel_Mode b = new ("PB_SpecialWheel_Mode");
 		b.specialIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
 		b.specialName = "SelectM41A_30mmGrenade";
-		b.specialAlias = "30mm Grenade";
+		b.specialAlias = "30mm Underbarrel";
 		b.specialPriority = 2;
 		b.iconScale = iconScale;
 		wheelSpecials.Push(b);
+		PB_SpecialWheel_Mode c = new ("PB_SpecialWheel_Mode");
+		c.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Dual.png", TexMan.Type_Any);
+		c.specialName = "SelectM41A_DualWield";
+		c.specialAlias = "Dual Wield";
+		c.specialPriority = 3;
+		c.iconScale = iconScale;
+		wheelSpecials.Push(c);
 		specialWheel_handleMouse();
 	}
 

@@ -1,6 +1,7 @@
 // VorpalBlade (Tiberium's Soulblade, Slot 1)
-// Original: Insanity's Requiem Mk.2 by the late TiberiumSoul. Sprites by Eriance.
-// PB 0.4.2+ rework by Renegade Android. Folded into PB 2022 from PB_VorpalBlade_from_Insanitys_Requiem-MK2.wad.
+// Original per PB_MeleeWeaponPack CREDITS: Eriance sprites; Insanity's Requiem Mk.2
+// by the late TiberiumSoul (RIP). PB 0.4.2+ rework by Renegade Android.
+// Folded into PB 2022 from PB_MeleeWeaponPack lineage.
 // BDPmelee logic (lunge-on-attack), Berserker BladeStorm, healing-on-hit kept verbatim.
 
 class VorpalBlade : PB_WeaponBase

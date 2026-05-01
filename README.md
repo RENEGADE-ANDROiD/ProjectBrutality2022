@@ -34,7 +34,7 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 - **Content breadth:** A large weapon roster, extra monsters, kill streaks, power-up hooks, and announcer support — most knobs live under Project Brutality menus.
 - **Configuration:** Tune almost everything under **Options → Project Brutality Settings**, **Options → Brutality 2022 Additions**, **Options → Weapon Settings**, and **Options → Glory Kill Options**.
 - **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** is the one-switch folded gore mix for BDv22 mist/meat/organs, BPv10 death extras, and extra death pools/trails.
-- **Shield Saw:** A chainsaw-side melee upgrade that throws the saw from Quick Melee at range and lets you recall it with the **Recall Shield Saw** bind.
+- **Shield Saw:** Standard equipment—you start every new game with it. Quick Melee throws the ricocheting saw at range (close targets still get normal melee), and **Recall Shield Saw** brings it back.
 
 ### Included weapons
 
@@ -47,8 +47,9 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **Chainsaw** — classic fuel-fed saw with PB gore and chainsaw-spawner variants.
 - **UAC Nanotech Energy Beam Katana** — energy blade with quick melee integration and barrier-style behavior.
 - **Argent Sith Beam Katana** — argent blade variant with its own energy attacks and shield/barrier handling.
-- **Tiberium's Soulblade / Vorpal Blade** — exotic blade with charged/special attack behavior.
-- **Shield Saw** — not a separate weapon slot entry; while the token is owned, Quick Melee throws the saw at range and **Recall Shield Saw** pulls it back.
+- **Tiberium's Soulblade / Vorpal Blade** — exotic blade with charged/special attack behavior (sprites **Eriance**; sword lineage *Insanity's Requiem Mk.2* by **TiberiumSoul**; folded from **PB_MeleeWeaponPack** / **Renegade Android** rework — see **`CREDITS.txt`**).
+- **Dragon Slayer** — heavy energy-melee / bolt-repeater-style attacks (**Craneo**; Hexen ModDB per upstream pack notes; same pack fold — **`CREDITS.txt`**).
+- **Shield Saw** — not a separate weapon slot entry; granted on spawn like other starter gear. With the saw “charged,” Quick Melee throws it at range; **Recall Shield Saw** pulls it back. It no longer drops from the chainsaw map spawner and is not shown on the HUD inventory strip.
 
 **Slot 2 — Sidearms & personal defense**
 
@@ -82,7 +83,7 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **UAC-320 Heavy Machine Gun** — older heavy automatic platform.
 - **UAC M1893 Lever Action** — lever rifle with a weapon-special caliber swap.
 - **Pro-Surv Ballista** — precision projectile weapon for heavy single shots.
-- **M41A Pulse Rifle** — pulse rifle with special-wheel 12-gauge and 30mm grenade underbarrel modes.
+- **M41A Pulse Rifle** — pulse rifle with weapon-special wheel: 12-gauge or 30mm underbarrel Alt-Fire, plus optional dual-wield.
 - **Battle Rifle** — modern rifle with magazine handling and PB tactical weapon flow.
 
 **Slot 5 — Heavy automatics**
@@ -122,6 +123,7 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **BFG9000 MK IV** — BFG-class room clearer.
 - **BFG 11K Prototype / BFG Beam** — beam-style BFG super-weapon entry.
 - **Demon Exterminator** — endgame demon-killing super-weapon.
+- **Stormcast** — lightning / energy weapon from *Schism* lineage (**Dreo** & **Lord Lothar**; **PB_MeleeWeaponPack** / **Renegade Android** — **`CREDITS.txt`**).
 
 **Slot 0 — Demon-tech pair**
 
@@ -129,6 +131,8 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **Demon-Tech Rifle** — demon-energy rifle with charged energy behavior and shared demon-tech support actors.
 
 Modders: `PLAYER.dec` is the source of truth for slotted weapons. The disabled **Demon-Tech Minigun** source remains on disk for possible future repair, but it is not part of the active player roster.
+
+**`GRAPHICS/`** (committed **uppercase**, hundreds of PNGs: wheel icons, blood decals, dash overlay, Glory Kill NewHud art, etc.) must remain in your working copy. If the folder is missing, restore it from version control (e.g. **`git restore GRAPHICS`**). After editing **`SRC/GloryHUD.acs`** or other ACS sources, recompile with **`tools/compile_acs.ps1`** or **`tools/compile_gloryhud.cmd`** (set **`PB_ACC`** to **`acc.exe`** if needed).
 
 ### Equipment
 
@@ -145,9 +149,9 @@ Modders: `PLAYER.dec` is the source of truth for slotted weapons. The disabled *
 | Menu label | CVar | Role |
 | --- | --- | --- |
 | **Rocket Jumping** | `pb_rocketjump` | Player rocket explosions launch you from floors/walls/ceilings without self-splash when **On**; vanilla-style self-splash when **Off**. |
-| **Plasma Wall Climbing** | `pb_plasma_wallclimb` | Plasma-ball impacts can thrust you along the same idea; **Off** restores small self-damage on those hits. |
+| **Plasma Wall Climbing** | `pb_plasma_wallclimb` | Plasma-ball impacts (slot-6 plasma family **and** **Mastermind's Chaingun** tracers) can thrust you along the same idea; **Off** restores small self-damage on those hits, and the chaingun tracer applies a full **120 / 140** radius self-splash (**`XF_HURTSOURCE`**) before the usual explosion VFX. |
 
-Rockets and certain plasma shots can double as **movement tools**, not just damage. With **Rocket Jumping** / **Plasma Wall Climbing** on, those player weapons skip harsh self-damage so you can blast-jump or scrape along surfaces without punishing yourself every time.
+Rockets and certain plasma shots **and the Mastermind chaingun's explosive tracers** can double as **movement tools**, not just damage. With **Rocket Jumping** / **Plasma Wall Climbing** on, those player weapons skip harsh self-damage so you can blast-jump or scrape along surfaces without punishing yourself every time.
 
 You do **not** need to jump first — firing behind you into floors or walls still shoves you forward. A brief **blast momentum** helper keeps that push from dying instantly to friction.
 
@@ -168,14 +172,14 @@ The internal BDv22 blend is tuned to about **66.6%** so the BDv22 pieces are com
 
 ### Shield Saw
 
-**Shield Saw** is folded directly into Quick Melee rather than added as another weapon slot. Pick up the Shield Saw token, then:
+**Shield Saw** is folded into Quick Melee rather than taking a weapon slot. You begin with the saw token on a **new game**; map-placed pickups (or `summon ShieldSaw_token`) still work if a mapper extras them.
 
-- press **Quick Melee** near enemies for the usual close-range melee flow;
-- press **Quick Melee** at range to throw the saw as a projectile;
-- press **Recall Shield Saw** (default **T**) to call it back through the **FastCall** inventory;
-- keep playing normally if you change maps while it is out — the map-enter helper refunds the saw token so it is not lost.
+- **Quick Melee** near enemies uses the usual close-range melee.
+- **Quick Melee** at range throws the saw as a projectile.
+- **Recall Shield Saw** (default **T**) calls it back through the **FastCall** inventory.
+- Level transitions while the saw is still out refund the token via the map-enter script so it is not lost.
 
-It is always part of the chainsaw-spawner rotation and has no separate spawn-toggle menu entry.
+The vanilla **chainsaw** spawn point no longer rolls a Shield Saw drop—the saw is default kit, not spawner loot. There is no separate spawn-toggle menu entry.
 
 ## Settings and controls
 
@@ -215,8 +219,10 @@ This build layers several community sources into Project Brutality’s own syste
 
 Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki113r/Project_Brutality) and the work of that team and their contributors. It also includes Glory Kills and Monster Pack-line content, third-party systems such as **Nash Gore** (Nash Muhandes, modified here), and many named authors in **`CREDITS.txt`** and **`DetailedCredits.txt`**.
 
-**Recent additions in this line:** **2022 Enhanced Brootality** folded **Brutal Doom 22 (BDv22)** gore (`actors/Gore/BDv22Gore/`, `zscript/Gore/BDv22Gore*.zc`, `SPRITES/BDv22/`) and **Brutal Pack V10** gore (`actors/Gore/BPv10Gore/`, `SPRITES/GORE/`) behind `pb_enhanced_brutality_2022`; **first-person and expanded executions** with art lineage from the **Brutal Doom *El Diablo* Edition** family and related packs (under `SPRITES/MONSTERS/fatalitys/eld_eld_*` and similar); **Realm667**-sourced and **Realm667-style** community monsters and props (see in-file and **DetailedCredits**); **Project Brutality Legacy**-style **execution / stagger handoff** behavior merged into the main actor set; and **Brutal Pack**-sourced *fragments* only where they were reauthored for PB 2022 (not the pack as a whole). See the table in **Sources and important third-party lineage** above.
+**Recent additions in this line:** **2022 Enhanced Brootality** folded **Brutal Doom 22 (BDv22)** gore (`actors/Gore/BDv22Gore/`, `zscript/Gore/BDv22Gore*.zc`, `SPRITES/BDv22/`) and **Brutal Pack V10** gore (`actors/Gore/BPv10Gore/`, `SPRITES/GORE/`) behind `pb_enhanced_brutality_2022`; **first-person and expanded executions** with art lineage from the **Brutal Doom *El Diablo* Edition** family and related packs (under `SPRITES/MONSTERS/fatalitys/eld_eld_*` and similar); **Glory Kill equipment launcher** first-person sprites (**`SPRITES/ShoulderCannon/`**) and **Eternal fuel-HUD** glyphs aligned with the **PB_Staging** Glory Kills line; **Explosive Movement** extended to **Mastermind's Chaingun** tracers (`pb_plasma_wallclimb`); **Realm667**-sourced and **Realm667-style** community monsters and props (see in-file and **DetailedCredits**); **Project Brutality Legacy**-style **execution / stagger handoff** behavior merged into the main actor set; and **Brutal Pack**-sourced *fragments* only where they were reauthored for PB 2022 (not the pack as a whole). See the table in **Sources and important third-party lineage** above.
 
 Credit to **BeefRice** and **Jaih1r0** for PBX HUD elements and many weapon improvements and systems. Thanks to **HUNG** for the **Shield Saw** (**GK_ShieldSaw**) behavior folded into this build (quick melee + recall).
+
+**PB_MeleeWeaponPack** (folded slot-1 **Dragon Slayer** & **Vorpal Blade**, slot-9 **Stormcast**): original credits per that add-on’s `CREDITS.txt` — **Craneo**, **Dreo** & **Lord Lothar** (*Schism*), **Eriance** & **TiberiumSoul** (RIP); compatibility rework for PB 0.4.2+ by **Renegade Android**. Details: **`CREDITS.txt`**.
 
 **Maintainers of this package:** RENEGADE ANDROID and doc.

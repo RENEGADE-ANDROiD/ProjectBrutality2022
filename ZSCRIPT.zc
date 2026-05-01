@@ -113,6 +113,8 @@ const MAXITERATIONS = 32676;
 
 //Weapons
 #include "zscript/Weapons/BaseWeapon.zc"
+#include "zscript/Weapons/RailGunFire.zc"
+#include "zscript/Weapons/PB_SuperBFGBall.zc"
 #include "zscript/Weapons/Slot1/KatanaUpgradeChoiceHelpers.zc"
 // Staging-parity helper back-fill on PB_WeaponBase (chamber/mag tracking,
 // PB_WeaponRaise, PB_CheckReload, PB_jumpIfNoAmmo, upgrade handoff, etc.)
@@ -131,6 +133,8 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot1/ArgentSith_Weapon.zs"
 #include "zscript/Weapons/Slot1/BeamKatana_Weapon.zs"
 #include "zscript/Weapons/Slot1/VorpalBlade.zc"
+#include "zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc"
+#include "zscript/Weapons/MeleeWeaponPack/Stormcast.zc"
 #include "zscript/Weapons/ShieldSawNotify.zc"
 #include "zscript/Weapons/Slot2/Deagle/Deagle.zs"
 #include "zscript/Weapons/PB_WeaponTacticalFeel.zc"

@@ -319,6 +319,7 @@ DoomEdNums
 	23162 = HASG
 	23163 = HASGDrum
 	23164 = PossessedGibsSlither
+	23165 = PB_GuardsphereST
 
 	//Glory Kills
 	17003 = CyberdemonLegsFatality

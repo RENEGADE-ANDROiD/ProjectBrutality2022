@@ -254,7 +254,6 @@ class PB_MetalSniper : PB_WeaponBase
                 {
                     if (PressingAltfire())  return resolvestate("ZoomOut");
                     if (JustPressed(BT_ATTACK)) return resolvestate("Fire_ADS");
-                    A_Refire("Fire_ADS");
                 }
                 return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
             }

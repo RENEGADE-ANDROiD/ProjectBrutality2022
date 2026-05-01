@@ -1,8 +1,19 @@
 Add-Type -AssemblyName System.IO.Compression.FileSystem
+# Sync selected repo files into the packaged TC zip (edit $pairs when you add hotfix lumps).
+# After changing anything in $pairs, run: powershell -NoProfile -ExecutionPolicy Bypass -File tools/smoke_update_tc_zip.ps1
 $zipPath = 'C:\Program Files (x86)\Steam\steamapps\common\Ultimate Doom\(Doom Mod Builds)\.TCs\ProjectBrutality2022.zip'
 $root = Split-Path $PSScriptRoot -Parent
 # Each pair: @(<source path>, <canonical lump path inside zip>, <list of any duplicate lump paths to remove>)
 $pairs = @(
+	, @((Join-Path $root 'SNDINFO.txt'), 'SNDINFO.txt', @())
+	, @((Join-Path $root 'DECORATE'), 'DECORATE', @())
+	, @((Join-Path $root 'AGENTS.md'), 'AGENTS.md', @())
+	, @((Join-Path $root 'README.md'), 'README.md', @())
+	, @((Join-Path $root 'CREDITS.txt'), 'CREDITS.txt', @())
+	, @((Join-Path $root 'actors\Player\PLAYER.dec'), 'actors/Player/PLAYER.dec', @())
+	, @((Join-Path $root 'actors\Weapons\Slot1\ShieldSaw.dec'), 'actors/Weapons/Slot1/ShieldSaw.dec', @())
+	, @((Join-Path $root 'actors\SPAWNERS\WeaponSpawners\ChainsawWeaponSpawner.dec'), 'actors/SPAWNERS/WeaponSpawners/ChainsawWeaponSpawner.dec', @())
+	, @((Join-Path $root 'actors\Weapons\Slot4\LeverAction.dec'), 'actors/Weapons/Slot4/LeverAction.dec', @())
 	, @((Join-Path $root 'Fontdefs.txt'), 'Fontdefs.txt', @())
 	, @((Join-Path $root 'language.enu'), 'language.enu', @())
 	, @((Join-Path $root 'CVARINFO'), 'CVARINFO', @())
@@ -25,11 +36,21 @@ $pairs = @(
 	, @((Join-Path $root 'zscript\Items\PBKillstreak\PB_Killstreak_Items.zc'), 'zscript/items/pbkillstreak/pb_killstreak_items.zc', @('zscript/Items/PBKillstreak/PB_Killstreak_Items.zc'))
 	, @((Join-Path $root 'zscript\Items\PBKillstreak\PB_Killstreak_Messages.zc'), 'zscript/items/pbkillstreak/pb_killstreak_messages.zc', @('zscript/Items/PBKillstreak/PB_Killstreak_Messages.zc'))
 	, @((Join-Path $root 'actors\Items\PBKillstreak\PB_UnlessYouHavePowah.dec'), 'actors/items/pbkillstreak/pb_unlessyouhavepowah.dec', @('actors/Items/PBKillstreak/PB_UnlessYouHavePowah.dec'))
-	, @((Join-Path $root 'zscript\Weapons\Slot4\BattleRifle\BDPBattleRifle.zs'), 'zscript/weapons/slot4/battlerifle/bdpbattlerifle.zs', @('zscript/Weapons/Slot4/BattleRifle/BDPBattleRifle.zs'))
+	, @((Join-Path $root 'zscript\Weapons\Slot4\BattleRifle\BDPBattleRifle.zs'), 'zscript/Weapons/Slot4/BattleRifle/BDPBattleRifle.zs', @('zscript/weapons/slot4/battlerifle/bdpbattlerifle.zs'))
 	, @((Join-Path $root 'zscript\Weapons\Slot4\NeoHMG\NeoHMG.zs'), 'zscript/weapons/slot4/neohmg/neohmg.zs', @('zscript/Weapons/Slot4/NeoHMG/NeoHMG.zs'))
 	, @((Join-Path $root 'zscript\Weapons\Slot3\CSSG\CSSG.zs'), 'zscript/weapons/slot3/cssg/cssg.zs', @('zscript/Weapons/Slot3/CSSG/CSSG.zs'))
+	, @((Join-Path $root 'actors\Weapons\Slot3\SSG.dec'), 'actors/weapons/slot3/ssg.dec', @('actors/Weapons/Slot3/SSG.dec'))
+	, @((Join-Path $root 'actors\Weapons\Slot3\X12Shotgun.dec'), 'actors/weapons/slot3/x12shotgun.dec', @('actors/Weapons/Slot3/X12Shotgun.dec'))
+	, @((Join-Path $root 'actors\Weapons\Slot7\RAILGUN.dec'), 'actors/weapons/slot7/railgun.dec', @('actors/Weapons/Slot7/RAILGUN.dec'))
+	, @((Join-Path $root 'actors\Friendly Marines\CapturedMarine.dec'), 'actors/friendly marines/capturedmarine.dec', @('actors/Friendly Marines/CapturedMarine.dec'))
+	, @((Join-Path $root 'actors\Gore\BURN.dec'), 'actors/gore/burn.dec', @('actors/Gore/BURN.dec'))
+	, @((Join-Path $root 'actors\Monsters\T3-Fats\Daedabus.dec'), 'actors/monsters/t3-fats/daedabus.dec', @('actors/Monsters/T3-Fats/Daedabus.dec'))
 	, @((Join-Path $root 'zscript\Weapons\Slot6\Excavator\PB_Excavator.zs'), 'zscript/weapons/slot6/excavator/pb_excavator.zs', @('zscript/Weapons/Slot6/Excavator/PB_Excavator.zs'))
-	, @((Join-Path $root 'zscript\Weapons\Slot4\MetalSniper\MetalSniper.zs'), 'zscript/weapons/slot4/metalsniper/metalsniper.zs', @('zscript/Weapons/Slot4/MetalSniper/MetalSniper.zs'))
+	, @((Join-Path $root 'zscript\Weapons\Slot4\MetalSniper\MetalSniper.zs'), 'zscript/Weapons/Slot4/MetalSniper/MetalSniper.zs', @('zscript/weapons/slot4/metalsniper/metalsniper.zs'))
+	, @((Join-Path $root 'actors\Weapons\MeleeWeaponPack\DragonSlayer.dec'), 'actors/weapons/meleeweaponpack/dragonslayer.dec', @('actors/Weapons/MeleeWeaponPack/DragonSlayer.dec'))
+	, @((Join-Path $root 'actors\Weapons\MeleeWeaponPack\Stormcast.dec'), 'actors/weapons/meleeweaponpack/stormcast.dec', @('actors/Weapons/MeleeWeaponPack/Stormcast.dec'))
+	, @((Join-Path $root 'zscript\Weapons\MeleeWeaponPack\DragonSlayer.zc'), 'zscript/weapons/meleeweaponpack/dragonslayer.zc', @('zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc'))
+	, @((Join-Path $root 'zscript\Weapons\MeleeWeaponPack\Stormcast.zc'), 'zscript/weapons/meleeweaponpack/stormcast.zc', @('zscript/Weapons/MeleeWeaponPack/Stormcast.zc'))
 )
 
 if (-not (Test-Path -LiteralPath $zipPath)) { throw "Zip not found: $zipPath" }

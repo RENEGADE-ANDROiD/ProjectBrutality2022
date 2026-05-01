@@ -14,80 +14,79 @@ AANUM3
 	/ AASLAS
 }
 
-// Glory Kill HUD fonts: ship with graphics/hud/glorykills/newhud/ for art. When those lumps
-// are missing, map glyphs to TNT1A0 so FONTDEFS still parses (HUD icons are invisible).
-// Letter "A" = 65 (HudMessage full-sprite draw)
+// Glory Kill HUD fonts (ACS HudMessage + SetFont). Graphics live under GRAPHICS/HUD/;
+// FONTDEFS must use TexMan paths: lowercase graphics/… + .png (see MATERIALS in MODELS/).
+// Letter "A" = 65 (full-sprite glyph draw).
 
 FUELPA01
 {
-	65 TNT1A0
+	65 graphics/hud/FUELPA01.png
 }
 CRUCPA01
 {
-	65 TNT1A0
+	65 graphics/hud/CRUCPA01.png
 }
 CRUCPA02
 {
-	65 TNT1A0
+	65 graphics/hud/CRUCPA02.png
 }
 CRUCPA03
 {
-	65 TNT1A0
+	65 graphics/hud/CRUCPA03.png
 }
 CRAMMO00
 {
-	65 TNT1A0
+	65 graphics/hud/CRAMMO00.png
 }
 CRAMMO01
 {
-	65 TNT1A0
+	65 graphics/hud/CRAMMO01.png
 }
 CRAMMO02
 {
-	65 TNT1A0
+	65 graphics/hud/CRAMMO02.png
 }
 CRAMMO03
 {
-	65 TNT1A0
+	65 graphics/hud/CRAMMO03.png
 }
 BPAMMO00
 {
-	65 TNT1A0
+	65 graphics/hud/BPAMMO00.png
 }
 BPAMMO01
 {
-	65 TNT1A0
+	65 graphics/hud/BPAMMO01.png
 }
 BPAMMO02
 {
-	65 TNT1A0
+	65 graphics/hud/BPAMMO02.png
 }
 BPAMMO03
 {
-	65 TNT1A0
+	65 graphics/hud/BPAMMO03.png
 }
 BPAMMO04
 {
-	65 TNT1A0
+	65 graphics/hud/BPAMMO04.png
 }
 BPAMMO05
 {
-	65 TNT1A0
+	65 graphics/hud/BPAMMO05.png
 }
 
-// Glory Kill Eternal-style HUD (sv_fuelhud_background == 3): direct-named single-character
-// fonts so SRC/GloryHUD.acs can SetFont("CRUCRY00")/SetFont("SCFLM01") etc.
-CRUCRY00 { 65 TNT1A0 }
-CRUCRY01 { 65 TNT1A0 }
-CRUCAM01 { 65 TNT1A0 }
-CRUCAM02 { 65 TNT1A0 }
-CRUCAM03 { 65 TNT1A0 }
-SCFLM00  { 65 TNT1A0 }
-SCFLM01  { 65 TNT1A0 }
-SCICB00  { 65 TNT1A0 }
-SCICB01  { 65 TNT1A0 }
-BPAMMO10 { 65 TNT1A0 }
-BPAMMO11 { 65 TNT1A0 }
-BPAMMO12 { 65 TNT1A0 }
-BPAMMO13 { 65 TNT1A0 }
-BPAMMO14 { 65 TNT1A0 }
+// Glory Kill Eternal-style HUD (sv_fuelhud_background == 3)
+CRUCRY00 { 65 graphics/hud/glorykills/newhud/CRUCRY00.png }
+CRUCRY01 { 65 graphics/hud/glorykills/newhud/CRUCRY01.png }
+CRUCAM01 { 65 graphics/hud/glorykills/newhud/CRUCAM01.png }
+CRUCAM02 { 65 graphics/hud/glorykills/newhud/CRUCAM02.png }
+CRUCAM03 { 65 graphics/hud/glorykills/newhud/CRUCAM03.png }
+SCFLM00  { 65 graphics/hud/glorykills/newhud/SCFLM00.png }
+SCFLM01  { 65 graphics/hud/glorykills/newhud/SCFLM01.png }
+SCICB00  { 65 graphics/hud/glorykills/newhud/SCICB00.png }
+SCICB01  { 65 graphics/hud/glorykills/newhud/SCICB01.png }
+BPAMMO10 { 65 graphics/hud/glorykills/newhud/BPAMMO10.png }
+BPAMMO11 { 65 graphics/hud/glorykills/newhud/BPAMMO11.png }
+BPAMMO12 { 65 graphics/hud/glorykills/newhud/BPAMMO12.png }
+BPAMMO13 { 65 graphics/hud/glorykills/newhud/BPAMMO13.png }
+BPAMMO14 { 65 graphics/hud/glorykills/newhud/BPAMMO14.png }

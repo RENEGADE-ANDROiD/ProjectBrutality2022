@@ -424,6 +424,10 @@ PB_WPNBASEPICKUP_ShieldSaw_token = "Shield Saw charge ready — Quick Melee thro
 PB_WPNHINT_ShieldSaw_token = "Quick Melee (out of hug range) throws the saw.\nRecall with the Shield Saw key (uses FastCall) or when it returns.";
 
 PB_PICKUP_VorpalBlade = "You picked up Tiberium's Soulblade! (Slot 1)";
+PB_PICKUP_DragonSlayer = "You picked up the Dragon Slayer! (Slot 1)";
+PB_PICKUP_Stormcast = "You got the Arcane Power of Stormcasting! (Slot 9)";
+PB_WPNHINT_DragonSlayer = "Dragon Slayer: build Slayer energy with slashes; spend for empowered strikes.\nAlt-Fire: nail launcher Volley.\nUses Slot 1 with chainsaw-tier spawns.";
+PB_WPNHINT_Stormcast = "Stormcast: PowerChargeStorm fuels lightning channel and charge casts.\nWeapon Special + Alt tiers summon Arc of Death.\nUses Slot 9 with BFG spawns.";
 PB_WPNHINT_VorpalBlade = "Lifesteal Sword: Lunges Lock Targets.\nBerserk Alt-Fire: BladeStorm.";
 
 PB_PICKUP_HASG = "UAC XHAS-SP -;{The Lady Golide};- (Slot 3)";
@@ -469,6 +473,7 @@ PB_WHEELTIP_SelectShotgun_Buckshot = "Pump Shotgun: Buckshot.";
 PB_WHEELTIP_SelectShotgun_Slugshot = "Pump Shotgun: Slugs.";
 PB_WHEELTIP_SelectM41A_12Gauge = "M41A: 12ga Underbarrel Alt-Fire.";
 PB_WHEELTIP_SelectM41A_30mmGrenade = "M41A: 30mm Grenade Launcher Alt-Fire.";
+PB_WHEELTIP_SelectM41A_DualWield = "M41A: Dual Wield two pulse rifles\n(Primary / Alt-Fire per gun; separate chamber tracks).";
 PB_WHEELTIP_SelectXM21_Ballistic = "XM-21 Upgrade: Explosive Ballistics.\n2 NewClip per Shot.";
 PB_WHEELTIP_SelectXM21_HighCaliber = "XM-21 Upgrade: AP Precision Fire.";
 
@@ -518,7 +523,7 @@ PB_WPNHINT_PB_Freezer = "Freeze Rifle:\nCryo Primary Fire; Alt-Fire Bomb / Beam.
 PB_WPNHINT_PB_LMG = "LMG: Belt Fed; Alt-Fire Micro-Missiles\nWhen Upgraded.";
 PB_WPNHINT_PB_M1Plasma = "M1 Plasma Rifle: Bolts;\nAlt-Fire Overcharge; Weapon Special Mode.";
 PB_WPNHINT_PB_M2Plasma = "M2 Lightning Gun:\nAlt-Fire Arc; Upgrade Chain Modes.";
-PB_WPNHINT_PB_M41A = "M41A: Quick 7.62 Primary.\nWeapon Special Wheel — 12ga vs 30mm underbarrel Alt-Fire.";
+PB_WPNHINT_PB_M41A = "M41A: Quick 7.62 Primary.\nWeapon Special Wheel — underbarrel 12ga or 30mm grenade, or Dual Wield.\nCarry two M41As: tap Special (no wheel token pending) to enter or exit dual wield.";
 PB_WPNHINT_PB_MetalSniper = "Anti-Materiel Sniper:\nWeapon Special — wheel: ammo type, scope vs grenade.\nAlt-Fire zooms (sniper mode) or primes grenade.";
 PB_MSNI_PICKUP = "Metal Sniper (slot 4)";
 PB_MSNI_TAG = "Metal Sniper";

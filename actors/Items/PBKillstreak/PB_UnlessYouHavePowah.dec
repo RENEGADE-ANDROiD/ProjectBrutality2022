@@ -146,7 +146,7 @@ Actor PB_PowerQuarterDamageST : PowerProtection
 Damagefactor "Normal", 0.25
 }
 
-Actor PB_GuardsphereST : PowerupGiver 5037
+Actor PB_GuardsphereST : PowerupGiver 23165
 {
   +CountItem
   +NoGravity

@@ -45,7 +45,7 @@ class PB_WeaponTilterInventory : Inventory
 		'PB_DemonExterminator',
 		'PB_DualPulseCannons',
 		'PB_PulseCannon',
-		'PB_MastermindChaingun',
+		'MastermindChaingun',
 		'PB_RiotShield'
 	};
 

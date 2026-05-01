@@ -529,6 +529,25 @@ actor ShakeYourAssMinor
   }
 }
 
+actor ShakeYourAssMedium
+{
+  height 8
+  radius 4
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOSECTOR
+  +NOCLIP
+  +CLIENTSIDEONLY
+  states
+  {
+  Spawn:
+  TNT1 A 0
+  TNT1 A 0 Radius_Quake (1, 5, 0, 2, 0)
+  TNT1 A 10
+    Stop
+  }
+}
+
 actor ShakeYourAss
 {
   height 8

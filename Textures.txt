@@ -63,15 +63,6 @@ graphic AASLAS, 64, 80 //UC
 }
 
 Graphic DASHSCREEN, 640, 360 {}
-Graphic uac_00, 32, 32 {}
-Graphic uac_01, 32, 32 {}
-Graphic uac_02, 32, 32 {}
-Graphic uac_03, 32, 32 {}
-Graphic uac_04, 32, 32 {}
-Graphic uac_05, 32, 32 {}
-Graphic uac_06, 32, 32 {}
-Graphic uac_07, 32, 32 {}
-
 
 Graphic dash_1, 640, 360 {}
 Graphic dash_2, 640, 360 {}
@@ -82,46 +73,10 @@ Graphic dash_6, 640, 360 {}
 Graphic dash_7, 640, 360 {}
 
 //Menu Skull
-Graphic uac_00, 32, 32 {}
-Graphic uac_01, 32, 32 {}
-Graphic uac_02, 32, 32 {}
-Graphic uac_03, 32, 32 {}
-Graphic uac_04, 32, 32 {}
-Graphic uac_05, 32, 32 {}
-Graphic uac_06, 32, 32 {}
-Graphic uac_07, 32, 32 {}
-Graphic uac_08, 32, 32 {}
-Graphic uac_09, 32, 32 {}
-Graphic uac_10, 32, 32 {}
-Graphic uac_11, 32, 32 {}
-Graphic uac_12, 32, 32 {}
-Graphic uac_13, 32, 32 {}
-Graphic uac_14, 32, 32 {}
-Graphic uac_15, 32, 32 {}
-Graphic uac_16, 32, 32 {}
-Graphic uac_17, 32, 32 {}
-Graphic uac_18, 32, 32 {}
-Graphic uac_19, 32, 32 {}
-Graphic uac_20, 32, 32 {}
-Graphic uac_21, 32, 32 {}
-Graphic uac_22, 32, 32 {}
-Graphic uac_23, 32, 32 {}
-Graphic uac_24, 32, 32 {}
-Graphic uac_25, 32, 32 {}
-Graphic uac_26, 32, 32 {}
-Graphic uac_27, 32, 32 {}
-Graphic uac_28, 32, 32 {}
-Graphic uac_29, 32, 32 {}
-Graphic uac_30, 32, 32 {}
-Graphic uac_31, 32, 32 {}
-Graphic uac_32, 32, 32 {}
-Graphic uac_33, 32, 32 {}
-Graphic uac_34, 32, 32 {}
-Graphic uac_35, 32, 32 {}
-Graphic uac_36, 32, 32 {}
-Graphic uac_37, 32, 32 {}
-Graphic uac_38, 32, 32 {}
-Graphic uac_39, 32, 32 {}
+Graphic CTROLL1, 32, 32 {}
+Graphic CTROLL2, 32, 32 {}
+Graphic CTROLL3, 32, 32 {}
+Graphic CTROLL4, 32, 32 {}
 
 Graphic uac_00p, 32, 32 {}
 Graphic uac_01p, 32, 32 {}

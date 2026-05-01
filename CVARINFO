@@ -1,4 +1,4 @@
-server bool pb_experimental = false;
+server bool pb_experimental = true;
 user bool py_weaponwheel_freeze = true;
 user int py_weaponwheel_invert = 0;
 user bool py_weaponwheel_musicfade = false;
@@ -327,6 +327,8 @@ server int pb_NoMancubusFlameCannonWeapon = 0;
 server int pb_NoArgentSithWeapon = 0;
 server int pb_NoBeamKatanaWeapon = 0;
 server int pb_NoVorpalBladeWeapon = 0;
+server int pb_NoDragonSlayerWeapon = 0;
+server int pb_NoStormcastWeapon = 0;
 server int pb_NoMolotov = 0;
 
 server int pb_NoHelmetAnimation = 1;

@@ -190,3 +190,10 @@ ACTOR BlueFlareRed
 		Stop
 	}
 }
+
+// DragonSlayer.dec (folded trail / ice helpers; originals lived in another add-on tree)
+ACTOR RandomSmallIcecrystal : BDExplosionparticlesSmall {}
+ACTOR GaussParticlesMany : BDExplosionparticlesSmall {}
+ACTOR GaussParticlesFew : BDExplosionparticlesSmall {}
+ACTOR IceFlak2 : BDExplosionparticlesSmall {}
+ACTOR IceFlak4 : BDExplosionparticlesSmall {}

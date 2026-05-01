@@ -1,8 +1,7 @@
 OptionMenu "OptionsMenu"
 {
 	Title "OPTIONS"
-	Submenu "Project Brutality Settings",		"PBSettings"
-	Submenu "Brutality 2022 Additions",	"PB_2022AdditionsMenu"
+	Submenu "PB 2022 Enhanced",	"PB_2022AdditionsMenu"
 	StaticText " "
 	Submenu "Customize Controls",		"CustomizeControls"
 	Submenu "Mouse options",			"MouseOptions"
@@ -265,96 +264,75 @@ OptionMenu "PB_KillstreakRewardOptions"
 
 OptionMenu "PB_2022AdditionsMenu"
 {
-	Title "Brutality 2022 Additions"
-	StaticText "Shortcuts to Folded Add-Ons & New 2022 Systems.", teal
-	StaticText "Full Menus (Glory Kills, Weapons, Spawns) Stay Below.", teal
+	Title "PB 2022 Enhanced"
 	StaticText " ", teal
+	Submenu "Gameplay Settings",		"GameplaySettings"
+	StaticText " ", teal
+	Submenu "Advanced Weapon Spawns",		"WeaponSpawns"
+	StaticText " ", teal
+	Submenu "Weapon Settings",		"WeaponSettings"
+	StaticText " ", teal
+	Submenu "Global Settings",		"GlobalSettings"
+	StaticText " ", teal
+	Submenu "Visual Settings",		"RenderingSettings"
 	StaticText " ", teal
 	StaticText "-----------------Finishers, Gore, Taunts-----------------", gold
 	Option "Auto-Fatality On Primary Fire", "pb_auto_fatality_fire", YesNo
-	StaticText " ", teal
 	Slider "Auto-Fatality Distance", "pb_auto_fatality_dist", 64, 400, 4
-	StaticText " ", teal
 	StaticText "Requires Glory Kills On: Finisher Attempt", teal
-	StaticText "When Firing at Staggered Target in Range.", teal
 	StaticText " ", teal
+	Option "Glory Kill.", "be_ExecutionsON", YesNo
+	Submenu "Glorykill Options",		"Glorykills"
 	StaticText " ", teal
 	NashGoreOption "$BDV22GOREMNU_ENHANCED2022",	"$BDV22GOREMNU_ENHANCED2022_TIP",	"pb_enhanced_brutality_2022",	"OnOff"
-	StaticText " ", teal
 	StaticText "One switch for the folded BDv22 / BPv10 gore mix.", teal
 	StaticText "Nash and PB base blood/gib/casing settings: ", teal
 	StaticText "Project Brutality Settings, Visual, Gore/Debris.", teal
 	StaticText " ", teal
-	StaticText "On: full BDv22 mist/meat/organs + BPv10 death extras.", teal
-	StaticText "Off: standard Project Brutality / Nash gore only.", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "Enable Voice-Line Taunts", "pb_voicetaunts", YesNo
-	StaticText " ", teal
-	StaticText "Taunt / Fatality Voice Lines.", teal
-	StaticText "(Separate from Idle Doomguy Quips.)", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	StaticText "-----------------UI and Feel-----------------", gold
-	Submenu "Damage Numbers", "DamNumsOptions"
-	Submenu "Tactical Weapon Motion", "PBTacticalMotionOptions"
-	Submenu "PBX 2022 Weapon HUD", "PBWeaponHudOptions"
-	Submenu "Kill Streaks & Power-Up Rewards", "PB_KillstreakOptions"
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "Instant Weapon Switch", "pb_instantweaponswitch", "OnOff"
-	StaticText " ", teal
-	StaticText "Doom-Style Instant Weapon Raise/Lower.", teal
+	StaticText "On: full BDv22 mist/meat/organs + BPv10 death extras.", green
+	StaticText "Off: standard Project Brutality / Nash gore only.", green
 	StaticText " ", teal
 	StaticText " ", teal
 	StaticText "-----------------Explosive Movement-----------------", gold
 	Option "Rocket Jumping", "pb_rocketjump", "OnOff"
 	StaticText " ", teal
-	StaticText "Rocket Splash Can Launch From Floors,", teal
-	StaticText "Walls, or Ceilings.", teal
-	StaticText " ", teal
+	StaticText "Rocket Splash Can Launch From Floors, Walls, or Ceilings.", teal
 	StaticText " ", teal
 	Option "Plasma Wall Climbing", "pb_plasma_wallclimb", "OnOff"
 	StaticText " ", teal
-	StaticText "Plasma Blast Knockback From Floors,", teal
-	StaticText "Walls, Ceilings.", teal
+	StaticText "Plasma Blast Knockback From Floors, Walls, or Ceilings.", teal
+	StaticText " ", teal
+	StaticText " ", teal
+	StaticText "-----------------UI and Feel-----------------", gold
+	Option "Enable Voice-Line Taunts", "pb_voicetaunts", YesNo
+	StaticText "Taunt / Fatality Voice Lines.", teal
+	StaticText "(Separate from Idle Doomguy Quips.)", teal
+	StaticText " ", teal
+	Option "Enable Damage Numbers.", "dam_enabled", "DamEnabled"
+	Submenu "Damage Numbers Options", "DamNumsOptions"
+	StaticText " ", teal
+	Option "Enable tactical weapon motion.", "pb_tac_enable", "YesNo"
+	Submenu "Tactical Weapon Motion Options", "PBTacticalMotionOptions"
+	StaticText " ", teal
+	Option "Enable weapon pickup icon overlay.", "pb_weaponhud_enable", "YesNo"
+	Submenu "PBX 2022 Weapon HUD Options", "PBWeaponHudOptions"
+	StaticText " ", teal
+	Option "Enable Kill Streak System", "pb_ks_enable", "OnOff"
+	Submenu "Kill Streaks & Power-Up Rewards Options", "PB_KillstreakOptions"
+	StaticText " ", teal
+	Option "Instant Weapon Switch", "pb_instantweaponswitch", "OnOff"
+	StaticText "Doom-Style Instant Weapon Raise/Lower.", teal
+	StaticText " ", teal
+	Option "HP Arcade item behavior", "pb_hp_arcade", "OnOff"
+	StaticText " ", teal
+	Option "Wolvus item mutators", "pb_wolvus_item_mutators", "OnOff"
 	StaticText " ", teal
 	StaticText " ", teal
 	StaticText "-----------------Content Packs-----------------", gold
 	Submenu "Monster Pack Settings (Horrorspawn, Summons, etc.)", "MonsterPackSettings"
 	StaticText " ", teal
-	StaticText " ", teal
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-OptionMenu "PBSettings"
-{
-	Title "Project Brutality Settings"
-	StaticText " ", teal
-	
-	Submenu "Brutality 2022 Additions", "PB_2022AdditionsMenu"
-	StaticText " ", teal
-
-	Submenu "Global Settings",		"GlobalSettings"
-	StaticText " ", teal
-	//StaticText " "
-	Submenu "Gameplay Settings",		"GameplaySettings"
-	StaticText " ", teal
-	Submenu "Weapon Settings",		"WeaponSettings"
-	StaticText " ", teal
-	Submenu "Add-On Toggles",		"AddOnToggles"
-	StaticText " ", teal
-	Submenu "Visual Settings",		"RenderingSettings"
-	StaticText " ", teal
-	Submenu "Damage Numbers",		"DamNumsOptions"
-	StaticText " ", teal
-	Submenu "Glorykill Options",		"Glorykills"
-	StaticText " ", teal
-	Submenu "Riot Shield Settings",	"ShieldAxe_Settings"
-	StaticText " ", teal
-	Submenu "Monster Pack Settings",	"MonsterPackSettings"
-	StaticText " ", teal
 	Option "Festive Hat Simulator Mode", "PB_HatExtravaganza", "YesOrNo"
+	StaticText " ", teal
 	StaticText " ", teal
 }
 
@@ -372,8 +350,6 @@ OptionMenu "GlobalSettings"
 	Submenu "Advanced Monster Spawns",		"MonsterSpawns"
 	StaticText " ", teal
 	Submenu "Advanced Weapon Spawns",		"WeaponSpawns"
-	StaticText " ", teal
-	Submenu "Add-On Toggles",		"AddOnToggles"
 	StaticText " ", teal
 	Submenu "Configure Monster Abilities",		"MonsterSettings"
 	StaticText " ", teal
@@ -626,114 +602,13 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Vorpal Blade (Tiberium's Soulblade)", "pb_NoVorpalBladeWeapon", "SpawnOnOff"
 	StaticText " "
+	Option "Spawn Dragon Slayer", "pb_NoDragonSlayerWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Stormcast", "pb_NoStormcastWeapon", "SpawnOnOff"
+	StaticText " "
 }
 
-OptionMenu "AddOnToggles"
-{
-	Title "--------- Add-On Toggles ---------"
-	StaticText " "
-	Option "HP Arcade item behavior", "pb_hp_arcade", "OnOff"
-	Option "Wolvus item mutators", "pb_wolvus_item_mutators", "OnOff"
-	StaticText " "
-	Title "--------- Weapon Spawn Toggles ---------"
-	StaticText " "
-	Option "Spawn Revolver", "pb_NoRevolverWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Submachine Gun", "pb_NoSMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Autoshotgun", "pb_NoASGWeapon", "SpawnOnOff"
-	StaticText " "
-	StaticText " "
-	Option "Spawn Combat Shotgun", "pb_NoCSSGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Carbine", "pb_NoCarbineWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Nailgun", "pb_NoNailgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Excavator Launcher", "pb_NoHeavyGLWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Super Grenade Launcher", "pb_NoSuperGLWeapon", "SpawnOnOff"
-	StaticText " "
-	StaticText " "
-	Option "$PB_OPT_Molotov", "pb_NoMolotov", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn M2 Plasma Rifle", "pb_NoM2PlasmaWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Freezer Rifle", "pb_NoFreezerWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Rail Gun", "pb_NoRailgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn BFG 11K Beam", "pb_NoBFGBeamWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Blackhole Generator", "pb_NoBlackholeWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Lever Action", "pb_NoLeverActionWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Paingiver", "pb_NoPaingiverWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Shotgun", "pb_NoShotgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Rocket Launcher", "pb_NoRocketLauncherWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Plasma Rifle", "pb_NoPlasmaRifleWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn BFG 9000", "pb_NoBFGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Chainsaw", "pb_NoChainsawWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Flamethrower", "pb_NoFlamethrowerWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Flamethrower Upgrade", "pb_NoFlamethrowerUpgrade", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Minigun", "pb_NoMinigunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn LMG", "pb_NoLMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn HDMR Upgrade", "pb_NoHDMRWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Minigun Upgrade", "pb_NoMinigunUpgradeWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Metal Sniper", "pb_NoMetalSniperWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn XM-21 Sniper", "pb_NoPB_XM21Weapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn X12 Shotgun", "pb_NoX12ShotgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Lady Golide (HASG)", "pb_NoHASGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Old HMG", "pb_NoOldHMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn NeoHMG", "pb_NoNeoHMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn M41A", "pb_NoM41AWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Battle Rifle", "pb_NoBattleRifleWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Pro-Surv Ballista", "pb_NoProSurvBallistaWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Pulse Cannon", "pb_NoPulseCannonWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Demon Exterminator", "pb_NoDemonExterminatorWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn MG42", "pb_NoMG42Weapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Mastermind Chaingun", "pb_NoMastermindChaingunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Cyberdemon Missile Launcher", "pb_NoPB_CyberdemonRLWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Hell Pistoler", "pb_NoHellPistolerWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Bio Acid Launcher", "pb_NoBioAcidLauncherWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Mancubus Flame Cannon", "pb_NoMancubusFlameCannonWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Argent Sith", "pb_NoArgentSithWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Beam Katana", "pb_NoBeamKatanaWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Vorpal Blade (Tiberium's Soulblade)", "pb_NoVorpalBladeWeapon", "SpawnOnOff"
-	StaticText " "
-}
+
 
 OptionValue "ReticleCode"
 {
@@ -1033,6 +908,10 @@ OptionMenu "MBlurOpts"
 OptionMenu "WeaponSettings"
 {
 	Title "---------Weapon Settings---------"
+	StaticText "-----------------RiotShield Settings-----------------", 1
+	StaticText "Optional: Axe Pickup Required", 1
+	StaticText "Before Axe Shield Mode.", 1
+	Option "Require Axe For Axe Mode", "RS_AxeCheck", "OnOff"
 	
 	StaticText "-----------------Weapon Upgrades-----------------", teal
 	
@@ -1406,12 +1285,12 @@ ListMenu "MainMenu"
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 			TextItem "Options", "o", "OptionsMenu"
-			TextItem "PB Options", "p", "PBSettings"
+			TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
 		}
 		else
 		{
 			TextItem "Options", "o", "OptionsMenu"
-			TextItem "Project Brutality", "p", "PBSettings"
+			TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 		}
@@ -1426,7 +1305,7 @@ ListMenu "MainMenu"
 	{
 		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
 		TextItem "$MNU_OPTIONS", "o", "OptionsMenu"
-		TextItem "Project Brutality Settings", "p", "PBSettings"
+		TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
 		TextItem "$MNU_GAMEFILES", "g", "GameFilesMenu"
 		TextItem "$MNU_INFO", "i", "ReadThisMenu"
 		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
@@ -1822,12 +1701,4 @@ OptionMenu "MonsterPackSettings"
 	StaticText "---------------Zombieman---------------", gold
 	Option "T4 — QSG Dreadtrooper", "NoQSGDreadTrooper", "OffOn"
 	StaticText " "
-}
-
-OptionMenu "ShieldAxe_Settings"
-{
-	StaticText "-----------------RiotShield Addon Settings-----------------", 1
-	StaticText "Optional: Axe Pickup Required", 1
-	StaticText "Before Axe Shield Mode.", 1
-	Option "Require Axe For Axe Mode", "RS_AxeCheck", "OnOff"
 }

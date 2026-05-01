@@ -19,6 +19,11 @@ Maintainers (this distribution)
 - doc
 - Wintermute
 
+Dev tooling (this repository)
+- **`tools/compile_acs.ps1`** / **`tools/compile_gloryhud.cmd`** — ACC wrapper for recompiling
+  `SRC/*.acs` to `ACS/*.o` (GloryHUD, GloryChain→GloryMelee, etc.); set **`PB_ACC`** to your
+  **`acc.exe`** (e.g. SLADE-bundled ACC) if auto-detection fails.
+
 Gameplay and content in this release
 - DarkShadow’s Monster Sounds Overhaul: monster SFX (based on Ravik’s Soundpack, with
   content from multiple Doom games) — integrated by replacing matching files under
@@ -67,6 +72,9 @@ Selected weapons and equipment (authors)
 - **M41A Pulse Rifle (`PB_M41A`)** — ZScript in `zscript/Weapons/Slot4/PB_M41A.zs`;
   folded from the **PB_M41A** / Aliens pulse-rifle add-on: sprites **Mike12**;
   animations & code **Jaih1r0** (see upstream `credits.txt` in that package).
+  This repo adds **Weapon Special** modes for **12ga underbarrel**, **30mm grenade**
+  underbarrel, and **dual-wield** (paired rifles; wheel icon reuses
+  `graphics/pywheel/Carbine_Dual.png`).
 - Metal Sniper — Sprites: Metalman; animation/code: Jaih1r0; sounds: Ravik
   (actors/Weapons/Slot4/MetalSniper.dec).
 - Riot Shield — add-on source noted in actors/Weapons/Slot2/RiotShield.dec.
@@ -77,10 +85,27 @@ Selected weapons and equipment (authors)
   Vampy.
 - Pro-Surv Ballista — The Pope of Dope (ThePopeOfDope), slot-4 crossbow; **Rail
   Ballista** is the slot-9 weapon and is a separate system.
+- **Dragon Slayer (`DragonSlayer`)** — `actors/Weapons/MeleeWeaponPack/DragonSlayer.dec`,
+  `zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc`. Folded from **PB_MeleeWeaponPack**
+  (Project Brutality 0.4.2+ compatibility rework by **Renegade Android**). Per that
+  package’s `CREDITS.txt`: **Dragon Slayer** swords and bolt-repeater by **Craneo**
+  (upstream note: Hexen ModDB).
+- **Stormcast (`Stormcast`)** — `actors/Weapons/MeleeWeaponPack/Stormcast.dec`,
+  `zscript/Weapons/MeleeWeaponPack/Stormcast.zc`. Same **PB_MeleeWeaponPack** fold /
+  **Renegade Android** rework. Per upstream `CREDITS.txt`: **Battle Axe & Shield** /
+  **Stormcast** by **Dreo** & **Lord Lothar** (*Schism*).
+- **Vorpal Blade (`VorpalBlade`, Tiberium's Soulblade)** —
+  `actors/Weapons/Slot1/VorpalBlade.dec`, `zscript/Weapons/Slot1/VorpalBlade.zc`.
+  Same pack fold / **Renegade Android** rework. Per upstream `CREDITS.txt`: sprites
+  **Eriance**; sword from *Insanity's Requiem Mk.2* by **TiberiumSoul** (RIP).
 
 Monsters and packs
 - Glory Kills: lineage from D4D / Brutal Doom Black Edition
-  (SNDINFO.GloryKills and related).
+  (SNDINFO.GloryKills and related). **Glory Kill Eternal HUD** PNGs live under
+  **`GRAPHICS/HUD/glorykills/newhud/`**; **equipment launcher** first-person overlays
+  (**Flame Belch** / **Ice Bomb**) use **`SPRITES/ShoulderCannon/`** (**`SCL0`/`SCF0`**
+  and **`LCL0`/`LCF0`**) updated from the **Project Brutality PB_Staging** Glory Kills
+  line (shoulder placement: flame right, ice left).
 - Monster Pack: content line documented with SNDINFO.MonsterPack and tier files.
 - Brutal Doom *El Diablo* Edition: additional first-person and expanded execution /
   finisher sprite sets (`SPRITES/MONSTERS/fatalitys/eld_eld_*` and related) merged
@@ -111,6 +136,7 @@ Gore: optional Brutal Doom 22 (BDv22) add-on
   **Gore/Debris** in visual settings).
 
 Graphics, shaders, HUD
+- Main menu cursor: **C⛧rrot** and **JP_valle20/DOOM**.
 - Glory Kill shader: traceable to D4D shader work (shaders/glorykill.shader).
 - Gearbox / wheel UI: CC BY-SA 4.0 and CC0 as marked in those assets.
 - Gas mask overlay: TEXTURES.GasMask (HUD-GAS-MASK line).

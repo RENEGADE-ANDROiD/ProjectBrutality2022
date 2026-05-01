@@ -1,22 +1,17 @@
 clearplayerclasses
 addplayerclass PB_Doomer
 
-   addkeysection "Project Brutality - Interactions" PBInteractions             
+        addkeysection "PB 2022 Enhanced - Interactions" PBInteractions             
       
-   addkeysection "Project Brutality" PBAdvMoves   
+        addkeysection "Project Brutality" PBAdvMoves   
    
 	AddMenuKey "Activate Weapon Special" "+PBWeaponSpecial"
 	alias "+PBWeaponSpecial" "netevent PBWeaponSpecialOn"
 	alias "-PBWeaponSpecial" "netevent PBWeaponSpecialOff"
    
-   AddMenuKey "Equipment Selection Wheel" "+PBEquipSpecial"
+        AddMenuKey "Equipment Selection Wheel" "+PBEquipSpecial"
 	alias "+PBEquipSpecial" "netevent PBEquipSpecialOn"
 	alias "-PBEquipSpecial" "netevent PBEquipSpecialOff"
-
-   addmenukey "Unload Gun" unreloader
-   alias unreloader "puke 363"
-   defaultbind U unreloader
-   
    
 	AddMenuKey "Activate Equipment" +User1
 	Alias +User1
@@ -34,35 +29,34 @@ addplayerclass PB_Doomer
 	alias +User4
 	defaultbind Q +User4
 
-	addmenukey "Lean Toggle" PBLeanToggle
+	addmenukey "Crucible" +glorysaw
+	addmenukey "Shoulder Cannon" shouldercannon
+	addmenukey "Shoulder cryo (ice bomb)" glorycryo
+	alias +glorysaw "netevent pb_glorysaw_on"
+	alias -glorysaw "netevent pb_glorysaw_off"
+	alias shouldercannon "netevent pb_shouldercannon"
+	alias glorycryo "netevent pb_glorycryo"
+
+	addmenukey "Recall Shield Saw (FastCall)" TShieldsaw
+	alias TShieldsaw "use FastCall"
+	defaultbind T TShieldsaw
+
+	addmenukey "Leaning Movement" PBLeanToggle
 	alias PBLeanToggle "netevent pb_lean_toggle"
+
+        addmenukey "Unload Gun" unreloader
+        alias unreloader "puke 363"
+        defaultbind U unreloader
 
 //Needs to actually be finished.    
 //    AddMenuKey "Open PDA" openpda
 //    alias openpda "netevent openpda"
    
-   addmenukey "Clear All Debris" "netevent EV_ClearGore"
-defaultbind L "netevent EV_ClearGore"
+        addmenukey "Clear All Debris" "netevent EV_ClearGore"
+	defaultbind L "netevent EV_ClearGore"
 
 	AddMenuKey "Toggle PBVP Models" togglepbvp
 	Alias togglepbvp "Toggle V5_MODELS"
 
-// Glory Kills
-addkeysection "Glory kill" GloryKill
-addmenukey "Crucible" +glorysaw
-addmenukey "Shoulder Cannon" shouldercannon
-addmenukey "Shoulder cryo (ice bomb)" glorycryo
-
-alias +glorysaw "netevent pb_glorysaw_on"
-alias -glorysaw "netevent pb_glorysaw_off"
-
-alias shouldercannon "netevent pb_shouldercannon"
-alias glorycryo "netevent pb_glorycryo"
-
-addkeysection "Shield Saw" ShieldSaw
-addmenukey "Recall Shield Saw (FastCall)" TShieldsaw
-alias TShieldsaw "use FastCall"
-defaultbind T TShieldsaw
-
-weaponsection "PB_RocketLauncher"
-addslotdefault 6 PB_RocketLauncher
+	weaponsection "PB_RocketLauncher"
+	addslotdefault 6 PB_RocketLauncher

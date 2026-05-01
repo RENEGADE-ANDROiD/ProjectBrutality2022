@@ -1268,11 +1268,12 @@ ACTOR PB_Carbine : PB_Weapon
 	FlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashPunchingDW")
-		C1KI ABCDEFEDCBA 1
+		C1KI ABCDEEFFEEDCBA 1
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
 		Goto Ready3
 	FlashPunchingDW:
-		TNT1 A 15
+		TNT1 A 0 A_ClearOverlays(10,11)
+		CB01 ABCDEEFFEEDCBA 1
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
 		Goto Ready3
 		

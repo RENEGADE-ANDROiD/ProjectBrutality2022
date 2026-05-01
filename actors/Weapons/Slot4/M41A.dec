@@ -15,6 +15,11 @@ ACTOR SelectM41A_30mmGrenade : Inventory
 	Inventory.MaxAmount 1
 }
 
+ACTOR SelectM41A_DualWield : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
 ACTOR M41AGrenade : FastProjectile
 {
 	+MISSILE

@@ -588,7 +588,6 @@ ACTOR LeverAction : PB_Weapon
 			if (JustPressed(BT_ATTACK)){
 					return state("Fire2");
 			}
-			A_Refire("Fire2");
 		}
 		return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
 	}

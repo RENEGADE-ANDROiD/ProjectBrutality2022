@@ -310,8 +310,12 @@ class PB_EventHandler : EventHandler
 				break;
 			case 'PB_M41A':
 				localScale = 0.85;
-				if (p.mo.CountInv("M41ChangeCart") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
-				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
+				if (p.mo.CountInv("DualWieldingM41A") >= 1)
+					modeIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Dual.png", TexMan.Type_Any);
+				else if (p.mo.CountInv("M41ChangeCart") >= 1)
+					modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
+				else
+					modeIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
 				break;
 			case 'PB_XM21':
 				localScale = 0.85;
