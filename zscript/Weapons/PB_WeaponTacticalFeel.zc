@@ -205,7 +205,15 @@ class PB_WeaponTilterInventory : Inventory
 
 	private bool UsesAuthoredFireOffset(Name weaponClass, Weapon weap, PSprite psp)
 	{
-		return weaponClass == 'PB_NeoHMG' && IsFiringState(weap, psp);
+		if (weaponClass != 'PB_NeoHMG' || !weap || !psp || !psp.CurState)
+			return false;
+		// Fire only matches the preamble; DoFireHMG is a jump target and is not
+		// in InStateSequence(Fire, ...) — without this, tilter roll/Y fights
+		// fireHMG()'s A_WeaponOffset / zoom / recoil every tic.
+		if (IsFiringState(weap, psp))
+			return true;
+		State st = weap.FindState("DoFireHMG");
+		return st && weap.InStateSequence(psp.CurState, st);
 	}
 
 	private bool IsReloadState(Weapon weap, PSprite psp)
@@ -353,7 +361,7 @@ class PB_WeaponTilterInventory : Inventory
 		previousVelZ = owner.Vel.Z;
 
 		double targetLean = 0;
-		if (cvEnableLean && !blocked && ready && !excluded)
+		if (cvEnableLean && !blocked && ready && !excluded && !authoredFireOffset)
 		{
 			bool toggleLean = owner.CountInv("PB_LeanToggle") > 0;
 			bool moveLeft = (cmd.buttons & BT_MOVELEFT) != 0;
