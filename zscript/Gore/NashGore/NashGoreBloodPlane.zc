@@ -52,12 +52,17 @@ class NashGoreBloodPlane : Actor
 	//
 	//===========================================================================
 
+	virtual void BloodPlaneApplySpawnScale()
+	{
+		A_SetScale(frandom(0.9, 1.0));
+	}
+
 	override void BeginPlay(void)
 	{
 		ChangeStatNum(STAT_NashGore_Gore);
 		NashGoreStatics.QueueGore();
 		rndzoffset = frandom(0.0001, 0.0100);
-		A_SetScale(frandom(0.9, 1.0));
+		BloodPlaneApplySpawnScale();
 		Super.BeginPlay();
 
 		if (!level.IsPointInLevel(Pos))
@@ -71,7 +76,7 @@ class NashGoreBloodPlane : Actor
 	{
 		if (!bOnCeiling && Pos.Z > FloorZ) { Destroy(); return; }
 		if (bOnCeiling) rndzoffset *= -1;
-		if (!(self is "NashGoreFootPrint")) Angle = NashGoreStatics.RandomAngle4();
+		if (!(self is "NashGoreFootprint")) Angle = NashGoreStatics.RandomAngle4();
 		zOld = zNew = Pos.Z;
 		Super.PostBeginPlay();
 	}
