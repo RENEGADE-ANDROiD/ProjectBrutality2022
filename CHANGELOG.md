@@ -62,6 +62,7 @@ All notable changes for this working tree are documented here. Earlier history l
 ### Removed
 
 - **Demon-Tech Minigun** as a supported spawn/player weapon (broken); references toggled off per mod policy (`5be253ff0`).
+- **X12 Shotgun Semi-Auto / "Senato" mode** entirely. The `IsSemi` token, the `Fire2` / `Fire2_WaitRelease` states, the `AltFire` toggle and `FullAgain` swap-back state, and the `X12ReadyToFire` semi-auto branch are all gone. Even after the prior `Fire2_WaitRelease` `Loop` fix, the mode kept producing engine-level state-loop failures, so the X12 is now full-auto only. `WeaponSpecial` reverts to its no-op `"No X12 Special Available"` print + `Goto X12ReadyToFire`. `language.enu` `PB_WPNHINT_X12Shotgun` no longer advertises the semi-auto toggle.
 
 ### Documentation
 
