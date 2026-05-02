@@ -129,6 +129,7 @@ Actor ThrownMolotov
 				A_RadiusGive("PBBlastMomentum", 320, RGF_PLAYERS|RGF_CUBE, 35);
 			}
 			Goto ThrownMolotovDeathVfx
+		ThrownMolotovDeathVfx:
 			TNT1 A 0 Bright
 			{
 				A_SpawnItemEx("ExplosionFlareSpawner", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
