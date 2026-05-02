@@ -23,6 +23,7 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Fixed
 
+- **PB_CSSG:** Empty tube no longer ran the single-barrel `LeftFire` path (same `count < 2` branch as one shell loaded), which fired projectiles without removing shells after punch / muzzle-flash returns to **Fire** / **AltFire**; empty mag now jumps to **Reload** first.
 - **Gore / footprints:** Stopped **NashGoreBloodPlane** spawn logic from forcing **0.9–1.0** actor scale on **`GrowingBloodPool`** (so **`RedBloodFootPrint*`** / smear chain keep their small **DECORATE** scales instead of ballooning ~10×). Removed erroneous **`MODELS/Definitions/GreenBlood.txt`** footprint model override that used **90³** MD3 scale (huge voxels + footprint spam could exhaust VRAM/system memory and hard-crash). Corrected **NashGore** footprint hooks: **`NashGoreFootprint`** class check in **PostBeginPlay**, **`footprintFootSide`** typo in **NashGoreActor** (left/right alternation).
 - **ZScript quick melee / Shield Saw + Stormcast:** Glory-stagger melee (`FinisherToken` + line of fire) now runs the same **PermormGloryKill** chain as DECORATE **`PB_Weapon`** (new states on **`PB_WeaponBase`**), **close-range punch** is preferred **before** **`PB_Execute()`**, and throwing the **Shield Saw** clears stray **`GoFatality`** + **`SetPlayerProperty(0,0,0)`** so PSprites / weapon switching do not stay locked after a bad execution vs throw path.
 
