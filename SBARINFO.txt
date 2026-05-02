@@ -875,28 +875,6 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 					DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 				}
 			}
-			IsSelected PB_PulseCannon {
-				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
-				drawimage "BARBACP2", -121, -32, centerbottom, 180, 22;
-				DrawImage "BAMBAR5", -149, -30;
-				DrawImage "BAMBAR5", -149, -48;
-				DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
-				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
-				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
-				DrawNumber 3, AANUM3, Purple, ammo2, Alignment(right), -150, -50;
-				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
-			}
-			IsSelected PB_DualPulseCannons {
-				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
-				drawimage "BARBACP2", -121, -32, centerbottom, 180, 22;
-				DrawImage "BAMBAR5", -149, -30;
-				DrawImage "BAMBAR5", -149, -48;
-				DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
-				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
-				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
-				DrawNumber 3, AANUM3, Purple, ammo2, Alignment(right), -150, -50;
-				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
-			}
 			IsSelected PB_Freezer {
 				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
 				drawimage "BARBACP3", -121, -32, centerbottom, 180, 22;
@@ -1038,7 +1016,6 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 			IsSelected not PB_SuperGL, MastermindChaingun {
 			IsSelected not Paingiver, PB_M1Plasma {
 			IsSelected not MarauderSSG, PB_M2Plasma {
-			IsSelected not PB_PulseCannon, PB_DualPulseCannons {
 			IsSelected not PB_Freezer, PB_Railgun {
 			IsSelected not PB_BFG9000, BHGen {
 			IsSelected not BHGen, PB_Flamethrower {
@@ -1072,7 +1049,6 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 					DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
 					DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 				}
-			}
 			}
 			}
 			}

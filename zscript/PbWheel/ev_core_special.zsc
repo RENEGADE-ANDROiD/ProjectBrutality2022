@@ -1541,27 +1541,6 @@ Class PB_SpecialWheelHandler : EventHandler
 		specialWheel_handleMouse();
 	}
 
-	void specialWheel_PulseCannon()
-	{
-		wheelSpecials.Clear();
-		iconScale = (0.65, 0.65);
-		PB_SpecialWheel_Mode pc_grav = new ("PB_SpecialWheel_Mode");
-		pc_grav.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_acid.png", TexMan.Type_Any);
-		pc_grav.specialName = "Select_PulseCannon_Gravity";
-		pc_grav.specialAlias = "Alt: Gravity bomb";
-		pc_grav.specialPriority = 1;
-		pc_grav.iconScale = iconScale;
-		wheelSpecials.Push(pc_grav);
-		PB_SpecialWheel_Mode pc_super = new ("PB_SpecialWheel_Mode");
-		pc_super.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_impact.png", TexMan.Type_Any);
-		pc_super.specialName = "Select_PulseCannon_Super";
-		pc_super.specialAlias = "Alt: Super ball";
-		pc_super.specialPriority = 2;
-		pc_super.iconScale = iconScale;
-		wheelSpecials.Push(pc_super);
-		specialWheel_handleMouse();
-	}
-
 	void specialWheel_RocketLauncher()
 	{
 			
@@ -1851,10 +1830,6 @@ Class PB_SpecialWheelHandler : EventHandler
 
 				case 'PB_M1Plasma':
 					specialWheel_M1Plasma();
-					return;
-
-				case 'PB_PulseCannon':
-					specialWheel_PulseCannon();
 					return;
 
 				case 'PB_M41A':

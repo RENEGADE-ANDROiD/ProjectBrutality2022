@@ -216,15 +216,6 @@ script "PBUpgradeChecker_DragonsBreath" (void)
 {
 	for (int p = 0; p < 8; p++) {
         if (CheckActorInventory(800 + p, "DragonBreathUpgrade")) {
-            SetActorState(0,"SpawnPulseCannon");
-		}
-	}
-}
-
-script "PBUpgradeChecker_PulseCannon" (void)
-{
-	for (int p = 0; p < 8; p++) {
-        if (CheckActorInventory(800 + p, "PulseCannon")) {
             SetActorState(0,"SpawnRifleUpgrade");
 		}
 	}
@@ -771,11 +762,6 @@ Script "ToggleDragonBreathUpgrade" (VOID) NET
 if	(GetCvar("pb_NoDBUpgrade") == 1) { SetActorState(0,"BackpackSpawn"); }
 }
 
-Script "TogglePulseCannonUpgrade" (VOID) NET
-{
-if	(GetCvar("pb_NoPulseCannonUpgrade") == 1) { SetActorState(0,"BackpackSpawn"); }
-}
-
 Script "ToggleRifleUpgrade" (VOID) NET
 {
 if	(GetCvar("pb_NoRifleUpgrade") == 1) { SetActorState(0,"BackpackSpawn"); }
@@ -1265,11 +1251,6 @@ if	(GetCvar("pb_NoM41AWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
 Script "ToggleWeaponBattleRifle" (VOID) NET
 {
 if	(GetCvar("pb_NoBattleRifleWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
-}
-
-Script "ToggleWeaponPulseCannon" (VOID) NET
-{
-if	(GetCvar("pb_NoPulseCannonWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
 }
 
 Script "ToggleWeaponDemonExterminator" (VOID) NET

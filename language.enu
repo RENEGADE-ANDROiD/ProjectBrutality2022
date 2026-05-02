@@ -534,9 +534,6 @@ PB_WHEELTIP_Select_LeverAction_Marlin = "Lever Action: Marlin heavy caliber.";
 PB_WHEELTIP_Select_M1Plasma_Single = "M1 Plasma Rifle: Single gun.";
 PB_WHEELTIP_Select_M1Plasma_Dual = "M1 Plasma Rifle: Dual wield (upgrade).";
 
-PB_WHEELTIP_Select_PulseCannon_Gravity = "Pulse Cannon: Gravity well alt-fire.";
-PB_WHEELTIP_Select_PulseCannon_Super = "Pulse Cannon: Super sphere alt-fire.";
-
 PB_PICKUP_PB_Deagle = "You found the UAC .50 Caliber Hand Cannon! (Slot 2, Upgrade)";
 PB_WPNHINT_ASGguyShield = "Meat Shield: Block With Primary Fire;\nBash / Throw With Alt-Fire & Weapon Special.";
 PB_WPNHINT_ProSurv_Ballista = "Pro-Surv Ballista: Bolts + Rockets Alt-Fire.\nWeapon Special: Demonic Mode When Upgraded.";
@@ -564,7 +561,6 @@ PB_WPNHINT_PB_Carbine = "Carbine: Weapon Special Wheel\n(Modes, Akimbo, Sights).
 PB_WPNHINT_PB_Chainsaw = "Chainsaw: Grind Primary Fire;\nAlt-Fire Vertical; Berserk Heals.";
 PB_WPNHINT_PB_Deagle = "Desert Eagle: Alt-Fire Aim / Fan Hammer.";
 PB_WPNHINT_PB_DemonExterminator = "Flame Cannon: Alt-Fire Wide Blast;\nWeapon Special Fuel.";
-PB_WPNHINT_PB_DualPulseCannons = "Dual Pulse Cannons: Twin Magazines;\nAlt-Fire Combined Blast.";
 PB_WPNHINT_PB_DualWeapon = "Dual Wield: Primary Left / Alt-Fire Right.\nSingle-Button Dual Mode in Menu Overrides.";
 PB_WPNHINT_PB_Flamethrower = "Flamethrower: Cone Primary Fire;\nAlt-Fire Napalm / Burst; Heat Meter.";
 PB_WPNHINT_PB_Freezer = "Freeze Rifle:\nCryo Primary Fire; Alt-Fire Bomb / Beam.";
@@ -588,7 +584,6 @@ PB_WPNHINT_PB_Nailgun = "Nailgun: Stake Alt-Fire;\nUpgrade Airburst.";
 PB_WPNHINT_PB_NailgunGuyShield = "Nailgun Zombie Shield:\nBlock; Spike Alt-Fire.";
 PB_WPNHINT_PB_NeoHMG = "Neo Heavy MG: Hold Alt-Fire Shield;\nWeapon Special Fire Groups.";
 PB_WPNHINT_PB_Pistol = "Pistol: Weapon Special Suppressor /\nAkimbo / Burst Wheel.\nAlt-Fire Flashlight / Secondary.";
-PB_WPNHINT_PB_PulseCannon = "Pulse Cannon: Alt-Fire Gravity / Super Ball;\nUpgrade Dual via Weapon Special.";
 PB_WPNHINT_PB_QuadSG = "Quad Shotgun: Weapon Special Akimbo / Blast /\nShell vs Breath;\nAlt-Fire Patterns.";
 PB_WPNHINT_PB_Railgun = "Railgun: Alt-Fire Tripwire / Overload;\nSecondary Zoom.";
 PB_WPNHINT_PB_Revolver = "Revolver: Alt-Fire Fan Hammer / Single-Action;\nSee PDA Upgrades.";

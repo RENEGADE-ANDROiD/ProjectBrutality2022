@@ -43,8 +43,6 @@ class PB_WeaponTilterInventory : Inventory
 		'PB_BLACKHOLE',
 		'PB_Unmaker',
 		'PB_DemonExterminator',
-		'PB_DualPulseCannons',
-		'PB_PulseCannon',
 		'MastermindChaingun',
 		'PB_RiotShield'
 	};

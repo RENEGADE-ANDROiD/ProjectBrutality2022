@@ -44,9 +44,6 @@ brightmap sprite RKTLZ0 { map "Brightmaps/WEAPONS/RKTLZ.png" }
 //M1 Plasma Rifle
 brightmap sprite PLASA0 { map "Brightmaps/WEAPONS/PLASA.png" }
 
-//Pulse Cannon Upgrade
-brightmap sprite PLCUA0 { map "Brightmaps/WEAPONS/PulseCannon/PLCUA.png" }
-
 //M2 Plasma Rifle (M2PRA0/M2PRB0: BMAP/M2Plasma.txt, Slot 6/M2Plasma bmaps)
 
 //Freezer

@@ -427,8 +427,6 @@ Actor PBBlastMomentum : Inventory
 
 
 #include "actors/Weapons/Slot3/QUADBARREL.dec"
-#include "actors/Weapons/Slot6/PulseCannon.dec"
-#include "actors/Weapons/Slot6/DUALPULSECANNON.dec"
 #include "actors/Weapons/Slot4/ChexRifle.dec" //This is only TEMPORARY. This can be removed when the Chex Quest patch is completed.
 
 
@@ -465,7 +463,6 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Friendly Marines/Marine-AutoShotgun.dec"
 #include "actors/Friendly Marines/Marine-Chaingun.dec"
 #include "actors/Friendly Marines/Marine-Plasmagun.dec"
-#include "actors/Friendly Marines/Marine-PulseCannon.dec"
 #include "actors/Friendly Marines/Marine-Shotgun.dec"
 
 //Dying Monsters
