@@ -57,6 +57,7 @@ All notable changes for this working tree are documented here. Earlier history l
 - **First-person legs:** **PB_WeaponRaise** uses legs overlay **-10** (matches **SelectFirstPersonLegs**) instead of **-1000**.
 - **SSG / quad shotgun:** removed invalid **PB_WeaponBase.Upgrade** from **SSG.dec**; **PB_jumpIfNoAmmo()** DECORATE empty-paren fixes in **SSG.dec** / **QUADBARREL.dec**; removed dead **HasNotPickedUpSSG** line; quad ammo HUD uses **SGN3A0** when **QSGSA0** is absent; dropped stray **SSG_Staging** paths list lump.
 - **PB_Freezer:** **UnloaderToken** handling aligned with unload / slot-cycle behavior.
+- **X12 Shotgun:** Semiauto High-Power ("Senato") mode no longer crashes on fire — the **`Fire2_WaitRelease`** poll used **`return state("Fire2_WaitRelease")`**, which DECORATE processes as a same-tic **`SetState`** self-jump and trips *Infinite State Loop in Weapon State X12Shotgun.139* (also kills the psprite, which is why the weapon disappears). Now uses the canonical PB **`return state("")` + `Loop`** pattern, matching UACSMG / MP40 / AUTOSHOTGUN reload polls and RAILGUN laser stages.
 
 ### Removed
 

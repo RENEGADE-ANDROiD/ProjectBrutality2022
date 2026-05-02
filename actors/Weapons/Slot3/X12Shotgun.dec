@@ -274,8 +274,9 @@ ACTOR X12Shotgun : PB_Weapon
 		TNT1 A 1 {
 			A_WeaponReady(WRF_NOPRIMARY | WRF_ALLOWRELOAD);
 			if (!PressingFire()) { return state("X12ReadyToFire"); }
-			return state("Fire2_WaitRelease");
+			return state("");
 		}
+		Loop
 
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel")
