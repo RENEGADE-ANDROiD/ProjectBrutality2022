@@ -125,14 +125,14 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **BFG9000 MK IV** — BFG-class room clearer.
 - **BFG 11K Prototype / BFG Beam** — beam-style BFG super-weapon entry.
 - **Demon Exterminator** — endgame demon-killing super-weapon.
-- **Stormcast** — lightning staff / *Schism*-style energy weapon (**Dreo** & **Lord Lothar**; **PB_MeleeWeaponPack** / **Renegade Android** — **`CREDITS.txt`**). Uses a shared **charge** pool (**PowerChargeStorm**); slotted as super-weapon **9**, not the old weapon-special **wheel** tokens.
-  - **Primary Fire (on ground)** — staff lightning/melee while you have enough charge; with **Berserk**, the strike pattern upgrades.
-  - **Alt-Fire (hold)** — enter the charge loop (visual tiers **SCC1 → SCC4**); **release** to **discharge** a bolt scaled to how long you charged (quick zap up through full storm).
-  - **Fire while holding Alt-Fire** — spends charge into orb attacks by tier: **Tesla pulse** → **stun ball** → **ball lightning** (mid) → **ball lightning** (high) → **Morgenstern** at the top tier.
-  - **Use Equipment** while charging — **stunwall** with size by tier (extra small → small → full).
-  - **Weapon Special** (hold) while charging — hands off to **Arc of Death** fake weapon at higher tiers (tiered **CastingArcOfDeath**).
-  - **Reload** (tap) while charging — place a **lightning warper**; global limits apply (see on-screen **Print** messages if you hit the caps).
-  - **Alt-Fire while airborne** — **Fly** hover loop; **Alt-Fire** in that loop calls **Quick Lightning**; refire / movement as in the **MEDI** staff air states.
+- **Stormcast** — lightning staff (*Schism* lineage; **Dreo** & **Lord Lothar**; **PB_MeleeWeaponPack** / **Renegade Android** — **`CREDITS.txt`**). Slot **9**, one shared charge pool; chords replace the old weapon-special wheel.
+  - **Primary** — staff lightning / melee (needs charge; **Berserk** upgrades the strikes).
+  - **Alt-Fire (hold)** — build charge; **release** to cast a bolt scaled to charge.
+  - **Primary while holding Alt-Fire** — orb attacks (stronger orbs at higher charge).
+  - **Use Equipment** while charging — **stunwall** (bigger at higher charge).
+  - **Weapon Special** (hold) while charging — **Arc of Death** at higher tiers.
+  - **Reload** (tap) while charging — lightning warper (caps show as on-screen messages).
+  - **Alt-Fire in the air** — hover flight; **Alt-Fire** in that state fires a quick lightning burst.
 
 **Slot 0 — Demon-tech pair**
 
