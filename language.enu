@@ -82,7 +82,7 @@ BDV22GOREMNU_ORGANS_TIP = "Adds Rare Organs\nAnd Small Brain Chunks\nOn Some Dea
 BDV22GOREMNU_MIX = "Brutal Doom 22 / PB Gore Mix";
 BDV22GOREMNU_MIX_TIP = "Controls Extra Gore Style.\nLower = More PB Gore.\nHigher = More BDv22 Gore.\n50 = Balanced Mix.";
 BDV22GOREMNU_ENHANCED2022 = "2022 Enhanced Brootality";
-BDV22GOREMNU_ENHANCED2022_TIP = "Master Switch For\nThe Full 2022 Gore Mix.\nEnables BDv22 Mist,\nMeat, Organs, And\nBPv10 Death Extras.";
+BDV22GOREMNU_ENHANCED2022_TIP = "Master Switch For\nThe Full 2022 Gore Mix.\nEnables BDv22 Mist,\nMeat, Organs, BPv10 Death\nExtras, And Shiny PBR Nash\nBlood (Decals + Pools).";
 
 BPV10GOREMNU_ENABLE = "Brutal Pack V10: Enable Extra Gore";
 BPV10GOREMNU_ENABLE_TIP = "Master Switch For\nBrutal Pack V10 Gore.\nAdds Extra Death FX\nFor Humanoids And Imps.";

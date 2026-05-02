@@ -830,6 +830,398 @@ DecalGroup BloodSmear
 	BloodSplatNoDrip4 1
 }
 
+//===========================================================================
+//
+// Nash Gore — shiny/PBR decals (pb_enhanced_brutality_2022 + BloodSplatPB2022 group)
+//
+//===========================================================================
+
+Stretcher ABitStretchyPB2022
+{
+	GoalY 1.2
+	StretchStart 1.0
+	StretchTime 8.0
+}
+
+Slider ABitSlideyPB2022
+{
+	DistY -15
+	SlideStart 1.0
+	SlideTime 10.0
+}
+
+Combiner ABitYuckyPB2022
+{
+	ABitStretchyPB2022
+	ABitSlideyPB2022
+}
+
+Decal BloodDripPB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bdrip.png"
+	X-Scale 1.0
+	Y-Scale 0.02
+	Animator Yucky
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodSplat1PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat1.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodSplat2PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat2.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodSplat3PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat3.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodSplat4PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat4.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodSplat5PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bsplat5.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodSplat6PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bsplat6.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplat1PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small1.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplat2PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small2.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplat3PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small3.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplat4PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small4.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplat5PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bsplat_small5.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplat6PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bsplat_small6.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplat7PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bsplat_small7.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplat8PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bsplat_small8.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	LowerDecal "BloodDripPB2022"
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplatNoDrip1PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small1.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplatNoDrip2PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small2.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplatNoDrip3PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small3.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal SmallBloodSplatNoDrip4PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small4.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+}
+
+Decal BloodSplatNoDrip1PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat1.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodSplatNoDrip2PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat2.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodSplatNoDrip3PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat3.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodSplatNoDrip4PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat4.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+}
+
+Decal BloodSplatNoDrip5PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bsplat5.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodSplatNoDrip6PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bsplat6.png"
+	X-Scale 1.0
+	Y-Scale 1.0
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodDroplets1PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bdropl1.png"
+	Animator ABitYuckyPB2022
+	X-Scale 0.4
+	Y-Scale 0.4
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodDroplets2PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bdropl2.png"
+	Animator ABitYuckyPB2022
+	X-Scale 0.4
+	Y-Scale 0.4
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodDroplets3PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bdropl3.png"
+	Animator ABitYuckyPB2022
+	X-Scale 0.4
+	Y-Scale 0.4
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+Decal BloodDroplets4PB2022
+{
+	Pic "GRAPHICS/PB2022/ShinyNashGore/decals/bdropl4.png"
+	Animator ABitYuckyPB2022
+	X-Scale 0.4
+	Y-Scale 0.4
+	RandomFlipX
+	RandomFlipY
+	OpaqueBlood
+	Solid
+}
+
+DecalGroup BloodSplatPB2022
+{
+	BloodSplat1PB2022 1
+	BloodSplat2PB2022 1
+	BloodSplat3PB2022 1
+	BloodSplat4PB2022 1
+	BloodSplat5PB2022 1
+	BloodSplat6PB2022 1
+	BloodSplatNoDrip1PB2022 1
+	BloodSplatNoDrip2PB2022 1
+	BloodSplatNoDrip3PB2022 1
+	BloodSplatNoDrip4PB2022 1
+	BloodSplatNoDrip5PB2022 1
+	BloodSplatNoDrip6PB2022 1
+	SmallBloodSplat1PB2022 1
+	SmallBloodSplat2PB2022 1
+	SmallBloodSplat3PB2022 1
+	SmallBloodSplat4PB2022 1
+	SmallBloodSplat5PB2022 1
+	SmallBloodSplat6PB2022 1
+	SmallBloodSplat7PB2022 1
+	SmallBloodSplat8PB2022 1
+	SmallBloodSplatNoDrip1PB2022 1
+	SmallBloodSplatNoDrip2PB2022 1
+	SmallBloodSplatNoDrip3PB2022 1
+	SmallBloodSplatNoDrip4PB2022 1
+	BloodDroplets1PB2022 1
+	BloodDroplets2PB2022 1
+	BloodDroplets3PB2022 1
+	BloodDroplets4PB2022 1
+}
+
 
 
 //===========================================================================

@@ -20,6 +20,7 @@
 */
 #include "models/nashgore/CorpseBlood/_materials.txt"
 #include "models/nashgore/Footprint/_materials.txt"
+#include "lumps/includes/gldefs/ShinyNashGore.inc"
 #include "lumps/includes/gldefs/Overlord.inc"
 #include "lumps/includes/gldefs/MetalSniper.inc"
 #include "lumps/includes/gldefs/OldHMG.inc"

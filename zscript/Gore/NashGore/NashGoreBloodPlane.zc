@@ -247,6 +247,8 @@ class NashGoreBloodSpot : NashGoreBloodPlane
 		{
 			A_StartSound("nashgore/bloodsplash");
 			if (nashgore_spriteblood) return A_Jump(256, "BloodSpotSprite1", "BloodSpotSprite2", "BloodSpotSprite3", "BloodSpotSprite4");
+			let cp = players[consoleplayer];
+			if (cp && PB_EnhancedBrutality2022.IsOn(cp)) return A_Jump(256, "BloodSpot1Sh", "BloodSpot2Sh", "BloodSpot3Sh", "BloodSpot4Sh");
 			return A_Jump(256, "BloodSpot1", "BloodSpot2", "BloodSpot3", "BloodSpot4");
 		}
 		Stop;
@@ -261,6 +263,18 @@ class NashGoreBloodSpot : NashGoreBloodPlane
 		Stop;
 	BloodSpot4:
 		NGMV D -1;
+		Stop;
+	BloodSpot1Sh:
+		NGMV E -1;
+		Stop;
+	BloodSpot2Sh:
+		NGMV F -1;
+		Stop;
+	BloodSpot3Sh:
+		NGMV G -1;
+		Stop;
+	BloodSpot4Sh:
+		NGMV H -1;
 		Stop;
 	BloodSpotSprite1:
 		NSPT A -1;
@@ -383,8 +397,19 @@ class NashGoreCorpseBlood : NashGoreBloodPlane
 	States
 	{
 	Spawn:
+		TNT1 A 0 NoDelay
+		{
+			let cp = players[consoleplayer];
+			if (cp && PB_EnhancedBrutality2022.IsOn(cp)) return ResolveState("SpawnPB2022");
+			return ResolveState("SpawnClassic");
+		}
+	SpawnClassic:
 		NGMV A 200;
 		NGMV B -1;
+		Stop;
+	SpawnPB2022:
+		NGMV C 200;
+		NGMV D -1;
 		Stop;
 	}
 }
@@ -423,7 +448,17 @@ class NashGoreFootprint : NashGoreBloodPlane
 	States
 	{
 	Spawn:
+		TNT1 A 0 NoDelay
+		{
+			let cp = players[consoleplayer];
+			if (cp && PB_EnhancedBrutality2022.IsOn(cp)) return ResolveState("SpawnPB2022");
+			return ResolveState("SpawnClassic");
+		}
+	SpawnClassic:
 		NGMV A -1;
+		Stop;
+	SpawnPB2022:
+		NGMV B -1;
 		Stop;
 	}
 }

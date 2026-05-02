@@ -10,6 +10,7 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Added
 
+- **Shiny Nash Gore (PBR)** fold: materials + `BloodSplatPB2022` decal pool under **`GRAPHICS/PB2022/ShinyNashGore/`** and **`materials/pb2022/shiny_nashgore/`**, toggled with **`pb_enhanced_brutality_2022`** (Nash pools / corpse blood / footprints use PBR skins; red supergore / blood cloud / head-blood / small supergore use `A_SprayDecal` between **`BloodSplat`** and **`BloodSplatPB2022`** via **`GetCVar("pb_enhanced_brutality_2022")`** in DECORATE (console/local userinfo context; not a per-remote-player read in MP).
 - Peacekeeper / Marauder **SSG** fold-in from PB3.0 (`d6bbe88db`).
 - Refreshed **SSG** sprite sets (kick, reload, fire, respect, select) including follow-up missed lumps (`e0076241d`, `f5eba713f`).
 - **Shield Saw** and **Mastermind Chaingun** integration with spawner and HUD wiring (`b5c61d297`, related `7003ef7b3`, `bb1099367`).
@@ -36,6 +37,7 @@ All notable changes for this working tree are documented here. Earlier history l
 - Menus, tooltips, **Glory Kills** options, killstreak messaging (`e2687bc02`, `8697c2951`, `10e37b923`).
 - Wall-detection lowering and **Tilt++** / tactical motion (`5b67a2849`, `6dc1cd6c1`, `1edce0b20`, `eb942028f`).
 - Gore handlers (BDv22 merge, BPv10, Nash, death-boost) and **pb_enhanced_brutality_2022** integration touches (`960e3aa36`, `fc291df83`, `08cde24c6`, `79140dc1c`).
+- **PB_DeathGoreBoostHandler**: extra death pools/trails now randomly mix **NashGoreBloodSpot** / **NashGoreBloodSpotSmall** (shiny Nash model path when Enhanced Brootality is on) and **NashGoreClassicBloodTrail** with **GrowingBloodPool**, **BigBloodSpot**, and **PB_SquirtingBloodTrail**.
 - Branding: killstreak icon **UAC** instead of UT-style (`e0fdfaa8e`); title / logo assets (`4e9f42267`, `2a288a08d`, `4eb7ae9bc`).
 - **Weapon slot cycling:** **PlayerPawnBase** overrides **PickNextWeapon** / **PickPrevWeapon** (higher wrap budget; fallback when the ready weapon is missing from the slot table).
 - **Pump shotgun:** states use **SH0G** sprite prefix to match shipped **PumpShotgun** lumps; full PB Staging **PumpShotgun** sprite tree synced to the repo.
