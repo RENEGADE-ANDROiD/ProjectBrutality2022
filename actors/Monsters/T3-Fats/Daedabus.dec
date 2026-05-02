@@ -1345,6 +1345,8 @@ ACTOR DaedabusGreenCloudSmall : BrownCloudSmall
 		stop
 	Spawn:
 		TNT1 A 0 A_Playsound("redburn")
+		Goto DaedabusGreenCloudSmallLoop
+	DaedabusGreenCloudSmallLoop:
 		GTXS ABCDE 7
 		GTXS A 0 A_Explode ( 3, 100 )
 		Loop
@@ -1381,6 +1383,8 @@ ACTOR DaedabusGreenCloudMedium : BrownCloudSmall
 		stop
 	Spawn:
 		TNT1 A 0 A_Playsound("redburn")
+		Goto DaedabusGreenCloudMediumLoop
+	DaedabusGreenCloudMediumLoop:
 		GTXM ABCDE 7
 		GTXM A 0 A_Explode ( 4, 135 )
 		Loop

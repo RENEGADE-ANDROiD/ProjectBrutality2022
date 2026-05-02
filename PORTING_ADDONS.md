@@ -443,7 +443,7 @@ Staging's **actively included** weapons (via its `DECORATE` and `ZSCRIPT.zc`):
 
 | Slot | Staging lump | PB 2022 counterpart | Status |
 | --- | --- | --- | --- |
-| 1 | `MELEE.dec`, `Axe.dec`, `SAW.dec` | same names + `ShieldSaw.dec`, `BeamKatana.dec`, `ArgentSith.dec`, `Razorjack.dec`, `Crucible.dec`, `BloodPunch.dec` | PB 2022 has more. |
+| 1 | `MELEE.dec`, `Axe.dec`, `SAW.dec` | same names + `ShieldSaw.dec`, `BeamKatana.dec`, `ArgentSith.dec`, `Crucible.dec`, `BloodPunch.dec` | PB 2022 has more. |
 | 2 | `PBPISTOL.dec` (DECORATE), `Revolver.zs` (ZScript), `Deagle.zs` (ZScript), `UACSMG.dec`, `MP40.dec` | Same + `HellPistoler.dec`, `RiotShield.dec`, Deagle / Revolver still DECORATE | Staging has **newer ZScript Deagle + Revolver**. See 9.10.2. |
 | 3 | `SSG.dec`, `AUTOSHOTGUN.dec`, `QUADBARREL.dec`, `Shotgun.zs` (ZScript) | Same + `X12Shotgun.dec`, `MarauderSSG.dec`, `SHOTGUN.dec` (DECORATE still) | Staging moved the basic shotgun to ZScript. PB 2022 has more variants but the stock SG is still DECORATE. |
 | 4 | `Carbine.dec`, `LMG.dec`, `Nailgun.dec`, `MG42.dec`, `PBRIFLE.dec`, `ChexRifle.dec` (temp) | Same + `LeverAction.dec`, `MetalSniper.dec`, `XM21.dec`, `OldHMG.dec`, `NeoHMG.dec`, `M41A.dec`, `BDPBattleRifle.dec`, `ProSurv_Ballista.dec` | PB 2022 has **vastly more** slot-4 weapons. Carbine is a real divergence. See 9.10.3. |

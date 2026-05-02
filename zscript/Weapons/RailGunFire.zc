@@ -1,0 +1,95 @@
+class PB_RailLine : LineTracer
+{
+	array<Actor> hitActors;
+	array<double> hitX, hitY, hitZ;
+
+	override ETraceStatus TraceCallback()
+	{
+		if (results.HitType == TRACE_HitActor && results.HitActor.bSHOOTABLE)
+		{
+			hitActors.Push(results.HitActor);
+			hitX.Push(results.hitPos.x);
+			hitY.Push(results.hitPos.y);
+			hitZ.Push(results.hitPos.z);
+			return TRACE_Continue;
+		}
+		if (results.HitType == TRACE_HitWall || results.HitType == TRACE_HitCeiling || results.HitType == TRACE_HitFloor)
+			return TRACE_Stop;
+		return TRACE_Skip;
+	}
+}
+
+extend class PB_WeaponBase
+{
+	action void PB_DrawRailBeamParticle(vector3 where)
+	{
+		TextureID tid = TexMan.CheckForTexture("RA36B0", TexMan.Type_Sprite);
+		if (!tid.isValid())
+			tid = TexMan.CheckForTexture("PLSEA0", TexMan.Type_Sprite);
+		if (!tid.isValid())
+			return;
+		FSpawnParticleParams p;
+		p.Texture = tid;
+		p.Color1 = "A8FFFF";
+		p.Style = STYLE_Add;
+		p.Flags = SPF_FULLBRIGHT | SPF_NOTIMEFREEZE;
+		p.StartAlpha = 0.8;
+		p.FadeStep = 0.065;
+		p.Size = 38;
+		p.SizeStep = -2.5;
+		p.Lifetime = 22;
+		p.Pos = where;
+		Level.SpawnParticle(p);
+	}
+
+	action void PB_FireRail()
+	{
+		PlayerPawn pp = PlayerPawn(invoker.owner);
+		if (!pp || !pp.player || !pp.player.mo)
+			return;
+
+		double vz = (pp.height * 0.5 - pp.floorclip + pp.AttackZOffset * pp.player.crouchFactor) - 8.;
+		Vector3 dir = (AngleToVector(pp.angle, cos(pp.pitch)), -sin(pp.pitch));
+		Vector3 spos = (pp.pos.xy, pp.pos.z + vz);
+		let rail = PB_RailLine(new("PB_RailLine"));
+		if (!rail)
+			return;
+
+		rail.Trace(spos, pp.cursector, dir, 8192, TRACE_NoSky, Line.ML_BLOCKEVERYTHING | Line.ML_BLOCKHITSCAN, false, pp);
+
+		vector3 fpos = rail.results.HitPos;
+		fpos -= rail.results.HitVector;
+
+		vector3 dif = Level.Vec3Diff(spos, fpos);
+		vector3 dr = dif.unit();
+		double dis = dif.length();
+		int q = int(dis / 20) + 1;
+
+		if (rail.results.HitType != TRACE_HitNone)
+		{
+			Actor pen = Spawn("RailgunPenetrator", fpos, ALLOW_REPLACE);
+			if (pen)
+			{
+				pen.target = pp;
+				State dth = pen.FindState("Death");
+				if (dth)
+					pen.SetState(dth);
+			}
+		}
+
+		for (int i = 0; i < rail.hitActors.Size(); i++)
+		{
+			Actor vic = rail.hitActors[i];
+			if (!vic || vic.health <= 0)
+				continue;
+			vic.DamageMobj(pp, pp, 220, 'Railgun');
+		}
+
+		for (int i = 0; i < q; i++)
+		{
+			spos += dr * 20;
+			if (i > 0)
+				PB_DrawRailBeamParticle(spos);
+		}
+	}
+}

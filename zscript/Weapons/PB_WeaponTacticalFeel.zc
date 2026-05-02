@@ -45,7 +45,7 @@ class PB_WeaponTilterInventory : Inventory
 		'PB_DemonExterminator',
 		'PB_DualPulseCannons',
 		'PB_PulseCannon',
-		'PB_MastermindChaingun',
+		'MastermindChaingun',
 		'PB_RiotShield'
 	};
 
@@ -57,6 +57,10 @@ class PB_WeaponTilterInventory : Inventory
 		'BDPBattleRifle',
 		'PB_LeverAction'
 	};
+
+	// Wall proximity: fan traces (deg from view yaw) + distance scale per ray.
+	static const double TAC_WALL_YAW[] = { 0., 22.5, -22.5, 45., -45., 90., -90. };
+	static const double TAC_WALL_DISTSCALE[] = { 1., 0.95, 0.95, 0.9, 0.9, 0.85, 0.85 };
 
 	Default
 	{
@@ -137,7 +141,7 @@ class PB_WeaponTilterInventory : Inventory
 
 	private bool ShouldBlockForSafety(Actor plr, Weapon weap, PSprite psp)
 	{
-		if (!plr || !weap || !psp) { return true; }
+		if (!plr || !weap || !psp || !plr.player) { return true; }
 		if (IsScopedNow(plr, weap, psp)) { return true; }
 		let ov10 = plr.player.GetPSprite(10);
 		let ov11 = plr.player.GetPSprite(11);
@@ -154,15 +158,28 @@ class PB_WeaponTilterInventory : Inventory
 		return false;
 	}
 
-	private bool FacingWall(double distance)
+	private bool TraceHitsWall(double traceAngle, double dist)
 	{
 		FLineTraceData wallCheck;
-		// Ignore actors so enemies/items don't suppress wall-lowering detection.
-		owner.LineTrace(owner.Angle, distance, 0, TRF_THRUACTORS, offsetz: owner.Height * 0.55, data: wallCheck);
+		double zOff = owner.Height * 0.55;
+		owner.LineTrace(traceAngle, dist, 0, TRF_THRUACTORS, offsetz: zOff, data: wallCheck);
 		if (wallCheck.HitType == TRACE_HitWall) { return true; }
-		// Fallback using current pitch for steep look directions.
-		owner.LineTrace(owner.Angle, distance, owner.Pitch, TRF_THRUACTORS, offsetz: owner.Height * 0.55, data: wallCheck);
+		owner.LineTrace(traceAngle, dist, owner.Pitch, TRF_THRUACTORS, offsetz: zOff, data: wallCheck);
 		return wallCheck.HitType == TRACE_HitWall;
+	}
+
+	private bool FacingWall(double distance)
+	{
+		if (distance < 1.0) { return false; }
+		// Single forward trace misses geometry when you slide along a wall (trace parallels the surface).
+		// Fan traces catch adjacent walls and corners without touching roll / lean / tilt smoothing.
+		for (int i = 0; i < 7; i++)
+		{
+			double ang = owner.Angle + TAC_WALL_YAW[i];
+			double dist = distance * TAC_WALL_DISTSCALE[i];
+			if (TraceHitsWall(ang, dist)) { return true; }
+		}
+		return false;
 	}
 
 	private bool IsFiringState(Weapon weap, PSprite psp)
@@ -184,6 +201,25 @@ class PB_WeaponTilterInventory : Inventory
 		if (st && weap.InStateSequence(psp.CurState, st)) { return true; }
 
 		return false;
+	}
+
+	private bool UsesExtraMoveLowering(Name weaponClass)
+	{
+		return weaponClass == 'PB_RocketLauncher';
+	}
+
+	private bool UsesAuthoredFireOffset(Name weaponClass, Weapon weap, PSprite psp)
+	{
+		if (weaponClass != 'PB_NeoHMG' || !weap || !psp || !psp.CurState)
+			return false;
+		// Fire only matches the preamble; DoFireHMG is a jump target and is not
+		// in InStateSequence(Fire, ...) — without Y suppression, tactical lowering
+		// fights fireHMG()'s A_WeaponOffset / zoom / recoil every tic. Strafe roll
+		// still applies (psp.Rotation) via currentRoll.
+		if (IsFiringState(weap, psp))
+			return true;
+		State st = weap.FindState("DoFireHMG");
+		return st && weap.InStateSequence(psp.CurState, st);
 	}
 
 	private bool IsReloadState(Weapon weap, PSprite psp)
@@ -211,7 +247,11 @@ class PB_WeaponTilterInventory : Inventory
 	{
 		if (psp && appliedYOffset != 0)
 		{
-			psp.Y -= appliedYOffset;
+			double expectedY = hasNeutralWeaponY ? neutralWeaponY + appliedYOffset : psp.Y;
+			if (!hasNeutralWeaponY || abs(psp.Y - expectedY) <= 2.0)
+			{
+				psp.Y -= appliedYOffset;
+			}
 		}
 		appliedYOffset = 0;
 	}
@@ -273,12 +313,14 @@ class PB_WeaponTilterInventory : Inventory
 		bool moving = owner.Vel.XY.Length() > 0.75;
 		bool reloading = IsReloadState(weap, psp);
 		bool excluded = IsExcludedWeapon(weap);
-		bool nailgunFireSuppressed = (weaponClass == 'PB_Nailgun') && IsFiringState(weap, psp);
+		bool authoredFireOffset = UsesAuthoredFireOffset(weaponClass, weap, psp);
+		bool fireSuppressed = IsFiringState(weap, psp) && weaponClass == 'PB_Nailgun';
 
 		bool allowMotion = !blocked && !excluded;
 		if (cvEnableReadyOnly) { allowMotion = allowMotion && ready; }
 		if (cvEnableMoveOnly) { allowMotion = allowMotion && moving; }
-		if (nailgunFireSuppressed) { allowMotion = false; }
+		if (fireSuppressed) { allowMotion = false; }
+		bool allowLowering = allowMotion && !authoredFireOffset;
 
 		Vector2 strafeDir = (sin(-owner.angle), cos(-owner.angle));
 		double strafeDot = (owner.Vel.X * strafeDir.X) + (owner.Vel.Y * strafeDir.Y);
@@ -297,19 +339,26 @@ class PB_WeaponTilterInventory : Inventory
 		}
 
 		double targetLower = 0;
-		if (allowMotion)
+		if (allowLowering)
 		{
 			// Blend strafe component + overall horizontal speed + sidemove intent
 			// so forward movement also lowers the weapon a bit.
 			double speedXY = owner.Vel.XY.Length();
 			double sidewaysInput = abs(cmd.sidemove);
 			double baseLower = (abs(strafeDot) * 1.8) + (speedXY * 0.45) + (sidewaysInput * 0.03);
-			targetLower = min(30.0, baseLower) * cvLoweringScale;
+			double lowerCap = 30.0;
+			if (UsesExtraMoveLowering(weaponClass))
+			{
+				baseLower *= 1.28;
+				baseLower += abs(currentRoll) * 0.22;
+				lowerCap = 38.0;
+			}
+			targetLower = min(lowerCap, baseLower) * cvLoweringScale;
 		}
 		// Wall detection should not depend on movement-only lowering gates.
-		bool allowWallDetect = !blocked && !excluded;
+		bool allowWallDetect = !blocked && !excluded && !fireSuppressed;
 		if (cvEnableReadyOnly) { allowWallDetect = allowWallDetect && ready; }
-		if (cvWallDetect && allowWallDetect && FacingWall(cvWallDistance))
+		if (cvWallDetect && allowWallDetect && !authoredFireOffset && FacingWall(cvWallDistance))
 		{
 			targetLower = min(32.0, targetLower + cvWallLowering);
 		}
@@ -325,7 +374,7 @@ class PB_WeaponTilterInventory : Inventory
 		previousVelZ = owner.Vel.Z;
 
 		double targetLean = 0;
-		if (cvEnableLean && !blocked && ready && !excluded)
+		if (cvEnableLean && !blocked && ready && !excluded && !authoredFireOffset)
 		{
 			bool toggleLean = owner.CountInv("PB_LeanToggle") > 0;
 			bool moveLeft = (cmd.buttons & BT_MOVELEFT) != 0;
@@ -350,7 +399,23 @@ class PB_WeaponTilterInventory : Inventory
 		leanRoll += (targetLean - leanRoll) * cvLeanSmoothing;
 		owner.A_SetRoll(leanRoll, SPF_INTERPOLATE);
 
+		if (authoredFireOffset)
+		{
+			psp.Rotation = currentRoll;
+			appliedYOffset = 0;
+			neutralWeaponY = psp.Y;
+			hasNeutralWeaponY = true;
+			return;
+		}
 		psp.Rotation = currentRoll;
+		if (hasNeutralWeaponY && appliedYOffset != 0)
+		{
+			double expectedY = neutralWeaponY + appliedYOffset;
+			if (abs(psp.Y - expectedY) > 2.0 && abs(psp.Y - neutralWeaponY) < abs(psp.Y - expectedY))
+			{
+				appliedYOffset = 0;
+			}
+		}
 		double baseY = psp.Y - appliedYOffset;
 		if (!hasNeutralWeaponY)
 		{
@@ -364,9 +429,10 @@ class PB_WeaponTilterInventory : Inventory
 		}
 		// In PB's HUD setup, negative Y offset moves the sprite downward.
 		// Keep lowering strictly downward-only so movement never lifts weapons.
-		double extraLowerPixels = 5.0;
+		double extraLowerPixels = UsesExtraMoveLowering(weaponClass) ? 7.0 : 5.0;
 		double targetYOffset = - (loweringAmount + (landingKick * 0.45) + (reloading ? 0.8 : 0) + extraLowerPixels);
-		targetYOffset = clamp(targetYOffset, -28.0, 0.0);
+		double yLowerCap = UsesExtraMoveLowering(weaponClass) ? -36.0 : -28.0;
+		targetYOffset = clamp(targetYOffset, yLowerCap, 0.0);
 		// Smooth Y offset to avoid bob/tilt feedback oscillation when movement starts/stops.
 		double newYOffset = appliedYOffset + (targetYOffset - appliedYOffset) * 0.20;
 		double finalY = baseY + newYOffset;
@@ -409,5 +475,24 @@ class PB_TacticalFeelHandler : EventHandler
 		else if (e.Name ~== "pb_unlean_left") { mo.TakeInventory("PB_LeanLeft", 1); }
 		else if (e.Name ~== "pb_lean_right") { mo.GiveInventory("PB_LeanRight", 1); }
 		else if (e.Name ~== "pb_unlean_right") { mo.TakeInventory("PB_LeanRight", 1); }
+		else if (e.Name ~== "pb_glorycryo")
+		{
+			while (mo.CountInv("FlameBelchSelected") > 0)
+				mo.TakeInventory("FlameBelchSelected", 1);
+			mo.GiveInventory("IceBombSelected", 1);
+			mo.GiveInventory("DoShoulderCannon", 1);
+		}
+		else if (e.Name ~== "pb_glorysaw_on")
+		{
+			mo.GiveInventory("DoGloryMelee", 1);
+		}
+		else if (e.Name ~== "pb_glorysaw_off")
+		{
+			mo.TakeInventory("DoGloryMelee", 1);
+		}
+		else if (e.Name ~== "pb_shouldercannon")
+		{
+			mo.GiveInventory("DoShoulderCannon", 1);
+		}
 	}
 }

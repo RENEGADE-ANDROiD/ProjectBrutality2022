@@ -1,0 +1,99 @@
+// Adds extra blood pools and short trails on monster deaths without touching per-monster death states.
+class PB_DeathGoreBoostHandler : EventHandler
+{
+	clearscope static PlayerPawn PB_ResolvePlayer(Actor a)
+	{
+		for (int i = 0; a && i < 10; i++)
+		{
+			if (a is "PlayerPawn" && a.player) return PlayerPawn(a);
+			Actor next = a.target != null ? a.target : (a.master != null ? a.master : a.tracer);
+			if (!next || next == a) break;
+			a = next;
+		}
+		return null;
+	}
+
+	clearscope static PlayerPawn PB_ResolveKiller(WorldEvent e)
+	{
+		if (!e) return null;
+		PlayerPawn p = PB_ResolvePlayer(e.Inflictor);
+		if (p) return p;
+		p = PB_ResolvePlayer(e.DamageSource);
+		if (p) return p;
+		if (e.Thing) return PB_ResolvePlayer(e.Thing.target);
+		return null;
+	}
+
+	clearscope static bool PB_BloodyDeathType(Name dt)
+	{
+		return dt != 'Burn'
+			&& dt != 'Fire'
+			&& dt != 'Flame'
+			&& dt != 'Flames'
+			&& dt != 'Napalm'
+			&& dt != 'Disintegrate'
+			&& dt != 'Ice'
+			&& dt != 'Freeze';
+	}
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (!e) return;
+		Actor t = e.Thing;
+		if (!t || t.bNoBlood || !t.bIsMonster) return;
+		if (t is "PlayerPawn") return;
+		if (t.waterlevel > 0) return;
+		if (!PB_BloodyDeathType(e.DamageType)) return;
+
+		PlayerPawn k = PB_ResolveKiller(e);
+		PlayerInfo pi = k ? k.player : null;
+		if (!pi) return;
+
+		let cvLow = CVar.GetCVar("pb_lowgraphicsmode", pi);
+		if (!cvLow || cvLow.GetInt() > 0) return;
+		let cvBloodAmt = CVar.GetCVar("pb_bloodamount", pi);
+		int bloodAmount = cvBloodAmt ? cvBloodAmt.GetInt() : 1;
+		if (bloodAmount < 1) return;
+
+		bool enhanced = PB_EnhancedBrutality2022.IsOn(pi);
+		if (!enhanced) return;
+
+		bool xdeath = t.health <= -t.SpawnHealth();
+		int poolCount = 3;
+		int trailCount = 8;
+		if (bloodAmount >= 3)
+		{
+			poolCount += 2;
+			trailCount += 6;
+		}
+		if (xdeath)
+		{
+			poolCount += 2;
+			trailCount += 5;
+		}
+
+		vector3 base = (t.pos.x, t.pos.y, t.floorz + 1);
+		for (int i = 0; i < poolCount; i++)
+		{
+			Class<Actor> poolCls = (i == 0 || xdeath) ? "GrowingBloodPool" : "BigBloodSpot";
+			if (!poolCls) continue;
+			Actor pool = Actor.Spawn(poolCls, (base.x + frandom(-18, 18), base.y + frandom(-18, 18), base.z), NO_REPLACE);
+			if (pool)
+			{
+				pool.angle = random(0, 359);
+				pool.scale *= frandom(0.85, 1.35);
+			}
+		}
+
+		Class<Actor> trailCls = "PB_SquirtingBloodTrail";
+		for (int j = 0; j < trailCount && trailCls; j++)
+		{
+			Actor b = Actor.Spawn(trailCls, (t.pos.x, t.pos.y, t.pos.z + frandom(12, max(16, t.height * 0.65))), NO_REPLACE);
+			if (b)
+			{
+				b.vel = (frandom(-6, 6), frandom(-6, 6), frandom(1.5, 7.5));
+				b.angle = random(0, 359);
+			}
+		}
+	}
+}

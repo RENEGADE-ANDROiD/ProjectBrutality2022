@@ -192,10 +192,136 @@ class PlayerPawnBase : PlayerPawn
 		if(VecToUnit.Length()) { VecToUnit /= VecToUnit.Length(); }
 		return VecToUnit;
 	}
+
+	//===========================================================================
+	// Weapon cycle: PB uses many weapons per slot; empty slot 0 makes the stock
+	// slotschecked <= NUM_WEAPON_SLOTS (10) cap exit early — no wrap. Off-list
+	// ready weapons skipped cycling entirely when LocateWeapon fails. Mirrors
+	// GZDoom's PlayerPawn::PickNextWeapon / PickPrevWeapon with a wider cap +
+	// off-list anchors (see wadsrc/.../player/player.zs).
+	//===========================================================================
+
+	const PB_NUM_WP_SLOTS = 10;
+	const PB_WEAPON_CYCLE_WRAP_CAP = 128;
+
+	override Weapon PickNextWeapon()
+	{
+		let player = self.player;
+		if(!player) return null;
+
+		bool found;
+		int startslot, startindex;
+		let ReadyWeapon = player.ReadyWeapon;
+
+		if(player.PendingWeapon != WP_NOCHANGE)
+			[found, startslot, startindex] = player.weapons.LocateWeapon(player.PendingWeapon.GetClass());
+		else if(ReadyWeapon != null)
+		{
+			[found, startslot, startindex] = player.weapons.LocateWeapon(ReadyWeapon.GetClass());
+			if(!found && ReadyWeapon.bPOWERED_UP && ReadyWeapon.SisterWeaponType != null)
+				[found, startslot, startindex] = player.weapons.LocateWeapon(ReadyWeapon.SisterWeaponType);
+		}
+		else
+		{
+			found = false;
+			startslot = 0;
+			startindex = 0;
+		}
+
+		if(ReadyWeapon == null || found ||
+			(ReadyWeapon != null && !found && player.PendingWeapon == WP_NOCHANGE))
+		{
+			if(ReadyWeapon == null || (!found && ReadyWeapon != null && player.PendingWeapon == WP_NOCHANGE))
+			{
+				startslot = PB_NUM_WP_SLOTS - 1;
+				startindex = player.weapons.SlotSize(startslot) - 1;
+			}
+
+			int slot = startslot;
+			int index = startindex;
+			int slotschecked = 0;
+			do
+			{
+				if(++index >= player.weapons.SlotSize(slot))
+				{
+					index = 0;
+					slotschecked++;
+					if(++slot >= PB_NUM_WP_SLOTS)
+						slot = 0;
+				}
+				let wt = player.weapons.GetWeapon(slot, index);
+				let weap = Weapon(FindInventory(wt));
+				if(weap != null && weap.CheckAmmo(Weapon.EitherFire, false))
+					return weap;
+			} while((slot != startslot || index != startindex) && slotschecked <= PB_WEAPON_CYCLE_WRAP_CAP);
+		}
+
+		return ReadyWeapon;
+	}
+
+	override Weapon PickPrevWeapon()
+	{
+		let player = self.player;
+		if(!player) return null;
+
+		bool found;
+		int startslot, startindex;
+		let ReadyWeapon = player.ReadyWeapon;
+
+		if(player.PendingWeapon != WP_NOCHANGE)
+			[found, startslot, startindex] = player.weapons.LocateWeapon(player.PendingWeapon.GetClass());
+		else if(ReadyWeapon != null)
+		{
+			[found, startslot, startindex] = player.weapons.LocateWeapon(ReadyWeapon.GetClass());
+			if(!found && ReadyWeapon.bPOWERED_UP && ReadyWeapon.SisterWeaponType != null)
+				[found, startslot, startindex] = player.weapons.LocateWeapon(ReadyWeapon.SisterWeaponType);
+		}
+		else
+		{
+			found = false;
+			startslot = 0;
+			startindex = 0;
+		}
+
+		if(ReadyWeapon == null || found ||
+			(ReadyWeapon != null && !found && player.PendingWeapon == WP_NOCHANGE))
+		{
+			if(ReadyWeapon == null || (!found && ReadyWeapon != null && player.PendingWeapon == WP_NOCHANGE))
+			{
+				startslot = 0;
+				startindex = 0;
+			}
+
+			int slot = startslot;
+			int index = startindex;
+			int slotschecked = 0;
+			do
+			{
+				if(--index < 0)
+				{
+					slotschecked++;
+					if(--slot < 0)
+						slot = PB_NUM_WP_SLOTS - 1;
+					index = player.weapons.SlotSize(slot) - 1;
+				}
+				let wt = player.weapons.GetWeapon(slot, index);
+				let weap = Weapon(FindInventory(wt));
+				if(weap != null && weap.CheckAmmo(Weapon.EitherFire, false))
+					return weap;
+			} while((slot != startslot || index != startindex) && slotschecked <= PB_WEAPON_CYCLE_WRAP_CAP);
+		}
+
+		return ReadyWeapon;
+	}
 	
 	Override void PlayerThink()
 	{
 		let player = self.player;
+		if(!player)
+		{
+			Super.PlayerThink();
+			return;
+		}
 		UserCmd cmd = player.cmd;
 		if(WSlideBlockTics > 0) { WSlideBlockTics--; }
 		
@@ -235,7 +361,8 @@ class PlayerPawnBase : PlayerPawn
 
 	void ApplyWallBlastEscape()
 	{
-		if(!player || player.OnGround || WaterLevel >= 2) { return; }
+		if(!player || WaterLevel >= 2) { return; }
+		if(player.OnGround && CountInv("PBBlastMomentum") < 1) { return; }
 		
 		FLineTraceData wallCheck;
 		double nearestDist = 0;
@@ -298,6 +425,11 @@ class PlayerPawnBase : PlayerPawn
 	Override void CalcHeight()
 	{
 		let player = self.player;
+		if(!player)
+		{
+			Super.CalcHeight();
+			return;
+		}
 		UserCmd cmd = player.cmd;
 		
 		double HeightAngle;
@@ -446,6 +578,11 @@ class PlayerPawnBase : PlayerPawn
 	Override void CheckPitch()
 	{
 		let player = self.player;
+		if(!player)
+		{
+			Super.CheckPitch();
+			return;
+		}
 		
 		int clook = player.cmd.pitch;
 		if(clook != 0)
@@ -489,7 +626,12 @@ class PlayerPawnBase : PlayerPawn
 	Override void HandleMovement()
 	{
 		let player = self.player;
-		UserCmd cmd = Player.cmd;
+		if(!player)
+		{
+			Super.HandleMovement();
+			return;
+		}
+		UserCmd cmd = player.cmd;
 		
 		//Slime Dissolving sound effect
 		CheckSlime();
@@ -510,6 +652,9 @@ class PlayerPawnBase : PlayerPawn
 		}
 		else
 		{	
+			if (CountInv("PBBlastMomentum") > 0)
+				TakeInventory("PBBlastMomentum", 1);
+
 			ViewAngleDelta = cmd.Yaw * (360.0 / 65536.0); //needed for two other things
 			ViewPitchDelta = cmd.Pitch * (90.0 / 65536.0);
 			
@@ -811,7 +956,9 @@ class PlayerPawnBase : PlayerPawn
 	float ZMScale()
 	{
 		Let Player = self.Player;
-		UserCmd cmd = player.cmd;
+		if(!Player)
+			return 1.f;
+		UserCmd cmd = Player.cmd;
 		
 		Bool 	IsWalking = (CVar.GetCVar("cl_run", Player).GetBool() && (cmd.buttons & BT_SPEED)) || (!CVar.GetCVar("cl_run", Player).GetBool() && !(cmd.buttons & BT_SPEED));
 		Float 	MoveMulti;
@@ -937,7 +1084,10 @@ class PlayerPawnBase : PlayerPawn
 		else
 		{
 			Acceleration *= pb_friction;
-			Vel.XY *= 1 - pb_friction / 10.f;
+			float fr = pb_friction / 10.f;
+			if (CountInv("PBBlastMomentum") > 0)
+				fr *= 0.38;
+			Vel.XY *= 1 - fr;
 		}
 	}
 	
@@ -972,6 +1122,7 @@ class PlayerPawnBase : PlayerPawn
 		if((DashNumber || Grappled) && MaxAirSpeed > MaxGroundSpeed) { DashMove = True; }
 		// DEDashJump (BT_USER3) sets high XY speed + PlayerDashed; without this, DoomAirMove's cap to MaxGroundSpeed erases the evade in the same tic.
 		Bool evadeDashing = CheckInventory("PlayerDashed", 1);
+		Bool blastMom = CountInv("PBBlastMomentum") > 0;
 		
 		///////////////////////////////////////////
 		//Actual Movement
@@ -987,6 +1138,7 @@ class PlayerPawnBase : PlayerPawn
 		Float capXY;
 		if (DashMove) capXY = MaxAirSpeed;
 		else if (evadeDashing) capXY = max(pb_maxhopspeed, 50.0f);
+		else if (blastMom) capXY = max(max(MaxGroundSpeed * 2.f, pb_maxhopspeed), Vel.XY.Length());
 		else capXY = MaxGroundSpeed;
 		Vel.XY = min(Vel.XY.Length(), capXY) * SafeUnit2(Vel.XY);
 		
@@ -1261,6 +1413,8 @@ class PlayerPawnBase : PlayerPawn
 			
 			//Limiter (DEDashJump / PlayerDashed evade is ~50; do not clamp to pb_maxhopspeed alone)
 			Float qCap = CheckInventory("PlayerDashed", 1) ? max(pb_maxhopspeed, 50.0f) : pb_maxhopspeed;
+			if (CountInv("PBBlastMomentum") > 0)
+				qCap = max(qCap, Vel.XY.Length());
 			Vel.XY = min(Vel.XY.Length(), qCap) * SafeUnit2(Vel.XY);
 		}
 		

@@ -1,0 +1,38 @@
+class PB_EnhancedBrutality2022 play
+{
+	clearscope static bool IsOn(PlayerInfo plr)
+	{
+		if (!plr) return false;
+		let cv = CVar.GetCVar("pb_enhanced_brutality_2022", plr);
+		return cv && cv.GetBool();
+	}
+
+	clearscope static int EffectiveBDv22Mix(int mix, PlayerInfo plr)
+	{
+		if (mix < 0) mix = 0;
+		if (mix > 100) mix = 100;
+		if (!IsOn(plr)) return mix;
+		return 67;
+	}
+
+	clearscope static int ScaleDeathRoll255(int threshold, PlayerInfo plr)
+	{
+		if (!IsOn(plr)) return threshold;
+		if (threshold < 0) return 0;
+		return min(255, (threshold * 125 + 99) / 100);
+	}
+
+	clearscope static int ScaleMistWeight(int w, PlayerInfo plr)
+	{
+		if (!IsOn(plr)) return w;
+		if (w < 0) return 0;
+		return min(255, (w * 125 + 99) / 100);
+	}
+
+	clearscope static int ScaleDeathChancePct(int pct, PlayerInfo plr)
+	{
+		if (!IsOn(plr)) return pct;
+		if (pct < 0) return 0;
+		return min(100, (pct * 125 + 99) / 100);
+	}
+}

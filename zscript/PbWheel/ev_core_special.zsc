@@ -5,7 +5,7 @@ Class PB_SpecialWheelHandler : EventHandler
 	array<string> useTheseSpecials;
 	array<string> avoidTheseSpecials;
 	
-	array<bool > wheelShow;
+	array<int > wheelShow;
 	int wheelIt;
 	int currentSelection;
 	int oldSelection;
@@ -427,6 +427,18 @@ Class PB_SpecialWheelHandler : EventHandler
 	{
 		if (!e) return;
 		currentSelection = 1;
+		oldSelection = 0;
+		wheelIsOpen = false;
+		wheelSort = false;
+		noWheel = false;
+		wheelShow.Clear();
+		actualList.Clear();
+		fakeMouse = realMouse = (0, 0);
+		alphaFade = 0;
+		musicFade = 0;
+		oldPTics.Clear();
+		oldPUTics.Clear();
+		Level.setFrozen(false);
 		if (playeringame[consoleplayer])
 		{
 			let cv = CVar.GetCVar("py_weaponwheel_musicfade", players[consoleplayer]);
@@ -1132,42 +1144,69 @@ Class PB_SpecialWheelHandler : EventHandler
 				specialWheel_handleMouse();
 	}
 
-	void specialWheel_DTechMinigun()
+	void specialWheel_MetalSniper()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.7, 0.7);
+		PB_SpecialWheel_Mode ms_std = new ("PB_SpecialWheel_Mode");
+		ms_std.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Slug.png", TexMan.Type_Any);
+		ms_std.specialName = "Select_MS_Standard";
+		ms_std.specialAlias = "7.62 AP Magazine";
+		ms_std.specialPriority = 1;
+		ms_std.iconScale = iconScale;
+		wheelSpecials.Push(ms_std);
+		PB_SpecialWheel_Mode ms_rs = new ("PB_SpecialWheel_Mode");
+		ms_rs.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+		ms_rs.specialName = "Select_MS_Resonance";
+		ms_rs.specialAlias = "Resonance Rounds";
+		ms_rs.specialPriority = 2;
+		ms_rs.iconScale = iconScale;
+		wheelSpecials.Push(ms_rs);
+		PB_SpecialWheel_Mode ms_aim = new ("PB_SpecialWheel_Mode");
+		ms_aim.specialIcon = TexMan.CheckForTexture("graphics/pywheel/hdmr_sniper.png", TexMan.Type_Any);
+		ms_aim.specialName = "MS_Select_AimMode";
+		ms_aim.specialAlias = "Scope Secondary";
+		ms_aim.specialPriority = 3;
+		ms_aim.iconScale = iconScale;
+		wheelSpecials.Push(ms_aim);
+		PB_SpecialWheel_Mode ms_gr = new ("PB_SpecialWheel_Mode");
+		ms_gr.specialIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
+		ms_gr.specialName = "MS_Select_GrenMode";
+		ms_gr.specialAlias = "Underslung Grenade";
+		ms_gr.specialPriority = 4;
+		ms_gr.iconScale = iconScale;
+		wheelSpecials.Push(ms_gr);
+		specialWheel_handleMouse();
+	}
+
+	void specialWheel_HellPistoler()
 	{
 				wheelSpecials.Clear();
-				iconScale = (0.8, 0.8);
+				iconScale = (0.75, 0.75);
 
-				PB_SpecialWheel_Mode dtech_plasma = new ("PB_SpecialWheel_Mode");
-				dtech_plasma.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
-				dtech_plasma.specialName = "Select_DTechMG_Plasma";
-				dtech_plasma.specialAlias = "Plasma Volley";
-				dtech_plasma.specialPriority = 1;
-				dtech_plasma.iconScale = iconScale;
-				wheelSpecials.Push(dtech_plasma);
+				PB_SpecialWheel_Mode hp_hell = new ("PB_SpecialWheel_Mode");
+				hp_hell.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+				hp_hell.specialName = "Select_HP_Hellfire";
+				hp_hell.specialAlias = "Hell Rounds";
+				hp_hell.specialPriority = 1;
+				hp_hell.iconScale = iconScale;
+				wheelSpecials.Push(hp_hell);
 
-				PB_SpecialWheel_Mode dtech_shrink = new ("PB_SpecialWheel_Mode");
-				dtech_shrink.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_1.png", TexMan.Type_Any);
-				dtech_shrink.specialName = "Select_DTechMG_Shrink";
-				dtech_shrink.specialAlias = "Shrink Beam";
-				dtech_shrink.specialPriority = 2;
-				dtech_shrink.iconScale = iconScale;
-				wheelSpecials.Push(dtech_shrink);
+				PB_SpecialWheel_Mode hp_shrink = new ("PB_SpecialWheel_Mode");
+				hp_shrink.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_1.png", TexMan.Type_Any);
+				hp_shrink.specialName = "Select_HP_Shrink";
+				hp_shrink.specialAlias = "Shrink Beam";
+				hp_shrink.specialPriority = 2;
+				hp_shrink.iconScale = iconScale;
+				wheelSpecials.Push(hp_shrink);
 
-				PB_SpecialWheel_Mode dtech_acid = new ("PB_SpecialWheel_Mode");
-				dtech_acid.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_acid.png", TexMan.Type_Any);
-				dtech_acid.specialName = "Select_DTechMG_Acid";
-				dtech_acid.specialAlias = "Acid Glob";
-				dtech_acid.specialPriority = 3;
-				dtech_acid.iconScale = iconScale;
-				wheelSpecials.Push(dtech_acid);
-
-				PB_SpecialWheel_Mode dtech_danmaku = new ("PB_SpecialWheel_Mode");
-				dtech_danmaku.specialIcon = TexMan.CheckForTexture("graphics/CSSG/SG_Danmaku.png", TexMan.Type_Any);
-				dtech_danmaku.specialName = "Select_DTechMG_Danmaku";
-				dtech_danmaku.specialAlias = "Danmaku Spiral";
-				dtech_danmaku.specialPriority = 4;
-				dtech_danmaku.iconScale = iconScale;
-				wheelSpecials.Push(dtech_danmaku);
+				PB_SpecialWheel_Mode hp_rof = new ("PB_SpecialWheel_Mode");
+				hp_rof.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Semi.png", TexMan.Type_Any);
+				hp_rof.specialName = "Select_HP_ToggleROF";
+				hp_rof.specialAlias = "Semi / Full Toggle";
+				hp_rof.specialPriority = 3;
+				hp_rof.iconScale = iconScale;
+				wheelSpecials.Push(hp_rof);
 
 				specialWheel_handleMouse();
 	}
@@ -1202,17 +1241,24 @@ Class PB_SpecialWheelHandler : EventHandler
 		PB_SpecialWheel_Mode a = new ("PB_SpecialWheel_Mode");
 		a.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
 		a.specialName = "SelectM41A_12Gauge";
-		a.specialAlias = "12ga Alt-Fire";
+		a.specialAlias = "12ga Underbarrel";
 		a.specialPriority = 1;
 		a.iconScale = iconScale;
 		wheelSpecials.Push(a);
 		PB_SpecialWheel_Mode b = new ("PB_SpecialWheel_Mode");
 		b.specialIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
 		b.specialName = "SelectM41A_30mmGrenade";
-		b.specialAlias = "30mm Grenade";
+		b.specialAlias = "30mm Underbarrel";
 		b.specialPriority = 2;
 		b.iconScale = iconScale;
 		wheelSpecials.Push(b);
+		PB_SpecialWheel_Mode c = new ("PB_SpecialWheel_Mode");
+		c.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Dual.png", TexMan.Type_Any);
+		c.specialName = "SelectM41A_DualWield";
+		c.specialAlias = "Dual Wield";
+		c.specialPriority = 3;
+		c.iconScale = iconScale;
+		wheelSpecials.Push(c);
 		specialWheel_handleMouse();
 	}
 
@@ -1451,6 +1497,69 @@ Class PB_SpecialWheelHandler : EventHandler
 			return cv ? cv.GetBool() : false;
 		}
 		return true;
+	}
+
+	void specialWheel_LeverAction()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.75, 0.75);
+		PB_SpecialWheel_Mode lev_357 = new ("PB_SpecialWheel_Mode");
+		lev_357.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Semi.png", TexMan.Type_Any);
+		lev_357.specialName = "Select_LeverAction_357";
+		lev_357.specialAlias = ".357 Revolver rounds";
+		lev_357.specialPriority = 1;
+		lev_357.iconScale = iconScale;
+		wheelSpecials.Push(lev_357);
+		PB_SpecialWheel_Mode lev_marlin = new ("PB_SpecialWheel_Mode");
+		lev_marlin.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Auto.png", TexMan.Type_Any);
+		lev_marlin.specialName = "Select_LeverAction_Marlin";
+		lev_marlin.specialAlias = ".444 Marlin rounds";
+		lev_marlin.specialPriority = 2;
+		lev_marlin.iconScale = iconScale;
+		wheelSpecials.Push(lev_marlin);
+		specialWheel_handleMouse();
+	}
+
+	void specialWheel_M1Plasma()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.65, 0.65);
+		PB_SpecialWheel_Mode pl_single = new ("PB_SpecialWheel_Mode");
+		pl_single.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Quad_Single.png", TexMan.Type_Any);
+		pl_single.specialName = "Select_M1Plasma_Single";
+		pl_single.specialAlias = "Single wield";
+		pl_single.specialPriority = 1;
+		pl_single.iconScale = iconScale;
+		wheelSpecials.Push(pl_single);
+		PB_SpecialWheel_Mode pl_dual = new ("PB_SpecialWheel_Mode");
+		pl_dual.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Quad_Dual.png", TexMan.Type_Any);
+		pl_dual.specialName = "Select_M1Plasma_Dual";
+		pl_dual.specialAlias = "Dual wield";
+		pl_dual.specialPriority = 2;
+		pl_dual.iconScale = iconScale;
+		wheelSpecials.Push(pl_dual);
+		specialWheel_handleMouse();
+	}
+
+	void specialWheel_PulseCannon()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.65, 0.65);
+		PB_SpecialWheel_Mode pc_grav = new ("PB_SpecialWheel_Mode");
+		pc_grav.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_acid.png", TexMan.Type_Any);
+		pc_grav.specialName = "Select_PulseCannon_Gravity";
+		pc_grav.specialAlias = "Alt: Gravity bomb";
+		pc_grav.specialPriority = 1;
+		pc_grav.iconScale = iconScale;
+		wheelSpecials.Push(pc_grav);
+		PB_SpecialWheel_Mode pc_super = new ("PB_SpecialWheel_Mode");
+		pc_super.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_impact.png", TexMan.Type_Any);
+		pc_super.specialName = "Select_PulseCannon_Super";
+		pc_super.specialAlias = "Alt: Super ball";
+		pc_super.specialPriority = 2;
+		pc_super.iconScale = iconScale;
+		wheelSpecials.Push(pc_super);
+		specialWheel_handleMouse();
 	}
 
 	void specialWheel_RocketLauncher()
@@ -1720,8 +1829,12 @@ Class PB_SpecialWheelHandler : EventHandler
 					specialWheel_Minigun();
 					return;
 
-				case 'DemonTechMinigun':
-					specialWheel_DTechMinigun();
+				case 'PB_MetalSniper':
+					specialWheel_MetalSniper();
+					return;
+
+				case 'HellPistoler':
+					specialWheel_HellPistoler();
 					return;
 
 				case 'PB_NeoHMG':
@@ -1730,6 +1843,18 @@ Class PB_SpecialWheelHandler : EventHandler
 					
 				case 'PB_RocketLauncher':
 					specialWheel_RocketLauncher();
+					return;
+
+				case 'LeverAction':
+					specialWheel_LeverAction();
+					return;
+
+				case 'PB_M1Plasma':
+					specialWheel_M1Plasma();
+					return;
+
+				case 'PB_PulseCannon':
+					specialWheel_PulseCannon();
 					return;
 
 				case 'PB_M41A':

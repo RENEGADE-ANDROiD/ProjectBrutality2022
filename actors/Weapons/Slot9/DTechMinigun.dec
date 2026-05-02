@@ -1,16 +1,11 @@
-// Legacy 1-bit AltFire token; kept synced with DemonTechMinigunMode for back-compat.
-Actor DemonTechMinigunType : Inventory { Inventory.MaxAmount 1 }
-
-// 0..3 mode counter:
+// 0..2 mode counter:
 //   0 = Plasma Volley (vanilla primary)
-//   1 = Shrink Beam   (vanilla AltFire mode)
-//   2 = Acid Glob     (PB 2022 — bouncing acid + persistent puddle)
-//   3 = Danmaku Spiral (PB 2022 — rotating colored bullet-hell stream)
-Actor DemonTechMinigunMode : Inventory { Inventory.MaxAmount 3 }
+//   1 = Acid Glob (bouncing acid + persistent puddle)
+//   2 = Danmaku Spiral (rotating colored bullet-hell stream)
+Actor DemonTechMinigunMode : Inventory { Inventory.MaxAmount 2 }
 
 // Wheel-grant tokens consumed by DemonTechMinigun.WeaponSpecial.
 Actor Select_DTechMG_Plasma  : Inventory { Inventory.MaxAmount 1 }
-Actor Select_DTechMG_Shrink  : Inventory { Inventory.MaxAmount 1 }
 Actor Select_DTechMG_Acid    : Inventory { Inventory.MaxAmount 1 }
 Actor Select_DTechMG_Danmaku : Inventory { Inventory.MaxAmount 1 }
 
@@ -25,7 +20,7 @@ ACTOR DemonTechMinigun : PB_Weapon
    Weapon.AmmoType "PB_DTech" 
    Weapon.UpSound "HRReady"
    Inventory.PickupSound "weapons/demontechload"
-   Inventory.PickupMessage "You got the Demon Tech Minigun! (Slot 0)"
+   Inventory.PickupMessage "You got the Demon Tech Minigun! (Slot 5)"
    Obituary "%o was infernally grazed upon by %k's hellish gatling gun."
    //+Weapon.NoAutoFire
    +Weapon.NoAutoAim
@@ -51,12 +46,7 @@ ACTOR DemonTechMinigun : PB_Weapon
 		PB_HandleCrosshair(39);
 		A_TakeInventory("PB_LockScreenTilt",1);
 	  }
-      DTM1 A 0 A_JumpIfInventory("DemonTechMinigunType",1,"Ready2")
       DTM1 A 1 A_DoPBWeaponAction
-      Loop
-   Ready2:
-      TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady")
-      DTM2 A 1 A_DoPBWeaponAction
       Loop
 	ChooseUpgradePath:
 		TNT1 A 0 A_PrintBold("\cfChoose your path:\n\caFIRE = BIOACIDLAUNCHER\n\ciALTFIRE = DTECHMINIGUN")
@@ -124,9 +114,8 @@ ACTOR DemonTechMinigun : PB_Weapon
       TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel")
 	  TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "ThrowFlameBarrel")
 	  TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "ThrowIceBarrel")
-      DTM1 A 0 A_JumpIfInventory("DemonTechMinigunMode",3,"FireDanmaku")
-      DTM1 A 0 A_JumpIfInventory("DemonTechMinigunMode",2,"FireAcid")
-      DTM1 A 0 A_JumpIfInventory("DemonTechMinigunMode",1,"Fire2")
+      DTM1 A 0 A_JumpIfInventory("DemonTechMinigunMode",2,"FireDanmaku")
+      DTM1 A 0 A_JumpIfInventory("DemonTechMinigunMode",1,"FireAcid")
 	  TNT1 A 0 A_PlaySound("8FGGSPIN",5)
       DTM1 BCDE 3
 	  DTM1 EFGHI 3
@@ -155,30 +144,6 @@ ACTOR DemonTechMinigun : PB_Weapon
 	  TNT1 A 0 A_PlaySound("weapons/expmgunspinstop",5)
 	  DTM1 EFGHI 3
 	  DTM1 JKLA 3
-	  Goto Ready3
-   Fire2:
-	  TNT1 A 0 A_PlaySound("8FGGSPIN",5)
-      DTM2 BCDE 3
-	  DTM2 EFGHI 3
-   Hold2:  
-      TNT1 A 0 A_PlaySound("weapons/expmgunspin",5)
-	  TNT1 A 0 Radius_Quake(2,2,0,1,0)
-	  TNT1 A 0 A_GunFlash
-	  TNT1 A 0 A_PlaySound("DemonTechMGFire", CHAN_AUTO)
-	  TNT1 A 0 Radius_Quake(2,2,0,1,0)
-	  TNT1 A 0 A_GunFlash
-	  TNT1 AA 0 A_FireCustomMissile("ShrinkBeam",0,1,0,0)
-	  DTM0 A 6 Bright A_FireCustomMissile("ShrinkBeam",0,1,0,0,0,0)
-	  TNT1 A 0 A_PlaySound("DemonTechMGFire", CHAN_AUTO)
-	  TNT1 A 0 Radius_Quake(2,2,0,1,0)
-	  TNT1 A 0 A_GunFlash
-	  TNT1 AA 0 A_FireCustomMissile("ShrinkBeam",0,1,0,0)
-	  DTM0 B 6 Bright A_FireCustomMissile("ShrinkBeam",0,1,0,0,0,0)
-	  DTM0 C 6	  
-      TNT1 A 0 PB_ReFire("Hold2")
-	  TNT1 A 0 A_PlaySound("Weapons/BFGG/Down",5)
-	  DTM2 EFGHI 3
-	  DTM2 JKLA 3
 	  Goto Ready3
 
    FireAcid:
@@ -243,69 +208,11 @@ ACTOR DemonTechMinigun : PB_Weapon
 	  TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel")
 	  TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "PlaceFlameBarrel")
 	  TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "PlaceIceBarrel")
-	  // From Acid/Danmaku, AltFire snaps silently back to Plasma (mode 0).
 	  DTM1 A 0 A_JumpIfInventory("DemonTechMinigunMode",2,"AltFireSnap")
-	  // Mode 1 -> Mode 0: existing "unload" animation.
-  	DTM1 A 0 A_JumpIfInventory("DemonTechMinigunMode",1,"AltFire2")
-	  // Mode 0 -> Mode 1: existing "load in" animation.
-	  DTM1 A 1 {
-		A_GiveInventory("DemonTechMinigunMode",1);
-		A_GiveInventory("DemonTechMinigunType",1);
-	  }
-      DTM1 A 0 A_GunFlash
-      DTM1 A 4 Offset(0,32)
-	  DTM1 A 4 Offset(0,36)
-	  DTM1 A 4 Offset(0,40)
-	  DTM1 A 4 Offset(0,44)
-	  DTM1 A 4 Offset(0,48)
-	  DTM1 A 4 Offset(0,52)
-	  DTM1 A 4 Offset(0,54)
-	  DTM2 A 0 A_PlaySound("DTP/Magin")
-	  DTM1 A 0 A_PlayWeaponSound("TechBlaster/LoadIn")
-	  DTM1 A 0 A_PlaySound("TechBlaster/Online",1)
-	  DTM1 A 4 Offset(0,58)
-	  DTM2 A 4 Offset(0,54)
-	  DTM2 A 4 Offset(0,52)
-	  DTM2 A 4 Offset(0,48)
-	  DTM2 A 4 Offset(0,44)
-	  DTM2 A 4 Offset(0,40)
-	  DTM2 A 4 Offset(0,36)
-	  DTM2 A 4 Offset(0,32)
-      DTM2 A 4 A_DoPBWeaponAction
-	  DTM2 A 3 PB_ReFire
-      Goto Ready3
-    AltFire2:
-	  DTM2 A 0
-	  DTM2 A 1 {
-		A_TakeInventory("DemonTechMinigunMode",1);
-		A_TakeInventory("DemonTechMinigunType",1);
-	  }
-      DTM2 A 0 A_GunFlash
-      DTM2 A 4 Offset(0,32)
-	  DTM2 A 4 Offset(0,36)
-	  DTM2 A 4 Offset(0,40)
-	  DTM2 A 4 Offset(0,44)
-	  DTM2 A 4 Offset(0,48)
-	  DTM2 A 4 Offset(0,52)
-	  DTM2 A 4 Offset(0,54)
-	  DTM2 A 0 A_PlaySound("TechBlaster/Unload")
-	  DTM2 A 0 A_PlayWeaponSound("DTP/Snap")
-	  DTM2 A 4 Offset(0,58)
-	  DTM1 A 4 Offset(0,54)
-	  DTM1 A 4 Offset(0,52)
-	  DTM1 A 4 Offset(0,48)
-	  DTM1 A 4 Offset(0,44)
-	  DTM1 A 4 Offset(0,40)
-	  DTM1 A 4 Offset(0,36)
-	  DTM1 A 4 Offset(0,32)
-      DTM1 A 4 A_DoPBWeaponAction
-	  DTM1 A 3 PB_ReFire
-      Goto Ready3
+	  DTM1 A 0 A_JumpIfInventory("DemonTechMinigunMode",1,"AltFireSnap")
+	  Goto Ready3
     AltFireSnap:
-	  TNT1 A 0 {
-		A_TakeInventory("DemonTechMinigunMode",3);
-		A_TakeInventory("DemonTechMinigunType",1);
-	  }
+	  TNT1 A 0 A_TakeInventory("DemonTechMinigunMode",10)
 	  TNT1 A 0 A_PlaySound("TechBlaster/Unload")
 	  Goto Ready3
    Flash:
@@ -320,56 +227,36 @@ ACTOR DemonTechMinigun : PB_Weapon
 		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "IdleFlameBarrel")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "IdleIceBarrel")
 		TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility",1)
-		// Wheel just granted one of Select_DTechMG_*. Resolve it into DemonTechMinigunMode (0..3).
 		TNT1 A 0 A_JumpIfInventory("Select_DTechMG_Danmaku", 1, "WSpec_SetDanmaku")
 		TNT1 A 0 A_JumpIfInventory("Select_DTechMG_Acid",    1, "WSpec_SetAcid")
-		TNT1 A 0 A_JumpIfInventory("Select_DTechMG_Shrink",  1, "WSpec_SetShrink")
 		TNT1 A 0 A_JumpIfInventory("Select_DTechMG_Plasma",  1, "WSpec_SetPlasma")
 		Goto Ready3
 	WSpec_SetPlasma:
 		TNT1 A 0 {
 			A_TakeInventory("Select_DTechMG_Plasma", 1);
-			A_TakeInventory("Select_DTechMG_Shrink", 1);
 			A_TakeInventory("Select_DTechMG_Acid", 1);
 			A_TakeInventory("Select_DTechMG_Danmaku", 1);
-			A_TakeInventory("DemonTechMinigunMode", 3);
-			A_TakeInventory("DemonTechMinigunType", 1);
-			A_PlaySound("menu/choose", CHAN_AUTO);
-		}
-		Goto Ready3
-	WSpec_SetShrink:
-		TNT1 A 0 {
-			A_TakeInventory("Select_DTechMG_Plasma", 1);
-			A_TakeInventory("Select_DTechMG_Shrink", 1);
-			A_TakeInventory("Select_DTechMG_Acid", 1);
-			A_TakeInventory("Select_DTechMG_Danmaku", 1);
-			A_TakeInventory("DemonTechMinigunMode", 3);
-			A_GiveInventory("DemonTechMinigunMode", 1);
-			A_GiveInventory("DemonTechMinigunType", 1);
+			A_TakeInventory("DemonTechMinigunMode", 10);
 			A_PlaySound("menu/choose", CHAN_AUTO);
 		}
 		Goto Ready3
 	WSpec_SetAcid:
 		TNT1 A 0 {
 			A_TakeInventory("Select_DTechMG_Plasma", 1);
-			A_TakeInventory("Select_DTechMG_Shrink", 1);
 			A_TakeInventory("Select_DTechMG_Acid", 1);
 			A_TakeInventory("Select_DTechMG_Danmaku", 1);
-			A_TakeInventory("DemonTechMinigunMode", 3);
-			A_GiveInventory("DemonTechMinigunMode", 2);
-			A_TakeInventory("DemonTechMinigunType", 1);
+			A_TakeInventory("DemonTechMinigunMode", 10);
+			A_GiveInventory("DemonTechMinigunMode", 1);
 			A_PlaySound("menu/choose", CHAN_AUTO);
 		}
 		Goto Ready3
 	WSpec_SetDanmaku:
 		TNT1 A 0 {
 			A_TakeInventory("Select_DTechMG_Plasma", 1);
-			A_TakeInventory("Select_DTechMG_Shrink", 1);
 			A_TakeInventory("Select_DTechMG_Acid", 1);
 			A_TakeInventory("Select_DTechMG_Danmaku", 1);
-			A_TakeInventory("DemonTechMinigunMode", 3);
-			A_GiveInventory("DemonTechMinigunMode", 3);
-			A_TakeInventory("DemonTechMinigunType", 1);
+			A_TakeInventory("DemonTechMinigunMode", 10);
+			A_GiveInventory("DemonTechMinigunMode", 2);
 			A_PlaySound("menu/choose", CHAN_AUTO);
 		}
 		Goto Ready3
@@ -396,7 +283,8 @@ ACTOR DemonTechMinigun : PB_Weapon
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching")
 		TNT1 A 0 A_ClearOverlays(3,10)
 		DTS0 FEDCBAAAAABCDEF 1
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 		
 	FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelAirKicking")
@@ -458,7 +346,7 @@ ACTOR DTechMGProjectile : PB_Projectile
 }
 
 // --------------------------------------------------------------------------
-// Mode 2: Acid Glob - bouncing arc of corrosive plasma that leaves an
+// Mode 1: Acid Glob - bouncing arc of corrosive plasma that leaves an
 // AcidSpot puddle on impact (heavy disintegrate DoT inside the puddle).
 // AcidSpot lives in actors/Gore/GreenBlood.dec.
 // --------------------------------------------------------------------------
@@ -508,7 +396,7 @@ ACTOR DTechAcidGlob
 }
 
 // --------------------------------------------------------------------------
-// Mode 3: Danmaku Spiral - fast-rotating colored bolts that ride a tight
+// Mode 2: Danmaku Spiral - fast-rotating colored bolts that ride a tight
 // rotating spiral cone. Each bolt picks one of four hue translations on
 // spawn so the volley looks like a kaleidoscope corkscrew.
 // --------------------------------------------------------------------------

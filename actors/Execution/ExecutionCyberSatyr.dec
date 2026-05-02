@@ -1,0 +1,218 @@
+ACTOR PB_CyberSatyr_Execution_1 //Thanks to Dairotj92 for writing the code
+{
+  XScale 0.84
+  YScale 0.91
+  +FORCEXYBILLBOARD
+  +Clientsideonly
+  +FLOORCLIP
+  +FLOORHUGGER
+  -noclip
+  -SOLID
+  +THRUACTORS
+  speed 18
+  States
+	{
+	Spawn:
+	        SATC AAAAAA 1 {
+			A_FaceTarget;
+			A_FaceMaster;
+			}
+			//kick
+			SATC A 1 {
+			A_Recoil(8.8);
+            }
+			satc aa 1
+			SATC AAAA 1 
+			TNT1 A 0 {
+				A_StartSound("MinorHeadshot", CHAN_AUTO);
+					  A_SpawnItem("BlueBloodSplasher");
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("MuchBloodBlue", 24, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("MuchBloodBlue", 24, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("MuchBloodBlue", 24, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));		
+	  }
+			006E CCC 1
+			006E C 1 
+			006E C 1
+			TNT1 a 0 A_ChangeFlag("FLATSPRITE",true)
+			006E BBB 1 
+			006E B 1 
+			006E B 1 
+			006E BBBBBB 2 
+			//Machete
+			006E AAaaa 1 
+			006E A 1 {//XDeath2Blue
+			A_SpawnProjectile ("BlueBloodMistBig", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	        A_SpawnProjectile ("BlueBloodMistBig", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	        A_SpawnProjectile ("BlueBloodMistBig", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	        A_SpawnProjectile ("BlueBloodMistBig", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+			A_SpawnProjectile ("XDeath2Blue", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+			A_SpawnProjectile ("XDeath3Blue", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	        			A_SpawnProjectile ("XDeath4Blue", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+			A_SpawnProjectile ("XDeath2Blue", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	        			A_SpawnProjectile ("XDeath3Blue", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+			A_SpawnProjectile ("XDeath4Blue", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	        }
+			TNT1 aaaaa 0 A_SpawnProjectile("PB_BlueIntestine", 4, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90))
+			006E A 1
+			006E AAAAAA 1 
+			TNT1 A 0 A_SpawnItemEx("GlorySawPinataMed",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+			TNT1 a 0 a_spawnitemex("DeadCyberSatyr")
+	  Stop
+	  }
+ }
+
+
+ACTOR PB_CyberSatyr_Execution_2
+{
+  XScale 0.84
+  YScale 0.91
+  +FORCEXYBILLBOARD
+  +Clientsideonly
+  +FLOORCLIP
+  +FLOORHUGGER
+  -SOLID
+  +THRUACTORS
+  States
+	{
+	Spawn:
+	        SAT0 BBBBB 1 A_FaceMaster
+			006E FG 1 //a_playsound("satyr/Pain")
+			006E FG 1 {
+					  A_SpawnItem("BlueBloodSplasher");
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  }	  
+			006E FG 1 //a_playsound("satyr/Pain")
+			006E FG 1 {
+					  A_SpawnItem("BlueBloodSplasher");
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  }	  
+			006E HH 1 //a_playsound("satyr/Pain")
+			006E HHH 1 {
+					  A_SpawnItem("BlueBloodSplasher");
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  }
+	  TNT1 A 0 {
+				A_StartSound("MinorHeadshot", CHAN_AUTO);
+					  A_SpawnItem("BlueBloodSplasher");
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("MuchBloodBlue", 24, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("MuchBloodBlue", 24, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("MuchBloodBlue", 24, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));		
+	  }
+			TNT1 A 0 A_SpawnItemEx("GlorySawPinataMed",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+	        006E H 8 a_playsound("satyr/Pain")
+			006E HHHH 8
+			006E H 8 a_playsound("satyr/Pain")
+			006E IJK 6
+		TNT1 A 0 A_CustomMissile ("XDeathGlassesCyberSatyr", 32, 0, random (170, 190), 2, random (0, 40))
+			TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+			TNT1 A 0 a_playsound("satyr/Death")
+			DCTS E -1
+	  Stop
+	  }
+ }
+
+ACTOR XDeathGlassesCyberSatyr: XDeathArm1 
+{
+  -CLIENTSIDEONLY
+  +ROLLSPRITE
+  Radius 10
+  Scale 0.9
+  +NOBLOODDECALS
+  +NOBLOOD
+  Bloodtype "Blue_Blood"
+  BloodColor "Blue"
+  States
+    {
+	Spawn:
+	Spawn1:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		TNT1 A 0 A_JumpIf(momz == 0, "Death")
+		006E D 3 A_SetRoll(roll-25)//A_CustomMissile("ShortWallRedBlood", 0, 0, 0, 2)//
+		TNT1 A 0 A_ChangeFlag("THRUSPECIES", 0)
+		006E DDDDDD 3 A_SetRoll(roll-25)// A_CustomMissile("ShortWallRedBlood", 0, 0, 0, 2)//
+	Loop
+
+	Death:
+	    006E e 1 a_setroll(0)
+		006E E -1 
+	Stop
+      }
+ }
+
+ACTOR PB_CyberSatyr_Execution_3
+{
+  Scale 0.9
+  +NOINTERACTION
+  +FORCEXYBILLBOARD
+  +Clientsideonly
+  Radius 12
+  States
+    {
+	Spawn:
+	
+	  // Frame 1: 12 Ticks
+	  TNT1 A 0  A_FaceMaster
+	  SATC H 4
+	  TNT1 A 0 A_StartSound("satyr/Pain", CHAN_BODY )
+	  SATC H 6
+	  TNT1 A 0 A_ChangeFlag("NOINTERACTION", False)
+	  MSAT CCC 1 A_Recoil(-15)
+	  
+	  // Frame 2: 4 ticks
+	  TNT1 A 0 A_Stop
+	  TNT1 A 0 {
+	  A_SpawnProjectile ("SuperWallBlueBlood", 46, 0, random (170, 190), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 40));
+	  A_SpawnProjectile ("SuperWallBlueBlood", 46, 0, random (170, 190), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 40));
+	  A_SpawnProjectile ("SuperWallBlueBlood", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 40));
+	  A_SpawnProjectile ("SuperWallBlueBlood", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 40));
+	  A_SpawnProjectile ("MeleeSmoke", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 40));
+	  A_SpawnProjectile ("MeleeSmoke", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 40));
+	  A_SpawnProjectile ("MeleeSmoke", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 40));
+	  A_SpawnProjectile ("MeleeSmoke", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 40));
+	  A_SpawnProjectile ("MeleeSmoke", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 40));
+	  A_StartSound("satyr/Pain",CHAN_AUTO);
+	  }
+	  MSAT C 4
+		
+	  // Frame 3: 7 ticks
+	  STYB GGG 1
+	  STYB GGGG 1
+	  STYB E 1 A_StartSound("gore/minimum", CHAN_BODY ) 
+	  TNT1 A 0 {
+	  A_SpawnItem("BlueBloodSplasher");
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBloodMistBig", 26, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (20, 90));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("BlueBrainPiece", 35, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("MuchBloodBlue", 24, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("MuchBloodBlue", 24, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));
+	  A_SpawnProjectile ("MuchBloodBlue", 24, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (0, 160));		
+	  }
+	  STYB FFFFFF 1
+	  STYB F 10 A_SetAngle(angle-180)
+	  TNT1 A 0 A_SpawnItemEx("GlorySawPinataMed",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+	  //TNT1 A 0 A_SpawnItem ("CrueltyBonus5Health")
+	  TNT1 A 0 A_SpawnItemEX("DeadCyberSatyr_Slumped_NoHead",0,0,1,0,0, 0)
+	  Stop	
+	  }
+ }

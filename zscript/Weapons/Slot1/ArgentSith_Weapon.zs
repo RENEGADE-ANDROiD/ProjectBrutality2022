@@ -62,6 +62,7 @@ class PB_ArgentSith : PB_WeaponBase
 		Loop;
 
 	ChooseUpgradePath:
+		TNT1 A 0 PB_KatanaUpgradeFreeze(true);
 		TNT1 A 0 A_PrintBold(
 			"\c-You have both the \caSITH LORD\c- and \ciJEDI MASTER\c- in inventory.\n\cdFIRE\ci: Keep \caSITH LORD (current)\ci  |  \chALTFIRE\ci: Equip \ciJEDI MASTER\ci (drop SITH, use pickup as replacement)\c-"
 		);
@@ -80,13 +81,22 @@ class PB_ArgentSith : PB_WeaponBase
 	KeepArgentPath:
 		TNT1 A 0 A_TakeInventory("PB_BeamKatana", 1);
 		TNT1 A 0 A_PrintBold("\cdKept: \caSITH LORD");
-		Goto KatanaReadyToCut;
+		Goto ReleaseKatanaButtons;
 
 	KeepBeamPath:
+		TNT1 A 0 PB_KatanaUpgradeFreeze(false);
+		TNT1 A 0 PB_KatanaUpgradeClearAttackButtons();
 		TNT1 A 0 A_PrintBold("\cdSwitched to: \ciJEDI MASTER");
 		TNT1 A 0 A_SelectWeapon("PB_BeamKatana");
 		TNT1 A 0 A_TakeInventory("PB_ArgentSith", 1);
 		Stop;
+
+	ReleaseKatanaButtons:
+		TNT1 A 0 PB_KatanaUpgradeFreeze(false);
+		TNT1 A 0 PB_KatanaUpgradeClearAttackButtons();
+		TNT1 A 0 PB_KatanaUpgradeResolveReadyWhenReleased();
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH | WRF_NOBOB);
+		Goto ReleaseKatanaButtons;
 
 	Deselect:
         	TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel");
@@ -174,7 +184,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVAT A 0 A_JumpIfInventory("ArgentSithSwitchHands", 1, "NormalCutAlt");
 		BVAT A 1 BRIGHT;
 		BVAT C 1 BRIGHT;
-		BVAT D 1 BRIGHT;
+		BVAT D 1 BRIGHT A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
 		BVAT A 0 A_GiveInventory("KatanaSequence1");
 		BVAT A 0 A_JumpIfInventory("PowerStrength", 1, "BerserkerCut");
 		BVAT E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"ArgSithSawPuff",140,1,150,"ArmorShard","ArgKatana/Hit","ArgKatana/Swing");
@@ -182,7 +192,7 @@ class PB_ArgentSith : PB_WeaponBase
 	    Goto FinishCuttingAnimation;
 
 	BerserkerCut:
-		BVAT E 0;
+		BVAT E 0 A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
 		BVAT E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"ArgSithSawPuff",140,1,250,"ArmorShard","ArgKatana/Hit","ArgKatana/Swing");
 		BVAT E 1 BRIGHT A_CustomPunch(110,true,0,"ArgSithSawPuff",180,0,0,"none","ArgKatana/Hit","ArgKatana/Swing");
 		Goto FinishCuttingAnimation;
@@ -205,7 +215,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVT2 A 1 BRIGHT;
 		BVT2 B 1 BRIGHT;
 		BVT2 C 1 BRIGHT;
-		BVT2 D 1 BRIGHT;
+		BVT2 D 1 BRIGHT A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
 		BVAT A 0 A_GiveInventory("KatanaSequence2");
 		BVT2 A 0 A_JumpIfInventory("PowerStrength", 1, "BerserkerCutAlt");
 		BVT2 E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"ArgSithSawPuff",140,1,150,"ArmorShard","ArgKatana/Hit","ArgKatana/Swing");
@@ -213,6 +223,7 @@ class PB_ArgentSith : PB_WeaponBase
 	    Goto FinishCuttingAnimationAlt;
 
 	BerserkerCutAlt:
+		BVT2 E 0 A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
 		BVT2 E 0 A_CustomPunch(5,true, CPF_STEALARMOR,"ArgSithSawPuff",140,1,250,"ArmorShard","ArgKatana/Hit","ArgKatana/Swing");
 		BVT2 E 1 BRIGHT A_CustomPunch(110,true,0,"ArgSithSawPuff",180,0,0,"none","ArgKatana/Hit","ArgKatana/Swing");
 		Goto FinishCuttingAnimationAlt;
@@ -304,6 +315,7 @@ class PB_ArgentSith : PB_WeaponBase
 		"####" AAA 0 PB_Execute();
 	GoMeleeInstead:
 		TNT1 A 0 {
+			A_PB_AirMeleeLunge(10);
 			A_Overlay(PSP_FLASH, "FlashPunching");
 			A_TakeInventory("Zoomed",1);
 			A_ZoomFactor(1.0);
@@ -517,6 +529,7 @@ class PB_ArgentSith : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 15;
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 		Goto Ready3;
 	}
 }

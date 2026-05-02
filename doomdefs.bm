@@ -1,6 +1,7 @@
 // Textures
 #include BMAP/Ammo.txt
 #include BMAP/Armor.txt
+#include BMAP/WolvusMutatorBonuses.txt
 #include BMAP/Shields.txt
 
 //Weapons

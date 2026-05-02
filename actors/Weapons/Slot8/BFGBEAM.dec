@@ -19,6 +19,8 @@ actor PB_BFGBeam : PB_Weapon
   Inventory.PickupSound "8FGPICK"
 	Tag "BFG 11K Prototype"
   inventory.pickupmessage "You got the BFG Prototype Beam 11K! (Slot 9)"
+  Weapon.SlotNumber 9
+  Weapon.SlotPriority 0.05
   states
   {
   
@@ -252,7 +254,8 @@ actor PB_BFGBeam : PB_Weapon
 		8BGG E 1 
 		8BGG A 1 
 		8BGG AAA 1
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
   }
 }
 

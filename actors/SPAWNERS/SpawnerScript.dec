@@ -34,7 +34,7 @@
 //ItemSpawners
 #include "actors/Spawners/ItemSpawners/ItemTokens.dec"
 #include "actors/Spawners/ItemSpawners/ArmorSpawners.dec"
-#include "actors/Spawners/ItemSpawners/BonusSpawners.dec"
+// BonusSpawners.dec is pulled in from DECORATE after GenericHealth + WolvusMutatorItems so spawner replaces win over HealthPlus/ArmorShard.
 #include "actors/Spawners/ItemSpawners/BackPackSpawner.dec"
 //HealthSpawners
 #include "actors/Spawners/ItemSpawners/BerserkSpawner.dec"

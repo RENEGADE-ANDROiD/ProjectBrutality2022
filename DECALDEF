@@ -1023,6 +1023,16 @@ decalgroup slimesplash
 //
 //===========================================================================
 
+decal Slayerslash
+{
+	pic BULDE1
+	shade "00 00 00"
+	translucent 0.85
+	x-scale 0.45
+	y-scale 0.45
+	randomflipx
+}
+
 decal SawDecalNew1
 {
 	pic BULDE1

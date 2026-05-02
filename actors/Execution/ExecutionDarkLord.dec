@@ -1,0 +1,23 @@
+ACTOR PB_DarkLord_Execution_1
+{
+  Scale 1.0
+  +NOINTERACTION 
+  +FORCEXYBILLBOARD
+  +Clientsideonly
+  +NOGRAVITY
+  States
+    {
+	Spawn:
+		TNT1 A 0 A_FaceMaster
+		TNT1 A 0 A_SpawnItemEx("DarkCardinalFireSpawner", 0, 0, 10, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+		CARD RSRS 5
+		CARD R 2
+		CARD T 20
+		TNT1 A 0 A_CustomMissile ("XDeathDarkLordHead", 105, 0, random (0, 360), 2, random (0, 180))
+		TNT1 A 0 A_RemoveChildren(1,RMVF_EVERYTHING)
+		TNT1 A 0 A_SpawnItemEx("BeheadedDarkCardinal", 0, 0, 0, SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_RemoveChildren(1,RMVF_EVERYTHING)
+		Stop
+      }
+ }

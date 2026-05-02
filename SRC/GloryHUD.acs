@@ -13,7 +13,7 @@ script "GloryHud" ENTER
 
 	while(true)
 	{
-	if(GetCVar ("be_fuelhud") == 1)
+	if(GetCVar ("be_fuelhud"))
 	{
 		int x = GetCVar ("sv_fuelhud_x");
 		int y = GetCVar ("sv_fuelhud_y");
@@ -48,14 +48,14 @@ script "GloryHud" ENTER
 			// Crucible energy core: dim (CRUCRY00) when empty, lit (CRUCRY01) otherwise.
 			if( CrucibleAmmo == 0 ) SetFont("CRUCRY00");
 			if( CrucibleAmmo > 0 )  SetFont("CRUCRY01");
-			HudMessage(s:"A"; HUDMSG_ALPHA, 1120, CR_UNTRANSLATED, (width / 2 + x <<16), (height / 2 + y <<16), 0, 0.85);
+			HudMessage(s:"A"; HUDMSG_ALPHA, 1120, CR_UNTRANSLATED, ((width / 2 + x) << 16), ((height / 2 + y) << 16), 0, 0.85);
 
 			if( CrucibleAmmo == 0 ) SetFont("Blank");
 			if( CrucibleAmmo == 1 ) SetFont("CRUCAM01");
 			if( CrucibleAmmo == 2 ) SetFont("CRUCAM02");
 			if( CrucibleAmmo >= 3 ) SetFont("CRUCAM03");
 			offset = 21;
-			HudMessage(s:"A"; HUDMSG_ALPHA, 1121, CR_UNTRANSLATED, (width / 2 + x + offset <<16), (height / 2 + y <<16), 0, 0.85);
+			HudMessage(s:"A"; HUDMSG_ALPHA, 1121, CR_UNTRANSLATED, ((width / 2 + x + offset) << 16), ((height / 2 + y) << 16), 0, 0.85);
 
 			// Blood Punch pips: BPAMMO10-14, linear (BP 0..5).
 			if(BPtoken == 0) SetFont("BPAMMO10");
@@ -65,17 +65,17 @@ script "GloryHud" ENTER
 			if(BPtoken == 4) SetFont("BPAMMO14");
 			if(BPtoken >= 5) SetFont("BPAMMO14");
 			offset = 43;
-			HudMessage(s:"A"; HUDMSG_ALPHA, 1122, CR_UNTRANSLATED, (width / 2 + x + offset <<16), (height / 2 + y <<16), 0, 0.85);
+			HudMessage(s:"A"; HUDMSG_ALPHA, 1122, CR_UNTRANSLATED, ((width / 2 + x + offset) << 16), ((height / 2 + y) << 16), 0, 0.85);
 
 			if(FBMode == 1) SetFont("SCFLM01");
 			if(FBMode == 0) SetFont("SCFLM00");
 			offset = 83;
-			HudMessage(s:"A"; HUDMSG_ALPHA, 1123, CR_UNTRANSLATED, (width / 2 + x + offset <<16), (height / 2 + y <<16), 0, 0.85);
+			HudMessage(s:"A"; HUDMSG_ALPHA, 1123, CR_UNTRANSLATED, ((width / 2 + x + offset) << 16), ((height / 2 + y) << 16), 0, 0.85);
 
 			if(ICMode == 1) SetFont("SCICB01");
 			if(ICMode == 0) SetFont("SCICB00");
 			offset = 123;
-			HudMessage(s:"A"; HUDMSG_ALPHA, 1124, CR_UNTRANSLATED, (width / 2 + x + offset <<16), (height / 2 + y <<16), 0, 0.85);
+			HudMessage(s:"A"; HUDMSG_ALPHA, 1124, CR_UNTRANSLATED, ((width / 2 + x + offset) << 16), ((height / 2 + y) << 16), 0, 0.85);
 			Delay(1);
 		}
 		else
@@ -106,14 +106,14 @@ script "GloryHud" ENTER
 			}
 
 
-			HudMessage(s:"A"; HUDMSG_ALPHA, 1124, CR_UNTRANSLATED, (width / 2 + x <<16), (height / 2 + y + offset - 12 <<16), 0, 0.75);
+			HudMessage(s:"A"; HUDMSG_ALPHA, 1124, CR_UNTRANSLATED, ((width / 2 + x) << 16), ((height / 2 + y + offset - 12) << 16), 0, 0.75);
 
 			if( CrucibleAmmo < 1 ) SetFont("CRAMMO00");
 			if( CrucibleAmmo >= 1 && CrucibleAmmo < 2 ) SetFont("CRAMMO01");
 			if( CrucibleAmmo >= 2 && CrucibleAmmo < 3 ) SetFont("CRAMMO02");
 			if( CrucibleAmmo >= 3) SetFont("CRAMMO03");
 
-			HudMessage(s:"A"; HUDMSG_ALPHA, 1123, CR_UNTRANSLATED, (width / 2 + x <<16), (height / 2 + y - 12 <<16), 0, 0.85);
+			HudMessage(s:"A"; HUDMSG_ALPHA, 1123, CR_UNTRANSLATED, ((width / 2 + x) << 16), ((height / 2 + y - 12) << 16), 0, 0.85);
 
 			if(GetCVar ("sv_fuelhud_background") == 2)
 			{
@@ -127,7 +127,7 @@ script "GloryHud" ENTER
 				offset = -3;
 			}
 
-			HudMessage(s:"A"; HUDMSG_ALPHA, 1122, CR_UNTRANSLATED, (width / 2 + x <<16), (height / 2 + y <<16), 0, 0.75);
+			HudMessage(s:"A"; HUDMSG_ALPHA, 1122, CR_UNTRANSLATED, ((width / 2 + x) << 16), ((height / 2 + y) << 16), 0, 0.75);
 
 			if(BPtoken == 0) SetFont("BPAMMO00");
 			if(BPtoken == 1) SetFont("BPAMMO01");
@@ -136,7 +136,7 @@ script "GloryHud" ENTER
 			if(BPtoken == 4) SetFont("BPAMMO04");
 			if(BPtoken == 5) SetFont("BPAMMO05");
 
-			HudMessage(s:"A"; HUDMSG_ALPHA, 1121, CR_UNTRANSLATED, (width / 2 + x <<16), (height / 2 + y <<16), 0, 0.85);
+			HudMessage(s:"A"; HUDMSG_ALPHA, 1121, CR_UNTRANSLATED, ((width / 2 + x) << 16), ((height / 2 + y) << 16), 0, 0.85);
 			Delay(1);
 		}
 	}

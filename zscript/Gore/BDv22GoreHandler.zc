@@ -6,10 +6,10 @@ class BDv22GoreHandler : EventHandler
 	{
 		for (int n = 0; a && n < 10; n++)
 		{
-			if (a.player) return PlayerPawn(a);
-			if (a.master) a = a.master;
-			else if (a.target) a = a.target;
-			else break;
+			if (a is "PlayerPawn" && a.player) return PlayerPawn(a);
+			Actor next = a.target != null ? a.target : (a.master != null ? a.master : a.tracer);
+			if (!next || next == a) break;
+			a = next;
 		}
 		return null;
 	}
@@ -27,23 +27,20 @@ class BDv22GoreHandler : EventHandler
 		PlayerPawn ppl = BDv22_ResolveAttacker(e.DamageSource);
 		if (!ppl || !ppl.player) return;
 
-		let cvMist = CVar.GetCVar("bdv22_mist", ppl.player);
-		if (!cvMist || !cvMist.GetBool()) return;
+		if (!PB_EnhancedBrutality2022.IsOn(ppl.player)) return;
 		let cvLow = CVar.GetCVar("pb_lowgraphicsmode", ppl.player);
 		if (!cvLow || cvLow.GetInt() > 0) return;
 		let cvBloodAmt = CVar.GetCVar("pb_bloodamount", ppl.player);
 		if (!cvBloodAmt || cvBloodAmt.GetInt() < 2) return;
 		if (!nashgore_splat) return;
 
-		let cvMix = CVar.GetCVar("bdv22_gore_mix", ppl.player);
-		int mix = cvMix ? cvMix.GetInt() : 0;
-		if (mix < 0) mix = 0;
-		if (mix > 100) mix = 100;
+		int mix = PB_EnhancedBrutality2022.EffectiveBDv22Mix(100, ppl.player);
 
 		int w = 18 + e.Damage * 2;
 		w = (w * nashgore_bloodamount) / 96;
 		if (w < 0) w = 0;
 		if (w > 255) w = 255;
+		w = PB_EnhancedBrutality2022.ScaleMistWeight(w, ppl.player);
 		if (random(0, 255) > w) return;
 
 		String mistName = random(1, 100) <= mix ? "BDv22GoreMist" : "PB_Bloodmist";

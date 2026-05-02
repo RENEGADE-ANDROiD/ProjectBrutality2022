@@ -11,7 +11,7 @@ class PB_Excavator : PB_WeaponBase
 	default
 	{
 		Weapon.SlotNumber 6;
-		Weapon.SlotPriority 0;
+		Weapon.SlotPriority 0.18;
 		Weapon.SelectionOrder 506;
 		Inventory.AltHudIcon "5DUNA0";
 		Weapon.AmmoType1 "RocketAmmo";
@@ -327,7 +327,7 @@ class PB_Excavator : PB_WeaponBase
 			TNT1 A 0 A_SetRoll(roll+0.6,SPF_INTERPOLATE);
 			6DKF GHI 1;
 			6DKF J 1;
-			TNT1 A 0 PB_UnloadMag("ExcavatorRounds", "RocketAmmo", 2);
+			TNT1 A 0 { PB_UnloadMag("ExcavatorRounds", "RocketAmmo", 2, 0, 4, 12, "PB_RocketRoundUnloadProp"); }
 			6DKF K 1;
 			8DKF ABCD 1;
 			goto NoAmmo;
@@ -386,6 +386,7 @@ class PB_Excavator : PB_WeaponBase
 			7DKF MNOP 1;
 			7DKF P 4;
 			7DKF PONML 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashKicking:
 			5DKF E 1;

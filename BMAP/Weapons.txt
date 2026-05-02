@@ -15,6 +15,7 @@ brightmap sprite 9SMUA0 { map "Brightmaps/WEAPONS/Shotgun/9SMUA.png" }
 
 //SSG
 brightmap sprite SGN2A0 { map "Brightmaps/WEAPONS/SGN2A.png" }
+brightmap sprite SGN3A0 { map "Brightmaps/WEAPONS/SGN2A.png" }
 
 //QSG
 brightmap sprite QSGSA0 { map "brightmaps/WEAPONS/QuadShotty/QSGSA.png" }

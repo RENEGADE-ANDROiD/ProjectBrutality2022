@@ -53,6 +53,8 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 	Weapon.BobRangeY 0.5
 	Weapon.BobStyle InverseSmooth
 	Weapon.BobSpeed 2.4
+	Weapon.SlotNumber 2
+	Weapon.SlotPriority 0
 	Weapon.AmmoUse1 0
 	Weapon.AmmoGive1 5
 	Weapon.AmmoUse2 0
@@ -282,7 +284,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 	FireRight_Overlay:
 		"####" "#" 0 A_JumpIfInventory("ToggledPistolBurstFire",1,"FireRightBurst_Overlay")
 		D2RF A 1 BRIGHT {
-			A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,4);
+			A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,4);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 4, 0, 0, 0);
 			A_FireCustomMissile("PistolCasingSpawner",0,0,11,-1);
 			A_ZoomFactor(0.985);
@@ -357,7 +359,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 	
 	FireRightBurst_Overlay:
 		D2RF A 1 BRIGHT {
-			A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,4);
+			A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,4);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 4, 0, 0, 0);
 			A_FireCustomMissile("PistolCasingSpawner",0,0,11,-1);
 			A_ZoomFactor(0.985);
@@ -388,7 +390,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		"####" "#" 0 A_PlaySoundEx("weapons/empty", "Auto")
         Goto StopRightBurst_Overlay
 		D2RF A 1 BRIGHT {
-			A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,4);
+			A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,4);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 4, 0, 0, 0);
 			A_FireCustomMissile("PistolCasingSpawner",0,0,11,-1);
 			A_ZoomFactor(0.985);
@@ -419,7 +421,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		"####" "#" 0 A_PlaySoundEx("weapons/empty", "Auto")
         Goto StopRightBurst_Overlay
 		D2RF A 1 BRIGHT {
-			A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,4);
+			A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,4);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 4, 0, 0, 0);
 			A_FireCustomMissile("PistolCasingSpawner",0,0,11,-1);
 			A_ZoomFactor(0.985);
@@ -496,7 +498,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		"####" "#" 0 A_JumpIfInventory("ToggledPistolBurstFire",1,"FireLeftBurst_Overlay")
 		D2LF A 1 BRIGHT{
 			A_Overlay(-5, "LeftFlash", true);
-			A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,-4);
+			A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,-4);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, -4, 0, 0, 0);
 			A_FireCustomMissile("PistolCasingSpawner",0,0,-8,-1);
 			A_TakeInventory("PB_PistolFireAnimation1",1);
@@ -567,7 +569,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		
 	FireLeftBurst_Overlay:
 		D2LF A 1 BRIGHT{
-			A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,-4);
+			A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,-4);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, -4, 0, 0, 0);
 			A_FireCustomMissile("PistolCasingSpawner",0,0,-8,-1);
 			A_TakeInventory("PB_PistolFireAnimation1",1);
@@ -599,7 +601,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		"####" "#" 0 A_PlaySoundEx("weapons/empty", "Auto")
 		Goto StopLeftBurst_Overlay
 		D2LF A 1 BRIGHT{
-			A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,-4);
+			A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,-4);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, -4, 0, 0, 0);
 			A_FireCustomMissile("PistolCasingSpawner",0,0,-8,-1);
 			A_TakeInventory("PB_PistolFireAnimation1",1);
@@ -631,7 +633,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		"####" "#" 0 A_PlaySoundEx("weapons/empty", "Auto")
 		Goto StopLeftBurst_Overlay
 		D2LF A 1 BRIGHT{
-			A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,-4);
+			A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -1,-4);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, -4, 0, 0, 0);
 			A_FireCustomMissile("PistolCasingSpawner",0,0,-8,-1);
 			A_TakeInventory("PB_PistolFireAnimation1",1);
@@ -982,7 +984,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 			A_Overlay(-5, "GunFlash", true);
 			if (CountInv("SilencerEquipped") == 1 ) {
 				A_SetWeaponSprite("D3GF");
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(0.985);
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 				A_FireCustomMissile("ShakeYourAssMinor", 270, 0, 0, 0);
@@ -993,7 +995,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 			}
 			//Fire normally
 			else {
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(0.985);
 				A_AlertMonsters;
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -1060,7 +1062,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 			A_GunFlash;
 			if (CountInv("SilencerEquipped") == 1 ) {
 				A_SetWeaponSprite("D3GF");
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(0.985);
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 				A_FireCustomMissile("ShakeYourAssMinor", 270, 0, 0, 0);
@@ -1070,7 +1072,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 				PB_WeaponRecoil(-0.54,-0.24);
 			}
 			else {
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(0.985);
 				A_AlertMonsters;
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -1097,7 +1099,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 			A_GunFlash;
 			if (CountInv("SilencerEquipped") == 1 ) {
 				A_SetWeaponSprite("D3GF");
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(0.985);
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 				A_FireCustomMissile("ShakeYourAssMinor", 270, 0, 0, 0);
@@ -1107,7 +1109,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
                 PB_WeaponRecoil(-0.54,-0.24);
 			}
 			else {
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(0.985);
 				A_AlertMonsters;
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -1134,7 +1136,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 			A_GunFlash;
 			if (CountInv("SilencerEquipped") == 1 ) {
 				A_SetWeaponSprite("D3GF");
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(0.985);
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 				A_FireCustomMissile("ShakeYourAssMinor", 270, 0, 0, 0);
@@ -1144,7 +1146,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
                 PB_WeaponRecoil(-0.54,-0.24);
 			}
 			else {
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(0.985);
 				A_AlertMonsters;
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -1204,7 +1206,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		D7GG G 1 BRIGHT { 
 			if (CountInv("SilencerEquipped") == 1 ) {
 					A_SetWeaponSprite("D8GG");
-					A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+					A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 					A_ZoomFactor(1.24);
 					A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 					A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
@@ -1213,7 +1215,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 					A_PlaySoundEx("weapons/suppressedpistol", "Weapon");
 			}
 			else {
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(1.24);
 				A_AlertMonsters;
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -1265,7 +1267,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		D7GG G 1 BRIGHT { 
 			if (CountInv("SilencerEquipped") == 1 ) {
 					A_SetWeaponSprite("D8GG");
-					A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+					A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 					A_ZoomFactor(1.24);
 					A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 					A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
@@ -1274,7 +1276,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 					A_PlaySoundEx("weapons/suppressedpistol", "Weapon");
 			}
 			else {
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(1.24);
 				A_AlertMonsters;
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -1299,7 +1301,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		D7GG G 1 BRIGHT { 
 			if (CountInv("SilencerEquipped") == 1 ) {
 					A_SetWeaponSprite("D8GG");
-					A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+					A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 					A_ZoomFactor(1.24);
 					A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 					A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
@@ -1308,7 +1310,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 					A_PlaySoundEx("weapons/suppressedpistol", "Weapon");
 			}
 			else {
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(1.24);
 				A_AlertMonsters;
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -1333,7 +1335,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		D7GG G 1 BRIGHT { 
 			if (CountInv("SilencerEquipped") == 1 ) {
 					A_SetWeaponSprite("D8GG");
-					A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+					A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 					A_ZoomFactor(1.24);
 					A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 					A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
@@ -1342,7 +1344,7 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 					A_PlaySoundEx("weapons/suppressedpistol", "Weapon");
 			}
 			else {
-				A_FireBullets (0.1, 0.1, -1, 15, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
+				A_FireBullets (0.1, 0.1, -1, 17, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 				A_ZoomFactor(1.24);
 				A_AlertMonsters;
 				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
@@ -1868,11 +1870,13 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		D5GT A 0 A_JumpIfInventory("SilencerEquipped",1,2)
 		D5GS A 0
 		"####" ABCDEFGHIJKLMN 1 
-		Stop	
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 		
 	FlashPunchingDualWield:
 		TNT1 A 15
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 		
 	FlashKickingDualWield:
 		TNT1 A 0 A_ClearOverlays(10,11)

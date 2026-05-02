@@ -1,8 +1,7 @@
 OptionMenu "OptionsMenu"
 {
 	Title "OPTIONS"
-	Submenu "Project Brutality Settings",		"PBSettings"
-	Submenu "Brutality 2022 Additions",	"PB_2022AdditionsMenu"
+	Submenu "PB 2022 Enhanced",	"PB_2022AdditionsMenu"
 	StaticText " "
 	Submenu "Customize Controls",		"CustomizeControls"
 	Submenu "Mouse options",			"MouseOptions"
@@ -175,7 +174,8 @@ OptionString "DamTranslations"
 OptionMenu "PBTacticalMotionOptions"
 {
 	Title "Tactical Weapon Motion"
-	StaticText "Rotational tilt, weapon lowering, wall near-field, step recoil, and lean (PB 2022)."
+	StaticText "Rotational Tilt, Lowering, Wall Near-Field,"
+	StaticText "Step Recoil, Lean (PB 2022)."
 	StaticText " "
 	Option "Enable tactical weapon motion.", "pb_tac_enable", "YesNo"
 	Option "Apply only while in ready states.", "pb_tac_ready_only", "YesNo"
@@ -193,15 +193,16 @@ OptionMenu "PBTacticalMotionOptions"
 	Option "Enable lean.", "pb_tac_lean_enable", "YesNo"
 	Slider "Lean angle.", "pb_tac_lean_angle", 0.0, 25.0, 0.5, 1
 	Slider "Lean smoothing.", "pb_tac_lean_smoothing", 0.05, 0.50, 0.01, 2
-	StaticText "Safety: disabled while zoomed/ADS, executions, and equipment actions."
-	StaticText "Some complex-overlay weapons are excluded in ZScript for compatibility."
+	StaticText "Safety: Off During Zoom/ADS,"
+	StaticText "Executions, Equipment Actions."
+	StaticText "Some Overlay-Heavy Guns Skipped (ZScript)."
 	StaticText " "
 }
 
 OptionMenu "PBWeaponHudOptions"
 {
 	Title "PBX 2022 Weapon HUD"
-	StaticText "Compact weapon icon overlays for pickup and fire mode display."
+	StaticText "Corner Overlays: Pickup Icon + Fire-Mode Icon."
 	StaticText "Weapon HUD by BeefRice"
 	Option "Enable weapon pickup icon overlay.", "pb_weaponhud_enable", "YesNo"
 	Slider "Pickup icon X offset.", "pb_weaponhud_x", -1024, 1024, 1
@@ -220,7 +221,8 @@ OptionMenu "PBWeaponHudOptions"
 OptionMenu "PB_KillstreakOptions"
 {
 	Title "Kill Streaks (PB 2022)"
-	StaticText "Pick up the gold globe, then get streak voice hits + a reward every 5 kills. Defaults on."
+	StaticText "Grab the Gold Globe for Streak Callouts."
+	StaticText "Every 5 Kills Rolls a Reward (Default On)."
 	StaticText " "
 	Option "Enable Kill Streak System", "pb_ks_enable", "OnOff"
 	Slider "Chance To Spawn Kill-Streak Globe On Kill (Percent)", "pb_ks_rare_chance", 0, 100, 1
@@ -236,7 +238,8 @@ OptionMenu "PB_KillstreakOptions"
 OptionMenu "PB_KillstreakRewardOptions"
 {
 	Title "Kill Streak Reward Pool"
-	StaticText "Toggles for items rolled when you get a 5x streak reward. If all off, you get a stimpack."
+	StaticText "Pool for the 5-Kill Reward Roll."
+	StaticText "If Everything Is Off: Fallback Stimpack."
 	StaticText " "
 	Option "Haste Sphere", "pb_ks_r_haste", "OnOff"
 	Option "Doom Sphere (Double Damage)", "pb_ks_r_double", "OnOff"
@@ -261,75 +264,78 @@ OptionMenu "PB_KillstreakRewardOptions"
 
 OptionMenu "PB_2022AdditionsMenu"
 {
-	Title "Brutality 2022 Additions"
-	StaticText "Shortcuts To Merged Add-Ons And New 2022 Systems.", teal
-	StaticText "Original Full Menus (Glory, Weapons, Spawns) Are Still Available Below.", teal
+	Title "PB 2022 Enhanced"
 	StaticText " ", teal
-	StaticText "-----------------Finishers and Taunts-----------------", gold
+	Submenu "Gameplay Settings",		"GameplaySettings"
+	StaticText " ", teal
+	Submenu "Advanced Weapon Spawns",		"WeaponSpawns"
+	StaticText " ", teal
+	Submenu "Weapon Settings",		"WeaponSettings"
+	StaticText " ", teal
+	Submenu "Global Settings",		"GlobalSettings"
+	StaticText " ", teal
+	Submenu "Visual Settings",		"RenderingSettings"
+	StaticText " ", teal
+	StaticText "-----------------Finishers, Gore, Taunts-----------------", gold
 	Option "Auto-Fatality On Primary Fire", "pb_auto_fatality_fire", YesNo
 	Slider "Auto-Fatality Distance", "pb_auto_fatality_dist", 64, 400, 4
-	StaticText "With \"Glory Kills\" On, Attempts A Finisher When Firing", teal
-	StaticText "At A Valid Staggered Target In Range.", teal
+	StaticText "Requires Glory Kills On: Finisher Attempt", teal
 	StaticText " ", teal
-	Option "Enable Voice-Line Taunts", "pb_voicetaunts", YesNo
-	StaticText "Player Taunt Voice Lines During Taunt And Fatality Moments.", teal
-	StaticText "(Separate From Auto Doomguy Quips).", teal
+	Option "$PB_EXPERIMENTAL_EXECUTIONS", "pb_experimental", "OnOff"
+	StaticText "$PB_EXPERIMENTAL_EXECUTIONS_DESC", teal
 	StaticText " ", teal
-	StaticText "-----------------Gore: Brutal Doom 22 (2022)-----------------", gold
-	Submenu "Brutal Doom 22 gore", "PB_2022_BDv22GoreMenu"
-	StaticText "Extra hit mist, gut props, flying gibs, organs, and PB/BDv22 gore mix.", teal
-	StaticText "Nash/Project Brutality base gore: Project Brutality Settings, Visual, Gore/Debris.", teal
+	Option "Glory Kill.", "be_ExecutionsON", YesNo
+	Submenu "Glorykill Options",		"Glorykills"
 	StaticText " ", teal
-	StaticText "-----------------UI and Feel-----------------", gold
-	Submenu "Damage Numbers", "DamNumsOptions"
-	Submenu "Tactical Weapon Motion", "PBTacticalMotionOptions"
-	Submenu "PBX 2022 Weapon HUD", "PBWeaponHudOptions"
-	Submenu "Kill Streaks & Power-Up Rewards", "PB_KillstreakOptions"
-	Option "Instant Weapon Switch", "pb_instantweaponswitch", "OnOff"
-	StaticText "Faster Weapon Changes (Doom Instant-Select).", teal
-	StaticText "Distinct CVar From \"RandomWeapSwtch\" rw_ Settings.", teal
+	NashGoreOption "$BDV22GOREMNU_ENHANCED2022",	"$BDV22GOREMNU_ENHANCED2022_TIP",	"pb_enhanced_brutality_2022",	"OnOff"
+	StaticText "One switch for the folded BDv22 / BPv10 gore mix.", teal
+	StaticText "Nash and PB base blood/gib/casing settings: ", teal
+	StaticText "Project Brutality Settings, Visual, Gore/Debris.", teal
+	StaticText " ", teal
+	StaticText "On: full BDv22 mist/meat/organs + BPv10 death extras.", green
+	StaticText "Off: standard Project Brutality / Nash gore only.", green
+	StaticText " ", teal
 	StaticText " ", teal
 	StaticText "-----------------Explosive Movement-----------------", gold
 	Option "Rocket Jumping", "pb_rocketjump", "OnOff"
-	StaticText "Rocket Blasts Can Launch You From Floors, Walls, Or Ceilings.", teal
+	StaticText " ", teal
+	StaticText "Rocket Splash Can Launch From Floors, Walls, or Ceilings.", teal
+	StaticText " ", teal
 	Option "Plasma Wall Climbing", "pb_plasma_wallclimb", "OnOff"
-	StaticText "Plasma Impact Blasts Can Launch You From Floors,", teal
-	StaticText "Walls, And Ceilings.", teal
+	StaticText " ", teal
+	StaticText "Plasma Blast Knockback From Floors, Walls, or Ceilings.", teal
+	StaticText " ", teal
+	StaticText " ", teal
+	StaticText "-----------------UI and Feel-----------------", gold
+	Option "Enable Voice-Line Taunts", "pb_voicetaunts", YesNo
+	StaticText "Taunt / Fatality Voice Lines.", teal
+	StaticText "(Separate from Idle Doomguy Quips.)", teal
+	StaticText " ", teal
+	Option "Enable Damage Numbers.", "dam_enabled", "DamEnabled"
+	Submenu "Damage Numbers Options", "DamNumsOptions"
+	StaticText " ", teal
+	Option "Enable tactical weapon motion.", "pb_tac_enable", "YesNo"
+	Submenu "Tactical Weapon Motion Options", "PBTacticalMotionOptions"
+	StaticText " ", teal
+	Option "Enable weapon pickup icon overlay.", "pb_weaponhud_enable", "YesNo"
+	Submenu "PBX 2022 Weapon HUD Options", "PBWeaponHudOptions"
+	StaticText " ", teal
+	Option "Enable Kill Streak System", "pb_ks_enable", "OnOff"
+	Submenu "Kill Streaks & Power-Up Rewards Options", "PB_KillstreakOptions"
+	StaticText " ", teal
+	Option "Instant Weapon Switch", "pb_instantweaponswitch", "OnOff"
+	StaticText "Doom-Style Instant Weapon Raise/Lower.", teal
+	StaticText " ", teal
+	Option "HP Arcade item behavior", "pb_hp_arcade", "OnOff"
+	StaticText " ", teal
+	Option "Wolvus item mutators", "pb_wolvus_item_mutators", "OnOff"
+	StaticText " ", teal
 	StaticText " ", teal
 	StaticText "-----------------Content Packs-----------------", gold
 	Submenu "Monster Pack Settings (Horrorspawn, Summons, etc.)", "MonsterPackSettings"
 	StaticText " ", teal
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-OptionMenu "PBSettings"
-{
-	Title "Project Brutality Settings"
-	StaticText " ", teal
-	
-	Submenu "Brutality 2022 Additions", "PB_2022AdditionsMenu"
-	StaticText " ", teal
-
-	Submenu "Global Settings",		"GlobalSettings"
-	StaticText " ", teal
-	//StaticText " "
-	Submenu "Gameplay Settings",		"GameplaySettings"
-	StaticText " ", teal
-	Submenu "Weapon Settings",		"WeaponSettings"
-	StaticText " ", teal
-	Submenu "Add-On Toggles",		"AddOnToggles"
-	StaticText " ", teal
-	Submenu "Visual Settings",		"RenderingSettings"
-	StaticText " ", teal
-	Submenu "Damage Numbers",		"DamNumsOptions"
-	StaticText " ", teal
-	Submenu "Glorykill Options",		"Glorykills"
-	StaticText " ", teal
-	Submenu "Riot Shield Settings",	"ShieldAxe_Settings"
-	StaticText " ", teal
-	Submenu "Monster Pack Settings",	"MonsterPackSettings"
-	StaticText " ", teal
 	Option "Festive Hat Simulator Mode", "PB_HatExtravaganza", "YesOrNo"
+	StaticText " ", teal
 	StaticText " ", teal
 }
 
@@ -340,15 +346,13 @@ OptionMenu "GlobalSettings"
 	StaticText " ", teal
 	Submenu "Spawn Preset Configuration",		"SpawnPresets"
 	StaticText " ", teal
-	StaticText "Determine What Type Of Weapons And Enemies You'll Encounter.", teal
+	StaticText "Pick Weapon / Enemy Mix & Progression Tier.", teal
 	StaticText " ", teal
 	Title "--------- Advanced Preferences ---------"
 	StaticText " ", teal
 	Submenu "Advanced Monster Spawns",		"MonsterSpawns"
 	StaticText " ", teal
 	Submenu "Advanced Weapon Spawns",		"WeaponSpawns"
-	StaticText " ", teal
-	Submenu "Add-On Toggles",		"AddOnToggles"
 	StaticText " ", teal
 	Submenu "Configure Monster Abilities",		"MonsterSettings"
 	StaticText " ", teal
@@ -378,11 +382,13 @@ OptionMenu "DamNumsOptions"
 OptionMenu "ContentCompatOptions"
 {
 	Title	"--------- Content & add-on toggles ---------"
-	StaticText "Roster and compatibility switches (merged add-on / Monster Pack content uses the same CVARs as main PB)."
+	StaticText "Roster & Compatibility (Merged Add-Ons"
+	StaticText "/ Monster Pack Share Main PB CVARs)."
 	StaticText " "
 
 	Option "Classic monster roster (vanilla-style replaces)", "pb_classicmonsters", "YesOrNo"
-	StaticText "Toggles classic-style spawner replaces (see pb_classicmonsters in ACS/spawner scripts)."
+	StaticText "Classic: Vanilla-Style Replaces via Spawners."
+	StaticText "(pb_classicmonsters in ACS / Spawner Scripts.)"
 	StaticText " "
 
 	Option "Disable new enemy content", "pb_disablenewenemies", "YesOrNo"
@@ -402,7 +408,7 @@ OptionMenu "SpawnPresets"
 	StaticText " "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
 	StaticText " "
-	StaticText "Defines the playstyle, and nature of progression for each preset."
+	StaticText "Preset = Enemy / Weapon Mix & Progression Curve."
 	StaticText " "
 	Title "--------- Spawn Presets ---------"
 	StaticText " "
@@ -429,48 +435,48 @@ OptionMenu "DefaultSpawnMenu"
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Randomized Progression - "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
-	StaticText "Balanced variety, with a mild Progression curve."
-	StaticText " Default recommended experience."
+	StaticText "Balanced Mix; Gentle Progression."
+	StaticText "Default Recommendation."
 }
 OptionMenu "Tier1SpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Tier 1 - "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
-	StaticText "Similar to vanilla Doom."
-	StaticText "A few Zombie variants, no 'new' Weapons except Dual-Wielding."
+	StaticText "Closest to Vanilla Pacing."
+	StaticText "Few Zombie Variants; Dual-Wield Only New Gun."
 }
 OptionMenu "Tier2SpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Tier 2 - "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
-	StaticText "Nearly the same as Tier 1."
-	StaticText "Slightly higher power Weapons and Enemies."		//This is actually easier than T1 because of the extra weapons available and pretty much no harder enemy variants.
+	StaticText "Like Tier 1 but Stronger Guns."
+	StaticText "Usually Easier Than T1 (More Weapons, Few Hard Variants)."		//This is actually easier than T1 because of the extra weapons available and pretty much no harder enemy variants.
 }
 OptionMenu "Tier3SpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Tier 3 - "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
-	StaticText "Medium level of variation."
-	StaticText "About half of what Project Brutality has to offer."
+	StaticText "Mid Roster Variety."
+	StaticText "~Half of Project Brutality Content Unlocked."
 }
 OptionMenu "Tier4SpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Tier 4 - "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
-	StaticText "The 'end-game' preset."
-	StaticText "The fairest balance of all Weapons and Enemy types."
+	StaticText "End-Game Preset."
+	StaticText "Even Spread of Guns & Monsters."
 }
 OptionMenu "TieredProgressSpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Tiered Progression - "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
-	StaticText "Fight through each Tier."
-	StaticText "Each tier is 6 levels long. (Splits at, 7, 13, and 21+)"
+	StaticText "Progress Tier-by-Tier."
+	StaticText "~6 Maps Per Tier (Splits ~7 / 13 / 21+)."
 
 }
 OptionMenu "DeathWishSpawnMenu"
@@ -478,32 +484,32 @@ OptionMenu "DeathWishSpawnMenu"
 	Title "--------- Spawn Presets ---------"
 	StaticText " - DeathWish - "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
-	StaticText "Beyond the last Tier."
-	StaticText "Very difficult Enemies, but better gear available."
+	StaticText "After Final Tier."
+	StaticText "Brutal Monsters; Top-Tier Loot."
 }
 OptionMenu "ChaoticSpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Chaotic Random - "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
-	StaticText "Intensely Randomized."
-	StaticText "Equal weighting for all Monster and Enemy variants."
+	StaticText "Full Chaos Pool."
+	StaticText "Equal Odds on All Variants."
 }
 OptionMenu "PistolStartSpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Pistol Starts - "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
-	StaticText "Start from Scratch."
-	StaticText "Lose all weapons each level, but goodies are common. "
+	StaticText "Pistol Start Each Map."
+	StaticText "Strip Guns Between Levels; Loot Is Generous."
 }
 
 OptionMenu "WeaponSpawns"
 {
 	Title	"--------- Advanced Weapon Spawns ---------"
 	Option "Spawn Revolver", "pb_NoRevolverWeapon", "SpawnOnOff"
-	StaticText "This also disables the Deagle"
-	StaticText "See Disable Deagle upgrade in Weapon Settings for more info"
+	StaticText "Also Removes Deagle Spawns."
+	StaticText "Weapon Settings → Disable Deagle Upgrade."
 	StaticText " "
 	Option "Spawn Submachine Gun", "pb_NoSMGWeapon", "SpawnOnOff"
 	StaticText " "
@@ -585,8 +591,6 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Mastermind Chaingun", "pb_NoMastermindChaingunWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn ShieldSaw", "pb_NoShieldSawWeapon", "SpawnOnOff"
-	StaticText " "
 	Option "Spawn Cyberdemon Missile Launcher", "pb_NoPB_CyberdemonRLWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Hell Pistoler", "pb_NoHellPistolerWeapon", "SpawnOnOff"
@@ -595,130 +599,19 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Mancubus Flame Cannon", "pb_NoMancubusFlameCannonWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Demon Tech Minigun", "pb_NoDTechMinigunWeapon", "SpawnOnOff"
-	StaticText " "
 	Option "Spawn Argent Sith", "pb_NoArgentSithWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Beam Katana", "pb_NoBeamKatanaWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Razorjack", "pb_NoRazorjackWeapon", "SpawnOnOff"
-	StaticText " "
 	Option "Spawn Vorpal Blade (Tiberium's Soulblade)", "pb_NoVorpalBladeWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Dragon Slayer", "pb_NoDragonSlayerWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Stormcast", "pb_NoStormcastWeapon", "SpawnOnOff"
 	StaticText " "
 }
 
-OptionMenu "AddOnToggles"
-{
-	Title "--------- Add-On Toggles ---------"
-	StaticText " "
-	Option "HP Arcade item behavior", "pb_hp_arcade", "OnOff"
-	Option "Wolvus item mutators", "pb_wolvus_item_mutators", "OnOff"
-	StaticText " "
-	Title "--------- Weapon Spawn Toggles ---------"
-	StaticText " "
-	Option "Spawn Revolver", "pb_NoRevolverWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Submachine Gun", "pb_NoSMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Autoshotgun", "pb_NoASGWeapon", "SpawnOnOff"
-	StaticText " "
-	StaticText " "
-	Option "Spawn Combat Shotgun", "pb_NoCSSGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Carbine", "pb_NoCarbineWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Nailgun", "pb_NoNailgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Excavator Launcher", "pb_NoHeavyGLWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Super Grenade Launcher", "pb_NoSuperGLWeapon", "SpawnOnOff"
-	StaticText " "
-	StaticText " "
-	Option "$PB_OPT_Molotov", "pb_NoMolotov", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn M2 Plasma Rifle", "pb_NoM2PlasmaWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Freezer Rifle", "pb_NoFreezerWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Rail Gun", "pb_NoRailgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn BFG 11K Beam", "pb_NoBFGBeamWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Blackhole Generator", "pb_NoBlackholeWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Lever Action", "pb_NoLeverActionWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Paingiver", "pb_NoPaingiverWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Shotgun", "pb_NoShotgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Rocket Launcher", "pb_NoRocketLauncherWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Plasma Rifle", "pb_NoPlasmaRifleWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn BFG 9000", "pb_NoBFGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Chainsaw", "pb_NoChainsawWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Flamethrower", "pb_NoFlamethrowerWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Flamethrower Upgrade", "pb_NoFlamethrowerUpgrade", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Minigun", "pb_NoMinigunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn LMG", "pb_NoLMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn HDMR Upgrade", "pb_NoHDMRWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Minigun Upgrade", "pb_NoMinigunUpgradeWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Metal Sniper", "pb_NoMetalSniperWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn XM-21 Sniper", "pb_NoPB_XM21Weapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn X12 Shotgun", "pb_NoX12ShotgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Lady Golide (HASG)", "pb_NoHASGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Old HMG", "pb_NoOldHMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn NeoHMG", "pb_NoNeoHMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn M41A", "pb_NoM41AWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Battle Rifle", "pb_NoBattleRifleWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Pro-Surv Ballista", "pb_NoProSurvBallistaWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Pulse Cannon", "pb_NoPulseCannonWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Demon Exterminator", "pb_NoDemonExterminatorWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn MG42", "pb_NoMG42Weapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Mastermind Chaingun", "pb_NoMastermindChaingunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn ShieldSaw", "pb_NoShieldSawWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Cyberdemon Missile Launcher", "pb_NoPB_CyberdemonRLWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Hell Pistoler", "pb_NoHellPistolerWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Bio Acid Launcher", "pb_NoBioAcidLauncherWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Mancubus Flame Cannon", "pb_NoMancubusFlameCannonWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Demon Tech Minigun", "pb_NoDTechMinigunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Argent Sith", "pb_NoArgentSithWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Beam Katana", "pb_NoBeamKatanaWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Razorjack", "pb_NoRazorjackWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Vorpal Blade (Tiberium's Soulblade)", "pb_NoVorpalBladeWeapon", "SpawnOnOff"
-	StaticText " "
-}
+
 
 OptionValue "ReticleCode"
 {
@@ -733,14 +626,14 @@ OptionMenu "GameplaySettings"
 	
 	StaticText " ", teal
 	Option "Red Foot Prints Only (In Blood)",	"pb_red_footprints_only", "OnOff"
-	StaticText "In Colored Blood Puddles, Use Red Smears Only", teal
-	StaticText "(PB3 FootPrints / RedBloodOnly Style).", teal
+	StaticText "In Colored Blood Puddles: Red Smears Only", teal
+	StaticText "(PB3 Footprint Style).", teal
 	StaticText " ", teal
 
 	StaticText " ", teal
 	Option "Specialized Weapon Crosshairs",	"pb_weapon_crosshairs", "OnOff"
-	StaticText "Cross Is Unique For Each Weapon", teal
-	StaticText "(Overrides Custom Crosshair Setting).", teal
+	StaticText "Unique Crosshair Per Weapon.", teal
+	StaticText "Overrides Global Crosshair.", teal
 	StaticText " ", teal
 	StaticText " ", teal
 	
@@ -753,12 +646,12 @@ OptionMenu "GameplaySettings"
 	StaticText " "
   
 	Option "Weapon Special Wheel Freezes Time",	"py_weaponwheel_freeze", "OnOff"
-	StaticText "Weapon Special Wheel Freezes Time When Opened.", teal
+	StaticText "Freezes Time While Weapon Special Wheel Open.", teal
 	StaticText " ", teal
 	StaticText " ", teal
 	Option "Weapon Special Wheel Background Blur (0.3 Shader)",	"pb_wheelbackgroundblur", "OnOff"
-	StaticText "Softens The Scene While The Special Wheel Is Open", teal
-	StaticText "(PPShader gb_blur / mfx_bss_blur.fp).", teal
+	StaticText "Background Blur While Wheel Open", teal
+	StaticText "(PPShader gb_blur).", teal
 	StaticText " ", teal
 	StaticText " ", teal
 	Option "$PB_PICKUP_HINTS",	"pb_weapon_pickup_hints", "OnOff"
@@ -771,7 +664,7 @@ OptionMenu "GameplaySettings"
 	StaticText " "
 
 	Option "HP Arcade item behavior", "pb_hp_arcade", "OnOff"
-	StaticText "Enables PB HP ARCADE armor/powerup behavior changes"
+	StaticText "PB HP Arcade Armor / Powerup Rule Tweaks."
 	StaticText " "
 	StaticText " "
 	
@@ -780,8 +673,8 @@ OptionMenu "GameplaySettings"
 	StaticText " "
 	
 	Option "Player Frag Greandes explode on impact", "pb_grenadeimpact", "YesNo"
-	StaticText "Allows frag grenades from the player to explode on impact (such"
-	StaticText "as a wall, a ceiling, a floor, an enemy, etc.)"
+	StaticText "Player Frags Detonate on Impact"
+	StaticText "(Walls, Floors, Ceilings, Actors)."
 	StaticText " "
 	StaticText " "
 	
@@ -792,7 +685,7 @@ OptionMenu "GameplaySettings"
   StaticText "Barrels"
 	StaticText " "
 	Option "Random Barrels", "PB_LuckyBarrels","YesorNo"
-	StaticText "Ice and Fire barrels can ocassionaly replace normal ones"
+	StaticText "Ice / Fire Barrels Sometimes Replace Normal Barrels."
     StaticText " "
 	StaticText " "
 
@@ -800,43 +693,42 @@ OptionMenu "GameplaySettings"
   StaticText "Pump Shot Gun Settings"
 	StaticText " "
 	Option "Alternate Ammo Swap Animation",	"pb_SGAltAmmoSwap", "OnOff"
-	StaticText "Ammo Swap is slower and more realistic"
+	StaticText "Slower, Heavier Ammo Swap."
 	Option "Alternate Pump Animation",	"pb_SGPumpFromHip", "OnOff"
-	StaticText "Pump shotgun from hip when you have berserk or a box magazine upgrade is in inventory"
+	StaticText "Hip Pump With Berserk or Magazine Upgrade."
 	
  StaticText " "
 
   StaticText "Marauder SSG Settings"
 	StaticText " "
 	Option "$OPTMNU_MarauderSSGClassicReload",	"pb_marauderssg_classicreload", "OnOff"
-	StaticText "Use the classic break-action reload instead of the Eternal-style one"
+	StaticText "Classic Break-Action Reload (Not Eternal-Style)."
 
  StaticText " "
 	
  StaticText "Rail Gun Settings"
 	StaticText " "
 	Option "Overloaded Cell",	"pb_RLOverloadCell", "OnOff"
-	StaticText "A 50% Chance when firing a 60 cell laser blast you will overload the cell"
+	StaticText "50% Overload Chance on Full 60-Cell Laser Blast."
  
  StaticText " "
 	
 	Option "Advanced movement on hazards","pb_hazardmovement", "OnOff"
-	StaticText "Toggles hazard floors to inhibit or allow advanced movement, such as jumping and dashing"
-	StaticText "Turn this off for maps where advanced movement is not intended!!!"
+	StaticText "Hazard Floors vs Dash / Jump / Advanced Moves."
+	StaticText "Off on Maps Not Meant for Parkour."
 	StaticText " "
 	
 	StaticText " "
 	Option "Exploding enemies deal actual damage", "pb_enemyexplosiondamage", "OnOff"
-	StaticText "Enemies that can explode on death will deal actual damage if turned on" 
-	StaticText "(except Pain Elementals as they will always deal damage)"
+	StaticText "Exploding Corpses Damage Player When On."
+	StaticText "(Pain Elementals Always Damage.)"
 	StaticText " "
 	
 	StaticText " "
 	Option "Realistic damage on certain weapons", "pb_realdamage", "OnOff"
-	StaticText "Weapons that are not intended to damage the player will deal damage if this is turned on."
-	StaticText "Only the Shotgun Dragons Breath, QSG Demonic Breath,", sapphire
-	StaticText "Akimbo Full Blast QSGs and the Freeze Rifle are affected", sapphire
-	StaticText "This will not affect explosive or BFG based weapons.", brick
+	StaticText "Friendly-Fire Style Damage From Select Weapons.", sapphire
+	StaticText "Dragon's Breath, QSG Breath, Akimbo Full QSG, Freeze Rifle.", sapphire
+	StaticText "No Effect on Explosives / BFG-Class.", brick
 	StaticText " "
 	
 	StaticText " "
@@ -845,12 +737,12 @@ OptionMenu "GameplaySettings"
 	
 	StaticText " "
 	Option "Replace Captured Marines",				"pb_replacemarines", "OnOff"
-	StaticText "Replace captured marines with traditional Blurspheres"
+	StaticText "Captured Marines → Blursphere Pickups."
 	StaticText " "
 	StaticText " "
 	
 	Option "Disable Helmet Animation",				"pb_NoHelmetAnimation", "OnOff"
-	StaticText "Disable the animation of putting on your helmet at the start of the game"
+	StaticText "Skip Startup Helmet Animation."
 	StaticText " "
 	StaticText " "
 		
@@ -861,17 +753,18 @@ OptionMenu "GameplaySettings"
 	StaticText " "
 	
 	Option "Disable Auto-Doomguy Talk.",				"nodoomguytalk", "OnOff"
-	StaticText "Disables the chance for automatic taunts to play. Voice-line taunt toggle: Brutality 2022 Additions."
+	StaticText "Disables Random Idle Taunts."
+	StaticText "Taunt Lines: Brutality 2022 Additions Menu."
 	StaticText " "
 	StaticText " "
 	
 	Option "Standard Cyberdemon Death Animation.", "pb_cyberdemondeath", "YesNo"
-	StaticText "Plays standard Cyberdemon death animation instead"
-	StaticText "of the slower, Hideous Destructor-inspired death animation."
+	StaticText "Vanilla Cyberdemon Death Animation."
+	StaticText "Off = Slower Hideous Destructor-Style Death."
 	StaticText " "
 	
 	Slider "Doomguy Fatalities Speed",				"cl_fatalityspeed", 1.0, 3.0, 0.05, 2
-	StaticText "Increases the speed of Doomguy's fatalities (higher is faster)."
+	StaticText "Fatality Playback Speed (Higher = Faster)."
 	StaticText " "
 	StaticText " "	
 	
@@ -909,30 +802,30 @@ OptionMenu "RenderingSettings"
 	
 	
 	Option "Show dash screen effect","pb_dasheffect", "OnOff"
-	StaticText "Toggles the screen effect when performing a dash"
+	StaticText "Fullscreen Tint During Dash."
 	StaticText " "
 	Option "Blood Splash Effects Mode",				"bloodsplash", "BloodSplashOption"
-	StaticText "Switch between the Regular PB Blood Splash and the Alternative Blood Splash"
+	StaticText "Project Brutality vs Alternate Blood Splash Style."
 	StaticText " "
 	
 	Option "Disable Screen Splash Effects",				"noscreensplash", "OnOff"
-	StaticText "Disables the splashing of liquids on the screen"
+	StaticText "No Liquid Streaks on View."
 	StaticText " "
 	
 	Option "Disable Screen Pain Effects",				"nopaineffect", "OnOff"
-	StaticText "Disables the screen scratches, bullet holes, and cracks"
+	StaticText "No Screen Cracks / Bullet Holes / Scratches."
 	StaticText " "
 	
 	Option "Enable Light From Tracers",				"PB_tracerlight", "OnOff"
-	StaticText "Enables GL light emitted from tracers"
+	StaticText "Dynamic Lights From Tracers."
 	StaticText " "
 	Option "Alternate Tracers","PB_alttracer", "OnOff"
-	StaticText "Enables longer/more realistic tracer (Rifle/Minigun only currently)"
+	StaticText "Longer Tracers (Rifle / Minigun)."
 	StaticText " "
 	
 	
 	Option "Disable Fade out effects when exiting a map", "pb_fadeonmapexit", "YesOrNoFalse"
-	StaticText "Disables the fade out effects when completing a map"
+	StaticText "Skip Exit Fade / Wipe."
 	StaticText " "
 	
 }
@@ -945,18 +838,18 @@ OptionMenu "PBVPOptions"
 	Option "Enable PBVP Models (WIP)",			"V5_MODELS",	"OnOff"
 	Control "Toggle PBVP Models On/Off" , "togglepbvp"
 	StaticText " "
-	StaticText "Replaces Pickups/Casings/Decor with Voxel-Style PolyMesh Models"
-	StaticText "Models may cause performance issues", "darkgray"
-	StaticText "You can switch this feature On or Off at any time."
+	StaticText "PBVP Poly Meshes on Pickups / Casings / Deco."
+	StaticText "May Hit FPS.", "darkgray"
+	StaticText "Toggle Anytime."
 	StaticText " "
 	Option "Enable Culling",			"V5_Cull",	"OnOff",	"V5_MODELS"
 	NumberField_PBVP "Culling Distance (120 - 1020)", "V5_MDist" , 120, 1020 , 60 , "V5_Cull", "V5_Models"
 	StaticText " "
-	StaticText "Models will only render in when inside the set culling distance"
+	StaticText "Models Only Inside Culling Distance."
 	StaticText " "
 	Option "[QSA]Quake 3 Style Animations(WIP)",			"V5_Quake3",	"OnOff",	"V5_Models"
 	StaticText " "
-	StaticText "Makes Weapons, Keys, and small pickups float and spin a la Quake 3"
+	StaticText "Floating Spinning Pickups (Quake 3 Style)."
 	StaticText " "
 	StaticText "----------QSA Settings---------"
 	StaticText " "
@@ -1018,6 +911,10 @@ OptionMenu "MBlurOpts"
 OptionMenu "WeaponSettings"
 {
 	Title "---------Weapon Settings---------"
+	StaticText "-----------------RiotShield Settings-----------------", 1
+	StaticText "Optional: Axe Pickup Required", 1
+	StaticText "Before Axe Shield Mode.", 1
+	Option "Require Axe For Axe Mode", "RS_AxeCheck", "OnOff"
 	
 	StaticText "-----------------Weapon Upgrades-----------------", teal
 	
@@ -1025,75 +922,75 @@ OptionMenu "WeaponSettings"
 	StaticText " ", teal
 	
 	Option "Disable UAC349 LMG Upgrade",				"pb_NoLMG", "OnOff"
-	StaticText "Removes The LMG That Upgrades The UAC41 Carbine.", teal
+	StaticText "Blocks LMG Upgrade for UAC41 Carbine.", teal
 	StaticText " ", teal
 	
 	Option "Disable Quad-Barrel Shotgun Upgrade",				"pb_NoQuadSSG", "OnOff"
-	StaticText "Removes The Quad Shotgun That Upgrades The Super Shotgun.", teal
+	StaticText "Blocks Quad-Barrel Super Shotgun Upgrade.", teal
 	StaticText " ", teal
 	
 	Option "Disable Auto-Shotgun Upgrade",				"pb_NoAutoshotgunUpgrade", "OnOff"
-	StaticText "Removes The Drum Magazine Upgrade For The Automatic Shotgun.", teal
+	StaticText "Blocks Auto-Shotgun Drum Upgrade.", teal
 	StaticText " ", teal
 	StaticText " ", teal
 	
 	Option "Disable Triple Minigun Upgrade",				"pb_NoMinigunUpgrade", "OnOff"
-	StaticText "Removes the triple-rotary upgrade for the minigun"
+	StaticText "Blocks Triple-Barrel Minigun Upgrade."
 	StaticText " "
 	StaticText " "
 	StaticText "-----------------Tactical Motion (Merged)-----------------", gold
 	Submenu "Tactical Weapon Motion (Full List)", "PBTacticalMotionOptions"
-	StaticText "Also under Brutality 2022 Additions."
+	StaticText "Same Submenu Under Brutality 2022 Additions."
 	StaticText " "
 	
 	Option "Disable Pump Shotgun Upgrade",				"pb_NoDBUpgrade", "OnOff"
-	StaticText "Removes the magazine upgrade for the pump shotgun"
+	StaticText "Blocks Pump Shotgun Magazine Upgrade."
 	StaticText " "
 	StaticText " "
 	
 	Option "Disable Pulse Cannon Upgrade",				"pb_NoPulseCannonUpgrade", "OnOff"
-	StaticText "Removes the dark pulse cannon upgrade for the plasma gun"
+	StaticText "Blocks Pulse Cannon Upgrade Path."
 	StaticText " "
 	StaticText " "
 	
 	Option "Disable DMR Upgrade",				"pb_NoRifleUpgrade", "OnOff"
-	StaticText "Removes the underbarrel grenade launcher for the DMR"
+	StaticText "Blocks DMR Underbarrel Grenade Launcher Upgrade."
 	StaticText " "
 	StaticText " "
 	
 	Option "Disable Unmaker Upgrade",				"pb_NoUnmakerUpgrade", "OnOff"
-	StaticText "Removes the Unmaker upgrade for the flame cannon"
+	StaticText "Blocks Unmaker Upgrade on Flame Cannon."
 	StaticText " "
 	StaticText " "
 	
 	Option "Disable Lightning Gun Upgrade",				"pb_NoM2Upgrade", "OnOff"
-	StaticText "Removes the lightning upgrade for the m2 plasma rifle"
+	StaticText "Blocks M2 Lightning Gun Upgrade."
 	StaticText " "
 	StaticText " "
 	
 	Option "Disable Deagle Upgrade",				"pb_nodeagle", "OnOff"
-	StaticText "Disables the Deagle replacing the revolver"
-	StaticText "If you have No Revolver turned on, leave this option off"
-	StaticText "See No Revolver in Advanced Weapon Spawns for more details"
+	StaticText "No Deagle Replacing Revolver Spawn."
+	StaticText "If \"No Revolver\" Is On, Leave This Off."
+	StaticText "See Advanced Weapon Spawns → No Revolver."
 	StaticText " "
 	
 	StaticText "-----------------Weapon Progression-----------------"
 	
 	StaticText " "
 	Option "Revolver upgrades Pistol",				"pb_UpgradeRevolver", "OnOff"
-	StaticText "No longer use the Pistol once you collect a revolver"
+	StaticText "Revolver Replaces Pistol Slot."
 	StaticText " "
 	
 	Option "Carbine upgrades DMR",				"pb_UpgradeCarbine", "OnOff"
-	StaticText "No longer use the DMR once you collect a Carbine"
+	StaticText "Carbine Replaces DMR Slot."
 	StaticText " "
 	
 	Option "Autoshotgun upgrades Pump Shotgun",				"pb_UpgradeShotgun", "OnOff"
-	StaticText "No longer use the Pump Shotgun once you collect a Autoshotgun"
+	StaticText "Auto-Shotgun Replaces Pump Shotgun."
 	StaticText " "
 	
 	Option "Nailgun upgrades Minigun",				"pb_UpgradeNailgun", "OnOff"
-	StaticText "No longer use the Minigun when you collect a Nailgun"
+	StaticText "Nailgun Replaces Minigun Slot."
 	StaticText " "
 	
 	StaticText "-----------------Weapon Misc-----------------"
@@ -1114,44 +1011,44 @@ OptionMenu "MonsterSettings"
 {
 	Title	"---------Monster Abilities---------"
 	Option "No Zombie Grenades", "pb_NoZmanGrenade", "YesOrNo"
-	StaticText "Zombie men will not throw grenades"
+	StaticText "Zombies Cannot Throw Grenades."
 	StaticText " "
 	
 	
 	Option "Normal Zombie Men Attacks", "pb_NoZmanAdvancedAttacks", "YesOrNo"
-	StaticText "Zombie men will use their original rifle attacks"
+	StaticText "Zombies Use Classic Rifle Attacks Only."
 	StaticText " "
 
 	Option "Grounded Imps", "pb_GroundImps", "YesOrNo"
-	StaticText "Prohibit imps from climbing on the ceiling"
+	StaticText "Imps Stay Off Ceilings."
 	StaticText " "
 	
 	Option "Hungry Pinky Demons", "pb_HungryPinky", "YesOrNo"
-	StaticText "Prevent pinky demon variants recovering health by eating monsters"
+	StaticText "Pinkies Cannot Heal by Eating Corpses."
 	StaticText " "
 	
 	Option "Grounded Revenants", "pb_GroundRevenant", "YesOrNo"
-	StaticText "Prohibit the Revenant's use of his jetpack"
+	StaticText "Revenants Cannot Use Jetpack."
 	StaticText " "
 	
 	Option "Normal Hellknights", "pb_NoKnightCharge", "YesOrNo"
-	StaticText "Prevent the Hellknight from sprinting toward targets"
+	StaticText "Hell Knights Cannot Sprint Charge."
 	StaticText " "
 	
 	Option "Barons Ignore Barrels", "pb_NoBaronBarrel", "YesOrNo"
-	StaticText "Baron of Hell will not pick up and throw explosive barrels"
+	StaticText "Barons Ignore Explosive Barrels."
 	StaticText " "
 	
 	Option "Generic Archvile Heal", "pb_NoArchvileHeal", "YesOrNo"
-	StaticText "Archvile will not have the chance to area heal surrounding monsters"
+	StaticText "Arch-Vile Cannot Area-Heal Others."
 	StaticText " "
 	
 	Option "Generic Archvile Attack", "pb_NoArchvileSummon", "YesOrNo"
-	StaticText "Archvile will not summon additional monsters to fight"
+	StaticText "Arch-Vile Cannot Summon Adds."
 	StaticText " "
 	
 	Option "Simple Mancubus", "pb_NoMancubusFlamer", "YesOrNo"
-	StaticText "Mancubus will not use flamethrower attack when close"
+	StaticText "Mancubi Skip Close-Range Flamer Burst."
 	StaticText " "
 	
 	Option "$PB_DISABLE_PRONE", "pb_disable_sergent_prone", "YesNo"
@@ -1391,12 +1288,12 @@ ListMenu "MainMenu"
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 			TextItem "Options", "o", "OptionsMenu"
-			TextItem "PB Options", "p", "PBSettings"
+			TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
 		}
 		else
 		{
 			TextItem "Options", "o", "OptionsMenu"
-			TextItem "Project Brutality", "p", "PBSettings"
+			TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 		}
@@ -1411,7 +1308,7 @@ ListMenu "MainMenu"
 	{
 		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
 		TextItem "$MNU_OPTIONS", "o", "OptionsMenu"
-		TextItem "Project Brutality Settings", "p", "PBSettings"
+		TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
 		TextItem "$MNU_GAMEFILES", "g", "GameFilesMenu"
 		TextItem "$MNU_INFO", "i", "ReadThisMenu"
 		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
@@ -1532,33 +1429,6 @@ OptionValue "Speedometer"
 	2, "Quake Units"
 }
 
-OptionMenu "PB_2022_BDv22GoreMenu"
-{
-	Class "NashGoreMenu"
-	Title "Brutal Doom 22 gore (2022 add-on)"
-	Position -32
-	StaticText "Optional content for Project Brutality & Nash gore.", teal
-	StaticText "Nash and PB base blood/gib/casing settings: ", teal
-	StaticText "Project Brutality Settings, Visual, Gore/Debris.", teal
-	StaticText " "
-
-	NashGoreOption "$BDV22GOREMNU_MIST",		"$BDV22GOREMNU_MIST_TIP",			"bdv22_mist",	"OnOff"
-	NashGoreOption "$BDV22GOREMNU_CORPSEMEAT",		"$BDV22GOREMNU_CORPSEMEAT_TIP",		"bdv22_corpse_meat",	"OnOff"
-	NashGoreOption "$BDV22GOREMNU_FLYINGMEAT",		"$BDV22GOREMNU_FLYINGMEAT_TIP",		"bdv22_flying_meat",	"OnOff"
-	NashGoreOption "$BDV22GOREMNU_ORGANS",		"$BDV22GOREMNU_ORGANS_TIP",		"bdv22_organs",	"OnOff"
-	NashGoreSlider "$BDV22GOREMNU_MIX",		"$BDV22GOREMNU_MIX_TIP",		"bdv22_gore_mix",	0, 100, 1, 0
-
-	StaticText " "
-	StaticText "Brutal Pack V10 gore (humanoid grunts + imps only):", teal
-	NashGoreOption "$BPV10GOREMNU_ENABLE",		"$BPV10GOREMNU_ENABLE_TIP",		"bpv10_enable",			"OnOff"
-	NashGoreOption "$BPV10GOREMNU_BURNCORPSE",	"$BPV10GOREMNU_BURNCORPSE_TIP",	"bpv10_burn_corpse",	"OnOff"
-	NashGoreOption "$BPV10GOREMNU_CARBONIZED",	"$BPV10GOREMNU_CARBONIZED_TIP",	"bpv10_carbonized",		"OnOff"
-	NashGoreOption "$BPV10GOREMNU_XDTORSO",		"$BPV10GOREMNU_XDTORSO_TIP",	"bpv10_xdeath_torso",	"OnOff"
-	NashGoreOption "$BPV10GOREMNU_FLOP",			"$BPV10GOREMNU_FLOP_TIP",		"bpv10_flop_organs",	"OnOff"
-	NashGoreOption "$BPV10GOREMNU_ZGEAR",		"$BPV10GOREMNU_ZGEAR_TIP",		"bpv10_zgear",			"OnOff"
-	NashGoreOption "$BPV10GOREMNU_SPLAT",		"$BPV10GOREMNU_SPLAT_TIP",		"bpv10_blood_splat",	"OnOff"
-}
-
 OptionMenu "GoreDebrisMenu"
 {
 	Class "NashGoreMenu"
@@ -1573,9 +1443,10 @@ OptionMenu "GoreDebrisMenu"
 	NashGoreOption "$NASHGOREMNU_BLOOD_SPRITES",	"$NASHGOREMNU_HELPTEXT_BLOOD_SPRITES",		"nashgore_spriteblood",	"NashGoreBloodSpriteValues"
 	NashGoreOption "$NASHGOREMNU_BLOOD_SPURTS",		"$NASHGOREMNU_HELPTEXT_BLOOD_SPURTS",		"nashgore_bloodspurt",	"OnOff"
 	StaticText ""
-	StaticText "Brutal Doom 22 (2022) — optional gore", 1
-	Submenu "Open Brutal Doom 22 gore options", "PB_2022_BDv22GoreMenu"
-	StaticText "Placed under Options, Brutality 2022 Additions for visibility.", teal
+	StaticText "2022 Enhanced Brootality", 1
+	Submenu "Open 2022 Enhanced Brootality options", "PB_2022_BDv22GoreMenu"
+	NashGoreOption "$BDV22GOREMNU_ENHANCED2022",	"$BDV22GOREMNU_ENHANCED2022_TIP",	"pb_enhanced_brutality_2022",	"OnOff"
+	StaticText "Single master switch for folded BDv22 / BPv10 gore extras.", teal
 	StaticText ""
 
 	StaticText "$NASHGOREMNU_GIB_TITLE", 1
@@ -1661,16 +1532,18 @@ OptionMenu "Glorykills"
 	Option "Fear During Glory Kill.", "be_Fear", YesNo
 	Slider  "Stun Duration.", "be_StaggerLenght", 2, 12, 1
 	Option "Hard Mode.", "be_GKHard", YesNo
-	StaticText "Halved health/armor from glory pinatas; harder ammo roll when ammo drop is on."
+	StaticText "Halves Pinata HP / Armor (Hard Mode)."
+	StaticText "Ammo Rolls Get Tighter When Ammo Drops Are On."
 	StaticText " "
 	Option "Health & Armor Drop (Pinatas).", "be_GKBonus", YesNo
 	Option "Bonus Trail Effect (Pinata Pickup).", "PinataParticles", YesNo
 	StaticText " "
 	Option "Fatality kill Health Bonus.", "be_HealthBonus", YesNo
 	StaticText " "
-	StaticText "Auto-fatality on fire and distance: Brutality 2022 Additions (Project Brutality main menu)."
+	StaticText "Auto-Fatality Fire / Range Rules:"
+	StaticText "Brutality 2022 Additions Menu."
 	StaticText " "
-	StaticText "This option requires \"Fatality kill Health Bonus\" to be enabled."
+	StaticText "Needs \"Fatality Kill Health Bonus\" ON."
 	Option "Only Berserk Kill Health Bonus.", "be_OnlyBerserk", YesNo
 	StaticText " "
 	StaticText " "
@@ -1694,7 +1567,7 @@ OptionMenu "Glorykills"
 	Slider  "Glory HUD X.", "sv_fuelhud_x", -1024, 1024, 1
 	Slider  "Glory HUD Y.", "sv_fuelhud_y", -768, 768, 1
 	StaticText " "
-	StaticText "Sound notification"
+	StaticText "Sound Notification"
 	Option "Low Health Notification (ACS).", "be_LowHealthAlert", YesNo
 	Slider  "Low Health (Hit Points).", "sv_LowHealthValue", 0, 200, 1
 	Option "Low Armor Notification (ACS).", "be_LowArmorAlert", YesNo
@@ -1707,23 +1580,25 @@ OptionMenu "PB_HorrorspawnSettings"
 	Title "PB_Horrorspawn"
 	StaticText "---------------Map Horrorification Settings---------------", gold
 	Slider "Horrorspawn Appear Chance.", "PB_HorrorspawnChance", 0, 100, 1
-	StaticText "100 — appear almost always; 0 — never. Default: 30."
+	StaticText "100 = Almost Always; 0 = Never."
+	StaticText "Default: 30."
 	StaticText " "
 	Slider "Horrorspawn Map Multiplier (Max Horrors/Encounter).", "HorrorMapMultiplier", 1, 10, 1
-	StaticText "Random 1..n. Default: 3."
+	StaticText "Random 1..n Per Encounter."
+	StaticText "Default: 3."
 	StaticText " "
 	Slider "Horror Brutal Health (Mini/Freeze Health Drops).", "HorrorBrutalHealth", 0, 5, 1
-	StaticText "Default 1. Does not change all fodder types (see mod actors)."
+	StaticText "Default 1. Not Every Fodder Type Honors This."
 	StaticText " "
 	StaticText "---------------Reinforcement Settings---------------", gold
 	Slider "Horrorspawn Reinforcement Multiplier.", "PB_HorrorspawnMultiplier", 0, 100, 1
 	StaticText "Default: 6."
 	StaticText " "
 	Slider "Hunger reinforcement multiplier", "HungerMultiplier", 0, 100, 1
-	StaticText "Default 5"
+	StaticText "Default: 5."
 	StaticText " "
 	Slider "Unwilling reinforcement multiplier", "UnwillingMultiplier", 0, 100, 1
-	StaticText "Default 4"
+	StaticText "Default: 4."
 	StaticText " "
 	StaticText "---------------Horrorspawn variant blocks (On = do not allow)---------------", gold
 	Option "T1 — Fresh horrorspawn", "NoFresh", "OffOn"
@@ -1739,7 +1614,8 @@ OptionMenu "PB_HorrorspawnSettings"
 OptionMenu "SummonsSettings"
 {
 	Title "Summon limits"
-	StaticText "How many of each summon type (including already placed). 0 = block; -1 = unlimited; default in menus is -1 for ghosts."
+	StaticText "Counts Include Map-Placed Actors."
+	StaticText "0 = Block; -1 = Unlimited (Ghost Defaults -1)."
 	StaticText " "
 	StaticText "---------------Dark lord (Hell ghost)---------------", gold
 	Slider "Dark lord's ghost", "HellGhostCount", -1, 100, 1
@@ -1766,7 +1642,8 @@ OptionMenu "MonsterPackSettings"
 	Submenu "Horrorspawn settings", "PB_HorrorspawnSettings"
 	Submenu "Summon limit settings", "SummonsSettings"
 	StaticText ""
-	StaticText "Ice Vile, Fleshwizard, and Overlord use the same CVARs as global Advanced Monster Spawns (pb_)."
+	StaticText "Ice Vile / Flesh Wizard / Overlord:"
+	StaticText "Same pb_* Toggles as Advanced Monster Spawns."
 	StaticText " "
 	StaticText "---------------Arachnotron + tanks---------------", gold
 	Option "T1 — Zombie tank", "NoZombieTank", "OffOn"
@@ -1827,11 +1704,4 @@ OptionMenu "MonsterPackSettings"
 	StaticText "---------------Zombieman---------------", gold
 	Option "T4 — QSG Dreadtrooper", "NoQSGDreadTrooper", "OffOn"
 	StaticText " "
-}
-
-OptionMenu "ShieldAxe_Settings"
-{
-	StaticText "-----------------RiotShield Addon Settings-----------------", 1
-	StaticText "-----------------Allows The Player To Decide To Wait Until An Axe Is Found To Use This Mode-----------------", 1
-	Option "Require Axe For Axe Mode", "RS_AxeCheck", "OnOff"
 }

@@ -280,6 +280,31 @@ class NashGoreStatics play
 		}
 	}
 
+	// Missile-flag gibs orient their sprite yaw from velocity; residual bounce/slide jitter spins them visually.
+	static void TickStabilizeMissileGibSprite(Actor self, in out bool frozen, in out double snapYaw, in out int stableCt)
+	{
+		if (!self) return;
+		if (frozen)
+		{
+			self.A_SetAngle(snapYaw);
+			self.Vel = (0, 0, 0);
+			return;
+		}
+		double lv = self.Vel.XY.Length();
+		double av = abs(self.Vel.Z);
+		if (lv < 1.5 && av < 2.0 && NashGoreStatics.bIsOnFloor(self))
+			stableCt++;
+		else
+			stableCt = 0;
+		if (stableCt >= 4)
+		{
+			frozen = true;
+			snapYaw = self.Angle;
+			self.Vel = (0, 0, 0);
+			self.A_SetAngle(snapYaw);
+		}
+	}
+
 	//===========================================================================
 	//
 	// AlignToPlane

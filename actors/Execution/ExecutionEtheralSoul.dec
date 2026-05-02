@@ -1,0 +1,23 @@
+ACTOR PB_ESoul_Execution
+{ 
++FORCEXYBILLBOARD 
++Clientsideonly 
++NOGRAVITY
++FLOAT
+-SOLID 
++THRUACTORS 
+States 
+{ 
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_FaceMaster
+		ETHS G 14
+		ETHS G 15
+		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))    
+		TNT1 AAAA 0 A_CustomMissile ("PlasmaSmoke", 32, 0, random (0, 360), 2, random (0, 360))
+		ETHS F 3 bright
+		ETHS H 3 bright
+		ETHS IJKLMNO 3 bright
+	Stop
+} 
+}

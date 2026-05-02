@@ -25,7 +25,7 @@ class PB_CyberdemonRL : PB_WeaponBase
 		//$Category Weapons
 		//$Sprite CYBFA0
 		Weapon.SlotNumber 6;
-		Weapon.SlotPriority 0;
+		Weapon.SlotPriority 0.22;
 		Weapon.SelectionOrder 3800;
 		Inventory.AltHudIcon "HND7E0";
 
@@ -227,6 +227,7 @@ class PB_CyberdemonRL : PB_WeaponBase
 
 		FlashPunching:
 			CYBF PQRSTTUUUTTSRQP 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashKicking:
 			CYBF PQRSTTUUUUTTSRQP 1;

@@ -35,6 +35,15 @@ brightmap sprite SH1FB0{map "Brightmaps/WEAPONS/Shotgun/Fire/SHTFB0.png" DISABLE
 brightmap sprite SH2FA0{map "Brightmaps/WEAPONS/Shotgun/Fire/SHTFA0.png" DISABLEFULLBRIGHT}
 brightmap sprite SH2FB0{map "Brightmaps/WEAPONS/Shotgun/Fire/SHTFB0.png" DISABLEFULLBRIGHT}
 
+// Buckshot hip/fire (SH0FA–SH0FG lumps)
+brightmap sprite SH0FA0{map "Brightmaps/WEAPONS/Shotgun/Fire/SHTFA0.png" DISABLEFULLBRIGHT}
+brightmap sprite SH0FB0{map "Brightmaps/WEAPONS/Shotgun/Fire/SHTFB0.png" DISABLEFULLBRIGHT}
+brightmap sprite SH0FC0{map "Brightmaps/WEAPONS/Shotgun/SHTFC.png"}
+brightmap sprite SH0FD0{map "Brightmaps/WEAPONS/Shotgun/SHTFD.png"}
+brightmap sprite SH0FE0{map "Brightmaps/WEAPONS/Shotgun/SHTFE.png"}
+brightmap sprite SH0FF0{map "Brightmaps/WEAPONS/Shotgun/SHTFF.png"}
+brightmap sprite SH0FG0{map "Brightmaps/WEAPONS/Shotgun/SHTFG.png"}
+
 //FIRE ANIMATION
 brightmap sprite SHTFC0{map "Brightmaps/WEAPONS/Shotgun/SHTFC.png"}
 brightmap sprite SHTFD0{map "Brightmaps/WEAPONS/Shotgun/SHTFD.png"}
@@ -42,7 +51,7 @@ brightmap sprite SHTFE0{map "Brightmaps/WEAPONS/Shotgun/SHTFE.png"}
 brightmap sprite SHTFF0{map "Brightmaps/WEAPONS/Shotgun/SHTFF.png"}
 brightmap sprite SHTFG0{map "Brightmaps/WEAPONS/Shotgun/SHTFG.png"}
 //Buckshot - idle
-brightmap sprite SHTGA0{map "Brightmaps/WEAPONS/Shotgun/SHSSA.png"}
+brightmap sprite SH0GA0{map "Brightmaps/WEAPONS/Shotgun/SHSSA.png"}
 
 //PumpFromHip
 brightmap sprite SHSPA0 {map "Brightmaps/WEAPONS/Shotgun/Pumping/SHSPA0.png"}
@@ -50,8 +59,8 @@ brightmap sprite SHSPB0 {map "Brightmaps/WEAPONS/Shotgun/Pumping/SHSPA0.png"}
 brightmap sprite SHSPC0 {map "Brightmaps/WEAPONS/Shotgun/Pumping/SHSPA0.png"}
 
 //Pumping
-brightmap sprite SHTGB0 {map "Brightmaps/WEAPONS/Shotgun/Pumping/SHTGB0.png"}
-brightmap sprite SHTGC0 {map "Brightmaps/WEAPONS/Shotgun/Pumping/SHTGC0.png"}
+brightmap sprite SH0GB0 {map "Brightmaps/WEAPONS/Shotgun/Pumping/SHTGB0.png"}
+brightmap sprite SH0GC0 {map "Brightmaps/WEAPONS/Shotgun/Pumping/SHTGC0.png"}
 
 //ADS - Slug
 brightmap sprite SHT6A0{map "Brightmaps/WEAPONS/Shotgun/IronSights/SHT8A.png"}

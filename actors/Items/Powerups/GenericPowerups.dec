@@ -21,7 +21,7 @@ ACTOR InvulnerabilitySphere_  : PowerupGiver Replaces InvulnerabilitySphere
 	+DONTGIB
 	Inventory.MaxAmount 0
 	Powerup.Type Invulnerable
-	Powerup.Color White //InverseMap
+	Powerup.Color White, 0.012
 	Inventory.PickupMessage "$GOTINVUL"
 	Inventory.PickupSound "INVUL"
 	States
@@ -83,7 +83,7 @@ ACTOR DemonStrengthRune : Custominventory//Berserl1
 	+DONTGIB
 	+INVENTORY.ALWAYSPICKUP
 	Inventory.PickupMessage "You got the Demon Strength Rune. RIP AND TEAR!"
-	Inventory.PickupSound "misc/p_pkup"
+	Inventory.PickupSound "items/rune"
 	States
 	{
 	Spawn:

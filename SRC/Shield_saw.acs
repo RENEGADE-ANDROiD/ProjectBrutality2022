@@ -1,22 +1,21 @@
 #library "Shield_saw"
 #include "zcommon.acs"
 
-// On level start: (1) refund ShieldSaw_token if the saw was still in flight at map exit (projectile despawned, token not returned).
-// (2) give FastCall so the player can force-return the saw if one ever lingers, matching GK_ShieldSaw cap.acs behavior.
+// Map start: refund ShieldSaw_token if the saw was still in flight (projectile lost on travel).
+// Always grant FastCall for manual recall (inventory Use / bound key).
 Script "ShieldSawMapEnter" ENTER
 {
 	Delay(1);
-	if (CheckInventory("TheShieldSaw") >= 1)
+	if (CheckInventory("ShieldSawThrown") >= 1)
 	{
 		if (CheckInventory("ShieldSaw_token") < 1)
-		{
 			GiveInventory("ShieldSaw_token", 1);
-		}
+		TakeInventory("ShieldSawThrown", 1);
 	}
 	GiveInventory("FastCall", 1);
 }
 
-// Per-flying-saw: wait until the projectile has CallBack (A_RadiusGive from FastCall) then snap to ShieldBack. GK_ShieldSaw
+// Per flying saw: wait until the projectile holds CallBack (from FastCall Use) then snap to ShieldBack.
 Script "CallBack" (void)
 {
 	while (true)
@@ -27,21 +26,5 @@ Script "CallBack" (void)
 			break;
 		}
 		Delay(1);
-	}
-}
-
-Script "Shield_saw" (void)
-{
-	str weapon = GetWeapon();
-	if (StrICmp(weapon, "TheShieldSaw"))
-	{
-		SetPlayerProperty(0, 1, PROP_INSTANTWEAPONSWITCH);
-		GiveInventory("TheShieldSaw", 1);
-		SetWeapon("TheShieldSaw");
-		While (CheckInventory("ShieldSaw_token"))
-			Delay(1);
-		SetWeapon(weapon);
-		TakeInventory("TheShieldSaw", 1);
-		SetPlayerProperty(0, 0, PROP_INSTANTWEAPONSWITCH);
 	}
 }

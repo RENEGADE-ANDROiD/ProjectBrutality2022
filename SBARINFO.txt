@@ -31,7 +31,7 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 		
 	//mugshot + equipment frame (37x37 matches Textures.txt "EQUPCO"; legacy SBAR used 600x900 which scales huge on modern GZDoom)
 		drawimage "EQUPCO", 30, -13, centerbottom, 37, 37;
-		drawmugshot 5, 13, -50;
+		drawmugshot "STF", 5, 13, -50;
 		drawimage "EQUPCO", 30, -13, centerbottom, 37, 37;
 	//equipment
 		
@@ -208,6 +208,17 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
+			IsSelected DragonSlayer {
+				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR1", -149, -30;
+				DrawImage "BAMBAR1", -149, -48;
+				DrawBar "CURBAR1", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 			IsSelected PB_MetalSniper {
 				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
 				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
@@ -276,6 +287,22 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
 			IsSelected PB_M41A {
+				InInventory DualWieldingM41A {
+					drawimage "BARBACT1", -121, -12, centerbottom, 180, 22;
+					drawimage "BARBACT3", -121, -32, centerbottom, 180, 22;
+					DrawImage "BAMBAR2", -149, -30;
+					DrawImage "BAMBAR2", -149, -48;
+					DrawBar "CURBAR2", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+					Drawimage "AMMOIC2", -66, -17, centerbottom, 17, 17;
+					DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
+					DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
+					DrawBar "RESBAR2", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+					DrawImage "BARBACT2", -121, -50, centerbottom, 180, 22;
+					DrawImage "BAMBAR2", -149, -66;
+					DrawBar "CURBAR2", "BGBARL", M41AChamberAmmoLeft, horizontal, interpolate (64), -146, -63;
+					DrawNumber 3, AANUM3, Yellow, M41AChamberAmmoLeft, Alignment(right), -150, -68;
+				}
+				else {
 				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
 				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
 				DrawImage "BAMBAR1", -149, -30;
@@ -285,6 +312,7 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
 				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+				}
 			}
 			IsSelected BDPBattleRifle {
 				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
@@ -323,13 +351,6 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 			}
 			
 			IsSelected PB_Minigun {
-				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
-				DrawImage "BAMBAR1", -149, -30;
-				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
-				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
-				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
-			}
-			IsSelected DemonTechMinigun {
 				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
 				DrawImage "BAMBAR1", -149, -30;
 				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
@@ -560,13 +581,6 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				Drawimage "AMMOIC6", -66, -17, centerbottom, 17, 17;
 				DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -150, -32;
 				DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
-			}
-			IsSelected Razorjack {
-				drawimage "BARBACD1", -121, -12, centerbottom, 180, 22;
-				DrawImage "BAMBAR6", -149, -30;
-				Drawimage "AMMOIC6", -66, -17, centerbottom, 17, 17;
-				DrawNumber 3, AANUM3, Orange, ammo2, Alignment(right), -150, -32;
-				DrawBar "RESBAR6", "BGBARL", ammo2, horizontal, interpolate (64), -146, -27;
 			}
 			IsSelected PB_Shotgun {
 				drawimage "BARBACO1", -121, -12, centerbottom, 180, 22;
@@ -922,6 +936,13 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
 				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
 				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;	
+			}
+			IsSelected Stormcast {
+				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+				DrawImage "BAMBAR5", -149, -30;
+				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Purple, ammo2, Alignment(right), -150, -32;
+				DrawBar "RESBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -27;	
 			}
 			IsSelected BHGen {
 				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;

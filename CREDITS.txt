@@ -32,24 +32,23 @@ Gameplay and content in this release
 - UT announcer: kill-streak announcer audio, menu routing, and volume
   handling wired to the project cvars and options.
 - Metal Sniper, XM-21, ShieldSaw, Molotov: weapon packages included in the
-  supported weapon and equipment set (see per-file notes).
+  supported weapon and equipment set (see per-file notes). Shield Saw behavior
+  traces to **GK_ShieldSaw** (**HUNG**).
 - Commander Shotgun (Combat Shotgun, CSSG, `PB_CSSG`): ZScript stack — special
   wheel, magazine flow, upgrade tokens, projectiles — on `PB_WeaponBase`, with
   spawners, status bar, spawn toggles, and test utilities. RENEGADE ANDROID, doc,
   and repository contributors.
 - Excavator (UAC-M2) launcher: based on the PBX-Weapons / Project Brutality
   X Excavator (ThePopeofDope, BeefRice; ZScript on `PB_WeaponBase` in this
-  build). Special thanks in upstream: Nemesis_Vampy, Popguy12, Jaih1ro.
+  build). Special thanks in upstream: Nemesis_Vampy, Popguy12, Jaih1r0.
 - Project Brutality Weapons Pack (weapons in this build include): Hell
   Pistoler, Bio Acid Launcher, Mancubus Flame Cannon, Demon
-  Tech Minigun, Argent Sith, Beam Katana, Razorjack, **Pro-Surv Ballista**
+  Tech Minigun, Argent Sith, Beam Katana, **Pro-Surv Ballista**
   (The Pope of Dope), with supporting projectiles and tokens. Equipment: Freeze Nade, Hook, Void Grenade,
   Freezebot, ElecPod. Naming, spawners, menu toggles, and HUD: RENEGADE ANDROID
   and doc.
-- Credit to BeefRice for PBX HUD elements and many weapon improvements and systems.
-- Legacy of Rust Calamity Blade: design and PB-oriented notes (xxHeavySwagxx
-  / xxSwag Masterxx, rework notes by Renegade Android). Shipped inert in this
-  build until a full public sprite/sound set is available.
+- Credit to BeefRice and **Jaih1r0** for PBX HUD elements and many weapon improvements and systems.
+- **Shield Saw** (GK_ShieldSaw lineage): **HUNG** — folded as quick-melee **`ShieldSaw_token`** + recall; see **`AGENTS.md`**.
 - Rocket jump, plasma wall climb, and instant weapon switch: included as
   configurable options with PB cvar names.
 
@@ -65,6 +64,12 @@ Code systems and libraries
   see shader / staging path notes.
 
 Selected weapons and equipment (authors)
+- **M41A Pulse Rifle (`PB_M41A`)** — ZScript in `zscript/Weapons/Slot4/PB_M41A.zs`;
+  folded from the **PB_M41A** / Aliens pulse-rifle add-on: sprites **Mike12**;
+  animations & code **Jaih1r0** (see upstream `credits.txt` in that package).
+  This repo adds **Weapon Special** modes for **12ga underbarrel**, **30mm grenade**
+  underbarrel, and **dual-wield** (paired rifles; wheel icon reuses
+  `graphics/pywheel/Carbine_Dual.png`).
 - Metal Sniper — Sprites: Metalman; animation/code: Jaih1r0; sounds: Ravik
   (actors/Weapons/Slot4/MetalSniper.dec).
 - Riot Shield — add-on source noted in actors/Weapons/Slot2/RiotShield.dec.
@@ -75,10 +80,27 @@ Selected weapons and equipment (authors)
   Vampy.
 - Pro-Surv Ballista — The Pope of Dope (ThePopeOfDope), slot-4 crossbow; **Rail
   Ballista** is the slot-9 weapon and is a separate system.
+- **Dragon Slayer (`DragonSlayer`)** — `actors/Weapons/MeleeWeaponPack/DragonSlayer.dec`,
+  `zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc`. Folded from **PB_MeleeWeaponPack**
+  (Project Brutality 0.4.2+ compatibility rework by **Renegade Android**). Per that
+  package’s `CREDITS.txt`: **Dragon Slayer** swords and bolt-repeater by **Craneo**
+  (upstream note: Hexen ModDB).
+- **Stormcast (`Stormcast`)** — `actors/Weapons/MeleeWeaponPack/Stormcast.dec`,
+  `zscript/Weapons/MeleeWeaponPack/Stormcast.zc`. Same **PB_MeleeWeaponPack** fold /
+  **Renegade Android** rework. Per upstream `CREDITS.txt`: **Battle Axe & Shield** /
+  **Stormcast** by **Dreo** & **Lord Lothar** (*Schism*).
+- **Vorpal Blade (`VorpalBlade`, Tiberium's Soulblade)** —
+  `actors/Weapons/Slot1/VorpalBlade.dec`, `zscript/Weapons/Slot1/VorpalBlade.zc`.
+  Same pack fold / **Renegade Android** rework. Per upstream `CREDITS.txt`: sprites
+  **Eriance**; sword from *Insanity's Requiem Mk.2* by **TiberiumSoul** (RIP).
 
 Monsters and packs
 - Glory Kills: lineage from D4D / Brutal Doom Black Edition
-  (SNDINFO.GloryKills and related).
+  (SNDINFO.GloryKills and related). **Glory Kill Eternal HUD** PNGs live under
+  **`GRAPHICS/HUD/glorykills/newhud/`**; **equipment launcher** first-person overlays
+  (**Flame Belch** / **Ice Bomb**) use **`SPRITES/ShoulderCannon/`** (**`SCL0`/`SCF0`**
+  and **`LCL0`/`LCF0`**) updated from the **Project Brutality PB_Staging** Glory Kills
+  line (shoulder placement: flame right, ice left).
 - Monster Pack: content line documented with SNDINFO.MonsterPack and tier files.
 - Brutal Doom *El Diablo* Edition: additional first-person and expanded execution /
   finisher sprite sets (`SPRITES/MONSTERS/fatalitys/eld_eld_*` and related) merged
@@ -109,6 +131,7 @@ Gore: optional Brutal Doom 22 (BDv22) add-on
   **Gore/Debris** in visual settings).
 
 Graphics, shaders, HUD
+- Main menu cursor: **C⛧rrot** and **JP_valle20/DOOM**.
 - Glory Kill shader: traceable to D4D shader work (shaders/glorykill.shader).
 - Gearbox / wheel UI: CC BY-SA 4.0 and CC0 as marked in those assets.
 - Gas mask overlay: TEXTURES.GasMask (HUD-GAS-MASK line).

@@ -3,13 +3,27 @@
 class PB_KillstreakHandler : EventHandler
 {
 	int currentStreak[MAXPLAYERS];
+	int pendingRewardStreak[MAXPLAYERS];
 
 	override void WorldLoaded(WorldEvent e)
 	{
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
 			currentStreak[i] = 0;
+			pendingRewardStreak[i] = 0;
 			if (players[i].mo) ClearKSTokens(players[i].mo);
+		}
+	}
+
+	override void WorldTick()
+	{
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			if (pendingRewardStreak[i] <= 0) continue;
+			PlayerPawn plr = PlayerPawn(players[i].mo);
+			if (plr && plr.player && PB_CvarEnabled(plr) && plr.FindInventory("PB_KillstreakMode"))
+				GiveKSReward(plr, pendingRewardStreak[i]);
+			pendingRewardStreak[i] = 0;
 		}
 	}
 
@@ -51,6 +65,7 @@ class PB_KillstreakHandler : EventHandler
 			if (pnum >= 0 && pnum < MAXPLAYERS)
 			{
 				currentStreak[pnum] = 0;
+				pendingRewardStreak[pnum] = 0;
 				dead.A_StartSound("dspldeth", CHAN_AUTO);
 				ClearKSTokens(dead);
 			}
@@ -70,7 +85,7 @@ class PB_KillstreakHandler : EventHandler
 		int st = currentStreak[pnum];
 		String snd = PBStreakLine(killer, st);
 		if (snd != "") killer.A_StartSound(snd, CHAN_AUTO);
-		if (st % 5 == 0) GiveKSReward(killer, st);
+		if (st % 5 == 0) pendingRewardStreak[pnum] = st;
 	}
 
 	void ClearKSTokens(Actor who)

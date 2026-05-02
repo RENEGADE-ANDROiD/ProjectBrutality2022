@@ -74,7 +74,7 @@ Actor PB_12GAPellet_ASG : DragonsBreathTracer
 
 Actor PB_12GASlug : DragonsBreathTracer
 {
-    Damage 22
+    Damage 24
     DamageType Bullet
     PoisonDamage 0
     -ADDITIVEPOISONDURATION
@@ -325,8 +325,7 @@ Actor HASG : PB_Weapon
         {
             A_AlertMonsters;
             if (Countinv("HASG_DRBT") >= 1) {
-                A_PlaySound("DRBTFIRE", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_db", CHAN_Weapon);
                 PB_FireBullets("PB_DragonsBreathTracer", 6, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -337,8 +336,7 @@ Actor HASG : PB_Weapon
                 return state("ContFire");
             }
             if (Countinv("HASG_Flech") >= 1) {
-                A_PlaySound("CSSGFLKS", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_flech", CHAN_Weapon);
                 PB_FireBullets("IN_MGNail", 5, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -349,8 +347,7 @@ Actor HASG : PB_Weapon
                 return state("ContFire");
             }
             if (Countinv("HASG_Slug") >= 1) {
-                A_PlaySound("SlugShot", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_slug", CHAN_Weapon);
                 A_FireProjectile("PB_12GASlug", frandom(-0.1, 0.1), 0, 0, 0, FPF_NOAUTOAIM, frandom(-0.1, 0.1));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -360,7 +357,7 @@ Actor HASG : PB_Weapon
                 A_FireCustomMissile("ShotCaseSpawn2", 5, 0, 0, -9);
                 return state("ContFire");
             }
-            A_PlaySound("SHOTGUN", CHAN_Weapon, 0.99, 0, 2);
+            A_StartSound("weapons/golide/fire", CHAN_Weapon);
             A_PlaySound("ASG/Add", CHAN_Weapon, 0.88, 0, 2);
             PB_FireBullets("PB_12GAPellet_ASG", 9, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
             A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -405,8 +402,7 @@ Actor HASG : PB_Weapon
         {
             A_AlertMonsters;
             if (Countinv("HASG_DRBT") >= 1) {
-                A_PlaySound("DRBTFIRE", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_db", CHAN_Weapon);
                 PB_FireBullets("PB_DragonsBreathTracer", 6, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -417,8 +413,7 @@ Actor HASG : PB_Weapon
                 return state("ContFire2");
             }
             if (Countinv("HASG_Flech") >= 1) {
-                A_PlaySound("CSSGFLKS", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_flech", CHAN_Weapon);
                 PB_FireBullets("IN_MGNail", 5, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -429,8 +424,7 @@ Actor HASG : PB_Weapon
                 return state("ContFire2");
             }
             if (Countinv("HASG_Slug") >= 1) {
-                A_PlaySound("SlugShot", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_slug", CHAN_Weapon);
                 A_FireProjectile("PB_12GASlug", frandom(-0.1, 0.1), 0, 0, 0, FPF_NOAUTOAIM, frandom(-0.1, 0.1));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -440,7 +434,7 @@ Actor HASG : PB_Weapon
                 A_FireCustomMissile("ShotCaseSpawn2", 5, 0, 8, -9);
                 return state("ContFire2");
             }
-            A_PlaySound("SHOTGUN", CHAN_Weapon, 0.99, 0, 2);
+            A_StartSound("weapons/golide/fire", CHAN_Weapon);
             A_PlaySound("ASG/Add", CHAN_Weapon, 0.88, 0, 2);
             PB_FireBullets("PB_12GAPellet_ASG", 9, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
             A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -474,8 +468,7 @@ Actor HASG : PB_Weapon
         {
             A_AlertMonsters;
             if (Countinv("HASG_WPhos") >= 1) {
-                A_PlaySound("CSSGPHOS", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_wp", CHAN_Weapon);
                 A_FireProjectile("WPhosphorusProjectile_Golide", frandom(-0.1, 0.1), 0, 0, 0, FPF_NOAUTOAIM, frandom(-0.1, 0.1));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -503,8 +496,7 @@ Actor HASG : PB_Weapon
                 return state("ContDrumFire");
             }
             if (Countinv("HASG_Explosive") >= 1) {
-                A_PlaySound("CSSGEXPS", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_expl", CHAN_Weapon);
                 PB_FireBullets("GolideExplosiveProjectile", 3, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -515,8 +507,7 @@ Actor HASG : PB_Weapon
                 return state("ContDrumFire");
             }
             if (Countinv("HASG_DRBT") >= 1) {
-                A_PlaySound("DRBTFIRE", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_db", CHAN_Weapon);
                 PB_FireBullets("PB_DragonsBreathTracer", 6, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -527,8 +518,7 @@ Actor HASG : PB_Weapon
                 return state("ContDrumFire");
             }
             if (Countinv("HASG_Flech") >= 1) {
-                A_PlaySound("CSSGFLKS", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_flech", CHAN_Weapon);
                 PB_FireBullets("IN_MGNail", 5, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -539,8 +529,7 @@ Actor HASG : PB_Weapon
                 return state("ContDrumFire");
             }
             if (Countinv("HASG_Slug") >= 1) {
-                A_PlaySound("SlugShot", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_slug", CHAN_Weapon);
                 A_FireProjectile("PB_12GASlug", frandom(-0.1, 0.1), 0, 0, 0, FPF_NOAUTOAIM, frandom(-0.1, 0.1));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -550,7 +539,7 @@ Actor HASG : PB_Weapon
                 A_FireCustomMissile("ShotCaseSpawn2", 5, 0, 8, -9);
                 return state("ContDrumFire");
             }
-            A_PlaySound("SHOTGUN", CHAN_Weapon, 0.99, 0, 2);
+            A_StartSound("weapons/golide/fire", CHAN_Weapon);
             A_PlaySound("ASG/Add", CHAN_Weapon, 0.88, 0, 2);
             PB_FireBullets("PB_12GAPellet_ASG", 9, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
             A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
@@ -597,8 +586,7 @@ Actor HASG : PB_Weapon
         {
             A_AlertMonsters;
             if (Countinv("HASG_WPhos") >= 1) {
-                A_PlaySound("CSSGPHOS", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_wp", CHAN_Weapon);
                 A_FireProjectile("WPhosphorusProjectile_Golide", frandom(-0.1, 0.1), 0, 0, 0, FPF_NOAUTOAIM, frandom(-0.1, 0.1));
                 A_FireCustomMissile("ShotCaseSpawnHASGWP", 5, 0, 8, -9);
                 return state("ContDrumFire");
@@ -616,34 +604,30 @@ Actor HASG : PB_Weapon
                 return state("ContDrumFire");
             }
             if (Countinv("HASG_Explosive") >= 1) {
-                A_PlaySound("CSSGEXPS", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_expl", CHAN_Weapon);
                 PB_FireBullets("GolideExplosiveProjectile", 3, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
                 A_FireCustomMissile("ShotCaseSpawnHASGEXP", 5, 0, 8, -9);
                 return state("ContDrumFire");
             }
             if (Countinv("HASG_DRBT") >= 1) {
-                A_PlaySound("DRBTFIRE", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_db", CHAN_Weapon);
                 PB_FireBullets("PB_DragonsBreathTracer", 5, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
                 A_FireCustomMissile("ShotCaseSpawn3", 5, 0, 8, -9);
                 return state("ContDrumFire");
             }
             if (Countinv("HASG_Flech") >= 1) {
-                A_PlaySound("CSSGFLKS", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_flech", CHAN_Weapon);
                 PB_FireBullets("IN_MGNail", 5, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
                 A_FireCustomMissile("ShotCaseSpawnHASG5", 5, 0, 8, -9);
                 return state("ContDrumFire");
             }
             if (Countinv("HASG_Slug") >= 1) {
-                A_PlaySound("SlugShot", CHAN_Weapon, 0.99, 0, 2);
-                A_PlaySound("SHOTGUN", CHAN_Weapon, 0.88, 0, 2);
+                A_StartSound("weapons/golide/fire_slug", CHAN_Weapon);
                 A_FireProjectile("PB_12GASlug", frandom(-0.1, 0.1), 0, 0, 0, FPF_NOAUTOAIM, frandom(-0.1, 0.1));
                 A_FireCustomMissile("ShotCaseSpawn2", 5, 0, 8, -9);
                 return state("ContDrumFire");
             }
-            A_PlaySound("SHOTGUN", CHAN_Weapon, 0.99, 0, 2);
+            A_StartSound("weapons/golide/fire", CHAN_Weapon);
             A_PlaySound("ASG/Add", CHAN_Weapon, 0.88, 0, 2);
             PB_FireBullets("PB_12GAPellet_ASG", 9, frandom(5.85, 6.65), 0, 0, frandom(5.32, 6.75));
             A_FireCustomMissile("ShotCaseSpawn", 5, 0, 8, -9);

@@ -21,10 +21,10 @@ ACTOR BPv10_BloodSplat0
     {
     Spawn:
         BL00 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
-        BL00 BCDEFGHIJKLMNOPQR 2
+        BL00 BCDEFGHIJKLMNOPQR 1
         Goto Linger
     Linger:
-        BL00 R 1 A_FadeOut(0.004)
+        BL00 R 1 A_FadeOut(0.03)
         Loop
     }
 }
@@ -48,11 +48,11 @@ ACTOR BPv10_BloodSplat1
     {
     Spawn:
         BL01 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
-        BL01 BCDEF 2
-        BL01 HIJKLMNOPQ 2
+        BL01 BCDEF 1
+        BL01 HIJKLMNOPQ 1
         Goto Linger
     Linger:
-        BL01 Q 1 A_FadeOut(0.004)
+        BL01 Q 1 A_FadeOut(0.03)
         Loop
     }
 }
@@ -76,10 +76,10 @@ ACTOR BPv10_BloodSplat2
     {
     Spawn:
         BL02 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
-        BL02 BCDEFGHIJKLMNOPQR 2
+        BL02 BCDEFGHIJKLMNOPQR 1
         Goto Linger
     Linger:
-        BL02 R 1 A_FadeOut(0.004)
+        BL02 R 1 A_FadeOut(0.03)
         Loop
     }
 }
@@ -103,11 +103,11 @@ ACTOR BPv10_BloodSplat3
     {
     Spawn:
         BL03 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
-        BL03 BCDEFGHIJKLMN 2
-        BL03 OPQRSTWXYZ 2
+        BL03 BCDEFGHIJKLMN 1
+        BL03 OPQRSTWXYZ 1
         Goto Linger
     Linger:
-        BL03 Z 1 A_FadeOut(0.004)
+        BL03 Z 1 A_FadeOut(0.03)
         Loop
     }
 }
@@ -131,10 +131,10 @@ ACTOR BPv10_BloodSplat4
     {
     Spawn:
         BL04 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
-        BL04 BCDEFGHIJKLMN 2
+        BL04 BCDEFGHIJKLMN 1
         Goto Linger
     Linger:
-        BL04 N 1 A_FadeOut(0.004)
+        BL04 N 1 A_FadeOut(0.03)
         Loop
     }
 }

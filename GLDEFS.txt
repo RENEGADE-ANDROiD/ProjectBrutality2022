@@ -426,6 +426,17 @@ object SuperBFGBall
 	frame BFE1E { light BFGEXPLO }
 }
 
+object PB_SuperBFGBall
+{
+    frame BFS1A { light BFGBALL }
+    frame BFS1B { light BFGBALL }
+    frame BFE1A { light BFGEXPLO }
+    frame BFE1B { light BFGEXPLO }
+	frame BFE1C { light BFGEXPLO }
+	frame BFE1D { light BFGEXPLO }
+	frame BFE1E { light BFGEXPLO }
+}
+
 flickerlight BFGEXPLO
 {
     color 0.1 1.0 0.0
@@ -1357,6 +1368,8 @@ pulselight BLUEITEM
     offset 0 5 0
 }
 
+#include "lumps/includes/gldefs/WolvusMutator.inc"
+
 
 
 
@@ -2164,7 +2177,7 @@ pointlight PulseC
 	dontlightself 1
 }
 
-object PB_Pulsecannon
+object PB_PulseCannon
 {
 	frame PLCU { light PulseC }
 }

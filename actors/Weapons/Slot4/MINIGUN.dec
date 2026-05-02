@@ -115,6 +115,8 @@ ACTOR PB_Minigun : PB_Weapon Replaces Chaingun
 	Inventory.AltHUDIcon "MG0ZA0"
 	PB_WeaponBase.respectItem "RespectMiniGun"
 	FloatBobStrength 0.5
+	Weapon.SlotNumber 5
+	Weapon.SlotPriority 0
 States
 {
 	Steady:
@@ -567,7 +569,7 @@ States
         CHAF A 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 4, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 4, 1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			if(GetCvar("PB_alttracer") >=1)
@@ -587,7 +589,7 @@ States
         CHAF C 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 4, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 4, 1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			A_Firecustommissile("MiniBeltPieceSpawn",0,0,-12,-18);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
@@ -607,7 +609,7 @@ States
         CHAF E 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 4, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 4, 1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			if(GetCvar("PB_alttracer") >=1)
@@ -626,7 +628,7 @@ States
         CHAF G 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 4, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 4, 1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			A_Firecustommissile("MiniBeltPieceSpawn",0,0,-12,-18);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
@@ -753,7 +755,7 @@ States
 			A_Overlay(3,"AmmoMeterOverlayFire");
 			if (CountInv("MinigunUpgraded") == 1) {A_Overlay(4,"AmmoBeltIdle_Upgraded");}
 			else {A_Overlay(4,"AmmoBeltIdle");}
-			A_FireBullets(4, 4, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 4, 1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			if(GetCvar("PB_alttracer") >=1)
@@ -778,7 +780,7 @@ States
 			A_Overlay(3,"AmmoMeterOverlayFire");
 			if (CountInv("MinigunUpgraded") == 1) {A_Overlay(4,"AmmoBeltIdle_Upgraded");}
 			else {A_Overlay(4,"AmmoBeltIdle");}
-			A_FireBullets(4, 4, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 4, 1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			if(GetCvar("PB_alttracer") >=1)
@@ -799,7 +801,7 @@ States
 			A_Overlay(3,"AmmoMeterOverlayFire");
 			if (CountInv("MinigunUpgraded") == 1) {A_Overlay(4,"AmmoBeltIdle_Upgraded");}
 			else {A_Overlay(4,"AmmoBeltIdle");}
-			A_FireBullets(4, 4, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 4, 1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			if(GetCvar("PB_alttracer") >=1)
@@ -829,7 +831,7 @@ States
         CHAF A 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 4, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 4, 1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			if(GetCvar("PB_alttracer") >=1)
@@ -854,7 +856,7 @@ States
         CHAF D 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 4, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 4, 1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			A_Firecustommissile("MiniBeltPieceSpawn",0,0,-12,-18);
@@ -881,7 +883,7 @@ States
         CHAF G 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 4, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 4, 1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			if(GetCvar("PB_alttracer") >=1)
@@ -995,7 +997,7 @@ States
 		CHAF A 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 3, -1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 3, -1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			if(GetCvar("PB_alttracer") >=1)
 				{
@@ -1010,7 +1012,7 @@ States
         CHAF C 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 3, -1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 3, -1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			if(GetCvar("PB_alttracer") >=1)
 				{
@@ -1025,7 +1027,7 @@ States
         CHAF D 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 3, -1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 3, -1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			if(GetCvar("PB_alttracer") >=1)
 				{
@@ -1040,7 +1042,7 @@ States
         CHAF F 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 3, -1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 3, -1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			if(GetCvar("PB_alttracer") >=1)
 				{
@@ -1055,7 +1057,7 @@ States
         CHAF G 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 3, -1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 3, -1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			if(GetCvar("PB_alttracer") >=1)
 				{
@@ -1070,7 +1072,7 @@ States
         CHAF H 1 BRIGHT {
 			if (CountInv("MinigunUpgraded") == 1) {A_SetWeaponSprite("UCHF");}
 			A_Overlay(3,"AmmoMeterOverlayFire");
-			A_FireBullets(4, 3, -1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(4, 3, -1, 11, "MachineGunBulletPuff", 1);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 			if(GetCvar("PB_alttracer") >=1)
 				{
@@ -1150,9 +1152,9 @@ States
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			A_Firecustommissile("MiniBeltPieceSpawn",0,0,-12,-18);
-			A_FireBullets(7, 7, 1, 9, "MachineGunBulletPuff", 1);
-			A_FireBullets(7, 7, 1, 9, "MachineGunBulletPuff", 1);
-			A_FireBullets(7, 7, 0, 9, "MachineGunBulletPuff", 1);
+			A_FireBullets(7, 7, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(7, 7, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(7, 7, 0, 10, "MachineGunBulletPuff", 1);
 			A_Overlay(3,"AmmoMeterOverlayIdle_DeathDealer");
 			//A_GunFlash;
             PB_WeaponRecoil(-0.8,frandom(2.4, -2.4));
@@ -1171,9 +1173,9 @@ States
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			A_Firecustommissile("MiniBeltPieceSpawn",0,0,-12,-18);
-			A_FireBullets(7, 7, 1, 9, "MachineGunBulletPuff", 1);
-			A_FireBullets(7, 7, 1, 9, "MachineGunBulletPuff", 1);
-			A_FireBullets(7, 7, 0, 9, "MachineGunBulletPuff", 1);
+			A_FireBullets(7, 7, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(7, 7, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(7, 7, 0, 10, "MachineGunBulletPuff", 1);
 			A_Overlay(3,"AmmoMeterOverlayIdle_DeathDealer");
 			//A_GunFlash;
             PB_WeaponRecoil(-0.8,frandom(2.4, -2.4));
@@ -1192,9 +1194,9 @@ States
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18);
 			A_Firecustommissile("MiniBeltPieceSpawn",0,0,-12,-18);
-			A_FireBullets(7, 7, 1, 9, "MachineGunBulletPuff", 1);
-			A_FireBullets(7, 7, 1, 9, "MachineGunBulletPuff", 1);
-			A_FireBullets(7, 7, 0, 9, "MachineGunBulletPuff", 1);
+			A_FireBullets(7, 7, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(7, 7, 1, 10, "MachineGunBulletPuff", 1);
+			A_FireBullets(7, 7, 0, 10, "MachineGunBulletPuff", 1);
 			A_Overlay(3,"AmmoMeterOverlayIdle_DeathDealer");
 			//A_GunFlash;
             PB_WeaponRecoil(-0.8,frandom(2.4, -2.4));
@@ -1431,7 +1433,8 @@ States
 				if (CountInv("MinigunUpgraded") == 1) {A_SetFlashWeaponSprite("MG33");}
 				if (CountInv("TripleBarrelMode") == 1) {A_SetFlashWeaponSprite("MG35");}
 			}
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 		
 	FlashAirKicking:
 		TNT1 A 0 A_ClearOverlays(3,4)

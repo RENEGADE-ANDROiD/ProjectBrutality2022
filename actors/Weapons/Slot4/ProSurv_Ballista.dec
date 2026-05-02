@@ -38,13 +38,16 @@ ACTOR ProSurv_Ballista : PB_Weapon {
 				Goto FlashPunchingUnloaded
 				TNT1 A 0 A_JumpIfInventory("BallistaDemonicMode", 1, "FlashPunchingUpgraded")
 				CBOW ABCDEEEEEEDCBA 1
-				stop
+				TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+				Goto Ready3
 			FlashPunchingUpgraded:
 				CBOW KLMNOOOOOONMLK 1
-				stop
+				TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+				Goto Ready3
 			FlashPunchingUnloaded:
 				CBOW FGHIJJJJJJIHGF 1
-				stop
+				TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+				Goto Ready3
 			FlashKicking:
 				TNT1 A 0 A_JumpIfInventory("BallistaAmmo",1,1)
 				Goto FlashKickingUnloaded
@@ -538,7 +541,7 @@ ACTOR BallistaBolt: FastProjectile {
 	Height 2
 	Projectile
 	Speed 150
-    Damage 55
+    Damage 61
 	Scale 1.0
     Decal Scorch
 	Damagetype "Nailgun"
@@ -650,7 +653,7 @@ ACTOR ExplosiveBolt: BallistaBolt {
 				TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 				TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 				TNT1 A 0 A_SpawnItemEx ("DetectCeilCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-				TNT1 A 0 A_SpawnItemEx ("StickyExplosion",0,0,-2,0,0,0,0,SXF_NOCHECKPOSITION,0)
+				TNT1 A 0 A_SpawnItemEx ("PB_PlayerStickyExplosion",0,0,-2,0,0,0,0,SXF_NOCHECKPOSITION,0)
 				TNT1 A 0 A_SpawnItemEx ("NewRocketExploFX", 0, 0, 0)
 				TNT1 AAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 360))
 				XXXX A 0 A_CustomMissile ("ExplosionQuake", 1, 0, random (0, 360), 2, random (0, 160))
@@ -664,7 +667,7 @@ ACTOR DemonicBolt: FastProjectile {
 	Height 3
 	Projectile
 	Speed 100
-    Damage 18
+    Damage 20
 	DamageType "Railgun"
 	Scale 1.0
     Decal Scorch

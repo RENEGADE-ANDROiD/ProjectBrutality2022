@@ -1,6 +1,7 @@
 // VorpalBlade — Tiberium's Soulblade (Slot 1)
-// Original: Insanity's Requiem Mk.2 by the late TiberiumSoul (RIP). Sprites by Eriance.
-// PB 0.4.2+ rework by Renegade Android. PB 2022 fold by Project Brutality 2022.
+// Original per PB_MeleeWeaponPack CREDITS: sprites Eriance; sword from Insanity's
+// Requiem Mk.2 by the late TiberiumSoul (RIP). PB 0.4.2+ rework by Renegade Android.
+// PB 2022 fold by Project Brutality 2022.
 //
 // Main weapon class: zscript/Weapons/Slot1/VorpalBlade.zc
 
@@ -34,7 +35,6 @@ Actor KyreiPuffRight : MeleePuff
     SeeSound "Sword/HitMeat"
     AttackSound "Sword/HitMeat"
     +PUFFGETSOWNER
-    +ALWAYSPUFF
 }
 
 Actor KyreiPuffLeft : MeleePuff
@@ -43,7 +43,6 @@ Actor KyreiPuffLeft : MeleePuff
     SeeSound "Sword/HitMeat"
     AttackSound "Sword/HitMeat"
     +PUFFGETSOWNER
-    +ALWAYSPUFF
 }
 
 Actor BladeSlash1 : FastProjectile

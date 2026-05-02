@@ -178,5 +178,5 @@ Class PB_Monster : Actor abstract
 				);
 			}
 	}
-	
+
 }

@@ -827,9 +827,14 @@ Script "ToggleShotgunUpgraded" (VOID) NET
 {
 	if	(GetCvar("pb_UpgradeShotgun") == 1)
 	{
+		// Do not strip PB_Shotgun during its own Select while ASGSelected is stale; switch to autos instead.
 		if (CheckInventory("ASGSelected") == TRUE)
 		{
-			TakeInventory("PB_Shotgun", 99);
+			if (CheckInventory("PB_AutoShotgun") == TRUE)
+			{
+				TakeInventory("PB_Shotgun", 99);
+				SetWeapon("PB_AutoShotgun");
+			}
 		}
 		
 		else if (CheckInventory("PB_AutoShotgun") == TRUE)
@@ -883,7 +888,7 @@ Script "PumpShotgunMag" (void)
 	SetAmmoCapacity("ShotgunAmmo", 11);
 	if (CheckInventory("ShotgunSelected") == TRUE)
 	{
-	SetWeapon("Shot_Mag");
+	SetWeapon("PB_Shotgun");
 	}
 }
 

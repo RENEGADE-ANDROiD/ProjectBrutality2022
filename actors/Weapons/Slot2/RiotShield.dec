@@ -226,7 +226,7 @@ Actor RiotShield : PB_Weapon
         Goto NoAmmo
         RSWF A 1 Bright
         {
-            A_FireBullets(0.1,0.1,-1,15,"HitPuff",FBF_NORANDOM,8192,"Tracer",-1,4);
+            A_FireBullets(0.1,0.1,-1,17,"HitPuff",FBF_NORANDOM,8192,"Tracer",-1,4);
             A_FireCustomMissile("YellowFlareSpawn",0,0,4,0);
             A_FireCustomMissile("ShakeYourAssMinor",0,0,4,0);
             A_FireCustomMissile("GunFireSmoke",0,0,4,0);
@@ -554,7 +554,8 @@ Actor RiotShield : PB_Weapon
         TNT1 A 0 A_ClearOverlays(10,11)
         TNT1 A 0 A_JumpIfInventory("ShieldModeA",1,"RiotShieldModeFlashPunching")
         TNT1 A 15
-        Stop
+        TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+        Goto Ready3
     RiotShieldModeFlashPunching:
         TNT1 A 0 A_ClearOverlays(10,11)
         RSWU A 1 A_DoPBWeaponAction
@@ -569,6 +570,7 @@ Actor RiotShield : PB_Weapon
         RSWU B 1 A_DoPBWeaponAction
         RSWU A 1 A_DoPBWeaponAction
         RSWT A 1 A_DoPBWeaponAction
+        TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
         Stop
 
     RightFlash:

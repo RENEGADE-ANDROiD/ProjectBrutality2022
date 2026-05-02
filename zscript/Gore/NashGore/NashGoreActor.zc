@@ -238,6 +238,7 @@ class NashGoreActor : NashGorePlugin
 
 	void ResetActor(void)
 	{
+		if (!Owner) return;
 		bIsDead = false;
 		bCorpseBlood = false;
 		bGibbed = false;

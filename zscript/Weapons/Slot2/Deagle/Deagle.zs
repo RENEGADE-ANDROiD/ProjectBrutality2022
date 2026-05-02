@@ -32,7 +32,7 @@ class PB_Deagle : PB_WeaponBase
 		PB_WeaponBase.respectItem "RespectDeagle";
 		Inventory.MaxAmount 2;
 		Inventory.PickupSound "weapons/deagle/equip";
-		Inventory.PickupMessage "You found the UAC .50 Caliber Hand Cannon! (Slot 2, Upgrade)";
+		Inventory.PickupMessage "$PB_PICKUP_PB_Deagle";
 		Obituary "%o was popped by %k's .50 Caliber Hand Cannon.";
 		Inventory.AltHUDIcon "D4E0Z0";
 		PB_WeaponBase.TailPitch 0.6;
@@ -1056,10 +1056,12 @@ class PB_Deagle : PB_WeaponBase
 		FlashPunching:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashPunchingDual");
 			D8E0 ABCDEFGGFEDCBA 1 PB_SetSpriteIfUnload("D8E1");
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashPunchingDual:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 ABCDEFGGFEDCBA 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashKicking:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashKickingDual");

@@ -1,0 +1,86 @@
+ACTOR PB_CrackoDemon_Execution //It's kind of bad 
+{ 
++FORCEXYBILLBOARD 
++Clientsideonly 
++NOGRAVITY
+-SOLID 
++THRUACTORS 
+States 
+{ 
+Spawn: 
+            NGNG BBCCDDE 1
+			//L
+			NGNG EE 2 A_PlaySound("demon/pain")
+			 XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+			NGNG EE 2 
+			 XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+			NGNG EE 2 
+			 XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+			NGNG EE 2 
+			 XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+			NGNG EE 2 
+			 XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+			NGNG EE 2 A_PlaySound("demon/pain")
+			 XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+			NGNG EE 2 
+			 XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+			NGNG EE 2 
+			NGNG EE 2 
+			 XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+			NGNG EE 2 
+			NGNG EE 2 A_PlaySound("demon/pain")
+			 XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+			NGNG EE 2 
+			//Fuera
+			NGNG EEE 1  
+			NGNG EEEEE 1 
+			TNT1 A 0 A_StopSound
+			NGNG FFF 1 
+			NGNG F 1
+
+			TNT1 A 0 A_SpawnItemEx("GlorySawPinataMed",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+
+			TNT1 AA 0 A_CustomMissile ("BlueGuts", 7, 0, random (0, 360), 2, random (20, 40))
+      TNT1 AAAAA 0 A_CustomMissile ("Blue_blood", 25, 0, random (140, 230), 2, random (30, 60))
+      TNT1 AAAAAAAA 0 A_CustomMissile ("BlueBloodmistBig", 30, 0, random (0, 360), 2, random (30, 150))
+      TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 50, 0, random (160, 200), 2, random (0, 50))
+      TNT1 A 0 A_CustomMissile ("XDeathOrgan1Blue", 7, 0, random (0, 360), 2, random (20, 40))
+      TNT1 A 0 A_CustomMissile ("XDeathOrgan2Blue", 7, 0, random (0, 360), 2, random (20, 40))
+      TNT1 AAAAA 0 A_CustomMissile ("MuchBlood3Blue", 7, 0, random (0, 360), 2, random (20, 40))
+	  TNT1 AA 0 A_CustomMissile ("XDeathEyeCrackDemon", 7, 0, random (0, 360), 2, random (20, 40))
+			NGNG GG 1 
+			NGNG G 1
+			NULL A 0 A_CustomMissile ("RipCracko", 35, 0, random (0, 360), 2, random (0, 160))
+			NULL A 0 A_SpawnItem ("DeadHalfCrackoDemon", 1)
+			TNT1 A 0 A_SpawnItem ("BlueBloodPool", 1)
+      Stop
+} 
+}
+
+ACTOR XDeathEyeCrackDemon: XDeathArm1 
+{
+  -CLIENTSIDEONLY
+  +ROLLSPRITE
+  Radius 10
+  Scale 0.9
+  +NOBLOODDECALS
+  +NOBLOOD
+  Bloodtype "Blue_Blood"
+  BloodColor "Blue"
+  States
+    {
+	Spawn:
+	Spawn1:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		TNT1 A 0 A_JumpIf(momz == 0, "Death")
+		NGNI BCD 3 //A_SetRoll(roll-25)//A_CustomMissile("ShortWallRedBlood", 0, 0, 0, 2)//
+		TNT1 A 0 A_ChangeFlag("THRUSPECIES", 0)
+		NGNI BCD 3 ///A_SetRoll(roll-25)// A_CustomMissile("ShortWallRedBlood", 0, 0, 0, 2)//
+	Loop
+
+	Death:
+	    NGNI A 1 //a_setroll(0)
+		NGNI A -1 
+	Stop
+      }
+ }

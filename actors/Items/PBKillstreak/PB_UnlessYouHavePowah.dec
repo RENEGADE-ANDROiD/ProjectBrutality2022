@@ -8,7 +8,7 @@ actor KSFreeze : PowerupGiver
 	inventory.pickupmessage "Killstreak Acquired:  You move faster!"
 	inventory.maxamount 0
 	powerup.duration -5
-	powerup.color "FF FF 00", 0.05
+	powerup.color "FF FF 00", 0.012
 	powerup.type Speed
 	-COUNTITEM
 	+FloatBob
@@ -47,7 +47,7 @@ ACTOR CoffeeTime : PowerupGiver
 	+FORCEXYBILLBOARD
 	Inventory.MaxAmount 0
 	Powerup.Type PowerSpeed
-	Powerup.Color Gold, 0.1
+	Powerup.Color Gold, 0.03
 	Inventory.PickupMessage "I think it's kickin' in !"
 	Tag "Coffee Time !"
 	States
@@ -67,8 +67,8 @@ Actor TFST : PowerupGiver
 	+FLOATBOB
 	+FORCEXYBILLBOARD
     Inventory.MaxAmount 0
-    Powerup.Type TimeFreezer
-    Powerup.Color GoldMap, 0.5
+    Powerup.Type "PB_PowerTimeSlow"
+    Powerup.Color GoldMap, 0.12
     Inventory.PickupMessage "Time freeze!"
     States
     {
@@ -111,7 +111,7 @@ Actor Crucifix : PowerupGiver
 	Inventory.MaxAmount 10
 	Inventory.InterHubAmount 10
 	Powerup.Type Frightener
-	Powerup.Color White, 0.015
+	Powerup.Color White, 0.005
 	Powerup.Duration -20
 	Inventory.PickupMessage "You got a crucifix rosary! Make 'em repent!"
 	Inventory.Icon "CRFXZ0"
@@ -141,19 +141,19 @@ actor DeflectionSphere : PowerupGiver
 	}
 }
 
-Actor PowerQuarterDamageST : PowerProtection
+Actor PB_PowerQuarterDamageST : PowerProtection
 {
 Damagefactor "Normal", 0.25
 }
 
-Actor GuardsphereST : PowerupGiver 5037
+Actor PB_GuardsphereST : PowerupGiver 23165
 {
   +CountItem
   +NoGravity
   +Inventory.AutoActivate
   +Inventory.AlwaysPickup
   Inventory.MaxAmount 0
-  Powerup.Type "PowerQuarterDamageST"
+  Powerup.Type "PB_PowerQuarterDamageST"
   Powerup.Color GreenMap, 0.015
   Inventory.PickupMessage "Guardsphere! Gain 75% Damage Reduction"
   States
@@ -173,7 +173,7 @@ ACTOR LegendSphere : PowerupGiver
   Inventory.MaxAmount 0
   Scale 0.73
   Powerup.Type "Buddha"
-  Powerup.Color 00 00 128, 0.015
+  Powerup.Color 00 00 128, 0.005
   Inventory.PickupMessage "Legend Sphere! You Can't Go Below 1 HP! Go Crazy!" 
   States
   {
@@ -194,7 +194,7 @@ ACTOR LifeshieldSphere : PowerupGiver
 	+INVENTORY.ALWAYSPICKUP
 	Powerup.Type "PowerLifeshield"
 	Powerup.Duration -20
-	Powerup.Color 255, 176, 0, 0.015
+	Powerup.Color 255, 176, 0, 0.005
 
   States
   {
@@ -207,7 +207,7 @@ ACTOR LifeshieldSphere : PowerupGiver
 ACTOR PowerLifeshield : PowerProtection
 {
   DamageFactor "Normal", 0
-  Powerup.Color 255, 176, 0, 0.015
+  Powerup.Color 255, 176, 0, 0.005
   Powerup.Duration 0x7FFFFFFF // A VERY long duration
 }
 
@@ -217,7 +217,7 @@ actor RegenSphere : PowerupGiver
 	inventory.pickupmessage "Regeneration!!."
 	inventory.maxamount 0
 	powerup.duration -30
-	powerup.color "FF FF FF", 0.015
+	powerup.color "FF FF FF", 0.005
 	powerup.type Regeneration
 	+COUNTITEM
 	+INVENTORY.AUTOACTIVATE

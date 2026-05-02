@@ -1,4 +1,4 @@
-server bool pb_experimental = false;
+server bool pb_experimental = true;
 user bool py_weaponwheel_freeze = true;
 user int py_weaponwheel_invert = 0;
 user bool py_weaponwheel_musicfade = false;
@@ -8,29 +8,20 @@ user bool pb_toggle_aim_hold = true;
 user int sd_lasers_densityoffset = 1;
 
 user int pb_bloodamount	= 2;
-// Brutal Doom 22: extra on-hit blood mist (off by default; credits see menu string)
+// Legacy extra-gore cvars are kept for old configs; 2022 Enhanced Brootality is the runtime master switch.
 user bool bdv22_mist = false;
-// Brutal Doom 22: gut prop chunks (B22G) on some player kills; on by default
 user bool bdv22_corpse_meat = true;
-// Brutal Doom 22: flying meat / ribs / micro (B22M/B22T/…); on by default
 user bool bdv22_flying_meat = true;
-// Brutal Doom 22: organs (B22O) and small brain (B22U); on by default
 user bool bdv22_organs = true;
-// Gore mix slider for extra randomized gore spawns: 0 = PB-favored, 100 = BDv22-favored
 user int bdv22_gore_mix = 50;
-// Brutal Pack V10 (BPv10) optional gore add-on. Master toggle; off by default.
+// 2022 Enhanced Brootality: full folded BDv22 / BPv10 gore mix on one switch.
+user bool pb_enhanced_brutality_2022 = false;
 user bool bpv10_enable = false;
-// BPv10 burned-corpse husk (BDT1/NJEX) on burn / fire / FlameBelch deaths
 user bool bpv10_burn_corpse = true;
-// BPv10 carbonized body (CARB/BRZ3) on plasma / disintegrate / BFG deaths
 user bool bpv10_carbonized = true;
-// BPv10 flying torso x-deaths (XMT1/XMT2)
 user bool bpv10_xdeath_torso = true;
-// BPv10 flopping organs (MANA*) on x-death
 user bool bpv10_flop_organs = true;
-// BPv10 zombie gear debris (ZGEA-D) on humanoid x-death (skipped for imps)
 user bool bpv10_zgear = true;
-// BPv10 large animated blood splat (BL00-04) on x-death
 user bool bpv10_blood_splat = true;
 // Colored puddle foot smears: if 1, use red trails only (PB3 FootPrints / "RedBloodOnly" behavior)
 server int pb_red_footprints_only = 0;
@@ -329,16 +320,15 @@ server int pb_NoPulseCannonWeapon = 0;
 server int pb_NoDemonExterminatorWeapon = 0;
 server int pb_NoMG42Weapon = 0;
 server int pb_NoMastermindChaingunWeapon = 0;
-server int pb_NoShieldSawWeapon = 0;
 server int pb_NoPB_CyberdemonRLWeapon = 0;
 server int pb_NoHellPistolerWeapon = 0;
 server int pb_NoBioAcidLauncherWeapon = 0;
 server int pb_NoMancubusFlameCannonWeapon = 0;
-server int pb_NoDTechMinigunWeapon = 0;
 server int pb_NoArgentSithWeapon = 0;
 server int pb_NoBeamKatanaWeapon = 0;
-server int pb_NoRazorjackWeapon = 0;
 server int pb_NoVorpalBladeWeapon = 0;
+server int pb_NoDragonSlayerWeapon = 0;
+server int pb_NoStormcastWeapon = 0;
 server int pb_NoMolotov = 0;
 
 server int pb_NoHelmetAnimation = 1;
@@ -686,8 +676,8 @@ server bool be_holdablesaw = true;
 server bool be_fuelhud = true;
 server int sv_fuelhud_background = 0;
 server int sv_fuelhud_size = 2;
-server int sv_fuelhud_x = 360;
-server int sv_fuelhud_y = -210;
+server int sv_fuelhud_x = 0;
+server int sv_fuelhud_y = 0;
 
 // Glory Kills (staging / equipment options)
 server bool be_GKHard = false;

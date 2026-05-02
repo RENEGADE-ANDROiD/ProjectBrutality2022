@@ -269,6 +269,8 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 	Tag "Rocket Launcher"
 	Inventory.AltHUDIcon "RKTLZ0"
 	PB_WeaponBase.respectItem "RespectRocketLauncher"
+	Weapon.SlotNumber 6
+	Weapon.SlotPriority 0
 	States
 	{
 		Steady:
@@ -1717,7 +1719,8 @@ ACTOR PB_RocketLauncher : PB_Weapon// replaces RocketLauncher
 			if (PB_GetCurrentRocketMode() == "Homing") {A_SetFlashWeaponSprite("RL84");}
 			if (PB_GetCurrentRocketMode() == "Laser") {A_SetFlashWeaponSprite("RL83");}
 		}
-		Stop
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 		
     FlashKicking:
 		TNT1 A 0 
