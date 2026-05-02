@@ -21,6 +21,10 @@ All notable changes for this working tree are documented here. Earlier history l
 - **Explosive movement** (`pb_rocketjump` / `pb_plasma_wallclimb` patterns) and **WolvusMutator** fold (`ed7f66dd2`, `910d1d46e`, `0b8eef3c4`).
 - **Pump shotgun** / **auto shotty** pickup sprites **SHTCA0** / **AUSCA0** (PB Staging) under **PumpShotgun** / **AUTOSHOTTY** asset paths.
 
+### Fixed
+
+- **ZScript quick melee / Shield Saw + Stormcast:** Glory-stagger melee (`FinisherToken` + line of fire) now runs the same **PermormGloryKill** chain as DECORATE **`PB_Weapon`** (new states on **`PB_WeaponBase`**), **close-range punch** is preferred **before** **`PB_Execute()`**, and throwing the **Shield Saw** clears stray **`GoFatality`** + **`SetPlayerProperty(0,0,0)`** so PSprites / weapon switching do not stay locked after a bad execution vs throw path.
+
 ### Changed
 
 - **Stormcast** re-enabled (slot 9): folded melee-pack ZScript + DECORATE are loaded again; BFG spawner can pick **Stormcast**; HUD + **Weapon Spawns** menu use **`pb_NoStormcastWeapon`**. Alt-fire spell branches match **Project-Brutality-Weapons-Pack** behavior (hold **Fire** while charging for orbs, **User1**/equipment for stunwalls, **Weapon Special** held for Arc of Death tiers, **Reload** tap during charge for warper, **Alt-Fire** while airborne for air lightning)—not weapon-special **wheel** `Select_SC_*` / `SCMode_*` tokens (those actors were removed).
