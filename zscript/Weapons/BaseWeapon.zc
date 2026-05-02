@@ -726,11 +726,11 @@ class PB_WeaponBase : DoomWeapon
 		};
 		static const string PBWeapUnloadedToken[] =
 		{
-			"HasUnloaded","PulseCannonHasUnloaded", "HasUnloadedRG"
+			"HasUnloaded", "HasUnloadedRG"
 		};
 		static const string PBWeapUnloadableClasses [] =
 		{
-			"PB_Weapon","PulseCannon"
+			"PB_Weapon"
 		};
 		static const statelabel PBWeapStatelabels[] =
 		{
