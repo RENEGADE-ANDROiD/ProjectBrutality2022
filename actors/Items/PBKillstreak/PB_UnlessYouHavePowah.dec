@@ -7,7 +7,7 @@ actor KSFreeze : PowerupGiver
 	SpawnID 7210
 	inventory.pickupmessage "Killstreak Acquired:  You move faster!"
 	inventory.maxamount 0
-	powerup.duration -5
+	powerup.duration -3
 	powerup.color "FF FF 00", 0.012
 	powerup.type Speed
 	-COUNTITEM
@@ -89,7 +89,7 @@ Actor AmmoSphere : PowerupGiver
 	+INVENTORY.FANCYPICKUPSOUND
 	Inventory.PickupMessage "Infinite Ammo!"
 	Inventory.PickupSound "misc/p_pkup"
-	Powerup.Duration -30
+	Powerup.Duration -20
 	Powerup.Type "PowerInfiniteAmmo"
 	Powerup.Color "255 0 0" 0.015
 	States
@@ -112,7 +112,7 @@ Actor Crucifix : PowerupGiver
 	Inventory.InterHubAmount 10
 	Powerup.Type Frightener
 	Powerup.Color White, 0.005
-	Powerup.Duration -20
+	Powerup.Duration -13
 	Inventory.PickupMessage "You got a crucifix rosary! Make 'em repent!"
 	Inventory.Icon "CRFXZ0"
 	Inventory.UseSound "crucifix/use"
@@ -193,7 +193,7 @@ ACTOR LifeshieldSphere : PowerupGiver
 	+INVENTORY.AUTOACTIVATE
 	+INVENTORY.ALWAYSPICKUP
 	Powerup.Type "PowerLifeshield"
-	Powerup.Duration -20
+	Powerup.Duration -13
 	Powerup.Color 255, 176, 0, 0.005
 
   States
@@ -216,7 +216,7 @@ actor RegenSphere : PowerupGiver
 	Game Doom
 	inventory.pickupmessage "Regeneration!!."
 	inventory.maxamount 0
-	powerup.duration -30
+	powerup.duration -20
 	powerup.color "FF FF FF", 0.005
 	powerup.type Regeneration
 	+COUNTITEM
@@ -228,6 +228,21 @@ actor RegenSphere : PowerupGiver
 		REGN ABCD 6 Bright
 		Loop
 	}
+}
+
+actor PB_KSHasteSphere : HasteSphere
+{
+	powerup.duration -20
+}
+
+actor PB_KSDoubleSphere : DoubleSphere
+{
+	Powerup.Duration -20
+}
+
+actor PB_KSInvulnerabilitySphere : InvulnerabilitySphere_
+{
+	Powerup.Duration -20
 }
 
 //Familiar creature

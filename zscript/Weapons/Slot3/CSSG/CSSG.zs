@@ -43,6 +43,7 @@ Class PB_CSSG : PB_WeaponBase
 		Steady:
 			TNT1 A 1;
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+			TNT1 A 0 SetPlayerProperty(0, 0, 0);
 			goto Ready3;
 		
 		Select:

@@ -31,7 +31,9 @@ class PB_ArgentSith : PB_WeaponBase
 	States
    {
    Steady:
-	    TNT1 A 0;
+	    TNT1 A 1;
+	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+	    TNT1 A 0 SetPlayerProperty(0, 0, 0);
 	    goto Ready;
 
    Ready:
