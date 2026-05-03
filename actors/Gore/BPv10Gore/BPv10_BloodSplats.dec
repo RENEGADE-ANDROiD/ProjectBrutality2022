@@ -6,7 +6,7 @@ ACTOR BPv10_BloodSplat0
 {
     Radius 1
     Height 1
-    Scale 0.6
+    Scale 0.58
     +CLIENTSIDEONLY
     +DONTSPLASH
     +NOBLOCKMAP
@@ -16,15 +16,15 @@ ACTOR BPv10_BloodSplat0
     +FORCEXYBILLBOARD
     +MOVEWITHSECTOR
     RenderStyle Translucent
-    Alpha 0.85
+    Alpha 0.92
     States
     {
     Spawn:
-        BL00 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        BL00 A 0 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
         BL00 BCDEFGHIJKLMNOPQR 1
         Goto Linger
     Linger:
-        BL00 R 1 A_FadeOut(0.03)
+        BL00 R 1 A_FadeOut(0.04)
         Loop
     }
 }
@@ -33,7 +33,7 @@ ACTOR BPv10_BloodSplat1
 {
     Radius 1
     Height 1
-    Scale 0.6
+    Scale 0.58
     +CLIENTSIDEONLY
     +DONTSPLASH
     +NOBLOCKMAP
@@ -43,16 +43,16 @@ ACTOR BPv10_BloodSplat1
     +FORCEXYBILLBOARD
     +MOVEWITHSECTOR
     RenderStyle Translucent
-    Alpha 0.85
+    Alpha 0.92
     States
     {
     Spawn:
-        BL01 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        BL01 A 0 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
         BL01 BCDEF 1
         BL01 HIJKLMNOPQ 1
         Goto Linger
     Linger:
-        BL01 Q 1 A_FadeOut(0.03)
+        BL01 Q 1 A_FadeOut(0.04)
         Loop
     }
 }
@@ -61,7 +61,7 @@ ACTOR BPv10_BloodSplat2
 {
     Radius 1
     Height 1
-    Scale 0.6
+    Scale 0.58
     +CLIENTSIDEONLY
     +DONTSPLASH
     +NOBLOCKMAP
@@ -71,15 +71,15 @@ ACTOR BPv10_BloodSplat2
     +FORCEXYBILLBOARD
     +MOVEWITHSECTOR
     RenderStyle Translucent
-    Alpha 0.85
+    Alpha 0.92
     States
     {
     Spawn:
-        BL02 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        BL02 A 0 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
         BL02 BCDEFGHIJKLMNOPQR 1
         Goto Linger
     Linger:
-        BL02 R 1 A_FadeOut(0.03)
+        BL02 R 1 A_FadeOut(0.04)
         Loop
     }
 }
@@ -88,7 +88,7 @@ ACTOR BPv10_BloodSplat3
 {
     Radius 1
     Height 1
-    Scale 0.6
+    Scale 0.58
     +CLIENTSIDEONLY
     +DONTSPLASH
     +NOBLOCKMAP
@@ -98,16 +98,16 @@ ACTOR BPv10_BloodSplat3
     +FORCEXYBILLBOARD
     +MOVEWITHSECTOR
     RenderStyle Translucent
-    Alpha 0.85
+    Alpha 0.92
     States
     {
     Spawn:
-        BL03 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        BL03 A 0 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
         BL03 BCDEFGHIJKLMN 1
         BL03 OPQRSTWXYZ 1
         Goto Linger
     Linger:
-        BL03 Z 1 A_FadeOut(0.03)
+        BL03 Z 1 A_FadeOut(0.04)
         Loop
     }
 }
@@ -116,7 +116,7 @@ ACTOR BPv10_BloodSplat4
 {
     Radius 1
     Height 1
-    Scale 0.6
+    Scale 0.58
     +CLIENTSIDEONLY
     +DONTSPLASH
     +NOBLOCKMAP
@@ -126,15 +126,15 @@ ACTOR BPv10_BloodSplat4
     +FORCEXYBILLBOARD
     +MOVEWITHSECTOR
     RenderStyle Translucent
-    Alpha 0.85
+    Alpha 0.92
     States
     {
     Spawn:
-        BL04 A 1 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+        BL04 A 0 NoDelay A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
         BL04 BCDEFGHIJKLMN 1
         Goto Linger
     Linger:
-        BL04 N 1 A_FadeOut(0.03)
+        BL04 N 1 A_FadeOut(0.04)
         Loop
     }
 }

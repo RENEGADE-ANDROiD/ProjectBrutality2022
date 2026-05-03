@@ -337,6 +337,8 @@ class PB_BloodmistXXBig : PB_Bloodmist
 
 class GrowingBloodPool: NashGoreBloodPlane
 {
+	override void BloodPlaneApplySpawnScale() {}
+
 	Default
 	{
 		radius 1;

@@ -26,6 +26,18 @@ Model NashGoreBloodSpot
 	//Path "graphics/decals"
 	Skin 0 "bsplat4.png"
 	FrameIndex NGMV D 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat1.png"
+	FrameIndex NGMV E 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat2.png"
+	FrameIndex NGMV F 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat3.png"
+	FrameIndex NGMV G 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat4.png"
+	FrameIndex NGMV H 0 0
 }
 
 //===========================================================================
@@ -62,6 +74,18 @@ Model NashGoreBloodSpotSmall
 	//Path "graphics/decals"
 	Skin 0 "bsplat_small4.png"
 	FrameIndex NGMV D 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small1.png"
+	FrameIndex NGMV E 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small2.png"
+	FrameIndex NGMV F 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small3.png"
+	FrameIndex NGMV G 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat_small4.png"
+	FrameIndex NGMV H 0 0
 }
 
 //===========================================================================
@@ -98,6 +122,18 @@ Model NashGoreBloodSpotCeiling
 	//Path "graphics/decals"
 	Skin 0 "bsplat4.png"
 	FrameIndex NGMV D 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat1.png"
+	FrameIndex NGMV E 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat2.png"
+	FrameIndex NGMV F 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat3.png"
+	FrameIndex NGMV G 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat4.png"
+	FrameIndex NGMV H 0 0
 }
 
 //===========================================================================

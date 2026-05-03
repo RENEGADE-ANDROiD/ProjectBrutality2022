@@ -842,10 +842,16 @@ ACTOR XDeathBaronHead
 
 actor Brutal_BloodForHeads : Brutal_Blood
 {
-Decal BloodSplat
++NODECAL
 States
 {
   Spawn:
+	    TNT1 A 0 A_JumpIf(GetCVar("pb_enhanced_brutality_2022") >= 1, "HeadDecalShiny")
+	    TNT1 A 0 A_SprayDecal("BloodSplat")
+	    Goto HeadDecalDone
+	HeadDecalShiny:
+	    TNT1 A 0 A_SprayDecal("BloodSplatPB2022")
+	HeadDecalDone:
 	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Splash")
         TNT1 AAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail", 15, 0, random (0, 360), 2, random (0, 180))
         TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 180), 2, random (0, 180))

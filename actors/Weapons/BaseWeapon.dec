@@ -1193,8 +1193,8 @@ States
 		}
 		TNT1 A 0 A_ClearOverlays(3,65)
 		TNT1 A 0 A_Gunflash("Null")
-		TNT1 A 1 PB_Execute()
 		TNT1 A 0 A_JumpIfCloser(99, "GoMeleePunchSetup")
+		TNT1 A 1 PB_Execute()
 		TNT1 A 0 A_JumpIfInventory("ShieldSaw_token", 1, "ThrowShieldSaw")
 	GoMeleePunchSetup:
 		// A_ClearOverlays defaults `safety = true` which SILENTLY SKIPS
@@ -1264,6 +1264,8 @@ States
 	
 	ThrowShieldSaw:
 		TNT1 A 0 A_JumpIfCloser(99, "GoMeleePunchSetup")
+		TNT1 A 0 A_TakeInventory("GoFatality",1)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
 		TNT1 A 0 A_JumpIfInventory("PlayerIsDead",1,"FailOverlay")
 		TNT1 A 0 A_JumpIfHealthLower(0, "FailOverlay")
 	   	TNT1 A 0
@@ -2569,35 +2571,35 @@ States
 			Goto Execution_Imp2+1
 		Execution_Cacodemon1:
 			TNT1 A 0  {
-				A_SpawnItemEx("PB_Cacodemon_Execution_1", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SpawnItemEx("PB_Zombieman_Execution_5", 38, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
 				A_SetPitch(0, SPF_INTERPOLATE);
-				A_ZoomFactor(0.8, ZOOM_INSTANT);
+				A_ZoomFactor(1.1);
 			}
 			Goto Execution_Zombieman5+1
 		Execution_Cacodemon2:
 			TNT1 A 0  {
-				A_SpawnItemEx("PB_Cacodemon_Execution_1", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SpawnItemEx("PB_Imp_Execution_1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
 				A_SetPitch(0, SPF_INTERPOLATE);
 				A_ZoomFactor(1.1, ZOOM_INSTANT);
 			}
 			Goto Execution_Imp1+1
 		Execution_Cacodemon3:
 			TNT1 A 0  {
-				A_SpawnItemEx("PB_Cacodemon_Execution_1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SpawnItemEx("PB_Imp_Execution_2", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
 				A_SetPitch(0, SPF_INTERPOLATE);
 				A_ZoomFactor(1.2, ZOOM_INSTANT);
 			}
 			Goto Execution_Imp2+1
 		Execution_Cacodemon4:
 			TNT1 A 0  {
-				A_SpawnItemEx("PB_Cacodemon_Execution_1", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SpawnItemEx("PB_Zombieman_Execution_1", 32, 0,0,0,0,0,0,SXF_NOCHECKPOSITION);
 				A_SetPitch(0, SPF_INTERPOLATE);
 				A_ZoomFactor(1.1);
 			}
 			Goto Execution_Zombieman1+1
 		Execution_Cacodemon5:
 			TNT1 A 0  {
-				A_SpawnItemEx("PB_Cacodemon_Execution_1", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				A_SpawnItemEx("PB_Zombieman_Execution_6", 41, 0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
 				A_SetPitch(0, SPF_INTERPOLATE);
 				A_ZoomFactor(1.2);
 				A_Overlay(-9, "Execution_Zombieman6_Overlay1");

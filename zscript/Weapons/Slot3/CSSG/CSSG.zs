@@ -156,6 +156,7 @@ Class PB_CSSG : PB_WeaponBase
 				return resolveState(null);
 			}
 			TNT1 A 0 PB_CheckAmmoFire();
+			TNT1 A 0 A_jumpif(countinv(invoker.ammotype2)<1,"Reload");
 			TNT1 A 0 A_jumpif(countinv(invoker.ammotype2)<2,"LeftFire");
 			TNT1 A 0 A_overlay(-31,"MuzzleFlashFull");
 			TNT1 A 0 CM_PlayFireSound();
@@ -212,6 +213,7 @@ Class PB_CSSG : PB_WeaponBase
 			}
 			TNT1 A 0 PB_CheckBarrelPlace1();
 			TNT1 A 0 PB_CheckAmmoFire();
+			TNT1 A 0 A_jumpif(countinv(invoker.ammotype2)<1,"Reload");
 			TNT1 A 0 A_jumpif(countinv(invoker.ammotype2)<2,"LeftFire");
 		RightFire:
 			TNT1 A 0 CM_PlayAltFireSound();

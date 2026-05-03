@@ -9,4 +9,7 @@ Model NashGoreFootprint
 	Model 0 "Footprint.md3"
 	Skin 0 "Footprint01.png"
 	FrameIndex NGMV A 0 0
+
+	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/Footprint/Footprint01.png"
+	FrameIndex NGMV B 0 0
 }

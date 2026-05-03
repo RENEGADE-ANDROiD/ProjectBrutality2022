@@ -784,4 +784,5 @@ remap H4F6G0 H4F6G0HD
 #include "lumps/includes/textures/Retical.inc"
 #include "lumps/includes/textures/SGLDrums.inc"
 #include "lumps/includes/textures/ExecutionIndicator.inc"
+#include "lumps/includes/textures/ExecutionImpSpriteAliases.inc"
 #include "lumps/includes/textures/PBVP.inc"

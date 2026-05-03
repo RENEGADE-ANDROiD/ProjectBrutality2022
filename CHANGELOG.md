@@ -10,6 +10,7 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Added
 
+- **Shiny Nash Gore (PBR)** fold: materials + `BloodSplatPB2022` decal pool under **`GRAPHICS/PB2022/ShinyNashGore/`** and **`materials/pb2022/shiny_nashgore/`**, toggled with **`pb_enhanced_brutality_2022`** (Nash pools / corpse blood / footprints use PBR skins; red supergore / blood cloud / head-blood / small supergore use `A_SprayDecal` between **`BloodSplat`** and **`BloodSplatPB2022`** via **`GetCVar("pb_enhanced_brutality_2022")`** in DECORATE (console/local userinfo context; not a per-remote-player read in MP).
 - Peacekeeper / Marauder **SSG** fold-in from PB3.0 (`d6bbe88db`).
 - Refreshed **SSG** sprite sets (kick, reload, fire, respect, select) including follow-up missed lumps (`e0076241d`, `f5eba713f`).
 - **Shield Saw** and **Mastermind Chaingun** integration with spawner and HUD wiring (`b5c61d297`, related `7003ef7b3`, `bb1099367`).
@@ -20,7 +21,17 @@ All notable changes for this working tree are documented here. Earlier history l
 - **Explosive movement** (`pb_rocketjump` / `pb_plasma_wallclimb` patterns) and **WolvusMutator** fold (`ed7f66dd2`, `910d1d46e`, `0b8eef3c4`).
 - **Pump shotgun** / **auto shotty** pickup sprites **SHTCA0** / **AUSCA0** (PB Staging) under **PumpShotgun** / **AUTOSHOTTY** asset paths.
 
+### Fixed
+
+- **Hellduke Glory Kill (`FatalityHellduke6Eld`):** `HDF0` strip has no **F** lump under **`SPRITES/MONSTERS/fatalitys/eld_eld_hellduke`** (only **A–E** and **I**); state now plays **A–E** then **I** so the sixth frame is valid.
+- **Pinky Glory Kill (`FatalityDemon4Eld`):** El Diablo LSLS token **4** no longer flashes past in a few tics; sequence paces like classic **FatalityDemon** (hold / CDCDCD beat) and spawns **XDeathDemonHead** before **DyingDemon**, matching the satisfying head-rip payoff of the other pinky paths.
+- **PB_CSSG:** Empty tube no longer ran the single-barrel `LeftFire` path (same `count < 2` branch as one shell loaded), which fired projectiles without removing shells after punch / muzzle-flash returns to **Fire** / **AltFire**; empty mag now jumps to **Reload** first.
+- **Gore / footprints:** Stopped **NashGoreBloodPlane** spawn logic from forcing **0.9–1.0** actor scale on **`GrowingBloodPool`** (so **`RedBloodFootPrint*`** / smear chain keep their small **DECORATE** scales instead of ballooning ~10×). Removed erroneous **`MODELS/Definitions/GreenBlood.txt`** footprint model override that used **90³** MD3 scale (huge voxels + footprint spam could exhaust VRAM/system memory and hard-crash). Corrected **NashGore** footprint hooks: **`NashGoreFootprint`** class check in **PostBeginPlay**, **`footprintFootSide`** typo in **NashGoreActor** (left/right alternation).
+- **ZScript quick melee / Shield Saw + Stormcast:** Glory-stagger melee (`FinisherToken` + line of fire) now runs the same **PermormGloryKill** chain as DECORATE **`PB_Weapon`** (new states on **`PB_WeaponBase`**), **close-range punch** is preferred **before** **`PB_Execute()`**, and throwing the **Shield Saw** clears stray **`GoFatality`** + **`SetPlayerProperty(0,0,0)`** so PSprites / weapon switching do not stay locked after a bad execution vs throw path.
+
 ### Changed
+
+- **Imp third-person fatality art (`FTCI*`):** Moved **`FTCIA0`–`FTCIL0`** from **`SPRITES/FATALITY/CyberDemon/`** to **`SPRITES/FATALITY/Imp/`** and removed duplicate copies under **`SPRITES/Fatality (Player)/Imp Fatality (Player)/`** so Imp ground-fatality sprites are not filed with Cyberdemon assets. **`FTCY*`** (Cyberdemon finisher in **`NEWPLAYE.dec`**) stays under **`CyberDemon`**.
 
 - **Stormcast** re-enabled (slot 9): folded melee-pack ZScript + DECORATE are loaded again; BFG spawner can pick **Stormcast**; HUD + **Weapon Spawns** menu use **`pb_NoStormcastWeapon`**. Alt-fire spell branches match **Project-Brutality-Weapons-Pack** behavior (hold **Fire** while charging for orbs, **User1**/equipment for stunwalls, **Weapon Special** held for Arc of Death tiers, **Reload** tap during charge for warper, **Alt-Fire** while airborne for air lightning)—not weapon-special **wheel** `Select_SC_*` / `SCMode_*` tokens (those actors were removed).
 
@@ -36,6 +47,7 @@ All notable changes for this working tree are documented here. Earlier history l
 - Menus, tooltips, **Glory Kills** options, killstreak messaging (`e2687bc02`, `8697c2951`, `10e37b923`).
 - Wall-detection lowering and **Tilt++** / tactical motion (`5b67a2849`, `6dc1cd6c1`, `1edce0b20`, `eb942028f`).
 - Gore handlers (BDv22 merge, BPv10, Nash, death-boost) and **pb_enhanced_brutality_2022** integration touches (`960e3aa36`, `fc291df83`, `08cde24c6`, `79140dc1c`).
+- **PB_DeathGoreBoostHandler**: extra death pools/trails now randomly mix **NashGoreBloodSpot** / **NashGoreBloodSpotSmall** (shiny Nash model path when Enhanced Brootality is on) and **NashGoreClassicBloodTrail** with **GrowingBloodPool**, **BigBloodSpot**, and **PB_SquirtingBloodTrail**.
 - Branding: killstreak icon **UAC** instead of UT-style (`e0fdfaa8e`); title / logo assets (`4e9f42267`, `2a288a08d`, `4eb7ae9bc`).
 - **Weapon slot cycling:** **PlayerPawnBase** overrides **PickNextWeapon** / **PickPrevWeapon** (higher wrap budget; fallback when the ready weapon is missing from the slot table).
 - **Pump shotgun:** states use **SH0G** sprite prefix to match shipped **PumpShotgun** lumps; full PB Staging **PumpShotgun** sprite tree synced to the repo.

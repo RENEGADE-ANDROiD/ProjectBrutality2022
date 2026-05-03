@@ -25,6 +25,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Items/PBKillstreak/PB_PowerTimeSlow.zc"
 #include "zscript/Items/PBKillstreak/PB_Killstreak_Handler.zc"
 #include "zscript/Items/PBKillstreak/PB_UnlessYouHavePowah_Powerups.zs"
+#include "zscript/Gore/PB_EnhancedBrutality2022.zc"
 #include "zscript/Gore/NashGore/NashGoreCommon.zc"
 #include "zscript/Gore/NashGore/NashGoreStatics.zc"
 #include "zscript/Gore/NashGore/NashGoreHandler.zc"
@@ -39,7 +40,6 @@ const MAXITERATIONS = 32676;
 #include "zscript/Gore/NashGore/NashGoreActor.zc"
 #include "zscript/Gore/NashGore/NashGoreMenu.zc"
 #include "zscript/Gore/PBBlood.zc"
-#include "zscript/Gore/PB_EnhancedBrutality2022.zc"
 #include "zscript/Gore/BDv22GoreHandler.zc"
 // BDv22GoreMist (Brutal Doom 22; extends PB_Bloodmist): after PBBlood, before PBGore
 #include "zscript/Gore/BDv22Gore/BDv22GoreMist.zc"

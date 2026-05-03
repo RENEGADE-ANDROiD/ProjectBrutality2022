@@ -6,7 +6,7 @@
 // Original sprites by AWEZ (Brutal Pack V10).
 //
 // Burn deaths roll BPv10_BurnedHusk; plasma/disintegrate roll BPv10_CarbonizedBody;
-// x-death rolls flying torso + flop organs + zombie-gear debris + a big blood splat.
+// x-death adds flying torso, flop organs, zombie gear debris (grunt). Floor splat also rolls on non-x deaths.
 
 class BPv10GoreHandler : EventHandler
 {
@@ -127,6 +127,23 @@ class BPv10GoreHandler : EventHandler
 			}
 		}
 
+		// Floor blood splat: visible on typical kills; xdeath gets a higher roll. (Gibs below stay xdeath-only.)
+		int splatPct = xdeath ? 62 : 32;
+		if (random(0, 99) < PB_EnhancedBrutality2022.ScaleDeathChancePct(splatPct, k.player))
+		{
+			int p = random(0, 4);
+			String c = p == 0 ? "BPv10_BloodSplat0" :
+				p == 1 ? "BPv10_BloodSplat1" :
+				p == 2 ? "BPv10_BloodSplat2" :
+				p == 3 ? "BPv10_BloodSplat3" : "BPv10_BloodSplat4";
+			Class<Actor> cls = c;
+			if (cls)
+			{
+				Actor a = Actor.Spawn(cls, (t.pos.x, t.pos.y, t.floorz + 0.25), NO_REPLACE);
+				if (a) a.angle = t.angle + frandom(-20, 20);
+			}
+		}
+
 		if (!xdeath) return;
 
 		if (random(0, 99) < PB_EnhancedBrutality2022.ScaleDeathChancePct(35, k.player))
@@ -163,20 +180,6 @@ class BPv10GoreHandler : EventHandler
 					Actor a = Actor.Spawn(cls, (base.x, base.y, base.z + 4), NO_REPLACE);
 					if (a) a.vel = (frandom(-6, 6), frandom(-6, 6), frandom(3, 8));
 				}
-			}
-		}
-		if (random(0, 99) < PB_EnhancedBrutality2022.ScaleDeathChancePct(40, k.player))
-		{
-			int p = random(0, 4);
-			String c = p == 0 ? "BPv10_BloodSplat0" :
-				p == 1 ? "BPv10_BloodSplat1" :
-				p == 2 ? "BPv10_BloodSplat2" :
-				p == 3 ? "BPv10_BloodSplat3" : "BPv10_BloodSplat4";
-			Class<Actor> cls = c;
-			if (cls)
-			{
-				Actor a = Actor.Spawn(cls, (t.pos.x, t.pos.y, t.pos.z + 1), NO_REPLACE);
-				if (a) a.angle = random(0, 359);
 			}
 		}
 	}
