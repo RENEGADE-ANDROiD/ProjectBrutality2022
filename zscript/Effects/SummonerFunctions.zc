@@ -1,0 +1,144 @@
+mixin class SummonerFunctions
+{
+	Array<Actor> MonstersArray;
+	int Summoned;
+
+	virtual void SpawnReinforcement(Class<Actor> EnemyName, int px, int py, int pz, Actor caller, Actor mastern, Actor targetn, StateLabel StateName, int Rang, int Rpitch, String sp, int ta, int nf, int madd)
+	{
+		Vector2 ofs = RotateVector((px, py), caller.angle);
+		Vector3 spawnpos = Vec3Offset(ofs.x, ofs.y, pz);
+
+		caller.bSolid = false;
+		Actor enemy = Spawn(EnemyName, spawnpos);
+		if (enemy == null)
+		{
+			caller.bSolid = true;
+			return;
+		}
+		enemy.bSolid = false;
+		enemy.bThruactors = true;
+		enemy.bNoTeleport = true;
+
+		if (mastern != null)
+			enemy.master = mastern;
+
+		if (targetn != null)
+			enemy.target = targetn;
+
+		if (sp != "")
+			enemy.species = sp;
+
+		if (ta != 0)
+			enemy.bTHRUSPECIES = true;
+
+		if (nf != 0)
+			enemy.bNOINFIGHTING = true;
+
+		if (madd != 0)
+		{
+			MonstersArray.Push(enemy);
+			Summoned++;
+		}
+
+		Vector2 move = AngleToVector(0, enemy.radius * 1.5);
+		Vector2 ptry = enemy.pos.xy + move;
+		if (!enemy.TryMove(ptry, enemy.height))
+		{
+			enemy.ClearCounters();
+			enemy.DamageMobj(self, self, TELEFRAG_DAMAGE, 'SilentDeath');
+			enemy.bSolid = true;
+			enemy.bThruactors = false;
+			enemy.bNoTeleport = false;
+			return;
+		}
+
+		if (enemy.TestMobjLocation() == false)
+		{
+			enemy.ClearCounters();
+			enemy.DamageMobj(self, self, TELEFRAG_DAMAGE, 'SilentDeath');
+			enemy.bSolid = true;
+			enemy.bThruactors = false;
+			enemy.bNoTeleport = false;
+			return;
+		}
+
+		if (enemy.target != null)
+		{
+			caller.bSolid = false;
+			enemy.bSolid = true;
+			enemy.bThruactors = false;
+			enemy.bNoTeleport = false;
+			if (StateName == "SkullAttack")
+			{
+				if (Rang == 0 && Rpitch == 0)
+				{
+					enemy.A_SkullAttack();
+					caller.bSolid = true;
+				}
+				else
+				{
+					enemy.angle = enemy.angle + random(-1 * Rang, Rang);
+					enemy.pitch = enemy.pitch + random(-1 * Rpitch, Rpitch);
+					enemy.A_Recoil(-1 * enemy.Speed);
+					caller.bSolid = true;
+				}
+			}
+			else
+			{
+				enemy.A_FaceTarget();
+				caller.bSolid = true;
+				return;
+			}
+		}
+		else
+			return;
+	}
+
+	void CheckMonstersArray()
+	{
+		if (Summoned > 0 && MonstersArray.Size() != 0)
+		{
+			for (int i = 0; i < MonstersArray.Size(); i++)
+			{
+				let mon = MonstersArray[i];
+
+				if (!mon || mon.health <= 0 || mon.InStateSequence(self.curstate, self.ResolveState("Death.Execution")))
+				{
+					MonstersArray.delete(i);
+					MonstersArray.ShrinkToFit();
+					Summoned--;
+				}
+			}
+
+			if (MonstersArray.Size() == 0)
+				Summoned = 0;
+		}
+	}
+
+	virtual void CountReinforcements(Class<Actor> EnemyName, int limit, StateLabel StateName)
+	{
+		if (limit == 0)
+			SetState(FindState(StateName));
+
+		if (limit > 0)
+		{
+			int count = 1;
+			ThinkerIterator it = ThinkerIterator.Create(EnemyName);
+			Thinker othink;
+
+			while ((othink = it.Next()))
+			{
+				count++;
+				if (count > limit)
+					SetState(FindState(StateName));
+			}
+		}
+	}
+
+	double TrDistance(Actor a, Actor b)
+	{
+		if (a && b)
+			return a.Distance3D(b);
+		return 0;
+	}
+}

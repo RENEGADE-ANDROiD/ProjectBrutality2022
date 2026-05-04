@@ -31,6 +31,7 @@
 #include "lumps/includes/gldefs/MolotovCocktail.inc"
 #include "lumps/includes/gldefs/CrueltyPhysicalBonuses.inc"
 #include "lumps/includes/gldefs/HelmetDrops.inc"
+#include "lumps/includes/gldefs/D3Maledict.inc"
 
 flickerlight2 FT_GroundFire
 {

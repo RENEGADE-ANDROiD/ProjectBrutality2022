@@ -332,6 +332,7 @@ DoomEdNums
 	30107 = Director
 	30108 = Hellduke
 	30109 = Hellsmith
+	30110 = D3Maledict
 	30130 = Helemental
 	30135 = Hierophant
 	// Weapons pack — Baalgar Demon (Doom1-style cyber boss, separate from PB_Cyberdemon)

@@ -307,7 +307,7 @@ class PB_WeaponBase : DoomWeapon
 			if(GetPointer(AAPTR_PLAYER_GETTARGET) != NULL)
 			{
 				
-				if(GetPointer(AAPTR_PLAYER_GETTARGET) is "PB_Monster")
+				if(GetPointer(AAPTR_PLAYER_GETTARGET) is "PB_Monster" || GetPointer(AAPTR_PLAYER_GETTARGET) is "D3Maledict")
 				{
 					LookExParams look;
 					look.FOV = 110;

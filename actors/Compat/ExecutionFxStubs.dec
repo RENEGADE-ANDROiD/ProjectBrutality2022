@@ -107,10 +107,6 @@ ACTOR XDeathHeadD3HellGuardian : XDeathArm1 {}
 ACTOR XDeathArmD3HellGuardian : XDeathArm1 {}
 ACTOR BrutalizedD3HellGuardianStop3 : XDeathArm1 {}
 
-ACTOR XDeathProfD3Maledict : XDeathArm1 {}
-ACTOR XDeathHeadD3Maledict : XDeathArm1 {}
-ACTOR DeadD3MaledictNoHead : XDeathArm1 {}
-
 ACTOR RahovartExPart1 : XDeathArm1 {}
 ACTOR RahovartExPart2 : XDeathArm1 {}
 ACTOR RahovartExPart3 : XDeathArm1 {}
