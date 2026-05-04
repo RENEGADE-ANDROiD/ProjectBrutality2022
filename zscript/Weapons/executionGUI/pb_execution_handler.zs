@@ -76,7 +76,7 @@ class pb_ExecutionHandler : EventHandler
 			int targetHealth = target.health;
 
 			
-			if((targetHealth <= targetMaxHealth*0.2 || targetHealth < 65) && (target is "PB_Monster" || target is "D3Maledict") && getTargetDistance() < 250)
+			if((targetHealth <= targetMaxHealth*0.2 || targetHealth < 65) && (target is "PB_Monster" || target is "D3Maledict" || target is "ObsidianRavager") && getTargetDistance() < 250)
 			{
 				draw(target, event);
 			}

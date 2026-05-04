@@ -1610,7 +1610,7 @@ extend class PB_WeaponBase
 		    P1NP KLM 1;
 		    TNT1 A 0 A_SetRoll(0)  ;   
 		    TNT1 A 0 {
-		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_Overlay(9,"Execution_ZoZ_Overlay1");
 		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
 		    }
 		    TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
@@ -2141,7 +2141,7 @@ extend class PB_WeaponBase
 		    P1NP KLM 1;
 		    TNT1 A 0 A_SetRoll(0)  ;   
 		    TNT1 A 0 {
-		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_Overlay(9,"Execution_ZoZ_Overlay1");
 		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
 		    }
 		    TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
@@ -2691,7 +2691,7 @@ extend class PB_WeaponBase
 		    P1NP KLM 1;
 		    TNT1 A 0 A_SetRoll(0)  ;   
 		    TNT1 A 0 {
-		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_Overlay(9,"Execution_ZoZ_Overlay1");
 		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
 		    }
 		    TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
@@ -3219,7 +3219,7 @@ extend class PB_WeaponBase
 		    P1NP KLM 1;
 		    TNT1 A 0 A_SetRoll(0)  ;   
 		    TNT1 A 0 {
-		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_Overlay(9,"Execution_ZoZ_Overlay1");
 		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
 		    }
 		    TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
@@ -3747,7 +3747,7 @@ extend class PB_WeaponBase
 		    P1NP KLM 1;
 		    TNT1 A 0 A_SetRoll(0)  ;   
 		    TNT1 A 0 {
-		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_Overlay(9,"Execution_ZoZ_Overlay1");
 		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
 		    }
 		    TNT1 A 0 A_StartSound("KICK", CHAN_AUTO);
@@ -4266,7 +4266,7 @@ extend class PB_WeaponBase
 		    P1NP KLM 1;
 		    TNT1 A 0 A_SetRoll(0)  ;   
 		    TNT1 A 0 {
-		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_Overlay(9,"Execution_ZoZ_Overlay1");
 		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
 		    }
 			TNT1 A 0  {
@@ -4446,7 +4446,7 @@ extend class PB_WeaponBase
 		    P1NP KLM 1;
 		    TNT1 A 0 A_SetRoll(0)  ;   
 		    TNT1 A 0 {
-		    A_Overlay(9,"Execution_ZoZ_Overlay1:");
+		    A_Overlay(9,"Execution_ZoZ_Overlay1");
 		    A_OverlayFlags(PSP_WEAPON,PSPF_PLAYERTRANSLATED, true);
 		    }
 			TNT1 A 0  {

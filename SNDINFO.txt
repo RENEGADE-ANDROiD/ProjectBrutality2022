@@ -5211,3 +5211,58 @@ MLDBT01 "sounds/monsters/D3Maledict/MLDBT01.wav"
 $volume MLDBT01 1.0
 $rolloff MLDBT01 100 1000
 
+// --- Obsidian Ravager + Ravager portals (Monster Pack fold) ---
+OBPRTLP "sounds/effects/portals/OBPRTLP.wav"
+$volume OBPRTLP 1.0
+$rolloff OBPRTLP 100 1100
+OBPRTOP "sounds/effects/portals/OBPRTOP.wav"
+$volume OBPRTOP 1.0
+$rolloff OBPRTOP 100 1100
+OBPRTCL "sounds/effects/portals/OBPRTCL.wav"
+$volume OBPRTCL 1.0
+$rolloff OBPRTCL 100 1100
+
+$random Obsidian/Alert { STALR1 STALR2 }
+$random Obsidian/Attack { STATK1 STATK2 STATK2 }
+$random Obsidian/Death { STDIE1 STDIE2 }
+$random Obsidian/Idle { STIDL1 STIDL2 }
+$random Obsidian/Melee { STMEL1 STMEL2 }
+$random Obsidian/Pain { STPAI1 STPAI2 STPAI3 STPAI4 }
+$random Obsidian/Swipe { STSWI1 STSWI2 }
+$random Obsidian/Missile { STMIS1 STMIS2 STMIS3 STMIS4 }
+$random Obsidian/Impact { STBAL1 STBAL2 STBAL3 STBAL4 }
+$random Obsidian/TrapDeath { STRPD1 STRPD2 }
+$random Obsidian/TrapSpawn { STRPS1 STRPS2 }
+$random Obsidian/ShadowStrike { STATK4 }
+
+STALR1 "sounds/monsters/ObsidianRavager/VSTALRT1.ogg"
+STALR2 "sounds/monsters/ObsidianRavager/VSTALRT2.ogg"
+STATK1 "sounds/monsters/ObsidianRavager/VSTATCK1.ogg"
+STATK2 "sounds/monsters/ObsidianRavager/VSTATCK2.ogg"
+STATK3 "sounds/monsters/ObsidianRavager/VSTATCK3.ogg"
+STATK4 "sounds/monsters/ObsidianRavager/VSTATCK4.ogg"
+STDIE1 "sounds/monsters/ObsidianRavager/VSTDETH1.ogg"
+STDIE2 "sounds/monsters/ObsidianRavager/VSTDETH2.ogg"
+STIDL1 "sounds/monsters/ObsidianRavager/VSTIDLE1.ogg"
+STIDL2 "sounds/monsters/ObsidianRavager/VSTIDLE2.ogg"
+STMEL1 "sounds/monsters/ObsidianRavager/VSTMELE1.ogg"
+STMEL2 "sounds/monsters/ObsidianRavager/VSTMELE2.ogg"
+STPAI1 "sounds/monsters/ObsidianRavager/VSTPAIN1.ogg"
+STPAI2 "sounds/monsters/ObsidianRavager/VSTPAIN2.ogg"
+STPAI3 "sounds/monsters/ObsidianRavager/VSTPAIN4.ogg"
+STPAI4 "sounds/monsters/ObsidianRavager/VSTPAIN3.ogg"
+STSWI1 "sounds/monsters/ObsidianRavager/VSTSWIP1.ogg"
+STSWI2 "sounds/monsters/ObsidianRavager/VSTSWIP2.ogg"
+STMIS1 "sounds/monsters/ObsidianRavager/VSTMISS1.ogg"
+STMIS2 "sounds/monsters/ObsidianRavager/VSTMISS2.ogg"
+STMIS3 "sounds/monsters/ObsidianRavager/VSTMISS3.ogg"
+STMIS4 "sounds/monsters/ObsidianRavager/VSTMISS4.ogg"
+STBAL1 "sounds/monsters/ObsidianRavager/VSTBALL1.ogg"
+STBAL2 "sounds/monsters/ObsidianRavager/VSTBALL2.ogg"
+STBAL3 "sounds/monsters/ObsidianRavager/VSTBALL3.ogg"
+STBAL4 "sounds/monsters/ObsidianRavager/VSTBALL4.ogg"
+STRPD1 "sounds/monsters/ObsidianRavager/VSTRAPD1.ogg"
+STRPD2 "sounds/monsters/ObsidianRavager/VSTRAPD2.ogg"
+STRPS1 "sounds/monsters/ObsidianRavager/VSTRAPS1.ogg"
+STRPS2 "sounds/monsters/ObsidianRavager/VSTRAPS2.ogg"
+
