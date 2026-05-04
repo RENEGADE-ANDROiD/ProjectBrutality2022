@@ -360,6 +360,7 @@ ACTOR LeverAction : PB_Weapon
 				}
 				else {
 					SetPlayerProperty(0,0,0);
+					SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
 				}
 				A_SetRoll(0);
 				PB_HandleCrosshair(76);

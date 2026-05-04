@@ -34,6 +34,7 @@ class PB_BeamKatana : PB_WeaponBase
 	    TNT1 A 1;
 	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 	    TNT1 A 0 SetPlayerProperty(0, 0, 0);
+	    TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 	    Goto Ready;
 
    Ready:
@@ -163,7 +164,11 @@ class PB_BeamKatana : PB_WeaponBase
 		}
 		TNT1 A 0 {
 			if (CountInv("GoFatality") >= 1) SetPlayerProperty(0, 1, 0);
-			else SetPlayerProperty(0, 0, 0);
+			else
+			{
+				SetPlayerProperty(0, 0, 0);
+				SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+			}
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel");
