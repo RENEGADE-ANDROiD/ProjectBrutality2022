@@ -1,0 +1,1304 @@
+Class ObsidianTrapSummoned: Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+	}
+}
+
+Class ObsidianRavager: Actor
+{
+  int Shielded;
+  int CanCastTrap;
+  int NumTeleports;
+  float Dist;
+  float ProjectileHeight;
+  int BossState;
+  String BallSmallName;
+  String BallSmallNameNG;
+  String BallBigName;
+  String BallBigNameNG;
+  String CrystalTrapName;
+
+  int DontAttackChance;
+
+  int MarksSummoned;
+  int MarkIndex;
+  string MarkName;
+  static const string MarkNames[] =
+{
+  "ObsidianMark01",
+  "ObsidianMark02",
+  "ObsidianMark03",
+  "ObsidianMark04"
+};
+Mixin SummonerFunctions;
+Default
+  {
+  Tag "Obsidian Ravager";
+  Health 20000;
+  Radius 30;
+  Height 88;
+  Mass 20000;
+  Speed 14;
+  Monster;
+  Scale 0.7;
+  MeleeRange 84;
+  +FLOORCLIP;
+  +BUDDHA;
+  +DONTGIB;
+  +NOBLOODDECALS
+  BloodType "NullBlood";
+  +BOSS;
+  +NODAMAGETHRUST;
+  -PUSHABLE;
+  +DONTRIP;
+  +NOINFIGHTING;
+  +NORADIUSDMG;
+  DamageFactor "Crush", 10.0;
+  DamageFactor "TeleportRemover", 0.0;
+  DamageFactor "GibRemoving", 0.0;
+  DamageFactor "CauseObjectsToSplash", 0.0;
+  DamageFactor "Head", 1.0;
+  DamageFactor "MinorHead", 1.0;
+  DamageFactor "SSG", 1.0;
+  DamageFactor "Avoid", 0.0;
+  DamageFactor "KillMe", 0.0;
+  DamageFactor "Fatality", 0.8;
+  DamageFactor "Burn", 0.1;
+  DamageFactor "Flame", 0.1;
+  DamageFactor "Fire", 0.1;
+  DamageFactor "Acid", 0.35;
+  DamageFactor "ExtremePunches", 3.0;
+  DamageFactor "Disintegrate", 0.25;
+  DamageFactor "GreenFire", 0.25;
+  DamageFactor "Bullet", 0.5;
+  DamageFactor "Railgun", 1.0;
+  DamageFactor "CutLess", 0.25;
+  DamageFactor "Explosive", 0.6;
+  DamageFactor "SuperKick", 0.6;
+  DamageFactor "ExplosiveImpact", 0.5;
+  DamageFactor "Shotgun", 0.6;
+  DamageFactor "Freeze", 0.6;
+  DamageFactor "Nailgun", 0.5;
+  DamageFactor "GibRemoving", 0.0;
+  DamageFactor "Crucible", 1.0;
+  DamageFactor "GloryFire", 0.25;
+  DamageFactor "BloodPunch", 0.8;
+  Painchance 10;
+  PainChance "Fire", 0;
+  PainChance "Burn", 0;
+  PainChance "Flame", 0;
+  Painchance "Explosive", 50;
+  PainChance "Siphon", 255;
+  PainChance "ShieldBreak", 256;
+  SeeSound "Obsidian/Alert";
+  PainSound "Obsidian/Pain";
+  DeathSound "Obsidian/Death";
+  ActiveSound "Obsidian/Idle";
+  Obituary "%o was killed by an Obsidian Ravager.";
+  HitObituary "%o was killed by an Obsidian Ravager.";
+  Species "ObsidianRavager";
+  PainChance "BloodPunch", 256;
+  DropItem "SlayerPower", 60;
+  DropItem "Demonpickup2", 256;
+  DropItem "Demonpickup2", 256;
+  DropItem "Demonpickup2", 256;
+  DropItem "Demonpickup2", 256;
+  DropItem "Crucible", 60;
+  PainChance "GloryFire", 64;
+  PainChance "BloodPunch", 255;
+  WoundHealth 1100;
+}
+
+	override void Tick()
+	{
+		Super.Tick();
+		CheckMonstersArray();
+		if(BossState == 1 && Self.Health < 16000 && !InStateSequence(self.curstate, self.ResolveState("FalseDeath1")) && !InStateSequence(self.curstate, self.ResolveState("FalseDeath2")))
+			{SetState(FindState("FalseDeath1"));}
+
+		else if (BossState == 2 && Self.Health < 10000 && !InStateSequence(self.curstate, self.ResolveState("FalseDeath1")) && !InStateSequence(self.curstate, self.ResolveState("FalseDeath2")))
+			{SetState(FindState("FalseDeath2"));}
+		else return;
+	}
+
+  States
+	{
+	Wound:
+
+		"####" "#" 1
+		{
+			if(GetCvar("be_ExecutionsON"))
+			{
+				if(countinv("FinisherToken")==0) //if it isnt healing already
+				{								//will heal and give the token that indicates it's executable
+					A_SpawnItemEx("BaronHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
+					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+				}
+				
+				if(GetCvar("be_MonsterStagger")==1) //will the monsters stagger at all?
+				{
+					return ResolveState("Stagger");	//stays there for a few seconds
+				}
+				else
+				{
+					return ResolveState(null);
+				}
+			}
+			return ResolveState(null);
+		}
+		Goto See;
+	Stagger:
+		0ORF T 0
+		{
+			if(getcvar("be_ExecutionHighlight")==1)
+			{	return ResolveState("PrepareStaggerHighlight");}
+			else
+			{	return ResolveState("StagLooper");	}
+		}
+		Goto StagLooper;
+	PrepareStaggerHighlight:
+		//RFTR X 0
+		0ORF T 0;
+		Goto StagLooper;
+	
+	StagLooper:
+		"####" "#" 4
+		{
+			if(!countinv("FinisherToken"))
+			{
+				return ResolveState("See");
+			}
+			if(getcvar("be_NoisyStagger") && countinv("PainSoundToken"))
+			{ 
+				A_Pain(); 
+				A_TakeInventory("PainSoundToken");
+			}
+			return ResolveState(null);
+		}
+		//"####" "#" 0 { A_SpawnItem ("HeadshotTarget4", 0, 40,0); A_SpawnItem ("LegTarget4", 10); }
+		"####" "#" 0;
+		Loop;
+
+	Death.Crucible:
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataMax",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
+	Goto Death;
+
+	Death.GloryFire:
+		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
+	Goto Death;
+
+	Death.BloodPunch:
+		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1);
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH);
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH);
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH);
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH);
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataMax",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
+	Goto Death;
+
+	Pain.GloryFire:
+		TNT1 A 0 A_Jump(192, "See");
+		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
+	Goto See;
+
+	Pain.BloodPunch:
+		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1);
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH);
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH);
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH);
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH);
+	Goto Pain;
+
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0
+		{
+		BossState = 1;
+		ProjectileHeight = 59;
+		BallSmallName = "ChaosBarrage";
+		BallSmallNameNG = "ChaosBarrageNoGrav";
+		BallBigName = "ChaosBall";
+		BallBigNameNG = "ChaosBallNoGrav";
+		CrystalTrapName = "SlowCrystalTrap01";
+		DontAttackChance = 128;
+		}
+	SpawnLoop:
+		VSTL IJK 10 Bright A_Look;
+	Loop;
+
+	See:
+		TNT1 A 0;
+	SeeContinue:
+		TNT1 A 0;
+		TNT1 A 0
+			{
+				if (Summoned == 0 && BossState == 3)
+				{
+				A_KillChildren ("ShieldBreak", KILS_FOILINVUL, "ChaosShieldEffect");
+				bINVULNERABLE = false;
+				Shielded = 0;
+				}
+			}
+		TNT1 A 0 A_StartSound("Obsidian/Swipe");
+		VSTL A 7 Bright A_Chase;
+		VSTL B 7 Bright A_Chase;
+		VSTL C 7 Bright A_Chase;
+		VSTL D 7 Bright A_Chase;
+		TNT1 A 0 A_StartSound("Obsidian/Swipe");
+		TNT1 A 0 A_JumpIf (BossState != 2, 2);
+		TNT1 A 0 A_Jump(64, "Teleport");
+		TNT1 A 0;
+		VSTL E 7 Bright A_Chase;
+		VSTL F 7 Bright A_Chase;
+		VSTL G 7 Bright A_Chase;
+		VSTL H 7 Bright A_Chase;
+		TNT1 A 0 A_JumpIf (BossState != 2, 2);
+		TNT1 A 0 A_Jump(64, "Teleport");
+		TNT1 A 0 A_Jump (DontAttackChance, "SeeContinue");
+		TNT1 A 0 A_JumpIfTargetInLOS("Missile", 0, 180);
+		TNT1 A 0;
+	Loop;
+
+	Teleport:
+		TNT1 A 0 A_UnSetshootable;
+		TNT1 A 0 {bNOPAIN = true;}
+		TNT1 A 0 {bTHRUACTORS = true;}
+		TNT1 A 0 {bFLOORHUGGER = true;}
+		TNT1 A 0 {bINVULNERABLE = true;}
+		VSTL I 1 Bright A_SpawnItemEx ("RavagerTeleportEffect", 0, 0, 59, 0, 0, 0, SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_KillChildren ("ShieldBreak", KILS_FOILINVUL, "ChaosShieldEffect");
+		VSTL J 1 Bright A_SetTranslucent(0.5);
+		VSTL J 1 Bright A_SetTranslucent(0.0);
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAA 1 { A_ExtChase(0,0,1,1); A_recoil(random (-10, -2));}
+		TNT1 A 0 A_Jump(128,25);
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAA 1 { A_ExtChase(0,0,1,1); A_recoil(random (-10, -2));}
+		TNT1 A 0 A_ScaleVelocity(0);
+		VSTL I 1 Bright A_SpawnItemEx ("RavagerTeleportEffect", 0, 0, 59, 0, 0, 0, SXF_NOCHECKPOSITION);
+		VSTL J 1 Bright A_SetTranslucent(0.5);
+		VSTL J 1 Bright A_SetTranslucent(1.0);
+		VSTL I 1 Bright;
+		TNT1 A 0 {bINVULNERABLE = false;}
+		TNT1 A 0 {bFLOORHUGGER = false;}
+		TNT1 A 0 {bTHRUACTORS = false;}
+		TNT1 A 0 {bNOPAIN = false;}
+		TNT1 A 0 A_Setshootable;
+		TNT1 A 0 A_DamageChildren(1, "MustTeleport", DMSS_FOILINVUL|DMSS_NOPROTECT|DMSS_EXSPECIES);
+	goto See;
+
+
+	FalseDeath1:
+		TNT1 A 0;
+		TNT1 A 0 A_ScaleVelocity(0);
+		TNT1 A 0 {bINVULNERABLE = true; bSOLID = false;}
+		TNT1 A 0 {Height = 25;}
+		VSTK A 8 Bright;
+		VSTK B 8 Bright A_Scream;
+		VSTK C 8 Bright;
+		VSTK D 8 Bright;
+		VSTK E 8 Bright;
+		VSTK F 105;
+		TNT1 A 0 A_SpawnItemEx("ChaosStrike1", 0, random(-15,15), 0);
+		VSTK F 70;
+		TNT1 A 0 A_SpawnItemEx("ChaosStrike1", 0, random(-15,15), 0);
+		TNT1 AAAAA 0 A_SpawnItemEx("RedLightningTrial_Small", 0, random(-20,20), random(15,45));
+		VSTK F 35;
+		TNT1 A 0 A_SpawnItemEx("ChaosStrike1", 0, random(-15,15), 0);
+		TNT1 AAAAAAAA 0 A_SpawnItemEx("RedLightningTrial_Small", 0, random(-20,20), random(15,45));
+		VSTK F 35;
+		TNT1 A 0 A_SpawnItemEx("ChaosStrike1", 0, random(-15,15), 0);
+		TNT1 AAAAAAAAAAA 0 A_SpawnItemEx("RedLightningTrial_Small", 0, random(-20,20), random(15,45));
+		VSTK F 8;
+		VSTK E 4;
+		VSTK D 4;
+		VSTK C 4;
+		TNT1 A 0 A_SetScale (0.75, 0.75);
+		VSTK B 4;
+		TNT1 A 0 A_SetScale (0.8, 0.8);
+		TNT1 A 0 {Height = 101;}
+		VSTK A 4;
+		TNT1 A 0 A_FaceTarget;
+		TNT1 A 0 {bINVULNERABLE = false; bSOLID = true; bSHOOTABLE = true;}
+		TNT1 A 0
+			{
+			BossState = 2;
+			ProjectileHeight = 77;
+			BallBigName = "ChaosBallBig";
+			BallBigNameNG = "ChaosBallBigNoGrav";
+			CrystalTrapName = "RandomizedCrystalTrap01";
+			Health = 14000;
+			DontAttackChance = 80;
+			}
+	Goto See;
+
+	FalseDeath2:
+		TNT1 A 0;
+		TNT1 A 0 A_ScaleVelocity(0);
+		TNT1 A 0 {bINVULNERABLE = true; bSOLID = false;}
+		TNT1 A 0 {Height = 28;}
+		VSTK A 8 Bright;
+		VSTK B 8 Bright A_Scream;
+		VSTK C 8 Bright;
+		VSTK D 8 Bright;
+		VSTK E 8 Bright;
+		VSTK F 105;
+		TNT1 A 0 A_SpawnItemEx("ChaosStrike1", 0, random(-15,15), 0);
+		VSTK F 70;
+		TNT1 A 0 A_SpawnItemEx("ChaosStrike1", 0, random(-15,15), 0);
+		TNT1 AAAAA 0 A_SpawnItemEx("RedLightningTrial_Small", 0, random(-20,20), random(15,45));
+		VSTK F 35;
+		TNT1 A 0 A_SpawnItemEx("ChaosStrike1", 0, random(-15,15), 0);
+		TNT1 AAAAAAAA 0 A_SpawnItemEx("RedLightningTrial_Small", 0, random(-20,20), random(15,45));
+		VSTK FFFFFFFFFFFFFFF 2
+		{
+		A_SpawnItemEx("ChaosStrike1", 0, random(-15,15), 0);
+		A_SpawnItemEx("RedLightningTrial_Small", 0, random(-20,20), random(15,45));
+		}
+
+
+		TNT1 A 0
+			{
+			for (Int I = 0; I < 4; I ++)
+				{
+				//A_TakeInventory("ObsidianMarkNumber", 1, AAPTR_DEFAULT);
+				MarkIndex = Random(0, MarkNames.Size() - 1);
+				MarkName = MarkNames[MarkIndex];
+				//A_SpawnItemEx(MarkName, 0, 0, 0, 25, 0, 0, random(0, 360), SXF_NOCHECKPOSITION|SXF_SETMASTER);
+				SpawnReinforcement(MarkName,random(-25,25), random(-25,25), 50, self, self, target, null, 0, 0, "ObsidianRavager", 1, 1, 1);
+				}
+			}
+		TNT1 A 0
+			{
+			A_SpawnItemEx("ChaosShieldEffect", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+			Shielded = 1;
+			}
+		TNT1 A 0
+			{
+			BossState = 3;
+			ProjectileHeight = 67;
+			BallSmallName = "ChaosBall";
+			BallSmallNameNG = "ChaosBallNoGrav";
+			BallBigName = "ChaosBallVeryBig";
+			BallBigNameNG = "ChaosBallVeryBig";
+			Health = 10000;
+			Painchance = 0;
+			DontAttackChance = 100;
+			bBUDDHA = false;
+			bSHOOTABLE = true;
+			}
+
+		VSTK F 8;
+		VSTK E 4;
+		VSTK D 4;
+		VSTK C 4;
+		TNT1 A 0 A_SetScale (0.85, 0.85);
+		VSTK B 4;
+		TNT1 A 0 A_SetScale (0.9, 0.9);
+		TNT1 A 0 {Height = 114;}
+		VSTK A 4;
+		TNT1 A 0 A_FaceTarget;
+		TNT1 A 0 {bSOLID = true;}
+		Goto See;
+
+
+
+	Melee:
+		VSTL L 1 Bright A_FaceTarget;
+		VSTL L 1 Bright A_StartSound("Obsidian/Swipe");
+		VSTL L 4 Bright A_FaceTarget;
+		VSTL M 6 Bright A_FaceTarget;
+		VSTL NNN 2 Bright
+			{
+				A_FaceTarget();
+				A_Recoil(-3);
+			}
+		VSTL O 12 Bright;
+		TNT1 A 0;
+		TNT1 A 0 A_StartSound("weapons/gswing");
+		TNT1 A 0 A_CustomMeleeAttack(50*BossState, "", "", "BHFT");
+		VSTL P 10 Bright;
+	Goto See;
+
+	Missile:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump (127, "AttackContinue");
+		TNT1 A 0 A_JumpIf(CanCastTrap >= 2, "CastTrap");
+	AttackContinue:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfCloser(1200, "AttackContinueShortRange");
+		TNT1 A 0 A_JumpIf(BossState == 3 && Summoned == 0 && Shielded == 0, "AttackContinueS3");
+		TNT1 A 0 A_Jump(256, "Missile1", "Missile2", "ShadowStrike", "CastCrystalTrap");
+	Goto Missile2;
+
+	AttackContinueS3:
+		TNT1 A 0 A_Jump(256, "Missile1", "Missile2", "ShadowStrike", "CastCrystalTrap", "SummonMarks", "SummonMarks");
+	Goto Missile2;
+
+	AttackContinueShortRange:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(BossState == 3 && Summoned == 0 && Shielded == 0, "AttackContinueShortRangeS3");
+		TNT1 A 0 A_Jump(256, "Missile1", "Missile2", "ShadowStrike", "EarthShake", "CastCrystalTrap");
+	Goto Missile2;
+
+	AttackContinueShortRangeS3:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(256, "Missile1", "Missile2", "ShadowStrike", "EarthShake", "CastCrystalTrap", "SummonMarks", "SummonMarks");
+	Goto Missile2;
+
+
+	CastTrap:
+		VSTL RP 10 Bright A_FaceTarget;
+		TNT1 A 0 {CanCastTrap = 0;}
+		TNT1 A 0 A_SpawnProjectile("TrapAttack");
+		VSTL R 5 Bright A_FaceTarget;
+		TNT1 A 0 A_Jump (60, "ShadowStrike");
+	Goto See;
+
+	CastCrystalTrap:
+		VSTL RP 10 Bright A_FaceTarget;
+		TNT1 A 0 {CanCastTrap = 0;}
+		TNT1 A 0 A_SpawnProjectile(CrystalTrapName);
+		VSTL R 5 A_FaceTarget;
+		TNT1 A 0 A_Jump (60, "ShadowStrike");
+	Goto See;
+
+	EarthShake:
+		VSTL RP 10 Bright A_FaceTarget;
+		TNT1 A 0 {CanCastTrap = 0;}
+		TNT1 A 0 A_JumpIf(BossState == 2, "EarthShake2");
+		TNT1 A 0 A_JumpIf(BossState == 3, "EarthShake3");
+	EarthShake1:
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake");
+		TNT1 A 0 A_Jump(256, "EarthShakeEnd");
+
+	EarthShake2:
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, -15);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, -10);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, -5);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake");
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, 5);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, 10);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, 15);
+		TNT1 A 0 A_Jump(256, "EarthShakeEnd");
+
+	EarthShake3:
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, -25);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, -20);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, -15);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, -10);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, -5);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake");
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, 5);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, 10);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, 15);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, 20);
+		TNT1 A 0 A_SpawnProjectile("ObsidianEarthShake", 0, 0, 25);
+
+	EarthShakeEnd:
+		VSTL R 5 Bright A_FaceTarget;
+		TNT1 A 0 {CanCastTrap = CanCastTrap + 1;}
+		TNT1 A 0;
+	Goto See;
+
+	Missile1:
+		VSTL QR 5 Bright A_FaceTarget;
+		VSTL S 10 Bright A_StartSound("Obsidian/Attack");
+		VSTL T 5 Bright A_FaceTarget;
+		VSTL U 8 Bright;
+		TNT1 A 0
+			{
+			if(target)
+				{
+				int Dist = Distance3D(target);
+				int zDiff = (self.pos.z - target.pos.z);
+				if ((Dist < 250) || (zDiff < 0)) A_SpawnProjectile(BallBigNameNG, ProjectileHeight,0,0);
+				else if (Dist < 400) A_SpawnProjectile(BallBigName, ProjectileHeight,0,0,CMF_OFFSETPITCH,Dist*-0.01);
+				else if (Dist > 1000) A_SpawnProjectile(BallBigName, ProjectileHeight,0,0,CMF_OFFSETPITCH,-18);
+				else A_SpawnProjectile(BallBigName, ProjectileHeight,0,0,CMF_OFFSETPITCH,Dist*-0.018);
+				}
+			A_StartSound("Obsidian/Missile");
+			CanCastTrap = true;
+			}
+		VSTL V 8 Bright;
+		TNT1 A 0 {CanCastTrap = CanCastTrap + 1;}
+		TNT1 A 0;
+	Goto See;
+
+	Missile2:
+		VSTL QR 5 Bright A_FaceTarget;
+		VSTL S 10 Bright A_StartSound("Obsidian/Attack");
+		VSTL T 5 Bright A_FaceTarget;
+		VSTL U 8 Bright;
+		TNT1 A 0
+			{
+			if(target)
+				{
+				int Dist = Distance3D(target);
+				int zDiff = (self.pos.z - target.pos.z);
+				if ((Dist < 250) || (zDiff < 0)) 
+					{
+					A_SpawnProjectile(BallSmallNameNG, ProjectileHeight,0,random(-14,-18));
+					A_SpawnProjectile(BallSmallNameNG, ProjectileHeight,0,random(14,18));
+					A_SpawnProjectile(BallSmallNameNG, ProjectileHeight,0,random(-8,-12));
+					A_SpawnProjectile(BallSmallNameNG, ProjectileHeight,0,random(8,12));
+					A_SpawnProjectile(BallSmallNameNG, ProjectileHeight,0,random(-2,-6));
+					A_SpawnProjectile(BallSmallNameNG, ProjectileHeight,0,random(2,6));
+					}
+				else if (Dist < 400)
+					{
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(-14,-18),CMF_OFFSETPITCH,(Dist*-0.01));
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(14,18),CMF_OFFSETPITCH,(Dist*-0.01));
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(-8,-12),CMF_OFFSETPITCH,(Dist*-0.01));
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(8,12),CMF_OFFSETPITCH,(Dist*-0.01));
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(-2,-6),CMF_OFFSETPITCH,(Dist*-0.01));
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(2,6),CMF_OFFSETPITCH,(Dist*-0.01));
+					}
+				else if (Dist > 1000)
+					{
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(-14,-18),CMF_OFFSETPITCH,-18);
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(14,18),CMF_OFFSETPITCH,-18);
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(-8,-12),CMF_OFFSETPITCH,-18);
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(8,12),CMF_OFFSETPITCH,-18);
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(-2,-6),CMF_OFFSETPITCH,-18);
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(2,6),CMF_OFFSETPITCH,-18);
+					}
+				else 
+					{
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(-14,-18),CMF_OFFSETPITCH,(Dist*-0.018));
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(14,18),CMF_OFFSETPITCH,(Dist*-0.018));
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(-8,-12),CMF_OFFSETPITCH,(Dist*-0.018));
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(8,12),CMF_OFFSETPITCH,(Dist*-0.018));
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(-2,-6),CMF_OFFSETPITCH,(Dist*-0.018));
+					A_SpawnProjectile(BallSmallName, ProjectileHeight,0,random(2,6),CMF_OFFSETPITCH,(Dist*-0.018));
+					}
+				A_StartSound("Obsidian/Missile");
+				CanCastTrap = true;
+				}
+			}
+
+		VSTL V 8 Bright;
+		TNT1 A 0 {CanCastTrap = CanCastTrap + 1;}
+		TNT1 A 0;
+	Goto See;
+
+	ShadowStrike:
+		TNT1 A 0 {CanCastTrap = CanCastTrap + 1;}
+		TNT1 A 0 A_UnSetshootable;
+		TNT1 A 0 {bNOPAIN = true;}
+		TNT1 A 0 {bTHRUACTORS = true;}
+		TNT1 A 0 {bFLOORHUGGER = true;}
+		TNT1 A 0 {bINVULNERABLE = true;}
+		VSTL I 1 Bright A_SpawnItemEx ("RavagerTeleportEffect", 0, 0, 59, 0, 0, 0, SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_KillChildren ("ShieldBreak", KILS_FOILINVUL, "ChaosShieldEffect");
+		VSTL J 1 Bright A_SetTranslucent(0.5);
+		VSTL J 1 Bright A_SetTranslucent(0.0);
+	ShadowStrikeLoop:
+		VSTL A 1 Bright;
+		TNT1 A 0 A_Recoil (-14);
+		TNT1 A 0 A_FaceTarget;
+		TNT1 A 0 {NumTeleports = NumTeleports + 1;}
+		TNT1 A 0 A_JumpIf(NumTeleports >= 100, "ShadowStrikeStop");
+		TNT1 A 0 A_JumpIfCloser(130, "ShadowStrikeAttack");
+
+		VSTL A 1 Bright;
+		TNT1 A 0 A_Recoil (-14);
+		TNT1 A 0 A_FaceTarget;
+		TNT1 A 0 {NumTeleports = NumTeleports + 1;}
+		TNT1 A 0 A_JumpIf(NumTeleports >= 100, "ShadowStrikeStop");
+		TNT1 A 0 A_JumpIf(Vel.X == 0 || Vel.Y == 0, "ShadowStrikeStop");
+		TNT1 A 0 A_JumpIfCloser(84, "ShadowStrikeAttack");
+
+		VSTL A 1 Bright;
+		TNT1 A 0 A_Recoil (-14);
+		TNT1 A 0 A_FaceTarget;
+		TNT1 A 0 {NumTeleports = NumTeleports + 1;}
+		TNT1 A 0 A_JumpIf(NumTeleports >= 100, "ShadowStrikeStop");
+		TNT1 A 0 A_JumpIf(Vel.X == 0 || Vel.Y == 0, "ShadowStrikeStop");
+		TNT1 A 0 A_JumpIfCloser(84, "ShadowStrikeAttack");
+
+		VSTL A 1 Bright;
+		TNT1 A 0 A_Recoil (-14);
+		TNT1 A 0 A_FaceTarget;
+		TNT1 A 0 {NumTeleports = NumTeleports + 1;}
+		TNT1 A 0 A_JumpIf(NumTeleports >= 100, "ShadowStrikeStop");
+		TNT1 A 0 A_JumpIf(Vel.X == 0 || Vel.Y == 0, "ShadowStrikeStop");
+		TNT1 A 0 A_JumpIfCloser(84, "ShadowStrikeAttack");
+	Goto ShadowStrikeLoop;
+
+	ShadowStrikeStop:
+		TNT1 A 0 {NumTeleports = 0;}
+		TNT1 A 0 A_ScaleVelocity(0);
+		VSTL I 1 Bright A_SpawnItemEx ("RavagerTeleportEffect", 0, 0, 59, 0, 0, 0, SXF_NOCHECKPOSITION);
+		VSTL J 1 Bright A_SetTranslucent(0.5);
+		VSTL J 1 Bright A_SetTranslucent(1.0);
+		VSTL I 1 Bright;
+		TNT1 A 0 {
+				if (Summoned > 0 && Shielded == 1 && BossState == 3 )
+					{
+					A_SpawnItemEx("ChaosShieldEffect", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					}
+				else {bINVULNERABLE = false;}
+				}
+		TNT1 A 0 {bFLOORHUGGER = false;}
+		TNT1 A 0 {bTHRUACTORS = false;}
+		TNT1 A 0 {bNOPAIN = false;}
+		TNT1 A 0 A_Setshootable;
+		TNT1 A 0 A_DamageChildren(1, "MustTeleport", DMSS_FOILINVUL|DMSS_NOPROTECT|DMSS_EXSPECIES);
+	Goto See;
+
+	ShadowStrikeAttack:
+		TNT1 A 0 {NumTeleports = 0;}
+		TNT1 A 0 A_ScaleVelocity(0) ;
+		VSTL I 1 Bright A_SpawnItemEx ("RavagerTeleportEffect", 0, 0, 59, 0, 0, 0, SXF_NOCHECKPOSITION);
+		VSTL J 1 Bright A_SetTranslucent(0.5);
+		VSTL J 1 Bright A_SetTranslucent(1.0);
+		VSTL I 1 Bright;
+		TNT1 A 0 {
+				if (Summoned > 0 && Shielded == 1 && BossState == 3 )
+					{
+					A_SpawnItemEx("ChaosShieldEffect", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					}
+				else {bINVULNERABLE = false;}
+				}
+		TNT1 A 0 {bFLOORHUGGER = false;}
+		TNT1 A 0 {bTHRUACTORS = false;}
+		TNT1 A 0 {bNOPAIN = false;}
+		TNT1 A 0 A_Setshootable;
+		TNT1 A 0 A_DamageChildren(1, "MustTeleport", DMSS_FOILINVUL|DMSS_NOPROTECT|DMSS_EXSPECIES);
+	Goto Melee;
+
+	SummonMarks:
+		VSTL RP 10 Bright A_FaceTarget;
+		TNT1 A 0
+			{
+			for (Int I = 0; I < 4; I ++)
+				{
+				//A_TakeInventory("ObsidianMarkNumber", 1, AAPTR_DEFAULT);
+				MarkIndex = Random(0, MarkNames.Size() - 1);
+				MarkName = MarkNames[MarkIndex];
+				SpawnReinforcement(MarkName,random(-25,25), random(-25,25), 50, self, self, target, null, 0, 0, "ObsidianRavager", 1, 1, 1);
+				}
+			}
+		VSTL P 2 Bright A_FaceTarget;
+		TNT1 A 0
+			{
+			A_SpawnItemEx("ChaosShieldEffect", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+			Shielded = 1;
+			bINVULNERABLE = true;
+			}
+		VSTL R 5 Bright A_FaceTarget;
+	Goto See;
+
+
+	Pain:
+
+		VSTL W 4 Bright;
+		VSTL X 4 Bright A_Pain;
+		VSTL Y 4 Bright;
+		VSTL Z 4 Bright;
+	Goto See;
+
+	Death.Ice:
+	Death.IceExplosion:
+	Death.Freeze:
+	Death.Frost:
+		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 {bSHOOTABLE = false;}
+		TNT1 A 0 {bSOLID = false;}
+		TNT1 A 0 A_SpawnItem("FrozenObsidianRavager");
+		TNT1 A 0 A_KillChildren ("ShieldBreak", KILS_FOILINVUL, "ChaosShieldEffect");
+	Stop;
+
+	Death.BlackHole:
+		TNT1 A 0 A_ScaleVelocity(0);
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_SpawnItem("BlackHoledObsidianRavager");
+		TNT1 A 0 A_KillChildren ("ShieldBreak", KILS_FOILINVUL, "ChaosShieldEffect");
+	Stop;
+
+	Death:
+	Xdeath:
+		TNT1 A 0
+		{
+		if (GetCvar("pb_enemyexplosiondamage") == true)
+		{
+		A_SpawnItemEx ("ChaosBallVeryBigExplosion",0,0,60,0,0,0,0,SXF_NOCHECKPOSITION,0);
+			}
+		}
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_FaceTarget;
+		TNT1 A 0 A_KillChildren ("ShieldBreak", KILS_FOILINVUL, "ChaosShieldEffect");
+		TNT1 AA 0 A_SpawnProjectile ("ObsidianRavagerExPart1", 60, 10, random (0, 360), 2, random (0, 90));
+		TNT1 AA 0 A_SpawnProjectile ("ObsidianRavagerExPart1F", 60, -10, random (0, 360), 2, random (0, 90));
+		TNT1 A 0 A_SpawnProjectile ("ObsidianRavagerExPart2", 30, 18, random (0, 360), 2, random (0, 90));
+		TNT1 A 0 A_SpawnProjectile ("ObsidianRavagerExPart2F", 30, -18, random (0, 360), 2, random (0, 90));
+		TNT1 A 0 A_SpawnProjectile ("ObsidianRavagerExPart3", 70, 0, random (0, 360), 2, random (0, 90));
+		TNT1 A 0 A_SpawnProjectile ("ObsidianRavagerExPart4", 50, 0, random (0, 360), 2, random (0, 90));
+		TNT1 AAAAAAAAAAA 0 A_SpawnProjectile ("ObsidianRavagerExPart5", random(25,50), 0, random (0, 360), 2, random (0, 90));
+		TNT1 AAAA 0 A_SpawnProjectile ("ObsidianCrystalsBlackDustMed", random(20,60), 0, random (0, 360), 2, random (0, 160), SXF_NOCHECKPOSITION);
+		TNT1 AAAA 0 A_SpawnProjectile ("ObsidianChunk", Random(20,60), 0, random (0, 360), 2, random (0, 160),SXF_NOCHECKPOSITION);
+		TNT1 A 0 {bSHOOTABLE = false;}
+		TNT1 A 0 A_StopSound(1);
+		TNT1 A 0
+			{
+			A_StopSound(CHAN_BODY);
+			A_StartSound("FAREXPL", CHAN_AUTO|CHANF_OVERLAP);
+			Radius_Quake (6, 8, 0, 15, 0);	
+			A_SpawnItemEx ("ExplosionRedFlareSpawner",0,0,60,0,0,0,0,SXF_NOCHECKPOSITION,0);
+			A_SpawnItemEx ("LiquidExplosionEffectSpawner",0,0,60,0,0,0,0,SXF_NOCHECKPOSITION,0);
+			A_SpawnProjectile ("ExplosionSmokeFast22", 60, 0, random (0, 360), 2, random (0, 360));
+			A_SpawnProjectile ("ExplosionSmokeFast22", 60, 0, random (0, 360), 2, random (0, 360));
+			A_SpawnProjectile ("ExplosionSmokeFast22", 60, 0, random (0, 360), 2, random (0, 360));
+			A_SpawnProjectile ("MediumExplosionRedFlames", 60, 0, random (0, 360), 2, random (0, 360));
+			A_SpawnProjectile ("MediumExplosionRedFlames", 60, 0, random (0, 360), 2, random (0, 360));
+			A_SpawnProjectile ("MediumExplosionRedFlames", 60, 0, random (0, 360), 2, random (0, 360));
+			A_SpawnProjectile ("PBExplosionparticles", 60, 0, random (0, 360), 2, random (40, 90));
+			A_SpawnProjectile ("PBExplosionparticles", 60, 0, random (0, 360), 2, random (40, 90));
+			A_SpawnProjectile ("PBExplosionparticles2", 60, 0, random (0, 360), 2, random (40, 90));
+			A_SpawnProjectile ("PBExplosionparticles2", 60, 0, random (0, 360), 2, random (40, 90));
+			A_SpawnProjectile ("PBExplosionparticles3", 60, 0, random (0, 360), 2, random (40, 90));
+			A_SpawnItemEx("ChaosBallBigBlastWave", 0, 0, 60, 0, 0, 0, 0, SXF_NOCHECKPOSITION);
+			}
+		EXPL AAAAA 0 A_SpawnProjectile ("ExplosionSmokeFast22", 60, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAAA 0 A_SpawnProjectile ("ChaosBallSuperPlasmaFire", 60, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAA 0 A_SpawnProjectile ("ChaosBallPlasmaFireSmall2", 60, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAAAAAAAAAAAAAAA 0 A_SpawnProjectile ("ChaosBallPlasmaParticle", 60, 0, random (0, 360), 2, random (0, 360));
+		//TNT1 AAAAAAAA 0 A_SpawnProjectile ("ChaosBallVeryBigCrystalTrapPlasma", 60, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAAA 0 BRIGHT A_SpawnItem("RedFlare22" ,0, 60);
+		TNT1 AAA 0 A_SpawnItemEx("ChaosShieldLightnings",0,0,60,0,0,0,0,128,0);
+		TNT1 AAAAAAAAAAAA 0 A_SpawnItemEx("ChaosBallVeryBigParticle", 0,0,60, (Random(-5,5)), (Random(-5,5)), (Random(-5,5)), 0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION);
+		TNT1 AAAAAAAAAAAA 0 A_SpawnItemEx("ChaosBallVeryBigParticle", 0,0,60, (Random(-5,5)), (Random(-5,5)), (Random(-5,5)), 0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION);
+		TNT1 AAAAAAAAAAAA 0 A_SpawnItemEx("ChaosBallVeryBigParticleShort", 0,0,60, (Random(-5,5)), (Random(-5,5)), (Random(-5,5)), 0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION);
+		TNT1 AAAAAAAAAAAA 0 A_SpawnItemEx("ChaosBallVeryBigParticleShort", 0,0,60, (Random(-5,5)), (Random(-5,5)), (Random(-5,5)), 0, SXF_ABSOLUTEMOMENTUM|SXF_NOCHECKPOSITION);
+		TNT1 A 1 Light("Shadowball");
+		Stop;
+
+	Death.Execution:
+		TNT1 A 0 A_KillChildren ("ShieldBreak", KILS_FOILINVUL, "ChaosShieldEffect");
+		TNT1 A 0 A_StopAllSounds;
+		TNT1 A 0 A_FaceTarget;
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_GiveToTarget("BPtoken",5);
+	Stop;
+		}
+ }
+
+
+
+Class TrapAttack : Actor
+{
+bool trapped;
+Default
+{
+  Radius 5;
+  Height 5;
+  Speed 256;
+  Damage 0;
+  Projectile;
+  +SEEKERMISSILE;
+  +FLOORHUGGER;
+  +BLOODLESSIMPACT;
+  +THRUSPECIES;
+  +MTHRUSPECIES;
+  Species "ObsidianRavager";
+  BounceType "Hexen";
+  BounceFactor 1;
+  WallBounceFactor 1;
+  BounceCount 20;
+	}
+//spawn obsidian trap
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+	}
+	override int SpecialMissileHit(actor victim)
+	{
+		if (victim && target && (victim != target))
+		{
+			if (trapped != 1)
+			{
+				victim.A_StartSound("Obsidian/TrapSpawn");
+				victim.A_SpawnItemEx("ObsidianTrap1", 16, -32, -32, 0, 0, 0, 0);
+				victim.A_SpawnItemEx("ObsidianTrap2", 32, -16, -32, 0, 0, 0, 0); 
+				victim.A_SpawnItemEx("ObsidianTrap3", 32, 16, -32, 0, 0, 0, 0);
+				victim.A_SpawnItemEx("ObsidianTrap4", 16, 32, -32, 0, 0, 0, 0);
+				victim.A_SpawnItemEx("ObsidianTrap1", -16, 32, -32, 0, 0, 0, 0);
+				victim.A_SpawnItemEx("ObsidianTrap2", -32, 16, -32, 0, 0, 0, 0);
+				victim.A_SpawnItemEx("ObsidianTrap3", -32, -16, -32, 0, 0, 0, 0);
+				victim.A_SpawnItemEx("ObsidianTrap4", -16, -32, -32, 0, 0, 0, 0);
+				trapped = 1;
+			}
+		}
+		return 1;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 1 A_SeekerMissile(90, 90);
+		TNT1 A 0 A_JumpIf(trapped == 1, "Death");
+		loop;
+	Death:
+		TNT1 A 0; 
+		stop;
+	}
+}
+
+Class SlowCrystalTrap01: Actor
+{
+bool trapped;
+int RandomIndex;
+string CrystalName;
+static const string CrystalNames[] =
+{
+"ObsidianCrystalA01",
+"ObsidianCrystalA01F"
+};
+
+Default
+{
+  Radius 5;
+  Height 5;
+  Speed 256;
+  Damage 0;
+  Projectile;
+  +SEEKERMISSILE;
+  +FLOORHUGGER;
+  +BLOODLESSIMPACT;
+  +THRUSPECIES;
+  +MTHRUSPECIES;
+  Species "ObsidianRavager";
+  BounceType "Hexen";
+  BounceFactor 1;
+  WallBounceFactor 1;
+  BounceCount 20;
+	}
+//spawn obsidian trap
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+	}
+	override int SpecialMissileHit(actor victim)
+	{
+		if (victim && target && (victim != target))
+		{
+			if (trapped != 1)
+			{
+				randomIndex = Random(0, CrystalNames.Size() - 1);
+				CrystalName = CrystalNames[randomIndex];
+				A_SpawnItemEx(CrystalName, 0, 0, 0, 5, 0, 0, random(0, 360), SXF_NOCHECKPOSITION);
+				trapped = 1;
+			}
+		}
+		return 1;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 1 A_SeekerMissile(90, 90);
+		TNT1 A 0 A_JumpIf(trapped == 1, "Death");
+		loop;
+	Death:
+		TNT1 A 0; 
+		stop;
+	}
+}
+
+
+Class RandomizedCrystalTrap01: Actor
+{
+bool trapped;
+int RandomIndex;
+string CrystalName;
+static const string CrystalNames[] =
+{
+"ObsidianCrystalA01",
+"ObsidianCrystalA01F",
+"ObsidianCrystalA01",
+"ObsidianCrystalA01F",
+"ObsidianCrystalA01",
+"ObsidianCrystalA01F",
+"ObsidianCrystalA01",
+"ObsidianCrystalA01F",
+
+"ObsidianCrystalB01",
+"ObsidianCrystalB01F",
+"ObsidianCrystalB02",
+"ObsidianCrystalB02F",
+"ObsidianCrystalB03",
+"ObsidianCrystalB03F",
+"ObsidianCrystalB04",
+"ObsidianCrystalB04F"
+};
+
+Default
+{
+  Radius 5;
+  Height 5;
+  Speed 256;
+  Damage 0;
+  Projectile;
+  +SEEKERMISSILE;
+  +FLOORHUGGER;
+  +BLOODLESSIMPACT;
+  +THRUSPECIES;
+  +MTHRUSPECIES;
+  Species "ObsidianRavager";
+  BounceType "Hexen";
+  BounceFactor 1;
+  WallBounceFactor 1;
+  BounceCount 20;
+	}
+//spawn obsidian trap
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+	}
+	override int SpecialMissileHit(actor victim)
+	{
+		if (victim && target && (victim != target))
+		{
+			if (trapped != 1)
+			{
+				randomIndex = Random(0, CrystalNames.Size() - 1);
+				CrystalName = CrystalNames[randomIndex];
+				A_SpawnItemEx(CrystalName, 0, 0, 0, 5, 0, 0, random(0, 360), SXF_NOCHECKPOSITION);
+				trapped = 1;
+			}
+		}
+		return 1;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 1 A_SeekerMissile(90, 90);
+		TNT1 A 0 A_JumpIf(trapped == 1, "Death");
+		loop;
+	Death:
+		TNT1 A 0; 
+		stop;
+	}
+}
+
+
+Class ObsidianMark01: Actor
+{
+  int NumAvoids;
+  int FMaster;
+  double distance;
+  int numteleports;
+Default
+{
+  Tag "Obsidian mark";
+  Health 480;
+  Radius 30;
+  Height 89;
+  Scale 0.4;
+  Mass 3000;
+  Speed 7;
+  Species "ObsidianRavager";
+  Obituary "%o was too close to the obsidian mark";
+  Monster;
+  DamageFactor "Crush", 10.0;
+  DamageFactor "TeleportRemover", 0.0;
+  DamageFactor "GibRemoving", 0.0;
+  DamageFactor "CauseObjectsToSplash", 0.0;
+  DamageFactor "Head", 1.0;
+  DamageFactor "MinorHead", 1.0;
+  DamageFactor "SSG", 1.2;
+  DamageFactor "Avoid", 0.0;
+  DamageFactor "KillMe", 0.0;
+  DamageFactor "Fatality", 0.8;
+  DamageFactor "Burn", 0.1;
+  DamageFactor "Flame", 0.1;
+  DamageFactor "Fire", 0.1;
+  DamageFactor "Acid", 0.35;
+  DamageFactor "ExtremePunches", 3.0;
+  DamageFactor "Disintegrate", 0.15;
+  DamageFactor "GreenFire", 0.1;
+  DamageFactor "Bullet", 0.5;
+  DamageFactor "Railgun", 1.2;
+  DamageFactor "CutLess", 0.25;
+  DamageFactor "Explosive", 1.0;
+  DamageFactor "Blast", 1.0;
+  DamageFactor "SuperKick", 0.6;
+  DamageFactor "ExplosiveImpact", 0.5;
+  DamageFactor "Shotgun", 0.7;
+  DamageFactor "Freeze", 0.6;
+  DamageFactor "Nailgun", 0.7;
+  DamageFactor "GibRemoving", 0.0;
+  DamageFactor "Crucible", 1.0;
+  DamageFactor "GloryFire", 0.25;
+  DamageFactor "BloodPunch", 0.8;
+  PainChance "Disintegrate", 256;
+  PainChance "Head", 120;
+  PainChance "Saw", 100;
+  PainChance "Cut", 100;
+  PainChance "Kick", 256;
+  PainChance "SSG", 256;
+  PainChance "Stun", 256;
+  PainChance "Siphon", 256;
+  PainChance "ExtremePunches", 256;
+  PainChance "Explosive", 256;
+  PainChance "MustTeleport", 256;
+  DamageFactor "Blood", 0.0;
+  DamageFactor "BlueBlood", 0.0;
+  DamageFactor "GreenBlood", 0.0;
+  +LOOKALLAROUND;
+  +NOGRAVITY;
+  +FLOAT;
+  +NOICEDEATH;
+  -COUNTKILL;
+  +NOBLOODDECALS;
+  //+NOBLOOD;
+  BloodType "NullBlood";
+
+  +DONTHARMSPECIES;
+  +THRUSPECIES;
+
+  //+NOINFIGHTING;
+  +DONTTHRUST;
+  +NOINFIGHTSPECIES;
+  +DONTMORPH;
+  +DONTFALL;
+
+}
+  states
+    {
+	Spawn:
+		TNT1 A 0;
+		NULL AAAAAAAAAAAA 2;
+		TNT1 A 0 A_ScaleVelocity(0);
+		TNT1 A 0 A_SpawnItemEx ("MarksTeleportEffect", 0, 0, 54, 0, 0, 0, SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_ScaleVelocity(0);
+		V05A A 5 A_Look;
+		V05A A 0
+			{ if (Master)
+			{distance = Distance3D(Master);}
+			}
+		V05A A 0 A_Jumpif (Master && distance > 400, "FollowMaster");
+	Loop;
+
+	Idle:
+		TNT1 A 0;
+		V05A A 5 A_Look;
+	Loop;
+		
+	Pain.MustTeleport:
+		"####" "#" 0;
+		"####" "#" 0 {Health = health+1;}
+	Goto MoveToMaster;
+
+	See:
+		"####" "#" 0;
+		"####" "#" 2 Bright A_Wander;
+		"####" "#" 0
+			{ if (Master)
+			{distance = Distance3D(Master);}
+			}
+		"####" "#" 0 A_Jumpif (Master && distance > 400, "FollowMaster");
+	Loop;
+
+	Pain.Disintegrate:
+	"####" "#" 2 Bright
+		{
+		A_FaceTarget();
+		A_StartSound("LGLoop", 7);
+		A_SpawnItemEx("ChaosBallVeryBigExplode", 0, random(-20,20), random(15,65));
+		}
+	Goto See;
+/*
+	Missile:
+		"####" "#" 0;
+		"####" "#" 0 A_JumpIf (Master && fMaster > 0, "FollowMaster");
+		"####" "#" 0 Light("ShadowBall") { A_SpawnProjectile("ChaosBall",54,0); A_SpawnItem("RedFlare22" ,0, 54); }
+	Goto See;
+*/
+	FollowMaster:
+		"####" "#" 0;
+		//"####" "#" 0 {bNOINFIGHTING = false;}
+		"####" "#" 0 {bFRIENDLY = true;}
+		"####" "#" 0 {FMaster = 1;}
+	FollowMasterContinue:
+		"####" "#" 0;
+		"####" "#" 0 A_Jumpif (Master && distance < 250, "Returned");
+		"####" "#" 0
+			{ if (Master)
+			{distance = Distance3D(Master);}
+			}
+		//"####" "#" 0 {Console.Printf("Distance: %f", distance);}
+		//"####" "#" 0 {Console.Printf("Teleports: %f", numteleports);}
+		"####" "#" 0 {if (Master && distance > 600) {numteleports = numteleports + 1;} else {numteleports = 0;}}
+		"####" "#" 0 A_Jumpif (Master && distance > 250 && numteleports > 100, "MoveToMaster");
+		"####" "#" 0 {if (Master){A_TransferPointer(AAPTR_DEFAULT, AAPTR_TARGET, AAPTR_MASTER, AAPTR_DEFAULT);}}
+		"####" "#" 2 Bright A_Chase;
+	Loop;
+
+    MoveToMaster:
+		"####" "#" 0;
+		"####" "#" 0 {bTHRUACTORS = true;}
+		"####" "#" 0 A_SpawnItemEx ("MarksTeleportEffect", 0, 0, 54, 0, 0, 0, SXF_NOCHECKPOSITION);
+		"####" "#" 0 {if (Master){Warp(master, RandomPick(-15, 15), RandomPick(-15, 15), random(1, 5), WARPF_STOP|WARPF_NOCHECKPOSITION|WARPF_TOFLOOR );}}
+		"####" "#" 0 {numteleports = 0;}
+		"####" "#" 0 A_SpawnItemEx ("MarksTeleportEffect", 0, 0, 54, 0, 0, 0, SXF_NOCHECKPOSITION);
+	Goto Returned;
+
+	Returned:
+		"####" "#" 0;
+		"####" "#" 0 {bTHRUACTORS = false;}
+		"####" "#" 0 {bNOINFIGHTING = true;}
+		"####" "#" 0 {bFRIENDLY = false;}
+		"####" "#" 0 {FMaster = 0;}
+		"####" "#" 0 A_ClearTarget;
+		"####" "#" 0 {if (Master){A_TransferPointer(AAPTR_DEFAULT, AAPTR_TARGET, AAPTR_MASTER, AAPTR_TARGET);}}
+	Goto See;
+
+	Death:
+	XDeath:
+		"####" "#" 0;
+		"####" "#" 2 Bright;
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_StartSound ("IceBreakSmall");
+		TNT1 AAAAAA 0 A_SpawnProjectile ("ObsidianCrystalsBlackDustMed", Random(5,40), Random(5,40), random (0, 360), 2, random (0, 160), SXF_NOCHECKPOSITION);
+		TNT1 AAAAAA 0 A_SpawnProjectile ("ObsidianChunk", Random(5,40), Random(5,40), random (0, 360), 2, random (0, 160),SXF_NOCHECKPOSITION);
+	Stop;
+		}
+}
+
+
+Class ObsidianMark02: ObsidianMark01
+{
+Default
+{
+  Height 126;
+  Health 447;
+  Scale 0.5;
+}
+  states
+    {
+	Spawn:
+		TNT1 A 0;
+		NULL AAAAAAAAAAAA 2;
+		TNT1 A 0 A_ScaleVelocity(0);
+		TNT1 A 0 A_SpawnItemEx ("MarksTeleportEffect", 0, 0, 54, 0, 0, 0, SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_ScaleVelocity(0);
+		V05A B 5 A_Look;
+		V05A B 0
+			{ if (Master)
+			{distance = Distance3D(Master);}
+			}
+		V05A B 0 A_Jumpif (Master && distance > 400, "FollowMaster");
+	Loop;
+	  }
+}
+
+Class ObsidianMark03: ObsidianMark01
+{
+Default
+{
+  Height 76;
+  Health 559;
+  Scale 0.5;
+}
+  states
+    {
+	Spawn:
+		TNT1 A 0;
+		NULL AAAAAAAAAAAA 2;
+		TNT1 A 0 A_ScaleVelocity(0);
+		TNT1 A 0 A_SpawnItemEx ("MarksTeleportEffect", 0, 0, 54, 0, 0, 0, SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_ScaleVelocity(0);
+		V05A C 5 A_Look;
+		V05A C 0
+			{ if (Master)
+			{distance = Distance3D(Master);}
+			}
+		V05A C 0 A_Jumpif (Master && distance > 400, "FollowMaster");
+	Loop;
+	  }
+}
+
+
+Class ObsidianMark04: ObsidianMark01
+{
+Default
+{
+  Height 53;
+  Health 383;
+  Scale 0.5;
+}
+  states
+    {
+	Spawn:
+		TNT1 A 0;
+		NULL AAAAAAAAAAAA 2;
+		TNT1 A 0 A_ScaleVelocity(0);
+		TNT1 A 0 A_SpawnItemEx ("MarksTeleportEffect", 0, 0, 54, 0, 0, 0, SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_ScaleVelocity(0);
+		V05A D 5 A_Look;
+		V05A D 0
+			{ if (Master)
+			{distance = Distance3D(Master);}
+			}
+		V05A D 0 A_Jumpif (Master && distance > 400, "FollowMaster");
+	Loop;
+	  }
+}
+
+Class ChaosShieldEffect: Actor
+{
+Default
+{
+  RenderStyle "Add";
+  Alpha 0.5;
+  Scale 0.0;
+  +CLIENTSIDEONLY;
+  -SOLID;
+  +NOCLIP;
+  +THRUACTORS;
+  +NOGRAVITY;
+  +DONTFALL;
+  +NOTELEPORT;
+  -PUSHABLE;
+  +NODAMAGETHRUST;
+  +NOTARGET;
+  +NORADIUSDMG;
+  +INVULNERABLE;
+  +NOBLOOD;
+  +NOBLOODDECALS;
+  +SHOOTABLE;
+  +NOICEDEATH;
+  +DONTTHRUST;
+}
+  States
+	{
+	Spawn:
+		TNT1 A 0;
+		V07A ABCDE 1 bright
+		{
+		A_SetScale((Scale.Y+0.13)*1.2, Scale.Y+0.13);
+		A_FadeIn(0.1);
+		}
+
+	SpawnLoop:
+		V07A ABCDEFGHIJKLMNOP 2 bright
+		{
+			A_JumpIf(!AAPTR_MASTER, "Death");
+			A_JumpIfHealthLower(1, "Death", AAPTR_MASTER);
+			//A_SetRoll(random(0,360));
+			//A_WARP(AAPTR_Master, 0, 0, 0, 0, WARPF_NOCHECKPOSITION);
+			SetOrigin(master.Pos, false);
+		}
+	Loop;
+
+	Death:
+		TNT1 A 0;
+		V07A ABCDE 2 bright
+		{
+		A_SetScale(Scale.X+0.25, Scale.Y+0.25);
+		A_FadeOut(0.2);
+		}
+	Stop;
+		}
+}

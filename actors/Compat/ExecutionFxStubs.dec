@@ -11,25 +11,6 @@ ACTOR DarkCardinalFireSpawner : BDExplosionparticlesSmall {}
 ACTOR XDeathDarkLordHead : XDeathArm1 {}
 ACTOR BeheadedDarkCardinal : XDeathArm1 {}
 
-ACTOR ChaosBallVeryBigExplosion : BDExplosionparticlesSmall {}
-ACTOR ObsidianRavagerExPart1 : XDeathArm1 {}
-ACTOR ObsidianRavagerExPart1F : XDeathArm1 {}
-ACTOR ObsidianRavagerExPart2 : XDeathArm1 {}
-ACTOR ObsidianRavagerExPart2F : XDeathArm1 {}
-ACTOR ObsidianRavagerExPart3 : XDeathArm1 {}
-ACTOR ObsidianRavagerExPart4 : XDeathArm1 {}
-ACTOR ObsidianRavagerExPart5 : XDeathArm1 {}
-ACTOR ObsidianCrystalsRedBlackDustMed : BDExplosionparticlesSmall {}
-ACTOR ExplosionRedFlareSpawner : BDExplosionparticlesSmall {}
-ACTOR MediumExplosionRedFlames : BDExplosionparticlesSmall {}
-ACTOR ChaosBallBigBlastWave : BDExplosionparticlesSmall {}
-ACTOR ChaosBallSuperPlasmaFire : BDExplosionparticlesSmall {}
-ACTOR ChaosBallPlasmaFireSmall2 : BDExplosionparticlesSmall {}
-ACTOR ChaosBallPlasmaParticle : BDExplosionparticlesSmall {}
-ACTOR ChaosBallVeryBigExplode : BDExplosionparticlesSmall {}
-ACTOR ChaosBallVeryBigParticle : BDExplosionparticlesSmall {}
-ACTOR ChaosBallVeryBigParticleShort : BDExplosionparticlesSmall {}
-
 ACTOR IceDemonIceBloodBig : BDExplosionparticlesSmall {}
 ACTOR XDeathIceDemonHead : XDeathArm1 {}
 ACTOR XDeathIceDemonArm : XDeathArm1 {}
@@ -106,10 +87,6 @@ ACTOR DeadBehemothFrontNoHead : XDeathArm1 {}
 ACTOR XDeathHeadD3HellGuardian : XDeathArm1 {}
 ACTOR XDeathArmD3HellGuardian : XDeathArm1 {}
 ACTOR BrutalizedD3HellGuardianStop3 : XDeathArm1 {}
-
-ACTOR XDeathProfD3Maledict : XDeathArm1 {}
-ACTOR XDeathHeadD3Maledict : XDeathArm1 {}
-ACTOR DeadD3MaledictNoHead : XDeathArm1 {}
 
 ACTOR RahovartExPart1 : XDeathArm1 {}
 ACTOR RahovartExPart2 : XDeathArm1 {}

@@ -1,0 +1,7 @@
+// Names referenced by ObsidianRavagerStuff.dec + DyingD3Maledict.dec from PB3 staging; map to main-mod actors.
+
+ACTOR PB_HealthBonus : HealthPlus {}
+
+ACTOR HSTracer : RedFlare22 {}
+
+ACTOR HellStormCloudEffect : PlasmaSmoke {}

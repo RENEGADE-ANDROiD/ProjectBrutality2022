@@ -1,0 +1,1805 @@
+ACTOR FrozenEnemyBase
+{
+	DamageFactor "IceBeam", 0.0
+	Health 1000
+	Mass 2000
+	+SOLID
+	+SHOOTABLE
+	+NOBLOOD
+	States
+	{
+	Spawn:
+		TNT1 A -1
+		Wait
+	}
+}
+
+Actor XDeathHeadD3Maledict: XDeathBullArm1
+{
+  -CLIENTSIDEONLY
+  +ROLLSPRITE
+  Radius 20
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		TNT1 A 0 A_JumpIf(momz == 0, "Death")
+		D3MI AAAAAAA 3 A_SetRoll(roll-25)
+	Loop
+
+	Death:
+		TNT1 A 0 A_ChangeFlag("ROLLSPRITE", 0)
+		TNT1 A 0 A_SpawnItem("HeadD3Maledict",0,0,0,1)
+	Stop
+	}
+}
+
+Actor HeadD3Maledict: LimbBase
+{
+  damagefactor "Kick", 9.0
+  damagefactor "Melee", 9.0
+  damagefactor "SuperPunch", 9.0
+  -CLIENTSIDEONLY
+  Radius 20
+  Mass 10
+  Health 60
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0 
+		D3MI B 1 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+		D3MI B -1
+	Stop
+
+	Death.Trample:
+	Death.Stomp:
+		TNT1 A 0
+		TNT1 A 0 A_GiveToTarget("BootsSmearedWithRedBlood", 6)
+	Goto Death
+
+	Death:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("HorrorHeadExplode")
+	Stop
+
+	Crush:
+		TNT1 A 0
+		TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail5", 0, 0, random (0, 360), 2, random (60, 140))
+		TNT1 A 0 A_PlaySound("misc/xdeath4")
+		CRS1 B 5
+		CRS1 B 9009
+	Stop
+
+	Death.plasma:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-15, 15), random (-15, 15))
+		EXPL A 0 A_CustomMissile ("ExplosionSmoke", 32, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0
+	Stop
+
+	Death.Melee:
+	Death.SuperPunch:
+	Death.Kick:
+		TNT1 A 0
+		D3MI AA 1 A_FaceTarget
+		TNT1 AAAA 0 A_SpawnItemEx("Blood", 0, 0, 10)
+		TNT1 A 0 A_CustomMissile ("XDeathHeadD3Maledict", 5, 0, random (170, 190), 2, random (20, 40))
+		TNT1 A 0 A_PlaySound("misc/xdeath4", 1)
+		TNT1 A 0 A_PlaySound("player/cyborg/fist", 3)
+		TNT1 A 20
+	Stop
+	
+	Pain:
+		TNT1 A 0
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+		D3MI AAAAA 3 A_SetRoll(roll-25)
+	Goto Spawn
+	
+	Death.ExplosiveImpact:
+		TNT1 A 0
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 0)
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+		D3MI AAAAA 3 A_SetRoll(roll-25)
+		TNT1 A 0 A_SpawnItem("HeadD3Maledict")
+	Stop
+	}
+}
+
+
+Actor XDeathWingD3Maledict: XDeathArm1
+{
+  -CLIENTSIDEONLY
+  +ROLLSPRITE
+  Radius 10
+  Scale 1.0
+  Mass 1000
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+	SpawnLoop:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		D3MI EEEEEE 3 A_SetRoll(roll-25)
+	Loop
+
+	Death:
+		D3MI F 1
+		TNT1 A 0 A_SpawnItem("Gib_WingD3Maledict",0,0,0,1)
+	Stop
+	}
+}
+
+Actor Gib_WingD3Maledict: LimbBase
+{
+  damagefactor "Kick", 9.0
+  damagefactor "Melee", 9.0
+  damagefactor "SuperPunch", 9.0
+  -CLIENTSIDEONLY
+  Radius 10
+  Mass 10
+  Health 60
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3MI F -1
+	Loop
+
+	Pain:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 1)
+		TNT1 A 0 ThrustThingZ(0,20,0,1)
+		D3MI E 6 {A_SetRoll(random(0,360));}
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 0)
+	Goto Spawn
+
+	XDeath:
+	Death:
+	Death.fire:
+	Death.burn:
+	Death.flames:
+	Death.Plasma:
+	Death.Incinerate:
+	Death.SuperPlasma:
+	Death.Desintegrate:
+	Death.Crush:
+		TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail5", 0, 0, random (0, 360), 2, random (60, 140))
+		TNT1 A 0 A_PlaySound("misc/xdeath4")
+		CRS1 A 5
+		CRS1 A 9009
+	Stop
+
+	Death.Melee:
+	Death.SuperPunch:
+	Death.Kick:
+		D3MI F 1 A_FaceTarget
+		TNT1 A 0 A_PlaySound("player/cyborg/fist", 3)
+	Death.ExplosiveImpact:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 1)
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 0)
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+		D3MI E 6 {A_SetRoll(random(0,360));}
+		D3MI E 3 A_CheckFloor("Landz")
+	Goto Landz
+
+	Landz:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 0)
+		TNT1 A 0 A_SpawnItem("Gib_WingD3Maledict")
+	Stop
+
+	Death.Trample:
+	Death.Stomp:
+		TNT1 A 0 A_GiveToTarget("BootsSmearedWithRedBlood", 6)
+	Goto Death
+
+	Death.plasma:
+	Death.Burn:
+	Death.Flames:
+	Death.Fire:
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-15, 15), random (-15, 15))	
+	Stop
+	}
+}
+
+Actor XDeathFeetD3Maledict: XDeathArm1
+{
+  -CLIENTSIDEONLY
+  +ROLLSPRITE
+  Radius 10
+  Scale 1.0
+  Mass 1000
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+	SpawnLoop:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		D3MI CCCCCC 3 A_SetRoll(roll-25)
+	Loop
+
+	Death:
+		D3MI D 1
+		TNT1 A 0 A_SpawnItem("Gib_FeetD3Maledict",0,0,0,1)
+	Stop
+	}
+}
+
+Actor Gib_FeetD3Maledict: LimbBase
+{
+  damagefactor "Kick", 9.0
+  damagefactor "Melee", 9.0
+  damagefactor "SuperPunch", 9.0
+  -CLIENTSIDEONLY
+  Radius 10
+  Mass 10
+  Health 60
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3MI D -1
+	Loop
+
+	Pain:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 1)
+		TNT1 A 0 ThrustThingZ(0,20,0,1)
+		D3MI C 6 {A_SetRoll(random(0,360));}
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 0)
+	Goto Spawn
+
+	XDeath:
+	Death:
+	Death.fire:
+	Death.burn:
+	Death.flames:
+	Death.Plasma:
+	Death.Incinerate:
+	Death.SuperPlasma:
+	Death.Desintegrate:
+	Death.Crush:
+		TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail5", 0, 0, random (0, 360), 2, random (60, 140))
+		TNT1 A 0 A_PlaySound("misc/xdeath4")
+		CRS1 A 5
+		CRS1 A 9009
+	Stop
+
+	Death.Melee:
+	Death.SuperPunch:
+	Death.Kick:
+		D3MI D 1 A_FaceTarget
+		TNT1 A 0 A_PlaySound("player/cyborg/fist", 3)
+	Death.ExplosiveImpact:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 1)
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 0)
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+		D3MI C 6 {A_SetRoll(random(0,360));}
+		D3MI C 3 A_CheckFloor("Landz")
+	Goto Landz
+
+	Landz:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 0)
+		TNT1 A 0 A_SpawnItem("Gib_FeetD3Maledict")
+	Stop
+
+	Death.Trample:
+	Death.Stomp:
+		TNT1 A 0 A_GiveToTarget("BootsSmearedWithRedBlood", 6)
+	Goto Death
+
+	Death.plasma:
+	Death.Burn:
+	Death.Flames:
+	Death.Fire:
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-15, 15), random (-15, 15))	
+	Stop
+	}
+}
+
+Actor XDeathHumpD3Maledict: XDeathArm1
+{
+  -CLIENTSIDEONLY
+  +ROLLSPRITE
+  Radius 10
+  Scale 1.0
+  Mass 1000
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+	SpawnLoop:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		D3MI GGGGGG 3 A_SetRoll(roll-25)
+	Loop
+
+	Death:
+		D3MI H 1
+		TNT1 A 0 A_SpawnItem("Gib_HumpD3Maledict",0,0,0,1)
+	Stop
+	}
+}
+
+Actor Gib_HumpD3Maledict: LimbBase
+{
+  damagefactor "Kick", 9.0
+  damagefactor "Melee", 9.0
+  damagefactor "SuperPunch", 9.0
+  -CLIENTSIDEONLY
+  Radius 10
+  Mass 10
+  Health 60
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3MI H -1
+	Loop
+
+	Pain:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 1)
+		TNT1 A 0 ThrustThingZ(0,20,0,1)
+		D3MI G 6 {A_SetRoll(random(0,360));}
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 0)
+	Goto Spawn
+
+	XDeath:
+	Death:
+	Death.fire:
+	Death.burn:
+	Death.flames:
+	Death.Plasma:
+	Death.Incinerate:
+	Death.SuperPlasma:
+	Death.Desintegrate:
+	Death.Crush:
+		TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail5", 0, 0, random (0, 360), 2, random (60, 140))
+		TNT1 A 0 A_PlaySound("misc/xdeath4")
+		CRS1 A 5
+		CRS1 A 9009
+	Stop
+
+	Death.Melee:
+	Death.SuperPunch:
+	Death.Kick:
+		D3MI H 1 A_FaceTarget
+		TNT1 A 0 A_PlaySound("player/cyborg/fist", 3)
+	Death.ExplosiveImpact:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 1)
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 0)
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+		D3MI G 6 {A_SetRoll(random(0,360));}
+		D3MI G 3 A_CheckFloor("Landz")
+	Goto Landz
+
+	Landz:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 0)
+		TNT1 A 0 A_SpawnItem("Gib_HumpD3Maledict")
+	Stop
+
+	Death.Trample:
+	Death.Stomp:
+		TNT1 A 0 A_GiveToTarget("BootsSmearedWithRedBlood", 6)
+	Goto Death
+
+	Death.plasma:
+	Death.Burn:
+	Death.Flames:
+	Death.Fire:
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-15, 15), random (-15, 15))	
+	Stop
+	}
+}
+
+
+Actor XDeathTailD3Maledict: XDeathArm1
+{
+  -CLIENTSIDEONLY
+  +ROLLSPRITE
+  Radius 10
+  Scale 1.0
+  Mass 1000
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+	SpawnLoop:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		D3MI IIIIII 3 A_SetRoll(roll-25)
+	Loop
+
+	Death:
+		D3MI J 1
+		TNT1 A 0 A_SpawnItem("Gib_TailD3Maledict",0,0,0,1)
+	Stop
+	}
+}
+
+Actor Gib_TailD3Maledict: LimbBase
+{
+  damagefactor "Kick", 9.0
+  damagefactor "Melee", 9.0
+  damagefactor "SuperPunch", 9.0
+  -CLIENTSIDEONLY
+  Radius 10
+  Mass 10
+  Health 60
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3MI J -1
+	Loop
+
+	Pain:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 1)
+		TNT1 A 0 ThrustThingZ(0,20,0,1)
+		D3MI I 6 {A_SetRoll(random(0,360));}
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 0)
+	Goto Spawn
+
+	XDeath:
+	Death:
+	Death.fire:
+	Death.burn:
+	Death.flames:
+	Death.Plasma:
+	Death.Incinerate:
+	Death.SuperPlasma:
+	Death.Desintegrate:
+	Death.Crush:
+		TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail5", 0, 0, random (0, 360), 2, random (60, 140))
+		TNT1 A 0 A_PlaySound("misc/xdeath4")
+		CRS1 A 5
+		CRS1 A 9009
+	Stop
+
+	Death.Melee:
+	Death.SuperPunch:
+	Death.Kick:
+		D3MI J 1 A_FaceTarget
+		TNT1 A 0 A_PlaySound("player/cyborg/fist", 3)
+	Death.ExplosiveImpact:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 1)
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 0)
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+		D3MI I 6 {A_SetRoll(random(0,360));}
+		D3MI I 3 A_CheckFloor("Landz")
+	Goto Landz
+
+	Landz:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 0)
+		TNT1 A 0 A_SpawnItem("Gib_TailD3Maledict")
+	Stop
+
+	Death.Trample:
+	Death.Stomp:
+		TNT1 A 0 A_GiveToTarget("BootsSmearedWithRedBlood", 6)
+	Goto Death
+
+	Death.plasma:
+	Death.Burn:
+	Death.Flames:
+	Death.Fire:
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-15, 15), random (-15, 15))	
+	Stop
+	}
+}
+
+
+
+Actor XDeathProfD3Maledict: XDeathArm1
+{
+  -CLIENTSIDEONLY
+  +ROLLSPRITE
+  Radius 10
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+	SpawnLoop:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		D3MI RRRRRR 3 A_SetRoll(roll-25)
+	Loop
+
+	Death:
+		D3MI S 1
+		TNT1 A 0 A_SpawnItem("Gib_ProfD3Maledict",0,0,0,1)
+	Stop
+	}
+}
+
+Actor Gib_ProfD3Maledict: LimbBase
+{
+  damagefactor "Kick", 9.0
+  damagefactor "Melee", 9.0
+  damagefactor "SuperPunch", 9.0
+  -CLIENTSIDEONLY
+  Radius 10
+  Mass 10
+  Health 60
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3MI S -1
+	Loop
+
+	Pain:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 1)
+		TNT1 A 0 ThrustThingZ(0,20,0,1)
+		D3MI R 6 {A_SetRoll(random(0,360));}
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 0)
+	Goto Spawn
+
+	XDeath:
+	Death:
+	Death.fire:
+	Death.burn:
+	Death.flames:
+	Death.Plasma:
+	Death.Incinerate:
+	Death.SuperPlasma:
+	Death.Desintegrate:
+	Death.Crush:
+		TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail5", 0, 0, random (0, 360), 2, random (60, 140))
+		TNT1 A 0 A_PlaySound("misc/xdeath4")
+		CRS1 A 5
+		CRS1 A 9009
+	Stop
+
+	Death.Melee:
+	Death.SuperPunch:
+	Death.Kick:
+		D3MI S 1 A_FaceTarget
+		TNT1 A 0 A_PlaySound("player/cyborg/fist", 3)
+	Death.ExplosiveImpact:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 1)
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 0)
+		TNT1 A 0 ThrustThingZ(0,50,0,1)
+		D3MI R 6 {A_SetRoll(random(0,360));}
+		D3MI R 3 A_CheckFloor("Landz")
+	Goto Landz
+
+	Landz:
+		TNT1 A 0 A_Changeflag ("ROLLSPRITE", 0)
+		TNT1 A 0 A_SpawnItem("Gib_ProfD3Maledict")
+	Stop
+
+	Death.Trample:
+	Death.Stomp:
+		TNT1 A 0 A_GiveToTarget("BootsSmearedWithRedBlood", 6)
+	Goto Death
+
+	Death.plasma:
+	Death.Burn:
+	Death.Flames:
+	Death.Fire:
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-15, 15), random (-15, 15))	
+	Stop
+	}
+}
+
+
+
+
+Actor DeadD3Maledict
+{
+  damagefactor "Blood", 0.0
+  damagefactor "Trample", 0.0
+  damagefactor "Melee", 10.0
+  damagefactor "Fatality", 10.0
+  damagefactor "Kick", 10.0
+  +CORPSE
+  +SHOOTABLE
+  +SOLID
+  +THRUACTORS
+  Scale 1.0
+  Radius 40
+  Height 22
+  Health 500
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3MF W -1
+	Stop
+
+	Death:
+	XDeath:
+	Death.Disintegrate:
+	Death.Stomp:
+	Death.CrushedBodies:
+	Death.Crush:
+	Crush:
+	Death.Fatality:
+	Death.Melee:
+	Death.Kick:
+	Death.Extremepunches:
+		TNT1 AAAAAAAAAA 0 A_SpawnItemEX("NashgoreGibs", 0, 0, 0, random (4, 12), 0, random (4, 12), random(0, 360))
+		TNT1 A 0 A_CustomMissile ("XDeathHeadD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_CustomMissile ("XDeathWingD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_CustomMissile ("XDeathFeetD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("XDeathTailD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("XDeathHumpD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAAA 0 A_CustomMissile ("PB_SmallGib", 32, 0, random(0,360), 2, random (0, 40))
+		TNT1 AA 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_CustomMissile ("MeatDeathsmall", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAA 0 A_CustomMissile ("Instestin", 32, 0, random(0,360), 2, random (0, 40))
+		TNT1 AAA 0 A_CustomMissile ("XDeath1", 42, 0, random(0,360), 2, random (0, 40))
+		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 26, 0, random(0,360), 2, random (0, 40))
+		TNT1 AAAA 0 A_CustomMissile ("NashGoreBloodSpurt", 32, 0, random(0,360), 2, random (0, 40))
+	Stop
+
+	Death.Plasma: Death.Plasma2:
+	Death.Flames:
+	Death.Burn:
+		TNT1 AAAAAA 0 A_SpawnItemEx("TinyBurningPiece2", random (-15, 15), random (-15, 15))
+		TNT1 AAAAAA 0 A_SpawnItemEx("TinyBurningPiece3", random (-15, 15), random (-15, 15))
+		TNT1 AAAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 50, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_SpawnProjectile ("XDeathBurnedMeat", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_SpawnProjectile ("XDeathBurnedMeat2", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_SpawnProjectile ("XDeathBurnedMeat3", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 6 A_CustomMissile ("PlasmaSmoke", 16, 0, random (0, 180), 2, random (0, 180))
+	Stop
+
+	Death.TeleportRemover:
+	Death.GibRemoving:
+		TNT1 A 0
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_ChangeFlag("NOCLIP", 1)
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 1)
+	Stop	
+
+	}
+}
+
+
+
+
+//HalfUpperbody
+//Horizontal saw
+Actor RipHalfD3MaledictUpper: DeadD3Maledict
+{
+  Radius 8
+  Height 8
+  Speed 7
+  Mass 8
+  BounceFActor 0.2
+  +DOOMBOUNCE
+  +NOBLOCKMAP
+  +MISSILE
+  +NOTELEPORT
+  +DONTSPLASH
+  +MOVEWITHSECTOR
+  DeathSound "misc/xdeath1"
+  Decal BrutalBloodSplat
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		D3ML GH 12 A_CustomMissile("Brutal_FlyingBloodTrail",0,0,180,2)
+	Loop
+		
+	Death:
+		TNT1 A 0 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+		TNT1 A 0 A_SpawnItem("RipHalfD3MaledictUpperGib")
+	Stop
+	}
+}
+
+Actor RipHalfD3MaledictUpperGib: DeadD3Maledict
+{
+  Scale 1.0
+  -CORPSE
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3ML I 1 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+		D3ML I -1
+	Stop
+
+	Death:
+	XDeath:
+	Death.Fatality:
+	Death.Melee:
+	Death.Kick:
+	Death.Extremepunches:
+		TNT1 AAAA 0 A_SpawnItemEX("NashgoreGibs", 0, 0, 0, random (4, 12), 0, random (4, 12), random(0, 360))
+		TNT1 A 0 A_CustomMissile ("XDeathHeadD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("XDeathHumpD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_CustomMissile ("XDeathWingD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("PB_SmallGib", 32, 0, random(0,360), 2, random (0, 40))
+		TNT1 A 0 A_CustomMissile ("MeatDeathsmall", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("Instestin", 32, 0, random(0,360), 2, random (0, 40))
+		TNT1 A 0 A_CustomMissile ("XDeath1", 42, 0, random(0,360), 2, random (0, 40))
+		TNT1 A 0 A_CustomMissile ("Xdeath3", 26, 0, random(0,360), 2, random (0, 40))
+		TNT1 A 0 A_CustomMissile ("NashGoreBloodSpurt", 32, 0, random(0,360), 2, random (0, 40))
+	Stop
+	}
+}
+
+//Lowerbody
+//Horizontal saw
+
+Actor RipHalfD3MaledictLower1
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+		D3ML A 8
+		D3ML BCDE 6
+		TNT1 A 0 A_StartSound("Corpse/Fall",CHAN_6)
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
+		TNT1 A 0 A_SpawnItem("RipHalfD3MaledictLowerGib")
+	Stop
+	}
+}
+
+
+Actor RipHalfD3MaledictLower2
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+		D3ML CDE 8
+		TNT1 A 0 A_StartSound("Corpse/Fall",CHAN_6)
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
+		TNT1 A 0 A_SpawnItem("RipHalfD3MaledictLowerGib")
+	Stop
+	}
+}
+
+
+Actor RipHalfD3MaledictLower3
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+		D3ML DE 8
+		TNT1 A 0 A_StartSound("Corpse/Fall",CHAN_6)
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
+		TNT1 A 0 A_SpawnItem("RipHalfD3MaledictLowerGib")
+	Stop
+	}
+}
+
+Actor RipHalfD3MaledictLowerGib: DeadD3Maledict
+{
+  Scale 1.0
+  -CORPSE
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3ML F 1 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
+		D3ML F -1
+	Stop
+
+	Death:
+	XDeath:
+	Death.Fatality:
+	Death.Melee:
+	Death.Kick:
+	Death.Extremepunches:
+		TNT1 AAAA 0 A_SpawnItemEX("NashgoreGibs", 0, 0, 0, random (4, 12), 0, random (4, 12), random(0, 360))
+		TNT1 A 0 A_CustomMissile ("XDeathTailD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_CustomMissile ("XDeathFeetD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("PB_SmallGib", 32, 0, random(0,360), 2, random (0, 40))
+		TNT1 A 0 A_CustomMissile ("MeatDeathsmall", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("Instestin", 32, 0, random(0,360), 2, random (0, 40))
+		TNT1 A 0 A_CustomMissile ("XDeath1", 42, 0, random(0,360), 2, random (0, 40))
+		TNT1 A 0 A_CustomMissile ("Xdeath3", 26, 0, random(0,360), 2, random (0, 40))
+		TNT1 A 0 A_CustomMissile ("NashGoreBloodSpurt", 32, 0, random(0,360), 2, random (0, 40))
+	Stop
+	}
+}
+
+
+Actor DeadD3MaledictNoHead: DeadD3Maledict
+{
+States
+	{
+	Spawn:
+		TNT1 A 0
+		D3MJ Z -1
+	Stop
+
+	Death:
+	XDeath:
+	Death.Disintegrate:
+	Death.Stomp:
+	Death.CrushedBodies:
+	Death.Crush:
+	Crush:
+	Death.Fatality:
+	Death.Melee:
+	Death.Kick:
+	Death.Extremepunches:
+		TNT1 AAAAAAAAAA 0 A_SpawnItemEX("NashgoreGibs", 0, 0, 0, random (4, 12), 0, random (4, 12), random(0, 360))
+		//TNT1 A 0 A_CustomMissile ("XDeathHeadD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_CustomMissile ("XDeathWingD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_CustomMissile ("XDeathFeetD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("XDeathTailD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("XDeathHumpD3Maledict", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAAA 0 A_CustomMissile ("PB_SmallGib", 32, 0, random(0,360), 2, random (0, 40))
+		TNT1 AA 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AA 0 A_CustomMissile ("MeatDeathsmall", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAA 0 A_CustomMissile ("Instestin", 32, 0, random(0,360), 2, random (0, 40))
+		TNT1 AAA 0 A_CustomMissile ("XDeath1", 42, 0, random(0,360), 2, random (0, 40))
+		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 26, 0, random(0,360), 2, random (0, 40))
+		TNT1 AAAA 0 A_CustomMissile ("NashGoreBloodSpurt", 32, 0, random(0,360), 2, random (0, 40))
+	Stop
+	}
+}
+
+Actor PlasmaDeadD3Maledict: DeadD3Maledict
+{
+Translation "0:255=%[0,0,0]:[0.2,0.2,0.2]"
+
+States
+	{
+
+	Death:
+	XDeath:
+	Death.Cutless: 
+	Death.Cut:
+	Death.Saw:
+	Death.Fatality:
+	Death.Melee:
+	Death.Kick:
+	Death.Extremepunches:
+		TNT1 A 0
+		TNT1 A 0 A_XScream
+		TNT1 A 0 A_NoBlocking
+		TNT1 AAA 0 A_CustomMissile ("Brutal_FlyingBlood", 50, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAA 0 A_CustomMissile ("XDeathBurnedMeat", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAA 0 A_CustomMissile ("XDeathBurnedMeat2", 32, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAA 0 A_CustomMissile ("XDeathBurnedMeat3", 32, 0, random (0, 360), 2, random (0, 160))
+		EXPL AAA 0 A_CustomMissile ("ExplosionSmoke", 32, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0
+	Stop
+	}
+}
+
+
+
+actor BlackHoledD3Maledict
+{ 
+  Radius 1
+  Height 1
+  +NOTELEPORT
+  +MOVEWITHSECTOR
+  +NOGRAVITY
+  DamageFactor "bloodsplasher", 0.0    DamageFactor "tinybloodsplasher", 0.0    DamageFactor "superbloodsplasher", 0.0    DamageFactor "smallbloodsplasher", 0.0
+  Mass 1000
+  Health 100
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0 A_PlaySound("redburn",6,1,1)
+		TNT1 AAAAAAAAAA 0 A_SpawnItemEx("PurpleTrailSparks", 0, 0, 27, 0, 0, 0, 0, 128)
+		D3MI NOPQ 6 A_SpawnItemEx("PurpleTrailSparks", 0, 0, 0, 6, 0, 0, 0, 128)
+		TNT1 A 0 A_StopSound(2)  
+	Stop
+		}
+ }
+
+
+Actor IncinerateDyingD3Maledict1
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_StartSound("MELT")
+		TNT1 A 0 A_NoBlocking
+		TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 52, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleVeryFast", 52, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,52,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35))
+		D3MI TUV 6 Light("IncinerationGlow")
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes1", 28, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes2", 40, 0, random (0, 360), 2, random (0, 180))
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 A 0 A_StartSound("SZZLL", 3)
+		D3MI W 8 Light("IncinerationGlow")
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,52,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		D3MI X 7 Light("IncinerationGlow")
+		D3MI YYYYYYY 12 A_SpawnProjectile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_SpawnItem("IncineratedD3Maledict")
+	Stop
+	}
+}
+
+
+
+Actor IncinerateDyingD3Maledict2
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_StartSound("MELT")
+		TNT1 A 0 A_NoBlocking
+		TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 52, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleVeryFast", 52, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,52,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35))
+		D3MI UV 6 Light("IncinerationGlow")
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes1", 28, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes2", 40, 0, random (0, 360), 2, random (0, 180))
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 A 0 A_StartSound("SZZLL", 3)
+		D3MI W 8 Light("IncinerationGlow")
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,52,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		D3MI X 7 Light("IncinerationGlow")
+		D3MI YYYYYYY 12 A_SpawnProjectile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_SpawnItem("IncineratedD3Maledict")
+	Stop
+	}
+}
+
+
+
+Actor IncinerateDyingD3Maledict3
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_StartSound("MELT")
+		TNT1 A 0 A_NoBlocking
+		TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 52, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleVeryFast", 52, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,52,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35))
+		D3MI V 6 Light("IncinerationGlow")
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes1", 28, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes2", 40, 0, random (0, 360), 2, random (0, 180))
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 A 0 A_StartSound("SZZLL", 3)
+		D3MI W 8 Light("IncinerationGlow")
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,52,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		D3MI X 7 Light("IncinerationGlow")
+		D3MI YYYYYYY 12 A_SpawnProjectile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_SpawnItem("IncineratedD3Maledict")
+	Stop
+	}
+}
+
+Actor DisintegrateDyingD3Maledict1
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  Translation "16:47=112:127", "160:191=112:127", "208:235=112:127", "248:249=112:127"
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_StartSound("SZZLL", 3)
+		TNT1 AAAAAAA 0 A_SpawnItem("BFGDeathParticleSpawner",0,45)
+		TNT1 AA 0 A_SpawnItem("GreenExplosionFlameTrail",0,45)
+		TNT1 A 0 A_NoBlocking
+		TNT1 AAAAAA 0 A_SpawnItemEx ("PlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 A 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 AAAAAA 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 AAAAAA 0 A_SpawnItemEx("GreenTrailSparks", random (-35, 35), random (-35, 35))
+		TNT1 AAAAAA 0 A_SpawnItemEx("GreenTrailSparks", random (-35, 35), random (-35, 35))
+		TNT1 AAAAAA 0 A_SpawnItemEx("GreenTrailSparks", random (-45, 45), random (-45, 35))
+		D3MI TUV 6 //Light("IncinerationGlow")
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes1", 28, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes2", 40, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAA 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		//TNT1 A 0 A_StartSound("SZZLL", 3)
+		D3MI W 8 //Light("IncinerationGlow")
+		TNT1 AAAAAA 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 A 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		D3MI X 7 //Light("IncinerationGlow")
+		D3MI YYYYYYY 12 A_SpawnProjectile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_SpawnItem("IncineratedD3Maledict")
+	Stop
+	}
+}
+
+
+
+Actor DisintegrateDyingD3Maledict2
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  Translation "16:47=112:127", "160:191=112:127", "208:235=112:127", "248:249=112:127"
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_StartSound("SZZLL", 3)
+		TNT1 AAAAAAA 0 A_SpawnItem("BFGDeathParticleSpawner",0,45)
+		TNT1 AA 0 A_SpawnItem("GreenExplosionFlameTrail",0,45)
+		TNT1 A 0 A_NoBlocking
+		TNT1 AAAAAA 0 A_SpawnItemEx ("PlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 A 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 AAAAAA 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 AAAAAA 0 A_SpawnItemEx("GreenTrailSparks", random (-35, 35), random (-35, 35))
+		TNT1 AAAAAA 0 A_SpawnItemEx("GreenTrailSparks", random (-35, 35), random (-35, 35))
+		TNT1 AAAAAA 0 A_SpawnItemEx("GreenTrailSparks", random (-45, 45), random (-45, 35))
+		D3MI UV 6 //Light("IncinerationGlow")
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes1", 28, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes2", 40, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAA 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		//TNT1 A 0 A_StartSound("SZZLL", 3)
+		D3MI W 8 //Light("IncinerationGlow")
+		TNT1 AAAAAA 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 A 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		D3MI X 7 //Light("IncinerationGlow")
+		D3MI YYYYYYY 12 A_SpawnProjectile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_SpawnItem("IncineratedD3Maledict")
+	Stop
+	}
+}
+
+
+
+Actor DisintegrateDyingD3Maledict3
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  Translation "16:47=112:127", "160:191=112:127", "208:235=112:127", "248:249=112:127"
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_StartSound("SZZLL", 3)
+		TNT1 AAAAAAA 0 A_SpawnItem("BFGDeathParticleSpawner",0,45)
+		TNT1 AA 0 A_SpawnItem("GreenExplosionFlameTrail",0,45)
+		TNT1 A 0 A_NoBlocking
+		TNT1 AAAAAA 0 A_SpawnItemEx ("PlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 A 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 AAAAAA 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 AAAAAA 0 A_SpawnItemEx("GreenTrailSparks", random (-35, 35), random (-35, 35))
+		TNT1 AAAAAA 0 A_SpawnItemEx("GreenTrailSparks", random (-35, 35), random (-35, 35))
+		TNT1 AAAAAA 0 A_SpawnItemEx("GreenTrailSparks", random (-45, 45), random (-45, 35))
+		D3MI V 6 //Light("IncinerationGlow")
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes1", 28, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAAAAAAAA 0 A_SpawnProjectile ("Ashes2", 40, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAA 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		//TNT1 A 0 A_StartSound("SZZLL", 3)
+		D3MI W 8 //Light("IncinerationGlow")
+		TNT1 AAAAAA 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		TNT1 A 0 A_SpawnItemEx ("BigPlasmaParticleX",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+		D3MI X 7 //Light("IncinerationGlow")
+		D3MI YYYYYYY 12 A_SpawnProjectile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_SpawnItem("IncineratedD3Maledict")
+	Stop
+	}
+}
+
+Actor PlasmaDyingD3Maledict1
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  Translation "0:255=%[0,0,0]:[0.2,0.2,0.2]"
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3MF LMNO 6
+		D3MF P 8
+		D3MF QR 7
+		D3MF STUV 6
+		TNT1 A 0 A_StartSound("Corpse/Fall",CHAN_6)
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
+		TNT1 A 0 A_SpawnItem("PlasmaDeadD3Maledict")
+	Stop
+	}
+}
+
+
+Actor PlasmaDyingD3Maledict2
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  Translation "0:255=%[0,0,0]:[0.2,0.2,0.2]"
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3MF QR 7
+		D3MF STUV 6
+		D3MF V 1 A_CheckFloor("SpawnCorpse")
+	Loop
+
+	SpawnCorpse:
+		TNT1 A 0 A_StartSound("Corpse/Fall",CHAN_6)
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
+		TNT1 A 0 A_SpawnItem("PlasmaDeadD3Maledict")
+	Stop
+	}
+}
+
+
+Actor PlasmaDyingD3Maledict3
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  Translation "0:255=%[0,0,0]:[0.2,0.2,0.2]"
+  States
+	{
+	Spawn:
+		TNT1 A 0
+		D3MF R 7
+		D3MF STUV 6
+		D3MF V 1 A_CheckFloor("SpawnCorpse")
+	Loop
+
+	SpawnCorpse:
+		TNT1 A 0 A_StartSound("Corpse/Fall",CHAN_6)
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
+		TNT1 A 0 A_SpawnItem("PlasmaDeadD3Maledict")
+	Stop
+	}
+}
+
+
+
+ACTOR BurningD3Maledict1
+{
+  Radius 50
+  Height 120
+  Speed 12
+  Scale 1.0
+  Health 100
+  GibHealth 25
+  +NOICEDEATH
+  damagefactor "Burn", 0.5
+  damagefactor "Fire", 0.5
+  damagefactor "Flames", 0.5
+  damagefactor "Flame", 0.5
+  damagefactor "ExplosiveImpact", 10.0
+  MONSTER
+  -COUNTKILL
+  //+FLOAT
+  //+NOGRAVITY
+  +FRIENDLY
+  +FLOORCLIP
+  +SHOOTABLE
+  +NOBLOCKMONST
+  +DONTSPLASH
+  Gravity 1.0
+  bloodtype "DeadBlood"
+  Mass 100
+  Translation "0:255=%[0,0,0]:[2.0,0.83,0.0]"
+  States
+    {
+    Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_CustomMissile("BurnParticlesNoDamage", 40, 0, random (0, 360), 2, random (50, 130))
+	Goto Suffer
+
+	Suffer:
+		TNT1 A 0 A_StartSound("D3Maledict/StepHeavy", CHAN_BODY, CHANF_OVERLAP)
+		D3MA A 2 A_Wander
+		TNT1 A 0 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_StartSound("D3Maledict/StepLight", CHAN_BODY, CHANF_OVERLAP)
+		D3MA AA 4 A_Chase
+		D3MA A 2 A_Wander
+		TNT1 A 0 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		D3MA BBB 4 A_Wander
+		TNT1 A 0 A_StartSound("D3Maledict/StepHeavy", CHAN_BODY, CHANF_OVERLAP)
+		D3MA C 2 A_Wander
+		TNT1 A 0 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_StartSound("D3Maledict/StepLight", CHAN_BODY, CHANF_OVERLAP)
+		D3MA CC 4 A_Wander
+		D3MA C 2 A_Wander
+		TNT1 A 0 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		D3MA DDD 4 A_Wander
+		TNT1 A 0 A_JumpIfInventory("PoorGuyBurningLife", 15, "Death")
+		TNT1 A 0 A_GiveInventory("PoorGuyBurningLife", 1)
+	Loop
+
+    Death:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("PlasmaDyingD3Maledict1")
+	Stop
+		}
+ }
+
+
+ACTOR BurningD3Maledict2
+{
+  Radius 50
+  Height 250
+  Speed 20
+  Scale 1.0
+  Health 100
+  GibHealth 25
+  +NOICEDEATH
+  damagefactor "Burn", 0.5
+  damagefactor "Fire", 0.5
+  damagefactor "Flames", 0.5
+  damagefactor "Flame", 0.5
+  damagefactor "ExplosiveImpact", 10.0
+  MONSTER
+  -COUNTKILL
+  +FLOAT
+  +NOGRAVITY
+  +FRIENDLY
+  +FLOORCLIP
+  +SHOOTABLE
+  +NOBLOCKMONST
+  +DONTSPLASH
+  Gravity 1.0
+  bloodtype "DeadBlood"
+  Mass 100
+  Translation "0:255=%[0,0,0]:[2.0,0.83,0.0]"
+  States
+    {
+    Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_CustomMissile("BurnParticlesNoDamage", 40, 0, random (0, 360), 2, random (50, 130))
+	Goto Suffer
+
+	Suffer:
+		TNT1 A 0 {A_StartSound("D3Maledict/float", CHAN_BODY, CHANF_OVERLAP);}
+		D3MC A 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS1:
+		D3MC B 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS2:
+		D3MC C 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS3:
+		D3MC D 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS4:
+		D3MC E 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS5:
+		D3MC F 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS6:
+		D3MC G 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS7:
+		D3MC H 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS8:
+		D3MC I 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS9:
+		D3MC J 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS10:
+		D3MC K 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	FloatLoopS11:
+		D3MC L 4 {A_CustomMissile("BurnParticlesNoDamage", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(80,220), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(80,220), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+		TNT1 A 0 A_JumpIfInventory("PoorGuyBurningLife", 4, "Death")
+		TNT1 A 0 A_GiveInventory("PoorGuyBurningLife", 1)
+	Loop
+
+    Death:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("PlasmaDyingD3Maledict2")
+	Stop
+		}
+ }
+
+
+ACTOR BurningD3Maledict3
+{
+  Radius 80
+  Height 250
+  Speed 40
+  Scale 1.0
+  Health 100
+  GibHealth 25
+  +NOICEDEATH
+  damagefactor "Burn", 0.5
+  damagefactor "Fire", 0.5
+  damagefactor "Flames", 0.5
+  damagefactor "Flame", 0.5
+  damagefactor "ExplosiveImpact", 10.0
+  MONSTER
+  -COUNTKILL
+  +FLOAT
+  +NOGRAVITY
+  +FRIENDLY
+  +FLOORCLIP
+  +SHOOTABLE
+  +NOBLOCKMONST
+  +DONTSPLASH
+  Gravity 1.0
+  bloodtype "DeadBlood"
+  Mass 100
+  Translation "0:255=%[0,0,0]:[2.0,0.83,0.0]"
+  States
+    {
+    Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_CustomMissile("BurnParticlesNoDamage", 40, 0, random (0, 360), 2, random (50, 130))
+	Goto Suffer
+
+	Suffer:
+		TNT1 A 0 {A_StartSound("D3Maledict/fastfloat", CHAN_BODY, CHANF_OVERLAP);}
+		D3MD A 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS1:
+		D3MD B 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS2:
+		D3MD C 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS3:
+		D3MD D 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS4:
+		D3MD E 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS5:
+		D3MD F 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS6:
+		D3MD G 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS7:
+		D3MD H 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS8:
+		D3MD I 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS9:
+		D3MD J 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS10:
+		D3MD K 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+	DragonFlyLoopS11:
+		D3MD L 4 {A_CustomMissile("BurnParticlesNoDamage", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("FireballExplosionFlamesBig", random(30,80), 0, random (0, 360), 2, random (50, 130)); A_CustomMissile("ExplosionParticleVerySlow", random(30,80), 0, random (0, 360), 2, random (50, 130));}
+		TNT1 A 0 A_Wander
+		TNT1 A 0 A_JumpIfInventory("PoorGuyBurningLife", 4, "Death")
+		TNT1 A 0 A_GiveInventory("PoorGuyBurningLife", 1)
+	Loop
+
+    Death:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("PlasmaDyingD3Maledict3")
+	Stop
+		}
+ }
+
+
+
+
+Actor IncineratedD3Maledict
+{
+  -CLIENTSIDEONLY
+  -SOLID
+  Scale 1.0
+  States
+	{
+	Spawn:
+		D3MI Z -1
+	Stop
+	}
+}
+
+
+ACTOR FrozenD3Maledict : FrozenEnemyBase
+{
+  Radius 50
+  Height 120
+  Mass 2000
+  Scale 1.0
+  var int user_healthbonus;
+  States
+	{
+	Spawn:
+		TNT1 A 0 A_Playsound("weapons/CryoRifle/freezeobject")
+		TNT1 AAAAAAAAAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 AAAAA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)		
+		TNT1 AAAAAAA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 A 0 Bright A_SpawnItemEx("IceExplosionImpact", 0, 0, 0, 0, 0, 0, random(1,360), SXF_NOCHECKPOSITION)
+		D3MI K -1
+	Loop
+		
+	Death.Fire:
+	Death.Flames:
+	Death.Burn:
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_ChangeFlag("SOLID", 0)
+		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
+		TNT1 A 0 A_PlaySound ("IceMelt")
+		TNT1 AAAAAAAAAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 AAAAA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 AAAAAAA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 A 0 Bright A_SpawnItemEx("IceExplosionImpact", 0, 0, 0, 0, 0, 0, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("D3Maledict", 0, 0, 0, 0, 0, 0, random(1,360), SXF_NOCHECKPOSITION)
+	Stop
+		
+	Death.Breakout:	
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_PlaySound ("IceBreakMedium")
+		TNT1 AAAAAAAAAAA 0 A_CustomMissile ("IceDust", 5, 0, random (0, 360), 2, random (0, 160), SXF_NOCHECKPOSITION)
+		TNT1 AAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 AAA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 A 0 Bright A_SpawnItemEx("IceExplosionImpact", 0, 0, 0, 0, 0, 0, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("D3Maledict", 0, 0, 0, 0, 0, 0, random(1,360), SXF_NOCHECKPOSITION)
+	Stop
+		
+	Death:	
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_StartSound ("breakfrozenguy/large")
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke", random (5, 35), random (20, -20), random (0, 360), random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", random (5, 35), random (20, -20), random (0, 360), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke2", random (5, 35), random (20, -20), random (0, 360), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 AAAAAAAAAAAAAAA 0 A_CustomMissile ("IceBlood", random (5, 35), random (20, -20), random (0, 360), 2, random (0, 160), SXF_NOCHECKPOSITION)
+		TNT1 AAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("IceDust", random (5, 35), random (20, -20), random (0, 360), 2, random (0, 160), SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_SpawnItem("BloodSplasher3")
+		TNT1 AAAAAAAAAAAAAA 0 A_SpawnProjectile ("BloodMistXXBig", 30, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (70, 90))
+		TNT1 AAAAAAAAAAAAAA 0 A_SpawnProjectile ("BloodMistXXBig", 100, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (20, 90))
+		TNT1 AA 0 A_SpawnProjectile ("XDeath1", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 160))
+		TNT1 AAAAA 0 A_SpawnProjectile ("XDeath2", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 160))
+		TNT1 AAAAAAA 0 A_SpawnProjectile ("XDeath3", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 160))
+		TNT1 AAAAAAA 0 A_SpawnProjectile ("XDeath4", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 160))
+		TNT1 A 0 A_SpawnProjectile ("XDeath4b", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 160))
+		TNT1 AAAAA 0 A_SpawnProjectile ("SuperGoreSpawner2", 10, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 180))
+		TNT1 AAAAAAAAAA 0 A_SpawnProjectile ("SuperGoreSpawner2", 0, 0, random (0, 180), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 180))
+		TNT1 AAAAA 0 A_SpawnProjectile ("SuperGoreSpawner2", 25, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 180))
+		TNT1 AAAAAAAAAA 0 A_SpawnProjectile ("SuperGoreSpawner2", 35, 0, random (0, 180), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 180))
+		TNT1 AAAAAAAAAAAAAAAAAA 0 A_SpawnProjectile ("SuperGoreMist", 54, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 90))
+		TNT1 A 0 A_SpawnItem ("GiantBloodSpot")
+		TNT1 A 0 {
+				A_Stop;
+				for(user_healthbonus = 0; user_healthbonus < random(8,10); user_healthbonus++) {
+					A_SpawnItemEx("PB_HealthBonus", 0, 0, 32, random(2,4),random(2,4),random(1,3),random(0,360),SXF_NOCHECKPOSITION);
+				}
+			}
+		D3MI L -1
+	Stop
+		
+	Death.Ice:
+	Death.IceExplosion:
+	Death.Freeze:
+	Death.Frost:
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_ChangeFlag("SOLID", 0)
+		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
+		TNT1 A 0 A_SpawnItem("FrozenD3Maledict")
+	Stop
+		}
+ }
+
+Actor FrozenD3Maledict2 : FrozenEnemyBase
+{
+  Radius 50
+  Height 250
+  Scale 1.0
+  var int user_healthbonus;
+  +THRUACTORS
+  States
+	{
+	Spawn:
+		TNT1 A 0 A_Playsound("weapons/CryoRifle/freezeobject")
+		TNT1 AAAAAAAAAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 AAAAA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)		
+		TNT1 AAAAAAA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 A 0 Bright A_SpawnItemEx("IceExplosionImpact", 0, 0, 0, 0, 0, 0, random(1,360), SXF_NOCHECKPOSITION)
+	FallLoop:
+		D3MI M 1 A_CheckFloor("Death")
+	Loop
+
+	Death.Fire:
+	Death.Flames:
+	Death.Burn:
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_ChangeFlag("SOLID", 0)
+		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
+		TNT1 A 0 A_PlaySound ("IceMelt")
+		TNT1 AAAAAAAAAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 AAAAA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 AAAAAAA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 A 0 Bright A_SpawnItemEx("IceExplosionImpact", 0, 0, 0, 0, 0, 0, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("D3Maledict", 0, 0, 0, 0, 0, 0, random(1,360), SXF_NOCHECKPOSITION)
+	Stop
+		
+	Death.Breakout:	
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_PlaySound ("IceBreakMedium")
+		TNT1 AAAAAAAAAAA 0 A_CustomMissile ("IceDust", 5, 0, random (0, 360), 2, random (0, 160), SXF_NOCHECKPOSITION)
+		TNT1 AAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 AAA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 A 0 Bright A_SpawnItemEx("IceExplosionImpact", 0, 0, 0, 0, 0, 0, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("D3Maledict", 0, 0, 0, 0, 0, 0, random(1,360), SXF_NOCHECKPOSITION)
+	Stop
+		
+	Death:	
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_StartSound ("breakfrozenguy/large")
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke", random (5, 35), random (20, -20), random (0, 360), random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_NOCHECKPOSITION)
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", random (5, 35), random (20, -20), random (0, 360), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke2", random (5, 35), random (20, -20), random (0, 360), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_NOCHECKPOSITION,64)
+		TNT1 AAAAAAAAAAAAAAA 0 A_CustomMissile ("IceBlood", random (5, 35), random (20, -20), random (0, 360), 2, random (0, 160), SXF_NOCHECKPOSITION)
+		TNT1 AAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("IceDust", random (5, 35), random (20, -20), random (0, 360), 2, random (0, 160), SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_SpawnItem("BloodSplasher3")
+		TNT1 AAAAAAAAAAAAAA 0 A_SpawnProjectile ("BloodMistXXBig", 30, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (70, 90))
+		TNT1 AAAAAAAAAAAAAA 0 A_SpawnProjectile ("BloodMistXXBig", 100, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (20, 90))
+		TNT1 AA 0 A_SpawnProjectile ("XDeath1", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 160))
+		TNT1 AAAAA 0 A_SpawnProjectile ("XDeath2", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 160))
+		TNT1 AAAAAAA 0 A_SpawnProjectile ("XDeath3", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 160))
+		TNT1 AAAAAAA 0 A_SpawnProjectile ("XDeath4", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 160))
+		TNT1 A 0 A_SpawnProjectile ("XDeath4b", 32, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 160))
+		TNT1 AAAAA 0 A_SpawnProjectile ("SuperGoreSpawner2", 10, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 180))
+		TNT1 AAAAAAAAAA 0 A_SpawnProjectile ("SuperGoreSpawner2", 0, 0, random (0, 180), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 180))
+		TNT1 AAAAA 0 A_SpawnProjectile ("SuperGoreSpawner2", 25, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 180))
+		TNT1 AAAAAAAAAA 0 A_SpawnProjectile ("SuperGoreSpawner2", 35, 0, random (0, 180), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 180))
+		TNT1 AAAAAAAAAAAAAAAAAA 0 A_SpawnProjectile ("SuperGoreMist", 54, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (0, 90))
+		TNT1 A 0 A_SpawnItem ("GiantBloodSpot")
+		TNT1 A 0 {
+				A_Stop;
+				for(user_healthbonus = 0; user_healthbonus < random(8,10); user_healthbonus++) {
+					A_SpawnItemEx("PB_HealthBonus", 0, 0, 32, random(2,4),random(2,4),random(1,3),random(0,360),SXF_NOCHECKPOSITION);
+				}
+			}
+	Stop
+		
+	Death.Ice:
+	Death.IceExplosion:
+	Death.Freeze:
+	Death.Frost:
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_ChangeFlag("SOLID", 0)
+		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
+		TNT1 A 0 A_SpawnItem("FrozenD3Maledict2")
+	Stop
+		}
+}
+
+
+
+//Shrinks
+ACTOR D3MaledictShrinkFX1
+{
+  +NOINTERACTION
+  +NOCLIP
+  Scale 1.0
+  States
+	{
+	Spawn:
+		D3MA U 6 A_FadeOut (0.25)
+	loop
+	}
+ }
+
+ACTOR D3MaledictShrinkFX2
+{
+  +NOINTERACTION
+  +NOCLIP
+  Scale 0.9
+  States
+	{
+	Spawn:
+		D3MA U 6 A_FadeOut (0.25)
+		loop
+	}
+ }
+
+ACTOR D3MaledictShrinkFX3
+{
+  +NOINTERACTION
+  +NOCLIP
+  Scale 0.8
+  States
+	{
+	Spawn:
+		D3MA U 6 A_FadeOut (0.25)
+		loop
+	}
+ }
+
+ACTOR D3MaledictShrinkFX4
+{
+  +NOINTERACTION
+  +NOCLIP
+  Scale 0.7
+  States
+	{
+	Spawn:
+		D3MA U 6 A_FadeOut (0.25)
+		loop
+	}
+ }
+
+ACTOR D3MaledictShrinkFX5
+{
+  +NOINTERACTION
+  +NOCLIP
+  Scale 0.6
+  States
+	{
+	Spawn:
+		D3MA U 6 A_FadeOut (0.25)
+		loop
+	}
+ }
+
+ACTOR D3MaledictShrinkFX6
+{
+  +NOINTERACTION
+  +NOCLIP
+  Scale 0.5
+  States
+	{
+	Spawn:
+		D3MA U 6 A_FadeOut (0.25)
+		loop
+	}
+ }
+
+ACTOR D3MaledictShrinkFX7
+{
+  +NOINTERACTION
+  +NOCLIP
+  Scale 0.4
+  States
+	{
+	Spawn:
+		D3MA U 6 A_FadeOut (0.25)
+		loop
+	}
+ }
+
+ACTOR D3MaledictShrinkFX8
+{
+  +NOINTERACTION
+  +NOCLIP
+  Scale 0.3
+  States
+	{
+	Spawn:
+		D3MA U 6 A_FadeOut (0.25)
+		loop
+	}
+ }
+
+ACTOR D3MaledictShrinkFX9
+{
+  +NOINTERACTION
+  +NOCLIP
+  Scale 0.2
+  States
+	{
+	Spawn:
+		D3MA U 6 A_FadeOut (0.25)
+		loop
+	}
+ }
+
+ACTOR D3MaledictShrinkFX10
+{
+  +NOINTERACTION
+  +NOCLIP
+  Scale 0.1
+  States
+	{
+	Spawn:
+		D3MA U 6 A_FadeOut (0.25)
+		loop
+	}
+ }
+
+
+ACTOR LilD3Maledict
+{
+  Radius 3
+  Height 3
+  Speed 2
+  Health 5
+  Scale 0.2
+  DamageFactor "Kick", 6.0
+  DamageFactor "Shrink", 0.0
+  DamageFactor "bloodsplasher", 0.0    DamageFactor "tinybloodsplasher", 0.0    DamageFactor "superbloodsplasher", 0.0    DamageFactor "smallbloodsplasher", 0.0
+  DamageFactor "BlueBloodSplasher", 0.0
+  DamageFactor "BlueSuperBloodSplasher", 0.0
+  PainChance "Kick", 255
+  PainChance "SuperKick", 255
+  DamageFactor "trample", 2.0
+  DamageFactor "Avoid", 0.0
+  damagefactor "killme", 0.0
+  +SHOOTABLE
+  +FLOORCLIP
+  +LOOKALLAROUND
+  +FRIGHTENED
+  +SOLID
+  States
+	{
+	Spawn:
+		D3MA A 1 A_Look
+	See:
+		D3MA AABBCCDD 2 A_Wander
+	Loop
+			
+	Death:
+	XDeath:
+		TNT1 A 0 A_Playsound("misc/xdeath3", 2)
+		TNT1 A 0 A_CustomMissile ("Brutal_LiquidBlood2", 2, 0, random (0, 360), 2, random (60, 120))
+		TNT1 AA 0 A_CustomMissile ("MuchBlood2", 3, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_SpawnItem ("XDeath2", 1, 3)
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool", 1)
+	Stop
+		}
+ }

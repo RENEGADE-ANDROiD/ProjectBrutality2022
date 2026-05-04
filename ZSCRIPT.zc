@@ -96,6 +96,10 @@ const MAXITERATIONS = 32676;
 #include "zscript/Monsters/Sergeants/ZombieSergeantHelmet.zc"
 #include "zscript/Monsters/Sergeants/ZombieSergeantShield.zc"
 #include "zscript/Monsters/Imps/Imp.zc"
+#include "zscript/Effects/SummonerFunctions.zc"
+#include "zscript/Effects/RavagerPortals.zc"
+#include "zscript/Monsters/ObsidianRavager.zc"
+#include "zscript/Monsters/D3Maledict.zc"
 
 //Glory Kills
 #include "zscript/Monsters/Imps/ImpGloryKill.zc"

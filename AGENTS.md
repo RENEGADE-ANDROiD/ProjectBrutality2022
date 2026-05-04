@@ -219,6 +219,7 @@ Follow the same spawn/menu/HUD ideas, but the hook points are: `BaseWeapon.dec` 
 - **Comments.** Do not add comments that narrate what the code does. The existing ZScript comments only explain intent (e.g. `// I call these "Mini Event Handlers" in decorate`).
 - **Attribution.** Preserve the header comment `// IF YOU WANT TO USE STUFF FROM THIS MOD, GIVE ME CREDITS` at the top of `DECORATE` and any author credits in sub-files.
 - **Reuse existing tokens.** Before defining a new flag-style `Inventory`, search `DECORATE` for an equivalent one.
+- **Fatality / execution unblock.** Player states that call `SetPlayerProperty(0,0,0)` to leave a fatality or camera lock should clear **`PROP_TOTALLYFROZEN`** in the same transition (`SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)`), not only property `0` — they are separate engine bits; leftover total freeze causes soft-locks after finishers. See **`CHANGELOG.md`** under **[Unreleased] → Fixed** for the repo-wide sweep (`NEWPLAYE.dec`, `PLAYER.dec`, **`BaseWeapon`**).
 - **DoomEdNum discipline.** Always update `DoomEdNums` in `zmapinfo.txt` and never reuse an existing number.
 
 ## 8. Reference documentation

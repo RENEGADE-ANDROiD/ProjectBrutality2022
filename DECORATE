@@ -747,6 +747,11 @@ Actor TurboReload : Inventory
 #include "actors/Items/Ammo/PinataAmmo.dec"
 // MP execution finishers: need GORE (XDeathArm1), Crucible pinatas, SoulCube pinata spawns, Stun explosion alias in EXPLOSIVES.
 #include "actors/Compat/ExecutionFxStubs.dec"
+#include "actors/Monsters/ObsidianRavager/SlayerPower.dec"
+#include "actors/Monsters/ObsidianRavager/ObsidianRavagerCompat.dec"
+#include "actors/Monsters/ObsidianRavager/ObsidianRavagerStuff.dec"
+#include "actors/Monsters/D3Maledict/MaledictCometSupport.dec"
+#include "actors/Monsters/D3Maledict/DyingD3Maledict.dec"
 #include "actors/Execution/ExecutionHellDuke.dec"
 #include "actors/Execution/ExecutionDirector.dec"
 #include "actors/Execution/ExecutionDarkLord.dec"
