@@ -175,7 +175,10 @@ class PB_Excavator : PB_WeaponBase
 			5DUN A -1;
 			Stop;
 		Steady:
-			TNT1 A 0;
+			TNT1 A 1;
+			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+			TNT1 A 0 SetPlayerProperty(0, 0, 0);
+			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			goto Ready3;
 		Deselect:
 			5DKF EFGHI 1;
@@ -254,7 +257,11 @@ class PB_Excavator : PB_WeaponBase
 			TNT1 A 0 { A_WeaponOffset(0,32); A_SetRoll(0); A_SetInventory("PB_LockScreenTilt",0); }
 			TNT1 A 0 {
 				if (CountInv("GoFatality") >= 1) SetPlayerProperty(0, 1, 0);
-				else SetPlayerProperty(0, 0, 0);
+				else
+				{
+					SetPlayerProperty(0, 0, 0);
+					SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+				}
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 PB_CheckBarrelThrow1();

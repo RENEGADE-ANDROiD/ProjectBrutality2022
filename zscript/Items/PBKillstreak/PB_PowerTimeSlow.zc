@@ -7,7 +7,7 @@ class PB_PowerTimeSlow : Powerup
 
 	Default
 	{
-		Powerup.Duration -12;
+		Powerup.Duration -8;
 	}
 
 	override void InitEffect()

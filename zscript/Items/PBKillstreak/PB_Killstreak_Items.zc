@@ -103,9 +103,9 @@ class PB_KillstreakPowerUp : Inventory
 	static void PBRollReward(PlayerPawn plr, out String outClass, out String outMsg)
 	{
 		Array<String> pool;
-		PushIf(pool, "pb_ks_r_haste",     "HasteSphere",         plr);
-		PushIf(pool, "pb_ks_r_double",    "DoubleSphere",         plr);
-		PushIf(pool, "pb_ks_r_invuln",   "InvulnerabilitySphere_", plr);
+		PushIf(pool, "pb_ks_r_haste",     "PB_KSHasteSphere",         plr);
+		PushIf(pool, "pb_ks_r_double",    "PB_KSDoubleSphere",         plr);
+		PushIf(pool, "pb_ks_r_invuln",   "PB_KSInvulnerabilitySphere", plr);
 		PushIf(pool, "pb_ks_r_mega",     "EnergySphere",         plr);
 		PushIf(pool, "pb_ks_r_megaberserk", "MegaBerserk",        plr);
 		PushIf(pool, "pb_ks_r_life",     "LifeSphere",           plr);
@@ -132,9 +132,9 @@ class PB_KillstreakPowerUp : Inventory
 		String pick = pool[i];
 		outClass = pick;
 		// Flavor
-		if (pick == "HasteSphere") outMsg   = "Kill streak: Haste!";
-		else if (pick == "DoubleSphere") outMsg = "Kill streak: Doom sphere (double damage)!";
-		else if (pick == "InvulnerabilitySphere_") outMsg = "Kill streak: Invulnerability!";
+		if (pick == "PB_KSHasteSphere") outMsg   = "Kill streak: Haste!";
+		else if (pick == "PB_KSDoubleSphere") outMsg = "Kill streak: Doom sphere (double damage)!";
+		else if (pick == "PB_KSInvulnerabilitySphere") outMsg = "Kill streak: Invulnerability!";
 		else if (pick == "EnergySphere") outMsg = "Kill streak: Energy sphere (mega) !!";
 		else if (pick == "MegaBerserk") outMsg  = "Kill streak: MEGA BERSERK !";
 		else if (pick == "LifeSphere") outMsg  = "Kill streak: Life sphere !";
