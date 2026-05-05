@@ -140,6 +140,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc"
 #include "zscript/Weapons/MeleeWeaponPack/Stormcast.zc"
 #include "zscript/Weapons/ShieldSawNotify.zc"
+#include "zscript/Weapons/ShieldSawPinataHandler.zc"
 #include "zscript/Weapons/Slot2/Deagle/Deagle.zs"
 #include "zscript/Weapons/PB_WeaponTacticalFeel.zc"
 #include "zscript/Weapons/Slot3/CSSG/CSSG_Upgrades.zs"

@@ -140,6 +140,7 @@ GameInfo
 	AddEventHandlers = "PB_KillstreakRareFlare"
 	AddEventHandlers = "PB_InstantWeaponSwitchHandler"
 	AddEventHandlers = "CSSGEvent"
+	AddEventHandlers = "PB_ShieldSawPinataHandler"
 	NormForwardMove = 0x32, 0x32		//Walk speed is modulated through
 	NormSideMove = 0x32, 0x32			//CVar in the menu options
 }

@@ -10,6 +10,7 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Added
 
+- **Shield Saw:** Finishing a monster with the thrown saw while **`be_ExecutionsON`** is on now spawns the same **`GlorySawPinata*`** shard burst as a Crucible kill when the victim had **≤20** HP before the killing blow (tier still scales with **`SpawnHealth`**). Implemented via **`PB_ShieldSawPinataHandler`** (`zmapinfo` **AddEventHandlers**).
 - **Shiny Nash Gore (PBR)** fold: materials + `BloodSplatPB2022` decal pool under **`GRAPHICS/PB2022/ShinyNashGore/`** and **`materials/pb2022/shiny_nashgore/`**, toggled with **`pb_enhanced_brutality_2022`** (Nash pools / corpse blood / footprints use PBR skins; red supergore / blood cloud / head-blood / small supergore use `A_SprayDecal` between **`BloodSplat`** and **`BloodSplatPB2022`** via **`GetCVar("pb_enhanced_brutality_2022")`** in DECORATE (console/local userinfo context; not a per-remote-player read in MP).
 - Peacekeeper / Marauder **SSG** fold-in from PB3.0 (`d6bbe88db`).
 - Refreshed **SSG** sprite sets (kick, reload, fire, respect, select) including follow-up missed lumps (`e0076241d`, `f5eba713f`).
@@ -23,6 +24,7 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Fixed
 
+- **Shield Saw execution pinata:** `WorldThingDied` never fills `e.Damage`, so the handler’s `dmg < 1` check always failed. Eligibility is now set in `WorldThingDamaged` (`PB_ShieldSawPinataPending` when a saw hit’s pre-hit HP ≤ 20), then confirmed on death with saw `Inflictor`.
 - **Hellduke Glory Kill (`FatalityHellduke6Eld`):** `HDF0` strip has no **F** lump under **`SPRITES/MONSTERS/fatalitys/eld_eld_hellduke`** (only **A–E** and **I**); state now plays **A–E** then **I** so the sixth frame is valid.
 - **Pinky Glory Kill (`FatalityDemon4Eld`):** El Diablo LSLS token **4** no longer flashes past in a few tics; sequence paces like classic **FatalityDemon** (hold / CDCDCD beat) and spawns **XDeathDemonHead** before **DyingDemon**, matching the satisfying head-rip payoff of the other pinky paths.
 - **PB_CSSG:** Empty tube no longer ran the single-barrel `LeftFire` path (same `count < 2` branch as one shell loaded), which fired projectiles without removing shells after punch / muzzle-flash returns to **Fire** / **AltFire**; empty mag now jumps to **Reload** first.

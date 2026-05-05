@@ -22,6 +22,7 @@ actor Decelerate : Inventory
     +IGNORESKILL
 }
 Actor ExecutionToken : Inventory {inventory.maxamount 1}
+Actor PB_ShieldSawPinataPending : Inventory { Inventory.MaxAmount 1 }
 Actor SlideKicking : Inventory {}
 Actor HasUnmorphed : Inventory {}
 Actor LedgeGrabbingRightNow : Inventory {}
@@ -166,18 +167,18 @@ Actor PBBlastMomentum : Inventory
 
 //MeatShields
 #include "actors/Weapons/Meatshields/IMPSHIELD.dec"
-#include "actors/Weapons/MeatShields/ZMANSHIELD.dec"
-#include "actors/Weapons/MeatShields/SGUYSHIELD.dec"
-#include "actors/Weapons/MeatShields/DARKIMPSHIELD.dec"
-#include "actors/Weapons/MeatShields/ASGGUYSHIELD.dec"
-#include "actors/Weapons/MeatShields/CarbineZombieSHIELD.dec"
-#include "actors/Weapons/MeatShields/CommandoSHIELD.dec"
-#include "actors/Weapons/MeatShields/PlasmaZombieSHIELD.dec"
-#include "actors/Weapons/MeatShields/LabGuySHIELD.dec"
-#include "actors/Weapons/MeatShields/SavageImpSHIELD.dec"
-#include "actors/Weapons/MeatShields/TriclopsImpSHIELD.dec"
-#include "actors/Weapons/MeatShields/PB_NailgunGuyShield.dec"
-#include "actors/Weapons/MeatShields/BarrelThrower.dec"
+#include "actors/Weapons/Meatshields/ZMANSHIELD.dec"
+#include "actors/Weapons/Meatshields/SGUYSHIELD.dec"
+#include "actors/Weapons/Meatshields/DARKIMPSHIELD.dec"
+#include "actors/Weapons/Meatshields/ASGGUYSHIELD.dec"
+#include "actors/Weapons/Meatshields/CarbineZombieSHIELD.dec"
+#include "actors/Weapons/Meatshields/CommandoSHIELD.dec"
+#include "actors/Weapons/Meatshields/PlasmaZombieSHIELD.dec"
+#include "actors/Weapons/Meatshields/LabGuySHIELD.dec"
+#include "actors/Weapons/Meatshields/SavageImpSHIELD.dec"
+#include "actors/Weapons/Meatshields/TriclopsImpSHIELD.dec"
+#include "actors/Weapons/Meatshields/PB_NailgunGuySHIELD.dec"
+#include "actors/Weapons/Meatshields/BarrelThrower.dec"
 
 //Ammo Ammo Ammo //Smart Scavenger
 #include "actors/Items/Ammo/GenericAmmo.dec"
