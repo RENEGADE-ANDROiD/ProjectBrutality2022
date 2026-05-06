@@ -12,6 +12,8 @@ Actor WW_ProximityMineSelected : Inventory {inventory.maxamount 1}
 Actor WW_StunGrenadeSelected : Inventory {inventory.maxamount 1}
 Actor WW_LeechSelected : Inventory {inventory.maxamount 1}
 Actor WW_RevGunSelected : Inventory {inventory.maxamount 1}
+Actor HookSelected : Inventory {inventory.maxamount 1}
+Actor WW_HookSelected : Inventory {inventory.maxamount 1}
 
 Actor DualFiring: Inventory {Inventory.maxamount 1}
 Actor DualFireReload: Inventory {Inventory.maxamount 2}
@@ -748,9 +750,22 @@ States
 			TNT1 A 0 A_JumpIfInventory("StunGrenadeSelected", 1, "ThrowStun")
 			TNT1 A 0 A_JumpIfInventory("LeechSelected", 1, "ThrowLeech")
 			TNT1 A 0 A_JumpIfInventory("RevGunSelected", 1, "FireRevGun")
+			TNT1 A 0 A_JumpIfInventory("HookSelected", 1, "UseHookEquipment")
 			//More stuff to come.....
 			
 			
+			Goto GoingToReady
+		
+		UseHookEquipment:
+			TNT1 A 0 A_JumpIfInventory("PB_HookToken", 1, "UseHookEquipmentFire")
+			TNT1 A 0 A_JumpIfInventory("HookAmmo", 1, "UseHookEquipmentFire")
+			TNT1 A 0 A_JumpIfInventory("AlreadyHaveMeatHook", 1, "UseHookEquipmentFire")
+			TNT1 A 0 A_Print("\cgPick up the \ctMeat Hook\c- first.")
+			TNT1 A 0 A_TakeInventory("UseEquipment", 1)
+			Goto GoingToReady
+		UseHookEquipmentFire:
+			TNT1 A 0 A_GiveInventory("PB_FireGrapplePulse", 1)
+			TNT1 A 0 A_TakeInventory("UseEquipment", 1)
 			Goto GoingToReady
 		
 		WheelCancelEquipment:
@@ -762,6 +777,7 @@ States
 				A_SetInventory("WW_FragGrenadeSelected",0);
 				A_SetInventory("WW_RevGunSelected",0);
 				A_SetInventory("WW_MolotovSelected",0);
+				A_SetInventory("WW_HookSelected",0);
 				A_SetInventory("GK_FlamebelchSelected",0);
 				A_SetInventory("GK_IcebombSelected",0);
 				A_SetInventory("CantWeaponSpecial",0);
@@ -783,6 +799,8 @@ States
 				{A_Print("\coAlready using: \ctRevenant Launcher"); Return State("WheelCancelEquipment");}
 			if(CountInv("WW_MolotovSelected") && CountInv("MolotovSelected") >=1)
 				{A_Print("\coAlready using: \ctMolotov cocktail"); Return State("WheelCancelEquipment");}
+			if(CountInv("WW_HookSelected") && CountInv("HookSelected") >=1)
+				{A_Print("\coAlready using: \ctMeat Hook"); Return State("WheelCancelEquipment");}
 			if(CountInv("WW_ProximityMineSelected") >=1)
 				{
 				if(CountInv("MineAmmo") <=0)
@@ -795,7 +813,7 @@ States
 				}
 			if(CountInv("WW_LeechSelected") >=1)
 				{
-				if(CountInv("HasLeech") <=0)
+				if(CountInv("HasLeech") <=0 && CountInv("PB_DTech") < 4)
 					{A_Print("\cgNo \ctleeches \c-remaining"); Return State("WheelCancelEquipment");}
 				}
 			if(CountInv("WW_RevGunSelected") >=1)
@@ -813,12 +831,18 @@ States
 				if(CountInv("HandMolotovAmmo") <=0)
 					{A_Print("\cgNo \ctmolotov cocktails \c-remaining"); Return State("WheelCancelEquipment");}
 				}
+			if(CountInv("WW_HookSelected") >=1)
+				{
+				if(CountInv("PB_HookToken") <=0 && CountInv("HookAmmo") <=0 && CountInv("AlreadyHaveMeatHook") <=0)
+					{A_Print("\cgYou don't have the \ctMeat Hook\c-"); Return State("WheelCancelEquipment");}
+				}
 			if(CountInv("GK_FlamebelchSelected") >=1)
 				{ 
 					A_Print("\cdEquipment: \ctFlame Belch"); 
 					A_SetInventory("FlameBelchSelected",1);
 					A_SetInventory("IceBombSelected",0);
 					A_SetInventory("MolotovSelected",0);
+					A_SetInventory("HookSelected",0);
 					A_PlaySound("FLMDRAW", CHAN_UI);
 					Return State("WheelCancelEquipment");
 				}
@@ -828,6 +852,7 @@ States
 					A_SetInventory("FlameBelchSelected",0);
 					A_SetInventory("IceBombSelected",1);
 					A_SetInventory("MolotovSelected",0);
+					A_SetInventory("HookSelected",0);
 					A_PlaySound("weapons/freezer/reload1", CHAN_UI);
 					Return State("WheelCancelEquipment");
 				}
@@ -844,6 +869,7 @@ States
 						A_SetInventory("RevGunSelected",0);
 						A_SetInventory("FragGrenadeSelected",0);
 						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						Return State("WheelCancelEquipment");
 					}
@@ -856,6 +882,7 @@ States
 						A_SetInventory("RevGunSelected",0);
 						A_SetInventory("FragGrenadeSelected",0);
 						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						Return State("WheelCancelEquipment");
 					}
@@ -868,6 +895,7 @@ States
 						A_SetInventory("RevGunSelected",0);
 						A_SetInventory("FragGrenadeSelected",0);
 						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						Return State("WheelCancelEquipment");
 					}
@@ -880,6 +908,7 @@ States
 						A_SetInventory("RevGunSelected",1);
 						A_SetInventory("FragGrenadeSelected",0);
 						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
 						A_PlaySound("REVUP", 3);
 						Return State("WheelCancelEquipment");
 					}
@@ -892,6 +921,7 @@ States
 						A_SetInventory("RevGunSelected",0);
 						A_SetInventory("FragGrenadeSelected",1);
 						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						Return State("WheelCancelEquipment");
 					}
@@ -903,6 +933,7 @@ States
 						A_SetInventory("LeechSelected",0);
 						A_SetInventory("RevGunSelected",0);
 						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("HookSelected",0);
 						A_SetInventory("MolotovSelected",1);
 						A_SetInventory("GK_FlamebelchSelected",0);
 						A_SetInventory("GK_IcebombSelected",0);
@@ -911,12 +942,30 @@ States
 						A_PlaySound("MOLPKUP", 3);
 						Return State("WheelCancelEquipment");
 					}
+				if(CountInv("WW_HookSelected") >=1)
+					{ 
+						A_Print("\cdEquipment: \ctMeat Hook"); 
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("HookSelected",1);
+						A_PlaySound("GRNPIN", 3);
+						Return State("WheelCancelEquipment");
+					}
 				if(CountInv("GK_FlamebelchSelected") >=1)
 				{ 
 					A_Print("\cdEquipment: \ctFlame Belch"); 
 					A_SetInventory("FlameBelchSelected",1);
 					A_SetInventory("IceBombSelected",0);
 					A_SetInventory("MolotovSelected",0);
+					A_SetInventory("HookSelected",0);
 					A_PlaySound("FLMDRAW", CHAN_UI);
 					Return State("WheelCancelEquipment");
 				}
@@ -926,6 +975,7 @@ States
 					A_SetInventory("FlameBelchSelected",0);
 					A_SetInventory("IceBombSelected",1);
 					A_SetInventory("MolotovSelected",0);
+					A_SetInventory("HookSelected",0);
 					A_PlaySound("weapons/freezer/reload1", CHAN_UI);
 					Return State("WheelCancelEquipment");
 				}	
@@ -1277,7 +1327,7 @@ States
 		SHIE I 0 { 
 			A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			A_ClearOverlays(3,65);
-			if(CountInv("GrabbedBarrel") == 1 || CountInv("GrabbedIceBarrel") == 1 || CountInv("GrabbedFlameBarrel") == 1) {
+			if(CountInv("GrabbedBarrel") == 1 || CountInv("GrabbedIceBarrel") == 1 || CountInv("GrabbedBurningBarrel") == 1) {
 				A_Overlay(PSP_WEAPON, "FlashBarrelKicking");
 			}
 			A_GiveInventory("HasCutingWeapon", 1);

@@ -103,7 +103,7 @@ class PB_ArgentSith : PB_WeaponBase
 
 	Deselect:
         	TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel");
-	    	TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "PlaceFlameBarrel");
+	    	TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
 	    	TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "PlaceIceBarrel");
 	    	TNT1 A 0 {
 			A_WeaponOffset(0,32);
@@ -127,10 +127,10 @@ class PB_ArgentSith : PB_WeaponBase
 		}
 		TNT1 A 0 A_TakeInventory("HasBarrel",1);
 	    	TNT1 A 0 A_TakeInventory("HasIceBarrel",1);
-	    	TNT1 A 0 A_TakeInventory("HasFlameBarrel",1);
+	    	TNT1 A 0 A_TakeInventory("HasBurningBarrel",1);
 	    	TNT1 A 0 A_TakeInventory("GrabbedBarrel",1);
 	    	TNT1 A 0 A_TakeInventory("GrabbedIceBarrel",1);
-	    TNT1 A 0 A_TakeInventory("GrabbedFlameBarrel",1);
+	    TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel",1);
 		TNT1 A 0 A_StopSound(1);
 		TNT1 A 0 A_StopSound(5);
 		TNT1 A 0 A_StopSound(6);
@@ -153,7 +153,7 @@ class PB_ArgentSith : PB_WeaponBase
 
 	Reload:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "IdleBarrel");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "IdleFlameBarrel");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "IdleIceBarrel");
 		Goto KatanaReadyToCut;
 
@@ -173,7 +173,7 @@ class PB_ArgentSith : PB_WeaponBase
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "ThrowFlameBarrel");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 		TNT1 A 0 PB_CheckBarrelThrow1();
 		TNT1 A 0 {
@@ -354,7 +354,7 @@ class PB_ArgentSith : PB_WeaponBase
 
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "PlaceFlameBarrel");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "PlaceIceBarrel");
 		TNT1 A 0 {
 			A_WeaponOffset(0, 32);
@@ -409,7 +409,7 @@ class PB_ArgentSith : PB_WeaponBase
 
 	WeaponSpecial: //THX to Dox778 AKA Donks Seven Seventy Ate//;
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "IdleBarrel");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "IdleFlameBarrel");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "IdleIceBarrel");
 		TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
 		TNT1 A 0 A_JumpIfInventory("ActivateWeaponSpecial", 1, "KatanaReadyToCut");
@@ -479,7 +479,7 @@ class PB_ArgentSith : PB_WeaponBase
 
 	FlashKicking:
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelPunching");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1, 4);
 		TNT1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1, 3);
@@ -493,7 +493,7 @@ class PB_ArgentSith : PB_WeaponBase
 
 	FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelPunching");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1, 4);
 		TNT1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1, 3);
@@ -507,7 +507,7 @@ class PB_ArgentSith : PB_WeaponBase
 
 	FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelPunching");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1, 4);
 		TNT1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1, 3);
@@ -521,7 +521,7 @@ class PB_ArgentSith : PB_WeaponBase
 
 	FlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelPunching");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1, 4);
 		TNT1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1, 3);
@@ -532,7 +532,7 @@ class PB_ArgentSith : PB_WeaponBase
 
 	FlashPunching:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelPunching");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 15;

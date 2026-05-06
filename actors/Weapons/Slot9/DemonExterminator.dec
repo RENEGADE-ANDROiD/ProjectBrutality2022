@@ -89,10 +89,10 @@ ACTOR PB_DemonExterminator : PB_Weapon
 		TNT1 A 0 A_TakeInventory("PB_LockScreenTilt", 1)
 		TNT1 A 0 A_TakeInventory("HasBarrel", 1)
 		TNT1 A 0 A_TakeInventory("HasIceBarrel", 1)
-		TNT1 A 0 A_TakeInventory("HasFlameBarrel", 1)
+		TNT1 A 0 A_TakeInventory("HasBurningBarrel", 1)
 		TNT1 A 0 A_TakeInventory("GrabbedBarrel", 1)
 		TNT1 A 0 A_TakeInventory("GrabbedIceBarrel", 1)
-		TNT1 A 0 A_TakeInventory("GrabbedFlameBarrel", 1)
+		TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel", 1)
 		Goto SelectFirstPersonLegs
 	SelectContinue:
 		TNT1 A 0
@@ -114,7 +114,7 @@ ACTOR PB_DemonExterminator : PB_Weapon
 		TNT1 A 0 A_StopSound(CHAN_WEAPON)
 		TNT1 A 0 A_TakeInventory("Zoomed", 1)
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel")
-		TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel")
 		TNT1 A 0 A_JumpIfInventory("DEx_Cur2", 1, "DeselectSoul")
 		UNMD ABCDE 1
@@ -188,7 +188,7 @@ ACTOR PB_DemonExterminator : PB_Weapon
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel")
-		TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "ThrowFlameBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel")
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel")
 		TNT1 A 0 A_JumpIfInventory("DEx_Cur0", 1, "FireModeLaser")
 		TNT1 A 0 A_JumpIfInventory("DEx_Cur1", 1, "FireModeIncin")
@@ -266,7 +266,7 @@ ACTOR PB_DemonExterminator : PB_Weapon
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel")
-		TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel")
 		TNT1 A 0 A_JumpIfInventory("DEx_Cur0", 1, "AltModeLaser")
 		TNT1 A 0 A_JumpIfInventory("DEx_Cur1", 1, "AltModeIncin")

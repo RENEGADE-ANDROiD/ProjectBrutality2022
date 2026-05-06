@@ -10,7 +10,9 @@ const MAXITERATIONS = 32676;
 
 #include "zscript/PbWheel/parse.zsc"
 #include "zscript/PbWheel/ev_core_special.zsc"
+#include "zscript/PbWheel/pb_weapon_pick_wheel.zsc"
 #include "zscript/PbWheel/ev_drawer_special.zsc"
+#include "zscript/gearbox_fold.zs"
 #include "zscript/PbWheel/wheel_bss_postblur.zsc"
 #include "zscript/DeathFader.zc"
 #include "zscript/PlayerPawn.zc"

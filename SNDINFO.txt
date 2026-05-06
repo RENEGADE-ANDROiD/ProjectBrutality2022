@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 // SNDINFO.ChexCompatibility
 //==============================================================================
 //This is only here temporarily until the Chex Quest compatibility
@@ -5272,3 +5272,23 @@ $alias METTEAR	cyber/metal
 $alias METHITF	bulletimpact/metal/a_1
 $alias METCRSH	misc/xdeath4
 
+// Meat hook: DECORATE HookShot + ZScript grapple (PlayerPawn Hook / FireHook)
+hookshot/loop		dspstop
+hookshot/swish		dssawidl
+hookshot/fire		dschain
+hookshot/hit/terrain	dsmetal
+hookshot/hit/flesh	dspldeth
+HookLaunch		dsrlaun
+HookWall		dsmetal
+HookMeat		dspldeth
+HookFailed		dspstop
+
+// Gearbox UI audio (folded; see GRAPHICS/gb_*.png wheel patches)
+gearbox/tick sounds/gearbox/gb_tick.ogg
+$volume gearbox/tick 0.5
+gearbox/open sounds/gearbox/gb_toggle.ogg
+$volume gearbox/open 0.2
+gearbox/close sounds/gearbox/gb_toggle.ogg
+$volume gearbox/close 0.2
+gearbox/nope sounds/gearbox/gb_nope.ogg
+$volume gearbox/nope 0.5

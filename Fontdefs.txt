@@ -75,18 +75,18 @@ BPAMMO05
 	65 graphics/hud/BPAMMO05.png
 }
 
-// Glory Kill Eternal-style HUD (sv_fuelhud_background == 3)
-CRUCRY00 { 65 graphics/hud/glorykills/newhud/CRUCRY00.png }
-CRUCRY01 { 65 graphics/hud/glorykills/newhud/CRUCRY01.png }
-CRUCAM01 { 65 graphics/hud/glorykills/newhud/CRUCAM01.png }
-CRUCAM02 { 65 graphics/hud/glorykills/newhud/CRUCAM02.png }
-CRUCAM03 { 65 graphics/hud/glorykills/newhud/CRUCAM03.png }
-SCFLM00  { 65 graphics/hud/glorykills/newhud/SCFLM00.png }
-SCFLM01  { 65 graphics/hud/glorykills/newhud/SCFLM01.png }
-SCICB00  { 65 graphics/hud/glorykills/newhud/SCICB00.png }
-SCICB01  { 65 graphics/hud/glorykills/newhud/SCICB01.png }
-BPAMMO10 { 65 graphics/hud/glorykills/newhud/BPAMMO10.png }
-BPAMMO11 { 65 graphics/hud/glorykills/newhud/BPAMMO11.png }
-BPAMMO12 { 65 graphics/hud/glorykills/newhud/BPAMMO12.png }
-BPAMMO13 { 65 graphics/hud/glorykills/newhud/BPAMMO13.png }
-BPAMMO14 { 65 graphics/hud/glorykills/newhud/BPAMMO14.png }
+// Glory Kill Eternal-style HUD (sv_fuelhud_background == 3); match GRAPHICS/ casing for Linux
+CRUCRY00 { 65 GRAPHICS/HUD/glorykills/newhud/CRUCRY00.png }
+CRUCRY01 { 65 GRAPHICS/HUD/glorykills/newhud/CRUCRY01.png }
+CRUCAM01 { 65 GRAPHICS/HUD/glorykills/newhud/CRUCAM01.png }
+CRUCAM02 { 65 GRAPHICS/HUD/glorykills/newhud/CRUCAM02.png }
+CRUCAM03 { 65 GRAPHICS/HUD/glorykills/newhud/CRUCAM03.png }
+SCFLM00  { 65 GRAPHICS/HUD/glorykills/newhud/SCFLM00.png }
+SCFLM01  { 65 GRAPHICS/HUD/glorykills/newhud/SCFLM01.png }
+SCICB00  { 65 GRAPHICS/HUD/glorykills/newhud/SCICB00.png }
+SCICB01  { 65 GRAPHICS/HUD/glorykills/newhud/SCICB01.png }
+BPAMMO10 { 65 GRAPHICS/HUD/glorykills/newhud/BPAMMO10.png }
+BPAMMO11 { 65 GRAPHICS/HUD/glorykills/newhud/BPAMMO11.png }
+BPAMMO12 { 65 GRAPHICS/HUD/glorykills/newhud/BPAMMO12.png }
+BPAMMO13 { 65 GRAPHICS/HUD/glorykills/newhud/BPAMMO13.png }
+BPAMMO14 { 65 GRAPHICS/HUD/glorykills/newhud/BPAMMO14.png }

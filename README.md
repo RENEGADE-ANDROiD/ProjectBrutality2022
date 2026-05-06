@@ -6,6 +6,8 @@ The project is derived from the long-running [Project Brutality](https://github.
 
 For the latest upstream mainline mod, see [pa1nki113r/Project_Brutality](https://github.com/pa1nki113r/Project_Brutality). This repository is the Project Brutality 2022 snapshot and tooling described here.
 
+**Curated change notes** for this tree live in **`CHANGELOG.md`** (Keep a Changelog format, including an **`[Unreleased]`** section for ongoing work—e.g. weapon selection wheel behavior, PBX weapon HUD icon sizing, barrel set from Project Brutality Staging, kill streak reward variety, and engine compatibility fixes). Use **`git log`** for full commit history.
+
 > **Engine:** This release targets **UZDoom**, the actively maintained fork in the GZDoom family. Please use a current UZDoom build (see Requirements). Older or unrelated source ports are not supported.
 
 ## Requirements

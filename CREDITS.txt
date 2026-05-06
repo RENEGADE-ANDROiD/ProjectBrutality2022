@@ -57,9 +57,13 @@ Code systems and libraries
   / TiltPlusPlus.zc), “Written by Nash Muhandes.”
 - Xaser Acheron: DamNums (zscript/damnums/damnum.txt).
 - Lewisk3 (Redxone): Laser API (zscript/LaserAPI/LaserAPI.txt).
-- DrPyspy: weapon wheel basis (see gearbox / wheel credits in-tree).
-- 3saster: MD5 ZScript reference (see gearbox notes).
-- m8f: wheel crash fix and related notes.
+- Gearbox (Alexander Kromm / m8f et al.; GPLv3+): folded weapon/inventory selector under
+  `zscript/gearbox/`, `zscript/MD5/`, `zscript/m_gizmos/`, `zscript/zabor/`; license
+  `zscript/gearbox/COPYING_Gearbox_GPLv3.txt`. Upstream: https://github.com/mmaulwurff/gearbox
+
+- DrPyspy: early PB weapon wheel basis; superseded for the primary bind by folded Gearbox.
+- 3saster: MD5 ZScript (Gearbox fold).
+- m8f: wheel crash fix, MariENB blur lineage, Gearbox.
 - Marisa Kirisame (OrdinaryMagician): Blur work derived from MariFX (GPLv3);
   see shader / staging path notes.
 

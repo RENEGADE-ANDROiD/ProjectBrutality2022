@@ -1,0 +1,183 @@
+// Radial weapon inventory wheel: one outer slice per occupied slot; inner ring for multiple weapons in a slot.
+extend class PB_SpecialWheelHandler
+{
+	// PB_NUM_WP_SLOTS in PlayerPawn matches Doom's 0–9 weapon slot rows.
+	bool weaponPickWheel_ShouldList(Weapon w)
+	{
+		if (!w)
+			return false;
+		if (w.bINVBAR)
+			return true;
+		if (w.SlotNumber >= 0 && w.SlotNumber < 10)
+			return true;
+		return false;
+	}
+
+	void weaponPickWheel_SortWeapons(array<Weapon> ws)
+	{
+		int n = ws.Size();
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = i + 1; j < n; j++)
+			{
+				Weapon a = ws[i];
+				Weapon b = ws[j];
+				if (!a || !b)
+					continue;
+				bool swap = false;
+				if (b.SlotNumber < a.SlotNumber)
+					swap = true;
+				else if (b.SlotNumber == a.SlotNumber && b.SlotPriority > a.SlotPriority)
+					swap = true;
+				if (swap)
+				{
+					ws[i] = b;
+					ws[j] = a;
+				}
+			}
+		}
+	}
+
+	void weaponPickWheel_CollectSortedWeapons(PlayerPawn pl, out array<Weapon> ws)
+	{
+		ws.Clear();
+		if (!pl)
+			return;
+		for (Inventory ch = pl.Inv; ch != null; ch = ch.Inv)
+		{
+			let w = Weapon(ch);
+			if (!weaponPickWheel_ShouldList(w))
+				continue;
+			ws.Push(w);
+		}
+		weaponPickWheel_SortWeapons(ws);
+	}
+
+	void weaponPickWheel_HealReadyWeaponIfNeeded(PlayerPawn pl)
+	{
+		if (!pl || !pl.player || pl.player.ReadyWeapon)
+			return;
+		array<Weapon> ws;
+		weaponPickWheel_CollectSortedWeapons(pl, ws);
+		if (ws.Size() < 1)
+			return;
+		pl.player.PendingWeapon = ws[0];
+		pl.BringUpWeapon();
+	}
+
+	TextureID weaponPickWheel_IconForClass(String cname)
+	{
+		TextureID tid = TexMan.CheckForTexture(String.Format("graphics/pywheel/weapons/%s.png", cname), TexMan.Type_Any);
+		if (tid.isValid())
+			return tid;
+		return crowbarTex;
+	}
+
+	void specialWheel_WeaponPick(PlayerPawn pl)
+	{
+		wheelSpecials.Clear();
+		wpick_SlotNums.Clear();
+		wpick_SlotStart.Clear();
+		wpick_SlotCount.Clear();
+		wpick_WeaponFlat.Clear();
+		wpick_OuterSel = 0;
+		wpick_InnerSel = 0;
+		wpick_MouseIsInner = false;
+		wpick_PrevSelTrack = -1;
+		weaponPickWheel = false;
+		if (!pl || !pl.player)
+			return;
+		let cv = CVar.GetCVar("pb_weapon_wheel_enable", pl.player);
+		if (cv && !cv.GetBool())
+			return;
+
+		array<Weapon> ws;
+		weaponPickWheel_CollectSortedWeapons(pl, ws);
+		int n = ws.Size();
+		if (n < 1)
+		{
+			if (level.maptime - weaponPickWheel_LastEmptyMsgMapTime >= 24)
+			{
+				weaponPickWheel_LastEmptyMsgMapTime = level.maptime;
+				pl.A_Print(StringTable.Localize("$PB_WEAPON_WHEEL_EMPTY"));
+			}
+			return;
+		}
+
+		int flatIdx = 0;
+		for (int slot = 0; slot < 10; slot++)
+		{
+			int startHere = flatIdx;
+			int cnt = 0;
+			for (int i = 0; i < n; i++)
+			{
+				Weapon w = ws[i];
+				if (!w || w.SlotNumber != slot)
+					continue;
+				wpick_WeaponFlat.Push(w.GetClassName());
+				flatIdx++;
+				cnt++;
+			}
+			if (cnt > 0)
+			{
+				wpick_SlotNums.Push(slot);
+				wpick_SlotStart.Push(startHere);
+				wpick_SlotCount.Push(cnt);
+			}
+		}
+
+		Vector2 wIconSc = (1.05, 1.05);
+		for (int si = 0; si < wpick_SlotNums.Size(); si++)
+		{
+			int slot = wpick_SlotNums[si];
+			int st = wpick_SlotStart[si];
+			int cnt = wpick_SlotCount[si];
+			let wm = new("PB_SpecialWheel_Mode");
+			String firstCls = wpick_WeaponFlat[st];
+			wm.specialName = "WPICKSLOT_" .. slot;
+			if (cnt == 1)
+			{
+				Weapon w0 = Weapon(pl.FindInventory(firstCls));
+				String tag = w0 ? w0.GetTag() : "";
+				String disp = (tag.Length() > 0) ? tag : firstCls;
+				wm.specialAlias = String.Format("[%d] %s", slot, disp);
+			}
+			else
+			{
+				wm.specialAlias = String.Format("[%d] · %d weapons", slot, cnt);
+			}
+			wm.specialIcon = weaponPickWheel_IconForClass(firstCls);
+			wm.specialPriority = slot;
+			wm.iconScale = wIconSc;
+			wheelSpecials.Push(wm);
+		}
+
+		Weapon rw = pl.player.ReadyWeapon;
+		if (rw)
+		{
+			int rws = rw.SlotNumber;
+			for (int i = 0; i < wpick_SlotNums.Size(); i++)
+			{
+				if (wpick_SlotNums[i] == rws)
+				{
+					wpick_OuterSel = i;
+					int st = wpick_SlotStart[i];
+					int cnt = wpick_SlotCount[i];
+					String rcn = rw.GetClassName();
+					for (int j = 0; j < cnt; j++)
+					{
+						if (wpick_WeaponFlat[st + j] == rcn)
+						{
+							wpick_InnerSel = j;
+							break;
+						}
+					}
+					break;
+				}
+			}
+		}
+
+		weaponPickWheel = true;
+		specialWheel_handleMouse();
+	}
+}

@@ -247,7 +247,7 @@ Actor HASG : PB_Weapon
 
     AltFire:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel")
         TNT1 A 0 A_JumpIfInventory("Zoomed", 1, "NoAim")
         TNT1 A 0 A_GiveInventory("Zoomed", 1)
@@ -273,7 +273,7 @@ Actor HASG : PB_Weapon
 
     Deselect:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel")
         GL1R ABC 1
         GLUP CBA 1
@@ -283,10 +283,10 @@ Actor HASG : PB_Weapon
     Select:
         TNT1 A 0 A_TakeInventory("HasBarrel", 1)
         TNT1 A 0 A_TakeInventory("HasIceBarrel", 1)
-        TNT1 A 0 A_TakeInventory("HasFlameBarrel", 1)
+        TNT1 A 0 A_TakeInventory("HasBurningBarrel", 1)
         TNT1 A 0 A_TakeInventory("GrabbedBarrel", 1)
         TNT1 A 0 A_TakeInventory("GrabbedIceBarrel", 1)
-        TNT1 A 0 A_TakeInventory("GrabbedFlameBarrel", 1)
+        TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel", 1)
         Goto SelectFirstPersonLegs
     SelectContinue:
         TNT1 A 0 A_TakeInventory("HasUnloaded", 1)
@@ -304,7 +304,7 @@ Actor HASG : PB_Weapon
 
     Fire:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "ThrowFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel")
         TNT1 A 0
         {
@@ -388,7 +388,7 @@ Actor HASG : PB_Weapon
 
     Fire2:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "ThrowFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel")
         TNT1 A 0
         {
@@ -571,7 +571,7 @@ Actor HASG : PB_Weapon
 
     Fire2Drumed:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "ThrowFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel")
         TNT1 A 0
         {
@@ -674,7 +674,7 @@ Actor HASG : PB_Weapon
 
     Reload:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "IdleBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "IdleFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel")
         TNT1 A 0 A_ZoomFactor(1.0)
         TNT1 A 0 A_SetCrosshair(39)
@@ -775,26 +775,26 @@ Actor HASG : PB_Weapon
 
     FlashKicking:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelKicking")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelKicking")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelKicking")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelKicking")
         GL1P ABCDEEEEEEEEEEEE 1
         Goto Ready3
 
     FlashAirKicking:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelAirKicking")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelAirKicking")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelAirKicking")
         GL1P ABCDEEEEEEEEEEEEEE 1
         Goto Ready3
 
     FlashSlideKicking:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKicking")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelSlideKicking")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking")
         GL1P ABCDEEEEEEEE 1
     FlashSlideKickingStop:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelSlideKickingStop")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop")
         GL1P EEEEEEEEDCBA 1
         Goto Ready3
@@ -816,7 +816,7 @@ Actor HASG : PB_Weapon
 
     WeaponSpecial:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "IdleBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "IdleFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel")
         TNT1 A 0
         {

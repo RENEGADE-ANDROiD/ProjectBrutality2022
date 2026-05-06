@@ -338,7 +338,7 @@ Class PB_CSSG : PB_WeaponBase
 		WeaponSpecial:
 			TNT1 A 0 A_takeinventory("GoWeaponSpecialAbility",1);
 			TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "IdleBarrel");
-			TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "IdleFlameBarrel");
+			TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "IdleIceBarrel");
 			TNT1 A 0 {
 				A_Takeinventory("GoWeaponSpecialAbility",1);

@@ -32,8 +32,6 @@ Actor HeightTIDIndicator : Inventory
 }
 Actor IsDead : Inventory {}
 Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
-Actor GrabbedFlameBarrel : Inventory { Inventory.MaxAmount 1 }
-Actor HasFlameBarrel : Inventory { Inventory.MaxAmount 1 }
 Actor DisintegratedHuman
 {
 	+NOBLOCKMAP
@@ -206,7 +204,14 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Decorations/FIREWORKS.dec"
 //#include "actors/Decorations/TORCHES.dec"
 #include "actors/Decorations/DEAD.dec"
-#include "Actors/Decorations/Barrels/BarrelEffects.dec"
+#include "actors/Decorations/Barrels/Core/NukageBarrelTokens.dec"
+#include "actors/Decorations/Barrels/Core/NukageBarrelEffects.dec"
+#include "actors/Decorations/Barrels/Core/NukageBarrelParts.dec"
+#include "actors/Decorations/Barrels/Core/TheNukageBarrel.dec"
+#include "actors/Decorations/Barrels/NukageBarrels.dec"
+#include "actors/Decorations/Barrels/IceBarrels.dec"
+#include "actors/Decorations/Barrels/FlameBarrels.dec"
+#include "actors/Decorations/Barrels/BarrelEffects.dec"
 
 //Enemies
 #include "actors/Monsters/T1-Grunts/ZOMBIEMEN.dec"
@@ -496,10 +501,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Items/HelmetDrops/HelmetDrops.dec" // PB_HelmetDrops (3BON helmet; HelmetDropHandler in ZScript)
 
 ////// New Barrels /////
-#include "Actors/Decorations/Barrels/BarrelEmpty.dec"
-#include "Actors/Decorations/Barrels/BarrelFrozen.dec"
-#include "Actors/Decorations/Barrels/FlameBarrel.dec"
-#include "Actors/Decorations/Barrels/NukageBarrel.dec"
+#include "actors/Decorations/Barrels/BarrelEmpty.dec"
 
 
 actor Z_FloorCheck

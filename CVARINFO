@@ -3,6 +3,7 @@ user bool py_weaponwheel_freeze = true;
 user int py_weaponwheel_invert = 0;
 user bool py_weaponwheel_musicfade = false;
 user bool pb_wheelbackgroundblur = true; // 0.3+ MariENB gb_blur (shaders/mfx_bss_blur.fp) while special wheel open
+user bool pb_weapon_wheel_enable = true;
 user bool pb_toggle_aim_hold = true;
 
 user int sd_lasers_densityoffset = 1;
@@ -451,6 +452,10 @@ user	bool	pb_ks_r_deflectionsphere	= true;
 user	bool	pb_ks_r_lifeshield		= true;
 user	bool	pb_ks_r_electricsphere	= true;
 user	bool	pb_ks_r_legendsphere	= true;
+user	bool	pb_ks_r_backpack		= true;
+user	int		pb_ks_r_backpack_chance	= 4;
+user	bool	pb_ks_r_supplies			= true;
+user	int		pb_ks_r_supplies_chance	= 20;
 user	bool	pb_doubletap			= false;		
 user	int		pb_maxtaptime			= 10;
 server	float	pb_dashboost			= 15.0;
@@ -479,8 +484,8 @@ server 	int 	pb_qslideduration		= 8;
 //Ledge Grabbing
 server	bool	pb_ledgegrab			= true;
 
-//Grappling Hook
-server	int		pb_hook					= 0;
+//Grappling Hook (meat hook works whenever you own it; pb_hook is style only: 2 = pendulum on re-fire, else detach)
+server	int		pb_hook					= 1;
 server 	float 	pb_hookboost			= 1.5;
 
 
@@ -670,7 +675,7 @@ server int sv_bonusrange = 20;
 server int sv_ammorange = 20;
 server bool be_holdablesaw = true;
 server bool be_fuelhud = true;
-server int sv_fuelhud_background = 0;
+server int sv_fuelhud_background = 3;
 server int sv_fuelhud_size = 2;
 server int sv_fuelhud_x = 0;
 server int sv_fuelhud_y = 0;
@@ -744,3 +749,42 @@ server int NoZombieTank = 0;
 server int NoZombietankelite = 0;
 
 Server Bool RS_AxeCheck = True;
+
+// ---- Gearbox (weapon/inventory wheel; GPLv3+ — zscript/gearbox/COPYING_Gearbox_GPLv3.txt) ----
+user int   gb_scale     = 1;
+user color gb_color     = "22 22 CC";
+user color gb_dim_color = "99 99 99";
+user bool  gb_show_tags = true;
+user int gb_view_type = 1; // Gearbox selector: 0 Blocks, 1 Wheel (default), 2 Text
+user bool  gb_enable_dim       = true;
+user bool  gb_enable_blur      = false;
+user float gb_wheel_position   = 1.0;
+user float gb_wheel_scale      = 1.0;
+user bool  gb_wheel_tint       = true;
+user int   gb_multiwheel_limit = 12;
+user float gb_blocks_position_x = 0.0;
+user float gb_blocks_position_y = 0.0;
+user int   gb_text_scale      = 1;
+user float gb_text_position_x = 0.0;
+user float gb_text_position_y = 0.0;
+user float gb_text_position_y_max = 1.0;
+user int   gb_text_usual_color    = 21;
+user int   gb_text_selected_color =  9;
+user string gb_font = "NewSmallFont";
+user bool gb_open_on_scroll   = false;
+user bool gb_open_on_slot     = true;
+user bool gb_reverse_slot_cycle_order  = false;
+user bool gb_select_first_slot_weapon  = false;
+user bool gb_mouse_in_wheel   = true;
+user bool gb_select_on_key_up = false;
+user bool gb_no_menu_if_one   = false;
+user bool gb_on_automap       = false;
+user bool gb_lock_positions   = false;
+user bool gb_enable_sounds    = true;
+user bool gb_frozen_can_open  = false;
+user int  gb_time_freeze      = 0;
+user float gb_mouse_sensitivity_x = 1.0;
+user float gb_mouse_sensitivity_y = 1.0;
+user bool gb_zabor_enabled = true;
+nosave string gb_custom_weapon_order = "";
+

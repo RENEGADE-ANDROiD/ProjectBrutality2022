@@ -12,10 +12,11 @@ class PB_WheelBSSBlurHandler : StaticEventHandler
 			if (plr && plr.mo)
 			{
 				let cv = CVar.GetCVar("pb_wheelbackgroundblur", plr);
-				if (cv && cv.GetBool() && plr.mo.FindInventory("PlayerWheelOpen"))
-				{
-					on = true;
-				}
+				bool pbBlur = cv && cv.GetBool() && plr.mo.FindInventory("PlayerWheelOpen");
+				bool gbBlur = false;
+				let geh = gb_EventHandler(EventHandler.Find("gb_EventHandler"));
+				if (geh) gbBlur = geh.GetGearboxWantsPPBlur();
+				on = pbBlur || gbBlur;
 			}
 		}
 		PPShader.SetEnabled("gb_blur", on);

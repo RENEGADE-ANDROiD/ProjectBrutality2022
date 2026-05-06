@@ -2288,23 +2288,24 @@ class PlayerPawnBase : PlayerPawn
 	// Grappling Hook 					//
 	//////////////////////////////////////
 	
-	// A very cool concept, but breaks gameplay and allows players to cheese things
 	void FireHook()
 	{
-		A_Print("Grappling Hook has been disabled");
-		return;
-	
-		Let Player = self.player;
+		if (!player) return;
+		if (CountInv("PB_HookToken") < 1 && CountInv("HookAmmo") < 1 && CountInv("AlreadyHaveMeatHook") < 1)
+			return;
+
+		int hookMode = (pb_hook == 2) ? 2 : 1;
+
 		//Heavy metal music stops
 		if(WaterLevel >= 2 || bNOGRAVITY) { return; }
 		//Third click, detach hook
-		if(PendulumLength || (GrappleVel.Length() && pb_hook == 1))
+		if(PendulumLength || (GrappleVel.Length() && hookMode == 1))
 		{
 			StopHook();
 			return;
 		}
 		//Second click, activate pendulum physics
-		if(GrappleVel.Length() && pb_hook == 2)
+		if(GrappleVel.Length() && hookMode == 2)
 		{
 			Float RopePitch = atan2(Rope.XY.Length(), Rope.Z);
 			//Trust me, it's better if you do not see what happens otherwise
@@ -2403,6 +2404,12 @@ class PlayerPawnBase : PlayerPawn
 		Rope = GrappleVel = (0, 0, 0);
 		PendulumLength = 0;
 		GrappledMonster = Null;
+		Grappled = false;
+		if (HookFired)
+		{
+			HookFired.Destroy();
+			HookFired = null;
+		}
 	}
 	
 	//////////////////////////////////////
@@ -2904,12 +2911,26 @@ Class WallSlideHandler : EventHandler
     }
 }
 
+class PB_FireGrapplePulse : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+	}
+	override void AttachToOwner(Actor other)
+	{
+		Super.AttachToOwner(other);
+		let pp = PlayerPawnBase(other);
+		if (pp) pp.FireHook();
+		other.TakeInventory("PB_FireGrapplePulse", 1);
+	}
+}
+
 Class GrapplingHookHandler : EventHandler
 {
     Override void NetworkProcess(ConsoleEvent e)
     {
 		if (!e) return;
-		if(!pb_hook) { return; }
 		
         if(e.Player >= 0 && e.Player < MAXPLAYERS && PlayerInGame[e.Player] && Players[e.Player].Mo)
         {
