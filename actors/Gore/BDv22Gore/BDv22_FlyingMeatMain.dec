@@ -1,4 +1,4 @@
-// Brutal Doom 22 (BDv22) flying meat (XDeath2/3, ribs, smear/ceil); actors BDv22_*; B22M/B22T/B22R/B22S in SPRITES/BDv22/.
+// Brutal Doom 22 (BDv22) flying meat (XDeath2/3, ribs, smear/ceil); actors BDv22_*; B22M/B22T/B22R/B22S in SPRITES/GORE/BDv22/.
 // Uses PB XDeath1 / Brutal_FlyingBlood* / Brutal_BloodSpot (no BD ACS). Does not replace GORE!!! XDeath*.
 
 // --- Meat2 (B22M) -----------------------------------------------------------

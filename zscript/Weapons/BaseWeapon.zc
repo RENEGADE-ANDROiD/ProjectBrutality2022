@@ -911,9 +911,9 @@ class PB_WeaponBase : DoomWeapon
 		}
 	}
 
-	// Shims for add-on weapons that expect newer-PB helper actions (e.g. Ballista from CRASH pack)
+	// Shims for add-on weapons that expect newer-PB helper actions (e.g. ported Ballista-style reload helpers)
 	action void PB_IncrementHeat(int amount, bool secondBarrel = false) {}
-	// Transfers from reserve pool into magazine in steps of "per" until mag reaches "magMax" (CRASH Tech Blaster reload)
+	// Transfers from reserve pool into magazine in steps of "per" until mag reaches "magMax" (e.g. Demon Tech Blaster)
 	action void PB_AmmoIntoMag(name mag, name pool, int magMax, int per)
 	{
 		int n;

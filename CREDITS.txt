@@ -98,7 +98,7 @@ Monsters and packs
 - Glory Kills: lineage from D4D / Brutal Doom Black Edition
   (SNDINFO.GloryKills and related). **Glory Kill Eternal HUD** PNGs live under
   **`GRAPHICS/HUD/glorykills/newhud/`**; **equipment launcher** first-person overlays
-  (**Flame Belch** / **Ice Bomb**) use **`SPRITES/ShoulderCannon/`** (**`SCL0`/`SCF0`**
+  (**Flame Belch** / **Ice Bomb**) use **`SPRITES/WEAPONS/GloryKillLauncher/ShoulderCannon/`** (**`SCL0`/`SCF0`**
   and **`LCL0`/`LCF0`**) updated from the **Project Brutality PB_Staging** Glory Kills
   line (shoulder placement: flame right, ice left).
 - Monster Pack: content line documented with SNDINFO.MonsterPack and tier files.
@@ -123,7 +123,7 @@ Gore: optional Brutal Doom 22 (BDv22) add-on
   meat, organs / small-brain style props, limb subset, and a PB/BDv22 gore
   *mix* cvar. Implemented with separate `BDv22_*` class names, `zscript/Gore/`
   handlers (`BDv22GoreHandler`, `BDv22GoreMergeHandler`, `BDv22GoreMist`), and
-  assets under `SPRITES/BDv22/` and `lumps/includes/bdv22_modeldef.inc` (included from `modeldef.txt`) where used. Credited to
+  assets under `SPRITES/GORE/BDv22/` and `lumps/includes/bdv22_modeldef.inc` (included from `modeldef.txt`) where used. Credited to
   the **Brutal Doom 22** project and its artists; that content remains third-party
   — keep upstream credits and any distribution limits the BDv22 project requires.
   Does *not* replace core Project Brutality or Nash gore; it layers on when enabled

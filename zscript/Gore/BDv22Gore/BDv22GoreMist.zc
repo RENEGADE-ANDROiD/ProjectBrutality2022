@@ -1,4 +1,4 @@
-// Brutal Doom 22 (BDv22) extra blood-mist; MSBL row renamed to P22M in SPRITES/BDv22/.
+// Brutal Doom 22 (BDv22) extra blood-mist; MSBL row renamed to P22M in SPRITES/GORE/BDv22/.
 // BDv22GoreHandler spawns this when bdv22_mist is on. Load after PBBlood.zc in ZSCRIPT.
 
 class BDv22GoreMist : PB_Bloodmist

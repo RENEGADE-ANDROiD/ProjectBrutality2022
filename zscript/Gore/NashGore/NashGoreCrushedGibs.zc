@@ -51,7 +51,7 @@ class NashGoreCrushedGibsSmall : NashGoreCrushedGibs
 	States
 	{
 	Spawn:
-		CRS1 A -1;
+		NGC1 A -1;
 		Stop;
 	}
 }
@@ -66,7 +66,7 @@ class NashGoreCrushedGibsMedium : NashGoreCrushedGibs
 	States
 	{
 	Spawn:
-		CRS2 A -1;
+		NGC2 A -1;
 		Stop;
 	}
 }
@@ -81,7 +81,7 @@ class NashGoreCrushedGibsLarge : NashGoreCrushedGibs
 	States
 	{
 	Spawn:
-		CRS3 A -1;
+		NGC3 A -1;
 		Stop;
 	}
 }

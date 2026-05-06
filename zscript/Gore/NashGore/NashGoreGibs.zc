@@ -197,22 +197,22 @@ class NashGoreGibs : Actor
 		TNT1 A 0 NoDelay A_Jump(256, "Gib1", "Gib2", "Gib3", "Gib4", "Gib5", "Gib6", "Gib7", "Gib8", "Gib9", "Gib0");
 		Stop;
 	Gib1:
-		GIB1 A 0;
+		NSG1 A 0;
 		Goto SpawnLoop;
 	Gib2:
 		GIB2 A 0;
 		Goto SpawnLoop;
 	Gib3:
-		GIB3 A 0;
+		NSG3 A 0;
 		Goto SpawnLoop;
 	Gib4:
-		GIB4 A 0;
+		NSG4 A 0;
 		Goto SpawnLoop;
 	Gib5:
-		GIB5 A 0;
+		NSG5 A 0;
 		Goto SpawnLoop;
 	Gib6:
-		GIB6 A 0;
+		NSG6 A 0;
 		Goto SpawnLoop;
 	Gib7:
 		GIB7 A 0;

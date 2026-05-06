@@ -3890,7 +3890,7 @@ misc/givecurrentammo "SOUNDS/gunpickup2.wav"
 //==============================================================================
 // 2022-only weapon SFX (not in PB 0.3 staging PBWeapons shard)
 //==============================================================================
-// Demon-Tech (CRASH) - minigun uses DTP/Magin, DTP/Snap (Demon-Tech Pistol removed)
+// Demon-Tech weapon line — minigun uses DTP/Magin, DTP/Snap (Demon-Tech Pistol removed)
 DTP/Magin "sounds/combat/weapons/DemonTech/Pistol/DTPMIN.ogg"
 DTP/Snap "sounds/combat/weapons/DemonTech/Pistol/DTPSNAP.ogg"
 TechBlaster/LoadIn "sounds/combat/weapons/DemonTech/Blaster/TBINJECT.ogg"
@@ -3906,7 +3906,7 @@ TechBlaster/Tsss "sounds/combat/weapons/DemonTech/Blaster/TBTSSSSS.ogg"
 toolbox/off "sounds/combat/weapons/DemonTech/Blaster/TBUNJECT.ogg"
 weapons/click2 DEAGMG3
 
-// NeoHMG (CRASH)
+// NeoHMG
 weapon/HMG/Fire "sounds/combat/weapons/NeoHMG/HMGFIRE.ogg"
 $volume weapon/HMG/Fire 1.0
 weapon/HMG/Stop "sounds/combat/weapons/NeoHMG/DIBSTOP.ogg"
@@ -5265,4 +5265,10 @@ STRPD1 "sounds/monsters/ObsidianRavager/VSTRAPD1.ogg"
 STRPD2 "sounds/monsters/ObsidianRavager/VSTRAPD2.ogg"
 STRPS1 "sounds/monsters/ObsidianRavager/VSTRAPS1.ogg"
 STRPS2 "sounds/monsters/ObsidianRavager/VSTRAPS2.ogg"
+
+// BPv10 arach fatality metal cues (Brutal Pack logical names)
+$alias METPULL	cyber/metal
+$alias METTEAR	cyber/metal
+$alias METHITF	bulletimpact/metal/a_1
+$alias METCRSH	misc/xdeath4
 

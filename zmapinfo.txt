@@ -337,6 +337,6 @@ DoomEdNums
 	30111 = ObsidianRavager
 	30130 = Helemental
 	30135 = Hierophant
-	// Weapons pack — Baalgar Demon (Doom1-style cyber boss, separate from PB_Cyberdemon)
+	// Baalgar: replaces vanilla Cyberdemon in-game; 2546 = placed Baalgar. PB_Cyberdemon (23127) is an alias, resolved to GK chain via GloryKills.dec.
 	2546  = CyberdemonBoss
 }

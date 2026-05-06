@@ -226,8 +226,8 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Monsters/T3-Floaters/CacoPlayerWeapon.dec"
 #include "actors/Monsters/T3-Floaters/PAIN.dec"
 #include "actors/Monsters/T4-Viles/ARCHVILE.dec"
-#include "actors/Monsters/Tz-Bosses/CYBERDEMON.dec"
 #include "actors/Monsters/Tz-Bosses/CYBERDEMON_BOSS.dec"
+#include "actors/Monsters/Tz-Bosses/CYBERDEMON.dec"
 #include "actors/Monsters/Tz-Bosses/MASTERMIND.dec"
 
 //ST Monsters

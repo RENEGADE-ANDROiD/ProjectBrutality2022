@@ -1,28 +1,29 @@
-// Baalgar Demon (CyberdemonBoss) — from Project Brutality Weapons Pack. Graphics: SPRITES/Monsters/CyberdemonBoss/, SPRITES/PBWP_GloryKill/CyberdemonBoss/.
+// Baalgar Demon (CyberdemonBoss) — from Project Brutality Weapons Pack. Graphics: SPRITES/Monsters/CyberdemonBoss/, SPRITES/WEAPONS/GloryKillLauncher/PBWP_GloryKill/CyberdemonBoss/.
+// Replaces vanilla Cyberdemon. PB_Cyberdemon is a thin alias for spawns / summons. PB cyber execution, decap, freeze, Glory Kill finisher, and related deaths are folded here.
 
-ACTOR CyberdemonBoss: PB_Monster 2546
+ACTOR CyberdemonBoss : Cyberdemon Replaces Cyberdemon 2546
 {
 	//$Title Baalgar Demon (Doom1-style Cyber)
 	//$Category Project Brutality - Monsters/Bosses
 	//$Sprite HIBRA1
 	SpawnID 2450
-    damagefactor "BFG", 0.5
+	damagefactor "BFG", 0.5
 	DamageFactor "Plasma", .75
 	DamageFactor "Disintegrate", .5
 	DamageFactor "GreenFire", .5
 	DamageFactor "SSG", .75
-  damagefactor "Fire", 0.75
-  damagefactor "Flames", 0.75
-  damagefactor "Burn", 0.75
-  DamageFactor "Freeze", .25
-  DamageFactor "Ice", .25
-  DamageFactor "Frost", .25
-  DamageFactor "PB_Shell", .05
-  DamageFactor "HexaAmmo", .05
+	damagefactor "Fire", 0.75
+	damagefactor "Flames", 0.75
+	damagefactor "Burn", 0.75
+	DamageFactor "Freeze", .25
+	DamageFactor "Ice", .25
+	DamageFactor "Frost", .25
+	DamageFactor "PB_Shell", .05
+	DamageFactor "HexaAmmo", .05
 	DamageFactor "Blast", .75
 	DamageFactor "Cut", .75
 	damagefactor "Explosive", 1.1
-    damagefactor "HKFT", 0.05
+	damagefactor "HKFT", 0.05
 	damagefactor "Decaptate", 5.0
 	damagefactor "Avoid", 0.0
 	damagefactor "killme", 0.0
@@ -30,10 +31,13 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 	damagefactor "TeleportRemover", 0.0
 	DamageFactor "CauseObjectsToSplash", 0.0
 	DamageFactor "Blackhole", 0.75
+	DamageFactor "ExtremePunches", 1.0
 	Obituary "%o was destroyed by a Baalgar Demon."
+	Species "CyberDemon"
+	+DONTHURTSPECIES
+	+DONTHARMSPECIES
 	+NOICEDEATH
-	+NOTARGET
-    Health 12000
+	Health 12000
 	PainChance "Siphon", 255
 	PainChance "Stun", 255
 	PainChance "Head", 255
@@ -43,19 +47,28 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 	PainChance "Melee", 255
 	PainChance "Fatality", 255
 	PainChance "BloodPunch", 255
-	DropItem "Crucible", 128
+	PainChance "KillMe", 64
+	DropItem "DemonStrengthRune" 25
+	DropItem "Crucible" 128
+	DropItem "Demonpickup2" 255
+	DropItem "Demonpickup2" 255
+	DropItem "Demonpickup2" 255
+	DropItem "Demonpickup2" 255
+	DropItem "Demonpickup2" 255
 	WoundHealth 3000
-    damagefactor "Crush", 20.0
+	BloodType "CyberDemon_Blood", "SawBlood", "SawBlood"
+	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
+	damagefactor "Crush", 20.0
 	MaxStepHeight 24
 	MaxDropOffHeight 32
-    Scale 2.4
+	Scale 2.4
 	Radius 90
 	Height 220
 	Tag "Baalgar Demon"
 	+MISSILEMORE
 	+MISSILEEVENMORE
-    +DONTRIP
-    +NORADIUSDMG
+	+DONTRIP
+	+NORADIUSDMG
 	+QUICKTORETALIATE
 	+BOSS
 	Speed 28
@@ -65,9 +78,29 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 	MeleeRange 104
 	States
 	{
-    Spawn:
-        HIBR A 10 A_Look
-        Loop
+	ReplaceVanilla:
+		TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
+		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
+		TNT1 A 0 A_SpawnItemEx ("Vanilla_Cyberdemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION |SXF_TRANSFERSPECIAL| SXF_TRANSFERAMBUSHFLAG ,0)
+		Stop
+
+	Death.KillMe:
+	Death.Taunt:
+		TNT1 A 0 A_ChangeFlag("SOLID", 0)
+		TNT1 A 0 A_SpawnItem("CyberdemonBoss")
+		Stop
+
+	Pain.Killme:
+		TNT1 A 0
+		Goto See2
+
+	Spawn:
+		TNT1 A 0 ACS_ExecuteAlways(796, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 200,0)
+		TNT1 A 0 A_GiveInventory("TargetIsACyberdemon")
+		HIBR A 10 A_Look
+		Loop
+
 	See:
 		TNT1 A 0
 		TNT1 A 0 A_ChangeFlag("FASTER", 1)
@@ -88,8 +121,20 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 	Pain:
 		HIBR V 10 A_Pain
 		Goto Missile
+
+	Pain.Siphon:
+		TNT1 AAA 0 A_SpawnItemEx ("RedLightning_Small", random (-12, 12), random (-12, 12), random (16, 52), 0, 0)
+		HIBR V 1
+		{
+			A_FaceTarget;
+			A_GiveToTarget("HealthBonus",4);
+		}
+		HIBR V 5 A_FaceTarget
+		TNT1 A 0 A_Pain
+		Goto See2
+
 	Missile:
-	    TNT1 A 0 A_JumpIfCloser(250, "Melee")
+		TNT1 A 0 A_JumpIfCloser(250, "Melee")
 		HIBR F 8 A_FaceTarget
 		HIBR G 6 BRIGHT A_CustomMissile("FastCyberballs",140,-50,0,0)
 		TNT1 A 0 A_JumpIfCloser(180, "Melee")
@@ -109,14 +154,14 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 		HIBR L 5 A_FaceTarget
 		TNT1 A 0 A_Recoil(-15)
 		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 200,0)
-	    HIBR MN 4 A_FaceTarget
+		HIBR MN 4 A_FaceTarget
 		HIBR N 0 A_FaceTarget
 		TNT1 A 0 A_Recoil(-15)
 		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 200,0)
 		TNT1 A 0 A_StartSound ("cyber/melee")
 		TNT1 A 0 A_CustomMeleeAttack(random(4,6)*10, "cyber/melee")
 		TNT1 A 0 A_Explode (150,200)
-	    HIBR O 7
+		HIBR O 7
 		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 200,0)
 		HIBR PQ 4
 		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 200,0)
@@ -138,7 +183,26 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 		HIBR T 0 A_CustomMeleeAttack(80, "cyber/impact")
 		HIBR T 10 A_JumpIfTargetInsideMeleeRange("Melee")
 		Goto Missile
+
+	Death.ExeCution:
+		TNT1 A 0 A_JumpIfIntargetInventory("PowerStrength", 1, "SpecialFatality")
+	Death.ExeCution1:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_GiveToTarget ("GoExecution", 1)
+		CYBR G 30 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Goto Death
+
+	SpecialFatality:
+		TNT1 A 0 A_JumpIfIntargetInventory("NoFatality", 1, "Death.ExeCution1")
+		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, "Death")
+		Goto Death.ExeCution1
+
 	Death:
+		TNT1 A 0 A_JumpIf(GetCvar("pb_cyberdemondeath"), "StandardDeathCYBR")
+		TNT1 A 0
+		{
+			A_BossDeath;
+		}
 		HIBD AB 6
 		TNT1 AAAAAAAAAAAAA 0 A_SpawnItemEx("Blood",0,0,115,0,0,0,0)
 		HIBD CDED 8
@@ -151,8 +215,8 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 		HIBD H 14
 		HIBD I 6
 		EXPL A 0 Radius_Quake (6, 100, 0, 22, 0)
-        TNT1 AAAA 0 A_CustomMissile ("ExplosionSpawner", 180, 0, random (0, 360), 2, random (0, 180))
-        TNT1 AAAAAA 0 A_CustomMissile ("ExplosionSpawner", 180, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAA 0 A_CustomMissile ("ExplosionSpawner", 180, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAA 0 A_CustomMissile ("ExplosionSpawner", 180, 0, random (0, 360), 2, random (0, 180))
 		TNT1 AAAAA 0 A_SpawnProjectile("UltraGoreSPawner", 170, 0, random (0, 360), CMF_BADPITCH | CMF_ABSOLUTEPITCH | CMF_AIMDIRECTION, random (0, 180))
 		TNT1 AAAAA 0 A_SpawnProjectile("UltraGoreSpawner", 170, 0, random (0, 360), CMF_BADPITCH | CMF_ABSOLUTEPITCH | CMF_AIMDIRECTION, random (0, 180))
 		TNT1 AAAAA 0 A_SpawnProjectile("MuchMeatDeath", 170, 0, random (0, 360), CMF_BADPITCH | CMF_ABSOLUTEPITCH | CMF_AIMDIRECTION, random (0, 180))
@@ -165,21 +229,92 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 		HIBD P -1 A_BossDeath
 		Stop
 
-	//GK Stuff
-		Wound:
+	StandardDeathCYBR:
+		CYBR H 10
+		EXPL A 0 Radius_Quake (6, 100, 0, 22, 0)
+		TNT1 A 0
+		{
+			if (GetCvar("pb_enemyexplosiondamage") == true)
+			{
+				A_Explode(250,250,XF_HURTSOURCE);
+			}
+		}
+		TNT1 AAAAAA 0 A_CustomMissile ("HighExplosiveFlames2", random (40, 90), 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAA 0 A_CustomMissile ("PBExplosionparticles3", 74, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AAA 0 A_CustomMissile ("PBExplosionparticles4", 76, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AA 0 A_CustomMissile ("ExplosionSpawner", 40, 0, random (0, 360), 2, random (10, 90))
+		EXPL AA 0 A_CustomMissile ("BigBlackSmokeLarger", 40, 0, random (0, 360), 2, random (10, 90))
+		TNT1 A 0 A_CustomMissile ("CyberXDeath", 0, 0, random (0, 360), 2, random (0, 160))
+		CYBR I 5 A_Scream
+		CYBR JKL 5
+		CYBR M 5 A_NoBlocking
+		CYBR NOP 5
+		CYBR P 120
+		TNT1 A 0 A_BossDeath
+		CYBR P -1 A_BossDeath
+		Stop
+
+	Death.Decaptate:
+	Death.Head:
+	Death.MinorHead:
+		TNT1 A 0 A_CustomMissile ("XDeathCyberdemonHead", 120, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAAA 0 A_CustomMissile ("XDeath1", 120, 0, random (0, 360), 2, random (0, 180))
+		CYBB AAA 8 A_SpawnItem("MuchBlood", 0, 120)
+		CYBB ABCABCB 8 A_SpawnItem("MuchBlood", 0, 120)
+		EXPL A 0 Radius_Quake (6, 100, 0, 22, 0)
+		TNT1 AA 0 A_CustomMissile ("ExplosionSpawner", 90, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAA 0 A_CustomMissile ("ExplosionSpawner", 90, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AA 0 A_CustomMissile ("UltraGoreSPawner", 90, 0, random (0, 360), 2, random (0, 180))
+		TNT1 A 0 A_CustomMissile ("UltraGoreSpawner", 90, 0, random (0, 360), 2, random (0, 180))
+		TNT1 A 0 A_CustomMissile ("CyberXDeath", 0, 0, random (0, 360), 2, random (0, 160))
+		CYBR I 0 A_Fall
+		CYBR JKL 0
+		CYBR M 0 A_NoBlocking
+		CYBR NOP 0
+		CYBR P 120
+		TNT1 A 0 A_BossDeath
+		CYBR P -1 A_BossDeath
+		Stop
+
+	Death.IceBeam:
+		TNT1 A 0 A_BossDeath
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_ChangeFlag("SOLID", 0)
+		TNT1 A 0 A_SpawnItem("FrozenCyberdemon")
+		TNT1 A 0 A_SpawnItem("IceCrystalGround")
+		TNT1 A 0 A_SpawnItem("IceCrystalGround")
+		TNT1 A 0 A_SpawnItem("IceCrystalGround")
+		Stop
+
+	Death.Freeze:
+	Death.Ice:
+	Death.Frost:
+		TNT1 A 0 A_BossDeath
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_ChangeFlag("SOLID", 0)
+		TNT1 A 0 A_SpawnItem("FrozenCyberdemon")
+		Stop
+
+	Crush:
+		TNT1 A 0
+		TNT1 AAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		Stop
+
+	Wound:
 		"####" "#" 1
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0) //if it isnt healing already
-				{								//will heal and give the token that indicates it's executable
-					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
-					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+				if(countinv("FinisherToken")==0)
+				{
+					A_SpawnItemEx("BaronHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
 				}
 
-				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
+				if(GetCvar(be_MonsterStagger)==1)
 				{
-					return state("Stagger");	//stays there for a few seconds
+					return state("Stagger");
 				}
 				else
 				{
@@ -188,7 +323,7 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 			}
 			return state(0);
 		}
-		Goto See
+		Goto See2
 	Stagger:
 		HXBD V 0
 		{
@@ -207,7 +342,7 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 		{
 			if(!countinv("FinisherToken"))
 			{
-				return state("See");
+				return state("See2");
 			}
 			if(getcvar(be_NoisyStagger) && countinv("PainSoundToken"))
 			{
@@ -216,22 +351,22 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 			}
 			return state(0);
 		}
-		"####" "#" 0 A_SpawnItem("HeadshotTarget4b", 0, 56,0)
+		"####" "#" 0 A_SpawnItem("HeadshotTarget4b", 0, 120,0)
 		"####" "#" 0
 		Loop
 
 	Death.Crucible:
 		TNT1 A 0 A_SpawnItemEx("GlorySawPinataMax",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-		Goto Death
+		Goto Death.Decaptate
 
 	Death.GloryFire:
 		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawnHigh",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
 		Goto Death
 
 	Pain.GloryFire:
-		TNT1 A 0 A_Jump(192, "See")
+		TNT1 A 0 A_Jump(192, "See2")
 		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawnHigh",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-		Goto See
+		Goto See2
 
 	Death.BloodPunch:
 		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1)
@@ -241,11 +376,11 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
 		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
 		TNT1 A 0 A_SpawnItemEx("GlorySawPinataMax",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-		Goto Death
+		Goto Death.Decaptate
 
 	Death.Execution:
 		TNT1 A 0 {
- 			A_Stopsound;
+			A_Stopsound;
 			A_FaceTarget;
 			A_NoBlocking;
 		}
@@ -255,6 +390,22 @@ ACTOR CyberdemonBoss: PB_Monster 2546
 		TNT1 A 0 A_GiveToTarget("BPtoken",2)
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
 		Goto Death
+
+	Death.GloryKill:
+		TNT1 A 0 A_GiveToTarget("BPtoken",5)
+		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_GiveToTarget("CyberdemonFatality", 1)
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		Stop
+
+	Pain.BloodPunch:
+		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1)
+		TNT1 A 0	A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0	A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0	A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0	A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		Goto Pain
 	}
 }
 

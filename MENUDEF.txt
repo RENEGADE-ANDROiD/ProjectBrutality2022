@@ -175,7 +175,7 @@ OptionMenu "PBTacticalMotionOptions"
 {
 	Title "Tactical Weapon Motion"
 	StaticText "Rotational Tilt, Lowering, Wall Near-Field,"
-	StaticText "Step Recoil, Lean (PB 2022)."
+	StaticText "Tactical motion & lean (PB 2022)."
 	StaticText " "
 	Option "Enable tactical weapon motion.", "pb_tac_enable", "YesNo"
 	Option "Apply only while in ready states.", "pb_tac_ready_only", "YesNo"
@@ -188,8 +188,6 @@ OptionMenu "PBTacticalMotionOptions"
 	Option "Enable wall detection lowering.", "pb_tac_wall_detect", "YesNo"
 	Slider "Wall detection distance.", "pb_tac_wall_distance", 8.0, 48.0, 1.0, 1
 	Slider "Wall lowering bonus.", "pb_tac_wall_lowering", 0.0, 16.0, 0.5, 1
-	Option "Enable step recoil.", "pb_tac_steprecoil_enable", "YesNo"
-	Slider "Step recoil scale.", "pb_tac_steprecoil_scale", 0.0, 2.0, 0.05, 2
 	Option "Enable lean.", "pb_tac_lean_enable", "YesNo"
 	Slider "Lean angle.", "pb_tac_lean_angle", 0.0, 25.0, 0.5, 1
 	Slider "Lean smoothing.", "pb_tac_lean_smoothing", 0.05, 0.50, 0.01, 2

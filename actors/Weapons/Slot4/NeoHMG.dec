@@ -1,4 +1,4 @@
-// Ported from CRASH PB_Addons/NeoHMG.zs — full-auto HMG, reserve NewClip, belt magazine HMGChamberAmmo.
+// Ported from legacy PB_Addons NeoHMG — full-auto HMG, reserve NewClip, belt magazine HMGChamberAmmo.
 // Weapon class PB_NeoHMG is ZScript: zscript/Weapons/Slot4/NeoHMG/NeoHMG.zs
 
 ACTOR HMGJustRespect : Inventory
