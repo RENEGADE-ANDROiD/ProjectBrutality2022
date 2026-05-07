@@ -1,0 +1,121 @@
+// Glory-Kill pinata parity: thrown Shield Saw finishing a very weak enemy drops Crucible-style shards.
+//
+// WorldThingDied does not populate e.Damage (engine only passes Thing + Inflictor), so eligibility
+// is set in WorldThingDamaged (pre-hit HP = health after hit + damage) and confirmed on death.
+
+class PB_ShieldSawPinataHandler : EventHandler
+{
+	clearscope static PlayerPawn ResolvePlayerChain(Actor a)
+	{
+		for (int i = 0; a && i < 10; i++)
+		{
+			if (a is "PlayerPawn" && PlayerPawn(a).player)
+				return PlayerPawn(a);
+			Actor next = a.target != null ? a.target : (a.master != null ? a.master : a.tracer);
+			if (!next || next == a)
+				break;
+			a = next;
+		}
+		return null;
+	}
+
+	clearscope static PlayerPawn ResolveKiller(WorldEvent e)
+	{
+		if (!e)
+			return null;
+		PlayerPawn p = ResolvePlayerChain(e.Inflictor);
+		if (p)
+			return p;
+		p = ResolvePlayerChain(e.DamageSource);
+		if (p)
+			return p;
+		if (e.Thing)
+			return ResolvePlayerChain(e.Thing.target);
+		return null;
+	}
+
+	clearscope static bool IsShieldSawActor(Actor a)
+	{
+		return a && (a is "ShieldSawProjectile" || a is "ShieldSawTargetChecker");
+	}
+
+	clearscope static class<Actor> PinataTierFor(Actor victim)
+	{
+		if (!victim)
+			return null;
+		int sh = victim.SpawnHealth();
+		if (sh < 400)
+			return "GlorySawPinataLow";
+		if (sh < 1000)
+			return "GlorySawPinataMed";
+		if (sh < 3000)
+			return "GlorySawPinataHight";
+		return "GlorySawPinataMax";
+	}
+
+	override void WorldThingDamaged(WorldEvent e)
+	{
+		if (!e || !e.Thing || e.Damage < 1)
+			return;
+		if (!e.Thing.bISMONSTER || e.Thing.player)
+			return;
+
+		bool fromSaw = IsShieldSawActor(e.Inflictor) || IsShieldSawActor(e.DamageSource);
+		if (fromSaw)
+		{
+			int hpBeforeHit = HealthBeforeDamageHit(e.Thing, e.Damage);
+			if (hpBeforeHit <= 20)
+				e.Thing.GiveInventory("PB_ShieldSawPinataPending", 1);
+			else
+				e.Thing.TakeInventory("PB_ShieldSawPinataPending", 999);
+		}
+		else
+			e.Thing.TakeInventory("PB_ShieldSawPinataPending", 999);
+	}
+
+	// Health after this damage packet + damage amount (Damaged event is post-apply).
+	clearscope static int HealthBeforeDamageHit(Actor victim, int dmg)
+	{
+		if (!victim)
+			return 0x7fffffff;
+		return victim.health + dmg;
+	}
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (!e || !e.Thing)
+			return;
+		Actor t = e.Thing;
+		if (!t.bISMONSTER || t.player)
+			return;
+		if (t is "SwitchableDecoration")
+			return;
+
+		let ex = CVar.FindCVar("be_ExecutionsON");
+		if (!ex || !ex.GetBool())
+			return;
+
+		if (!IsShieldSawActor(e.Inflictor))
+			return;
+		if (!t.CountInv("PB_ShieldSawPinataPending"))
+			return;
+
+		PlayerPawn killer = ResolveKiller(e);
+		if (!killer || !killer.player)
+			return;
+
+		class<Actor> pc = PinataTierFor(t);
+		if (!pc)
+			return;
+
+		vector3 pz = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.5);
+		Actor p = Actor.Spawn(pc, pz, NO_REPLACE);
+		if (p)
+		{
+			p.angle = frandom(0, 360);
+			p.vel.x = frandom(0, 8);
+			p.vel.y = 0;
+			p.vel.z = frandom(0, 8);
+		}
+	}
+}

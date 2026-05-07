@@ -118,6 +118,10 @@ GameInfo
 	AddEventHandlers = "PB_EventHandler"
 	AddEventHandlers = "MBlurHandler"
 	AddEventHandlers = "PB_WheelBSSBlurHandler"
+	AddEventHandlers = "gb_EventHandler"
+	AddEventHandlers = "gb_PreviousWeaponEventHandler"
+	AddEventHandlers = "gb_PreviousWeaponStorage"
+	AddEventHandlers = "gb_VmAbortHandler"
 	AddEventHandlers = "NashGoreHandler"
 	AddEventHandlers = "BDv22GoreHandler"
 	AddEventHandlers = "BDv22GoreMergeHandler"
@@ -140,6 +144,7 @@ GameInfo
 	AddEventHandlers = "PB_KillstreakRareFlare"
 	AddEventHandlers = "PB_InstantWeaponSwitchHandler"
 	AddEventHandlers = "CSSGEvent"
+	AddEventHandlers = "PB_ShieldSawPinataHandler"
 	NormForwardMove = 0x32, 0x32		//Walk speed is modulated through
 	NormSideMove = 0x32, 0x32			//CVar in the menu options
 }
@@ -318,6 +323,29 @@ DoomEdNums
 	23163 = HASGDrum
 	23164 = PossessedGibsSlither
 	23165 = PB_GuardsphereST
+	23166 = ShieldGrenade
+	23167 = Shambler
+	23168 = Burster
+	23169 = Blighter
+	23170 = CyberFodder
+	23171 = Screamer
+	23172 = Spiker
+	23173 = Puker
+	23174 = FodderExtraPassiveSpawn
+	23175 = Pustule
+	23176 = Mimic
+	23177 = Tentacle
+	23178 = TritePod
+	23179 = TritePodCeiling
+	23180 = Hangman
+	23181 = Trite
+	23182 = ProjectSurvivalPassiveExtraSpawn
+	23183 = FrozenMimic
+	23184 = FrozenTentacle
+	23185 = FrozenTritePod
+	23186 = FrozenTritePodCeiling
+	23187 = FrozenHangman
+	23188 = PB_VenorGK
 
 	//Glory Kills
 	17003 = CyberdemonLegsFatality
@@ -336,6 +364,6 @@ DoomEdNums
 	30111 = ObsidianRavager
 	30130 = Helemental
 	30135 = Hierophant
-	// Weapons pack — Baalgar Demon (Doom1-style cyber boss, separate from PB_Cyberdemon)
+	// Baalgar: replaces vanilla Cyberdemon in-game; 2546 = placed Baalgar. PB_Cyberdemon (23127) is an alias, resolved to GK chain via GloryKills.dec.
 	2546  = CyberdemonBoss
 }

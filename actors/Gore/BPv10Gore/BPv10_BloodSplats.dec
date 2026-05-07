@@ -24,7 +24,7 @@ ACTOR BPv10_BloodSplat0
         BL00 BCDEFGHIJKLMNOPQR 1
         Goto Linger
     Linger:
-        BL00 R 1 A_FadeOut(0.04)
+        BL00 R 1 A_FadeOut(0.08)
         Loop
     }
 }
@@ -52,7 +52,7 @@ ACTOR BPv10_BloodSplat1
         BL01 HIJKLMNOPQ 1
         Goto Linger
     Linger:
-        BL01 Q 1 A_FadeOut(0.04)
+        BL01 Q 1 A_FadeOut(0.08)
         Loop
     }
 }
@@ -79,7 +79,7 @@ ACTOR BPv10_BloodSplat2
         BL02 BCDEFGHIJKLMNOPQR 1
         Goto Linger
     Linger:
-        BL02 R 1 A_FadeOut(0.04)
+        BL02 R 1 A_FadeOut(0.08)
         Loop
     }
 }
@@ -107,7 +107,7 @@ ACTOR BPv10_BloodSplat3
         BL03 OPQRSTWXYZ 1
         Goto Linger
     Linger:
-        BL03 Z 1 A_FadeOut(0.04)
+        BL03 Z 1 A_FadeOut(0.08)
         Loop
     }
 }
@@ -134,7 +134,7 @@ ACTOR BPv10_BloodSplat4
         BL04 BCDEFGHIJKLMN 1
         Goto Linger
     Linger:
-        BL04 N 1 A_FadeOut(0.04)
+        BL04 N 1 A_FadeOut(0.08)
         Loop
     }
 }

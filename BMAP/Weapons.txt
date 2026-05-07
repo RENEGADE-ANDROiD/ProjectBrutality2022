@@ -1,65 +1,65 @@
 //Pistol
-brightmap sprite DEGTA0 { map "Brightmaps/WEAPONS/DEGTA.png" }
+brightmap sprite DEGTA0 { map "brightmaps/WEAPONS/DEGTA.png" }
 
 //Deagle
-brightmap sprite D4E0Z0 { map "Brightmaps/WEAPONS/D4E0Z.png" }
+brightmap sprite D4E0Z0 { map "brightmaps/WEAPONS/D4E0Z.png" }
 
 //SMG
-brightmap sprite ATFLA0 { map "Brightmaps/WEAPONS/ATFLA.png" }
+brightmap sprite ATFLA0 { map "brightmaps/WEAPONS/ATFLA.png" }
 
 //Pump Shotgun
-brightmap sprite SHTCA0 { map "Brightmaps/WEAPONS/SHTCA.png" }
+brightmap sprite SHTCA0 { map "brightmaps/WEAPONS/SHTCA.png" }
 
 //Pump Shotgun magazine upgrade
-brightmap sprite 9SMUA0 { map "Brightmaps/WEAPONS/Shotgun/9SMUA.png" }
+brightmap sprite 9SMUA0 { map "brightmaps/WEAPONS/Shotgun/9SMUA.png" }
 
 //SSG
-brightmap sprite SGN2A0 { map "Brightmaps/WEAPONS/SGN2A.png" }
-brightmap sprite SGN3A0 { map "Brightmaps/WEAPONS/SGN2A.png" }
+brightmap sprite SGN2A0 { map "brightmaps/WEAPONS/SGN2A.png" }
+brightmap sprite SGN3A0 { map "brightmaps/WEAPONS/SGN2A.png" }
 
 //QSG
 brightmap sprite QSGSA0 { map "brightmaps/WEAPONS/QuadShotty/QSGSA.png" }
 
 //Auto Shotgun
-brightmap sprite AUSCA0 { map "Brightmaps/WEAPONS/AUSCA.png" }
+brightmap sprite AUSCA0 { map "brightmaps/WEAPONS/AUSCA.png" }
 
 //Auto Shotgun Drum upgrade
-brightmap sprite A9SCA0 { map "Brightmaps/WEAPONS/AUSCA.png" }
+brightmap sprite A9SCA0 { map "brightmaps/WEAPONS/AUSCA.png" }
 
 //DMR
-brightmap sprite RIFLA0 { map "Brightmaps/WEAPONS/RIFLA.png" }
+brightmap sprite RIFLA0 { map "brightmaps/WEAPONS/RIFLA.png" }
 
 //Carbine
-brightmap sprite CB00Z0 { map "Brightmaps/WEAPONS/CB00Z.png" }
+brightmap sprite CB00Z0 { map "brightmaps/WEAPONS/CB00Z.png" }
 
 //Nailgun
-brightmap sprite NLMGF0 { map "Brightmaps/WEAPONS/NLMGF.png" }
+brightmap sprite NLMGF0 { map "brightmaps/WEAPONS/NLMGF.png" }
 
 //Minigun Upgrade
-brightmap sprite 8GUNA0 { map "Brightmaps/WEAPONS/Minigun/8GUNA.png" }
+brightmap sprite 8GUNA0 { map "brightmaps/WEAPONS/Minigun/8GUNA.png" }
 
 //Rocket Launcher
-brightmap sprite RKTLZ0 { map "Brightmaps/WEAPONS/RKTLZ.png" }
+brightmap sprite RKTLZ0 { map "brightmaps/WEAPONS/RKTLZ.png" }
 
 //M1 Plasma Rifle
-brightmap sprite PLASA0 { map "Brightmaps/WEAPONS/PLASA.png" }
+brightmap sprite PLASA0 { map "brightmaps/WEAPONS/PLASA.png" }
 
 //M2 Plasma Rifle (M2PRA0/M2PRB0: BMAP/M2Plasma.txt, Slot 6/M2Plasma bmaps)
 
 //Freezer
-brightmap sprite FRPKA0 { map "Brightmaps/WEAPONS/FRPKA.png" }
+brightmap sprite FRPKA0 { map "brightmaps/WEAPONS/FRPKA.png" }
 
 //Railgun
-brightmap sprite SRCGA0 { map "Brightmaps/WEAPONS/SRCGA.png" }
+brightmap sprite SRCGA0 { map "brightmaps/WEAPONS/SRCGA.png" }
 
 //BFG-9000
-brightmap sprite RDABX0 { map "Brightmaps/WEAPONS/RDABX.png" }
+brightmap sprite RDABX0 { map "brightmaps/WEAPONS/RDABX.png" }
 
 //BFG Beam
-brightmap sprite 8BGPA0 { map "Brightmaps/WEAPONS/8BGPA.png" }
+brightmap sprite 8BGPA0 { map "brightmaps/WEAPONS/8BGPA.png" }
 
 //Black Hole Generator
-brightmap sprite PRDCZ0 { map "Brightmaps/WEAPONS/PRDCZ.png" }
+brightmap sprite PRDCZ0 { map "brightmaps/WEAPONS/PRDCZ.png" }
 
 //Demon Tech Rifle
-brightmap sprite HRPUA0 { map "Brightmaps/WEAPONS/HRPUA.png" }
+brightmap sprite HRPUA0 { map "brightmaps/WEAPONS/HRPUA.png" }

@@ -57,9 +57,13 @@ Code systems and libraries
   / TiltPlusPlus.zc), “Written by Nash Muhandes.”
 - Xaser Acheron: DamNums (zscript/damnums/damnum.txt).
 - Lewisk3 (Redxone): Laser API (zscript/LaserAPI/LaserAPI.txt).
-- DrPyspy: weapon wheel basis (see gearbox / wheel credits in-tree).
-- 3saster: MD5 ZScript reference (see gearbox notes).
-- m8f: wheel crash fix and related notes.
+- Gearbox (Alexander Kromm / m8f et al.; GPLv3+): folded weapon/inventory selector under
+  `zscript/gearbox/`, `zscript/MD5/`, `zscript/m_gizmos/`, `zscript/zabor/`; license
+  `zscript/gearbox/COPYING_Gearbox_GPLv3.txt`. Upstream: https://github.com/mmaulwurff/gearbox
+
+- DrPyspy: early PB weapon wheel basis; superseded for the primary bind by folded Gearbox.
+- 3saster: MD5 ZScript (Gearbox fold).
+- m8f: wheel crash fix, MariENB blur lineage, Gearbox.
 - Marisa Kirisame (OrdinaryMagician): Blur work derived from MariFX (GPLv3);
   see shader / staging path notes.
 
@@ -95,10 +99,20 @@ Selected weapons and equipment (authors)
   **Eriance**; sword from *Insanity's Requiem Mk.2* by **TiberiumSoul** (RIP).
 
 Monsters and packs
+- **Project Survival** monster additions (fodder zombies + passive hazards):
+  **The Pope of Dope (ThePopeOfDope)**. Folded under
+  `actors/Monsters/T1-Grunts/ProjectSurvivalFodder/` and
+  `actors/Monsters/T1-Grunts/ProjectSurvivalPassive/` plus
+  `zscript/Monsters/ProjectSurvival/` and `zscript/Spawner/PB_ProjectSurvival*`.
+  Includes Shambler, Burster, Blighter, Screamer, Spiker, Puker, CyberFodder
+  (fodder set) and Pustule, Mimic, Tentacle, TritePod / TritePodCeiling, Hangman,
+  Trite (passive set) — sprites, sounds, monster behavior, and original
+  spawner / passive-pod coding by The Pope of Dope; integrated as opt-in
+  reinforcement spawns alongside vanilla zombies in this build.
 - Glory Kills: lineage from D4D / Brutal Doom Black Edition
   (SNDINFO.GloryKills and related). **Glory Kill Eternal HUD** PNGs live under
   **`GRAPHICS/HUD/glorykills/newhud/`**; **equipment launcher** first-person overlays
-  (**Flame Belch** / **Ice Bomb**) use **`SPRITES/ShoulderCannon/`** (**`SCL0`/`SCF0`**
+  (**Flame Belch** / **Ice Bomb**) use **`SPRITES/WEAPONS/GloryKillLauncher/ShoulderCannon/`** (**`SCL0`/`SCF0`**
   and **`LCL0`/`LCF0`**) updated from the **Project Brutality PB_Staging** Glory Kills
   line (shoulder placement: flame right, ice left).
 - Monster Pack: content line documented with SNDINFO.MonsterPack and tier files.
@@ -123,7 +137,7 @@ Gore: optional Brutal Doom 22 (BDv22) add-on
   meat, organs / small-brain style props, limb subset, and a PB/BDv22 gore
   *mix* cvar. Implemented with separate `BDv22_*` class names, `zscript/Gore/`
   handlers (`BDv22GoreHandler`, `BDv22GoreMergeHandler`, `BDv22GoreMist`), and
-  assets under `SPRITES/BDv22/` and `lumps/includes/bdv22_modeldef.inc` (included from `modeldef.txt`) where used. Credited to
+  assets under `SPRITES/GORE/BDv22/` and `lumps/includes/bdv22_modeldef.inc` (included from `modeldef.txt`) where used. Credited to
   the **Brutal Doom 22** project and its artists; that content remains third-party
   — keep upstream credits and any distribution limits the BDv22 project requires.
   Does *not* replace core Project Brutality or Nash gore; it layers on when enabled
@@ -146,8 +160,12 @@ Audio (overview)
 Special thanks
 - Carrot (iamcarrotmaster): extensive sprites and weapon art.
 - Dithered Output: lean / wall-detection work.
-- ThePopeOfDope (The Pope of Dope): LeverAction, Pro-Surv Ballista, and other
-  contributions noted in staging (ice effects, barrels, Cryo-adjacent work).
+- ThePopeOfDope (The Pope of Dope): LeverAction, Pro-Surv Ballista, the
+  **Project Survival** fodder + passive monster sets (Shambler, Burster,
+  Blighter, Screamer, Spiker, Puker, CyberFodder, Pustule, Mimic, Tentacle,
+  TritePod / TritePodCeiling, Hangman, Trite — sprites, sounds, monster /
+  spawner code), and other contributions noted in staging (ice effects,
+  barrels, Cryo-adjacent work).
 - Vampy: fixes and improvements (e.g. LMG reload) on the staging line.
 
 Licensing
@@ -183,6 +201,9 @@ Sergeant_Mark_IV
 
 POSSITEM
 Realm667, Blue Shadow
+
+VNR1*, VNR2*, VNRH*, VNRD* (Venor)
+Kan3 / Realm667
 
 Cheering Marine MWAV A to F
 Unknown

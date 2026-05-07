@@ -6,7 +6,7 @@ Realm667 (community bases), Monster Pack / Glory Kills lines, **Brutal Doom
 **Project Brutality Legacy** execution / stagger handoff behavior folded into core
 actors, **Brutal Pack**-line fragments (selective only; pack not distributed whole),
 and optional **Brutal Doom 22 (BDv22)** gore (`bdv22_*`, `actors/Gore/BDv22Gore/`,
-`SPRITES/BDv22/`). The list below is retained verbatim for per-sprite history.
+`SPRITES/GORE/BDv22/`). The list below is retained verbatim for per-sprite history.
 
 ---------------------------------------------------------------------------
 

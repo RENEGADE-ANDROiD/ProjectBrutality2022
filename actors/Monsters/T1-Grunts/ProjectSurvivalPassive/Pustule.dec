@@ -1,0 +1,83 @@
+actor Pustule {
+	obituary "%o was popped by a pustule."
+	health 5
+	radius 25
+	height 24
+	mass 100
+	speed 0
+	scale 0.7
+	PainChance 256
+	seesound "Blob/Sight"
+	painsound "Blob/Pain"
+	activesound "Blob/Active"
+	MONSTER
+	+FLOORCLIP
+	+LOOKALLAROUND
+	-Countkill
+	+THRUSPECIES  
+	+NOINFIGHTING
+		states {
+			Spawn:
+				FLO2 A 10 A_Look
+				TNT1 A 0 A_JumpIfCloser(75, "Death")
+				loop
+			See:
+				TNT1 A 0 A_ChangeFlag("THRUSPECIES",false)
+				FLO2 AAABBBCCCBBB 2 A_JumpIfCloser(75, "Death")
+				TNT1 A 0 A_Jump(90,"Yuck")
+				TNT1 A 0 A_Jump(200,"Blood")
+				loop
+			Blood:
+				TNT1 A 0 A_SpawnItemEx("NashGoreBloodSpurt",frandom(-5, 5), frandom(-5, 5), 5,frandom(-2, 2), frandom(-2, 2), frandom(2, 4),frandom(0, 360))
+				Goto See
+			Yuck:
+				TNT1 A 0 A_PlaySound("PUSWAL")
+				Goto See
+			Pain:
+			Death:
+				FLO2 F 0 bright A_Explode (75, 175)
+				EXPL A 0 Radius_Quake (2, 40, 0, 8, 0)
+				TNT1 AAA 0 A_CustomMissile ("XDeath1", 5, 0, random (0, 360), 2, random (0, 160))
+				TNT1 AAA 0 A_CustomMissile ("XDeath2b", 5, 0, random (0, 360), 2, random (0, 160))
+				TNT1 AAA 0 A_CustomMissile ("XDeath3b", 5, 0, random (0, 360), 2, random (0, 160))
+				TNT1 AA 0 A_CustomMissile ("Brutal_FlyingBlood", 5, 0, random (170, 190), 2, random (0, 40))
+				TNT1 AA 0 A_CustomMissile ("Brutal_FlyingBloodFaster", 5, 0, random (170, 190), 2, random (0, 40))
+				TNT1 AA 0 A_CustomMissile ("Brutal_FlyingBloodMuchFaster", 5, 0, random (170, 190), 2, random (0, 40))
+				TNT1 AAAAAA 0 A_CustomMissile ("SuperWallRedBlood", 5, 0, random (170, 190), 2, random (0, 40))
+				TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
+				TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
+				TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
+				TNT1 A 0 A_CustomMissile ("XDeathGuts", 32, 0, random (0, 360), 2, random (0, 160))
+				TNT1 A 0 A_CustomMissile ("XDeathGuts", 32, 0, random (0, 360), 2, random (0, 160))
+				TNT1 A 0 A_CustomMissile ("XDeathGuts", 32, 0, random (0, 360), 2, random (0, 160))
+				TNT1 AAAAAAA 0 A_CustomMissile ("BloodMistExtraBig", 5, 0, random (0, 360), 2, random (60, 90))
+				TNT1 AAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLong", 0, 0, random (0, 360), 2, random (50, 130))
+				TNT1 AAAA 0 A_CustomMissile ("Instestin", 32, 0, random (150, 210), 2, random (0, 40))
+				TNT1 A 0
+				FLO2 G 0 bright A_PlaySound ("EYEPULL")
+				FLO2 AB 2
+				TNT1 A 0 A_NoBlocking
+				stop
+			Death.Fire:
+			Death.FireExplosion:
+			Death.Flames:
+			Death.Burn:
+				TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)
+				TNT1 AA 0 A_SpawnItem ("IncendiaryGrenadeExplosion")
+				TNT1 AAA 0 A_SpawnItemEx("ArmorChip",0,0,16,random(0,8),0,random(0,8),random(0,360))
+				TNT1 A 0 Radius_Quake (2, 24, 0, 15, 0)
+				FLO2 G 0 bright A_PlaySound ("EYEPULL")
+				FLO2 AB 2
+				TNT1 A -1 A_NoBlocking
+				Stop
+			Death.Ice:
+			Death.IceExplosion:
+			Death.Freeze:
+			Death.Frost:
+				TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)
+				TNT1 AA 0 A_SpawnItem ("CryoGrenadeExplosion")
+				TNT1 A 0 Radius_Quake (2, 24, 0, 15, 0)
+				FLO2 G 0 bright A_PlaySound ("EYEPULL")
+				FLO2 AB 2
+				TNT1 A -1 A_NoBlocking
+				Stop	}}

@@ -238,6 +238,65 @@ class PB_KsMsgQueuedWaggle : PB_KsMsgQueued
 class PB_KillstreakMessageHandler : EventHandler
 {
 	Array<PB_KsMsgQueued> queue;
+	String ksPendingClass[MAXPLAYERS];
+	String ksPendingMsg[MAXPLAYERS];
+	bool ksPendingSet[MAXPLAYERS];
+
+	static PB_KillstreakMessageHandler KS_Get()
+	{
+		return PB_KillstreakMessageHandler(EventHandler.Find("PB_KillstreakMessageHandler"));
+	}
+
+	static play void KS_SetPendingReward(PlayerPawn plr, String className, String msg)
+	{
+		let h = KS_Get();
+		if (!h || !plr || !plr.player) return;
+		int p = plr.PlayerNumber();
+		if (p < 0 || p >= MAXPLAYERS) return;
+		h.ksPendingClass[p] = className;
+		h.ksPendingMsg[p] = msg;
+		h.ksPendingSet[p] = true;
+	}
+
+	static void KS_ClearPendingAll()
+	{
+		let h = KS_Get();
+		if (!h) return;
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			h.ksPendingSet[i] = false;
+			h.ksPendingClass[i] = "";
+			h.ksPendingMsg[i] = "";
+		}
+	}
+
+	static void KS_ClearPendingForPlayer(PlayerPawn plr)
+	{
+		let h = KS_Get();
+		if (!h || !plr || !plr.player) return;
+		int p = plr.PlayerNumber();
+		if (p < 0 || p >= MAXPLAYERS) return;
+		h.ksPendingSet[p] = false;
+		h.ksPendingClass[p] = "";
+		h.ksPendingMsg[p] = "";
+	}
+
+	static play void KS_TakePending(PlayerPawn plr, out String className, out String msg, out bool had)
+	{
+		className = "";
+		msg = "";
+		had = false;
+		let h = KS_Get();
+		if (!h || !plr || !plr.player) return;
+		int p = plr.PlayerNumber();
+		if (p < 0 || p >= MAXPLAYERS || !h.ksPendingSet[p]) return;
+		className = h.ksPendingClass[p];
+		msg = h.ksPendingMsg[p];
+		h.ksPendingSet[p] = false;
+		h.ksPendingClass[p] = "";
+		h.ksPendingMsg[p] = "";
+		had = true;
+	}
 
 	static bool PB_BigmsgOn()
 	{

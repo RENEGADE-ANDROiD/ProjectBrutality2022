@@ -22,6 +22,7 @@ actor Decelerate : Inventory
     +IGNORESKILL
 }
 Actor ExecutionToken : Inventory {inventory.maxamount 1}
+Actor PB_ShieldSawPinataPending : Inventory { Inventory.MaxAmount 1 }
 Actor SlideKicking : Inventory {}
 Actor HasUnmorphed : Inventory {}
 Actor LedgeGrabbingRightNow : Inventory {}
@@ -31,8 +32,6 @@ Actor HeightTIDIndicator : Inventory
 }
 Actor IsDead : Inventory {}
 Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
-Actor GrabbedFlameBarrel : Inventory { Inventory.MaxAmount 1 }
-Actor HasFlameBarrel : Inventory { Inventory.MaxAmount 1 }
 Actor DisintegratedHuman
 {
 	+NOBLOCKMAP
@@ -166,18 +165,18 @@ Actor PBBlastMomentum : Inventory
 
 //MeatShields
 #include "actors/Weapons/Meatshields/IMPSHIELD.dec"
-#include "actors/Weapons/MeatShields/ZMANSHIELD.dec"
-#include "actors/Weapons/MeatShields/SGUYSHIELD.dec"
-#include "actors/Weapons/MeatShields/DARKIMPSHIELD.dec"
-#include "actors/Weapons/MeatShields/ASGGUYSHIELD.dec"
-#include "actors/Weapons/MeatShields/CarbineZombieSHIELD.dec"
-#include "actors/Weapons/MeatShields/CommandoSHIELD.dec"
-#include "actors/Weapons/MeatShields/PlasmaZombieSHIELD.dec"
-#include "actors/Weapons/MeatShields/LabGuySHIELD.dec"
-#include "actors/Weapons/MeatShields/SavageImpSHIELD.dec"
-#include "actors/Weapons/MeatShields/TriclopsImpSHIELD.dec"
-#include "actors/Weapons/MeatShields/PB_NailgunGuyShield.dec"
-#include "actors/Weapons/MeatShields/BarrelThrower.dec"
+#include "actors/Weapons/Meatshields/ZMANSHIELD.dec"
+#include "actors/Weapons/Meatshields/SGUYSHIELD.dec"
+#include "actors/Weapons/Meatshields/DARKIMPSHIELD.dec"
+#include "actors/Weapons/Meatshields/ASGGUYSHIELD.dec"
+#include "actors/Weapons/Meatshields/CarbineZombieSHIELD.dec"
+#include "actors/Weapons/Meatshields/CommandoSHIELD.dec"
+#include "actors/Weapons/Meatshields/PlasmaZombieSHIELD.dec"
+#include "actors/Weapons/Meatshields/LabGuySHIELD.dec"
+#include "actors/Weapons/Meatshields/SavageImpSHIELD.dec"
+#include "actors/Weapons/Meatshields/TriclopsImpSHIELD.dec"
+#include "actors/Weapons/Meatshields/PB_NailgunGuySHIELD.dec"
+#include "actors/Weapons/Meatshields/BarrelThrower.dec"
 
 //Ammo Ammo Ammo //Smart Scavenger
 #include "actors/Items/Ammo/GenericAmmo.dec"
@@ -205,7 +204,14 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Decorations/FIREWORKS.dec"
 //#include "actors/Decorations/TORCHES.dec"
 #include "actors/Decorations/DEAD.dec"
-#include "Actors/Decorations/Barrels/BarrelEffects.dec"
+#include "actors/Decorations/Barrels/Core/NukageBarrelTokens.dec"
+#include "actors/Decorations/Barrels/Core/NukageBarrelEffects.dec"
+#include "actors/Decorations/Barrels/Core/NukageBarrelParts.dec"
+#include "actors/Decorations/Barrels/Core/TheNukageBarrel.dec"
+#include "actors/Decorations/Barrels/NukageBarrels.dec"
+#include "actors/Decorations/Barrels/IceBarrels.dec"
+#include "actors/Decorations/Barrels/FlameBarrels.dec"
+#include "actors/Decorations/Barrels/BarrelEffects.dec"
 
 //Enemies
 #include "actors/Monsters/T1-Grunts/ZOMBIEMEN.dec"
@@ -225,8 +231,8 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Monsters/T3-Floaters/CacoPlayerWeapon.dec"
 #include "actors/Monsters/T3-Floaters/PAIN.dec"
 #include "actors/Monsters/T4-Viles/ARCHVILE.dec"
-#include "actors/Monsters/Tz-Bosses/CYBERDEMON.dec"
 #include "actors/Monsters/Tz-Bosses/CYBERDEMON_BOSS.dec"
+#include "actors/Monsters/Tz-Bosses/CYBERDEMON.dec"
 #include "actors/Monsters/Tz-Bosses/MASTERMIND.dec"
 
 //ST Monsters
@@ -272,6 +278,15 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Effects/PARTICLES.dec"
 #include "actors/Effects/SMOKE.dec"
 #include "actors/Effects/FIRE.dec"
+// Project Survival Fodder (ImpAttack/GORE/Zombie corpses frozen sergeants + FIRE enemy flamer trail; no replaces)
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Shambler.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Burster.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Blighter.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/CyberFodder.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Screamer.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Spiker.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Puker.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/FodderPassiveSpawn.dec"
 // Molotov (parents: RocketExplosion in EXPLOSIVES.dec, LargeGlassParticle* in PARTICLES.dec, TinyBurningPiece* in FIRE.dec — must load after those)
 #include "actors/Weapons/MolotovCocktail/MolotovCocktailToken.dec"
 #include "actors/Weapons/MolotovCocktail/MolotovCocktail.dec"
@@ -400,6 +415,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/MeleeWeaponPack/DragonSlayer.dec"
 #include "actors/Weapons/MeleeWeaponPack/Stormcast.dec"
 #include "actors/Weapons/Slot8/BFGMKIV.dec"
+#include "actors/Weapons/Equipment/ShieldGrenade_PS.dec"
 //#include "actors/Weapons/Slot8/BFGBEAM.dec"
 #include "actors/Weapons/Slot8/BLACKHOLE.dec"
 #include "actors/Weapons/Slot8/BioAcidLauncher.dec"
@@ -477,6 +493,13 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Monsters/T1-Grunts/NAZIS.dec"
 
 #include "actors/Monsters/realm667monsters.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalPassive/Pustule.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalPassive/Mimic.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalPassive/Tentacle.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalPassive/TritePod.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalPassive/Hangman.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalPassive/ProjectSurvivalPassiveFreeze.dec"
+#include "actors/Monsters/T1-Grunts/ProjectSurvivalPassive/PassiveExtraSpawn.dec"
 #include "actors/Monsters/StealthMonsters.dec"
 #include "actors/Monsters/UnderwaterMonsters.dec"
 
@@ -495,10 +518,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Items/HelmetDrops/HelmetDrops.dec" // PB_HelmetDrops (3BON helmet; HelmetDropHandler in ZScript)
 
 ////// New Barrels /////
-#include "Actors/Decorations/Barrels/BarrelEmpty.dec"
-#include "Actors/Decorations/Barrels/BarrelFrozen.dec"
-#include "Actors/Decorations/Barrels/FlameBarrel.dec"
-#include "Actors/Decorations/Barrels/NukageBarrel.dec"
+#include "actors/Decorations/Barrels/BarrelEmpty.dec"
 
 
 actor Z_FloorCheck
@@ -790,3 +810,6 @@ Actor TurboReload : Inventory
 #include "actors/Monsters/Realm667/Realm667_Projectiles.dec"
 #include "actors/Monsters/Realm667/Realm667_Monsters.dec"
 #include "actors/Monsters/Realm667/Realm667_GloryKills.dec"
+
+// Late-stage compatibility stubs (must be last — uses PB parents defined above)
+#include "actors/Compat/LateWarningStubs.dec"

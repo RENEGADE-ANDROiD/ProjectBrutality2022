@@ -321,7 +321,7 @@ The **Cyberdemon Missile Launcher** was folded in from `PBX-Weapons-main/Zscript
 | `PB_Math.LinearMap(...)` | `PB_HitFeedback_Math.LinearMap(...)` (PB 2022's math namespace) |
 | `Goto Ready` / `Goto Select` / reused `PB_WeaponRaise` helper | **Inlined** `SelectFirstPersonLegs` chain — calls `Melee_Equipment_Handler_Overlay`, `KickHandler_Overlay`, `Equipment_Toggle_Handler_Overlay`, `FirstPersonLegsStand`, then `PB_WeapTokenSwitch` / `PB_RespectIfNeeded` / `Goto SelectAnimation`. Required because PB 2022's `PB_Weapon : PB_WeaponBase` owns that chain in DECORATE; a pure-ZScript subclass that inherits only from `PB_WeaponBase` would skip it. See AGENTS.md §4, "ZScript-only weapons". |
 | `A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)` inside various flash states, many ending in `Stop` | Flash states end in `Goto Ready3` so that kick-flash / punch-flash transitions don't leave duplicate PSprite layers (see the PB staging finding at the end of this file). |
-| Projectile `CyberBalls : PBX_Projectile` | `CyberBallsPlayer : PB_Projectile` — `PB_Projectile` in PB 2022 is just an alias for `FastProjectile` (see AGENTS.md §4). Explosion uses existing `EXPLA0` sprite already shipped under `SPRITES/FLAMES/`. |
+| Projectile `CyberBalls : PBX_Projectile` | `CyberBallsPlayer : PB_Projectile` — `PB_Projectile` in PB 2022 is just an alias for `FastProjectile` (see AGENTS.md §4). Explosion uses existing `EXPLA0` sprite already shipped under `SPRITES/Effects/Flames/`. |
 | `A_ReFire()` → direct refire loop | `PB_ReFire()` wrapper, so we pick up PB 2022's shared refire token / cancel logic. |
 
 ### 9.8.2 Fire/AltFire parity fix
@@ -384,7 +384,7 @@ Assets landed at:
 Projectile and explosion reuse existing assets:
 
 - Missile sprite `WYVBA1` from `SPRITES/MONSTERS/Cyberdemons/CYBERDEMON/`.
-- Explosion sprite `EXPLA0` from `SPRITES/FLAMES/`.
+- Explosion sprite `EXPLA0` from `SPRITES/Effects/Flames/`.
 
 ### 9.8.4 File list delta
 
@@ -574,7 +574,7 @@ First weapon ported on top of [9.10.5](#9105-staging-helper-back-fill-baseweapon
 
 **What this port gives you over the DECORATE version:**
 
-- All staging slide / mag-toss / dual-wield animations preserved (D4E0–D4E2, D6E0–D6E5, DR00–DR42 prefixes). PB 2022's older Deagle tree had byte-different copies of every shared frame plus 122 stale frames in 5 PB22-only subdirs (`DualFire/`, `DualReload/`, `Kick/`, `Selection/`, `SlideForward/`) that were referenced only by the retired DECORATE `Deagle.dec`. The shared 601 frames were force-overwritten from staging (`robocopy /IS /IT`) and the 5 stale subdirs deleted, so `SPRITES/WEAPONS/Slot 2/Deagle/` is now byte-identical to staging's tree (699 files, ~13.17 MB).
+- All staging slide / mag-toss / dual-wield animations preserved (D4E0–D4E2, D6E0–D6E5, DR00–DR42 prefixes). PB 2022's older Deagle tree had byte-different copies of every shared frame plus 122 stale frames in 5 PB22-only subdirs (`DualFire/`, `DualReload/`, `Kick/`, `Selection/`, `SlideForward/`) that were referenced only by the retired DECORATE `Deagle.dec`. The shared 601 frames were force-overwritten from staging (`robocopy /IS /IT`) and the 5 stale subdirs deleted, so `SPRITES/WEAPONS/Slot2/Deagle/` is now byte-identical to staging's tree (699 files, ~13.17 MB).
 - Real chamber tracking via the shim (`PB_GetChamberEmpty`, etc.) — the gun now *visually* shows an unloaded slide on the last shot, plus a separate `EmptyReload` path that racks the chamber afterward.
 - Full akimbo + per-hand fire / reload / overlay rotation, including the staging "swap" animation when only one hand needs reloading.
 - ADS / zoomed altfire with `pb_toggle_aim_hold` honoured.

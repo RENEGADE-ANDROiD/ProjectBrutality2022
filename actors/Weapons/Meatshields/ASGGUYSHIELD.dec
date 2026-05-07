@@ -203,7 +203,7 @@ ACTOR ASGguyShield : PB_Weapon
 		Stop
 		
  	Spawn:
-		8876 A -1
+		TNT1 A -1
 		Stop
 	}
 }

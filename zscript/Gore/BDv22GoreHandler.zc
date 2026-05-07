@@ -1,4 +1,4 @@
-// Optional on-hit blood mist: spawns BDv22GoreMist (P22M in SPRITES/BDv22/). Brutal Doom 22 content.
+// Optional on-hit blood mist: spawns BDv22GoreMist (P22M in SPRITES/GORE/BDv22/). Brutal Doom 22 content.
 
 class BDv22GoreHandler : EventHandler
 {

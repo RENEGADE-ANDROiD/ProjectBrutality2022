@@ -21,14 +21,12 @@ class PB_WeaponTilterInventory : Inventory
 	double cvRollCap;
 	double cvLoweringScale;
 	double cvWallLowering;
-	double cvStepRecoil;
 	double cvLeanAngle;
 	double cvLeanSmoothing;
 	double cvWallDistance;
 	bool cvEnabled;
 	bool cvWallDetect;
 	bool cvEnableLean;
-	bool cvEnableStepRecoil;
 	bool cvEnableReadyOnly;
 	bool cvEnableMoveOnly;
 	bool cvCapRoll;
@@ -67,7 +65,14 @@ class PB_WeaponTilterInventory : Inventory
 
 	private bool IsOnFloor()
 	{
-		return owner && owner.Pos.Z <= owner.FloorZ + 0.01;
+		if (!owner) { return false; }
+		let pp = PlayerPawn(owner);
+		if (pp && pp.player)
+		{
+			return pp.player.OnGround || owner.bONMOBJ || owner.bMBFBOUNCER
+				|| ((pp.player.Cheats & CF_NOCLIP2) != 0);
+		}
+		return owner.Pos.Z <= owner.FloorZ + 1.0;
 	}
 
 	private bool IsExcludedWeapon(Weapon weap)
@@ -264,8 +269,6 @@ class PB_WeaponTilterInventory : Inventory
 		cvWallDetect = CVar.GetCVar("pb_tac_wall_detect", pi).GetBool();
 		cvWallDistance = CVar.GetCVar("pb_tac_wall_distance", pi).GetFloat();
 		cvWallLowering = CVar.GetCVar("pb_tac_wall_lowering", pi).GetFloat();
-		cvEnableStepRecoil = CVar.GetCVar("pb_tac_steprecoil_enable", pi).GetBool();
-		cvStepRecoil = CVar.GetCVar("pb_tac_steprecoil_scale", pi).GetFloat();
 		cvEnableLean = CVar.GetCVar("pb_tac_lean_enable", pi).GetBool();
 		cvLeanAngle = CVar.GetCVar("pb_tac_lean_angle", pi).GetFloat();
 		cvLeanSmoothing = CVar.GetCVar("pb_tac_lean_smoothing", pi).GetFloat();
@@ -363,11 +366,11 @@ class PB_WeaponTilterInventory : Inventory
 		loweringAmount += (targetLower - loweringAmount) * 0.20;
 
 		bool onFloor = IsOnFloor();
-		if (cvEnableStepRecoil && previousOnFloor == false && onFloor == true && previousVelZ < -2.0)
+		if (previousOnFloor == false && onFloor == true && previousVelZ < -1.0)
 		{
-			landingKick += min(8.0, abs(previousVelZ) * 0.4) * cvStepRecoil;
+			landingKick += min(12.0, abs(previousVelZ) * 0.5) * 1.5;
 		}
-		landingKick *= 0.78;
+		landingKick *= 0.85;
 		previousOnFloor = onFloor;
 		previousVelZ = owner.Vel.Z;
 

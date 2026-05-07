@@ -51,7 +51,7 @@ class PB_KillstreakFlare : Inventory
 }
 
 // Random power-up in the PB 2022 pool; does not replace any map item.
-class PB_KillstreakPowerUp : Inventory
+class PB_KillStreakPowerUp : Inventory
 {
 	Default
 	{
@@ -67,15 +67,22 @@ class PB_KillstreakPowerUp : Inventory
 		if (!Owner || !(Owner is "PlayerPawn")) return true;
 		let plr = PlayerPawn(Owner);
 		String className, msg;
-		PBRollReward(plr, className, msg);
+		bool hadPending;
+		PB_KillstreakMessageHandler.KS_TakePending(plr, className, msg, hadPending);
+		if (!hadPending)
+			PBRollReward(plr, className, msg);
 		Class<Inventory> rewardClass = className;
 		if (!rewardClass)
 		{
 			className = "Stimpack2";
 			msg = "Kill streak reward: stimpack (reward unavailable).";
 		}
-		plr.GiveInventory(className, 1);
-		plr.A_Print(msg, 2.0);
+		if (className == "PB_Backpack")
+			GrantKillstreakBackpack(plr);
+		else
+			plr.GiveInventory(className, 1);
+		if (!PB_KillstreakMessageHandler.PB_BigmsgOn())
+			plr.A_Print(msg, 2.0);
 		return true;
 	}
 
@@ -94,6 +101,55 @@ class PB_KillstreakPowerUp : Inventory
 		return c == null || c.GetBool();
 	}
 
+	static int PBCvarInt(PlayerPawn p, String n, int def, int lo, int hi)
+	{
+		if (!p || !p.player) return def;
+		let c = CVar.GetCVar(n, p.player);
+		int v = c ? c.GetInt() : def;
+		return clamp(v, lo, hi);
+	}
+
+	static bool PlayerHasAnyBackpackToken(PlayerPawn plr)
+	{
+		return plr && (plr.FindInventory("GotAPack") || plr.FindInventory("GotAPack_h"));
+	}
+
+	static void PushSupplyClass(Array<String> a, String className)
+	{
+		Class<Inventory> cls = className;
+		if (cls) a.Push(className);
+	}
+
+	static void GrantKillstreakBackpack(PlayerPawn plr)
+	{
+		if (!plr) return;
+		plr.A_StartSound("BACKPCK", CHAN_ITEM);
+		plr.GiveInventory("BackpackItem", 1);
+		plr.GiveInventory("GotAPack", 1);
+		plr.GiveInventory("PistolBullets", 40);
+		plr.GiveInventory("NewClip", 10);
+		plr.GiveInventory("NewShell", 1);
+		plr.GiveInventory("CellPack", 1);
+		plr.GiveInventory("RocketBox", 2);
+		plr.GiveInventory("HandGrenadeAmmo", 2);
+		plr.GiveInventory("StunGrenadeAmmo", 1);
+		plr.GiveInventory("MiniHellRocketAmmo", 3);
+	}
+
+	static String SuppliesRewardMsg(String pick)
+	{
+		if (pick == "HealthPinataPermL2" || pick == "HealthPinataPermL3") return "Kill streak: health bonus!";
+		if (pick == "ArmorPinataL1" || pick == "ArmorPinataL2") return "Kill streak: armor bonus!";
+		if (pick == "ClipPinata") return "Kill streak: clip pinata!";
+		if (pick == "ShellPinata") return "Kill streak: shell pinata!";
+		if (pick == "CellPinata") return "Kill streak: cell pinata!";
+		if (pick == "RocketPinata") return "Kill streak: rocket pinata!";
+		if (pick == "CartridgePinata") return "Kill streak: cartridge pinata!";
+		if (pick == "GasPinata") return "Kill streak: gas pinata!";
+		if (pick == "GrenadePinata") return "Kill streak: grenade pinata!";
+		return "Kill streak: bonus supplies!";
+	}
+
 	static void PushIf(Array<String> a, String itemCvar, String className, PlayerPawn p)
 	{
 		Class<Inventory> cls = className;
@@ -102,6 +158,48 @@ class PB_KillstreakPowerUp : Inventory
 
 	static void PBRollReward(PlayerPawn plr, out String outClass, out String outMsg)
 	{
+		if (PBCvarItem(plr, "pb_ks_r_backpack"))
+		{
+			int bc = PBCvarInt(plr, "pb_ks_r_backpack_chance", 4, 0, 100);
+			if (bc > 0 && random(0, 99) < bc && !PlayerHasAnyBackpackToken(plr))
+			{
+				Class<Inventory> bpc = "PB_Backpack";
+				if (bpc)
+				{
+					outClass = "PB_Backpack";
+					outMsg = "Kill streak: backpack!";
+					return;
+				}
+			}
+		}
+
+		if (PBCvarItem(plr, "pb_ks_r_supplies"))
+		{
+			int sc = PBCvarInt(plr, "pb_ks_r_supplies_chance", 20, 0, 100);
+			if (sc > 0 && random(0, 99) < sc)
+			{
+				Array<String> sup;
+				PushSupplyClass(sup, "HealthPinataPermL2");
+				PushSupplyClass(sup, "HealthPinataPermL3");
+				PushSupplyClass(sup, "ArmorPinataL1");
+				PushSupplyClass(sup, "ArmorPinataL2");
+				PushSupplyClass(sup, "ClipPinata");
+				PushSupplyClass(sup, "ShellPinata");
+				PushSupplyClass(sup, "CellPinata");
+				PushSupplyClass(sup, "RocketPinata");
+				PushSupplyClass(sup, "CartridgePinata");
+				PushSupplyClass(sup, "GasPinata");
+				PushSupplyClass(sup, "GrenadePinata");
+				if (sup.Size() > 0)
+				{
+					String sp = sup[random(0, sup.Size() - 1)];
+					outClass = sp;
+					outMsg = SuppliesRewardMsg(sp);
+					return;
+				}
+			}
+		}
+
 		Array<String> pool;
 		PushIf(pool, "pb_ks_r_haste",     "PB_KSHasteSphere",         plr);
 		PushIf(pool, "pb_ks_r_double",    "PB_KSDoubleSphere",         plr);

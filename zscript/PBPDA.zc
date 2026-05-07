@@ -230,6 +230,18 @@ class PB_EventHandler : EventHandler
 	// Full-screen dash vignette (from PBv0.3+ staging: PB_EventHandler + PB_DashOverlay; toggled with pb_dasheffect)
 	ui double dashAlpha;
 	ui double dashScale;
+	// PBX 2022 weapon HUD: nudge mixed Icon/AltHUDIcon footprints toward a common on-screen size (uniform scale).
+	ui double PB2022WeaponHudIconSizeMul(Vector2 texSize)
+	{
+		double w = texSize.x;
+		double h = texSize.y;
+		if (w < 1.0 || h < 1.0)
+			return 1.0;
+		double maxEdge = max(w, h);
+		double refEdge = 52.0;
+		double mul = refEdge / maxEdge;
+		return clamp(mul, 0.70, 1.35);
+	}
 	ui void DrawPB2022WeaponPickupOverlay()
 	{
 		if (!playeringame[consoleplayer]) { return; }
@@ -260,11 +272,12 @@ class PB_EventHandler : EventHandler
 		let cvOffX  = CVar.GetCVar("pb_weaponhud_x", p);
 		let cvOffY  = CVar.GetCVar("pb_weaponhud_y", p);
 		double alpha = cvAlpha ? clamp(cvAlpha.GetFloat(), 0.0, 1.0) : 1.0;
-		double scale = cvScale ? max(0.1, cvScale.GetFloat()) : 1.0;
+		double userScale = cvScale ? max(0.1, cvScale.GetFloat()) : 1.0;
 		int offX = cvOffX ? cvOffX.GetInt() : 0;
 		int offY = cvOffY ? cvOffY.GetInt() : 0;
 
 		Vector2 texSize = TexMan.GetScaledSize(iconID);
+		double scale = userScale * PB2022WeaponHudIconSizeMul(texSize);
 		double drawW = texSize.x * scale;
 		double drawH = texSize.y * scale;
 		double drawX = (Screen.GetWidth() - (drawW / 2.0)) + offX;
@@ -346,11 +359,12 @@ class PB_EventHandler : EventHandler
 		let cvOffX  = CVar.GetCVar("pb_weaponmodehud_x", p);
 		let cvOffY  = CVar.GetCVar("pb_weaponmodehud_y", p);
 		double alpha = cvAlpha ? clamp(cvAlpha.GetFloat(), 0.0, 1.0) : 1.0;
-		double scale = (cvScale ? max(0.1, cvScale.GetFloat()) : 1.0) * modeScaleAdjust;
+		double userScale = (cvScale ? max(0.1, cvScale.GetFloat()) : 1.0) * modeScaleAdjust;
 		int offX = cvOffX ? cvOffX.GetInt() : 0;
 		int offY = cvOffY ? cvOffY.GetInt() : 0;
 
 		Vector2 texSize = TexMan.GetScaledSize(modeIcon);
+		double scale = userScale * PB2022WeaponHudIconSizeMul(texSize);
 		double drawW = texSize.x * scale;
 		double drawH = texSize.y * scale;
 		double drawX = (Screen.GetWidth() - (drawW / 2.0)) + offX + modeOffX;

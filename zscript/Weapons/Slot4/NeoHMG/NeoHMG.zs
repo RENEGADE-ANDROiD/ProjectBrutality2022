@@ -471,7 +471,7 @@ class PB_NeoHMG : PB_WeaponBase
 		}
 
 		bool noBarrels = Owner.CountInv("GrabbedBarrel") < 1
-			&& Owner.CountInv("GrabbedFlameBarrel") < 1
+			&& Owner.CountInv("GrabbedBurningBarrel") < 1
 			&& Owner.CountInv("GrabbedIceBarrel") < 1;
 
 		if ((pi.cmd.buttons & BT_ALTATTACK) && shieldReady && Owner.CountInv("HMGShield") > 0 && noBarrels)
@@ -552,10 +552,10 @@ class PB_NeoHMG : PB_WeaponBase
 			TNT1 A 0 A_TakeInventory("PB_LockScreenTilt", 1);
 			TNT1 A 0 A_TakeInventory("HasBarrel", 1);
 			TNT1 A 0 A_TakeInventory("HasIceBarrel", 1);
-			TNT1 A 0 A_TakeInventory("HasFlameBarrel", 1);
+			TNT1 A 0 A_TakeInventory("HasBurningBarrel", 1);
 			TNT1 A 0 A_TakeInventory("GrabbedBarrel", 1);
 			TNT1 A 0 A_TakeInventory("GrabbedIceBarrel", 1);
-			TNT1 A 0 A_TakeInventory("GrabbedFlameBarrel", 1);
+			TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel", 1);
 			TNT1 A 0 A_StopSound(1);
 			TNT1 A 0 A_StopSound(5);
 			TNT1 A 0 A_StopSound(6);
@@ -596,7 +596,7 @@ class PB_NeoHMG : PB_WeaponBase
 		Deselect:
 			TNT1 A 0 { invoker.ClearShieldSideEffects(); }
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel");
+			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel");
 			HG0D ABCD 1;
 			TNT1 A 0 A_Lower(120);
@@ -635,7 +635,7 @@ class PB_NeoHMG : PB_WeaponBase
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "ThrowFlameBarrel");
+			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 			TNT1 A 0 PB_CheckBarrelThrow1();
 			TNT1 A 0
@@ -670,7 +670,7 @@ class PB_NeoHMG : PB_WeaponBase
 			Goto Ready3;
 		AltFire:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel");
+			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel");
 			Goto Ready3;
 		HMGShieldBash:
@@ -765,7 +765,7 @@ class PB_NeoHMG : PB_WeaponBase
 				A_Weaponoffset(0, 32);
 			}
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "IdleBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "IdleFlameBarrel");
+			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel");
 			TNT1 A 0 A_JumpIfInventory("HMGChamberAmmo", neohmgFullAmmo, "Ready3");
 			TNT1 A 0 A_JumpIfInventory("NewClip", 1, "StartReloadHMG");

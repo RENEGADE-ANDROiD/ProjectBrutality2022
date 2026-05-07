@@ -1,0 +1,165 @@
+// Gearbox menus — duplicate of the block at the end of MENUDEF.txt (UZDoom has no MENUDEF #include; edit both or only MENUDEF).
+
+OptionMenu gb_Options
+{
+	Title "$PB_WEAPON_SELECTOR_MENU"
+
+	StaticText  "$GB_SELECTOR_HINT", black
+	StaticText  ""
+	Option      "$GB_VIEW_TYPE", gb_view_type, gb_ViewTypeValues
+
+	StaticText  ""
+	StaticText  "$GB_KEYSECTION", 1
+	Control     "$GB_TOGGLE_WEAPON_MENU"    , "+PBWeaponWheel"
+	Control     "$GB_TOGGLE_INVENTORY_MENU" , "+gb_toggle_inventory_menu"
+	Control     "$GB_PREV_WEAPON"           , "gb_prev_weapon"
+	Control     "$GB_ROTATE_WEAPON_PRIORITY", "gb_rotate_weapon_priority"
+	Control     "$GB_ROTATE_WEAPON_SLOT"    , "gb_rotate_weapon_slot"
+
+	StaticText  ""
+	Submenu     "$GB_BEHAVIOR_OPTIONS" , gb_BehaviorOptions
+	Submenu     "$GB_UI_OPTIONS"       , gb_UiOptions
+	Submenu     "$GB_WHEEL_OPTIONS"    , gb_WheelOptions
+	Submenu     "$GB_BLOCKS_OPTIONS"   , gb_BlocksOptions
+	Submenu     "$GB_TEXT_OPTIONS"     , gb_TextOptions
+	Submenu     "$GB_ADVANCED_OPTIONS" , gb_AdvancedOptions
+	Submenu     "$GB_GZDOOM_OPTIONS"   , gb_GZDoomOptions
+
+	StaticText  ""
+	SafeCommand "$GB_RESET"              , gb_reset              , "$GB_RESET_PROMPT"
+	SafeCommand "$GB_RESET_CUSTOM_ORDER" , gb_reset_custom_order , "$GB_RESET_CUSTOM_ORDER_PROMPT"
+	StaticText  "$GB_RESET_CUSTOM_ORDER_NOTE", black
+}
+
+OptionMenu gb_BehaviorOptions
+{
+	Title "$GB_BEHAVIOR_OPTIONS_TITLE"
+
+	Option      "$GB_OPEN_ON_PREV_NEXT"        , gb_open_on_scroll           , OnOff
+
+	StaticText  ""
+	Option      "$GB_OPEN_ON_SLOT"             , gb_open_on_slot             , OnOff
+	Option      "$GB_REVERSE_SLOT_CYCLE_ORDER" , gb_reverse_slot_cycle_order , OnOff
+	Option      "$GB_SELECT_FIRST_SLOT_WEAPON" , gb_select_first_slot_weapon , OnOff
+	Option      "$GB_NO_MENU_IF_ONE"           , gb_no_menu_if_one           , OnOff
+
+	StaticText  ""
+	Option      "$GB_SELECT_ON_KEY_UP"         , gb_select_on_key_up         , OnOff
+	Option      "$GB_FREEZE_TIME"              , gb_time_freeze              , gb_FreezeValues
+	Option      "$GB_ENABLE_ON_AUTOMAP"        , gb_on_automap               , OnOff
+	Option      "$GB_LOCK_POSITION"            , gb_lock_positions           , OnOff
+	Option      "$GB_FROZEN_CAN_OPEN"          , gb_frozen_can_open          , OnOff
+}
+
+OptionMenu gb_GZDoomOptions
+{
+	Title "$GB_GZDOOM_OPTIONS_TITLE"
+
+	StaticText ""
+	Option     "$SCALEMNU_HUDASPECT", hud_AspectScale, OnOff
+	StaticText "$GB_ASPECT_SCALE_NOTE", black
+}
+
+OptionMenu gb_UiOptions
+{
+	Title "$GB_UI_OPTIONS_TITLE"
+
+	StaticText  ""
+	ColorPicker "$GB_COLOR"     , gb_color
+	Command     "$GB_PLAYER_COLOR", gb_copy_player_color
+
+	StaticText  ""
+	Option      "$GB_SHOW_TAGS" , gb_show_tags      , OnOff
+
+	StaticText  ""
+	Option      "$GB_DIM"       , gb_enable_dim     , OnOff
+	ColorPicker "$GB_DIM_COLOR" , gb_dim_color
+	Option      "$GB_BLUR"      , gb_enable_blur    , OnOff
+
+	StaticText  ""
+	Option      "$GB_SOUND"     , gb_enable_sounds  , OnOff
+
+	StaticText  ""
+	Option      "$GB_FONT"        , gb_font , gb_FontValues
+	TextField   "$GB_FONT_CUSTOM" , gb_font
+}
+
+OptionMenu gb_WheelOptions
+{
+	Title "$GB_WHEEL_OPTIONS_TITLE"
+
+	StaticText  ""
+	Slider      "$GB_WHEEL_X"     , gb_wheel_position , -1.5, 1.5, 0.1, 1
+	Slider      "$GB_WHEEL_SCALE" , gb_wheel_scale    , 0.1, 2, 0.1, 1
+	Option      "$GB_WHEEL_TINT"  , gb_wheel_tint     , OnOff
+
+	StaticText  ""
+	Option      "$GB_MOUSE_IN_WHEEL"    , gb_mouse_in_wheel   , OnOff
+	Slider      "$GB_MULTIWHEEL_LIMIT"  , gb_multiwheel_limit , 3, 100, 1, 0
+
+	StaticText  ""
+	StaticText  "$GB_MOUSE_SENSITIVITY", 1
+	Slider      "$GB_X", gb_mouse_sensitivity_x, 0.1, 5, 0.1, 1
+	Slider      "$GB_Y", gb_mouse_sensitivity_y, 0.1, 5, 0.1, 1
+}
+
+OptionMenu gb_BlocksOptions
+{
+	Title "$GB_BLOCKS_OPTIONS_TITLE"
+
+	StaticText ""
+	Slider     "$GB_SCALE"    , gb_scale, 1, 8, 1, 0
+
+	StaticText ""
+	StaticText "$GB_POSITION", 1
+	Slider     "$GB_X" , gb_blocks_position_x, 0.0, 1.0, 0.01, 2
+	Slider     "$GB_Y" , gb_blocks_position_y, 0.0, 1.0, 0.01, 2
+}
+
+OptionMenu gb_TextOptions
+{
+	Title "$GB_TEXT_OPTIONS_TITLE"
+
+	StaticText ""
+	Slider     "$GB_SCALE" , gb_text_scale, 1, 8, 1, 0
+
+	StaticText ""
+	StaticText "$GB_POSITION", 1
+	Slider     "$GB_X"          , gb_text_position_x     , 0.0, 1.0, 0.01, 2
+	Slider     "$GB_Y"          , gb_text_position_y     , 0.0, 1.0, 0.01, 2
+	Slider     "$GB_Y_BOUNDARY" , gb_text_position_y_max , 0.0, 1.0, 0.01, 2
+
+	StaticText ""
+	Option "$GB_TEXT_USUAL_COLOR"    , gb_text_usual_color    , TextColors
+	Option "$GB_TEXT_SELECTED_COLOR" , gb_text_selected_color , TextColors
+}
+
+OptionMenu gb_AdvancedOptions
+{
+	Title "$GB_ADVANCED_OPTIONS_TITLE"
+
+	StaticText ""
+	Option     "$GB_VM_ABORT_INFO_ENABLED", gb_zabor_enabled, OnOff
+}
+
+OptionValue gb_ViewTypeValues
+{
+	1, "$GB_WHEEL_VIEW"
+	0, "$GB_BLOCKY_VIEW"
+	2, "$GB_TEXT_VIEW"
+}
+
+OptionValue gb_FreezeValues
+{
+	0, "$OPTVAL_OFF"
+	1, "$GB_LEVEL_AND_PLAYER"
+	2, "$GB_PLAYER"
+}
+
+OptionString gb_FontValues
+{
+	"NewSmallFont" , "$GB_NEW_SMALL_FONT"
+	"SmallFont"    , "$GB_OLD_SMALL_FONT"
+	"ConsoleFont"  , "$GB_CONSOLE_FONT"
+	"BigFont"      , "$GB_BIG_FONT"
+}

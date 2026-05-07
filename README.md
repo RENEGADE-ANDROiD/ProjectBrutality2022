@@ -6,6 +6,8 @@ The project is derived from the long-running [Project Brutality](https://github.
 
 For the latest upstream mainline mod, see [pa1nki113r/Project_Brutality](https://github.com/pa1nki113r/Project_Brutality). This repository is the Project Brutality 2022 snapshot and tooling described here.
 
+**Curated change notes** for this tree live in **`CHANGELOG.md`** (Keep a Changelog format, including an **`[Unreleased]`** section for ongoing work—e.g. weapon selection wheel behavior, PBX weapon HUD icon sizing, barrel set from Project Brutality Staging, kill streak reward variety, and engine compatibility fixes). Use **`git log`** for full commit history.
+
 > **Engine:** This release targets **UZDoom**, the actively maintained fork in the GZDoom family. Please use a current UZDoom build (see Requirements). Older or unrelated source ports are not supported.
 
 ## Requirements
@@ -146,7 +148,9 @@ Modders: `PLAYER.dec` is the source of truth for slotted weapons. The disabled *
 ### Equipment
 
 - Freeze Nade  
-- Hook  
+- Hook
+- Molotov
+- StunGrenade
 - Void Grenade  
 - Freezebot  
 - ElecPod  
@@ -231,14 +235,14 @@ This build layers several community sources into Project Brutality’s own syste
 | **Brutal Doom — *El Diablo* Edition** | **Extra first-person executions / finisher** art and pools (`eld_eld_*` and related paths under `SPRITES/MONSTERS/fatalitys/…`, e.g. zombieman, sarge, imp, caco, revenant, arch-vile, nobles, Hellduke). Wired through **Glory Kills** / `actors/Player/NEWPLAYE.dec`—not a standalone El Diablo TC. |
 | **Project Brutality Legacy (lineage)** | **Execution routing** and third-person **“legacy”** handoff (`GoExecution`, `Death.ExeCution` / `Death.ExeCution1` / `SpecialFatality` style pivots) **folded** into core monster DECORATE so older-style triggers still work with current PB. |
 | **Brutal Pack (e.g. V10 class packs)** | Used in development as a **selective art / finisher reference** when porting assets; **this repo does not ship the Brutal Pack in full**—only what was adapted into PB 2022’s class names and Glory Kill / weapon flows. |
-| **Brutal Doom 22 (BDv22)** | Folded gore: separate `BDv22_*` actors, `SPRITES/BDv22/`, and event handlers. Enabled by **`pb_enhanced_brutality_2022`**. Credit **Brutal Doom 22** as a project; observe its license if you redistribute those lumps. |
+| **Brutal Doom 22 (BDv22)** | Folded gore: separate `BDv22_*` actors, `SPRITES/GORE/BDv22/`, and event handlers. Enabled by **`pb_enhanced_brutality_2022`**. Credit **Brutal Doom 22** as a project; observe its license if you redistribute those lumps. |
 | **Brutal Pack V10 (BPv10) gore** | Folded gore add-on (`BPv10_*` actors, `actors/Gore/BPv10Gore/`, `SPRITES/GORE/`). Enabled by **`pb_enhanced_brutality_2022`**. Sprites credited to **AWEZ**; observe Brutal Pack licensing if you redistribute. |
 
 ## Credits
 
 Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki113r/Project_Brutality) and the work of that team and their contributors. It also includes Glory Kills and Monster Pack-line content, third-party systems such as **Nash Gore** (Nash Muhandes, modified here), and many named authors in **`CREDITS.txt`** and **`DetailedCredits.txt`**.
 
-**Recent additions in this line:** **2022 Enhanced Brootality** folded **Brutal Doom 22 (BDv22)** gore (`actors/Gore/BDv22Gore/`, `zscript/Gore/BDv22Gore*.zc`, `SPRITES/BDv22/`) and **Brutal Pack V10** gore (`actors/Gore/BPv10Gore/`, `SPRITES/GORE/`) behind `pb_enhanced_brutality_2022`; **first-person and expanded executions** with art lineage from the **Brutal Doom *El Diablo* Edition** family and related packs (under `SPRITES/MONSTERS/fatalitys/eld_eld_*` and similar); **Glory Kill equipment launcher** first-person sprites (**`SPRITES/ShoulderCannon/`**) and **Eternal fuel-HUD** glyphs aligned with the **PB_Staging** Glory Kills line; **Explosive Movement** extended to **Mastermind's Chaingun** tracers (`pb_plasma_wallclimb`); **Realm667**-sourced and **Realm667-style** community monsters and props (see in-file and **DetailedCredits**); **Project Brutality Legacy**-style **execution / stagger handoff** behavior merged into the main actor set; and **Brutal Pack**-sourced *fragments* only where they were reauthored for PB 2022 (not the pack as a whole). See the table in **Sources and important third-party lineage** above.
+**Recent additions in this line:** **2022 Enhanced Brootality** folded **Brutal Doom 22 (BDv22)** gore (`actors/Gore/BDv22Gore/`, `zscript/Gore/BDv22Gore*.zc`, `SPRITES/GORE/BDv22/`) and **Brutal Pack V10** gore (`actors/Gore/BPv10Gore/`, `SPRITES/GORE/`) behind `pb_enhanced_brutality_2022`; **first-person and expanded executions** with art lineage from the **Brutal Doom *El Diablo* Edition** family and related packs (under `SPRITES/MONSTERS/fatalitys/eld_eld_*` and similar); **Glory Kill equipment launcher** first-person sprites (**`SPRITES/WEAPONS/GloryKillLauncher/ShoulderCannon/`**) and **Eternal fuel-HUD** glyphs aligned with the **PB_Staging** Glory Kills line; **Explosive Movement** extended to **Mastermind's Chaingun** tracers (`pb_plasma_wallclimb`); **Realm667**-sourced and **Realm667-style** community monsters and props (see in-file and **DetailedCredits**); **Project Brutality Legacy**-style **execution / stagger handoff** behavior merged into the main actor set; and **Brutal Pack**-sourced *fragments* only where they were reauthored for PB 2022 (not the pack as a whole). See the table in **Sources and important third-party lineage** above.
 
 Credit to **BeefRice** and **Jaih1r0** for PBX HUD elements and many weapon improvements and systems. Thanks to **HUNG** for the **Shield Saw** (**GK_ShieldSaw**) behavior folded into this build (quick melee + recall).
 

@@ -7,6 +7,7 @@ class PB_KillstreakHandler : EventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
+		PB_KillstreakMessageHandler.KS_ClearPendingAll();
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
 			currentStreak[i] = 0;
@@ -41,16 +42,13 @@ class PB_KillstreakHandler : EventHandler
 		return c == null || c.GetBool();
 	}
 
-	// 0..100 -> 0(low) / 1(mid) / 2(high)
-	static int PB_AnnouncerBucket(PlayerPawn p)
+	// 0.0–1.0 from user cvar pb_ks_announcer_volume (read every play; no restart).
+	static double PB_AnnouncerVolumeMul(PlayerPawn p)
 	{
-		if (!p || !p.player) return 2;
+		if (!p || !p.player) return 1.;
 		let c = CVar.GetCVar("pb_ks_announcer_volume", p.player);
 		int v = c ? c.GetInt() : 100;
-		if (v <= 0) return -1;
-		if (v <= 33) return 0;
-		if (v <= 66) return 1;
-		return 2;
+		return clamp(v, 0, 100) / 100.;
 	}
 
 	override void WorldThingDied(WorldEvent e)
@@ -84,13 +82,23 @@ class PB_KillstreakHandler : EventHandler
 		currentStreak[pnum]++;
 		int st = currentStreak[pnum];
 		String snd = PBStreakLine(killer, st);
-		if (snd != "") killer.A_StartSound(snd, CHAN_AUTO);
+		// One announcer line at a time on CHAN_7 (CHAN_AUTO stacks voices every kill; no CHAN_8 in this engine line).
+		if (snd != "")
+		{
+			double avol = PB_AnnouncerVolumeMul(killer);
+			if (!killer.IsActorPlayingSound(CHAN_7))
+				killer.A_StartSound(snd, CHAN_7, 0, avol);
+			else
+				PB_ShowAnnouncerTextFallback(killer, st);
+		}
 		if (st % 5 == 0) pendingRewardStreak[pnum] = st;
 	}
 
 	void ClearKSTokens(Actor who)
 	{
 		if (!who) return;
+		if (who is "PlayerPawn")
+			PB_KillstreakMessageHandler.KS_ClearPendingForPlayer(PlayerPawn(who));
 		Inventory t;
 		while ((t = who.FindInventory("PB_KillstreakMode"))) t.Destroy();
 		while ((t = who.FindInventory("PB_KillstreakFlare"))) t.Destroy();
@@ -110,16 +118,58 @@ class PB_KillstreakHandler : EventHandler
 	String PBStreakLine(PlayerPawn p, int count)
 	{
 		if (!PB_AnnouncerEnabled(p)) return "";
-		int bucket = PB_AnnouncerBucket(p);
-		if (bucket < 0) return "";
-		// 8 short hooks in 3 volume tiers.
+		if (!p || !p.player) return "";
+		let c = CVar.GetCVar("pb_ks_announcer_volume", p.player);
+		int v = c ? c.GetInt() : 100;
+		if (v <= 0) return "";
 		if (count < 1) return "";
-		return String.Format("pb_ks/ann%d_v%d", (count - 1) % 8, bucket);
+		// Loudness from slider via A_StartSound volume; use _v2 as 100% SNDINFO reference.
+		return String.Format("pb_ks/ann%d_v2", (count - 1) % 8);
+	}
+
+	// Matches pb_ks/ann0_v* … ann7_v* in SNDINFO (voice line queued but channel busy).
+	static String PBAnnouncerHookCaption(int killCount)
+	{
+		if (killCount < 1) return "";
+		switch ((killCount - 1) % 8)
+		{
+		case 0: return "First blood!";
+		case 1: return "Double kill!";
+		case 2: return "Triple kill!";
+		case 3: return "Multikill!";
+		case 4: return "Unstoppable!";
+		case 5: return "Rampage!";
+		case 6: return "Wicked sick!";
+		case 7: return "Godlike!";
+		}
+		return "";
+	}
+
+	void PB_ShowAnnouncerTextFallback(PlayerPawn plr, int st)
+	{
+		String cap = PBAnnouncerHookCaption(st);
+		if (cap == "") return;
+		if (!PB_KillstreakMessageHandler.PB_BigmsgOn())
+		{
+			plr.A_Print("Kill streak active!", 2.0);
+			plr.A_Print(cap, 2.0);
+			return;
+		}
+		int pn = plr.PlayerNumber();
+		PB_KillstreakMessageHandler.PB_KsPlainMsg(
+			pn, "BIGFONT2", "Kill streak active!", (240, 110), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
+			(0.2, 2.5, 0.4), 0, 13, BaseStatusBar.HUDMSGLayer_OverHUD);
+		PB_KillstreakMessageHandler.PB_KsPlainMsg(
+			pn, "BIGFONT2", cap, (240, 140), (480, 360), -1, (0, 0), Font.CR_WHITE,
+			(0.2, 2.5, 0.4), 0, 14, BaseStatusBar.HUDMSGLayer_OverHUD);
 	}
 
 	void GiveKSReward(PlayerPawn plr, int count)
 	{
 		plr.GiveInventory("PB_KSFreeze", 1);
+		String rewardClass, rewardMsg;
+		PB_KillStreakPowerUp.PBRollReward(plr, rewardClass, rewardMsg);
+		PB_KillstreakMessageHandler.KS_SetPendingReward(plr, rewardClass, rewardMsg);
 		plr.GiveInventory("PB_KillStreakPowerUp", 1);
 		if (!PB_KillstreakMessageHandler.PB_BigmsgOn())
 		{
@@ -130,7 +180,7 @@ class PB_KillstreakHandler : EventHandler
 			plr.PlayerNumber(), "BIGFONT2", PBStreakTitle(count), (240, 120), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
 			(0.2, 3, 0.5), 0.5, 2.0, 1.0, 0, 11, BaseStatusBar.HUDMSGLayer_OverHUD);
 		PB_KillstreakMessageHandler.PB_KsPlainMsg(
-			plr.PlayerNumber(), "CONFONT", "-  Kill streak reward!  -", (240, 140), (480, 360), -1, (0, 0), Font.CR_GOLD,
+			plr.PlayerNumber(), "BIGFONT2", rewardMsg, (240, 154), (480, 360), -1, (0, 0), Font.CR_WHITE,
 			(0.2, 3, 0.5), 0, 12, BaseStatusBar.HUDMSGLayer_OverHUD);
 	}
 

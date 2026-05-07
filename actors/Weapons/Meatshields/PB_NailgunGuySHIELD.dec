@@ -199,7 +199,7 @@ ACTOR PB_NailgunGuyShield : PB_Weapon
 		stop
 		
  	Spawn:
-		8876 A -1
+		TNT1 A -1
 		Stop
 	}
 }

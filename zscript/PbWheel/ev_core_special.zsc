@@ -31,6 +31,21 @@ Class PB_SpecialWheelHandler : EventHandler
 	bool noWheel;
 	
 	string selectedWeapon;
+	bool weaponPickWheel;
+	int weaponPickWheel_LastEmptyMsgMapTime;
+
+	// Weapon pick wheel: one outer slice per occupied slot, inner ring for multi-weapon slots.
+	array<int> wpick_SlotNums;
+	array<int> wpick_SlotStart;
+	array<int> wpick_SlotCount;
+	array<string > wpick_WeaponFlat;
+	int wpick_OuterSel;
+	int wpick_InnerSel;
+	bool wpick_MouseIsInner;
+	int wpick_PrevSelTrack;
+
+	// PBWeaponSpecial + equipment wheels: draw/orbit vs legacy (128px ring).
+	double specialWheelLayoutScale;
 	
 	enum E_WeaponSortMode
 	{
@@ -431,6 +446,16 @@ Class PB_SpecialWheelHandler : EventHandler
 		wheelIsOpen = false;
 		wheelSort = false;
 		noWheel = false;
+		weaponPickWheel = false;
+		weaponPickWheel_LastEmptyMsgMapTime = -1000000000;
+		wpick_SlotNums.Clear();
+		wpick_SlotStart.Clear();
+		wpick_SlotCount.Clear();
+		wpick_WeaponFlat.Clear();
+		wpick_OuterSel = 0;
+		wpick_InnerSel = 0;
+		wpick_MouseIsInner = false;
+		wpick_PrevSelTrack = -1;
 		wheelShow.Clear();
 		actualList.Clear();
 		fakeMouse = realMouse = (0, 0);
@@ -439,6 +464,7 @@ Class PB_SpecialWheelHandler : EventHandler
 		oldPTics.Clear();
 		oldPUTics.Clear();
 		Level.setFrozen(false);
+		specialWheelLayoutScale = 0.55;
 		if (playeringame[consoleplayer])
 		{
 			let cv = CVar.GetCVar("py_weaponwheel_musicfade", players[consoleplayer]);
@@ -488,13 +514,14 @@ Class PB_SpecialWheelHandler : EventHandler
 		}
 		
 		if(pmo.FindInventory("CantWeaponSpecial") || 
-			players[consoleplayer].readyweapon.InStateSequence(players[consoleplayer].readyweapon.curstate, players[consoleplayer].readyweapon.resolvestate("Deselect")))
+			(!weaponPickWheel && players[consoleplayer].readyweapon.InStateSequence(players[consoleplayer].readyweapon.curstate, players[consoleplayer].readyweapon.resolvestate("Deselect"))))
 
 		{
 			oldPitch = pmo.pitch;
 			oldYaw = pmo.angle;
 			wheelShow.Clear();
 			wheelIsOpen = false;
+			weaponPickWheel = false;
 			noWheel = true;
 			return;
 		}
@@ -534,31 +561,46 @@ Class PB_SpecialWheelHandler : EventHandler
 				players[consoleplayer].viewz = pmo.pos.z+players[consoleplayer].viewheight;
 				players[consoleplayer].bob = 0;
 			}
-			if(oldSelection!=currentSelection)
+			if (!weaponPickWheel)
 			{
-				S_StartSound("menu/change",5);
+				if(oldSelection!=currentSelection)
+				{
+					S_StartSound("menu/change",5);
+				}
 			}
 			
 			if(!wheelSort)
 			{
-				for(int i = 0;i<wheelSpecials.Size();i++)
+				if (weaponPickWheel)
 				{
-					bool screwed = false;
-					
-					if((wheelSpecials[i].hidden))
+					wheelShow.Clear();
+					for (int i = 0; i < wheelSpecials.Size(); i++)
 					{
-						 screwed = true;
-					}
-					if(!screwed)
-					{
-						wheelShow.Push(i);
+						if (!wheelSpecials[i].hidden)
+							wheelShow.Push(i);
 					}
 				}
-				
+				else
+				{
+					for(int i = 0;i<wheelSpecials.Size();i++)
+					{
+						bool screwed = false;
+						
+						if((wheelSpecials[i].hidden))
+						{
+							 screwed = true;
+						}
+						if(!screwed)
+						{
+							wheelShow.Push(i);
+						}
+					}
+				}
 				wheelSort = true;
 			}
 			
-			oldSelection = currentSelection;
+			if (!weaponPickWheel)
+				oldSelection = currentSelection;
 			
 			double pitchMod = 1.6;
 			double yawMod = 1.2;
@@ -567,28 +609,108 @@ Class PB_SpecialWheelHandler : EventHandler
 			
 			realMouse.x-=players[consoleplayer].original_cmd.yaw * (360./65536.)*yawMod;
 			realMouse.y-=players[consoleplayer].original_cmd.pitch * (360./65536.)*pitchMod;
-			if(point_distance(0,0,realMouse.x,realMouse.y)>6000)
+			double whSc = specialWheelLayoutScale > 0 ? specialWheelLayoutScale : 0.55;
+			int outerSq = int(6000 * whSc * whSc);
+			int innerSq = int(5900 * whSc * whSc);
+			int outerR   = int(80 * whSc);
+			int innerR   = int(78 * whSc);
+			if (weaponPickWheel)
 			{
-				int angler = point_direction(0,0,realMouse.x,realMouse.y);
-				realMouse = (cos(angler)*80,sin(angler)*80);
+				int wpOuterSq = int(11000 * whSc * whSc);
+				int wpMaxR = int(96 * whSc);
+				if(point_distance(0,0,realMouse.x,realMouse.y) > wpOuterSq)
+				{
+					int angler = point_direction(0,0,realMouse.x,realMouse.y);
+					realMouse = (cos(angler)*wpMaxR,sin(angler)*wpMaxR);
+				}
+				fakeMouse.x = realMouse.x;
+				fakeMouse.y = realMouse.y;
 			}
-			fakeMouse.x = realMouse.x;
-			fakeMouse.y = realMouse.y;
-			if(point_distance(0,0,fakeMouse.x,fakeMouse.y)<5900)
+			else
 			{
-				int angler = point_direction(0,0,fakeMouse.x,fakeMouse.y);
-				fakeMouse = (cos(angler)*78,sin(angler)*78);
+				if(point_distance(0,0,realMouse.x,realMouse.y) > outerSq)
+				{
+					int angler = point_direction(0,0,realMouse.x,realMouse.y);
+					realMouse = (cos(angler)*outerR,sin(angler)*outerR);
+				}
+				fakeMouse.x = realMouse.x;
+				fakeMouse.y = realMouse.y;
+				if(point_distance(0,0,fakeMouse.x,fakeMouse.y) < innerSq)
+				{
+					int angler = point_direction(0,0,fakeMouse.x,fakeMouse.y);
+					fakeMouse = (cos(angler)*innerR,sin(angler)*innerR);
+				}
 			}
 			int chooseAngle = point_direction(0,0,fakeMouse.x,-fakeMouse.y)+180;
-			int averageAngles = 360/max(1,wheelShow.Size());
-			int halfAngle = averageAngles/2;
-			for(int i = 0;i<wheelShow.Size();i++)
+
+			if (weaponPickWheel && wpick_SlotNums.Size() > 0)
 			{
-				int pointyAngle = ((double(i+1)/wheelShow.Size())*360);
-				if(abs(Actor.DeltaAngle(chooseAngle,pointyAngle))<halfAngle)
+				int dist2 = point_distance(0,0,fakeMouse.x,fakeMouse.y);
+				int innerRingMax2 = int(3400 * whSc * whSc);
+				int nslots = wpick_SlotNums.Size();
+
+				if (dist2 <= innerRingMax2)
 				{
-					currentSelection=i;
-					break;
+					wpick_MouseIsInner = true;
+					int cnt = wpick_SlotCount[wpick_OuterSel];
+					if (cnt <= 1)
+					{
+						wpick_InnerSel = 0;
+					}
+					else
+					{
+						int halfA = 360 / max(1, cnt) / 2;
+						for (int i = 0; i < cnt; i++)
+						{
+							int pointyAngle = ((double(i+1)/cnt)*360);
+							if (abs(Actor.DeltaAngle(chooseAngle, pointyAngle)) < halfA)
+							{
+								wpick_InnerSel = i;
+								break;
+							}
+						}
+					}
+				}
+				else
+				{
+					wpick_MouseIsInner = false;
+					wpick_InnerSel = 0;
+					int halfA = 360 / max(1, nslots) / 2;
+					for (int i = 0; i < nslots; i++)
+					{
+						int pointyAngle = ((double(i+1)/nslots)*360);
+						if (abs(Actor.DeltaAngle(chooseAngle, pointyAngle)) < halfA)
+						{
+							wpick_OuterSel = i;
+							break;
+						}
+					}
+				}
+				if (wpick_OuterSel < 0)
+					wpick_OuterSel = 0;
+				if (wpick_OuterSel >= nslots)
+					wpick_OuterSel = nslots - 1;
+				currentSelection = wpick_OuterSel;
+
+				int track = wpick_OuterSel * 16 + wpick_InnerSel + (wpick_MouseIsInner ? 4096 : 0);
+				if (track != wpick_PrevSelTrack)
+				{
+					S_StartSound("menu/change", 5);
+					wpick_PrevSelTrack = track;
+				}
+			}
+			else
+			{
+				int averageAngles = 360/max(1,wheelShow.Size());
+				int halfAngle = averageAngles/2;
+				for(int i = 0;i<wheelShow.Size();i++)
+				{
+					int pointyAngle = ((double(i+1)/wheelShow.Size())*360);
+					if(abs(Actor.DeltaAngle(chooseAngle,pointyAngle))<halfAngle)
+					{
+						currentSelection=i;
+						break;
+					}
 				}
 			}
 			{
@@ -1487,15 +1609,15 @@ Class PB_SpecialWheelHandler : EventHandler
 		if (specialName == "WW_FragGrenadeSelected") { return pl.CountInv("HandGrenadeAmmo") > 0; }
 		if (specialName == "WW_ProximityMineSelected") { return pl.CountInv("MineAmmo") > 0; }
 		if (specialName == "WW_StunGrenadeSelected") { return pl.CountInv("StunGrenadeAmmo") > 0; }
+		if (specialName == "WW_ShieldGrenadeSelected") { return pl.CountInv("ShieldGrenadeAmmo") > 0; }
+		if (specialName == "WW_VoidGrenadeSelected") { return pl.CountInv("VoidGrenadeAmmo") > 0; }
 		if (specialName == "WW_MolotovSelected") { return pl.CountInv("HandMolotovAmmo") > 0; }
-		if (specialName == "WW_LeechSelected") { return pl.CountInv("HasLeech") > 0; }
+		if (specialName == "WW_LeechSelected")
+			return pl.CountInv("HasLeech") > 0 || pl.CountInv("PB_DTech") >= 4;
 		if (specialName == "WW_RevGunSelected") { return pl.CountInv("MiniHellRocketAmmo") > 0; }
-		if (specialName == "GK_FlamebelchSelected" || specialName == "GK_IcebombSelected")
-		{
-			if (!playeringame[consoleplayer]) { return false; }
-			let cv = CVar.GetCVar("be_ExecutionsON", players[consoleplayer]);
-			return cv ? cv.GetBool() : false;
-		}
+		if (specialName == "WW_HookSelected")
+			return pl.CountInv("PB_HookToken") > 0 || pl.CountInv("HookAmmo") > 0
+				|| pl.CountInv("AlreadyHaveMeatHook") > 0;
 		return true;
 	}
 
@@ -1617,13 +1739,29 @@ Class PB_SpecialWheelHandler : EventHandler
 				equip_stun.iconScale = iconScale;
 				if (WheelSliceIsUsable(pl, equip_stun.specialName)) { wheelSpecials.Push(equip_stun); }
 				
+				PB_SpecialWheel_Mode equip_shield = new ("PB_SpecialWheel_Mode");
+				equip_shield.specialIcon = TexMan.CheckForTexture("SGGRA0",TexMan.Type_Any);
+				equip_shield.specialName = "WW_ShieldGrenadeSelected";
+				equip_shield.specialAlias = "Shield Grenade";
+				equip_shield.specialPriority = 4;
+				equip_shield.iconScale = iconScale;
+				if (WheelSliceIsUsable(pl, equip_shield.specialName)) { wheelSpecials.Push(equip_shield); }
+
+				PB_SpecialWheel_Mode equip_void = new ("PB_SpecialWheel_Mode");
+				equip_void.specialIcon = TexMan.CheckForTexture("VGR1A0",TexMan.Type_Any);
+				equip_void.specialName = "WW_VoidGrenadeSelected";
+				equip_void.specialAlias = "Void Grenade";
+				equip_void.specialPriority = 5;
+				equip_void.iconScale = iconScale;
+				if (WheelSliceIsUsable(pl, equip_void.specialName)) { wheelSpecials.Push(equip_void); }
+
 		let cvNoMolotov = CVar.GetCVar("pb_NoMolotov", players[consoleplayer]);
 				if (cvNoMolotov && cvNoMolotov.GetInt() == 0) {
 				PB_SpecialWheel_Mode equip_molotov = new ("PB_SpecialWheel_Mode");
 					equip_molotov.specialIcon = TexMan.CheckForTexture("MOLOV0",TexMan.Type_Any);
 					equip_molotov.specialName = "WW_MolotovSelected";
 					equip_molotov.specialAlias = "Molotov Cocktail";
-					equip_molotov.specialPriority = 4;
+					equip_molotov.specialPriority = 5;
 					equip_molotov.iconScale = iconScale;
 					if (WheelSliceIsUsable(pl, equip_molotov.specialName)) { wheelSpecials.Push(equip_molotov); }
 				}
@@ -1632,37 +1770,30 @@ Class PB_SpecialWheelHandler : EventHandler
 				equip_leech.specialIcon = TexMan.CheckForTexture("HLECHY",TexMan.Type_Any);
 				equip_leech.specialName = "WW_LeechSelected";
 				equip_leech.specialAlias = "Leech";
-				equip_leech.specialPriority = 5;
+				equip_leech.specialPriority = 6;
 				equip_leech.iconScale = iconScale;
 				if (WheelSliceIsUsable(pl, equip_leech.specialName)) { wheelSpecials.Push(equip_leech); }
 				
-				iconScale = (0.2, 0.2);
-				PB_SpecialWheel_Mode flame_belch = new ("PB_SpecialWheel_Mode");
-				flame_belch.specialIcon = TexMan.CheckForTexture("graphics/HUD/Flame_Belch.png",TexMan.Type_Any);
-				flame_belch.specialName = "GK_FlamebelchSelected";
-				flame_belch.specialAlias = "Flame Belch";
-				flame_belch.specialPriority = 6;
-				flame_belch.iconScale = iconScale;
-				if (WheelSliceIsUsable(pl, flame_belch.specialName)) { wheelSpecials.Push(flame_belch); }
-				
-				PB_SpecialWheel_Mode ice_bomb = new ("PB_SpecialWheel_Mode");
-				ice_bomb.specialIcon = TexMan.CheckForTexture("graphics/HUD/Ice_Bomb.png",TexMan.Type_Any);
-				ice_bomb.specialName = "GK_IcebombSelected";
-				ice_bomb.specialAlias = "Ice Bomb";
-				ice_bomb.specialPriority = 7;
-				ice_bomb.iconScale = iconScale;
-				if (WheelSliceIsUsable(pl, ice_bomb.specialName)) { wheelSpecials.Push(ice_bomb); }
-				
 			iconScale = (1.3, 1.3);
-			if(pl.FindInventory("HasRevGun")) {
-					PB_SpecialWheel_Mode equip_revgun = new ("PB_SpecialWheel_Mode");
-					equip_revgun.specialIcon = TexMan.CheckForTexture("HREVCY",TexMan.Type_Any);
-					equip_revgun.specialName = "WW_RevGunSelected";
-					equip_revgun.specialAlias = "Quick Launcher";
-					equip_revgun.specialPriority = 8;
-					equip_revgun.iconScale = iconScale;
-					if (WheelSliceIsUsable(pl, equip_revgun.specialName)) { wheelSpecials.Push(equip_revgun); }
-				}
+				PB_SpecialWheel_Mode equip_revgun = new ("PB_SpecialWheel_Mode");
+				equip_revgun.specialIcon = TexMan.CheckForTexture("HREVCY",TexMan.Type_Any);
+				equip_revgun.specialName = "WW_RevGunSelected";
+				equip_revgun.specialAlias = "Quick Launcher";
+				equip_revgun.specialPriority = 8;
+				equip_revgun.iconScale = iconScale;
+				if (WheelSliceIsUsable(pl, equip_revgun.specialName)) { wheelSpecials.Push(equip_revgun); }
+				
+				PB_SpecialWheel_Mode equip_hook = new ("PB_SpecialWheel_Mode");
+				TextureID hookIcon = TexMan.CheckForTexture("graphics/Equipments/hook.png", TexMan.Type_Any);
+				if (!hookIcon.isValid()) { hookIcon = TexMan.CheckForTexture("H00KA0", TexMan.Type_Any); }
+				if (!hookIcon.isValid()) { hookIcon = TexMan.CheckForTexture("OCLWA0", TexMan.Type_Any); }
+				if (!hookIcon.isValid()) { hookIcon = crowbarTex; }
+				equip_hook.specialIcon = hookIcon;
+				equip_hook.specialName = "WW_HookSelected";
+				equip_hook.specialAlias = "Meat Hook";
+				equip_hook.specialPriority = 9;
+				equip_hook.iconScale = iconScale;
+				if (WheelSliceIsUsable(pl, equip_hook.specialName)) { wheelSpecials.Push(equip_hook); }
 				
 				if (wheelSpecials.Size() < 1)
 				{
@@ -1677,12 +1808,67 @@ Class PB_SpecialWheelHandler : EventHandler
 	{
 		if (!e) return;
 		if (!playeringame[consoleplayer]) return;
+
+		if (e.name == 'PBWeaponWheelOff')
+		{
+			let pmo = players[consoleplayer].mo;
+			if (pmo && weaponPickWheel && !noWheel && wheelIsOpen && wheelShow.Size() > 0
+				&& players[consoleplayer].ReadyWeapon
+				&& players[consoleplayer].ReadyWeapon.GetClassName() == selectedWeapon)
+			{
+				int oi = wpick_OuterSel;
+				if (oi >= 0 && oi < wpick_SlotNums.Size())
+				{
+					int st = wpick_SlotStart[oi];
+					int cnt = wpick_SlotCount[oi];
+					int ii = wpick_InnerSel;
+					if (ii < 0) ii = 0;
+					if (ii >= cnt) ii = cnt - 1;
+					String cn = wpick_WeaponFlat[st + ii];
+					Class<Weapon> wcls = cn;
+					if (wcls)
+					{
+						let wi = Weapon(pmo.FindInventory(wcls));
+						if (wi)
+							players[consoleplayer].PendingWeapon = wi;
+					}
+				}
+				S_StartSound("menu/choose", 5);
+			}
+			weaponPickWheel = false;
+			if (pmo)
+				pmo.A_TakeInventory("PlayerWheelOpen");
+			wheelSort = false;
+			wheelIsOpen = false;
+			return;
+		}
+
 		let pmo = players[consoleplayer].mo;
 		if (!pmo) return;
+		if (e.name == 'PBWeaponWheelOn' && !players[consoleplayer].ReadyWeapon)
+			weaponPickWheel_HealReadyWeaponIfNeeded(PlayerPawn(pmo));
 		if (players[consoleplayer].ReadyWeapon == NULL) 
          {
              return;
          }
+
+		if (e.name == 'PBWeaponWheelOn')
+		{
+			if (pmo.FindInventory("CantWeaponSpecial"))
+			{
+				wheelShow.Clear();
+				wheelIsOpen = false;
+				weaponPickWheel = false;
+				noWheel = true;
+				return;
+			}
+			noWheel = false;
+			if (wheelIsOpen)
+				return;
+			specialWheel_WeaponPick(pmo);
+			return;
+		}
+
 			if(e.name == 'PBEquipSpecialOn')
 		{
 
@@ -1690,6 +1876,7 @@ Class PB_SpecialWheelHandler : EventHandler
 			{
 				wheelShow.Clear();
 				wheelIsOpen = false;
+				weaponPickWheel = false;
 				noWheel = true;
 				return;
 			}
@@ -1697,6 +1884,7 @@ Class PB_SpecialWheelHandler : EventHandler
 				noWheel = false;
 		
             if (wheelIsOpen) { return; }
+			weaponPickWheel = false;
 			
 
 			if (pmo.FindInventory("Melee_Attacks")){
@@ -1710,6 +1898,8 @@ Class PB_SpecialWheelHandler : EventHandler
 		
 		else if(!noWheel && e.name == 'PBEquipSpecialOff' || players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon)
 		{
+			if (weaponPickWheel && e.name == 'PBEquipSpecialOff')
+				return;
 			if(!(players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon))
 			{
 				if(wheelShow.Size()>0)
@@ -1732,6 +1922,7 @@ Class PB_SpecialWheelHandler : EventHandler
 			{
 				wheelShow.Clear();
 				wheelIsOpen = false;
+				weaponPickWheel = false;
 				noWheel = true;
 				return;
 			}
@@ -1739,6 +1930,7 @@ Class PB_SpecialWheelHandler : EventHandler
 				noWheel = false;
 		
             if (wheelIsOpen) { return; }
+			weaponPickWheel = false;
 			
 			//Check if equipped valid wheel-based weapon
 			
@@ -1864,6 +2056,8 @@ Class PB_SpecialWheelHandler : EventHandler
 		
 		else if(!noWheel && e.name == 'PBWeaponSpecialOff' || players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon)
 		{
+			if (weaponPickWheel && e.name == 'PBWeaponSpecialOff')
+				return;
 			
 			if(!(players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon))
 			{

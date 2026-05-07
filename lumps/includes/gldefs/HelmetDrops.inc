@@ -31,7 +31,7 @@ Object PB_DroppedHelmetItem
 	Frame 3BONE { light DroppedHelm4 }
 }
 
-Brightmap Sprite 3BONB0 { map "Brightmaps/HelmetDrops/3BONB0.png" }
-Brightmap Sprite 3BONC0 { map "Brightmaps/HelmetDrops/3BONC0.png" }
-Brightmap Sprite 3BOND0 { map "Brightmaps/HelmetDrops/3BOND0.png" }
-Brightmap Sprite 3BONE0 { map "Brightmaps/HelmetDrops/3BONE0.png" }
+Brightmap Sprite 3BONB0 { map "brightmaps/HelmetDrops/3BONB0.png" }
+Brightmap Sprite 3BONC0 { map "brightmaps/HelmetDrops/3BONC0.png" }
+Brightmap Sprite 3BOND0 { map "brightmaps/HelmetDrops/3BOND0.png" }
+Brightmap Sprite 3BONE0 { map "brightmaps/HelmetDrops/3BONE0.png" }

@@ -10,7 +10,9 @@ const MAXITERATIONS = 32676;
 
 #include "zscript/PbWheel/parse.zsc"
 #include "zscript/PbWheel/ev_core_special.zsc"
+#include "zscript/PbWheel/pb_weapon_pick_wheel.zsc"
 #include "zscript/PbWheel/ev_drawer_special.zsc"
+#include "zscript/gearbox_fold.zs"
 #include "zscript/PbWheel/wheel_bss_postblur.zsc"
 #include "zscript/DeathFader.zc"
 #include "zscript/PlayerPawn.zc"
@@ -100,6 +102,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Effects/RavagerPortals.zc"
 #include "zscript/Monsters/ObsidianRavager.zc"
 #include "zscript/Monsters/D3Maledict.zc"
+#include "zscript/Monsters/Realm667/Venor.zc"
 
 //Glory Kills
 #include "zscript/Monsters/Imps/ImpGloryKill.zc"
@@ -140,6 +143,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc"
 #include "zscript/Weapons/MeleeWeaponPack/Stormcast.zc"
 #include "zscript/Weapons/ShieldSawNotify.zc"
+#include "zscript/Weapons/ShieldSawPinataHandler.zc"
 #include "zscript/Weapons/Slot2/Deagle/Deagle.zs"
 #include "zscript/Weapons/PB_WeaponTacticalFeel.zc"
 #include "zscript/Weapons/Slot3/CSSG/CSSG_Upgrades.zs"
@@ -156,6 +160,9 @@ const MAXITERATIONS = 32676;
 //Spawners
 #include "zscript/Spawner/PB_SpawnerBase.zc"
 #include "zscript/Spawner/PB_HorrorPassiveController.zc"
+#include "zscript/Spawner/PB_ProjectSurvivalFodderPassive.zc"
+#include "zscript/Monsters/ProjectSurvival/Trite.zc"
+#include "zscript/Spawner/PB_ProjectSurvivalPassiveSpawner.zc"
 #include "zscript/Spawner/Weapons/PB_ShotgunSpawner.zc"
 #include "zscript/Items/HPArcade/PBHPArcade.zc"
 
