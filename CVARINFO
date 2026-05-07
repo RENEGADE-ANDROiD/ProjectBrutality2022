@@ -725,6 +725,17 @@ server int NoAracnorbQueen = 0;
 server int NoBehemoth = 0;
 server int NoDarkDisciple = 0;
 server int NoCrackodemon = 0;
+// Realm667 community monster pack toggles (used by ImpPackSpawner / CacoPackSpawner /
+// MancubusPackSpawner / LostSoulPackSpawner / BaronPackSpawner; gated additionally by
+// pb_disablenewenemies). NoBehemoth was previously declared but unused; now wired.
+server int NoBabyCaco = 0;
+server int NoBlot = 0;
+server int NoDrone = 0;
+server int NoFusionCyberImp = 0;
+server int NoPossessedGibs = 0;
+server int NoSlayerKnight = 0;
+server int NoVenor = 0;
+server int NoVulgar = 0;
 server int NoCyberSatyr = 0;
 server int NoD3HellGuardian = 0;
 server int NoD3Maledict = 0;
@@ -778,7 +789,7 @@ user bool gb_open_on_slot     = true;
 user bool gb_reverse_slot_cycle_order  = false;
 user bool gb_select_first_slot_weapon  = false;
 user bool gb_mouse_in_wheel   = true;
-user bool gb_select_on_key_up = false;
+user bool gb_select_on_key_up = true;
 user bool gb_no_menu_if_one   = false;
 user bool gb_on_automap       = false;
 user bool gb_lock_positions   = false;

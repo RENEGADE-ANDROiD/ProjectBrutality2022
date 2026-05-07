@@ -71,13 +71,17 @@ Actor MancubusPackSpawner : Demonpickup
 	{
 		Spawn: 	// Checks for the tokens distributed above and spawns the correct monster accordingly
 		TNT1 A 3
+		// Realm667 mancubus-tier addition (gated by pb_disablenewenemies + NoBehemoth).
+		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "Realm667Skip")
 		TNT1 A 0 A_Jump(2, "SpawnRealm667Behemoth")
+		Realm667Skip:
 		TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 		TNT1 A 0 A_JumpIfInventory("IsVolcabus", 1, "SpawnVolcabus")
 		TNT1 A 0 A_JumpIfInventory("IsDaedabus", 1, "SpawnDaedabus")
 		TNT1 A 0 A_JumpIfInventory("IsMancubus", 1, "SpawnMancubus")
 		Loop
 	SpawnRealm667Behemoth:
+		TNT1 A 0 A_JumpIf(GetCvar("NoBehemoth")==1, "Realm667Skip")
 		TNT1 A 0 A_SpawnItemEx("PB_Realm667_BehemothGK",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	RandomSpawn:

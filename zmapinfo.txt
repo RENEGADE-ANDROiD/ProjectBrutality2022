@@ -345,6 +345,7 @@ DoomEdNums
 	23185 = FrozenTritePod
 	23186 = FrozenTritePodCeiling
 	23187 = FrozenHangman
+	23188 = PB_VenorGK
 
 	//Glory Kills
 	17003 = CyberdemonLegsFatality

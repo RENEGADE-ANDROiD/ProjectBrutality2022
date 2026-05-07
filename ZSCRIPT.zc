@@ -102,6 +102,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Effects/RavagerPortals.zc"
 #include "zscript/Monsters/ObsidianRavager.zc"
 #include "zscript/Monsters/D3Maledict.zc"
+#include "zscript/Monsters/Realm667/Venor.zc"
 
 //Glory Kills
 #include "zscript/Monsters/Imps/ImpGloryKill.zc"

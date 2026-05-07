@@ -1,6 +1,6 @@
 Realm667 monster pack (ported community resources) — asset expectations
 
-Integrated sprite drops live under **`SPRITES/MONSTERS/Realm667/<shortname>/`** (flat lump names). Brightmaps for those packs are in **`brightmaps/doom/Monsters/<BabyCaco|DarkCardinal|Nitromite|Venor>/`** (same **`Monsters/`** casing as the rest of this repo) and registered at the end of **`doommonsters.bm`**.
+Integrated sprite drops live under **`SPRITES/MONSTERS/Realm667/<shortname>/`** (flat lump names). Brightmaps for those packs are in **`brightmaps/doom/Monsters/<BabyCaco|DarkCardinal|Nitromite|Venor>/`** (same **`Monsters/`** casing as the rest of this repo) and registered at the end of **`doommonsters.bm`**. **Venor** sounds map via **`SNDINFO.txt`** (`venor/*`) to **`sounds/monsters/Venor/`** (extensionless **`VNR*`** lumps or matching filenames).
 
 Graphics (4-char sprite prefixes used in decorate)
 - Fusion cyber imp: UCIM, CARM, IARM, IMIS

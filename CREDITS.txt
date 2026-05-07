@@ -202,6 +202,9 @@ Sergeant_Mark_IV
 POSSITEM
 Realm667, Blue Shadow
 
+VNR1*, VNR2*, VNRH*, VNRD* (Venor)
+Kan3 / Realm667
+
 Cheering Marine MWAV A to F
 Unknown
 

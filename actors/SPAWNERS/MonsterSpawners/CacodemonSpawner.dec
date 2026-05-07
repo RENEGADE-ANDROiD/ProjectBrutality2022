@@ -67,13 +67,17 @@ Actor CacoPackSpawner : Demonpickup
 	{
 	Spawn: 	// Checks for the tokens distributed above and spawns the correct monster accordingly
 	TNT1 A 3
+	// Realm667 caco-tier addition (gated by pb_disablenewenemies + NoBabyCaco).
+	TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "Realm667Skip")
 	TNT1 A 0 A_Jump(3, "SpawnRealm667BabyCaco")
+	Realm667Skip:
 	TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 	TNT1 A 0 A_JumpIfInventory("IsAfritCaco", 1, "SpawnAfrit")
 	TNT1 A 0 A_JumpIfInventory("IsMagCaco", 1, "SpawnInfernalCaco")
 	TNT1 A 0 A_JumpIfInventory("IsNormalCaco", 1, "SpawnCacodemon")
 	Loop
 	SpawnRealm667BabyCaco:
+	TNT1 A 0 A_JumpIf(GetCvar("NoBabyCaco")==1, "Realm667Skip")
 	TNT1 A 0 A_SpawnItemEx("PB_Realm667_BabyCacoGK",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	Stop
 	RandomSpawn:

@@ -1668,9 +1668,12 @@ OptionMenu "MonsterPackSettings"
 	StaticText "---------------Baron of Hell variants---------------", gold
 	Option "T4 — Pyrodemon", "NoPyrodemon", "OffOn"
 	Option "T4 — Dark Disciple", "NoDarkDisciple", "OffOn"
+	Option "T4 — Slayer Knight (Realm667)", "NoSlayerKnight", "OffOn"
+	Option "T4 — Venor (Realm667)", "NoVenor", "OffOn"
 	StaticText " "
 	StaticText "---------------Cacodemon variants---------------", gold
 	Option "T1 — Aracnorb", "NoAracnorb", "OffOn"
+	Option "T2 — Baby Cacodemon (Realm667)", "NoBabyCaco", "OffOn"
 	Option "T3 — Crackodemon", "NoCrackodemon", "OffOn"
 	Option "T4 — Helemental", "NoHelemental", "OffOn"
 	Option "T4 — Overlord (same as Advanced Monster Spawns)", "pb_NoOverlord", "OffOn"
@@ -1687,12 +1690,19 @@ OptionMenu "MonsterPackSettings"
 	StaticText "---------------Hell Knight variants---------------", gold
 	Option "T2 — Ice Demon", "NoIceDemon", "OffOn"
 	StaticText " "
+	StaticText "---------------Imp variants (Realm667)---------------", gold
+	Option "T1 — Blot (Realm667)", "NoBlot", "OffOn"
+	Option "T1 — Possessed Gibs (Realm667)", "NoPossessedGibs", "OffOn"
+	Option "T2 — Vulgar (Realm667)", "NoVulgar", "OffOn"
+	Option "T3 — Fusion Cyber Imp (Realm667)", "NoFusionCyberImp", "OffOn"
+	StaticText " "
 	StaticText "---------------Lost soul variants---------------", gold
 	Option "T4 — Ethereal soul", "NoESoul", "OffOn"
+	Option "T2 — Drone (Realm667)", "NoDrone", "OffOn"
 	StaticText " "
 	StaticText "---------------Mancubus variants---------------", gold
 	Option "T3 — Terminator", "NoTerminator", "OffOn"
-	Option "T4 — Behemoth", "NoBehemoth", "OffOn"
+	Option "T4 — Behemoth (Realm667)", "NoBehemoth", "OffOn"
 	StaticText " "
 	StaticText "---------------Mastermind / spider---------------", gold
 	Option "T2 — D3 Hell Guardian", "NoD3HellGuardian", "OffOn"

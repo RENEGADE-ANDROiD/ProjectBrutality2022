@@ -5233,6 +5233,22 @@ meltingice1	ICEMLT1
 meltingice2	ICEMLT2
 meltingice3	ICEMLT3
 
+// Realm667 — Venor (Kan3); place VNR* lumps under sounds/monsters/Venor/ (extensionless or .ogg per lump name)
+venor/sight					monsters/venor/VNRSIGHT
+venor/active					monsters/venor/VNRACT
+venor/attack					monsters/venor/VNRATK
+venor/chomp					monsters/venor/VNRCHOMP
+venor/pain					monsters/venor/VNRPAIN
+venor/death					monsters/venor/VNRDEATH
+venor/bite					monsters/venor/VNRBITE
+venor/choir					monsters/venor/VNRCHOIR
+$attenuation	venor/choir			2.3
+$volume		venor/choir			0.5
+venor/void					monsters/venor/VNRVOID
+venor/splat					monsters/venor/VNRSPLT
+$volume		venor/splat			0.4
+$limit		venor/splat			2
+
 // Realm667  - Possessed Gibs (place VPG*.lmp or OGG at sounds/ per logical names, or add extensionless lumps)
 PossessedGibs/noodles monsters/possessedgibs/noodles
 PossessedGibs/active VPGACT
