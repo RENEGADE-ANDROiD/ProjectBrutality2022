@@ -1610,6 +1610,7 @@ Class PB_SpecialWheelHandler : EventHandler
 		if (specialName == "WW_ProximityMineSelected") { return pl.CountInv("MineAmmo") > 0; }
 		if (specialName == "WW_StunGrenadeSelected") { return pl.CountInv("StunGrenadeAmmo") > 0; }
 		if (specialName == "WW_ShieldGrenadeSelected") { return pl.CountInv("ShieldGrenadeAmmo") > 0; }
+		if (specialName == "WW_VoidGrenadeSelected") { return pl.CountInv("VoidGrenadeAmmo") > 0; }
 		if (specialName == "WW_MolotovSelected") { return pl.CountInv("HandMolotovAmmo") > 0; }
 		if (specialName == "WW_LeechSelected")
 			return pl.CountInv("HasLeech") > 0 || pl.CountInv("PB_DTech") >= 4;
@@ -1745,7 +1746,15 @@ Class PB_SpecialWheelHandler : EventHandler
 				equip_shield.specialPriority = 4;
 				equip_shield.iconScale = iconScale;
 				if (WheelSliceIsUsable(pl, equip_shield.specialName)) { wheelSpecials.Push(equip_shield); }
-				
+
+				PB_SpecialWheel_Mode equip_void = new ("PB_SpecialWheel_Mode");
+				equip_void.specialIcon = TexMan.CheckForTexture("VGR1A0",TexMan.Type_Any);
+				equip_void.specialName = "WW_VoidGrenadeSelected";
+				equip_void.specialAlias = "Void Grenade";
+				equip_void.specialPriority = 5;
+				equip_void.iconScale = iconScale;
+				if (WheelSliceIsUsable(pl, equip_void.specialName)) { wheelSpecials.Push(equip_void); }
+
 		let cvNoMolotov = CVar.GetCVar("pb_NoMolotov", players[consoleplayer]);
 				if (cvNoMolotov && cvNoMolotov.GetInt() == 0) {
 				PB_SpecialWheel_Mode equip_molotov = new ("PB_SpecialWheel_Mode");

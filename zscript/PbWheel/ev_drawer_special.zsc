@@ -7,6 +7,7 @@ Extend Class PB_SpecialWheelHandler
 		if (specialName == "WW_ProximityMineSelected") { return pl.CountInv("MineAmmo") > 0; }
 		if (specialName == "WW_StunGrenadeSelected") { return pl.CountInv("StunGrenadeAmmo") > 0; }
 		if (specialName == "WW_ShieldGrenadeSelected") { return pl.CountInv("ShieldGrenadeAmmo") > 0; }
+		if (specialName == "WW_VoidGrenadeSelected") { return pl.CountInv("VoidGrenadeAmmo") > 0; }
 		if (specialName == "WW_MolotovSelected") { return pl.CountInv("HandMolotovAmmo") > 0; }
 		if (specialName == "WW_LeechSelected")
 			return pl.CountInv("HasLeech") > 0 || pl.CountInv("PB_DTech") >= 4;
@@ -26,6 +27,7 @@ Extend Class PB_SpecialWheelHandler
 			return 1.0;
 		if (specialName == "WW_FragGrenadeSelected" || specialName == "WW_ProximityMineSelected"
 			|| specialName == "WW_StunGrenadeSelected" || specialName == "WW_ShieldGrenadeSelected"
+			|| specialName == "WW_VoidGrenadeSelected"
 			|| specialName == "WW_LeechSelected" || specialName == "WW_RevGunSelected")
 			return 1.5;
 		return 1.0;
