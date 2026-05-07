@@ -159,6 +159,9 @@ const MAXITERATIONS = 32676;
 //Spawners
 #include "zscript/Spawner/PB_SpawnerBase.zc"
 #include "zscript/Spawner/PB_HorrorPassiveController.zc"
+#include "zscript/Spawner/PB_ProjectSurvivalFodderPassive.zc"
+#include "zscript/Monsters/ProjectSurvival/Trite.zc"
+#include "zscript/Spawner/PB_ProjectSurvivalPassiveSpawner.zc"
 #include "zscript/Spawner/Weapons/PB_ShotgunSpawner.zc"
 #include "zscript/Items/HPArcade/PBHPArcade.zc"
 

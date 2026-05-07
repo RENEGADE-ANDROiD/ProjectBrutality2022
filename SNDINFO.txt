@@ -246,6 +246,269 @@ $volume ZombieFodder/Active 0.7
 $volume ZombieFodder/Pain 0.8
 $volume ZombieFodder/Death 0.6
 
+///// Project Survival Fodder (logical names referenced by actors/Monsters/T1-Grunts/ProjectSurvivalFodder/)
+
+$random Shambler/Sight { FODDSEE1 FODDSEE2 FODDSEE3 FODDSEE4 }
+
+$random Shambler/Spawn { FODDSPA1 FODDSPA2 FODDSPA3 }
+FODDSPA1 FODDSPA1
+FODDSPA2 FODDSPA2
+FODDSPA3 FODDSPA3
+
+$random Shambler/Active { FODDERACT1 FODDERACT2 FODDERACT3 FODDERACT4 }
+FODDERACT3	FODDACT3
+FODDERACT4	FODDACT4
+
+$random Shambler/Twitch { Shambler/Twitch1 Shambler/Twitch2 }
+Shambler/Twitch1 "sounds/monsters/FodderZombies/Shambler/ShamblerTwitch1"
+Shambler/Twitch2 "sounds/monsters/FodderZombies/Shambler/ShamblerTwitch2"
+
+$random Shambler/Ramble { FODDERCRY1 FODDERCRY2 FODDERCRY3 FODDERCRY4 }
+FODDERCRY1	FODDCRY1
+FODDERCRY2	FODDCRY2
+FODDERCRY3	FODDCRY3
+FODDERCRY4	FODDCRY4
+
+$random Shambler/Pain { FODDERPAI1 FODDERPAI2 FODDERPAI3 }
+FODDERPAI1	FODDPAI1
+FODDERPAI2	FODDPAI2
+FODDERPAI3	FODDPAI3
+
+$random Shambler/Death { FODDERDIE1 FODDERDIE2 FODDERDIE3 FODDERDIE4 }
+FODDERDIE3	FODDDIE3
+FODDERDIE4	FODDDIE4
+
+$random Screamer/Sight { Screamer/Sight1 Screamer/Sight2 }
+Screamer/Sight1 "sounds/monsters/FodderZombies/Screamer/AfflictedSight1"
+Screamer/Sight2 "sounds/monsters/FodderZombies/Screamer/AfflictedSight2"
+
+$random Screamer/Pain { Screamer/Pain1 Screamer/Pain2 Screamer/Pain3 }
+Screamer/Pain1 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedPain1"
+Screamer/Pain2 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedPain2"
+Screamer/Pain3 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedPain3"
+
+$random Screamer/Death { Screamer/Death1 Screamer/Death2 }
+Screamer/Death1 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedDeath1"
+Screamer/Death2 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedDeath2"
+
+$random Screamer/Idle { Screamer/Idle1 Screamer/Idle2 Screamer/Idle3 }
+Screamer/Idle1 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedIdle1"
+Screamer/Idle2 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedIdle2"
+Screamer/Idle3 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedIdle3"
+
+$random Screamer/Howl { Screamer/Howl1 Screamer/Howl2 Screamer/Howl3 Screamer/Howl4 }
+Screamer/Howl1 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedHowl1"
+Screamer/Howl2 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedHowl2"
+Screamer/Howl3 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedHowl3"
+Screamer/Howl4 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedHowl4"
+
+$random Screamer/Ramble { Screamer/Ramble1 Screamer/Ramble2 Screamer/Ramble3 }
+Screamer/Ramble1 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedCry1"
+Screamer/Ramble2 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedCry2"
+Screamer/Ramble3 "sounds/monsters/FodderZombies/Screamer/FemaleAfflictedCry3"
+
+$random Puker/Sight { Puker/Sight1 Puker/Sight2 Puker/Sight3 }
+Puker/Sight1 "sounds/monsters/FodderZombies/Puker/PukerSight1"
+Puker/Sight2 "sounds/monsters/FodderZombies/Puker/PukerSight2"
+Puker/Sight3 "sounds/monsters/FodderZombies/Puker/PukerSight3"
+
+$random Puker/Pain { Puker/Pain1 Puker/Pain2 Puker/Pain3 }
+Puker/Pain1 "sounds/monsters/FodderZombies/Puker/PukerPain1"
+Puker/Pain2 "sounds/monsters/FodderZombies/Puker/PukerPain2"
+Puker/Pain3 "sounds/monsters/FodderZombies/Puker/PukerPain3"
+
+$random Puker/Death { Puker/Death1 Puker/Death2 Puker/Death3 }
+Puker/Death1 "sounds/monsters/FodderZombies/Puker/PukerDeath1"
+Puker/Death2 "sounds/monsters/FodderZombies/Puker/PukerDeath2"
+Puker/Death3 "sounds/monsters/FodderZombies/Puker/PukerDeath3"
+
+$random Puker/Ramble { Puker/Ramble1 Puker/Ramble2 Puker/Ramble3 }
+Puker/Ramble1 "sounds/monsters/FodderZombies/Puker/PukerRamble1"
+Puker/Ramble2 "sounds/monsters/FodderZombies/Puker/PukerRamble2"
+Puker/Ramble3 "sounds/monsters/FodderZombies/Puker/PukerRamble3"
+
+$random Puker/Puke { Puker/Puke1 Puker/Puke2 }
+Puker/Puke1 "sounds/monsters/FodderZombies/Puker/PukerPuke1"
+Puker/Puke2 "sounds/monsters/FodderZombies/Puker/PukerPuke2"
+
+Puker/PrepPuke "sounds/monsters/FodderZombies/Puker/PukerPrepPuke"
+
+Puker/Active "sounds/monsters/FodderZombies/Puker/PukerActive"
+
+$volume Puker/Sight 0.65
+$volume Puker/Active 0.5
+$volume Puker/Death 0.5
+
+$random Spiker/Sight { Spiker/Sight1 Spiker/Sight2 Spiker/Sight3 }
+Spiker/Sight1 "sounds/monsters/FodderZombies/Spiker/SpikerSight1"
+Spiker/Sight2 "sounds/monsters/FodderZombies/Spiker/SpikerSight2"
+Spiker/Sight3 "sounds/monsters/FodderZombies/Spiker/SpikerSight3"
+
+$random Spiker/Pain { Spiker/Pain1 Spiker/Pain2 }
+Spiker/Pain1 "sounds/monsters/FodderZombies/Spiker/SpikerPain1"
+Spiker/Pain2 "sounds/monsters/FodderZombies/Spiker/SpikerPain2"
+
+$random Spiker/Active { Spiker/Active1 Spiker/Active2 Spiker/Active3 Spiker/Active4 }
+Spiker/Active1 "sounds/monsters/FodderZombies/Spiker/SpikerActive1"
+Spiker/Active2 "sounds/monsters/FodderZombies/Spiker/SpikerActive2"
+Spiker/Active3 "sounds/monsters/FodderZombies/Spiker/SpikerActive3"
+Spiker/Active4 "sounds/monsters/FodderZombies/Spiker/SpikerActive4"
+
+Spiker/Death "sounds/monsters/FodderZombies/Spiker/SpikerDeath"
+
+$random Spiker/Ramble { Spiker/Ramble1 Spiker/Ramble2 Spiker/Ramble3 }
+Spiker/Ramble1 "sounds/monsters/FodderZombies/Spiker/SpikerRamble1"
+Spiker/Ramble2 "sounds/monsters/FodderZombies/Spiker/SpikerRamble2"
+Spiker/Ramble3 "sounds/monsters/FodderZombies/Spiker/SpikerRamble3"
+
+$random HSpawnBurster/Sight { HSpawnBurster/Sight1 HSpawnBurster/Sight2 HSpawnBurster/Sight3 }
+HSpawnBurster/Sight1 "sounds/monsters/FodderZombies/Burster/HSpawnBursterSight1"
+HSpawnBurster/Sight2 "sounds/monsters/FodderZombies/Burster/HSpawnBursterSight2"
+HSpawnBurster/Sight3 "sounds/monsters/FodderZombies/Burster/HSpawnBursterSight3"
+
+$volume HspawnBurster/Sight 1.2
+
+HSpawnBurster/Loop "sounds/monsters/FodderZombies/Burster/HSpawnBursterLoop"
+$volume HspawnBurster/Loop 1.2
+$rolloff HSpawnBurster/Loop 200 900
+
+HSpawnBurster/Explode "sounds/monsters/FodderZombies/Burster/HSpawnBursterExplode"
+$volume HspawnBurster/Explode 1.2
+$rolloff HSpawnBurster/Explode 1500 3000
+
+HSpawnBurster/Arm "sounds/monsters/FodderZombies/Burster/HSpawnBursterArm"
+$volume HspawnBurster/Arm 1.2
+
+$random Blighter/Sight { Blighter/Sight1 Blighter/Sight2 Blighter/Sight3 }
+Blighter/Sight1 "sounds/monsters/FodderZombies/Blighter/BlighterSight1"
+Blighter/Sight2 "sounds/monsters/FodderZombies/Blighter/BlighterSight2"
+Blighter/Sight3 "sounds/monsters/FodderZombies/Blighter/BlighterSight3"
+
+$random Blighter/Active { Blighter/Active1 Blighter/Active2 Blighter/Active3 Blighter/Active4 }
+Blighter/Active1 "sounds/monsters/FodderZombies/Blighter/BlighterActive1"
+Blighter/Active2 "sounds/monsters/FodderZombies/Blighter/BlighterActive2"
+Blighter/Active3 "sounds/monsters/FodderZombies/Blighter/BlighterActive3"
+Blighter/Active4 "sounds/monsters/FodderZombies/Blighter/BlighterActive4"
+
+Blighter/Pain "sounds/monsters/FodderZombies/Blighter/BlighterPain"
+
+Blighter/Death "sounds/monsters/FodderZombies/Blighter/BlighterDeath"
+
+$alias Blighter/Explode Blighter/Death
+$alias Blighter/Arm HSpawnBurster/Arm
+
+$random CyberZ/Sight { CZOMSEE1 CZOMSEE2 }
+CZOMSEE1 "sounds/MONSTERS/CyberFodder/CZOMSEE1"
+CZOMSEE2 "sounds/MONSTERS/CyberFodder/CZOMSEE2"
+
+$random CyberZ/Active { CZOMACT1 CZOMACT2 CZOMACT3 CZOMACT4 CZOMACT5 CZOMACT6 }
+CZOMACT1 "sounds/MONSTERS/CyberFodder/CZOMACT1"
+CZOMACT2 "sounds/MONSTERS/CyberFodder/CZOMACT2"
+CZOMACT3 "sounds/MONSTERS/CyberFodder/CZOMACT3"
+CZOMACT4 "sounds/MONSTERS/CyberFodder/CZOMACT4"
+CZOMACT5 "sounds/MONSTERS/CyberFodder/CZOMACT5"
+CZOMACT6 "sounds/MONSTERS/CyberFodder/CZOMACT6"
+
+CyberZ/Pain			"sounds/MONSTERS/CyberFodder/CZOMPAI"
+
+CyberZ/Death			"sounds/MONSTERS/CyberFodder/CZOMDTH"
+
+$volume CyberZ/Sight 0.8
+$volume CyberZ/Active 0.8
+
+BIOSHOOT				"sounds/combat/weapons/Fatso Cannon/BIOSHOOT"
+$volume BIOSHOOT 1.2
+
+///// Project Survival Passive (actors/Monsters/T1-Grunts/ProjectSurvivalPassive/)
+
+$random Mimic/Active { Mimic/Active1 Mimic/Active2 Mimic/Active3 }
+Mimic/Active1 "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicActive1.ogg"
+Mimic/Active2 "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicActive2.ogg"
+Mimic/Active3 "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicActive3.ogg"
+$random Mimic/Sight { Mimic/Sight1 Mimic/Sight2 Mimic/Sight3 }
+Mimic/Sight1 "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicSight1.ogg"
+Mimic/Sight2 "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicSight2.ogg"
+Mimic/Sight3 "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicSight3.ogg"
+$random Mimic/Pop { Mimic/Pop1 Mimic/Pop2 Mimic/Pop3 }
+Mimic/Pop1 "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicPop1.ogg"
+Mimic/Pop2 "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicPop2.ogg"
+Mimic/Pop3 "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicPop3.ogg"
+Mimic/Death "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicDeath.ogg"
+
+Tentacle/Active "sounds/monsters/ProjectSurvivalPassive/Tentacle/TentacleLoop.ogg"
+monster/tensit "sounds/monsters/ProjectSurvivalPassive/Tentacle/DSTENSIT"
+monster/tenact "sounds/monsters/ProjectSurvivalPassive/Tentacle/DSTENACT"
+monster/tenatk "sounds/monsters/ProjectSurvivalPassive/Tentacle/DSTENATK"
+monster/tenpn1 "sounds/monsters/ProjectSurvivalPassive/Tentacle/DSTENPN1"
+monster/tenpn2 "sounds/monsters/ProjectSurvivalPassive/Tentacle/DSTENPN2"
+monster/tenpn3 "sounds/monsters/ProjectSurvivalPassive/Tentacle/DSTENPN3"
+monster/tendth "sounds/monsters/ProjectSurvivalPassive/Tentacle/DSTENDTH"
+$random monster/tenpai { monster/tenpn1 monster/tenpn2 monster/tenpn3 }
+
+$random PUSWAL { PUSWAL1 PUSWAL2 PUSWAL3 PUSWAL4 }
+PUSWAL1 "sounds/monsters/ProjectSurvivalPassive/Pustule/PUSWAL1"
+PUSWAL2 "sounds/monsters/ProjectSurvivalPassive/Pustule/PUSWAL2"
+PUSWAL3 "sounds/monsters/ProjectSurvivalPassive/Pustule/PUSWAL3"
+PUSWAL4 "sounds/monsters/ProjectSurvivalPassive/Pustule/PUSWAL4"
+$rolloff PUSWAL 25 800
+Blob/Sight "sounds/monsters/ProjectSurvivalPassive/Pustule/DSBLBSEE"
+Blob/Active "sounds/monsters/ProjectSurvivalPassive/Pustule/DSBLBACT"
+Blob/Pain "sounds/monsters/ProjectSurvivalPassive/Pustule/DSBLBPAN"
+$rolloff Blob/Active 25 800
+$limit Blob/Pain 0
+
+$random Trite/Sight { Trite/Sight1 Trite/Sight2 Trite/Sight3 }
+Trite/Sight1 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteSight1.ogg"
+Trite/Sight2 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteSight2.ogg"
+Trite/Sight3 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteSight3.ogg"
+$random Trite/Active { Trite/Active1 Trite/Active2 Trite/Active3 Trite/Active4 }
+Trite/Active1 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteActive1.ogg"
+Trite/Active2 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteActive2.ogg"
+Trite/Active3 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteActive3.ogg"
+Trite/Active4 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteActive4.ogg"
+$random Trite/Attack { Trite/Attack1 Trite/Attack2 Trite/Attack3 }
+Trite/Attack1 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteAttack1.ogg"
+Trite/Attack2 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteAttack2.ogg"
+Trite/Attack3 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteAttack3.ogg"
+$random Trite/MeleeHit { Trite/Hit1 Trite/Hit2 }
+Trite/Hit1 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteHit1.ogg"
+Trite/Hit2 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteHit2.ogg"
+$random Trite/Step { Trite/Step1 Trite/Step2 Trite/Step3 Trite/Step4 }
+Trite/Step1 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteStep1.ogg"
+Trite/Step2 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteStep2.ogg"
+Trite/Step3 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteStep3.ogg"
+Trite/Step4 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteStep4.ogg"
+$random Trite/Splat { Trite/Splat1 Trite/Splat2 }
+Trite/Splat1 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteSplat1.ogg"
+Trite/Splat2 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteSplat2.ogg"
+$random Trite/Pain { Trite/Pain1 Trite/Pain2 Trite/Pain3 }
+Trite/Pain1 "sounds/monsters/ProjectSurvivalPassive/Trite/TritePain1.ogg"
+Trite/Pain2 "sounds/monsters/ProjectSurvivalPassive/Trite/TritePain2.ogg"
+Trite/Pain3 "sounds/monsters/ProjectSurvivalPassive/Trite/TritePain3.ogg"
+$random Trite/Death { Trite/Death1 Trite/Death2 Trite/Death3 }
+Trite/Death1 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteDeath1.ogg"
+Trite/Death2 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteDeath2.ogg"
+Trite/Death3 "sounds/monsters/ProjectSurvivalPassive/Trite/TriteDeath3.ogg"
+Trite/WebStart "sounds/monsters/ProjectSurvivalPassive/Trite/TriteWeb1.ogg"
+Trite/WebEnd "sounds/monsters/ProjectSurvivalPassive/Trite/TriteWeb1.ogg"
+$Volume Trite/Sight 0.3
+$Volume Trite/Active 0.3
+$Volume Trite/Attack 0.4
+$Volume Trite/MeleeHit 0.5
+$Volume Trite/Pain 0.3
+$Volume Trite/Death 0.3
+$Volume Trite/Splat 0.5
+$Volume Trite/Step 0.2
+$rolloff Trite/Step 130 770
+
+PMHangman/Charge "sounds/monsters/ProjectSurvivalPassive/Hangman/HangmanCharge.ogg"
+PMHangman/Death "sounds/monsters/ProjectSurvivalPassive/Hangman/HangmanDeath.ogg"
+PMHangman/Fire "sounds/monsters/ProjectSurvivalPassive/Hangman/HangmanFire.ogg"
+$random PMHangman/Sight { PMHangman/Sight1 PMHangman/Sight2 PMHangman/Sight3 }
+PMHangman/Sight1 "sounds/monsters/ProjectSurvivalPassive/Hangman/HangmanSight.ogg"
+PMHangman/Sight2 "sounds/monsters/ProjectSurvivalPassive/Hangman/HangmanSight2.ogg"
+PMHangman/Sight3 "sounds/monsters/ProjectSurvivalPassive/Hangman/HangmanSight3.ogg"
+
 //Hunger
 $random Hunger/Sight { HUNSEE1 HUNSEE2 }
 HUNSEE1	HUNSEE1
@@ -896,8 +1159,8 @@ nashgore/bullethitflesh "sounds/gore/nashgore/bullet hit flesh.ogg"
 $volume nashgore/bullethitflesh 0.23
 //Gore Sound
 $random EYEPULL { EYEPULL1 EYEPULL2 }
-EYEPULL1	EYEPULL1
-EYEPULL2	EYEPULL2 
+EYEPULL1 "sounds/monsters/ProjectSurvivalPassive/Gore/EYEPULL1"
+EYEPULL2 "sounds/monsters/ProjectSurvivalPassive/Gore/EYEPULL2" 
 //Bullet Flesh Impacts
 $random bulletfleshimpact { bltf1 bltf2 bltf3 }
 bltf1 BLT_FLS1
@@ -3643,6 +3906,9 @@ StunGrenadeBounce STNGRD2
 StunGrenadeDetonate STNGRD3
 StunGrenadeLoop STNGRD4
 StunGrenadePickup STNPKUP
+// Project Survival fold — shield grenade deploy (cover uses BFG MKIV ShieldSpawnerPlacedCover chain)
+grenade/activate/shield sounds/combat/weapons/Grenades/grenade_activate_shield
+grenade/spawn/shield sounds/combat/weapons/Grenades/grenade_spawn_shield
 
 //Swapping Weapons
 weapons/swapping change

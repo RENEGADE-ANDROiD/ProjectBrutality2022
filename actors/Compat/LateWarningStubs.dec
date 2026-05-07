@@ -1,0 +1,100 @@
+// Late-stage compatibility stubs (included at the END of DECORATE so PB parent
+// classes are already defined). Suppresses parser warnings from folded add-ons
+// (Project Survival fodder + passive monster sets, PB Staging-style barrel
+// surface, NEWPLAYE Cruelty Bonus leftovers) that reference class names not
+// present in this tree. Each stub aliases to the closest existing PB equivalent
+// so behavior degrades gracefully instead of failing softly at runtime.
+
+//-------------------------------------------------------------------------
+// Project Survival pickup aliases (small bonus on creature death)
+//-------------------------------------------------------------------------
+ACTOR HealthBonusPip : HealthBonus {}
+ACTOR ArmorChip      : ArmorBonus  {}
+
+//-------------------------------------------------------------------------
+// Project Survival fodder hitbox damage-type tokens
+//-------------------------------------------------------------------------
+ACTOR HitboxFireDamage    : Inventory { Inventory.MaxAmount 1 }
+ACTOR HitboxIceDamage     : Inventory { Inventory.MaxAmount 1 }
+ACTOR HitboxAcidDamage    : Inventory { Inventory.MaxAmount 1 }
+ACTOR HitboxDemonicDamage : Inventory { Inventory.MaxAmount 1 }
+ACTOR HitboxPlasmaDamage  : Inventory { Inventory.MaxAmount 1 }
+ACTOR HitboxBladedDamage  : Inventory { Inventory.MaxAmount 1 }
+
+//-------------------------------------------------------------------------
+// Project Survival frozen / burning fodder variants
+//-------------------------------------------------------------------------
+ACTOR FrozenShambler     : FrozenZombieman {}
+ACTOR FrozenScreamer     : FrozenZombieman {}
+ACTOR FrozenSpiker       : FrozenZombieman {}
+ACTOR FrozenPuker        : FrozenZombieman {}
+ACTOR BurningFodderZombie : BurningZombieMan {}
+
+//-------------------------------------------------------------------------
+// Project Survival blood gib aliases (PB equivalent: MuchBlood family)
+//-------------------------------------------------------------------------
+ACTOR BloodGib10 : MuchBlood  {}
+ACTOR BloodGib20 : MuchBlood2 {}
+ACTOR BloodGib30 : MuchBlood3 {}
+ACTOR BloodGib40 : MuchBlood3 {}
+
+//-------------------------------------------------------------------------
+// Project Survival barrel-blast aliases (PB equivalent: BarrelBlast family)
+//-------------------------------------------------------------------------
+ACTOR FlameBarrelBlast2   : FlameBarrelBlast {}
+ACTOR IceBarrelBlast2     : IceBarrelBlast   {}
+ACTOR CryoGrenadeExplosion : IceBarrelBlast  {}
+
+//-------------------------------------------------------------------------
+// PB Staging-style extra barrel-shrapnel / smoke variants
+//-------------------------------------------------------------------------
+ACTOR BarrelShrapnel4         : BarrelShrapnel3 {}
+ACTOR BigBlackSmokePillarShort : BigBlackSmokePillar {}
+
+//-------------------------------------------------------------------------
+// PB Staging-style ice crystal random spawners (used by IceBarrelBlast).
+// Aliased to the same no-op particle as RandomSmallIcecrystal already does in
+// actors/Compat/WarningStubs.dec; using IceCrystal2 (a SOLID monster prop) here
+// would litter the map with movement-blocking decorations on every blast.
+//-------------------------------------------------------------------------
+ACTOR RandomLargeIcecrystal  : BDExplosionparticlesSmall {}
+ACTOR RandomMediumIcecrystal : BDExplosionparticlesSmall {}
+
+//-------------------------------------------------------------------------
+// NEWPLAYE Cruelty Bonus fatality leftover (4.x-era)
+//-------------------------------------------------------------------------
+ACTOR CrueltyBonusFatalityhealth : CrueltyBonushealth {}
+
+//-------------------------------------------------------------------------
+// PB Staging-style damage / blood-state barrel aliases used by BarrelThrower.
+// PB 2022 ships single per-style variants (NukageBarrelCut / Holes / Dented
+// + their _RedBlood twins) and a single BarrelFrozen frozen variant; map the
+// missing PS-family names to the closest PB equivalents.
+//-------------------------------------------------------------------------
+ACTOR BarrelCut             : NukageBarrelCut             {}
+ACTOR BarrelHoles           : NukageBarrelHoles           {}
+ACTOR BarrelDent1           : NukageBarrelDented          {}
+ACTOR BarrelDent2           : NukageBarrelDented          {}
+ACTOR BarrelBloody          : NukageBarrel_RedBlood       {}
+ACTOR BarrelBloodyCut       : NukageBarrelCut_RedBlood    {}
+ACTOR BarrelBloodyHoles     : NukageBarrelHoles_RedBlood  {}
+ACTOR BarrelBloodyDent1     : NukageBarrelDented_RedBlood {}
+ACTOR BarrelBloodyDent2     : NukageBarrelDented_RedBlood {}
+
+ACTOR FlameBarrelDent1        : FlameBarrelDented          {}
+ACTOR FlameBarrelDent2        : FlameBarrelDented          {}
+ACTOR FlameBarrelBloody       : FlameBarrel_RedBlood       {}
+ACTOR FlameBarrelBloodyCut    : FlameBarrelCut_RedBlood    {}
+ACTOR FlameBarrelBloodyHoles  : FlameBarrelHoles_RedBlood  {}
+ACTOR FlameBarrelBloodyDent1  : FlameBarrelDented_RedBlood {}
+ACTOR FlameBarrelBloodyDent2  : FlameBarrelDented_RedBlood {}
+
+ACTOR BarrelCutFrozen         : BarrelFrozen {}
+ACTOR BarrelHolesFrozen       : BarrelFrozen {}
+ACTOR BarrelDent1Frozen       : BarrelFrozen {}
+ACTOR BarrelDent2Frozen       : BarrelFrozen {}
+ACTOR BarrelBloodyFrozen      : BarrelFrozen {}
+ACTOR BarrelBloodyCutFrozen   : BarrelFrozen {}
+ACTOR BarrelBloodyHolesFrozen : BarrelFrozen {}
+ACTOR BarrelBloodyDent1Frozen : BarrelFrozen {}
+ACTOR BarrelBloodyDent2Frozen : BarrelFrozen {}

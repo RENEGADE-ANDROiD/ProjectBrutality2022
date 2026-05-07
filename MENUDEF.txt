@@ -1614,6 +1614,8 @@ OptionMenu "PB_HorrorspawnSettings"
 	Option "T2 — Melee zombieman", "NoMeleeZombie", "OffOn"
 	Option "T2 — Melee sergeant", "NoMeleeSergeant", "OffOn"
 	Option "T3 — Cyberfodder", "NoCyberFodder", "OffOn"
+	Option "$PB_OPT_PS_FODDER_SPAWN", "pb_NoProjectSurvivalFodder", "SpawnOnOff"
+	Option "$PB_OPT_PS_PASSIVE_SPAWN", "pb_NoProjectSurvivalPassive", "SpawnOnOff"
 	Option "T4 — Unwilling", "NoUnwilling", "OffOn"
 	StaticText " "
 }

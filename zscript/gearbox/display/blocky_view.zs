@@ -25,7 +25,7 @@ class gb_BlockyView
 
     result.setAlpha(1.0);
     result.setScale(1);
-    result.setBaseColor(0x2222CC);
+    result.setBaseColor(0xCC2222);
     result.mTextureCache = textureCache;
     result.mOptions      = options;
     result.mFontSelector = fontSelector;

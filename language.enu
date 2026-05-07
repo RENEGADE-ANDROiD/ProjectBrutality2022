@@ -15,6 +15,10 @@ OPTMNU_MarauderSSGClassicReload = "Marauder SSG classic reload";
 // Tilt Screen
 OPTMNU_TILTPLUSPLUS = "Customize Tilt++";
 
+// Monster Pack / reinforcement toggles ($ keys used by MENUDEF)
+PB_OPT_PS_FODDER_SPAWN = "Project Survival fodder (extra shamblers etc.)";
+PB_OPT_PS_PASSIVE_SPAWN = "Project Survival passives (pustule, mimic, pods, etc.)";
+
 TILTPLUSPLUSMNU_TITLE = "Tilt++ Options";
 
 TILTPLUSPLUSMNU_STRAFETILT_TITLE = "Strafe Tilting";
@@ -593,8 +597,11 @@ PB_WHEELTIP_RocketLauncher_Laser = "Rocket Launcher: Beam-Guided Rocket.";
 PB_WHEELTIP_WW_FragGrenadeSelected = "Equipment Wheel: Frag Grenades.";
 PB_WHEELTIP_WW_ProximityMineSelected = "Equipment Wheel: Proximity Mines.";
 PB_WHEELTIP_WW_StunGrenadeSelected = "Equipment Wheel: Stun Grenades.";
+PB_WHEELTIP_WW_ShieldGrenadeSelected = "Equipment Wheel: Shield Grenades.\nDeploys portable cover on impact.";
 PB_WHEELTIP_WW_LeechSelected = "Leech Beam Equipment.\nHold to Drain; Costs Demon Tech.";
 PB_PICKUP_LeechGrenade = "\cdDemon Tech: \coLeech device acquired \c-(+20 DTech).";
+PB_PICKUP_ShieldGrenade = "Picked up a shield grenade.";
+PB_PICKUP_ShieldGrenadeAmmo = "Picked up shield grenade ammo.";
 PB_WHEELTIP_WW_RevGunSelected = "Equipment Wheel: Compact Launcher.";
 PB_WHEELTIP_WW_HookSelected = "Equipment Wheel: Meat Hook.\nUser1 Grapples; User1 Again to Release.";
 PB_WHEELTIP_GK_FlamebelchSelected = "Glory Kill Equipment: Flame Belch.";

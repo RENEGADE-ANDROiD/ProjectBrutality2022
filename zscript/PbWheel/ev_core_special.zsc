@@ -1609,6 +1609,7 @@ Class PB_SpecialWheelHandler : EventHandler
 		if (specialName == "WW_FragGrenadeSelected") { return pl.CountInv("HandGrenadeAmmo") > 0; }
 		if (specialName == "WW_ProximityMineSelected") { return pl.CountInv("MineAmmo") > 0; }
 		if (specialName == "WW_StunGrenadeSelected") { return pl.CountInv("StunGrenadeAmmo") > 0; }
+		if (specialName == "WW_ShieldGrenadeSelected") { return pl.CountInv("ShieldGrenadeAmmo") > 0; }
 		if (specialName == "WW_MolotovSelected") { return pl.CountInv("HandMolotovAmmo") > 0; }
 		if (specialName == "WW_LeechSelected")
 			return pl.CountInv("HasLeech") > 0 || pl.CountInv("PB_DTech") >= 4;
@@ -1737,13 +1738,21 @@ Class PB_SpecialWheelHandler : EventHandler
 				equip_stun.iconScale = iconScale;
 				if (WheelSliceIsUsable(pl, equip_stun.specialName)) { wheelSpecials.Push(equip_stun); }
 				
+				PB_SpecialWheel_Mode equip_shield = new ("PB_SpecialWheel_Mode");
+				equip_shield.specialIcon = TexMan.CheckForTexture("SGGRA0",TexMan.Type_Any);
+				equip_shield.specialName = "WW_ShieldGrenadeSelected";
+				equip_shield.specialAlias = "Shield Grenade";
+				equip_shield.specialPriority = 4;
+				equip_shield.iconScale = iconScale;
+				if (WheelSliceIsUsable(pl, equip_shield.specialName)) { wheelSpecials.Push(equip_shield); }
+				
 		let cvNoMolotov = CVar.GetCVar("pb_NoMolotov", players[consoleplayer]);
 				if (cvNoMolotov && cvNoMolotov.GetInt() == 0) {
 				PB_SpecialWheel_Mode equip_molotov = new ("PB_SpecialWheel_Mode");
 					equip_molotov.specialIcon = TexMan.CheckForTexture("MOLOV0",TexMan.Type_Any);
 					equip_molotov.specialName = "WW_MolotovSelected";
 					equip_molotov.specialAlias = "Molotov Cocktail";
-					equip_molotov.specialPriority = 4;
+					equip_molotov.specialPriority = 5;
 					equip_molotov.iconScale = iconScale;
 					if (WheelSliceIsUsable(pl, equip_molotov.specialName)) { wheelSpecials.Push(equip_molotov); }
 				}
@@ -1752,7 +1761,7 @@ Class PB_SpecialWheelHandler : EventHandler
 				equip_leech.specialIcon = TexMan.CheckForTexture("HLECHY",TexMan.Type_Any);
 				equip_leech.specialName = "WW_LeechSelected";
 				equip_leech.specialAlias = "Leech";
-				equip_leech.specialPriority = 5;
+				equip_leech.specialPriority = 6;
 				equip_leech.iconScale = iconScale;
 				if (WheelSliceIsUsable(pl, equip_leech.specialName)) { wheelSpecials.Push(equip_leech); }
 				

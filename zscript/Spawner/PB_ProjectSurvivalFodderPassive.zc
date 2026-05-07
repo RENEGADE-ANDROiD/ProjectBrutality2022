@@ -1,0 +1,52 @@
+// Extra Project Survival fodder spawns routed from FodderExtraPassiveSpawn (no vanilla replaces).
+
+class PB_ProjectSurvivalFodderPassiveUtil
+{
+	static int I(string n, int d = 0)
+	{
+		let cv = CVar.FindCVar(n);
+		return cv ? cv.GetInt() : d;
+	}
+}
+
+class PB_ProjectSurvivalFodderPassive : Actor
+{
+	Default
+	{
+		+NOINTERACTION;
+		-SOLID;
+		+NOGRAVITY;
+		Height 1;
+		Radius 1;
+		Mass 1;
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		if (PB_ProjectSurvivalFodderPassiveUtil.I("pb_disablenewenemies", 0) != 0) { Destroy(); return; }
+		if (PB_ProjectSurvivalFodderPassiveUtil.I("pb_NoProjectSurvivalFodder", 0) != 0) { Destroy(); return; }
+
+		if (random(0, 255) >= 35) { Destroy(); return; }
+
+		String cn = PickClass();
+		Actor.Spawn(cn, pos, NO_REPLACE);
+
+		Destroy();
+	}
+
+	private static String PickClass()
+	{
+		if (random(0, 255) >= 22) return "Shambler";
+
+		switch (random(0, 4))
+		{
+		default:
+		case 0: return "Puker";
+		case 1: return "Blighter";
+		case 2: return "Screamer";
+		case 3: return "Burster";
+		case 4: return "Spiker";
+		}
+	}
+}

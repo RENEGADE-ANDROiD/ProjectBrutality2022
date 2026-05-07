@@ -1,0 +1,48 @@
+// Extra Project Survival passive spawns (Pustule, pods, mimic, tentacle, hangman; no vanilla replaces).
+
+class PB_ProjectSurvivalPassiveUtil
+{
+	static int I(string n, int d = 0)
+	{
+		let cv = CVar.FindCVar(n);
+		return cv ? cv.GetInt() : d;
+	}
+}
+
+class PB_ProjectSurvivalPassiveSpawner : Actor
+{
+	Default
+	{
+		+NOINTERACTION;
+		-SOLID;
+		+NOGRAVITY;
+		Height 1;
+		Radius 1;
+		Mass 1;
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		if (PB_ProjectSurvivalPassiveUtil.I("pb_disablenewenemies", 0) != 0) { Destroy(); return; }
+		if (PB_ProjectSurvivalPassiveUtil.I("pb_NoProjectSurvivalPassive", 0) != 0) { Destroy(); return; }
+
+		if (random(0, 255) >= 28) { Destroy(); return; }
+
+		String cn = PickClass();
+		Actor.Spawn(cn, pos, NO_REPLACE);
+
+		Destroy();
+	}
+
+	private static String PickClass()
+	{
+		int r = random(0, 255);
+		if (r < 40) return "Pustule";
+		if (r < 80) return "Mimic";
+		if (r < 118) return "Tentacle";
+		if (r < 165) return "TritePod";
+		if (r < 195) return "Hangman";
+		return "TritePodCeiling";
+	}
+}

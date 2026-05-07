@@ -29,7 +29,7 @@ class gb_WheelView
     let result = new("gb_WheelView");
 
     result.setAlpha(1.0);
-    result.setBaseColor(0x2222CC);
+    result.setBaseColor(0xCC2222);
 
     result.mScreen         = screen;
     result.mOptions        = options;
@@ -220,23 +220,12 @@ class gb_WheelView
                         , NO_ANIMATION
                         , mCenter.x
                         , mCenter.y
-                        , DTA_Alpha        , mAlpha * 0.32
+                        , DTA_Alpha        , mAlpha * 0.5
                         , DTA_CenterOffset , true
-                        , DTA_DestWidth    , int(wheelDiameter * 1.12)
-                        , DTA_DestHeight   , int(wheelDiameter * 1.12)
+                        , DTA_DestWidth    , wheelDiameter
+                        , DTA_DestHeight   , wheelDiameter
                         );
     }
-    Screen.drawTexture( mTextureCache.circle
-                      , NO_ANIMATION
-                      , mCenter.x
-                      , mCenter.y
-                      , DTA_FillColor    , mBaseColor
-                      , DTA_AlphaChannel , true
-                      , DTA_Alpha        , mAlpha
-                      , DTA_CenterOffset , true
-                      , DTA_DestWidth    , wheelDiameter
-                      , DTA_DestHeight   , wheelDiameter
-                      );
   }
 
   private

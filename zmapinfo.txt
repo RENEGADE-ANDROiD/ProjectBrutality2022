@@ -323,6 +323,28 @@ DoomEdNums
 	23163 = HASGDrum
 	23164 = PossessedGibsSlither
 	23165 = PB_GuardsphereST
+	23166 = ShieldGrenade
+	23167 = Shambler
+	23168 = Burster
+	23169 = Blighter
+	23170 = CyberFodder
+	23171 = Screamer
+	23172 = Spiker
+	23173 = Puker
+	23174 = FodderExtraPassiveSpawn
+	23175 = Pustule
+	23176 = Mimic
+	23177 = Tentacle
+	23178 = TritePod
+	23179 = TritePodCeiling
+	23180 = Hangman
+	23181 = Trite
+	23182 = ProjectSurvivalPassiveExtraSpawn
+	23183 = FrozenMimic
+	23184 = FrozenTentacle
+	23185 = FrozenTritePod
+	23186 = FrozenTritePodCeiling
+	23187 = FrozenHangman
 
 	//Glory Kills
 	17003 = CyberdemonLegsFatality

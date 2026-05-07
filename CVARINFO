@@ -45,6 +45,8 @@ server int pb_disablemapenhancements = 0;
 server int pb_disablenewguns = 0;
 
 server int pb_disablenewenemies = 0;
+server int pb_NoProjectSurvivalFodder = 0;
+server int pb_NoProjectSurvivalPassive = 0;
 server bool pb_cyberdemondeath = false;
 server bool pb_grenadeimpact = false;
 
@@ -752,7 +754,7 @@ Server Bool RS_AxeCheck = True;
 
 // ---- Gearbox (weapon/inventory wheel; GPLv3+ — zscript/gearbox/COPYING_Gearbox_GPLv3.txt) ----
 user int   gb_scale     = 1;
-user color gb_color     = "22 22 CC";
+user color gb_color     = "204 34 34";
 user color gb_dim_color = "99 99 99";
 user bool  gb_show_tags = true;
 user int gb_view_type = 1; // Gearbox selector: 0 Blocks, 1 Wheel (default), 2 Text

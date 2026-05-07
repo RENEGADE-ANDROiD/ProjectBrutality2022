@@ -99,6 +99,16 @@ Selected weapons and equipment (authors)
   **Eriance**; sword from *Insanity's Requiem Mk.2* by **TiberiumSoul** (RIP).
 
 Monsters and packs
+- **Project Survival** monster additions (fodder zombies + passive hazards):
+  **The Pope of Dope (ThePopeOfDope)**. Folded under
+  `actors/Monsters/T1-Grunts/ProjectSurvivalFodder/` and
+  `actors/Monsters/T1-Grunts/ProjectSurvivalPassive/` plus
+  `zscript/Monsters/ProjectSurvival/` and `zscript/Spawner/PB_ProjectSurvival*`.
+  Includes Shambler, Burster, Blighter, Screamer, Spiker, Puker, CyberFodder
+  (fodder set) and Pustule, Mimic, Tentacle, TritePod / TritePodCeiling, Hangman,
+  Trite (passive set) — sprites, sounds, monster behavior, and original
+  spawner / passive-pod coding by The Pope of Dope; integrated as opt-in
+  reinforcement spawns alongside vanilla zombies in this build.
 - Glory Kills: lineage from D4D / Brutal Doom Black Edition
   (SNDINFO.GloryKills and related). **Glory Kill Eternal HUD** PNGs live under
   **`GRAPHICS/HUD/glorykills/newhud/`**; **equipment launcher** first-person overlays
@@ -150,8 +160,12 @@ Audio (overview)
 Special thanks
 - Carrot (iamcarrotmaster): extensive sprites and weapon art.
 - Dithered Output: lean / wall-detection work.
-- ThePopeOfDope (The Pope of Dope): LeverAction, Pro-Surv Ballista, and other
-  contributions noted in staging (ice effects, barrels, Cryo-adjacent work).
+- ThePopeOfDope (The Pope of Dope): LeverAction, Pro-Surv Ballista, the
+  **Project Survival** fodder + passive monster sets (Shambler, Burster,
+  Blighter, Screamer, Spiker, Puker, CyberFodder, Pustule, Mimic, Tentacle,
+  TritePod / TritePodCeiling, Hangman, Trite — sprites, sounds, monster /
+  spawner code), and other contributions noted in staging (ice effects,
+  barrels, Cryo-adjacent work).
 - Vampy: fixes and improvements (e.g. LMG reload) on the staging line.
 
 Licensing
