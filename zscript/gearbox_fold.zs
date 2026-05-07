@@ -45,10 +45,10 @@
 #include "zscript/gearbox/wheel/text.zs"
 #include "zscript/gearbox/wheel/screen.zs"
 
-#include "zscript/gearbox/tools/cvar.zs"
-#include "zscript/gearbox/tools/log.zs"
-#include "zscript/gearbox/tools/texture_cache.zs"
-#include "zscript/gearbox/tools/ammo.zs"
+#include "zscript/gearbox/hammers/cvar.zs"
+#include "zscript/gearbox/hammers/log.zs"
+#include "zscript/gearbox/hammers/texture_cache.zs"
+#include "zscript/gearbox/hammers/ammo.zs"
 
 #include "zscript/gearbox/engine/level.zs"
 #include "zscript/gearbox/engine/weapon_watcher.zs"
