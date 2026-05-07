@@ -148,7 +148,9 @@ Modders: `PLAYER.dec` is the source of truth for slotted weapons. The disabled *
 ### Equipment
 
 - Freeze Nade  
-- Hook  
+- Hook
+- Molotov
+- StunGrenade
 - Void Grenade  
 - Freezebot  
 - ElecPod  
