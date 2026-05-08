@@ -100,6 +100,7 @@ OptionValue "VisorMiddlePart"
 	0, "Top center strip"
 	1, "Bottom center strip"
 	2, "Both"
+	3, "\cgOff"
 }
 
 OptionValue "TacticalRollCap"
@@ -175,7 +176,7 @@ OptionMenu "PBTacticalMotionOptions"
 {
 	Title "Tactical Weapon Motion"
 	StaticText "Rotational Tilt, Lowering, Wall Near-Field,"
-	StaticText "Tactical motion & lean (PB 2022)."
+	StaticText "Tactical motion & lean (PB2022)."
 	StaticText " "
 	Option "Enable tactical weapon motion.", "pb_tac_enable", "YesNo"
 	Option "Apply only while in ready states.", "pb_tac_ready_only", "YesNo"
@@ -216,9 +217,45 @@ OptionMenu "PBWeaponHudOptions"
 	StaticText " "
 }
 
+// Helmet visor options (folded from PB Staging PB_Hud.zs).
+// Reads cvars declared in CVARINFO; rendered by PB_VisorHandler.
+OptionMenu "PB_HelmetVisorOptions"
+{
+	Title "Helmet Visor (PB2022)"
+	StaticText " ", teal
+	StaticText "Folded from Project Brutality Staging (PBv0.3+).", teal
+	StaticText "Drawn on top of the SBARINFO HUD by", teal
+	StaticText "PB_VisorHandler (RenderOverlay).", teal
+	StaticText " ", teal
+	Option "Show Helmet Corners",            "pb_showhudvisor",         "YesNo"
+	Option "Show Visor Glass",               "pb_showhudvisorglass",    "YesNo"
+	Option "Show Gas-Mask Overlay",          "pb_showgasmask",          "YesNo"
+	StaticText "Gas-mask draws between visor glass and helmet shell,", green
+	StaticText "with subtle yaw/pitch sway when you turn or look up/down.", green
+	StaticText " ", teal
+	Slider "Visor Glass Transparency",       "pb_hudalpha",             0, 1, 0.02, 2
+	Slider "Visor Scale",                    "pb_visorscale",           0.2, 0.5, 0.02, 2
+	StaticText "Visor Scale is a multiplier on top of GZDoom's HUD scale", green
+	StaticText "(Display Options -> HUD Scale / Scale Factor): the visor",  green
+	StaticText "tracks your global HUD-size choice. 0.5 = full visor frame", green
+	StaticText "as authored by PB Staging (default + slider max).",         green
+	StaticText "Lower values shrink the visor while keeping the rest of",   green
+	StaticText "the HUD at your chosen size; raise GZDoom's HUD scale if",  green
+	StaticText "you want everything (visor + status bar) larger together.", green
+	Slider "Visor Edge Offset",              "pb_visorofsx",           -32,  32, 1, 0
+	StaticText " ", teal
+	Option "Central Helmet Part",            "pb_visormiddlepartbottom","VisorMiddlePart"
+	StaticText " ", teal
+	StaticText "Top: brace clings to the upper edge of the screen.",       green
+	StaticText "Bottom: brace clings to the lower edge.",                  green
+	StaticText "Both: shows the brace at top and bottom.",                 green
+	StaticText "Off: hides the central brace entirely.",                   green
+	StaticText " ", teal
+}
+
 OptionMenu "PB_KillstreakOptions"
 {
-	Title "Kill Streaks (PB 2022)"
+	Title "Kill Streaks (PB2022)"
 	StaticText "Grab the Gold Globe for Streak Callouts."
 	StaticText "Every 5 Kills Rolls a Reward (Default On)."
 	StaticText " "
@@ -255,7 +292,8 @@ OptionMenu "PB_KillstreakRewardOptions"
 	Option "Demon Strength Rune (Melee Boost)", "pb_ks_r_melee", "OnOff"
 	Option "Coffee Time (speed boost)", "pb_ks_r_coffee", "OnOff"
 	Option "Time Sphere (time freeze)", "pb_ks_r_timesphere", "OnOff"
-	Option "Familiar Summon Sphere", "pb_ks_r_familiar", "OnOff"
+	Option "Drone Summon Sphere", "pb_ks_r_familiar", "OnOff"
+	Option "  Drone Flashlight Beam (forward dynamic light)", "cl_drone_flashlight", "OnOff"
 	Option "Guard Sphere (75 Percent Reduction)", "pb_ks_r_guardsphere", "OnOff"
 	Option "Crucifix", "pb_ks_r_crucifix", "OnOff"
 	Option "Regen Sphere", "pb_ks_r_regensphere", "OnOff"
@@ -263,6 +301,18 @@ OptionMenu "PB_KillstreakRewardOptions"
 	Option "Lifeshield Sphere", "pb_ks_r_lifeshield", "OnOff"
 	Option "Electric Aura Sphere", "pb_ks_r_electricsphere", "OnOff"
 	Option "Legend Sphere (Buddha)", "pb_ks_r_legendsphere", "OnOff"
+	StaticText " "
+	StaticText "----- Realm667 Folded Power-ups -----", gold
+	Option "$OPTMNU_KS_BootsOfTheNorth", "pb_ks_r_bootsnorth",  "OnOff"
+	Option "$OPTMNU_KS_BracersOfForce",  "pb_ks_r_bracers",     "OnOff"
+	Option "$OPTMNU_KS_BookOfTheDead",   "pb_ks_r_deadbook",    "OnOff"
+	Option "$OPTMNU_KS_FireAuraSphere",  "pb_ks_r_fireaura",    "OnOff"
+	Option "$OPTMNU_KS_FlightSphere",    "pb_ks_r_flight",      "OnOff"
+	Option "$OPTMNU_KS_FrostAuraSphere", "pb_ks_r_frostaura",   "OnOff"
+	Option "$OPTMNU_KS_HandOfTheWraith", "pb_ks_r_wraithhand",  "OnOff"
+	Option "$OPTMNU_KS_LichSkull",       "pb_ks_r_lichskull",   "OnOff"
+	Option "$OPTMNU_KS_Pentacle",        "pb_ks_r_pentacle",    "OnOff"
+	Option "$OPTMNU_KS_ReflectorSphere", "pb_ks_r_reflector",   "OnOff"
 	StaticText " "
 }
 
@@ -272,6 +322,7 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText " ", teal
 	Submenu "Gameplay Settings",		"GameplaySettings"
 	Submenu "Advanced Weapon Spawns",		"WeaponSpawns"
+	Submenu "Simpler Monster Settings", "SimplerMonsterSettings"
 	Submenu "Weapon Settings",		"WeaponSettings"
 	Submenu "Global Settings",		"GlobalSettings"
 	Submenu "Visual Settings",		"RenderingSettings"
@@ -340,6 +391,13 @@ OptionMenu "PB_2022AdditionsMenu"
 	Submenu "PBX 2022 Weapon HUD Options", "PBWeaponHudOptions"
 	StaticText " ", teal
 	StaticText " ", teal
+	Option "Show Helmet Visor", "pb_showhudvisor", "YesNo"
+	StaticText " ", teal
+	Submenu "Helmet Visor Options", "PB_HelmetVisorOptions"
+	StaticText " ", teal
+	StaticText "Helmet shell + visor glass overlay (folded from PB Staging).", teal
+	StaticText " ", teal
+	StaticText " ", teal
 	Option "Enable Kill Streak System", "pb_ks_enable", "OnOff"
 	StaticText " ", teal
 	Submenu "Kill Streaks & Power-Up Rewards Options", "PB_KillstreakOptions"
@@ -362,14 +420,9 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText " ", teal
 	StaticText "-----------------Content Packs-----------------", gold
 	StaticText " ", teal
-	Submenu "Simpler Monster Settings", "SimplerMonsterSettings"
-	StaticText " ", teal
-	StaticText " ", teal
 	Submenu "Classic Monster Pack Menu (per-creature)", "MonsterPackSettings"
 	StaticText " ", teal
-	StaticText " ", teal
 	Option "Festive Hat Simulator Mode", "PB_HatExtravaganza", "YesOrNo"
-	StaticText " ", teal
 	StaticText " ", teal
 }
 
@@ -1339,12 +1392,12 @@ ListMenu "MainMenu"
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 			TextItem "Options", "o", "OptionsMenu"
-			TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
+			TextItem "PB2022 ENHANCED", "p", "PB_2022AdditionsMenu"
 		}
 		else
 		{
 			TextItem "Options", "o", "OptionsMenu"
-			TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
+			TextItem "PB2022 ENHANCED", "p", "PB_2022AdditionsMenu"
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 		}
@@ -1359,7 +1412,7 @@ ListMenu "MainMenu"
 	{
 		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
 		TextItem "$MNU_OPTIONS", "o", "OptionsMenu"
-		TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
+		TextItem "PB2022 ENHANCED", "p", "PB_2022AdditionsMenu"
 		TextItem "$MNU_GAMEFILES", "g", "GameFilesMenu"
 		TextItem "$MNU_INFO", "i", "ReadThisMenu"
 		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
@@ -1711,10 +1764,7 @@ OptionMenu "SimplerMonsterSettings"
 	StaticText "Master gate for every folded add-on monster."
 	StaticText "Skips Realm667 + Monster Pack add-ons at the spawner."
 	StaticText " ", teal
-	StaticText " "
 	Option "Disable map decoration enhancements", "pb_disabledecorations", "YesOrNo"
-	StaticText " ", teal
-	StaticText " "
 	Option "Disable map gameplay enhancements", "pb_disablemapenhancements", "YesOrNo"
 	StaticText " "
 	StaticText " "
@@ -1728,14 +1778,13 @@ OptionMenu "SimplerMonsterSettings"
 
 	StaticText "---- Realm667 monsters (Blot, Vulgar, Behemoth, Drone, Venor, ...) ----"
 	StaticText " ", teal
-	Command "Enable all Realm667 monsters",  "set NoBabyCaco 0; set NoBehemoth 0; set NoBlot 0; set NoDrone 0; set NoFusionCyberImp 0; set NoPossessedGibs 0; set NoSlayerKnight 0; set NoVenor 0; set NoVulgar 0"
-	Command "Disable all Realm667 monsters", "set NoBabyCaco 1; set NoBehemoth 1; set NoBlot 1; set NoDrone 1; set NoFusionCyberImp 1; set NoPossessedGibs 1; set NoSlayerKnight 1; set NoVenor 1; set NoVulgar 1"
+	Command "Enable all Realm667 monsters",  "set NoBabyCaco 0; set NoBehemoth 0; set NoBlot 0; set NoBloodGhost 0; set NoBloodSkull 0; set NoDrone 0; set NoFusionCyberImp 0; set NoPossessedGibs 0; set NoSlayerKnight 0; set NoVenor 0; set NoVulgar 0"
+	Command "Disable all Realm667 monsters", "set NoBabyCaco 1; set NoBehemoth 1; set NoBlot 1; set NoBloodGhost 1; set NoBloodSkull 1; set NoDrone 1; set NoFusionCyberImp 1; set NoPossessedGibs 1; set NoSlayerKnight 1; set NoVenor 1; set NoVulgar 1"
 	StaticText " "
 
 	StaticText "---- Monster Pack add-ons (Crackodemon, Hellduke, Director, ...) ----"
 	StaticText " ", teal
 	Command "Enable all Monster Pack add-ons",  "set NoAfrit 0; set NoAracnorb 0; set NoAracnorbQueen 0; set NoCrackodemon 0; set NoCyberSatyr 0; set NoD3HellGuardian 0; set NoD3Maledict 0; set NoDarkDisciple 0; set NoDarkLord 0; set NoDirector 0; set NoESoul 0; set NoHellduke 0; set NoHellSmith 0; set NoHelemental 0; set NoHierophant 0; set NoIceDemon 0; set NoMarauder 0; set NoObsRavager 0; set NoOverlord 0; set NoPyrodemon 0; set NoQSGDreadTrooper 0; set NoRahovart 0; set NoRifleCommando 0; set NoSatyr 0; set NoTerminator 0"
-	StaticText " ", teal
 	Command "Disable all Monster Pack add-ons", "set NoAfrit 1; set NoAracnorb 1; set NoAracnorbQueen 1; set NoCrackodemon 1; set NoCyberSatyr 1; set NoD3HellGuardian 1; set NoD3Maledict 1; set NoDarkDisciple 1; set NoDarkLord 1; set NoDirector 1; set NoESoul 1; set NoHellduke 1; set NoHellSmith 1; set NoHelemental 1; set NoHierophant 1; set NoIceDemon 1; set NoMarauder 1; set NoObsRavager 1; set NoOverlord 1; set NoPyrodemon 1; set NoQSGDreadTrooper 1; set NoRahovart 1; set NoRifleCommando 1; set NoSatyr 1; set NoTerminator 1"
 	StaticText " ", teal
 	StaticText " "
@@ -1743,21 +1792,18 @@ OptionMenu "SimplerMonsterSettings"
 	StaticText "---- Zombie tank reinforcements (vehicle / flyer family) ----"
 	StaticText " ", teal
 	Command "Enable all zombie tanks + flyer",  "set NoZombieTank 0; set NoZombieplasmatank 0; set NoZombiemissiletank 0; set NoZombieFlyer 0; set NoZombietankelite 0"
-	StaticText " ", teal
 	Command "Disable all zombie tanks + flyer", "set NoZombieTank 1; set NoZombieplasmatank 1; set NoZombiemissiletank 1; set NoZombieFlyer 1; set NoZombietankelite 1"
 	StaticText " "
 
 	StaticText "---- Reinforcement / Horrorspawn fodder pool ----"
 	StaticText " ", teal
 	Command "Enable all reinforcement fodder",  "set NoHorror 0; set NoFresh 0; set NoHunger 0; set NoMeleeZombie 0; set NoMeleeSergeant 0; set NoCyberFodder 0; set NoUnwilling 0; set pb_NoProjectSurvivalFodder 0; set pb_NoProjectSurvivalPassive 0"
-	StaticText " ", teal
 	Command "Disable all reinforcement fodder", "set NoHorror 1; set NoFresh 1; set NoHunger 1; set NoMeleeZombie 1; set NoMeleeSergeant 1; set NoCyberFodder 1; set NoUnwilling 1; set pb_NoProjectSurvivalFodder 1; set pb_NoProjectSurvivalPassive 1"
 	StaticText " "
 
 	StaticText "---- Boss-tier summons (queen, director, maledict, ...) ----"
 	StaticText " ", teal
 	Command "Enable all boss-tier summons",  "set NoAracnorbQueen 0; set NoD3HellGuardian 0; set NoD3Maledict 0; set NoDirector 0; set NoHellduke 0; set NoHellSmith 0; set NoObsRavager 0; set NoRahovart 0"
-	StaticText " ", teal
 	Command "Disable all boss-tier summons", "set NoAracnorbQueen 1; set NoD3HellGuardian 1; set NoD3Maledict 1; set NoDirector 1; set NoHellduke 1; set NoHellSmith 1; set NoObsRavager 1; set NoRahovart 1"
 	StaticText " "
 	StaticText " "
@@ -1885,6 +1931,8 @@ OptionMenu "MonsterPackSettings"
 	StaticText "---------------Lost soul variants---------------", gold
 	Option "T4 — Ethereal soul", "NoESoul", "OffOn"
 	Option "T2 — Drone (Realm667)", "NoDrone", "OffOn"
+	Option "T2 — Blood Ghost (Realm667)", "NoBloodGhost", "OffOn"
+	Option "T2 — Blood Skull (Realm667)", "NoBloodSkull", "OffOn"
 	StaticText " "
 	StaticText "---------------Mancubus variants---------------", gold
 	Option "T3 — Terminator", "NoTerminator", "OffOn"

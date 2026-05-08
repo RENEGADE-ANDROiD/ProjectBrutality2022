@@ -1131,6 +1131,60 @@ action StateLabel PB_ExecutionCrackodemon() {
 		return result;
 	}
 
+	// Realm 667 - Blood Ghost (KILLA DIO). Humanoid silhouette flying ghost.
+	// Grants ExecutionToken to the target so the cacodemon-pattern SetState(null)
+	// vanish path runs cleanly while the visual PB_Realm667_BloodGhost_Execution
+	// actor plays through the dismemberment animation next to the player.
+	action StateLabel PB_ExecutionBloodGhost() {
+		A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET);
+		StateLabel result;
+		int selector = random(1, 2);
+		FLineTraceData RemoteRay;
+		bool wallcheck = LineTrace(
+			angle,
+			120,
+			pitch,
+			TRF_THRUACTORS,
+			offsetz: height-12,
+			data: RemoteRay
+		);
+		if ((Pos.Z-floorz) > 8) {
+			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
+			result = "Execution_BloodGhost1";
+			return result;
+		}
+		switch (selector) {
+			case 1: result = "Execution_BloodGhost1"; break;
+			case 2: result = "Execution_BloodGhost2"; break;
+			default: result = "Execution_BloodGhost1"; break;
+		}
+		return result;
+	}
+
+	// Realm 667 - Blood Skull (Gothic). Tiny floating skull.
+	// Single execution variant -- no humanoid body to animate against, so the visual
+	// actor plays the source death frames at an offset that matches the player aim.
+	action StateLabel PB_ExecutionBloodSkull() {
+		A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET);
+		StateLabel result;
+		FLineTraceData RemoteRay;
+		bool wallcheck = LineTrace(
+			angle,
+			120,
+			pitch,
+			TRF_THRUACTORS,
+			offsetz: height-12,
+			data: RemoteRay
+		);
+		if ((Pos.Z-floorz) > 8) {
+			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
+			result = "Execution_BloodSkull1";
+			return result;
+		}
+		result = "Execution_BloodSkull1";
+		return result;
+	}
+
 	action StateLabel PB_ExecutionHandlerString(Actor monster)
 	{
 		PB_SetExecutionBlueBlood(false);
@@ -1225,6 +1279,12 @@ action StateLabel PB_ExecutionCrackodemon() {
 			return PB_ExecutionBehemoth();
 		case 'Behemoth':
 			return PB_ExecutionBehemoth();
+		case 'PB_Realm667_BloodGhost':
+		case 'PB_Realm667_BloodGhostGK':
+			return PB_ExecutionBloodGhost();
+		case 'PB_Realm667_BloodSkull':
+		case 'PB_Realm667_BloodSkullGK':
+			return PB_ExecutionBloodSkull();
 		case 'D3HellGuardian':
 			return PB_ExecutionD3HellGuardian();
 		case 'D3Maledict':

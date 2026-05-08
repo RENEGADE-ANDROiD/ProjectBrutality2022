@@ -429,6 +429,38 @@ server	float	pb_minlanding			= 0.5;
 
 server	bool	pb_dash					= true;
 user	bool	pb_dasheffect			= true;
+
+// Helmet visor overlay (folded from PB Staging PB_Hud.zs).
+// PB_VisorHandler (zscript/PB_VisorOverlay.zc) reads these.
+// pb_visorscale acts as a *relative* multiplier on top of GZDoom's engine
+// HUD scaling -- DrawVisorPiece / DrawGasmask query `statusbar.GetHUDScale()`
+// (driven by hud_scale + hud_scalefactor + hud_aspectscale, plus the engine
+// auto-fit fallback when factor=0) so the visor frame tracks the user's
+// global HUD-size choice instead of a fixed scrH/200 anchor. This is the
+// same idiom SpeedoMeterHandler in `zscript/PlayerPawn.zc` uses.
+// MENUDEF caps the pb_visorscale slider at 0.5 because that's the visual
+// max for the authored corner / glass / brace artwork -- higher values
+// quickly look oversized and start clipping into other HUD elements. The
+// slider lower bound (0.2) shrinks the visor while still leaving the rest
+// of the HUD at the user's chosen size; raise GZDoom's HUD scale (NOT
+// pb_visorscale) if everything should grow together. Both the corner-
+// piece base inset (24 px) and the center-brace inset (44/50 px) are
+// multiplied by pb_visorscale at draw time, so the brace stays anchored
+// to the screen edge at any slider value.
+// The visor renders via PB_VisorHandler.RenderUnderlay (NOT RenderOverlay)
+// so the SBARINFO bar paints on top of the bottom corner pieces.
+user	bool	pb_showhudvisor			= true;
+user	bool	pb_showhudvisorglass	= true;
+// Optional 2nd visor layer (fullscreen gas-mask overlay). Drawn between the
+// visor glass and the helmet shell, with subtle inertial yaw/pitch sway tied
+// to the player's view changes. Default off because not every playthrough
+// fits the breathing-mask aesthetic.
+user	bool	pb_showgasmask			= false;
+user	float	pb_hudalpha				= 0.7;
+user	float	pb_visorscale			= 0.5;
+user	float	pb_visorofsx			= 0.0;
+user	float	pb_visorofsy			= 0.0;
+user	int		pb_visormiddlepartbottom = 0;
 // Kill streaks (Universal Kill Streaks–style; ZScript in zscript/Items/PBKillstreak/)
 user	bool	pb_ks_enable			= true;
 user	bool	pb_ks_bigmsg			= true;
@@ -447,6 +479,10 @@ user	bool	pb_ks_r_melee			= true;
 user	bool	pb_ks_r_coffee			= true;
 user	bool	pb_ks_r_timesphere		= true;
 user	bool	pb_ks_r_familiar		= true;
+// Optional forward flashlight cone for the friendly Drone summon (see
+// actors/Items/PBKillstreak/PB_UnlessYouHavePowah.dec - DroneFlashlightBeam).
+// User cvar so each player can opt in without the host forcing it.
+user	bool	cl_drone_flashlight		= false;
 user	bool	pb_ks_r_guardsphere		= true;
 user	bool	pb_ks_r_crucifix		= true;
 user	bool	pb_ks_r_regensphere		= true;
@@ -458,6 +494,17 @@ user	bool	pb_ks_r_backpack		= true;
 user	int		pb_ks_r_backpack_chance	= 4;
 user	bool	pb_ks_r_supplies			= true;
 user	int		pb_ks_r_supplies_chance	= 20;
+// Realm667 power-up fold (kill streak reward pool toggles).
+user	bool	pb_ks_r_bootsnorth		= true;
+user	bool	pb_ks_r_bracers			= true;
+user	bool	pb_ks_r_deadbook		= true;
+user	bool	pb_ks_r_fireaura		= true;
+user	bool	pb_ks_r_flight			= true;
+user	bool	pb_ks_r_frostaura		= true;
+user	bool	pb_ks_r_wraithhand		= true;
+user	bool	pb_ks_r_lichskull		= true;
+user	bool	pb_ks_r_pentacle		= true;
+user	bool	pb_ks_r_reflector		= true;
 user	bool	pb_doubletap			= false;		
 user	int		pb_maxtaptime			= 10;
 server	float	pb_dashboost			= 15.0;
@@ -730,6 +777,8 @@ server int NoCrackodemon = 0;
 // pb_disablenewenemies). NoBehemoth was previously declared but unused; now wired.
 server int NoBabyCaco = 0;
 server int NoBlot = 0;
+server int NoBloodGhost = 0;
+server int NoBloodSkull = 0;
 server int NoDrone = 0;
 server int NoFusionCyberImp = 0;
 server int NoPossessedGibs = 0;

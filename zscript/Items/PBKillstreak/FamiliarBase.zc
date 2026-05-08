@@ -1,0 +1,60 @@
+// FamiliarBase: thin ZScript parent for the kill-streak Drone Familiar
+// (`actors/Items/PBKillstreak/PB_UnlessYouHavePowah.dec`'s `ACTOR Familiar`).
+//
+// Why this exists: the Familiar inherits all of its DECORATE state machinery
+// (Spawn / Chase / Missile / Pain / Death / Ice / etc.) from the .dec file --
+// we only need to add ONE behavior (player-fire immunity) that DECORATE can't
+// express, and converting the entire Familiar to ZScript would be a large
+// pointless rewrite. Instead we declare this minimal ZScript parent class
+// with the override, and the DECORATE actor inherits from it (DECORATE-from-
+// ZScript inheritance is the same pattern PB_Monster + its DECORATE wrappers
+// use, see AGENTS.md "Monster base classes" bullet).
+//
+// Behavior: friendly-drone helper survives accidental player friendly fire.
+// The user's repro was "Our Drone disappeared once after I shot it by accident.
+// It shouldn't leave when the player hits it." -- accidental rocket / BFG /
+// SSG-up-close hits could still cleave through the helper's Health 1000 in a
+// single tic, and `+QUICKTORETALIATE` made the drone re-target the player
+// after a hit. With this override, all damage that traces back to a player
+// (direct hitscan, shoulder-fired projectile, melee, environmental from a
+// player-owned source like a spawned barrel explosion) is zero'd out before
+// it lands, so the kill-streak helper can't be killed by friendly fire and
+// won't retaliate at the summoner. Enemy damage is still applied normally
+// (Health 1000 + +NOPAIN+NODAMAGE during deploy is unchanged).
+//
+// We keep the override surgical: only the source-resolution chain returns 0;
+// non-player sources go through `Super.DamageMobj` exactly as before so
+// `+QUICKTORETALIATE`, monster Pain triggers, monster scoring, friendly-fire
+// from non-player friends, console `kill` (null source -> not filtered),
+// telefrag splash from a non-player monster, etc. all still work.
+
+class FamiliarBase : Actor
+{
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		// Direct player hit (melee, hitscan source = player pawn).
+		if (source && source.player)
+		{
+			return 0;
+		}
+		// Some action functions pass the player as `inflictor` directly.
+		if (inflictor && inflictor.player)
+		{
+			return 0;
+		}
+		// Player-fired projectile: the projectile is the inflictor, and its
+		// `target` slot is the firer (set by A_FireProjectile / A_CustomMissile
+		// / A_SpawnProjectile / etc.). Walk inflictor.target -> player.
+		if (inflictor && inflictor.target && inflictor.target.player)
+		{
+			return 0;
+		}
+		// Less common: chained `source.target` (puff-emitting hitscan
+		// sometimes passes the puff as source whose target is the firer).
+		if (source && source.target && source.target.player)
+		{
+			return 0;
+		}
+		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+	}
+}

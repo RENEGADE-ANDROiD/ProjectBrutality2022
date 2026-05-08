@@ -171,7 +171,7 @@ class ElectricAuraPower : Powerup
     {
         super.InitEffect();
 
-        arad = 120;   // smaller radius (original was 384)
+        arad = 160;   // small/medium tactical radius (original was 384, dropped to 120, then bumped slightly so the field noticeably reaches past adjacent monsters; Fire matches this as the sister zapper)
 
         if (owner)
         {

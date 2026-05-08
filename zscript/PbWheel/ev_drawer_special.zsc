@@ -37,10 +37,11 @@ Extend Class PB_SpecialWheelHandler
 	{
 		double sc = specialWheelLayoutScale > 0 ? specialWheelLayoutScale : 0.55;
 
-		// Equipment-only wheels render ~33% more compactly (background, cursor, and
-		// orbit). Icon sizes still use `sc` so equipment icons keep their authored
-		// scaling. Weapon-special wheels (M41A modes, Hell Pistoler modes, etc.) and
-		// the Gearbox-driven weapon-pick branch keep the original layout.
+		// Equipment-only wheels render ~16% more compactly (background, cursor, and
+		// orbit) — bumped 25% from the prior 0.67 multiplier. Icon sizes still use
+		// `sc` so equipment icons keep their authored scaling. Weapon-special wheels
+		// (M41A modes, Hell Pistoler modes, etc.) and the Gearbox-driven weapon-pick
+		// branch keep the original layout.
 		bool isEquipmentWheel = !weaponPickWheel && wheelShow.Size() > 0;
 		if (isEquipmentWheel)
 		{
@@ -54,7 +55,7 @@ Extend Class PB_SpecialWheelHandler
 				}
 			}
 		}
-		double layoutSc = sc * (isEquipmentWheel ? 0.67 : 1.0);
+		double layoutSc = sc * (isEquipmentWheel ? 0.8375 : 1.0);
 
 		int orbit = int(128 * layoutSc);
 		int circleX = 640*0.75;

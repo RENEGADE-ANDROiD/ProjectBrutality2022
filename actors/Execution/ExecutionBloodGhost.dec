@@ -1,0 +1,59 @@
+// Visual execution effect actor for PB_Realm667_BloodGhost (KILLA DIO).
+// Spawned next to the player from Execution_BloodGhost1 / Execution_BloodGhost2
+// in BaseWeapon.dec. Plays through the source death frames + xdeath gibs and
+// adds Project Brutality gore. Targeted Blood Ghost is silenced + destroyed by
+// the standard ExecutionToken -> SetState(null) path used for cacodemon-style
+// flying executions; this actor is purely visual and SXF_SETMASTER-linked to
+// the player so A_FaceMaster reads the correct direction.
+
+ACTOR PB_Realm667_BloodGhost_Execution
+{
+    Scale 1.0
+    +NOINTERACTION
+    +FORCEXYBILLBOARD
+    +Clientsideonly
+    +NOGRAVITY
+    States
+    {
+    Spawn:
+        TNT1 A 0
+        TNT1 A 0 A_FaceMaster
+        // First-pass: ghost claws / pain
+        GHST FFGGHH 2 A_FaceMaster
+        TNT1 A 0 {
+            A_StartSound("BloodGhost/pain", CHAN_BODY);
+            A_SpawnProjectile("PB_MuchBlood", 30, 0, random(170, 219), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 100));
+            A_SpawnProjectile("NashGoreBlood", 29, 0, random(0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+            A_SpawnProjectile("NashGoreBlood", 25, 0, random(0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+            A_SpawnProjectile("XDeath1", 28, 0, random(0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+            A_SpawnProjectile("XDeath1", 29, 0, random(0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+        }
+        GHST IJ 4 A_FaceMaster
+        // Second-pass: tear apart
+        TNT1 A 0 {
+            A_StartSound("BloodGhost/death", CHAN_VOICE);
+            A_StartSound("gore/headshot", CHAN_BODY);
+            A_SpawnProjectile("PB_MuchBlood2", 30, 0, random(0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+            A_SpawnProjectile("PB_MuchBlood2", 28, 0, random(0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+            A_SpawnProjectile("NashGoreBlood", 32, 0, random(0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+            A_SpawnProjectile("NashGoreBlood", 30, 0, random(0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(0, 160));
+            A_SpawnProjectile("PB_BloodmistLarge", 30, 0, random(0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(30, 90));
+            A_SpawnProjectile("PB_BloodmistLarge", 28, 0, random(0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random(30, 90));
+        }
+        GHST KLM 4 A_FaceMaster
+        TNT1 A 0 {
+            A_SpawnDebris("Realm667_GhostBlood", false, random(2, 5), random(2, 5));
+            A_SpawnDebris("Realm667_GhostGib1", false, random(2, 5), random(2, 4));
+            A_SpawnDebris("Realm667_GhostGib2", false, random(2, 5), random(2, 4));
+            A_SpawnDebris("Realm667_GhostGib3", false, random(2, 5), random(2, 4));
+            A_SpawnDebris("Realm667_GhostGib4", false, random(2, 5), random(2, 4));
+            A_SpawnDebris("Realm667_GhostGib5", false, random(2, 5), random(2, 4));
+            A_SpawnDebris("Realm667_GhostGib6", false, random(2, 5), random(2, 4));
+        }
+        GHST N 4 A_ChangeFlag("NOGRAVITY", false)
+        GHST O 6
+        // Drop a pinata + leave the resting frame
+        TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2", 0, 0, Height/2, random(0,8), 0, random(0,8), random(0,360))
+        Stop
+    }
+}

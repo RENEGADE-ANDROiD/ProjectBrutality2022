@@ -1,0 +1,222 @@
+// Realm 667 - Blood Ghost (KILLA DIO)
+// Folded into Project Brutality 2022 as PB_Realm667_BloodGhost. Lost-soul-tier flying
+// humanoid ghost: melee + slow plasma-style projectile, drops 1HP ghost bonus on death.
+// Scaled to PB_Monster like the other Realm667 monsters; sound aliases moved to BloodGhost/*
+// to dodge the engine-level WHIT clash with weapon hitsounds.
+
+ACTOR PB_Realm667_BloodGhost : PB_Monster
+{
+    Health 100
+    Radius 16
+    Height 56
+    Mass 50
+    Speed 8
+    Game Doom
+    Scale 1
+    PainChance 136
+    BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
+    damagefactor "Blood", 0.0
+    damagefactor "BlueBlood", 0.0
+    damagefactor "GreenBlood", 0.0
+    Monster
+    DropItem "GhostHealthBonus"
+    +FLOAT
+    +NOGRAVITY
+    +MISSILEMORE
+    +DONTFALL
+    +NOICEDEATH
+    +FLOATBOB
+    AttackSound "BloodGhost/attack"
+    SeeSound   "BloodGhost/sight"
+    PainSound  "BloodGhost/pain"
+    DeathSound "BloodGhost/death"
+    ActiveSound "BloodGhost/idle"
+    Obituary "%o was haunted to death by a Blood Ghost."
+    HitObituary "%o was clawed apart by a Blood Ghost."
+    States
+    {
+    Spawn:
+        GHST AB 10 A_Look
+        Loop
+    See:
+        GHST AABB 3 A_Chase
+        Loop
+    Missile:
+        TNT1 A 0 A_PlaySound("BloodGhost/attack", CHAN_WEAPON)
+        TNT1 A 0 A_SpawnProjectile("Realm667_GhostBall")
+        GHST E 6 Bright A_FaceTarget
+        Goto See
+    Melee:
+        GHST C 10 Fast A_FaceTarget
+        GHST D 8 Fast A_CustomMeleeAttack(15, "BloodGhost/melee")
+        Goto See
+    Pain:
+        GHST F 3 Fast
+        GHST F 3 Fast A_Pain
+        Goto See
+    Death:
+        GHST F 4
+        GHST G 4 A_ScreamAndUnblock
+        GHST H 4
+        GHST I 4
+        GHST JKLM 4
+        GHST N 4 A_ChangeFlag("NOGRAVITY", false)
+        GHST O -1
+    Crash:
+        GHST P -1 A_SetFloorClip
+        Stop
+    XDeath:
+        TNT1 A 0 A_XScream
+        TNT1 A 0 A_NoBlocking
+        TNT1 A 0 A_SpawnDebris("Realm667_GhostBlood", false, random(1,5), random(1,5))
+        TNT1 A 0 A_SpawnDebris("Realm667_GhostGib1", false, random(1,5), random(1,3))
+        TNT1 A 0 A_SpawnDebris("Realm667_GhostGib2", false, random(1,5), random(1,3))
+        TNT1 A 0 A_SpawnDebris("Realm667_GhostGib3", false, random(1,5), random(1,3))
+        TNT1 A 0 A_SpawnDebris("Realm667_GhostGib4", false, random(1,5), random(1,3))
+        TNT1 A 0 A_SpawnDebris("Realm667_GhostGib5", false, random(1,5), random(1,3))
+        TNT1 A 1 A_SpawnDebris("Realm667_GhostGib6", false, random(1,5), random(1,3))
+        Stop
+    Death.cut:
+        Goto XDeath+0
+    Death.Flames:
+        Goto Death+0
+    Death.ExtremePunches:
+        Goto XDeath+0
+    }
+}
+
+// Projectile fire ball (renamed from Ghostball -> Realm667_GhostBall for namespace safety)
+ACTOR Realm667_GhostBall
+{
+    Radius 6
+    Height 8
+    Speed 15
+    FastSpeed 30
+    Damage 3
+    Projectile
+    RenderStyle Add
+    Alpha 1
+    DeathSound "BloodGhost/hit"
+    States
+    {
+    Spawn:
+        GBOM AE 4 Bright
+        Loop
+    Death:
+        GBOM BCD 6 Bright
+        Stop
+    }
+}
+
+ACTOR Realm667_GhostBlood
+{
+    Mass 5
+    Health 30
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +ALLOWPARTICLES
+    States
+    {
+    Spawn:
+        GHG2 HIJK 8
+        Stop
+    }
+}
+
+ACTOR Realm667_GhostGib1
+{
+    Mass 5
+    Health 1
+    States
+    {
+    Spawn:
+        GHGB ABCDEFGH 8
+        GHGB A -1
+        Stop
+    }
+}
+
+ACTOR Realm667_GhostGib2
+{
+    Mass 5
+    Health 1
+    States
+    {
+    Spawn:
+        GHGB IJ 8
+        GHGB K -1
+        Stop
+    }
+}
+
+ACTOR Realm667_GhostGib3
+{
+    Mass 5
+    Health 1
+    States
+    {
+    Spawn:
+        GHGB LMN 8
+        GHGB O -1
+        Stop
+    }
+}
+
+ACTOR Realm667_GhostGib4
+{
+    Mass 5
+    Health 1
+    States
+    {
+    Spawn:
+        GHGB QRSTUVW 8
+        GHGB Q -1
+        Stop
+    }
+}
+
+ACTOR Realm667_GhostGib5
+{
+    Mass 5
+    Health 1
+    States
+    {
+    Spawn:
+        GHGB XYZ 8
+        GHG2 ABC 8
+        GHG2 C -1
+        Stop
+    }
+}
+
+ACTOR Realm667_GhostGib6
+{
+    Mass 5
+    Health 1
+    +RANDOMIZE
+    States
+    {
+    Spawn:
+        GHG2 D -1
+        GHG2 E -1
+        GHG2 F -1
+        GHG2 G -1
+        Stop
+    }
+}
+
+ACTOR GhostHealthBonus : Health
+{
+    +COUNTITEM
+    +INVENTORY.ALWAYSPICKUP
+    Inventory.Amount 1
+    Inventory.MaxAmount 200
+    Inventory.PickupMessage "$PB_PICKUP_GhostHealthBonus"
+    Inventory.PickupSound "Health_Small"
+    States
+    {
+    Spawn:
+        GHPK ABCDCB 6 Bright
+        Loop
+    }
+}
