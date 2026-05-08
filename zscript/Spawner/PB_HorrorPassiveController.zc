@@ -74,9 +74,12 @@ class PB_HorrorPassiveController : Actor
 		Destroy();
 	}
 	// Weights = Horrorspawnmap RandomSpawner; Hunger* scaled by HungerMultiplier/5; No* as in pack fodder.
+	// Hunger pool weights (w4=HungryGroup, w6=Hunger) bumped from 2/1 to 4/3: Hunger (HP 20) is
+	// zombieman-tier fodder and was massively under-represented vs Horrorspawn1 (w1=50). The bump
+	// keeps Horrorspawn1 dominant (~46% of pool) while raising Hunger combined share from ~3% to ~6.5%.
 	String PickHorrorspawnMap(int hungerMul)
 	{
-		int w1=50, w2=4, w3=6, w4=2, w5=30, w6=1;
+		int w1=50, w2=4, w3=6, w4=4, w5=30, w6=3;
 		if (PB_HorrorPassiveUtil.I("nohorror", 0) == 1)
 			w1 = w2 = w5 = 0;
 		if (PB_HorrorPassiveUtil.I("nofresh", 0) == 1)

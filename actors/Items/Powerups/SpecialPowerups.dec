@@ -141,7 +141,7 @@ ACTOR DoubleSphere : PowerupGiver
 	Powerup.Type "PowerDoubleDamage"
 	Powerup.Duration -30
 	Translation "0:255=%[0,0,0]:[1,0,1]"
-	Powerup.Color 255, 0, 255, 0.042
+	Powerup.Color 255, 0, 255, 0.012
 	Inventory.PickupSound "items/sphere6"
   Inventory.PickupMessage "You got the Doom sphere. Your arsenal craves blood..."
 	States
@@ -171,7 +171,7 @@ actor HasteSphere : PowerupGiver
 	inventory.pickupmessage "You got the Haste Sphere. Your body trembles with energy..."
 	inventory.maxamount 0
 	powerup.duration -30
-	powerup.color "FF FF 00", 0.03
+	powerup.color "FF FF 00", 0.012
 	powerup.type Speed
 	-COUNTITEM
 	+FloatBob
@@ -203,7 +203,7 @@ actor RageDamageActivate : PowerupGiver
 {
 	Inventory.PickupMessage ""
 	Powerup.Type "PowerRageDamage"
-	Powerup.Color Red 0.3
+	Powerup.Color Red 0.05
 	Inventory.MaxAmount 0
 	Powerup.Duration -30
 	Inventory.PickupSound ""
@@ -230,7 +230,7 @@ ACTOR RageSphere : PowerupGiver
 	Inventory.MaxAmount 0
 	Powerup.Type Frightener
 	Powerup.Duration -30
-	Powerup.Color 255, 0, 0, 0.125
+	Powerup.Color 255, 0, 0, 0.04
 	Inventory.PickupMessage "You got the Terror Sphere!! May your enemies tremble before you"
 	Inventory.PickupSound "items/sphere7"
 	States

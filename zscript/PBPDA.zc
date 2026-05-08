@@ -760,15 +760,32 @@ class PB_EventHandler : EventHandler
 	{
 		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
-		DrawPB2022WeaponPickupOverlay();
-		DrawPB2022WeaponModeOverlay();
+		// Hide HUD overlays (pickup messages, weapon-mode tag, dash flash)
+		// during third-person executions / fatalities. ACS scripts 477/171
+		// in `SRC/SCHASECAM.txt` grant `CameraRunner` on execution entry and
+		// revoke it on exit, so we use that as the gate. Same check mirrored
+		// in `PB_VisorHandler.RenderUnderlay` (visor + gas-mask layers) and
+		// around each `statusbar` block in `SBARINFO.txt`. Mouse / PDA UI
+		// bookkeeping below this guard is intentionally allowed to keep
+		// running so closing the PDA mid-execution doesn't desync.
+		bool hideHUD = false;
+		if (playeringame[consoleplayer])
+		{
+			let plr = players[consoleplayer];
+			if (plr && plr.mo && plr.mo.CountInv("CameraRunner") > 0) hideHUD = true;
+		}
+		if (!hideHUD)
+		{
+			DrawPB2022WeaponPickupOverlay();
+			DrawPB2022WeaponModeOverlay();
+		}
 		bool dashEffectOn = false;
 		if (playeringame[consoleplayer])
 		{
 			let cvDash = CVar.GetCVar("pb_dasheffect", players[consoleplayer]);
 			if (cvDash) { dashEffectOn = cvDash.GetBool(); }
 		}
-		if (dashAlpha > 0 && dashEffectOn)
+		if (!hideHUD && dashAlpha > 0 && dashEffectOn)
 		{
 			TextureID dashTex = TexMan.CheckForTexture("graphics/hud/fullscrn/pb_dashoverlay.png", TexMan.Type_Any);
 			if (dashTex)

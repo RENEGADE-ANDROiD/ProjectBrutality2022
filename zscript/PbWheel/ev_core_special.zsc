@@ -1626,14 +1626,14 @@ Class PB_SpecialWheelHandler : EventHandler
 		wheelSpecials.Clear();
 		iconScale = (0.75, 0.75);
 		PB_SpecialWheel_Mode lev_357 = new ("PB_SpecialWheel_Mode");
-		lev_357.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Semi.png", TexMan.Type_Any);
+		lev_357.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Magnum.png", TexMan.Type_Any);
 		lev_357.specialName = "Select_LeverAction_357";
 		lev_357.specialAlias = ".357 Revolver rounds";
 		lev_357.specialPriority = 1;
 		lev_357.iconScale = iconScale;
 		wheelSpecials.Push(lev_357);
 		PB_SpecialWheel_Mode lev_marlin = new ("PB_SpecialWheel_Mode");
-		lev_marlin.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Auto.png", TexMan.Type_Any);
+		lev_marlin.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Marlin.png", TexMan.Type_Any);
 		lev_marlin.specialName = "Select_LeverAction_Marlin";
 		lev_marlin.specialAlias = ".444 Marlin rounds";
 		lev_marlin.specialPriority = 2;

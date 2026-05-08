@@ -1,5 +1,33 @@
 [enu default]
 
+// Realm667 power-up fold (kill streak reward pool entries).
+PB_PICKUP_BootsOfTheNorth   = "Boots of the North! Cold damage halved.";
+PB_PICKUP_BracersOfForce    = "Bracers of Force! 75% damage reduction.";
+PB_PICKUP_BookOfTheDead     = "Book of the Dead! The graves are restless...";
+PB_PICKUP_FireAuraSphere    = "Fire Aura! Incinerates anything that gets close.";
+PB_PICKUP_FlightSphere      = "Flight Sphere! You feel lighter.";
+PB_PICKUP_FrostAuraSphere   = "Frost Aura! Slows and freezes anything that gets close.";
+PB_PICKUP_HandOfTheWraith   = "Hand of the Wraith! Curse with one shot.";
+PB_PICKUP_LichSkull         = "Lich Skull! Double damage and speed.";
+PB_PICKUP_Pentacle          = "Pentacle of Projection! Pushed everything away.";
+PB_PICKUP_ReflectorSphere   = "Reflector Sphere! Invulnerability with reflected projectiles.";
+
+// Realm667 monster fold (Blood Ghost / Blood Skull) -- pickup string for the
+// Blood Ghost's drop bonus (1HP ghostly health globe).
+PB_PICKUP_GhostHealthBonus  = "Picked up a ghostly health bonus.";
+
+// Realm667 kill streak reward menu rows.
+OPTMNU_KS_BootsOfTheNorth = "Boots of the North (50 Percent Cold Reduction)";
+OPTMNU_KS_BracersOfForce  = "Bracers of Force (75 Percent Damage Reduction)";
+OPTMNU_KS_BookOfTheDead   = "Book of the Dead (Zombie Hand Swarm)";
+OPTMNU_KS_FireAuraSphere  = "Fire Aura Sphere (Burn Aura)";
+OPTMNU_KS_FlightSphere    = "Flight Sphere";
+OPTMNU_KS_FrostAuraSphere = "Frost Aura Sphere (Freeze Aura)";
+OPTMNU_KS_HandOfTheWraith = "Hand of the Wraith (Curse Projectile)";
+OPTMNU_KS_LichSkull       = "Lich Skull (Damage + Speed)";
+OPTMNU_KS_Pentacle        = "Pentacle of Projection (Repulsion Blast)";
+OPTMNU_KS_ReflectorSphere = "Reflector Sphere (Reflective Invulnerability)";
+
 GOTCLIP = "Picked up a Magazine.";
 GOTHTHNEED = "Picked up a health bonus. It's not enough health to manage, but you needed it anyway." ;
 GOTMEDPAKNEED = "Picked up a medipack that you DESPERATELY needed!";

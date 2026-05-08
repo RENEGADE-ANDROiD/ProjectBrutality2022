@@ -4,6 +4,14 @@ monospacefonts true, "0";
 
 statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutality
 {
+	// Hide the entire fullscreen HUD during third-person executions /
+	// fatalities. ACS scripts 477 / 171 in `SRC/SCHASECAM.txt` (called from
+	// the `Fatality*` states in `actors/Player/NEWPLAYE.dec`) grant
+	// `CameraRunner` on entry and revoke it on exit, so the body is gated
+	// on absence of that token. Same gate is mirrored in
+	// `PB_VisorHandler.RenderUnderlay` (visor + gas-mask) and
+	// `PB_EventHandler.RenderOverlay` (pickup / mode / dash overlays).
+	InInventory CameraRunner { } else {
 	//health
 		drawimage "BARBACK1", 124, -32, centerbottom, 180, 22;
 		InInventory PowerStrength
@@ -1216,6 +1224,10 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 
 statusbar normal // Modified Doom Status bar
 {
+	// Mirrors the `InInventory CameraRunner` HUD-hide gate on the
+	// `statusbar fullscreen` block above. See that block (or
+	// `zscript/PB_VisorOverlay.zc` / `zscript/PBPDA.zc`) for context.
+	InInventory CameraRunner { } else {
 	drawimage "STBAR", 0, 168;
 	drawimage "STTPRCNT", 90, 171;
 	drawimage "STTPRCNT", 221, 171;
@@ -1386,14 +1398,19 @@ statusbar normal // Modified Doom Status bar
 	{
 		drawmugshot "STF", 5, 143, 168;
 	}
+	} // close `InInventory CameraRunner ... else { ... }` HUD-hide gate
 }
 
 //totally not stolen from complex doom
 statusbar inventoryfullscreen, fullscreenoffsets // Inventory stuff for Fullscreen statusbar
 {
+   InInventory CameraRunner { } else {
    DrawInventoryBar Doom, Translucent, 6, INDEXFONT_DOOM, -96 + Center, 0, -68 + Center, 2, White;
+   } // close HUD-hide gate
 }
 statusbar inventory, fullscreenoffsets // Inventory stuff for Normal statusbar
 {
+   InInventory CameraRunner { } else {
    DrawInventoryBar Doom, Translucent, 6, INDEXFONT_DOOM, -96 + Center, 0, -68 + Center, 2, White;
+   } // close HUD-hide gate
 }

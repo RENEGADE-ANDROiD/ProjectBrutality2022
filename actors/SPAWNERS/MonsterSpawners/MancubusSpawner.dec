@@ -72,8 +72,10 @@ Actor MancubusPackSpawner : Demonpickup
 		Spawn: 	// Checks for the tokens distributed above and spawns the correct monster accordingly
 		TNT1 A 3
 		// Realm667 mancubus-tier addition (gated by pb_disablenewenemies + NoBehemoth).
+		// Behemoth is a fat cybermancubus with HP 2400 -- much tougher than PB_Mancubus (HP 600).
+		// Kept rare (~1.6% of mancubus spawns, was ~0.8%) so the boss-tier brute does not flood maps.
 		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "Realm667Skip")
-		TNT1 A 0 A_Jump(2, "SpawnRealm667Behemoth")
+		TNT1 A 0 A_Jump(4, "SpawnRealm667Behemoth")
 		Realm667Skip:
 		TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 		TNT1 A 0 A_JumpIfInventory("IsVolcabus", 1, "SpawnVolcabus")

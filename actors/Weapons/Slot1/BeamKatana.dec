@@ -294,11 +294,11 @@ Actor KatanaShieldSpawnerYEET
   {
   Spawn:
     TNT1 A 1
-    TNT1 A 0 A_SpawnItemEx ("KatanaShieldSpawner5", 8, 0, 0)
-    TNT1 A 0 A_SpawnItemEx ("KatanaShieldSpawner4", 8, 24, 0)
-    TNT1 A 0 A_SpawnItemEx ("KatanaShieldSpawner4", 8, -24, 0)
-    TNT1 A 0 A_SpawnItemEx ("KatanaShieldSpawner3", 8, 48, 0)
-    TNT1 A 0 A_SpawnItemEx ("KatanaShieldSpawner3", 8, -48, 0)
+    TNT1 A 0 A_SpawnItemEx ("KatanaShieldSpawner5", 22, 0, 0)
+    TNT1 A 0 A_SpawnItemEx ("KatanaShieldSpawner4", 22, 24, 0)
+    TNT1 A 0 A_SpawnItemEx ("KatanaShieldSpawner4", 22, -24, 0)
+    TNT1 A 0 A_SpawnItemEx ("KatanaShieldSpawner3", 22, 48, 0)
+    TNT1 A 0 A_SpawnItemEx ("KatanaShieldSpawner3", 22, -48, 0)
     Stop
   }
 }

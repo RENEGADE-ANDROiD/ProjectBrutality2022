@@ -33,6 +33,9 @@
 #include "lumps/includes/gldefs/HelmetDrops.inc"
 #include "lumps/includes/gldefs/D3Maledict.inc"
 #include "lumps/includes/gldefs/ObsidianRavager.inc"
+#include "lumps/includes/gldefs/Realm667Powerups.inc"
+#include "lumps/includes/gldefs/Realm667_Monsters_BloodGhostSkull.inc"
+#include "lumps/includes/gldefs/FriendlyDrone.inc"
 
 flickerlight2 FT_GroundFire
 {

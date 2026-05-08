@@ -37,24 +37,13 @@ Extend Class PB_SpecialWheelHandler
 	{
 		double sc = specialWheelLayoutScale > 0 ? specialWheelLayoutScale : 0.55;
 
-		// Equipment-only wheels render ~33% more compactly (background, cursor, and
-		// orbit). Icon sizes still use `sc` so equipment icons keep their authored
-		// scaling. Weapon-special wheels (M41A modes, Hell Pistoler modes, etc.) and
-		// the Gearbox-driven weapon-pick branch keep the original layout.
-		bool isEquipmentWheel = !weaponPickWheel && wheelShow.Size() > 0;
-		if (isEquipmentWheel)
-		{
-			for (int wi = 0; wi < wheelShow.Size(); wi++)
-			{
-				String sn = wheelSpecials[wheelShow[wi]].specialName;
-				if (sn.Length() < 3 || sn.IndexOf("WW_") != 0)
-				{
-					isEquipmentWheel = false;
-					break;
-				}
-			}
-		}
-		double layoutSc = sc * (isEquipmentWheel ? 0.67 : 1.0);
+		// Equipment AND weapon-special wheels both render at the compact
+		// 0.8375x layout (background, cursor, and orbit) — bumped 25% from the
+		// prior 0.67 multiplier. Icon sizes still use `sc` so authored icon
+		// scaling is preserved per-slice. Only the Gearbox-driven weapon-pick
+		// branch keeps the original 1.0x layout (it has its own self-contained
+		// rendering pass below at `weaponPickWheel`).
+		double layoutSc = sc * 0.8375;
 
 		int orbit = int(128 * layoutSc);
 		int circleX = 640*0.75;
@@ -278,40 +267,14 @@ Extend Class PB_SpecialWheelHandler
 					screen.DrawText (fnt, Font.CR_WHITE, circleX-fnt.StringWidth(mMessage.StringAt(i))/2, y, mMessage.StringAt(i), DTA_VirtualWidth,320,DTA_VirtualHeight,240, DTA_Alpha, 1.0*alphaFade);
 					y += fnt.GetHeight();
 				}
-				bool equipmentWheelOnly = true;
-				for (int wi = 0; wi < wheelShow.Size(); wi++)
-				{
-					String sn = wheelSpecials[wheelShow[wi]].specialName;
-					if (sn.Length() < 3 || sn.IndexOf("WW_") != 0)
-					{
-						equipmentWheelOnly = false;
-						break;
-					}
-				}
-				if (!equipmentWheelOnly)
-				{
-					String tipKey = String.Format("$PB_WHEELTIP_%s", wheelSpecials[curSelMod].specialName);
-					String tipFull = StringTable.Localize(tipKey);
-					if (tipFull != tipKey && tipFull.Length() > 0)
-					{
-						BrokenLines tipLines = fnt.BreakLines(tipFull, 140);
-						if (tipLines != NULL)
-						{
-							int tipY = y + 6;
-							int tc = tipLines.Count();
-							for (int ti = 0; ti < tc; ti++)
-							{
-								if (tipLines.StringAt(ti).Length() < 1)
-								{
-									tipY += fnt.GetHeight() / 2;
-									continue;
-								}
-								screen.DrawText (fnt, Font.CR_GOLD, circleX-fnt.StringWidth(tipLines.StringAt(ti))/2, tipY, tipLines.StringAt(ti), DTA_VirtualWidth,320,DTA_VirtualHeight,240, DTA_Alpha, 0.95*alphaFade);
-								tipY += fnt.GetHeight();
-							}
-						}
-					}
-				}
+				// Gold tooltip block (`$PB_WHEELTIP_<specialName>`) intentionally
+				// removed: the white centered `specialAlias` title above already
+				// names the mode (e.g. "7.62 AP Magazine" / "Hellfire" /
+				// "Single" / ".357 Tube"), and the gold line just re-prefixed
+				// it with the weapon name (e.g. "Metal Sniper: Standard
+				// magazines.") which read as redundant against the wheel's own
+				// branded center icon. The equipment wheel never showed a gold
+				// tip; weapon-special wheels now match.
 			}
 		}
 		else

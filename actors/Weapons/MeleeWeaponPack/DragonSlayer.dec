@@ -336,7 +336,7 @@ ACTOR SlayerGodModePowerup : InvulnerabilitySphere
 	powerup.duration -4
 	Powerup.Type "Invulnerable"
 	Powerup.Mode "Reflective"
-	Powerup.Color "FF4466", 0.2
+	Powerup.Color "FF4466", 0.05
 	+INVENTORY.AUTOACTIVATE
 	States
 	{

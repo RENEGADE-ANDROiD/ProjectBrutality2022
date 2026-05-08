@@ -1311,6 +1311,21 @@ familiar/hit FIREDHIT
 familiar/throw ARTACT1
 familiar/spawn IMPACT3
 
+// Realm 667 Drone (Shadesmaster, Cryomundus). Used by the friendly Drone summon
+// (kill-streak Familiar replacement, see actors/Items/PBKillstreak/PB_UnlessYouHavePowah.dec)
+// and by any other future Drone-flavored actor. Lumps live under
+// SOUNDS/Realm667Pack/Drone/Sounds/.
+drone/see   DRONSND
+drone/idle  DRONSND
+drone/fire  DRONFIRE
+$limit drone/fire 0
+$random drone/pain { drone/pain1 drone/pain2 drone/pain3 }
+drone/pain1 DRONPAN1
+drone/pain2 DRONPAN2
+drone/pain3 DRONPAN3
+$volume drone/pain 0.6
+drone/die   DRONDIE
+
 
 //==============================================================================
 // SNDINFO.PBMonsters
@@ -5249,6 +5264,29 @@ venor/splat					monsters/venor/VNRSPLT
 $volume		venor/splat			0.4
 $limit		venor/splat			2
 
+// Realm667 -- Blood Ghost (KILLA DIO) -- folded to LostSoulSpawner. Sound aliases scoped under
+// BloodGhost/* to dodge the engine-level WHIT clash with PB weapon hitsounds.
+BloodGhost/attack       monsters/BloodGhost/WATTACK
+BloodGhost/sight        monsters/BloodGhost/WSIGHT
+BloodGhost/pain         monsters/BloodGhost/WPAIN
+BloodGhost/death        monsters/BloodGhost/WDEATH
+BloodGhost/hit          monsters/BloodGhost/WHIT
+BloodGhost/melee        monsters/BloodGhost/WHIT2
+bloodghost/idle1        monsters/BloodGhost/WIDLE1
+bloodghost/idle2        monsters/BloodGhost/WIDLE2
+$random BloodGhost/idle { bloodghost/idle1 bloodghost/idle2 }
+
+// Realm667 -- Blood Skull (Gothic) -- folded to LostSoulSpawner.
+BSkull/See              monsters/BloodSkull/BSKULSEE
+BSkull/Active           monsters/BloodSkull/BSKULSEE
+$volume BSkull/Active   0.5
+BSkull/Pain             monsters/BloodSkull/BSKULPIN
+BSkull/Death            monsters/BloodSkull/BSKULEXP
+Blood/Spit              monsters/BloodSkull/BLDSPIT
+$limit Blood/Spit       0
+Blood/Impact            monsters/BloodSkull/BLDIMPAC
+$limit Blood/Impact     0
+
 // Realm667  - Possessed Gibs (place VPG*.lmp or OGG at sounds/ per logical names, or add extensionless lumps)
 PossessedGibs/noodles monsters/possessedgibs/noodles
 PossessedGibs/active VPGACT
@@ -5574,3 +5612,35 @@ gearbox/close sounds/gearbox/gb_toggle.ogg
 $volume gearbox/close 0.2
 gearbox/nope sounds/gearbox/gb_nope.ogg
 $volume gearbox/nope 0.5
+
+// =====================================================================
+// Realm667 powerup fold (kill streak reward pool entries).
+// FireAura/FrostAura: DeVloek (sounds: id Software, GSC Game World).
+// Book of the Dead: zrrion the insect (sounds: id/Quake).
+// Hand of the Wraith: Ghastly_dragon (sounds: id Software).
+// Lich Skull: Ghastly_dragon, NeuralStunner (sounds: Blizzard Entertainment).
+// Pentacle of Projection: MagicWazard (sounds: id Software).
+// =====================================================================
+FireAura/aura       sounds/Realm667Powerups/VFIREAUR.ogg
+FireAura/firedeath  sounds/Realm667Powerups/VFIREDTH.ogg
+firef1              sounds/Realm667Powerups/VFIREF1.ogg
+firef2              sounds/Realm667Powerups/VFIREF2.ogg
+firef3              sounds/Realm667Powerups/VFIREF3.ogg
+firef4              sounds/Realm667Powerups/VFIREF4.ogg
+$random FireAura/fire { firef1 firef2 firef3 firef4 }
+$pitchset FireAura/fire 1.0 1.2
+$limit FireAura/fire 4
+$limit FireAura/firedeath 4
+
+FrostAura/aura      sounds/Realm667Powerups/VFRSTAUR.ogg
+
+Book/Strike         sounds/Realm667Powerups/B_USE.ogg
+B_up1               sounds/Realm667Powerups/B_UP1.ogg
+B_up2               sounds/Realm667Powerups/B_UP2.ogg
+B_up3               sounds/Realm667Powerups/B_UP3.ogg
+B_up4               sounds/Realm667Powerups/B_UP4.ogg
+$random Book/p_pkup { B_up1 B_up2 B_up3 B_up4 }
+
+HandOfTheWraith/Fire sounds/Realm667Powerups/HWTHFIRE.ogg
+Pickups/LichSkull    sounds/Realm667Powerups/LCHSUSE.ogg
+pentacle/project     sounds/Realm667Powerups/PROJECT.ogg

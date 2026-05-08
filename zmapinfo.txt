@@ -116,6 +116,7 @@ GameInfo
 	NoRandomPlayerClass = True
 	AddEventHandlers = "pb_ExecutionHandler"
 	AddEventHandlers = "PB_EventHandler"
+	AddEventHandlers = "PB_VisorHandler"
 	AddEventHandlers = "MBlurHandler"
 	AddEventHandlers = "PB_WheelBSSBlurHandler"
 	AddEventHandlers = "gb_EventHandler"
@@ -346,6 +347,23 @@ DoomEdNums
 	23186 = FrozenTritePodCeiling
 	23187 = FrozenHangman
 	23188 = PB_VenorGK
+
+	// Realm667 community power-up fold (also rolled by the kill-streak reward pool)
+	23189 = BootsOfTheNorth
+	23190 = BracersOfForce
+	23191 = BookOfTheDead
+	23192 = FireAuraSphere
+	23193 = FlightSphere
+	23194 = FrostAuraSphere
+	23195 = HandOfTheWraith
+	23196 = ArtiLichSkull
+	23197 = PentacleOfProjection
+	23198 = ReflectorSphere
+
+	// Realm667 lost-soul-tier monster fold (Blood Ghost / Blood Skull). Map-placed
+	// instances spawn the GK wrapper so glory-kill / pb_experimental hooks engage.
+	23199 = PB_Realm667_BloodGhostGK
+	23200 = PB_Realm667_BloodSkullGK
 
 	//Glory Kills
 	17003 = CyberdemonLegsFatality

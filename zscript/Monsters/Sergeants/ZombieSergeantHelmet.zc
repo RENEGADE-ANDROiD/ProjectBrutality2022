@@ -1282,7 +1282,9 @@ Class PB_ShotgunGuyHelmet : PB_ShotgunGuy
 				TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1);
 				Goto Death.ExplosiveImpact;
 				TNT1 A 0 A_GiveToTarget("GoFatality", 1);
-				TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7", "Death.Fatality8");
+				// Skip Death.Fatality7/8 -- those grant SergeantFatality7/8 -> FatalitySergeant7Eld/8Eld
+				// (ESCR/SOBO sprites depict a horned satyr being held, not a helmet shotgun zombie).
+				TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6");
 				Goto Death.Fatality1;
 
 		Death.Fatality1:

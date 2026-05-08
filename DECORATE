@@ -194,6 +194,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Items/Powerups/SpecialPowerups.dec"
 #include "actors/Items/PBKillstreak/PB_KillstreakItems.dec"
 #include "actors/Items/PBKillstreak/PB_UnlessYouHavePowah.dec"
+#include "actors/Items/Realm667Powerups/Realm667Powerups.dec"
 #include "actors/Items/Powerups/Backpacks.dec"
 #include "actors/Items/Powerups/Healthbackpacks.dec"
 
@@ -793,6 +794,8 @@ Actor TurboReload : Inventory
 #include "actors/Execution/ExecutionOverLord.dec"
 #include "actors/Execution/ExecutionCrackodemon.dec"
 #include "actors/Execution/ExecutionCyberSatyr.dec"
+#include "actors/Execution/ExecutionBloodGhost.dec"
+#include "actors/Execution/ExecutionBloodSkull.dec"
 #include "actors/Effects/PinataParticles.dec"
 #include "actors/Weapons/Slot9/ShoulderCannon.dec"
 #include "actors/Weapons/Slot1/BloodPunch.dec"
@@ -809,6 +812,8 @@ Actor TurboReload : Inventory
 #include "actors/Monsters/Realm667/Realm667_Tokens.dec"
 #include "actors/Monsters/Realm667/Realm667_Projectiles.dec"
 #include "actors/Monsters/Realm667/Realm667_Monsters.dec"
+#include "actors/Monsters/Realm667/Realm667_BloodGhost.dec"
+#include "actors/Monsters/Realm667/Realm667_BloodSkull.dec"
 #include "actors/Monsters/Realm667/Realm667_GloryKills.dec"
 
 // Late-stage compatibility stubs (must be last — uses PB parents defined above)

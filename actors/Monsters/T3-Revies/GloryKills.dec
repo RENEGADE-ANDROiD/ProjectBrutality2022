@@ -318,7 +318,8 @@ ACTOR PB_RevenantGK : PB_Revenant Replaces PB_Revenant
 		TNT1 A 0
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(256, "RevenF1", "RevenF1", "RevenF1", "RevenF2", "RevenF2", "RevenF2", "RevenF3", "RevenF3", "RevenF3", "RevenF4", "RevenF4", "RevenF4")
+		// Skip RevenF3/F4 -- KOKO (El Diablo satyr2) depicts a horned satyr held, not a revenant.
+		TNT1 A 0 A_Jump(256, "RevenF1", "RevenF1", "RevenF1", "RevenF2", "RevenF2", "RevenF2")
 		Stop
 	}
 }

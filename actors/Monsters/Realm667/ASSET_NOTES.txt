@@ -22,3 +22,21 @@ Sounds
 Source-only / not yet integrated
 - Realm667DevilwormsSource/ — DECORATE + Worms/*.txt (not in DECORATE).
 - Other folders under `SOUNDS/Realm667Pack/` (DarkCardinal, Nitromite, Venor, ObsidianRavager, Behemoth, etc.) — reference only unless folded into `actors/` + `ZSCRIPT.zc` like Possessed Gibs.
+
+Fatality animation orphans (sprites authored, never granted)
+After the multi-pass fatality audit, the following first-person fatality states are still defined in `actors/Player/NEWPLAYE.dec` and dispatched by `FatalityChecker` (the `A_JumpIfInventory` lines stay for legacy-config compatibility), but **no monster grants the matching token in normal gameplay**. Their sprites are intentionally retained on disk so a future GK wrapper can wire them in:
+
+- **`FatalityRealm667FPEld1`** (sprite **`NATT`**, helmeted zombieman) and **`FatalityRealm667FPEld2`** (**`NZ0D`**, dark zombie body) — near-duplicates of **`FatalityZMan7Eld`** / **`FatalityZMan8Eld`**. Granted via tokens **`Realm667_FatalityFP1`** / **`FP2`**. Previously rolled by `PB_Realm667_BlotGK`, `PB_Realm667_VulgarGK`, `PB_Realm667_FusionCyberImpGK` — all rerouted because their live monsters (eye-blob / imp-class / cyborg-imp) don't visually match a humanoid zombie corpse.
+- **`FatalityRealm667FPEld3`** (sprite **`49AN`**, brown imp Eld) — near-duplicate of **`FatalityImp7Eld`**. Granted via **`Realm667_FatalityFP3`**. Previously rolled by `PB_Realm667_BehemothGK`, rerouted because Behemoth is a fat cybermancubus.
+- **`FatalityCacoDemon3Eld`** / **`4Eld`** (sprites **`HUF1`** / **`HUF2`** in `SPRITES/MONSTERS/fatalitys/eld_eld_caco/`) — bald grey humanoid victims (sourced from El Diablo's `Hunger/` reference folder). The `CacoDemonFatality3` / `4` tokens themselves are now orphan; the `HUF1` / `HUF2` strips are reused (alongside `HUF3`) by the new `FatalityHunger1Eld` / `FatalityHunger2Eld` / `FatalityHunger3Eld` states wired through `HungerGK` (see below).
+- **`FatalityComando3Eld`** (sprite **`HUF3`** in `eld_eld_comando/`) — orphan token. The `HUF3` strip is now also played by `FatalityHunger3Eld`.
+- **`FatalityComando4Eld`** (sprite **`HEDF`** in `eld_eld_comando/`) — orphan token. The `HEDF` strip is now also played by `FatalityCrackodemon1Eld` (granted by `CrackoDemonGK`).
+- **`FatalityRevenant3Eld`** / **`4Eld`** (sprite **`KOKO`** in `eld_eld_reven/`) — horned Satyr. PB has no satyr-class monster, so this stays orphan unless a future addon ports a satyr.
+- **`FatalitySergeant7Eld`** / **`8Eld`** (sprites **`ESCR`** / **`SOBO`** in `eld_eld_sarge/`) — horned Satyr / Cybersatyr. Same situation as `KOKO`.
+
+Wiring (Hunger / Crackodemon — DONE)
+- `HungerGK : Hunger Replaces Hunger` lives at the bottom of **`actors/Monsters/T1-Grunts/GloryKills.dec`** (`WoundHealth 8`, ZombieHighlight, ZHUN H stagger). Death.Fatality rolls `HungerFatality1` / `2` / `3` (1/3 each).
+- `CrackoDemonGK : CrackoDemon Replaces CrackoDemon` lives at the bottom of **`actors/Monsters/T2-Pinkies/GloryKills.dec`** (`WoundHealth 100`, CacoHighlight, HED9 E stagger). Death.Fatality always grants `CrackodemonFatality1`.
+- New player-side tokens (`HungerFatality1` / `2` / `3`, `CrackodemonFatality1`), dispatcher entries, and Eld animation states (`FatalityHunger1Eld` / `2Eld` / `3Eld`, `FatalityCrackodemon1Eld`) are in **`actors/Player/NEWPLAYE.dec`**. The new states use `Hunger/Pain` + `Hunger/Death` (or `Cracko/Pain` + `Caco/Death`) sounds and skip the inappropriate `DeadCacoDemon` / `DyingComando` / `DeadChaingunGuy_Half` corpse spawns that the original `FatalityCacoDemon3Eld` / `4Eld` / `FatalityComando3Eld` / `4Eld` Eld states still hardcode.
+
+The original `FatalityCacoDemon3Eld` / `4Eld` / `FatalityComando3Eld` / `4Eld` states are intentionally left in place but are dead code (no monster grants their tokens, dispatcher entries kept for legacy-config compatibility) — they can be removed in a future cleanup pass once nothing references their token names.

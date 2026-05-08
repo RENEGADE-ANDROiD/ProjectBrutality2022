@@ -1392,7 +1392,10 @@ Class PB_ZombieScientistChainsaw : PB_ZombieScientist
 				TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1);
 				Goto Death.ExplosiveImpact;
 				TNT1 A 0 A_GiveToTarget("GoFatality", 1);
-				TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7", "Death.Fatality8");
+				// Bald chainsaw-toting lab scientist: only Death.Fatality1 (ChainsawZombieFatality / FSF4
+				// lab-coat strip) visually matches. Death.Fatality2-8 grant ZombieManFatality* tokens that
+				// play uniformed zombieman first-person animations -- always pick the chainsaw lab-guy
+				// fatality instead.
 				Goto Death.Fatality1;
 
 		Death.Fatality1:
