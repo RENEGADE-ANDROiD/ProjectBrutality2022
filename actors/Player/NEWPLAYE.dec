@@ -29,6 +29,16 @@ Actor AfritFatality2 : Inventory
 {inventory.maxamount 1}
 Actor AfritFatality3 : Inventory
 {inventory.maxamount 1}
+// Monster Pack Hunger (HUF1 / HUF2 / HUF3 first-person Eld strips). Granted by HungerGK.
+Actor HungerFatality1 : Inventory
+{inventory.maxamount 1}
+Actor HungerFatality2 : Inventory
+{inventory.maxamount 1}
+Actor HungerFatality3 : Inventory
+{inventory.maxamount 1}
+// Monster Pack CrackoDemon (HEDF first-person Eld strip). Granted by CrackoDemonGK.
+Actor CrackodemonFatality1 : Inventory
+{inventory.maxamount 1}
 
 Actor IsCurbstompingHFQSZ : Inventory
 {
@@ -632,6 +642,11 @@ FatalityChecker:
 		TNT1 A 0 A_JumpIfInventory("MeanDemonFatality1", 1, "FatalityMeanDemon1")
 		TNT1 A 0 A_JumpIfInventory("CacoDemonFatality3", 1, "FatalityCacoDemon3Eld")
 		TNT1 A 0 A_JumpIfInventory("CacoDemonFatality4", 1, "FatalityCacoDemon4Eld")
+		// Monster Pack Hunger / CrackoDemon (Eld first-person finishers, HUF1/HUF2/HUF3/HEDF).
+		TNT1 A 0 A_JumpIfInventory("HungerFatality1", 1, "FatalityHunger1Eld")
+		TNT1 A 0 A_JumpIfInventory("HungerFatality2", 1, "FatalityHunger2Eld")
+		TNT1 A 0 A_JumpIfInventory("HungerFatality3", 1, "FatalityHunger3Eld")
+		TNT1 A 0 A_JumpIfInventory("CrackodemonFatality1", 1, "FatalityCrackodemon1Eld")
 		TNT1 A 0 A_JumpIfInventory("Realm667_FatalityFP1", 1, "FatalityRealm667FPEld1")
 		TNT1 A 0 A_JumpIfInventory("Realm667_FatalityFP2", 1, "FatalityRealm667FPEld2")
 		TNT1 A 0 A_JumpIfInventory("Realm667_FatalityFP3", 1, "FatalityRealm667FPEld3")
@@ -5433,7 +5448,9 @@ TNT1 A 0 ACS_Execute(585, 0, 0, 0, 0)
 		TNT1 A 0 ACS_Execute(477, 0, 0, 0, 0)
 		TNT1 A 0 ACS_Execute(acsFatality, 0)
 		TNT1 A 0 A_PlaySound("grunt/pain", 1)
-		NZ0D D 5 A_SetTics(5 / GetCVar("cl_fatalityspeed"))
+		// NZ0D D was referenced here but NZ0DD0.png is not shipped under
+		// SPRITES/MONSTERS/fatalitys/eld_eld_zman/. Start from frame E so the animation does
+		// not display GZDoom's missing-sprite placeholder on the first tic.
 		XXXX A 0 A_CustomMissile ("CameraShakeMinor", 1, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (0, 160))
 		NZ0D E 5 A_SetTics(5 / GetCVar("cl_fatalityspeed"))
@@ -7869,7 +7886,9 @@ TNT1 A 0 ACS_Execute(585, 0, 0, 0, 0)
 		TNT1 A 0 ACS_Execute(477, 0, 0, 0, 0)
 		TNT1 A 0 ACS_Execute(acsFatality, 0)
 		TNT1 A 0 A_PlaySound("nazi/pain", 2)
-		NZ0D D 5 A_SetTics(5 / GetCVar("cl_fatalityspeed"))
+		// NZ0D D was referenced here but NZ0DD0.png is not shipped under
+		// SPRITES/MONSTERS/fatalitys/eld_eld_zman/. Start from frame E so the animation does
+		// not display GZDoom's missing-sprite placeholder on the first tic.
 		XXXX A 0 A_CustomMissile ("CameraShakeMinor", 1, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (0, 160))
 		NZ0D E 5 A_SetTics(5 / GetCVar("cl_fatalityspeed"))
@@ -8522,6 +8541,145 @@ FSF5 D 10
 			}
 		}
 		TNT1 A 0 A_SpawnItemEx("DeadChaingunGuy_Half", 0, 0, 40, 0, 0)
+		MARN A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		Goto StandStill
+
+		// Monster Pack Hunger first-person finishers (HUF1 / HUF2 in SPRITES/MONSTERS/fatalitys/eld_eld_caco,
+		// HUF3 in SPRITES/MONSTERS/fatalitys/eld_eld_comando). Granted by HungerGK.Death.Fatality.
+		// Sounds use Hunger/* logical names from SNDINFO.txt; no extra corpse spawn -- the live
+		// Hunger's Death state plays after the player animation ends.
+		FatalityHunger1Eld:
+		TNT1 A 0 SetPlayerProperty(0,1,0)
+		TNT1 A 0 ACS_ExecuteAlways(477, 0, 0, 0, 0)
+		TNT1 A 0 ACS_Execute(acsFatality, 0)
+		TNT1 A 0 A_PlaySound("Hunger/Pain", 2)
+		HUF1 ABCD 3 A_SetTics(3 / GetCVar("cl_fatalityspeed"))
+		XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+		HUF1 EFGH 3 A_SetTics(3 / GetCVar("cl_fatalityspeed"))
+		TNT1 AA 0 A_CustomMissile ("XDeath1", 30, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_PlaySound("Hunger/Death", 2)
+		TNT1 A 0 A_TakeInventory("HungerFatality1",1)
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
+		"####" "#" 1
+		{
+			if(GetCvar(be_HealthBonus)==1)
+			{
+				if(GetCvar(be_OnlyBerserk)==1)
+				{
+					if(CountInv("FistsSelected") == 1)
+					{
+						A_GiveInventory("HealthBonus",10);
+					}
+				}
+				else
+				{
+					A_GiveInventory("HealthBonus",10);
+				}
+			}
+		}
+		MARN A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		Goto StandStill
+
+		FatalityHunger2Eld:
+		TNT1 A 0 SetPlayerProperty(0,1,0)
+		TNT1 A 0 ACS_ExecuteAlways(477, 0, 0, 0, 0)
+		TNT1 A 0 ACS_Execute(acsFatality, 0)
+		TNT1 A 0 A_PlaySound("Hunger/Pain", 2)
+		HUF2 ABCDEFG 3 A_SetTics(3 / GetCVar("cl_fatalityspeed"))
+		TNT1 AA 0 A_CustomMissile ("XDeath1", 30, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_PlaySound("Hunger/Death", 2)
+		TNT1 A 0 A_TakeInventory("HungerFatality2",1)
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
+		"####" "#" 1
+		{
+			if(GetCvar(be_HealthBonus)==1)
+			{
+				if(GetCvar(be_OnlyBerserk)==1)
+				{
+					if(CountInv("FistsSelected") == 1)
+					{
+						A_GiveInventory("HealthBonus",10);
+					}
+				}
+				else
+				{
+					A_GiveInventory("HealthBonus",10);
+				}
+			}
+		}
+		MARN A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		Goto StandStill
+
+		FatalityHunger3Eld:
+		TNT1 A 0 SetPlayerProperty(0,1,0)
+		TNT1 A 0 ACS_ExecuteAlways(477, 0, 0, 0, 0)
+		TNT1 A 0 ACS_Execute(acsFatality, 0)
+		TNT1 A 0 A_PlaySound("Hunger/Pain", 2)
+		HUF3 ABCD 3 A_SetTics(3 / GetCVar("cl_fatalityspeed"))
+		XXXX A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
+		HUF3 EFGH 3 A_SetTics(3 / GetCVar("cl_fatalityspeed"))
+		TNT1 AA 0 A_CustomMissile ("XDeath1", 25, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_PlaySound("Hunger/Death", 2)
+		TNT1 A 0 A_TakeInventory("HungerFatality3",1)
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
+		"####" "#" 1
+		{
+			if(GetCvar(be_HealthBonus)==1)
+			{
+				if(GetCvar(be_OnlyBerserk)==1)
+				{
+					if(CountInv("FistsSelected") == 1)
+					{
+						A_GiveInventory("HealthBonus",10);
+					}
+				}
+				else
+				{
+					A_GiveInventory("HealthBonus",10);
+				}
+			}
+		}
+		MARN A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		Goto StandStill
+
+		// Monster Pack CrackoDemon first-person finisher (HEDF in SPRITES/MONSTERS/fatalitys/eld_eld_comando).
+		// Granted by CrackoDemonGK.Death.Fatality. Uses Cracko/Pain + Caco/Death sounds; Crackodemon's
+		// own Death state spawns the corpse -- no extra spawn here.
+		FatalityCrackodemon1Eld:
+		TNT1 A 0 SetPlayerProperty(0,1,0)
+		TNT1 A 0 ACS_ExecuteAlways(477, 0, 0, 0, 0)
+		TNT1 A 0 ACS_Execute(acsFatality, 0)
+		TNT1 A 0 A_PlaySound("Cracko/Pain", 2)
+		HEDF ABCDEFGHI 2 A_SetTics(2 / GetCVar("cl_fatalityspeed"))
+		TNT1 AA 0 A_CustomMissile ("XDeath1Blue", 30, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_PlaySound("Caco/Death", 2)
+		TNT1 A 0 A_TakeInventory("CrackodemonFatality1",1)
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
+		"####" "#" 1
+		{
+			if(GetCvar(be_HealthBonus)==1)
+			{
+				if(GetCvar(be_OnlyBerserk)==1)
+				{
+					if(CountInv("FistsSelected") == 1)
+					{
+						A_GiveInventory("HealthBonus",10);
+					}
+				}
+				else
+				{
+					A_GiveInventory("HealthBonus",10);
+				}
+			}
+		}
 		MARN A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)
 		TNT1 A 0 SetPlayerProperty(0,0,0)
 		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)

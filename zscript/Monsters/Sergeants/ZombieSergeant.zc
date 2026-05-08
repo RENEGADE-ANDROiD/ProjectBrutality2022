@@ -1731,7 +1731,11 @@ Class PB_ShotgunGuy : PB_Monster
 				TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1);
 				Goto Death.ExplosiveImpact;
 				TNT1 A 0 A_GiveToTarget("GoFatality", 1);
-				TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6", "Death.Fatality7", "Death.Fatality8");
+				// Death.Fatality7/8 grant SergeantFatality7/8 -> FatalitySergeant7Eld/8Eld which use
+				// El Diablo ESCR/SOBO sprites depicting a horned satyr/cybersatyr being held -- visually
+				// completely wrong for a uniformed shotgun-zombie kill. Skip those rolls so the sergeant
+				// fatality pool stays consistent with the live enemy sprite.
+				TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality6");
 				Goto Death.Fatality1;
 
 		Death.Fatality1:

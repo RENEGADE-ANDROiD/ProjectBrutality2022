@@ -209,7 +209,9 @@ ACTOR PB_CacodemonGK : PB_Cacodemon Replaces PB_Cacodemon
 		TNT1 A 0 A_Pain
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(256, "CacoF1", "CacoF1", "CacoF1", "CacoF2", "CacoF2", "CacoF2", "CacoF3", "CacoF3", "CacoF3", "CacoF4", "CacoF4", "CacoF4")
+		// Skip CacoF3/F4 -- HUF1/HUF2 sprites depict a bald humanoid Hunger victim; a cacodemon
+		// kill should not show a humanoid in hand.
+		TNT1 A 0 A_Jump(256, "CacoF1", "CacoF1", "CacoF1", "CacoF2", "CacoF2", "CacoF2")
 		Stop
 	}
 }

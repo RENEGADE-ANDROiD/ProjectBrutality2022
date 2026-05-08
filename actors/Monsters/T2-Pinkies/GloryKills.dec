@@ -523,3 +523,121 @@ ACTOR PB_VoidSpectreGK: PB_VoidSpectre Replaces PB_VoidSpectre
         Stop
 	}
 }
+
+// Monster Pack CrackoDemon Glory Kill wrapper. Wires CrackodemonFatality1 (HEDF in
+// SPRITES/MONSTERS/fatalitys/eld_eld_comando) -- see player Eld state
+// FatalityCrackodemon1Eld in NEWPLAYE.dec. Crackodemon (Health 600, +NOGRAVITY +FLOAT)
+// already defines Death.cut / Death.Flames / Death.ExtremePunches so the standard PB
+// GK Super::Death.* routes work. Only one Eld variant exists for now (HEDF), but the
+// Death.Fatality pool stays a single entry to keep the door open for future strips.
+Actor CrackoDemonGK : CrackoDemon Replaces CrackoDemon
+{
+	DropItem "DemonStrengthRune" 5
+	DropItem "Demonpickup2" 255
+	DropItem "Demonpickup2" 255
+	DropItem "Demonpickup2" 255
+	DropItem "Demonpickup2" 255
+	DropItem "Demonpickup2" 255
+	DropItem "Crucible" 1
+	WoundHealth 100
+
+	States
+	{
+	Wound:
+		"####" "#" 1
+		{
+			if(GetCvar("be_ExecutionsON"))
+			{
+				if(countinv("FinisherToken")==0)
+				{
+					A_SpawnItemEx("CacoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
+				}
+
+				if(GetCvar(be_MonsterStagger)==1)
+				{
+					return state("Stagger");
+				}
+				else
+				{
+					return state(0);
+				}
+			}
+			return state(0);
+		}
+		Goto See
+
+	Stagger:
+		HED9 E 0
+		{
+			if(getcvar(be_ExecutionHighlight)==1)
+			{	return state("PrepareStaggerHighlight");}
+			else
+			{	return state("StagLooper");	}
+		}
+		Goto StagLooper
+
+	PrepareStaggerHighlight:
+		HED9 E 2
+		Goto StagLooper
+
+	StagLooper:
+		"####" "#" 1
+		{
+			if(!countinv("FinisherToken"))
+			{
+				return state("See");
+			}
+			if(getcvar(be_NoisyStagger) && countinv("PainSoundToken"))
+			{
+				A_Pain;
+				A_TakeInventory("PainSoundToken");
+			}
+			return state(0);
+		}
+		Loop
+
+	Death.GloryKill:
+		TNT1 A 0 A_GiveToTarget("BPtoken",3)
+		Goto Death.Fatality
+
+	Death.Crucible:
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataMed",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.cut
+
+	Death.GloryFire:
+		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.Flames
+
+	Pain.GloryFire:
+		TNT1 A 0 A_Jump(192, "See")
+		TNT1 A 0 A_SpawnItemEx("FlamePinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		Goto See
+
+	Death.BloodPunch:
+		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("GlorySawPinataMed",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		Goto Super::Death.ExtremePunches
+
+	Pain.BloodPunch:
+		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		TNT1 A 0 A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		Goto See
+
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		TNT1 A 0 A_GiveToTarget("CrackodemonFatality1", 1)
+		Stop
+	}
+}

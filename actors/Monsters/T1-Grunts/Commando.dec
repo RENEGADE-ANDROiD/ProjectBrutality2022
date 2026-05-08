@@ -1065,7 +1065,10 @@ ACTOR PB_Commando: PB_Monster Replaces ChaingunGuy
 		Goto Death.ExplosiveImpact
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
 		TNT1 A 0 A_SpawnItem ("DropedMinigun", 0, 5,0)
-		TNT1 A 0 A_Jump(256, "ComandoF1", "ComandoF1", "ComandoF1", "ComandoF2", "ComandoF2", "ComandoF2", "ComandoF3", "ComandoF3", "ComandoF3", "ComandoF4", "ComandoF4", "ComandoF4")
+		// ComandoF3/F4 grant ComandoFatality3/4 -> FatalityComando3Eld/4Eld which use El Diablo
+		// HUF3 (Hunger -- bald grey humanoid) and HEDF (Crackodemon-shaped) sprites. Neither
+		// matches a uniformed chaingun-commando kill, so skip those rolls.
+		TNT1 A 0 A_Jump(256, "ComandoF1", "ComandoF1", "ComandoF1", "ComandoF2", "ComandoF2", "ComandoF2")
 		Stop
 	ComandoF1:
 		TNT1 A 0 A_GiveToTarget("ComandoFatality", 1)

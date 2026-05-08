@@ -87,6 +87,10 @@ ACTOR PB_Realm667_FusionCyberImpGK : PB_Realm667_FusionCyberImp Replaces PB_Real
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		// FusionCyberImp (UCIM) is a cyborg imp. Realm667_FatalityFP1 plays
+		// NATT helmeted-zombie strips, which is a different creature class
+		// entirely. Replace branch 3 with another imp Eld so all rolls keep
+		// the in-hand victim imp-shaped.
 		TNT1 A 0 A_Jump(255, "CFF1","CFF1","CFF2","CFF2","CFF3","CFF3")
 	CFF1:
 		TNT1 A 0 A_GiveToTarget("ImpFatality6",1)
@@ -95,7 +99,7 @@ ACTOR PB_Realm667_FusionCyberImpGK : PB_Realm667_FusionCyberImp Replaces PB_Real
 		TNT1 A 0 A_GiveToTarget("ImpFatality7",1)
 		Stop
 	CFF3:
-		TNT1 A 0 A_GiveToTarget("Realm667_FatalityFP1",1)
+		TNT1 A 0 A_GiveToTarget("ImpFatality7",1)
 		Stop
 	}
 }
@@ -182,6 +186,10 @@ ACTOR PB_Realm667_VulgarGK : PB_Realm667_Vulgar Replaces PB_Realm667_Vulgar
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		// Vulgar (VULG) is an imp-class creature. Realm667_FatalityFP2 plays
+		// NZ0D dark-zombie strips, which is a different creature class
+		// entirely. Replace branch 3 with another imp Eld so all rolls keep
+		// the in-hand victim imp-shaped.
 		TNT1 A 0 A_Jump(255, "VGF1","VGF1","VGF2","VGF2","VGF3")
 	VGF1:
 		TNT1 A 0 A_GiveToTarget("ImpFatality6",1)
@@ -190,7 +198,7 @@ ACTOR PB_Realm667_VulgarGK : PB_Realm667_Vulgar Replaces PB_Realm667_Vulgar
 		TNT1 A 0 A_GiveToTarget("ImpFatality7",1)
 		Stop
 	VGF3:
-		TNT1 A 0 A_GiveToTarget("Realm667_FatalityFP2",1)
+		TNT1 A 0 A_GiveToTarget("ImpFatality6",1)
 		Stop
 	}
 }
@@ -262,13 +270,17 @@ ACTOR PB_Realm667_BehemothGK : PB_Realm667_Behemoth Replaces PB_Realm667_Behemot
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		// Behemoth (LARD) is a fat cybermancubus. Realm667_FatalityFP3 plays
+		// 49AN brown-imp Eld frames, which is a different creature class
+		// entirely. Reroute both branches to the fat-tier fatalities so the
+		// in-hand victim stays mancubus-shaped.
 		TNT1 A 0 A_Jump(256, "BHF1","BHF1","BHF2","BHF2")
 	BHF1:
-		TNT1 A 0 A_GiveToTarget("OtherFatsoFatality2",1)
+		TNT1 A 0 A_GiveToTarget("OtherFatsoFatality",1)
 		TNT1 A 0 A_BossDeath
 		Stop
 	BHF2:
-		TNT1 A 0 A_GiveToTarget("Realm667_FatalityFP3",1)
+		TNT1 A 0 A_GiveToTarget("OtherFatsoFatality2",1)
 		TNT1 A 0 A_BossDeath
 		Stop
 	}
@@ -338,12 +350,15 @@ ACTOR PB_Realm667_BabyCacoGK : PB_Realm667_BabyCaco Replaces PB_Realm667_BabyCac
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		// CacoDemonFatality3/4 -> FatalityCacoDemon3Eld/4Eld are El Diablo HUF1/HUF2 (Hunger
+		// bald-humanoid) sprites that don't fit any cacodemon-shaped monster. Reroute to the
+		// legitimate cacodemon fatalities.
 		TNT1 A 0 A_Jump(256, "BCF1","BCF1","BCF2")
 	BCF1:
-		TNT1 A 0 A_GiveToTarget("CacoDemonFatality3",1)
+		TNT1 A 0 A_GiveToTarget("CacoDemonFatality",1)
 		Stop
 	BCF2:
-		TNT1 A 0 A_GiveToTarget("CacoDemonFatality4",1)
+		TNT1 A 0 A_GiveToTarget("CacoDemonFatality2",1)
 		Stop
 	}
 }
@@ -481,15 +496,18 @@ ACTOR PB_Realm667_DroneGK : PB_Realm667_Drone Replaces PB_Realm667_Drone
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		// RevenantFatality3/4 (KOKO -- El Diablo satyr2) and ComandoFatality3 (HUF3 Hunger) are
+		// satyr/Hunger-shaped victims, mismatched against the Drone's flying-ghost silhouette.
+		// Reroute to the legitimate revenant fatalities so the in-hand victim stays bony.
 		TNT1 A 0 A_Jump(256, "DGF1","DGF1","DGF2","DGF2","DGF3")
 	DGF1:
-		TNT1 A 0 A_GiveToTarget("RevenantFatality3",1)
+		TNT1 A 0 A_GiveToTarget("RevenantFatality",1)
 		Stop
 	DGF2:
-		TNT1 A 0 A_GiveToTarget("RevenantFatality4",1)
+		TNT1 A 0 A_GiveToTarget("RevenantFatality2",1)
 		Stop
 	DGF3:
-		TNT1 A 0 A_GiveToTarget("ComandoFatality3",1)
+		TNT1 A 0 A_GiveToTarget("RevenantFatality",1)
 		Stop
 	}
 }
@@ -545,12 +563,11 @@ ACTOR PB_Realm667_BlotGK : PB_Realm667_Blot Replaces PB_Realm667_Blot
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,4,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
-		TNT1 A 0 A_Jump(256, "BLF1","BLF1","BLF2","BLF2")
-	BLF1:
-		TNT1 A 0 A_GiveToTarget("Realm667_FatalityFP1",1)
-		Stop
-	BLF2:
-		TNT1 A 0 A_GiveToTarget("Realm667_FatalityFP2",1)
+		// Blot is a tiny eye-blob (EYES sprites). Realm667_FatalityFP1/FP2 play
+		// NATT/NZ0D zombieman strips, which look completely wrong as the in-hand
+		// victim. No shipped first-person finisher matches an eye-blob shape, so
+		// only grant GoFatality (pinata/kill credit) and let the player's
+		// FatalityChecker fall through to See -- no humanoid animation.
 		Stop
 	}
 }

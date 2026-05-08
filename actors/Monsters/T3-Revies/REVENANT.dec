@@ -708,7 +708,10 @@ Death:
 		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
 		Goto Death
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		TNT1 A 0 A_Jump(256, "RevenF1", "RevenF1", "RevenF1", "RevenF2", "RevenF2", "RevenF2", "RevenF3", "RevenF3", "RevenF3", "RevenF4", "RevenF4", "RevenF4")
+		// RevenF3/F4 grant RevenantFatality3/4 -> FatalityRevenant3Eld/4Eld which use El Diablo
+		// KOKO sprites (sourced from satyr2/, depicts a horned satyr/cybersatyr being held) --
+		// completely wrong for a skeletal revenant kill. Skip those rolls.
+		TNT1 A 0 A_Jump(256, "RevenF1", "RevenF1", "RevenF1", "RevenF2", "RevenF2", "RevenF2")
 		Stop
 	RevenF1:
 		TNT1 A 0 A_GiveToTarget("RevenantFatality", 1)
