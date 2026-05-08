@@ -81,7 +81,11 @@ Selected weapons and equipment (authors)
 - Molotov Cocktail — from Project Brutality 3.0 Molotov Cocktail v15
   (actors/Weapons/MolotovCocktail/MolotovCocktail.dec).
 - LeverAction — original sprites and code: ThePopeOfDope; later staging polish:
-  Vampy.
+  Vampy. **Weapon-special wheel icons** (caliber-swap mode picker —
+  `graphics/pywheel/Magnum.png` for `Select_LeverAction_357` and
+  `graphics/pywheel/Marlin.png` for `Select_LeverAction_Marlin`, dispatched in
+  `zscript/PbWheel/ev_core_special.zsc` `specialWheel_LeverAction()`):
+  **TomiikiPro**.
 - Pro-Surv Ballista — The Pope of Dope (ThePopeOfDope), slot-4 crossbow; **Rail
   Ballista** is the slot-9 weapon and is a separate system.
 - **Dragon Slayer (`DragonSlayer`)** — `actors/Weapons/MeleeWeaponPack/DragonSlayer.dec`,
@@ -167,6 +171,10 @@ Special thanks
   spawner code), and other contributions noted in staging (ice effects,
   barrels, Cryo-adjacent work).
 - Vampy: fixes and improvements (e.g. LMG reload) on the staging line.
+- **TomiikiPro**: LeverAction weapon-special wheel icons
+  (`graphics/pywheel/Magnum.png`, `graphics/pywheel/Marlin.png`) — the
+  caliber-swap mode-picker art for the `.357 Revolver` / `.444 Marlin`
+  branches of `specialWheel_LeverAction()`.
 
 Licensing
 - Observe per-file licenses and author blocks.
