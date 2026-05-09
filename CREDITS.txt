@@ -75,7 +75,7 @@ Gameplay and content in this release
   **Slice 5 weapons** (**`SPRITES/Weapons/CatsFrozen/`**): **Cryo / Electro rifle** — TypicalSF base,
   Mike12-style edits, Sergeant_Mark_IV, IDDQD_1337 (addon CryoRifle / ElectroRifle README lineage);
   **Cryo Cannon** — Thanuris, Ganbare-Lucifer, DeVloek, SchrödingCat; **Cryo ASG** — Sergeant_Mark_IV /
-  SchrödingCat; **Cryo Rocket Launcher** — addon RocketLauncher credits (folded as **`PB_CF_RocketLauncher`**).
+  SchrödingCat; Cat's Frozen Addon weapon / equipment art (see **`SPRITES/WEAPONS/CatsFrozen/`** and related trees).
 
 Code systems and libraries
 - Nash Muhandes: NashGore (zscript/Gore/NashGore/*); Tilt++ (zscript/TiltPlus

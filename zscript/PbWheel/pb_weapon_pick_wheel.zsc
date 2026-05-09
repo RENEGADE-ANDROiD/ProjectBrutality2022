@@ -65,11 +65,65 @@ extend class PB_SpecialWheelHandler
 		pl.BringUpWeapon();
 	}
 
+	TextureID weaponPickWheel_FirstNonTNTFromSpawn(Class<Actor> acl)
+	{
+		TextureID nullTex;
+		if (!acl)
+			return nullTex;
+		let adef = Actor(GetDefaultByType(acl));
+		if (!adef)
+			return nullTex;
+		State st = adef.SpawnState;
+		for (int n = 0; n < 48 && st; n++)
+		{
+			TextureID sid = st.GetSpriteTexture(0);
+			if (sid.IsValid())
+			{
+				string tn = TexMan.GetName(sid);
+				if (tn.Length() >= 4 && tn.Mid(0, 4) ~== "TNT1")
+				{
+					st = st.NextState;
+					continue;
+				}
+				return sid;
+			}
+			st = st.NextState;
+		}
+		return nullTex;
+	}
+
 	TextureID weaponPickWheel_IconForClass(String cname)
 	{
 		TextureID tid = TexMan.CheckForTexture(String.Format("graphics/pywheel/weapons/%s.png", cname), TexMan.Type_Any);
 		if (tid.isValid())
 			return tid;
+
+		Name nm = cname;
+		class<Inventory> icl = (class<Inventory>)(nm);
+		if (icl)
+		{
+			let idef = Inventory(GetDefaultByType(icl));
+			if (idef && idef.Icon.IsValid())
+				return idef.Icon;
+		}
+		class<Weapon> wcl = (class<Weapon>)(nm);
+		if (wcl)
+		{
+			let wdef = Weapon(GetDefaultByType(wcl));
+			if (wdef && wdef.AltHUDIcon.IsValid())
+				return wdef.AltHUDIcon;
+		}
+		class<Actor> acl = (class<Actor>)(nm);
+		if (acl)
+		{
+			string iconLump = cname .. "ICON";
+			tid = TexMan.CheckForTexture(iconLump, TexMan.Type_Any);
+			if (tid.isValid())
+				return tid;
+			tid = weaponPickWheel_FirstNonTNTFromSpawn(acl);
+			if (tid.isValid())
+				return tid;
+		}
 		return crowbarTex;
 	}
 
@@ -80,6 +134,7 @@ extend class PB_SpecialWheelHandler
 		wpick_SlotStart.Clear();
 		wpick_SlotCount.Clear();
 		wpick_WeaponFlat.Clear();
+		wpick_WeaponIconFlat.Clear();
 		wpick_OuterSel = 0;
 		wpick_InnerSel = 0;
 		wpick_MouseIsInner = false;
@@ -114,7 +169,9 @@ extend class PB_SpecialWheelHandler
 				Weapon w = ws[i];
 				if (!w || w.SlotNumber != slot)
 					continue;
-				wpick_WeaponFlat.Push(w.GetClassName());
+				String wcn = w.GetClassName();
+				wpick_WeaponFlat.Push(wcn);
+				wpick_WeaponIconFlat.Push(weaponPickWheel_IconForClass(wcn));
 				flatIdx++;
 				cnt++;
 			}

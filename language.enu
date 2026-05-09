@@ -25,7 +25,6 @@ PB_PICKUP_PB_CRYOCELLSPACK = "Picked up a cryo cell bundle.";
 PB_PICKUP_PB_CRYOCANNONCELLS = "Picked up cryo cannon fuel.";
 PB_PICKUP_PB_CRYOELECTRORIFLE = "Picked up the Cryo Electro Rifle (slot 8).";
 PB_PICKUP_PB_DARKMATTERRIFLE = "Picked up the UAC Prototype Dark Matter Rifle (slot 8).";
-PB_PICKUP_PB_CF_ROCKETLAUNCHER = "Picked up the Cryo Rocket Launcher (slot 6).";
 PB_PICKUP_PB_CRYOCANNON = "Picked up the Cryo Cannon (slot 9).";
 PB_PICKUP_PB_CRYOASG = "Picked up the Cryo Auto Shotgun (slot 3).";
 
@@ -592,7 +591,6 @@ PB_WPNHINT_DragonSlayer = "Dragon Slayer: build Slayer energy with slashes; spen
 PB_WPNHINT_Stormcast = "Stormcast (slot 9): PowerChargeStorm fuels the lightning beam (Fire) and alt-fire charge releases.\nHold Fire while charging alt for orb spells; hold Activate Equipment (User1) for stunwall variants; hold Weapon Special for Arc of Death charge tiers; tap Reload during charge for Lightning Warper; hold Alt-Fire while airborne after Fire for air lightning.\nSpawns from BFG pickups when enabled in Weapon Spawns.";
 PB_WPNHINT_PB_CryoElectroRifle = "Cryo Electro Rifle (slot 8): Weapon Special toggles Cryo vs Electric.\nPrimary: cryo orb or lightning missile (shared PB_CryoCells).\nReload trades PB_Cell packs into cryo ammo.";
 PB_WPNHINT_PB_DARKMATTERRIFLE = "Dark Matter Rifle (slot 8): Weapon Special wheel picks Alt-Fire payload — charged Super Plasma Ball or Gravity Singularity.\nPrimary: fast plasma orb (PB_DarkMatterMag).\nReload feeds the magazine from Cell reserve; unload supported.";
-PB_WPNHINT_PB_CF_RocketLauncher = "Cryo Rocket Launcher (slot 6): rockets apply area cryo slow on detonation.\nUses RocketAmmo.";
 PB_WPNHINT_PB_CryoCannon = "Cryo Cannon (slot 9): cone of cryo wind; uses PB_CryoCannonCells.\nReload trades PB_Cell into cannon fuel.";
 PB_WPNHINT_PB_CryoASG = "Cryo Auto Shotgun (slot 3): cryo pellet burst; uses PB_Shell (2 per shot).\nEach pellet applies brief cryo slow.";
 PB_WPNHINT_VorpalBlade = "Lifesteal Sword: Lunges Lock Targets.\nBerserk Alt-Fire: BladeStorm.";

@@ -39,6 +39,7 @@ Class PB_SpecialWheelHandler : EventHandler
 	array<int> wpick_SlotStart;
 	array<int> wpick_SlotCount;
 	array<string > wpick_WeaponFlat;
+	array<TextureID> wpick_WeaponIconFlat;
 	int wpick_OuterSel;
 	int wpick_InnerSel;
 	bool wpick_MouseIsInner;
@@ -452,6 +453,7 @@ Class PB_SpecialWheelHandler : EventHandler
 		wpick_SlotStart.Clear();
 		wpick_SlotCount.Clear();
 		wpick_WeaponFlat.Clear();
+		wpick_WeaponIconFlat.Clear();
 		wpick_OuterSel = 0;
 		wpick_InnerSel = 0;
 		wpick_MouseIsInner = false;
@@ -610,9 +612,28 @@ Class PB_SpecialWheelHandler : EventHandler
 			realMouse.x-=players[consoleplayer].original_cmd.yaw * (360./65536.)*yawMod;
 			realMouse.y-=players[consoleplayer].original_cmd.pitch * (360./65536.)*pitchMod;
 			double whSc = specialWheelLayoutScale > 0 ? specialWheelLayoutScale : 0.55;
-			int outerSq = int(6000 * whSc * whSc);
+
+			// Equipment wheel slices are prefixed WW_*; give it a wider reach so the
+			// cursor/stick can "flick" to the wider equipment orbit without changing
+			// weapon-special wheel feel.
+			bool isEquipmentWheel = false;
+			if (!weaponPickWheel && wheelShow.Size() > 0)
+			{
+				for (int i = 0; i < wheelShow.Size(); i++)
+				{
+					String sn = wheelSpecials[wheelShow[i]].specialName;
+					if (sn.Length() >= 3 && sn.IndexOf("WW_") == 0)
+					{
+						isEquipmentWheel = true;
+						break;
+					}
+				}
+			}
+			double eqMul = isEquipmentWheel ? 1.15 : 1.0;
+
+			int outerSq = int(6000 * whSc * whSc * eqMul * eqMul);
 			int innerSq = int(5900 * whSc * whSc);
-			int outerR   = int(80 * whSc);
+			int outerR   = int(80 * whSc * eqMul);
 			int innerR   = int(78 * whSc);
 			if (weaponPickWheel)
 			{
@@ -1339,7 +1360,10 @@ Class PB_SpecialWheelHandler : EventHandler
 		iconScale = (0.75, 0.75);
 
 		PB_SpecialWheel_Mode m_cryo = new ("PB_SpecialWheel_Mode");
-		m_cryo.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+		TextureID icCryo = TexMan.CheckForTexture("BXPLA0", TexMan.Type_Any);
+		if (!icCryo.isValid())
+			icCryo = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+		m_cryo.specialIcon = icCryo;
 		m_cryo.specialName = "Select_PB_CryoElectro_Cryo";
 		m_cryo.specialAlias = "Cryo Mode";
 		m_cryo.specialPriority = 1;
@@ -1347,7 +1371,12 @@ Class PB_SpecialWheelHandler : EventHandler
 		wheelSpecials.Push(m_cryo);
 
 		PB_SpecialWheel_Mode m_elec = new ("PB_SpecialWheel_Mode");
-		m_elec.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+		TextureID icElec = TexMan.CheckForTexture("ZAP6A1", TexMan.Type_Any);
+		if (!icElec.isValid())
+			icElec = TexMan.CheckForTexture("CELLA0", TexMan.Type_Any);
+		if (!icElec.isValid())
+			icElec = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+		m_elec.specialIcon = icElec;
 		m_elec.specialName = "Select_PB_CryoElectro_Electric";
 		m_elec.specialAlias = "Electric Mode";
 		m_elec.specialPriority = 2;
@@ -1852,7 +1881,10 @@ Class PB_SpecialWheelHandler : EventHandler
 				if (WheelSliceIsUsable(pl, equip_hook.specialName)) { wheelSpecials.Push(equip_hook); }
 
 				PB_SpecialWheel_Mode equip_cf_fn = new ("PB_SpecialWheel_Mode");
-				equip_cf_fn.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+				TextureID icFn = TexMan.CheckForTexture("FGNDH0", TexMan.Type_Any);
+				if (!icFn.isValid())
+					icFn = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+				equip_cf_fn.specialIcon = icFn;
 				equip_cf_fn.specialName = "WW_FreezenadeSelected";
 				equip_cf_fn.specialAlias = "Freezenade";
 				equip_cf_fn.specialPriority = 10;
@@ -1860,7 +1892,7 @@ Class PB_SpecialWheelHandler : EventHandler
 				if (WheelSliceIsUsable(pl, equip_cf_fn.specialName)) { wheelSpecials.Push(equip_cf_fn); }
 
 				PB_SpecialWheel_Mode equip_cf_sn = new ("PB_SpecialWheel_Mode");
-				equip_cf_sn.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+				equip_cf_sn.specialIcon = TexMan.CheckForTexture("BXPLA0", TexMan.Type_Any);
 				equip_cf_sn.specialName = "WW_PB_CF_SnowCasterSelected";
 				equip_cf_sn.specialAlias = "Snow Caster";
 				equip_cf_sn.specialPriority = 11;
@@ -1868,7 +1900,7 @@ Class PB_SpecialWheelHandler : EventHandler
 				if (WheelSliceIsUsable(pl, equip_cf_sn.specialName)) { wheelSpecials.Push(equip_cf_sn); }
 
 				PB_SpecialWheel_Mode equip_cf_fb = new ("PB_SpecialWheel_Mode");
-				equip_cf_fb.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+				equip_cf_fb.specialIcon = TexMan.CheckForTexture("FZBLA0", TexMan.Type_Any);
 				equip_cf_fb.specialName = "WW_PB_CF_FreezeBotSelected";
 				equip_cf_fb.specialAlias = "Freezebot";
 				equip_cf_fb.specialPriority = 12;
@@ -1876,7 +1908,10 @@ Class PB_SpecialWheelHandler : EventHandler
 				if (WheelSliceIsUsable(pl, equip_cf_fb.specialName)) { wheelSpecials.Push(equip_cf_fb); }
 
 				PB_SpecialWheel_Mode equip_cf_iw = new ("PB_SpecialWheel_Mode");
-				equip_cf_iw.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+				TextureID icIw = TexMan.CheckForTexture("CMSTA0", TexMan.Type_Any);
+				if (!icIw.isValid())
+					icIw = TexMan.CheckForTexture("BXPLA0", TexMan.Type_Any);
+				equip_cf_iw.specialIcon = icIw;
 				equip_cf_iw.specialName = "WW_PB_CF_IceWallSelected";
 				equip_cf_iw.specialAlias = "Ice Wall";
 				equip_cf_iw.specialPriority = 13;
@@ -1884,7 +1919,7 @@ Class PB_SpecialWheelHandler : EventHandler
 				if (WheelSliceIsUsable(pl, equip_cf_iw.specialName)) { wheelSpecials.Push(equip_cf_iw); }
 
 				PB_SpecialWheel_Mode equip_cf_hd = new ("PB_SpecialWheel_Mode");
-				equip_cf_hd.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+				equip_cf_hd.specialIcon = TexMan.CheckForTexture("PLAYE1", TexMan.Type_Any);
 				equip_cf_hd.specialName = "WW_PB_CF_HoloDecoySelected";
 				equip_cf_hd.specialAlias = "Holo Decoy";
 				equip_cf_hd.specialPriority = 14;
@@ -1892,7 +1927,7 @@ Class PB_SpecialWheelHandler : EventHandler
 				if (WheelSliceIsUsable(pl, equip_cf_hd.specialName)) { wheelSpecials.Push(equip_cf_hd); }
 
 				PB_SpecialWheel_Mode equip_cf_tt = new ("PB_SpecialWheel_Mode");
-				equip_cf_tt.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+				equip_cf_tt.specialIcon = TexMan.CheckForTexture("ELPDA0", TexMan.Type_Any);
 				equip_cf_tt.specialName = "WW_PB_CF_TeslaTurretSelected";
 				equip_cf_tt.specialAlias = "Tesla Turret";
 				equip_cf_tt.specialPriority = 15;
@@ -1900,7 +1935,7 @@ Class PB_SpecialWheelHandler : EventHandler
 				if (WheelSliceIsUsable(pl, equip_cf_tt.specialName)) { wheelSpecials.Push(equip_cf_tt); }
 
 				PB_SpecialWheel_Mode equip_cf_ft = new ("PB_SpecialWheel_Mode");
-				equip_cf_ft.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+				equip_cf_ft.specialIcon = TexMan.CheckForTexture("F1REA0", TexMan.Type_Any);
 				equip_cf_ft.specialName = "WW_PB_CF_FlameTurretSelected";
 				equip_cf_ft.specialAlias = "Flame Turret";
 				equip_cf_ft.specialPriority = 16;
@@ -1908,7 +1943,7 @@ Class PB_SpecialWheelHandler : EventHandler
 				if (WheelSliceIsUsable(pl, equip_cf_ft.specialName)) { wheelSpecials.Push(equip_cf_ft); }
 
 				PB_SpecialWheel_Mode equip_cf_fm = new ("PB_SpecialWheel_Mode");
-				equip_cf_fm.specialIcon = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+				equip_cf_fm.specialIcon = TexMan.CheckForTexture("FZBLA0", TexMan.Type_Any);
 				equip_cf_fm.specialName = "WW_PB_CF_FreezeMineSelected";
 				equip_cf_fm.specialAlias = "Freeze Mine";
 				equip_cf_fm.specialPriority = 17;

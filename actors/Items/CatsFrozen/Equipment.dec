@@ -41,7 +41,7 @@ ACTOR PB_CF_FreezeBotDeployAmmo : Ammo
 	Inventory.MaxAmount 4
 	Ammo.BackpackAmount 1
 	Ammo.BackpackMaxAmount 4
-	Inventory.Icon "SHIGA0"
+	Inventory.Icon "FZBLA0"
 	Inventory.PickupMessage ""
 	+INVENTORY.IGNORESKILL
 }
@@ -63,7 +63,7 @@ ACTOR PB_CF_HoloDecoyAmmo : Ammo
 	Inventory.MaxAmount 6
 	Ammo.BackpackAmount 2
 	Ammo.BackpackMaxAmount 8
-	Inventory.Icon "BXPLA0"
+	Inventory.Icon "PLAYE1"
 	Inventory.PickupMessage ""
 	+INVENTORY.IGNORESKILL
 }

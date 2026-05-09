@@ -1,8 +1,4 @@
 // Cat's Frozen Slice 5 — PBCF_CryoPellet (cryo ASG pellets).
-// PB_CF_CryoRocket lives in DECORATE (actors/Weapons/Slot6/PB_CF_RocketLauncher.dec)
-// because its base class PB_Rocket is also DECORATE -- ZScript at parse time
-// cannot resolve DECORATE-only base classes (UZDoom 4.14.3 abort:
-// "Class PB_CF_CryoRocket has unknown base class PB_Rocket").
 
 class PBCF_CryoPellet : FastProjectile
 {

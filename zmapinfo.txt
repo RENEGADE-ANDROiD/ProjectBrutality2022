@@ -382,7 +382,7 @@ DoomEdNums
 
 	// Cat's Frozen weapons + ammo pickups (Slice 5; unconditional spawner rolls � no pb_No* toggles)
 	23212 = PB_CryoASG
-	23213 = PB_CF_RocketLauncher
+	// 23213 freed — reserved within the Cat's Frozen 23212–23218 block (former slice‑5 rocket-launcher ednum); do not reuse for unrelated actors
 	23214 = PB_CryoElectroRifle
 	23215 = PB_CryoCannon
 	23216 = PB_CryoCellsPickup

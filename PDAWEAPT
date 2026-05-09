@@ -192,15 +192,6 @@ Recoil: Low–moderate
 Alt-Fire: Mode selection via Weapon Special (cryo vs electric)
 Firemodes: Dual emitter semi-auto
 Akimbo: X#
-Cryo Rocket Launcher$Rocket launcher wrapping standard UAC motors with cryogenic jacketed warheads—the blast still blows holes in demons, but survivors crawl through frost.$PB_CF_RocketLauncher$Manufacturer: Cat's Frozen support weapons
-Magazine Capacity: Rocket bin (tube-fed PB rocket doctrine)
-Ammunition: RocketAmmo firing PB_CF_CryoRocket
-Effective Range: Medium–long
-RPM: Single-shot rocket cadence
-Recoil: High
-Alt-Fire: Standard PB launcher secondary behaviors / respect chains
-Firemodes: Single-shot rockets (cryo payload)
-Akimbo: X#
 Cryo Cannon$Heavy area denial cannon dumping concentrated cryo wind cones—think flamer mentality with blue frost instead of orange flame.$PB_CryoCannon$Manufacturer: Cat's Frozen heavy weapons
 Magazine Capacity: 40 charges default pool (12 cells per blast)
 Ammunition: PB_CryoCannonCells

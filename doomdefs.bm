@@ -45,6 +45,8 @@
 #include BMAP/Weapons.txt
 #include BMAP/Weapons/QuickLauncher.txt
 #include BMAP/Health.txt
+// --- Cat's Frozen Addon ---
+#include "BMAP/CatsFrozen.txt"
 
 // Monsters
 #include doommonsters.bm

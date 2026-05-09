@@ -11,7 +11,7 @@ ACTOR FreezenadeAmmo : Ammo
 	Inventory.MaxAmount 6
 	Ammo.BackpackAmount 5
 	Ammo.BackpackMaxAmount 10
-	Inventory.Icon "FGNDA"
+	Inventory.Icon "FGNDH0"
 	XScale 0.8
 	Yscale 0.7
 	States

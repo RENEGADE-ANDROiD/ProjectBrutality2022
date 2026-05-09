@@ -18,6 +18,7 @@ ACTOR PB_CryoCannon : PB_Weapon
 	Inventory.PickupSound "Flamer/select"
 	Obituary "%o was flash-frozen by %k's cryo cannon."
 	Tag "Cryo Cannon"
+	Inventory.Icon "FZSGA0"
 	States
 	{
 	Spawn:

@@ -1,0 +1,63 @@
+// Cat's Frozen Addon — brightmaps (PNG roots under brightmaps/WEAPONS/CatsFrozen/..., brightmaps/Monsters/CatsFrozen/...).
+// Sources: CatsFrozenAddon upstream CryoRifle/Brightmaps + CryoRifle/CRYRB0 (pickup glow); Freezebot brightmaps renamed FZBX* -> FZB1*. (Use lowercase brightmaps/monsters/... for Linux — matches repo tree.)
+
+// --- PB_CryoElectroRifle (CYGF*, CYGW*, world CRYR pickup) ---
+brightmap sprite CYGFA0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFA0.png" DisableFullBright }
+brightmap sprite CYGFB0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFB0.png" DisableFullBright }
+brightmap sprite CYGFC0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFC0.png" DisableFullBright }
+brightmap sprite CYGFD0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFD0.png" DisableFullBright }
+brightmap sprite CYGFH0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFH0.png" DisableFullBright }
+brightmap sprite CYGFI0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFI0.png" DisableFullBright }
+brightmap sprite CYGFJ0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFJ0.png" DisableFullBright }
+brightmap sprite CYGFK0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFK0.png" DisableFullBright }
+brightmap sprite CYGFL0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFL0.png" DisableFullBright }
+brightmap sprite CYGFM0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFM0.png" DisableFullBright }
+brightmap sprite CYGFN0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFN0.png" DisableFullBright }
+brightmap sprite CYGFO0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFO0.png" DisableFullBright }
+brightmap sprite CYGFP0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFP0.png" DisableFullBright }
+brightmap sprite CYGFQ0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFQ0.png" DisableFullBright }
+brightmap sprite CYGFR0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGFR0.png" DisableFullBright }
+brightmap sprite CYGWH0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWH0.png" DisableFullBright }
+brightmap sprite CYGWI0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWI0.png" DisableFullBright }
+brightmap sprite CYGWJ0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWJ0.png" DisableFullBright }
+brightmap sprite CYGWK0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWK0.png" DisableFullBright }
+brightmap sprite CYGWL0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWL0.png" DisableFullBright }
+brightmap sprite CYGWM0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWM0.png" DisableFullBright }
+brightmap sprite CYGWN0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWN0.png" DisableFullBright }
+brightmap sprite CYGWO0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWO0.png" DisableFullBright }
+brightmap sprite CYGWP0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWP0.png" DisableFullBright }
+brightmap sprite CYGWQ0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWQ0.png" DisableFullBright }
+brightmap sprite CYGWR0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWR0.png" DisableFullBright }
+brightmap sprite CYGWS0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWS0.png" DisableFullBright }
+brightmap sprite CYGWT0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWT0.png" DisableFullBright }
+brightmap sprite CYGWU0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWU0.png" DisableFullBright }
+brightmap sprite CYGWV0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWV0.png" DisableFullBright }
+brightmap sprite CYGWW0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CYGWW0.png" DisableFullBright }
+brightmap sprite CRYRA0 { map "brightmaps/WEAPONS/CatsFrozen/CryoElectroRifle/CRYRA0.png" DisableFullBright }
+
+// --- Freezebot companion (actors/Equipments/Freezebot.dec) ---
+brightmap sprite FZB1A1 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1A1.png" DisableFullBright }
+brightmap sprite FZB1A2A8 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1A2A8.png" DisableFullBright }
+brightmap sprite FZB1A3A7 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1A3A7.png" DisableFullBright }
+brightmap sprite FZB1A4A6 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1A4A6.png" DisableFullBright }
+brightmap sprite FZB1A5 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1A5.png" DisableFullBright }
+brightmap sprite FZB1B1 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1B1.png" DisableFullBright }
+brightmap sprite FZB1B2B8 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1B2B8.png" DisableFullBright }
+brightmap sprite FZB1B3B7 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1B3B7.png" DisableFullBright }
+brightmap sprite FZB1B4B6 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1B4B6.png" DisableFullBright }
+brightmap sprite FZB1B5 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1B5.png" DisableFullBright }
+brightmap sprite FZB1C1 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1C1.png" DisableFullBright }
+brightmap sprite FZB1C2C8 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1C2C8.png" DisableFullBright }
+brightmap sprite FZB1C3C7 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1C3C7.png" DisableFullBright }
+brightmap sprite FZB1C4C6 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1C4C6.png" DisableFullBright }
+brightmap sprite FZB1C5 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1C5.png" DisableFullBright }
+brightmap sprite FZB1E1 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1E1.png" DisableFullBright }
+brightmap sprite FZB1E2E8 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1E2E8.png" DisableFullBright }
+brightmap sprite FZB1E3E7 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1E3E7.png" DisableFullBright }
+brightmap sprite FZB1E4E6 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1E4E6.png" DisableFullBright }
+brightmap sprite FZB1E5 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1E5.png" DisableFullBright }
+brightmap sprite FZB1F1 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1F1.png" DisableFullBright }
+brightmap sprite FZB1F2F8 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1F2F8.png" DisableFullBright }
+brightmap sprite FZB1F3F7 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1F3F7.png" DisableFullBright }
+brightmap sprite FZB1F4F6 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1F4F6.png" DisableFullBright }
+brightmap sprite FZB1F5 { map "brightmaps/monsters/CatsFrozen/Freezebot/FZB1F5.png" DisableFullBright }

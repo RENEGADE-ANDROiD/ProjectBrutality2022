@@ -28,7 +28,12 @@ Extend Class PB_SpecialWheelHandler
 		if (specialName == "WW_FragGrenadeSelected" || specialName == "WW_ProximityMineSelected"
 			|| specialName == "WW_StunGrenadeSelected" || specialName == "WW_ShieldGrenadeSelected"
 			|| specialName == "WW_VoidGrenadeSelected"
-			|| specialName == "WW_LeechSelected" || specialName == "WW_RevGunSelected")
+			|| specialName == "WW_LeechSelected" || specialName == "WW_RevGunSelected"
+			|| specialName == "WW_FreezenadeSelected"
+			|| specialName == "WW_PB_CF_SnowCasterSelected" || specialName == "WW_PB_CF_FreezeBotSelected"
+			|| specialName == "WW_PB_CF_IceWallSelected" || specialName == "WW_PB_CF_HoloDecoySelected"
+			|| specialName == "WW_PB_CF_TeslaTurretSelected" || specialName == "WW_PB_CF_FlameTurretSelected"
+			|| specialName == "WW_PB_CF_FreezeMineSelected")
 			return 1.5;
 		return 1.0;
 	}
@@ -45,7 +50,25 @@ Extend Class PB_SpecialWheelHandler
 		// rendering pass below at `weaponPickWheel`).
 		double layoutSc = sc * 0.8375;
 
+		// Equipment wheel has many more slices than weapon-special wheels,
+		// so it runs on a slightly wider orbit to reduce center crowding.
+		bool isEquipmentWheel = false;
+		if (!weaponPickWheel && wheelShow.Size() > 0)
+		{
+			for (int i = 0; i < wheelShow.Size(); i++)
+			{
+				String sn = wheelSpecials[wheelShow[i]].specialName;
+				if (sn.Length() >= 3 && sn.IndexOf("WW_") == 0)
+				{
+					isEquipmentWheel = true;
+					break;
+				}
+			}
+		}
+
 		int orbit = int(128 * layoutSc);
+		if (isEquipmentWheel)
+			orbit = int(orbit * 1.15);
 		int circleX = 640*0.75;
 		int circleY = 480/2;
 		let circleTex = TexMan.CheckForTexture("graphics/pywheel/wheel_bg.png",TexMan.Type_MiscPatch);
@@ -117,9 +140,9 @@ Extend Class PB_SpecialWheelHandler
 				for (int j = 0; j < cnt; j++)
 				{
 					String wcls = wpick_WeaponFlat[st + j];
-					TextureID wicon = TexMan.CheckForTexture(String.Format("graphics/pywheel/weapons/%s.png", wcls), TexMan.Type_Any);
-					if (!wicon.isValid())
-						wicon = crowbarTex;
+					TextureID wicon;
+					if (st + j < wpick_WeaponIconFlat.Size())
+						wicon = wpick_WeaponIconFlat[st + j];
 					Vector2 t2 = (cos(((double(j+1)/cnt)*360)+180)*innerOrbit, sin((double(j+1)/cnt)*360)*innerOrbit);
 					int ix = circleX + t2.x;
 					int iy = circleY + t2.y;
@@ -202,6 +225,10 @@ Extend Class PB_SpecialWheelHandler
 		}
 
 		int curSelMod = wheelShow[currentSelection];
+		// Equipment wheel (WW_*): normalize icon draw to a fixed virtual box in 640×480 space so
+		// mixed pickup sprites vs pywheel art read uniform; weapon-special wheels keep per-slice iconScale.
+		int PB_EQ_WHEEL_ICON_BOX = 32;
+		double PB_EQ_WHEEL_ICON_SELMUL = 1.25;
 		screen.DrawTexture (circleTex, true, circleX/2, circleY/2, DTA_VirtualWidth, 320, DTA_VirtualHeight, 240,
 			DTA_DestWidth, bgW, DTA_DestHeight, bgH, DTA_Alpha, 0.25*alphaFade,
 			DTA_CenterOffset, true);
@@ -211,13 +238,38 @@ Extend Class PB_SpecialWheelHandler
 			TextureID specIcon = wheelSpecials[wheelShow[i]].specialIcon;
 			int screenPosX = (circleX+textPos.x);//wheelScaleX[i];
 			int screenPosY = (circleY+textPos.y);//wheelScaleY[i];
-			Vector2 imageScale = TexMan.GetScaledSize(specIcon);
-			imageScale.x *= wheelSpecials[wheelShow[i]].iconScale.x * sc;
-			imageScale.y *= wheelSpecials[wheelShow[i]].iconScale.y*1.2 * sc;
+			Vector2 imageScale;
+			if (isEquipmentWheel)
 			{
-				double eqMul = EquipmentWheelIconSizeMul(wheelSpecials[wheelShow[i]].specialName);
-				imageScale.x *= eqMul;
-				imageScale.y *= eqMul;
+				Vector2 texSize = TexMan.GetScaledSize(specIcon);
+				if (texSize.x < 1 || texSize.y < 1)
+				{
+					imageScale = texSize;
+					imageScale.x *= wheelSpecials[wheelShow[i]].iconScale.x * sc;
+					imageScale.y *= wheelSpecials[wheelShow[i]].iconScale.y * 1.2 * sc;
+					double eqMulFB = EquipmentWheelIconSizeMul(wheelSpecials[wheelShow[i]].specialName);
+					imageScale.x *= eqMulFB;
+					imageScale.y *= eqMulFB;
+				}
+				else
+				{
+					double targetBox = (i == currentSelection) ? (PB_EQ_WHEEL_ICON_BOX * PB_EQ_WHEEL_ICON_SELMUL) : PB_EQ_WHEEL_ICON_BOX;
+					double dim = max(texSize.x, texSize.y);
+					double boxScale = targetBox / dim;
+					imageScale.x = texSize.x * boxScale * sc;
+					imageScale.y = texSize.y * boxScale * sc;
+				}
+			}
+			else
+			{
+				imageScale = TexMan.GetScaledSize(specIcon);
+				imageScale.x *= wheelSpecials[wheelShow[i]].iconScale.x * sc;
+				imageScale.y *= wheelSpecials[wheelShow[i]].iconScale.y*1.2 * sc;
+				{
+					double eqMul = EquipmentWheelIconSizeMul(wheelSpecials[wheelShow[i]].specialName);
+					imageScale.x *= eqMul;
+					imageScale.y *= eqMul;
+				}
 			}
 			bool actuallyHas = WheelSliceIsUsableOverlay(PlayerPawn(players[0].mo), wheelSpecials[wheelShow[i]].specialName);
 			bool noIcon = specIcon==crowbarTex;

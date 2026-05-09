@@ -37,6 +37,7 @@
 #include "lumps/includes/gldefs/Realm667_Monsters_BloodGhostSkull.inc"
 #include "lumps/includes/gldefs/FriendlyDrone.inc"
 #include "lumps/includes/gldefs/PB_DarkMatterRifle.inc"
+#include "lumps/includes/gldefs/CatsFrozen.inc"
 
 flickerlight2 FT_GroundFire
 {
