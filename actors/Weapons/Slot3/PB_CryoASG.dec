@@ -9,7 +9,7 @@ ACTOR PB_CryoASG : PB_Weapon
 	Weapon.SlotPriority 0.06
 	Weapon.AmmoType1 "PB_Shell"
 	Weapon.AmmoGive1 16
-	Weapon.AmmoUse1 1
+	Weapon.AmmoUse1 0
 	+WEAPON.NOAUTOAIM
 	+WEAPON.NOALERT
 	Inventory.PickupMessage "$PB_PICKUP_PB_CRYOASG"
@@ -70,6 +70,7 @@ ACTOR PB_CryoASG : PB_Weapon
 		TNT1 A 0 A_JumpIfInventory("PB_Shell", 1, "FireCryoPellets")
 		Goto ReadyLoop
 	FireCryoPellets:
+        TNT1 A 0 A_TakeInventory("PB_Shell", 1)
 		TNT1 A 0 A_PlaySound("weapons/golide/fire_db", CHAN_WEAPON)
 		A12F A 1 Bright
 		TNT1 A 0 A_FireCustomMissile("PBCF_CryoPellet", frandom(-5, 5), 1, 4, frandom(-3, 3))
