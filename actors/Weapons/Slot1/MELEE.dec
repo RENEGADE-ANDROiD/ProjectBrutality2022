@@ -170,7 +170,8 @@ ACTOR Melee_Attacks : PB_Weapon Replaces Fist
 	Weapon.SlotNumber 1
 	Weapon.SlotPriority 0
 	Tag "Bare Hands"
-	inventory.AltHUDIcon "KUKRA0"
+	Inventory.Icon "TH3AA0"
+	inventory.AltHUDIcon "TH3AA0"
 	States
 	{
 		

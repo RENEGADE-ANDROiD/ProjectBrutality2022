@@ -68,7 +68,7 @@ Extend Class PB_SpecialWheelHandler
 
 		int orbit = int(128 * layoutSc);
 		if (isEquipmentWheel)
-			orbit = int(orbit * 1.15);
+			orbit = int(orbit * 1.30);
 		int circleX = 640*0.75;
 		int circleY = 480/2;
 		let circleTex = TexMan.CheckForTexture("graphics/pywheel/wheel_bg.png",TexMan.Type_MiscPatch);
@@ -227,7 +227,7 @@ Extend Class PB_SpecialWheelHandler
 		int curSelMod = wheelShow[currentSelection];
 		// Equipment wheel (WW_*): normalize icon draw to a fixed virtual box in 640×480 space so
 		// mixed pickup sprites vs pywheel art read uniform; weapon-special wheels keep per-slice iconScale.
-		int PB_EQ_WHEEL_ICON_BOX = 32;
+		int PB_EQ_WHEEL_ICON_BOX = 40;
 		double PB_EQ_WHEEL_ICON_SELMUL = 1.25;
 		screen.DrawTexture (circleTex, true, circleX/2, circleY/2, DTA_VirtualWidth, 320, DTA_VirtualHeight, 240,
 			DTA_DestWidth, bgW, DTA_DestHeight, bgH, DTA_Alpha, 0.25*alphaFade,
