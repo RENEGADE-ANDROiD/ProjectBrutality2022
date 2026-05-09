@@ -19,7 +19,7 @@ class PBCF_CryoPellet : FastProjectile
 	{
 	Spawn:
 	Fly:
-		TNT1 A 1 Bright;
+		CRY0 A 1 Bright;
 		Loop;
 	Death:
 		TNT1 A 1;
