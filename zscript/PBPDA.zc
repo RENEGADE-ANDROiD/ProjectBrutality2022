@@ -25,9 +25,9 @@ class PB_PDAWeaponContainer : Inventory
 	Array<int> PDA_CodexMonsterSlots;
 
 	// SmallFont.BreakLines width is in font-native units; DrawText uses
-	// `pdaDescScale` (~0.68× menu scale). Keep lines short enough that
-	// scaled glyph runs stay inside `Screen/2 → clipRight` on 1366×768+.
-	const PB_PDA_DESC_BREAK_WIDTH = 118;
+	// `pdaDescScale` (~0.68× menu scale). Narrowed when Blocky mode reserves
+	// the right-hand sprite-preview band (`PB_EventHandler` preview metrics).
+	const PB_PDA_DESC_BREAK_WIDTH = 80;
 
 	void ClearCodexMonsterRegistry()
 	{
@@ -250,6 +250,15 @@ class PB_PDAWeaponContainer : Inventory
 		}
 	}
 }
+
+// Blocky PDA sprite-action preview timeline (weapon/monster state walks).
+class PB_PDAPreviewSequence
+{
+	Array<TextureID> frames;
+	Array<int> ticsPerFrame;
+	Array<int> segmentLabels;
+}
+
 class PB_PDAUi_Object
 {
 	TextureID DialogPicture;
@@ -335,6 +344,16 @@ class PB_EventHandler : EventHandler
 	transient int LastPDAToggleTic;
 	bool isnetgame;
 	ui Vector2 UpArrowPos,DownArrowPos;
+	// Blocky-only draw anchors for "<" / ">" (hitboxes are padded in
+	// `SyncBlockyPageArrowHitboxes`; draw uses these top-left positions).
+	ui Vector2 LeftCatArrowVisPos, RightCatArrowVisPos;
+	// Cached from `PB_PDAWeaponContainer.largestStringWidth` at PDA init
+	// so category-arrow X placement can track the description pane in
+	// `SyncBlockyPageArrowHitboxes` without a play-scope inventory read.
+	transient ui int pdaDescLargestStrW;
+	// Blocky-only: horizontal shift so tile grid + description pane share
+	// balanced side margins (`ApplyBlockyLayout`; 0 when blocky is off).
+	transient ui int pdaBlockyXOffset;
 	ui double globalPDAAlpha;
 	bool NonMainMenu;
 	bool MonsterMenuOpened,MonsterMenuOnly;
@@ -383,6 +402,23 @@ class PB_EventHandler : EventHandler
 	transient ui Array<String> blockyWeaponIconMissed;
 	transient ui Array<String> blockyMonsterIconMissed;
 	transient ui int currentMonsterIndex;
+	// Debounces `pdaprevq#…` netevents from UiTick (UI cannot write play-scope
+	// preview fields directly).
+	transient ui string pdaPrevUILastQueuedKey;
+	// Blocky sprite-action preview (built + animated in play `WorldTick`, drawn in UI).
+	Array<TextureID> pdaPrevFrames;
+	Array<int> pdaPrevFrameTics;
+	Array<int> pdaPrevSegIdx;
+	string pdaPrevPendingKey;
+	string pdaPrevBuiltKey;
+	bool pdaPrevNeedsBuild;
+	int pdaPrevCurFrame;
+	int pdaPrevTicsRemain;
+	int pdaPrevLastAdvGametic;
+	transient ui int pdaPreviewPaneX;
+	transient ui int pdaPreviewPaneY;
+	transient ui int pdaPreviewPaneW;
+	transient ui int pdaPreviewPaneH;
 	// Full-screen dash vignette (from PBv0.3+ staging: PB_EventHandler + PB_DashOverlay; toggled with pb_dasheffect)
 	ui double dashAlpha;
 	ui double dashScale;
@@ -531,6 +567,18 @@ class PB_EventHandler : EventHandler
 			DTA_Alpha, alpha, DTA_CenterOffset, true);
 	}
 
+	clearscope static string PB_PDA_NormClassStr(string cn)
+	{
+		cn.Replace("\r", "");
+		cn.Replace("\n", "");
+		cn.Replace("\t", "");
+		while (cn.Length() > 0 && cn.ByteAt(0) <= 32)
+			cn = cn.Mid(1, cn.Length() - 1);
+		while (cn.Length() > 0 && cn.ByteAt(cn.Length() - 1) <= 32)
+			cn = cn.Mid(0, cn.Length() - 1);
+		return cn;
+	}
+
 	clearscope static int PB_PDA_ParseUInt(string s)
 	{
 		if (s.length() < 1) return -1;
@@ -674,6 +722,26 @@ class PB_EventHandler : EventHandler
 			}
 			SendNetworkEvent("ResetMonsterFound");
 		}
+		if (PDAMode && uiObjects.Size() >= 1)
+		{
+			double pdaArrowScale = clamp(Screen.GetHeight() / 240.0, 2.0, 6.0);
+			SyncBlockyPageArrowHitboxes(pdaArrowScale);
+			if (BlockyEnabled() && NonMainMenu && (WeaponMenuOpened || MonsterMenuOpened))
+			{
+				string nk = "";
+				if (WeaponMenuOpened && currentindex >= 0 && currentindex < pdaWeapTextArray.Size())
+					nk = "W:" .. BlockyNormalizeClassString(pdaWeapTextArray[currentindex].PDAWeapClassName);
+				else if (MonsterMenuOpened && currentMonsterIndex >= 0 && currentMonsterIndex < PDAMonsterIconClass.Size())
+					nk = "M:" .. BlockyNormalizeClassString(PDAMonsterIconClass[currentMonsterIndex]);
+				if (nk != "" && nk != pdaPrevUILastQueuedKey)
+				{
+					pdaPrevUILastQueuedKey = nk;
+					SendNetworkEvent("pdaprevq#" .. nk);
+				}
+			}
+			else
+				pdaPrevUILastQueuedKey = "";
+		}
 		for (int i = 0;i < uiObjects.Size();i++)
 		{
 			if (MouseX >= uiObjects[i].ImagePos.x
@@ -813,6 +881,139 @@ class PB_EventHandler : EventHandler
 	{
 		NewGameStarted = true;
 	}
+
+	void PDA_Play_ClearPreview()
+	{
+		pdaPrevFrames.Clear();
+		pdaPrevFrameTics.Clear();
+		pdaPrevSegIdx.Clear();
+		pdaPrevBuiltKey = "";
+		pdaPrevCurFrame = 0;
+		pdaPrevTicsRemain = 0;
+		pdaPrevLastAdvGametic = 0;
+	}
+
+	void PDA_Play_ResetAnim()
+	{
+		if (pdaPrevFrames.Size() < 1)
+		{
+			pdaPrevCurFrame = 0;
+			pdaPrevTicsRemain = 0;
+			return;
+		}
+		pdaPrevCurFrame = 0;
+		pdaPrevTicsRemain = pdaPrevFrameTics[0];
+		pdaPrevLastAdvGametic = gametic;
+	}
+
+	void PDA_Play_AdvancePreviewAnim()
+	{
+		if (!PDAMode || pdaPrevFrames.Size() < 1)
+			return;
+		PlayerInfo plr = players[consoleplayer];
+		bool blockyOn = true;
+		if (plr)
+		{
+			let cvB = CVar.GetCVar("pb_pda_blocky", plr);
+			if (cvB)
+				blockyOn = cvB.GetBool();
+		}
+		if (!blockyOn || !NonMainMenu || !(WeaponMenuOpened || MonsterMenuOpened))
+			return;
+		while (gametic >= pdaPrevLastAdvGametic + pdaPrevTicsRemain)
+		{
+			pdaPrevLastAdvGametic += pdaPrevTicsRemain;
+			pdaPrevCurFrame++;
+			if (pdaPrevCurFrame >= pdaPrevFrames.Size())
+				pdaPrevCurFrame = 0;
+			pdaPrevTicsRemain = pdaPrevFrameTics[pdaPrevCurFrame];
+		}
+	}
+
+	void PDA_Play_AppendChain(Name actorClass, String label, int segIdx, int maxSteps)
+	{
+		readonly<Actor> def = GetDefaultByType((class<Actor>)(actorClass));
+		if (!def)
+			return;
+		State st = def.FindStateByString(label, true);
+		if (!st)
+			return;
+		int steps = 0;
+		while (st && steps < maxSteps && pdaPrevFrames.Size() < PB_PDA_PREVIEW_TOTAL_FRAMES)
+		{
+			TextureID tid = st.GetSpriteTexture(0);
+			bool ok = tid.IsValid();
+			if (ok)
+			{
+				string tn = TexMan.GetName(tid);
+				if (tn.Length() >= 4 && tn.Mid(0, 4) ~== "TNT1")
+					ok = false;
+			}
+			if (ok)
+			{
+				int tic = st.tics;
+				if (tic < 1)
+					tic = 1;
+				tic = max(PB_PDA_PREVIEW_MIN_TICS, tic);
+				pdaPrevFrames.Push(tid);
+				pdaPrevFrameTics.Push(tic);
+				pdaPrevSegIdx.Push(segIdx);
+			}
+			State nx = st.NextState;
+			if (!nx || nx == st)
+				break;
+			st = nx;
+			steps++;
+		}
+	}
+
+	void PDA_Play_BuildWeapon(string cn)
+	{
+		Name nm = cn;
+		readonly<Weapon> wchk = GetDefaultByType((class<Weapon>)(nm));
+		if (!wchk)
+			return;
+		PDA_Play_AppendChain(nm, "Select", 0, PB_PDA_PREVIEW_SEG_FRAMES);
+		PDA_Play_AppendChain(nm, "Ready", 1, PB_PDA_PREVIEW_READY_FRAMES);
+		PDA_Play_AppendChain(nm, "Fire", 2, PB_PDA_PREVIEW_SEG_FRAMES);
+		PDA_Play_AppendChain(nm, "AltFire", 3, PB_PDA_PREVIEW_SEG_FRAMES);
+		PDA_Play_AppendChain(nm, "Reload", 4, PB_PDA_PREVIEW_SEG_FRAMES);
+		PDA_Play_AppendChain(nm, "Deselect", 5, PB_PDA_PREVIEW_SEG_FRAMES);
+	}
+
+	void PDA_Play_BuildMonster(string cn)
+	{
+		Name nm = cn;
+		readonly<Actor> achk = GetDefaultByType((class<Actor>)(nm));
+		if (!achk)
+			return;
+		PDA_Play_AppendChain(nm, "Spawn", 0, PB_PDA_PREVIEW_SEG_FRAMES);
+		PDA_Play_AppendChain(nm, "See", 1, PB_PDA_PREVIEW_SEG_FRAMES);
+		PDA_Play_AppendChain(nm, "Missile", 2, PB_PDA_PREVIEW_SEG_FRAMES);
+		PDA_Play_AppendChain(nm, "Melee", 3, PB_PDA_PREVIEW_SEG_FRAMES);
+		PDA_Play_AppendChain(nm, "Pain", 4, PB_PDA_PREVIEW_SEG_FRAMES);
+		PDA_Play_AppendChain(nm, "Death", 5, PB_PDA_PREVIEW_SEG_FRAMES);
+	}
+
+	void PDA_Play_BuildFromKey(string key)
+	{
+		PDA_Play_ClearPreview();
+		if (key.Length() < 3)
+			return;
+		string prefix = key.Mid(0, 2);
+		string body = key.Mid(2, key.Length() - 2);
+		body = PB_PDA_NormClassStr(body);
+		if (body.Length() < 1)
+			return;
+		if (prefix == "W:")
+			PDA_Play_BuildWeapon(body);
+		else if (prefix == "M:")
+			PDA_Play_BuildMonster(body);
+		else
+			return;
+		pdaPrevBuiltKey = key;
+	}
+
 	override void PlayerEntered(PlayerEvent e)
 	{
 		if (!e) return;
@@ -832,6 +1033,13 @@ class PB_EventHandler : EventHandler
 			MouseHeldDown = false;
 		}
 		if (!DontTick) uiTics++;
+		if (pdaPrevNeedsBuild)
+		{
+			pdaPrevNeedsBuild = false;
+			PDA_Play_BuildFromKey(pdaPrevPendingKey);
+			PDA_Play_ResetAnim();
+		}
+		PDA_Play_AdvancePreviewAnim();
 		ThinkerIterator ti = ThinkerIterator.Create("PlayerPawn");
 		PlayerPawn a;
 		while (a = PlayerPawn(ti.Next()))
@@ -875,6 +1083,9 @@ class PB_EventHandler : EventHandler
 			WeaponMenuOpened = false;
 			NonMainMenu = false;
 			S_StartSound("PDABACK",CHAN_AUTO);
+			PDA_Play_ClearPreview();
+			pdaPrevPendingKey = "";
+			pdaPrevNeedsBuild = false;
 		}
 		if (e.Name ~== "openweaponmenu")
 		{
@@ -951,6 +1162,9 @@ class PB_EventHandler : EventHandler
 			WeaponMenuOpened = False;
 			NonMainMenu = false;
 			LastPDAToggleTic = gametic;
+			PDA_Play_ClearPreview();
+			pdaPrevPendingKey = "";
+			pdaPrevNeedsBuild = false;
 		}
 		if (e.Name ~== "openpda")
 		{
@@ -979,6 +1193,9 @@ class PB_EventHandler : EventHandler
 				MonsterMenuOpened = false;
 				WeaponMenuOpened = false;
 				NonMainMenu = false;
+				PDA_Play_ClearPreview();
+				pdaPrevPendingKey = "";
+				pdaPrevNeedsBuild = false;
 			}
 			else
 			{
@@ -995,6 +1212,17 @@ class PB_EventHandler : EventHandler
 			MouseX = e.Args[0];
 			MouseY = e.Args[1];
 			MousePositionSet = true;
+		}
+		if (e.Name ~== "pdaprevclear")
+		{
+			PDA_Play_ClearPreview();
+			pdaPrevPendingKey = "";
+			pdaPrevNeedsBuild = false;
+		}
+		if (e.Name.Length() > 9 && e.Name.Left(9) ~== "pdaprevq#")
+		{
+			pdaPrevPendingKey = e.Name.Mid(9, e.Name.Length() - 9);
+			pdaPrevNeedsBuild = true;
 		}
 		if (e.Name ~== "foundweapon")
 		{
@@ -1069,12 +1297,55 @@ class PB_EventHandler : EventHandler
 	const PB_PDA_BLOCKY_COLS = 5;
 	const PB_PDA_BLOCKY_ROWS = 8;
 	const PB_PDA_BLOCKY_ICON_PULSE_AMP = 0.04;
+	// Blocky catalogue page-up / page-down (`objecttype` 4 / 5): larger than
+	// body `pdaTextScale` so the arrows stay easy targets beside the tile grid.
+	const PB_PDA_BLOCKY_PAGE_ARROW_VIS_MUL = 1.65;
+	const PB_PDA_BLOCKY_PAGE_ARROW_HIT_PAD = 8;
+	// Top-left anchored `DrawText`: bottom of glyph = y + fontH×scale×mul.
+	// `0` pins the down-arrow tip to `descClipH` (description clip bottom).
+	const PB_PDA_BLOCKY_PAGE_ARROW_BOTTOM_PAD = 0;
+	const PB_PDA_BLOCKY_CAT_ARROW_VIS_MUL = 1.65;
+	const PB_PDA_BLOCKY_CAT_ARROW_HIT_PAD = 8;
+	// Vertical gap from `descClipH` / down-arrow tip to the category row.
+	const PB_PDA_BLOCKY_CAT_ARROW_BELOW_DESC = 12;
+	// Blocky right column: sprite-action preview pane (768p baselines, scaled).
+	const PB_PDA_PREVIEW_GAP_768 = 16;
+	const PB_PDA_PREVIEW_WIDTH_768 = 300;
+	const PB_PDA_PREVIEW_SEG_FRAMES = 16;
+	const PB_PDA_PREVIEW_READY_FRAMES = 10;
+	const PB_PDA_PREVIEW_TOTAL_FRAMES = 64;
+	const PB_PDA_PREVIEW_MIN_TICS = 5;
 
 	ui bool BlockyEnabled() const
 	{
 		if (!playeringame[consoleplayer]) return false;
 		let cv = CVar.GetCVar("pb_pda_blocky", players[consoleplayer]);
 		return cv ? cv.GetBool() : true;
+	}
+
+	ui int PB_PDA_PreviewGapPx() const
+	{
+		return max(10, int(double(PB_PDA_PREVIEW_GAP_768) * double(Screen.GetHeight()) / 768.0));
+	}
+
+	ui int PB_PDA_PreviewWidthPx() const
+	{
+		int sw = Screen.GetWidth();
+		int sh = Screen.GetHeight();
+		int w = int(double(PB_PDA_PREVIEW_WIDTH_768) * double(sh) / 768.0);
+		int lo = int(double(sw) * 0.17);
+		int hi = int(double(sw) * 0.36);
+		return clamp(w, lo, hi);
+	}
+
+	// Right edge for dossier text clip when Blocky + preview band are on.
+	ui int PB_PDA_BlockyDescClipRight() const
+	{
+		int sw = Screen.GetWidth();
+		if (!BlockyEnabled())
+			return sw - 32;
+		int safeRight = sw - 32 + pdaBlockyXOffset;
+		return safeRight - PB_PDA_PreviewWidthPx() - PB_PDA_PreviewGapPx();
 	}
 
 	// Computes the visible tile-grid box (left half of the screen, since
@@ -1176,14 +1447,7 @@ class PB_EventHandler : EventHandler
 
 	ui string BlockyNormalizeClassString(string cn) const
 	{
-		cn.Replace("\r", "");
-		cn.Replace("\n", "");
-		cn.Replace("\t", "");
-		while (cn.Length() > 0 && cn.ByteAt(0) <= 32)
-			cn = cn.Mid(1, cn.Length() - 1);
-		while (cn.Length() > 0 && cn.ByteAt(cn.Length() - 1) <= 32)
-			cn = cn.Mid(0, cn.Length() - 1);
-		return cn;
+		return PB_PDA_NormClassStr(cn);
 	}
 
 	ui TextureID BlockyFirstFrameOfState(State st) const
@@ -1232,38 +1496,28 @@ class PB_EventHandler : EventHandler
 			return nullTex;
 		TextureID resolved;
 		Name nm = cn;
-		class<Inventory> icl = (class<Inventory>)(nm);
-		if (icl)
 		{
-			let idef = Inventory(GetDefaultByType(icl));
+			readonly<Inventory> idef = GetDefaultByType((class<Inventory>)(nm));
 			if (idef && idef.Icon.IsValid())
 				resolved = idef.Icon;
 		}
 		if (!resolved.IsValid())
 		{
-			class<Weapon> wcl = (class<Weapon>)(nm);
-			if (wcl)
-			{
-				let wdef = Weapon(GetDefaultByType(wcl));
-				if (wdef && wdef.AltHUDIcon.IsValid())
-					resolved = wdef.AltHUDIcon;
-			}
+			readonly<Weapon> wdef = GetDefaultByType((class<Weapon>)(nm));
+			if (wdef && wdef.AltHUDIcon.IsValid())
+				resolved = wdef.AltHUDIcon;
 		}
 		if (!resolved.IsValid())
 		{
-			class<Actor> acl = (class<Actor>)(nm);
-			if (acl)
+			readonly<Actor> adef = GetDefaultByType((class<Actor>)(nm));
+			if (adef)
 			{
 				string iconLump = cn .. "ICON";
 				TextureID ic = TexMan.CheckForTexture(iconLump, TexMan.Type_Any);
 				if (ic.IsValid())
 					resolved = ic;
 				else
-				{
-					let adef = Actor(GetDefaultByType(acl));
-					if (adef)
-						resolved = BlockyFirstFrameOfState(adef.SpawnState);
-				}
+					resolved = BlockyFirstFrameOfState(adef.SpawnState);
 			}
 		}
 		if (resolved.IsValid())
@@ -1295,13 +1549,7 @@ class PB_EventHandler : EventHandler
 		if (blockyMonsterIconMissed.Find(cn) < blockyMonsterIconMissed.Size())
 			return nullTex;
 		Name nm = cn;
-		class<Actor> acl = (class<Actor>)(nm);
-		if (!acl)
-		{
-			blockyMonsterIconMissed.Push(cn);
-			return nullTex;
-		}
-		let adef = Actor(GetDefaultByType(acl));
+		readonly<Actor> adef = GetDefaultByType((class<Actor>)(nm));
 		if (!adef)
 		{
 			blockyMonsterIconMissed.Push(cn);
@@ -1397,6 +1645,37 @@ class PB_EventHandler : EventHandler
 		return pdaWeapTextArray.Size();
 	}
 
+	// Bottom-left `BACK / EXIT` hit padding (matches page / category arrows).
+	ui void StampBlockyBackExitFooter(int gridPadding, int sh)
+	{
+		font f = SmallFont;
+		if (!f) return;
+		double pts = clamp(double(sh) / 240.0, 2.0, 6.0);
+		int pad = PB_PDA_BLOCKY_PAGE_ARROW_HIT_PAD;
+		double backW = f.StringWidth("BACK") * pts;
+		double sepW = f.StringWidth(" / ") * pts;
+		double exitW = f.StringWidth("EXIT") * pts;
+		double gh = f.GetHeight() * pts;
+		int anchorX = max(8, gridPadding * 2);
+		int anchorY = sh - int(gh + 0.5) - max(8, sh / 64);
+		for (int i = 0; i < UiObjects.Size(); i++)
+		{
+			PB_PDAUi_Object o = UiObjects[i];
+			if (!o) continue;
+			if (o.BackButtonTrue)
+			{
+				o.ImagePos = (anchorX - pad, anchorY - pad);
+				o.ImageSize = (int(backW + 2 * pad + 0.5), int(gh + 2 * pad + 0.5));
+			}
+			else if (o.ExitButtonTrue)
+			{
+				int exitLeft = anchorX + int(backW + sepW + 0.5) - pad;
+				o.ImagePos = (exitLeft, anchorY - pad);
+				o.ImageSize = (int(exitW + 2 * pad + 0.5), int(gh + 2 * pad + 0.5));
+			}
+		}
+	}
+
 	// Reposition every weapon (objecttype 3) / monster (objecttype 6)
 	// uiObject onto the current page's tile slot. Tiles on other pages
 	// get pushed off-screen (-9999, -9999) so the existing UiTick mouse
@@ -1404,11 +1683,40 @@ class PB_EventHandler : EventHandler
 	// without needing a separate `pageHidden` flag.
 	ui void ApplyBlockyLayout()
 	{
-		if (!BlockyEnabled()) return;
+		if (!BlockyEnabled())
+		{
+			pdaBlockyXOffset = 0;
+			if (descriptiondialog)
+			{
+				int sw0 = Screen.GetWidth();
+				descriptiondialog.ImagePos.x = sw0 / 2;
+				descriptiondialog.InitialImagePos.x = descriptiondialog.ImagePos.x;
+				UpArrowPos.x = descriptiondialog.ImagePos.x + pdaDescLargestStrW;
+				DownArrowPos.x = UpArrowPos.x;
+			}
+			return;
+		}
+		int sw = Screen.GetWidth();
+		int sh = Screen.GetHeight();
+		int safeRight = sw - 32;
 		int originX, originY, cols, rows, tileW, tileH, padding;
 		GetBlockyMetrics(originX, originY, cols, rows, tileW, tileH, padding);
+		// Center tile grid + description as one unit; right edge tracks
+		// the dossier clip (`Screen.GetWidth() - 32`).
+		int gridLeftUn = originX;
+		int compositionW = safeRight - gridLeftUn;
+		pdaBlockyXOffset = (sw - compositionW) / 2 - gridLeftUn;
+		int off = pdaBlockyXOffset;
+		if (descriptiondialog)
+		{
+			descriptiondialog.ImagePos.x = sw / 2 + off;
+			descriptiondialog.InitialImagePos.x = descriptiondialog.ImagePos.x;
+			UpArrowPos.x = descriptiondialog.ImagePos.x + pdaDescLargestStrW;
+			DownArrowPos.x = UpArrowPos.x;
+		}
 		int pageSize = cols * rows;
-		if (pageSize < 1) return;
+		if (pageSize >= 1)
+		{
 		// Count visible (unlocked) tiles per section to size the page
 		// range. Locked entries (`dontdraw == true` from the
 		// "found-by-pickup / killed-monster" gate) are intentionally
@@ -1454,9 +1762,206 @@ class PB_EventHandler : EventHandler
 			int idxOnPage = slot % pageSize;
 			int row = idxOnPage / cols;
 			int col = idxOnPage % cols;
-			UiObjects[i].ImagePos  = (originX + col * (tileW + padding),
+			UiObjects[i].ImagePos  = (originX + off + col * (tileW + padding),
 			                           originY + row * (tileH + padding));
 			UiObjects[i].ImageSize = (tileW, tileH);
+		}
+		}
+		StampBlockyBackExitFooter(padding, sh);
+	}
+
+	ui string PDA_PreviewSegCaption(bool weapon, int seg) const
+	{
+		if (weapon)
+		{
+			switch (seg)
+			{
+			case 0: return "Select";
+			case 1: return "Ready";
+			case 2: return "Fire";
+			case 3: return "Alt Fire";
+			case 4: return "Reload";
+			case 5: return "Deselect";
+			default: return "";
+			}
+		}
+		switch (seg)
+		{
+		case 0: return "Spawn";
+		case 1: return "See";
+		case 2: return "Missile";
+		case 3: return "Melee";
+		case 4: return "Pain";
+		case 5: return "Death";
+		default: return "";
+		}
+	}
+
+	ui void DrawBlockyPreviewPane(double pdaTextScale, double gAlpha, bool weapMode)
+	{
+		if (!BlockyEnabled() || !NonMainMenu)
+			return;
+		if (pdaPreviewPaneW < 4 || pdaPreviewPaneH < 4)
+			return;
+		Screen.Dim(color(32, 36, 48), 0.62 * gAlpha, pdaPreviewPaneX, pdaPreviewPaneY, pdaPreviewPaneW, pdaPreviewPaneH);
+		TextureID drawTex;
+		bool haveAnim = pdaPrevFrames.Size() > 0;
+		if (haveAnim && pdaPrevCurFrame >= 0 && pdaPrevCurFrame < pdaPrevFrames.Size())
+			drawTex = pdaPrevFrames[pdaPrevCurFrame];
+		if (!drawTex.IsValid() && weapMode && currentindex >= 0 && currentindex < pdaWeapTextArray.Size())
+			drawTex = ResolveBlockyWeaponIconTex(pdaWeapTextArray[currentindex].PDAWeapClassName);
+		if (!drawTex.IsValid() && !weapMode && currentMonsterIndex >= 0 && currentMonsterIndex < PDAMonsterIconClass.Size())
+			drawTex = ResolveBlockyMonsterIconTex(PDAMonsterIconClass[currentMonsterIndex]);
+		if (!drawTex.IsValid())
+			return;
+		Vector2 ts = TexMan.GetScaledSize(drawTex);
+		if (ts.X < 0.5 || ts.Y < 0.5)
+			return;
+		double targetH = double(pdaPreviewPaneH) * 0.74;
+		double targetW = double(pdaPreviewPaneW) * 0.9;
+		double sc = min(targetH / ts.Y, targetW / ts.X);
+		double dw = ts.X * sc;
+		double dh = ts.Y * sc;
+		double cx = double(pdaPreviewPaneX) + double(pdaPreviewPaneW) * 0.5;
+		double cy = double(pdaPreviewPaneY) + double(pdaPreviewPaneH) * 0.4;
+		int clipL = pdaPreviewPaneX + 2;
+		int clipT = pdaPreviewPaneY + 2;
+		int clipR = pdaPreviewPaneX + pdaPreviewPaneW - 2;
+		int clipB = pdaPreviewPaneY + pdaPreviewPaneH - 2;
+		Screen.DrawTexture(drawTex, false, cx, cy,
+			DTA_DestWidthF, dw, DTA_DestHeightF, dh,
+			DTA_Alpha, gAlpha, DTA_CenterOffset, true,
+			DTA_ClipLeft, clipL, DTA_ClipTop, clipT, DTA_ClipRight, clipR, DTA_ClipBottom, clipB);
+		if (haveAnim && pdaPrevCurFrame >= 0 && pdaPrevCurFrame < pdaPrevSegIdx.Size())
+		{
+			string cap = PDA_PreviewSegCaption(weapMode, pdaPrevSegIdx[pdaPrevCurFrame]);
+			if (cap.Length() > 0)
+			{
+				double capS = pdaTextScale * 0.52;
+				int capY = pdaPreviewPaneY + pdaPreviewPaneH - int(double(SmallFont.GetHeight()) * capS) - 8;
+				Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED, pdaPreviewPaneX + 8, capY, cap,
+					DTA_ScaleX, capS, DTA_ScaleY, capS,
+					DTA_Alpha, gAlpha,
+					DTA_ClipLeft, clipL, DTA_ClipTop, clipT, DTA_ClipRight, clipR, DTA_ClipBottom, clipB);
+			}
+		}
+	}
+
+	// Keeps page (4/5) + category (12/13) arrow `ImagePos` / `ImageSize`
+	// aligned with what `RenderOverlay` draws and what `UiTick` hit-tests.
+	// Blocky: recomputes `UpArrowPos`/`DownArrowPos` Y so the enlarged
+	// down-arrow bottom meets `descClipH` (see `PB_PDA_BLOCKY_PAGE_ARROW_BOTTOM_PAD`).
+	ui void SyncBlockyPageArrowHitboxes(double pdaTextScale)
+	{
+		if (!PDAMode || UiObjects.Size() < 1) return;
+		int sw = Screen.GetWidth();
+		int sh = Screen.GetHeight();
+		int midX = sw / 2;
+
+		if (BlockyEnabled() && descriptiondialog != null)
+		{
+			font pageFont = NULL;
+			for (int pi = 0; pi < UiObjects.Size(); pi++)
+			{
+				PB_PDAUi_Object po = UiObjects[pi];
+				if (po && po.objecttype == 4 && po.usefont)
+				{
+					pageFont = po.usefont;
+					break;
+				}
+			}
+			if (pageFont)
+			{
+				double pageVisH = pageFont.GetHeight() * pdaTextScale
+					* PB_PDA_BLOCKY_PAGE_ARROW_VIS_MUL;
+				double bp = PB_PDA_BLOCKY_PAGE_ARROW_BOTTOM_PAD;
+				double clipBottom = double(descriptiondialog.descClipH);
+				DownArrowPos.y = clipBottom - pageVisH - bp;
+				UpArrowPos.y = double(descriptiondialog.ImagePos.y) - pageVisH - bp;
+			}
+			double catRowY = double(descriptiondialog.descClipH)
+				+ PB_PDA_BLOCKY_CAT_ARROW_BELOW_DESC;
+			double paneLeft = double(descriptiondialog.ImagePos.x);
+			double paneStrW = double(pdaDescLargestStrW);
+			double descColRight = double(PB_PDA_BlockyDescClipRight());
+			int catPad = PB_PDA_BLOCKY_CAT_ARROW_HIT_PAD;
+			double catMul = pdaTextScale * PB_PDA_BLOCKY_CAT_ARROW_VIS_MUL;
+
+			for (int ci = 0; ci < UiObjects.Size(); ci++)
+			{
+				PB_PDAUi_Object co = UiObjects[ci];
+				if (!co) continue;
+				if (co.objecttype != 12 && co.objecttype != 13) continue;
+				if (co.usefont == NULL || !co.toDraw) continue;
+				font cf = co.usefont;
+				double visW = cf.StringWidth(co.toDraw) * catMul;
+				double visH = cf.GetHeight() * catMul;
+				int chw = int(visW + 2 * catPad);
+				int chh = int(visH + 2 * catPad);
+				Vector2 catAt;
+				if (co.objecttype == 12)
+				{
+					catAt = (paneLeft, catRowY);
+					LeftCatArrowVisPos = catAt;
+				}
+				else
+				{
+					double rightWant = paneLeft + paneStrW;
+					double rightMax = descColRight - visW - 4.0;
+					if (rightMax < paneLeft)
+						rightMax = paneLeft;
+					catAt = (min(rightWant, rightMax), catRowY);
+					RightCatArrowVisPos = catAt;
+				}
+				int chx = int(catAt.X) - catPad;
+				int chy = int(catAt.Y) - catPad;
+				if (chy + chh > sh - 8)
+					chy = max(0, sh - 8 - chh);
+				if (chx + chw > sw - 8)
+					chx = max(midX + 2, sw - 8 - chw);
+				if (chx < 0) chx = 0;
+				co.ImagePos = (chx, chy);
+				co.ImageSize = (chw, chh);
+			}
+		}
+		else if (!BlockyEnabled() && descriptiondialog != null)
+		{
+			UpArrowPos.y = descriptiondialog.ImagePos.y;
+			DownArrowPos.y = descriptiondialog.descClipH;
+		}
+
+		for (int i = 0; i < UiObjects.Size(); i++)
+		{
+			PB_PDAUi_Object o = UiObjects[i];
+			if (!o) continue;
+			if (o.objecttype != 4 && o.objecttype != 5) continue;
+			if (o.usefont == NULL || !o.toDraw) continue;
+			font f = o.usefont;
+			if (!BlockyEnabled())
+			{
+				if (o.objecttype == 4)
+					o.ImagePos = UpArrowPos;
+				else
+					o.ImagePos = DownArrowPos;
+				o.ImageSize.X = f.StringWidth(o.toDraw) * pdaTextScale;
+				o.ImageSize.Y = f.GetHeight() * pdaTextScale;
+				continue;
+			}
+			int pad = PB_PDA_BLOCKY_PAGE_ARROW_HIT_PAD;
+			double baseMul = pdaTextScale * PB_PDA_BLOCKY_PAGE_ARROW_VIS_MUL;
+			double visW = f.StringWidth(o.toDraw) * baseMul;
+			double visH = f.GetHeight() * baseMul;
+			int hw = int(visW + 2 * pad);
+			int hh = int(visH + 2 * pad);
+			Vector2 basePos = (o.objecttype == 4) ? UpArrowPos : DownArrowPos;
+			int hx = int(basePos.X) - pad;
+			int hy = int(basePos.Y) - pad;
+			if (hy + hh > sh - 8)
+				hy = max(0, sh - 8 - hh);
+			if (hx + hw > sw - 8)
+				hx = max(midX + 2, sw - 8 - hw);
+			o.ImagePos = (hx, hy);
+			o.ImageSize = (hw, hh);
 		}
 	}
 	// === end blocky helpers =========================================
@@ -1538,7 +2043,18 @@ class PB_EventHandler : EventHandler
 			// Recompute tile positions every frame in blocky mode so
 			// resolution changes / page advances reflow on the next render
 			// without requiring a UiObjects rebuild.
-			if (blockyOn) ApplyBlockyLayout();
+			ApplyBlockyLayout();
+			SyncBlockyPageArrowHitboxes(pdaTextScale);
+			int pdaDescClipRight = PB_PDA_BlockyDescClipRight();
+			{
+				int sw = Screen.GetWidth();
+				int sr = sw - 32 + (blockyOn ? pdaBlockyXOffset : 0);
+				pdaPreviewPaneW = blockyOn ? PB_PDA_PreviewWidthPx() : 0;
+				pdaPreviewPaneX = sr - pdaPreviewPaneW;
+				pdaPreviewPaneY = (descriptiondialog != null) ? descriptiondialog.descClipY : 0;
+				pdaPreviewPaneH = (descriptiondialog != null)
+					? (descriptiondialog.descClipH - descriptiondialog.descClipY) : 0;
+			}
 			Screen.Dim("Black",0.50,0,0,Screen.GetWidth(),Screen.GetHeight());
 			for (int ii = 0; ii < Screen.GetHeight(); ii += Screen.GetHeight() / 20)
 			{
@@ -1628,6 +2144,77 @@ class PB_EventHandler : EventHandler
 						UiObjects[i].notdrawn = false;
 						continue;
 					}
+					if (blockyOn && (UiObjects[i].objecttype == 4 || UiObjects[i].objecttype == 5)
+						&& UiObjects[i].usefont != NULL && UiObjects[i].todraw)
+					{
+						font arf = UiObjects[i].usefont;
+						double arrBase = pdaTextScale * PB_PDA_BLOCKY_PAGE_ARROW_VIS_MUL;
+						double arrPulse = UiObjects[i].MouseOvered
+							? (1.0 + PB_PDA_BLOCKY_ICON_PULSE_AMP * sin(gametic * 0.15))
+							: 1.0;
+						double arrDraw = arrBase * arrPulse;
+						Vector2 arrAt = (UiObjects[i].objecttype == 4) ? UpArrowPos : DownArrowPos;
+						Screen.DrawText(arf, UiObjects[i].fontcolor,
+							arrAt.x, arrAt.y, UiObjects[i].toDraw,
+							DTA_ScaleX, arrDraw, DTA_ScaleY, arrDraw,
+							DTA_Alpha, globalPDAAlpha);
+						UiObjects[i].notdrawn = false;
+						continue;
+					}
+					if (blockyOn && (UiObjects[i].objecttype == 12 || UiObjects[i].objecttype == 13)
+						&& UiObjects[i].usefont != NULL && UiObjects[i].todraw)
+					{
+						font crf = UiObjects[i].usefont;
+						double catBase = pdaTextScale * PB_PDA_BLOCKY_CAT_ARROW_VIS_MUL;
+						double catPulse = UiObjects[i].MouseOvered
+							? (1.0 + PB_PDA_BLOCKY_ICON_PULSE_AMP * sin(gametic * 0.15))
+							: 1.0;
+						double catDraw = catBase * catPulse;
+						Vector2 catAt = (UiObjects[i].objecttype == 12)
+							? LeftCatArrowVisPos : RightCatArrowVisPos;
+						Screen.DrawText(crf, UiObjects[i].fontcolor,
+							catAt.x, catAt.y, UiObjects[i].toDraw,
+							DTA_ScaleX, catDraw, DTA_ScaleY, catDraw,
+							DTA_Alpha, globalPDAAlpha);
+						UiObjects[i].notdrawn = false;
+						continue;
+					}
+					if (blockyOn && UiObjects[i].BackButtonTrue
+						&& UiObjects[i].usefont != NULL)
+					{
+						font bbf = UiObjects[i].usefont;
+						int hitPad = PB_PDA_BLOCKY_PAGE_ARROW_HIT_PAD;
+						double bx = UiObjects[i].ImagePos.x + hitPad;
+						double by = UiObjects[i].ImagePos.y + hitPad;
+						double sepX = bx + bbf.StringWidth("BACK") * pdaTextScale;
+						double exitX = sepX + bbf.StringWidth(" / ") * pdaTextScale;
+						Screen.DrawText(bbf, UiObjects[i].fontcolor, bx, by, "BACK",
+							DTA_ScaleX, pdaTextScale, DTA_ScaleY, pdaTextScale,
+							DTA_Alpha, globalPDAAlpha);
+						Screen.DrawText(bbf, Font.CR_UNTRANSLATED, sepX, by, " / ",
+							DTA_ScaleX, pdaTextScale, DTA_ScaleY, pdaTextScale,
+							DTA_Alpha, globalPDAAlpha);
+						int exitCol = Font.CR_UNTRANSLATED;
+						for (int exi = 0; exi < UiObjects.Size(); exi++)
+						{
+							PB_PDAUi_Object exo = UiObjects[exi];
+							if (exo && exo.ExitButtonTrue)
+							{
+								exitCol = exo.fontcolor;
+								break;
+							}
+						}
+						Screen.DrawText(bbf, exitCol, exitX, by, "EXIT",
+							DTA_ScaleX, pdaTextScale, DTA_ScaleY, pdaTextScale,
+							DTA_Alpha, globalPDAAlpha);
+						UiObjects[i].notdrawn = false;
+						continue;
+					}
+					if (blockyOn && UiObjects[i].ExitButtonTrue)
+					{
+						UiObjects[i].notdrawn = true;
+						continue;
+					}
 					if (UiObjects[i].todraw)
 					{
 						Screen.DrawText(UiObjects[i].usefont,UiObjects[i].fontcolor,UiObjects[i].ImagePos.x,UiObjects[i].ImagePos.y,UiObjects[i].toDraw,
@@ -1652,8 +2239,7 @@ class PB_EventHandler : EventHandler
 				// past the screen, even if `LargestStringWidth` (computed at
 				// init from `CleanXFac` for legacy reasons) would otherwise
 				// push the right side past `Screen.GetWidth()`.
-				int safeRight = int(Screen.GetWidth() - 32);
-				int paneRight = int(min(UpArrowPos.X, safeRight));
+				int paneRight = int(min(UpArrowPos.X, pdaDescClipRight));
 				int paneWidth = paneRight - int(descriptiondialog.ImagePos.X);
 				if (paneWidth < 0) paneWidth = 0;
 				Screen.dim(color(75,75,75),globalPDAAlpha,descriptiondialog.ImagePos.X,descriptiondialog.descClipY,paneWidth,DownArrowPos.Y - UpArrowPos.Y);
@@ -1661,8 +2247,10 @@ class PB_EventHandler : EventHandler
 					DTA_ScaleX, pdaDescScale, DTA_ScaleY, pdaDescScale,
 					DTA_ClipTop, descriptiondialog.descClipY,
 					DTA_ClipBottom, descriptiondialog.descClipH,
-					DTA_ClipRight, safeRight,
+					DTA_ClipRight, pdaDescClipRight,
 					DTA_Alpha, globalPDAAlpha);
+				if (blockyOn && NonMainMenu && (WeaponMenuOpened || MonsterMenuOpened))
+					DrawBlockyPreviewPane(pdaTextScale, globalPDAAlpha, WeaponMenuOpened);
 			}
 			// ZCURSOR.png is 32x32 native; scale up so the cursor reads at any
 			// resolution and CenterOffset so the visible hot-point (the X) sits
@@ -1690,6 +2278,8 @@ class PB_EventHandler : EventHandler
 		blockyMonsterIconVals.Clear();
 		blockyWeaponIconMissed.Clear();
 		blockyMonsterIconMissed.Clear();
+		pdaPrevUILastQueuedKey = "";
+		SendNetworkEvent("pdaprevclear");
 		currentMonsterIndex = -1;
 		// Same scale anchor as PB_PDAUi_Object.InitializeUiObject and the
 		// RenderOverlay DrawText scale: keeps row spacing in step with the
@@ -1706,6 +2296,7 @@ class PB_EventHandler : EventHandler
 		PDAWeaponTextHSize.Copy(weaptextcontainer.PDAWeaponTextHSize);
 		pdaWeapTextArray.Copy(weaptextcontainer.pdaWeapTextArray);
 		int largeststringwidth = weaptextcontainer.largeststringwidth;
+		pdaDescLargestStrW = largeststringwidth;
 		let descdialog = new("PB_PDAUi_Object");
 		descdialog.todraw = "Select a entry to \nview its description";
 		descdialog.UnSelectable = true;
@@ -1736,14 +2327,18 @@ class PB_EventHandler : EventHandler
 		DownArrowDialog.InitializeUiObject(confont);
 		UiObjects.Push(DownArrowDialog);
 		PB_PDAUi_Object LeftArrowDialog = new("PB_PDAUi_Object");
-		LeftArrowDialog.ImagePos = (descdialog.imagepos.x,descdialog.descClipH + (SmallFont.GetHeight()*pdaTextScale));
+		double catRowY = double(descdialog.descClipH)
+			+ (BlockyEnabled()
+				? PB_PDA_BLOCKY_CAT_ARROW_BELOW_DESC
+				: (SmallFont.GetHeight() * pdaTextScale));
+		LeftArrowDialog.ImagePos = (descdialog.imagepos.x, catRowY);
 		LeftArrowDialog.todraw = "<";
 		LeftArrowDialog.ObjectType = 12;
 		LeftArrowDialog.NonMainMenuOnly = true;
 		LeftArrowDialog.InitializeUiObject();
 		UiObjects.Push(LeftArrowDialog);
 		PB_PDAUi_Object RightArrowDialog = new("PB_PDAUi_Object");
-		RightArrowDialog.ImagePos = (descdialog.imagepos.x + LargestStringWidth,descdialog.descClipH + (SmallFont.GetHeight()*pdaTextScale));
+		RightArrowDialog.ImagePos = (descdialog.imagepos.x + largeststringwidth, catRowY);
 		RightArrowDialog.todraw = ">";
 		RightArrowDialog.ObjectType = 13;
 		RightArrowDialog.NonMainMenuOnly = true;
@@ -1781,14 +2376,14 @@ class PB_EventHandler : EventHandler
 			UiObjects.Push(monstertext);
 		}
 		let BackDialog = new("PB_PDAUi_Object");
-		BackDialog.todraw = "Back";
+		BackDialog.todraw = BlockyEnabled() ? "BACK" : "Back";
 		BackDialog.InitializeUiObject();
 		BackDialog.BackButtonTrue = true;
 		BackDialog.NonMainMenuOnly = true;
 		BackDialog.ImagePos = (0,Screen.GetHeight() - BackDialog.ImageSize.y);
 		uiObjects.Push(BackDialog);
 		let dialog = new("PB_PDAUi_Object");
-		dialog.toDraw = "Exit";
+		dialog.toDraw = BlockyEnabled() ? "EXIT" : "Exit";
 		dialog.InitializeUiObject();
 		dialog.exitbuttontrue = True;
 		let monsterdialog = new("PB_PDAUi_Object");
@@ -1804,7 +2399,10 @@ class PB_EventHandler : EventHandler
 		weapondialog.InitializeUiObject();
 		weapondialog.ImagePos = (MonsterDialog.ImagePos.x,MonsterDialog.ImagePos.y + MonsterDialog.ImageSize.y);
 		uiObjects.Push(weapondialog);
-		dialog.ImagePos = ((Screen.GetWidth() ) - Screen.GetWidth()/4, (Screen.GetHeight() ) - Screen.GetHeight()/4);
+		if (!BlockyEnabled())
+			dialog.ImagePos = ((Screen.GetWidth() ) - Screen.GetWidth()/4, (Screen.GetHeight() ) - Screen.GetHeight()/4);
+		else
+			dialog.ImagePos = (0, Screen.GetHeight() - dialog.ImageSize.y);
 		UiObjects.Push(dialog);
 		// Initial blocky reflow: rewrites every weapon/monster row's
 		// ImagePos / ImageSize to its tile slot when `pb_pda_blocky` is
@@ -1812,6 +2410,7 @@ class PB_EventHandler : EventHandler
 		// ImageSize) lands on the rendered tile boxes. No-op when blocky
 		// is off — legacy stacked-text positions stay intact.
 		ApplyBlockyLayout();
+		SyncBlockyPageArrowHitboxes(pdaTextScale);
 		SendNetworkEvent("addbaseweapons");
 	}
 
