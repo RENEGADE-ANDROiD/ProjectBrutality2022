@@ -1452,7 +1452,7 @@ Class PB_SpecialWheelHandler : EventHandler
 		b.iconScale = iconScale;
 		wheelSpecials.Push(b);
 		PB_SpecialWheel_Mode c = new ("PB_SpecialWheel_Mode");
-		c.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Dual.png", TexMan.Type_Any);
+		c.specialIcon = TexMan.CheckForTexture("graphics/pywheel/M41DW0.png", TexMan.Type_Any);
 		c.specialName = "SelectM41A_DualWield";
 		c.specialAlias = "Dual Wield";
 		c.specialPriority = 3;
