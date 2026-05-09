@@ -24,6 +24,11 @@ class PB_PDAWeaponContainer : Inventory
 	Array<String> PDA_CodexMonsterClassNames;
 	Array<int> PDA_CodexMonsterSlots;
 
+	// SmallFont.BreakLines width is in font-native units; DrawText uses
+	// `pdaDescScale` (~0.68× menu scale). Keep lines short enough that
+	// scaled glyph runs stay inside `Screen/2 → clipRight` on 1366×768+.
+	const PB_PDA_DESC_BREAK_WIDTH = 118;
+
 	void ClearCodexMonsterRegistry()
 	{
 		PDA_CodexMonsterClassNames.Clear();
@@ -120,7 +125,14 @@ class PB_PDAWeaponContainer : Inventory
 			string composed = PDAMonsterStrings[mi] .. "\n\n" .. desc;
 			if (stats != "")
 				composed = composed .. "\n\n" .. stats;
-			PDAMonsterTexts.Push(composed);
+			BrokenLines monWrap = SmallFont.BreakLines(composed, PB_PDA_DESC_BREAK_WIDTH);
+			string wrappedMon = "";
+			for (int ml = 0; ml < monWrap.Count(); ml++)
+			{
+				if (ml > 0) wrappedMon = wrappedMon .. "\n";
+				wrappedMon = wrappedMon .. monWrap.StringAt(ml);
+			}
+			PDAMonsterTexts.Push(wrappedMon);
 			if (clsbundle != "")
 			{
 				Array<String> clsParts;
@@ -198,14 +210,9 @@ class PB_PDAWeaponContainer : Inventory
 		for (iii = 0; iii < PDAWeaponTexts.Size(); iii++)
 		{
 			NewWeaponText = "";
-			// Wrap width tightened from 240 -> 160 so each broken line fits the
-			// smaller description pane after the typography pass scaled
-			// `pdaTextScale` up to ~3.2x at 768p / ~4.5x at 1080p. With wrap 240
-			// the scaled per-line glyph width was ~768 screen px, overshooting
-			// the right pane edge (cf. screenshot: "FLAGSHIP" / "WITH D" / etc
-			// clipping past 1366). 160 keeps lines comfortably inside the dim
-			// rectangle even at 1366x768 and stays readable on 1080p+.
-			WeaponTextLines = breaklinefont.BreakLines(PDAWeaponTexts[iii],160);
+			// Wrap width 240 → 160 → PB_PDA_DESC_BREAK_WIDTH: must stay inside
+			// half-screen pane at `pdaDescScale` (see PB_EventHandler.RenderOverlay).
+			WeaponTextLines = breaklinefont.BreakLines(PDAWeaponTexts[iii], PB_PDA_DESC_BREAK_WIDTH);
 			for (int linecounter = 0; linecounter < WeaponTextLines.Count(); ++linecounter)
 			{
 				string linestring = WeaponTextLines.StringAt(lineCounter);
@@ -220,6 +227,16 @@ class PB_PDAWeaponContainer : Inventory
 		for (int extraindex = 0; extraindex < PDAWeaponExtraTexts.Size(); extraindex++)
 		{
 			NewWeaponExtraText = "";
+			WeaponExtraTextLines = breaklinefont.BreakLines(PDAWeaponExtraTexts[extraindex], PB_PDA_DESC_BREAK_WIDTH);
+			for (int linecounter = 0; linecounter < WeaponExtraTextLines.Count(); ++linecounter)
+			{
+				string linestring = WeaponExtraTextLines.StringAt(linecounter);
+				if (largestStringWidth < SmallFont.StringWidth(linestring) * CleanYFac)
+					largestStringWidth = SmallFont.StringWidth(linestring) * CleanXFac;
+				linestring.AppendFormat("\n");
+				NewWeaponExtraText = NewWeaponExtraText .. linestring;
+			}
+			PDAWeaponExtraTexts[extraindex] = NewWeaponExtraText;
 		}
 		ThinkerIterator ti = ThinkerIterator.Create("Weapon");
 		Weapon a;
@@ -1628,16 +1645,14 @@ class PB_EventHandler : EventHandler
 			}
 			if (descriptiondialog != null && NonMainMenu == true)
 			{
-				// Description pane gets a slightly smaller font than the menu
-				// labels per the "scaled down, slightly smaller font" request
-				// after the wrap-width tightening still left the typography
-				// reading too dense at 1366x768.
-				double pdaDescScale = pdaTextScale * 0.75;
+				// Smaller than tile labels (`pdaTextScale`); paired with
+				// PB_PDA_DESC_BREAK_WIDTH in InitializePDATexts BreakLines.
+				double pdaDescScale = pdaTextScale * 0.68;
 				// Pull the dim panel in from the right edge so it never bleeds
 				// past the screen, even if `LargestStringWidth` (computed at
 				// init from `CleanXFac` for legacy reasons) would otherwise
 				// push the right side past `Screen.GetWidth()`.
-				int safeRight = int(Screen.GetWidth() - 24);
+				int safeRight = int(Screen.GetWidth() - 32);
 				int paneRight = int(min(UpArrowPos.X, safeRight));
 				int paneWidth = paneRight - int(descriptiondialog.ImagePos.X);
 				if (paneWidth < 0) paneWidth = 0;
@@ -1698,7 +1713,11 @@ class PB_EventHandler : EventHandler
 		descdialog.ImagePos = (Screen.GetWidth() / 2,Screen.GetHeight() / 10);
 		descdialog.InitialImagePos = descdialog.ImagePos;
 		descdialog.descClipY = descdialog.ImagePos.Y;
-		descdialog.descClipH = descdialog.ImagePos.Y + 240;
+		{
+			int clipSh = Screen.GetHeight();
+			int descMargin = max(52, clipSh / 14);
+			descdialog.descClipH = clipSh - descMargin;
+		}
 		descriptiondialog = descdialog;
 		UpArrowPos = (LargestStringWidth + DescriptionDialog.ImagePos.X,descdialog.ImagePos.Y);
 		DownArrowPos = (UpArrowPos.x,descdialog.descClipH);
