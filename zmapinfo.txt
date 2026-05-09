@@ -365,6 +365,31 @@ DoomEdNums
 	23199 = PB_Realm667_BloodGhostGK
 	23200 = PB_Realm667_BloodSkullGK
 
+	// Cat's Frozen Addon — optional frost-tier monsters (no replaces; rolled by pack spawners)
+	23201 = PB_FrostBaron   // HellNoble lineage
+	23202 = PB_Cryocubus    // Fatso lineage
+	23203 = PB_FrostBrain   // Caco lineage
+	23204 = PB_Cryotron     // Arachnotron lineage (ZScript)
+
+	// Cat's Frozen equipment pickups (Slice 4 fold; Freezenade uses FreezenadeAmmo / Freezenade pack)
+	23205 = PB_CF_SnowCasterPickup
+	23206 = PB_CF_FreezeBotDeployPickup
+	23207 = PB_CF_IceWallGenPickup
+	23208 = PB_CF_HoloDecoyPickup
+	23209 = PB_CF_TeslaTurretPickup
+	23210 = PB_CF_FlameTurretPickup
+	23211 = PB_CF_FreezeMinePickup
+
+	// Cat's Frozen weapons + ammo pickups (Slice 5; unconditional spawner rolls � no pb_No* toggles)
+	23212 = PB_CryoASG
+	23213 = PB_CF_RocketLauncher
+	23214 = PB_CryoElectroRifle
+	23215 = PB_CryoCannon
+	23216 = PB_CryoCellsPickup
+	23217 = PB_CryoCellsPack
+	23218 = PB_CryoCannonCellsPickup
+	23219 = PB_DarkMatterRifle
+
 	//Glory Kills
 	17003 = CyberdemonLegsFatality
 

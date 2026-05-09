@@ -29,6 +29,8 @@ const MAXITERATIONS = 32676;
 #include "zscript/Items/PBKillstreak/PB_Killstreak_Handler.zc"
 #include "zscript/Items/PBKillstreak/PB_UnlessYouHavePowah_Powerups.zs"
 #include "zscript/Items/PBKillstreak/FamiliarBase.zc"
+#include "zscript/Items/CatsFrozen/PBCF_FriendlyDeployableBase.zc"
+#include "zscript/Items/CatsFrozen/PBCF_CatsFrozenEquipment.zc"
 #include "zscript/Items/Realm667Powerups/Realm667Powerups.zs"
 #include "zscript/Gore/PB_EnhancedBrutality2022.zc"
 #include "zscript/Gore/NashGore/NashGoreCommon.zc"
@@ -88,6 +90,9 @@ const MAXITERATIONS = 32676;
 
 //Monsters
 #include "zscript/Monsters/PBMonster.zc"
+#include "zscript/Monsters/CatsFrozen/PB_Cryotron.zc"
+#include "zscript/Monsters/CatsFrozen/PB_FrozenSolid.zc"
+#include "zscript/Monsters/CatsFrozen/PB_FrozenSolidHandler.zc"
 #include "zscript/Monsters/ZombieMen/ZombieMan.zc"
 #include "zscript/Monsters/ZombieMen/ZombieManDeath.zc"
 #include "zscript/Monsters/ZombieMen/ZombieManHelmet.zc"
@@ -116,6 +121,8 @@ const MAXITERATIONS = 32676;
 //Effects
 #include "zscript/Effects/Casings.txt"
 #include "zscript/Effects/IceShards.txt"
+#include "zscript/Effects/PBCF_CryoSlowProjectiles.zc"
+#include "zscript/Weapons/CatsFrozen/PB_CatsFrozenWeapons.zc"
 #include "zscript/Effects/JunkedBarrel.txt"
 
 //Lewisk3Lasers

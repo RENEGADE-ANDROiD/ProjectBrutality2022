@@ -14,11 +14,51 @@ class PB_PDAWeaponContainer : Inventory
 	Array<String> PDAWeaponTexts;
 	Array<String> PDAMonsterTexts;
 	Array<String> PDAMonsterStrings;
+	Array<String> PDAMonsterIconClass;
+	Array<bool> PDAMonsterFound;
 	Array<String> PDAWeaponStrings;
 	Array<Double> PDAWeaponTextVSize,PDAWeaponTextHSize;
 	Array<String> CollectedWeapons;
 	Array<PB_PDAWeapTextContainer> pdaWeapTextArray;
 	int largestStringWidth;
+	Array<String> PDA_CodexMonsterClassNames;
+	Array<int> PDA_CodexMonsterSlots;
+
+	void ClearCodexMonsterRegistry()
+	{
+		PDA_CodexMonsterClassNames.Clear();
+		PDA_CodexMonsterSlots.Clear();
+	}
+
+	void RegisterMonsterCodexClass(string cls, int slot)
+	{
+		PDA_CodexMonsterClassNames.Push(cls);
+		PDA_CodexMonsterSlots.Push(slot);
+	}
+
+	void ApplyMonsterCodexKill(Actor dead)
+	{
+		if (!dead || !dead.bIsMonster) return;
+		if (PDA_CodexMonsterClassNames.Size() < 1) return;
+		for (class<Object> ty = dead.GetClass(); ty != null; ty = ty.GetParentClass())
+		{
+			bool tierHit = false;
+			string tyn = String.Format("%s", ty);
+			for (int i = 0; i < PDA_CodexMonsterClassNames.Size(); i++)
+			{
+				if (tyn != PDA_CodexMonsterClassNames[i]) continue;
+				tierHit = true;
+				int sl = PDA_CodexMonsterSlots[i];
+				if (sl >= 0 && sl < PDAMonsterFound.Size() && !PDAMonsterFound[sl])
+				{
+					PDAMonsterFound[sl] = true;
+					EventHandler.SendNetworkEvent("FoundMonster:" .. sl);
+				}
+			}
+			if (tierHit) return;
+		}
+	}
+
 	Default
 	{
 		+INVENTORY.UNDROPPABLE
@@ -38,6 +78,66 @@ class PB_PDAWeaponContainer : Inventory
 		int lump = Wads.FindLump("PDAMONST");
 		string stuff = Wads.ReadLump(lump);
 		stuff.Split(PDAMonsterStrings,",");
+		ClearCodexMonsterRegistry();
+		PDAMonsterTexts.Clear();
+		PDAMonsterIconClass.Clear();
+		PDAMonsterFound.Clear();
+		Array<String> mtBlocks;
+		int lumpMt = Wads.FindLump("PDAMONSTT");
+		if (lumpMt >= 0)
+		{
+			string mtstuff = Wads.ReadLump(lumpMt);
+			mtstuff.Split(mtBlocks, "#");
+		}
+		for (int mi = 0; mi < PDAMonsterStrings.Size(); mi++)
+		{
+			string desc = "";
+			string stats = "";
+			string clsbundle = "";
+			string firstMonsterCls = "";
+			if (mi < mtBlocks.Size())
+			{
+				string blk = mtBlocks[mi];
+				blk.Replace("\r", "");
+				while (blk.length() > 0 && (blk.ByteAt(0) == 10 || blk.ByteAt(0) == 13))
+					blk = blk.Mid(1, blk.length() - 1);
+				Array<String> mf;
+				blk.Split(mf, "$");
+				if (mf.Size() >= 4)
+				{
+					desc = mf[1];
+					clsbundle = mf[2];
+					stats = mf[3];
+				}
+				else if (mf.Size() >= 3)
+				{
+					desc = mf[1];
+					clsbundle = mf[2];
+				}
+			}
+			if (desc == "")
+				desc = "No dossier text available for this catalogue index.";
+			string composed = PDAMonsterStrings[mi] .. "\n\n" .. desc;
+			if (stats != "")
+				composed = composed .. "\n\n" .. stats;
+			PDAMonsterTexts.Push(composed);
+			if (clsbundle != "")
+			{
+				Array<String> clsParts;
+				clsbundle.Split(clsParts, ",");
+				for (int ci = 0; ci < clsParts.Size(); ci++)
+				{
+					string tok = clsParts[ci];
+					tok.Replace("\n", "");
+					tok.Replace(" ", "");
+					if (tok.length() < 1) continue;
+					if (firstMonsterCls == "") firstMonsterCls = tok;
+					RegisterMonsterCodexClass(tok, mi);
+				}
+			}
+			PDAMonsterIconClass.Push(firstMonsterCls);
+			PDAMonsterFound.Push(false);
+		}
 		int weaplump = Wads.FindLump("PDAWEAP");
 		string weapstuff = Wads.ReadLump(weaplump);
 		weapstuff.Split(PDAWeaponStrings,",");
@@ -98,7 +198,14 @@ class PB_PDAWeaponContainer : Inventory
 		for (iii = 0; iii < PDAWeaponTexts.Size(); iii++)
 		{
 			NewWeaponText = "";
-			WeaponTextLines = breaklinefont.BreakLines(PDAWeaponTexts[iii],240);
+			// Wrap width tightened from 240 -> 160 so each broken line fits the
+			// smaller description pane after the typography pass scaled
+			// `pdaTextScale` up to ~3.2x at 768p / ~4.5x at 1080p. With wrap 240
+			// the scaled per-line glyph width was ~768 screen px, overshooting
+			// the right pane edge (cf. screenshot: "FLAGSHIP" / "WITH D" / etc
+			// clipping past 1366). 160 keeps lines comfortably inside the dim
+			// rectangle even at 1366x768 and stays readable on 1080p+.
+			WeaponTextLines = breaklinefont.BreakLines(PDAWeaponTexts[iii],160);
 			for (int linecounter = 0; linecounter < WeaponTextLines.Count(); ++linecounter)
 			{
 				string linestring = WeaponTextLines.StringAt(lineCounter);
@@ -191,8 +298,12 @@ class PB_PDAUi_Object
 		dialog.usefont = touse;
 		//dialog.colorOverlay = "White";
 		dialog.fontcolor = Font.CR_UNTRANSLATED;
-		dialog.ImageSize.X = usefont.StringWidth(dialog.toDraw) * CleanXFac;
-		dialog.ImageSize.Y = usefont.GetHeight() * CleanYFac;
+		// Hitbox dimensions must match the explicit pdaTextScale used by
+		// PB_EventHandler.RenderOverlay (DTA_ScaleX/Y), otherwise mouse-over /
+		// click detection in UiTick lands far outside the rendered glyphs.
+		double scale = clamp(Screen.GetHeight() / 240.0, 2.0, 6.0);
+		dialog.ImageSize.X = usefont.StringWidth(dialog.toDraw) * scale;
+		dialog.ImageSize.Y = usefont.GetHeight() * scale;
 	}
 }
 class PB_EventHandler : EventHandler
@@ -200,21 +311,27 @@ class PB_EventHandler : EventHandler
 	int MouseX,MouseY,DeltaMouseX,DeltaMouseY;
 	uint HeldDownTics;
 	transient int PDAMode;
+	// gametic-based debounce on the openpda toggle. Without this, holding
+	// BACKSLASH or pressing it rapidly can fire two ConsoleEvents within a
+	// few tics and the open->close->open race re-freezes the player after
+	// they meant to close. 6 tics ~= 170ms; mirrors typical menu key-repeat.
+	transient int LastPDAToggleTic;
 	bool isnetgame;
 	ui Vector2 UpArrowPos,DownArrowPos;
 	ui double globalPDAAlpha;
-	bool ClearArrays;
 	bool NonMainMenu;
 	bool MonsterMenuOpened,MonsterMenuOnly;
 	bool WeaponMenuOpened,WeaponMenuOnly;
 	bool MouseClicked,MousePositionSet,MouseHeldDown;
 	bool weaponFound;
+	bool monsterFound;
 	bool DontTick;
 	bool NewGameStarted;
 	int uiTics;
 	Array<string> weaponFoundName;
-	Array<String> PDAMonsterStrings;
-	Array<String> PDAWeaponStrings;
+	Array<int> monsterFoundSlots;
+	transient ui Array<String> PDAMonsterStrings;
+	transient ui Array<String> PDAWeaponStrings;
 	Array<String> PBWeapons;
 	ui Array<PB_PDAWeapTextContainer> pdaWeapTextArray;
 	transient ui bool WeaponTextMode;
@@ -223,10 +340,32 @@ class PB_EventHandler : EventHandler
 	transient ui Array<String> PDAWeaponHeaders;
 	transient ui Array<String> PDAWeaponTexts;
 	transient ui Array<String> PDAMonsterTexts;
+	transient ui Array<String> PDAMonsterIconClass;
 	transient ui Array<Double> PDAWeaponTextVSize,PDAWeaponTextHSize;
 	transient ui Array<PB_PDAUi_Object> UiObjects;
 	transient ui PB_PDAUi_Object descriptiondialog;
 	transient ui PB_PDAWeaponContainer weaptextcontainer;
+	// Blocky-format PDA paging state (see `pb_pda_blocky`). One page index per
+	// catalogue section; reset on PDA close so the user always lands on page 0
+	// next time. transient ui = wiped on save load (one-shot rebuild from
+	// `InitializeUiObjects` re-runs `ApplyBlockyLayout` afterwards).
+	transient ui int pdaBlockyWeapPage;
+	transient ui int pdaBlockyMonsterPage;
+	// Positive caches: parallel Arrays (Map<> requires ZScript >= 4.10 and PB
+	// targets `version "4.5.0"`, so we fall back to a string-key + TextureID
+	// pair with linear `Find()` lookup — n is bounded by catalogue size,
+	// O(n) is fine).
+	transient ui Array<String> blockyWeaponIconKeys;
+	transient ui Array<TextureID> blockyWeaponIconVals;
+	transient ui Array<String> blockyMonsterIconKeys;
+	transient ui Array<TextureID> blockyMonsterIconVals;
+	// Negative caches: classes whose resolution chain genuinely returned no
+	// icon. Kept separate from the positive caches so stale-texture detection
+	// on positive hits (`!cached.IsValid()` -> evict + re-resolve) doesn't
+	// also force a full re-walk for confirmed-iconless entries every frame.
+	transient ui Array<String> blockyWeaponIconMissed;
+	transient ui Array<String> blockyMonsterIconMissed;
+	transient ui int currentMonsterIndex;
 	// Full-screen dash vignette (from PBv0.3+ staging: PB_EventHandler + PB_DashOverlay; toggled with pb_dasheffect)
 	ui double dashAlpha;
 	ui double dashScale;
@@ -256,7 +395,7 @@ class PB_EventHandler : EventHandler
 		// Auto-draw exception list (these are better handled manually by dedicated overlays).
 		if (weaponClass == 'PB_Pistol' || weaponClass == 'PB_SMG' || weaponClass == 'PB_Revolver' || weaponClass == 'PB_Deagle'
 			|| weaponClass == 'PB_Shotgun' || weaponClass == 'PB_Autoshotgun' || weaponClass == 'PB_QuadSG' || weaponClass == 'PB_SSG'
-			|| weaponClass == 'PB_Carbine' || weaponClass == 'PB_DMR'
+			|| weaponClass == 'PB_Carbine' || weaponClass == 'Rifle'
 			|| weaponClass == 'PB_Minigun'
 			|| weaponClass == 'PB_M1Plasma' || weaponClass == 'PB_M2Plasma'
 			|| weaponClass == 'PB_Flamethrower')
@@ -374,6 +513,43 @@ class PB_EventHandler : EventHandler
 			DTA_DestWidth, int(drawW + 0.5), DTA_DestHeight, int(drawH + 0.5),
 			DTA_Alpha, alpha, DTA_CenterOffset, true);
 	}
+
+	clearscope static int PB_PDA_ParseUInt(string s)
+	{
+		if (s.length() < 1) return -1;
+		int n = 0;
+		for (uint i = 0; i < s.length(); i++)
+		{
+			int code = int(s.ByteAt(i));
+			if (code < 48 || code > 57) return -1;
+			n = n * 10 + (code - 48);
+		}
+		return n;
+	}
+
+	clearscope static PlayerPawn PB_PDA_ResolvePlayer(Actor a)
+	{
+		for (int i = 0; a && i < 10; i++)
+		{
+			if (a is "PlayerPawn" && PlayerPawn(a).player) return PlayerPawn(a);
+			Actor next = a.target != null ? a.target : (a.master != null ? a.master : a.tracer);
+			if (!next || next == a) break;
+			a = next;
+		}
+		return null;
+	}
+
+	clearscope static PlayerPawn PB_PDA_ResolveKiller(WorldEvent e)
+	{
+		if (!e) return null;
+		PlayerPawn p = PB_PDA_ResolvePlayer(e.Inflictor);
+		if (p) return p;
+		p = PB_PDA_ResolvePlayer(e.DamageSource);
+		if (p) return p;
+		if (e.Thing) return PB_PDA_ResolvePlayer(e.Thing.target);
+		return null;
+	}
+
 	override void WorldThingDamaged(WorldEvent e)
 	{
 		if (!e) return;
@@ -399,13 +575,12 @@ class PB_EventHandler : EventHandler
 	{
 		if (!e) return;
 		Actor t = e.Thing;
-		if (t && t.target
-		&& t.target.player
-		&& t.bCOUNTKILL
-		&& t.bISMONSTER)
-		{
-			//t.target.player.mo.A_SetBlend("RoyalBlue",0.1,17);
-		}
+		if (!t || !t.bIsMonster || t is "PlayerPawn") return;
+		PlayerPawn killer = PB_PDA_ResolveKiller(e);
+		if (!killer || !killer.player) return;
+		let pda = PB_PDAWeaponContainer(killer.FindInventory("PB_PDAWeaponContainer", true));
+		if (!pda) return;
+		pda.ApplyMonsterCodexKill(t);
 	}
 	ui void UpdateDesc()
 	{
@@ -460,6 +635,28 @@ class PB_EventHandler : EventHandler
 			}		
 			SendNetworkEvent("ResetWeaponName");
 		}
+		if (monsterFound == true)
+		{
+			if (uiObjects.Size() < 1) InitializeUiObjects();
+			for (int mfi = 0; mfi < monsterFoundSlots.Size(); mfi++)
+			{
+				int mslot = monsterFoundSlots[mfi];
+				if (mslot < 0 || mslot >= PDAMonsterStrings.Size()) continue;
+				for (int i = 0; i < uiObjects.Size(); i++)
+				{
+					if (uiObjects[i]
+						&& uiObjects[i].objecttype == 6
+						&& uiObjects[i].entrynumber == mslot
+						&& uiObjects[i].dontdraw == true)
+					{
+						S_StartSound("PDAOPEN",CHAN_AUTO,CHANF_DEFAULT,2);
+						Console.PrintF("New PDA Entry:" .. PDAMonsterStrings[mslot]);
+						uiObjects[i].dontdraw = false;
+					}
+				}
+			}
+			SendNetworkEvent("ResetMonsterFound");
+		}
 		for (int i = 0;i < uiObjects.Size();i++)
 		{
 			if (MouseX >= uiObjects[i].ImagePos.x
@@ -508,8 +705,33 @@ class PB_EventHandler : EventHandler
 							{
 								if (uiObjects[i].entrynumber == counter)
 								{
+									currentMonsterIndex = uiObjects[i].entrynumber;
 									descriptiondialog.todraw = PDAMonsterTexts[counter];
 								}
+							}
+							break;
+						case 4:
+							// Up arrow — page-up in blocky mode. Legacy
+							// behavior (nudge desc-pane Y while held) is
+							// still wired below in the MouseHeldDown
+							// branch and kicks in when blocky is off.
+							if (BlockyEnabled())
+							{
+								if (MonsterMenuOpened)
+									pdaBlockyMonsterPage = max(0, pdaBlockyMonsterPage - 1);
+								else if (WeaponMenuOpened)
+									pdaBlockyWeapPage = max(0, pdaBlockyWeapPage - 1);
+								ApplyBlockyLayout();
+							}
+							break;
+						case 5:
+							// Down arrow — page-down in blocky mode.
+							// ApplyBlockyLayout clamps to last valid page.
+							if (BlockyEnabled())
+							{
+								if (MonsterMenuOpened) pdaBlockyMonsterPage++;
+								else if (WeaponMenuOpened) pdaBlockyWeapPage++;
+								ApplyBlockyLayout();
 							}
 							break;
 						case 13:
@@ -648,27 +870,55 @@ class PB_EventHandler : EventHandler
 			self.WeaponFound = false;
 			self.WeaponFoundName.Clear();
 		}
+		if (e.Name ~== "resetmonsterfound")
+		{
+			self.MonsterFound = false;
+			self.MonsterFoundSlots.Clear();
+		}
 		if (e.Name ~== "weaponname")
 		{
 			self.WeaponFound = true;
 		}
 		if (MouseHeldDown == false && MouseClicked == true && !(HeldDownTics <= 0) ) HeldDownTics--;
-// 				//Console.Printf("Mouse Event Detected");
-// 					MouseHeldDown = true;
-// 					HeldDownTics++;
-// 					MouseClicked = true;
-// 					MouseHeldDown = true;
-// 				MouseHeldDown = false;
-// 				SetPlayerProperty(1,1,4);
-// 				players[e.Player].timefreezer |= freezemask;
-// 				S_StartSound("PDAOPEN",CHAN_AUTO);
-// 				PDAMode = true;
-// 				DeltaMouseX = e.Args[0] / 2;
-// 				DeltaMouseY = e.Args[1];
-// 				MouseX += DeltaMouseX;
-// 				MouseY -= DeltaMouseY;
-// 				MouseX = clamp(MouseX, 0, Screen.GetWidth());
-// 				MouseY = clamp(MouseY, 0, Screen.GetHeight());
+		// PDA mouse-input bridge. `InputProcess` (ui scope) emits raw mouse
+		// deltas + Mouse1 down/up via `SendNetworkEvent("input", dx, dy, btn)`;
+		// this play-scope handler accumulates them into MouseX/MouseY and
+		// drives the MouseClicked/MouseHeldDown state machine that UiTick
+		// reads. Without this block the in-PDA cursor never tracks because
+		// the original implementation was commented out and never restored
+		// during the PDA-restore work; the engine only delivers mouse motion
+		// through the InputProcess path while the player is in-game.
+		if (e.Name ~== "input")
+		{
+			if (PDAMode)
+			{
+				DeltaMouseX = e.Args[0] / 2;
+				DeltaMouseY = e.Args[1];
+				MouseX += DeltaMouseX;
+				MouseY -= DeltaMouseY;
+				MouseX = clamp(MouseX, 0, Screen.GetWidth());
+				MouseY = clamp(MouseY, 0, Screen.GetHeight());
+				MousePositionSet = true;
+				if (e.Args[2] == 1 && !MouseClicked)
+				{
+					// Persist the click-edge for a handful of NetworkProcess
+					// invocations so UiTick (35Hz) has time to consume it
+					// before line 818's "MouseHeldDown==false &&
+					// MouseClicked==true" decrement, plus the top-of-method
+					// "if HeldDownTics<=0 mouseclicked=false" reset, drain
+					// the click flag.
+					MouseClicked = true;
+					MouseHeldDown = false;
+					HeldDownTics = 5;
+				}
+				else if (e.Args[2] == 2)
+				{
+					MouseClicked = false;
+					MouseHeldDown = false;
+					HeldDownTics = 0;
+				}
+			}
+		}
 		if (e.Name ~== "exitpda")
 		{
 			SetPlayerProperty(1,0,4);
@@ -683,18 +933,45 @@ class PB_EventHandler : EventHandler
 			MonsterMenuOpened = false;
 			WeaponMenuOpened = False;
 			NonMainMenu = false;
+			LastPDAToggleTic = gametic;
 		}
 		if (e.Name ~== "openpda")
 		{
 			if (isnetgame) return;
 			if (e.Player < 0 || e.Player >= MAXPLAYERS) return;
 			if (!playeringame[e.Player]) return;
-			SetPlayerProperty(1,1,4);
-			int freezemask = 1 << e.Player;
-			players[e.Player].timefreezer |= freezemask;
-			Level.SetFrozen(true);
-			S_StartSound("PDAOPEN",CHAN_AUTO);
-			PDAMode = true;
+			// Toggle: same bind opens AND closes the PDA. gametic debounce
+			// prevents an accidental open->close->open race when the bind
+			// fires twice within a few engine tics. Mirror exitpda's
+			// freeze + mouse cleanup so we never leave the player frozen.
+			if (gametic - LastPDAToggleTic < 6) return;
+			LastPDAToggleTic = gametic;
+			if (PDAMode)
+			{
+				SetPlayerProperty(1,0,4);
+				players[e.Player].timefreezer &= ~(1 << e.Player);
+				Level.SetFrozen(false);
+				S_StartSound("PDABACK",CHAN_AUTO);
+				PDAMode = false;
+				MouseX = 1;
+				MouseY = 1;
+				MousePositionSet = false;
+				MouseClicked = false;
+				MouseHeldDown = false;
+				HeldDownTics = 0;
+				MonsterMenuOpened = false;
+				WeaponMenuOpened = false;
+				NonMainMenu = false;
+			}
+			else
+			{
+				SetPlayerProperty(1,1,4);
+				int freezemask = 1 << e.Player;
+				players[e.Player].timefreezer |= freezemask;
+				Level.SetFrozen(true);
+				S_StartSound("PDAOPEN",CHAN_AUTO);
+				PDAMode = true;
+			}
 		}
 		if (e.Name ~== "modifymousepos")
 		{
@@ -714,7 +991,7 @@ class PB_EventHandler : EventHandler
 		}
 		Array<String> splittedStrings;
 		e.Name.Split(splittedStrings,":");
-		if (SplittedStrings.Size() == 0) return;
+		if (splittedStrings.Size() == 0) return;
 		if (splittedStrings[0] == "addweaponclass")
 		{
 			PBWeapons.Push(splittedStrings[1]);
@@ -724,17 +1001,22 @@ class PB_EventHandler : EventHandler
 			weaponFound = true;
 			weaponFoundName.push(splittedStrings[1]);
 		}
+		if (splittedStrings.Size() >= 2 && splittedStrings[0] ~== "foundmonster")
+		{
+			int ms = PB_PDA_ParseUInt(splittedStrings[1]);
+			if (ms >= 0)
+			{
+				monsterFound = true;
+				monsterFoundSlots.Push(ms);
+			}
+		}
 	}
 	override void WorldLoaded(WorldEvent e)
 	{
-		if (!e) return;
-		if (gamestate == GS_TITLELEVEL) return;
-		if (e.IsSaveGame)
-		{
-			ClearArrays = true;
-			PDAMonsterStrings.Clear();
-			PDAWeaponStrings.Clear();
-		}
+		// Save-load cleanup is handled implicitly: every PDA cache field on the
+		// handler is now `transient ui`, so ZScript zero-initialises them on save
+		// load. `RenderOverlay` then sees `uiObjects.Size() < 1` and rebuilds via
+		// `InitializeUiObjects()` from the persistent `PB_PDAWeaponContainer`.
 	}
 	override void OnRegister()
 	{
@@ -756,6 +1038,412 @@ class PB_EventHandler : EventHandler
 		if (!tex) return (0,0);
 		return TexMan.GetScaledSize(tex) / 2;
 	}
+
+	// === Blocky-format PDA layout helpers ===========================
+	// Translates Gearbox's "Blocky" tile-grid pattern (gb_BlockyView in
+	// zscript/gearbox/display/blocky_view.zs) into the PDA's catalogue
+	// surface. Where Gearbox uses a slot-row + selected-slot-column for
+	// the player's current weapon set, the PDA has 60 weapons + 33
+	// monsters that need browsing — so we keep the rectangle-tile look,
+	// reuse the same drawAlphaTexture / corner / selection-color pattern,
+	// and add paged scrolling via the existing Up/Down PDA arrows since
+	// the catalogue won't fit in one screen on 1366x768. CVar gate:
+	// `pb_pda_blocky` (server bool, default true).
+	const PB_PDA_BLOCKY_COLS = 5;
+	const PB_PDA_BLOCKY_ROWS = 8;
+	const PB_PDA_BLOCKY_ICON_PULSE_AMP = 0.04;
+
+	ui bool BlockyEnabled() const
+	{
+		if (!playeringame[consoleplayer]) return false;
+		let cv = CVar.GetCVar("pb_pda_blocky", players[consoleplayer]);
+		return cv ? cv.GetBool() : true;
+	}
+
+	// Computes the visible tile-grid box (left half of the screen, since
+	// the description pane is anchored at Screen.GetWidth() / 2). Output
+	// is in screen pixels so all callers — DrawText / Screen.Dim / hit
+	// test — share one source of truth, mirroring `gb_BlockyView.display`
+	// where startX / startY / SLOT_SIZE feed every later draw call.
+	ui void GetBlockyMetrics(out int originX, out int originY,
+	                         out int cols, out int rows,
+	                         out int tileW, out int tileH, out int padding) const
+	{
+		int sw = Screen.GetWidth();
+		int sh = Screen.GetHeight();
+		cols    = PB_PDA_BLOCKY_COLS;
+		rows    = PB_PDA_BLOCKY_ROWS;
+		padding = max(2, sh / 110);
+		int gridLeftPad = padding * 2;
+		int gridTopPad  = sh / 6;       // headroom for tab buttons
+		int gridBotPad  = sh / 8;       // room for Back / Exit / page arrows
+		int gridW       = (sw / 2) - gridLeftPad - padding;
+		int gridH       = sh - gridTopPad - gridBotPad;
+		tileW = max(48, (gridW - padding * (cols - 1)) / cols);
+		tileH = max(44, (gridH - padding * (rows - 1)) / rows);
+		originX = gridLeftPad;
+		originY = gridTopPad;
+	}
+
+	// Single-tile draw. Mirrors gb_BlockyView's drawAlphaTexture(blockBox)
+	// for the unselected case and the corner-stamp pass for the hovered
+	// selection. Uses Screen.Dim + Screen.DrawLine instead of Gearbox's
+	// authored gb_box / gb_weap / gb_cor lumps because those textures
+	// ship inside Gearbox and aren't available as loose patches in this
+	// tree; the visual identity (rectangular tile, brighter on hover,
+	// corner accents on the selected tile) is preserved.
+	ui void DrawBlockyTile(int x, int y, int w, int h,
+	                       bool hovered, bool locked, double alpha) const
+	{
+		if (locked)
+		{
+			Screen.Dim(color(26, 26, 26), 0.55 * alpha, x, y, w, h);
+			Screen.DrawLine(x,         y,         x + w - 1, y,         "Gray", int(140 * alpha));
+			Screen.DrawLine(x,         y + h - 1, x + w - 1, y + h - 1, "Gray", int(140 * alpha));
+			return;
+		}
+		Color baseCol;
+		if (hovered) baseCol = color(50, 110, 150);
+		else baseCol = color(25, 50, 65);
+		Screen.Dim(baseCol, hovered ? 0.85 * alpha : 0.55 * alpha, x, y, w, h);
+		Color border;
+		if (hovered) border = color(120, 220, 255);
+		else border = color(80, 150, 180);
+		int bAlpha = int((hovered ? 230 : 170) * alpha);
+		Screen.DrawLine(x,         y,         x + w - 1, y,         border, bAlpha);
+		Screen.DrawLine(x,         y + h - 1, x + w - 1, y + h - 1, border, bAlpha);
+		Screen.DrawLine(x,         y,         x,         y + h - 1, border, bAlpha);
+		Screen.DrawLine(x + w - 1, y,         x + w - 1, y + h - 1, border, bAlpha);
+		if (hovered)
+		{
+			// Corner accent stamps (Gearbox's drawFlippedTexture(corner)
+			// pattern) — short L-strokes inset from each corner.
+			int c = max(3, h / 10);
+			Color cc = "Yellow";
+			int cA = int(220 * alpha);
+			Screen.DrawLine(x + 2,         y + 2,     x + 2 + c, y + 2,     cc, cA);
+			Screen.DrawLine(x + 2,         y + 2,     x + 2,     y + 2 + c, cc, cA);
+			Screen.DrawLine(x + w - 3 - c, y + 2,     x + w - 3, y + 2,     cc, cA);
+			Screen.DrawLine(x + w - 3,     y + 2,     x + w - 3, y + 2 + c, cc, cA);
+			Screen.DrawLine(x + 2,         y + h - 3, x + 2 + c, y + h - 3, cc, cA);
+			Screen.DrawLine(x + 2,         y + h - 3 - c, x + 2, y + h - 3, cc, cA);
+			Screen.DrawLine(x + w - 3 - c, y + h - 3, x + w - 3, y + h - 3, cc, cA);
+			Screen.DrawLine(x + w - 3,     y + h - 3 - c, x + w - 3, y + h - 3, cc, cA);
+		}
+	}
+
+	// Draws a label inside the tile box. Truncates with ellipsis if the
+	// label overflows (Gearbox's gb_BlockyView.drawTag does the same).
+	// When `alignTop` is true (blocky + icon layout), the label pins under
+	// the tile's top edge so the icon band can sit beneath it.
+	ui void DrawBlockyLabel(font fnt, string txt, int x, int y, int w, int h,
+	                        bool hovered, double alpha, bool alignTop = false) const
+	{
+		if (!fnt || txt.length() < 1) return;
+		string s = txt;
+		s.Replace("\n", " ");
+		int maxW = w - 6;
+		while (s.length() > 0 && fnt.StringWidth(s) > maxW)
+			s = s.Mid(0, s.length() - 1);
+		if (s.length() < txt.length() && s.length() >= 2)
+		{
+			s.DeleteLastCharacter();
+			s = s .. "..";
+		}
+		int textColor = hovered ? Font.CR_YELLOW : Font.CR_UNTRANSLATED;
+		int tx = x + (w - fnt.StringWidth(s)) / 2;
+		int pad = max(2, h / 14);
+		int ty = alignTop ? (y + pad) : (y + (h - fnt.GetHeight()) / 2);
+		Screen.DrawText(fnt, textColor, tx, ty, s, DTA_Alpha, alpha);
+	}
+
+	ui string BlockyNormalizeClassString(string cn) const
+	{
+		cn.Replace("\r", "");
+		cn.Replace("\n", "");
+		cn.Replace("\t", "");
+		while (cn.Length() > 0 && cn.ByteAt(0) <= 32)
+			cn = cn.Mid(1, cn.Length() - 1);
+		while (cn.Length() > 0 && cn.ByteAt(cn.Length() - 1) <= 32)
+			cn = cn.Mid(0, cn.Length() - 1);
+		return cn;
+	}
+
+	ui TextureID BlockyFirstFrameOfState(State st) const
+	{
+		// TextureID's default-initialized state is invalid (texnum < 0).
+		// ZScript 4.5.0 (PB pin) rejects `null` as a TextureID value, so we
+		// return this sentinel for the "no frame found" path instead.
+		TextureID nullTex;
+		for (int n = 0; n < 48 && st; n++)
+		{
+			TextureID tid = st.GetSpriteTexture(0);
+			if (tid.IsValid())
+			{
+				string tn = TexMan.GetName(tid);
+				if (tn.Length() >= 4 && tn.Mid(0, 4) ~== "TNT1")
+				{
+					st = st.NextState;
+					continue;
+				}
+				return tid;
+			}
+			st = st.NextState;
+		}
+		return nullTex;
+	}
+
+	ui TextureID ResolveBlockyWeaponIconTex(string cn)
+	{
+		TextureID nullTex;
+		cn = BlockyNormalizeClassString(cn);
+		if (cn.Length() < 1) return nullTex;
+		// Positive cache hit: validate. If the TextureID is still live,
+		// return it; if it went stale (e.g. mid-session texture flush),
+		// evict and fall through to re-resolve.
+		int hit = blockyWeaponIconKeys.Find(cn);
+		if (hit < blockyWeaponIconKeys.Size())
+		{
+			TextureID cached = blockyWeaponIconVals[hit];
+			if (cached.IsValid())
+				return cached;
+			blockyWeaponIconKeys.Delete(hit);
+			blockyWeaponIconVals.Delete(hit);
+		}
+		// Negative cache hit: confirmed iconless, skip the resolve chain.
+		if (blockyWeaponIconMissed.Find(cn) < blockyWeaponIconMissed.Size())
+			return nullTex;
+		TextureID resolved;
+		Name nm = cn;
+		class<Inventory> icl = (class<Inventory>)(nm);
+		if (icl)
+		{
+			let idef = Inventory(GetDefaultByType(icl));
+			if (idef && idef.Icon.IsValid())
+				resolved = idef.Icon;
+		}
+		if (!resolved.IsValid())
+		{
+			class<Weapon> wcl = (class<Weapon>)(nm);
+			if (wcl)
+			{
+				let wdef = Weapon(GetDefaultByType(wcl));
+				if (wdef && wdef.AltHUDIcon.IsValid())
+					resolved = wdef.AltHUDIcon;
+			}
+		}
+		if (!resolved.IsValid())
+		{
+			class<Actor> acl = (class<Actor>)(nm);
+			if (acl)
+			{
+				string iconLump = cn .. "ICON";
+				TextureID ic = TexMan.CheckForTexture(iconLump, TexMan.Type_Any);
+				if (ic.IsValid())
+					resolved = ic;
+				else
+				{
+					let adef = Actor(GetDefaultByType(acl));
+					if (adef)
+						resolved = BlockyFirstFrameOfState(adef.SpawnState);
+				}
+			}
+		}
+		if (resolved.IsValid())
+		{
+			blockyWeaponIconKeys.Push(cn);
+			blockyWeaponIconVals.Push(resolved);
+		}
+		else
+		{
+			blockyWeaponIconMissed.Push(cn);
+		}
+		return resolved;
+	}
+
+	ui TextureID ResolveBlockyMonsterIconTex(string cn)
+	{
+		TextureID nullTex;
+		cn = BlockyNormalizeClassString(cn);
+		if (cn.Length() < 1) return nullTex;
+		int hit = blockyMonsterIconKeys.Find(cn);
+		if (hit < blockyMonsterIconKeys.Size())
+		{
+			TextureID cached = blockyMonsterIconVals[hit];
+			if (cached.IsValid())
+				return cached;
+			blockyMonsterIconKeys.Delete(hit);
+			blockyMonsterIconVals.Delete(hit);
+		}
+		if (blockyMonsterIconMissed.Find(cn) < blockyMonsterIconMissed.Size())
+			return nullTex;
+		Name nm = cn;
+		class<Actor> acl = (class<Actor>)(nm);
+		if (!acl)
+		{
+			blockyMonsterIconMissed.Push(cn);
+			return nullTex;
+		}
+		let adef = Actor(GetDefaultByType(acl));
+		if (!adef)
+		{
+			blockyMonsterIconMissed.Push(cn);
+			return nullTex;
+		}
+		TextureID resolved = BlockyFirstFrameOfState(adef.SpawnState);
+		if (!resolved.IsValid())
+			resolved = BlockyFirstFrameOfState(adef.SeeState);
+		if (!resolved.IsValid())
+			resolved = BlockyFirstFrameOfState(adef.FindState('Idle'));
+		if (resolved.IsValid())
+		{
+			blockyMonsterIconKeys.Push(cn);
+			blockyMonsterIconVals.Push(resolved);
+		}
+		else
+		{
+			blockyMonsterIconMissed.Push(cn);
+		}
+		return resolved;
+	}
+
+	// Returns a TextureID for the codex slot (`entrynumber`). Invalid /
+	// unresolved textures → null so the drawer shows a `?` glyph (BigFont).
+	// objectType: 3 = weapon row, 6 = monster row.
+	ui TextureID ResolveBlockyTileIcon(int slotIndex, int objectType)
+	{
+		TextureID nullTex;
+		string cn = "";
+		if (objectType == 3)
+		{
+			if (slotIndex < 0 || slotIndex >= pdaWeapTextArray.Size()) return nullTex;
+			cn = pdaWeapTextArray[slotIndex].PDAWeapClassName;
+			return ResolveBlockyWeaponIconTex(cn);
+		}
+		if (objectType == 6)
+		{
+			if (slotIndex < 0 || slotIndex >= PDAMonsterIconClass.Size()) return nullTex;
+			cn = PDAMonsterIconClass[slotIndex];
+			return ResolveBlockyMonsterIconTex(cn);
+		}
+		return nullTex;
+	}
+
+	ui void DrawBlockyTileIcon(TextureID iconTex, int x, int y, int w, int h,
+	                           int labelBottomY, double alpha,
+	                           double iconScaleMul = 1.0) const
+	{
+		int pad = max(2, h / 14);
+		int iconTop = labelBottomY + pad / 2;
+		int iconBottom = y + h - pad;
+		if (iconBottom <= iconTop + 2) return;
+		double slotH = double(iconBottom - iconTop);
+		slotH = min(slotH, h * 0.58);
+		double cx = double(x) + double(w) * 0.5;
+		double cy = double(iconTop) + slotH * 0.5;
+		if (!iconTex.IsValid())
+		{
+			Screen.DrawText(BigFont, Font.CR_DARKGRAY, int(cx - BigFont.StringWidth("?") / 2),
+				int(cy - BigFont.GetHeight() / 2), "?",
+				DTA_Alpha, alpha,
+				DTA_ScaleX, iconScaleMul, DTA_ScaleY, iconScaleMul);
+			return;
+		}
+		// ZScript 4.5.0 (PB pin) rejects direct field access on a function
+		// return for `TexMan.GetScaledSize(...).X` — assign into a Vector2
+		// first, matching the existing PB pattern (e.g. ev_drawer_special.zsc
+		// `Vector2 bgSc = TexMan.GetScaledSize(circleTex);`).
+		Vector2 texSize = TexMan.GetScaledSize(iconTex);
+		if (texSize.X < 1 || texSize.Y < 1)
+		{
+			Screen.DrawText(BigFont, Font.CR_DARKGRAY, int(cx - BigFont.StringWidth("?") / 2),
+				int(cy - BigFont.GetHeight() / 2), "?",
+				DTA_Alpha, alpha,
+				DTA_ScaleX, iconScaleMul, DTA_ScaleY, iconScaleMul);
+			return;
+		}
+		double box = min(slotH * 0.92, double(w - pad * 2));
+		double scale = box / max(texSize.X, texSize.Y);
+		double dw = texSize.X * scale * iconScaleMul;
+		double dh = texSize.Y * scale * iconScaleMul;
+		Screen.DrawTexture(iconTex, false, cx, cy,
+			DTA_DestWidthF, dw, DTA_DestHeightF, dh,
+			DTA_KeepRatio, true,
+			DTA_Alpha, alpha,
+			DTA_CenterOffset, true);
+	}
+
+	// Total catalogue tiles in a section (used for page clamp).
+	ui int BlockySectionTotal(int objType) const
+	{
+		if (objType == 6) return PDAMonsterStrings.Size();
+		return pdaWeapTextArray.Size();
+	}
+
+	// Reposition every weapon (objecttype 3) / monster (objecttype 6)
+	// uiObject onto the current page's tile slot. Tiles on other pages
+	// get pushed off-screen (-9999, -9999) so the existing UiTick mouse
+	// hit-test (MouseX/Y vs ImagePos+ImageSize) skips them automatically
+	// without needing a separate `pageHidden` flag.
+	ui void ApplyBlockyLayout()
+	{
+		if (!BlockyEnabled()) return;
+		int originX, originY, cols, rows, tileW, tileH, padding;
+		GetBlockyMetrics(originX, originY, cols, rows, tileW, tileH, padding);
+		int pageSize = cols * rows;
+		if (pageSize < 1) return;
+		// Count visible (unlocked) tiles per section to size the page
+		// range. Locked entries (`dontdraw == true` from the
+		// "found-by-pickup / killed-monster" gate) are intentionally
+		// skipped so the grid stays densely packed and unfound rows
+		// don't leak names that would spoil discovery.
+		int weapVisible = 0;
+		int monVisible  = 0;
+		for (int i = 0; i < UiObjects.Size(); i++)
+		{
+			if (!UiObjects[i] || UiObjects[i].dontdraw) continue;
+			if (UiObjects[i].objecttype == 3) ++weapVisible;
+			else if (UiObjects[i].objecttype == 6) ++monVisible;
+		}
+		int weapMaxPage = (weapVisible > 0) ? (weapVisible - 1) / pageSize : 0;
+		int monMaxPage  = (monVisible  > 0) ? (monVisible  - 1) / pageSize : 0;
+		pdaBlockyWeapPage    = clamp(pdaBlockyWeapPage, 0, weapMaxPage);
+		pdaBlockyMonsterPage = clamp(pdaBlockyMonsterPage, 0, monMaxPage);
+		int weapSlot = 0;
+		int monSlot  = 0;
+		for (int i = 0; i < UiObjects.Size(); i++)
+		{
+			if (!UiObjects[i]) continue;
+			if (UiObjects[i].objecttype != 3 && UiObjects[i].objecttype != 6) continue;
+			if (UiObjects[i].dontdraw)
+			{
+				// Stays hidden by the existing dontdraw gate; push the
+				// hitbox off-screen so a stale ImagePos doesn't ghost-hit
+				// from the prior page.
+				UiObjects[i].ImagePos  = (-9999, -9999);
+				UiObjects[i].ImageSize = (1, 1);
+				continue;
+			}
+			bool isMon = (UiObjects[i].objecttype == 6);
+			int slot   = isMon ? monSlot++ : weapSlot++;
+			int curPage   = isMon ? pdaBlockyMonsterPage : pdaBlockyWeapPage;
+			int entryPage = slot / pageSize;
+			if (entryPage != curPage)
+			{
+				UiObjects[i].ImagePos  = (-9999, -9999);
+				UiObjects[i].ImageSize = (1, 1);
+				continue;
+			}
+			int idxOnPage = slot % pageSize;
+			int row = idxOnPage / cols;
+			int col = idxOnPage % cols;
+			UiObjects[i].ImagePos  = (originX + col * (tileW + padding),
+			                           originY + row * (tileH + padding));
+			UiObjects[i].ImageSize = (tileW, tileH);
+		}
+	}
+	// === end blocky helpers =========================================
+
 	override void RenderOverlay(RenderEvent e)
 	{
 		if (!e) return;
@@ -803,17 +1491,17 @@ class PB_EventHandler : EventHandler
 		{
 			SendNetworkEvent("modifymousepos",Screen.GetWidth() / 2,Screen.GetHeight() / 2);
 		}
-		if (ClearArrays == true)
-		{
-			// Destruct all arrays.
-			PDAWeaponHeaders.Clear();
-			PDAWeaponTexts.Clear();
-			PDAWeaponTextVSize.Clear();
-			PDAWeaponTextHSize.Clear();
-			UiObjects.Clear();
-			if (DescriptionDialog) { DescriptionDialog.Destroy(); }
-			DescriptionDialog = null;
-		}
+		// Note: the explicit `ClearArrays` save-load wipe block was removed because
+		// every array it touched (PDAMonsterStrings / PDAMonsterTexts /
+		// PDAWeaponStrings / PDAWeaponHeaders / PDAWeaponTexts / PDAWeaponTextVSize /
+		// PDAWeaponTextHSize / UiObjects / DescriptionDialog) is now `transient ui`
+		// and is auto-reset to default on save load by ZScript itself (transient =
+		// not serialized). After save reload, `uiObjects.Size() < 1` is therefore
+		// true on the next render frame and the `InitializeUiObjects()` re-init
+		// path below rebuilds everything from `PB_PDAWeaponContainer` (the
+		// persistent play-scope source). The previous flag-based wipe ran every
+		// frame because `ClearArrays` was play-scope and could not be reset from
+		// ui-scope `RenderOverlay`, causing a per-frame clear+rebuild thrash.
 		if (uiObjects.Size() < 1)
 		{
 			WeaponTextMode = 0;
@@ -823,6 +1511,17 @@ class PB_EventHandler : EventHandler
 		{
 			globalPDAAlpha += 0.1;
 			TextureID cursortex = Texman.CheckForTexture("ZCURSOR",TexMan.Type_Any);
+			// Resolution-aware text scale. `DTA_CleanNoMove_1` was producing
+			// near-native (8 px) text on the user's 1366x768 screen, so we
+			// drop CleanNoMove and apply an explicit scale to every PDA
+			// DrawText / hitbox-size calc instead. Anchor: ~24 px tall body
+			// text at 768p, ~36 px at 1080p.
+			double pdaTextScale = clamp(Screen.GetHeight() / 240.0, 2.0, 6.0);
+			bool blockyOn = BlockyEnabled();
+			// Recompute tile positions every frame in blocky mode so
+			// resolution changes / page advances reflow on the next render
+			// without requiring a UiObjects rebuild.
+			if (blockyOn) ApplyBlockyLayout();
 			Screen.Dim("Black",0.50,0,0,Screen.GetWidth(),Screen.GetHeight());
 			for (int ii = 0; ii < Screen.GetHeight(); ii += Screen.GetHeight() / 20)
 			{
@@ -877,9 +1576,46 @@ class PB_EventHandler : EventHandler
 						uiObjects[i].notdrawn = true;
 						continue;
 					}
+					// Blocky path: weapon (3) / monster (6) entries on the
+					// current page render as a tile box + centered label
+					// instead of the legacy stacked-text row. Off-page
+					// entries were pushed to (-9999, -9999) by
+					// ApplyBlockyLayout so they fail the screen check
+					// here and skip the draw without needing a separate
+					// page-hidden flag.
+					if (blockyOn && (UiObjects[i].objecttype == 3 || UiObjects[i].objecttype == 6)
+						&& UiObjects[i].ImagePos.x > -1000 && UiObjects[i].todraw)
+					{
+						bool hovered = UiObjects[i].MouseOvered;
+						bool selected = (UiObjects[i].objecttype == 3 && WeaponMenuOpened
+							&& UiObjects[i].entrynumber == currentindex)
+							|| (UiObjects[i].objecttype == 6 && MonsterMenuOpened
+							&& UiObjects[i].entrynumber == currentMonsterIndex);
+						double iconPulseMul = (hovered || selected)
+							? (1.0 + PB_PDA_BLOCKY_ICON_PULSE_AMP * sin(gametic * 0.15))
+							: 1.0;
+						int bx = int(UiObjects[i].ImagePos.x);
+						int by = int(UiObjects[i].ImagePos.y);
+						int bw = int(UiObjects[i].ImageSize.x);
+						int bh = int(UiObjects[i].ImageSize.y);
+						DrawBlockyTile(bx, by, bw, bh,
+							hovered, false, globalPDAAlpha);
+						font lblFont = UiObjects[i].usefont != NULL ? UiObjects[i].usefont : SmallFont;
+						DrawBlockyLabel(lblFont, UiObjects[i].toDraw,
+							bx, by, bw, bh,
+							hovered, globalPDAAlpha, true);
+						int labelBottom = by + max(2, bh / 14) + lblFont.GetHeight();
+						TextureID tileIc = ResolveBlockyTileIcon(UiObjects[i].entrynumber, UiObjects[i].objecttype);
+						DrawBlockyTileIcon(tileIc, bx, by, bw, bh, labelBottom,
+							globalPDAAlpha, iconPulseMul);
+						UiObjects[i].notdrawn = false;
+						continue;
+					}
 					if (UiObjects[i].todraw)
 					{
-						Screen.DrawText(UiObjects[i].usefont,UiObjects[i].fontcolor,UiObjects[i].ImagePos.x,UiObjects[i].ImagePos.y,UiObjects[i].toDraw,DTA_CleanNoMove_1,true,DTA_Alpha,globalPDAAlpha);
+						Screen.DrawText(UiObjects[i].usefont,UiObjects[i].fontcolor,UiObjects[i].ImagePos.x,UiObjects[i].ImagePos.y,UiObjects[i].toDraw,
+							DTA_ScaleX, pdaTextScale, DTA_ScaleY, pdaTextScale,
+							DTA_Alpha, globalPDAAlpha);
 						uiObjects[i].notdrawn = false;
 					}
 					else if (UiObjects[i].DialogPicture)
@@ -892,10 +1628,35 @@ class PB_EventHandler : EventHandler
 			}
 			if (descriptiondialog != null && NonMainMenu == true)
 			{
-				Screen.dim(color(75,75,75),globalPDAAlpha,descriptiondialog.ImagePos.X,descriptiondialog.descClipY,UpArrowPos.X - descriptiondialog.ImagePos.X,DownArrowPos.Y - UpArrowPos.Y);
-				Screen.DrawText(descriptiondialog.usefont,Font.CR_UNTRANSLATED,descriptiondialog.ImagePos.x,descriptiondialog.ImagePos.y,descriptiondialog.todraw,DTA_CleanNoMove_1,true,DTA_ClipTop,descriptiondialog.descClipY,DTA_ClipBottom,descriptiondialog.descClipH,DTA_Alpha,globalPDAAlpha);
+				// Description pane gets a slightly smaller font than the menu
+				// labels per the "scaled down, slightly smaller font" request
+				// after the wrap-width tightening still left the typography
+				// reading too dense at 1366x768.
+				double pdaDescScale = pdaTextScale * 0.75;
+				// Pull the dim panel in from the right edge so it never bleeds
+				// past the screen, even if `LargestStringWidth` (computed at
+				// init from `CleanXFac` for legacy reasons) would otherwise
+				// push the right side past `Screen.GetWidth()`.
+				int safeRight = int(Screen.GetWidth() - 24);
+				int paneRight = int(min(UpArrowPos.X, safeRight));
+				int paneWidth = paneRight - int(descriptiondialog.ImagePos.X);
+				if (paneWidth < 0) paneWidth = 0;
+				Screen.dim(color(75,75,75),globalPDAAlpha,descriptiondialog.ImagePos.X,descriptiondialog.descClipY,paneWidth,DownArrowPos.Y - UpArrowPos.Y);
+				Screen.DrawText(descriptiondialog.usefont,Font.CR_UNTRANSLATED,descriptiondialog.ImagePos.x,descriptiondialog.ImagePos.y,descriptiondialog.todraw,
+					DTA_ScaleX, pdaDescScale, DTA_ScaleY, pdaDescScale,
+					DTA_ClipTop, descriptiondialog.descClipY,
+					DTA_ClipBottom, descriptiondialog.descClipH,
+					DTA_ClipRight, safeRight,
+					DTA_Alpha, globalPDAAlpha);
 			}
-			Screen.DrawTexture(cursortex,false,MouseX,MouseY);
+			// ZCURSOR.png is 32x32 native; scale up so the cursor reads at any
+			// resolution and CenterOffset so the visible hot-point (the X) sits
+			// on MouseX/MouseY, which is also the click point used by UiTick.
+			double pdaCursorScale = clamp(Screen.GetHeight() / 540.0, 1.5, 3.5);
+			double pdaCursorSize = 32.0 * pdaCursorScale;
+			Screen.DrawTexture(cursortex, false, MouseX, MouseY,
+				DTA_DestWidthF, pdaCursorSize, DTA_DestHeightF, pdaCursorSize,
+				DTA_CenterOffset, true);
 			if (UiObjects.Size() >= 1) return;
 			//Initialize the objects.
 			InitializeUiObjects();
@@ -908,10 +1669,24 @@ class PB_EventHandler : EventHandler
 		if (!pmo) { return; }
 		PB_PDAWeaponContainer weaptextcontainer = PB_PDAWeaponContainer(pmo.FindInventory("PB_PDAWeaponContainer",true));
 		if (!weaptextcontainer) { return; }
+		blockyWeaponIconKeys.Clear();
+		blockyWeaponIconVals.Clear();
+		blockyMonsterIconKeys.Clear();
+		blockyMonsterIconVals.Clear();
+		blockyWeaponIconMissed.Clear();
+		blockyMonsterIconMissed.Clear();
+		currentMonsterIndex = -1;
+		// Same scale anchor as PB_PDAUi_Object.InitializeUiObject and the
+		// RenderOverlay DrawText scale: keeps row spacing in step with the
+		// rendered glyph height instead of CleanYFac_1 (which collapses to
+		// near-native size on common widescreen resolutions).
+		double pdaTextScale = clamp(Screen.GetHeight() / 240.0, 2.0, 6.0);
 		PDAWeaponExtraTexts.Copy(weaptextcontainer.PDAWeaponExtraTexts);
 		PDAWeaponHeaders.Copy(weaptextcontainer.PDAWeaponHeaders);
 		PDAWeaponTexts.Copy(weaptextcontainer.PDAWeaponTexts);
-		PDAMonsterTexts.Copy(weaptextcontainer.PDAWeaponTexts);
+		PDAMonsterStrings.Copy(weaptextcontainer.PDAMonsterStrings);
+		PDAMonsterTexts.Copy(weaptextcontainer.PDAMonsterTexts);
+		PDAMonsterIconClass.Copy(weaptextcontainer.PDAMonsterIconClass);
 		PDAWeaponTextVSize.Copy(weaptextcontainer.PDAWeaponTextVSize);
 		PDAWeaponTextHSize.Copy(weaptextcontainer.PDAWeaponTextHSize);
 		pdaWeapTextArray.Copy(weaptextcontainer.pdaWeapTextArray);
@@ -942,14 +1717,14 @@ class PB_EventHandler : EventHandler
 		DownArrowDialog.InitializeUiObject(confont);
 		UiObjects.Push(DownArrowDialog);
 		PB_PDAUi_Object LeftArrowDialog = new("PB_PDAUi_Object");
-		LeftArrowDialog.ImagePos = (descdialog.imagepos.x,descdialog.descClipH + (SmallFont.GetHeight()*cleanyfac_1));
+		LeftArrowDialog.ImagePos = (descdialog.imagepos.x,descdialog.descClipH + (SmallFont.GetHeight()*pdaTextScale));
 		LeftArrowDialog.todraw = "<";
 		LeftArrowDialog.ObjectType = 12;
 		LeftArrowDialog.NonMainMenuOnly = true;
 		LeftArrowDialog.InitializeUiObject();
 		UiObjects.Push(LeftArrowDialog);
 		PB_PDAUi_Object RightArrowDialog = new("PB_PDAUi_Object");
-		RightArrowDialog.ImagePos = (descdialog.imagepos.x + LargestStringWidth,descdialog.descClipH + (SmallFont.GetHeight()*cleanyfac_1));
+		RightArrowDialog.ImagePos = (descdialog.imagepos.x + LargestStringWidth,descdialog.descClipH + (SmallFont.GetHeight()*pdaTextScale));
 		RightArrowDialog.todraw = ">";
 		RightArrowDialog.ObjectType = 13;
 		RightArrowDialog.NonMainMenuOnly = true;
@@ -966,7 +1741,7 @@ class PB_EventHandler : EventHandler
 			weapontext.pdaWeapTextArray = pdaWeapTextArray[ii];
 			weapontext.toDraw = pdaWeapTextArray[ii].PDAWeaponHeader;
 			weapontext.ImagePos = prevtextpos;
-			prevtextpos.y += SmallFont.GetHeight() * CleanYFac_1;
+			prevtextpos.y += SmallFont.GetHeight() * pdaTextScale;
 			weapontext.InitializeUiObject();
 			weapontext.objecttype = 3;
 			UiObjects.Push(weapontext);
@@ -976,10 +1751,13 @@ class PB_EventHandler : EventHandler
 		{
 			let monstertext = new("PB_PDAUi_Object");
 			monstertext.MonsterMenuOnly = true;
-			monstertext.dontdraw = true;
+			monstertext.dontdraw = (i >= weaptextcontainer.PDAMonsterFound.Size()
+				|| !weaptextcontainer.PDAMonsterFound[i]);
+			monstertext.entrynumber = i;
+			monstertext.objecttype = 6;
 			monstertext.toDraw = PDAMonsterStrings[i];
 			monstertext.ImagePos = prevtextpos;
-			prevtextpos.y += SmallFont.GetHeight() * CleanYFac_1;
+			prevtextpos.y += SmallFont.GetHeight() * pdaTextScale;
 			monstertext.InitializeUiObject();
 			UiObjects.Push(monstertext);
 		}
@@ -1009,6 +1787,12 @@ class PB_EventHandler : EventHandler
 		uiObjects.Push(weapondialog);
 		dialog.ImagePos = ((Screen.GetWidth() ) - Screen.GetWidth()/4, (Screen.GetHeight() ) - Screen.GetHeight()/4);
 		UiObjects.Push(dialog);
+		// Initial blocky reflow: rewrites every weapon/monster row's
+		// ImagePos / ImageSize to its tile slot when `pb_pda_blocky` is
+		// on so the existing UiTick hit-test (MouseX/Y vs ImagePos +
+		// ImageSize) lands on the rendered tile boxes. No-op when blocky
+		// is off — legacy stacked-text positions stay intact.
+		ApplyBlockyLayout();
 		SendNetworkEvent("addbaseweapons");
 	}
 
@@ -1020,10 +1804,30 @@ class PB_EventHandler : EventHandler
 		// Note: PDA will be always disabled when at title screen.
 		if (gamestate == GS_TITLELEVEL || gametic <= 1) return false;
 		if (!e) return false;
+		// Only intercept input while the PDA is open. Out of PDA mode we let
+		// every event fall through so player view-turn / firing / menu input
+		// keep working. PDAMode is play-scope but ui-scope reads are allowed.
+		if (!PDAMode) return false;
 		int mouseinput = 0;
-		if (e.KeyScan == InputEvent.Key_Mouse1 && e.Type == InputEvent.Type_KeyDown) mouseinput = 1;
-		if (e.KeyScan == InputEvent.Key_Mouse1 && e.Type == InputEvent.Type_KeyUp) mouseinput = 2;
-		SendNetworkEvent("input",e.mouseX, e.mouseY,int(mouseinput));
-		return false;
+		bool relevant = false;
+		if (e.Type == InputEvent.Type_Mouse)
+		{
+			relevant = true;
+		}
+		else if (e.KeyScan == InputEvent.Key_Mouse1 && e.Type == InputEvent.Type_KeyDown)
+		{
+			mouseinput = 1;
+			relevant = true;
+		}
+		else if (e.KeyScan == InputEvent.Key_Mouse1 && e.Type == InputEvent.Type_KeyUp)
+		{
+			mouseinput = 2;
+			relevant = true;
+		}
+		if (!relevant) return false;
+		SendNetworkEvent("input", e.mouseX, e.mouseY, mouseinput);
+		// Consume so the engine doesn't feed mouse motion into the player's
+		// view turn or fire Mouse1 as a weapon attack while the PDA is up.
+		return true;
 	}
 }

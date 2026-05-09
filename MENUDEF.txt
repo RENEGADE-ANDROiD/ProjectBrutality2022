@@ -391,6 +391,13 @@ OptionMenu "PB_2022AdditionsMenu"
 	Submenu "PBX 2022 Weapon HUD Options", "PBWeaponHudOptions"
 	StaticText " ", teal
 	StaticText " ", teal
+	StaticText "$OPTMNU_PB_PDA_HINT", teal
+	StaticText "$OPTMNU_PB_PDA_HINT2", teal
+	StaticText " ", teal
+	Option "PDA Blocky Layout (tile grid)", "pb_pda_blocky", "YesNo"
+	StaticText "$OPTMNU_PB_PDA_BLOCKY_HINT", teal
+	StaticText "$OPTMNU_PB_PDA_BLOCKY_HINT2", teal
+	StaticText " ", teal
 	Option "Show Helmet Visor", "pb_showhudvisor", "YesNo"
 	StaticText " ", teal
 	Submenu "Helmet Visor Options", "PB_HelmetVisorOptions"
@@ -486,6 +493,8 @@ OptionMenu "ContentCompatOptions"
 	Option "Disable map decoration enhancements", "pb_disabledecorations", "YesOrNo"
 	StaticText " "
 	Option "Disable map gameplay enhancements", "pb_disablemapenhancements", "YesOrNo"
+	StaticText " "
+	Submenu "Advanced Weapon Spawns", "WeaponSpawns"
 	StaticText " "
 }
 
@@ -617,6 +626,7 @@ OptionMenu "WeaponSpawns"
 	Option "$PB_OPT_Molotov", "pb_NoMolotov", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn M2 Plasma Rifle", "pb_NoM2PlasmaWeapon", "SpawnOnOff"
+	Option "Spawn UAC Dark Matter Rifle", "pb_NoPB_DarkMatterRifleWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Freezer Rifle", "pb_NoFreezerWeapon", "SpawnOnOff"
 	StaticText " "
@@ -1778,8 +1788,8 @@ OptionMenu "SimplerMonsterSettings"
 
 	StaticText "---- Realm667 monsters (Blot, Vulgar, Behemoth, Drone, Venor, ...) ----"
 	StaticText " ", teal
-	Command "Enable all Realm667 monsters",  "set NoBabyCaco 0; set NoBehemoth 0; set NoBlot 0; set NoBloodGhost 0; set NoBloodSkull 0; set NoDrone 0; set NoFusionCyberImp 0; set NoPossessedGibs 0; set NoSlayerKnight 0; set NoVenor 0; set NoVulgar 0"
-	Command "Disable all Realm667 monsters", "set NoBabyCaco 1; set NoBehemoth 1; set NoBlot 1; set NoBloodGhost 1; set NoBloodSkull 1; set NoDrone 1; set NoFusionCyberImp 1; set NoPossessedGibs 1; set NoSlayerKnight 1; set NoVenor 1; set NoVulgar 1"
+	Command "Enable all Realm667 monsters",  "set NoBabyCaco 0; set NoBehemoth 0; set NoBlot 0; set NoBloodGhost 0; set NoBloodSkull 0; set NoDrone 0; set NoFusionCyberImp 0; set NoPossessedGibs 0; set NoSlayerKnight 0; set NoVenor 0; set NoVulgar 0; set pb_NoFrostBaron 0; set pb_NoCryocubus 0; set pb_NoFrostBrain 0; set pb_NoCryotron 0"
+	Command "Disable all Realm667 monsters", "set NoBabyCaco 1; set NoBehemoth 1; set NoBlot 1; set NoBloodGhost 1; set NoBloodSkull 1; set NoDrone 1; set NoFusionCyberImp 1; set NoPossessedGibs 1; set NoSlayerKnight 1; set NoVenor 1; set NoVulgar 1; set pb_NoFrostBaron 1; set pb_NoCryocubus 1; set pb_NoFrostBrain 1; set pb_NoCryotron 1"
 	StaticText " "
 
 	StaticText "---- Monster Pack add-ons (Crackodemon, Hellduke, Director, ...) ----"

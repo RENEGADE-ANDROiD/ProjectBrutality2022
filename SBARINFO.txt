@@ -67,6 +67,38 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 			drawimage "HLECHY", -30, -15, centerbottom;
 			drawnumber 4, INDEXFONT, DarkRed, Ammo PB_DTech, alignment(center), -16, -26, 0;
 			}
+		InInventory FreezenadeSelected{
+			drawimage "FGNDA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo FreezenadeAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_SnowCasterSelected{
+			drawimage "BXPLA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_SnowCasterAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_FreezeBotSelected{
+			drawimage "SHIGA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_FreezeBotDeployAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_IceWallSelected{
+			drawimage "BXPLA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_IceWallGenAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_HoloDecoySelected{
+			drawimage "PLAYE0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_HoloDecoyAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_TeslaTurretSelected{
+			drawimage "ELPDA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_TeslaTurretAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_FlameTurretSelected{
+			drawimage "F1REA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Orange, Ammo PB_CF_FlameTurretAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_FreezeMineSelected{
+			drawimage "FZBLA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_FreezeMineAmmo, alignment(center), -16, -26, 0;
+			}
 	
 		drawimage "EQUPBO", -30, -15, centerbottom, 37, 37;
 
@@ -675,6 +707,17 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Orange, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR3", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
+			IsSelected PB_CryoASG {
+				drawimage "BARBACO1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACO2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR3", -149, -30;
+				DrawImage "BAMBAR3", -149, -48;
+				DrawBar "CURBAR3", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC3", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Orange, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR3", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 			IsSelected PB_Autoshotgun {
 				InInventory DualWieldingAutoshotguns {
 					drawimage "BARBACO1", -121, -12, centerbottom, 180, 22;
@@ -746,6 +789,17 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 			
 			//Explosive Ammo
 			IsSelected PB_RocketLauncher {
+				drawimage "BARBACR1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACR2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR4", -149, -30;
+				DrawImage "BAMBAR4", -149, -48;
+				DrawBar "CURBAR4", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC4", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Red, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Red, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR4", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
+			IsSelected PB_CF_RocketLauncher {
 				drawimage "BARBACR1", -121, -12, centerbottom, 180, 22;
 				drawimage "BARBACR2", -121, -32, centerbottom, 180, 22;
 				DrawImage "BAMBAR4", -149, -30;
@@ -920,12 +974,54 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Purple, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
+			IsSelected PB_CryoElectroRifle {
+				InInventory PB_CryoElectroRifle_ElectricMode {
+					drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+					drawimage "BARBACP2", -121, -32, centerbottom, 180, 22;
+					DrawImage "BAMBAR5", -149, -30;
+					DrawImage "BAMBAR5", -149, -48;
+					DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+					Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+					DrawNumber 3, AANUM3, White, ammo1, Alignment(right), -150, -32;
+					DrawNumber 3, AANUM3, White, ammo2, Alignment(right), -150, -50;
+					DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+				}
+				else {
+					drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+					drawimage "BARBACP2", -121, -32, centerbottom, 180, 22;
+					DrawImage "BAMBAR5", -149, -30;
+					DrawImage "BAMBAR5", -149, -48;
+					DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+					Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+					DrawNumber 3, AANUM3, Cyan, ammo1, Alignment(right), -150, -32;
+					DrawNumber 3, AANUM3, Cyan, ammo2, Alignment(right), -150, -50;
+					DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+				}
+			}
+			IsSelected PB_DarkMatterRifle {
+				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACP2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR5", -149, -30;
+				DrawImage "BAMBAR5", -149, -48;
+				DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Purple, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 			IsSelected PB_BFG9000 {
 				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
 				DrawImage "BAMBAR5", -149, -30;
 				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
 				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
 				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;	
+			}
+			IsSelected PB_CryoCannon {
+				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+				DrawImage "BAMBAR5", -149, -30;
+				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Cyan, ammo1, Alignment(right), -150, -32;
+				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
 			IsSelected Stormcast {
 				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;

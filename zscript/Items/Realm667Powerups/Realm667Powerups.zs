@@ -22,7 +22,6 @@ class FireAuraSphere : PowerupGiver
 		+INVENTORY.AUTOACTIVATE;
 		+INVENTORY.ALWAYSPICKUP;
 		+INVENTORY.BIGPOWERUP;
-		+INVENTORY.PICKUPFLASH;
 		Inventory.MaxAmount 0;
 		Powerup.Type "FireAuraPower";
 		Powerup.Duration -60;
@@ -367,7 +366,6 @@ class FrostAuraSphere : PowerupGiver
 		+INVENTORY.AUTOACTIVATE;
 		+INVENTORY.ALWAYSPICKUP;
 		+INVENTORY.BIGPOWERUP;
-		+INVENTORY.PICKUPFLASH;
 		Inventory.MaxAmount 0;
 		Powerup.Type "FrostAuraPower";
 		Powerup.Duration -60;

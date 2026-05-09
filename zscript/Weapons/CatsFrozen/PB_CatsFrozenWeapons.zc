@@ -1,0 +1,38 @@
+// Cat's Frozen Slice 5 — PBCF_CryoPellet (cryo ASG pellets).
+// PB_CF_CryoRocket lives in DECORATE (actors/Weapons/Slot6/PB_CF_RocketLauncher.dec)
+// because its base class PB_Rocket is also DECORATE -- ZScript at parse time
+// cannot resolve DECORATE-only base classes (UZDoom 4.14.3 abort:
+// "Class PB_CF_CryoRocket has unknown base class PB_Rocket").
+
+class PBCF_CryoPellet : FastProjectile
+{
+	Default
+	{
+		Radius 3;
+		Height 3;
+		Speed 85;
+		Damage 4;
+		DamageType "Ice";
+		Projectile;
+		+RANDOMIZE;
+		+FORCEXYBILLBOARD;
+		RenderStyle "Add";
+		Alpha 0.85;
+	}
+	States
+	{
+	Spawn:
+	Fly:
+		TNT1 A 1 Bright;
+		Loop;
+	Death:
+		TNT1 A 1;
+		Stop;
+	}
+	override int SpecialMissileHit(Actor victim)
+	{
+		if (victim && victim.bSHOOTABLE && victim.health > 0)
+			victim.A_GiveInventory("PBCF_CryocubusSlowdown");
+		return Super.SpecialMissileHit(victim);
+	}
+}

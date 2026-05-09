@@ -147,6 +147,8 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Items/Ammo/Clipbox.dec"
 #include "actors/Items/Ammo/Cellpack.dec"
 #include "actors/Items/Ammo/PBWP_CompatAmmo.dec"
+#include "actors/Items/Ammo/CatsFrozenAmmo.dec"
+#include "actors/Weapons/Slot3/PB_CryoASG.dec"
 #include "actors/Items/Ammo/PB_SingleShell.dec"
 #include "actors/Weapons/Slot3/X12Shotgun.dec"
 #include "actors/Weapons/Slot3/HASG.dec"
@@ -154,6 +156,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot4/MINIGUN.dec"
 #include "actors/Weapons/Slot5/ROCKETLAUNCHER.dec"
 #include "actors/Weapons/EXPLOSIVES.dec"
+#include "actors/Weapons/Slot6/PB_CF_RocketLauncher.dec"
 #include "actors/Weapons/Slot6/PLASMA.dec"
 #include "actors/Weapons/Slot6/MastermindChaingun.dec"
 #include "actors/Weapons/Slot4/MG42.dec"
@@ -415,6 +418,8 @@ Actor PBBlastMomentum : Inventory
 // DragonSlayer / Stormcast (ZAPR trail: StormcastElectroBlastTrail; DLI trail: ElectroBlastTrail in M2PLASMA; PlasmaFlare from FLARES)
 #include "actors/Weapons/MeleeWeaponPack/DragonSlayer.dec"
 #include "actors/Weapons/MeleeWeaponPack/Stormcast.dec"
+#include "actors/Weapons/Slot8/PB_CryoElectroRifle.dec"
+#include "actors/Weapons/Slot8/PB_DarkMatterRifle.dec"
 #include "actors/Weapons/Slot8/BFGMKIV.dec"
 #include "actors/Weapons/Equipment/ShieldGrenade_PS.dec"
 //#include "actors/Weapons/Slot8/BFGBEAM.dec"
@@ -431,6 +436,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot9/Unmaker.dec"
 #include "actors/Weapons/Slot9/Flamethrower.dec"
 #include "actors/Weapons/Slot9/DemonExterminator.dec"
+#include "actors/Weapons/Slot9/PB_CryoCannon.dec"
 #include "actors/Weapons/Slot4/ProSurv_Ballista.dec"
 #include "actors/Weapons/Slot9/MancubusFlameCannon.dec"
 // #include "actors/Weapons/Slot9/DTechMinigun.dec"  // disabled: weapon broken, hidden from player
@@ -440,6 +446,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Equipments/VoidGrenade.dec"
 #include "actors/Equipments/Freezebot.dec"
 #include "actors/Equipments/ElecPod2.dec"
+#include "actors/Items/CatsFrozen/Equipment.dec"
 
 
 
@@ -815,6 +822,7 @@ Actor TurboReload : Inventory
 #include "actors/Monsters/Realm667/Realm667_BloodGhost.dec"
 #include "actors/Monsters/Realm667/Realm667_BloodSkull.dec"
 #include "actors/Monsters/Realm667/Realm667_GloryKills.dec"
+#include "actors/Monsters/CatsFrozen/PB_CatsFrozen_Monsters.dec"
 
 // Late-stage compatibility stubs (must be last — uses PB parents defined above)
 #include "actors/Compat/LateWarningStubs.dec"

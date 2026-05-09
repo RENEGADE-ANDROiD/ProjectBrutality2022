@@ -1,0 +1,71 @@
+// Cat's Frozen Slice 5 — ammo for PB_CryoElectroRifle (shared cryo/electric), PB_CryoCannon.
+
+ACTOR PB_CryoCells : Ammo
+{
+	Inventory.PickupMessage "$PB_PICKUP_PB_CRYOCELLS"
+	Inventory.Icon "BXPLA0"
+	Inventory.Amount 20
+	Inventory.MaxAmount 300
+	Ammo.BackpackAmount 40
+	Ammo.BackpackMaxAmount 600
+	+IGNORESKILL
+}
+
+ACTOR PB_CryoCellsPickup : PB_CryoCells
+{
+	//$Category Ammunition
+	Scale 0.55
+	Inventory.PickupMessage "$PB_PICKUP_PB_CRYOCELLS"
+	States
+	{
+	Spawn:
+		BXPL A -1 Bright
+		Stop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("PB_CryoCells", 20)
+		Stop
+	}
+}
+
+ACTOR PB_CryoCellsPack : PB_CryoCells
+{
+	//$Category Ammunition
+	Inventory.PickupMessage "$PB_PICKUP_PB_CRYOCELLSPACK"
+	Scale 0.6
+	States
+	{
+	Spawn:
+		CELP A -1
+		Stop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("PB_CryoCells", 60)
+		Stop
+	}
+}
+
+ACTOR PB_CryoCannonCells : Ammo
+{
+	Inventory.PickupMessage "$PB_PICKUP_PB_CRYOCANNONCELLS"
+	Inventory.Icon "CELLA0"
+	Inventory.Amount 10
+	Inventory.MaxAmount 120
+	Ammo.BackpackAmount 10
+	Ammo.BackpackMaxAmount 240
+	+IGNORESKILL
+}
+
+ACTOR PB_CryoCannonCellsPickup : PB_CryoCannonCells
+{
+	//$Category Ammunition
+	Scale 0.65
+	Inventory.PickupMessage "$PB_PICKUP_PB_CRYOCANNONCELLS"
+	States
+	{
+	Spawn:
+		CELL A -1
+		Stop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("PB_CryoCannonCells", 10)
+		Stop
+	}
+}

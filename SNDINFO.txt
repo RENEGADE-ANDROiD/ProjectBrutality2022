@@ -4595,6 +4595,31 @@ weapons/freezer/reload1 "sounds/combat/weapons/Freezer/FRZRRL1.ogg"
 weapons/freezer/reload2 "sounds/combat/weapons/Freezer/FRZRRL2.ogg"
 weapons/freezer/reload3 "sounds/combat/weapons/Freezer/FRZRRL3.ogg"
 
+// Cat's Frozen Addon fold — cryo slow projectiles (logical names used by PBCF_CryoSlowProjectiles.zc)
+iceimpa "sounds/combat/weapons/CatsFrozen/iceimpact3.wav"
+coldcst "sounds/combat/weapons/CatsFrozen/coldcast.wav"
+
+// --- Cat's Frozen Addon monsters (logical names from DECORATE / PB_Cryotron.zc)
+PBCF/FrostBaron/See "sounds/monsters/CatsFrozen/FrostBaron/FROBARA.wav"
+PBCF/FrostBaron/Active "sounds/monsters/CatsFrozen/FrostBaron/FROBARB.mp3"
+PBCF/FrostBaron/Pain "sounds/monsters/CatsFrozen/FrostBaron/FROBARC.wav"
+PBCF/FrostBaron/Death "sounds/monsters/CatsFrozen/FrostBaron/FROBARD.wav"
+PBCF/FrostBallLand "sounds/monsters/CatsFrozen/FrostBaron/BRUSPOL.ogg"
+PBCF/FrostBrain/See "sounds/monsters/CatsFrozen/Frostbrain/DSARACST.ogg"
+PBCF/FrostBrain/Active "sounds/monsters/CatsFrozen/Frostbrain/DSARACST.ogg"
+PBCF/FrostBrain/Pain "sounds/monsters/CatsFrozen/Frostbrain/DSARACML.ogg"
+PBCF/FrostBrain/Death "sounds/monsters/CatsFrozen/Frostbrain/DSARACST.ogg"
+PBCF/FrostBrain/Missile "sounds/monsters/CatsFrozen/Frostbrain/DSARACDT.ogg"
+PBCF/ICESHA coldcst
+PBCF/Cryocubus/Llama "sounds/monsters/CatsFrozen/Cryocubus/HIELOLLA.ogg"
+PBCF/Cryotron/See baby/sight
+PBCF/Cryotron/Pain baby/pain
+PBCF/Cryotron/Death baby/death
+PBCF/Cryotron/Active baby/active
+PBCF/Cryotron/Attack "sounds/monsters/CatsFrozen/Cryotron/CRYOSHOT"
+PBCF/Cryotron/Hit "sounds/monsters/CatsFrozen/Cryotron/CRYOHIT"
+PBCF/Cryotron/Loop "sounds/monsters/CatsFrozen/Cryotron/CRYOLOOP"
+
 //Rocket Launcher
 misc/rockboxa rockboxa
 SEEKER SEEKER

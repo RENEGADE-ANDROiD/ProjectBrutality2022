@@ -12,6 +12,23 @@ PB_PICKUP_LichSkull         = "Lich Skull! Double damage and speed.";
 PB_PICKUP_Pentacle          = "Pentacle of Projection! Pushed everything away.";
 PB_PICKUP_ReflectorSphere   = "Reflector Sphere! Invulnerability with reflected projectiles.";
 
+// Cat's Frozen equipment (wheel / backpacks; no separate menu toggles)
+PB_PICKUP_PB_CF_SNOWCASTER = "Picked up Snow Caster charges.";
+PB_PICKUP_PB_CF_FREEZEBOT = "Picked up Freezebot deploy charges.";
+PB_PICKUP_PB_CF_ICEWALL = "Picked up ice wall generator charges.";
+PB_PICKUP_PB_CF_HOLODECOY = "Picked up holographic decoy charges.";
+PB_PICKUP_PB_CF_TESLATURRET = "Picked up Tesla turret charges.";
+PB_PICKUP_PB_CF_FLAMETURRET = "Picked up flame turret charges.";
+PB_PICKUP_PB_CF_FREEZMINE = "Picked up freeze mine charges.";
+PB_PICKUP_PB_CRYOCELLS = "Picked up cryo cells.";
+PB_PICKUP_PB_CRYOCELLSPACK = "Picked up a cryo cell bundle.";
+PB_PICKUP_PB_CRYOCANNONCELLS = "Picked up cryo cannon fuel.";
+PB_PICKUP_PB_CRYOELECTRORIFLE = "Picked up the Cryo Electro Rifle (slot 8).";
+PB_PICKUP_PB_DARKMATTERRIFLE = "Picked up the UAC Prototype Dark Matter Rifle (slot 8).";
+PB_PICKUP_PB_CF_ROCKETLAUNCHER = "Picked up the Cryo Rocket Launcher (slot 6).";
+PB_PICKUP_PB_CRYOCANNON = "Picked up the Cryo Cannon (slot 9).";
+PB_PICKUP_PB_CRYOASG = "Picked up the Cryo Auto Shotgun (slot 3).";
+
 // Realm667 monster fold (Blood Ghost / Blood Skull) -- pickup string for the
 // Blood Ghost's drop bonus (1HP ghostly health globe).
 PB_PICKUP_GhostHealthBonus  = "Picked up a ghostly health bonus.";
@@ -459,6 +476,10 @@ PB_WEAPON_WHEEL_ENABLE_DESC = "Master switch for the integrated Gearbox weapon s
 
 PB_WEAPON_SELECTOR_MENU = "Weapon & Inventory Selector";
 PB_WEAPON_SELECTOR_MENU_HINT = "Gearbox: wheel / blocks / text layout, keys, colors, and reset.";
+OPTMNU_PB_PDA_HINT = "UAC battlefield codex (PDA): Customize Controls -> PB 2022 Enhanced - Interactions -> Open PDA.";
+OPTMNU_PB_PDA_HINT2 = "Default key Backslash. Press the same key again to close. Disabled while playing multiplayer (co-op / DM).";
+OPTMNU_PB_PDA_BLOCKY_HINT = "Blocky layout: weapon / monster entries render as a Gearbox-style paged tile grid.";
+OPTMNU_PB_PDA_BLOCKY_HINT2 = "Off = legacy text-list. Up / Down arrows page through tiles when blocky is on.";
 PB_WEAPON_WHEEL_EMPTY = "\cgNothing to select\c- (no weapons on bar).";
 PB_WHEELTIP_WPICKSLOT = "Outer ring: weapon slots you are carrying.\nAim toward the \cccenter\c- when a slot lists multiple weapons\nto open the inner ring for that slot.";
 
@@ -569,6 +590,11 @@ PB_PICKUP_DragonSlayer = "You picked up the Dragon Slayer! (Slot 1)";
 PB_PICKUP_Stormcast = "You got the Arcane Power of Stormcasting! (Slot 9)";
 PB_WPNHINT_DragonSlayer = "Dragon Slayer: build Slayer energy with slashes; spend for empowered strikes.\nAlt-Fire: nail launcher Volley.\nUses Slot 1 with chainsaw-tier spawns.";
 PB_WPNHINT_Stormcast = "Stormcast (slot 9): PowerChargeStorm fuels the lightning beam (Fire) and alt-fire charge releases.\nHold Fire while charging alt for orb spells; hold Activate Equipment (User1) for stunwall variants; hold Weapon Special for Arc of Death charge tiers; tap Reload during charge for Lightning Warper; hold Alt-Fire while airborne after Fire for air lightning.\nSpawns from BFG pickups when enabled in Weapon Spawns.";
+PB_WPNHINT_PB_CryoElectroRifle = "Cryo Electro Rifle (slot 8): Weapon Special toggles Cryo vs Electric.\nPrimary: cryo orb or lightning missile (shared PB_CryoCells).\nReload trades PB_Cell packs into cryo ammo.";
+PB_WPNHINT_PB_DARKMATTERRIFLE = "Dark Matter Rifle (slot 8): Weapon Special wheel picks Alt-Fire payload — charged Super Plasma Ball or Gravity Singularity.\nPrimary: fast plasma orb (PB_DarkMatterMag).\nReload feeds the magazine from Cell reserve; unload supported.";
+PB_WPNHINT_PB_CF_RocketLauncher = "Cryo Rocket Launcher (slot 6): rockets apply area cryo slow on detonation.\nUses RocketAmmo.";
+PB_WPNHINT_PB_CryoCannon = "Cryo Cannon (slot 9): cone of cryo wind; uses PB_CryoCannonCells.\nReload trades PB_Cell into cannon fuel.";
+PB_WPNHINT_PB_CryoASG = "Cryo Auto Shotgun (slot 3): cryo pellet burst; uses PB_Shell (2 per shot).\nEach pellet applies brief cryo slow.";
 PB_WPNHINT_VorpalBlade = "Lifesteal Sword: Lunges Lock Targets.\nBerserk Alt-Fire: BladeStorm.";
 
 PB_PICKUP_HASG = "UAC XHAS-SP -;{The Lady Golide};- (Slot 3)";

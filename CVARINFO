@@ -290,6 +290,7 @@ server int pb_NoCarbineWeapon = 0;
 server int pb_NoSuperGLWeapon = 0;
 server int pb_NoHeavyGLWeapon = 0;
 server int pb_NoM2PlasmaWeapon = 0;
+server int pb_NoPB_DarkMatterRifleWeapon = 0;
 server int pb_NoFreezerWeapon = 0;
 server int pb_NoRailgunWeapon = 0;
 server int pb_NoBFGBeamWeapon = 0;
@@ -429,6 +430,13 @@ server	float	pb_minlanding			= 0.5;
 
 server	bool	pb_dash					= true;
 user	bool	pb_dasheffect			= true;
+
+// PDA "Blocky" tile-grid layout (Gearbox-inspired). When on, the Weapons /
+// Monsters codex pages render as a paged grid of selectable tiles instead of
+// a stacked text list. Off = legacy text-list. Up/Down PDA arrows page when
+// blocky is on. Same `BACKSLASH` bind opens AND closes the PDA (toggle).
+// See PB_EventHandler in zscript/PBPDA.zc.
+user	bool	pb_pda_blocky			= true;
 
 // Helmet visor overlay (folded from PB Staging PB_Hud.zs).
 // PB_VisorHandler (zscript/PB_VisorOverlay.zc) reads these.
@@ -784,6 +792,11 @@ server int NoFusionCyberImp = 0;
 server int NoPossessedGibs = 0;
 server int NoSlayerKnight = 0;
 server int NoVenor = 0;
+// Cat's Frozen Addon — optional frost-tier monsters (Slice 3; pack spawner hooks).
+server int pb_NoFrostBaron = 0;
+server int pb_NoCryocubus = 0;
+server int pb_NoFrostBrain = 0;
+server int pb_NoCryotron = 0;
 server int NoVulgar = 0;
 server int NoCyberSatyr = 0;
 server int NoD3HellGuardian = 0;
