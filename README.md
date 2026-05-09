@@ -37,7 +37,7 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 - **Combat depth:** Brutality-style damage and reactions, plus the weapon and monster variety below—all adjustable from **PB 2022 Enhanced** and related submenus.
 - **Content breadth:** Large weapon roster, extra monsters, kill streaks, power-up hooks, and announcer support.
 - **Configuration:** Use **Options → PB 2022 Enhanced** (same screen is **PB 2022 Enhanced** on the main menu, bound to **P** when available). That hub groups **Gameplay Settings**, **Weapon Settings**, **Global Settings**, **Visual Settings**, the **Finishers, Gore, Taunts** block (including **Experimental weapon executions** / `pb_experimental` and **Glory Kill**), **Explosive Movement**, UI/feel (damage numbers, tactical motion, PBX HUD, kill streaks), and **Content Packs**. Deeper monster/spawn work also lives under **Global Settings** and **Monster Pack Settings**.
-- **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** is the one-switch folded gore mix for BDv22 mist/meat/organs, BPv10 death extras, and extra death pools/trails.
+- **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** is the one-switch combined gore mix that includes BDv22 mist/meat/organs, BPv10 death extras, and extra death pools/trails.
 - **Shield Saw:** Standard equipment—you start every new game with it. Quick Melee throws the ricocheting saw at range (close targets still get normal melee), and **Recall Shield Saw** brings it back.
 
 ### Included weapons
@@ -51,8 +51,8 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **Chainsaw** — classic fuel-fed saw with PB gore and chainsaw-spawner variants.
 - **UAC Nanotech Energy Beam Katana** — energy blade with quick melee integration and barrier-style behavior.
 - **Argent Sith Beam Katana** — argent blade variant with its own energy attacks and shield/barrier handling.
-- **Tiberium's Soulblade / Vorpal Blade** — exotic blade with charged/special attack behavior (sprites **Eriance**; sword lineage *Insanity's Requiem Mk.2* by **TiberiumSoul**; folded from **PB_MeleeWeaponPack** / **Renegade Android** rework — see **`CREDITS.txt`**).
-- **Dragon Slayer** — heavy energy-melee / bolt-repeater-style attacks (**Craneo**; Hexen ModDB per upstream pack notes; same pack fold — **`CREDITS.txt`**).
+- **Tiberium's Soulblade / Vorpal Blade** — exotic blade with charged/special attack behavior (sprites **Eriance**; sword lineage *Insanity's Requiem Mk.2* by **TiberiumSoul**; included from **PB_MeleeWeaponPack** / **Renegade Android** rework — see **`CREDITS.txt`**).
+- **Dragon Slayer** — heavy energy-melee / bolt-repeater-style attacks (**Craneo**; Hexen ModDB per upstream pack notes; same source pack — **`CREDITS.txt`**).
 - **Shield Saw** — not a separate weapon slot entry; granted on spawn like other starter gear. With the saw “charged,” Quick Melee throws it at range; **Recall Shield Saw** pulls it back. It no longer drops from the chainsaw map spawner and is not shown on the HUD inventory strip.
 
 **Slot 2 — Sidearms & personal defense**
@@ -75,14 +75,14 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **X12 Shotgun** — special shotgun using the PBWP shell alias path.
 - **Quad-Barrel Shotgun** — four-barrel burst weapon with special-wheel behavior.
 - **Marauder Shotgun** — Marauder-style super shotgun variant.
-- **Cryo Auto Shotgun (`PB_CryoASG`)** — Cat's Frozen fold; PB_Shell-fed cryo pellet burst that applies brief cryo slow per pellet (no `pb_No*` toggle — always rolls from shotgun spawners).
+- **Cryo Auto Shotgun (`PB_CryoASG`)** — includes the Cat's Frozen Cryo ASG; PB_Shell-fed cryo pellet burst that applies brief cryo slow per pellet (no `pb_No*` toggle — always rolls from shotgun spawners).
 
 **Slot 4 — Rifles, precision & support**
 
 - **UAC-30 DMR** — marksman rifle with upgrade/dual-wield style support.
 - **UAC-41 Carbine** — flexible rifle with special-wheel fire modes.
 - **Chex Quest Assault Rifle** — optional Chex-themed rifle variant.
-- **XM-21 Rifle** — sniper/marksman add-on fold with dedicated ammo handling.
+- **XM-21 Rifle** — sniper/marksman add-on included with dedicated ammo handling.
 - **Light Machine Gun** — belt/magazine support rifle for sustained automatic fire.
 - **Metal Sniper** — heavy precision rifle with custom ammo and unload behavior.
 - **UAC-320 Heavy Machine Gun** — older heavy automatic platform.
@@ -106,7 +106,7 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **Excavator** — launcher/special weapon with mode-specific ammo behavior.
 - **Mastermind's Chaingun** — boss-derived heavy chaingun.
 - **Cyberdemon Missile Launcher** — cyberdemon-style missile launcher.
-- **Cryo Rocket Launcher (`PB_CF_RocketLauncher`)** — Cat's Frozen fold; rockets apply area cryo slow on detonation while still feeding into the **Explosive Movement** rocket-jump path (see [Rocket Jump integration](#explosive-movement-rocket-jump--plasma-wall-boost)). Always rolls from rocket-launcher spawners.
+- **Cryo Rocket Launcher (`PB_CF_RocketLauncher`)** — includes the Cat's Frozen Cryo Rocket Launcher; rockets apply area cryo slow on detonation while still feeding into the **Explosive Movement** rocket-jump path (see [Rocket Jump integration](#explosive-movement-rocket-jump--plasma-wall-boost)). Always rolls from rocket-launcher spawners.
 
 **Slot 7 — Energy rifles (non-plasma line)**
 
@@ -119,8 +119,8 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 
 - **UAC-M1 Plasma Rifle** — plasma rifle with single/dual weapon-special support and plasma wall-climb behavior.
 - **UAC-M2 Plasma Rifle** — alternate plasma rifle using the same movement-friendly plasma impact family.
-- **Cryo Electro Rifle (`PB_CryoElectroRifle`)** — Cat's Frozen fold; **Weapon Special** wheel toggles between **Cryo** mode (cryo orb projectile, applies slowdown) and **Electric** mode (lightning missile reused from Stormcast). Uses **`PB_CryoCells`** (with **`PB_Cell`** packs as reload feed). HUD ammo readout switches color (cyan ↔ white) with the active mode. Always rolls from plasma spawners.
-- **UAC Prototype Dark Matter Rifle (`PB_DarkMatterRifle`)** — PB 3.x Pulse Cannon fold: magazine-fed plasma orbs, chargeable Alt-Fire (Super Plasma Ball vs Gravity Singularity via Weapon Special wheel), **`Cell`** reserve + internal mag, plasma wall-climb on **`PB_DMR_PulseBall`** / **`PB_DMR_SuperBall`** impacts; rolls from plasma rifle spawners with **`pb_NoPB_DarkMatterRifleWeapon`**.
+- **Cryo Electro Rifle (`PB_CryoElectroRifle`)** — includes the Cat's Frozen Cryo + Electric Rifle merge; **Weapon Special** wheel toggles between **Cryo** mode (cryo orb projectile, applies slowdown) and **Electric** mode (lightning missile reused from Stormcast). Uses **`PB_CryoCells`** (with **`PB_Cell`** packs as reload feed). HUD ammo readout switches color (cyan ↔ white) with the active mode. Always rolls from plasma spawners.
+- **UAC Prototype Dark Matter Rifle (`PB_DarkMatterRifle`)** — includes the PB 3.x Pulse Cannon: magazine-fed plasma orbs, chargeable Alt-Fire (Super Plasma Ball vs Gravity Singularity via Weapon Special wheel), **`Cell`** reserve + internal mag, plasma wall-climb on **`PB_DMR_PulseBall`** / **`PB_DMR_SuperBall`** impacts; rolls from plasma rifle spawners with **`pb_NoPB_DarkMatterRifleWeapon`**.
 
 **Slot 9 — Super-weapons**
 
@@ -129,7 +129,7 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **BFG9000 MK IV** — BFG-class room clearer.
 - **BFG 11K Prototype / BFG Beam** — beam-style BFG super-weapon entry.
 - **Demon Exterminator** — endgame demon-killing super-weapon.
-- **Cryo Cannon (`PB_CryoCannon`)** — Cat's Frozen fold; cone-shape cryo wind burst using **`PB_CryoCannonCells`** (with **`PB_Cell`** packs as reload feed). Heavy-burst fire pattern, slows + chips at clusters. Always rolls from BFG spawners.
+- **Cryo Cannon (`PB_CryoCannon`)** — includes the Cat's Frozen Cryo Cannon; cone-shape cryo wind burst using **`PB_CryoCannonCells`** (with **`PB_Cell`** packs as reload feed). Heavy-burst fire pattern, slows + chips at clusters. Always rolls from BFG spawners.
 - **Stormcast** — lightning staff (*Schism* lineage; **Dreo** & **Lord Lothar**; **PB_MeleeWeaponPack** / **Renegade Android** — **`CREDITS.txt`**). Slot **9**, one shared charge pool; chords replace the old weapon-special wheel.
   - **Primary** — staff lightning / melee (needs charge; **Berserk** upgrades the strikes).
   - **Alt-Fire (hold)** — build charge; **release** to cast a bolt scaled to charge.
@@ -158,7 +158,7 @@ Modders: `PLAYER.dec` is the source of truth for slotted weapons. The disabled *
 - Freezebot
 - ElecPod
 
-**Cat's Frozen equipment additions** (always-on, no `pb_No*` toggles per the Cat's Frozen fold directive — see [Cat's Frozen Addon](#cats-frozen-addon)):
+**Cat's Frozen equipment additions** (always-on, no per-piece toggles — see [Cat's Frozen Addon](#cats-frozen-addon)):
 
 - **Snow Caster** — handheld cone-burst that lays cryo wind + ice particles in front of the player.
 - **Ice Wall** — generator that drops a temporary line of cryo barrier segments.
@@ -186,7 +186,7 @@ You do **not** need to jump first — firing behind you into floors or walls sti
 
 ### 2022 Enhanced Brootality
 
-**2022 Enhanced Brootality** is the single switch for the folded 2022 gore mix. It keeps the normal Project Brutality and Nash Gore stack in place, then layers in the extra BDv22, BPv10, and PB death-boost effects when `pb_enhanced_brutality_2022` is on.
+**2022 Enhanced Brootality** is the single switch for the combined 2022 gore mix. It keeps the normal Project Brutality and Nash Gore stack in place, then layers in the extra BDv22, BPv10, and PB death-boost effects when `pb_enhanced_brutality_2022` is on.
 
 Turn it on from **Options → PB 2022 Enhanced** (the **2022 Enhanced Brootality** row under *Finishers, Gore, Taunts*) when you want the full mixed presentation. Nash Gore and classic PB blood/gib options remain under **Visual Settings** → **Gore/Debris Settings** (see the on-screen hint in PB 2022 Enhanced).
 
@@ -199,7 +199,7 @@ The internal BDv22 blend is tuned to about **66.6%** so the BDv22 pieces are com
 
 ### Shield Saw
 
-**Shield Saw** is folded into Quick Melee rather than taking a weapon slot. You begin with the saw token on a **new game**; map-placed pickups (or `summon ShieldSaw_token`) still work if a mapper extras them.
+**Shield Saw** is included with Quick Melee rather than taking a weapon slot. You begin with the saw token on a **new game**; map-placed pickups (or `summon ShieldSaw_token`) still work if a mapper extras them.
 
 - **Quick Melee** near enemies uses the usual close-range melee.
 - **Quick Melee** at range throws the saw as a projectile.
@@ -210,20 +210,20 @@ The vanilla **chainsaw** spawn point no longer rolls a Shield Saw drop—the saw
 
 ### Cat's Frozen Addon
 
-The **Cat's Frozen Addon** (SchrödingCat) is folded directly into Project Brutality 2022 as **always-on standard content** — there are **no** `pb_NoFrost*` / `pb_NoCryo*` cvars or menu toggles for any of the Cat's Frozen pieces. The fold landed in five slices:
+The **Cat's Frozen Addon** (SchrödingCat) is part of Project Brutality 2022 as **always-on standard content** — there are no separate `pb_NoFrost*` / `pb_NoCryo*` cvars or per-piece menu toggles. What it adds:
 
-- **Slice 1 — Cryo slowdown projectile family.** Namespaced ZScript actors `PBCF_CryocubusSlowdown`, `PBCF_IceOrbCryo`, `PBCF_CryoWind`, `PBCF_SnowParticle`, `PBCF_SlowingCloud`, etc. (`zscript/Effects/PBCF_CryoSlowProjectiles.zc`). Used by every other slice for shared cryo behavior.
-- **Slice 2 — 8-angle frozen-solid corpses.** When monsters die from ice/cryo damage, they convert into 8-angle frozen statues (idle, thaw, shatter states) instead of vanilla frozen-corpse art. `PB_FrozenSolidHandler` event handler (always registered via `zmapinfo.txt`) and `PB_FrozenSolid*` actor family (`zscript/Monsters/CatsFrozen/PB_FrozenSolid*.zc`). Sprites under `SPRITES/Monsters/CatsFrozenFrozen/`.
-- **Slice 3 — Frost combat monsters.** Four new always-on monsters folded into the relevant pack spawners:
-  - **Frost Baron** — added unconditionally to the baron spawner roll.
-  - **Cryocubus** — added unconditionally to the mancubus spawner roll.
-  - **Frostbrain** — added unconditionally to the cacodemon spawner roll.
-  - **Cryotron** — added unconditionally to the arachnotron spawner roll.
-  - Only the global `pb_disablenewenemies` blanket switch still gates them as part of the broader "new enemies" toggle.
-- **Slice 4 — Equipment-wheel additions.** Six new equipment slots (see the Equipment list above) plus the existing **Freeze Nade** path — all plumbed into `specialWheel_Equipment()` and `BaseWeapon.dec` `SwitchEquipment` / `UseEquipment` / `WheelCancelEquipment` alongside Molotov / hand grenade / sticky grenade. Friendly deployables (Freezebot, Tesla / Flame turrets, Holo Decoy) inherit `PBCF_FriendlyDeployableBase` so player-sourced damage doesn't mark them hostile.
-- **Slice 5 — New weapons.** Four cryo weapons added to the standard spawner pools (no spawn toggles): **`PB_CryoASG`** (slot 3), **`PB_CF_RocketLauncher`** (slot 6), **`PB_CryoElectroRifle`** (slot 8, with Cryo / Electric Weapon Special wheel), **`PB_CryoCannon`** (slot 9). Ammo pickups `PB_CryoCellsPickup` / `PB_CryoCellsPack` / `PB_CryoCannonCellsPickup` roll alongside existing ammo. The **PB Backpack** has a ~20% bonus branch that grants a random Cat's Frozen equipment ammo charge.
+- **Cryo slowdown effects.** A shared family of ice projectiles, freezing winds, and snow particles drives the slow / freeze behavior used by everything else below.
+- **Frozen-solid corpses.** Monsters killed by ice or cryo damage turn into proper 8-angle frozen statues (idle, thaw, shatter states) instead of the engine's flat frozen-corpse art.
+- **Four new frost monsters** that roll naturally from existing pack spawners:
+  - **Frost Baron** alongside Hell Knights / Barons.
+  - **Cryocubus** alongside Mancubi.
+  - **Frostbrain** alongside Cacodemons.
+  - **Cryotron** alongside Arachnotrons.
+  - The global `pb_disablenewenemies` switch still hides them as part of the broader "new enemies" preference; otherwise they're standard roster.
+- **Six equipment-wheel additions** alongside the existing **Freeze Nade**, **Molotov**, **hand grenade**, and **sticky grenade** options (see the Equipment list above). Friendly deployables (Freezebot, Tesla / Flame turrets, Holo Decoy) ignore player-sourced damage so a stray rocket won't turn them hostile.
+- **Four new cryo weapons** rolling alongside the existing weapon pool (no spawn toggles): **Cryo Auto Shotgun** (`PB_CryoASG`, slot 3), **Cryo Rocket Launcher** (`PB_CF_RocketLauncher`, slot 6), **Cryo + Electric Rifle** (`PB_CryoElectroRifle`, slot 8 — Weapon Special wheel toggles between cryo orbs and Stormcast lightning), and **Cryo Cannon** (`PB_CryoCannon`, slot 9). Their ammo pickups roll alongside existing ammo, and the **PB Backpack** has a ~20% chance to grant a random Cat's Frozen equipment ammo charge.
 
-All Cat's Frozen pieces play with the **Explosive Movement** system — see the cryo-rocket / freezenade / freeze-mine note in [Explosive Movement](#explosive-movement-rocket-jump--plasma-wall-boost). Asset / author attribution is in **`CREDITS.txt`** (the Cat's Frozen entry under *Gameplay and content*) and the architectural notes are in **`AGENTS.md`** §4 + §9.6.
+All Cat's Frozen explosives respect the **Explosive Movement** system — see the cryo-rocket / freezenade / freeze-mine note in [Explosive Movement](#explosive-movement-rocket-jump--plasma-wall-boost). Author attribution is in **`CREDITS.txt`** (the Cat's Frozen entry under *Gameplay and content*); the technical breakdown for modders lives in **`AGENTS.md`**.
 
 ## Settings and controls
 
@@ -247,7 +247,7 @@ When **off**, **`PB_Execute()`** no-ops and normal melee/punch flow continues.
 - `pb_classicmonsters` — classic vs. Brutality-style monsters.  
 - `pb_disablenewenemies`, `pb_disablenewguns`, `pb_disabledecorations`, `pb_disablemapenhancements` — turn major blocks on or off.  
 - `pb_lowgraphicsmode`, `pb_bloodamount`, `zdoombrutalblood`, `zdoombrutaljanitor`, `zdoombrutaljanitorcasings` — lighter visuals and gore.  
-- `pb_enhanced_brutality_2022` — one-switch full mix for the folded BDv22 / BPv10 / extra death-pool gore behavior (**PB 2022 Enhanced**). Legacy `bdv22_*` and `bpv10_*` cvars remain declared for old configs, but are no longer exposed as tuning options.
+- `pb_enhanced_brutality_2022` — one-switch full mix for the included BDv22 / BPv10 / extra death-pool gore behavior (**PB 2022 Enhanced**). Legacy `bdv22_*` and `bpv10_*` cvars remain declared for old configs, but are no longer exposed as tuning options.
 - `pb_experimental` — **PB 2022 Enhanced** hub → **Finishers, Gore, Taunts** → **Experimental weapon executions**; enables weapon-initiated **`PB_Execute`** finishers (see **Experimental weapon executions** above). Default in **`CVARINFO`**.
 - `pb_rocketjump`, `pb_plasma_wallclimb` — **Explosive Movement**: rocket-jump and plasma climb/boost toggles (**PB 2022 Enhanced**, section **Explosive Movement**). Both default **On** in **`CVARINFO`**; set either **Off** for vanilla-style self-splash on that weapon path.
 
@@ -262,23 +262,23 @@ This build layers several community sources into Project Brutality’s own syste
 | Area | What we ship / how it is used |
 | --- | --- |
 | **Realm667** | Many monster and prop **bases and edits** (community resource site). Specific authors appear on actors, in `SNDINFO`, and in the detailed list (e.g. **Overlord**, **Ice Vile**-line content, and hundreds of one-off credits). |
-| **Monster Pack line** | Extra **MP-style monsters and spawners** (e.g. Crackodemon, Hellduke, Helemental, Hierophant) folded into the main mod; see `SNDINFO.MonsterPack` and tier `actors/Monsters/`. |
+| **Monster Pack line** | Extra **MP-style monsters and spawners** (e.g. Crackodemon, Hellduke, Helemental, Hierophant) included in the main mod; see `SNDINFO.MonsterPack` and tier `actors/Monsters/`. |
 | **Brutal Doom — *El Diablo* Edition** | **Extra first-person executions / finisher** art and pools (`eld_eld_*` and related paths under `SPRITES/MONSTERS/fatalitys/…`, e.g. zombieman, sarge, imp, caco, revenant, arch-vile, nobles, Hellduke). Wired through **Glory Kills** / `actors/Player/NEWPLAYE.dec`—not a standalone El Diablo TC. |
-| **Project Brutality Legacy (lineage)** | **Execution routing** and third-person **“legacy”** handoff (`GoExecution`, `Death.ExeCution` / `Death.ExeCution1` / `SpecialFatality` style pivots) **folded** into core monster DECORATE so older-style triggers still work with current PB. |
+| **Project Brutality Legacy (lineage)** | **Execution routing** and third-person **“legacy”** handoff (`GoExecution`, `Death.ExeCution` / `Death.ExeCution1` / `SpecialFatality` style pivots) **included** in core monster DECORATE so older-style triggers still work with current PB. |
 | **Brutal Pack (e.g. V10 class packs)** | Used in development as a **selective art / finisher reference** when porting assets; **this repo does not ship the Brutal Pack in full**—only what was adapted into PB 2022’s class names and Glory Kill / weapon flows. |
-| **Brutal Doom 22 (BDv22)** | Folded gore: separate `BDv22_*` actors, `SPRITES/GORE/BDv22/`, and event handlers. Enabled by **`pb_enhanced_brutality_2022`**. Credit **Brutal Doom 22** as a project; observe its license if you redistribute those lumps. |
-| **Brutal Pack V10 (BPv10) gore** | Folded gore add-on (`BPv10_*` actors, `actors/Gore/BPv10Gore/`, `SPRITES/GORE/`). Enabled by **`pb_enhanced_brutality_2022`**. Sprites credited to **AWEZ**; observe Brutal Pack licensing if you redistribute. |
-| **Cat's Frozen Addon** (SchrödingCat) | Five-slice fold: cryo slowdown projectiles (Slice 1), 8-angle frozen-solid corpses (Slice 2), four new frost monsters — Frost Baron / Cryocubus / Frostbrain / Cryotron (Slice 3), six equipment-wheel additions plus Freeze Nade (Slice 4), four cryo weapons — `PB_CryoASG` / `PB_CF_RocketLauncher` / `PB_CryoElectroRifle` / `PB_CryoCannon` (Slice 5). **Always-on, no `pb_No*` toggles** per the explicit fold directive. Asset attribution: SchrödingCat plus addon-listed contributors (Sergeant_Mark_IV, IDDQD_1337, TypicalSF, Eriance/Amuscaria, Electro7777, Captain Toenail, Rifleman, Gothic, Thanuris, Ganbare-Lucifer, DeVloek, Bloax, ZZrionTheInsect, Xaser, Ethril). See **`CREDITS.txt`** for the per-piece breakdown and **`AGENTS.md`** §4 + §9.6 for architectural notes. |
+| **Brutal Doom 22 (BDv22)** | Included gore: separate `BDv22_*` actors, `SPRITES/GORE/BDv22/`, and event handlers. Enabled by **`pb_enhanced_brutality_2022`**. Credit **Brutal Doom 22** as a project; observe its license if you redistribute those lumps. |
+| **Brutal Pack V10 (BPv10) gore** | Included gore add-on (`BPv10_*` actors, `actors/Gore/BPv10Gore/`, `SPRITES/GORE/`). Enabled by **`pb_enhanced_brutality_2022`**. Sprites credited to **AWEZ**; observe Brutal Pack licensing if you redistribute. |
+| **Cat's Frozen Addon** (SchrödingCat) | Cryo content set: slowdown projectiles, frozen-solid corpses, four new frost monsters (Frost Baron / Cryocubus / Frostbrain / Cryotron), six equipment-wheel additions plus Freeze Nade, and four cryo weapons (`PB_CryoASG`, `PB_CF_RocketLauncher`, `PB_CryoElectroRifle`, `PB_CryoCannon`). **Always-on standard content, no per-piece toggles.** Asset attribution: SchrödingCat plus addon-listed contributors (Sergeant_Mark_IV, IDDQD_1337, TypicalSF, Eriance/Amuscaria, Electro7777, Captain Toenail, Rifleman, Gothic, Thanuris, Ganbare-Lucifer, DeVloek, Bloax, ZZrionTheInsect, Xaser, Ethril). See **`CREDITS.txt`** for the per-piece breakdown and **`AGENTS.md`** for the technical notes. |
 
 ## Credits
 
 Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki113r/Project_Brutality) and the work of that team and their contributors. It also includes Glory Kills and Monster Pack-line content, third-party systems such as **Nash Gore** (Nash Muhandes, modified here), and many named authors in **`CREDITS.txt`** and **`DetailedCredits.txt`**.
 
-**Recent additions in this line:** **2022 Enhanced Brootality** folded **Brutal Doom 22 (BDv22)** gore (`actors/Gore/BDv22Gore/`, `zscript/Gore/BDv22Gore*.zc`, `SPRITES/GORE/BDv22/`) and **Brutal Pack V10** gore (`actors/Gore/BPv10Gore/`, `SPRITES/GORE/`) behind `pb_enhanced_brutality_2022`; **first-person and expanded executions** with art lineage from the **Brutal Doom *El Diablo* Edition** family and related packs (under `SPRITES/MONSTERS/fatalitys/eld_eld_*` and similar); **Glory Kill equipment launcher** first-person sprites (**`SPRITES/WEAPONS/GloryKillLauncher/ShoulderCannon/`**) and **Eternal fuel-HUD** glyphs aligned with the **PB_Staging** Glory Kills line; **Explosive Movement** extended to **Mastermind's Chaingun** tracers (`pb_plasma_wallclimb`) and to the new Cat's Frozen Cryo Rocket Launcher / Freezenade / Freeze Mines (`pb_rocketjump`); **Cat's Frozen Addon** five-slice fold (cryo projectiles, 8-angle frozen-solid corpses, Frost Baron / Cryocubus / Frostbrain / Cryotron, six new equipment-wheel pieces, four cryo weapons — all always-on); a wider **Realm667 Powerups** kill-streak reward pool plus an aesthetics-revamped **Drone Familiar** kill-streak summon (drone reskin with optional `cl_drone_flashlight` eye-cone, particle thruster trails, and player-friendly-fire immunity via `FamiliarBase.DamageMobj`); **Realm667**-sourced and **Realm667-style** community monsters and props (see in-file and **DetailedCredits**); **Project Brutality Legacy**-style **execution / stagger handoff** behavior merged into the main actor set; and **Brutal Pack**-sourced *fragments* only where they were reauthored for PB 2022 (not the pack as a whole). See the table in **Sources and important third-party lineage** above.
+**Recent additions in this line:** **2022 Enhanced Brootality** includes **Brutal Doom 22 (BDv22)** gore (`actors/Gore/BDv22Gore/`, `zscript/Gore/BDv22Gore*.zc`, `SPRITES/GORE/BDv22/`) and **Brutal Pack V10** gore (`actors/Gore/BPv10Gore/`, `SPRITES/GORE/`) behind `pb_enhanced_brutality_2022`; **first-person and expanded executions** with art lineage from the **Brutal Doom *El Diablo* Edition** family and related packs (under `SPRITES/MONSTERS/fatalitys/eld_eld_*` and similar); **Glory Kill equipment launcher** first-person sprites (**`SPRITES/WEAPONS/GloryKillLauncher/ShoulderCannon/`**) and **Eternal fuel-HUD** glyphs aligned with the **PB_Staging** Glory Kills line; **Explosive Movement** extended to **Mastermind's Chaingun** tracers (`pb_plasma_wallclimb`) and to the new Cat's Frozen Cryo Rocket Launcher / Freezenade / Freeze Mines (`pb_rocketjump`); **Cat's Frozen Addon** content set (cryo projectiles, 8-angle frozen-solid corpses, Frost Baron / Cryocubus / Frostbrain / Cryotron, six new equipment-wheel pieces, four cryo weapons — all always-on); a wider **Realm667 Powerups** kill-streak reward pool plus an aesthetics-revamped **Drone Familiar** kill-streak summon (drone reskin with optional `cl_drone_flashlight` eye-cone, particle thruster trails, and player-friendly-fire immunity via `FamiliarBase.DamageMobj`); **Realm667**-sourced and **Realm667-style** community monsters and props (see in-file and **DetailedCredits**); **Project Brutality Legacy**-style **execution / stagger handoff** behavior merged into the main actor set; and **Brutal Pack**-sourced *fragments* only where they were reauthored for PB 2022 (not the pack as a whole). See the table in **Sources and important third-party lineage** above.
 
-Credit to **BeefRice** and **Jaih1r0** for PBX HUD elements and many weapon improvements and systems. Thanks to **HUNG** for the **Shield Saw** (**GK_ShieldSaw**) behavior folded into this build (quick melee + recall).
+Credit to **BeefRice** and **Jaih1r0** for PBX HUD elements and many weapon improvements and systems. Thanks to **HUNG** for the **Shield Saw** (**GK_ShieldSaw**) behavior included in this build (quick melee + recall).
 
-**PB_MeleeWeaponPack** (folded slot-1 **Dragon Slayer** & **Vorpal Blade**, slot-9 **Stormcast**): original credits per that add-on’s `CREDITS.txt` — **Craneo**, **Dreo** & **Lord Lothar** (*Schism*), **Eriance** & **TiberiumSoul** (RIP); compatibility rework for PB 0.4.2+ by **Renegade Android**. Details: **`CREDITS.txt`**.
+**PB_MeleeWeaponPack** (including slot-1 **Dragon Slayer** & **Vorpal Blade**, slot-9 **Stormcast**): original credits per that add-on’s `CREDITS.txt` — **Craneo**, **Dreo** & **Lord Lothar** (*Schism*), **Eriance** & **TiberiumSoul** (RIP); compatibility rework for PB 0.4.2+ by **Renegade Android**. Details: **`CREDITS.txt`**.
 
 **Maintainers of this package:** RENEGADE ANDROID and doc.
 
