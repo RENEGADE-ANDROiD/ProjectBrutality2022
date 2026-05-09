@@ -20,6 +20,7 @@ Maintainers (this distribution)
 - Wintermute
 
 Gameplay and content in this release
+- Revolver Firing sprites by IDKFA
 - DarkShadow’s Monster Sounds Overhaul: monster SFX (based on Ravik’s Soundpack, with
   content from multiple Doom games) — integrated by replacing matching files under
   SOUNDS/ and by extending a small set of caco/imp SNDINFO pools to use additional
