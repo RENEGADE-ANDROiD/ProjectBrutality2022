@@ -2391,7 +2391,6 @@ class PB_EventHandler : EventHandler
 		monsterdialog.toDraw = monsterDialog.GetString();
 		monsterdialog.InitializeUiObject();
 		monsterdialog.ImagePos = (Screen.GetWidth() / 4, Screen.GetHeight() / 2);
-		monsterdialog.dontdraw = true;
 		uiObjects.Push(monsterdialog);
 		let weapondialog = new("PB_PDAUi_Object");
 		weapondialog.objecttype = 2;
