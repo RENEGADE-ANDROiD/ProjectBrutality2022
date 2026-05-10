@@ -331,28 +331,30 @@ class PB_MetalSniper : PB_WeaponBase
             TNT1 A 0 A_JumpIf(isResonance(), "TakeMagResonance");
         // Take standard mag out
         TakeMagStandard:
-            MST1 ABCD 1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
+            MST1 ABCD 1 ;
             TNT1 A 0 A_StartSound("MS/Button", 22);
-            MST1 E    1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
+            MST1 E    1;
             TNT1 A 0
             {
                 A_StartSound("MS/TakeMag", 23);
                 PB_SetMagUnloaded(true);
             }
-            MST1 FGHIJKL 1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
+            MST1 FGHIJKL 1;
+			TNT1 A 0 PB_SpawnCasing("EmptyDMRMag",38,26,7,frandom(0, 3.5),frandom(-7.2, -3.3),frandom(3,7));
             goto InsertMag;
 
         // Take resonance mag out
         TakeMagResonance:
-            MST3 ABCD 1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
+            MST3 ABCD 1;
             TNT1 A 0 A_StartSound("MS/Button", 22);
-            MST3 E    1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
+            MST3 E    1;
             TNT1 A 0
             {
                 A_StartSound("MS/TakeMag", 23);
                 PB_SetMagUnloaded(true);
             }
             MST3 FGHIJKL 1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
+			TNT1 A 0 PB_SpawnCasing("EmptyDMRMag",38,26,7,frandom(0, 3.5),frandom(-7.2, -3.3),frandom(3,7));
         // Insert new mag
         InsertMag:
             MSNR ABCDEFG 1 { if (isResonance()) A_SetWeaponSprite("MSR6"); }
@@ -438,9 +440,9 @@ class PB_MetalSniper : PB_WeaponBase
             {
                 MS_UnloadMag();
                 PB_SetMagUnloaded(true);
-                PB_SetMagEmpty(true);
             }
             MST1 IJKL 1;
+			TNT1 A 0 PB_SpawnCasing("EmptyDMRMag",38,26,7,frandom(0, 3.5),frandom(-7.2, -3.3),frandom(3,7));
             TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(), "FinishUnload");
             goto UnloadChamber;
 
@@ -453,10 +455,10 @@ class PB_MetalSniper : PB_WeaponBase
             {
                 MS_UnloadMag();
                 PB_SetMagUnloaded(true);
-                PB_SetMagEmpty(true);
             }
             TNT1 A 0 A_StartSound("MS/TakeMag", 23);
             MST0 FGHIJKL 1;
+			TNT1 A 0 PB_SpawnCasing("EmptyDMRMag",38,26,7,frandom(0, 3.5),frandom(-7.2, -3.3),frandom(3,7));
             TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(), "FinishUnload");
             goto UnloadChamber;
 
@@ -469,10 +471,10 @@ class PB_MetalSniper : PB_WeaponBase
             {
                 MS_UnloadMag();
                 PB_SetMagUnloaded(true);
-                PB_SetMagEmpty(true);
             }
             TNT1 A 0 A_StartSound("MS/TakeMag", 23);
             MST3 FGHIJKL 1;
+			TNT1 A 0 PB_SpawnCasing("EmptyDMRMag",38,26,7,frandom(0, 3.5),frandom(-7.2, -3.3),frandom(3,7));
             TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(), "FinishUnload");
             goto UnloadChamber;
 
