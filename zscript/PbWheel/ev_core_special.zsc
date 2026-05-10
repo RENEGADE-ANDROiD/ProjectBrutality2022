@@ -1292,14 +1292,14 @@ Class PB_SpecialWheelHandler : EventHandler
 		wheelSpecials.Clear();
 		iconScale = (0.7, 0.7);
 		PB_SpecialWheel_Mode ms_std = new ("PB_SpecialWheel_Mode");
-		ms_std.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Slug.png", TexMan.Type_Any);
+		ms_std.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Normalrounds.png", TexMan.Type_Any);
 		ms_std.specialName = "Select_MS_Standard";
 		ms_std.specialAlias = "7.62 AP Magazine";
 		ms_std.specialPriority = 1;
 		ms_std.iconScale = iconScale;
 		wheelSpecials.Push(ms_std);
 		PB_SpecialWheel_Mode ms_rs = new ("PB_SpecialWheel_Mode");
-		ms_rs.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+		ms_rs.specialIcon = TexMan.CheckForTexture("graphics/pywheel/ResonanceRounds.png", TexMan.Type_Any);
 		ms_rs.specialName = "Select_MS_Resonance";
 		ms_rs.specialAlias = "Resonance Rounds";
 		ms_rs.specialPriority = 2;
