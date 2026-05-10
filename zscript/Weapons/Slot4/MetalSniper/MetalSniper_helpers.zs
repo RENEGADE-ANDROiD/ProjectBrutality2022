@@ -22,9 +22,17 @@ class MS_ResonanceAmmo : FastProjectile
 		bool hitShield = (victim.GetClassName() == "Shield") || victim.CountInv("ShieldUp") >= 1;
 		if (hitShield)
 		{
-			A_SpawnItemEx("StunGrenadeExplosion", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+			A_SpawnItemEx ("StunGrenadeExplosion",0,0,1,0,0,0,0,SXF_NOCHECKPOSITION,0);
 			return 0;
 		}
 		return -1;
+	}
+   states
+	{
+		Death:
+		TNT1 A 0 {
+		A_SpawnItemEx ("StunGrenadeExplosion",0,0,1,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		}
+		stop;
 	}
 }
