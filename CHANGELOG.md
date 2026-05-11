@@ -6,7 +6,7 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Added
 
-- **Optional PDA XP & reward spin (single-player):** `server bool pb_xp_rewards` (default off) under **PB 2022 Enhanced → UI and Feel**. When enabled, monster kills credit XP, crossing rank thresholds grants spendable **reward points**, and the blocky PDA home hub shows a left-side **Reward Spin** tile (3 points per spin) with weighted loot; when disabled there is no XP accrual and no slot-style panel (`CVARINFO`, `MENUDEF.txt`, `language.enu`, `zscript/Items/PB_XP/PB_XPRewards.zc`, `zscript/PBPDA.zc`, `zmapinfo.txt`, `ZSCRIPT.zc`).
+- **Optional PDA XP & reward spin (single-player):** `server bool pb_xp_rewards` (default off) under **PB 2022 Enhanced → UI and Feel**. When enabled, monster kills credit XP, crossing rank thresholds grants spendable **reward points**, and the blocky PDA home hub shows a left-side **Reward Spin** tile (3 points per spin) that grants **weapons only** from a fixed pool (refunds if none eligible); when disabled there is no XP accrual and no slot-style panel (`CVARINFO`, `MENUDEF.txt`, `language.enu`, `zscript/Items/PB_XP/PB_XPRewards.zc`, `zscript/PBPDA.zc`, `zmapinfo.txt`, `ZSCRIPT.zc`).
 
 ### Removed
 
