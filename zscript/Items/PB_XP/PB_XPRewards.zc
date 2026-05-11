@@ -1,0 +1,336 @@
+class PB_XPBank : Inventory
+{
+	Default
+	{
+		+INVENTORY.UNDROPPABLE
+		Inventory.MaxAmount 999999999;
+	}
+}
+
+class PB_XPRank : Inventory
+{
+	Default
+	{
+		+INVENTORY.UNDROPPABLE
+		Inventory.MaxAmount 100;
+	}
+}
+
+class PB_RewardSpin : Inventory
+{
+	Default
+	{
+		+INVENTORY.UNDROPPABLE
+		Inventory.MaxAmount 999999;
+	}
+}
+
+class PB_XPRewardsHandler : EventHandler
+{
+	const SPIN_COST = 3;
+
+	clearscope static int SpinCost()
+	{
+		return SPIN_COST;
+	}
+
+	static int RankFromXP(int xp)
+	{
+		if (xp >= 127000) return 25;
+		if (xp >= 111500) return 24;
+		if (xp >= 97500) return 23;
+		if (xp >= 85000) return 22;
+		if (xp >= 74000) return 21;
+		if (xp >= 64300) return 20;
+		if (xp >= 55800) return 19;
+		if (xp >= 48300) return 18;
+		if (xp >= 41700) return 17;
+		if (xp >= 35900) return 16;
+		if (xp >= 30800) return 15;
+		if (xp >= 26300) return 14;
+		if (xp >= 22300) return 13;
+		if (xp >= 18800) return 12;
+		if (xp >= 15700) return 11;
+		if (xp >= 13000) return 10;
+		if (xp >= 10600) return 9;
+		if (xp >= 8500) return 8;
+		if (xp >= 6600) return 7;
+		if (xp >= 5000) return 6;
+		if (xp >= 3600) return 5;
+		if (xp >= 2500) return 4;
+		if (xp >= 1600) return 3;
+		if (xp >= 900) return 2;
+		if (xp >= 400) return 1;
+		return 0;
+	}
+
+	static int XPAwardForMonster(Actor dead)
+	{
+		if (!dead)
+			return 0;
+		int sh = dead.SpawnHealth();
+		if (sh >= 1200)
+			return 120;
+		if (sh >= 800)
+			return 90;
+		if (sh >= 500)
+			return 65;
+		if (sh >= 350)
+			return 50;
+		if (sh >= 200)
+			return 35;
+		if (sh >= 120)
+			return 25;
+		if (sh >= 80)
+			return 18;
+		if (sh >= 40)
+			return 12;
+		return 8;
+	}
+
+	static int ApplyRankFromXP(PlayerPawn plr)
+	{
+		if (!plr || !plr.player)
+			return -1;
+		let bank = plr.FindInventory("PB_XPBank");
+		let rankInv = plr.FindInventory("PB_XPRank");
+		int xp = bank ? bank.Amount : 0;
+		int oldRank = rankInv ? rankInv.Amount : 0;
+		int newRank = RankFromXP(xp);
+		if (newRank <= oldRank)
+			return -1;
+		plr.A_TakeInventory("PB_XPRank", 1000);
+		plr.A_GiveInventory("PB_XPRank", newRank);
+		int delta = newRank - oldRank;
+		plr.GiveInventory("PB_RewardSpin", delta * 2);
+		return newRank;
+	}
+
+	static bool XPDamageNumbersEnabled(PlayerPawn plr)
+	{
+		if (!plr || !plr.player)
+			return false;
+		let cv = CVar.GetCVar("dam_enabled", plr.player);
+		return cv && cv.GetBool();
+	}
+
+	static Vector3 PB_XP_FloatSpot(Actor at, double zFrac = 0.88)
+	{
+		if (!at)
+			return (0, 0, 0);
+		Vector3 p = at.pos;
+		p.z += at.height * zFrac;
+		return p;
+	}
+
+	static Name PB_XP_DamTypeFor(PlayerPawn plr, Name preferred, Name fallback)
+	{
+		if (!plr || !plr.player)
+			return fallback;
+		let cvt = CVar.GetCVar("dam_usetypes", plr.player);
+		if (cvt && cvt.GetBool())
+			return preferred;
+		return fallback;
+	}
+
+	static void SpawnXPFloaters(PlayerPawn plr, Actor victim, int add)
+	{
+		if (!XPDamageNumbersEnabled(plr) || add < 1)
+			return;
+		Vector3 p = PB_XP_FloatSpot(victim);
+		p.x += frandom(-10., 10.);
+		p.y += frandom(-10., 10.);
+		Name dt = PB_XP_DamTypeFor(plr, 'PBXP', 'Disintegrate');
+		DamNum.spawnDamageNumbers(p, add, dt, true, 1.15);
+	}
+
+	static void SpawnRankFloaters(PlayerPawn plr, int newRank)
+	{
+		if (!plr || newRank < 1)
+			return;
+		if (XPDamageNumbersEnabled(plr))
+		{
+			Name dt = PB_XP_DamTypeFor(plr, 'PBRANKUP', 'Rocket');
+			for (int b = 0; b < 2; b++)
+			{
+				Vector3 p = PB_XP_FloatSpot(plr, 0.95);
+				p.x += frandom(-14., 14.);
+				p.y += frandom(-14., 14.);
+				p.z += frandom(0., 16.);
+				DamNum.spawnDamageNumbers(p, newRank, dt, true, 1.15);
+			}
+		}
+		plr.A_SetBlend("Gold", 0.2, 16);
+		plr.A_StartSound("misc/trkey", CHAN_7, CHANF_OVERLAP, 0.75, ATTN_NONE);
+	}
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (!PB_EventHandler.PB_XP_RewardsOn())
+			return;
+		if (netgame)
+			return;
+		if (!e)
+			return;
+		Actor t = e.Thing;
+		if (!t || !t.bISMONSTER || !t.bCOUNTKILL || t is "PlayerPawn")
+			return;
+		PlayerPawn killer = PB_EventHandler.PB_PDA_ResolveKiller(e);
+		if (!killer || !killer.player)
+			return;
+		int add = XPAwardForMonster(t);
+		if (add < 1)
+			return;
+		killer.GiveInventory("PB_XPBank", add);
+		SpawnXPFloaters(killer, t, add);
+		int newRank = ApplyRankFromXP(killer);
+		if (newRank >= 1)
+			SpawnRankFloaters(killer, newRank);
+	}
+
+	static void DoSpin(PlayerPawn plr)
+	{
+		if (!plr || !plr.player)
+			return;
+		if (!PB_EventHandler.PB_XP_RewardsOn())
+			return;
+		if (netgame)
+			return;
+		if (plr.CountInv("PB_RewardSpin") < SPIN_COST)
+		{
+			plr.A_Print("\cgNeed \cf" .. SPIN_COST .. " \cgreward points.");
+			return;
+		}
+		plr.A_TakeInventory("PB_RewardSpin", SPIN_COST);
+		int roll = random[PBXPSPIN](0, 255);
+		if (roll < 8)
+		{
+			if (TryGrantRandomWeapon(plr))
+			{
+				plr.A_Print("\cdJackpot: \cfunique weapon drop!");
+				return;
+			}
+		}
+		if (roll < 48)
+		{
+			plr.GiveInventory("Soulsphere", 1);
+			plr.A_Print("\cdSupply reel: \cfSoulsphere");
+			return;
+		}
+		if (roll < 88)
+		{
+			plr.GiveInventory("Megasphere", 1);
+			plr.A_Print("\cdSupply reel: \cfMegasphere");
+			return;
+		}
+		if (roll < 128)
+		{
+			plr.GiveInventory("Berserk", 1);
+			plr.A_Print("\cdSupply reel: \cfBerserk pack");
+			return;
+		}
+		if (roll < 168)
+		{
+			plr.GiveInventory("PB_Backpack", 1);
+			plr.A_Print("\cdSupply reel: \cfBackpack");
+			return;
+		}
+		if (roll < 208)
+		{
+			plr.GiveInventory("Medikit2", 2);
+			plr.A_Print("\cdSupply reel: \cfMedikits x2");
+			return;
+		}
+		if (roll < 228)
+		{
+			plr.GiveInventory("NewClip", 80);
+			plr.A_Print("\cdSupply reel: \cfBullets");
+			return;
+		}
+		if (roll < 238)
+		{
+			plr.GiveInventory("NewShell", 40);
+			plr.A_Print("\cdSupply reel: \cfShells");
+			return;
+		}
+		if (roll < 248)
+		{
+			plr.GiveInventory("NewCell", 120);
+			plr.A_Print("\cdSupply reel: \cfCells");
+			return;
+		}
+		plr.GiveInventory("RocketRounds", 12);
+		plr.A_Print("\cdSupply reel: \cfRockets");
+	}
+
+	static bool WeaponFoundInPlayerCodex(PlayerPawn plr, class<Inventory> cls)
+	{
+		if (!plr || !cls)
+			return false;
+		let wc = PB_PDAWeaponContainer(plr.FindInventory("PB_PDAWeaponContainer", true));
+		if (!wc || wc.pdaWeapTextArray.Size() < 1)
+			return false;
+		readonly<Inventory> defInv = GetDefaultByType(cls);
+		if (!defInv)
+			return false;
+		string want = PB_EventHandler.PB_PDA_NormClassStr(defInv.GetClassName());
+		for (uint i = 0; i < wc.pdaWeapTextArray.Size(); i++)
+		{
+			if (!wc.pdaWeapTextArray[i].found)
+				continue;
+			string row = PB_EventHandler.PB_PDA_NormClassStr(wc.pdaWeapTextArray[i].PDAWeapClassName);
+			if (row == want)
+				return true;
+		}
+		return false;
+	}
+
+	static bool TryGrantRandomWeapon(PlayerPawn plr)
+	{
+		for (int attempt = 0; attempt < 32; attempt++)
+		{
+			int idx = random[PBXPWPN](0, 8);
+			Name nm;
+			switch (idx)
+			{
+			case 0: nm = 'PB_Shotgun'; break;
+			case 1: nm = 'PB_Autoshotgun'; break;
+			case 2: nm = 'PB_SSG'; break;
+			case 3: nm = 'PB_Carbine'; break;
+			case 4: nm = 'Rifle'; break;
+			case 5: nm = 'PB_Minigun'; break;
+			case 6: nm = 'PB_M2Plasma'; break;
+			case 7: nm = 'PB_RocketLauncher'; break;
+			case 8: nm = 'PB_BFG9000'; break;
+			default: nm = 'PB_Shotgun'; break;
+			}
+			class<Inventory> cls = (class<Inventory>)(nm);
+			if (!cls)
+				continue;
+			if (plr.FindInventory(cls))
+				continue;
+			if (WeaponFoundInPlayerCodex(plr, cls))
+				continue;
+			plr.GiveInventory(cls, 1);
+			return true;
+		}
+		plr.GiveInventory("PB_RewardSpin", SPIN_COST);
+		return false;
+	}
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		if (!e || !(e.Name ~== "pb_xp_spin"))
+			return;
+		if (netgame)
+			return;
+		if (e.Player < 0 || e.Player >= MAXPLAYERS)
+			return;
+		if (!playeringame[e.Player])
+			return;
+		let plr = PlayerPawn(players[e.Player].mo);
+		if (!plr)
+			return;
+		DoSpin(plr);
+	}
+}

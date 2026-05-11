@@ -424,6 +424,9 @@ OPTMNU_PB_PDA_HINT = "UAC battlefield codex (PDA): Customize Controls -> PB 2022
 OPTMNU_PB_PDA_HINT2 = "Default key Backslash. Press the same key again to close. Disabled while playing multiplayer (co-op / DM).";
 OPTMNU_PB_PDA_BLOCKY_HINT = "Blocky layout: weapon / monster entries render as a Gearbox-style paged tile grid.";
 OPTMNU_PB_PDA_BLOCKY_HINT2 = "Off = legacy text-list. Up / Down arrows page through tiles when blocky is on.";
+OPTMNU_PB_XP_REWARDS = "PDA XP & reward spin (single-player)";
+OPTMNU_PB_XP_REWARDS_HINT = "On: single-player kills grant XP; rank-ups give reward points.";
+OPTMNU_PB_XP_REWARDS_HINT2 = "Blocky PDA home adds Reward Spin (3 pts) for loot.";
 PB_WEAPON_WHEEL_EMPTY = "\cgNothing to select\c- (no weapons on bar).";
 PB_WHEELTIP_WPICKSLOT = "Outer ring: weapon slots you are carrying.\nAim toward the \cccenter\c- when a slot lists multiple weapons\nto open the inner ring for that slot.";
 
@@ -807,3 +810,5 @@ DAMNUM_TYPECOLOR_PLASMA       = "DamCyan";
 DAMNUM_TYPECOLOR_DISINTEGRATE = "DamGreen";
 DAMNUM_TYPECOLOR_BFG          = "DamGreen";
 DAMNUM_TYPECOLOR_BFGSPLASH    = "DamGreen";
+DAMNUM_TYPECOLOR_PBXP         = "DamGreen";
+DAMNUM_TYPECOLOR_PBRANKUP     = "DamGold";
