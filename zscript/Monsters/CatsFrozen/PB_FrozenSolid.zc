@@ -1,0 +1,518 @@
+class PB_FrozenSolidBase : Actor
+{
+	Default
+	{
+		Health 20;
+		Mass 999999;
+		Friction 0.1;
+		PainChance "Ice", 0;
+		damagefactor "Ice", 0.0;
+		PainChance "Freeze", 0;
+		damagefactor "Freeze", 0.0;
+		PainChance "Frost", 0;
+		damagefactor "Frost", 0.0;
+		PainChance "Head", 256;
+		DamageFactor "Head", 10.0;
+		+SOLID;
+		+SHOOTABLE;
+		+PUSHABLE;
+		+NOBLOOD;
+		+NOBLOODDECALS;
+		+NOBLOCKMONST;
+		-COUNTKILL;
+		+NOTARGET;
+		+NEVERTARGET;
+		+CANTSEEK;
+		-FORCEXYBILLBOARD;
+	}
+}
+
+class PB_FrozenSolidImp : PB_FrozenSolidBase
+{
+	Default
+	{
+		Scale 1.04;
+		Radius 18;
+		Height 48;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		Goto Idle;
+	Idle:
+		IFZD A 800;
+		Goto Thaw;
+	Thaw:
+		IFZD A 2;
+		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		IFZD A 50;
+		IFZD B 2;
+		IFZD A 50;
+		IFZD B 2;
+		IFZD A 50;
+		IFZD B 2;
+		IFZD A 25;
+		IFZD B 2;
+		IFZD A 25;
+		IFZD B 2;
+		IFZD A 10;
+		IFZD B 2;
+		IFZD A 10;
+		IFZD B 2;
+		IFZD A 10;
+		IFZD B 2;
+		IFZD A 2;
+		IFZD B 2;
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 A 0 A_NoBlocking;
+		Stop;
+	Death:
+	Death.Head:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAAAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 20, random(10, 30) * 0.04, 0, random(0, 10) * 0.04, random(1, 360), SXF_CLIENTSIDE | SXF_NOCHECKPOSITION, 64);
+		TNT1 A 0 A_SpawnItemEx("DetectFloorIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_SpawnItemEx("DetectCeilIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_CustomMissile("IceBlood", 36, 0, random(0, 360), 2, random(25, 85));
+		IFZD C 300;
+		IFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
+		Stop;
+	}
+}
+
+class PB_FrozenSolidBaron : PB_FrozenSolidBase
+{
+	Default
+	{
+		Scale 1.1;
+		Radius 24;
+		Height 64;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		Goto Idle;
+	Idle:
+		BFZD A 800;
+		Goto Thaw;
+	Thaw:
+		BFZD A 2;
+		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		BFZD A 50;
+		BFZD B 2;
+		BFZD A 50;
+		BFZD B 2;
+		BFZD A 50;
+		BFZD B 2;
+		BFZD A 25;
+		BFZD B 2;
+		BFZD A 25;
+		BFZD B 2;
+		BFZD A 10;
+		BFZD B 2;
+		BFZD A 10;
+		BFZD B 2;
+		BFZD A 10;
+		BFZD B 2;
+		BFZD A 2;
+		BFZD B 2;
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 A 0 A_NoBlocking;
+		Stop;
+	Death:
+	Death.Head:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAAAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 24, random(10, 30) * 0.04, 0, random(0, 10) * 0.04, random(1, 360), SXF_CLIENTSIDE | SXF_NOCHECKPOSITION, 64);
+		TNT1 A 0 A_SpawnItemEx("DetectFloorIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_SpawnItemEx("DetectCeilIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_CustomMissile("IceBlood", 44, 0, random(0, 360), 2, random(25, 95));
+		BFZD C 300;
+		BFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
+		Stop;
+	}
+}
+
+class PB_FrozenSolidMancubus : PB_FrozenSolidBase
+{
+	Default
+	{
+		Scale 1.2;
+		Radius 48;
+		Height 64;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		Goto Idle;
+	Idle:
+		MFZD A 800;
+		Goto Thaw;
+	Thaw:
+		MFZD A 2;
+		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		MFZD A 50;
+		MFZD B 2;
+		MFZD A 50;
+		MFZD B 2;
+		MFZD A 50;
+		MFZD B 2;
+		MFZD A 25;
+		MFZD B 2;
+		MFZD A 25;
+		MFZD B 2;
+		MFZD A 10;
+		MFZD B 2;
+		MFZD A 10;
+		MFZD B 2;
+		MFZD A 10;
+		MFZD B 2;
+		MFZD A 2;
+		MFZD B 2;
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 A 0 A_NoBlocking;
+		Stop;
+	Death:
+	Death.Head:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAAAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 28, random(10, 30) * 0.04, 0, random(0, 10) * 0.04, random(1, 360), SXF_CLIENTSIDE | SXF_NOCHECKPOSITION, 64);
+		TNT1 A 0 A_SpawnItemEx("DetectFloorIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_SpawnItemEx("DetectCeilIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_CustomMissile("IceBlood", 48, 0, random(0, 360), 2, random(25, 100));
+		MFZD C 300;
+		MFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
+		Stop;
+	}
+}
+
+class PB_FrozenSolidCacodemon : PB_FrozenSolidBase
+{
+	Default
+	{
+		Scale 1.0;
+		Radius 31;
+		Height 56;
+		+FLOAT;
+		+NOGRAVITY;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		Goto Idle;
+	Idle:
+		CFZD A 800;
+		Goto Thaw;
+	Thaw:
+		CFZD A 2;
+		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		CFZD A 50;
+		CFZD B 2;
+		CFZD A 50;
+		CFZD B 2;
+		CFZD A 50;
+		CFZD B 2;
+		CFZD A 25;
+		CFZD B 2;
+		CFZD A 25;
+		CFZD B 2;
+		CFZD A 10;
+		CFZD B 2;
+		CFZD A 10;
+		CFZD B 2;
+		CFZD A 10;
+		CFZD B 2;
+		CFZD A 2;
+		CFZD B 2;
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 A 0 A_NoBlocking;
+		Stop;
+	Death:
+	Death.Head:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAAAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 28, random(10, 30) * 0.04, 0, random(0, 10) * 0.04, random(1, 360), SXF_CLIENTSIDE | SXF_NOCHECKPOSITION, 64);
+		TNT1 A 0 A_SpawnItemEx("DetectFloorIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_SpawnItemEx("DetectCeilIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_CustomMissile("IceBlood", 40, 0, random(0, 360), 2, random(25, 90));
+		CFZD D 300;
+		CFZD DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1 A_FadeOut(0.01);
+		Stop;
+	}
+}
+
+class PB_FrozenSolidPinky : PB_FrozenSolidBase
+{
+	Default
+	{
+		Scale 1.1;
+		Radius 22;
+		Height 56;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		Goto Idle;
+	Idle:
+		PFZD A 800;
+		Goto Thaw;
+	Thaw:
+		PFZD A 2;
+		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		PFZD A 50;
+		PFZD B 2;
+		PFZD A 50;
+		PFZD B 2;
+		PFZD A 50;
+		PFZD B 2;
+		PFZD A 25;
+		PFZD B 2;
+		PFZD A 25;
+		PFZD B 2;
+		PFZD A 10;
+		PFZD B 2;
+		PFZD A 10;
+		PFZD B 2;
+		PFZD A 10;
+		PFZD B 2;
+		PFZD A 2;
+		PFZD B 2;
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 A 0 A_NoBlocking;
+		Stop;
+	Death:
+	Death.Head:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAAAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 22, random(10, 30) * 0.04, 0, random(0, 10) * 0.04, random(1, 360), SXF_CLIENTSIDE | SXF_NOCHECKPOSITION, 64);
+		TNT1 A 0 A_SpawnItemEx("DetectFloorIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_SpawnItemEx("DetectCeilIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_CustomMissile("IceBlood", 38, 0, random(0, 360), 2, random(25, 90));
+		PFZD C 300;
+		PFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
+		Stop;
+	}
+}
+
+class PB_FrozenSolidRevenant : PB_FrozenSolidBase
+{
+	Default
+	{
+		Scale 1.0;
+		Radius 20;
+		Height 60;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		Goto Idle;
+	Idle:
+		RFZD A 800;
+		Goto Thaw;
+	Thaw:
+		RFZD A 2;
+		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		RFZD A 50;
+		RFZD B 2;
+		RFZD A 50;
+		RFZD B 2;
+		RFZD A 50;
+		RFZD B 2;
+		RFZD A 25;
+		RFZD B 2;
+		RFZD A 25;
+		RFZD B 2;
+		RFZD A 10;
+		RFZD B 2;
+		RFZD A 10;
+		RFZD B 2;
+		RFZD A 10;
+		RFZD B 2;
+		RFZD A 2;
+		RFZD B 2;
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 A 0 A_NoBlocking;
+		Stop;
+	Death:
+	Death.Head:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAAAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 26, random(10, 30) * 0.04, 0, random(0, 10) * 0.04, random(1, 360), SXF_CLIENTSIDE | SXF_NOCHECKPOSITION, 64);
+		TNT1 A 0 A_SpawnItemEx("DetectFloorIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_SpawnItemEx("DetectCeilIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_CustomMissile("IceBlood", 42, 0, random(0, 360), 2, random(25, 95));
+		RFZD C 300;
+		RFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
+		Stop;
+	}
+}
+
+class PB_FrozenSolidCyberdemon : PB_FrozenSolidBase
+{
+	Default
+	{
+		Scale 1.2;
+		Radius 45;
+		Height 100;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		Goto Idle;
+	Idle:
+		CYFZ A 800;
+		Goto Thaw;
+	Thaw:
+		CYFZ A 2;
+		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		CYFZ A 50;
+		CYFZ B 2;
+		CYFZ A 50;
+		CYFZ B 2;
+		CYFZ A 50;
+		CYFZ B 2;
+		CYFZ A 25;
+		CYFZ B 2;
+		CYFZ A 25;
+		CYFZ B 2;
+		CYFZ A 10;
+		CYFZ B 2;
+		CYFZ A 10;
+		CYFZ B 2;
+		CYFZ A 10;
+		CYFZ B 2;
+		CYFZ A 2;
+		CYFZ B 2;
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 A 0 A_NoBlocking;
+		Stop;
+	Death:
+	Death.Head:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAAAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 48, random(10, 30) * 0.04, 0, random(0, 10) * 0.04, random(1, 360), SXF_CLIENTSIDE | SXF_NOCHECKPOSITION, 64);
+		TNT1 A 0 A_SpawnItemEx("DetectFloorIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_SpawnItemEx("DetectCeilIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_CustomMissile("IceBlood", 52, 0, random(0, 360), 2, random(25, 110));
+		CYFZ C 300;
+		CYFZ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
+		Stop;
+	}
+}
+
+class PB_FrozenSolidMastermind : PB_FrozenSolidBase
+{
+	Default
+	{
+		Scale 1.0;
+		Radius 90;
+		Height 72;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		Goto Idle;
+	Idle:
+		SPFZ A 800;
+		Goto Thaw;
+	Thaw:
+		SPFZ A 2;
+		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		SPFZ A 50;
+		SPFZ B 2;
+		SPFZ A 50;
+		SPFZ B 2;
+		SPFZ A 50;
+		SPFZ B 2;
+		SPFZ A 25;
+		SPFZ B 2;
+		SPFZ A 25;
+		SPFZ B 2;
+		SPFZ A 10;
+		SPFZ B 2;
+		SPFZ A 10;
+		SPFZ B 2;
+		SPFZ A 10;
+		SPFZ B 2;
+		SPFZ A 2;
+		SPFZ B 2;
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 A 0 A_NoBlocking;
+		Stop;
+	Death:
+	Death.Head:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
+		TNT1 AAAAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
+		TNT1 AA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 40, random(10, 30) * 0.04, 0, random(0, 10) * 0.04, random(1, 360), SXF_CLIENTSIDE | SXF_NOCHECKPOSITION, 64);
+		TNT1 A 0 A_SpawnItemEx("DetectFloorIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_SpawnItemEx("DetectCeilIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 A_CustomMissile("IceBlood", 56, 0, random(0, 360), 2, random(25, 110));
+		SPFZ C 300;
+		SPFZ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
+		Stop;
+	}
+}

@@ -465,5 +465,54 @@ ACTOR X12Shotgun : PB_Weapon
 		X12G A 1 A_WeaponReady(WRF_ALLOWRELOAD)
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
 		Goto X12ReadyToFire
+
+	PDA_Preview_Fire:
+		X12F A 1 Bright
+		X12F B 1
+		X12F D 1
+		X12F C 1
+		X12F D 1
+		X12F E 1
+		X12F F 1
+		X12F G 1
+		X12F H 1
+		X12G A 1
+		Stop
+	PDA_Preview_Pump:
+		X22R F 1
+		X22R D 1
+		X22R E 1
+		X12B A 1
+		X12B B 1
+		X12B C 1
+		X12B D 1
+		X12B E 1
+		X12B F 1
+		X12B G 1
+		X12B G 1
+		X12B G 1
+		X12B F 1
+		X12B E 1
+		X12B D 1
+		X12B C 1
+		X12B B 1
+		X12B A 1
+		Stop
+	PDA_Preview_Reload:
+		X12R A 1
+		X12R B 1
+		X12R C 1
+		X22R D 1
+		X22R E 1
+		X22R F 1
+		X22R G 1
+		X22R H 1
+		X22R I 1
+		X22R J 1
+		X22R K 1
+		X22R L 1
+		X22R M 1
+		X22R N 1
+		Stop
 	}
 }

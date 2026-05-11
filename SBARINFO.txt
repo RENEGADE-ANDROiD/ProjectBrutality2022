@@ -2,17 +2,9 @@ base Doom;
 height 32;
 monospacefonts true, "0";
 
-statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutality
+statusbar fullscreen, fullscreenoffsets
 {
-	// Hide the entire fullscreen HUD during third-person executions /
-	// fatalities. ACS scripts 477 / 171 in `SRC/SCHASECAM.txt` (called from
-	// the `Fatality*` states in `actors/Player/NEWPLAYE.dec`) grant
-	// `CameraRunner` on entry and revoke it on exit, so the body is gated
-	// on absence of that token. Same gate is mirrored in
-	// `PB_VisorHandler.RenderUnderlay` (visor + gas-mask) and
-	// `PB_EventHandler.RenderOverlay` (pickup / mode / dash overlays).
 	InInventory CameraRunner { } else {
-	//health
 		drawimage "BARBACK1", 124, -32, centerbottom, 180, 22;
 		InInventory PowerStrength
 		{
@@ -22,27 +14,22 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 		{
 			drawimage "hlthhud", 70, -35, centerbottom;
 		}
-	
+
 		DrawImage "HTBAR1", 82, -48;
 		DrawBar "BLUEBAR", "BGBARL", health(100), horizontal, interpolate (64), 85, -45;
-// 	    DrawBar "BLUEBAR2", "nothing", PB_HUD_HealthToken, horizontal, interpolate (64), 85, -45; //<- Caused the black bar on top left of the screen glitch. This can be uncommented out if this will be fixed later. -JMartinez2098
 		DrawNumber 3, AANUM3, HUDBLUEBAR, Health, Alignment(right), 188, -50;
-	
 
-	//armor
+
 		drawimage "BARBACK2", 124, -12, centerbottom, 180, 22;
 		DrawImage "ARBAR1", 82, -30;
 		DrawBar "GRbar", "BGBARL", armor(100), horizontal, interpolate (64), 85, -27;
-// 	    DrawBar "GRbar2", "nothing", PB_HUD_ArmorToken, horizontal, interpolate (64), 85, -27; //<- Caused the black bar on top left of the screen glitch. This can be uncommented out if this will be fixed later. -JMartinez2098
 		DrawNumber 3, AANUM3, HUDGREENBAR, armor, Alignment(right), 188, -32;
 		Drawimage "armrhud", 70, -14, centerbottom, 17, 17;
-		
-	//mugshot + equipment frame (37x37 matches Textures.txt "EQUPCO"; legacy SBAR used 600x900 which scales huge on modern GZDoom)
+
 		drawimage "EQUPCO", 30, -13, centerbottom, 37, 37;
 		drawmugshot "STF", 5, 13, -50;
 		drawimage "EQUPCO", 30, -13, centerbottom, 37, 37;
-	//equipment
-		
+
 		InInventory FragGrenadeSelected{
 			drawimage "HFRAGY", -30, -15, centerbottom;
 			drawnumber 4, INDEXFONT, Cyan, Ammo HandGrenadeAmmo, alignment(center), -16, -26, 0;
@@ -67,53 +54,69 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 			drawimage "HLECHY", -30, -15, centerbottom;
 			drawnumber 4, INDEXFONT, DarkRed, Ammo PB_DTech, alignment(center), -16, -26, 0;
 			}
-	
+		InInventory FreezenadeSelected{
+			drawimage "FGNDA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo FreezenadeAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_SnowCasterSelected{
+			drawimage "BXPLA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_SnowCasterAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_FreezeBotSelected{
+			drawimage "SHIGA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_FreezeBotDeployAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_IceWallSelected{
+			drawimage "BXPLA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_IceWallGenAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_HoloDecoySelected{
+			drawimage "PLAYE0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_HoloDecoyAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_TeslaTurretSelected{
+			drawimage "ELPDA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_TeslaTurretAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_FlameTurretSelected{
+			drawimage "F1REA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Orange, Ammo PB_CF_FlameTurretAmmo, alignment(center), -16, -26, 0;
+			}
+		InInventory PB_CF_FreezeMineSelected{
+			drawimage "FZBLA0", -30, -15, centerbottom;
+			drawnumber 4, INDEXFONT, Cyan, Ammo PB_CF_FreezeMineAmmo, alignment(center), -16, -26, 0;
+			}
+
 		drawimage "EQUPBO", -30, -15, centerbottom, 37, 37;
 
-	//ammo
-	
-		//drawimage "BARBACK5", -30, -60, centerbottom, 400, 800;
-		//DrawImage "BLBAR1", -30, -120, centerbottom, 300, 100;//PistolBullets
-		
-		
-		//Reserve Pistol Ammo
-		//drawimage "BARBACT1", -36, -60, centerbottom, 67, 33;
-		//DrawBar "RSVBAR2", "BVBARL", PistolBullets, horizontal, interpolate (64), -50, -69;
+
+
+
 		drawnumber 3, INDEXFONT, Tan, Ammo PistolBullets, alignment(center), -23, -70, 0;
 		drawimage "AMMOIC2", -9, -62, centerbottom, 14, 12;
-		//Reserve Shotgun Ammo
 		drawnumber 3, INDEXFONT, Orange, Ammo NewShell, alignment(center), -23, -82, 0;
 		drawimage "AMMOIC3", -9, -74, centerbottom, 14, 12;
-		
-		//Reserve Heavy Ammo
+
 		drawnumber 3, INDEXFONT, Yellow, Ammo NewClip, alignment(center), -23, -94, 0;
 		drawimage "AMMOIC1", -9, -86, centerbottom, 14, 12;
-		
-		
-		//Reserve Rocket Ammo
+
+
 		drawnumber 3, INDEXFONT, Red, Ammo RocketAmmo, alignment(center), -23, -106, 0;
 		drawimage "AMMOIC4", -9, -98, centerbottom, 14, 12;
-		
-		//Reserve Plasma Ammo
+
 		drawnumber 3, INDEXFONT, Purple, Ammo Cell, alignment(center), -23, -118, 0;
 		drawimage "AMMOIC5", -9, -110, centerbottom, 14, 12;
-		
-		//Reserve Gas Ammo
+
 		drawnumber 3, INDEXFONT, Orange, Ammo Gas, alignment(center), -23, -130, 0;
 		drawimage "AMMOIC6", -9, -123, centerbottom, 14, 12;
-		
-		//Reserve Demon Ammo
+
 		drawnumber 3, INDEXFONT, DarkRed, Ammo Demonpower, alignment(center), -23, -142, 0;
 		drawimage "AMMOIC7", -9, -135, centerbottom, 14, 12;
-		
+
 		usesammo
 		{
-			// ammo background
-			//drawimage "BARBACK3", -121, -12, centerbottom, 180, 22;
-			
-			//Primary Ammo
-			
-			//Heavy Bullet Ammo
+
+
 			IsSelected Rifle {
 				InInventory DualWieldingDMRs {
 					drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
@@ -265,8 +268,8 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
 
-			IsSelected PB_LMG { //yes
-				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22; 
+			IsSelected PB_LMG {
+				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
 				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
 				DrawImage "BAMBAR1", -149, -30;
 				DrawImage "BAMBAR1", -149, -48;
@@ -348,7 +351,7 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
-			
+
 			IsSelected PB_MG42 {
 				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
 				DrawImage "BAMBAR1", -149, -30;
@@ -357,11 +360,9 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 				DrawImage "BLBAR1", -149, -48;
 				DrawBar "RESBAR4", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
-				//Number look horrible
-				//DrawNumber 3, AANUM3, red, ammo2, Alignment(right), -150, -50;
 				drawstring SMALLFONT, Red, "HEAT", -145, -57, 0,alignment(left)|drawshadow(1,1);
 			}
-			
+
 			IsSelected PB_Minigun {
 				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
 				DrawImage "BAMBAR1", -149, -30;
@@ -369,8 +370,7 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
-			
-			//Light Bullet Ammo
+
 			IsSelected PB_Pistol {
 				InInventory DualWieldingPistols {
 					drawimage "BARBACT1", -121, -12, centerbottom, 180, 22;
@@ -507,7 +507,7 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 					DrawBar "RESBAR2", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 				}
 			}
-			IsSelected PB_MP40 { 
+			IsSelected PB_MP40 {
 				InInventory DualWieldingMP40 {
 					drawimage "BARBACT1", -121, -12, centerbottom, 180, 22;
 					drawimage "BARBACT3", -121, -32, centerbottom, 180, 22;
@@ -538,7 +538,7 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				Drawimage "AMMOIC2", -66, -17, centerbottom, 17, 17;
 				DrawNumber 3, AANUM3, Tan, ammo1, Alignment(right), -150, -32;
 				DrawNumber 3, AANUM3, Tan, ammo2, Alignment(right), -150, -50;
-				DrawBar "RESBAR2", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;		
+				DrawBar "RESBAR2", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 					}
 			}
 			IsSelected RiotShield {
@@ -564,18 +564,17 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawBar "RESBAR2", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
 
-			//Shotgun Ammo
 			IsSelected PB_Chainsaw {
-					
-					
-					
+
+
+
 					drawimage "BARBACD1", -121, -12, centerbottom, 180, 22;
 					DrawImage "BAMBAR6", -149, -30;
 					Drawimage "AMMOIC6", -66, -17, centerbottom, 17, 17;
 					DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -150, -32;
-					DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;	
-					
-					
+					DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+
+
 					InInventory "ChainsawResourceGather" {
 						DrawImage "CHAINHL", -90, -36, centerbottom, 32,32;
 					}
@@ -675,6 +674,17 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Orange, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR3", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
+			IsSelected PB_CryoASG {
+				drawimage "BARBACO1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACO2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR3", -149, -30;
+				DrawImage "BAMBAR3", -149, -48;
+				DrawBar "CURBAR3", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC3", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Orange, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR3", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 			IsSelected PB_Autoshotgun {
 				InInventory DualWieldingAutoshotguns {
 					drawimage "BARBACO1", -121, -12, centerbottom, 180, 22;
@@ -743,8 +753,7 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawBar "RESBAR3", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
 		}
-			
-			//Explosive Ammo
+
 			IsSelected PB_RocketLauncher {
 				drawimage "BARBACR1", -121, -12, centerbottom, 180, 22;
 				drawimage "BARBACR2", -121, -32, centerbottom, 180, 22;
@@ -811,7 +820,6 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Red, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR4", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
-			//Plasma Ammo
 			IsSelected PB_M1Plasma {
 				InInventory DualWieldingPlasma {
 					drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
@@ -920,26 +928,68 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawNumber 3, AANUM3, Purple, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
+			IsSelected PB_CryoElectroRifle {
+				InInventory PB_CryoElectroRifle_ElectricMode {
+					drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+					drawimage "BARBACP2", -121, -32, centerbottom, 180, 22;
+					DrawImage "BAMBAR5", -149, -30;
+					DrawImage "BAMBAR5", -149, -48;
+					DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+					Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+					DrawNumber 3, AANUM3, White, ammo1, Alignment(right), -150, -32;
+					DrawNumber 3, AANUM3, White, ammo2, Alignment(right), -150, -50;
+					DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+				}
+				else {
+					drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+					drawimage "BARBACP2", -121, -32, centerbottom, 180, 22;
+					DrawImage "BAMBAR5", -149, -30;
+					DrawImage "BAMBAR5", -149, -48;
+					DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+					Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+					DrawNumber 3, AANUM3, Cyan, ammo1, Alignment(right), -150, -32;
+					DrawNumber 3, AANUM3, Cyan, ammo2, Alignment(right), -150, -50;
+					DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+				}
+			}
+			IsSelected PB_DarkMatterRifle {
+				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACP2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR5", -149, -30;
+				DrawImage "BAMBAR5", -149, -48;
+				DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Purple, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 			IsSelected PB_BFG9000 {
 				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
 				DrawImage "BAMBAR5", -149, -30;
 				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
 				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
-				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;	
+				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
+			IsSelected PB_CryoCannon {
+				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
+				DrawImage "BAMBAR5", -149, -30;
+				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Cyan, ammo1, Alignment(right), -150, -32;
+				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
 			IsSelected Stormcast {
 				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
 				DrawImage "BAMBAR5", -149, -30;
 				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
 				DrawNumber 3, AANUM3, Purple, ammo2, Alignment(right), -150, -32;
-				DrawBar "RESBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -27;	
+				DrawBar "RESBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -146, -27;
 			}
 			IsSelected BHGen {
 				drawimage "BARBACP1", -121, -12, centerbottom, 180, 22;
 				DrawImage "BAMBAR5", -149, -30;
 				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
 				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -150, -32;
-				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;	
+				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
 			IsSelected PB_Flamethrower {
 				InInventory FlamerUpgraded {
@@ -947,8 +997,7 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				DrawImage "BAMBAR6", -149, -30;
 				Drawimage "AMMOIC6", -66, -17, centerbottom, 17, 17;
 				DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -150, -32;
-				DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;	
-				//DrawImage "BLBAR1", -149, -48;
+				DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 				}
 				else {
 				drawimage "BARBACD1", -121, -12, centerbottom, 180, 22;
@@ -959,7 +1008,6 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 					Drawimage "AMMOIC6", -66, -17, centerbottom, 17, 17;
 					DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -150, -32;
 					DrawNumber 3, AANUM3, Orange, ammo2, Alignment(right), -150, -50;
-				//	DrawImage "BLBAR1", -149, -66;
 					DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 				}
 			}
@@ -1040,7 +1088,6 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 			IsSelected not ZMANShield, CommandoShield {
 			IsSelected not PlasmaZombieShield, ImpShield {
 			IsSelected not TriclopsImpShield, ZombieScientistShield {
-				// Generic: future weapons (yellow dual/single, PB_Nailgun family)
 				usessecondaryammo
 				{
 					drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
@@ -1091,18 +1138,14 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 			}
 			}
 			}
-			//secondary ammo and inventory
 			usessecondaryammo
 			{
-				//drawimage "BARBACK4", -121, -32, centerbottom, 180, 22;
-				
-				
-				//DrawNumber 3, AANUM3, HUDYELLOWBAR, ammo2, Alignment(right), -150, -50;
-					
-				//special shit for AR grenade launcher // Did not do anything with this since the HDMR will likely supercede this.  
+
+
+
 				IsSelected "Rifle"
 				{
-				
+
 					InInventory "DMRUpgraded" , 1
 					{
 						InInventory "UnderBarrelGrenadeLoaded", 1
@@ -1116,28 +1159,24 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 					}
 				}
 
-				//special shit for meatshields
 				Weaponammo "MeatshieldGunAmmo"
 				{
-					//drawimage "XDT5B0", -14, -39, centerbottom;
-					//drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo MeatAmmo, drawshadow, -25, -56;
 					drawstring SMALLFONT, Red, "MEAT SHIELD", -163, -20, 0,alignment(left)|drawshadow(1,1);
 					inventorybarnotvisible
 					{
 						drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, SMALLFONT, -43, -80, -38, -83, untranslated;
 					}
 				}
-				//normal shit
 				IsSelected not "PB_Freezer"
 				Weaponammo not "MeatshieldGunAmmo"
 				{
 					inventorybarnotvisible
-					{					
+					{
 						drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, SMALLFONT, -43, -80, -38, -83, untranslated;
 					}
 				}
 			}
-			else //no secondary ammo
+			else
 			{
 				inventorybarnotvisible
 				{
@@ -1145,68 +1184,24 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				}
 			}
 		}
-		else // no ammo but inventory
+		else
 		{
 			inventorybarnotvisible
 			{
 				drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, SMALLFONT, -43, -80, -38, -83, untranslated;
 			}
 		}
-		
-		//mines and grenades
-		//	{
-// 			else
-// 				{
-// 					InInventory ProximityMineSelected
-// 						{
-// 							drawimage "HMINEY", -40, -40;
-// 						}
-// 					else
-// 						{
-// 							drawimage "HMINEN", -40, -40;
-// 						}
-			
-// 					InInventory FragGrenadeSelected
-// 						{
-// 							drawimage "HFRAGY", -76, -40;
-// 						}
-// 					else
-// 						{
-// 							drawimage "HFRAGN", -76, -40;
-// 						}
-			
-// 					InInventory LeechSelected
-// 						{
-// 							drawimage "HLECHY", -40, -76;
-// 						}
-// 					else
-// 						{
-// 							drawimage "HLECHN", -40, -76;
-// 						}
-// 					InInventory StunGrenadeSelected
-// 						{
-// 							drawimage "HSTUNY", -76, -76;
-// 						}
-// 					else
-// 						{
-// 							drawimage "HSTUNN", -76, -76;
-// 						}
-// 					drawnumber 4, SMALLFONT, red, Ammo MineAmmo, alignment(center), -22, -38, 0;
-// 					drawnumber 4, SMALLFONT, red, Ammo HandGrenadeAmmo, alignment(center), -58, -38, 0;
-// 					drawnumber 4, SMALLFONT, red, Ammo Demonpower, alignment(center), -22, -74, 0;
-// 					drawnumber 4, SMALLFONT, red, Ammo StunGrenadeAmmo, alignment(center), -58, -74, 0;
-// 				}
-	//}
 
-	//frags
+
+
+
 			gamemode deathmatch, teamgame
 			{
 				drawnumber 8, SMALLFONT, darkred, frags, -15, 10;
-				drawstring SMALLFONT, darkred, "Frags", -15, 2;   
+				drawstring SMALLFONT, darkred, "Frags", -15, 2;
 			}
 			else
 			{
-				// let's hope no mod ever uses 100 keys...
 				InInventory RedCard{drawimage "KEYYCR", 90, -55, centerbottom, 10, 16;}
 				InInventory BlueCard{drawimage "KEYYCB", 100, -55, centerbottom, 10, 16;}
 				InInventory YellowCard{drawimage "KEYYCY", 110, -55, centerbottom, 10, 16;}
@@ -1214,27 +1209,23 @@ statusbar fullscreen, fullscreenoffsets // Modified ZDoom HUD for Project Brutal
 				InInventory BlueSkull{drawimage "SKKYYB", 140, -55, centerbottom, 10, 16;}
 				InInventory YellowSkull{drawimage "SKKYYY", 150, -55, centerbottom, 10, 16;}
 			}
-	
-	
-	
+
+
+
 
 
 }
 }
 
-statusbar normal // Modified Doom Status bar
+statusbar normal
 {
-	// Mirrors the `InInventory CameraRunner` HUD-hide gate on the
-	// `statusbar fullscreen` block above. See that block (or
-	// `zscript/PB_VisorOverlay.zc` / `zscript/PBPDA.zc`) for context.
 	InInventory CameraRunner { } else {
 	drawimage "STBAR", 0, 168;
 	drawimage "STTPRCNT", 90, 171;
 	drawimage "STTPRCNT", 221, 171;
 	drawnumber 3, HUDFONT_DOOM, untranslated, health, 90, 171;
 	drawnumber 3, HUDFONT_DOOM, untranslated, armor, 221, 171;
-	
-	//special shit for AR grenade launcher
+
 	IsSelected "Rifle"
 	{
 		InInventory "DMRUpgraded" , 1
@@ -1249,11 +1240,10 @@ statusbar normal // Modified Doom Status bar
 			}
 		}
 	}
-	//special shit for Freezer Rifle
 	IsSelected "PB_Freezer"
 	{
 		InInventory "FreezerPistolToken"
-		{				
+		{
 			drawnumber 3, HUDFONT_DOOM, untranslated, ammo PrimaryPistolAmmo, 44, 171;
 		}
 		else
@@ -1261,7 +1251,6 @@ statusbar normal // Modified Doom Status bar
 			drawnumber 3, HUDFONT_DOOM, untranslated, ammo2, 44, 171;
 		}
 	}
-	//special shit for Unmaker
 	IsSelected "PB_Unmaker"
 	{
 		InInventory "UnmakerFireSelected"
@@ -1273,7 +1262,6 @@ statusbar normal // Modified Doom Status bar
 			drawnumber 3, HUDFONT_DOOM, untranslated, ammo2, 44, 171;
 		}
 	}
-	//special shit for meatshields
 	Weaponammo "MeatshieldGunAmmo"
 	{
 		InInventory "MeatShieldPistolEquipped", 1
@@ -1285,8 +1273,7 @@ statusbar normal // Modified Doom Status bar
 			drawnumber 3, HUDFONT_DOOM, untranslated, ammo1, 44, 171;
 		}
 	}
-	
-	//normal weapons
+
 	IsSelected not "PB_Freezer", "PB_Unmaker"
 	Weaponammo not "MeatshieldGunAmmo"
 	{
@@ -1299,13 +1286,11 @@ statusbar normal // Modified Doom Status bar
 			drawnumber 3, HUDFONT_DOOM, untranslated, ammo1, 44, 171;
 		}
 	}
-	
-	//keys
+
 	drawswitchableimage keyslot 2 && 5, "nullimage", "STKEYS0", "STKEYS3", "STKEYS6", 239, 171;
 	drawswitchableimage keyslot 3 && 6, "nullimage", "STKEYS1", "STKEYS4", "STKEYS7", 239, 181;
 	drawswitchableimage keyslot 1 && 4, "nullimage", "STKEYS2", "STKEYS5", "STKEYS8", 239, 191;
 
-	//total ammo
 	PlayerType "PB_Doomer"
 	{
 		drawimage "STPBAMMO", 249, 168;
@@ -1350,10 +1335,8 @@ statusbar normal // Modified Doom Status bar
 		drawnumber 3, INDEXFONT_DOOM, untranslated, ammocapacity Cell, 314, 191;
 	}
 
-	//grenades and mines
 	PlayerType "Traditional"
 	{
-		//nothing to be drawn
 	}
 	else
 	{
@@ -1372,24 +1355,22 @@ statusbar normal // Modified Doom Status bar
 		}
 	}
 
-	//frags
 	gamemode deathmatch, teamgame
 	{
 		drawnumber 2, HUDFONT_DOOM, untranslated, frags, 138, 171;
 	}
-	
-	//arms
+
 	gamemode cooperative, singleplayer
 	{
 		drawimage "STARMS", 104, 168;
-		drawswitchableimage weaponslot 2, "STGNU22", "STYSNU22", 111, 172; 
+		drawswitchableimage weaponslot 2, "STGNU22", "STYSNU22", 111, 172;
 		drawswitchableimage weaponslot 3, "STGNU23", "STYSNU23", 123, 172;
 		drawswitchableimage weaponslot 4, "STGNU24", "STYSNU24", 135, 172;
 		drawswitchableimage weaponslot 5, "STGNU25", "STYSNU25", 111, 182;
 		drawswitchableimage weaponslot 6, "STGNU26", "STYSNU26", 123, 182;
 		drawswitchableimage weaponslot 7, "STGNU27", "STYSNU27", 135, 182;
 	}
-	
+
 	gamemode cooperative, deathmatch, teamgame
 	{
 		drawimage translatable "STFBANY", 143, 169;
@@ -1398,19 +1379,18 @@ statusbar normal // Modified Doom Status bar
 	{
 		drawmugshot "STF", 5, 143, 168;
 	}
-	} // close `InInventory CameraRunner ... else { ... }` HUD-hide gate
+	}
 }
 
-//totally not stolen from complex doom
-statusbar inventoryfullscreen, fullscreenoffsets // Inventory stuff for Fullscreen statusbar
+statusbar inventoryfullscreen, fullscreenoffsets
 {
    InInventory CameraRunner { } else {
    DrawInventoryBar Doom, Translucent, 6, INDEXFONT_DOOM, -96 + Center, 0, -68 + Center, 2, White;
-   } // close HUD-hide gate
+   }
 }
-statusbar inventory, fullscreenoffsets // Inventory stuff for Normal statusbar
+statusbar inventory, fullscreenoffsets
 {
    InInventory CameraRunner { } else {
    DrawInventoryBar Doom, Translucent, 6, INDEXFONT_DOOM, -96 + Center, 0, -68 + Center, 2, White;
-   } // close HUD-hide gate
+   }
 }

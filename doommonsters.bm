@@ -2245,10 +2245,6 @@ BrightMap Sprite HELNK6{Map "brightmaps/doom/Monsters/Hellion/HELNK6.png"Disable
 BrightMap Sprite HELNK7{Map "brightmaps/doom/Monsters/Hellion/HELNK7.png"DisableFullBright}
 BrightMap Sprite HELNK8{Map "brightmaps/doom/Monsters/Hellion/HELNK8.png"DisableFullBright}
 
-//PB_Marauder (ported from PB3.0 Marauder .../DOOMDEFS.MarauderSSG).
-//Shield glow reuses a single MASHA0 brightmap across all four frames; axe
-//sprites are MAAT* (frames A-C) while their brightmap PNGs ship as MAAB* -
-//that's an asset naming quirk from the original addon, not a bug.
 BrightMap Sprite MASHA0 {Map "brightmaps/monsters/Marauder/MASHA0.png" DisableFullBright}
 BrightMap Sprite MASHB0 {Map "brightmaps/monsters/Marauder/MASHA0.png" DisableFullBright}
 BrightMap Sprite MASHC0 {Map "brightmaps/monsters/Marauder/MASHA0.png" DisableFullBright}
@@ -2257,7 +2253,6 @@ BrightMap Sprite MAATA0 {Map "brightmaps/monsters/Marauder/MAABA0.png" DisableFu
 BrightMap Sprite MAATB0 {Map "brightmaps/monsters/Marauder/MAABB0.png" DisableFullBright}
 BrightMap Sprite MAATC0 {Map "brightmaps/monsters/Marauder/MAABC0.png" DisableFullBright}
 
-// Realm667 community monsters (SPRITES/MONSTERS/Realm667/; brightmaps in brightmaps/doom/Monsters/).
 brightmap sprite CACBA1{map "brightmaps/doom/Monsters/BabyCaco/CACBA1.png"}
 brightmap sprite CACBA2A8{map "brightmaps/doom/Monsters/BabyCaco/CACBA2A8.png"}
 brightmap sprite CACBB1{map "brightmaps/doom/Monsters/BabyCaco/CACBB1.png"}

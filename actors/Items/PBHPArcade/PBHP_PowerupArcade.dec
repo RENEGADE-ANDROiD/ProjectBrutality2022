@@ -1,6 +1,3 @@
-// HP Arcade powerups (DECORATE + A_JumpIf) — no ZScript `replaces` on CustomInventory.
-
-// Soulsphere --------------------------------------------------------------
 ACTOR LifeSphere : CustomInventory Replaces SoulSphere
 {
 	//$Title Life Sphere
@@ -62,8 +59,6 @@ ACTOR EnergySphere : CustomInventory Replaces Megasphere
 		Stop
 	}
 }
-
-// Berserk ------------------------------------------------------------------
 
 ACTOR MegaBerserk : CustomInventory
 {

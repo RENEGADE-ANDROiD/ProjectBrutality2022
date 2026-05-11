@@ -1,4 +1,3 @@
-
 pulselight GTRZOULSPHERE
 {
 	color 1.0 0.0 0.0

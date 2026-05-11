@@ -2,7 +2,7 @@
 #include "zcommon.acs"
 #define MAX_VOLUME 127
 
-// Cooldowns for shoulder flame / ice: mirrors glorykills-PB_Staging Source/EquipmentLanucher.acs
+// Glory Kills shoulder flame / ice cooldowns (lineage: PB Staging equipment launcher).
 script "GKEquipmentLauncher" ENTER
 {
 	int FBCooldown_tic, IBCooldown_tic;

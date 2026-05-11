@@ -797,11 +797,6 @@ class PB_XDeathBurnedSkull : PB_XDeathBurnedMeat
 }
 
 
-/////////////////
-//ARMS
-/////////////////
-
-
 class PB_XDeathArm1 : FlyingGibBase
 {
 	Default
@@ -964,7 +959,6 @@ class PB_GibHand: PB_TinyGibBase
 	}
 }
 
-// Nazi Arm
 class PB_NaziArm : PB_XDeathArm1
 {
 	Default
@@ -1084,10 +1078,6 @@ class PB_GibNaziArmPart: PB_GibArmPart
 			Stop;
 	}
 }
-
-/////////////////////
-//LEGS
-/////////////////////
 
 class PB_XDeathZombieLeg: PB_XDeathArm1
 {
@@ -2206,9 +2196,7 @@ class PB_XDeathZombiemanHeadKicked: PB_XDeathZombieManHead
 }
 
 
-// NAZI GORE
-
-class PB_XDeathNaziHelmet: PB_XDeathZombieManHead //White skinned piece 1
+class PB_XDeathNaziHelmet: PB_XDeathZombieManHead
 {
 	Default 
 	{
@@ -3120,7 +3108,6 @@ class PB_XDeathHalfARZombieman : PB_XDeathHalfZombieman
     }
 }
 
-//
 class PB_XDeathHalfZombieScientistChainsaw : PB_XDeathHalfZombieman
 {
     States
@@ -3287,7 +3274,6 @@ class PB_XDeathHalfHelmetZombieman2 : PB_XDeathHalfZombieman
     }
 }
 
-//
 Class PB_Gib_HalfSergeant1: PB_GibBase
 {
     States

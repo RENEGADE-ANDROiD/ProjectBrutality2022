@@ -343,6 +343,24 @@ class PB_Excavator : PB_WeaponBase
 			5DKF S 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 			Loop;
 
+		PDA_Preview_EXC_Fire:
+			6DKF A 1 BRIGHT;
+			6DKF A 1 BRIGHT;
+			5DKF L 1 BRIGHT;
+			5DKF M 1 BRIGHT;
+			5DKF N 1 BRIGHT;
+			5DKF OPQRDDD 1;
+			Stop;
+		PDA_Preview_EXC_Reload:
+			6DKF LMN 1;
+			7DKF A 1;
+			7DKF BCD 1;
+			Stop;
+		PDA_Preview_EXC_ModeSwitch:
+			7DKF LMNOP 1;
+			7DKF PONML 1;
+			Stop;
+
 		Weaponspecial:
 			TNT1 A 0 {
 				A_TakeInventory("GoWeaponSpecialAbility",1);

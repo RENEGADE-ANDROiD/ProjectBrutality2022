@@ -1,6 +1,3 @@
-// Stock PowerTimeFreezer pauses all sound (S_PauseSound); this keeps near-full freeze without that.
-// slot == 0 briefly clears LEVEL_FROZEN so time is never a perfect 100% lock (revenant tracer parity unchanged).
-
 class PB_PowerTimeSlow : Powerup
 {
 	const SLOWMO_SLOT_MASK = 255;

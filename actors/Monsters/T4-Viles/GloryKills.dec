@@ -15,16 +15,16 @@ ACTOR PB_ArchvileGK: PB_Archvile Replaces PB_Archvile
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0) //if it isnt healing already
-				{								//will heal and give the token that indicates it's executable
-					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
-					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
-					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
+				if(countinv("FinisherToken")==0)
+				{
+					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
+				if(GetCvar(be_MonsterStagger)==1)
 				{
-					return state("Stagger");	//stays there for a few seconds
+					return state("Stagger");
 				}
 				else
 				{
@@ -122,16 +122,16 @@ actor PB_FleshWizardGK: PB_FleshWizard Replaces PB_FleshWizard
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0) //if it isnt healing already
-				{								//will heal and give the token that indicates it's executable
-					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
-					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
-					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
+				if(countinv("FinisherToken")==0)
+				{
+					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
+				if(GetCvar(be_MonsterStagger)==1)
 				{
-					return state("Stagger");	//stays there for a few seconds
+					return state("Stagger");
 				}
 				else
 				{
@@ -231,16 +231,16 @@ Actor PB_HellionGK: PB_Hellion Replaces PB_Hellion
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0) //if it isnt healing already
-				{								//will heal and give the token that indicates it's executable
-					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
-					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
-					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
+				if(countinv("FinisherToken")==0)
+				{
+					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
+				if(GetCvar(be_MonsterStagger)==1)
 				{
-					return state("Stagger");	//stays there for a few seconds
+					return state("Stagger");
 				}
 				else
 				{
@@ -340,16 +340,16 @@ ACTOR PB_IcevileGK: PB_Icevile Replaces PB_Icevile
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0) //if it isnt healing already
-				{								//will heal and give the token that indicates it's executable
-					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
-					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
-					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
+				if(countinv("FinisherToken")==0)
+				{
+					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
+				if(GetCvar(be_MonsterStagger)==1)
 				{
-					return state("Stagger");	//stays there for a few seconds
+					return state("Stagger");
 				}
 				else
 				{

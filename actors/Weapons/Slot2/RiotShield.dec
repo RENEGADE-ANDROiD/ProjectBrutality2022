@@ -1,33 +1,4 @@
-// ============================================================================
-// Riot Shield - ported from "Addon - RiotShield" into Project Brutality 2022.
-// Source: Addon - RiotShield/RiotShield.txt + Decorate.Shields.
-// Patches vs. the upstream addon (see plans/port_riotshield_addon_*.plan.md
-// and PORTING_ADDONS.md):
-//   * BrutalAxe -> PB_Axe so the axe gate checks PB 2022's actual axe weapon.
-//   * WeaponSpecial honours the RS_AxeCheck CVar: when the CVar is 0, the axe
-//     requirement is bypassed and the mode toggles unconditionally.
-//   * skeleton/swing -> AXSWING (the addon's swing sound isn't in SNDINFO).
-//   * RespectItem -> respectItem to match the spelling dominant across PB 2022.
-//   * Super_Shield_Melee is dropped (defined upstream, never referenced).
-//   * RiotShieldModeFlashPunching terminates with Stop instead of
-//     layer (PSP_FLASH) via A_Overlay(PSP_FLASH,"FlashPunching") in
-//     BaseWeapon.dec, so falling into ReadyShield's RSWT A loop on
-//     that overlay would produce a duplicate raised-shield sprite
-//     stacked on top of the main weapon layer. The base QuickMelee
-//     exit now does A_ClearOverlays(PSP_FLASH,PSP_FLASH,false) so
-//     either Stop or Goto Ready3 are both safe terminators, but
-//     jumping back into ReadyShield (which is a *loop*) on PSP_FLASH
-//     would still stick, so Stop is preserved here. Note the third
-//     `false` argument is REQUIRED â€” A_ClearOverlays defaults to
-//     safety=true, which silently skips PSP_FLASH/PSP_WEAPON. See
-//     docs/punch_flash_psp_flash.md Â§4a.
-//   * Fire: state split 'RSWF AB 1 Bright { <fire block> }' into a
-//     per-frame 'RSWF A 1 Bright { <fire block> }' + 'RSWF B 1 Bright'
-//     animation tic. The compound AB form ran the anonymous action
-//     function on BOTH frames, firing two A_FireBullets calls and
-//     taking two PrimaryPistolAmmo per trigger press; the split
-//     matches PB_Pistol's per-shot cost (one bullet per shot).
-// ============================================================================
+// UAC-33 Riot Shield — Addon RiotShield port. PB integration: AGENTS.md §4 (Paingiver + Riot Shield + Stormcast).
 
 Actor RespectRiotShield : Inventory { Inventory.MaxAmount 1 }
 Actor RiotShieldUnloaded : Inventory { Inventory.MaxAmount 1 }
@@ -191,6 +162,10 @@ Actor RiotShield : PB_Weapon
         RSWR K 1 Offset(0,52)
         RSWF C 1 Offset(0,42)
         RSWG A 1 Offset(0,32)
+        Goto Ready3
+
+    Ready:
+        TNT1 A 0
         Goto Ready3
 
     Ready3:
@@ -596,6 +571,50 @@ Actor RiotShield : PB_Weapon
         Stop
     RightBigFlash3:
         D2RM E 1 Bright
+        Stop
+
+    PDA_Preview_ShieldBlockIdle:
+        RSWT A 1
+        Stop
+    PDA_Preview_ShieldBash:
+        RSWT C 4
+        RSWT D 4
+        RSWT E 4
+        RSWT F 4
+        RSWT A 4
+        Stop
+    PDA_Preview_ShieldPistolFire:
+        RSWF A 3 Bright
+        RSWF B 3 Bright
+        RSWF C 3
+        RSWF D 3
+        RSWF E 3
+        RSWG A 3
+        Stop
+    PDA_Preview_ShieldAltRaise:
+        RSWB A 3
+        RSWB B 3
+        RSWB C 3
+        RSWB D 3
+        RSWB E 3
+        RSWB F 3
+        RSWT F 3
+        RSWT F 3
+        Stop
+    PDA_Preview_ShieldReload:
+        D5GB A 3
+        D5GB BCD 3
+        D5GB EFGHI 3
+        D5GB KKLMNOPQRS 2
+        D5GB TUVWX 3
+        Stop
+    PDA_Preview_ShieldAxeSwing:
+        RSWX F 4
+        RSWX E 4
+        RSWX D 4
+        RSWX C 4
+        RSWX B 4
+        RSWX A 4
         Stop
     }
 }

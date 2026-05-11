@@ -1360,7 +1360,6 @@ actor BrutalizedNailgunMajor5: CurbstompedMarine
 4CH5 D -1
        Stop    }}
 	   
-///////////////////////////======VANILLA======//////////////////////////////////
 
 Actor Vanilla_NailgunMajor : PB_NailgunMajor
 {

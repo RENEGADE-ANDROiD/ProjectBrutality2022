@@ -1,8 +1,4 @@
-//Why does this class exist? Because we have so many fatalities and states in PB's player class
-//This is a band-aid solution for now and have all fatalities in a separate actor until we update and
-//clean the main PB player class
-
-//Inventory declarations
+// PB_Doomer fatality / stealth-kill shard (split from PLAYER.dec).
 ACTOR HasQuadShotgun : Inventory
 {Inventory.MaxAmount 1}
 Actor LabGuyToken1 : Inventory
@@ -348,6 +344,18 @@ ACTOR ArachnoGun : Inventory
 {
 Inventory.MaxAmount 1
 }
+ACTOR RevenantRider : Inventory
+{
+Inventory.MaxAmount 1
+}
+ACTOR RevenantRiderFiring : Inventory
+{
+Inventory.MaxAmount 1
+}
+ACTOR RevenantLauncher : Inventory
+{
+Inventory.MaxAmount 1
+}
 ACTOR AracnorbFatality : Inventory
 {
 Inventory.MaxAmount 1
@@ -567,8 +575,6 @@ Inventory.maxamount 1
 }
 		
 Actor DoNotJump : Inventory {Inventory.MaxAmount 2}
-// This class and all the code can be removed once we implement the first person execution system
-// RIP old PB, you are no longer the cringe-tastic submod you once were :)
 ACTOR PB_Doomer: Doomer
 {
 States
@@ -684,6 +690,7 @@ FatalityChecker:
 		TNT1 A 0 A_JumpIfInventory("ArachnotronXFatality", 1, "FatalityArachnotronX")
 		TNT1 A 0 A_JumpIfInventory("ArachnotronXFatality2", 1, "FatalityArachnotronX2")
 		TNT1 A 0 A_JumpIfInventory("ArachnotronTurret", 1, "ArachnoGunner")
+		TNT1 A 0 A_JumpIfInventory("RevenantRider", 1, "RevenantRider")
 		TNT1 A 0 A_JumpIfInventory("ArachnophyteFatality", 1, "FatalityArachnophyte")
 	    TNT1 A 0 A_JumpIfInventory("FleshWizardFatality", 1, "FatalityFleshWizard")
 		TNT1 A 0 A_JumpIfInventory("ArchVileFatality", 1, "FatalityArchVile")
@@ -2094,6 +2101,8 @@ FatalitySpiderMastermind:
 		MARN A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)//Stop Camera
 		TNT1 A 0 SetPlayerProperty(0,0,0)
 		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		TNT1 A 0 A_GiveInventory("MastermindPlayer", 1)
+		TNT1 A 0 A_SelectWeapon("MastermindPlayer")
 		Goto Standstill
 
 FatalityCyberdemon:
@@ -2152,6 +2161,8 @@ FatalityCyberdemon:
 		MARN A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)//Stop Camera
 		NULL A 0 SetPlayerProperty(0,0,0)	
 		NULL A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)	
+		TNT1 A 0 A_GiveInventory("CyberdemonPlayer", 1)
+		TNT1 A 0 A_SelectWeapon("CyberdemonPlayer")
         Goto Standstill
 
 FatalityHellduke1Eld:
@@ -2240,7 +2251,6 @@ FatalityHellduke6Eld:
 		
 		
 	
-// FATALITIES
 FatalityLabGuy1: //Face kicker
 		TNT1 A 0 SetPlayerProperty(0,1,0)
         TNT1 A 0 ACS_Execute(477,0,0,0,0)
@@ -2848,9 +2858,6 @@ FatalityAfrit2:
 		TNT1 A 0 SetPlayerProperty(0,1,0)
         TNT1 A 0 ACS_Execute(477, 0, 0, 0, 0)
 		 TNT1 A 0 ACS_Execute(acsFatality, 0)
-		//////////////////////////// Fatal Procedure
-
-//
 		TNT1 A 0 A_TakeInventory("GoFatality", 1)
 		TNT1 A 0 A_TakeInventory("AfritFatality2",1)
 		"####" "#" 1
@@ -3054,6 +3061,8 @@ FatalityAfrit3:
         TNT1 A 0 A_SpawnItemEx("FatalizedOtherFatso", 0, 1, 1, 1, 1)
         TNT1 A 0 SetPlayerProperty(0,0,0)
         TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		TNT1 A 0 A_GiveInventory("MancubusPlayer", 1)
+		TNT1 A 0 A_SelectWeapon("MancubusPlayer")
         Goto Standstill
 		
 	FatalityOtherFatso2:
@@ -3129,6 +3138,8 @@ FatalityAfrit3:
         TNT1 A 0 A_SpawnItem("FatalizedOtherFatso2", 45)
         TNT1 A 0 SetPlayerProperty(0,0,0)
         TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		TNT1 A 0 A_GiveInventory("MancubusPlayer", 1)
+		TNT1 A 0 A_SelectWeapon("MancubusPlayer")
 		Goto Standstill
 
 		FatalityArachnophyte:
@@ -5250,6 +5261,8 @@ TNT1 A 0 ACS_Execute(585, 0, 0, 0, 0)
         TNT1 A 0 SetPlayerProperty(0,0,0)
         TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
         TNT1 A 0 A_UnSetInvulnerable
+		TNT1 A 0 A_GiveInventory("MancubusPlayer", 1)
+		TNT1 A 0 A_SelectWeapon("MancubusPlayer")
         Goto Standstill
 	   
 	 FatalityZMan6:
@@ -7301,6 +7314,8 @@ TNT1 A 0 ACS_Execute(585, 0, 0, 0, 0)
 		TNT1 A 0 A_SpawnItem ("FatalizedVolcabus", 45)
 		  TNT1 A 0 SetPlayerProperty(0,0,0)
 		  TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		TNT1 A 0 A_GiveInventory("MancubusPlayer", 1)
+		TNT1 A 0 A_SelectWeapon("MancubusPlayer")
 		Goto Standstill	
 		
 		//Fatso fatality from brutal doom v11
@@ -7370,6 +7385,8 @@ TNT1 A 0 ACS_Execute(585, 0, 0, 0, 0)
 		TNT1 A 0 SetPlayerProperty(0,0,0)
 		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
 		TNT1 A 0 A_UnSetInvulnerable
+		TNT1 A 0 A_GiveInventory("MancubusPlayer", 1)
+		TNT1 A 0 A_SelectWeapon("MancubusPlayer")
 		Goto Standstill
 		
 		
@@ -7523,6 +7540,62 @@ TNT1 A 0 ACS_Execute(585, 0, 0, 0, 0)
 		TNT1 A 0 SetPlayerProperty(0,0,0)
 		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
 		Goto Standstill
+
+		// Third-person Revenant possession — MHML rider sprites (BD22 RevenantLauncher set).
+		RevenantRider:
+		TNT1 A 1 SetPlayerProperty(0,1,0)
+		MHML A 0
+	RevenantRiderIdle:
+		MHML A 0 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 5 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 0 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 5 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 0 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 5 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 0 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 5 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 0 A_JumpIfInventory("RevenantRider", 1, "RevenantRiderVolley")
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
+		TNT1 A 0 A_TakeInventory("RevenantRider", 1)
+		TNT1 A 0 A_TakeInventory("RevenantRiderFiring", 1)
+		TNT1 A 0 A_TakeInventory("RevenantLauncher", 1)
+		TNT1 A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)//Stop Camera (dismount)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		Goto Standstill
+	RevenantRiderVolley:
+		TNT1 A 0 A_GiveInventory("RevenantRiderFiring", 1)
+		Goto RevenantRiderFire
+	RevenantRiderPain:
+		MHML A 0 A_Pain
+		MHML A 0 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 3 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 0 A_JumpIfInventory("RevenantRiderFiring", 1, "RevenantRiderFire")
+		MHML A 0 A_JumpIfInventory("RevenantRider", 1, "RevenantRiderIdle")
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
+		TNT1 A 0 A_TakeInventory("RevenantRider", 1)
+		TNT1 A 0 A_TakeInventory("RevenantRiderFiring", 1)
+		TNT1 A 0 A_TakeInventory("RevenantLauncher", 1)
+		TNT1 A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)//Stop Camera (dismount)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		Goto Standstill
+	RevenantRiderFire:
+		MHML B 3 BRIGHT
+		TNT1 A 0 A_CustomMissile("RevenantBalls", 28, 0, 0, 0)
+		TNT1 A 0 A_PlaySound("skeleton/attack", CHAN_WEAPON)
+		MHML C 3
+		MHML D 3
+		MHML E 3
+		TNT1 A 0 A_TakeInventory("RevenantRiderFiring", 1)
+		MHML A 0 A_JumpIfInventory("RevenantRider", 1, "RevenantRiderIdle")
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
+		TNT1 A 0 A_TakeInventory("RevenantRider", 1)
+		TNT1 A 0 A_TakeInventory("RevenantLauncher", 1)
+		TNT1 A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)//Stop Camera (dismount)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		Goto Standstill
 		
 		FatalityAracnorb:
 		NULL A 0 SetPlayerProperty(0,1,0)
@@ -7637,7 +7710,6 @@ TNT1 A 0 ACS_Execute(585, 0, 0, 0, 0)
 		NULL A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)	
 		Goto Standstill
 		
-//NAZI FATALITY BABY! UwU	
 	FatalityNazi:
 		NULL A 0 SetPlayerProperty(0,1,0)
 		NULL A 0 ACS_ExecuteAlways(477, 0, 0, 0, 0)//Start Camera
@@ -7979,8 +8051,6 @@ TNT1 A 0 ACS_Execute(585, 0, 0, 0, 0)
 		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
 		Goto StandStill		
 		
-// STEALTH KILLS
-
 	StealthKilLSavageImp:
         NULL A 0 SetPlayerProperty(0,1,0)
         NULL A 0 ACS_ExecuteAlways(477, 0, 0, 0, 0)//Start Camera

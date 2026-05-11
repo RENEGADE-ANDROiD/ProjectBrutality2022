@@ -1,5 +1,3 @@
-// Realm667 Venor (Kan3) — folded from CRASH pack; PB-prefixed classes to avoid clashes.
-
 class PB_VenorHands : Actor
 {
 	Default

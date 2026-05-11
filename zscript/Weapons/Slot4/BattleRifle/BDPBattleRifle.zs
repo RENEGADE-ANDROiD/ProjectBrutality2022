@@ -1,6 +1,5 @@
 const BDP_BR_MAG = 15;
 
-// : PB_WeaponBase: was PB_Weapon (ZScript only sees ZScript types in UZDoom; SelectFirstPersonLegs inlined from BaseWeapon.dec)
 class BDPBattleRifle : PB_WeaponBase
 {
 	bool isADS;
@@ -371,6 +370,31 @@ class BDPBattleRifle : PB_WeaponBase
 			TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
 			TNT1 A 0 A_Print("\ctWeapon Special:\c- \cdutility \c-");
 			goto Ready3;
+
+		PDA_Preview_BR_HipReady:
+			BR45 B 4;
+			stop;
+		PDA_Preview_BR_FireHip:
+			BR4F C 2 bright;
+			BR45 D 2;
+			BR4F C 2 bright;
+			BR45 D 2;
+			stop;
+		PDA_Preview_BR_FireADS:
+			BR4Z D 2 bright;
+			BR4Z D 2 bright;
+			BR4Z D 2 bright;
+			stop;
+		PDA_Preview_BR_AltZoom:
+			BR4Z A 2;
+			BR4Z B 2;
+			BR4Z C 2;
+			stop;
+		PDA_Preview_BR_Reload:
+			BR4R ABCDE 2;
+			BR4R GHI 2;
+			BR4R QRST 2;
+			stop;
 
 		FlashPunching:
 			TNT1 A 0 A_ClearOverlays(10, 11);

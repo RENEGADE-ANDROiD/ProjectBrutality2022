@@ -205,7 +205,6 @@ ACTOR MancubusFlameCannon : PB_Weapon
 		FUMG A 10
 		Goto Ready3
 
-	////////////////////////////////////////////////////////
 	Fire:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "ThrowFlameBarrel")
@@ -239,6 +238,32 @@ ACTOR MancubusFlameCannon : PB_Weapon
 		FUMG A 0 PB_ReFire
 	    Goto Ready3
 
+	PDA_Preview_MFFC_FireBurst:
+		FUMF A 2 BRIGHT
+		FUMF BCD 2 BRIGHT
+		FUMF EF 2
+		FUMG GHI 2
+		Stop
+	PDA_Preview_MFFC_Slime:
+		FUMF G 2 BRIGHT
+		FUMF HIJ 2 BRIGHT
+		FUMF KL 2
+		FUMG JKL 1
+		Stop
+	PDA_Preview_MFFC_AltStream:
+		FUMF A 1 BRIGHT
+		FUMF B 1 BRIGHT
+		FUMF Z 1 BRIGHT
+		FUMF Y 1 BRIGHT
+		FUMF X 1 BRIGHT
+		Stop
+	PDA_Preview_MFFC_AltSlime:
+		FUMF F 1 BRIGHT
+		FUMF G 1 BRIGHT
+		FUMF H 1 BRIGHT
+		FUMF I 1 BRIGHT
+		Stop
+
 	FireSlime:
 		TNT1 A 0 A_JumpIfInventory("PB_Fuel",10,4)
 		Goto DryFire
@@ -246,7 +271,7 @@ ACTOR MancubusFlameCannon : PB_Weapon
 		TNT1 A 0 A_StopSound(6)
         TNT1 A 0 A_TakeInventory("PB_Fuel",10)
 		TNT1 A 0 A_AlertMonsters
-		TNT1 A 0 //A_PlaySound("BIOSHOOT", CHAN_WEAPON)
+		TNT1 A 0
 		TNT1 A 0 A_ZoomFactor(0.97)
         FUMF G 2 BRIGHT A_FireCustomMissile("DaedabusWithGravity", 0, 1, 0, 0)
 		TNT1 AAAAA 0 BRIGHT A_FireCustomMissile("PlasmaParticle", random(-17,17), 0, -1, random(-9,9))

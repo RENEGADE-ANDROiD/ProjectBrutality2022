@@ -15,20 +15,20 @@ Actor CacoDemonSpawner replaces Cacodemon
 	Stop
 	DiceMain:	// Default spawn preset with a slight difficulty curve. Tier 1-4 Monster presets are contained here to provide more variety.
 	EarlyLevelMob:
-	TNT1 A 0 A_Jump(12,"AfritPack")
-	TNT1 A 0 A_Jump(24,"InfernalPack")
+	TNT1 A 0 A_Jump(13,"AfritPack")
+	TNT1 A 0 A_Jump(27,"InfernalPack")
 	TNT1 A 0 A_Jump(256,"CacoPack")
 	LowLevelMob:
-	TNT1 A 0 A_Jump(16,"AfritPack")
-	TNT1 A 0 A_Jump(32,"InfernalPack")
+	TNT1 A 0 A_Jump(26,"AfritPack")
+	TNT1 A 0 A_Jump(71,"InfernalPack")
 	TNT1 A 0 A_Jump(256,"CacoPack")	
 	MidLevelMob:
-	TNT1 A 0 A_Jump(20,"AfritPack")
-	TNT1 A 0 A_Jump(64,"InfernalPack")
+	TNT1 A 0 A_Jump(32,"AfritPack")
+	TNT1 A 0 A_Jump(110,"InfernalPack")
 	TNT1 A 0 A_Jump(256,"CacoPack")
 	HighLevelMob:	
-	TNT1 A 0 A_Jump(32,"AfritPack")
-	TNT1 A 0 A_Jump(96,"InfernalPack")
+	TNT1 A 0 A_Jump(36,"AfritPack")
+	TNT1 A 0 A_Jump(119,"InfernalPack")
 	TNT1 A 0 A_Jump(256,"CacoPack")
 	DiceProg:	// Progressive spawn preset enforces strict spawning rules by excluding monsters until they are presented in later levels.
 	DiceTier1:
@@ -71,6 +71,7 @@ Actor CacoPackSpawner : Demonpickup
 	// BabyCaco is a weaker caco (HP 150 vs PB_Cacodemon HP 400); tuned to ~3% of caco spawns
 	// (was ~1.2%) to match its weaker-counterpart status without crowding out the regular pack.
 	TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "Realm667Skip")
+	TNT1 A 0 A_Jump(8, "SpawnPB_FrostBrain")
 	TNT1 A 0 A_Jump(8, "SpawnRealm667BabyCaco")
 	Realm667Skip:
 	TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
@@ -124,6 +125,10 @@ Actor CacoPackSpawner : Demonpickup
 	TNT1 A 0 A_JumpIf(GetCvar("NoCrackodemon") == 1, "Caco2Done")
 	TNT1 A 0 A_SpawnItemEx("CrackoDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	Caco2Done:
+	Stop
+	SpawnPB_FrostBrain:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoFrostBrain")==1, "Realm667Skip")
+	TNT1 A 0 A_SpawnItemEx("PB_FrostBrain",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	Stop
 	}
 }

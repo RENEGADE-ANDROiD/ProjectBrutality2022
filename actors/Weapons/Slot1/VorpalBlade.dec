@@ -2,7 +2,6 @@
 // Original per PB_MeleeWeaponPack CREDITS: sprites Eriance; sword from Insanity's
 // Requiem Mk.2 by the late TiberiumSoul (RIP). PB 0.4.2+ rework by Renegade Android.
 // PB 2022 fold by Project Brutality 2022.
-//
 // Main weapon class: zscript/Weapons/Slot1/VorpalBlade.zc
 
 DamageType KyreiSpecialDamage

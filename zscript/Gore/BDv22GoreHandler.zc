@@ -1,5 +1,4 @@
-// Optional on-hit blood mist: spawns BDv22GoreMist (P22M in SPRITES/GORE/BDv22/). Brutal Doom 22 content.
-
+// BDv22 optional blood mist (Brutal Doom 22 fold).
 class BDv22GoreHandler : EventHandler
 {
 	clearscope static PlayerPawn BDv22_ResolveAttacker(Actor a)

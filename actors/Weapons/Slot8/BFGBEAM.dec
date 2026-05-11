@@ -109,7 +109,7 @@ actor PB_BFGBeam : PB_Weapon
 		8BGG C 2 A_PlaySound("BMCHARG", 9)
 		8BGG D 2 
 		8BGG ABCDABCD 2
-		8BGG ABCDABCDABC 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)//A_FireCustomMissile("BFGLightningTrial_Small",0,0)
+		8BGG ABCDABCDABC 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)
 		8BGG D 1 A_PlaySound("SUPERBFG", 7)
 		TNT1 A 0 A_PlaySound("Weapons/BFSG/Fire", 3)
 		TNT1 A 0 A_FireCustomMissile("GreenFlareSpawn",0,0,0,0)
@@ -129,15 +129,14 @@ actor PB_BFGBeam : PB_Weapon
 		8BGG B 2 
 		8BGG C 2 
 		8BGG D 2 
-		8BGG A 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)//A_FireCustomMissile("BFGLightningTrial_Small",0,0)
-		8BGG B 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)//A_FireCustomMissile("BFGLightningTrial_Small",0,0)
-		8BGG C 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)//A_FireCustomMissile("BFGLightningTrial_Small",0,0)
-		8BGG D 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)//A_FireCustomMissile("BFGLightningTrial_Small",0,0)
-		8BGG A 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)//A_FireCustomMissile("BFGLightningTrial_Small",0,0)
-		8BGG B 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)//A_FireCustomMissile("BFGLightningTrial_Small",0,0)
-		8BGG C 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)//A_FireCustomMissile("BFGLightningTrial_Small",0,0)
-		8BGG D 1   A_FireCustomMissile("BFGLightningTrial_Small",0,0)//A_FireCustomMissile("BFGLightningTrial_Small",0,0)
-		goto AltHold
+		8BGG A 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)
+		8BGG B 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)
+		8BGG C 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)
+		8BGG D 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)
+		8BGG A 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)
+		8BGG B 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)
+		8BGG C 1 A_FireCustomMissile("BFGLightningTrial_Small",0,0)
+		8BGG D 1   A_FireCustomMissile("BFGLightningTrial_Small",0,0)		goto AltHold
 		
   AltHold:
 		TNT1 A 0 A_JumpIfInventory("Cell", 2, 3)

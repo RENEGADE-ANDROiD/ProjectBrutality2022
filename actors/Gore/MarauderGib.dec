@@ -1,4 +1,3 @@
-//==============================================================================
 // Marauder / Peacekeeper SSG addon (PB3.0 port)
 // Original addon: ikdfa (Marauder addon for PB)
 // Sprites: Craneo (Marauder), TypicalSF (Doom Eternal SSG), PB Team (doomguy/chaingunguy sprites)
@@ -6,12 +5,7 @@
 // Additional code: Dox, Headshot_Ev (Glory-kill addon / Brutal Doom BE)
 // PB3.0 build update: Jeniffer / Jenny (2023-05-14)
 // Ported into Project Brutality 2022 tree on 2026-04-20.
-//
 // Source: Decorate.GoreMarauder -- XDeath / gib chunks (head, arm, leg).
-//==============================================================================
-
-//Updates to be added to GORE.txt in main mod
-//Right skin colored Arm added (2 green arms were being spawned, Marauder has one skin colored Arm and one Armored Green Arm)
 Actor XDeathMarauderArm2: FlyingGibBase
 {
     Radius 8
@@ -181,7 +175,6 @@ ACTOR MarauderHeadExplode: ZombieXDeath
 	}
 }
 
-//Limbs.txt
 Actor XDeathMarauderLeg: XDeathArm1
 {
     Speed 8

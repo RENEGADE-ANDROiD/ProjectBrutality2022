@@ -1,4 +1,4 @@
-// Red Frame from Target Spy
+// Target Spy (execution frame textures)
 Texture "ts_framr_top_right", 64, 64
 {
   Patch  ts_framr, 0, 0

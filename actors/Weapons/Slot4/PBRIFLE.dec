@@ -182,11 +182,9 @@ Actor DMRBarrelHeat: Inventory
 Actor UpgradeInspect: Inventory
 {inventory.maxamount 1}
 
-// --------------------------------------------------------------------------
 
 // UAC DMR
 
-// --------------------------------------------------------------------------
 ACTOR Rifle : PB_Weapon
 {
 	//$Title Rifle
@@ -462,7 +460,6 @@ ACTOR Rifle : PB_Weapon
 				Stop
 		
 		Reticle7:
-			//TNT1 A 0 A_JumpIf(GetCvar("ReticleStyle")==1,"Stop_Overlay") //For ACS reticle.  To enable (other than the ACS code obviously.  There are three lines in menudef and one in cvarinfo that need to be turned on.
 			TNT1 A 0 A_JumpIfInventory("DMRUpgraded",1,"HDMR_Reticle")
 		DMR_Reticle:
 			RETC B 1 BRIGHT Offset(140,56)
@@ -3196,6 +3193,39 @@ ACTOR Rifle : PB_Weapon
 		R7F3 WX 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE)
 		Goto Ready3
 		
+	PDA_Preview_Rifle_Ready:
+		R0F6 E 4
+		Stop
+	PDA_Preview_Rifle_Fire:
+		R0F8 A 2 Bright
+		R0F8 B 2 Bright
+		R0F8 C 2
+		R0F8 D 2
+		R0F6 E 2
+		Stop
+	PDA_Preview_Rifle_Sniper:
+		H4F8 A 2 Bright
+		H4F8 B 2 Bright
+		H4F8 C 2
+		H4F8 E 2
+		Stop
+	PDA_Preview_Rifle_ModeToSniper:
+		H2F0 ABCDEF 2
+		H2F0 GHI 2
+		H2F1 AB 2
+		H2F3 ABCD 2
+		Stop
+	PDA_Preview_Rifle_Grenade:
+		H1F3 AB 2 Bright
+		H1F3 CDEF 2
+		Stop
+	PDA_Preview_Rifle_Reload:
+		R2F0 ABCDEF 2
+		R2F0 MNOP 2
+		R2F0 STUV 2
+		R2F0 XYZ 2
+		Stop
+
 	FlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIfInventory("DualWieldingDMRs", 1, "FlashPunching2")

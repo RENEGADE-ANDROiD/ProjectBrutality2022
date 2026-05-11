@@ -388,7 +388,6 @@ actor FatalizedFleshWizard
 }
 
 
-///////////////////////////======VANILLA======//////////////////////////////////
 
 Actor Vanilla_FleshWizard : PB_FleshWizard
 {

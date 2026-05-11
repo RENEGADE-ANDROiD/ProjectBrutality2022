@@ -1,4 +1,3 @@
-// Shared “Demon power cell” pool for Demon Tech add-on weapons (pistol, blaster, exterminator, etc.).
 ACTOR PB_DTech : Ammo
 {
 	Inventory.Amount 0

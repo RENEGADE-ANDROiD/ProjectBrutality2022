@@ -1,19 +1,16 @@
 Actor MonsterCounter : Inventory { }
 Actor IsPlayingChaoticRandom : Inventory { }
 
-//CacoDemons
 Actor IsNormalCaco : MonsterCounter { }
 Actor IsMagCaco : MonsterCounter { }
 Actor IsAfritCaco : MonsterCounter { }
 Actor IsHellElemental : MonsterCounter { }
 
-//Souls
 Actor IsNormalSoul : MonsterCounter { }
 Actor IsTiberiumSoul : MonsterCounter { }
 Actor IsImpureSoul : MonsterCounter { }
 Actor IsPhantasm : MonsterCounter { }
 
-//Shotgunguys
 Actor IsMixedShotgunGuyPack : MonsterCounter { }
 Actor IsNormalShotgunGuy : MonsterCounter { }
 Actor IsHelmetShotgunGuy : MonsterCounter { }
@@ -38,14 +35,12 @@ Actor IsMinigunZombie : MonsterCounter { }
 Actor IsPlasmaZombie : MonsterCounter { }
 Actor IsRifleCommando : MonsterCounter { }
 
-//ChaingunGuys
 Actor IsNormalChaingunGuy : MonsterCounter { }
 Actor IsNailgunMajor : MonsterCounter { }
 Actor IsClassicChaingunGuy : MonsterCounter { }
 Actor IsHelmetChaingunGuy : MonsterCounter { }
 Actor IsPlasmaZombieC : MonsterCounter { } //To prevent regular zombies from turning commandos into their kind!
 
-//Pinkies
 Actor IsMechPinky : MonsterCounter { }
 Actor IsBloodDemon : MonsterCounter { }
 Actor IsPinky : MonsterCounter { }
@@ -59,7 +54,6 @@ Actor IsWarlord : MonsterCounter { }
 Actor IsCataclysm : MonsterCounter { }
 Actor IsArchon : MonsterCounter { }
 
-//HellKnights
 Actor IsHellKnight : MonsterCounter { }
 Actor IsCyberKnight : MonsterCounter { }
 Actor IsPaladin : MonsterCounter { }
@@ -70,7 +64,6 @@ Actor IsInfernalArachnotron : MonsterCounter { }
 Actor IsEliteArachnotron : MonsterCounter { }
 Actor IsArachnophyte : MonsterCounter { }
 
-//Imps
 Actor IsMixedBrownImp : MonsterCounter { }
 Actor IsMixedDarkImp : MonsterCounter { }
 Actor IsNormalImp: MonsterCounter { }
@@ -83,12 +76,10 @@ Actor IsNamiDarkImp : MonsterCounter { }
 Actor IsVoidDarkImp : MonsterCounter { }
 Actor IsNetherDarkImp : MonsterCounter { }
 
-//Revenants
 Actor IsRevenant : MonsterCounter { }
 Actor IsBeamRevenant : MonsterCounter { }
 Actor IsDraugr : MonsterCounter { }
 
-//Archviles
 Actor IsArchvile: MonsterCounter { }
 Actor IsIceVile : MonsterCounter { }
 Actor IsHellion : MonsterCounter { }
@@ -104,13 +95,11 @@ Actor IsTiberiumElemental : MonsterCounter { }
 Actor IsOverlord : MonsterCounter { }
 Actor IsListIndexOutofBounds : MonsterCounter { }
 
-//Mancubus
 Actor IsMancubus: MonsterCounter { }
 Actor IsDaedabus : MonsterCounter { }
 Actor IsCryocubus : MonsterCounter { }
 Actor IsVolcabus : MonsterCounter { }
 
-//Spectres
 Actor IsVoidSpectre: MonsterCounter { }
 Actor IsAcidSpectre : MonsterCounter { }
 Actor IsEtherealSpectre : MonsterCounter { }

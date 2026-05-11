@@ -1,5 +1,3 @@
-// Wolvexus mutator tier pickups — sprite/audio fold from Wolvexus_Mutator (items only).
-
 ACTOR StrongHealthPlus : Health
 {
 	Game Doom

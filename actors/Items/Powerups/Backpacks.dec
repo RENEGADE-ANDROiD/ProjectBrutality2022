@@ -2,7 +2,6 @@ ACTOR GotAPack : Inventory {}
 ACTOR GotAPack_h : Inventory {}
 //These Inventory actors allow SmartScavenger to react based on your maximum ammo capacity
 
-// Backpack ---------------------------------------------------------------
 ACTOR PB_Backpack : CustomInventory
 {
 	//$Title Backpack
@@ -32,6 +31,33 @@ ACTOR PB_Backpack : CustomInventory
 				A_GiveInventory("StunGrenadeAmmo",1);
 				A_GiveInventory("MiniHellRocketAmmo", 3);
 			}
+			TNT1 A 0 A_Jump(51, "PBCF_BackpackBonus")
+			Stop
+		PBCF_BackpackBonus:
+			TNT1 A 0 A_Jump(256, "PBCF_BB1", "PBCF_BB2", "PBCF_BB3", "PBCF_BB4", "PBCF_BB5", "PBCF_BB6", "PBCF_BB7", "PBCF_BB8")
+		PBCF_BB1:
+			TNT1 A 0 A_GiveInventory("FreezenadeAmmo", 1)
+			Stop
+		PBCF_BB2:
+			TNT1 A 0 A_GiveInventory("PB_CF_SnowCasterAmmo", 1)
+			Stop
+		PBCF_BB3:
+			TNT1 A 0 A_GiveInventory("PB_CF_FreezeBotDeployAmmo", 1)
+			Stop
+		PBCF_BB4:
+			TNT1 A 0 A_GiveInventory("PB_CF_IceWallGenAmmo", 1)
+			Stop
+		PBCF_BB5:
+			TNT1 A 0 A_GiveInventory("PB_CF_HoloDecoyAmmo", 1)
+			Stop
+		PBCF_BB6:
+			TNT1 A 0 A_GiveInventory("PB_CF_TeslaTurretAmmo", 1)
+			Stop
+		PBCF_BB7:
+			TNT1 A 0 A_GiveInventory("PB_CF_FlameTurretAmmo", 1)
+			Stop
+		PBCF_BB8:
+			TNT1 A 0 A_GiveInventory("PB_CF_FreezeMineAmmo", 1)
 			Stop
 	}
 }

@@ -903,6 +903,29 @@ ACTOR PB_SMG : PB_Weapon
 			}
 		Goto Ready3
 //////////////////////////////////////////Unloading
+
+	PDA_Preview_SMG_Fire:
+		A1F1 F 1 BRIGHT
+		A1F1 G 1 BRIGHT
+		A1F1 H 1
+		Stop
+	PDA_Preview_SMG_AdsFire:
+		A1F3 E 1 BRIGHT
+		A1F3 F 1
+		A1F3 G 1
+		Stop
+	PDA_Preview_SMG_AltAds:
+		A1F3 A 1
+		A1F3 B 1
+		A1F3 C 1
+		Stop
+	PDA_Preview_SMG_Reload:
+		A1F4 A 1
+		A1F4 D 1
+		A1F4 J 1
+		A1F4 K 1
+		A1F4 T 1
+		Stop
 		
 	Spawn:
 		VTFL A 0 NoDelay

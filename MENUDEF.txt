@@ -76,7 +76,6 @@ OptionValue "YesOrNoFalse"
 	0, "Yes"
 }
 
-// 0/1: Off/On — for Monster pack "No* spawn" style toggles (1 = do not spawn / block).
 OptionValue "OffOn"
 {
 	0, "Off"
@@ -192,6 +191,7 @@ OptionMenu "PBTacticalMotionOptions"
 	Option "Enable lean.", "pb_tac_lean_enable", "YesNo"
 	Slider "Lean angle.", "pb_tac_lean_angle", 0.0, 25.0, 0.5, 1
 	Slider "Lean smoothing.", "pb_tac_lean_smoothing", 0.05, 0.50, 0.01, 2
+	Slider "Tilt display smoothing.", "pb_tac_tilt_smoothing", 0.50, 0.95, 0.01, 2
 	StaticText "Safety: Off During Zoom/ADS,"
 	StaticText "Executions, Equipment Actions."
 	StaticText "Some Overlay-Heavy Guns Skipped (ZScript)."
@@ -217,8 +217,6 @@ OptionMenu "PBWeaponHudOptions"
 	StaticText " "
 }
 
-// Helmet visor options (folded from PB Staging PB_Hud.zs).
-// Reads cvars declared in CVARINFO; rendered by PB_VisorHandler.
 OptionMenu "PB_HelmetVisorOptions"
 {
 	Title "Helmet Visor (PB2022)"
@@ -391,6 +389,13 @@ OptionMenu "PB_2022AdditionsMenu"
 	Submenu "PBX 2022 Weapon HUD Options", "PBWeaponHudOptions"
 	StaticText " ", teal
 	StaticText " ", teal
+	StaticText "$OPTMNU_PB_PDA_HINT", teal
+	StaticText "$OPTMNU_PB_PDA_HINT2", teal
+	StaticText " ", teal
+	Option "PDA Blocky Layout (tile grid)", "pb_pda_blocky", "YesNo"
+	StaticText "$OPTMNU_PB_PDA_BLOCKY_HINT", teal
+	StaticText "$OPTMNU_PB_PDA_BLOCKY_HINT2", teal
+	StaticText " ", teal
 	Option "Show Helmet Visor", "pb_showhudvisor", "YesNo"
 	StaticText " ", teal
 	Submenu "Helmet Visor Options", "PB_HelmetVisorOptions"
@@ -487,6 +492,8 @@ OptionMenu "ContentCompatOptions"
 	StaticText " "
 	Option "Disable map gameplay enhancements", "pb_disablemapenhancements", "YesOrNo"
 	StaticText " "
+	Submenu "Advanced Weapon Spawns", "WeaponSpawns"
+	StaticText " "
 }
 
 OptionMenu "SpawnPresets"
@@ -539,7 +546,7 @@ OptionMenu "Tier2SpawnMenu"
 	StaticText " - Tier 2 - "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
 	StaticText "Like Tier 1 but Stronger Guns."
-	StaticText "Usually Easier Than T1 (More Weapons, Few Hard Variants)."		//This is actually easier than T1 because of the extra weapons available and pretty much no harder enemy variants.
+	StaticText "Usually Easier Than T1 (More Weapons, Few Hard Variants)."
 }
 OptionMenu "Tier3SpawnMenu"
 {
@@ -617,6 +624,7 @@ OptionMenu "WeaponSpawns"
 	Option "$PB_OPT_Molotov", "pb_NoMolotov", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn M2 Plasma Rifle", "pb_NoM2PlasmaWeapon", "SpawnOnOff"
+	Option "Spawn UAC Dark Matter Rifle", "pb_NoPB_DarkMatterRifleWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Freezer Rifle", "pb_NoFreezerWeapon", "SpawnOnOff"
 	StaticText " "
@@ -725,7 +733,6 @@ OptionMenu "GameplaySettings"
   StaticText " "
 	Option "$PB_DUALSTYLE",	"SingleDualFire", "DualWieldOption"
 	StaticText "$PB_DUALSTYLE_SIN", green
-//	StaticText "$PB_DUALSTYLE_SINEXTRA", green
 	StaticText "$PB_DUALSTYLE_DEF"
 	StaticText " "
 	StaticText " "
@@ -760,7 +767,7 @@ OptionMenu "GameplaySettings"
 	StaticText " "
 	StaticText " "
 	
-	Option "Aiming mode","pb_toggle_aim_hold", "AimingStyle" //Looks like we are using this newer line.
+	Option "Aiming mode","pb_toggle_aim_hold", "AimingStyle"
 	StaticText " "
 	StaticText " "
 	
@@ -769,10 +776,6 @@ OptionMenu "GameplaySettings"
 	StaticText "(Walls, Floors, Ceilings, Actors)."
 	StaticText " "
 	StaticText " "
-	
-	//Option "DMR / HDMR Reticle Code Source?",	 "ReticleStyle", "ReticleCode" //For ACS style reticle
-	//StaticText " "
-	//StaticText " "
 	
   StaticText "Barrels"
 	StaticText " "
@@ -972,7 +975,6 @@ OptionValue "Q3Floating"
 	16, "On"
 }
 
-//Motion Blur Options by Pixel Eater
 OptionValue "MBlurBlendModes"
 {
 	0, "Normal"
@@ -980,7 +982,6 @@ OptionValue "MBlurBlendModes"
 }
 OptionMenu "MBlurAdvOpts"
 {
-	//Position -15
 	Title "Advanced Settings"
 	Option "Auto Stop", "mblur_autostop", OnOff
 	Slider "Stop Recovery", "mblur_recovery2", 0, 100, 5, 2
@@ -989,7 +990,6 @@ OptionMenu "MBlurAdvOpts"
 
 OptionMenu "MBlurOpts"
 {
-	//Position -15
 	Title "Motion Blur"
 	Option "Enabled", "mblur", YesNo
 	Option "Blend Mode", "mblur_blendmode", "MBlurBlendModes"
@@ -1102,14 +1102,7 @@ OptionMenu "WeaponSettings"
 	StaticText "$PB_NO_M1PLASMACOOLDOWN_EXTRA", "purple"
 	StaticText " ", teal
 	StaticText " "
-/*
-	Option "Old Dual SSG Firing System",				"pb_olddualssgfiresystem", "OnOff"
-	StaticText " ", teal
-	StaticText "Fire 2 Shells on The Right SSG Instead of one"
-	StaticText " "
-	StaticText " ", teal	*/
 }
-///////////////////////////////////////////////////////////////////////////////////////
 
 OptionMenu "MonsterSettings"
 {
@@ -1359,9 +1352,8 @@ OptionValue "PBSpawnChoices"
 669, "Tier 3"
 670, "Tier 4"
 671, "Tiered Progression"
-672, "DeathWish" //YE
+672, "DeathWish"
 663, "Chaotic Random"
-//674, "Pistol Starts"
 }
 
 OptionValue "SpawnOnOff"
@@ -1596,9 +1588,6 @@ OptionValue "NashGoreGibTypes"
 	2, "$NASHGOREMNU_VANILLA"
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
-// Glory Kills
-//////////////////////////////////////////////////////////////////////////////////////
 OptionValue "MaxStat"
 {
 	0, "200"
@@ -1678,7 +1667,6 @@ OptionMenu "Glorykills"
 	Slider  "Low Armor (Abs Points).", "sv_LowArmorValue", 0, 100, 1
 }
 
-// Folded from "PB Monster Pack" staging (Ultimate) menu; Ice Vile / Fleshwizard / Overlord use main pb_* CVARs.
 OptionMenu "PB_HorrorspawnSettings"
 {
 	Title "PB_Horrorspawn"
@@ -1711,7 +1699,6 @@ OptionMenu "PB_HorrorspawnSettings"
 	Option "T2 — Melee zombieman", "NoMeleeZombie", "OffOn"
 	Option "T2 — Melee sergeant", "NoMeleeSergeant", "OffOn"
 	Option "T3 — Cyberfodder", "NoCyberFodder", "OffOn"
-	Option "$PB_OPT_PS_FODDER_SPAWN", "pb_NoProjectSurvivalFodder", "SpawnOnOff"
 	Option "$PB_OPT_PS_PASSIVE_SPAWN", "pb_NoProjectSurvivalPassive", "SpawnOnOff"
 	Option "T4 — Unwilling", "NoUnwilling", "OffOn"
 	StaticText " "
@@ -1778,8 +1765,8 @@ OptionMenu "SimplerMonsterSettings"
 
 	StaticText "---- Realm667 monsters (Blot, Vulgar, Behemoth, Drone, Venor, ...) ----"
 	StaticText " ", teal
-	Command "Enable all Realm667 monsters",  "set NoBabyCaco 0; set NoBehemoth 0; set NoBlot 0; set NoBloodGhost 0; set NoBloodSkull 0; set NoDrone 0; set NoFusionCyberImp 0; set NoPossessedGibs 0; set NoSlayerKnight 0; set NoVenor 0; set NoVulgar 0"
-	Command "Disable all Realm667 monsters", "set NoBabyCaco 1; set NoBehemoth 1; set NoBlot 1; set NoBloodGhost 1; set NoBloodSkull 1; set NoDrone 1; set NoFusionCyberImp 1; set NoPossessedGibs 1; set NoSlayerKnight 1; set NoVenor 1; set NoVulgar 1"
+	Command "Enable all Realm667 monsters",  "set NoBabyCaco 0; set NoBehemoth 0; set NoBlot 0; set NoBloodGhost 0; set NoBloodSkull 0; set NoDrone 0; set NoFusionCyberImp 0; set NoPossessedGibs 0; set NoSlayerKnight 0; set NoVenor 0; set NoVulgar 0; set pb_NoFrostBaron 0; set pb_NoCryocubus 0; set pb_NoFrostBrain 0; set pb_NoCryotron 0"
+	Command "Disable all Realm667 monsters", "set NoBabyCaco 1; set NoBehemoth 1; set NoBlot 1; set NoBloodGhost 1; set NoBloodSkull 1; set NoDrone 1; set NoFusionCyberImp 1; set NoPossessedGibs 1; set NoSlayerKnight 1; set NoVenor 1; set NoVulgar 1; set pb_NoFrostBaron 1; set pb_NoCryocubus 1; set pb_NoFrostBrain 1; set pb_NoCryotron 1"
 	StaticText " "
 
 	StaticText "---- Monster Pack add-ons (Crackodemon, Hellduke, Director, ...) ----"
@@ -1797,8 +1784,8 @@ OptionMenu "SimplerMonsterSettings"
 
 	StaticText "---- Reinforcement / Horrorspawn fodder pool ----"
 	StaticText " ", teal
-	Command "Enable all reinforcement fodder",  "set NoHorror 0; set NoFresh 0; set NoHunger 0; set NoMeleeZombie 0; set NoMeleeSergeant 0; set NoCyberFodder 0; set NoUnwilling 0; set pb_NoProjectSurvivalFodder 0; set pb_NoProjectSurvivalPassive 0"
-	Command "Disable all reinforcement fodder", "set NoHorror 1; set NoFresh 1; set NoHunger 1; set NoMeleeZombie 1; set NoMeleeSergeant 1; set NoCyberFodder 1; set NoUnwilling 1; set pb_NoProjectSurvivalFodder 1; set pb_NoProjectSurvivalPassive 1"
+	Command "Enable all reinforcement fodder",  "set NoHorror 0; set NoFresh 0; set NoHunger 0; set NoMeleeZombie 0; set NoMeleeSergeant 0; set NoCyberFodder 0; set NoUnwilling 0; set pb_NoProjectSurvivalPassive 0"
+	Command "Disable all reinforcement fodder", "set NoHorror 1; set NoFresh 1; set NoHunger 1; set NoMeleeZombie 1; set NoMeleeSergeant 1; set NoCyberFodder 1; set NoUnwilling 1; set pb_NoProjectSurvivalPassive 1"
 	StaticText " "
 
 	StaticText "---- Boss-tier summons (queen, director, maledict, ...) ----"
@@ -1958,8 +1945,6 @@ OptionMenu "MonsterPackSettings"
 	Option "T4 — QSG Dreadtrooper", "NoQSGDreadTrooper", "OffOn"
 	StaticText " "
 }
-
-// Gearbox (folded) — see also lumps/includes/menudef_gearbox.inc (duplicate for editors; engine has no MENUDEF #include)
 
 OptionMenu gb_Options
 {

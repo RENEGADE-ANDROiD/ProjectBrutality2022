@@ -1,7 +1,3 @@
-//Alternative Flares
-// SMU new flares using special flare graphic designed to eliminate overlap with 
-// decoration sprites.
-
 Actor Flare_TallTorch_Green
 {
 +NOINTERACTION
@@ -494,8 +490,6 @@ states
 	}
 }
 
-/////////////////
-
 Actor Flare_General
 {
 +NOINTERACTION
@@ -523,7 +517,6 @@ states
 	}
 }
 
-//New Dragon's Breath flare
 Actor DragonsBreathFlare : Flare_General
 {
 XScale 0.8

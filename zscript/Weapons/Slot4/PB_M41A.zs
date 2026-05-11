@@ -1,6 +1,4 @@
-// M41A pulse rifle (folded from PB_M41A add-on + legacy PB underbarrel).
-// Primary: 7.62 + muzzle overlay / flash helpers. Alt: 30mm grenade or 12ga (wheel).
-// : PB_WeaponBase — ZScript cannot inherit DECORATE PB_Weapon (UZDoom); Select matches Battle Rifle pattern.
+// M41A pulse rifle (PB_M41A add-on fold). Primary 7.62; alt 30mm / 12ga (wheel).
 
 const m41a_ammoFull = 95;
 
@@ -494,7 +492,7 @@ class PB_M41A : PB_WeaponBase
 			PMAR QQRST 1;
 			TNT1 A 0 A_StartSound("M41A/MagTake", 33);
 			PMAR UVWX 1;
-			PMAR YZZZZZZZZ 1;
+			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
 			TNT1 A 0 A_StartSound("M41A/MagIn", 34);
 			PMAT ABCD 1;
 			TNT1 A 0 PB_AmmoIntoMag("M41AChamberAmmo", "NewClip", m41a_ammoFull, 1);
@@ -520,7 +518,7 @@ class PB_M41A : PB_WeaponBase
 			PMAR QQRST 1;
 			TNT1 A 0 A_StartSound("M41A/MagTake", 33);
 			PMAR UVWX 1;
-			PMAR YZZZZZZZZ 1;
+			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
 			TNT1 A 0 A_StartSound("M41A/MagIn", 34);
 			PMAT ABCD 1;
 			TNT1 A 0 PB_DumpMagToPool("M41AChamberAmmo", "NewClip", 1);
@@ -756,7 +754,7 @@ class PB_M41A : PB_WeaponBase
 			PMAR QQRST 1;
 			TNT1 A 0 A_StartSound("M41A/MagTake", 33);
 			PMAR UVWX 1;
-			PMAR YZZZZZZZZ 1;
+			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
 			TNT1 A 0 A_StartSound("M41A/MagIn", 34);
 			PMAT ABCD 1;
 			TNT1 A 0 PB_AmmoIntoMag("M41AChamberAmmo", "NewClip", m41a_ammoFull, 1);
@@ -779,7 +777,7 @@ class PB_M41A : PB_WeaponBase
 			PMAR QQRST 1;
 			TNT1 A 0 A_StartSound("M41A/MagTake", 33);
 			PMAR UVWX 1;
-			PMAR YZZZZZZZZ 1;
+			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, -6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
 			TNT1 A 0 A_StartSound("M41A/MagIn", 34);
 			PMAT ABCD 1;
 			TNT1 A 0 PB_AmmoIntoMag("M41AChamberAmmoLeft", "NewClip", m41a_ammoFull, 1);
@@ -826,6 +824,34 @@ class PB_M41A : PB_WeaponBase
 		MuzzleFlash:
 			TNT1 A 0 A_OverlayFlags(overlayID(), PSPF_MIRROR | PSPF_FLIP, random(0, 1));
 			PMAF EF 1 Bright;
+			Stop;
+
+		PDA_Preview_M41Fire:
+			PMAF B 2 Bright;
+			PMAF C 2 Bright;
+			PMAF D 2;
+			Stop;
+		PDA_Preview_M41AltGrenade:
+			PMAF AB 2 Bright;
+			PMAF C 2 Bright;
+			PMAF DEF 2;
+			PMAF A 2;
+			Stop;
+		PDA_Preview_M41AltShell:
+			PMAF AB 2 Bright;
+			PMAF C 2 Bright;
+			PMAF DEF 2;
+			PMAF A 2;
+			Stop;
+		PDA_Preview_M41Reload:
+			PMAR ABCD 2;
+			PMAR UVWX 2;
+			PMAT ABCD 2;
+			PMAT QRRRST 2;
+			Stop;
+		PDA_Preview_M41Dual:
+			PMDT ABCD 2;
+			PMDT FGHI 2;
 			Stop;
 
 		MuzzleDualL:

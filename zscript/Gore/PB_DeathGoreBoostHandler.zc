@@ -1,4 +1,3 @@
-// Adds extra blood pools and short trails on monster deaths without touching per-monster death states.
 class PB_DeathGoreBoostHandler : EventHandler
 {
 	clearscope static PlayerPawn PB_ResolvePlayer(Actor a)

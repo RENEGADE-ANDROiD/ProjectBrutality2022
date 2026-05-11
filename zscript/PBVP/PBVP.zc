@@ -21,7 +21,6 @@ class OptionMenuItemOption_PBVP : OptionMenuItemOption
 		{
 			indent = (screen.GetWidth() / 2);
 		}
-		//If(!isGrayed()){
 		drawLabel(indent, y, selected? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor, isGrayed());
 
 		int Selection = GetSelection();
@@ -61,7 +60,6 @@ class OptionMenuItemNumberField_PBVP : OptionMenuItemNumberField
 	override int Draw (OptionMenuDescriptor d, int y, int indent, bool selected)
 	{
 		bool grayed = (mGrayCheck != null && !mGrayCheck.GetInt()) || (mGrayCheck2 != null && !mGrayCheck2.GetInt());
-		//if (!grayed){// hide option if feature is off
 		drawLabel(indent, y, selected ? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor, grayed);
 		drawValue(indent, y, OptionMenuSettings.mFontColorValue, Represent(), grayed);
 		return indent;

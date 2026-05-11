@@ -87,10 +87,7 @@ ACTOR PB_Realm667_FusionCyberImpGK : PB_Realm667_FusionCyberImp Replaces PB_Real
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
-		// FusionCyberImp (UCIM) is a cyborg imp. Realm667_FatalityFP1 plays
-		// NATT helmeted-zombie strips, which is a different creature class
-		// entirely. Replace branch 3 with another imp Eld so all rolls keep
-		// the in-hand victim imp-shaped.
+		// UCIM GK forces imp Eld jumps; Realm667_FP1 NATT strip is zombieman-shaped.
 		TNT1 A 0 A_Jump(255, "CFF1","CFF1","CFF2","CFF2","CFF3","CFF3")
 	CFF1:
 		TNT1 A 0 A_GiveToTarget("ImpFatality6",1)
@@ -186,10 +183,7 @@ ACTOR PB_Realm667_VulgarGK : PB_Realm667_Vulgar Replaces PB_Realm667_Vulgar
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
-		// Vulgar (VULG) is an imp-class creature. Realm667_FatalityFP2 plays
-		// NZ0D dark-zombie strips, which is a different creature class
-		// entirely. Replace branch 3 with another imp Eld so all rolls keep
-		// the in-hand victim imp-shaped.
+		// Vulgar GK reroutes third branch to imp Eld; Realm667_FP2 uses NZ0D zombie art.
 		TNT1 A 0 A_Jump(255, "VGF1","VGF1","VGF2","VGF2","VGF3")
 	VGF1:
 		TNT1 A 0 A_GiveToTarget("ImpFatality6",1)
@@ -270,10 +264,7 @@ ACTOR PB_Realm667_BehemothGK : PB_Realm667_Behemoth Replaces PB_Realm667_Behemot
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
-		// Behemoth (LARD) is a fat cybermancubus. Realm667_FatalityFP3 plays
-		// 49AN brown-imp Eld frames, which is a different creature class
-		// entirely. Reroute both branches to the fat-tier fatalities so the
-		// in-hand victim stays mancubus-shaped.
+		// Behemoth GK keeps manc-shaped fatso tokens; Realm667_FP3 tries 49AN imp art.
 		TNT1 A 0 A_Jump(256, "BHF1","BHF1","BHF2","BHF2")
 	BHF1:
 		TNT1 A 0 A_GiveToTarget("OtherFatsoFatality",1)
@@ -350,9 +341,7 @@ ACTOR PB_Realm667_BabyCacoGK : PB_Realm667_BabyCaco Replaces PB_Realm667_BabyCac
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
-		// CacoDemonFatality3/4 -> FatalityCacoDemon3Eld/4Eld are El Diablo HUF1/HUF2 (Hunger
-		// bald-humanoid) sprites that don't fit any cacodemon-shaped monster. Reroute to the
-		// legitimate cacodemon fatalities.
+		// Baby caco skips CacoFatality3/4 Hunger strips (same as stock caco GK).
 		TNT1 A 0 A_Jump(256, "BCF1","BCF1","BCF2")
 	BCF1:
 		TNT1 A 0 A_GiveToTarget("CacoDemonFatality",1)
@@ -496,9 +485,7 @@ ACTOR PB_Realm667_DroneGK : PB_Realm667_Drone Replaces PB_Realm667_Drone
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
-		// RevenantFatality3/4 (KOKO -- El Diablo satyr2) and ComandoFatality3 (HUF3 Hunger) are
-		// satyr/Hunger-shaped victims, mismatched against the Drone's flying-ghost silhouette.
-		// Reroute to the legitimate revenant fatalities so the in-hand victim stays bony.
+		// Realm drone GK uses revenant Eld pool only — drop satyr/KOKO Hunger branches.
 		TNT1 A 0 A_Jump(256, "DGF1","DGF1","DGF2","DGF2","DGF3")
 	DGF1:
 		TNT1 A 0 A_GiveToTarget("RevenantFatality",1)
@@ -563,11 +550,7 @@ ACTOR PB_Realm667_BlotGK : PB_Realm667_Blot Replaces PB_Realm667_Blot
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,4,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
-		// Blot is a tiny eye-blob (EYES sprites). Realm667_FatalityFP1/FP2 play
-		// NATT/NZ0D zombieman strips, which look completely wrong as the in-hand
-		// victim. No shipped first-person finisher matches an eye-blob shape, so
-		// only grant GoFatality (pinata/kill credit) and let the player's
-		// FatalityChecker fall through to See -- no humanoid animation.
+		// Tiny blob GK: GoFatality only — no zomb-compatible FPS puppet available.
 		Stop
 	}
 }
@@ -645,11 +628,7 @@ ACTOR PB_VenorGK : PB_Venor replaces PB_Venor
 	}
 }
 
-// -----------------------------------------------------------------------------
-// Blood Ghost (KILLA DIO) GK wrapper. Lost-soul-tier humanoid ghost; modeled on
-// PB_Realm667_DroneGK (small flying monster) but the in-hand victim is humanoid
-// so first-person finishers route to revenant Eld variants for body shape match.
-// -----------------------------------------------------------------------------
+// Blood Ghost GK — flyers route through revenant Eld tokens instead of Hunger/zomb strips.
 ACTOR PB_Realm667_BloodGhostGK : PB_Realm667_BloodGhost Replaces PB_Realm667_BloodGhost
 {
 	WoundHealth 30
@@ -714,8 +693,6 @@ ACTOR PB_Realm667_BloodGhostGK : PB_Realm667_BloodGhost Replaces PB_Realm667_Blo
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
-		// Blood Ghost (GHST) is a humanoid silhouette. Route to bony revenant Eld
-		// variants -- body proportions match better than imp/zombieman strips.
 		TNT1 A 0 A_Jump(256, "BGF1","BGF1","BGF2","BGF2","BGF3")
 	BGF1:
 		TNT1 A 0 A_GiveToTarget("RevenantFatality",1)
@@ -729,13 +706,7 @@ ACTOR PB_Realm667_BloodGhostGK : PB_Realm667_BloodGhost Replaces PB_Realm667_Blo
 	}
 }
 
-// -----------------------------------------------------------------------------
-// Blood Skull (Gothic) GK wrapper. Tiny floating skull with no humanoid body,
-// modeled on PB_Realm667_BlotGK (tiny eye-blob): grant GoFatality for pinata /
-// kill credit but NO in-hand humanoid finisher (skull-only silhouette would
-// look wrong driving a NATT/NZ0D zombieman strip). FatalityChecker falls
-// through to See, identical to Blot's design comment.
-// -----------------------------------------------------------------------------
+// Blood Skull GK — GoFatality credit only (orb skull cannot puppet zomb FPS strips).
 ACTOR PB_Realm667_BloodSkullGK : PB_Realm667_BloodSkull Replaces PB_Realm667_BloodSkull
 {
 	WoundHealth 30
@@ -797,8 +768,6 @@ ACTOR PB_Realm667_BloodSkullGK : PB_Realm667_BloodSkull Replaces PB_Realm667_Blo
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
-		// No humanoid first-person finisher pool -- skull-only silhouette mirrors
-		// PB_Realm667_BlotGK's design (eye-blob). Glory Kill grants pinata + BP only.
 		Stop
 	}
 }
