@@ -39,11 +39,7 @@ class NashGoreHandler : EventHandler
 
 	Array<String> bloodTypes;
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	override void PlayerEntered(PlayerEvent e)
 	{
@@ -68,11 +64,7 @@ class NashGoreHandler : EventHandler
 		DoThingRevive(plr);
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	override void WorldLoaded(WorldEvent e)
 	{
@@ -98,11 +90,7 @@ class NashGoreHandler : EventHandler
 		}
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	override void WorldThingSpawned(WorldEvent e)
 	{
@@ -158,11 +146,7 @@ class NashGoreHandler : EventHandler
 		DoThingRevive(t);
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	override void CheckReplacement(ReplaceEvent e)
 	{
@@ -203,11 +187,7 @@ class NashGoreHandler : EventHandler
 		if (nashgore_icedeath == true && e.Replacee == "IceChunk") e.Replacement = "NashGoreIceChunk";
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	override void NetworkProcess(ConsoleEvent e)
 	{
@@ -220,11 +200,7 @@ class NashGoreHandler : EventHandler
 		}
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	void BuildBloodTypes(void)
 	{
@@ -271,11 +247,7 @@ class NashGoreHandler : EventHandler
 		}
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	void DoThingDie(Actor mo)
 	{

@@ -199,6 +199,31 @@ class VorpalBlade : PB_WeaponBase
 		VORP A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 		Loop;
 
+	PDA_Preview_VB_SwingR:
+		VORR A 0 Offset(15,32);
+		VORR A 1;
+		VORR B 1;
+		VORR C 1;
+		VORR D 1;
+		VORR E 1;
+		Stop;
+	PDA_Preview_VB_SwingL:
+		VORL A 0 Offset(15,32);
+		VORL A 1;
+		VORL B 1;
+		VORL C 1;
+		VORL D 1;
+		VORL E 1;
+		Stop;
+	PDA_Preview_VB_Zerk:
+		VORR A 0 Offset(15,32);
+		VORR A 1;
+		VORR B 1;
+		VORR C 1;
+		VORR D 1;
+		VORR E 1;
+		Stop;
+
 	Fire:
 		TNT1 A 0
 		{

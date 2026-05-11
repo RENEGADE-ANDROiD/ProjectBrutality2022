@@ -29,8 +29,6 @@ Actor FodderExtraPassiveSpawn
 		TNT1 A 0 A_Jump(50,"Die")
 		Loop
 	Create:
-		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1,"Die")
-		TNT1 A 0 A_JumpIf(GetCvar("pb_NoProjectSurvivalFodder")==1,"Die")
 		TNT1 A 0 A_SpawnItemEx("PB_ProjectSurvivalFodderPassive",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
 		Stop
 	Die:

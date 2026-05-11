@@ -22,12 +22,10 @@ class PB_MetalSniper : PB_WeaponBase
         +weapon.noautofire;
     }
 
-    // ── Constants ────────────────────────────────────────────────────────────
     const SniperMode  = 0;
     const GrenadeMode = 1;
     const muzzlelayer = -52;
 
-    // ── State ─────────────────────────────────────────────────────────────────
     bool resonanceAmmoLoaded;
     bool grenadeloaded;
     bool AltMode;
@@ -35,17 +33,12 @@ class PB_MetalSniper : PB_WeaponBase
     int  currentMaxAmmo;
     int  usedAmmo;
 
-    // ═════════════════════════════════════════════════════════════════════════
-    // STATES
-    // ═════════════════════════════════════════════════════════════════════════
     states
     {
-        // ── Spawn ─────────────────────────────────────────────────────────
         Spawn:
             MSNW A -1;
             stop;
 
-        // ── Weapon Respect ──────────────────────
         Steady:
             TNT1 A 1;
             TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
@@ -77,7 +70,6 @@ class PB_MetalSniper : PB_WeaponBase
             MSNJ GHIJKL 1 A_DoPBWeaponAction();
             goto Ready3;
 
-        // ── Select / Deselect ─────────────────────────────────────────────
         Select:
             TNT1 A 0 PB_WeaponRaise("MS/Up");
         SelectContinue:
@@ -103,19 +95,17 @@ class PB_MetalSniper : PB_WeaponBase
             TNT1 A 0 A_Lower(120);
             wait;
 
-        // ── Ready (hip-fire) ──────────────────────────────────────────────
-        //    Sprite-only states consumed by animation tools — never looped into.
         Ready:
-            MST0 ABCDEFGHIJKL 0;        // take mag empty
-            MST3 ABCDEFGHIJKL 0;        // take mag resonance
-            MST1 ABCDEFGHIJKL 0;        // take mag standard
-            MSNC ABCDEFGHIJKLM 0;       // standard chamber
-            M3NC ABCDEFGHIJKLM 0;       // empty chamber
-            MSN4 ABCDEFGHIJKLM 0;       // resonance chamber
-            MSU0 ABCDEFGHIJKL 0;        // raise no mag
-            MSU1 ABCDEFGHIJKL 0;        // raise normal
-            MSNR ABCDEFGHIJKLMNOPQR 0;  // insert standard mag
-            MSR6 ABCDEFGHIJKLMNOPQR 0;  // insert resonance mag 
+            MST0 ABCDEFGHIJKL 0;
+            MST3 ABCDEFGHIJKL 0;
+            MST1 ABCDEFGHIJKL 0;
+            MSNC ABCDEFGHIJKLM 0;
+            M3NC ABCDEFGHIJKLM 0;
+            MSN4 ABCDEFGHIJKLM 0;
+            MSU0 ABCDEFGHIJKL 0;
+            MSU1 ABCDEFGHIJKL 0;
+            MSNR ABCDEFGHIJKLMNOPQR 0;
+            MSR6 ABCDEFGHIJKLMNOPQR 0;
         Ready3:
             TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
             TNT1 A 0 PB_HandleCrosshair(42);
@@ -128,7 +118,6 @@ class PB_MetalSniper : PB_WeaponBase
             }
             loop;
 
-        // ── No Ammo States ─────────────────────────────────────────────
         NoAmmo:
             MSNF A 1 A_StartSound("weapons/empty");
             goto Ready3;
@@ -137,7 +126,6 @@ class PB_MetalSniper : PB_WeaponBase
             MSNG A 1 A_StartSound("weapons/empty");
             goto AltFire_Grenade;
 
-        // ── Fire ────────────────────────────────────────────────────
         Fire:
             TNT1 A 0
             {
@@ -171,7 +159,6 @@ class PB_MetalSniper : PB_WeaponBase
             TNT1 A 0 A_Refire("Fire");
             goto Ready3;
 
-        // ── AltFire: zoom or grenade mode ────────────────────────────────
         AltFire:
             TNT1 A 0 A_JumpIf(MS_getmode() == GrenadeMode, "AltFire_Grenade");
         AltFire_Zoom:
@@ -200,7 +187,6 @@ class PB_MetalSniper : PB_WeaponBase
             MSNA A 1 A_ZoomFactor(1.0);
             goto Ready3;
 
-        // ── Ready (ADS) ───────────────────────────────────────────────────
         Ready2:
         Ready_ADS:
             TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
@@ -235,7 +221,6 @@ class PB_MetalSniper : PB_WeaponBase
             }
             loop;
 
-        // ── Fire (ADS) ────────────────────────────────────────────────────
         Fire_ADS:
             TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
             TNT1 A 0 PB_JumpIfNoAmmo("ReloadFromADS", 1);
@@ -265,7 +250,6 @@ class PB_MetalSniper : PB_WeaponBase
             }
             goto Ready_ADS;
 
-        // ── Grenade mode ──────────────────────────────────────────────────
         AltFire_Grenade:
             MSNG A 1
             {
@@ -308,12 +292,11 @@ class PB_MetalSniper : PB_WeaponBase
                 }
                 A_StartSound("MS/GrenClose", 22);
             }
-            MSNL OPQRSTUGGGTTT 1;   // collapsed GGG + FEDCBA
+            MSNL OPQRSTUGGGTTT 1;
             MSNL FEDCBA 1;
             TNT1 A 0 A_Refire("AltFire_Grenade");
             goto Ready3;
 
-        // ── Reload ────────────────────────────────────────────────────────
         ReloadFromADS:
         Reload:
             TNT1 A 0
@@ -324,12 +307,10 @@ class PB_MetalSniper : PB_WeaponBase
                 invoker.usedAmmo = invoker.resonanceAmmoLoaded ? 6 : 2;
             }
             TNT1 A 0 PB_CheckReload("RaiseFromEmpty", null, "Start_Rechamber", "Ready3", "NoAmmo", invoker.currentMaxAmmo, invoker.usedAmmo);
-        // ── Raise weapon  ──────────────────
         StandardReload:
             TNT1 A 0 A_StartSound("IronSights", 30);
-            MSU1 ABCDEFGHIJKL 1;    // raise
+            MSU1 ABCDEFGHIJKL 1;
             TNT1 A 0 A_JumpIf(isResonance(), "TakeMagResonance");
-        // Take standard mag out
         TakeMagStandard:
             MST1 ABCD 1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
             TNT1 A 0 A_StartSound("MS/Button", 22);
@@ -339,10 +320,16 @@ class PB_MetalSniper : PB_WeaponBase
                 A_StartSound("MS/TakeMag", 23);
                 PB_SetMagUnloaded(true);
             }
-            MST1 FGHIJKL 1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
+            // Frames F-I depict the hand pulling the mag clear of the well.
+            // J/K/L only slide the mag down at a constant rate (no gravity
+            // curve) so we trim them and spawn a real world-actor mag at the
+            // release moment. Forward 24, +up 28 so the mag spawns just past
+            // the hand at chest height; small upward toss + forward push so
+            // gravity arcs it to the floor in front of the player.
+            MST1 FGHI 1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
+            TNT1 A 0 PB_SpawnCasing("EmptyHDMRMag_Sniper", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
             goto InsertMag;
 
-        // Take resonance mag out
         TakeMagResonance:
             MST3 ABCD 1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
             TNT1 A 0 A_StartSound("MS/Button", 22);
@@ -352,8 +339,8 @@ class PB_MetalSniper : PB_WeaponBase
                 A_StartSound("MS/TakeMag", 23);
                 PB_SetMagUnloaded(true);
             }
-            MST3 FGHIJKL 1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
-        // Insert new mag
+            MST3 FGHI 1 { if (PB_GetMagEmpty()) A_SetWeaponSprite("MST0"); }
+            TNT1 A 0 PB_SpawnCasing("EmptyHDMRMag_Sniper", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
         InsertMag:
             MSNR ABCDEFG 1 { if (isResonance()) A_SetWeaponSprite("MSR6"); }
             TNT1 A 0 A_StartSound("MS/InsertMag", 20);
@@ -367,23 +354,29 @@ class PB_MetalSniper : PB_WeaponBase
             MSNR MNOPQR 1 ;
             TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(), "Rechamber");
         FinishReload:
-            MSU1 LKJIHGFEDCBA 1;    // lower
+            MSU1 LKJIHGFEDCBA 1;
             TNT1 A 0 PB_SetReloading(false);
             goto Ready3;
 
-        // ── Raise from fully empty mag ────────────────────────────────────
         RaiseFromEmpty:
             TNT1 A 0 A_StartSound("IronSights", 30);
-            MSU0 ABCDEFGHIJKL 1;    // empty-mag raise
+            MSU0 ABCDEFGHIJKL 1;
             goto InsertMag;
 
-        // ── Rechamber ──────────────────────────
         Start_Rechamber:
             TNT1 A 0 A_StartSound("IronSights", 30);
-            MSU1 ABCDEFGHIJKL 1;    // raise
+            MSU1 ABCDEFGHIJKL 1;
         Rechamber:
             MSNC ABCDEFG 1 ;
             TNT1 A 0 A_StartSound("MS/BoltDown", 24);
+            TNT1 A 0
+            {
+                if (CountInv("MS_PendingSwapReload_RoundEject") > 0)
+                {
+                    PB_SpawnCasing("PB_HighCalUnloadProp", 22, -4, 24, frandom(2.0, 3.0), frandom(-2.5, -1.0), frandom(2.5, 3.5));
+                    A_TakeInventory("MS_PendingSwapReload_RoundEject", 1);
+                }
+            }
             TNT1 A 0 PB_SetChamberEmpty(false);
             MSNC HIJ 1 ;
 			MSNC K 1 { if (isResonance()) A_SetWeaponSprite("MSN4"); }
@@ -392,7 +385,6 @@ class PB_MetalSniper : PB_WeaponBase
             MSNC M 1 ;
 			goto FinishReload;
 
-        // ── Reload from special ─────────────
         ReloadFromSpecial:
             TNT1 A 0
             {
@@ -411,7 +403,6 @@ class PB_MetalSniper : PB_WeaponBase
             MSNR MNOPQR 1;
             goto Rechamber;
 
-        // ── Unload ────────────────────────────────────────────────────────
         UnloadFromSpecial:
             TNT1 A 0 A_StartSound("IronSights", 30);
             TNT1 A 0 A_JumpIf(PB_GetMagUnloaded() && !PB_GetChamberEmpty(), "StartUnloadChamber");
@@ -421,13 +412,11 @@ class PB_MetalSniper : PB_WeaponBase
 
 		Unload:
             TNT1 A 0 A_StartSound("IronSights", 30);
-            // If mag already unloaded, skip straight to chamber
             TNT1 A 0 A_JumpIf(PB_GetMagUnloaded() && !PB_GetChamberEmpty(), "StartUnloadChamber");
         UnloadRaise:
             MSU1 ABCDEFGHIJKL 1;
             TNT1 A 0 A_JumpIf(PB_GetMagEmpty(), "UnloadMagEmpty");
             TNT1 A 0 A_JumpIf(isResonance(), "UnloadMagResonance");
-        // Standard mag unload
         UnloadMagStandard:
             MST1 ABCD 1;
             TNT1 A 0 A_StartSound("MS/Button", 22);
@@ -440,11 +429,12 @@ class PB_MetalSniper : PB_WeaponBase
                 PB_SetMagUnloaded(true);
                 PB_SetMagEmpty(true);
             }
-            MST1 IJKL 1;
+            MST1 I 1;
+            TNT1 A 0 PB_SpawnCasing("EmptyHDMRMag_Sniper", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
+            TNT1 A 0 A_JumpIfInventory("MS_PendingSwapReload", 1, "FinishUnloadToReswapReload");
             TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(), "FinishUnload");
             goto UnloadChamber;
 
-        // Empty mag unload
         UnloadMagEmpty:
             MST0 ABCD 1;
             TNT1 A 0 A_StartSound("MS/Button", 22);
@@ -456,11 +446,12 @@ class PB_MetalSniper : PB_WeaponBase
                 PB_SetMagEmpty(true);
             }
             TNT1 A 0 A_StartSound("MS/TakeMag", 23);
-            MST0 FGHIJKL 1;
+            MST0 FGHI 1;
+            TNT1 A 0 PB_SpawnCasing("EmptyHDMRMag_Sniper", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
+            TNT1 A 0 A_JumpIfInventory("MS_PendingSwapReload", 1, "FinishUnloadToReswapReload");
             TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(), "FinishUnload");
             goto UnloadChamber;
 
-        // Resonance mag unload
         UnloadMagResonance:
             MST3 ABCD 1;
             TNT1 A 0 A_StartSound("MS/Button", 22);
@@ -472,20 +463,22 @@ class PB_MetalSniper : PB_WeaponBase
                 PB_SetMagEmpty(true);
             }
             TNT1 A 0 A_StartSound("MS/TakeMag", 23);
-            MST3 FGHIJKL 1;
+            MST3 FGHI 1;
+            TNT1 A 0 PB_SpawnCasing("EmptyHDMRMag_Sniper", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
+            TNT1 A 0 A_JumpIfInventory("MS_PendingSwapReload", 1, "FinishUnloadToReswapReload");
             TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(), "FinishUnload");
             goto UnloadChamber;
 
-        // Unchamber
         UnloadChamber:
             M3NC ABCDEFGHI 1;
             TNT1 A 0 A_StartSound("MS/BoltDown", 24);
             M3NC JKL 1;
             TNT1 A 0
             {
-                MS_UnloadMag(true);     // UnloadChamber = true
+                MS_UnloadMag(true);
                 PB_SetChamberEmpty(true);
             }
+            TNT1 A 0 A_TakeInventory("MS_PendingSwapReload_RoundEject", 1);
             TNT1 A 0 A_StartSound("MS/BoltUp", 25);
             M3NC M 1;
         FinishUnload:
@@ -496,12 +489,10 @@ class PB_MetalSniper : PB_WeaponBase
             TNT1 A 0 A_TakeInventory("MS_PendingSwapReload", 1);
             goto ReloadFromSpecial;
 
-        // Skip raise — already raised when mag was manually removed
         StartUnloadChamber:
             MSU0 ABCDEFGHIJKL 1;
             goto UnloadChamber;
 
-        // ── Weapon Special ────────────────────
         WeaponSpecial:
             TNT1 A 0
             {
@@ -523,7 +514,6 @@ class PB_MetalSniper : PB_WeaponBase
             MSSW GHIJKLM 1;
             goto Ready3;
 
-        // ── Muzzle flashes ────────────────────────────────────────────────
         MuzzleFlash:
             TNT1 A 0 A_OverlayFlags(overlayID(), PSPF_MIRROR | PSPF_FLIP, random(0, 1));
             TNT1 A 0 A_Jump(128, "MF2");
@@ -547,34 +537,66 @@ class PB_MetalSniper : PB_WeaponBase
             MSNM G 1 bright;
             stop;
 
-        // ── Melee flash overlays ──────────────────────────────────────────
+        PDA_Preview_MS_Fire:
+            MSNF B 2 bright;
+            MSNF C 2 bright;
+            MSNF D 2;
+            MSNF E 2;
+            stop;
+        PDA_Preview_MS_FireADS:
+            MSNS B 2 bright;
+            MSNS C 2 bright;
+            MSNS D 2;
+            MSNS E 2;
+            stop;
+        PDA_Preview_MS_Zoom:
+            MSNA A 2;
+            MSNA B 2;
+            MSNA C 2;
+            MSNA D 2;
+            MSNA E 2;
+            stop;
+        PDA_Preview_MS_Grenade:
+            MSNG B 2 bright;
+            MSNG C 2;
+            MSNG D 2;
+            MSNG E 2;
+            stop;
+        PDA_Preview_MS_ModeSwap:
+            MSSW ABCD 2;
+            MSSW GH 2;
+            MSSW JK 2;
+            stop;
+        PDA_Preview_MS_Reload:
+            MSU1 ABCD 2;
+            MST1 ABCD 2;
+            MSNR ABCD 2;
+            MSNR HI 2;
+            MSU1 LK 2;
+            stop;
+
         FlashPunching:
-            MSNQ ABCDEFGHFEDCBA 1;      // 14 frames
+            MSNQ ABCDEFGHFEDCBA 1;
             TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
             goto Ready3;
 
         FlashKicking:
-            MSNK ABCDEFGHGFEDCBA 1;     // 15 frames
+            MSNK ABCDEFGHGFEDCBA 1;
             goto Ready3;
 
         FlashAirKicking:
-            MSNQ ABCDEFGHHGFEDCBA 1;    // 16 frames
+            MSNQ ABCDEFGHHGFEDCBA 1;
             goto Ready3;
 
         FlashSlideKicking:
-            MSNK ABCDEFGHHHHHHHHHHHHHGFEDCBA 1; // 27 frames
+            MSNK ABCDEFGHHHHHHHHHHHHHGFEDCBA 1;
             goto Ready3;
 
         FlashSlideKickingStop:
-            MSNK GFEDCBA 1;             // 7 frames
+            MSNK GFEDCBA 1;
             goto Ready3;
     }
 
-    // ═════════════════════════════════════════════════════════════════════════
-    // ACTION FUNCTIONS
-    // ═════════════════════════════════════════════════════════════════════════
-
-    // ── Ammo / magazine helpers ───────────────────────────────────────────────
     action void MS_SetSniperMagMax(int capacity)
     {
         let po = invoker.owner;
@@ -671,7 +693,11 @@ class PB_MetalSniper : PB_WeaponBase
             MS_AmmoCapacity();
             A_Print("$PB_MSNI_STANDARD");
             if (!PB_GetMagUnloaded())
+            {
                 A_GiveInventory("MS_PendingSwapReload", 1);
+                if (!PB_GetChamberEmpty())
+                    A_GiveInventory("MS_PendingSwapReload_RoundEject", 1);
+            }
             return PB_GetMagUnloaded() ? resolvestate("ReloadFromSpecial") : resolvestate("UnloadFromSpecial");
         }
         if (FindInventory("Select_MS_Resonance"))
@@ -687,7 +713,11 @@ class PB_MetalSniper : PB_WeaponBase
             MS_AmmoCapacity();
             A_Print("$PB_MSNI_RESONANCE");
             if (!PB_GetMagUnloaded())
+            {
                 A_GiveInventory("MS_PendingSwapReload", 1);
+                if (!PB_GetChamberEmpty())
+                    A_GiveInventory("MS_PendingSwapReload_RoundEject", 1);
+            }
             return PB_GetMagUnloaded() ? resolvestate("ReloadFromSpecial") : resolvestate("UnloadFromSpecial");
         }
         return resolvestate(null);
@@ -719,7 +749,6 @@ class PB_MetalSniper : PB_WeaponBase
         return resolvestate(null);
     }
 
-    // ── Fire helpers ──────────────────────────────────────────────────────────
     action void MS_FireActual()
     {
         if (isResonance())
@@ -758,7 +787,6 @@ class PB_MetalSniper : PB_WeaponBase
         PB_DynamicTail("lmg", "lmg");
         A_Overlay(muzzlelayer, "MuzzleFlash");
         MS_FireActual();
-        // PB_LowAmmoSoundWarning("lmg");
         PB_TakeAmmo(invoker.ammotype2, 1);
         PB_IncrementHeat(4);
         PB_IncrementHeat(4, true);
@@ -769,23 +797,18 @@ class PB_MetalSniper : PB_WeaponBase
         PB_WeaponRecoil(-3, frandom(-0.5, 0.5));
     }
 
-	// ── Resonance helpers ──────────────────────────────────────────────────────────
     action bool isResonance()           { return invoker.resonanceAmmoLoaded; }
     action void setResonance(bool set)  { invoker.resonanceAmmoLoaded = set;  }
 
-    // ── Zoom helpers ──────────────────────────────────────────────────────────
     action bool iszoom()           { return invoker.isZooming; }
     action void setZoom(bool set)  { invoker.isZooming = set;  }
 
-    // ── Grenade helpers ───────────────────────────────────────────────────────
     action void MS_SetGrenadeQ(bool q) { invoker.grenadeloaded = q; }
     action int  getgrenqtty()          { return invoker.grenadeloaded; }
 
-    // ── Mode helpers ──────────────────────────────────────────────────────────
     action bool MS_getmode()            { return invoker.AltMode; }
     action void MS_SetMode(bool set = SniperMode) { invoker.AltMode = set; }
 
-    // ── Token cleanup ─────────────────────────────────────────────────────────
     action void cleanAmmoWheelTokens()
     {
         A_TakeInventory("Select_MS_Standard", 1);
@@ -799,13 +822,11 @@ class PB_MetalSniper : PB_WeaponBase
         A_TakeInventory("MS_Select_GrenMode", 1);
     }
 
-    // ── Input helpers ─────────────────────────────────────────────────────────
     action bool PlayerPressedOnce(int button)
     {
         return (player.cmd.buttons & button) && !(player.oldbuttons & button);
     }
 
-    // ── Init ──────────────────────────────────────────────────────────────────
     override void PostBeginPlay()
     {
         grenadeloaded  = true;

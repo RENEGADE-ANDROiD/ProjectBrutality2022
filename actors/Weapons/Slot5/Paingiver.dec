@@ -1,52 +1,4 @@
-// ============================================================================
-// Paingiver - ported from "Addon - Paingiver" into Project Brutality 2022.
-// Source: Addon - Paingiver/Paingiver.txt.
-// Patches vs. the upstream addon (see PORTING_ADDONS.md and the port plan):
-//   * PB_WeaponBase.RespectItem -> PB_WeaponBase.respectItem (lowercase) to
-//     match the dominant spelling across PB 2022 (every other Slot5 weapon
-//     uses respectItem - see SUPERGL.dec line 101, ROCKETLAUNCHER.dec line
-//     273). DECORATE properties are case-insensitive but consistency helps
-//     greppability.
-//   * Added ACTOR PaingiverRespected : Inventory at top of file - PB 2022
-//     does not auto-create respect tokens, unlike some newer PB builds.
-//   * Sound replacements: RLFIRE  -> weapons/paingiver/fire1 (Fire state),
-//     RLFIRE2 -> weapons/paingiver/fire2 (AltFire state), RLsweet ->
-//     weapons/paingiver/sweet, and in SeekerRocket DeathSound "rlboom" ->
-//     "weapons/paingiver/boom". Matches the SNDINFO.PBWeapons block added
-//     alongside this file.
-//   * Ready-state idle cue A_PlaySound("rocket", 2) -> A_PlaySound(
-//     "weapons/rocklf", 2) - "rocket" has no mapping in PB 2022's SNDINFO,
-//     "weapons/rocklf" is the established rocket-launcher idle hiss and is
-//     already used by actors/Weapons/EXPLOSIVES.dec (SeekerRocket SeeSound).
-//   * A_PlaySound("KICKSW", CHAN_AUTO) dropped from Ready and Deselect - no
-//     equivalent sound in PB 2022; the pitch-wobble + rocklf cue is enough
-//     feedback.
-//   * SelectContinue token juggling fixed: the addon copy-pasted its Select
-//     block from a shotgun weapon, so it gave ShotgunSelected and took
-//     RocketLauncherSelected - desync'd from the actual weapon class. Both
-//     lines are swapped here (Give RocketLauncherSelected, Take
-//     ShotgunSelected) so PB 2022's aim/feedback overlays see the correct
-//     selected-weapon flag.
-//   * Editor-number comment block (//$Title/$Category/$Sprite) added inside
-//     the actor, matching the LeverAction / MetalSniper editor-comment
-//     convention.
-//   * A_FireCustomMissile("GunSmokeSpawner",...) -> A_FireCustomMissile(
-//     "GunFireSmoke",...) (Fire and AltFire states). The plan listed
-//     GunSmokeSpawner as verified-exists but smoke-test lint confirms it
-//     is only referenced by this file; GunFireSmoke is PB 2022's standard
-//     muzzle-smoke actor (actors/Effects/SMOKE.dec line 270) and matches
-//     the PORTING_ADDONS.md section 2 native-FX-spawner guidance.
-// The barrel-grab flash labels (FlashKicking, FlashKickingDW, FlashAirKicking,
-// FlashSlideKicking, FlashSlideKickingStop, FlashPunching, FlashPunchingStop)
-// are kept as-is - they deliberately override PB_Weapon's defaults because
-// the Paingiver is an oversized launcher that can't do barrel grabs.
-// SeekerRocket and SeekerFlare follow verbatim; all their referenced effect
-// actors (BigRicoChet, DetectFloorCrater/CeilCrater, UnderwaterExplosion,
-// ExplosionFlareSpawner, RocketExplosion, NewRocketExploFX,
-// ExplosionParticleHeavy/VeryFast, MediumExplosionFlames,
-// ExplosionSmokeFast22, FAREXPL) already resolve against PB 2022.
-// ============================================================================
-
+// Paingiver — Addon Paingiver port. PB integration: AGENTS.md §4 (Paingiver + Riot Shield + Stormcast).
 Actor PaingiverRespected : Inventory { Inventory.MaxAmount 1 }
 
 ACTOR Paingiver : PB_Weapon
@@ -281,7 +233,8 @@ ACTOR Paingiver : PB_Weapon
 		TNT1 A 1 Bright A_Light1
 		TNT1 B 0 Bright
 		TNT1 D 1 Bright A_Light2
-		Goto LightDone
+		TNT1 A 0 A_Light0
+		Stop
 
 	Steady:
 	    TNT1 A 1
@@ -299,7 +252,6 @@ ACTOR Paingiver : PB_Weapon
 		TNT1 A 0 A_Print("\ctPaingiver:\c- \ciGolgothan \c-steel — \cgspite \c-and \cgsuffering \c-in one frame.")
 		Goto Ready3
 	
-	// ========== FIXED FLASH STATES ==========
 	FlashKicking:
 	    TNT1 A 0 A_ClearOverlays(10,11)
 		W17A AAA 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
@@ -350,6 +302,37 @@ ACTOR Paingiver : PB_Weapon
 		W17A AAA 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
 		Goto Ready3
+
+	PDA_Preview_PaingiverReady:
+		W17A A 2 A_WeaponReady(WRF_NOFIRE)
+		W17A A 2 A_WeaponReady(WRF_NOFIRE)
+		W17A A 2 A_WeaponReady(WRF_NOFIRE)
+		W17A A 2 A_WeaponReady(WRF_NOFIRE)
+		Stop
+	PDA_Preview_PaingiverFire:
+		W17F A 2 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		W17F B 2 A_WeaponReady(WRF_NOFIRE)
+		W17F C 2 A_WeaponReady(WRF_NOFIRE)
+		W17F D 2 A_WeaponReady(WRF_NOFIRE)
+		W17F E 2 A_WeaponReady(WRF_NOFIRE)
+		W17F F 2 A_WeaponReady(WRF_NOFIRE)
+		W17F G 2 A_WeaponReady(WRF_NOFIRE)
+		W17F H 2 A_WeaponReady(WRF_NOFIRE)
+		W17F I 2 A_WeaponReady(WRF_NOFIRE)
+		W17A A 3 A_WeaponReady(WRF_NOFIRE)
+		Stop
+	PDA_Preview_PaingiverAlt:
+		W17F A 2 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		W17F B 2 A_WeaponReady(WRF_NOFIRE)
+		W17F C 2 A_WeaponReady(WRF_NOFIRE)
+		W17F D 2 A_WeaponReady(WRF_NOFIRE)
+		W17F E 2 A_WeaponReady(WRF_NOFIRE)
+		W17F F 2 A_WeaponReady(WRF_NOFIRE)
+		W17F G 2 A_WeaponReady(WRF_NOFIRE)
+		W17F H 2 A_WeaponReady(WRF_NOFIRE)
+		W17F I 2 A_WeaponReady(WRF_NOFIRE)
+		W17A A 3 A_WeaponReady(WRF_NOFIRE)
+		Stop
 	}
 }
 

@@ -21,27 +21,6 @@ class PB_RailLine : LineTracer
 
 extend class PB_WeaponBase
 {
-	action void PB_DrawRailBeamParticle(vector3 where)
-	{
-		TextureID tid = TexMan.CheckForTexture("RA36B0", TexMan.Type_Sprite);
-		if (!tid.isValid())
-			tid = TexMan.CheckForTexture("PLSEA0", TexMan.Type_Sprite);
-		if (!tid.isValid())
-			return;
-		FSpawnParticleParams p;
-		p.Texture = tid;
-		p.Color1 = "A8FFFF";
-		p.Style = STYLE_Add;
-		p.Flags = SPF_FULLBRIGHT | SPF_NOTIMEFREEZE;
-		p.StartAlpha = 0.8;
-		p.FadeStep = 0.065;
-		p.Size = 38;
-		p.SizeStep = -2.5;
-		p.Lifetime = 22;
-		p.Pos = where;
-		Level.SpawnParticle(p);
-	}
-
 	action void PB_FireRail()
 	{
 		PlayerPawn pp = PlayerPawn(invoker.owner);
@@ -59,11 +38,6 @@ extend class PB_WeaponBase
 
 		vector3 fpos = rail.results.HitPos;
 		fpos -= rail.results.HitVector;
-
-		vector3 dif = Level.Vec3Diff(spos, fpos);
-		vector3 dr = dif.unit();
-		double dis = dif.length();
-		int q = int(dis / 20) + 1;
 
 		if (rail.results.HitType != TRACE_HitNone)
 		{
@@ -85,11 +59,7 @@ extend class PB_WeaponBase
 			vic.DamageMobj(pp, pp, 220, 'Railgun');
 		}
 
-		for (int i = 0; i < q; i++)
-		{
-			spos += dr * 20;
-			if (i > 0)
-				PB_DrawRailBeamParticle(spos);
-		}
+		A_RailAttack(0, 0, 0, "9F 9F FF", "04 7C FF", RGF_SILENT | RGF_FULLBRIGHT | RGF_CENTERZ,
+			0, "NullPuff", 0, 0, 8192, 35, 0.55, 0.48, "ElectroBlastTrail2", 0, frandom(0., 360.));
 	}
 }

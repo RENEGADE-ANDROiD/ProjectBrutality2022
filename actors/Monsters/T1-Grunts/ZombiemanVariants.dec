@@ -236,7 +236,6 @@ Actor DeadHelmetZombiemanLikeInActionMovie: DeadZombieman1
         Stop   }}
 
 
-///////////////////////////======VANILLA======//////////////////////////////////
 
 Actor Vanilla_PistolZombieman : PB_PistolZombieman 
 {

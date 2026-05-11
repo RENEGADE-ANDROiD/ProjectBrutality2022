@@ -98,7 +98,7 @@ ACTOR MicroMissileProjectile
 					A_SpawnItemEx("RocketTrailSparks",-10,0,0,-5,0,0);
 				}
 			}
-		Fly2: //for makin it fly off in different directions
+		Fly2:
 			MICR AAABBBCCC 1 Bright Light("ROCKET")
 			{
 				A_Weave(5,5,frandom(-5,5),frandom(-5,5));
@@ -240,6 +240,24 @@ States
 		LMPI A 10 A_PbvpFramework("VLMG")
 		"####" "#" 0 A_PbvpInterpolate()
 		LOOP*/
+	PDA_Preview_LMG_Fire:
+		LMGF A 2 Bright
+		LMGF B 2 Bright
+		LMGF C 2
+		LMGF D 2
+		Stop
+	PDA_Preview_LMG_Missile:
+		LMMF A 2 Bright
+		LMMF B 2 Bright
+		LMMF C 2
+		LMMF D 2
+		Stop
+	PDA_Preview_LMG_Reload:
+		LMR1 ABCDEFGHIJ 2
+		LRMR ABCDE 2
+		LMR4 CDEFGH 2
+		Stop
+
 	FlashPunching:
 		TNT1 A 0 A_JumpIfInventory("LMGMicroMissiles", 1, "FlashPunchingMissile")
 		LQB6 AB 0
@@ -939,7 +957,7 @@ States
 		TNT1 A 0 A_Takeinventory("NewClip",1)
 		Loop
 
-	StopOverlay: //just for fun lmfao
+	StopOverlay:
 		TNT1 A 1
 		Stop
 
@@ -1683,7 +1701,7 @@ States
 		Goto ReloadLidClosing
 	
 	Deselect:
-		TNT1 A 0 //A_SetCrosshair(0)
+		TNT1 A 0
 		TNT1 A 0 A_Takeinventory("RandomHeadExploder",1)
 		TNT1 A 0 A_Takeinventory("Unloading",1)
 		TNT1 A 0 A_Takeinventory("Reloading",1)

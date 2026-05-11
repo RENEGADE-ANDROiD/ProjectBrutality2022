@@ -20,7 +20,6 @@ Sounds
 - `SOUNDS/Realm667Pack/` holds additional **unmerged** upstream reference trees (loose `GLDEFS`, `DECORATE`, `ZSCRIPT` shards, etc.); only subpaths documented as integrated are loaded. Nested folders are **not** auto-loaded as engine lumps.
 
 Source-only / not yet integrated
-- Realm667DevilwormsSource/ — DECORATE + Worms/*.txt (not in DECORATE).
 - Other folders under `SOUNDS/Realm667Pack/` (DarkCardinal, Nitromite, Venor, ObsidianRavager, Behemoth, etc.) — reference only unless folded into `actors/` + `ZSCRIPT.zc` like Possessed Gibs.
 
 Fatality animation orphans (sprites authored, never granted)

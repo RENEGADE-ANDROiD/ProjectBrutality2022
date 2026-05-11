@@ -1,11 +1,9 @@
-/////TOKENS//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ACTOR RespectBallista : Inventory { Inventory.MaxAmount 1 }
 ACTOR BallistaDemonicMode : Inventory { Inventory.MaxAmount 1 }
 ACTOR BallistaUnloaded : Inventory { Inventory.MaxAmount 1 }
 ACTOR BallistaUpgraded : Inventory { Inventory.MaxAmount 1 }
 ACTOR SwapToDemonicMode : Inventory { Inventory.MaxAmount 1 }
 
-/////WEAPON//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ACTOR ProSurv_Ballista : PB_Weapon {
 	Game Doom
 	Weapon.AmmoUse1 0
@@ -32,7 +30,6 @@ ACTOR ProSurv_Ballista : PB_Weapon {
 	Scale 0.7
 	Tag "Pro-Surv Ballista"
 		States {	
-/////FLASHES//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			FlashPunching:
 				TNT1 A 0 A_JumpIfInventory("BallistaAmmo",1,1)
 				Goto FlashPunchingUnloaded
@@ -99,7 +96,6 @@ ACTOR ProSurv_Ballista : PB_Weapon {
 			FlashSlideKickingStopUnloaded:
 				CRBW UUUTSRQ 1
 				Goto Ready3
-/////STATES//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			Spawn:
 				CBOW S -1
 				Stop
@@ -251,6 +247,46 @@ ACTOR ProSurv_Ballista : PB_Weapon {
 			FinishDeselect:
 				TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower
 				Wait
+			PDA_Preview_BallistaFire:
+				CRBW F 1
+				CRBW G 1
+				CRBW H 1
+				CRBW I 1
+				CRBW J 1
+				CRBW JJ 1
+				CRBW J 1
+				CRBW J 2
+				Stop
+			PDA_Preview_BallistaFireDemonic:
+				CRBW K 1 BRIGHT
+				CRBW G 1 BRIGHT
+				CRBW H 1
+				CRBW I 1
+				CRBW J 1
+				CRBW JJ 1
+				CRBW J 1
+				CRBW J 2
+				Stop
+			PDA_Preview_BallistaAlt:
+				CRBW F 1
+				CRBW G 1
+				CRBW H 1
+				CRBW I 1
+				CRBW J 1
+				CRBW JJ 1
+				CRBW J 1
+				CRBW J 2
+				Stop
+			PDA_Preview_BallistaAltDemonic:
+				CBOW U 1 BRIGHT
+				CRBW G 1 BRIGHT
+				CRBW H 1
+				CRBW I 1
+				CRBW J 1
+				CRBW JJ 1
+				CRBW J 1
+				CRBW J 2
+				Stop
 			Fire:
 				TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel")
 				TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "ThrowFlameBarrel")
@@ -491,7 +527,6 @@ ACTOR ProSurv_Ballista : PB_Weapon {
 				TNT1 A 0 A_TakeInventory("Unloading", 1)
 				Goto Ready3	}}
 
-/////OTHERS//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ACTOR ProSurvBallistaBoltPickup : CustomInventory
 {
 	Scale 0.5

@@ -400,8 +400,8 @@ ACTOR PB_DarkMatterRifle : PB_Weapon
 		Goto Ready3
 
 	Flash:
-		TNT1 A 4
-		Goto LightDone
+		TNT1 A 1
+		Stop
 
 	Spawn:
 		PLCU A 10
@@ -648,5 +648,43 @@ ACTOR PB_DarkMatterRifle : PB_Weapon
 		PZCG A 1
 		PZCG AAA 1
 		Goto Ready3
+
+	PDA_Preview_DMRReady:
+		PZC4 A 1 A_WeaponReady(WRF_NOFIRE)
+		PZC4 B 1 A_WeaponReady(WRF_NOFIRE)
+		PZC4 C 1 A_WeaponReady(WRF_NOFIRE)
+		PZC4 D 1 A_WeaponReady(WRF_NOFIRE)
+		Stop
+	PDA_Preview_DMRFire:
+		PZCF A 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		PZCF B 1 A_WeaponReady(WRF_NOFIRE)
+		PZCF C 1 A_WeaponReady(WRF_NOFIRE)
+		PZCU B 1 A_WeaponReady(WRF_NOFIRE)
+		PZCU C 1 A_WeaponReady(WRF_NOFIRE)
+		PZCU D 1 A_WeaponReady(WRF_NOFIRE)
+		Stop
+	PDA_Preview_DMRAltCharge:
+		PZC4 A 5 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		PZC4 B 5 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		PZC4 C 5 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		PZC4 D 5 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		PZCS A 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		PZCS B 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		PZCS C 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		Stop
+	PDA_Preview_DMRAltFire:
+		PZCF A 2 BRIGHT A_WeaponReady(WRF_NOFIRE)
+		PZCR A 1 A_WeaponReady(WRF_NOFIRE)
+		PZCR B 1 A_WeaponReady(WRF_NOFIRE)
+		PZCG D 1 A_WeaponReady(WRF_NOFIRE)
+		PZCG C 1 A_WeaponReady(WRF_NOFIRE)
+		PZCG B 1 A_WeaponReady(WRF_NOFIRE)
+		Stop
+	PDA_Preview_DMRReload:
+		PZCR A 1 A_WeaponReady(WRF_NOFIRE)
+		PZCR B 2 A_WeaponReady(WRF_NOFIRE)
+		PZCR C 1 A_WeaponReady(WRF_NOFIRE)
+		PZCR D 2 A_WeaponReady(WRF_NOFIRE)
+		Stop
 	}
 }

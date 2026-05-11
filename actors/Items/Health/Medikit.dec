@@ -14,8 +14,6 @@ ACTOR Medikit2 : Health
 	}
 }
 
-
-// Might reuse later
 ACTOR Stim5Green : Health
 {
 	+DONTGIB

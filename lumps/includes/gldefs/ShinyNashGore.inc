@@ -1,5 +1,4 @@
-// Shiny Nash Gore (PBR) — credits: Nash Muhandes (base), generic name guy (normal/spec maps), Ibis Paint X; folded for PB 2022 Enhanced Brootality toggle.
-// Albedo under GRAPHICS/PB2022/ShinyNashGore/; maps under materials/pb2022/shiny_nashgore/.
+// Shiny Nash Gore (PBR): Nash Muhandes (base), generic name guy (normal/spec maps), Ibis Paint X.
 
 Material Texture "GRAPHICS/PB2022/ShinyNashGore/BloodSpot/bsplat1.png"
 {

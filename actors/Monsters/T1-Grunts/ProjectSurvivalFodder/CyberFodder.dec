@@ -10,6 +10,8 @@ Actor CyberFodder : Shotgunguy
   +DONTHURTSPECIES
   +DONTHARMSPECIES
   +DONTHARMCLASS
+  +THRUSPECIES
+  +NOINFIGHTING
   +AVOIDMELEE
   +CANNOTPUSH
   -CANUSEWALLS
@@ -47,6 +49,7 @@ Actor CyberFodder : Shotgunguy
 	DropItem "NewClip" 128
 	Tag "Cyber Fodder"
 	Species "Fodder"
+	BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
 	SeeSound "CyberZ/Sight"
 	ActiveSound "CyberZ/Active"
 	PainSound "CyberZ/Pain"

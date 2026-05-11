@@ -1,6 +1,5 @@
 Actor AmmoCounter : Inventory { }
 
-//Clipbox Spawner
 Actor IsSniperRoundBox : AmmoCounter { }
 Actor IsBulletKitBig : AmmoCounter { }
 Actor IsBulletKit : AmmoCounter {}
@@ -18,7 +17,6 @@ Actor IsNearLowCalWeapon : AmmoCounter { }
 Actor IsNearHighCalWeapon : AmmoCounter { }
 Actor IsNearGLUpgrade : AmmoCounter { }
 
-//Cell Spawner
 Actor IsNormalCellAmmo : AmmoCounter { }
 Actor IsBFGCellAmmo : AmmoCounter { }
 Actor IsBlackHoleCellAmmo : AmmoCounter {}
@@ -27,7 +25,6 @@ Actor ISNearBlackHoleGen : AmmoCounter { }
 Actor IsNearBFG : AmmoCounter { }
 Actor IsNearPlasmaWeapon : AmmoCounter { }
 
-//Rocket Spawner
 Actor IsRocketAmmo : AmmoCounter { }
 Actor IsSpecialGrenadeAmmo : AmmoCounter { }
 Actor IsExcavatorAmmo : AmmoCounter { }
@@ -42,7 +39,6 @@ Actor IsNearHEGrenadeLauncher : AmmoCounter { }
 Actor IsNearSpecialGrenadeLauncher : AmmoCounter { }
 Actor IsNearRocketLauncher : AmmoCounter { }
 
-//Shellbox Spawner
 Actor IsNearShotgun : AmmoCounter {}
 Actor IsNearRevolver : AmmoCounter { }
 Actor IsBigShellbox : AmmoCounter { }

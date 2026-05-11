@@ -990,6 +990,30 @@ ACTOR PB_MP40 : PB_Weapon
 			}
 			Goto Ready3
 //////////////////////////////////////////Unloading
+
+		PDA_Preview_MP40_Fire:
+			MPFI A 1 BRIGHT
+			MPFI B 1
+			MPFI C 1
+			Stop
+		PDA_Preview_MP40_AdsFire:
+			MPZO F 1 BRIGHT
+			MPZO G 1
+			MPZO H 1
+			Stop
+		PDA_Preview_MP40_AltAds:
+			MPZO A 1
+			MPZO B 1
+			MPZO C 1
+			MPZO D 1
+			Stop
+		PDA_Preview_MP40_Reload:
+			MPR1 A 1
+			MPR1 D 1
+			MPR1 M 1
+			MPR2 F 1
+			MPR2 R 1
+			Stop
 		
 		Spawn:
 			VMP4 A 0 NoDelay

@@ -1,10 +1,5 @@
-/*
- * DamNums: by Xaser Acheron
- */
+// DamNums: Xaser Acheron
 
-/*
- * Doom Classic font
- */
 Sprite "_C21A0", 28, 16 { Offset 14, 14 Patch "_C11A0", 14, 0 }
 Sprite "_C22A0", 28, 16 { Offset 14, 14 Patch "_C11A0",  0, 0 }
 Sprite "_C31A0", 42, 16 { Offset 21, 14 Patch "_C11A0", 28, 0 }
@@ -155,9 +150,6 @@ Sprite "_C53J0", 70, 16 { Offset 35, 14 Patch "_C11J0", 28, 0 }
 Sprite "_C54J0", 70, 16 { Offset 35, 14 Patch "_C11J0", 14, 0 }
 Sprite "_C55J0", 70, 16 { Offset 35, 14 Patch "_C11J0",  0, 0 }
 
-/*
- * Doom Small font
- */
 Sprite "_D21A0", 16, 7 { Offset  8,  5 Patch "_D11A0",  8, 0 }
 Sprite "_D22A0", 16, 7 { Offset  8,  5 Patch "_D11A0",  0, 0 }
 Sprite "_D31A0", 24, 7 { Offset 12,  5 Patch "_D11A0", 16, 0 }
@@ -308,9 +300,6 @@ Sprite "_D53J0", 40, 7 { Offset 18,  5 Patch "_D11J0", 16, 0 }
 Sprite "_D54J0", 40, 7 { Offset 18,  5 Patch "_D11J0",  8, 0 }
 Sprite "_D55J0", 40, 7 { Offset 18,  5 Patch "_D11J0",  0, 0 }
 
-/*
- * Doom Modern font
- */
 Sprite "_M21A0", 22, 13 { Offset 11, 11 Patch "_M11A0", 11, 0 }
 Sprite "_M22A0", 22, 13 { Offset 11, 11 Patch "_M11A0",  0, 0 }
 Sprite "_M31A0", 33, 13 { Offset 16, 11 Patch "_M11A0", 22, 0 }
@@ -461,9 +450,6 @@ Sprite "_M53J0", 55, 13 { Offset 27, 11 Patch "_M11J0", 22, 0 }
 Sprite "_M54J0", 55, 13 { Offset 27, 11 Patch "_M11J0", 11, 0 }
 Sprite "_M55J0", 55, 13 { Offset 27, 11 Patch "_M11J0",  0, 0 }
 
-/*
- * Raven Big font
- */
 Sprite "_R21A0", 24, 16 { Offset 12, 14 Patch "_R11A0", 12, 0 }
 Sprite "_R22A0", 24, 16 { Offset 12, 14 Patch "_R11A0",  0, 0 }
 Sprite "_R31A0", 36, 16 { Offset 12, 14 Patch "_R11A0", 24, 0 }
@@ -614,9 +600,6 @@ Sprite "_R53J0", 60, 16 { Offset 30, 14 Patch "_R11J0", 24, 0 }
 Sprite "_R54J0", 60, 16 { Offset 30, 14 Patch "_R11J0", 12, 0 }
 Sprite "_R55J0", 60, 16 { Offset 30, 14 Patch "_R11J0",  0, 0 }
 
-/*
- * Raven Small font
- */
 Sprite "_T21A0", 18, 9 { Offset 9, 7 Patch "_T11A0", 9, 0 }
 Sprite "_T22A0", 18, 9 { Offset 9, 7 Patch "_T11A0", 0, 0 }
 Sprite "_T31A0", 27, 9 { Offset 13, 7 Patch "_T11A0", 18, 0 }
@@ -767,9 +750,6 @@ Sprite "_T53J0", 45, 9 { Offset 22, 7 Patch "_T11J0", 18, 0 }
 Sprite "_T54J0", 45, 9 { Offset 22, 7 Patch "_T11J0", 9, 0 }
 Sprite "_T55J0", 45, 9 { Offset 22, 7 Patch "_T11J0", 0, 0 }
 
-/*
- * Raven Inventory font
- */
 Sprite "_I21A0", 16, 9 { Offset 8, 7 Patch "_I11A0", 8, 0 }
 Sprite "_I22A0", 16, 9 { Offset 8, 7 Patch "_I11A0", 0, 0 }
 Sprite "_I31A0", 24, 9 { Offset 12, 7 Patch "_I11A0", 16, 0 }
@@ -920,9 +900,6 @@ Sprite "_I53J0", 40, 9 { Offset 20, 7 Patch "_I11J0", 16, 0 }
 Sprite "_I54J0", 40, 9 { Offset 20, 7 Patch "_I11J0", 8, 0 }
 Sprite "_I55J0", 40, 9 { Offset 20, 7 Patch "_I11J0", 0, 0 }
 
-/*
- * Strife font
- */
 Sprite "_S21A0", 20, 7 { Offset 10, 5 Patch "_S11A0", 10, 0 }
 Sprite "_S22A0", 20, 7 { Offset 10, 5 Patch "_S11A0", 0, 0 }
 Sprite "_S31A0", 30, 7 { Offset 15, 5 Patch "_S11A0", 20, 0 }
@@ -1073,9 +1050,6 @@ Sprite "_S53J0", 50, 7 { Offset 25, 5 Patch "_S11J0", 20, 0 }
 Sprite "_S54J0", 50, 7 { Offset 25, 5 Patch "_S11J0", 10, 0 }
 Sprite "_S55J0", 50, 7 { Offset 25, 5 Patch "_S11J0", 0, 0 }
 
-/*
- * Chex Quest font
- */
 Sprite "_X21A0", 22, 12 { Offset 11, 10 Patch "_X11A0", 11, 0 }
 Sprite "_X22A0", 22, 12 { Offset 11, 10 Patch "_X11A0", 0, 0 }
 Sprite "_X31A0", 33, 12 { Offset 16, 10 Patch "_X11A0", 22, 0 }
@@ -1226,9 +1200,6 @@ Sprite "_X53J0", 55, 12 { Offset 27, 10 Patch "_X11J0", 22, 0 }
 Sprite "_X54J0", 55, 12 { Offset 27, 10 Patch "_X11J0", 11, 0 }
 Sprite "_X55J0", 55, 12 { Offset 27, 10 Patch "_X11J0", 0, 0 }
 
-/*
- * Hacx font
- */
 Sprite "_H21A0", 32, 12 { Offset 16, 10 Patch "_H11A0", 16, 0 }
 Sprite "_H22A0", 32, 12 { Offset 16, 10 Patch "_H11A0", 0, 0 }
 Sprite "_H31A0", 48, 12 { Offset 24, 10 Patch "_H11A0", 32, 0 }
@@ -1379,9 +1350,6 @@ Sprite "_H53J0", 80, 12 { Offset 40, 10 Patch "_H11J0", 32, 0 }
 Sprite "_H54J0", 80, 12 { Offset 40, 10 Patch "_H11J0", 16, 0 }
 Sprite "_H55J0", 80, 12 { Offset 40, 10 Patch "_H11J0", 0, 0 }
 
-/*
- * Harmony font
- */
 Sprite "_N21A0", 24, 12 { Offset 12, 10 Patch "_N11A0", 12, 0 }
 Sprite "_N22A0", 24, 12 { Offset 12, 10 Patch "_N11A0", 0, 0 }
 Sprite "_N31A0", 36, 12 { Offset 18, 10 Patch "_N11A0", 24, 0 }
@@ -1532,9 +1500,6 @@ Sprite "_N53J0", 60, 12 { Offset 30, 10 Patch "_N11J0", 24, 0 }
 Sprite "_N54J0", 60, 12 { Offset 30, 10 Patch "_N11J0", 12, 0 }
 Sprite "_N55J0", 60, 12 { Offset 30, 10 Patch "_N11J0", 0, 0 }
 
-/*
- * The Adventures of Square font
- */
 Sprite "_Q21A0", 30, 19 { Offset 15, 17 Patch "_Q11A0", 15, 0 }
 Sprite "_Q22A0", 30, 19 { Offset 15, 17 Patch "_Q11A0", 0, 0 }
 Sprite "_Q31A0", 45, 19 { Offset 22, 17 Patch "_Q11A0", 30, 0 }
@@ -1685,9 +1650,6 @@ Sprite "_Q53J0", 75, 19 { Offset 37, 17 Patch "_Q11J0", 30, 0 }
 Sprite "_Q54J0", 75, 19 { Offset 37, 17 Patch "_Q11J0", 15, 0 }
 Sprite "_Q55J0", 75, 19 { Offset 37, 17 Patch "_Q11J0", 0, 0 }
 
-/*
- * Urban Brawl font
- */
 Sprite "_U21A0", 16, 7 { Offset 8, 5 Patch "_U11A0", 8, 0 }
 Sprite "_U22A0", 16, 7 { Offset 8, 5 Patch "_U11A0", 0, 0 }
 Sprite "_U31A0", 24, 7 { Offset 12, 5 Patch "_U11A0", 16, 0 }
@@ -1838,9 +1800,6 @@ Sprite "_U53J0", 40, 7 { Offset 20, 5 Patch "_U11J0", 16, 0 }
 Sprite "_U54J0", 40, 7 { Offset 20, 5 Patch "_U11J0", 8, 0 }
 Sprite "_U55J0", 40, 7 { Offset 20, 5 Patch "_U11J0", 0, 0 }
 
-/*
- * Borderlands font
- */
 Sprite "_L21A0", 50, 38 { Offset 25, 36 Patch "_L11A0", 25, 0 }
 Sprite "_L22A0", 50, 38 { Offset 25, 36 Patch "_L11A0", 0, 0 }
 Sprite "_L31A0", 75, 38 { Offset 37, 36 Patch "_L11A0", 50, 0 }

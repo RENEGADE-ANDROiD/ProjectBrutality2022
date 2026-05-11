@@ -1,5 +1,3 @@
-// Spawns PB_FrozenSolid* statues on Ice / Freeze / Frost / IceBeam kills for mapped PB monsters (Cat's Frozen Addon art).
-
 class PB_FrozenSolidHandler : EventHandler
 {
 	clearscope static bool IsFrozenDamage(Name dt)

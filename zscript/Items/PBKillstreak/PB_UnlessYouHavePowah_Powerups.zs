@@ -1,12 +1,10 @@
-// DEFLECTION SPHERE
-// Deflects non-homing projectiles aimed at player
 class PowerDeflect : Powerup 
 {
-	bool zeroTurn;	// "random" deflection direction when projectile aims directly at player
+	bool zeroTurn;
 	
 	Default
 	{
-		Powerup.Duration -20;
+		Powerup.Duration -15;
 		Powerup.Color "ff 80 00", 0.005;
 	}
 	
@@ -27,21 +25,21 @@ class PowerDeflect : Powerup
 		{
 			if (!ob || !ob.bMissile || ob.bSeekermissile || ob.target == Owner) continue;
 			
-			double v = ob.vel.Length();	// speed of projectile
-			double ang = VectorAngle(ob.vel.x, ob.vel.y);	// direction of projectile
-			double dist = ob.Distance3D(Owner);	// distance from player
+			double v = ob.vel.Length();
+			double ang = VectorAngle(ob.vel.x, ob.vel.y);
+			double dist = ob.Distance3D(Owner);
 
-			if (dist > 35*v) continue;	// too far away, no need to deflect
+			if (dist > 35*v) continue;
 			
 			zeroTurn = !zeroTurn;
 			
 			vector2 vecToPlayer = ob.Vec2To(Owner);	
-			double angleToPlayer = VectorAngle(vecToPlayer.x, vecToPlayer.y); // direction from projectile to player
-			double angleDelta = deltaangle(ang, angleToPlayer);	// how much the projectile is off
+			double angleToPlayer = VectorAngle(vecToPlayer.x, vecToPlayer.y);
+			double angleDelta = deltaangle(ang, angleToPlayer);
 			
-			if (abs(angleDelta) > 60) continue;	// not going to player (too much off)
+			if (abs(angleDelta) > 60) continue;
 			
-			double newDiff;		// new direction difference
+			double newDiff;
 			if (angleDelta < 0) newDiff = 3.0;
 			else if (angleDelta > 0 || zeroTurn) newDiff = -3.0;
 			else newDiff = 3.0;
@@ -56,7 +54,6 @@ class PowerDeflect : Powerup
 	}
 }
 
-// ELECTRIC AURA SPHERE
 Class ElectricAuraSphere : PowerupGiver
 {
 	Default
@@ -70,7 +67,7 @@ Class ElectricAuraSphere : PowerupGiver
 		+INVENTORY.BIGPOWERUP;
 		Inventory.MaxAmount 0;
 		Powerup.Type "ElectricAuraPower";
-		Powerup.Duration -20;
+		Powerup.Duration -15;
 		Powerup.Color "FFFF00", 0.005;
 		Inventory.PickupMessage "Electric Aura! Summons an Electric Field that Stuns Nearby Enemies in Area";
 	}
@@ -82,7 +79,6 @@ Class ElectricAuraSphere : PowerupGiver
 	}
 }
 
-// ==================== Electric Aura Warp ====================
 class ElectricAuraWarp : Actor
 {
     int dist;
@@ -161,7 +157,6 @@ class ElectricAuraBeam : Actor
     }
 }
 
-// ==================== Main Powerup (small radius) ====================
 class ElectricAuraPower : Powerup
 {
     actor AL;
@@ -171,7 +166,7 @@ class ElectricAuraPower : Powerup
     {
         super.InitEffect();
 
-        arad = 160;   // small/medium tactical radius (original was 384, dropped to 120, then bumped slightly so the field noticeably reaches past adjacent monsters; Fire matches this as the sister zapper)
+        arad = 160;
 
         if (owner)
         {
@@ -183,7 +178,6 @@ class ElectricAuraPower : Powerup
                 flags: DYNAMICLIGHT.LF_NOSHADOWMAP,
                 ofs: (0, 0, owner.height));
 
-            // Spawn warp rings in three vertical layers to form a bubble
             for (int i = 0; i < 360; i += 15)
             {
                 for (int layer = 0; layer < 3; layer++)
@@ -216,7 +210,6 @@ class ElectricAuraPower : Powerup
     {
         if (owner)
         {
-            // Shock monsters every 5 tics (radius = arad)
             if (GetAge() % 5 == 0)
             {
                 array<actor> monsters;

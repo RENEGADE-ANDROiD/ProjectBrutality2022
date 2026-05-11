@@ -1,6 +1,3 @@
-// Pickup: find a PB "Killstreak" globe in the map, then your streak counts.
-// Power-up token: every 5 kills, random reward from pool (per-CVar toggles).
-
 class PB_KillstreakMode : Inventory
 {
 	Default
@@ -50,7 +47,6 @@ class PB_KillstreakFlare : Inventory
 	}
 }
 
-// Random power-up in the PB 2022 pool; does not replace any map item.
 class PB_KillStreakPowerUp : Inventory
 {
 	Default
@@ -219,7 +215,6 @@ class PB_KillStreakPowerUp : Inventory
 		PushIf(pool, "pb_ks_r_lifeshield","LifeshieldSphere",    plr);
 		PushIf(pool, "pb_ks_r_electricsphere","ElectricAuraSphere", plr);
 		PushIf(pool, "pb_ks_r_legendsphere","LegendSphere",      plr);
-		// Realm667 power-up fold (see actors/Items/Realm667Powerups/ + zscript counterparts)
 		PushIf(pool, "pb_ks_r_bootsnorth", "BootsOfTheNorth",        plr);
 		PushIf(pool, "pb_ks_r_bracers",    "BracersOfForce",         plr);
 		PushIf(pool, "pb_ks_r_deadbook",   "BookOfTheDead",          plr);
@@ -240,7 +235,6 @@ class PB_KillStreakPowerUp : Inventory
 		int i  = random(0, pool.size() - 1);
 		String pick = pool[i];
 		outClass = pick;
-		// Flavor
 		if (pick == "PB_KSHasteSphere") outMsg   = "Kill streak: Haste!";
 		else if (pick == "PB_KSDoubleSphere") outMsg = "Kill streak: Doom sphere (double damage)!";
 		else if (pick == "PB_KSInvulnerabilitySphere") outMsg = "Kill streak: Invulnerability!";

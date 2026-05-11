@@ -122,7 +122,6 @@ ACTOR CyberDemonLaserPointer
   }
 }
 
-///////////////////////////======VANILLA======//////////////////////////////////
 
 Actor Vanilla_Cyberdemon : PB_Cyberdemon
 {

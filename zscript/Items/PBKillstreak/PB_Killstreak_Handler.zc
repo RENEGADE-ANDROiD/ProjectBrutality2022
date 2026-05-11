@@ -1,5 +1,3 @@
-// Streak count + 5-kill reward + optional rare “flare” globe in the map.
-
 class PB_KillstreakHandler : EventHandler
 {
 	int currentStreak[MAXPLAYERS];
@@ -42,7 +40,6 @@ class PB_KillstreakHandler : EventHandler
 		return c == null || c.GetBool();
 	}
 
-	// 0.0–1.0 from user cvar pb_ks_announcer_volume (read every play; no restart).
 	static double PB_AnnouncerVolumeMul(PlayerPawn p)
 	{
 		if (!p || !p.player) return 1.;
@@ -82,7 +79,6 @@ class PB_KillstreakHandler : EventHandler
 		currentStreak[pnum]++;
 		int st = currentStreak[pnum];
 		String snd = PBStreakLine(killer, st);
-		// One announcer line at a time on CHAN_7 (CHAN_AUTO stacks voices every kill; no CHAN_8 in this engine line).
 		if (snd != "")
 		{
 			double avol = PB_AnnouncerVolumeMul(killer);
@@ -123,11 +119,9 @@ class PB_KillstreakHandler : EventHandler
 		int v = c ? c.GetInt() : 100;
 		if (v <= 0) return "";
 		if (count < 1) return "";
-		// Loudness from slider via A_StartSound volume; use _v2 as 100% SNDINFO reference.
 		return String.Format("pb_ks/ann%d_v2", (count - 1) % 8);
 	}
 
-	// Matches pb_ks/ann0_v* … ann7_v* in SNDINFO (voice line queued but channel busy).
 	static String PBAnnouncerHookCaption(int killCount)
 	{
 		if (killCount < 1) return "";
@@ -219,7 +213,6 @@ class PB_KillstreakRareFlare : EventHandler
 		let cChance = CVar.FindCVar("pb_ks_rare_chance");
 		int chance = cChance ? cChance.GetInt() : 15;
 		chance = clamp(chance, 0, 100);
-		// Chance once per level: bonus globe to activate kill streaks
 		if (random(1, 100) > chance) return;
 		Class<Actor> flareCls = "PB_KillstreakFlare";
 		if (!flareCls) return;

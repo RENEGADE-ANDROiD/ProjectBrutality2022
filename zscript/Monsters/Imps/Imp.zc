@@ -1,4 +1,4 @@
-Class PB_Imp1 : PB_Monster// Replaces DoomImp
+Class PB_Imp1 : PB_Monster
 {
 		Default
 		{
@@ -65,11 +65,9 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 		bool jumping;
 		
 		
-		// Check walls on right/left (from Imp's POV) after facing the player
 		
 		
 		bool canJumpOnCeiling(int height) {
-			// Is too low to do a jump?
 			FLineTraceData RemoteRayCeiling;
 			bool ceilingcheck = LineTrace(
 			   self.angle,
@@ -106,7 +104,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 		}
 		
 		bool touchingWall(){
-			// Walls left of Imp's perspective
 			FLineTraceData RemoteRay;
 			bool wallcheck = LineTrace(
 			   self.angle,
@@ -125,7 +122,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 		
 		bool canJumpOnWallLeft(int range){
 			
-			// Is too low to do a jump?
 			FLineTraceData RemoteRayCeiling;
 			bool ceilingcheck = LineTrace(
 			   self.angle,
@@ -141,7 +137,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			}
 			
 		
-			// Walls left of Imp's perspective
 			FLineTraceData RemoteRay;
 			bool wallcheck = LineTrace(
 			   self.angle-270,
@@ -159,9 +154,7 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 		}
 		
 		
-		// Check walls on right (from Imp's POV) after facing the player
 		bool canJumpOnWallRight(int range) {
-			// Is too low to do a jump?
 			FLineTraceData RemoteRayCeiling;
 			bool ceilingcheck = LineTrace(
 			   self.angle,
@@ -175,7 +168,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			if(ceilingcheck && RemoteRayCeiling.HitType == TRACE_HitCeiling ) {
 				return false;
 			}
-			// Walls right of Imp's perspective
 			FLineTraceData RemoteRay;
 			bool wallcheck = LineTrace(
 			   self.angle-90,
@@ -194,7 +186,7 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 		
 		
 		override void PostBeginPlay() {
-			Super.PostBeginPlay(); // call the super function for virtual functions so we don't break shit if GZdoom update.
+			Super.PostBeginPlay();
 			HitBoxSpawned = False;
 		}
 		
@@ -236,7 +228,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 				bDONTTHRUST = false;
 			}
 			
-			// Update recognition if crouching
 			if(crawlingOnFloor) {
 				self.Height = 28;
 			}
@@ -244,10 +235,8 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 				self.Height = 56;
 			}
 			
-			//Handle Hitbox system
 			HitboxerHandler();
 			
-			//Handle Execution system
 			ExecutionHandler();
 		}
 		
@@ -275,9 +264,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 				TNT1 A 0 A_StartSound("flesh/step");
 				Loop;
 			
-			////////////////
-			//Attack Logic// 
-			////////////////
 			Melee:
 				TNT1 A 0 A_JumpIfCloser(80, "Melee2");
 				TNT1 A 0 A_Jump(110, "MeleeRush");
@@ -327,7 +313,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 				TROO I 2;
 				Goto See;
 	
-		// Attack Handler
 		Missile:
 			TROO E 6 {
 				A_FaceTarget();
@@ -404,7 +389,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 				TROT HD 2 A_FaceTarget();
 				Goto See;
 				
-		// Right - Mirror the imp sprite	
 		
 		
 		TurnAndJumpRight_Long:
@@ -525,7 +509,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			Goto LandingAllFours;
 		
 		
-		// Left
 		TurnAndJumpLeft:
 			TNT1 A 0 A_SetAngle(angle-270);
 			TROT C 4;
@@ -590,17 +573,15 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			IW01 ABCD 0;
 			IW00 A 6 {
 				if (wallClimbFlipped) {
-					sprite = GetSpriteIndex("IW01"); // Will override the TNT1, replacing it with ZOMB.\
+					sprite = GetSpriteIndex("IW01");
 				}
 			
 				if ( !wallClimbFlipped && (target && deltaangle(wallFacingAngle, AngleTo(target)) > 0)) {
-// 					SetState(self.ResolveState("DropFromWall"));
 					SetState(self.ResolveState("SwitchWallRight"));
 				}
 				
 				
 				if ( wallClimbFlipped && (target && deltaangle(wallFacingAngle, AngleTo(target)) < 0)) {
-// 					SetState(self.ResolveState("DropFromWall"));
 					SetState(self.ResolveState("SwitchWallLeft"));
 				}
 				
@@ -611,17 +592,15 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			}
 			IW00 A 6 {
 				if (wallClimbFlipped) {
-					sprite = GetSpriteIndex("IW01"); // Will override the TNT1, replacing it with ZOMB.\
+					sprite = GetSpriteIndex("IW01");
 				}
 			
 				if ( !wallClimbFlipped && (target && deltaangle(wallFacingAngle, AngleTo(target)) > 0)) {
-// 					SetState(self.ResolveState("DropFromWall"));
 					SetState(self.ResolveState("SwitchWallRight"));
 				}
 				
 				
 				if ( wallClimbFlipped && (target && deltaangle(wallFacingAngle, AngleTo(target)) < 0)) {
-// 					SetState(self.ResolveState("DropFromWall"));
 					SetState(self.ResolveState("SwitchWallLeft"));
 				}
 				
@@ -632,18 +611,16 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			}
 			IW00 A 6 {
 				if (wallClimbFlipped) {
-					sprite = GetSpriteIndex("IW01"); // Will override the TNT1, replacing it with ZOMB.
+					sprite = GetSpriteIndex("IW01");
 				}
 				
 			
 				if ( !wallClimbFlipped && (target && deltaangle(wallFacingAngle, AngleTo(target)) > 0)) {
-// 					SetState(self.ResolveState("DropFromWall"));
 					SetState(self.ResolveState("SwitchWallRight"));
 				}
 				
 				
 				if ( wallClimbFlipped && (target && deltaangle(wallFacingAngle, AngleTo(target)) < 0)) {
-// 					SetState(self.ResolveState("DropFromWall"));
 					SetState(self.ResolveState("SwitchWallLeft"));
 				}
 				
@@ -655,18 +632,16 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			}
 			IW00 A 6 {
 				if (wallClimbFlipped) {
-					sprite = GetSpriteIndex("IW01"); // Will override the TNT1, replacing it with ZOMB.
+					sprite = GetSpriteIndex("IW01");
 				}
 				
 				
 				if ( !wallClimbFlipped && (target && deltaangle(wallFacingAngle, AngleTo(target)) > 0)) {
-// 					SetState(self.ResolveState("DropFromWall"));
 					SetState(self.ResolveState("SwitchWallRight"));
 				}
 				
 				
 				if ( wallClimbFlipped && (target && deltaangle(wallFacingAngle, AngleTo(target)) < 0)) {
-// 					SetState(self.ResolveState("DropFromWall"));
 					SetState(self.ResolveState("SwitchWallLeft"));
 				}
 				
@@ -695,7 +670,7 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 				
 				
 				if (wallClimbFlipped) {
-					sprite = GetSpriteIndex("IW01"); // Will override the TNT1, replacing it with ZOMB.
+					sprite = GetSpriteIndex("IW01");
 					A_FaceTarget();
 					A_Startsound ("IMPCHARG");
 					A_SpawnItemEx("PB_DoomImpBall_Spawn", 1, -24, 27);
@@ -712,7 +687,7 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 				A_FaceTarget(90,45);
 				
 				if (wallClimbFlipped) {
-					sprite = GetSpriteIndex("IW01"); // Will override the TNT1, replacing it with ZOMB.
+					sprite = GetSpriteIndex("IW01");
 				}
 				else {
 				}
@@ -722,7 +697,7 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			IW00 C 2 BRIGHT {
 				
 				if (wallClimbFlipped) {
-					sprite = GetSpriteIndex("IW01"); // Will override the TNT1, replacing it with ZOMB.
+					sprite = GetSpriteIndex("IW01");
 					A_DropAdjust("PB_DoomImpBallGravity","PB_DoomImpBall",8,-34,32, spawnOffsetY: -12, flipped: 1, minRange: 200, maxRange: 600);
 					
 					A_SpawnProjectile ("SmallFlameTrails", 35, -30, random (0, 40), 2, random (0, 160));
@@ -743,13 +718,13 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			
 			IW00 DCB 3 {
 				if (wallClimbFlipped) {
-					sprite = GetSpriteIndex("IW01"); // Will override the TNT1, replacing it with ZOMB.
+					sprite = GetSpriteIndex("IW01");
 				}
 					
 			}
 			IW00 A 1 {
 				if (wallClimbFlipped) {
-					sprite = GetSpriteIndex("IW01"); // Will override the TNT1, replacing it with ZOMB.
+					sprite = GetSpriteIndex("IW01");
 				}
 			}
 			TNT1 A 0 A_Jump(12, "DropFromWall");
@@ -847,9 +822,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			Goto See;
 			
 		
-		////////////////
-		//Pain Logic// 
-		////////////////
 		Pain.Head:
 			TNT1 A 0 A_JumpIf (jumping, "PainMidair");
 			TNT1 A 0 A_JumpIf (wallGrabbing, "FallingStart");
@@ -878,13 +850,11 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			TNT1 A 0 A_JumpIf (knockedDown, "Downed");
 			TROO H 6 A_Pain();
 			Goto See;
-		// Old Stealth System, going to be replaced with something better
 		StealthKill:
 			TROO H 1 A_FaceTarget();
 			TNT1 A 0 A_JumpIfInTargetInventory("Punching",1, 2);
 			TROO H 1;
 			Goto Pain;
-			// This old shit is going to be removed with the new stealth kill system
 			TNT1 A 0 A_GiveToTarget("SKImp", 1);
 			TNT1 A 0 A_NoBlocking();
 			TNT1 A 0 A_Die("Stealthy");
@@ -1049,7 +1019,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			Goto See;
 			
 		
-		//New Evade Animation
 		Pain.Avoid:
 			TNT1 A 0 {
 				crawlingOnFloor = False;
@@ -1087,11 +1056,9 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			TROT HD 2 A_FaceTarget();
 			Goto Missile;
 					
-	   //If the monster is hit by the "Killme" damage (which is "exploded" by the captured marine), automatically start firing at the target.
 		Pain.KillMe:
 			TNT1 A 0;
 			Goto Missile;
-		//Emergency manuever in case the monster gets killed by an "alerter" actor	
 		Death.KillMe:
 		Death.Taunt:
 		Death.Avoid:
@@ -1538,7 +1505,6 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 			}
 			TNT1 A 0 A_Jump(128,"ExplosiveImpact2");
 			TNT1 A 0 A_Jump(16,"XDeath");
-			//TNT1 A 0 //A_Jump(96, "Death.Landmine")
 			TNT1 A 0 {
 				A_Xscream();
 				A_NoBlocking();
@@ -2224,7 +2190,7 @@ Class PB_Imp1 : PB_Monster// Replaces DoomImp
 		Death.Fatality4:
 			TNT1 A 0 A_GiveToTarget("ZombieManFatality4", 1);
 			Stop;
-		Death.Fatality5://Didn't like this one, but it gives me an idea...
+		Death.Fatality5:
 			TNT1 A 0 A_GiveToTarget("ZombieManFatality5", 1);
 			Stop;
 		Death.Fatality6:

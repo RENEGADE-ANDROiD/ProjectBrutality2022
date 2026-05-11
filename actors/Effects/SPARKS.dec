@@ -65,8 +65,6 @@ actor SparkFlare_BD4 : SparkFlare_BD1 { states { Spawn: SPKW D 1 bright A_FadeOu
 actor SparkFlare_BD5 : SparkFlare_BD1 { states { Spawn: SPKW E 1 bright A_FadeOut (0.1) loop } }
 actor SparkFlare_BD6 : SparkFlare_BD1 { states { Spawn: SPKW F 1 bright A_FadeOut (0.1) loop } }
 
-// End of Sparks-------------------------
-
 actor BDSpark_Down
 {
   height 8
@@ -292,8 +290,6 @@ actor SparkFlare_W4 : SparkFlare_W1 { states { Spawn: SPKW D 1 bright A_FadeOut 
 actor SparkFlare_W5 : SparkFlare_W1 { states { Spawn: SPKW E 1 bright A_FadeOut (0.1) loop } }
 actor SparkFlare_W6 : SparkFlare_W1 { states { Spawn: SPKW F 1 bright A_FadeOut (0.1) loop } }
 
-// End of Sparks-------------------------
-
 actor Spark_Down //8914
 {
 	//$Category SpecialFX
@@ -507,8 +503,6 @@ actor Spark_UpOnce
     Stop
   }
 }
-
-//Radius_Quake (intensity, duration, damrad, tremrad, tid)
 
 actor ShakeYourAssMinor
 {

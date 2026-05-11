@@ -220,6 +220,29 @@ class PB_CyberdemonRL : PB_WeaponBase
 			CYBF IJIJ 1 BRIGHT A_DoPBWeaponAction(WRF_NOFIRE);
 			Goto Ready3;
 
+		PDA_Preview_CYRL_Fire:
+			CYBF A 1 BRIGHT;
+			CYBF B 1 BRIGHT;
+			CYBF C 1;
+			CYBF D 1 BRIGHT;
+			CYBF EFG 1 BRIGHT;
+			CYBF HJ 1 BRIGHT;
+			Stop;
+		PDA_Preview_CYRL_AltVolley:
+			CYBF A 1 BRIGHT;
+			CYBF B 1 BRIGHT;
+			CYBF C 1;
+			CYBF D 1 BRIGHT;
+			CYBF EFG 1 BRIGHT;
+			CYBF A 1 BRIGHT;
+			CYBF B 1 BRIGHT;
+			CYBF C 1;
+			CYBF D 3 BRIGHT;
+			CYBF EEFFGG 1 BRIGHT;
+			CYBF HHJ 1 BRIGHT;
+			CYBF IJIJIJ 1 BRIGHT;
+			Stop;
+
 		Weaponspecial:
 			TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
 			TNT1 A 0 A_Print("\ctWeapon Special:\c- \cdn/a \c-");

@@ -1,4 +1,3 @@
-// : PB_WeaponBase: SelectFirstPersonLegs inlined (BaseWeapon.dec)
 class PB_ArgentSith : PB_WeaponBase
 {
 	Default
@@ -529,6 +528,30 @@ class PB_ArgentSith : PB_WeaponBase
 		TNT1 A 0 A_ClearOverlays(10,11);
 		BVAT A 1 A_DoPBWeaponAction;
 		Goto KatanaReadyToCut;
+
+	PDA_Preview_AS_Ready:
+		BVAT A 2 Bright A_WeaponReady(WRF_NOFIRE);
+		Stop;
+	PDA_Preview_AS_Slash:
+		BVAT B 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVAT C 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVAT D 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVAT E 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVAT G 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVAT H 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVAT I 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVAT J 1 Bright A_WeaponReady(WRF_NOFIRE);
+		Stop;
+	PDA_Preview_AS_Barrier:
+		BVAT L 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVT1 E 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVT1 D 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVT1 C 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVT1 B 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVT1 A 2 Bright A_WeaponReady(WRF_NOFIRE);
+		BVT1 B 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BVAT L 1 Bright A_WeaponReady(WRF_NOFIRE);
+		Stop;
 
 	FlashPunching:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");

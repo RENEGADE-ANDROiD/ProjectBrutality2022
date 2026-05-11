@@ -24,11 +24,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-//===========================================================================
-//
-//
-//
-//===========================================================================
+
 
 class NashGoreActor : NashGorePlugin
 {
@@ -51,11 +47,7 @@ class NashGoreActor : NashGorePlugin
 	int footprintSpawnInterval;
 	NashGoreCorpseBlood lastCorpseBlood;
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	override void Tick(void)
 	{
@@ -69,7 +61,6 @@ class NashGoreActor : NashGorePlugin
 
 		if (!Owner) return;
 
-		// footprint stuff (only for players)
 		if (Owner is "PlayerPawn")
 		{
 			footprintSpawnInterval--;
@@ -79,13 +70,11 @@ class NashGoreActor : NashGorePlugin
 
 				if (footprintSpawnInterval <= 0)
 				{
-					// lower intervals produce more dense footprints
 					footprintSpawnInterval = FOOTPRINT_INTERVAL;
 
 					bool result;
 					Actor footprint;
 
-					// find the last corpse blood that was stepped on
 					if (lastCorpseBlood && lastCorpseBlood.target)
 					{
 						int flags = SXF_USEBLOODCOLOR | SXF_NOCHECKPOSITION | SXF_ABSOLUTEANGLE;
@@ -98,7 +87,6 @@ class NashGoreActor : NashGorePlugin
 
 						if (footprint)
 						{
-							// calculate footprint spawn offset
 							if (footprintFootSide == 0) footprintFootSide = 1;
 							else if (footprintFootSide == 1) footprintFootSide = 0;
 							double feetDistance = 5;
@@ -110,7 +98,6 @@ class NashGoreActor : NashGorePlugin
 								Owner.Pos.Z
 							);
 
-							// move footprint to position
 							footprint.SetOrigin(sPos, false);
 						}
 					}
@@ -118,18 +105,8 @@ class NashGoreActor : NashGorePlugin
 			}
 		}
 
-		// death stuff
 		if (bIsDead)
 		{
-			// randomly mirror death sprite
-			/*
-			if (nashgore_deathflip && !Owner.bIceCorpse && !bMirroredDeathSprite)
-			{
-				NashGoreStatics.RandomXFlip(Owner);
-				bMirroredDeathSprite = true;
-			}
-			*/
-			// spawn corpse blood when it's stopped moving
 			if (Owner.Vel ~== (0, 0, 0) && !bCorpseBlood && !Owner.bIceCorpse && bCanBleed)
 			{
 				bool result;
@@ -138,16 +115,13 @@ class NashGoreActor : NashGorePlugin
 				[result, corpseblood] =
 				Owner.A_SpawnItemEx("NashGoreCorpseBlood", flags: SXF_USEBLOODCOLOR);
 
-				// footprint colour needs pointer to owner
 				if (corpseblood) corpseblood.target = Owner;
 
-				// spawn blood spurts
 				if (nashgore_bloodspurt) Owner.A_SpawnItemEx("NashGoreBloodSpurtSpawner", flags: SXF_USEBLOODCOLOR, 200);
 
 				bCorpseBlood = true;
 			}
 
-			// falling death. SPLAT!
 			if (nashgore_splat && Owner.waterlevel < 2)
 			{
 				if (fallTics < MAX_FALLTICS && !NashGoreStatics.bIsOnFloor(Owner)) fallTics++;
@@ -178,7 +152,6 @@ class NashGoreActor : NashGorePlugin
 				{
 					if (bCanBleed)
 					{
-						// spawn crushed gib based on size
 						if (Owner.Radius <= 20)
 						{
 							Owner.A_SpawnItemEx("NashGoreCrushedGibsSmall", flags: spawnFlags);
@@ -197,25 +170,6 @@ class NashGoreActor : NashGorePlugin
 				}
 			}
 
-			// gibbed stuff
-			/*
-			bool canGib =
-			(
-				Owner.Health < Owner.GetGibHealth() ||
-				(Owner.FindState('XDeath', true) != NULL && 
-				Owner.InStateSequence(Owner.CurState, Owner.ResolveState('XDeath')))
-			);
-			
-			bool shotInHead = (Owner.InStateSequence(Owner.CurState, Owner.ResolveState("Death.Head")));
-			
-			
-			if (!bGibbed && canGib && bCanBleed && !shotInHead)
-			{
-				NashGoreGibs.SpawnGibs(Owner);
-				bGibbed = true;
-			}
-			*/
-			// spawn ice gore stuff
 			if (Owner.bShattering && !bShattered && bCanBleed)
 			{
 				bShattered = true;
@@ -224,17 +178,13 @@ class NashGoreActor : NashGorePlugin
 					Owner.A_SpawnItemEx("NashGoreGibs",
 						zofs: Owner.Height,
 						frandom(-2, 2), frandom(-2, 2), frandom(-4, 4),
-						flags: spawnFlags, 125);
+						flags: SXF_USEBLOODCOLOR | SXF_NOCHECKPOSITION, 125);
 				}
 			}
 		}
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	void ResetActor(void)
 	{

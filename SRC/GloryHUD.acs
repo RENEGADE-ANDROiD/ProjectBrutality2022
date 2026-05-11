@@ -1,7 +1,6 @@
 #library "commands"
 #include "zcommon.acs"
 
-
 script "GloryHud" ENTER
 {
 	int BPtoken;
@@ -21,8 +20,6 @@ script "GloryHud" ENTER
 		BPtoken = CheckInventory("BPtoken");
 		CrucibleSelect = CheckInventory("CrucibleToken");
 		CrucibleAmmo = CheckInventory("CrucibleEnergy");
-		// Eternal HUD reads Ready tokens (icon lights when equipment off cooldown).
-		// Legacy panels (styles 0/1) keep using Selected for "which icon shows".
 		FBMode = CheckInventory("FlameBelchReady");
 		ICMode = CheckInventory("IceBombReady");
 
@@ -44,8 +41,6 @@ script "GloryHud" ENTER
 
 		if(GetCVar ("sv_fuelhud_background") == 3)
 		{
-			// Eternal (NewHUD): horizontal spread of 5 elements, no central panel.
-			// Crucible energy core: dim (CRUCRY00) when empty, lit (CRUCRY01) otherwise.
 			if( CrucibleAmmo == 0 ) SetFont("CRUCRY00");
 			if( CrucibleAmmo > 0 )  SetFont("CRUCRY01");
 			HudMessage(s:"A"; HUDMSG_ALPHA, 1120, CR_UNTRANSLATED, ((width / 2 + x) << 16), ((height / 2 + y) << 16), 0, 0.85);
@@ -57,7 +52,6 @@ script "GloryHud" ENTER
 			offset = 21;
 			HudMessage(s:"A"; HUDMSG_ALPHA, 1121, CR_UNTRANSLATED, ((width / 2 + x + offset) << 16), ((height / 2 + y) << 16), 0, 0.85);
 
-			// Blood Punch pips: BPAMMO10-14, linear (BP 0..5).
 			if(BPtoken == 0) SetFont("BPAMMO10");
 			if(BPtoken == 1) SetFont("BPAMMO11");
 			if(BPtoken == 2) SetFont("BPAMMO12");
@@ -80,8 +74,6 @@ script "GloryHud" ENTER
 		}
 		else
 		{
-			// Legacy panel layouts (styles 0/1/2). Keep using Selected for icon swaps.
-			// Clear ID 1120 so a stale Eternal Crucible-core doesn't linger on style change.
 			SetFont("Blank");
 			HudMessage(s:""; HUDMSG_ALPHA, 1120, CR_UNTRANSLATED, 0, 0, 0, 0.0);
 			int FBSel = CheckInventory("FlameBelchSelected");

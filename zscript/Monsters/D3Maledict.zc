@@ -1,4 +1,4 @@
-﻿Class D3HGPortalEffect : Actor
+Class D3HGPortalEffect : Actor
 {
 	Default
 	{
@@ -119,16 +119,16 @@ Default
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0) //if it isnt healing already
-				{								//will heal and give the token that indicates it's executable
-					A_SpawnItemEx("BaronHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
-					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+				if(countinv("FinisherToken")==0)
+				{								
+					A_SpawnItemEx("BaronHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
 				}
 				
-				if(GetCvar("be_MonsterStagger")==1) //will the monsters stagger at all?
+				if(GetCvar("be_MonsterStagger")==1)
 				{
 					bNOGRAVITY = false;
-					return ResolveState("Stagger");	//stays there for a few seconds
+					return ResolveState("Stagger");
 				}
 				else
 				{
@@ -167,7 +167,6 @@ Default
 			}
 			return ResolveState(null);
 		}
-		//"####" "#" 0 { A_SpawnItem ("HeadshotTarget4", 0, 40,0); A_SpawnItem ("LegTarget4", 10); }
 		"####" "#" 0;
 		Loop;
 
@@ -289,7 +288,6 @@ Default
 	TakeOff:
 		TNT1 A 0;
 		TNT1 A 0 {CeilingHeight = int(CeilingZ - FloorZ);}
-		//TNT1 A 0 {Console.Printf("Height: %f", CeilingHeight);}
 		TNT1 A 0
 				{
 				if (CeilingHeight < 280)
@@ -901,12 +899,10 @@ Default
 						{
 						FlyTorchNums = 0;
 						Flight = 1;
-						//Console.Printf("Height: %f", CeilingHeight);
 						return ResolveState("DragonFlyLoopEnd");
 						}
 					else
 						{
-						//Console.Printf("cant to land!" , CeilingHeight);
 						return ResolveState("PrepareDragonAttack");
 						}
 					}
@@ -1031,7 +1027,6 @@ Default
 		TNT1 A 0 {Height = 70; Speed = 50; bFRIGHTENED = false; bNOPAIN = true;}
 		TNT1 A 0 A_StartSound("D3Maledict/fastfloat", CHAN_BODY, CHANF_OVERLAP);
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD M WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1040,7 +1035,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD M WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1050,7 +1044,6 @@ Default
 		}
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD N WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1059,7 +1052,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD N WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1070,7 +1062,6 @@ Default
 
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD O WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1079,7 +1070,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD O WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1090,7 +1080,6 @@ Default
 
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD P WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1099,7 +1088,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD P WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1110,7 +1098,6 @@ Default
 
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD Q WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1119,7 +1106,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD Q WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1130,7 +1116,6 @@ Default
 
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD R WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1139,7 +1124,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD R WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1150,7 +1134,6 @@ Default
 
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD S WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1159,7 +1142,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD S WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1170,7 +1152,6 @@ Default
 
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD T WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1179,7 +1160,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD T WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1190,7 +1170,6 @@ Default
 
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD U WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1199,7 +1178,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD U WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1210,7 +1188,6 @@ Default
 
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD V WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1219,7 +1196,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD V WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1230,7 +1206,6 @@ Default
 
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD W WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1239,7 +1214,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD W WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1250,7 +1224,6 @@ Default
 
 
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD X WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1259,7 +1232,6 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 		TNT1 A 0 A_FaceTarget;
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
 		D3MD X WF/2
 		{
 		if (FlyClose == 0) {A_SkullAttack(15);}
@@ -1268,9 +1240,7 @@ Default
 		A_SpawnProjectile("MaledictFlamethrowerMissile", 50, 0, random(-10,10), CMF_OFFSETPITCH, random(-3,3));
 		}
 
-		//TNT1 A 0 A_JumpIfCloser(FlyTorchDist, "DragonAttack");
-		TNT1 A 0 A_ScaleVelocity(0); //Stop moving
-		//TNT1 A 0 {if (250 < TrDistance(self, target) && FlyClose == 0)	{return resolvestate ("DragonAttackReload");}	else {return ResolveState(null);}	}
+		TNT1 A 0 A_ScaleVelocity(0);
 
 
 	Goto DragonAttackReload;
@@ -1292,7 +1262,6 @@ Default
 		TNT1 A 0 A_JumpIf(distance < 400, "TorchLand");
 
 		TNT1 A 0 {CeilingHeight = int(CeilingZ - FloorZ);}
-		//TNT1 A 0 {Console.Printf("Height: %f", CeilingHeight);}
 		TNT1 A 0 A_JumpIf(CeilingHeight < 260, "FireBallsLand");
 
 		TNT1 A 0 A_Jump(256, "FireBallsLand", "SummonLand", "CastMeteorsLand");

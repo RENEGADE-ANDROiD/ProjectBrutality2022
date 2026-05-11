@@ -1,54 +1,40 @@
-// Textures
 #include BMAP/Ammo.txt
 #include BMAP/Armor.txt
 #include BMAP/WolvusMutatorBonuses.txt
 #include BMAP/Shields.txt
 #include BMAP/Realm667Powerups.txt
 
-//Weapons
-//Slot 2
 #include "BMAP/Weapons/Slot2/Pistol.txt"
 #include "BMAP/Weapons/Slot2/Deagle.txt"
 #include BMAP/Revolver.txt
 #include "BMAP/Weapons/Slot2/SMG.txt"
 #INCLUDE "BMAP/Weapons/Slot2/MP40.txt"
-//Slot 3
 #include BMAP/AutoShotgun.txt
 #include "BMAP/Weapons/Slot3/QuadShotgun.txt"
 #include BMAP/Shotgun.txt
 #include "BMAP/Weapons/Slot3/X12.txt"
-//Slot 4
 #include BMAP/Carbine.txt
 #include BMAP/LMG.txt
 #include "BMAP/Weapons/Slot4/DMR.txt"
-//Slot 5
 #include BMAP/Nailgun.txt
 #include BMAP/Minigun.txt
 #INCLUDE "BMAP/Weapons/Slot4/MG42.TXT"
-//Slot 6
 #include "BMAP/Weapons/Slot6/SuperGrenadeLauncher.txt"
 #include "BMAP/Weapons/Slot6/RocketLauncher.txt"
-//Slot 7
 #include BMAP/M2Plasma.txt
 #include BMAP/Plasma.txt
-//Slot 8
 #include BMAP/Railgun.txt
 #include BMAP/Freezer.txt
-//Slot 9
 #include BMAP/BHG.txt
-//Slot 0
 #include "BMAP/Weapons/Slot0/Flamethrower.bm"
 #include "BMAP/Weapons/Slot0/DemonTech.txt"
 
-//Others
 #include BMAP/Throwables.txt
 #include BMAP/Weapons.txt
 #include BMAP/Weapons/QuickLauncher.txt
 #include BMAP/Health.txt
-// --- Cat's Frozen Addon ---
 #include "BMAP/CatsFrozen.txt"
 
-// Monsters
 #include doommonsters.bm
 #include BMAP/BruiserDemon.txt
 #include BMAP/CyberPaladin.txt
@@ -67,7 +53,6 @@
 #include BMAP/PlasmaZombie.txt
 #include BMAP/Draugr.txt
 #include BMAP/Arachnophyte.txt
-// Decorations
 brightmap sprite BAR1A0 { map "brightmaps/Decoration/BAR1A0.png" }
 brightmap sprite BAR1B0 { map "brightmaps/Decoration/BAR1B0.png" }
 brightmap sprite BAR1C0 { map "brightmaps/Decoration/BAR1C0.png" }
@@ -81,7 +66,6 @@ brightmap sprite BAR1J0 { map "brightmaps/Decoration/BAR1J0.png" }
 brightmap sprite BAR1K0 { map "brightmaps/Decoration/BAR1K0.png" }
 brightmap sprite BAR1L0 { map "brightmaps/Decoration/BAR1L0.png" }
 brightmap sprite BAR1M0 { map "brightmaps/Decoration/BAR1M0.png" }
-//Bloody Barrel
 brightmap sprite BARBA0 { map "brightmaps/Decoration/BAR1A0.png" }
 brightmap sprite BARBB0 { map "brightmaps/Decoration/BAR1B0.png" }
 brightmap sprite BARBC0 { map "brightmaps/Decoration/BAR1C0.png" }
@@ -96,12 +80,10 @@ brightmap sprite BARBK0 { map "brightmaps/Decoration/BAR1K0.png" }
 brightmap sprite BARBL0 { map "brightmaps/Decoration/BAR1L0.png" }
 brightmap sprite BARBM0 { map "brightmaps/Decoration/BAR1M0.png" }
 
-//Demon Strength Rune
 brightmap sprite DPRFA0 { map "brightmaps/ITEMS/DPRFAB.png" fullbright}
 brightmap sprite DPRFB0 { map "brightmaps/ITEMS/DPRFAB.png" fullbright}
 brightmap sprite DPRFC0 { map "brightmaps/ITEMS/DPRFAB.png" fullbright}
 
-// Mastermind Chaingun
 brightmap sprite RMNGA0 { map "brightmaps/WEAPONS/MastermindChaingun/RMNGA0.png" DisableFullBright }
 brightmap sprite RMNGB0 { map "brightmaps/WEAPONS/MastermindChaingun/RMNGB0.png" DisableFullBright }
 brightmap sprite RMNGC0 { map "brightmaps/WEAPONS/MastermindChaingun/RMNGC0.png" DisableFullBright }

@@ -1,6 +1,5 @@
 [enu default]
 
-// Realm667 power-up fold (kill streak reward pool entries).
 PB_PICKUP_BootsOfTheNorth   = "Boots of the North! Cold damage halved.";
 PB_PICKUP_BracersOfForce    = "Bracers of Force! 75% damage reduction.";
 PB_PICKUP_BookOfTheDead     = "Book of the Dead! The graves are restless...";
@@ -12,7 +11,6 @@ PB_PICKUP_LichSkull         = "Lich Skull! Double damage and speed.";
 PB_PICKUP_Pentacle          = "Pentacle of Projection! Pushed everything away.";
 PB_PICKUP_ReflectorSphere   = "Reflector Sphere! Invulnerability with reflected projectiles.";
 
-// Cat's Frozen equipment (wheel / backpacks; no separate menu toggles)
 PB_PICKUP_PB_CF_SNOWCASTER = "Picked up Snow Caster charges.";
 PB_PICKUP_PB_CF_FREEZEBOT = "Picked up Freezebot deploy charges.";
 PB_PICKUP_PB_CF_ICEWALL = "Picked up ice wall generator charges.";
@@ -28,11 +26,8 @@ PB_PICKUP_PB_DARKMATTERRIFLE = "Picked up the UAC Prototype Dark Matter Rifle (s
 PB_PICKUP_PB_CRYOCANNON = "Picked up the Cryo Cannon (slot 9).";
 PB_PICKUP_PB_CRYOASG = "Picked up the Cryo Auto Shotgun (slot 3).";
 
-// Realm667 monster fold (Blood Ghost / Blood Skull) -- pickup string for the
-// Blood Ghost's drop bonus (1HP ghostly health globe).
 PB_PICKUP_GhostHealthBonus  = "Picked up a ghostly health bonus.";
 
-// Realm667 kill streak reward menu rows.
 OPTMNU_KS_BootsOfTheNorth = "Boots of the North (50 Percent Cold Reduction)";
 OPTMNU_KS_BracersOfForce  = "Bracers of Force (75 Percent Damage Reduction)";
 OPTMNU_KS_BookOfTheDead   = "Book of the Dead (Zombie Hand Swarm)";
@@ -47,20 +42,15 @@ OPTMNU_KS_ReflectorSphere = "Reflector Sphere (Reflective Invulnerability)";
 GOTCLIP = "Picked up a Magazine.";
 GOTHTHNEED = "Picked up a health bonus. It's not enough health to manage, but you needed it anyway." ;
 GOTMEDPAKNEED = "Picked up a medipack that you DESPERATELY needed!";
-// Glory Kills pinata pickups
 GOTPINATAHEALTH = "Picked up some Health.";
 GOTPINATAARMOR = "Picked up some Armor.";
 PB_PICKUP_DroppedHelmet = "Picked up a dropped helmet. (+5 armor)";
 PB_PICKUP_PB_XM21 = "Picked up the XM-21 sniper rifle (slot 4).";
 PB_PICKUP_X12Shotgun = "Picked up the X12 shotgun (slot 3).";
 PB_PICKUP_PB_XM21Upgrade = "Picked up the XM-21 explosive upgrade kit (Weapon Special: ballistic mode).";
-// Marauder SSG (Peacekeeper)
 OPTMNU_MarauderSSGClassicReload = "Marauder SSG classic reload";
-// Tilt Screen
 OPTMNU_TILTPLUSPLUS = "Customize Tilt++";
 
-// Monster Pack / reinforcement toggles ($ keys used by MENUDEF)
-PB_OPT_PS_FODDER_SPAWN = "Project Survival fodder (extra shamblers etc.)";
 PB_OPT_PS_PASSIVE_SPAWN = "Project Survival passives (pustule, mimic, pods, etc.)";
 
 TILTPLUSPLUSMNU_TITLE = "Tilt++ Options";
@@ -71,15 +61,12 @@ TILTPLUSPLUSMNU_TURNTILT_TITLE = "Turn Tilting";
 TILTPLUSPLUSMNU_UNDERWATERTILT_TITLE = "Underwater Tilting";
 TILTPLUSPLUSMNU_DEATHTILT_TITLE = "Death Tilting";
 
-// Generic reusable labels
 TILTPLUSPLUSMNU_ENABLED = "Enabled";
 TILTPLUSPLUSMNU_SPEED = "Speed";
 TILTPLUSPLUSMNU_ANGLE = "Angle";
 TILTPLUSPLUSMNU_SCALAR = "Intensity";
 TILTPLUSPLUSMNU_INVERT = "Invert";
 
-
-// Help text (\\n splits multi-line tooltips where the menu supports it)
 TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT = "Enable Strafe Tilting.";
 TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_INVERT = "Invert Strafe Tilt Direction.";
 TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_SPEED = "How Fast Strafe Tilt Ramps.";
@@ -101,8 +88,6 @@ TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SCALAR = "Underwater Tilt Intensity\n(Ov
 
 TILTPLUSPLUSMNU_HELPTEXT_DEATHTILT = "Tilt View After Death.";
 
-
-//NashGore
 [enu default]
 
 OPTMNU_NASHGORE = "Customize Nash's Gore Mod";
@@ -162,19 +147,16 @@ NASHGOREMNU_MISC_SPLAT = "Fall Splat";
 
 NASHGOREMNU_CONTROLS_CLEARGORE = "Clear Gore Effects";
 
-// Generic reusable labels
 NASHGOREMNU_ENABLED = "Enabled";
 NASHGOREMNU_DEFAULT = "Default";
 NASHGOREMNU_VANILLA = "Vanilla";
 NASHGOREMNU_REALISTIC = "Realistic";
 
-// Specific labels
 NASHGOREMNU_BLOOD_TYPE_CLASSIC = "Classic";
 NASHGOREMNU_GIB_TYPE_NOSTICKYGIBS = "No wall & ceiling gibs";
 NASHGOREMNU_BLOOD_SPRITE_DECALS = "Decals";
 NASHGOREMNU_BLOOD_SPRITE_SPRITES = "Sprites";
 
-// Help text
 NASHGOREMNU_HELPTEXT_BLOOD_TYPE = "Hitscan Blood Effect Style.";
 NASHGOREMNU_HELPTEXT_BLOOD_AMOUNT = "Blood Quantity Scaler.";
 NASHGOREMNU_HELPTEXT_BLOOD_SPRITES = "Blood Spots: Decals vs Sprites.";
@@ -193,15 +175,8 @@ NASHGOREMNU_HELPTEXT_MISC_CLEARGORENOW = "Instant Clear:\nAll Active Gore FX.";
 
 NASHGOREMNU_HELPTEXT_CONTROLS_CLEARGORE = "Bind: Wipe Spawned Gore\nObjects & Decals.";
 
-// Footsteps V4
-// Language Definitions
 
-// This is where the footstep sounds for each texture are defined.
-// The definition MUST be STEP_<texturename>
-// If you are adding a new texture, in addition to defining its sound
-// here, see the ACS source code.
 
-// You can also change a few settings for the mod here
 
 [enu default]
 CONTROLWITHCVARS = "FALSE";
@@ -210,16 +185,13 @@ DELAYMULTIPLIER_CVAR = "cl_step_delaymul";
 VOLUMEMULTIPLIER = "7.0";
 DELAYMULTIPLIER = "1.0";
 
-// Sounds
 STEP_DEFAULT = "step/default";
 
-// Water
 STEP_FWATER1 = "step/water";
 STEP_FWATER2 = "step/water";
 STEP_FWATER3 = "step/water";
 STEP_FWATER4 = "step/water";
 
-// Ground
 STEP_FLOOR0_1 = "step/default";
 STEP_FLOOR0_3 = "step/default";
 STEP_FLOOR1_7 = "step/default";
@@ -248,7 +220,6 @@ STEP_FLAT19 = "step/default";
 STEP_COMP01 = "step/default";
 STEP_GRNLITE1 = "step/default";
 
-// Carpet
 STEP_FLOOR1_1 = "step/carpet";
 STEP_FLAT14 = "step/carpet";
 STEP_FLAT5_5 = "step/carpet";
@@ -257,11 +228,9 @@ STEP_CEIL4_1 = "step/carpet";
 STEP_GRASS1 = "step/carpet";
 STEP_GRASS2 = "step/carpet";
 
-// Dirt
 STEP_RROCK16 = "step/dirt";
 STEP_RROCK19 = "step/dirt";
 
-// Gravel
 STEP_FLOOR6_1 = "step/gravel";
 STEP_FLOOR6_2 = "step/gravel";
 STEP_FLAT10 = "step/gravel";
@@ -270,7 +239,6 @@ STEP_MFLR8_4 = "step/gravel";
 STEP_RROCK17 = "step/gravel";
 STEP_RROCK18 = "step/gravel";
 
-// Hard
 STEP_FLOOR0_6 = "step/hard";
 STEP_FLOOR4_8 = "step/hard";
 STEP_FLOOR5_1 = "step/hard";
@@ -287,7 +255,6 @@ STEP_CEIL3_6 = "step/hard";
 STEP_FLAT8 = "step/hard";
 STEP_SLIME13 = "step/hard";
 
-// Metal A
 STEP_STEP1 = "step/metal/a";
 STEP_STEP2 = "step/metal/a";
 STEP_GATE1 = "step/metal/a";
@@ -299,7 +266,6 @@ STEP_SLIME14 = "step/metal/a";
 STEP_SLIME15 = "step/metal/a";
 STEP_SLIME16 = "step/metal/a";
 
-// Metal B
 STEP_FLAT22 = "step/metal/b";
 STEP_FLAT23 = "step/metal/b";
 STEP_CONS1_1 = "step/metal/b";
@@ -308,7 +274,6 @@ STEP_CONS1_7 = "step/metal/b";
 STEP_GATE4 = "step/metal/b";
 STEP_FLAT4 = "step/metal/b";
 
-// Rock
 STEP_FLAT1 = "step/rock";
 STEP_FLAT5_4 = "step/rock";
 STEP_MFLR8_2 = "step/rock";
@@ -339,17 +304,14 @@ STEP_SLIME10 = "step/rock";
 STEP_SLIME11 = "step/rock";
 STEP_SLIME12 = "step/rock";
 
-// Snow
 STEP_FLAT5_6 = "step/snow";
 
-// Tile A
 STEP_FLOOR3_3 = "step/tile/a";
 STEP_FLAT20 = "step/tile/a";
 STEP_CEIL3_3 = "step/tile/a";
 STEP_CEIL3_4 = "step/tile/a";
 STEP_FLAT3 = "step/tile/a";
 
-// Tile B
 STEP_FLOOR7_2 = "step/tile/b";
 STEP_DEM1_1 = "step/tile/b";
 STEP_DEM1_2 = "step/tile/b";
@@ -358,12 +320,10 @@ STEP_DEM1_4 = "step/tile/b";
 STEP_DEM1_5 = "step/tile/b";
 STEP_DEM1_6 = "step/tile/b";
 
-// Wood
 STEP_CEIL1_1 = "step/wood";
 STEP_FLAT5_1 = "step/wood";
 STEP_FLAT5_2 = "step/wood";
 
-// Slime
 STEP_NUKAGE1 = "step/slime";
 STEP_NUKAGE2 = "step/slime";
 STEP_NUKAGE3 = "step/slime";
@@ -378,22 +338,18 @@ STEP_SLIME06 = "step/slime";
 STEP_SLIME07 = "step/slime";
 STEP_SLIME08 = "step/slime";
 
-// Slimy
 STEP_SFLR6_1 = "step/slimy";
 STEP_SFLR6_4 = "step/slimy";
 STEP_SFLR7_1 = "step/slimy";
 STEP_SFLR7_4 = "step/slimy";
 
-// Lava
 STEP_LAVA1 = "step/lava";
 STEP_LAVA2 = "step/lava";
 STEP_LAVA3 = "step/lava";
 STEP_LAVA4 = "step/lava";
 
-// None
 STEP_F_SKY1 = "";
 
-//PB Gameplay Messages
 PB_LMGMICRO = "\ctLMG:\c- \chMicro missiles \c-selected";
 PB_LMGBULLET = "\ctLMG:\c- \cdBullet \c-feed";
 PB_SGBUCKLD = "\cg Buckshot \c-Shells Loaded";
@@ -407,16 +363,13 @@ PB_SGLACID = "\ctGrenade:\c- \cdAcid \c-selected";
 PB_HDMRGRN = "\cuUnderbarrel grenade launcher\c- selected";
 PB_HDMRAIM = "\cjAiming secondary fire\c- selected";
 
-//Rocket Launcher
 PB_RLGUID = "\ciLaser Guided \c-rockets selected";
 PB_RLLOCK = "\cyLock-on \c-rockets selected";
 PB_RLNORM = "\cdStandard \c-rockets selected";
 
-// Flamethrower (Slot9/Flamethrower.dec — $PB_FLAMER_*)
 PB_FLAMER_FLAME = "\ctFlamethrower:\c- \ciStandard \c-flame";
 PB_FLAMER_ACID = "\ctFlamethrower:\c- \cgnukage / acid \c-mode";
 
-// Commander SSG (CSSG.zs — $CM_* load confirms)
 CM_BUCKLD = "\cd\cgBuckshot \c-shells \cdloaded";
 CM_SLUGLD = "\cd\ctSlug \c-shells \cdloaded";
 CM_FLCHLD = "\cd\cjFlechette \c-shells \cdloaded";
@@ -427,7 +380,6 @@ CM_WPLOAD = "\cd\c[WPBronze]White phosphorous \c-shells \cdloaded";
 CM_DOOMLD = "\cd\ctTriple Doom \c-shells \cdloaded";
 CM_DNMKULD = "\cd\c[DanmakuYellow]Danmaku \c-shells \cdloaded";
 
-//Gameplay Settings
 PB_DISABLE_PRONE = "Disable Prone Attacks";
 PB_DISABLE_PRONE_DESC = "Sergeants Cannot Enter Prone\nShooting Attacks.";
 
@@ -437,25 +389,20 @@ PB_RECOIL_DESC = "Recoil Strength Multiplier.\n1.0 = Normal; 0 = Off; Higher = S
 PB_RECOIL_EXTRA = "Add Recoil to more Weapons";
 PB_RECOIL_EXTRA_DESC = "Adds Kick to Rocket Launcher, Railgun Laser,\nBFG-Slot Guns, Mancubus Flame, Unmaker.";
 
-//No M1 Plasma Rifle cooldown
 PB_NO_M1PLASMACOOLDOWN = "No M1 Plasma Rifle cooldown";
 PB_NO_M1PLASMACOOLDOWN_DESC = "Skips Post-Shot Cooldown\non M1 Plasma Primary Fire.";
 PB_NO_M1PLASMACOOLDOWN_NOTICE = "Primary Fire Only.";
 PB_NO_M1PLASMACOOLDOWN_EXTRA = "Also Affects Pulse Cannon\nUpgrade When Equipped.";
 
-//Quiet marines
 PB_SILENCE_MARINES = "Silence Marine Chatter";
 PB_SILENCE_MARINES_DESC = "Mutes Idle & Attack Voice Lines\nFrom Marine Allies.";
 PB_SILENCE_MARINES_DESC2 = "Pain & Death Sounds Unchanged.";
 
-//Weapon Respect animations
 PB_RESPECT = "Weapon Respect animations";
 
-// Experimental PB_Execute weapon finishers (pb_experimental; PB 2022 Enhanced hub, Finishers/Gore/Taunts)
 PB_EXPERIMENTAL_EXECUTIONS = "Experimental weapon executions";
 PB_EXPERIMENTAL_EXECUTIONS_DESC = "Enables a mix of modern first person executions with third person";
 
-//Dual Wielding Style
 PB_DUALSTYLE = "Dual-Wield Fire Mode";
 PB_DUALSTYLE_SIN = "Single Button: Primary Fire Shoots Both Guns.\n(Similar to Brutal Doom v21 Dual Style.)";
 PB_DUALSTYLE_DEF = "Default: Primary Fire = Left Weapon;\nAlt-Fire = Right Weapon.";
@@ -463,11 +410,9 @@ PB_DUALSTYLE_SINEXTRA = "(Extra) Single-button dual details.\nSee PB_DUALSTYLE_S
 PB_DUALOPT_SN = "Single Button";
 PB_DUALOPT_DEF = "Default";
 
-// Molotov (melee equipment; pb_NoMolotov)
 PB_OPT_Molotov = "Molotov cocktails";
 PB_WHEELTIP_WW_MolotovSelected = "Molotov Equipment Slot.\nUser1 Throws; Fire Spreads on Impact.";
 
-// Pickup / wheel hint system (Gameplay Settings)
 PB_PICKUP_HINTS = "Weapon pickup hints";
 PB_PICKUP_HINTS_DESC = "Brief Inventory Tip for Project Brutality Guns.\n(Weapon Special Wheel & Alt-Fire Hints.)";
 PB_WEAPON_WHEEL_ENABLE = "Weapon selection wheel";
@@ -779,14 +724,12 @@ PB_WPNHINT_TriclopsImpShield = "Triclops Shield; Triple-Eye Alt-Fire Blast.";
 PB_WPNHINT_ZMANShield = "Zombieman Shield; Pistol Fire Through Alt-Fire Windows.";
 PB_WPNHINT_ZombieScientistShield = "Scientist Shield; Chemical Alt-Fire Splash.";
 
-// Main menu / IWAD-style pickup labels (ensures clean loads without base LANGUAGE merge)
 MNU_NEWGAME = "NEW GAME";
 MNU_OPTIONS = "OPTIONS";
 MNU_GAMEFILES = "GAME FILES";
 MNU_INFO = "INFO";
 MNU_QUITGAME = "QUIT GAME";
 
-// DamNums color preset labels (MENUDEF OptionValue)
 C_DEFAULT = "Default";
 C_BLACK = "Black";
 C_BLUE = "Blue";
@@ -810,7 +753,6 @@ C_TAN = "Tan";
 C_WHITE = "White";
 C_YELLOW = "Yellow";
 
-// Pickups referencing classic $GOT* / inventory tags
 GOTARMBONUS = "Picked up an armor bonus.";
 GOTBACKPACK = "Picked up a backpack full of ammo!";
 GOTBERSERK = "Berserk!";
@@ -824,7 +766,6 @@ GOTSTIM = "Picked up a stimpack.";
 GOTVISOR = "Light Amplification Visor!";
 GOTYELWSKUL = "Picked up a yellow skull key.";
 
-// Multiplayer / vanilla-style obituaries used by Brutality weapons
 OB_MPCHAINSAW = "%o was shredded by %k's chainsaw.";
 OB_MPPLASMARIFLE = "%o was melted by %k's plasma gun.";
 OB_MPROCKET = "%o rode %k's rocket.";

@@ -1,27 +1,7 @@
-// PB 2022 staging-parity helper back-fill for PB_WeaponBase.
-//
-// Ported (signature-for-signature) from PB Staging's
-// zscript/Weapons/BaseWeapon_Functions.zsc so that staging ZScript weapon
-// drops (Deagle, Revolver, Shotgun, SuperGL, PlasmaM1, ...) can be folded
-// into PB 2022 without re-implementing these helpers per-weapon.
-//
-// Adjustments vs upstream staging:
-//   * PlayerPawnBase.reloading (staging-only pawn flag) maps to PB 2022's
-//     existing "IsReloading" inventory token in PB_SetReloading.
-//   * PB_WeaponRaise omits staging-only curBlood / WeaponScaleX /
-//     PB_PixelRenderingFix; PB 2022 uses fixed 1.0 scale via the DECORATE
-//     SelectFirstPersonLegs chain.
-//   * PB_CoolDownBarrel uses PB 2022's GunFireSmoke actor instead of
-//     staging's PB_BarrelHeatSmoke (not shipped here).
-//   * Heavy muzzle-FX helpers (PB_MuzzleFlashEffects, _SpawnMuzzleSparks,
-//     PB_GunSmokeSpawn) are intentionally NOT back-filled because they
-//     depend on staging-only actors (PB_MuzzleSpark, PB_GunFireSmoke,
-//     PB_CasingEjectionSmoke). Weapon ports needing them should swap for
-//     PB 2022 equivalents per-weapon.
-//   * PB_SpawnCasing is left alone â€” PB 2022 already ships a 7-arg
-//     String-based version at zscript/Weapons/BaseWeapon.zc. The staging
-//     9-arg class<Actor>-based version would collide; weapon ports should
-//     adapt callers to the existing PB 2022 signature.
+// PB 2022 staging-parity extend on PB_WeaponBase (from PB Staging `BaseWeapon_Functions.zsc` signatures).
+// Fold/port notes: AGENTS.md §4 bullet **ZSCRIPT.zc master `#include` band — staging weapon shim** (IsReloading
+// inventory vs staging `PlayerPawnBase.reloading`, `PB_WeaponRaise` omissions, `GunFireSmoke` vs barrel smoke,
+// heavy muzzle helpers not back-filled, `PB_SpawnCasing` 7-arg PB2022 vs staging 9-arg).
 
 Extend class PB_WeaponBase
 {

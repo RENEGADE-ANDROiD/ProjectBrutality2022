@@ -1,6 +1,3 @@
-// Cat's Frozen Addon fold — 8-angle frozen-solid corpse actors (sprites under SPRITES/Monsters/CatsFrozenFrozen/).
-// No BD22-only gore actors in death chains; IceShard1 / CryoSmoke3 / DetectFloorIce / IceBlood / FROSTY helpers only.
-
 class PB_FrozenSolidBase : Actor
 {
 	Default

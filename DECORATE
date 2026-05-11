@@ -1,6 +1,3 @@
-
-// IF YOU WANT TO USE STUFF FROM THIS MOD, GIVE ME CREDITS
-
 actor EvadeCheck : Inventory
 {
     inventory.amount 0
@@ -31,7 +28,7 @@ Actor HeightTIDIndicator : Inventory
 	Inventory.MaxAmount 0x7FFFFFFF
 }
 Actor IsDead : Inventory {}
-Actor IsTacticalClass : Inventory {} //Fake item to fix the lag.
+Actor IsTacticalClass : Inventory {}
 Actor DisintegratedHuman
 {
 	+NOBLOCKMAP
@@ -80,7 +77,6 @@ Actor ZombiePlasmaTankExplosion
 	}
 }
 
-// Compatibility shims for merged content that expects these tokens/effects.
 Actor GoExecution : Inventory { Inventory.MaxAmount 1 }
 Actor BloodPunchArmor : Inventory { Inventory.MaxAmount 200 }
 Actor CameraShakeMinor : Actor
@@ -105,7 +101,6 @@ Actor CameraShake : Actor
 		Stop
 	}
 }
-// Regret Elemental compatibility drops.
 Actor ShieldSphere : ArmorBonus
 {
 	Inventory.Amount 25
@@ -130,7 +125,6 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Brutality/BrutalitiesImp.dec"
 #include "actors/Brutality/BrutalitiesCacodemon.dec"
 
-//Guns Guns Guns
 #include "actors/Weapons/BaseWeapon.dec"
 #include "actors/Weapons/Slot1/MELEE.dec"
 #include "actors/Weapons/Slot1/Axe.dec"
@@ -138,11 +132,6 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot1/ShieldSaw.dec"
 #include "actors/Weapons/Slot4/PBRIFLE.dec"
 #include "actors/Weapons/Slot3/SHOTGUN.dec"
-// PB_Shell (and other PBWP ammo aliases) must be parsed before X12Shotgun/HASG
-// reference them in state-action args. PBWP_CompatAmmo.dec defines
-//   PB_Shell : NewShell, PB_HighCalMag : NewClip, PB_Cell : NewCell, PB_CellPack : NewCellPack
-// so the three parent-providing ammo includes (ShellBox/Clipbox/Cellpack) must come
-// immediately before it; the rest of the ammo block stays at its original location below.
 #include "actors/Items/Ammo/ShellBox.dec"
 #include "actors/Items/Ammo/Clipbox.dec"
 #include "actors/Items/Ammo/Cellpack.dec"
@@ -162,10 +151,8 @@ Actor PBBlastMomentum : Inventory
 
 #include "actors/Weapons/Slot7/RAILGUN.dec"
 
-//Weapon select tokens
 #include "actors/Weapons/WeaponTokens.dec"
 
-//MeatShields
 #include "actors/Weapons/Meatshields/IMPSHIELD.dec"
 #include "actors/Weapons/Meatshields/ZMANSHIELD.dec"
 #include "actors/Weapons/Meatshields/SGUYSHIELD.dec"
@@ -180,18 +167,13 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Meatshields/PB_NailgunGuySHIELD.dec"
 #include "actors/Weapons/Meatshields/BarrelThrower.dec"
 
-//Ammo Ammo Ammo //Smart Scavenger
 #include "actors/Items/Ammo/GenericAmmo.dec"
 #include "actors/Items/Ammo/HandGrenadeBox.dec"
 #include "actors/Items/Ammo/RocketBox.dec"
 #include "actors/Items/Ammo/Bulletkit.dec"
 #include "actors/Items/Ammo/SpecialGrenadeBox.dec"
 #include "actors/Items/Ammo/PB_DTech_Ammo.dec"
-// ShellBox.dec, Clipbox.dec, Cellpack.dec, and PBWP_CompatAmmo.dec are included earlier
-// (above X12Shotgun/HASG) so PB_Shell / PB_HighCalMag / PB_Cell / PB_CellPack parent
-// classes resolve before Slot 3 shotgun states reference them.
 
-//Powerups
 #include "actors/Items/Powerups/GenericPowerups.dec"
 #include "actors/Items/Powerups/SpecialPowerups.dec"
 #include "actors/Items/PBKillstreak/PB_KillstreakItems.dec"
@@ -200,12 +182,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Items/Powerups/Backpacks.dec"
 #include "actors/Items/Powerups/Healthbackpacks.dec"
 
-//DECORATIONS
-//#include "actors/Decorations/FURNITURE.dec"
-//#include "actors/Decorations/LAMPS.dec"
-//#include "actors/Decorations/NATURAL.dec"
 #include "actors/Decorations/FIREWORKS.dec"
-//#include "actors/Decorations/TORCHES.dec"
 #include "actors/Decorations/DEAD.dec"
 #include "actors/Decorations/Barrels/Core/NukageBarrelTokens.dec"
 #include "actors/Decorations/Barrels/Core/NukageBarrelEffects.dec"
@@ -216,7 +193,6 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Decorations/Barrels/FlameBarrels.dec"
 #include "actors/Decorations/Barrels/BarrelEffects.dec"
 
-//Enemies
 #include "actors/Monsters/T1-Grunts/ZOMBIEMEN.dec"
 #include "actors/Monsters/T1-Grunts/SERGEANTS.dec"
 #include "actors/Monsters/T1-Grunts/Commando.dec"
@@ -230,19 +206,20 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Monsters/T3-Arachnos/Arachnotron.dec"
 #include "actors/Monsters/T3-Revies/REVENANT.dec"
 #include "actors/Monsters/T3-Fats/MANCUBUS.dec"
+#include "actors/Monsters/T3-Fats/MancubusPlayerWeapon.dec"
 #include "actors/Monsters/T3-Floaters/CACODEMON.dec"
 #include "actors/Monsters/T3-Floaters/CacoPlayerWeapon.dec"
+#include "actors/Monsters/Tz-Bosses/MastermindPlayerWeapon.dec"
+#include "actors/Monsters/Tz-Bosses/CyberdemonPlayerWeapon.dec"
 #include "actors/Monsters/T3-Floaters/PAIN.dec"
 #include "actors/Monsters/T4-Viles/ARCHVILE.dec"
 #include "actors/Monsters/Tz-Bosses/CYBERDEMON_BOSS.dec"
 #include "actors/Monsters/Tz-Bosses/CYBERDEMON.dec"
 #include "actors/Monsters/Tz-Bosses/MASTERMIND.dec"
 
-//ST Monsters
 #include "actors/Monsters/T4-Nobles/BELPHEGOR.dec"
 #include "actors/Monsters/Tz-Bosses/JUGGERNAUT.dec"
 
-//Frozen Monsters
 #include "actors/Monsters/TZ-Frozen/BossFreezes.dec"
 #include "actors/Monsters/TZ-Frozen/CommandoFreezes.dec"
 #include "actors/Monsters/TZ-Frozen/DemonFreezes.dec"
@@ -256,7 +233,6 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Monsters/TZ-Frozen/SergeantFreezes.dec"
 #include "actors/Monsters/TZ-Frozen/ZombieFreezes.dec"
 
-//Gore N' Blood
 #include "actors/Gore/GORE!!!.dec"
 #include "actors/Gore/GORE2.dec"
 #include "actors/Gore/GORE3.dec"
@@ -272,16 +248,12 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Gore/MarauderGib.dec"
 #include "actors/Gore/PBGoreAliases.dec"
 
-//Hitboxes
 #include "actors/Hitboxes/HEAD_SYS.dec"
 #include "actors/Hitboxes/LEGBOX.dec"
 
-
-//Effects
 #include "actors/Effects/PARTICLES.dec"
 #include "actors/Effects/SMOKE.dec"
 #include "actors/Effects/FIRE.dec"
-// Project Survival Fodder (ImpAttack/GORE/Zombie corpses frozen sergeants + FIRE enemy flamer trail; no replaces)
 #include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Shambler.dec"
 #include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Burster.dec"
 #include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Blighter.dec"
@@ -290,7 +262,6 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Spiker.dec"
 #include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Puker.dec"
 #include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/FodderPassiveSpawn.dec"
-// Molotov (parents: RocketExplosion in EXPLOSIVES.dec, LargeGlassParticle* in PARTICLES.dec, TinyBurningPiece* in FIRE.dec — must load after those)
 #include "actors/Weapons/MolotovCocktail/MolotovCocktailToken.dec"
 #include "actors/Weapons/MolotovCocktail/MolotovCocktail.dec"
 #include "actors/Weapons/MolotovCocktail/MolotovAmmoPickups.dec"
@@ -299,18 +270,14 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Hitboxes/BOSSBOX.dec"
 #include "actors/Weapons/DROPABLES.dec"
 #include "actors/Effects/PUFF.dec"
-#include "actors/Effects/ChexPuff.dec" //temporary until the Chex compatibility is complete
+#include "actors/Effects/ChexPuff.dec"
 #include "actors/Effects/TRACERS.dec"
 #include "actors/Effects/FROSTY.dec"
 
-//Misc
-
-//Player Classes
 #include "actors/Player/PLAYER.dec"
 #include "actors/Friendly Marines/MARINESPAWNER.dec"
 #include "actors/Player/NEWPLAYE.dec"
 
-//Project Brutality Monsters
 #include "actors/Gore/SwarmFly.dec"
 
 #include "actors/Monsters/T1-Grunts/ZombiemanVariants.dec"
@@ -382,21 +349,13 @@ Actor PBBlastMomentum : Inventory
 
 
 
-//Project Brutality Weapons
 #include "actors/Weapons/Throwables.dec"
 #include "actors/Weapons/Slot2/PBPISTOL.dec"
-// Deagle moved to ZScript: zscript/Weapons/Slot2/Deagle/Deagle.zs (full
-// staging port; companion classes live alongside it).
-//#include "actors/Weapons/Slot2/Deagle.dec"
 #include "actors/Weapons/Slot2/REVOLVER.dec"
 #include "actors/Weapons/Slot2/UACSMG.dec"
 #include "actors/Weapons/Slot2/MP40.dec"
 #include "actors/Weapons/Slot2/RiotShield.dec"
 #include "actors/Weapons/Slot3/AUTOSHOTGUN.dec"
-// Marauder SSG + monster load here (after AUTOSHOTGUN and PUFF are known,
-// so StunnerShotgunPuff : KickPuff and MarauderChunk1-4 : Chunk1-4 resolve).
-// Weapon include must precede monster include so DropItem "MarauderSSG" /
-// DropItem "MSSGUpgrade" resolve on PB_Marauder.
 #include "actors/Weapons/Slot3/MarauderSSG.dec"
 #include "actors/Monsters/T4-Viles/Marauder.dec"
 #include "actors/Monsters/T4-Viles/MarauderGore.dec"
@@ -405,7 +364,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot4/LMG.dec"
 #include "actors/Weapons/Slot4/LeverAction.dec"
 #include "actors/Weapons/Slot4/MetalSniper.dec"
-#include "actors/Weapons/Slot4/XM21.dec" // PB3 XM-21 Sniper (slot 4; reserve NewClip + internal XM21Ammo)
+#include "actors/Weapons/Slot4/XM21.dec"
 #include "actors/Weapons/Slot4/OldHMG.dec"
 #include "actors/Weapons/Slot4/NeoHMG.dec"
 #include "actors/Weapons/Slot4/M41A.dec"
@@ -414,21 +373,17 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot5/Paingiver.dec"
 #include "actors/Weapons/Slot7/FREEZER.dec"
 #include "actors/Weapons/Slot6/M2PLASMA.dec"
-// DragonSlayer / Stormcast (ZAPR trail: StormcastElectroBlastTrail; DLI trail: ElectroBlastTrail in M2PLASMA; PlasmaFlare from FLARES)
 #include "actors/Weapons/MeleeWeaponPack/DragonSlayer.dec"
 #include "actors/Weapons/MeleeWeaponPack/Stormcast.dec"
 #include "actors/Weapons/Slot8/PB_CryoElectroRifle.dec"
 #include "actors/Weapons/Slot8/PB_DarkMatterRifle.dec"
 #include "actors/Weapons/Slot8/BFGMKIV.dec"
 #include "actors/Weapons/Equipment/ShieldGrenade_PS.dec"
-//#include "actors/Weapons/Slot8/BFGBEAM.dec"
 #include "actors/Weapons/Slot8/BLACKHOLE.dec"
 #include "actors/Weapons/Slot8/BioAcidLauncher.dec"
 #include "actors/Weapons/Slot8/BFGPickups.dec"
 #include "actors/Weapons/Slot9/DemonTech.dec"
-// HellPistoler projectiles extend Hellbullet (DemonTech); must load after DemonTech.dec
 #include "actors/Weapons/Slot2/HellPistoler.dec"
-// Beam Katana / Argent Sith: require PARTICLES (BluePlasmaFire), PLASMA (Plasma_Ball), DemonTech (Hellbullet)
 #include "actors/Weapons/Slot1/BeamKatana.dec"
 #include "actors/Weapons/Slot1/ArgentSith.dec"
 #include "actors/Weapons/Slot1/VorpalBlade.dec"
@@ -438,7 +393,6 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot9/PB_CryoCannon.dec"
 #include "actors/Weapons/Slot4/ProSurv_Ballista.dec"
 #include "actors/Weapons/Slot9/MancubusFlameCannon.dec"
-// #include "actors/Weapons/Slot9/DTechMinigun.dec"  // disabled: weapon broken, hidden from player
 #include "actors/Weapons/Grenades/freeze_Grenade.dec"
 #include "actors/Equipments/FreezeNade.dec"
 #include "actors/Equipments/hook.dec"
@@ -450,14 +404,10 @@ Actor PBBlastMomentum : Inventory
 
 
 #include "actors/Weapons/Slot3/QUADBARREL.dec"
-#include "actors/Weapons/Slot4/ChexRifle.dec" //This is only TEMPORARY. This can be removed when the Chex Quest patch is completed.
+#include "actors/Weapons/Slot4/ChexRifle.dec"
 
-
-
-//New Death System
 #include "actors/Monsters/T1-Grunts/ZOMBIEMEN_DeathAnim.dec"
 
-//Lil Guys!
 #include "actors/Monsters/Tz-Shrinks/ZombieShrinks.dec"
 #include "actors/Monsters/Tz-Shrinks/SergeantShrinks.dec"
 #include "actors/Monsters/Tz-Shrinks/CommandoShrinks.dec"
@@ -466,14 +416,10 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Monsters/Tz-Shrinks/NoblesShrinks.dec"
 #include "actors/Monsters/Tz-Shrinks/MancubusShrinks.dec"
 
-//#include "actors/Decorations/TechPillar.dec"
-
-//New Inclusions - Daarkon (6-19-2017)
 #include "actors/Effects/FLATDECALS.dec"
 #include "actors/Effects/TELEPORTS.dec"
 #include "actors/Effects/SPLASHES.dec"
 
-//New Blood
 #include "actors/Gore/GreenBlood.dec"
 #include "actors/Gore/BlueBlood.dec"
 #include "actors/Gore/GreenSTICKY.dec"
@@ -481,14 +427,12 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Gore/BDv22Gore/BDv22Gore.dec"
 #include "actors/Gore/BPv10Gore/BPv10Gore.dec"
 
-//Captured Marines
 #include "actors/Friendly Marines/CapturedMarine.dec"
 #include "actors/Friendly Marines/Marine-AutoShotgun.dec"
 #include "actors/Friendly Marines/Marine-Chaingun.dec"
 #include "actors/Friendly Marines/Marine-Plasmagun.dec"
 #include "actors/Friendly Marines/Marine-Shotgun.dec"
 
-//Dying Monsters
 #include "actors/Monsters/T1-Grunts/DyingGuys.dec"
 #include "actors/Monsters/T1-Imps/DyingImps.dec"
 #include "actors/Monsters/T2-Pinkies/DyingDemon.dec"
@@ -514,17 +458,15 @@ Actor PBBlastMomentum : Inventory
 
 #include "actors/Spawners/SpawnerScript.dec"
 
-//Smart Scavenger Health
 #include "actors/Items/Health/GenericHealth.dec"
-#include "actors/Items/Health/CrueltyPhysicalBonuses.dec" // PB_PhysicalBonuses: 1BON bouncy Cruelty drops
+#include "actors/Items/Health/CrueltyPhysicalBonuses.dec"
 #include "actors/Items/Health/WolvusMutatorItems.dec"
-#include "actors/Spawners/ItemSpawners/BonusSpawners.dec" // After GenericHealth + Wolvus tiers so HealthBonusSpawner/ArmorBonusSpawner replace HealthBonus/ArmorBonus last.
+#include "actors/Spawners/ItemSpawners/BonusSpawners.dec"
 #include "actors/Items/Health/Stimpack.dec"
 #include "actors/Items/Health/Medikit.dec"
 #include "actors/Items/Health/Medipack.dec"
-#include "actors/Items/HelmetDrops/HelmetDrops.dec" // PB_HelmetDrops (3BON helmet; HelmetDropHandler in ZScript)
+#include "actors/Items/HelmetDrops/HelmetDrops.dec"
 
-////// New Barrels /////
 #include "actors/Decorations/Barrels/BarrelEmpty.dec"
 
 
@@ -605,13 +547,11 @@ ACTOR NoBloodydamage : CustomInventory
 ACTOR painstate : PowerupGiver
 {
   Inventory.MaxAmount 0
-  //Powerup.Color ""
   Powerup.Type "NoBloodDamage"
   +INVENTORY.AUTOACTIVATE
   States  {}
 }
 
-//////////////////////////////////////////////////////////
 Actor EnemyMemory : Inventory
 {
 inventory.maxamount 60
@@ -716,7 +656,6 @@ inventory.maxamount 1
 ACTOR CasingsJanitor: Inventory
 {Inventory.MaxAmount 1}
 
-//Monster Ability Toggles
 Actor NoZombieGrenade : Inventory
 {inventory.maxamount 1}
 
@@ -747,9 +686,6 @@ Actor NoMancubusTorch : Inventory
 Actor TurboReload : Inventory
 {inventory.maxamount 1}
 
-// Monster Pack
-// (Aracnorb.dec is intentionally not included; main's T3-Arachnos/Aracnorb.dec is canonical.
-//  Only the MP-only Aracnorbpassivespawn actor is ported — see MERGE_MANIFEST.md §3.1.)
 #include "actors/Monsters/T3-Arachnos/AracnorbPassiveSpawn.dec"
 #include "actors/Monsters/T1-Grunts/Horrorspawn.dec"
 #include "actors/Monsters/T1-Grunts/Hunger.dec"
@@ -767,12 +703,10 @@ Actor TurboReload : Inventory
 #include "actors/Monsters/Tz-Bosses/Hellduke.dec"
 #include "actors/Monsters/Tz-Bosses/Hellsmith.dec"
 
-// Glory Kills
 #include "actors/GloryKills/GloryKillCommon.dec"
 #include "actors/Weapons/Slot1/Crucible.dec"
 #include "actors/Weapons/Slot8/SoulCube.dec"
 #include "actors/Items/Ammo/PinataAmmo.dec"
-// MP execution finishers: need GORE (XDeathArm1), Crucible pinatas, SoulCube pinata spawns, Stun explosion alias in EXPLOSIVES.
 #include "actors/Compat/ExecutionFxStubs.dec"
 #include "actors/Monsters/ObsidianRavager/SlayerPower.dec"
 #include "actors/Monsters/ObsidianRavager/ObsidianRavagerCompat.dec"
@@ -823,5 +757,4 @@ Actor TurboReload : Inventory
 #include "actors/Monsters/Realm667/Realm667_GloryKills.dec"
 #include "actors/Monsters/CatsFrozen/PB_CatsFrozen_Monsters.dec"
 
-// Late-stage compatibility stubs (must be last — uses PB parents defined above)
 #include "actors/Compat/LateWarningStubs.dec"

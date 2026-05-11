@@ -997,7 +997,6 @@ States{Spawn:
 	
 
 
-///////////////////////////======VANILLA======//////////////////////////////////
 
 Actor Vanilla_ZombieMan : PB_RifleZombieMan
 {
