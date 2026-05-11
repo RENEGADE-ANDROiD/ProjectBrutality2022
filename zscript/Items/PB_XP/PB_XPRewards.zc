@@ -202,65 +202,12 @@ class PB_XPRewardsHandler : EventHandler
 			return;
 		}
 		plr.A_TakeInventory("PB_RewardSpin", SPIN_COST);
-		int roll = random[PBXPSPIN](0, 255);
-		if (roll < 8)
+		if (TryGrantRandomWeapon(plr))
 		{
-			if (TryGrantRandomWeapon(plr))
-			{
-				plr.A_Print("\cdJackpot: \cfunique weapon drop!");
-				return;
-			}
-		}
-		if (roll < 48)
-		{
-			plr.GiveInventory("Soulsphere", 1);
-			plr.A_Print("\cdSupply reel: \cfSoulsphere");
+			plr.A_Print("\cdReward reel: \cfweapon granted!");
 			return;
 		}
-		if (roll < 88)
-		{
-			plr.GiveInventory("Megasphere", 1);
-			plr.A_Print("\cdSupply reel: \cfMegasphere");
-			return;
-		}
-		if (roll < 128)
-		{
-			plr.GiveInventory("Berserk", 1);
-			plr.A_Print("\cdSupply reel: \cfBerserk pack");
-			return;
-		}
-		if (roll < 168)
-		{
-			plr.GiveInventory("PB_Backpack", 1);
-			plr.A_Print("\cdSupply reel: \cfBackpack");
-			return;
-		}
-		if (roll < 208)
-		{
-			plr.GiveInventory("Medikit2", 2);
-			plr.A_Print("\cdSupply reel: \cfMedikits x2");
-			return;
-		}
-		if (roll < 228)
-		{
-			plr.GiveInventory("NewClip", 80);
-			plr.A_Print("\cdSupply reel: \cfBullets");
-			return;
-		}
-		if (roll < 238)
-		{
-			plr.GiveInventory("NewShell", 40);
-			plr.A_Print("\cdSupply reel: \cfShells");
-			return;
-		}
-		if (roll < 248)
-		{
-			plr.GiveInventory("NewCell", 120);
-			plr.A_Print("\cdSupply reel: \cfCells");
-			return;
-		}
-		plr.GiveInventory("RocketRounds", 12);
-		plr.A_Print("\cdSupply reel: \cfRockets");
+		plr.A_Print("\cgNo eligible weapon\c- — points refunded (already carried / codex).");
 	}
 
 	static bool WeaponFoundInPlayerCodex(PlayerPawn plr, class<Inventory> cls)

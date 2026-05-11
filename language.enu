@@ -426,7 +426,7 @@ OPTMNU_PB_PDA_BLOCKY_HINT = "Blocky layout: weapon / monster entries render as a
 OPTMNU_PB_PDA_BLOCKY_HINT2 = "Off = legacy text-list. Up / Down arrows page through tiles when blocky is on.";
 OPTMNU_PB_XP_REWARDS = "PDA XP & reward spin (single-player)";
 OPTMNU_PB_XP_REWARDS_HINT = "On: single-player kills grant XP; rank-ups give reward points.";
-OPTMNU_PB_XP_REWARDS_HINT2 = "Blocky PDA home adds Reward Spin (3 pts) for loot.";
+OPTMNU_PB_XP_REWARDS_HINT2 = "Blocky PDA home adds Reward Spin (3 pts) — weapons only; refunds if none eligible.";
 PB_WEAPON_WHEEL_EMPTY = "\cgNothing to select\c- (no weapons on bar).";
 PB_WHEELTIP_WPICKSLOT = "Outer ring: weapon slots you are carrying.\nAim toward the \cccenter\c- when a slot lists multiple weapons\nto open the inner ring for that slot.";
 
