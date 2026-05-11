@@ -1,4 +1,4 @@
-Actor RedBloodSplatterz : Inventory
+﻿Actor RedBloodSplatterz : Inventory
 {
 inventory.maxamount 1
 }
@@ -298,7 +298,6 @@ CrashDecalShiny:
 }
 
 
-// Red Blood
 ACTOR BloodSplasher
 {
 	Game Doom
@@ -393,7 +392,6 @@ ACTOR BloodSplasher3: BloodSplasher2
 	}
 }
 
-// Blue Blood
 ACTOR BlueBloodSplasher : BloodSplasher
 {
 	Game Doom
@@ -435,7 +433,6 @@ ACTOR BlueBloodSplasher : BloodSplasher
 	}
 }
 
-// Green Blood
 ACTOR GreenBloodSplasher : BloodSplasher
 {
 	Game Doom

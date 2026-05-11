@@ -1,8 +1,8 @@
 #library "Shield_saw"
 #include "zcommon.acs"
 
-// Map start: refund ShieldSaw_token if the saw was still in flight (projectile lost on travel).
-// Always grant FastCall for manual recall (inventory Use / bound key).
+// Shield Saw recall — map enter refunds token if throw was in flight; FastCall for bound recall.
+
 Script "ShieldSawMapEnter" ENTER
 {
 	Delay(1);
@@ -15,7 +15,6 @@ Script "ShieldSawMapEnter" ENTER
 	GiveInventory("FastCall", 1);
 }
 
-// Per flying saw: wait until the projectile holds CallBack (from FastCall Use) then snap to ShieldBack.
 Script "CallBack" (void)
 {
 	while (true)

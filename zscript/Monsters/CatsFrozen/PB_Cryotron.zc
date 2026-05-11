@@ -1,6 +1,3 @@
-// Cat's Frozen Addon — Cryotron (arach-tier ice spider). Fold Slice 3.
-// Credits: Cryotron sprites/audio lineage from Captain Toenail / Rifleman / Gothic (Realm667).
-
 class PB_Cryotron : PB_Monster
 {
 	bool morphed;

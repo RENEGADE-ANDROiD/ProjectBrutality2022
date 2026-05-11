@@ -49,11 +49,7 @@ inventory.maxamount 1
 }
 
 
-// --------------------------------------------------------------------------
-//
 // Railgun
-//
-// --------------------------------------------------------------------------
 ACTOR PB_Railgun : PB_Weapon
 {
 	//$Title Railgun
@@ -1036,7 +1032,7 @@ ACTOR PB_Railgun : PB_Weapon
 			}
 			TNT1 A 0 A_StartSound("weapons/riflemagslap", CHAN_AUTO, CHANF_OVERLAP)
 			
-			ReloadUnloadedContinue: //ReloadUnloaded jumps 2 frames ahead of here
+			ReloadUnloadedContinue:
 			R053 TUV 1 BRIGHT {
 				//Blue
 				if (CountInv("Cell") < 60) { A_SetWeaponSprite("R059");}
@@ -1138,7 +1134,7 @@ ACTOR PB_Railgun : PB_Weapon
 		if(CountInv("RailgunLaserMode") == 1) {A_SetWeaponSprite("R013");}
 		}
 		Goto Ready3
-	NoAmmoScoped: // Same for the scoped mode
+	NoAmmoScoped:
 		R007 G 1 {
 		a_setcrosshair(5);
 		if(CountInv("RailgunLaserMode") == 1) {A_SetWeaponSprite("R030");}
@@ -1351,6 +1347,38 @@ ACTOR PB_Railgun : PB_Weapon
 		}
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
 		Goto Ready3
+
+		PDA_Preview_RailReady:
+			R006 A 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R006 B 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R007 A 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			Stop
+		PDA_Preview_RailShot:
+			R026 A 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R026 B 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R026 C 1 A_WeaponReady(WRF_NOFIRE)
+			R026 D 1 A_WeaponReady(WRF_NOFIRE)
+			R026 E 1 A_WeaponReady(WRF_NOFIRE)
+			Stop
+		PDA_Preview_RailLaserCharge:
+			R036 A 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R036 B 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R036 C 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R036 D 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R036 E 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R036 F 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R036 G 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			Stop
+		PDA_Preview_RailLaserBlast:
+			R036 Z 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R037 A 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R037 B 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			R037 C 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
+			Stop
+		PDA_Preview_RailModeSwitch:
+			R014 AB 1 A_WeaponReady(WRF_NOFIRE)
+			R018 AB 1 A_WeaponReady(WRF_NOFIRE)
+			Stop
 	}
 }
 

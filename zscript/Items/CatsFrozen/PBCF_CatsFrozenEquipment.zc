@@ -1,4 +1,4 @@
-// Cat's Frozen equipment deployables (Slice 4). Credits: addon lineage Cat's Frozen V2.6.x (SchrodingCat et al.).
+// Credits: Cat's Frozen addon V2.6.x (SchrodingCat et al.).
 
 class PBCF_CF_SnowCasterEmitter : Actor
 {
@@ -433,11 +433,6 @@ class PBCF_CF_FreezeMine : Actor
 		A_PlaySound("FRZFIRE2", CHAN_BODY);
 		A_SpawnItemEx("PBCF_CryoWind", 0, 0, 10, 0, 0, 4, random(0, 359), SXF_NOCHECKPOSITION);
 		A_RadiusGive("PBCF_CryocubusSlowdown", 216., RGF_MONSTERS, 40);
-		// Rocket Jump integration: when pb_rocketjump is enabled, freeze-mine
-		// detonation kicks any nearby player + grants PBBlastMomentum (matches
-		// PB_PlayerHandGrenadeExplosion / PB_PlayerStickyExplosion behaviour).
-		// Triggers from monster-step, shooting the mine (Die() -> DoDetonate),
-		// or any other detonation path.
 		let cvRJ = CVar.FindCVar("pb_rocketjump");
 		if (cvRJ && cvRJ.GetInt())
 		{

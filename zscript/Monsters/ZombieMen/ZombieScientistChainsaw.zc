@@ -40,9 +40,6 @@ Class PB_ZombieScientistChainsaw : PB_ZombieScientist
 				Goto See;
 		
 		
-			////////////////
-			//Attack Logic// 
-			////////////////
 			
 			Melee:
 				TNT1 A 0 A_JumpIfInventory ("SKLabGuy", 1, "Stand");
@@ -112,9 +109,6 @@ Class PB_ZombieScientistChainsaw : PB_ZombieScientist
 				Goto See;
 		
 		
-			////////////////
-			//Pain Logic// 
-			////////////////
 			Pain.Head:
 				TNT1 A 0 A_StopSound(7);
 				TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Downed");
@@ -318,7 +312,6 @@ Class PB_ZombieScientistChainsaw : PB_ZombieScientist
 			}
 			Goto Avoid;
 		
-		//New Evade Animation
 		DiveLeft:
 			5CZA A 1 A_FaceTarget();
 			5CZA A 1 A_SetAngle(angle*256/360+90, SPF_INTERPOLATE);
@@ -351,7 +344,6 @@ Class PB_ZombieScientistChainsaw : PB_ZombieScientist
 			5CZC A 6;
 			Goto See;
 		
-		//Avoid damage
 		Pain.Avoid:
 			TNT1 A 0 A_StopSound(7);
 			TNT1 A 0 A_JumpIfInTargetInventory("IsPlayer",1, "PlayerActionDialogue");
@@ -359,11 +351,9 @@ Class PB_ZombieScientistChainsaw : PB_ZombieScientist
 			TNT1 A 0 A_Jump(256, "DiveLeft", "DiveRight", "DiveLeft", "DiveRight", "DiveFront");
 			Goto DiveFront;
 			
-	   //If the monster is hit by the "Killme" damage (which is "exploded" by the captured marine), automatically start firing at the target.
 		Pain.KillMe:
 			TNT1 A 0;
 			Goto See;
-		//Emergency manuever in case the monster gets killed by an "alerter" actor	
 		Death.KillMe:
 		Death.Taunt:
 		Death.Avoid:
@@ -772,7 +762,6 @@ Class PB_ZombieScientistChainsaw : PB_ZombieScientist
 				A_SpawnItem("DeadZombieScientistLXSXO");
 				}
 			Stop;
-	//Boop
 	BlownAwayRight:
 			TNT1 A 0 {
 				bRollsprite = true;
@@ -1392,10 +1381,6 @@ Class PB_ZombieScientistChainsaw : PB_ZombieScientist
 				TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1);
 				Goto Death.ExplosiveImpact;
 				TNT1 A 0 A_GiveToTarget("GoFatality", 1);
-				// Bald chainsaw-toting lab scientist: only Death.Fatality1 (ChainsawZombieFatality / FSF4
-				// lab-coat strip) visually matches. Death.Fatality2-8 grant ZombieManFatality* tokens that
-				// play uniformed zombieman first-person animations -- always pick the chainsaw lab-guy
-				// fatality instead.
 				Goto Death.Fatality1;
 
 		Death.Fatality1:

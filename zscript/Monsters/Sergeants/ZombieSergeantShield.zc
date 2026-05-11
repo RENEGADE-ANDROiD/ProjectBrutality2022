@@ -11,7 +11,7 @@ Class PB_RiotShieldGuy : PB_ShotgunGuy
 		}
 		
 		override void PostBeginPlay() {
-			Super.PostBeginPlay(); // call the super function for virtual functions so we don't break shit if GZdoom update.
+			Super.PostBeginPlay();
 			HitBoxSpawned = False;
 		
 		}
@@ -60,7 +60,6 @@ Class PB_RiotShieldGuy : PB_ShotgunGuy
 		{
 			Super.Tick();
 			
-			// Update recognition if crouching
 			if(self.InStateSequence(self.Curstate, self.ResolveState("MissileContinue")) || self.InStateSequence(self.Curstate, self.ResolveState("DeployShield"))) {
 				self.Height = 44;
 			}
@@ -119,9 +118,6 @@ Class PB_RiotShieldGuy : PB_ShotgunGuy
 			Goto See;
 		
 		
-		////////////////
-		//Attack Logic// 
-		////////////////
 		Melee:
 			TNT1 A 0 A_KillChildren("DestroyShield", 0 , "RiotShieldPhysics");
 			TNT1 A 0 A_SpawnItemEx("RiotShieldPhysics", 20, 0, 5, 0, 0, 0, 0,SXF_NOCHECKPOSITION|SXF_SETMASTER);
@@ -199,9 +195,6 @@ Class PB_RiotShieldGuy : PB_ShotgunGuy
 			Goto See;
 			
 		
-		////////////////
-		//Pain Logic// 
-		////////////////
 		NormalKick:
 			TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain");
 			SPO4 U 1 {

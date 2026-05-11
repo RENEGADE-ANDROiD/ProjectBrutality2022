@@ -1,4 +1,3 @@
-// Molotov Cocktail (PB3 v15 brightmaps — PNGs in brightmaps/)
 Brightmap Sprite MOLOA0 { map "brightmaps/MOLOA0.png" }
 Brightmap Sprite MOLOB0 { map "brightmaps/MOLOB0.png" }
 Brightmap Sprite MOLOC0 { map "brightmaps/MOLOC0.png" }

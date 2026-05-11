@@ -19,20 +19,18 @@ class PossessedGibs : Actor
 	array<double> wvmod;
 	bool stealthy;
 	bool alerted;
-//=================================== Config ===================================
 	override void PostBeginPlay()
 	{
-		stealthy = false;		// If true, the Possessed Gibs initially won't hover or emit a light, perfect for ambushes
-		possradius = 128;		// Radius for various functions such as detection range, warp distance, dynamic light size
-		maxcorpses = 16;		// Maximum amount of gibbed corpses that can hover around the Possessed Gibs
-		startcorpses = 7;		// Amount of additional gibbed corpses spawned around the spawn position
-		corpselist.pushV("GibbedMarine",		// Classnames for the additional gibbed corpses
-						"GibbedMarineExtra",	// These can also be placed on the map as "reinforcements"
+		stealthy = false;
+		possradius = 128;
+		maxcorpses = 16;
+		startcorpses = 7;
+		corpselist.pushV("GibbedMarine",
+						"GibbedMarineExtra",
 						"GibbedZombieMan",
 						"GibbedShotgunGuy",
 						"GibbedDoomImp",
 						"GibbedChaingunGuy");
-//==============================================================================
 		rolldir = randompick(-10,-8,-6,-4,4,6,8,10);
 		corpses.reserve(maxcorpses);	
 		spriteroll.reserve(maxcorpses);
@@ -335,8 +333,6 @@ class PossessedGibs : Actor
 	}
 }
 
-// Ground variant: same VPSG look/sounds, gravity + stronger A_Weave for crawl and wobble.
-// Tendril lash: staged gib streaks toward the target + melee LineTrace hit (organs/gibs only — no new sprites).
 class PossessedGibsSlither : PossessedGibs
 {
 	int tendrilCooldown;
@@ -570,7 +566,6 @@ class PossessedGibsSlither : PossessedGibs
 	}
 }
 
-//--------------------------------- gibs dummy ---------------------------------
 class PossessedGibsExtra : Actor 
 {
 	Default

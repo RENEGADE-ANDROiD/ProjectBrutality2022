@@ -346,6 +346,11 @@ ACTOR PB_Axe : PB_Weapon
 		"####" ABCDE 1 A_DoPBWeaponAction
 		"####" E 5 A_DoPBWeaponAction
 		Goto Ready3
+
+	PDA_Preview_AxeThrow:
+		AX30 ABCDEFGHIJKLM 4
+		AX30 OPQ 4
+		Stop
 		
 	}
 }

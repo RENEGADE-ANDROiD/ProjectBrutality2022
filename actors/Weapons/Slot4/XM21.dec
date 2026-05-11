@@ -735,6 +735,39 @@ ACTOR PB_XM21 : PB_Weapon
 		X21G A 1
 		Goto Ready3
 
+	PDA_Preview_XM21_AP:
+		X21F A 2 Bright
+		X21F B 2
+		X21F C 2
+		Stop
+	PDA_Preview_XM21_Ballistic:
+		X21F A 2 Bright
+		X21F B 2
+		X21F C 2
+		Stop
+	PDA_Preview_XM21_Scoped:
+		SNIP A 2 Bright
+		SNIP A 2
+		SNIP A 2
+		Stop
+	PDA_Preview_XM21_AltScope:
+		X21A A 2
+		X21A B 2
+		X21A C 2
+		Stop
+	PDA_Preview_XM21_ModeSwap:
+		X21R N 4
+		X21R PQR 2
+		X21R STUVVV 2
+		X21R XYZ 2
+		Stop
+	PDA_Preview_XM21_Reload:
+		X21G AB 2
+		X21R ABCDE 2
+		X21R FGH 2
+		X21R JKL 2
+		Stop
+
 	FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking")

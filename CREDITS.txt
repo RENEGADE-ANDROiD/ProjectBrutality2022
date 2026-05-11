@@ -20,7 +20,7 @@ Maintainers (this distribution)
 - Wintermute
 
 Gameplay and content in this release
-- Revolver Firing sprites by IDKFA
+- Revolver sprites by IDKFA
 - DarkShadow’s Monster Sounds Overhaul: monster SFX (based on Ravik’s Soundpack, with
   content from multiple Doom games) — integrated by replacing matching files under
   SOUNDS/ and by extending a small set of caco/imp SNDINFO pools to use additional
@@ -626,3 +626,4 @@ Reload, fatality, death, and gore sprites + code + revenge idea - DarthSeeth
 Glory-kill addon code - Headshot_Ev (Brutal Doom BE)
 Additional code - Dox
 PB3.0 build update - Jeniffer/Jenny (2023-05-14): SelectAnimation/Idle rewrites, gun-smoke inventory, kick/slidekick/punch fixes, barrel grab + reload fixes, deselect and weapon-up polish, startup-error cleanup
+...

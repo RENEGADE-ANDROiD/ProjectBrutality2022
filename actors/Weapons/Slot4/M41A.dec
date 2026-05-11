@@ -77,6 +77,14 @@ Actor PB_762x51mm : FastProjectile
 	}
 }
 
+ACTOR M41AEjectedMag : LMGCasingStandard
+{
+	Scale 0.17
+	Mass 6
+	Speed 10
+	SeeSound "weapons/casing"
+}
+
 Actor PB_12GAPellet : FastProjectile
 {
 	Projectile

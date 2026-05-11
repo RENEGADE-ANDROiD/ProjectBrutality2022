@@ -1,7 +1,6 @@
-// Radial weapon inventory wheel: one outer slice per occupied slot; inner ring for multiple weapons in a slot.
+// Radial weapon wheel — outer slice per slot, inner ring when slot has multiple weapons. Slots: **AGENTS.md** §4 (`zscript/PlayerPawn.zc` `PB_NUM_WP_SLOTS`).
 extend class PB_SpecialWheelHandler
 {
-	// PB_NUM_WP_SLOTS in PlayerPawn matches Doom's 0–9 weapon slot rows.
 	bool weaponPickWheel_ShouldList(Weapon w)
 	{
 		if (!w)

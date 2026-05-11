@@ -1,4 +1,3 @@
-// PB_HelmetDrops: point lights + brightmaps for 3BON
 Pointlight DroppedHelm1
 {
 	color 1.0 0.0 0.0

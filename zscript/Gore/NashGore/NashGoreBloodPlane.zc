@@ -23,11 +23,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//===========================================================================
-//
-//
-//
-//===========================================================================
+
 
 class NashGoreBloodPlane : Actor
 {
@@ -46,11 +42,7 @@ class NashGoreBloodPlane : Actor
 	double rndzoffset;
 	double zOld, zNew;
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	virtual void BloodPlaneApplySpawnScale()
 	{
@@ -110,7 +102,6 @@ class NashGoreBloodPlane : Actor
 				tryCheckFloating = 1;
 			}
 
-			// advance states
 			if (tics != -1)
 			{
 				if (--tics <= 0)
@@ -132,12 +123,10 @@ class NashGoreBloodPlane : Actor
 			return;
 		}
 
-		// don't float beyond ledges
 		if (!bCheckedFloating)
 		{
 			if (!bOnCeiling)
 			{
-				// floor
 				if (Pos.Z <= FloorZ && NashGoreStatics.CheckFloating(self, false))
 				{
 					Destroy();
@@ -146,7 +135,6 @@ class NashGoreBloodPlane : Actor
 			}
 			else
 			{
-				// ceiling
 				if (Pos.Z <= CeilingZ && NashGoreStatics.CheckFloating(self, true))
 				{
 					Destroy();
@@ -157,23 +145,17 @@ class NashGoreBloodPlane : Actor
 			bCheckedFloating = true;
 		}
 
-		// align to slope
 		if (!bSloped)
 		{
 			NashGoreStatics.AlignToPlane(self, ceiling: bOnCeiling);
 			bSloped = true;
 		}
 
-		// corpse blood needs collision for footprint effects
 		if (!(self is "NashGoreCorpseBlood")) bNoInteraction = true;
 	}
 }
 
-//===========================================================================
-//
-//
-//
-//===========================================================================
+
 
 class NashGoreBloodSpot : NashGoreBloodPlane
 {
@@ -184,29 +166,13 @@ class NashGoreBloodSpot : NashGoreBloodPlane
 
 	int dripDuration, dripInterval;
 
-	// 30 seconds
 	const dripDuration_MAX = 35 * 30;
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	override void PostBeginPlay(void)
 	{
 		if (random() < (255 - nashgore_bloodamount)) { Destroy(); return; }
-
-		/*
-		if (target && !nashgore_spriteblood)
-		{
-			Color bc = target.BloodColor;
-			if (bc == 0) bc = gameinfo.defaultbloodcolor;
-			else bc = Color(bc.R / 2, bc.G / 2, bc.B / 2);
-			A_SetRenderStyle(1, STYLE_Shaded);
-			SetShade(bc);
-		}
-		*/
 
 		if (nashgore_spriteblood)
 		{
@@ -239,11 +205,7 @@ class NashGoreBloodSpot : NashGoreBloodPlane
 		}
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	States
 	{
@@ -306,7 +268,6 @@ class NashGoreBloodSpotSmall : NashGoreBloodSpot
 
 class NashGoreBloodSpotCeiling : NashGoreBloodSpot
 {
-	// uses a different Z offset in the MODELDEF
 }
 
 class NashGoreBloodSpotClassic : NashGoreBloodSpot
@@ -319,14 +280,9 @@ class NashGoreBloodSpotClassic : NashGoreBloodSpot
 
 class NashGoreBloodSpotClassicCeiling : NashGoreBloodSpotClassic
 {
-	// uses a different Z offset in the MODELDEF
 }
 
-//===========================================================================
-//
-//
-//
-//===========================================================================
+
 
 class NashGoreCorpseBlood : NashGoreBloodPlane
 {
@@ -340,11 +296,7 @@ class NashGoreCorpseBlood : NashGoreBloodPlane
 
 	bool bDepletedCorpseBlood;
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	override void BeginPlay(void)
 	{
@@ -374,7 +326,6 @@ class NashGoreCorpseBlood : NashGoreBloodPlane
 				a.lastCorpseBlood = self;
 				a.footprintDuration = NashGoreActor.MAX_FOOTPRINT_DURATION;
 
-				// reduce blood size every time it is stepped on
 				if (NashGoreStatics.GetVelocity(other) > 0.5)
 				{
 					A_SetSize(Radius - 0.28);
@@ -383,8 +334,6 @@ class NashGoreCorpseBlood : NashGoreBloodPlane
 
 				if (Scale.X <= 0.01)
 				{
-					// not recommended to destroy actors inside CanCollideWith
-					// so instead let's just mark it for destruction later
 					bDepletedCorpseBlood = true;
 				}
 			}
@@ -393,11 +342,7 @@ class NashGoreCorpseBlood : NashGoreBloodPlane
 		return false;
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	States
 	{
@@ -419,11 +364,7 @@ class NashGoreCorpseBlood : NashGoreBloodPlane
 	}
 }
 
-//===========================================================================
-//
-//
-//
-//===========================================================================
+
 
 class NashGoreFootprint : NashGoreBloodPlane
 {
@@ -432,11 +373,7 @@ class NashGoreFootprint : NashGoreBloodPlane
 		Radius 10;
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	override void BeginPlay(void)
 	{
@@ -444,11 +381,7 @@ class NashGoreFootprint : NashGoreBloodPlane
 		Super.BeginPlay();
 	}
 
-	//===========================================================================
-	//
-	//
-	//
-	//===========================================================================
+
 
 	States
 	{

@@ -19,7 +19,17 @@ Actor MetalSniperEmptyReload : Inventory { Inventory.MaxAmount 1 }
 Actor Select_MS_Standard : Inventory { Inventory.MaxAmount 1 }
 Actor Select_MS_Resonance : Inventory { Inventory.MaxAmount 1 }
 Actor MS_PendingSwapReload : Inventory { Inventory.MaxAmount 1 }
+Actor MS_PendingSwapReload_RoundEject : Inventory { Inventory.MaxAmount 1 }
 
+// Magazine ejection during reload uses the canonical purpose-built
+// EmptyHDMRMag_Sniper (zscript/Effects/Casings.txt:2070): correct HCL2
+// sniper-mag sprite, gravity-on physics inherited from EmptyMagMP40
+// (+DOOMBOUNCE, +ROLLSPRITE, +ROLLCENTER, full bounce/settle/rest state
+// graph), and weapons/largemagdrop sound. Spawned via PB_SpawnCasing(...)
+// in the take-mag / unload paths of MetalSniper.zs at the instant the
+// hand visually releases the mag, replacing the old PSprite-only
+// constant-drift "floaty" frames. PBRIFLE.dec already uses this same
+// actor for its DMR/sniper variant — see line ~2293 there.
 Actor SniperBullet : FastProjectile
 {
     Projectile

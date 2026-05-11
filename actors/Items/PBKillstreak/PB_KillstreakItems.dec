@@ -1,4 +1,3 @@
-// Short speed tick granted with every 5-kill reward (stack with random power-up).
 actor PB_KSFreeze : PowerupGiver
 {
 	//$Title Kill streak haste

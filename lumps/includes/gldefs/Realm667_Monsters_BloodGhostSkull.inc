@@ -1,8 +1,5 @@
-// Realm 667 -- Blood Ghost (KILLA DIO) + Blood Skull (Gothic) lights.
-// Folded into Project Brutality 2022. Lights renamed with R667_ prefix to
-// avoid namespace clashes with PB / BD / monster-pack lights.
+// Realm 667 — Blood Ghost (KILLA DIO) + Blood Skull (Gothic); R667_ light names avoid clashes with PB / BD / MP.
 
-// ---- Blood Ghost ------------------------------------------------------------
 Pointlight R667_BloodGhost
 {
     color 1.0 0.0 0.0
@@ -41,7 +38,6 @@ object Realm667_GhostBall
     Frame GBOM { light R667_BloodGhostBall }
 }
 
-// ---- Blood Skull (death pulse only -- spit is unlit in upstream) ------------
 Flickerlight R667_BloodSkull_X1
 {
     color 0.8 0.3 0.0

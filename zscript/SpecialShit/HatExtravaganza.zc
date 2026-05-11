@@ -5,7 +5,7 @@ Class HatExtravaganza : EventHandler
 		if (!e) return;
 		Actor t = e.Thing;
 		if (!t) return;
-		if(!t.bCORPSE && !t.bFRIENDLY && t is 'PB_Monster') //e.thing is 'PB_Monster'
+		if(!t.bCORPSE && !t.bFRIENDLY && t is 'PB_Monster')
 		{
 			CVar HatsEnabled = Cvar.FindCvar("PB_HatExtravaganza");
 			if(HatsEnabled)
@@ -57,4 +57,3 @@ Class FunnyHat : Actor
             stop;
     }
 }
-		

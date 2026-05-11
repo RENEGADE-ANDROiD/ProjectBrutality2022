@@ -1,6 +1,3 @@
-// Project Brutality 2022 — kill streak on-screen text (play→UI message queue).
-// Port of Universal Kill Streaks message path; class names use PB_Killstreak* / PB_Ks*.
-
 class PB_KsHudMessage : HUDMessageBase
 {
 	transient BrokenLines lines;
@@ -234,7 +231,6 @@ class PB_KsMsgQueuedWaggle : PB_KsMsgQueued
 	}
 }
 
-// Time: x = fade in, y = hold, z = fade out (seconds).
 class PB_KillstreakMessageHandler : EventHandler
 {
 	Array<PB_KsMsgQueued> queue;

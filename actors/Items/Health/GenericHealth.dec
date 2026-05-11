@@ -1,5 +1,3 @@
-// Health bonus -------------------------------------------------------------
-
 ACTOR HealthPlus : Health Replaces HealthBonus
 {
 	//$Title Health Bonus
@@ -21,8 +19,6 @@ ACTOR HealthPlus : Health Replaces HealthBonus
 		Loop
 	}
 }
-
-// Armor bonus --------------------------------------------------------------
 
 Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 {
@@ -52,7 +48,6 @@ Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 	}
 }
 
-// Green / blue / red armor: ZScript (PBHP_*ZSC) + States in PBHP_Bridges_Armor.dec
 #include "actors/Items/PBHPArcade/PBHP_Bridges_Armor.dec"
 
 Actor HeavyArmorForMegaSphere : HeavyArmor
@@ -77,8 +72,6 @@ Actor GiveHealth : Health
 		Loop
 	}
 }
-
-// Armor bonus --------------------------------------------------------------
 
 Actor GiveArmor : BasicArmorBonus
 {

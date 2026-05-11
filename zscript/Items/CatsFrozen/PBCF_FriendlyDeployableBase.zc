@@ -1,6 +1,3 @@
-// Cat's Frozen equipment deployables — player-sourced damage filtered (FamiliarBase pattern).
-// See zscript/Items/PBKillstreak/FamiliarBase.zc for rationale.
-
 class PBCF_FriendlyDeployableBase : Actor
 {
 	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)

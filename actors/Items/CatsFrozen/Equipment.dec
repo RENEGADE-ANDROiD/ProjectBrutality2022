@@ -1,5 +1,3 @@
-// Cat's Frozen Addon — equipment wheel ammo + pickups (Slice 4). Always-on; see AGENTS.md / CHANGELOG.
-
 Actor WW_FreezenadeSelected : Inventory { Inventory.MaxAmount 1 }
 Actor FreezenadeSelected : Inventory { Inventory.MaxAmount 1 }
 

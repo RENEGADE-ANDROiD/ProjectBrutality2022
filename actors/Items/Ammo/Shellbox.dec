@@ -36,7 +36,6 @@ ACTOR NewShellBox : NewShell
 	}
 }
 
-// Might remove, might implement somehow, keeping but removing smart scav
 ACTOR 2Shells : NewShell
 {
 	Scale .6
@@ -63,8 +62,6 @@ ACTOR 2Shells5 : 2Shells { States {	Spawn: SH3L F -1
 Stop } }
 ACTOR 2Shells6 : 2Shells { States {	Spawn: SH3L G -1 
 Stop } }
-
-//Live Single Shotshells
 
 ACTOR LiveShellRed_K : NewShell
 {

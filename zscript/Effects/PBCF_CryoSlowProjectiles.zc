@@ -1,6 +1,4 @@
-// Folded from Cat's Frozen Addon (Brutal Doom v22) CryoSlowProjectiles.zc — cryo slowdown / ice orb / cryo wind / snow / slowing cloud.
-// Credits: Thanuris, Ganbare-Lucifer, DeVloek (ZScript), SchrodingCat; ice projectile lineage CryoBow (Bloax, ZZrionTheInsect, Xaser, Ethril).
-// PB 2022: namespaced PBCF_* ; BigCryoSmoke -> FreezenadeBigCryoSmoke (existing PB actor).
+// Cat's Frozen cryo actors (`PBCF_*`). Credits: Thanuris, Ganbare-Lucifer, DeVloek (ZScript), SchrodingCat; CryoBow lineage: Bloax, ZZrionTheInsect, Xaser, Ethril.
 
 class PBCF_CryocubusLanzaHielo : Actor
 {
@@ -178,25 +176,20 @@ class PBCF_CryoWind : Actor
 		Goto See;
 
 	See:
-		CRYK A 0 A_Explode(10, 40);
-		WPXS ABCD 1 Bright;
-		CRYK A 0 A_Explode(10, 40);
-		WPXS EFGH 1 Bright;
-		CRYK A 0 A_Explode(10, 40);
-		WPXS IJKL 1 Bright;
-		CRYK A 0 A_Explode(10, 40);
-		WPXS HIJK 1 Bright;
-		CRYK A 0 A_Explode(10, 40);
-		WPXS LMNO 1 Bright;
-		CRYK A 0 A_Explode(10, 40);
-		WPXS QRST 1 Bright;
-		CRYK A 0 A_Explode(10, 40);
-		WPXS UVWXYZ 1 Bright;
-		WPXZ ABC 1 Bright;
+		TNT1 A 0 A_Explode(10, 40);
+		ICEB AABBCCDD 1 Bright;
+		TNT1 A 0 A_Explode(10, 40);
+		ICEB DDCCBBAA 1 Bright;
+		TNT1 A 0 A_Explode(10, 40);
+		ICEB AABBCCDD 1 Bright;
+		TNT1 A 0 A_Explode(10, 40);
+		ICEB DDCCBBAA 1 Bright;
+		TNT1 A 0 A_Explode(10, 40);
+		ICEB AABBCCDD 1 Bright;
 		Goto Death;
 
 	Death:
-		CRYK A 0 A_SpawnItem("BlueFlareMedium", 0, -20);
+		TNT1 A 0 A_SpawnItem("BlueFlareMedium", 0, -20);
 		TNT1 A 0 A_SpawnItemEx("DetectFloorIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
 		TNT1 A 0 A_SpawnItemEx("DetectCeilIce", 0, 0, 1, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
 		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, 0, 5, 0, -2, 0, 0, 0);

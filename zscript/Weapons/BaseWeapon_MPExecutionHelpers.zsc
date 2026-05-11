@@ -20,14 +20,9 @@ extend class PB_WeaponBase
 		// Shared P1NK/KIC* POV; blended only from humanoid fodder execution pools where it fits visually.
 		return "Execution_Generic";
 	}
-////////////////////////////Monsters Pack Execution//////////////////////////////////////////////////////////
-
 action StateLabel PB_ExecutionHellDuke() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -38,14 +33,11 @@ action StateLabel PB_ExecutionHellDuke() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
-			result = "Execution_HellDuke"; // ya sabes qe poner
-			return result;
+			result = "Execution_HellDuke";			return result;
 		}
 		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_HellDuke";
@@ -58,11 +50,8 @@ action StateLabel PB_ExecutionHellDuke() {
 	}
 
 action StateLabel PB_ExecutionDirector() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -73,14 +62,11 @@ action StateLabel PB_ExecutionDirector() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
-			result = "Execution_Director"; // ya sabes qe poner
-			return result;
+			result = "Execution_Director";			return result;
 		}
 		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_Director";
@@ -94,11 +80,8 @@ action StateLabel PB_ExecutionDirector() {
 
 
 action StateLabel PB_ExecutionDarkLord() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -109,14 +92,11 @@ action StateLabel PB_ExecutionDarkLord() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
-			result = "Execution_DarkLord"; // ya sabes qe poner
-			return result;
+			result = "Execution_DarkLord";			return result;
 		}
 		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_DarkLord";
@@ -130,11 +110,8 @@ action StateLabel PB_ExecutionDarkLord() {
 
 
 action StateLabel PB_ExecutionESoul() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -145,14 +122,11 @@ action StateLabel PB_ExecutionESoul() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
-			result = "Execution_ESoul"; // ya sabes qe poner
-			return result;
+			result = "Execution_ESoul";			return result;
 		}
 		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_ESoul";
@@ -167,11 +141,8 @@ action StateLabel PB_ExecutionESoul() {
 
 
 action StateLabel PB_ExecutionObsidianRavager() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -182,14 +153,12 @@ action StateLabel PB_ExecutionObsidianRavager() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_ObsidianRavager";
 			return result;
 		}
 		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_ObsidianRavager";
@@ -203,11 +172,8 @@ action StateLabel PB_ExecutionObsidianRavager() {
 
 
 action StateLabel PB_ExecutionIceDemon() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -218,21 +184,12 @@ action StateLabel PB_ExecutionIceDemon() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
-			result = "Execution_IceDemon1"; // ya sabes qe poner
-			return result;
+			result = "Execution_IceDemon1";			return result;
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_IceDemon1";
@@ -246,11 +203,8 @@ action StateLabel PB_ExecutionIceDemon() {
 
 
 	action StateLabel PB_ExecutionBehemoth() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -261,7 +215,6 @@ action StateLabel PB_ExecutionIceDemon() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_Behemoth";
@@ -269,13 +222,6 @@ action StateLabel PB_ExecutionIceDemon() {
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_Behemoth";
@@ -289,11 +235,8 @@ action StateLabel PB_ExecutionIceDemon() {
 
 
 action StateLabel PB_ExecutionMarauder() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,3));
-// 		int selector = 3;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -304,7 +247,6 @@ action StateLabel PB_ExecutionMarauder() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_Marauder1";
@@ -312,7 +254,6 @@ action StateLabel PB_ExecutionMarauder() {
 		}
 		
 		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_Marauder1";
@@ -328,11 +269,8 @@ action StateLabel PB_ExecutionMarauder() {
 	}
 
 action StateLabel PB_ExecutionFleshWizard() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -343,21 +281,12 @@ action StateLabel PB_ExecutionFleshWizard() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
-			result = "Execution_FleshWizard1"; // ya sabes qe poner
-			return result;
+			result = "Execution_FleshWizard1";			return result;
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_FleshWizard1";
@@ -371,11 +300,8 @@ action StateLabel PB_ExecutionFleshWizard() {
 
 
 action StateLabel PB_ExecutionD3Seeker() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -386,21 +312,12 @@ action StateLabel PB_ExecutionD3Seeker() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
-			result = "Execution_D3Seeker1"; // ya sabes qe poner
-			return result;
+			result = "Execution_D3Seeker1";			return result;
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_D3Seeker1";
@@ -415,11 +332,8 @@ action StateLabel PB_ExecutionD3Seeker() {
 
 
 action StateLabel PB_ExecutionCrackodemon() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -430,21 +344,12 @@ action StateLabel PB_ExecutionCrackodemon() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
-			result = "Execution_Cricoso"; // ya sabes qe poner
-			return result;
+			result = "Execution_Cricoso";			return result;
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_Cricoso";
@@ -457,8 +362,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 
 	action StateLabel PB_ExecutionCyberSatyr() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
 		FLineTraceData RemoteRay;
@@ -473,13 +376,11 @@ action StateLabel PB_ExecutionCrackodemon() {
 		
 		
 		
-		// Wall Kick Fatality
  		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
  			result = "Execution_CyberSatyr3";
  			return result;
  		}
 		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_CyberSatyr1";
@@ -492,8 +393,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 	
 	action StateLabel PB_ExecutionSatyr() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
 		FLineTraceData RemoteRay;
@@ -506,13 +405,11 @@ action StateLabel PB_ExecutionCrackodemon() {
 		data: RemoteRay
 		);
 
-		// Wall Kick Fatality
  		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
  			result = "Execution_Satyr3";
  			return result;
  		}
 
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_Satyr1";
@@ -527,7 +424,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 
 
       action StateLabel PB_ExecutionZombiefresh() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
 		if (random(1, 6) == 1)
 			return PB_ExecuteGeneric();
 
@@ -543,14 +439,12 @@ action StateLabel PB_ExecutionCrackodemon() {
 		data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_ZombieFresh";
 			return result;
 		}
 		
-		// Wall Kick Fatality
  		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
  			result = "Execution_ZombieFresh3";
  			return result;
@@ -574,7 +468,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 	
 	action StateLabel PB_ExecutionZombieFodder() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
 		if (random(1, 6) == 1)
 			return PB_ExecuteGeneric();
 
@@ -590,14 +483,12 @@ action StateLabel PB_ExecutionCrackodemon() {
 		data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_ZombieFodder";
 			return result;
 		}
 		
-		// Wall Kick Fatality
  		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
  			result = "Execution_ZombieFodder3";
  			return result;
@@ -623,8 +514,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 
 
 	action StateLabel PB_ExecutionPB_HorrorspawnDecap() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,4));
 		FLineTraceData RemoteRay;
@@ -637,14 +526,12 @@ action StateLabel PB_ExecutionCrackodemon() {
 		data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_PB_HorrorspawnDecap";
 			return result;
 		}
 		
-		// Wall Kick Fatality
  		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
  			result = "Execution_PB_HorrorspawnDecap";
  			return result;
@@ -656,7 +543,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 
 
 	action StateLabel PB_ExecutionUnwilling() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
 		if (random(1, 6) == 1)
 			return PB_ExecuteGeneric();
 
@@ -672,20 +558,17 @@ action StateLabel PB_ExecutionCrackodemon() {
 		data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_Unwilling";
 			return result;
 		}
 		
-		// Wall Kick Fatality
  		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
  			result = "Execution_Unwilling3";
  			return result;
  		}
 		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_Unwilling2";
@@ -704,8 +587,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 
 	action StateLabel PB_ExecutionHunger() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,4));
 		FLineTraceData RemoteRay;
@@ -718,20 +599,17 @@ action StateLabel PB_ExecutionCrackodemon() {
 		data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_Hunger";
 			return result;
 		}
 		
-		// Wall Kick Fatality
  		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
  			result = "Execution_Hunger3";
  			return result;
  		}
 		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_Hunger2";
@@ -750,7 +628,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 	
 	action StateLabel PB_ExecutionCyberFodder() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
 		if (random(1, 6) == 1)
 			return PB_ExecuteGeneric();
 
@@ -766,20 +643,17 @@ action StateLabel PB_ExecutionCrackodemon() {
 		data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_CyberFodder";
 			return result;
 		}
 		
-		// Wall Kick Fatality
  		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
  			result = "Execution_CyberFodder3";
  			return result;
  		}
 		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_CyberFodder4";
@@ -798,8 +672,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 	
 	  action StateLabel PB_ExecutionHelemental() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
 		FLineTraceData RemoteRay;
@@ -812,20 +684,12 @@ action StateLabel PB_ExecutionCrackodemon() {
 		data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_helemental";
 			return result;
 		}
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_helemental";
@@ -838,8 +702,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 	
 	action StateLabel PB_ExecutionDarkDisciple() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
 		FLineTraceData RemoteRay;
@@ -852,7 +714,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_Darkdisciple1";
@@ -860,13 +721,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_Darkdisciple1";
@@ -879,8 +733,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 	
 	action StateLabel PB_ExecutionPyroDemon() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
 		FLineTraceData RemoteRay;
@@ -893,7 +745,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_PyroDemon1";
@@ -901,13 +752,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_PyroDemon1";
@@ -920,11 +764,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 	
 	action StateLabel PB_ExecutionTerminator() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -935,7 +776,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_Terminator";
@@ -943,13 +783,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_Terminator";
@@ -962,11 +795,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 
 	action StateLabel PB_ExecutionD3HellGuardian() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -977,7 +807,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_D3HellGuardian1";
@@ -985,13 +814,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_D3HellGuardian1";
@@ -1005,11 +827,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 
 
 	action StateLabel PB_ExecutionD3Maledict() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -1020,7 +839,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_D3Maledict1";
@@ -1028,13 +846,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_D3Maledict1";
@@ -1048,11 +859,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 
 
 	action StateLabel PB_ExecutionRahovart() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -1063,7 +871,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_Rahovart1";
@@ -1071,13 +878,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_Rahovart1";
@@ -1090,11 +890,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 
 	action StateLabel PB_ExecutionOverLord() {
-		//A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET); // Todo: Move this to a higher function once more fatalities are done
-
 		StateLabel result;
 		int selector = (random(1,2));
-// 		int selector = 2;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
 		   angle,
@@ -1105,7 +902,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		   data: RemoteRay
 		);
 		
-		// Drop Kick Fatality
 		if((Pos.Z-floorz) > 8) {
 			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
 			result = "Execution_OverLord";
@@ -1113,13 +909,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		}
 		
 		
-// 		// Wall Kick Fatality
-// 		if(wallcheck && RemoteRay.HitType == TRACE_HitWall) {
-// 			result = "Execution_Zombieman3";
-// 			return result;
-// 		}
-		
-		// Generic Fatalities
 		switch(selector){
 			case 1:
 				result = "Execution_OverLord";

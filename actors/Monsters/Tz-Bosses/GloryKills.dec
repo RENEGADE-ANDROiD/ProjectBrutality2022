@@ -3,7 +3,6 @@ ACTOR PB_CyberdemonGK: CyberdemonBoss Replaces CyberdemonBoss
 	WoundHealth 300
 }
 
-// Editor number 23127 / ACS thaw paths spawn "PB_Cyberdemon"; this replacer keeps the same GK+stagger chain as map Cyberdemon -> CyberdemonBoss.
 ACTOR PB_Cyberdemon_MapGK : PB_CyberdemonGK Replaces PB_Cyberdemon
 {
 }
@@ -60,16 +59,16 @@ ACTOR PB_AnnihilatorGK: PB_Annihilator Replaces PB_Annihilator
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0) //if it isnt healing already
-				{								//will heal and give the token that indicates it's executable
-					A_SpawnItemEx("BaronHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
-					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
-					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
+				if(countinv("FinisherToken")==0)
+				{
+					A_SpawnItemEx("BaronHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
+				if(GetCvar(be_MonsterStagger)==1)
 				{
-					return state("Stagger");	//stays there for a few seconds
+					return state("Stagger");
 				}
 				else
 				{
@@ -159,16 +158,16 @@ ACTOR PB_MastermindGK: PB_Mastermind Replaces PB_Mastermind
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0) //if it isnt healing already
-				{								//will heal and give the token that indicates it's executable
-					A_SpawnItemEx("BaronHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
-					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
-					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
+				if(countinv("FinisherToken")==0)
+				{
+					A_SpawnItemEx("BaronHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
+					A_GiveToTarget("BloodPunchKilled",1);
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
+				if(GetCvar(be_MonsterStagger)==1)
 				{
-					return state("Stagger");	//stays there for a few seconds
+					return state("Stagger");
 				}
 				else
 				{

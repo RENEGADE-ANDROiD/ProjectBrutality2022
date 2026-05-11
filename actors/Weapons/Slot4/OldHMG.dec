@@ -490,6 +490,25 @@ Prompt2:
 		NLGN A 3 
 		Goto Ready3
 
+	PDA_Preview_OldHMG_Belt:
+		HMAF A 2 Bright
+		HMAF B 2
+		HMAF C 2
+		HMAF D 2
+		Stop
+	PDA_Preview_OldHMG_Nail:
+		NLGF A 2 Bright
+		NLGF B 2 Bright
+		NLGF CF 2
+		NLGF D 2 Bright
+		Stop
+	PDA_Preview_OldHMG_Reload:
+		HMAR ABCD 2
+		HMAR EFGHHHH 2
+		HMAR KLM 2
+		HMAR NOPQ 2
+		Stop
+
 	FlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIfInventory("EquippedNailRounds",1,"NailGunFlashPunching")

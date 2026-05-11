@@ -22,6 +22,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/TiltPlus/TiltPlusPlus.zc"
 #include "zscript/TiltPlus/TiltPlusPlusMenu.zc"
 #include "zscript/PBPDA.zc"
+#include "zscript/Items/PB_XP/PB_XPRewards.zc"
 #include "zscript/PB_VisorOverlay.zc"
 #include "zscript/Items/PBKillstreak/PB_Killstreak_Messages.zc"
 #include "zscript/Items/PBKillstreak/PB_Killstreak_Items.zc"
@@ -48,7 +49,6 @@ const MAXITERATIONS = 32676;
 #include "zscript/Gore/NashGore/NashGoreMenu.zc"
 #include "zscript/Gore/PBBlood.zc"
 #include "zscript/Gore/BDv22GoreHandler.zc"
-// BDv22GoreMist (Brutal Doom 22; extends PB_Bloodmist): after PBBlood, before PBGore
 #include "zscript/Gore/BDv22Gore/BDv22GoreMist.zc"
 #include "zscript/Gore/BDv22GoreMergeHandler.zc"
 #include "zscript/Gore/BPv10Gore/BPv10GoreHandler.zc"
@@ -60,12 +60,10 @@ const MAXITERATIONS = 32676;
 #include "zscript/Monsters/Realm667/possessedgibs/possessedgibs.zc"
 #include "zscript/Decorations/PBKeys.zc"
 
-//HitFeedback
 #include "zscript/pb_hitfeedback/sharedmath.zs"
 #include "zscript/pb_hitfeedback/handler.zs"
 #include "zscript/pb_hitfeedback/inventory.zs"
 
-//DamNums
 #include "zscript/damnums/constants.txt"
 #include "zscript/damnums/damnum.txt"
 #include "zscript/damnums/events.txt"
@@ -85,10 +83,8 @@ const MAXITERATIONS = 32676;
 #include "zscript/damnums/fonts/borderlands.txt"
 #include "zscript/damnums/fonts/gamedefaults.txt"
 
-// PB_HelmetDrops (ZScript event: spawn 3BON on helmeted deaths)
 #include "zscript/Items/HelmetDrops/HelmetDropHandler.zc"
 
-//Monsters
 #include "zscript/Monsters/PBMonster.zc"
 #include "zscript/Monsters/CatsFrozen/PB_Cryotron.zc"
 #include "zscript/Monsters/CatsFrozen/PB_FrozenSolid.zc"
@@ -112,31 +108,23 @@ const MAXITERATIONS = 32676;
 #include "zscript/Monsters/D3Maledict.zc"
 #include "zscript/Monsters/Realm667/Venor.zc"
 
-//Glory Kills
 #include "zscript/Monsters/Imps/ImpGloryKill.zc"
 #include "zscript/Monsters/Sergeants/SergeantsGloryKill.zc"
 #include "zscript/Monsters/ZombieMen/ZombieMenGloryKill.zc"
 #include "zscript/Monsters/ZombieMen/ZombieScientistGloryKill.zc"
 
-//Effects
 #include "zscript/Effects/Casings.txt"
 #include "zscript/Effects/IceShards.txt"
 #include "zscript/Effects/PBCF_CryoSlowProjectiles.zc"
 #include "zscript/Weapons/CatsFrozen/PB_CatsFrozenWeapons.zc"
 #include "zscript/Effects/JunkedBarrel.txt"
 
-//Lewisk3Lasers
 #include "zscript/LaserAPI/LaserAPI.txt"
 
-//Weapons
 #include "zscript/Weapons/BaseWeapon.zc"
 #include "zscript/Weapons/RailGunFire.zc"
 #include "zscript/Weapons/PB_SuperBFGBall.zc"
 #include "zscript/Weapons/Slot1/KatanaUpgradeChoiceHelpers.zc"
-// Staging-parity helper back-fill on PB_WeaponBase (chamber/mag tracking,
-// PB_WeaponRaise, PB_CheckReload, PB_jumpIfNoAmmo, upgrade handoff, etc.)
-// so future ZScript weapon drops from PB Staging (Deagle, Revolver, Shotgun,
-// SuperGL, PlasmaM1, ...) compile without per-weapon re-implementation.
 #include "zscript/Weapons/BaseWeapon_StagingShim.zsc"
 #include "zscript/Weapons/BaseWeapon_MPExecutionHelpers.zsc"
 #include "zscript/Weapons/BaseWeapon_MPExecutions.zsc"
@@ -167,7 +155,6 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot3/CSSG/CSSG.zs"
 #include "zscript/Weapons/Slot3/CSSG/CSSGEvent.zs"
 
-//Spawners
 #include "zscript/Spawner/PB_SpawnerBase.zc"
 #include "zscript/Spawner/PB_HorrorPassiveController.zc"
 #include "zscript/Spawner/PB_ProjectSurvivalFodderPassive.zc"
@@ -176,10 +163,8 @@ const MAXITERATIONS = 32676;
 #include "zscript/Spawner/Weapons/PB_ShotgunSpawner.zc"
 #include "zscript/Items/HPArcade/PBHPArcade.zc"
 
-//Le Funny Hat Simulator
 #include "zscript/SpecialShit/HatExtravaganza.zc"
 
-//PBVP
 #include "zscript/PBVP/PBVP.zc"
 
 Class PB_SpecialWheel_Mode
@@ -240,14 +225,13 @@ class Demonpickup2: Demonpickup
         Stop;
 	}
 }
-// global constants
 const STAT_NashGore_Gore = Thinker.STAT_USER + 1;
 const STAT_PB_BULLETS = Thinker.STAT_USER_MAX - 1;
 
-const C_TID	= 1000;	//Default camera tid
-const  MAX_R	= 56+32;	//Maximum radius (or distance from the player)
-const  ADJUST_R = 8;	//Amount to adjust the camera by
-const  VIEW_HEIGHT = 61.0;	//The approximate hight of the player's view
+const C_TID	= 1000;
+const  MAX_R	= 56+32;
+const  ADJUST_R = 8;
+const  VIEW_HEIGHT = 61.0;
 
 class DoNotDoubleJump : Inventory {}
 class BossBrainBase : Actor
@@ -263,8 +247,6 @@ class BossBrainBase : Actor
 		}
 	}
 }
-
-// Spawner code courtesy of Marisa Kirisame.
 
 class SpawnerBase : Actor
 {
@@ -322,9 +304,9 @@ extend class Demonpickup
 }
 enum EPBWeaponFlags
 {
-	PBWEAP_KEEPYOFFSET = 1<<0, //Weapon must not move up/down when looking up/down.
-	PBWEAP_ISPISTOLSILENCERSTATE = 1<<3, // Weapon is equipped with a silencer.
-	PBWEAP_UNLOADED = 1<<4 // Weapon has been unloaded.
+	PBWEAP_KEEPYOFFSET = 1<<0,
+	PBWEAP_ISPISTOLSILENCERSTATE = 1<<3,
+	PBWEAP_UNLOADED = 1<<4
 }
 class InvisiblePuff : BulletPuff
 {
@@ -422,26 +404,6 @@ class CameraRunner : Inventory
 			players[consoleplayer].mo.SetCamera(null);
 		}
 	}
-	// Cinematic chase-cam tuning for third-person executions / fatalities.
-	// `CameraRunner` is granted by ACS script 477 (`SRC/SCHASECAM.txt`) at
-	// every `Fatality*` entry in `actors/Player/NEWPLAYE.dec` and revoked
-	// by script 171 on exit; while held, `DoEffect` ticks `RunCameraNew`
-	// each frame to spawn / move a `ChaseCam2` actor that the player views
-	// through. Two tuning constants:
-	//   - PB_CHASECAM_DISTANCE: trace length BEHIND the player (in map
-	//     units) before the radius padding. 160 puts the camera ~192 mu
-	//     behind the player at default radius 16 — slightly farther than
-	//     the original 128 + radius*2 (~160 mu) so the cinematic frame
-	//     reads more of the victim and the surrounding scene.
-	//   - PB_CHASECAM_MAX_DOWN_PITCH: max DOWNWARD pitch (deg, positive
-	//     in GZDoom) the camera is allowed to inherit from the player.
-	//     Without this clamp, aiming straight down to start a fatality
-	//     made `LineAttack` slope at -player.pitch (i.e. UP behind the
-	//     player) AND `SetActorPitch` aim the camera DOWN at the player,
-	//     producing a bird's-eye / top-down framing that breaks the
-	//     cinematic feel. Clamping both pitch uses at +25 deg keeps the
-	//     camera roughly behind-and-level. Upward look (negative pitch)
-	//     is intentionally unclamped — heroic upward framing is fine.
 	const PB_CHASECAM_DISTANCE = 160.0;
 	const PB_CHASECAM_MAX_DOWN_PITCH = 25.0;
 	Vector3, double, double, actor ReturnCamPos(Actor a)
@@ -458,15 +420,11 @@ class CameraRunner : Inventory
 		}
 		return a.pos, a.angle, a.pitch, null;
 	}
-	//ACS Prefab chasecam script ported to ZScript with changes by Cacodemon345.
 	void RunCameraNew()
 	{
-		if (!owner.player || !owner) return; //Don't start camera if the owner isn't a player or is null.
+		if (!owner.player || !owner) return;
 		Double anglevalue;
 		Double pitchvalue;
-		// Match ReturnCamPos: clamp the camera's *render* pitch with the
-		// same ceiling so it never ends up looking straight down at the
-		// player even if `owner.pitch` is +90 at fatality entry.
 		Double actualpitch = clamp(owner.pitch, -90.0, PB_CHASECAM_MAX_DOWN_PITCH);
 		actor linepuff;
 		Vector3 campos;
@@ -536,7 +494,6 @@ class XDeathGibBase : Actor
 	}
 }
 
-// Optional Motion Blur by Pixel Eater
 class MBlurHandler : StaticEventHandler
 {
 	int			pitch, yaw ;
@@ -597,7 +554,7 @@ class MBlurHandler : StaticEventHandler
 		{
 			let player = players[ consoleplayer ].mo;
 			
-			if(  plr.health > 0 && Cvar.GetCVar( "mblur", plr ).GetBool() && !plr.mo.FindInventory("PlayerWheelOpen"))//&& yaw && pitch )
+			if(  plr.health > 0 && Cvar.GetCVar( "mblur", plr ).GetBool() && !plr.mo.FindInventory("PlayerWheelOpen"))
 			{
 				EventHandler.SendNetworkEvent( "liveupdate" );
 				int copies			= 1 + Cvar.GetCVar( "mblur_samples", plr ).GetInt() ;

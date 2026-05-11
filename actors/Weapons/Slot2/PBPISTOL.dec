@@ -1523,7 +1523,6 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		TNT1 A 0 A_GiveInventory("PB_PistolWasEmpty", 1)
 		Goto InsertBulletsChamber
 	ReloadFromEmpty:
-		//TNT1 A 0 A_JumpIfInventory("PB_PistolHasUnloaded", 1, "Ready3") //Commented this out so it works properly.
 		D5GB BCDEF 1 {
 			if (CountInv("SilencerEquipped") == 1 ) {
 					A_SetWeaponSprite("D5GD");
@@ -1868,6 +1867,44 @@ ACTOR PB_Pistol : PB_Weapon Replaces Pistol
 		DEGG A 0
 		"####" AAA 1 A_DoPBWeaponAction
 		Goto Ready3
+
+	PDA_Preview_Pistol_HipFire:
+		D3GF ABCD 0
+		DEGF A 1 BRIGHT
+		DEGF D 1
+		DEGF B 1
+		DEGF D 1
+		DEGG A 2
+		Stop
+	PDA_Preview_Pistol_AdsFire:
+		D7GG G 1 BRIGHT
+		D7GG H 1
+		D7GG I 1
+		D7GG J 1
+		Stop
+	PDA_Preview_Pistol_BurstFire:
+		DEGF A 1 BRIGHT
+		DEGF B 1
+		DEGF C 1
+		Stop
+	PDA_Preview_Pistol_AltAds:
+		D7GG B 1
+		D7GG C 1
+		D7GG D 1
+		D7GG E 1
+		D7GG F 1
+		Stop
+	PDA_Preview_Pistol_Reload:
+		D5GB A 1
+		D5GB B 1
+		D5GB C 1
+		D5GB E 1
+		D5GB F 1
+		D5GB G 1
+		D5GB M 1
+		D5GB N 1
+		D5GB Y 1
+		Stop
 		
 	FlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11)

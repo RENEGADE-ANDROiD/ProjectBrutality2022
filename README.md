@@ -1,18 +1,14 @@
 # Project Brutality 2022 Enhanced
 
-Project Brutality 2022 Enhanced is a full gameplay and content overhaul for *Doom* and *Doom II*, built for [UZDoom](https://github.com/UZDoom/UZDoom). It centers on a dedicated player class, deep weapon and monster variety, Brutality-style combat, and a wide set of menu options so you can tune intensity, spawns, and presentation.
+Project Brutality 2022 Enhanced is a full gameplay and content overhaul for *Doom* and *Doom II*, built for [UZDoom](https://github.com/UZDoom/UZDoom). Glory Kills, Project Survival Fodder/Passives, Monster Pack–style enemies and weapons, Cat's Frozen content, and the main roster are all **included** in this package—load **only** this folder with UZDoom; no extra companion files are required.
 
-The project is derived from the long-running [Project Brutality](https://github.com/pa1nki113r/Project_Brutality) line and ships as a **self-contained** package: Glory Kills, Monster Pack–style content, and the main weapon roster are all included in this folder. Load **only** this directory with UZDoom; no extra companion wads are required for the full feature set.
-
-For the latest upstream mainline mod, see [pa1nki113r/Project_Brutality](https://github.com/pa1nki113r/Project_Brutality). This repository is the Project Brutality 2022 snapshot and tooling described here.
-
-**Curated change notes** for this tree live in **`CHANGELOG.md`** (Keep a Changelog format, including an **`[Unreleased]`** section for ongoing work—e.g. weapon selection wheel behavior, PBX weapon HUD icon sizing, barrel set from Project Brutality Staging, kill streak reward variety, and engine compatibility fixes). Use **`git log`** for full commit history.
+For the latest upstream mainline mod, see [pa1nki113r/Project_Brutality](https://github.com/pa1nki113r/Project_Brutality). This repository is the Project Brutality 2022 snapshot maintained here.
 
 > **Engine:** This release targets **UZDoom**, the actively maintained fork in the GZDoom family. Please use a current UZDoom build (see Requirements). Older or unrelated source ports are not supported.
 
 ## Requirements
 
-- **[UZDoom](https://github.com/UZDoom/UZDoom) 4.13 or newer.** Development tracks the [UZDoom 4.14.3](https://github.com/UZDoom/UZDoom/tree/4.14.3) line. Install a release from the [Releases](https://github.com/UZDoom/UZDoom/releases) page. The mod uses ZScript and other features that only exist on recent UZDoom builds.
+- **[UZDoom](https://github.com/UZDoom/UZDoom) 4.13 or newer.** Development tracks the [UZDoom 4.14.3](https://github.com/UZDoom/UZDoom/tree/4.14.3) line. Install a release from the [Releases](https://github.com/UZDoom/UZDoom/releases) page. The mod needs modern UZDoom features.
 - **An IWAD** — `doom.wad`, `doom2.wad`, `tnt.wad`, `plutonia.wad`, or [Freedoom Phase 1+2](https://freedoom.github.io/download.html). Retail IWADs are available from the [Steam classics bundle](https://store.steampowered.com/sub/18397/) or GOG ([Doom II + Final Doom](https://www.gog.com/game/doom_ii_final_doom), [The Ultimate Doom](https://www.gog.com/game/the_ultimate_doom)).
 - **Mobile (Android / iOS) is not supported.** There is no supported UZDoom build on those platforms with the feature set this mod needs.
 
@@ -20,7 +16,7 @@ For the latest upstream mainline mod, see [pa1nki113r/Project_Brutality](https:/
 
 1. Install **UZDoom 4.13+** from the [UZDoom releases](https://github.com/UZDoom/UZDoom/releases) and unpack it somewhere convenient.
 2. Download this repository (**Code → Download ZIP**) or clone it.
-3. You should have a folder (for example `Project Brutality 2022`) that contains `gameinfo.txt`, `ZSCRIPT.zc`, `DECORATE`, and the rest of the data. The mod is a **loose folder**, not a single PK3 file.
+3. You should have a folder (for example `Project Brutality 2022`) that contains `gameinfo.txt` and the rest of the mod data. The mod ships as a **loose folder**, not a single packaged file.
 4. Launch with that folder on the command line:
 
 ```
@@ -31,28 +27,42 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 
 ## What you get
 
-**Glory Kills and finishers** are a major part of the fantasy: when enemies are weak enough, you can **stagger** them and rip into **cinematic kills**—in **first AND third person**, with different animations for a **wide** swath of the roster (vanilla-style demons, Brutality variants, and a lot of **extra / Monster Pack** cast). Layered on top are the **Crucible**, **Blood Punch**, **shoulder cannon** burn and freeze shots, **pinata**-style rewards, and a **Glory HUD** so you can see fuel, punch charges, and launcher cooldowns. Turn the system on or off and open the main tuning from **Options → PB 2022 Enhanced**; use **Glorykill Options** for HUD, range, and finer behavior.
+**Glory Kills and finishers** are a major part of the fantasy: when enemies are weak enough, you can **stagger** them and rip into **cinematic kills**—in **first and third person**, with different animations across vanilla demons, Brutality variants, and many **extra / Monster Pack** enemies. Layered on top are the **Crucible**, **Blood Punch**, **shoulder cannon** burn and freeze shots, **pinata**-style rewards, and a **Glory HUD** for fuel, punch charges, and launcher cooldowns. Turn the system on or off and tune it from **Options → PB 2022 Enhanced**; use **Glorykill Options** for HUD, range, and finer behavior.
 
-- **Player and systems:** The **PB_Doomer** player class, movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump & plasma climb — **PB 2022 Enhanced → Explosive Movement**), tactical weapon feel, layered gore, and HUD / PDA / weapon-special wheel flows.
+**Experimental weapon executions** add an optional second finisher path. When the demon you're aiming at is close and badly wounded, supported weapons can trigger their own first-person finishing animation through **Quick Melee** or **User2**—separate from the stagger / Glory Kill chain, and only on weapons that ship with one. Toggle it under **Options → PB 2022 Enhanced → Finishers, Gore, Taunts → Experimental weapon executions**.
+
+- **Player and systems:** Movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump and plasma climb — **PB 2022 Enhanced → Explosive Movement**), tactical weapon feel, layered gore, HUD, weapon-special wheel, and related flows.
+- **In-game codex (PDA):** Press **BACKSLASH** (rebindable) to flip through **Weapons**, **Monsters**, and **Equipment**. Entries unlock as you pick up gear or kill enemies; progress persists across saves. Pick an entry for its dossier and a small looping preview. Time pauses while the codex is open. Optional plain-text layout: **PB 2022 Enhanced → UI and Feel**. The same submenu offers **PDA XP & reward spin (single-player)** (default **Off**): when **On**, kills grant XP, rank-ups award spendable reward points, and—with the usual **blocky** PDA home layout—a **Reward Spin** tile appears on the left; each spin costs **3** points and tries to grant a **weapon** you do not already carry **and** that is not already unlocked in your PDA weapon codex (the roll rerolls within the pool); if nothing qualifies, **points are refunded**. With the toggle **Off**, the codex is unchanged and **no** spin panel appears.
 - **Combat depth:** Brutality-style damage and reactions, plus the weapon and monster variety below—all adjustable from **PB 2022 Enhanced** and related submenus.
 - **Content breadth:** Large weapon roster, extra monsters, kill streaks, power-up hooks, and announcer support.
-- **Configuration:** Use **Options → PB 2022 Enhanced** (same screen is **PB 2022 Enhanced** on the main menu, bound to **P** when available). That hub groups **Gameplay Settings**, **Weapon Settings**, **Global Settings**, **Visual Settings**, the **Finishers, Gore, Taunts** block (including **Experimental weapon executions** / `pb_experimental` and **Glory Kill**), **Explosive Movement**, UI/feel (damage numbers, tactical motion, PBX HUD, kill streaks), and **Content Packs**. Deeper monster/spawn work also lives under **Global Settings** and **Monster Pack Settings**.
-- **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** is the one-switch combined gore mix that includes BDv22 mist/meat/organs, BPv10 death extras, and extra death pools/trails.
+- **Configuration:** Use **Options → PB 2022 Enhanced** (same screen from the main menu, bound to **P** when available). That hub groups **Gameplay Settings**, **Weapon Settings**, **Global Settings**, **Visual Settings**, the **Finishers, Gore, Taunts** block (including **Experimental weapon executions** and **Glory Kill**), **Explosive Movement**, **UI and Feel** (damage numbers, tactical motion, weapon HUD modes, PDA blocky layout, optional **PDA XP & reward spin** for single-player, kill streaks), and **Content Packs**. Deeper monster and spawn options also live under **Global Settings** and **Monster Pack Settings**.
+- **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** (Options → PB 2022 Enhanced → *Finishers, Gore, Taunts*) is the single On/Off switch that adds Brutal Doom 22 mist and meat, Brutal Pack V10 death extras, and extra blood pools and trails on top of the base mix — no per-pack sliders to fiddle with.
 - **Shield Saw:** Standard equipment—you start every new game with it. Quick Melee throws the ricocheting saw at range (close targets still get normal melee), and **Recall Shield Saw** brings it back.
+
+### Possession finishers
+
+Some fatalities briefly turn you into the demon you just killed. The rides are short and invulnerable.
+
+- **Cacodemon** — matching glory-kill finish puts you in its body: you float, fire cacodemon shots, then drop back when the timer ends.
+- **Spider Mastermind** — you stay on its chassis: walk it around and spray the chaingun until the timer ends.
+- **Cyberdemon** — after the cyber fatality you shoulder its rocket arm, launch cyber rockets, then dismount with a shock burst when time runs out or you alt-fire.
+- **Mancubus family** — after a standard mancubus / Daedabus / Volcabus fatality you get dual flame cannons, alternating left/right fireballs until the timer ends or you alt-fire.
+- **Arachnotron** — the right finish seats you on its plasma turret (third-person view) until the rig tears apart.
+- **Revenant** — revenant fatalities can roll into a third-person rocket-backpack ride: homing rockets fire on a short cadence while the chase camera stays active; leaving the ride restores the normal view.
 
 ### Included weapons
 
-Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec`. Individual spawn toggles live in **Weapon Settings** / **Add-On Toggles** where available. Glory Kill tools such as the **Crucible**, shoulder cannon actions, Blood Punch, pinata pickups, and related HUD pieces are separate systems, not normal numbered-slot weapons.
+Weapons are grouped by their in-game number slots. Individual spawn toggles live in **Weapon Settings** / **Add-On Toggles** where available. Glory Kill tools such as the **Crucible**, shoulder cannon actions, Blood Punch, pinata pickups, and related HUD pieces are separate systems, not normal numbered-slot weapons.
 
 **Slot 1 — Melee & blades**
 
-- **Bare Hands** — fast close-range melee, kick, and execution starter used by the core PB melee flow.
+- **Bare Hands** — fast close-range melee, kick, and execution starter.
 - **Axe** — heavy melee pickup for chopping through low-tier enemies.
-- **Chainsaw** — classic fuel-fed saw with PB gore and chainsaw-spawner variants.
+- **Chainsaw** — classic fuel-fed saw with Project Brutality gore and chainsaw-spawner variants.
 - **UAC Nanotech Energy Beam Katana** — energy blade with quick melee integration and barrier-style behavior.
 - **Argent Sith Beam Katana** — argent blade variant with its own energy attacks and shield/barrier handling.
-- **Tiberium's Soulblade / Vorpal Blade** — exotic blade with charged/special attack behavior (sprites **Eriance**; sword lineage *Insanity's Requiem Mk.2* by **TiberiumSoul**; included from **PB_MeleeWeaponPack** / **Renegade Android** rework — see **`CREDITS.txt`**).
-- **Dragon Slayer** — heavy energy-melee / bolt-repeater-style attacks (**Craneo**; Hexen ModDB per upstream pack notes; same source pack — **`CREDITS.txt`**).
+- **Tiberium's Soulblade / Vorpal Blade** — exotic blade with charged and special attack behavior (*see CREDITS.txt for attribution*).
+- **Dragon Slayer** — heavy energy-melee / bolt-repeater-style attacks (*see CREDITS.txt*).
 - **Shield Saw** — not a separate weapon slot entry; granted on spawn like other starter gear. With the saw “charged,” Quick Melee throws it at range; **Recall Shield Saw** pulls it back. It no longer drops from the chainsaw map spawner and is not shown on the HUD inventory strip.
 
 **Slot 2 — Sidearms & personal defense**
@@ -72,10 +82,10 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **Sawed-Off Shotgun** — classic double-barrel burst damage.
 - **Commander Shotgun** — combat shotgun with its own ammo/mode logic.
 - **UAC XHAS-SP Lady Golide** — heavy automatic shotgun platform.
-- **X12 Shotgun** — special shotgun using the PBWP shell alias path.
+- **X12 Shotgun** — special shotgun with Project Brutality shell handling.
 - **Quad-Barrel Shotgun** — four-barrel burst weapon with special-wheel behavior.
 - **Marauder Shotgun** — Marauder-style super shotgun variant.
-- **Cryo Auto Shotgun (`PB_CryoASG`)** — includes the Cat's Frozen Cryo ASG; PB_Shell-fed cryo pellet burst that applies brief cryo slow per pellet (no `pb_No*` toggle — always rolls from shotgun spawners).
+- **Cryo Auto Shotgun** — Cat's Frozen cryo shotgun; shell-fed cryo pellet burst that applies brief cryo slow per pellet (always rolls from shotgun spawners).
 
 **Slot 4 — Rifles, precision & support**
 
@@ -89,7 +99,7 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **UAC M1893 Lever Action** — lever rifle with a weapon-special caliber swap.
 - **Pro-Surv Ballista** — precision projectile weapon for heavy single shots.
 - **M41A Pulse Rifle** — pulse rifle with weapon-special wheel: 12-gauge or 30mm underbarrel Alt-Fire, plus optional dual-wield.
-- **Battle Rifle** — modern rifle with magazine handling and PB tactical weapon flow.
+- **Battle Rifle** — modern rifle with magazine handling and tactical ready/fire flow.
 
 **Slot 5 — Heavy automatics**
 
@@ -118,8 +128,8 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 
 - **UAC-M1 Plasma Rifle** — plasma rifle with single/dual weapon-special support and plasma wall-climb behavior.
 - **UAC-M2 Plasma Rifle** — alternate plasma rifle using the same movement-friendly plasma impact family.
-- **Cryo Electro Rifle (`PB_CryoElectroRifle`)** — includes the Cat's Frozen Cryo + Electric Rifle merge; **Weapon Special** wheel toggles between **Cryo** mode (cryo orb projectile, applies slowdown) and **Electric** mode (lightning missile reused from Stormcast). Uses **`PB_CryoCells`** (with **`PB_Cell`** packs as reload feed). HUD ammo readout switches color (cyan ↔ white) with the active mode. Always rolls from plasma spawners.
-- **UAC Prototype Dark Matter Rifle (`PB_DarkMatterRifle`)** — includes the PB 3.x Pulse Cannon: magazine-fed plasma orbs, chargeable Alt-Fire (Super Plasma Ball vs Gravity Singularity via Weapon Special wheel), **`Cell`** reserve + internal mag, plasma wall-climb on **`PB_DMR_PulseBall`** / **`PB_DMR_SuperBall`** impacts; rolls from plasma rifle spawners with **`pb_NoPB_DarkMatterRifleWeapon`**.
+- **Cryo Electro Rifle** — Cat's Frozen cryo + electric rifle; **Weapon Special** switches **Cryo** mode (cryo orb, slowdown) and **Electric** mode (lightning shot reused from Stormcast). Uses cryo cell ammo with standard cell packs as reload feed. HUD ammo color shifts with the active mode. Always rolls from plasma spawners.
+- **UAC Prototype Dark Matter Rifle** — magazine-fed plasma orbs; chargeable Alt-Fire (super plasma ball vs gravity singularity via Weapon Special), standard cell reserve plus internal magazine, plasma wall-climb on primary impacts; rolls from plasma spawners with an optional **Weapon Settings** toggle.
 
 **Slot 9 — Super-weapons**
 
@@ -128,8 +138,8 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 - **BFG9000 MK IV** — BFG-class room clearer.
 - **BFG 11K Prototype / BFG Beam** — beam-style BFG super-weapon entry.
 - **Demon Exterminator** — endgame demon-killing super-weapon.
-- **Cryo Cannon (`PB_CryoCannon`)** — includes the Cat's Frozen Cryo Cannon; cone-shape cryo wind burst using **`PB_CryoCannonCells`** (with **`PB_Cell`** packs as reload feed). Heavy-burst fire pattern, slows + chips at clusters. Always rolls from BFG spawners.
-- **Stormcast** — lightning staff (*Schism* lineage; **Dreo** & **Lord Lothar**; **PB_MeleeWeaponPack** / **Renegade Android** — **`CREDITS.txt`**). Slot **9**, one shared charge pool; chords replace the old weapon-special wheel.
+- **Cryo Cannon** — Cat's Frozen cryo cannon; cone-shaped cryo wind burst using cryo cannon cells with standard cell packs as reload. Heavy burst pattern; slows and chips at clusters. Always rolls from BFG spawners.
+- **Stormcast** — lightning staff (*Schism* lineage; *see CREDITS.txt*). Slot **9**, one shared charge pool; chords replace the old weapon-special wheel.
   - **Primary** — staff lightning / melee (needs charge; **Berserk** upgrades the strikes).
   - **Alt-Fire (hold)** — build charge; **release** to cast a bolt scaled to charge.
   - **Primary while holding Alt-Fire** — orb attacks (stronger orbs at higher charge).
@@ -141,11 +151,9 @@ Weapons are grouped by their in-game number slots from `actors/Player/PLAYER.dec
 **Slot 0 — Demon-tech pair**
 
 - **UAC-M3 Flamethrower** — flame weapon for burn damage and crowd control.
-- **Demon-Tech Rifle** — demon-energy rifle with charged energy behavior and shared demon-tech support actors.
+- **Demon-Tech Rifle** — demon-energy rifle with charged energy behavior.
 
-Modders: `PLAYER.dec` is the source of truth for slotted weapons. The disabled **Demon-Tech Minigun** source remains on disk for possible future repair, but it is not part of the active player roster.
-
-**`GRAPHICS/`** (committed **uppercase**, hundreds of PNGs: wheel icons, blood decals, dash overlay, Glory Kill NewHud art, etc.) must remain in your working copy. If the folder is missing, restore it from version control (e.g. **`git restore GRAPHICS`**). After editing **`SRC/GloryHUD.acs`** or other ACS sources, recompile with **ACC** to the matching **`ACS/*.o`** lump (see **`LOADACS.txt`**; use an **`-i`** include path to **`zcommon.acs`**).
+The disabled **Demon-Tech Minigun** source remains on disk for possible future repair, but it is not part of the active player roster.
 
 ### Equipment
 
@@ -157,98 +165,118 @@ Modders: `PLAYER.dec` is the source of truth for slotted weapons. The disabled *
 - Freezebot
 - ElecPod
 
-**Cat's Frozen equipment additions** (always-on, no per-piece toggles — see [Cat's Frozen Addon](#cats-frozen-addon)):
+**Cat's Frozen equipment additions** (always-on; no per-piece toggles). The **Project Brutality backpack** pickup also has a ~20% chance to grant a random Cat's Frozen equipment ammo charge.
 
 - **Snow Caster** — handheld cone-burst that lays cryo wind + ice particles in front of the player.
 - **Ice Wall** — generator that drops a temporary line of cryo barrier segments.
 - **Holographic Decoy** — places a flickering decoy that pulls monster aggro.
-- **Tesla Turret** — friendly chained-lightning turret (player-sourced damage filtered via `PBCF_FriendlyDeployableBase`).
-- **Flame Turret** — friendly flame-cone turret (same deployable base).
-- **Freeze Mines** — proximity cryo mines; ignore the deploying player on step-trigger but can still rocket-jump the player when shot or when monsters trip them (see Explosive Movement below).
-
-### Explosive Movement (rocket jump & plasma wall boost)
-
-**Explosive Movement** is where you turn **Rocket Jumping** and **Plasma Wall Climbing** on or off. Open **Options → PB 2022 Enhanced** (or **PB 2022 Enhanced** from the title menu) and scroll to the **Explosive Movement** section. Both options are **On/Off** toggles:
-
-| Menu label | CVar | Role |
-| --- | --- | --- |
-| **Rocket Jumping** | `pb_rocketjump` | Player rocket explosions launch you from floors/walls/ceilings without self-splash when **On**; vanilla-style self-splash when **Off**. |
-| **Plasma Wall Climbing** | `pb_plasma_wallclimb` | Plasma-ball impacts (slot-6 plasma family **and** **Mastermind's Chaingun** tracers) can thrust you along the same idea; **Off** restores small self-damage on those hits, and the chaingun tracer applies a full **120 / 140** radius self-splash (**`XF_HURTSOURCE`**) before the usual explosion VFX. |
-
-Rockets and certain plasma shots **and the Mastermind chaingun's explosive tracers** can double as **movement tools**, not just damage. With **Rocket Jumping** / **Plasma Wall Climbing** on, those player weapons skip harsh self-damage so you can blast-jump or scrape along surfaces without punishing yourself every time.
-
-You do **not** need to jump first — firing behind you into floors or walls still shoves you forward. A brief **blast momentum** helper keeps that push from dying instantly to friction.
-
-**Cat's Frozen explosives are wired in too.** With `pb_rocketjump 1`, the **Freezenade** equipment and **Freeze Mines** grant blast momentum on detonation alongside their cryo-slowdown effect — so you can blast-jump cryo-style without taking self-damage, and the cryo slow still applies to monsters in radius regardless of toggle state. Mines can be detonated at range by shooting them; they still ignore the deploying player on step-trigger (no accidental self-trip).
-
-**Tip:** Most combat feel lives in **PB 2022 Enhanced** and its submenus (gameplay, weapons, global spawns, visuals/gore). Skim those before judging difficulty.
-
-### 2022 Enhanced Brootality
-
-**2022 Enhanced Brootality** is the single switch for the combined 2022 gore mix. It keeps the normal Project Brutality and Nash Gore stack in place, then layers in the extra BDv22, BPv10, and PB death-boost effects when `pb_enhanced_brutality_2022` is on.
-
-Turn it on from **Options → PB 2022 Enhanced** (the **2022 Enhanced Brootality** row under *Finishers, Gore, Taunts*) when you want the full mixed presentation. Nash Gore and classic PB blood/gib options remain under **Visual Settings** → **Gore/Debris Settings** (see the on-screen hint in PB 2022 Enhanced).
-
-- **BDv22 gore:** hit mist plus guts, flying meat, ribs, organs, and brain chunks.
-- **BPv10 gore:** burned and carbonized bodies, flying torsos, flopping organs, zombie gear, and extra blood splats.
-- **PB death boost:** extra blood sprites, pools, and short trails on monster deaths.
-- **Simple setup:** one On/Off option instead of separate sliders and per-pack toggles.
-
-The internal BDv22 blend is tuned to about **66.6%** so the BDv22 pieces are common but the base PB/Nash/BPv10 mix still shows through. Legacy `bdv22_*` and `bpv10_*` cvars remain declared for old configs and compatibility, but the player-facing control is **2022 Enhanced Brootality**.
+- **Tesla Turret** — friendly chained-lightning turret (won't take damage from your shots).
+- **Flame Turret** — friendly flame-cone turret (same rule).
+- **Freeze Mines** — proximity cryo mines; they won't trip under your feet, but you can rocket-jump off them when shot or when monsters set them off.
 
 ### Shield Saw
 
-**Shield Saw** is included with Quick Melee rather than taking a weapon slot. You begin with the saw token on a **new game**; map-placed pickups (or `summon ShieldSaw_token`) still work if a mapper extras them.
+**Shield Saw** is included with Quick Melee rather than taking a weapon slot. You begin with the saw on a **new game**; map-placed pickups still work if a mapper adds them.
 
 - **Quick Melee** near enemies uses the usual close-range melee.
 - **Quick Melee** at range throws the saw as a projectile.
-- **Recall Shield Saw** (default **T**) calls it back through the **FastCall** inventory.
-- Level transitions while the saw is still out refund the token via the map-enter script so it is not lost.
+- **Recall Shield Saw** (default **T**) calls it back.
+- Level transitions while the saw is still out refund it so it is not lost.
 
 The vanilla **chainsaw** spawn point no longer rolls a Shield Saw drop—the saw is default kit, not spawner loot. There is no separate spawn-toggle menu entry.
 
-### Cat's Frozen Addon
+## Monster roster
 
-The **Cat's Frozen Addon** (SchrödingCat) is part of Project Brutality 2022 as **always-on standard content** — there are no separate `pb_NoFrost*` / `pb_NoCryo*` cvars or per-piece menu toggles. What it adds:
+This section is a reader's map of enemy tiers and families—not a spawn manifest. Maps still mostly place vanilla Doom edits; pack rolls layer extra variants on top. Higher tiers skew toward late maps, boss slots, and optional pools. When **PB 2022 Enhanced** menus mention **Monster Pack** rolls or **disable new enemies**, those same gates decide whether the extras below appear.
 
-- **Cryo slowdown effects.** A shared family of ice projectiles, freezing winds, and snow particles drives the slow / freeze behavior used by everything else below.
-- **Frozen-solid corpses.** Monsters killed by ice or cryo damage turn into proper 8-angle frozen statues (idle, thaw, shatter states) instead of the engine's flat frozen-corpse art.
-- **Four new frost monsters** that roll naturally from existing pack spawners:
-  - **Frost Baron** alongside Hell Knights / Barons.
-  - **Cryocubus** alongside Mancubi.
-  - **Frostbrain** alongside Cacodemons.
-  - **Cryotron** alongside Arachnotrons.
-  - The global `pb_disablenewenemies` switch still hides them as part of the broader "new enemies" preference; otherwise they're standard roster.
-- **Six equipment-wheel additions** alongside the existing **Freeze Nade**, **Molotov**, **hand grenade**, and **sticky grenade** options (see the Equipment list above). Friendly deployables (Freezebot, Tesla / Flame turrets, Holo Decoy) ignore player-sourced damage so a stray rocket won't turn them hostile.
-- **Three new cryo weapons** rolling alongside the existing weapon pool (no spawn toggles): **Cryo Auto Shotgun** (`PB_CryoASG`, slot 3), **Cryo + Electric Rifle** (`PB_CryoElectroRifle`, slot 8 — Weapon Special wheel toggles between cryo orbs and Stormcast lightning), and **Cryo Cannon** (`PB_CryoCannon`, slot 9). Their ammo pickups roll alongside existing ammo, and the **PB Backpack** has a ~20% chance to grant a random Cat's Frozen equipment ammo charge.
+Glory Kills and cinematic finishes apply across these tiers—this list only names who shows up, not how those kills unlock.
 
-All Cat's Frozen explosives respect the **Explosive Movement** system — see the freezenade / freeze-mine note in [Explosive Movement](#explosive-movement-rocket-jump--plasma-wall-boost). Author attribution is in **`CREDITS.txt`** (the Cat's Frozen entry under *Gameplay and content*); the technical breakdown for modders lives in **`AGENTS.md`**.
+### Tier 1 — Grunts & fodder
+
+Low-tier pressure, hierarchy fodder, and most of the wandering cannon fodder you clear between arenas.
+
+Passive hazards from the same packs can share floors with Tier 1 without being “troops”: pus pods, mimics, ceiling tentacles, hangman traps, and other Project Survival set‑dressing monsters still read as grunt‑tier threats because of how little space they need to ruin your day.
+
+Those hazards are optional encounters—many maps never place them—but when they appear they still credit **Project Survival** authorship alongside the wandering fodder listed below.
+
+- **Project Survival fodder — the standard fodder backbone of this build.** Shambler, Puker, Blighter, Screamer, Burster, Spiker, and Cyber Fodder *(CyberFodder)* are the **default Tier 1 reinforcement roster**, not an opt-in pool: every zombieman, shotgunner, chaingunner, imp, pinky, and spectre spawn rolls extra PS fodder alongside the classic enemy, and PS fodder ignores the broader *disable new enemies* switch because it is treated as core content. Distribution skews toward variety — Shambler ~20%, the other five each ~16% — so the supporting cast carries the visual identity of the fodder layer instead of one face dominating. **Trite** pods on floors or ceilings burst into throngs of small **Trite** critters *(Trite)* for swarm panic. (**Project Survival** by **The Pope of Dope / ThePopeOfDope** — see **`CREDITS.txt`**.)
+- **Zombieman family** — pistol grunts, rifle grunts, carbine specialists, plasma zombies and their trooper-weight sibling, helmeted Phobos-style guards (pistol and rifle versions), and lab-coated scientists who still count as rank‑and‑file despite their animation set.
+- **Shotgun sergeants** — classic shotgun guys plus helmeted variants, quad‑shot and auto‑shotgun heavies, riot‑shield entries, rocket‑salvo zombies, demon‑tech shotgun troopers, and Z‑spec squads built on the same sergeant chassis.
+- **Chaingun commandos** — modern chaingunners next to the slower classic chaingunner rig; expect helmet chaingunners and nailgun‑style majors when spawns budget extra spice.
+- **Nazi soldiers** — Wolfenstein‑flavored SS rips drop wherever Nazi episodes or replacement tables still call for them.
+- **Imp family** — everyday fireball imps, frost‑breathing ice imps, infected savage imps, four themed dark imps (Nami, Nether, ST, Void), and three nightmare palette variants (DNImpVariant1–3) that read as imp squad remixes at a glance.
+- **Horrorspawn line** — Monster Pack mutant spawner chain that can vomit fresh runners, screamers, bursters, decapitation variants, and other horror-themed zombies into low tiers while keeping the encounter readable as “grunt tier, louder.” Slimmer footprint than the PS fodder backbone above so the two layers don’t step on each other.
+- **Monster Pack zombie armor** — Hunger gaunt bruiser *(console spawn name Hunger)*, treaded Zombie Tank *(ZombieTank)*, up‑armored Zombie Tank Elite *(ZombieTankelite)*, shoulder‑gun plasma and missile tanks *(ZombiePlasmaTank*, *ZombieMissileTank)*, and the jetpack Zombie Flyer *(PB_ZombieFlyer)* for aerial harassment.
+
+### Tier 2 — Pinkies & cyber demons
+
+Melee bruisers and the Monster Pack’s pinky-adjacent showcase demon.
+
+Expect tight corridors to amplify every charging demon—these enemies punish corners and doorways harder than zombies ever could.
+
+- **Pinkies and spectres** — stock pink demons, nearly invisible void spectres, stompy mech demons, and oversized mean demons that keep pinky AI but hit like mini‑bosses.
+- **Classic spectre** — the vanilla half‑visible twin still shares spawn tables with pinkies when maps call for it.
+- **Cracko Demon** — Monster Pack floater that mixes blue‑lightning offense with cacodemon‑scale HP *(CrackoDemon)*.
+
+### Tier 3 — Mid-roster horrors
+
+Mid-weight specials: walkers, floaters, and the missile ballet tier.
+
+This tier is where projectile density spikes—open yards favor mancubi and cacos, while tight tech bases turn arachnotrons into lane denial.
+
+- **Arachnotrons** — plasma walkers span stock, elite chrome trims, infernal red edits, and the plant‑chassis Arachnophyte experiment.
+- **Aracnorb** — gravity‑ ignoring plasma jellyfish cousin to arachnotrons *(Aracnorb)*.
+- **Mancubus family** — flame belching fatsos, slower Daedabus arc‑casters, and lava‑themed Volcabus variants sharing the fatso slot behaviors players already fear.
+- **Cacodemons and pain elementals** — meatball cannons plus vanilla pain elementals, infernal caco stand‑ins, and suffering elementals that behave like souped‑up pain mothers without stealing the boss spotlight.
+- **Other floaters** — Watchers as silent floating eyes, Overlords as oversized aerial tyrants, Phantasms as smoky lost‑soul upgrades, classic lost souls, and Afrits as winged harassers in the same sky‑pest bucket.
+- **Monster Pack elementals** — Helemental storm pillars *(Helemental)* and drifting ESoul wisps *(ESoul)* that peel off larger fights or environmental kills.
+- **Revenants and cousins** — guided missile revs, beam‑lance Beam Revs, and frost‑themed Draugr skeletons sharing homing DNA.
+
+### Tier 4 — Hell nobility
+
+Heavy hitters below proper episode bosses—arena anchors and caster nightmares.
+
+Knights and barons eat rockets; arch‑viles eat your patience. Bring plasma, corners, and priority target discipline.
+
+- **Knights and barons** — hell knights, barons, cyber‑knight/baron/paladin hybrids, sprinting Belphegors, and Infernus bruisers that still respect Baron‑tier spacing.
+- **Arch-viles and specialists** — flame arch‑viles, ice arch‑viles, flesh‑summoning wizards, and Hellions occupying the same raise‑and‑burn psychological lane as vanilla arch‑viles.
+- **Marauder** — Eternal‑inspired hunter demon with shields and shotgun snap‑shots; counts as a noble‑tier duelist when he crashes a fight.
+- **Hierophant** — Monster Pack mastermind‑scale glass cannon that trades armor for offense *(Hierophant)*.
+
+### Tier 5 — Bosses
+
+Icon of Sin‑adjacent threats and custom megabosses.
+
+These fights reserve the spotlight: huge hitboxes, splash damage, and arena‑wide sound cues. Save rockets, cells, and breathing room.
+
+Some boss‑scale fights still reuse Doom II encounter vocabulary—two cyberdemons on a wide staircase still means “empty the backpack,” regardless of which cosmetic variant spawned.
+
+- **Classic Doom bosses** — cyberdemons, spider masterminds, Annihilator missile brutes, Demolisher mastermind variants, and Juggernaut‑class spider edits sized for map climax fights.
+- **Monster Pack megabosses** — Hellduke cyber‑duel *(Hellduke)*, Hellsmith forge terror *(Hellsmith)*, Director spider mastermind remix *(Director)*, and Aracnorb Queen swarm mother *(AracnorbQueen)*.
+
+**Cat's Frozen frost roster** — **Frost Baron** rides Hell Knight / Baron spawns, **Cryocubus** rides mancubus tables, **Frostbrain** rides cacodemon tables, and **Cryotron** rides arachnotron tables. They are standard always‑on cryo guests unless **disable new enemies** hides the broader optional roster. (**SchrödingCat / Cat's Frozen Addon** — see **`CREDITS.txt`**.)
+
+Frozen-solid corpse statues are a separate Cat's Frozen presentation layer: most monsters killed by ice or cryo damage can leave an authored frozen prop—not only the four frost monsters listed above.
+
+**Realm667 community guests** — **Blood Ghost** and **Blood Skull** are Lost‑Soul‑tier flyers folded from the Realm667 resource line *(PB_Realm667_BloodGhost*, *PB_Realm667_BloodSkull)* — see **`CREDITS.txt`** / **`DetailedCredits.txt`** for authors.
+
+The in-game **PDA** codex mirrors many of these families with dossiers that unlock as you kill matching creatures—use it when you forget which cryo cousin interrupted your Baron fight.
+
+Unlocked codex rows persist across saves, so long campaigns slowly fill out the same roster this guide outlines.
+
+The base zombie, imp, pinky, floater, revenant, noble, arch‑vile, and Doom boss rosters come from **Project Brutality** and the **Monster Pack** line — see **`CREDITS.txt`** and **`DetailedCredits.txt`** for full per‑creature authorship.
 
 ## Settings and controls
 
-- **Options → PB 2022 Enhanced** — Primary hub (title **PB 2022 Enhanced**). Contains shortcuts to **Gameplay Settings**, **Advanced Weapon Spawns**, **Weapon Settings**, **Global Settings**, **Visual Settings**, the **Finishers, Gore, Taunts** block (auto-fatality, **Experimental weapon executions** / `pb_experimental`, **Glory Kill**, **2022 Enhanced Brootality**), **Explosive Movement**, **UI and Feel** (taunts, damage numbers, tactical weapon motion, PBX weapon HUD, kill streaks, instant weapon switch, optional arcade/mutator rows), and **Content Packs** (monster pack options, festive hats). The same entry appears on the **main menu** for quick access.
-- **PB 2022 Enhanced → Glorykill Options** — Glory Kills: protection/fear, range, execution key mode, Crucible/Blood Punch behavior, fuel HUD layout, shoulder-cannon helpers, and related `be_*` / `sv_fuelhud_*` options.
-- **PB 2022 Enhanced → Visual Settings** — Rendering, motion blur, Tilt++, weapon bob/sway, **Gore/Debris Settings**, voxel pack options, and other presentation toggles.
-- **PB 2022 Enhanced → Global Settings** — Spawn presets, advanced monster/weapon spawn lists, monster abilities, add-on compatibility toggles.
-- **PB 2022 Enhanced → Gameplay Settings** — Crosshairs, dual-wield mode, weapon-special wheel freeze/blur, respect animations, frags-on-impact, pump/Marauder/rail and other combat toggles (see in-game menu).
-- **Options → Customize Controls** — **Project Brutality** and **Project Brutality - Interactions** sections, plus **Glory kill** for the Crucible (`+glorysaw`) and shoulder-cannon actions.
+- **Options → PB 2022 Enhanced** — every PB-specific menu lives here (also reachable from the main menu). Submenu inventory is in *What you get → Configuration* above.
+- **Options → PB 2022 Enhanced → UI and Feel** — includes **PDA Blocky Layout** and **PDA XP & reward spin (single-player)**. The XP/spin switch defaults to **Off**; when **On**, only single-player games accrue XP and reward points from kills, and the blocky PDA home screen gains the **Reward Spin** panel (see *What you get → In-game codex (PDA)*). Multiplayer matches ignore this path so co-op and deathmatch stay unchanged.
+- **Options → Customize Controls** — keybinds under **Project Brutality**, **Project Brutality - Interactions**, and **Glory kill** (Crucible / shoulder-cannon actions).
 
-### Experimental weapon executions (`pb_experimental`)
+**Useful console cvars** for bisecting or performance work:
 
-**`pb_experimental`** is a **server** boolean in **`CVARINFO`**. Turn it **on or off** on the **PB 2022 Enhanced** main hub, in the **Finishers, Gore, Taunts** section (**Experimental weapon executions**—above **Glory Kill**), or from the console: `pb_experimental 0` / `pb_experimental 1`.
-
-When **on**, **Quick Melee** and **User2** branches on supported weapons can call **`PB_Execute()`**: if your aim target is a nearby, visible **`PB_Monster`** under about **20% max health** (or **below 65** HP), the weapon jumps into **`Execution_*`** states and spawns the first-person **`PB_*_Execution_*`** actor chains (plus the Monster Pack execution table in **`BaseWeapon_MPExecutionHelpers`** / **`BaseWeapon_MPExecutions`**). That path is **separate** from Glory Kill stagger / **`FatalityChecker`** token finishers in **`NEWPLAYE.dec`**—those still come from the Glory Kill death pools and inventory tokens.
-
-When **off**, **`PB_Execute()`** no-ops and normal melee/punch flow continues.
-
-**Useful cvars for testing or performance:**
-
-- `pb_classicmonsters` — classic vs. Brutality-style monsters.  
-- `pb_disablenewenemies`, `pb_disablenewguns`, `pb_disabledecorations`, `pb_disablemapenhancements` — turn major blocks on or off.  
-- `pb_lowgraphicsmode`, `pb_bloodamount`, `zdoombrutalblood`, `zdoombrutaljanitor`, `zdoombrutaljanitorcasings` — lighter visuals and gore.  
-- `pb_enhanced_brutality_2022` — one-switch full mix for the included BDv22 / BPv10 / extra death-pool gore behavior (**PB 2022 Enhanced**). Legacy `bdv22_*` and `bpv10_*` cvars remain declared for old configs, but are no longer exposed as tuning options.
-- `pb_experimental` — **PB 2022 Enhanced** hub → **Finishers, Gore, Taunts** → **Experimental weapon executions**; enables weapon-initiated **`PB_Execute`** finishers (see **Experimental weapon executions** above). Default in **`CVARINFO`**.
-- `pb_rocketjump`, `pb_plasma_wallclimb` — **Explosive Movement**: rocket-jump and plasma climb/boost toggles (**PB 2022 Enhanced**, section **Explosive Movement**). Both default **On** in **`CVARINFO`**; set either **Off** for vanilla-style self-splash on that weapon path.
+- `pb_classicmonsters` — classic vs. Brutality-style monsters.
+- `pb_disablenewenemies`, `pb_disablenewguns`, `pb_disabledecorations`, `pb_disablemapenhancements` — gate the major content blocks on/off.
+- `pb_lowgraphicsmode`, `pb_bloodamount` — lighter visuals and gore for low-end machines.
 
 ## Feedback and bug reports
 
@@ -260,22 +288,29 @@ This build layers several community sources into Project Brutality’s own syste
 
 | Area | What we ship / how it is used |
 | --- | --- |
-| **Realm667** | Many monster and prop **bases and edits** (community resource site). Specific authors appear on actors, in `SNDINFO`, and in the detailed list (e.g. **Overlord**, **Ice Vile**-line content, and hundreds of one-off credits). |
-| **Monster Pack line** | Extra **MP-style monsters and spawners** (e.g. Crackodemon, Hellduke, Helemental, Hierophant) included in the main mod; see `SNDINFO.MonsterPack` and tier `actors/Monsters/`. |
-| **Brutal Doom — *El Diablo* Edition** | **Extra first-person executions / finisher** art and pools (`eld_eld_*` and related paths under `SPRITES/MONSTERS/fatalitys/…`, e.g. zombieman, sarge, imp, caco, revenant, arch-vile, nobles, Hellduke). Wired through **Glory Kills** / `actors/Player/NEWPLAYE.dec`—not a standalone El Diablo TC. |
-| **Project Brutality Legacy (lineage)** | **Execution routing** and third-person **“legacy”** handoff (`GoExecution`, `Death.ExeCution` / `Death.ExeCution1` / `SpecialFatality` style pivots) **included** in core monster DECORATE so older-style triggers still work with current PB. |
-| **Brutal Pack (e.g. V10 class packs)** | Used in development as a **selective art / finisher reference** when porting assets; **this repo does not ship the Brutal Pack in full**—only what was adapted into PB 2022’s class names and Glory Kill / weapon flows. |
-| **Brutal Doom 22 (BDv22)** | Included gore: separate `BDv22_*` actors, `SPRITES/GORE/BDv22/`, and event handlers. Enabled by **`pb_enhanced_brutality_2022`**. Credit **Brutal Doom 22** as a project; observe its license if you redistribute those lumps. |
-| **Brutal Pack V10 (BPv10) gore** | Included gore add-on (`BPv10_*` actors, `actors/Gore/BPv10Gore/`, `SPRITES/GORE/`). Enabled by **`pb_enhanced_brutality_2022`**. Sprites credited to **AWEZ**; observe Brutal Pack licensing if you redistribute. |
-| **Cat's Frozen Addon** (SchrödingCat) | Cryo content set: slowdown projectiles, frozen-solid corpses, four new frost monsters (Frost Baron / Cryocubus / Frostbrain / Cryotron), six equipment-wheel additions plus Freeze Nade, and three cryo weapons (`PB_CryoASG`, `PB_CryoElectroRifle`, `PB_CryoCannon`). **Always-on standard content, no per-piece toggles.** Asset attribution: SchrödingCat plus addon-listed contributors (Sergeant_Mark_IV, IDDQD_1337, TypicalSF, Eriance/Amuscaria, Electro7777, Captain Toenail, Rifleman, Gothic, Thanuris, Ganbare-Lucifer, DeVloek, Bloax, ZZrionTheInsect, Xaser, Ethril). See **`CREDITS.txt`** for the per-piece breakdown and **`AGENTS.md`** for the technical notes. |
+| **Realm667** | Many monster and prop bases and edits from the community resource site; authors are credited per creature and in the detailed lists. |
+| **Monster Pack line** | Extra monsters and spawns (for example Crackodemon, Hellduke, Helemental, Hierophant) included in the main mod alongside standard Project Brutality enemies. |
+| **Brutal Doom — *El Diablo* Edition** | Extra first-person executions and finisher art wired through Glory Kills—not a standalone El Diablo total conversion. |
+| **Project Brutality Legacy (lineage)** | Older-style execution triggers and handoffs **included** in the main monster set so classic prompts still work with current Project Brutality. |
+| **Brutal Pack (e.g. V10 class packs)** | Used in development as selective art and finisher reference; **this repo does not ship the Brutal Pack in full**—only what was adapted into Project Brutality 2022’s roster and Glory Kill flows. |
+| **Brutal Doom 22 (BDv22)** | Optional-style gore assets and handlers packaged under their own names; enabled through **2022 Enhanced Brootality**. Credit **Brutal Doom 22** as a project and respect its license if you redistribute those assets. |
+| **Brutal Pack V10 (BPv10) gore** | Humanoid and imp-family death extras (burned bodies, carbonized remains, torsos, organs, splats); enabled through **2022 Enhanced Brootality**. Sprites credited to **AWEZ**; respect Brutal Pack licensing if you redistribute. |
+| **Cat's Frozen Addon** (SchrödingCat) | Cryo slowdown, frozen-solid corpses, four frost monsters, six extra equipment-wheel tools plus Freeze Nade, and three cryo weapons—**always-on standard content.** Asset attribution: SchrödingCat plus addon-listed contributors (Sergeant_Mark_IV, IDDQD_1337, TypicalSF, Eriance/Amuscaria, Electro7777, Captain Toenail, Rifleman, Gothic, Thanuris, Ganbare-Lucifer, DeVloek, Bloax, ZZrionTheInsect, Xaser, Ethril). See **`CREDITS.txt`** for the per-piece breakdown. |
 
 ## Credits
 
 Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki113r/Project_Brutality) and the work of that team and their contributors. It also includes Glory Kills and Monster Pack-line content, third-party systems such as **Nash Gore** (Nash Muhandes, modified here), and many named authors in **`CREDITS.txt`** and **`DetailedCredits.txt`**.
 
-**Recent additions in this line:** **2022 Enhanced Brootality** includes **Brutal Doom 22 (BDv22)** gore (`actors/Gore/BDv22Gore/`, `zscript/Gore/BDv22Gore*.zc`, `SPRITES/GORE/BDv22/`) and **Brutal Pack V10** gore (`actors/Gore/BPv10Gore/`, `SPRITES/GORE/`) behind `pb_enhanced_brutality_2022`; **first-person and expanded executions** with art lineage from the **Brutal Doom *El Diablo* Edition** family and related packs (under `SPRITES/MONSTERS/fatalitys/eld_eld_*` and similar); **Glory Kill equipment launcher** first-person sprites (**`SPRITES/WEAPONS/GloryKillLauncher/ShoulderCannon/`**) and **Eternal fuel-HUD** glyphs aligned with the **PB_Staging** Glory Kills line; **Explosive Movement** extended to **Mastermind's Chaingun** tracers (`pb_plasma_wallclimb`) and to Cat's Frozen **Freezenade** / **Freeze Mines** (`pb_rocketjump`); **Cat's Frozen Addon** content set (cryo projectiles, 8-angle frozen-solid corpses, Frost Baron / Cryocubus / Frostbrain / Cryotron, six new equipment-wheel pieces, three cryo weapons — all always-on); a wider **Realm667 Powerups** kill-streak reward pool plus an aesthetics-revamped **Drone Familiar** kill-streak summon (drone reskin with optional `cl_drone_flashlight` eye-cone, particle thruster trails, and player-friendly-fire immunity via `FamiliarBase.DamageMobj`); **Realm667**-sourced and **Realm667-style** community monsters and props (see in-file and **DetailedCredits**); **Project Brutality Legacy**-style **execution / stagger handoff** behavior merged into the main actor set; and **Brutal Pack**-sourced *fragments* only where they were reauthored for PB 2022 (not the pack as a whole). See the table in **Sources and important third-party lineage** above.
+**Recent additions in this line:**
 
-Credit to **BeefRice** and **Jaih1r0** for PBX HUD elements and many weapon improvements and systems. Thanks to **HUNG** for the **Shield Saw** (**GK_ShieldSaw**) behavior included in this build (quick melee + recall).
+- Combined **2022 Enhanced Brootality** gore from Brutal Doom 22 and Brutal Pack V10.
+- Expanded first-person executions with art lineage from **Brutal Doom *El Diablo* Edition** and related packs.
+- Glory Kill shoulder launcher art and Eternal-style fuel HUD glyphs aligned with the newer Glory Kills presentation.
+- **Explosive Movement** extended to Mastermind chaingun tracers and Cat's Frozen freezenade / freeze mines.
+- Cat's Frozen cryo enemies, statues, equipment, and weapons as always-on content.
+- Kill-streak reward variety (including a revamped drone summon and optional flashlight glow).
+
+Credit to **BeefRice** and **Jaih1r0** for fullscreen weapon HUD elements and many weapon improvements and systems. Thanks to **HUNG** for the **Shield Saw** behavior included in this build (quick melee + recall).
 
 **PB_MeleeWeaponPack** (including slot-1 **Dragon Slayer** & **Vorpal Blade**, slot-9 **Stormcast**): original credits per that add-on’s `CREDITS.txt` — **Craneo**, **Dreo** & **Lord Lothar** (*Schism*), **Eriance** & **TiberiumSoul** (RIP); compatibility rework for PB 0.4.2+ by **Renegade Android**. Details: **`CREDITS.txt`**.
 

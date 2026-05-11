@@ -1,6 +1,4 @@
-// --------------------------------------------------------------------------
 // Super Grenade Launcher
-// --------------------------------------------------------------------------
 
 ACTOR RespectSGL : Inventory
 {
@@ -452,6 +450,12 @@ ACTOR PB_SuperGL: PB_Weapon
 			TNT1 A 0 A_JumpIfInventory("GrenadeRounds",1,"InsertBullets2")
 			Goto InsertBullets
 		
+		PDA_Preview_SGL_OpenShot:
+			SL60 A 1 Bright
+			SL60 B 1 Bright
+			SL60 C 1
+			Stop
+
 		// A more elegant approach instead of having tons of states for different variations
 		// Shoutout to Galdoc for the modular design of these animations
 		Fire:

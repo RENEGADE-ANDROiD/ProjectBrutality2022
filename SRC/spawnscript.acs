@@ -1,11 +1,12 @@
 #library "spawnscript"
 #include "zcommon.acs"
 
+// Spawner preset routing from `spawnbalance` / cluster + classic-monsters weapon path (Project Brutality).
+
 Script "SpawnerScript" (int LevelNumber)
 {
 	LevelNumber = GetLevelInfo(LEVELINFO_CLUSTERNUM);
 	int spawnbalancecvar = GetCvar("spawnbalance");
-    //This part of the script will check a cvar and set an actor's state accordingly.
 	switch (spawnbalancecvar)
 	{
 	case 666:
@@ -83,9 +84,6 @@ Script "SpawnerScript" (int LevelNumber)
 			SetActorState(0,"ReplaceVanilla",true);
 			break;
 		Default:
-		//If this gets called, it means i've done something terribly wrong! 
-		//Or that someone mucked with the spawnbalance cvar!
-		//So we set it back to 1 and send it back to spawn where it will try again
 		Log(s:"------------------------------------------------------");
 		Log(s:"ERROR! SPAWN PRESET CVAR OUT OF KNOWN BOUNDARY!");
 		Log(s:"Changing Spawn Preset To Default");
@@ -100,8 +98,6 @@ Script "SpawnerScript" (int LevelNumber)
 Script "WeaponSpawnerScript" (int LevelNumber)
 {
 	LevelNumber = GetLevelInfo(LEVELINFO_CLUSTERNUM);
-    //This part of the script will check a cvar and set an actor's state accordingly.
-	    
 	 if(GetCvar("pb_classicmonsters") == 1)
     {
         SetActorState(0,"ReplaceVanilla",true);

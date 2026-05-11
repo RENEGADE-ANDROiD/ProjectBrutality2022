@@ -740,6 +740,38 @@ ACTOR LeverAction : PB_Weapon
 			LVRA A 1
 			Goto ReadyToFire
 
+		PDA_Preview_LA_HipFire:
+			LVR2 F 2 Bright
+			LVR2 G 2 Bright
+			LVR2 H 2
+			LVR2 I 2
+			Stop
+		PDA_Preview_LA_ADSFire:
+			LVR3 R 2 Bright
+			LVR3 S 2 Bright
+			LVR3 TU 2
+			LVR3 V 2
+			Stop
+		PDA_Preview_LA_AltZoom:
+			LVR3 MNOP 2
+			LVR3 PONM 2
+			Stop
+		PDA_Preview_LA_Pump:
+			LVR4 F 2
+			LVRA F 2
+			LVRA N 2
+			LVRA SUT 2
+			LVR4 G 2
+			LVRA AA 2
+			Stop
+		PDA_Preview_LA_Reload:
+			LVR2 MNOP 2
+			LVR2 QQ 2
+			LVR2 RSTUVV 2
+			LVR3 AB 2
+			LVR3 EFG 2
+			Stop
+
 		FlashSlideKicking:
 			TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKicking")
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking")

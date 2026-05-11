@@ -1,8 +1,4 @@
-// --------------------------------------------------------------------------
-//
 // Sawed-Off (SSG)
-//
-// --------------------------------------------------------------------------
 
 Actor PBSSGHasUnloaded : Inventory { Inventory.MaxAmount 1 }
 Actor RespectSSG : Inventory { Inventory.MaxAmount 1 }
@@ -1005,5 +1001,41 @@ ACTOR PB_SSG : PB_Weapon Replaces SuperShotgun
 		SG20 FEDCA 1 
 		SHT3 AAA 1
 		Goto Ready3
+
+	PDA_Preview_Fire:
+		SHO9 A 1 Bright
+		SHO9 B 1 Bright
+		SHO8 C 1
+		SHO8 D 1
+		SHO8 E 1
+		SHO8 F 1
+		SHO8 G 1
+		SHO8 H 1
+		SHO8 I 1
+		SHO8 J 1
+		Stop
+	PDA_Preview_AltFire:
+		SHTA A 1 Bright
+		SHTA B 1 Bright
+		SHO8 C 1
+		SHO8 L 1
+		SHO8 C 1
+		SHO8 M 1
+		Stop
+	PDA_Preview_Reload:
+		SG10 A 1
+		SG10 B 1
+		SG10 C 1
+		SG10 D 1
+		SG10 E 1
+		SG10 F 1
+		SG10 H 1
+		SG10 I 1
+		SG11 A 1
+		SG11 B 1
+		SG11 C 1
+		SG11 D 1
+		SG11 E 1
+		Stop
 	}
 }
