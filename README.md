@@ -1,6 +1,6 @@
 # Project Brutality 2022 Enhanced
 
-Project Brutality 2022 Enhanced is a full gameplay and content overhaul for *Doom* and *Doom II*, built for [UZDoom](https://github.com/UZDoom/UZDoom). Glory Kills, Monster Pack–style enemies and weapons, Cat's Frozen cryo content, and the main roster are all **included** in this package—load **only** this folder with UZDoom; no extra companion files are required.
+Project Brutality 2022 Enhanced is a full gameplay and content overhaul for *Doom* and *Doom II*, built for [UZDoom](https://github.com/UZDoom/UZDoom). Glory Kills, Project Survival Fodder/Passives, Monster Pack–style enemies and weapons, Cat's Frozen content, and the main roster are all **included** in this package—load **only** this folder with UZDoom; no extra companion files are required.
 
 For the latest upstream mainline mod, see [pa1nki113r/Project_Brutality](https://github.com/pa1nki113r/Project_Brutality). This repository is the Project Brutality 2022 snapshot maintained here.
 
