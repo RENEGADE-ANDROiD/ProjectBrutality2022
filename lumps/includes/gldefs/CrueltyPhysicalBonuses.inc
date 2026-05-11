@@ -1,4 +1,3 @@
-// Dynamic lights for PB_PhysicalBonuses (1BON shards)
 Pulselight APBonusLight
 {
 	color 0.1 1.0 0.1

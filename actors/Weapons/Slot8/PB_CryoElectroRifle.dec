@@ -191,6 +191,32 @@ ACTOR PB_CryoElectroRifle : PB_Weapon
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop")
 		CYGW IIIIIHGFEDCB 1
 		Goto Ready3
+
+	PDA_Preview_CEReady:
+		CYGW A 2 A_WeaponReady(WRF_NOFIRE)
+		Stop
+	PDA_Preview_CECryo:
+		CYGW B 2 Bright A_WeaponReady(WRF_NOFIRE)
+		CYGW C 2 Bright A_WeaponReady(WRF_NOFIRE)
+		CYGW D 2 A_WeaponReady(WRF_NOFIRE)
+		CYGW E 2 A_WeaponReady(WRF_NOFIRE)
+		CYGW A 4 A_WeaponReady(WRF_NOFIRE)
+		Stop
+	PDA_Preview_CEElectric:
+		CYGW B 1 Bright A_WeaponReady(WRF_NOFIRE)
+		CYGW C 1 Bright A_WeaponReady(WRF_NOFIRE)
+		CYGW B 1 Bright A_WeaponReady(WRF_NOFIRE)
+		CYGW C 1 Bright A_WeaponReady(WRF_NOFIRE)
+		CYGW D 2 A_WeaponReady(WRF_NOFIRE)
+		CYGW A 4 A_WeaponReady(WRF_NOFIRE)
+		Stop
+	PDA_Preview_CEReload:
+		CYGS D 3 A_WeaponReady(WRF_NOFIRE)
+		CYGS C 3 A_WeaponReady(WRF_NOFIRE)
+		CYGS B 3 A_WeaponReady(WRF_NOFIRE)
+		CYGS A 3 A_WeaponReady(WRF_NOFIRE)
+		CYGW A 3 A_WeaponReady(WRF_NOFIRE)
+		Stop
 	}
 }
 

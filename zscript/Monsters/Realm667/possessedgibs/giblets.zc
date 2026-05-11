@@ -35,7 +35,6 @@ class GibbedChaingunGuy : GibbedMarine
 	}
 }
 			
-//================================== Giblets ==================================
 class PGGiblet : Actor
 {
 	int rolldir;
@@ -162,7 +161,6 @@ class PGGibChunk : PGGiblet
 
 }
 
-//=================================== Blood ===================================
 class PGblood : Actor
 {
 	Default
@@ -231,7 +229,6 @@ class PGbloodDebrisXL : PGblood
 	}
 }
 
-//============================== Gibs Projectile ==============================
 class PGProjectile : Actor
 {
 	static const Name gibsprites[] = { "VGTO", "VGBO", "VGAR", "VGHE" };
@@ -281,7 +278,6 @@ class PGProjectile : Actor
 	}
 }
 
-// Ephemeral organ/gib streak used only by PossessedGibsSlither tendril lash.
 class PGTendrilLashSeg : Actor
 {
 	Default

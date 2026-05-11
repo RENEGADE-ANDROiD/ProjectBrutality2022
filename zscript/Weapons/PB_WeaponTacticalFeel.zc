@@ -7,6 +7,9 @@ class PB_WeaponTilterInventory : Inventory
 	double currentRoll;
 	double loweringAmount;
 	double landingKick;
+	double reloadBlend;
+	double motionEnableBlend;
+	// Smoothed tactical lean angle (degrees). Tilt++ reads this and adds its offset; do not A_SetRoll here.
 	double leanRoll;
 	double previousVelZ;
 	bool previousOnFloor;
@@ -15,6 +18,11 @@ class PB_WeaponTilterInventory : Inventory
 	Name lastWeaponClass;
 	double neutralWeaponY;
 	bool hasNeutralWeaponY;
+	double smoothedWeaponRoll;
+	double prevStrafeDot;
+	int wallOnCount;
+	int wallOffCount;
+	bool wallDebouncedActive;
 
 	double cvRollResistance;
 	double cvRollVelocity;
@@ -23,6 +31,7 @@ class PB_WeaponTilterInventory : Inventory
 	double cvWallLowering;
 	double cvLeanAngle;
 	double cvLeanSmoothing;
+	double cvTiltSmoothing;
 	double cvWallDistance;
 	bool cvEnabled;
 	bool cvWallDetect;
@@ -58,9 +67,42 @@ class PB_WeaponTilterInventory : Inventory
 	static const double TAC_WALL_YAW[] = { 0., 22.5, -22.5, 45., -45., 90., -90. };
 	static const double TAC_WALL_DISTSCALE[] = { 1., 0.95, 0.95, 0.9, 0.9, 0.85, 0.85 };
 
+	// PSprite layers that mirror PSP_WEAPON roll (see ApplyWeaponTiltToAttachedOverlays).
+	// 10/11: dual-wield idle/fire weapon halves (BaseWeapon + PLASMA/M2/Carbine/etc.).
+	// 60/61/63/64: UAC-M1 Plasma (PLASMA.dec) segmented ammo overlays — tens/ones left + tens/ones right.
+	// Not listed: PSP_FLASH (punch/kick flash), -10 legs, -9 / -777.. execution & handler overlays.
+
+	private void ApplyWeaponTiltToAttachedOverlays(PlayerInfo pi, double roll)
+	{
+		if (!pi) { return; }
+		let o10 = pi.FindPSprite(10); if (o10) { o10.Rotation = roll; }
+		let o11 = pi.FindPSprite(11); if (o11) { o11.Rotation = roll; }
+		let o60 = pi.FindPSprite(60); if (o60) { o60.Rotation = roll; }
+		let o61 = pi.FindPSprite(61); if (o61) { o61.Rotation = roll; }
+		let o63 = pi.FindPSprite(63); if (o63) { o63.Rotation = roll; }
+		let o64 = pi.FindPSprite(64); if (o64) { o64.Rotation = roll; }
+	}
+
+	// Caps movement-derived weapon lowering before wall bonus — keeps sprite bottoms
+	// anchored during strafe roll (tall slot firearms exposed gap below gun otherwise).
+	// Wall path still adds pb_tac_wall_lowering via min(32, …) below. See also
+	// UsesAuthoredFireOffset for per-weapon Y suppression during authored fire states.
+
 	Default
 	{
 		Inventory.MaxAmount 1;
+	}
+
+	override void BeginPlay()
+	{
+		Super.BeginPlay();
+		reloadBlend = 0.;
+		motionEnableBlend = 1.;
+		smoothedWeaponRoll = 0.;
+		prevStrafeDot = 0.;
+		wallOnCount = 0;
+		wallOffCount = 0;
+		wallDebouncedActive = false;
 	}
 
 	private bool IsOnFloor()
@@ -272,6 +314,7 @@ class PB_WeaponTilterInventory : Inventory
 		cvEnableLean = CVar.GetCVar("pb_tac_lean_enable", pi).GetBool();
 		cvLeanAngle = CVar.GetCVar("pb_tac_lean_angle", pi).GetFloat();
 		cvLeanSmoothing = CVar.GetCVar("pb_tac_lean_smoothing", pi).GetFloat();
+		cvTiltSmoothing = clamp(CVar.GetCVar("pb_tac_tilt_smoothing", pi).GetFloat(), 0.5, 0.95);
 		cvEnableReadyOnly = CVar.GetCVar("pb_tac_ready_only", pi).GetBool();
 		cvEnableMoveOnly = CVar.GetCVar("pb_tac_move_only", pi).GetBool();
 		cvCapRoll = CVar.GetCVar("pb_tac_roll_cap", pi).GetBool();
@@ -294,8 +337,15 @@ class PB_WeaponTilterInventory : Inventory
 		{
 			ResetAppliedOffset(psp);
 			currentRoll = 0;
+			smoothedWeaponRoll = 0;
+			prevStrafeDot = 0;
+			wallOnCount = 0;
+			wallOffCount = 0;
+			wallDebouncedActive = false;
 			loweringAmount = 0;
 			landingKick = 0;
+			reloadBlend = 0;
+			motionEnableBlend = 1.;
 			hasNeutralWeaponY = false;
 			lastWeaponClass = weaponClass;
 		}
@@ -304,8 +354,10 @@ class PB_WeaponTilterInventory : Inventory
 		if (!cvEnabled)
 		{
 			ResetAppliedOffset(psp);
+			smoothedWeaponRoll = 0;
 			psp.Rotation = 0;
-			owner.A_SetRoll(0, SPF_INTERPOLATE);
+			ApplyWeaponTiltToAttachedOverlays(pi, 0.);
+			leanRoll = 0;
 			return;
 		}
 
@@ -313,6 +365,11 @@ class PB_WeaponTilterInventory : Inventory
 		bool ready = IsReadyState(weap, psp);
 		bool moving = owner.Vel.XY.Length() > 0.75;
 		bool reloading = IsReloadState(weap, psp);
+		if (reloading)
+			reloadBlend += (1.0 - reloadBlend) * 0.18;
+		else
+			reloadBlend += (0.0 - reloadBlend) * 0.18;
+
 		bool excluded = IsExcludedWeapon(weap);
 		bool authoredFireOffset = UsesAuthoredFireOffset(weaponClass, weap, psp);
 		bool fireSuppressed = IsFiringState(weap, psp) && weaponClass == 'PB_Nailgun';
@@ -323,11 +380,18 @@ class PB_WeaponTilterInventory : Inventory
 		if (fireSuppressed) { allowMotion = false; }
 		bool allowLowering = allowMotion && !authoredFireOffset;
 
+		if (allowMotion)
+			motionEnableBlend += (1.0 - motionEnableBlend) * 0.15;
+		else
+			motionEnableBlend += (0.0 - motionEnableBlend) * 0.15;
+
 		Vector2 strafeDir = (sin(-owner.angle), cos(-owner.angle));
 		double strafeDot = (owner.Vel.X * strafeDir.X) + (owner.Vel.Y * strafeDir.Y);
 		if (allowMotion)
 		{
-			currentRoll += strafeDot * cvRollVelocity;
+			if (prevStrafeDot * strafeDot < 0. && abs(strafeDot) > 0.02 && abs(prevStrafeDot) > 0.02)
+				currentRoll *= 0.55;
+			currentRoll += strafeDot * cvRollVelocity * motionEnableBlend;
 			currentRoll *= cvRollResistance;
 			if (cvCapRoll)
 			{
@@ -338,28 +402,45 @@ class PB_WeaponTilterInventory : Inventory
 		{
 			currentRoll *= 0.75;
 		}
+		prevStrafeDot = strafeDot;
 
 		double targetLower = 0;
 		if (allowLowering)
 		{
 			// Blend strafe component + overall horizontal speed + sidemove intent
-			// so forward movement also lowers the weapon a bit.
+			// so forward movement also lowers the weapon a bit. Coefficients tuned
+			// conservatively so combined Y dip does not expose HUD gaps under rolled sprites.
 			double speedXY = owner.Vel.XY.Length();
 			double sidewaysInput = abs(cmd.sidemove);
-			double baseLower = (abs(strafeDot) * 1.8) + (speedXY * 0.45) + (sidewaysInput * 0.03);
+			if (sidewaysInput < 64.0) sidewaysInput = 0.;
+			double baseLower = (abs(strafeDot) * 0.9) + (speedXY * 0.225) + (sidewaysInput * 0.015);
 			double lowerCap = 30.0;
 			if (UsesExtraMoveLowering(weaponClass))
 			{
-				baseLower *= 1.28;
-				baseLower += abs(currentRoll) * 0.22;
+				baseLower *= 1.14;
+				baseLower += abs(currentRoll) * 0.11;
 				lowerCap = 38.0;
 			}
 			targetLower = min(lowerCap, baseLower) * cvLoweringScale;
+			targetLower = min(targetLower, 7.0);
 		}
 		// Wall detection should not depend on movement-only lowering gates.
 		bool allowWallDetect = !blocked && !excluded && !fireSuppressed;
 		if (cvEnableReadyOnly) { allowWallDetect = allowWallDetect && ready; }
-		if (cvWallDetect && allowWallDetect && !authoredFireOffset && FacingWall(cvWallDistance))
+		bool rawWall = cvWallDetect && allowWallDetect && !authoredFireOffset && FacingWall(cvWallDistance);
+		if (rawWall)
+		{
+			wallOnCount = min(wallOnCount + 1, 10);
+			wallOffCount = 0;
+		}
+		else
+		{
+			wallOffCount = min(wallOffCount + 1, 10);
+			wallOnCount = 0;
+		}
+		if (wallOnCount >= 6) { wallDebouncedActive = true; }
+		else if (wallOffCount >= 6) { wallDebouncedActive = false; }
+		if (wallDebouncedActive)
 		{
 			targetLower = min(32.0, targetLower + cvWallLowering);
 		}
@@ -370,7 +451,10 @@ class PB_WeaponTilterInventory : Inventory
 		{
 			landingKick += min(12.0, abs(previousVelZ) * 0.5) * 1.5;
 		}
-		landingKick *= 0.85;
+		if (abs(landingKick) > 1.0)
+			landingKick *= 0.78;
+		else
+			landingKick *= 0.92;
 		previousOnFloor = onFloor;
 		previousVelZ = owner.Vel.Z;
 
@@ -398,17 +482,21 @@ class PB_WeaponTilterInventory : Inventory
 			}
 		}
 		leanRoll += (targetLean - leanRoll) * cvLeanSmoothing;
-		owner.A_SetRoll(leanRoll, SPF_INTERPOLATE);
+
+		double tiltS = cvTiltSmoothing;
+		smoothedWeaponRoll = smoothedWeaponRoll * tiltS + currentRoll * (1.0 - tiltS);
 
 		if (authoredFireOffset)
 		{
-			psp.Rotation = currentRoll;
+			psp.Rotation = smoothedWeaponRoll;
+			ApplyWeaponTiltToAttachedOverlays(pi, smoothedWeaponRoll);
 			appliedYOffset = 0;
 			neutralWeaponY = psp.Y;
 			hasNeutralWeaponY = true;
 			return;
 		}
-		psp.Rotation = currentRoll;
+		psp.Rotation = smoothedWeaponRoll;
+		ApplyWeaponTiltToAttachedOverlays(pi, smoothedWeaponRoll);
 		if (hasNeutralWeaponY && appliedYOffset != 0)
 		{
 			double expectedY = neutralWeaponY + appliedYOffset;
@@ -430,9 +518,9 @@ class PB_WeaponTilterInventory : Inventory
 		}
 		// In PB's HUD setup, negative Y offset moves the sprite downward.
 		// Keep lowering strictly downward-only so movement never lifts weapons.
-		double extraLowerPixels = UsesExtraMoveLowering(weaponClass) ? 7.0 : 5.0;
-		double targetYOffset = - (loweringAmount + (landingKick * 0.45) + (reloading ? 0.8 : 0) + extraLowerPixels);
-		double yLowerCap = UsesExtraMoveLowering(weaponClass) ? -36.0 : -28.0;
+		double extraLowerPixels = UsesExtraMoveLowering(weaponClass) ? 4.5 : 3.0;
+		double targetYOffset = - (loweringAmount + (landingKick * 0.45) + (0.8 * reloadBlend) + extraLowerPixels);
+		double yLowerCap = UsesExtraMoveLowering(weaponClass) ? -30.0 : -22.0;
 		targetYOffset = clamp(targetYOffset, yLowerCap, 0.0);
 		// Smooth Y offset to avoid bob/tilt feedback oscillation when movement starts/stops.
 		double newYOffset = appliedYOffset + (targetYOffset - appliedYOffset) * 0.20;

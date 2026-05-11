@@ -71,8 +71,8 @@ Actor PB_Afrit replaces Cacodemon
 		Stop
    
   Spawn:
-	FRIT A 1 ACS_NamedExecuteAlways("MonsterPerformanceMode", 0, 0, 0, 0)//Check Effects
-	FRIT A 1 ACS_ExecuteAlways(796, 0, 0, 0, 0)//Check if Vanilla Mode is activated
+	FRIT A 1 ACS_NamedExecuteAlways("MonsterPerformanceMode", 0, 0, 0, 0)
+	FRIT A 1 ACS_ExecuteAlways(796, 0, 0, 0, 0)
     FRIT A 0
     FRIT AABB 4 Bright A_Look
     Goto Spawn+3
@@ -801,7 +801,6 @@ Speed 13
 BounceFactor 0.4
 }
 
-///////////////////////////======VANILLA======//////////////////////////////////
 
 Actor Vanilla_Afrit : PB_Afrit
 {
@@ -810,7 +809,7 @@ Actor Vanilla_Afrit : PB_Afrit
 	{
 		Spawn:
 		FRIT A 0
-	TNT1 A 0 ACS_NamedExecuteAlways("MonsterPerformanceMode", 0, 0, 0, 0)//Check Effects
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterPerformanceMode", 0, 0, 0, 0)
 		FRIT AABB 4 Bright A_Look
 		Goto Spawn+3
 	}

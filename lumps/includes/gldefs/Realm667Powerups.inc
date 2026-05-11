@@ -1,11 +1,6 @@
-// Dynamic-light bindings for the Realm667 powerup fold.
-// Original GLDEFS authored by DeVloek (auras), Captain Toenail (Reflector
-// Sphere, originally "ShieldSphere"), Ghastly_dragon (Wraith Hand),
-// LichSkull and FlightSphere lights from Ghastly_dragon (idea base) /
-// Ghastly_dragon credits. Names renamed to avoid clashes with existing
-// PB 2022 light objects (RFCT_SHIELD, R667_FLYTLIGHT, etc.).
+// Realm667 powerup lights — DeVloek (auras), Captain Toenail (Reflector Sphere / ShieldSphere),
+// Ghastly_dragon (Wraith Hand, LichSkull, FlightSphere). Renamed (R667_*, etc.) to avoid clashes with PB stock lights.
 
-// ----- Fire Aura Sphere -----
 flickerlight2 R667_FireAuraSphereLight
 {
     color 1.0 0.6 0.3
@@ -40,7 +35,6 @@ object FireAuraFire
     frame VFIRH { light R667_FireAuraFireLight8 }
 }
 
-// ----- Frost Aura Sphere -----
 pointlight R667_FrostAuraSphereLight0 { color 0.4 0.4 1.0 size 60 offset 0 16 0 attenuate 1 }
 pointlight R667_FrostAuraSphereLight1 { color 0.3 0.6 1.0 size  8 offset 0 16 0 attenuate 1 }
 pointlight R667_FrostAuraSphereLight2 { color 0.3 0.6 1.0 size 16 offset 0 16 0 attenuate 1 }
@@ -72,7 +66,6 @@ object FrostAuraFrozen
     frame TNT1 { light R667_FrostAuraFrozenLight }
 }
 
-// ----- Flight Sphere -----
 pulselight R667_FlightSphere
 {
     color 1.0 0.0 1.0
@@ -85,7 +78,6 @@ object FlightSphere
     frame FLYT { light R667_FlightSphere }
 }
 
-// ----- Reflector Sphere (was ShieldSphere upstream) -----
 pulselight R667_ReflectorSphere
 {
     color 1.0 0.5 0.0
@@ -99,7 +91,6 @@ object ReflectorSphere
     frame RFCT { light R667_ReflectorSphere }
 }
 
-// ----- Hand of the Wraith -----
 flickerlight R667_WraithHand
 {
     color 1.0 1.0 1.0
@@ -114,7 +105,6 @@ object HandOfTheWraith
     frame HWTH { light R667_WraithHand }
 }
 
-// ----- Lich Skull -----
 pointlight R667_LichSkull
 {
     color 0.7 0.0 0.0

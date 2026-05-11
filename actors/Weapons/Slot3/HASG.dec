@@ -1,5 +1,3 @@
-// --------------------------------------------------------------------------
-//
 // UAC XHAS-SP - Lady Golide  (Heavy Auto-Shotgun)
 // Folded from Project-Brutality-Weapons-Pack staging (Insanity's Nightmare).
 // PB2022 adaptations:
@@ -8,11 +6,8 @@
 //   - missing projectile/casing names defined here as inheriting stubs
 //   - 0-tick AHGG / J2FG sprites swapped to TNT1 (no asset gap)
 //   - stripped HASGDrumMag ACS call + DistantRifleFireSound spawn
-//
 // Sprite source: SPRITES/WEAPONS/Slot3/HASG/PBWP/
 // Sound source : SOUNDS/hasg/PBWP/  (mapped in SNDINFO.txt)
-//
-// --------------------------------------------------------------------------
 
 // --- Tokens ----------------------------------------------------------------
 Actor HASGMod : Inventory                  { Inventory.MaxAmount 6 }
@@ -1025,5 +1020,36 @@ Actor HASG : PB_Weapon
         DRMR JIHGFEDCBAX 1
         GL1R FEDCBA 1
         Goto ContinueReady
+
+    PDA_Preview_Fire:
+        GLXF A 1 Bright
+        GLXF B 1 Bright
+        GLXF C 1
+        GLXF C 1
+        GLXF D 1
+        GLXF D 1
+        GLXF E 2
+        Stop
+    PDA_Preview_AltFire:
+        LGZU A 1
+        LGZU B 1
+        LGZU C 1
+        LGZU C 1
+        Stop
+    PDA_Preview_Reload:
+        GL1R A 1
+        GL1R B 1
+        GL1R C 1
+        GL1R D 1
+        GL1R E 1
+        G11R A 1
+        G11R B 1
+        G11R C 1
+        G11R D 1
+        G11R E 1
+        G11R F 1
+        G11R G 1
+        G11R H 1
+        Stop
     }
 }

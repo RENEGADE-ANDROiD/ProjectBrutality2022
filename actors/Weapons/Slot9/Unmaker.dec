@@ -252,6 +252,33 @@ ACTOR PB_Unmaker : PB_Weapon
 		TNT1 A 0 A_StopSound(6)
 		UNHF EDCBA 1 
 		Goto Ready
+
+	PDA_Preview_UnmakerLaser:
+		UNHF N 1 BRIGHT
+		UNHF O 1 BRIGHT
+		UNHF P 1 BRIGHT
+		UNHF Q 1 BRIGHT
+		Stop
+	PDA_Preview_UnmakerInferno:
+		UNHF ABCDE 1
+		UNHF R 1 BRIGHT
+		UNHF STUV 1 BRIGHT
+		UNHF EBCB 1
+		Stop
+	PDA_Preview_UnmakerFlamer:
+		UNHF ABCDE 1
+		UNHF F 1 BRIGHT
+		UNHF W 1 BRIGHT
+		UNHF X 1 BRIGHT
+		UNHF Y 1 BRIGHT
+		Stop
+	PDA_Preview_UnmakerAltSeeker:
+		UNHF N 1 BRIGHT
+		UNHF Q 1 BRIGHT
+		UNHF JIHGF 1 BRIGHT
+		UNHF E 1 BRIGHT
+		UNHF DCBA 1
+		Stop
 		
 	Altfire:
 		TNT1 A 0 A_WeaponOffset(0,32)

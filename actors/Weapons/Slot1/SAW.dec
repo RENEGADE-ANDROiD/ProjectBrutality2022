@@ -1233,6 +1233,18 @@ Actor PB_Chainsaw  : PB_Weapon replaces Chainsaw
 		"####" IJ 1 
 		Goto EndCheck
 
+	PDA_Preview_SawIdle:
+		SAWS EFGH 4
+		SAWS IJK 4
+		Stop
+	PDA_Preview_SawCut:
+		CSA1 ABCDEF 4
+		Stop
+	PDA_Preview_SawAlt:
+		C7S1 ABCDEFGHIJKLMNOPQ 3
+		C7S1 RSTUVWXYZ 3
+		Stop
+
 	}
 }
 
@@ -1260,7 +1272,7 @@ ACTOR SawSwing : FastProjectile
 		TNT1 A 1
 		Stop
 	XDeath:
-		TNT1 A 0 //A_SpawnItemEx("BloodHit",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0
 		TNT1 A 0 A_PlaySound("Machete/Yum", 3)
 		TNT1 A 1
 		Stop
@@ -1300,7 +1312,7 @@ ACTOR ZerkSwing : SawSwing
 		Stop
 	XDeath:
 		TNT1 A 0
-		TNT1 A 0 //A_SpawnItemEx("BloodHit",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0
 		TNT1 A 0 A_PlaySound("Machete/Yum", 3)
 		TNT1 A 1
 		Stop

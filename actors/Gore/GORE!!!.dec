@@ -32,7 +32,6 @@ Scale 1.2
  }
 }
 
-// Blood trails spawned by FlyingBlood
 actor Brutal_FlyingBloodTrail8
 {
  game Doom
@@ -562,9 +561,6 @@ ACTOR ShakeShakeShake: XDeath2
     }
 }
 
-/////////////////
-//ARMS
-/////////////////
 
 ACTOR XDeathArm1 : FlyingGibBase
 {
@@ -2051,7 +2047,6 @@ HND8 Y 1
        Loop
 }}
 
-//Mean Demon arm pieces
 actor GibMeanDemonHand: TinyGib
 {
     Scale 0.8
@@ -2082,7 +2077,6 @@ Spawn:
        Loop
 }}
 
-//Mech Demon arm pieces
 actor GibMechDemonHand: TinyGib
 {
     Scale 0.9
@@ -2113,7 +2107,6 @@ H4D8 D 1
        Loop
 }}
 
-//Void Spectre arm gibs
 actor GibVoidSpectreArmPart: TinyGib
 {
     Scale 1.1
@@ -2521,9 +2514,6 @@ actor Gib_HalfArchvile2: BigGibBase
 		VILP B -1
 		Stop  }}
 
-/////////////////////
-//LEGS
-/////////////////////
 
 ACTOR XDeathZombieLeg: XDeathArm1
 {
@@ -3296,7 +3286,6 @@ Spawn:
        Loop
 }}
 
-//Mean Demon leg pieces
 actor GibMeanDemonLegPart: TinyGib
 {
     Scale 1.1
@@ -3327,7 +3316,6 @@ M3G7 L 1
        Loop
 }}
 
-//Void Spectre Leg Gibs
 actor GibVoidSpectreLegPart: TinyGib
 {
     Scale 1.1
@@ -3677,9 +3665,6 @@ Stop
 		TNT1 A 0 A_CustomMissile ("XDeathChainArm", 5, 0, random (170, 190), 2, random (20, 40))
 		Stop}}
 
-//////////////
-//GUTS
-//////////////
 
 
 ACTOR XDeathStomach: PB_XDeath1
@@ -4839,7 +4824,6 @@ actor GibHalfChaingunGuy2: CurbstompedMarine
 		CP06 L -1
 		Stop
             }}
-////////////////////////////////
 
 ACTOR XDeathHalfHelmetChaingunGuy1
 {
@@ -4921,7 +4905,6 @@ actor GibHalfHelmetChaingunGuy2: BigGibBase
 		C406 L -1
         Stop    }}
 
-////////////////////////////////
 ACTOR XDeathHalfZombieman2
 {
     Radius 8
@@ -5993,7 +5976,6 @@ ACTOR SpiderLeg
     }
 }
 
-// Spelling is hard, ain't it?
 ACTOR Instestin : PB_Intestine
 {}
 
@@ -6204,7 +6186,6 @@ ACTOR XDeathCyberKnightArm: XDeathArm1
     }
 }
 
-//Cyber Baron Arm
 ACTOR XDeathCyberBaronArm: XDeathArm1
 {
     Scale 1.1
@@ -6372,7 +6353,6 @@ ACTOR Gib_BaronArmGibbed: GenericHKGib1
     }
 }
 
-//Cyber Baron arm gib
 actor Gib_CyberBaronArm: LimbBase
 {
     Scale 1.1
@@ -8426,7 +8406,6 @@ BounceFactor 0.4
 BloodColor "DarkGreen"
 }
 
-//Cyber Baron
 ACTOR XDeathCyberBaronHead5: XDeathBullArm1
 {
     BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood"
@@ -9118,7 +9097,6 @@ actor Gib_HalfDemon: BigGibBase
 		SARC F -1
         Stop    }}
 
-//Mech Demon Half
 ACTOR XDeathHalfMechDemon : XDeathHalfDemon
 {
     States
@@ -9359,8 +9337,6 @@ ACTOR XDeathSpiderNew2: XDeathPainElementalNew2
 	Speed 7
 }
 
-// QSZ ARM
-
 ACTOR XDeathHFQSZArm1
 {
     Radius 8
@@ -9490,8 +9466,6 @@ ACTOR XDeathHFQSZArm2: XDeathArm1
 {
 	Speed 10
 }
-
-// QSZ LEG
 
 ACTOR XDeathHFQSZLeg1: XDeathHFQSZArm1
 {

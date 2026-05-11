@@ -24,16 +24,6 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-//===========================================================================
-//
-// Custom Widgets for NashGore
-// Adds tooltips to widgets
-//
-// Some redundant duplicates here but whatever; menus are painful to work
-// with in general anyway. >:(
-//
-//===========================================================================
-
 class OptionMenuItemNashGoreOption : OptionMenuItemOption
 {
 	String mTooltip;
@@ -70,27 +60,6 @@ class OptionMenuItemNashGoreControl : OptionMenuItemControl
 	}
 }
 
-/*
-// This doesn't work because mUh eXpLoiTs lmaaaaoooo
-class OptionMenuItemNashGoreSafeCommand : OptionMenuItemSafeCommand
-{
-	String mTooltip;
-
-	OptionMenuItemNashGoreSafeCommand Init(String label, String tooltip, Name command, String prompt = "")
-	{
-		mTooltip = tooltip;
-		Super.Init(label, command, prompt);
-		return self;
-	}
-}
-*/
-
-//===========================================================================
-//
-// NashGore Menu
-//
-//===========================================================================
-
 class NashGoreMenu : OptionMenu
 {
 	override void Drawer ()
@@ -115,14 +84,6 @@ class NashGoreMenu : OptionMenu
 			{
 				tt = StringTable.Localize(OptionMenuItemNashGoreControl(mDesc.mItems[mDesc.mSelectedItem]).mTooltip);
 			}
-
-			/*
-			// This doesn't work because mUh eXpLoiTs lmaaaaoooo
-			if (mDesc.mItems[mDesc.mSelectedItem] is "OptionMenuItemNashGoreSafeCommand")
-			{
-				tt = StringTable.Localize(OptionMenuItemNashGoreSafeCommand(mDesc.mItems[mDesc.mSelectedItem]).mTooltip);
-			}
-			*/
 		}
 
 		if (tt.Length() > 0)

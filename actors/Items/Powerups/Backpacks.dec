@@ -2,7 +2,6 @@ ACTOR GotAPack : Inventory {}
 ACTOR GotAPack_h : Inventory {}
 //These Inventory actors allow SmartScavenger to react based on your maximum ammo capacity
 
-// Backpack ---------------------------------------------------------------
 ACTOR PB_Backpack : CustomInventory
 {
 	//$Title Backpack

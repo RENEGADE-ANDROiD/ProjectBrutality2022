@@ -1,5 +1,3 @@
-//the main weapon, defined here before a thousand tokens
-// : PB_WeaponBase: Select path runs inlined SelectFirstPersonLegs (BaseWeapon.dec)
 Class PB_CSSG : PB_WeaponBase
 {
 	default
@@ -98,7 +96,6 @@ Class PB_CSSG : PB_WeaponBase
 			C0RO NO 1 A_DoPBWeaponAction();
 			TNT1 AA 0 PB_GunSmoke(random(0,1),0,-2);
 			C0RO P 1 A_DoPBWeaponAction();
-		//insert shells
 			C0RB A 1;
 			C0RB BCDFGH 1 {
 				ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM');
@@ -116,7 +113,6 @@ Class PB_CSSG : PB_WeaponBase
 			C0RC GHIJ 1 A_DoPBWeaponAction();
 			
 			C0XR LLLL 1 A_DoPBWeaponAction();
-		//random pump
 			TNT1 A 0 A_startsound("weapons/sgmvpump",64);
 			TNT1 A 0 A_quakeEx(0,1,1,6,0,10,"",QF_RELATIVE|QF_SCALEDOWN|QF_SCALEUP);
 			C0XR LMNOOOO 1 A_DoPBWeaponAction();
@@ -280,7 +276,6 @@ Class PB_CSSG : PB_WeaponBase
 			C0RO O 1;
 			TNT1 AA 0 PB_GunSmoke(random(0,1),0,-2);
 			C0RO P 1;
-		//insert shells
 			C0RB A 1;
 			C0RB BCDFGH 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM');
 			TNT1 A 0 A_startsound("weapons/cssg/in",26);
@@ -308,7 +303,6 @@ Class PB_CSSG : PB_WeaponBase
 			C0HO EFGH 1;
 			TNT1 A 0 PB_GunSmoke(0,0,-2);
 			C0HO II 1;
-		//insert shell
 			C0HB ABC 1 ChangeCSSGShellsLook('C0HB','C0HS','C0HN','C0HK','C0HD','C0HX','C0HW','C0HT','C0HM');
 			C0HB DEF 1 ChangeCSSGShellsLook('C0HB','C0HS','C0HN','C0HK','C0HD','C0HX','C0HW','C0HT','C0HM');
 			TNT1 A 0 A_startsound("weapons/cssg/in",24);
@@ -382,7 +376,7 @@ Class PB_CSSG : PB_WeaponBase
 			Goto Ready3;
 		
 		FlashKicking:
-			C0KO ABCDEEFFGGEDCBA 1; //A_DoPBWeaponAction();
+			C0KO ABCDEEFFGGEDCBA 1;
 			goto Ready3;
 			
 		FlashAirKicking:
@@ -390,11 +384,11 @@ Class PB_CSSG : PB_WeaponBase
 			goto Ready3;
 			
 		FlashSlideKicking:
-			C0KO ABCDEEFFFGGGFFFEEEGGGFEDCBA 1; //A_DoPBWeaponAction();
+			C0KO ABCDEEFFFGGGFFFEEEGGGFEDCBA 1;
 			goto Ready3;
 			
 		FlashSlideKickingStop:
-			C0KO GFEDCBA 1; //A_DoPBWeaponAction();
+			C0KO GFEDCBA 1;
 			goto Ready3;
 			
 		MuzzleFlashFull:
@@ -421,6 +415,47 @@ Class PB_CSSG : PB_WeaponBase
 				A_OverlayRenderstyle (overlayID(),STYLE_Add);
 			}
 			C1MZ D 1 bright;
+			stop;
+
+		PDA_Preview_Fire:
+			C0FF A 1 bright;
+			C0FF B 1 bright;
+			C0FF D 1;
+			C0FF D 1;
+			C0FF D 1;
+			C0FF D 1;
+			C0FF E 1;
+			C0FF E 1;
+			C0FF F 1;
+			stop;
+		PDA_Preview_AltFire:
+			C0FH A 1 bright;
+			C0FH C 1;
+			C0FH C 1;
+			C0FH D 1;
+			C0FH D 1;
+			C0FH E 1;
+			stop;
+		PDA_Preview_Reload:
+			C0HO A 1;
+			C0HO B 1;
+			C0HO C 1;
+			C0HO D 1;
+			C0HO E 1;
+			C0HO F 1;
+			C0HO G 1;
+			C0HO H 1;
+			C0HO I 1;
+			C0HO I 1;
+			C0HB A 1;
+			C0HB B 1;
+			C0HB C 1;
+			C0HB D 1;
+			C0HB E 1;
+			C0HB F 1;
+			C0HB G 1;
+			C0HB H 1;
+			C0HB I 1;
 			stop;
 			
 		LoadSprites:
@@ -463,32 +498,27 @@ Class PB_CSSG : PB_WeaponBase
 		"$CM_BUCKLD","$CM_SLUGLD","$CM_FLCHLD","$CM_FLAKLD","$CM_DGBTLD","$CM_EXPLLD",
 		"$CM_WPLOAD","$CM_DOOMLD","$CM_DNMKULD"
 	};
-	//for easier weapon control, ig
-	//this checks if there's at least one ammu loaded, if not, goes to reload instead
-	//this checks if theres ammo to reload, if the weapon is empty, and if its full already
-	//and jumps to the respective state, if none of the above its true, just go to normal reload
+	
 	Action State PB_CheckReload(int min = 1,statelabel noammo = null,statelabel empty = null,statelabel fully = null, int alreadyfull = 1)
 	{
 		let am1 = invoker.ammotype1;
 		let am2 = invoker.ammotype2;
 		if(!am1 || !am2)
-			return resolvestate(null); //this dont even uses ammo
+			return resolvestate(null);
 	
-		int amntres = countinv(am1); //ammo in reserve
-		int amntin = countinv(am2); //ammo in the gun
+		int amntres = countinv(am1);
+		int amntin = countinv(am2);
 		
-		if(amntin >= alreadyfull) //if its already full
+		if(amntin >= alreadyfull)
 			return resolvestate(fully);
-		if(amntres < min) //its theres actually no ammo
+		if(amntres < min)
 			return resolvestate(noammo);
 		if(amntin < 1)
 			return resolvestate(empty);
 		
-		return resolvestate(null); //continue to normal reload
+		return resolvestate(null);
 	}
 	
-	//for easier sprites manipulation
-	//gets a pointer to the asked layer and sets the defined sprite 
 	Action Void PB_ChangePsPrite(name spt,int layer = PSP_WEAPON)
 	{
 		let PS = player.findPSprite(layer);
@@ -496,7 +526,6 @@ Class PB_CSSG : PB_WeaponBase
 			PS.sprite = GetSpriteIndex(spt);
 	}
 	
-	//bascially, check wich shells is actually used, and change the sprite based on that
 	Action Void ChangeCSSGShellsLook(name buck = '',name slug = '',name flech = '',name flak = '',name dragons = '',name explo = '',name wp = '',name tds = '',name dnm = '',bool old = false)
 	{
 		int wich = old ? invoker.oldshells : invoker.shellsmode;
@@ -516,38 +545,23 @@ Class PB_CSSG : PB_WeaponBase
 		
 	}
 	
-	//shells:
-	// 0-buckshot 1-slug 2-flechette
-	// 3-flak 4-dragon breath
-	// 5-explosive 6-white phosphorous 7-Doom shells
-	// 8-danmaku
-	
-	//to cycle shells ->
 	Action Void CycleShellFw()
 	{
-		//cycle to the right
 		int actmod = invoker.shellsmode;
 		invoker.oldshells = actmod;
 		A_startsound("menu/change",CHAN_AUTO);
 		actmod++;
 		
-		//dont need extra checks there
 		if(actmod < 4)
 		{
 			invoker.shellsmode = actmod;
-			//PrintCurrentShell();
 			return;
 		}
 		
-		//this is kinda weird, the idea is, if you DONT have the upgrade, add another, so it jumps to the next shell type
-		//if you dont have any upgrade, just go back to 0, wich means buckshot
-		//if got dragon breat upgrade
 		if(countinv("DragonBreathUpgrade")<1 && actmod == 4)
 			actmod++;
-		//if got Explosive upgrade
 		if(countinv("ExplosiveUpgrade")<1 && actmod == 5)
 			actmod++;
-		//if got White phosphoruos upgrade (dragon breath 2: this time its personal)
 		if(countinv("WhitePhosphorusUpgrade")<1 && actmod == 6)
 			actmod++;
 		if(countinv("TripleDoomUpgrade")<1 && actmod == 7)
@@ -558,17 +572,13 @@ Class PB_CSSG : PB_WeaponBase
 		if(actmod > 8)
 			actmod = 0;
 		
-		//clamps, so it never goes out from the types allowed
 		actmod = clamp(actmod,0,8);
 		invoker.shellsmode = actmod;
-		//PrintCurrentShell();
 		return;
 	}
 	
-	//to cycle shells <-
 	Action Void CycleShellBack()
 	{
-		//idk why it was harder to do the back cycling than the forward one
 		int actmod = invoker.shellsmode;
 		invoker.oldshells = actmod;
 		A_startsound("menu/change",CHAN_AUTO);
@@ -581,11 +591,9 @@ Class PB_CSSG : PB_WeaponBase
 		if(actmod < 4)
 		{
 			invoker.shellsmode = actmod;
-			//PrintCurrentShell();
 			return;
 		}
 		
-		//the same as the other functions but the other way around, decrements if you dont have that specific upgrade
 		if(countinv("DanmakuUpgrade")<1 && actmod == 8)
 			actmod--;
 		if(countinv("TripleDoomUpgrade")<1 && actmod == 7)
@@ -599,12 +607,9 @@ Class PB_CSSG : PB_WeaponBase
 		
 		actmod = clamp(actmod,0,8);
 		invoker.shellsmode = actmod;
-		//PrintCurrentShell();
-		
 	}
 
 	
-	//this just prints the selected shell message
 	Action Void PrintSelectedShell()
 	{
 		int wich = invoker.shellsmode + 1;
@@ -622,7 +627,6 @@ Class PB_CSSG : PB_WeaponBase
 		}
 	}
 	
-	//this was just a debug thing
 	Action Void PrintCurrentShell()
 	{
 		int wich = invoker.shellsmode + 1;
@@ -640,9 +644,6 @@ Class PB_CSSG : PB_WeaponBase
 		}
 	}
 	
-	//at first i thought i would need this functions, but wasnt the case
-	
-	//player pressed bt button
 	Action Bool P_Pressed(int bt)
 	{
 		int buttons = player.cmd.buttons;
@@ -651,7 +652,6 @@ Class PB_CSSG : PB_WeaponBase
 		return false;
 	}
 	
-	//player is pressing and was pressing before bt
 	Action Bool P_KeepPressing(int bt)
 	{
 		int buttons = player.cmd.buttons;
@@ -662,7 +662,6 @@ Class PB_CSSG : PB_WeaponBase
 		return false;
 	}
 	
-	//player is pressing, but wasn't pressing bt before
 	Action Bool P_PressedOnce(int bt)
 	{
 		int buttons = player.cmd.buttons;
@@ -673,8 +672,6 @@ Class PB_CSSG : PB_WeaponBase
 		return false;
 	}
 	
-	
-	//this function spawns the casing based on the current shell
 	Action Void A_spawnCSSGCasing(bool useprev = false)
 	{
 		string shelltype = "BuckShellCasing";
@@ -698,8 +695,6 @@ Class PB_CSSG : PB_WeaponBase
 		PB_SpawnCasing(shelltype,random(10,14),random(-1,3),random(26,28),random(1,3),random(-5,-2),random(4,7));
 	}
 	
-	//just the pb_Firebullets but with a null check added
-	//might remove this when the null check is added in pb itself
 	action void CSSG_FireBullets(string type, int amount, double angle, double offs, double height, double pitch)
 	{
 		vector2 spread;
@@ -725,8 +720,6 @@ Class PB_CSSG : PB_WeaponBase
 		}
 	}
 	
-	//the nexts funcions exist only to not bloat the code and dont make a lot of different fire states
-	//so all is handled here, so if something goes wrong, i can fix it here once, and not in every state
 	Action Void FireCSSG()
 	{
 		int mode = invoker.shellsmode + 1;
@@ -966,8 +959,6 @@ Class PB_CSSG : PB_WeaponBase
 			A_takeinventory(PB_CSSG.CSSG_ShellsToken1[j],10);
 	}
 	
-	//so i dont need to override the player to add "player.startitem "blablabla",1"
-	//its not the full implementation of this, but works for now
 	override void attachtoowner(actor other)
 	{
 		if(other && other.player)
@@ -981,7 +972,6 @@ Class PB_CSSG : PB_WeaponBase
 	
 }
 
-//the ammo counter
 Class CSSGShellsIn : Ammo
 {
 	default
@@ -992,7 +982,6 @@ Class CSSGShellsIn : Ammo
 	}
 }
 
-//random token that apparently is needed
 Class CSSGHasUnloaded : inventory
 {
 	default
@@ -1001,7 +990,6 @@ Class CSSGHasUnloaded : inventory
 	}
 }
 
-//random token for respect animation to work
 class RespectCSSG : inventory
 {
 	default
@@ -1009,10 +997,6 @@ class RespectCSSG : inventory
 		inventory.maxamount 1;
 	}
 }
-
-////////////////////////////////////////////////////
-//the projectiles and effects 
-////////////////////////////////////////////////////
 
 class ExplosiveProjectile : PB_Projectile
 {
@@ -1084,14 +1068,13 @@ class ExplosiveProjectile : PB_Projectile
 	{
 		FSpawnParticleParams DBSPK;
 		DBSPK.Texture = TexMan.CheckForTexture("REXPA0");
-		DBSPK.Color1 = "FFFFFF";//"FF8400";
+		DBSPK.Color1 = "FFFFFF";
 		DBSPK.Style = STYLE_ADD;
 		DBSPK.Flags = SPF_ROLL|SPF_FULLBRIGHT;
 		DBSPK.Vel = (frandom(-5,5),frandom(-5,5),frandom(-5,5)); 
 		DBSPK.Startroll = random(0,360);
 		DBSPK.RollVel = frandom(-15,15);
 		DBSPK.StartAlpha = 0.85;
-		//DBSPK.FadeStep = 0.1;
 		DBSPK.Size = random(12,26);
 		DBSPK.SizeStep = -2;
 		DBSPK.Lifetime = random(4,8); 
@@ -1203,7 +1186,7 @@ Class WPhosphorusProjectile : PB_Projectile
 			case 5:		txt = "EXP9C0";			break;
 			case 6:		txt = "EXP6D0";			break;
 		}
-		FTrail.Texture = TexMan.CheckForTexture(txt);//("DB54K0");
+		FTrail.Texture = TexMan.CheckForTexture(txt);
 		FTrail.Color1 = "FFFFFF";
 		FTrail.Style = STYLE_ADD;
 		FTrail.Flags = SPF_ROLL|SPF_FULLBRIGHT;
@@ -1220,9 +1203,6 @@ Class WPhosphorusProjectile : PB_Projectile
 	}
 }
 
-//
-//	well, in real life white phosphorous reacts a lot with oxygen and produces a lot of smoke
-//
 Class BigFlamesIG : Actor
 {
 	int lifetime;
@@ -1342,7 +1322,6 @@ Class WPShockWave : Actor
 	{
 		Translation "0:255=%[0,0,0]:[1.0,1.0,1.0]";
 		renderstyle "add";
-		//+bright;
 		Scale 0.44;
 		+nointeraction;
 	}
@@ -1420,11 +1399,11 @@ Class DanmakuProjectile : Actor
 	{
 		FSpawnParticleParams DnmkBnc;
 		DnmkBnc.Texture = TexMan.CheckForTexture("SHWKK0");
-		DnmkBnc.Color1 = tracercolor;//"FFFFFF";
+		DnmkBnc.Color1 = tracercolor;
 		DnmkBnc.Style = STYLE_AddStencil;
 		DnmkBnc.Flags = SPF_ROLL|SPF_FULLBRIGHT;
 		DnmkBnc.Vel = (0,0,0); 
-		DnmkBnc.Startroll = 0;//random(0,360);
+		DnmkBnc.Startroll = 0;
 		DnmkBnc.RollVel = frandom(-3,3);
 		DnmkBnc.StartAlpha = 0.80;
 		DnmkBnc.Lifetime = random(7,10); 
@@ -1439,7 +1418,7 @@ Class DanmakuProjectile : Actor
 	{
 		FSpawnParticleParams DnmkSprk;
 		DnmkSprk.Texture = TexMan.CheckForTexture("5PRKA0");
-		DnmkSprk.Color1 = tracercolor;//"FFFFFF";
+		DnmkSprk.Color1 = tracercolor;
 		DnmkSprk.Style = STYLE_Add;
 		DnmkSprk.Flags = SPF_ROLL|SPF_FULLBRIGHT;
 		DnmkSprk.Vel = (random(-5,5),random(-5,5),random(-2,9));
@@ -1458,8 +1437,8 @@ Class DanmakuProjectile : Actor
 	void spawnDnmkFlare(vector3 position, bool bigger = false)
 	{
 		FSpawnParticleParams FFLAR;
-		FFLAR.Texture = TexMan.CheckForTexture("5PRKA0");//("LENSA0");//("L2NBA0");
-		FFLAR.Color1 = tracercolor;//"FFFFFF";
+		FFLAR.Texture = TexMan.CheckForTexture("5PRKA0");
+		FFLAR.Color1 = tracercolor;
 		FFLAR.Style = STYLE_ADDSTENCIL;
 		FFLAR.Flags = SPF_ROLL|SPF_FULLBRIGHT;
 		FFLAR.Vel = (0,0,0);

@@ -1,4 +1,3 @@
-//A Smarter Alternative to spam spawning Hitboxes
 Class PB_SpawnerBase : Actor
 {
 	
@@ -28,11 +27,6 @@ Class PB_SpawnerBase : Actor
 		Super.Tick();
 		
 		
-		//Check CVARs if tiered preset and, if so, select appropriate tier (I, II, III, IV) ... else go with default spawn
-		//Check CVARs for spawn value pulled from presets
-		
-		//If monster, check surrounding actors for same class name
-		
 	}
 	
 	States
@@ -42,7 +36,6 @@ Class PB_SpawnerBase : Actor
 			loop;
 			
 		Spawn_Default:
-			// 
 			TNT1 A 0;
 			Stop;
 		Spawn_Tier_I:
@@ -62,4 +55,3 @@ Class PB_SpawnerBase : Actor
 			stop;
 	}
 }
-

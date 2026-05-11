@@ -1,4 +1,3 @@
-// PB_HelmetDrops — spawns a helmet prop when helmet-wearing grunts/sergeants die
 class HelmetDropHandler : EventHandler
 {
 	static const String specialActors[] =

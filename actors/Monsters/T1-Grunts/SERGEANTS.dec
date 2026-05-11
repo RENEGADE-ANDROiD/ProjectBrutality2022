@@ -999,7 +999,6 @@ States{Spawn:
 		F105 N -1
         Stop 
 }}
-///////////////////////////======VANILLA======//////////////////////////////////
 
 Actor Vanilla_Shotgunguy1 : PB_Sergeant
 {

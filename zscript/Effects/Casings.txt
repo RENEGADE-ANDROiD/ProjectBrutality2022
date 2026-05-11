@@ -979,8 +979,7 @@ Class SGL_Drum : EmptyBrass2 //See?  Very minimal code to do the same thing.
 	}
 }
 
-Class FlamerEmptyGas : EmptyBrass2 //See?  Very minimal code to do the same thing.
-//Yea I see
+Class FlamerEmptyGas : EmptyBrass2
 {
   Default
    {
@@ -1741,7 +1740,6 @@ Class ShotgunCasingOrangeLive : ShotgunCasing
    }
 }
 
-// For different roll sprite angles
 Class ShotgunCasingSSG: ShotgunCasing
 {
  States
@@ -2757,11 +2755,6 @@ Class PlasmaCaseOLSpawn : RifleCaseSpawn
 	}
 }
 
-
- //the black metal piece that holds the bullets on belt! " -
-                       // Dragonball1957
-// Converted to a base class so that other possible belt link sprites could use this.
-// This may get deleted though.					   
 Class MinigunBeltPiece : Actor
 {
 		override void BeginPlay(void)

@@ -18,7 +18,6 @@ Extend Class PB_SpecialWheelHandler
 		return true;
 	}
 
-	// Equipment wheel only (WW_*); weapon-special wheels leave multiplier at 1.
 	ui double EquipmentWheelIconSizeMul(String specialName)
 	{
 		if (specialName == "WW_HookSelected")
@@ -42,16 +41,8 @@ Extend Class PB_SpecialWheelHandler
 	{
 		double sc = specialWheelLayoutScale > 0 ? specialWheelLayoutScale : 0.55;
 
-		// Equipment AND weapon-special wheels both render at the compact
-		// 0.8375x layout (background, cursor, and orbit) — bumped 25% from the
-		// prior 0.67 multiplier. Icon sizes still use `sc` so authored icon
-		// scaling is preserved per-slice. Only the Gearbox-driven weapon-pick
-		// branch keeps the original 1.0x layout (it has its own self-contained
-		// rendering pass below at `weaponPickWheel`).
 		double layoutSc = sc * 0.8375;
 
-		// Equipment wheel has many more slices than weapon-special wheels,
-		// so it runs on a slightly wider orbit to reduce center crowding.
 		bool isEquipmentWheel = false;
 		if (!weaponPickWheel && wheelShow.Size() > 0)
 		{
@@ -225,8 +216,6 @@ Extend Class PB_SpecialWheelHandler
 		}
 
 		int curSelMod = wheelShow[currentSelection];
-		// Equipment wheel (WW_*): normalize icon draw to a fixed virtual box in 640×480 space so
-		// mixed pickup sprites vs pywheel art read uniform; weapon-special wheels keep per-slice iconScale.
 		int PB_EQ_WHEEL_ICON_BOX = 40;
 		double PB_EQ_WHEEL_ICON_SELMUL = 1.25;
 		screen.DrawTexture (circleTex, true, circleX/2, circleY/2, DTA_VirtualWidth, 320, DTA_VirtualHeight, 240,
@@ -319,14 +308,6 @@ Extend Class PB_SpecialWheelHandler
 					screen.DrawText (fnt, Font.CR_WHITE, circleX-fnt.StringWidth(mMessage.StringAt(i))/2, y, mMessage.StringAt(i), DTA_VirtualWidth,320,DTA_VirtualHeight,240, DTA_Alpha, 1.0*alphaFade);
 					y += fnt.GetHeight();
 				}
-				// Gold tooltip block (`$PB_WHEELTIP_<specialName>`) intentionally
-				// removed: the white centered `specialAlias` title above already
-				// names the mode (e.g. "7.62 AP Magazine" / "Hellfire" /
-				// "Single" / ".357 Tube"), and the gold line just re-prefixed
-				// it with the weapon name (e.g. "Metal Sniper: Standard
-				// magazines.") which read as redundant against the wheel's own
-				// branded center icon. The equipment wheel never showed a gold
-				// tip; weapon-special wheels now match.
 			}
 		}
 		else

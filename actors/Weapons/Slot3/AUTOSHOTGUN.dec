@@ -1,8 +1,4 @@
-// --------------------------------------------------------------------------
-//
 // Auto-Shotgun
-//
-// --------------------------------------------------------------------------
 
 Actor AutoshotgunDrumMag: Inventory
 {
@@ -2126,6 +2122,66 @@ ACTOR PB_Autoshotgun  : PB_Weapon
 			AG63 FEDCBA 1
 			AG60 N 1
 			Goto Ready3	
+
+		PDA_Preview_Fire:
+			AG20 A 1 Bright
+			AG20 B 1 Bright
+			AG20 C 1
+			AG20 D 1
+			AG20 E 1
+			AG20 F 1
+			AG20 G 1
+			AG20 H 1
+			Stop
+		PDA_Preview_AltFire:
+			AG20 A 1 Bright
+			AG20 B 1 Bright
+			AG20 C 1
+			AG20 D 1
+			AG20 E 1
+			AG20 F 1
+			Stop
+		PDA_Preview_Pump:
+			AG40 A 1
+			AG40 B 1
+			AG40 C 1
+			AG40 D 1
+			AG40 E 1
+			AG40 F 1
+			AG40 G 1
+			AG40 H 1
+			AG40 I 1
+			AG40 J 1
+			AG40 K 1
+			AG40 L 1
+			AG40 M 1
+			AG40 N 1
+			AG40 I 1
+			AG40 H 1
+			AG40 G 1
+			AG40 F 1
+			AG40 E 1
+			AG40 D 1
+			AG40 C 1
+			AG40 B 1
+			AG40 A 1
+			Stop
+		PDA_Preview_Reload:
+			AG30 A 1
+			AG30 B 1
+			AG30 C 1
+			AG30 D 1
+			AG30 E 1
+			AG30 F 1
+			AG30 G 1
+			AG30 H 1
+			AG30 I 1
+			AG30 J 1
+			AG30 K 1
+			AG30 L 1
+			AG30 M 1
+			AG30 N 1
+			Stop
 
 	}
 }

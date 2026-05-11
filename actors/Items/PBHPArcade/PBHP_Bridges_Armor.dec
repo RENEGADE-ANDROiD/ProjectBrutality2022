@@ -1,6 +1,5 @@
-// ZScript parents PBHP_*ZSC (armor stats + hp arcade cvar) + States here. No `replaces` in ZScript.
+// ZScript parents PBHP_*ZSC; states only here.
 
-// Green armor
 ACTOR LightArmor : PBHP_LightArmorZSC
 {
 	//$Title Light Armor
@@ -29,7 +28,6 @@ ACTOR LightArmor : PBHP_LightArmorZSC
 	}
 }
 
-// Blue armor 
 ACTOR HeavyArmor : PBHP_HeavyArmorZSC Replaces BlueArmor
 {
 	//$Title Heavy Armor
@@ -57,7 +55,6 @@ ACTOR HeavyArmor : PBHP_HeavyArmorZSC Replaces BlueArmor
 	}
 }
 
-// Red armor
 ACTOR MediumArmor : PBHP_MediumArmorZSC
 {
 	//$Title Standard Armor

@@ -1,5 +1,3 @@
-// Cat's Frozen Slice 5 — ammo for PB_CryoElectroRifle (shared cryo/electric), PB_CryoCannon.
-
 ACTOR PB_CryoCells : Ammo
 {
 	Inventory.PickupMessage "$PB_PICKUP_PB_CRYOCELLS"

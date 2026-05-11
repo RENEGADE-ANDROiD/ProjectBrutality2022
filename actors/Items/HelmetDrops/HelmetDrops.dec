@@ -1,5 +1,3 @@
-// PB_HelmetDrops — bouncy dropped helmet; pickup grant based on small armor bonus
-
 ACTOR PB_ArmorBonusDropped : BasicArmorBonus
 {
 	Game Doom

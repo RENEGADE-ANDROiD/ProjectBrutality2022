@@ -24,14 +24,11 @@ RLACS
 BerserkPrompt
 MGSPAWN
 ExecutionsACS
-Reticle //This is for ACS DMR reticle
-// Glory Kills
+Reticle
 lowhealth
 EquipCooldown
 GloryMelee
 GloryHUD
 BloodPunch
-// Marauder add-on
 Marauder
-// ShieldSaw add-on
 Shield_saw

@@ -1,8 +1,4 @@
-//==============================================================================
-// SNDINFO.ChexCompatibility
-//==============================================================================
 //This is only here temporarily until the Chex Quest compatibility
-//branch is completed.
 
 weapons/chexrifle/fire	"sounds/Combat/Weapons/Plasma Rifles/ChexRifle/PLASMASHOT6.ogg"
 weapons/chexrifle/in	"sounds/Combat/Weapons/Plasma Rifles/ChexRifle/chriflin.ogg"
@@ -62,13 +58,7 @@ $random monsters/Flemoid/death
 */
 
 
-//==============================================================================
-// SNDINFO.GloryKills
-//==============================================================================
-////////////////////////////////////////////////////////
-//        Glory Kills Add-On sound definitions        //
 //  (ported from D4D / BrutalDoom Black Edition)      //
-////////////////////////////////////////////////////////
 
 BONECR1 BONECR1
 BONECR2 BONECR2
@@ -97,9 +87,6 @@ Flame_belch2				"sounds/FlameBelch/flamebelch2.ogg"
 Flame_belch3				"sounds/FlameBelch/flamebelch3.ogg"
 Flame_belch4				"sounds/FlameBelch/flamebelch4.ogg"
 
-//==============================================================================
-// Crucible
-//==============================================================================
 Crucible_Deselect		"Sounds/Crucible/Deselect.ogg"
 Crucible_Deploy			"Sounds/Crucible/Deploy.ogg"
 Crucible_Select			"Sounds/Crucible/Select.ogg"
@@ -185,22 +172,12 @@ $limit Crucible_Slice 0
 $limit Eternal/Crucible/Return 0
 
 
-//==============================================================================
-// SNDINFO.MonsterPack
-//==============================================================================
-//===========================================================================
-// SNDINFO.MonsterPack
-// Merged from Monster Pack Add-On/SNDINFO.txt.
 // GZDoom auto-loads every `SNDINFO*` lump; no include line needed.
 // The following four logical names collided with identical definitions in
-// SNDINFO.PBMonsters and have been commented out here to keep one authority:
-//   aracnorb/sight, aracnorb/death, aracnorb/melee, monster/heltel.
 // NOTE: the original MP add-on file redefines ZPTank/{see,pain,death,Run,explode}
 // twice within itself (once for Zombieplasmatank, once for Zombietankelite).
 // That behavior is preserved as-is; GZDoom will silently accept the second
 // binding as the winning one  - identical to external-load behavior.
-//===========================================================================
-//Horrorspawn
 
 $random Horrorspawn/Step { Horrorspawn/Step1 Horrorspawn/Step2 Horrorspawn/Step3 Horrorspawn/Step4 Horrorspawn/Step5 Horrorspawn/Step6 Horrorspawn/Step7 Horrorspawn/Step8 Horrorspawn/Step9 }
 Horrorspawn/Step1 "Sounds/Monsters/Horrorspawn/HorrorspawnStep1"
@@ -246,7 +223,6 @@ $volume ZombieFodder/Active 0.7
 $volume ZombieFodder/Pain 0.8
 $volume ZombieFodder/Death 0.6
 
-///// Project Survival Fodder (logical names referenced by actors/Monsters/T1-Grunts/ProjectSurvivalFodder/)
 
 $random Shambler/Sight { FODDSEE1 FODDSEE2 FODDSEE3 FODDSEE4 }
 
@@ -419,7 +395,6 @@ $volume CyberZ/Active 0.8
 BIOSHOOT				"sounds/combat/weapons/Fatso Cannon/BIOSHOOT"
 $volume BIOSHOOT 1.2
 
-///// Project Survival Passive (actors/Monsters/T1-Grunts/ProjectSurvivalPassive/)
 
 $random Mimic/Active { Mimic/Active1 Mimic/Active2 Mimic/Active3 }
 Mimic/Active1 "sounds/monsters/ProjectSurvivalPassive/Mimic/MimicActive1.ogg"
@@ -509,7 +484,6 @@ PMHangman/Sight1 "sounds/monsters/ProjectSurvivalPassive/Hangman/HangmanSight.og
 PMHangman/Sight2 "sounds/monsters/ProjectSurvivalPassive/Hangman/HangmanSight2.ogg"
 PMHangman/Sight3 "sounds/monsters/ProjectSurvivalPassive/Hangman/HangmanSight3.ogg"
 
-//Hunger
 $random Hunger/Sight { HUNSEE1 HUNSEE2 }
 HUNSEE1	HUNSEE1
 HUNSEE2	HUNSEE2
@@ -592,7 +566,6 @@ Gore/HeadBounce1 "Sounds/Monsters/Horrorspawn/HeadBounce1"
 Gore/HeadBounce2 "Sounds/Monsters/Horrorspawn/HeadBounce2"
 Gore/HeadBounce3 "Sounds/Monsters/Horrorspawn/HeadBounce3"
 
-//Zombietank
 ZTank/see       DSZTANK1 
 ZTank/attack    DSZTGUN 
 ZTank/pain      DSZTANKP 
@@ -600,7 +573,6 @@ ZTank/death     DSZTANKD
 ZTank/Run       DSZTANK2  
 ZTank/explode   DSZTANKX 
 
-//Zombiemissiletank
 ZMTank/see        DSZTANK1
 ZMTank/missile    DSZTMISL
 ZMTank/missileX   DSZTEXPL
@@ -610,7 +582,6 @@ ZMTank/Run        DSZTANK2
 ZMTank/explode    DSZTANKX
 
 
-//Zombieplasmatank
 ZPTank/see      DSZTANK1
 ZPTank/attack   DSZTPLAZ
 ZPTank/pain     DSZTANKP
@@ -618,26 +589,22 @@ ZPTank/death    DSZTANKD
 ZPTank/Run      DSZTANK2
 ZPTank/explode  DSZTANKX
 
-//Zombietankelite
 ZPTank/see 			DSZTANK1
 ZPTank/pain 		DSZTANKP
 ZPTank/death 		DSZTANKD
 ZPTank/Run 			DSZTANK2
 ZPTank/explode 		DSZTANKX
 
-//Queen
 queen/sight            quesit
 queen/pain             quepain
 queen/death            quedie
 queen/active           queact
-//queen/scream bqegg1a
 queen/fire qbfgfire
 electricplasma/shoot   PZAPSEE	
 electricplasma/hit	   PZAPHIT
 queen/hit		       qbfghit
 queen/melee		       quebit
 
-//Crackodemon
 cracko/see     s_cracko
 cracko/pain    p_cracko
 crack/see      cracksee
@@ -645,15 +612,7 @@ crack/death    crackdth
 blusoul/see    blusosee
 blusoul/death  blusodth
 
-// ARACNORB
-// aracnorb/sight		dsaracst
-// (already in SNDINFO.PBMonsters)
-// aracnorb/death		dsaracdt
-// (already in SNDINFO.PBMonsters)
-// aracnorb/melee		dsaracml
 
-// (already in SNDINFO.PBMonsters)
-//Hellduke
 
 $random TYRHOOF { TYRHOOF1 TYRHOOF2 TYRHOOF3 TYRHOOF4 }
 TYRHOOF1 TYRHOOF1
@@ -708,7 +667,6 @@ DUKESLIDER     DSDodge
 
 Activegren      DSGrenArm
 
-//Hierophant
 weapons/firmfi	dsfirmfi
 weapons/firex5	dsfirex5
 monster/hiesit	dshiesit
@@ -720,7 +678,6 @@ monster/curse2	dscurse2
 monster/DTHSL1  DSDTHSL1
 monster/DTHSL2  DSDTHSL2
 
-//Etherealsoul
 Esoul/sit    CHSLSIT
 Esoul/pain   DSNMRPAI
 Esoul/death  DSNMRDTH
@@ -733,8 +690,6 @@ monster/helac2               dshelac2
 $random monster/helact 	     { monster/helac1 monster/helac2 }
 monster/helpai               dshelpai
 monster/heldth               dsheldth
-// monster/heltel               dsheltel
-// (already in SNDINFO.PBMonsters)
 caco/melee                   dsdembit
 Helemental/fire		         DSNREFIR
 Helemental/impact	         DSNREIMP
@@ -754,7 +709,6 @@ CYANF11/DIE1				F11DIE1
 $RANDOM CYANF11/SWNG		{ CYANF11/SWNG1 }
 CYANF11/SWNG1				F11SWNG1
 
-//Hellsmith
 $random hellsmith/sight       { hellsmith/see1 hellsmith/see2 } 
 $random hellsmith/active      { hellsmith/active1  hellsmith/active2 } 
 $random hellsmith/pain        { hellsmith/pain1 hellsmith/pain2 }
@@ -796,7 +750,6 @@ Corpse/Fall6 "Sounds/Other/CorpseFall6"
 Corpse/Fall7 "Sounds/Other/CorpseFall7"
 Corpse/Fall8 "Sounds/Other/CorpseFall8"
 
-//Director
 Director/sight                dsdirsit
 Director/active               dsdiract
 Director/death			      dsdirdth	
@@ -806,13 +759,6 @@ DULTCHARGE                    ULTCHAR
 DIRECTORPAIN                  DIRECPAI
 
 
-//==============================================================================
-// SNDINFO.PBDoomguy and Marines
-//==============================================================================
-////////////////////////////////////////////////////////
-//	  	Project Brutality Doomguy and Marines         //
-////////////////////////////////////////////////////////
-//MARINES
 
 $random execution/impactHeavy { execution/heavy1 execution/heavy2 execution/heavy3 }
 execution/heavy1 "sounds/doomguy and marines/doomguy/sounds/Execution/ExecutionHeavyImpact1.ogg"
@@ -877,8 +823,6 @@ DSMADTH5 DSMADTH5
 DSMADTH6 DSMADTH6
 DSMADTH7 DSMADTH7
 DSMADTH8 DSMADTH8
-////////////////////////////////////////////////////////////////////////////////
-//Doomguy's Sounds
 IGOTSAW IGOTSAW
 // Offend Sound
 $random FUCK { FUCK1 FUCK2 FUCK3 FUCK4 FUCK5 FUCK6 }
@@ -898,7 +842,6 @@ MTAUN05 MTAUN05
 MTAUN06 MTAUN06
 MTAUN07 MTAUN07
 $limit MTAUN 1
-// Taunts
 $random TAUNT0 { TAUNT01 TAUNT02 TAUNT03 TAUNT04 TAUNT05 TAUNT06 TAUNT07 TAUNT08 TAUNT09 TAUNT10 TAUNT11 TAUNT12 TAUNT13 TAUNT14 TAUNT15 TAUNT16 }
 TAUNT01 TAUNT01
 TAUNT02 TAUNT02
@@ -919,7 +862,6 @@ TAUNT16 TAUNT16
 $limit TAUNT0 1
 $random CrueltyBonus { TAUNT0 ONELIN NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING }
 BIGSCREA BIGSCREA
-// One-Liners
 $random ONELIN { ONELIN01 ONELIN02 ONELIN03 ONELIN04 ONELIN05 ONELIN06 ONELIN07 ONELIN08 ONELIN09 ONELIN10 ONELIN11 ONELIN12}
 ONELIN01 ONELIN01
 ONELIN02 ONELIN02
@@ -948,7 +890,6 @@ FOOTWALL FOOTWALL
 $random ledgeclimb {CLIMB_1 CLIMB_2}
 CLIMB_1 CLIMB_1
 CLIMB_2 CLIMB_2
-//Putting on Helmet
 HLMTPUT HLMTPUT
 HLMTBEP HLMTBEP
 HLMTBPP HLMTBPP
@@ -958,22 +899,18 @@ $random helmet/swipe	{ HELMSWI1 /*HEMLSWI2*/ HELMSWI3 }
 HELMSWI1 HELMSWI1
 //HELMSWI2 HELMSWI2 Doesn't actually exist.
 HELMSWI3 HELMSWI3
-// Player Pain Sounds
 // 100 Pain
 $random player/pain100	{ pp10 }
 pp10 pain1
 $playeralias    player  male    *pain100    player/pain100
-// 75 Pain
 $random player/pain75	{ pp20 pp21 }
 pp20 pain2
 pp21 pa1n2
 $playeralias    player  male    *pain75    player/pain75
-// 50 Pain
 $random player/pain50	{ pp30 pp31 }
 pp30 pain3
 pp31 pain4
 $playeralias    player  male    *pain50    player/pain50
-// 25 Pain
 $random player/pain25	{ pp40 pp41 pp42 pp43 }
 pp40 pain5
 pp41 pain6
@@ -986,7 +923,6 @@ jump1 dsjump1
 jump2 dsjump2
 jump3 dsjump3
 jump4 dsjump4
-// Player Land Sounds
 $playeralias player	male *land land
 $random land { land1 land2 land3 land4 land5 land6 }
 land1	jmpland1
@@ -996,7 +932,6 @@ land4	jmpland4
 land5	jmpland5
 land6   jmpland6
 DSSALUTE DSSALUTE
-//Double Jump and Dodge Sound
 DBLJUMP DBLJUMP
 $random JMPBOOT { JMPBOT1 JMPBOT2}
 JMPBOT1 JMPBOT1
@@ -1018,13 +953,6 @@ DSFDTHG DSFDTHG
 DSFDTHE DSFDTHE
 
 
-//==============================================================================
-// SNDINFO.PBGore and Nashgore
-//==============================================================================
-////////////////////////////////////////////////////////
-//	  	Project Brutality Nashgore and Gore Sounds    //
-////////////////////////////////////////////////////////
-//Gore
 
 gore/break "sounds/Gore/gore/GoreBreak.ogg"
 gore/minimum "sounds/Gore/gore/GoreMinimum.ogg"
@@ -1099,7 +1027,6 @@ LQDRIP14 LQDRIP14
 $random blooddrop  { LQDRIP1 LQDRIP2 LQDRIP3 } 
 $random blooddrop2  { LQDRIP4 LQDRIP5 LQDRIP6 LQDRIP7 }
 $random blooddrop3  { LQDRIP8 LQDRIP9 LQDRIP10 LQDRIP11 LQDRIP12 LQDRIP13 LQDRIP14 LQDRIP14 } 
-//Nashgore
 nashgore/bloodsplash1 "sounds/gore/nashgore/blood splash 01.ogg"
 nashgore/bloodsplash2 "sounds/gore/nashgore/blood splash 02.ogg"
 nashgore/bloodsplash3 "sounds/gore/nashgore/blood splash 03.ogg"
@@ -1135,7 +1062,6 @@ nashgore/giblarge01 "sounds/gore/nashgore/gib large 01.ogg"
 nashgore/giblarge02 "sounds/gore/nashgore/gib large 02.ogg"
 nashgore/giblarge03 "sounds/gore/nashgore/gib large 03.ogg"
 
-// replace the stock gibbed sound
 $random misc/gibbed
 {
 	nashgore/giblarge01
@@ -1161,7 +1087,6 @@ $volume nashgore/bullethitflesh 0.23
 $random EYEPULL { EYEPULL1 EYEPULL2 }
 EYEPULL1 "sounds/monsters/ProjectSurvivalPassive/Gore/EYEPULL1"
 EYEPULL2 "sounds/monsters/ProjectSurvivalPassive/Gore/EYEPULL2" 
-//Bullet Flesh Impacts
 $random bulletfleshimpact { bltf1 bltf2 bltf3 }
 bltf1 BLT_FLS1
 bltf2 BLT_FLS2
@@ -1221,10 +1146,6 @@ DSINTG6 DSINTG6
 DSINTG7 DSINTG7
 
 
-//==============================================================================
-// SNDINFO.PBKillstreak
-//==============================================================================
-// UT announcer and Unless You Have Powah! sounds merged for PB kill streaks.
 
 KillStreak/firstblood "SOUNDS/KillStreak/firstblood.ogg"
 KillStreak/doublekill "SOUNDS/KillStreak/doublekill.ogg"
@@ -1235,7 +1156,6 @@ KillStreak/rampage "SOUNDS/KillStreak/rampage.ogg"
 KillStreak/wickedsick "SOUNDS/KillStreak/wickedsick.ogg"
 KillStreak/godlike "SOUNDS/KillStreak/godlike.ogg"
 
-// Kill streak announcer hooks (8 variants x 3 volume tiers): v0 low, v1 mid, v2 high.
 $alias pb_ks/ann0_v0		KillStreak/firstblood
 $alias pb_ks/ann1_v0		KillStreak/doublekill
 $alias pb_ks/ann2_v0		KillStreak/triplekill
@@ -1287,7 +1207,6 @@ $volume pb_ks/ann5_v2		1.0
 $volume pb_ks/ann6_v2		1.0
 $volume pb_ks/ann7_v2		1.0
 
-// Unless You Have Powah! sound assignments
 crucifix/use CRUCIUSE
 DoubleDamage/Activate	DSDUBLON
 DoubleDamage/Deactivate	DSDUBLOF
@@ -1327,14 +1246,6 @@ $volume drone/pain 0.6
 drone/die   DRONDIE
 
 
-//==============================================================================
-// SNDINFO.PBMonsters
-//==============================================================================
-////////////////////////////////////////////////////////
-//			Project Brutality Monsters Sounds		  //
-////////////////////////////////////////////////////////
-//Arachnotrons
-// ARACHNOPHYTE
 
 imp/jump "sounds/monsters/imps/imp/ImpJump.ogg"
 
@@ -1350,15 +1261,12 @@ arachnophyte/pain1		dsaphpn1
 arachnophyte/pain2		dsaphpn2
 arachnophyte/pain3		dsaphpn3
 arachnophyte/death		dsaphdth
-//ARACHNOTRON
 PAILGF3 PAILGF3
 PAILGF2 PAILGF2
 PAILGD3 PAILGD3
-// ARACHNORB
 aracnorb/sight		dsaracst
 aracnorb/death		dsaracdt
 aracnorb/melee		dsaracml
-//ARCHVILES
 //FLESH WIZARD
 wizard/pain                     dwizpain
 wizard/sight                    dwizact
@@ -1369,7 +1277,6 @@ icevile/see NA_TAUNT
 icevile/death NA_DEATH
 icevile/pain NA_PAIN_
 icevile/active NA_IDLE_
-//HELLION
 $random monster/hlnsit { HLNSIT1 HLNSIT2 HLNSIT3 }
 HLNSIT1 HLNSIT1
 HLNSIT2 HLNSIT2
@@ -1389,7 +1296,6 @@ HLNDTH3 HLNDTH3
 HLNDTH4 HLNDTH4
 monster/hlnphaseout HLNTEL1
 monster/hlnphasein HLNTEL2
-// Archvile's Step Sounds
 VRESURR VRESURR
 $random vile/fire	{ VFIRE1  VFIRE2 VFIRE3 VFIRE4 }
 VFIRE1		VFIRE1
@@ -1402,9 +1308,6 @@ avst2		vistep2
 avst3		vistep3
 avst4		vistep4
 $limit vile/step 12 256
-//BOSSES
-//CYBERDEMON
-// CyberDemon Metal Step Sounds
 $random cyber/metal	{ cdmst1  cdmst2 cdmst3 cdmst4 }
 cdmst1		cmetal1
 cdmst2		cmetal2
@@ -1425,7 +1328,6 @@ $rolloff cyber/impact 200 5000
 CLAP CLAP
 DSCANFIR DSCANFIR
 $rolloff DSCANFIR 600 2400
-//ANNIHILATOR
 monster/annsit dsannsit
 monster/anndth dsanndie
 $random monster/anhoof { CYBHOOF1 CYBHOOF2 CYBHOOF3 CYBHOOF4 }
@@ -1443,8 +1345,6 @@ CYBIDLE1 CYBIDLE1
 CYBIDLE2 CYBIDLE2
 CYBIDLE3 CYBIDLE3
 CYBIDLE4 CYBIDLE4
-//MASTERMIND
-//Masterwalk
 $random master/walk { masterwlk1 masterwlk2 masterwlk3 masterwlk4 }
 masterwlk1 SPST1
 masterwlk2 SPST2
@@ -1453,7 +1353,6 @@ masterwlk4 SPST4
 $rolloff master/walk linear 300 1200
 Mastermind/Chaingun MASTCGUN
 $rolloff Mastermind/Chaingun 1000 1500
-//JUGGERNAUT
 juggernaut/see BTKUNQV2
 juggernaut/roam BTKUNQV1
 juggernaut/engine BTKENGN1
@@ -1468,7 +1367,6 @@ $rolloff  juggernaut/death 900 2800
 $rolloff  juggernaut/pain 900 1100
 $rolloff  juggernaut/roam 900 1100
 //BULL DEMONS
-//PINKY
 $random pinky/step		{ PINKSTE1 PINKSTE2 PINKSTE3 PINKSTE4 PINKSTE5 }
 PINKSTE1	PINST1
 PINKSTE2 	PINST2
@@ -1514,8 +1412,6 @@ monster/sg2atk dssg2atk
 
 //MECH DEMON
 mechdemon/leg  DMMETAL//Sound from Zapsplat.com, https://www.zapsplat.com/sound-effect-category/metal/
-//CACODEMONS
-//CACODEMON
 $random caco/melee { CACOMEL1 CACOMEL2 CACOMEL3 }
 CACOMEL1 CACOMEL1
 CACOMEL2 CACOMEL2
@@ -1569,24 +1465,19 @@ CacoBallLoop CACBALOP
 monster/infsit               DSINFSIT
 monster/infpai               DSINFPAI
 monster/infact               DSINFACT
-//New Heavy Fireball sounds
 heavyfireball/throw MACOBAL3
 $random heavyfireball/explode { MACOBAL1 MACOBAL2 }
 MACOBAL1 MACOBAL1
 MACOBAL2 MACOBAL2
-//WATHER 
 monster/watsit                  dswatsit
 monster/watact                  dswatact
 monster/watpai                  dswatpai
 monster/watdth                  dswatdth
 monster/watatk                  dswatatk
 monster/wathit                  dswathit
-//AFRIT
 Afrit/CometFire FRITCMFR
 Afrit/CometHit	FRITCMHT
 Afrit/Hellfire	FRITFIRE
-//CULTISTS
-//DemonTech
 Weapons/Demontech/XFire 6XCHFIRE
 Weapons/Demontech/Steam 6ECHSTEM
 Weapons/Demontech/Crash 6XCHCRSH
@@ -1604,7 +1495,6 @@ BaronFire BARO_F
 BaronFireImpact CACOX1
 $pitchshift BaronFireImpact 4
 PSXDPN PSXDPN
-//BRUISER
 superbaron/scream dssbsit
 superbaron/pain dssbpain
 superbaron/death dssbdth
@@ -1633,7 +1523,6 @@ DSBRUWK3 DSBRUWK3
 DSBRUWK4 DSBRUWK4
 DSBRUWK5 DSBRUWK5
 monster/brufir dsbrufir
-// Hell Knight's Step Sounds
 $random knight/step		{ hkst1  hkst2 hkst3 hkst4 }
 hkst1		hkstep1
 hkst2		hkstep2
@@ -1642,7 +1531,6 @@ hkst4		hkstep4
 $volume knight/step 1.0
 $limit knight/step 12 256
 $rolloff knight/step linear 350 1350
-//PALADIN
 Paladin/Sight	HPALSIT
 Paladin/Active	HPALACT
 Paladin/Pain	HPALPAIN
@@ -1653,14 +1541,11 @@ Paladin/Melee	HPALHIT
 Paladin/Shoot	HPALATK
 Paladin/Hit		HPALHIT2
 Paladin/Step	HPALSTEP
-//BELPHEGOR
 BELCHRG BELCHRG
 $random belphegor/missile { BELMSL1 BELMSL2 }
 BELMSL1 BELMSL1
 BELMSL2 BELMSL2
 $rolloff belphegor/missile 1300 1800
-//IMPS
-//IMP
 ImpFire IMPFIRE2
 $pitchshift IMPFIRE 3
 $random ImpFireImpact {BALLEXP1 BALLEXP2 BALLEXP3 BALLEXP4 }
@@ -1694,7 +1579,6 @@ IMP_DEA1 IMP_DEA1
 IMP_DEA2 IMP_DEA2
 IMP_DEA3 IMP_DEA3
 IMP_DEA4 IMP_DEA4
-// Imp's Step Sounds
 $random flesh/step		{ fhstep1  fhstep2 fhstep3 fhstep4 }
 fhstep1		flesh1
 fhstep2		flesh2
@@ -1702,7 +1586,6 @@ fhstep3		flesh3
 fhstep4		flesh4
 $volume flesh/step 0.7
 $limit flesh/step 12 256
-//Impse
 $random imp/melee { imp/melee1 imp/melee2 imp/melee3 } 
 imp/melee1	IMPCLAW1
 imp/melee2	IMPCLAW2
@@ -1760,10 +1643,7 @@ LSOD1 LSOD1
 LSOD2 LSOD2
 LSOD3 LSOD3
 LSOD4 LSOD4
-//PHANTASM
 phantasm/attack SKL2ATK
-//MANCUBI
-//DEDABUS
 Daedabus/Sight		DAEDSIGH
 $Random Daedabus/Active	{ DAEDACT1 DAEDACT2 }
 DAEDACT1		DAEDACT1
@@ -1781,7 +1661,6 @@ $random Daedabus/impact  { daedim1 daedim2 }
 daedim1 daedim1
 daedim2 daedim2
 $rolloff Daedabus/impact 900 1500
-//VOLCABUS
 Volcabus/Sight VOLCST
 Volcabus/Pain VOLCPN
 Volcabus/Death VOLCDTH
@@ -1791,7 +1670,6 @@ VOLCCF1 VOLCCF1
 VOLCCF2 VOLCCF2
 VOLCCF3 VOLCCF3
 VOLCCF4 VOLCCF4
-//NAZI
 NAZRELD	NAZRELD
 $random nazi/sight { nazisight1 nazisight2 nazisight3 nazisight4 nazisight5 nazisight6 nazisight7 nazisight8 nazisight9 nazisight10 nazisight11 nazisight12 nazisight13 nazisight14 nazisight15 }
 $random nazi/death { nazideath1 nazideath2 nazideath3 nazideath4 nazideath5 nazideath6 nazideath7 nazideath8 nazideath9 nazideath10 nazideath11 }
@@ -1881,7 +1759,6 @@ nazisufferarm2 NAZIBRN3
 $rolloff nazi/sight 200 2500
 nazi/helmet NAZIHELM //From videovo.net and sounds-mp3.com
 //PAIN ELEMENTALS
-//OVERLORD
 weapons/devexp                dsdevexp
 weapons/devzap                dsdevzap
 monster/ovlsit                  dsovlsit
@@ -1897,7 +1774,6 @@ monster/heltel                  dsheltel
 monster/ovlbit                    dsdembit
 weapons/gntidl                dsgntidl
 weapons/shock                 dsshock
-//REVENANTS
 //BEAM REVENANT
 $random weapons/revrailgf { revrail1 revrail2 revrail3 }
 revrail1 REILGF1
@@ -1931,11 +1807,9 @@ REVIDLE6 REVIDLE6
 REVIDLE7 REVIDLE7
 
 skeleton/xdeath REVXDETH
-//ZOMBIES
 //BOMBER ZOMBIE
 suicide/scream dssuscrm
 suicide/sit dssusit
-//ZSPECOPS
 $Random ZSpecOps/Sight	{ ZSPCSIG1 ZSPCSIG2 ZSPCSIG3 }
 ZSPCSIG1	ZSPCSIG1
 ZSPCSIG2	ZSPCSIG2
@@ -1955,7 +1829,6 @@ ZSPCMGN1    DSRAIFR1
 ZSPCMGN2    DSRAIFR2
 $Limit ZSpecOps/MGun    0
 $rolloff ZSpecOps/MGun 100 2200
-//ZOMBIEMEN
 monsters/zombie/searching01 "sounds/monsters/Zombies/Searching/Monster- Searching for Player_1.ogg"
 monsters/zombie/searching02 "sounds/monsters/Zombies/Searching/Monster- Searching for Player_2.ogg"
 monsters/zombie/searching03 "sounds/monsters/Zombies/Searching/Monster- Searching for Player_3.ogg"
@@ -2473,7 +2346,6 @@ zdeath5 "sounds/monsters/Zombies/Rifle/Zombie Rifleman_23.ogg"
 zdeath6 "sounds/monsters/Zombies/Rifle/Zombie Rifleman_24.ogg"
 zdeath7 "sounds/monsters/Zombies/Rifle/Zombie Rifleman_25.ogg"
 zdeath8 "sounds/monsters/Zombies/Rifle/Zombie Rifleman_26.ogg"
-//Red Commando Steps
 $random metalboot/steps     { metb1 metb2 metb3 metb4 }
 metb1       clank1
 metb2       clank2
@@ -2504,24 +2376,17 @@ ZCI3 ZCI3
 ZCI4 ZCI4
 ZCI5 ZCI5
 
-////////////////////////////////////////////////////////
-//			Project Brutality Monsters Sounds		  //
-////////////////////////////////////////////////////////
-//ARCHVILES
 archvile/sit            dsvilsit
 archvile/active         dsvilact
 archvile/pain           dsvipain
 archvile/death          dsvildth
 //HELL NOBLES
-//BARON OF HELL
 baron/sight	            dsbrssit
 baron/death	            dsbrsdth
 //HELL KNIGHT
 knight/sight			dskntsit
 knight/active			dsdmact
 knight/pain			    dsdmpain
-//CACODEMONS
-//CACODEMON
 //caco/death: random pool (CACODTH1-6) defined in the PBMonsters caco block above
 //INFERNAL CACODEMON
 monster/infsit          sinfsit
@@ -2530,18 +2395,14 @@ monster/infact          dsinfact
 //LOST SOULS
 //LOST SOUL
 skull/active			dsdmact
-//MANCUBI
 MANCUBUS
 Mancubus/pain           dsmnpain
-//BOSSES
-//MASTERMIND
 spider/active			dsdmact
 spider/pain			    dsdmpain
 spider/attack			dsshotgn
 spider/death			dsspidth
 spider/walk			    dsmetal
 
-//FORMER HUMANS (not overhauled)
 $random grunt/sight { grunt/sight1
 grunt/sight2
 grunt/sight3
@@ -2623,7 +2484,6 @@ hustep3		boot3
 hustep4		boot4
 $volume humans/step 0.7
 $limit humans/step 12 256
-//FAR RANGE NOICES (Enemies)
 $rolloff ShotgunDistantGunshot 2800 7000
 $limit ShotgunDistantGunshot 80
 $volume ShotgunDistantGunshot 0.7
@@ -2656,9 +2516,6 @@ $rolloff RocketLauncherDistantFire 2800 7000
 $limit RocketLauncherDistantFire 80
 $volume RocketLauncherDistantFire 1.0 
 
-////////////////////////////////////////////////////////
-//			Marauder + Hound (T4-Vile)                //
-////////////////////////////////////////////////////////
 // Ported from PB3.0_Marauder_Hound .../SNDINFO.MarauderGun Sound and Marauder Sounds.
 // Weapon-side Peacekeeper SSG entries live in SNDINFO.PBWeapons.
 
@@ -2759,12 +2616,6 @@ $random WOLFDED {
 }
 
 
-//==============================================================================
-// SNDINFO.PBWeapons
-//==============================================================================
-////////////////////////////////////////////////////////
-//			Project Brutality Weapon Sounds		      //
-////////////////////////////////////////////////////////
 
 $random lesserExplosion	{ lesserExplosion1 lesserExplosion2 lesserExplosion3 lesserExplosion4 lesserExplosion5 lesserExplosion6 }
 lesserExplosion1	"sounds/Sounds Effects/Barrel and Explosions/RocketExplo1.ogg"
@@ -2837,7 +2688,6 @@ bfgfire1			"sounds/combat/weapons/BFGs/BFG/Normal/BFGFire1.ogg"
 bfgfire2 			"sounds/combat/weapons/BFGs/BFG/Normal/BFGFire2.ogg"
 bfgfire3 			"sounds/combat/weapons/BFGs/BFG/Normal/BFGFire3.ogg"
 
-//Acid
 
 weapons/flamethrower/acidstart 			"sounds/combat/weapons/flamethrower/Acid/AcidFlamerStart.ogg"
 weapons/flamethrower/acidstop 			"sounds/combat/weapons/flamethrower/Acid/AcidFlamerStop.ogg"
@@ -2849,7 +2699,6 @@ acidsplat1	"sounds/combat/weapons/flamethrower/Acid/AcidSplat1.wav"
 acidsplat2	"sounds/combat/weapons/flamethrower/Acid/AcidSplat2.wav"
 acidsplat3	"sounds/combat/weapons/flamethrower/Acid/AcidSplat3.wav"
 
-//Fire
 weapons/flamethrower/respect1 			"sounds/combat/weapons/flamethrower/FT_Select1.wav"
 weapons/flamethrower/respect2 			"sounds/combat/weapons/flamethrower/FT_Select2.wav"
 weapons/flamethrower/respect3 			"sounds/combat/weapons/flamethrower/FT_Select3.ogg"
@@ -2922,8 +2771,6 @@ weapons/emptymag/dropS2	"Sounds/COmbat/Casing/EmptyMags/SmallBounce2.ogg"
 weapons/emptymag/dropS3	"Sounds/COmbat/Casing/EmptyMags/SmallBounce3.ogg"
 weapons/emptymag/dropS4	"Sounds/COmbat/Casing/EmptyMags/SmallBounce4.ogg"
 
-//Slot 1 - MELE WEAPONS
-//AXE
 AXEDRAW AXEDRAW
 $volume AXEDRAW 0.7
 AXECLN AXECLN
@@ -2938,7 +2785,6 @@ $random weapons/axe/throw { AxeThrow1 AxeThrow2 }
 AxeThrow1 AXTHRW1
 AxeThrow2 AXTHRW2
 
-//FISTS
 weapons/fists_up FISTEQ1
 weapons/fists_smash FISTSM1
 $random weapons/fistwhoosh2 { F1STWH1 F1STWH2 F1STWH3 }
@@ -2957,7 +2803,6 @@ weapons/gswing                  dsswing
 weapons/gpunch                  dspunch
 KNUCKLED KNUCKLED
 
-//CHAINSAW
 DSSAWFUL DSSAWFUL
 DSSAWHIT DSSAWHIT
 DSSAWUP DSSAWUP
@@ -2992,8 +2837,6 @@ sawswing2 CSAWSW1
 //$volume sawswing 0.5
 DSSAWZIP DSSAWZIP
 
-//Slot 2 PISTOLS
-//PISTOL
 weapons/firepistol	3XPFIRE1
 //$random weapons/pistol {2PFIRE1 2PFIRE2 2PFIRE3}
 //2PFIRE1 2XPFIRE1
@@ -3027,7 +2870,6 @@ clip1 clip_p1
 clip2 clip_p2
 $random misc/clip_pickup { clip1 clip2 }
 
-//DEAGLE
 weapons/deagle/equip DEAGEQ1
 weapons/deagle/click1 "Sounds/Combat/Weapons/Pistol caliber weapons/Deagle/DeagleSlideBack.wav"
 weapons/deagle/click2 "Sounds/Combat/Weapons/Pistol caliber weapons/Deagle/DeagleSlideForward.wav"
@@ -3051,7 +2893,6 @@ aDEAGF2 aDEAGF2
 aDEAGF3 aDEAGF3
 aDEAGF4 aDEAGF4
 
-//REVOLVER
 REVOUP REVOUP
 $random revolver/fire { REVOFR1 REVOFR2 REVOFR3 REVOFR4 }
 REVOFR1 REVOFR1
@@ -3066,7 +2907,6 @@ Weapons/Revolver/Click1 REVCLK1
 Weapons/Revolver/Click2 REVCLK2
 CYLNSPIN CYLNSPIN
 
-//SMG's
 weapons/silencedsmg dsraisfr
 //weapons/smg/overlay dsraifro
 
@@ -3092,7 +2932,6 @@ ZSPCMGN1	DSRAIFR1
 ZSPCMGN2	DSRAIFR2
 
 
-//MP40
 weapons/MP40_up	MP40SELE
 weapons/MP40_fire	MP40FIRE
 weapons/MP40_striswhoosh	MP40THRO
@@ -3101,12 +2940,9 @@ MP4DGG MP4DGG
 MP4DG2 MP4DG2
 weapons/MP40_chamber MP40CHMB //From Medal of Honor: Allied Assault by EA, EA LA (aka Ripple Effect Studios) and 2015,Inc.
 weapons/MP40_pickup MP40PKUP // Credits are the same as above.
-//Clip
 MP40CLI MP40CLI
 MP40CLR MP40CLR
 
-//Slot 3 - SHOTGUNS
-//AUTOSHOTGUN
 $random FLAKFIRE { SSALT1 SSALT2 SSALT3}
 SSALT1	SSALT1
 SSALT2	SSALT2
@@ -3163,7 +2999,6 @@ SHELPKUP SHELPKUP
 weapons/shotgunmag/magout SH_MAGOU
 weapons/shotgunmag/magin SH_MAGIN
 
-//SSG
 $random weapons/shh2 { SSGAlt1 SSGAlt2 SSGAlt3 }
 SSGAlt1 shfire1
 SSGAlt2 shfire2
@@ -3202,14 +3037,11 @@ $limit weapons/sg 10
 
 weapons/qsg/singlein QSLOADS1
 
-// 4 Shells
 misc/shell_pickup SHELLS_S
 
 // Shells Box
 misc/shellbox_pickup SHELLS_L
 
-//Slot 4 - RIFLE CALIBRE WEAPONS
-//CARBINE
 $random weapons/carbine/respectbeep {CBRSP4 CBRSP5 CBRSP6}
 $random weapons/carbine/respectwhack {CBRSP1 CBRSP2 CBRSP3}
 CBRSP1 CBRSP1
@@ -3286,7 +3118,6 @@ CLIPIN CLIPIN
 Weapons/GrenadeOpen    DSGROPEN
 RFGLLCH RFGLLCH
 
-//LMG
 LMGFIRE LMGFIRE
 $volume LMGFIRE 0.65
 LMGOUT LMGOUT
@@ -3303,8 +3134,6 @@ LFEED LFEED
 LINSP LINSP1
 weapons/lmg/magin LMG_IN2
 
-//Slot 5 - MINIGUN AND NAILGUN
-//MINIGUN
 weapons/minigunfire2 DSMINIGL
 weapons/minigunfire DSMINIGN
 weapons/minigunfirefast DSMINIGF
@@ -3347,7 +3176,6 @@ CHGNPKUP CHGNPKUP
 CHGNSHOT CHGNSHOT
 $limit CHGNSHOT 0
 
-//NAILGUN
 weapons/nailgun/up NLGNS01
 weapons/nailgun/inspect1 NLGNS02
 weapons/nailgun/inspect2 NLGNS03
@@ -3381,7 +3209,6 @@ weapons/chagan/start CG_WINDU
 //$volume hmgun .6
 emgun emgun
 
-//MG42
 
 $random MG42FIR { MG42FIR1 MG42FIR2 MG42FIR3 MG42FIR4 }
 MG42FIR1 MG42FIR1
@@ -3398,8 +3225,6 @@ MG42HEAT MG42HEAT //Taken from freesound.com. Credits: Marregheriti
 weapons/MG42/Select MG42SLCT
 weapons/MG42/Pickup MG42PKUP
   
-//Slot 6 - EXPLOSIVE WEAPONS
-//EXCAVATOR
 excavator/firedigger EXCDIGR
 excavator/firedropshot EXCDROP
 excavator/detonate EXCBEEP
@@ -3442,7 +3267,6 @@ weapons/rocket/innercycle	"sounds/combat/weapons/Explosive Weapons/Rocket Launch
 weapons/rocket/rocketignite	"sounds/combat/weapons/Explosive Weapons/Rocket Launcher/rocket_ignite.ogg"
 $rolloff weapons/rocket/rocketignite 1500 2000
 
-//Rocket Launcher Special
 RLSPCL2 RLSPCL2
 $random 0SRFIRE { 0SRFIRE1 0SRFIRE2 }
 0SRFIRE1 0SRFIRE1
@@ -3452,10 +3276,8 @@ ROCKPKUP ROCKPKUP
 Rocket/Launch DSRLAUN
 misc/rocket_pickup ROCKPKUP
 
-// Box of Rockets
 misc/rockboxa rockboxa
 
-//SGL
 weapons/sgl/cycle SGLCYCL
 weapons/sgl/slap 5OCKSLAP
 weapons/sgl/detach 5OCKLOAD
@@ -3484,8 +3306,6 @@ grcsbounce4      CABRBNC4
 grcsbounce5      CABRBNC5
 grcsbounce6      CABRBNC6
  
-//Slot 7 - PLASMA RIFLES
-//M2 PLASMAGUN
 
 LGBOMB LGBOMB
 LGEnd1 LGEnd1
@@ -3511,7 +3331,6 @@ STNBOEX STNBOEX
 PZPCHR2 PZPCHR2
 PZAPFLY PZAPFLY
 
-//Plasma
 PLSIDLE PLSIDLE
 PLSRD PLSRD
 PLREADY PLREADY
@@ -3589,14 +3408,11 @@ PLSDRAW PLSDRAW
 PLSBULB PLSBULB
 PLSBULC PLSBULC
 
-// Cell
 misc/cell_pickup BATTERY
 
 // Cell Pack
 misc/bulkcell_pickup cell_pak
 
-//Slot 8 - RAILGUN AND CryoRifle
-//RAILGUN
 BFGHUM BFGHUM
 LIGHTON LIGHTON
 RA1IF1 RA1IF1
@@ -3713,15 +3529,12 @@ weapons/CryoRifle/freezeobject2		"sounds/Combat/Weapons/CryoRifle/FZR_FREEZEOBJE
 $attenuation weapons/CryoRifle/freezeobject 0.5
 
 
-//Slot 9 - BFGs
-//BFG
 BFG_FIRE BFG_FIRE
 mbfgsh mbfgsh
 BFGALPP BFGALPP
 BFGPICK BFGPICK
 8FGPICK 8FGPICK //No Doomguy auto talk
 
-//Shield
 SHLDSTT SHLDSTT
 SHLDLP SHLDLP
 SHLDSTP SHLDSTP
@@ -3780,8 +3593,6 @@ $limit DMBall/Impact 0
 $limit BHole/Suck 0
 $limit BHole/Explosion 0
 
-//Slot 0 - DEMONS WEAPONS AND NAZI WEAPONS
-// DEMON TECH RIFLE
 DTCHHUM DTCHHUM
 DTCHGUM DTCHGUM
 HRSteam HREXH
@@ -3813,7 +3624,6 @@ lscloop1 lscloop1
 lscloop2 lscloop2
 lscloop3 lscloop3
 
-//UNMAKER
 UNMWARN UNMWARN
 UNMSWTC UNMSWTC
 UNMFLY1 UNMFLY1
@@ -3853,11 +3663,9 @@ RHEAT1	RHEAT1
 RHEAT2	RHEAT2
 RHEAT3	RHEAT3
 
-//Rev Weapon Special Sound
 REVCYC REVCYC
 revup revup
 
-//MP40
 RELOAD RELOAD
 //Hiters Buzzsaw
 MP40 MP40
@@ -3877,18 +3685,14 @@ flameren FLAMSTOP
 FlmrStr FlmrStr
 FLMSWTC FLMSWTC
 
-//MISC
 //COMBAT KNIFE
 KNIFSWNG KNIFSWNG
 KNIFUP KNIFUP
 
-//GRENADES AND MINES
-//MINES
 MINE001		MINE001
 MINE002		MINE002
 Weapons/StickyBombTick		SBMBTICK
 
-//GRENADES
 OPNGRN OPNGRN
 THRGRN THRGRN
 GRNBNC1 GRNBNC1
@@ -3925,13 +3729,23 @@ StunGrenadePickup STNPKUP
 grenade/activate/shield sounds/combat/weapons/Grenades/grenade_activate_shield
 grenade/spawn/shield sounds/combat/weapons/Grenades/grenade_spawn_shield
 
+
+weapons/ballista/raise "sounds/combat/weapons/ProSurvBallista/ballista_raise.ogg"
+weapons/ballista/firebolt "sounds/combat/weapons/ProSurvBallista/ballista_fire_bolt.ogg"
+weapons/ballista/firedemonic "sounds/combat/weapons/ProSurvBallista/ballista_fire_demonic.ogg"
+weapons/ballista/firerazor "sounds/combat/weapons/ProSurvBallista/ballista_fire_razor.ogg"
+weapons/ballista/drawstring "sounds/combat/weapons/ProSurvBallista/ballista_draw_string.ogg"
+weapons/ballista/razor "sounds/combat/weapons/ProSurvBallista/ballista_razor.ogg"
+weapons/ballista/boltin "sounds/combat/weapons/ProSurvBallista/ballista_bolt_in.ogg"
+weapons/ballista/boltout "sounds/combat/weapons/ProSurvBallista/ballista_bolt_out.ogg"
+weapons/ballista/boltinoutdemonic "sounds/combat/weapons/ProSurvBallista/ballista_bolt_in_out_demonic.ogg"
+
 //Swapping Weapons
 weapons/swapping change
 SP_CRAWL SP_CRAWL
 $volume weapons/smallmagdrop 0.5
 $volume weapons/largemagdrop 0.5
 
-//Weapon Handling Sounds
 $random IronSights { ironsight1 ironsight2 ironsight3 ironsight4 }
 ironsight1	IRONSIT1
 ironsight2	IRONSIT2
@@ -4168,9 +3982,7 @@ weapons/enemycarbine/fire "SOUNDS/COMBAT/WEAPONS/enemycarbine.ogg"
 
 misc/givecurrentammo "SOUNDS/gunpickup2.wav"
 
-//==============================================================================
 // 2022-only weapon SFX (not in PB 0.3 staging PBWeapons shard)
-//==============================================================================
 // Demon-Tech weapon line — minigun uses DTP/Magin, DTP/Snap (Demon-Tech Pistol removed)
 DTP/Magin "sounds/combat/weapons/DemonTech/Pistol/DTPMIN.ogg"
 DTP/Snap "sounds/combat/weapons/DemonTech/Pistol/DTPSNAP.ogg"
@@ -4187,7 +3999,6 @@ TechBlaster/Tsss "sounds/combat/weapons/DemonTech/Blaster/TBTSSSSS.ogg"
 toolbox/off "sounds/combat/weapons/DemonTech/Blaster/TBUNJECT.ogg"
 weapons/click2 DEAGMG3
 
-// NeoHMG
 weapon/HMG/Fire "sounds/combat/weapons/NeoHMG/HMGFIRE.ogg"
 $volume weapon/HMG/Fire 1.0
 weapon/HMG/Stop "sounds/combat/weapons/NeoHMG/DIBSTOP.ogg"
@@ -4265,7 +4076,6 @@ X12PMP "sounds/combat/weapons/X12/X12PMP"
 X12PMP1 "sounds/combat/weapons/X12/X12PMP1"
 X12PMP2 "sounds/combat/weapons/X12/X12PMP2"
 
-// --- Folded weapons: logical names -> assets under sounds/combat/... or sounds/hasg/ ---
 // Battle Rifle (BDPBattleRifle.zs) — SOUNDS/combat/WEAPONS/BattleRifle
 weapons/battlerifle/up "sounds/combat/weapons/BattleRifle/BR45PICK.ogg"
 weapons/battlerifle/fire "sounds/combat/weapons/BattleRifle/BR45FIRE"
@@ -4286,7 +4096,6 @@ weapons/paingiver/fire1 "sounds/combat/weapons/Paingiver/fire1.ogg"
 weapons/paingiver/fire2 "sounds/combat/weapons/Paingiver/fire2.ogg"
 weapons/paingiver/sweet "sounds/combat/weapons/Paingiver/sweet.ogg"
 weapons/paingiver/boom "sounds/combat/weapons/Paingiver/boom.ogg"
-// Metal Sniper (MetalSniper.zs)
 MS/Up "sounds/combat/weapons/MetalSniper/msRaise.ogg"
 MS/Fire "sounds/combat/weapons/MetalSniper/msFire.ogg"
 MS/BoltDown "sounds/combat/weapons/MetalSniper/msBoltDown.ogg"
@@ -4311,7 +4120,6 @@ $random MSSFR { MSSFR1 MSSFR2 MSSFR3 MSSFR4 MSSFR5 MSSFR6 }
 $random MSSCL { MSSCL1 MSSCL2 MSSCL3 }
 MSSOP "sounds/combat/weapons/Peacekeeper/MSSOP"
 MSSLD "sounds/combat/weapons/Peacekeeper/MSSLD"
-// Cyberdemon Missile Launcher (PB_CyberdemonRL.zs)
 BFGREADY "sounds/combat/weapons/CyberdemonRL/BFGREADY.ogg"
 // UAC-320 OldHMG (OldHMG.dec) — folded HMG bank (blue HMG + drum); Neo spin/stop stay on NeoHMG lumps
 9HAINAMO "sounds/combat/weapons/HMG/9HAINAMO.ogg"
@@ -4320,7 +4128,6 @@ OldHMGUP "sounds/combat/weapons/HMG/HMGUP.ogg"
 HMGSTCH "sounds/combat/weapons/HMG/HMGSTCH.ogg"
 weapons/oldhmg/start "sounds/combat/weapons/HMG/HMG_WINDU.ogg"
 weapons/oldhmg/stop "sounds/combat/weapons/HMG/HMG_WINDD.ogg"
-// Argent Sith + Beam Katana
 ArgKatana/Activate "sounds/combat/weapons/ArgentSith/DVKatAct.ogg"
 ArgKatana/Swing "sounds/combat/weapons/ArgentSith/DVKatMis.ogg"
 ArgKatana/Thrust "sounds/combat/weapons/ArgentSith/MODESWIT.ogg"
@@ -4350,8 +4157,6 @@ ShSaBn4 "sounds/combat/ShieldSaw/Bounce4.ogg"
 ShSaBn5 "sounds/combat/ShieldSaw/Bounce5.ogg"
 $random ShieldSawBounce { ShSaBn1 ShSaBn2 ShSaBn3 ShSaBn4 ShSaBn5 }
 ShieldSawBash "sounds/combat/ShieldSaw/Bash.ogg"
-// SNDINFO.WeaponVolumeBalancing (PB 0.3.x staging)
-//==============================================================================
 $volume weapons/deagle/fire 1.0
 $volume weapons/mp40_fire 0.5
 $volume weapons/pistol 0.6
@@ -4384,20 +4189,11 @@ $volume weapons/minigunfire 0.8
 $volume weapons/minigunfire2 0.8
 $volume weapons/minigunfirefast 0.8
 $volume HRFire 1.0
-//==============================================================================
-// SNDINFO.PDA.txt
-//==============================================================================
 PDAMOUSEOVER		"sounds/PDA_gui_mouseover_1.wav"
 PDABACK				"sounds/PDA_gui_notification_5_new_entry.wav"
 PDAOPEN				"sounds/PDA_gui_notification_5_Tone_Up_1.wav"
 
 
-//==============================================================================
-// SNDINFO.Tortured Marines
-//==============================================================================
-////////////////////////////////////////////////////////
-//	  	Project Brutality Tortured Marines         //
-////////////////////////////////////////////////////////
 //TORRTURED MARINES
 $random TorturedMarinePB { CPTRT01 CPTRT02 CPTRT03 CPTRT04 CPTRT05 CPTRT06 CPTRT07 CPTRT08 CPTRT09 CPTRT10 }
 CPTRT01 CPTRT01
@@ -4432,7 +4228,6 @@ DSMADTH6 DSMADTH6
 DSMADTH7 DSMADTH7
 DSMADTH8 DSMADTH8
 
-//Torturedmarine
 $random TORTURE { TORTURE1 TORTURE2 }
 TORTURE1 TORTURE1
 TORTURE2 TORTURE2
@@ -4440,14 +4235,10 @@ TORTURE3 TORTURE3
 TORTURE4 TORTURE4
 TORTURE5 TORTURE5
 
-//==============================================================================
-// SNDINFO.txt (primary; merged last, same as prior load order)
-//==============================================================================
 NOTHING "SOUNDS/Misc/Nothing.wav"
 
 hud/shieldbreak "sounds/shieldbreak.ogg"
 
-////////////////////////////////////////////////////////PROJECT BRUTALITY SOUNDS
 menu/activate		"sounds/Menu/Select.ogg"	// Activate a new menu
 menu/backup			"sounds/Menu/Back.ogg"	// Backup to previous menu
 menu/prompt			dsswtchn	// Activate a prompt "menu"
@@ -4501,24 +4292,19 @@ weapons/rifle/magin "sounds/combat/weapons/Rifle caliber weapons/DMR/DMR_MAGIN.o
 weapons/rifle/magchange "sounds/combat/weapons/Rifle caliber weapons/DMR/DMR_MAG_CHANGE.ogg"
 weapons/rifle/magslap "sounds/combat/weapons/Rifle caliber weapons/DMR/DMR_MAGSLAP.ogg"
 
-//Items
 ARMOR ARMOR
-//Smart Scav Stuff
 Ammocase/Open CASEOPN1
 OPENMED CASEOPN2
 //Damage Sphere
 DDMGPU DDMGPU
-//Power Up Sounds
 SSPH SSPH
 MEGASPH MEGASPH
 INVUL INVUL
 INVISIBL INVISIBL
 DEM DEM
-// Automap
 misc/map_pickup VCD_PICK
 // Skull Keys
 pickups/skullkey	SKULPKUP
-// Key-Cards
 pickups/keycard		CARDPKUP
 
 BERSPKUP BERSPKUP
@@ -4538,14 +4324,11 @@ Sparks/Sound3		SPARKS3
 Sparks/Sound4		SPARKS4
 // Armor Bonus
 misc/abonus_pickup SHARD_PI
-//Fly
 FlyBuzz DSBUZZ
 $volume FlyBuzz 0.30
 $limit FlyBuzz 12 250
 $pitchshift FlyBuzz 3
-//BackPack
 BACKPCK BACKPCK
-//Devices and Electronics
 weapons/pbarm dspiparm
 SHPODEXP SHPODEXP
 $Limit SHPODEXP	0
@@ -4555,7 +4338,6 @@ $Limit SHDPHIT	0
 SHDPDIE SHDPDIE
 $Limit SHDPDIE	0
 
-//GL
 Weapons/GrenadeOpen	DSGROPEN
 Weapons/GrenadeLoad	DSGRLOAD
 $random weapon/grenade  {bounce1 bounce2}
@@ -4599,7 +4381,6 @@ weapons/freezer/reload3 "sounds/combat/weapons/Freezer/FRZRRL3.ogg"
 iceimpa "sounds/combat/weapons/CatsFrozen/iceimpact3.wav"
 coldcst "sounds/combat/weapons/CatsFrozen/coldcast.wav"
 
-// --- Cat's Frozen Addon monsters (logical names from DECORATE / PB_Cryotron.zc)
 PBCF/FrostBaron/See "sounds/monsters/CatsFrozen/FrostBaron/FROBARA.wav"
 PBCF/FrostBaron/Active "sounds/monsters/CatsFrozen/FrostBaron/FROBARB.mp3"
 PBCF/FrostBaron/Pain "sounds/monsters/CatsFrozen/FrostBaron/FROBARC.wav"
@@ -4630,7 +4411,6 @@ RELOADRL RELOADRL
 RLSHOT2 RLSHOT2
 weapons/rocketloop		rktloop
 
-//Minigun
 weapons/minigunfire2 DSMINIGL
 weapons/minigunfire DSMINIGN
 weapons/minigunfirefast DSMINIGF
@@ -4643,7 +4423,6 @@ DTHDLRSP DTHDLRSP
 DTHDRSN DTHDRSN
 CHGNPKUP CHGNPKUP
 
-//Heavy Machine Gun
 HMGUP "sounds/combat/weapons/HMG/HMGUP.ogg"
 HMGHEAT HMGHEAT
 8HAINAMO 8HAINAMO
@@ -4662,11 +4441,9 @@ $volume hmgun 1.0
 emgun emgun
 
 
-//Carbine
 Weapons/Rifle/SFire 4AFLFIR1
 $volume Weapons/Rifle/SFire 1.0
 
-//Autoshotgun
 $random FLAKFIRE { SSALT1 SSALT2 SSALT3}
 SSALT1	SSALT1
 SSALT2	SSALT2
@@ -4689,13 +4466,11 @@ XSG8 A4SGFIR8
 //$volume Weapons/AutoShotgun 0.61
 $rolloff Weapons/AutoShotgun 100 2200
 
-//Bullet Flesh Impacts
 $random bulletfleshimpact { bltf1 bltf2 bltf3 }
 bltf1 BLT_FLS1
 bltf2 BLT_FLS2
 bltf3 BLT_FLS3
 
-//SSG
 $random weapons/shh2 { SSGAlt1 SSGAlt2 SSGAlt3 }
 SSGAlt1 shfire1
 SSGAlt2 shfire2
@@ -4726,7 +4501,6 @@ shellin3 shtload3
 shellin4 shtload4
 
 
-//Fists
 weapons/fists_up FISTEQ1
 weapons/fists_smash FISTSM1
 
@@ -4755,7 +4529,6 @@ Machete/Yum4	MCHYUM4
 Machete/Yum5	MCHYUM5
 Machete/Yum6	MCHYUM6
 
-//SMG's
 weapons/smg_up DSRAIEQ
 weapons/smg_out DSRAIFOU
 weapons/smg_in DSRAIFIN
@@ -4769,7 +4542,6 @@ ZSPCMGN2	DSRAIFR2
 $Limit ZSpecOps/MGun	0
 $rolloff ZSpecOps/MGun 100 2200
 
-//MINES
 MINE001		MINE001
 MINE002		MINE002
 Weapons/StickyBombTick		SBMBTICK
@@ -4787,7 +4559,6 @@ RIFCL_CK RIFCL_CK
 RAIL_ZM RAIL_ZM
 RAIL_UZ RAIL_UZ
 
-//Pistol
 weapons/pistolup pistol_u
 PSRLIN PSRLIN
 PSRLOUT PSRLOUT
@@ -4809,7 +4580,6 @@ brc2 brass_c2
 brc3 brass_c3
 brc4 brass_c4
 
-//Revolver
 REVOUP REVOUP
 $random revolver/fire { REVOFR1 REVOFR2 REVOFR3 }
 REVOFR1 REVOFR1
@@ -4841,7 +4611,6 @@ $random SlideKick/End { SLYDEND1 SLYDEND2 }
 SLYDEND1	SLIDEND1
 SLYDEND2	SLIDEND2
 
-//Grenades
 TIMGRN TIMGRN
 ALRTGRN ALRTGRN
 $rolloff TIMGRN 320 240
@@ -4899,13 +4668,11 @@ grexpl12 grxpl_12
 
 $rolloff handgrenade/Explosion 750 1200
 
-// Health
 misc/E_HP_pickup E_HEALTH
 misc/L_HP_pickup L_HEALTH
 misc/N_HP_pickup N_HEALTH
 misc/hbonus_pickup S_HEALTH
 $volume misc/hbonus_pickup 0.8
-//Ricochets
 $random world/ricochet	 {  ricochet/hit }
 $random ricochet/hit		{  world/ricochet1 world/ricochet2 world/ricochet3 world/ricochet4 world/ricochet5 world/ricochet6 world/ricochet7 world/ricochet8 world/ricochet9 world/ricochet10 world/ricochet11 world/ricochet12 world/ricochet13 world/ricochet14 world/ricochet15 world/ricochet16 }
 world/ricochet1	ricoche1
@@ -5003,11 +4770,9 @@ M249R2        M249R2
 M249R3        M249R3
 M249R4        M249R4
 $limit blooddrop 3
-//Glass
 DSBOTTLE DSBOTTLE
 PillarGlassBreak GLSFAL
 WINBREA WINBREA
-//Barrel
 weapons/barrelpain		barrelz
 BIGEXPL2 BIGEXPL2
 $random barrel/pain { p1 p2 p3 p4 }
@@ -5041,7 +4806,6 @@ BHITDIR3 BHITDIR3
 BHITDIR4 BHITDIR4
 BHITDIR5 BHITDIR5
 
-// Player Pain Sounds
 // 100 Pain
 $random player/pain100	{ pp10 pp11 pp12 pp13 }
 pp10 pain1
@@ -5049,17 +4813,14 @@ pp11 pain1-2
 pp12 pain1-3
 pp13 pain1-4
 $playeralias    player  male    *pain100    player/pain100
-// 75 Pain
 $random player/pain75	{ pp20 pp21 }
 pp20 pain2
 pp21 pa1n2
 $playeralias    player  male    *pain75    player/pain75
-// 50 Pain
 $random player/pain50	{ pp30 pp31 }
 pp30 pain3
 pp31 pain4
 $playeralias    player  male    *pain50    player/pain50
-// 25 Pain
 $random player/pain25	{ pp40 pp41 pp42 pp43 }
 pp40 pain5
 pp41 pain6
@@ -5074,7 +4835,6 @@ jump2 dsjump2
 jump3 dsjump3
 jump4 dsjump4
 
-// Player Land Sounds
 $playeralias player	male *land land
 $random land { land1 land2 land3 land4 land5 land6 }
 land1	jmpland1
@@ -5092,19 +4852,13 @@ player/death3 DSFDTHE
 
 $playeralias           player  male    *death          pl_death
 
-////////////////////////////////////////////////////////
-//	  	Project Brutality Environment                 //
-////////////////////////////////////////////////////////
-//Fans and electrical stuff
 floor/elec1	dselec1
 $limit floor/elec1 20
-// Default / Ground
 step/default1			DSSTP1
 step/default2			DSSTP2
 step/default3			DSSTP3
 step/default4			DSSTP4
 $random step/default { step/default1  step/default2  step/default3  step/default4 }
-// Water
 step/water1			DSWTR1
 step/water2			DSWTR2
 step/water3			DSWTR3
@@ -5116,12 +4870,10 @@ $volume world/watersplash 0.3
 $rolloff world/watersplash 300 300
 bigspl1 bigspl1
 $limit world/watersplash 1 
-// Carpet
 step/carpet1			DSCARP1
 step/carpet2			DSCARP2
 step/carpet3			DSCARP3
 $random step/carpet { step/carpet1 step/carpet2 step/carpet3 }
-// Dirt
 step/dirt1			DSDIRT1
 step/dirt2			DSDIRT2
 step/dirt3			DSDIRT3
@@ -5129,13 +4881,11 @@ step/dirt4			DSDIRT4
 step/dirt5			DSDIRT5
 step/dirt6			DSDIRT6
 $random step/dirt { step/dirt1 step/dirt2 step/dirt3 step/dirt4 step/dirt5 step/dirt6 }
-// Gravel
 step/gravel1			DSGRAV1
 step/gravel2			DSGRAV2
 step/gravel3			DSGRAV3
 step/gravel4			DSGRAV4
 $random step/gravel { step/gravel1 step/gravel2 step/gravel3 step/gravel4 }
-// Hard
 step/hard1			DSHARD1
 step/hard2			DSHARD2
 step/hard3			DSHARD3
@@ -5143,7 +4893,6 @@ step/hard4			DSHARD4
 step/hard5			DSHARD5
 step/hard6			DSHARD6
 $random step/hard { step/hard1 step/hard2 step/hard3 step/hard4 step/hard5 step/hard6 }
-// Metal A
 step/metal/a1			DSMET01
 step/metal/a2			DSMET02
 step/metal/a3			DSMET03
@@ -5151,13 +4900,11 @@ step/metal/a4			DSMET04
 step/metal/a5			DSMET05
 step/metal/a6			DSMET06
 $random step/metal/a { step/metal/a1 step/metal/a2 step/metal/a3 step/metal/a4 step/metal/a5 step/metal/a6 }
-// Metal B (Thin Metals, Girders)
 step/metal/b1			DSMET201
 step/metal/b2			DSMET202
 step/metal/b3			DSMET203
 step/metal/b4			DSMET204
 $random step/metal/b { step/metal/b1 step/metal/b2 step/metal/b3 step/metal/b4 }
-// Rock
 step/rock1			DSROCK1
 step/rock2			DSROCK2
 step/rock3			DSROCK3
@@ -5167,7 +4914,6 @@ step/rock6			DSROCK6
 step/rock7			DSROCK7
 step/rock8			DSROCK8
 $random step/rock { step/rock1 step/rock2 step/rock3 step/rock4 step/rock5 step/rock6 step/rock7 step/rock8 }
-// Snow
 step/snow1			DSSNOW1
 step/snow2			DSSNOW2
 step/snow3			DSSNOW3
@@ -5175,7 +4921,6 @@ step/snow4			DSSNOW4
 step/snow5			DSSNOW5
 step/snow6			DSSNOW6
 $random step/snow { step/snow1 step/snow2 step/snow3 step/snow4 step/snow5 step/snow6 }
-// Tile A
 step/tile/a1			DSTILE01
 step/tile/a2			DSTILE02
 step/tile/a3			DSTILE03
@@ -5183,7 +4928,6 @@ step/tile/a4			DSTILE04
 step/tile/a5			DSTILE05
 step/tile/a6			DSTILE06
 $random step/tile/a { step/tile/a1 step/tile/a2 step/tile/a3 step/tile/a4 step/tile/a5 step/tile/a6 }
-// Tile B (Hallways, Marble/Finer Tiles)
 step/tile/b1			DSTILE21
 step/tile/b2			DSTILE22
 step/tile/b3			DSTILE23
@@ -5193,25 +4937,21 @@ step/tile/b6			DSTILE26
 step/tile/b7			DSTILE27
 step/tile/b8			DSTILE28
 $random step/tile/b { step/tile/b1 step/tile/b2 step/tile/b3 step/tile/b4 step/tile/b5 step/tile/b6 step/tile/b7 step/tile/b8 }
-// Wood
 step/wood1			DSWOOD1
 step/wood2			DSWOOD2
 step/wood3			DSWOOD3
 step/wood4			DSWOOD4
 $random step/wood { step/wood1 step/wood2 step/wood3 step/wood4 }
-// Slime
 step/slime1			DSSLIME1
 step/slime2			DSSLIME2
 step/slime3			DSSLIME3
 step/slime4			DSSLIME4
 $random step/slime { step/slime1 step/slime2 step/slime3 step/slime4 }
-// Slimy
 step/slimy1			DSSLIMY1
 step/slimy2			DSSLIMY2
 step/slimy3			DSSLIMY3
 step/slimy4			DSSLIMY4
 $random step/slimy { step/slimy1 step/slimy2 step/slimy3 step/slimy4 }
-// Lava
 step/lava1			DSLAVA1
 step/lava2			DSLAVA2
 step/lava3			DSLAVA3
@@ -5219,7 +4959,6 @@ step/lava4			DSLAVA4
 $random step/lava { step/lava1 step/lava2 step/lava3 step/lava4 }
 world/lavasizzle		dslvsiz
 world/lavasizzle2 	DSSIZLS
-//Torches
 BDFirePlace2 dsrdtrch
 $limit BDfireplace2 2
 $rolloff BDfireplace2 100 900
@@ -5237,7 +4976,6 @@ $limit world/drip 2
 $limit world/hotsiz 2
 $limit world/lavasizzle 2
 
-//Ice
 ICEBRK1 ICEBRK1
 
 $random IceBreakSmall { icebreaksmall1 icebreaksmall2 }
@@ -5290,7 +5028,6 @@ $volume		venor/splat			0.4
 $limit		venor/splat			2
 
 // Realm667 -- Blood Ghost (KILLA DIO) -- folded to LostSoulSpawner. Sound aliases scoped under
-// BloodGhost/* to dodge the engine-level WHIT clash with PB weapon hitsounds.
 BloodGhost/attack       monsters/BloodGhost/WATTACK
 BloodGhost/sight        monsters/BloodGhost/WSIGHT
 BloodGhost/pain         monsters/BloodGhost/WPAIN
@@ -5352,7 +5089,6 @@ $limit PossessedGibs/gibs 0
 $limit PossessedGibs/death 1
 
 
-// --- VorpalBlade (Tiberium's Soulblade) ---
 // Folded from PB_VorpalBlade_from_Insanitys_Requiem-MK2.wad
 // Sound files in SOUNDS/COMBAT/WEAPONS/VorpalBlade/ (auto-mapped by lump name)
 Sword/Draw         SWORDUP
@@ -5383,7 +5119,6 @@ Sword/SWave4       SHOKWAV4
 Sword/SWave5       SHOKWAV5
 
 
-// --- HASG (Lady Golide / Insanity's Heavy Auto Shotgun) — SOUNDS/hasg
 PUMP "sounds/hasg/PBWP/PUMP"
 BDOPEN "sounds/hasg/PBWP/BDOPEN.ogg"
 BDLOAD "sounds/hasg/PBWP/BDLOAD.ogg"
@@ -5430,7 +5165,6 @@ $pitchset weapons/golide/fire 0.95 1.05
 $pitchset weapons/golide/pump 0.9 1.1
 $volume weapons/golide/drumpickup 0.9
 
-// --- Wolvexus mutator item fold (logical names + lumps under sounds/items/) ---
 items/bonus1				HBONUS1
 items/bonus2				ABONUS1
 items/bonus3				HBONUS2
@@ -5455,7 +5189,6 @@ items/sphere8				TIMESPH
 items/rune					DRUNE
 Items/MegaBerserk			MEGAZERK
 
-// --- PB_MeleeWeaponPack fold: Dragon Slayer + Stormcast (assets: SOUNDS/Combat/Weapons/MeleeWeaponPack/, SPRITES/Weapons/MeleeWeaponPack/) ---
 Weapons/Slayerpickup		DSSLAY0
 Weapons/Slayerswing			FIRESHOT
 Weapons/Slayerimpact		DSSLAY1
@@ -5498,7 +5231,6 @@ electrogun/shoot			PZAPSEE
 electrogun/hit				PZAPHIT
 electrogun/explode			PZAPBEXP
 
-// --- D3Maledict (Monster Pack fold) ---
 $random D3Maledict/Step { MLDFT01 MLDFT02 }
 MLDFT01 "sounds/monsters/D3Maledict/MLDFT01.wav"
 $volume MLDFT01 1.0
@@ -5556,7 +5288,6 @@ MLDBT01 "sounds/monsters/D3Maledict/MLDBT01.wav"
 $volume MLDBT01 1.0
 $rolloff MLDBT01 100 1000
 
-// --- Obsidian Ravager + Ravager portals (Monster Pack fold) ---
 OBPRTLP "sounds/effects/portals/OBPRTLP.wav"
 $volume OBPRTLP 1.0
 $rolloff OBPRTLP 100 1100
@@ -5638,14 +5369,12 @@ $volume gearbox/close 0.2
 gearbox/nope sounds/gearbox/gb_nope.ogg
 $volume gearbox/nope 0.5
 
-// =====================================================================
 // Realm667 powerup fold (kill streak reward pool entries).
 // FireAura/FrostAura: DeVloek (sounds: id Software, GSC Game World).
 // Book of the Dead: zrrion the insect (sounds: id/Quake).
 // Hand of the Wraith: Ghastly_dragon (sounds: id Software).
 // Lich Skull: Ghastly_dragon, NeuralStunner (sounds: Blizzard Entertainment).
 // Pentacle of Projection: MagicWazard (sounds: id Software).
-// =====================================================================
 FireAura/aura       sounds/Realm667Powerups/VFIREAUR.ogg
 FireAura/firedeath  sounds/Realm667Powerups/VFIREDTH.ogg
 firef1              sounds/Realm667Powerups/VFIREF1.ogg

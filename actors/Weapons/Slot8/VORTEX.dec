@@ -181,45 +181,45 @@ Obituary "%o got absorbed by the darkness."
 		
 		TNT1 A 0 A_PlaySound("TPortalAppear")
 		TNT1 A 0 A_PlaySoundEx("BHole/Suck","Voice",1)
-		TNT1 A 0 //A_SpawnItemEx("PulseBeamLaser",random(3,-3),random(3,-3),4,0,0,0,0,SXF_TRANSFERPOINTERS,128)
+		TNT1 A 0
 		ORBP A 0 A_SpawnItemEx("BlackHoleSingularity",0,0,52,0,0,0,0,0,160)
 		ORBP A 1 bright Light("TPortNormal") A_RadiusThrust(-700,1000, RTF_NOIMPACTDAMAGE)
 		EXPL A 0 Radius_Quake (3, 60, 0, 11, 0)
 		TNT1 A 0 A_Explode(18,150)
-		TNT1 A 0 //A_SpawnItemEx("PulseBeamLaser",random(3,-3),random(3,-3),4,0,0,0,0,SXF_TRANSFERPOINTERS,128)		
+		TNT1 A 0
 		ORBP A 0 A_SpawnItemEx("PurpleShockWave",0,0,64,0,0,0,0,0,160)
 		ORBP B 1 bright Light("TPortNormal") A_RadiusThrust(-700,1000, RTF_NOIMPACTDAMAGE)
 		TNT1 A 0 A_Explode(18,150)
-		TNT1 A 0 //A_SpawnItemEx("PulseBeamLaser",random(3,-3),random(3,-3),4,0,0,0,0,SXF_TRANSFERPOINTERS,128)
+		TNT1 A 0
 		ORBP A 0 A_SpawnItemEx("PurpleShockWave",0,0,64,0,0,0,0,0,160)
 		ORBP C 1 bright Light("TPortNormal") A_RadiusThrust(-700,1000, RTF_NOIMPACTDAMAGE)
 		EXPL A 0 Radius_Quake (3, 60, 0, 11, 0)
 		TNT1 A 0 A_Explode(18,150)
-		TNT1 A 0 //A_SpawnItemEx("PulseBeamLaser",random(3,-3),random(3,-3),4,0,0,0,0,SXF_TRANSFERPOINTERS,128)
+		TNT1 A 0
 		ORBP A 0 A_SpawnItemEx("PurpleShockWave",0,0,64,0,0,0,0,0,160)
 		ORBP D 1 bright Light("TPortNormal") A_RadiusThrust(-700,1000, RTF_NOIMPACTDAMAGE)
 		TNT1 A 0 A_Explode(18,150)
-		TNT1 A 0 //A_SpawnItemEx("PulseBeamLaser",random(3,-3),random(3,-3),4,0,0,0,0,SXF_TRANSFERPOINTERS,128)
+		TNT1 A 0
 		ORBP A 0 A_SpawnItemEx("PurpleShockWave",0,0,64,0,0,0,0,0,160)
 		ORBP A 0 A_SpawnItemEx("BlackHoleSingularity",0,0,52,0,0,0,0,0,160)
 		ORBP A 1 bright Light("TPortNormal") A_RadiusThrust(-700,1000, RTF_NOIMPACTDAMAGE)
 		EXPL A 0 Radius_Quake (3, 60, 0, 11, 0)
 		TNT1 A 0 A_Explode(18,150)
-		TNT1 A 0 //A_SpawnItemEx("PulseBeamLaser",random(3,-3),random(3,-3),4,0,0,0,0,SXF_TRANSFERPOINTERS,128)
+		TNT1 A 0
 		ORBP A 0 A_SpawnItemEx("PurpleShockWave",0,0,64,0,0,0,0,0,160)
 		ORBP B 1 bright Light("TPortNormal") A_RadiusThrust(-700,1000, RTF_NOIMPACTDAMAGE)
 		TNT1 A 0 A_Explode(18,150)
-		TNT1 A 0 //A_SpawnItemEx("PulseBeamLaser",random(3,-3),random(3,-3),4,0,0,0,0,SXF_TRANSFERPOINTERS,128)
+		TNT1 A 0
 		ORBP A 0 A_SpawnItemEx("PurpleShockWave",0,0,64,0,0,0,0,0,160)
 		ORBP C 1 bright Light("TPortNormal") A_RadiusThrust(-700,1000, RTF_NOIMPACTDAMAGE)
 		EXPL A 0 Radius_Quake (3, 60, 0, 11, 0)
 		TNT1 A 0 A_Explode(18,150)
-		TNT1 A 0 //A_SpawnItemEx("PulseBeamLaser",random(3,-3),random(3,-3),4,0,0,0,0,SXF_TRANSFERPOINTERS,128)
+		TNT1 A 0
 		ORBP A 0 A_SpawnItemEx("PurpleShockWave",0,0,64,0,0,0,0,0,160)
 		ORBP D 1 bright Light("TPortNormal") A_RadiusThrust(-700,1000, RTF_NOIMPACTDAMAGE)
 		EXPL A 0 Radius_Quake (3, 60, 0, 11, 0)
 		TNT1 A 0 A_Explode(18,150)
-		TNT1 A 0 //A_SpawnItemEx("PulseBeamLaser",random(3,-3),random(3,-3),4,0,0,0,0,SXF_TRANSFERPOINTERS,128)
+		TNT1 A 0
 		ORBP A 0 A_SpawnItemEx("PurpleShockWave",0,0,64,0,0,0,0,0,160)
 		Loop
 		
@@ -250,9 +250,7 @@ Actor Counter : Inventory
 	Inventory.MaxAmount 255
 }
 
-//***************//
 // Support Actors//
-//***************//
 
 Actor VisualSpecialEffect
 {
@@ -299,7 +297,7 @@ Actor TPortLightning : VisualSpecialEffect
 	States
 	{
 	Spawn:
-		TNT1 A 0 // Huh, that's the jump...
+		TNT1 A 0
 		TNT1 A 0 A_Jump(256,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72)
 	Select:
 		BLL1 ABCDEFGHIJKLMNOPQR 0 A_Jump(256,"Fade")

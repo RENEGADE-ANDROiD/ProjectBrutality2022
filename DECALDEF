@@ -1,20 +1,6 @@
-//===========================================================================
-//
-// Contents
-// 1. Brutal Doom Decals
-// 2. Nashgore Decals
-// 3. Liquid Decals
-// 4. Weapon/Projectile Decals
-//
-//===========================================================================
 
 
 
-//===========================================================================
-//
-// Brutal Doom Decals (Old - to be replaced)
-//
-//===========================================================================
 
 stretcher BrutalBloodSmearer
 {
@@ -72,9 +58,6 @@ decalgroup BrutalBloodSmear
 
 
 
-/// +++++++++++++++++////
-/// Blood Base
-/// +++++++++++++++++////
 decal BloodSplat001
 {
 pic BSPLNEW
@@ -109,9 +92,6 @@ BloodSplat002 6
 BloodSplat003 6
 }
 
-/// +++++++++++++++++////
-/// Red Blood
-/// +++++++++++++++++////
 
 decal BrutalBloodSplat01
 {
@@ -190,7 +170,6 @@ y-scale 0.3
 randomflipx
 randomflipy
 translucent 0.99
-//lowerdecal BrutalBloodSmear
 }
 
 decal BrutalBloodSplatLarge06
@@ -201,7 +180,6 @@ y-scale 0.20
 randomflipx
 randomflipy
 translucent 0.99
-//lowerdecal BrutalBloodSmear
 }
 
 decalgroup BrutalBloodSplatLarge
@@ -229,7 +207,6 @@ pic BSPLBIG2
 x-scale  0.40
 y-scale  0.40
 randomflipx
-//lowerdecal BrutalBloodSmear
 }
 
 decal BrutalBloodSuper03
@@ -247,7 +224,6 @@ pic BSPLNEW2
 x-scale  0.5
 y-scale  0.5
 randomflipx
-//lowerdecal BrutalBloodSmear
 }
 
 decal BrutalBloodSuper05
@@ -256,7 +232,6 @@ pic BSPLNEW3
 x-scale  0.25
 y-scale  0.25
 randomflipx
-//lowerdecal BrutalBloodSmear
 }
 
 decalgroup BrutalBloodSuper
@@ -268,7 +243,6 @@ BrutalBloodSuper04 6
 BrutalBloodSuper05 6
 }
 
-// Blue Blood Smearer
 decal BlueBrutalBloodSmearS1
 {
 	pic BBPSNEW
@@ -338,7 +312,6 @@ decalgroup BlueBrutalBloodSmearLarge
 }
 
 
-// Blue Blood New
 decal BlueBloodSplat001
 {
 pic BBPLNEW4
@@ -419,14 +392,12 @@ decalgroup BlueBloodSuper
 BlueBrutalBloodSuper01 6
 }
 
-// Green Brutal Blood Smearer
 decal GreenBloodSmearS1
 {
 	pic BGPSNEW
 	x-scale  0.35
 	y-scale  0.35
 	translucent 0.99
-	//shade "00 45 00"
 	randomflipx
 	animator BrutalBloodSmearer
 }
@@ -438,7 +409,6 @@ decal GreenBloodSmearS2
 	y-scale  0.35
 	randomflipx
 	translucent 0.99
-	//shade "00 45 00"
 	animator BrutalBloodSmearer
 }
 
@@ -454,17 +424,15 @@ decal GreenBrutalBloodSmear1
 	x-scale  0.51
 	y-scale  0.51
 	randomflipx
-	//shade "00 45 00"
 	animator BrutalBloodSmearer
 }
 
 decal GreenBrutalBloodSmear2
 {
-    pic BGPSNEW4	
+    pic BGPSNEW4
 	x-scale  0.5
 	y-scale  0.5
 	randomflipx
-	//shade "00 45 00"
 	animator BrutalBloodSmearer
 }
 
@@ -474,7 +442,6 @@ decal GreenBrutalBloodSmear3
 	x-scale  0.5
 	y-scale  0.5
 	randomflipx
-	//shade "00 45 00"
 	animator BrutalBloodSmearer
 }
 
@@ -484,7 +451,6 @@ decal GreenBrutalBloodSmear4
 	x-scale  0.5
 	y-scale  0.5
 	randomflipx
-	//shade "00 45 00"
 	animator BrutalBloodSmearer
 }
 
@@ -498,7 +464,6 @@ decalgroup GreenBrutalBloodSmearLarge
 
 
 
-///////// GREEN BLOOD
 
 decal GreenBloodSplat01
 {
@@ -508,7 +473,6 @@ y-scale  0.555
 randomflipx
 randomflipy
 translucent 0.99
-//shade "00 45 00"
 lowerdecal GreenBrutalBloodSmearLarge
 }
 
@@ -520,7 +484,6 @@ y-scale  0.555
 randomflipx
 randomflipy
 translucent 0.99
-//shade "00 45 00"
 lowerdecal GreenBrutalBloodSmearLarge
 }
 
@@ -532,7 +495,6 @@ y-scale  0.555
 randomflipx
 randomflipy
 translucent 0.99
-//shade "00 45 00"
 lowerdecal GreenBrutalBloodSmearLarge
 }
 
@@ -544,7 +506,6 @@ y-scale  0.555
 randomflipx
 randomflipy
 translucent 0.99
-//shade "00 45 00"
 lowerdecal GreenBrutalBloodSmearLarge
 }
 
@@ -556,7 +517,6 @@ y-scale  0.555
 randomflipx
 randomflipy
 translucent 0.99
-//shade "00 45 00"
 lowerdecal GreenBrutalBloodSmearLarge
 }
 
@@ -576,7 +536,6 @@ x-scale  0.355
 y-scale  0.355
 randomflipx
 randomflipy
-//shade "00 45 00"
 lowerdecal GreenBrutalBloodSmearSmall
 }
 
@@ -586,7 +545,6 @@ pic BGPLNEW2
 x-scale  0.355
 y-scale  0.355
 randomflipx
-//shade "00 45 00"
 lowerdecal GreenBrutalBloodSmearSmall
 }
 
@@ -596,7 +554,6 @@ pic BGPLNEW3
 x-scale  0.355
 y-scale  0.355
 randomflipx
-//shade "00 45 00"
 lowerdecal GreenBrutalBloodSmearSmall
 }
 
@@ -651,11 +608,6 @@ BStretch2
 
 
 
-//===========================================================================
-//
-// Nashgore Decals (New)
-//
-//===========================================================================
 
 Fader Bye
 {
@@ -687,7 +639,6 @@ Combiner Yucky
 {
 	Stretchy
 	Slidey
-	//Bye
 }
 
 
@@ -716,7 +667,6 @@ Decal BloodSplat1
 	Y-Scale 0.7
 	RandomFlipX
 	RandomFlipY
-	//Animator Bye
 	LowerDecal "BloodDrip"
 }
 
@@ -728,7 +678,6 @@ Decal BloodSplat2
 	Y-Scale 0.7
 	RandomFlipX
 	RandomFlipY
-	//Animator Bye
 	LowerDecal "BloodDrip"
 }
 
@@ -740,7 +689,6 @@ Decal BloodSplat3
 	Y-Scale  0.5
 	RandomFlipX
 	RandomFlipY
-	//Animator Bye
 	LowerDecal "BloodDrip"
 }
 
@@ -752,7 +700,6 @@ Decal BloodSplat4
 	Y-Scale  0.5
 	RandomFlipX
 	RandomFlipY
-	//Animator Bye
 	LowerDecal "BloodDrip"
 }
 
@@ -830,11 +777,6 @@ DecalGroup BloodSmear
 	BloodSplatNoDrip4 1
 }
 
-//===========================================================================
-//
-// Nash Gore — shiny/PBR decals (pb_enhanced_brutality_2022 + BloodSplatPB2022 group)
-//
-//===========================================================================
 
 Stretcher ABitStretchyPB2022
 {
@@ -1224,11 +1166,6 @@ DecalGroup BloodSplatPB2022
 
 
 
-//===========================================================================
-//
-// Liquid Decals
-//
-//===========================================================================
 
 fader LiquidFader
 {
@@ -1409,11 +1346,6 @@ decalgroup slimesplash
 
 
 
-//===========================================================================
-//
-// Weapon/Projectile Decals
-//
-//===========================================================================
 
 decal Slayerslash
 {
@@ -1501,30 +1433,30 @@ decal GiantScorch
 	randomflipy
 }
 
-decal SkullScorch1 
-{ 
-   pic PLASMA1 
-   shade "00 00 00" 
-   x-scale  0.5 
-   y-scale  0.5 
-   randomflipx 
-   randomflipy 
-} 
+decal SkullScorch1
+{
+   pic PLASMA1
+   shade "00 00 00"
+   x-scale  0.5
+   y-scale  0.5
+   randomflipx
+   randomflipy
+}
 
-decal SkullScorch2 
-{ 
-   pic PLASMA2 
-   shade "00 00 00" 
-   x-scale  0.5 
-   y-scale  0.5 
-   randomflipx 
-   randomflipy 
-} 
+decal SkullScorch2
+{
+   pic PLASMA2
+   shade "00 00 00"
+   x-scale  0.5
+   y-scale  0.5
+   randomflipx
+   randomflipy
+}
 
-decalgroup SkullScorch 
-{ 
-   SkullScorch1   1 
-   SkullScorch2   1 
+decalgroup SkullScorch
+{
+   SkullScorch1   1
+   SkullScorch2   1
 }
 
 
@@ -1568,7 +1500,7 @@ decal SmallerScorch
 	randomflipy
 }
 
-decal IceScorch //That name really doesn't make any sense....
+decal IceScorch
 {
 	pic SCORCH1
 	shade "60 60 85"
@@ -1576,17 +1508,9 @@ decal IceScorch //That name really doesn't make any sense....
 	y-scale 1.25
 	randomflipx
 	randomflipy
-	
+
 }
 
-//===========================================================================
-//
-// Monster Pack decals (merged from Monster Pack Add-On/DECALDEF.txt)
-// Note: MP's duplicate 'FireworxScorch' decal (Scorch9 variant) was skipped
-// because the main mod already defines FireworxScorch (SCORCH1 variant) above.
-//
-//===========================================================================
-//Decal master
 decal Scorchbase
 {
 	pic Scorch9
@@ -1647,7 +1571,6 @@ fader GlowAway
 	DecayTime	3.0
 }
 
-//////////// ORANGE SCORCH
 
 decal burnScorch
 {
@@ -1709,7 +1632,6 @@ decal smallburn
 	lowerdecal tinyscorch
 }
 
-///// BLUE SCORCH
 decal smallPLASMAScorch
 {
 	pic ScorchBL
@@ -1750,7 +1672,6 @@ decal BiggerPLASMAScorch
 	lowerdecal BigScorchbase
 }
 
-///// GREEN SCORCH
 decal acidspurt
 {
 	pic ScorchGR
@@ -1780,7 +1701,6 @@ decal acidscorch
 	lowerdecal scorchbase
 }
 
-///// RED SCORCH
 decal RedsmallScorch
 {
 	pic ScorchRD
@@ -1821,9 +1741,6 @@ decal RedBiggerScorch
 	lowerdecal BigScorchbase
 }
 
-//======================================================================================
-//		Explosion decals medium size
-//======================================================================================
 
 decal ExploScorchBlack
 {
@@ -1854,9 +1771,6 @@ decal HitScorch
 	LowerDecal "ExploScorchBlack"
 }
 
-//======================================================================================
-//		Explosion decals medium-small size
-//======================================================================================
 
 decal ExploScorchBlackMediumSmall
 {
@@ -1882,9 +1796,6 @@ decal HitScorchMediumSmall
 	LowerDecal "ExploScorchBlackMediumSmall"
 }
 
-//======================================================================================
-//		Explosion decals small size
-//======================================================================================
 
 decal ExploScorchBlackSmall
 {
@@ -1910,9 +1821,6 @@ decal HitScorchSmall
 	LowerDecal "ExploScorchBlackSmall"
 }
 
-//======================================================================================
-//		Explosion decals smallest size
-//======================================================================================
 
 decal ExploScorchBlackSmallest
 {
@@ -1938,9 +1846,6 @@ decal HitScorchSmallest
 	LowerDecal "ExploScorchBlackSmallest"
 }
 
-//======================================================================================
-//		BFG hit FX
-//======================================================================================
 
 stretcher Quadruple
 {
@@ -1980,7 +1885,7 @@ decal BFGFXdecal
 	add 0.2
 	x-scale 0.2
 	y-scale 0.2
-	animator "BFGspikes"  
+	animator "BFGspikes"
 }
 
 stretcher QuintupleTriple
@@ -2012,7 +1917,7 @@ decal BFGFXringo
 	add 0.3
 	x-scale 0.2
 	y-scale 0.2
-	animator "BFGring"  
+	animator "BFGring"
 }
 
 decal BFGFXimpact
@@ -2024,7 +1929,7 @@ decal BFGFXimpact
 	add 1.0
 	x-scale 0.6
 	y-scale 0.6
-	animator "GoAwayRocketSchorch"  
+	animator "GoAwayRocketSchorch"
 }
 
 stretcher BFGringGrow1 { GoalX 5.0 GoalY 5.0 StretchStart 0.0 StretchTime 0.6 }
@@ -2051,7 +1956,7 @@ decal BFGFXring1
 	add 0.3
 	x-scale 0.23
 	y-scale 0.23
-	animator "BFGring1"  
+	animator "BFGring1"
 }
 
 decal BFGFXring2
@@ -2063,7 +1968,7 @@ decal BFGFXring2
 	add 0.3
 	x-scale 0.2
 	y-scale 0.2
-	animator "BFGring2"  
+	animator "BFGring2"
 }
 
 decal BFGFXring3
@@ -2075,7 +1980,7 @@ decal BFGFXring3
 	add 0.3
 	x-scale 0.1
 	y-scale 0.1
-	animator "BFGring3"  
+	animator "BFGring3"
 }
 
 decal BFGFXring4
@@ -2087,10 +1992,9 @@ decal BFGFXring4
 	add 0.3
 	x-scale 0.01
 	y-scale 0.01
-	animator "BFGring4"  
+	animator "BFGring4"
 }
 
-// Realm667 — Possessed Gibs (BSPLAT/BSMEAR art from upstream pack; see actors/Monsters/Realm667/ASSET_NOTES.txt)
 decal pgBloodSplat1
 {
 	pic BSPLAT1

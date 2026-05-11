@@ -1,16 +1,5 @@
-// Realm667 community power-ups (ZScript runtime side; DECORATE side lives in
-// actors/Items/Realm667Powerups/Realm667Powerups.dec).
-//
-// FireAuraSphere / FrostAuraSphere - DeVloek; idea base: Grim Dawn elemental auras.
-// HandOfTheWraith - Ghastly_dragon; PB 2022 rewrite removes the per-monster
-// Pain.HandOfTheWraith state requirement by handing the debuff powerups to
-// the victim from DoSpecialDamage instead.
+// Credits: DeVloek (FireAuraSphere, FrostAuraSphere; Grim Dawn aura prompt); Ghastly_dragon (HandOfTheWraith). DECORATE: actors/Items/Realm667Powerups/Realm667Powerups.dec.
 
-// =====================================================================
-// Fire Aura Sphere - 60s burning aura that damages and incinerates monsters
-// in a radius. Original visuals preserved (FX particles, dynamic lights,
-// burned-corpse sprite swap); duration mirrors Realm667 default.
-// =====================================================================
 class FireAuraSphere : PowerupGiver
 {
 	Default
@@ -24,7 +13,7 @@ class FireAuraSphere : PowerupGiver
 		+INVENTORY.BIGPOWERUP;
 		Inventory.MaxAmount 0;
 		Powerup.Type "FireAuraPower";
-		Powerup.Duration -60;
+		Powerup.Duration -20;
 		Powerup.Color "FF3000", 0.015;
 		Inventory.PickupMessage "$PB_PICKUP_FireAuraSphere";
 	}
@@ -43,10 +32,6 @@ class FireAuraPower : Powerup
 	override void InitEffect()
 	{
 		super.InitEffect();
-		// Match Electric Aura's radius/cadence so the two auras feel like
-		// sister effects with different elements (single-target zappers vs.
-		// FrostAura's room-spanning AoE slow). Both bumped from 120 -> 160
-		// so the field reaches past adjacent monsters on the next pass.
 		arad = 160;
 		if (owner)
 		{
@@ -67,8 +52,6 @@ class FireAuraPower : Powerup
 	{
 		if (owner)
 		{
-			// Mirror ElectricAura cadence: apply one aura "hit" every 5 tics
-			// to a randomly-selected monster within arad.
 			if (GetAge() % 5 == 0)
 			{
 				array<actor> monsters;
@@ -90,8 +73,6 @@ class FireAuraPower : Powerup
 					actor mon = monsters[index];
 					if (mon && !mon.bKilled && owner.Distance3D(mon) <= arad && owner.CheckSight(mon))
 					{
-						// On-hit FX cadence/layout matches ElectricAura (spark bursts + temporary light + sound),
-						// but the element identity stays fire: FireAuraFire damage actor + FireAuraVictim burn.
 						int ht = int(mon.height / 2);
 						for (int i = 0; i < 4; i++) SparkParticle("FFFFFF", mon.pos, ht);
 						for (int i = 0; i < 4; i++) SparkParticle("FFE060", mon.pos, ht);
@@ -118,9 +99,6 @@ class FireAuraPower : Powerup
 						}
 						if (mon.health <= 6)
 						{
-							// Capture render info before A_Die() can invalidate CurState.
-							// VM crash repro (UZDoom 4.14.3): mon.CurState can be null after A_Die(),
-							// causing State.GetSpriteTexture to read self=null.
 							int stxW = 0, stxH = 0;
 							TextureID stx;
 							if (mon.CurState != null)
@@ -349,12 +327,6 @@ class FireAuraAshes : Actor
 	}
 }
 
-// =====================================================================
-// Frost Aura Sphere - 60s freezing aura. Slows monsters, freezes/shatters
-// corpses. PB 2022 fold drops the original ICECA0/ICECB0/ICECC0 dust-sprite
-// references (those textures aren't in this mod's lump set; the per-tic
-// blue particle drift is plenty of visual feedback on its own).
-// =====================================================================
 class FrostAuraSphere : PowerupGiver
 {
 	Default
@@ -368,7 +340,7 @@ class FrostAuraSphere : PowerupGiver
 		+INVENTORY.BIGPOWERUP;
 		Inventory.MaxAmount 0;
 		Powerup.Type "FrostAuraPower";
-		Powerup.Duration -60;
+		Powerup.Duration -20;
 		Powerup.Color "4040FF", 0.015;
 		Inventory.PickupMessage "$PB_PICKUP_FrostAuraSphere";
 	}
@@ -387,9 +359,6 @@ class FrostAuraPower : Powerup
 	override void InitEffect()
 	{
 		super.InitEffect();
-		// FrostAura keeps its own (larger) AoE-slow standard distinct from the
-		// single-target zapper auras (Fire/Electric at 160). Bumped slightly
-		// from the original 384 so the slow field clearly outranges them.
 		arad = 448;
 		if (owner)
 		{
@@ -548,15 +517,6 @@ class FrostAuraFrozen : Actor
 	}
 }
 
-// =====================================================================
-// Hand of the Wraith projectile (PB 2022 rewrite).
-// Realm667's projectile relied on monsters defining a `Pain.HandOfTheWraith`
-// state to grant themselves WraithHandShadow + WraithHandDamage powerups.
-// PB 2022 monsters don't define that state, so the original projectile would
-// be inert. This rewrite hands the powerups to the victim from
-// `DoSpecialDamage` and returns 0 damage so the hit only registers the
-// curse + ForcePain flinch (matches the original 0-damage flavor).
-// =====================================================================
 class WraithHandProjectile : Actor
 {
 	Default

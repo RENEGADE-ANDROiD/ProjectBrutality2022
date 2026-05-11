@@ -306,9 +306,7 @@ ACTOR DemonTechMinigun : PB_Weapon
 		}
 }
 
-//
 // New Projectiles
-//
 
 ACTOR DTechMGProjectile : PB_Projectile
 {
@@ -345,11 +343,9 @@ ACTOR DTechMGProjectile : PB_Projectile
   }
 }
 
-// --------------------------------------------------------------------------
 // Mode 1: Acid Glob - bouncing arc of corrosive plasma that leaves an
 // AcidSpot puddle on impact (heavy disintegrate DoT inside the puddle).
 // AcidSpot lives in actors/Gore/GreenBlood.dec.
-// --------------------------------------------------------------------------
 ACTOR DTechAcidGlob
 {
   Radius 7
@@ -395,11 +391,9 @@ ACTOR DTechAcidGlob
   }
 }
 
-// --------------------------------------------------------------------------
 // Mode 2: Danmaku Spiral - fast-rotating colored bolts that ride a tight
 // rotating spiral cone. Each bolt picks one of four hue translations on
 // spawn so the volley looks like a kaleidoscope corkscrew.
-// --------------------------------------------------------------------------
 ACTOR DTechSpiralBolt : FastProjectile
 {
   Speed 50

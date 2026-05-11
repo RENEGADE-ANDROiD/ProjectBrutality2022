@@ -1,7 +1,6 @@
 // Brutal Doom 22 (BDv22) organs and small brain; sprites B22O* / B22U* in SPRITES/GORE/BDv22/ (from BD XME8 / XDB5).
 // Spawns (when bdv22_organs) from BDv22GoreMergeHandler. Uses PB XDeath1, BDv22_MeatChunk2, Brutal_LiquidBloodTrail.
 
-// --- Organs (B22O) ----------------------------------------------------------
 
 ACTOR BDv22_Organ0 : XDeath1
 {
@@ -49,7 +48,6 @@ ACTOR BDv22_Organ1b : BDv22_Organ0
 	YScale 0.5
 }
 
-// --- Small brain (B22U) — based on Brutal Doom 22 SmallBrainPiece chain ----------------
 
 ACTOR BDv22_SmallBrain0 : BDv22_MeatChunk2
 {

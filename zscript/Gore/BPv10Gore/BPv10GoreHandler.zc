@@ -1,13 +1,4 @@
-// Brutal Pack V10 (BPv10) gore add-on handler. Sibling to BDv22GoreMergeHandler.
-// Hooks WorldThingDied, gated by 2022 Enhanced Brootality, and only spawns extra gore when
-// the dead actor is one of our humanoid grunts (ZombieMan, ShotgunGuy, Commando,
-// Nazi, ZombieScientist, RifleCommando) or an Imp variant. Imps skip the
-// gear-debris path. All spawned actors live in actors/Gore/BPv10Gore/*.dec.
-// Original sprites by AWEZ (Brutal Pack V10).
-//
-// Burn deaths roll BPv10_BurnedHusk; plasma/disintegrate roll BPv10_CarbonizedBody;
-// x-death adds flying torso, flop organs, zombie gear debris (grunt). Floor splat also rolls on non-x deaths.
-
+// Sprites: AWEZ (Brutal Pack V10).
 class BPv10GoreHandler : EventHandler
 {
 	clearscope static PlayerPawn BPv10_ResolvePlayer(Actor a)
@@ -127,7 +118,6 @@ class BPv10GoreHandler : EventHandler
 			}
 		}
 
-		// Floor blood splat: visible on typical kills; xdeath gets a higher roll. (Gibs below stay xdeath-only.)
 		int splatPct = xdeath ? 62 : 32;
 		if (random(0, 99) < PB_EnhancedBrutality2022.ScaleDeathChancePct(splatPct, k.player))
 		{

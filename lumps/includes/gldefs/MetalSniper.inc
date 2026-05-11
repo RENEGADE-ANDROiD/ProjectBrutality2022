@@ -1,8 +1,3 @@
-// GLDEFS.MetalSniper - brightmap sprite declarations for the Metal Sniper.
-// Ported verbatim from "Addon - MetalSniper"/GLDEFS.txt.
-// Kept in its own lump (mirroring GLDEFS.OVERLORD) so the main GLDEFS file stays readable.
-
-//Fire
 Brightmap Sprite MSNFA0 { map "brightmaps/WEAPONS/MS/BMMSNFA0.png" DisableFullbright }
 Brightmap Sprite MSNFB0 { map "brightmaps/WEAPONS/MS/BMMSNFB0.png" DisableFullbright }
 Brightmap Sprite MSNFC0 { map "brightmaps/WEAPONS/MS/BMMSNFC0.png" DisableFullbright }
@@ -12,7 +7,6 @@ Brightmap Sprite MSNFF0 { map "brightmaps/WEAPONS/MS/BMMSNFF0.png" DisableFullbr
 Brightmap Sprite MSNFG0 { map "brightmaps/WEAPONS/MS/BMMSNFG0.png" DisableFullbright }
 Brightmap Sprite MSNFH0 { map "brightmaps/WEAPONS/MS/BMMSNFH0.png" DisableFullbright }
 
-//(de)select
 Brightmap Sprite MSNUB0 { map "brightmaps/WEAPONS/MS/BMMSNUB0.png" DisableFullbright }
 Brightmap Sprite MSNUC0 { map "brightmaps/WEAPONS/MS/BMMSNUC0.png" DisableFullbright }
 Brightmap Sprite MSNUD0 { map "brightmaps/WEAPONS/MS/BMMSNUD0.png" DisableFullbright }
@@ -21,14 +15,12 @@ Brightmap Sprite MSNDA0 { map "brightmaps/WEAPONS/MS/BMMSNDA0.png" DisableFullbr
 Brightmap Sprite MSNDB0 { map "brightmaps/WEAPONS/MS/BMMSNDB0.png" DisableFullbright }
 Brightmap Sprite MSNDC0 { map "brightmaps/WEAPONS/MS/BMMSNDC0.png" DisableFullbright }
 
-//Kick - knife
 Brightmap Sprite MSNKA0 { map "brightmaps/WEAPONS/MS/BMMSNKA0.png" DisableFullbright }
 Brightmap Sprite MSNKB0 { map "brightmaps/WEAPONS/MS/BMMSNKB0.png" DisableFullbright }
 
 Brightmap Sprite MSNQA0 { map "brightmaps/WEAPONS/MS/BMMSNQA0.png" DisableFullbright }
 Brightmap Sprite MSNQB0 { map "brightmaps/WEAPONS/MS/BMMSNQB0.png" DisableFullbright }
 
-//grenade fire
 Brightmap Sprite MSNGA0 { map "brightmaps/WEAPONS/MS/BMMSNGA0.png" DisableFullbright }
 Brightmap Sprite MSNGB0 { map "brightmaps/WEAPONS/MS/BMMSNGB0.png" DisableFullbright }
 Brightmap Sprite MSNGC0 { map "brightmaps/WEAPONS/MS/BMMSNGC0.png" DisableFullbright }
@@ -37,13 +29,10 @@ Brightmap Sprite MSNGE0 { map "brightmaps/WEAPONS/MS/BMMSNGE0.png" DisableFullbr
 Brightmap Sprite MSNGF0 { map "brightmaps/WEAPONS/MS/BMMSNGF0.png" DisableFullbright }
 Brightmap Sprite MSNGG0 { map "brightmaps/WEAPONS/MS/BMMSNGG0.png" DisableFullbright }
 
-//Grenade reload
 Brightmap Sprite MSNLA0 { map "brightmaps/WEAPONS/MS/BMMSNLA0.png" DisableFullbright }
 Brightmap Sprite MSNLB0 { map "brightmaps/WEAPONS/MS/BMMSNLB0.png" DisableFullbright }
 Brightmap Sprite MSNLC0 { map "brightmaps/WEAPONS/MS/BMMSNLC0.png" DisableFullbright }
 
-//Reload sequence
-//raise
 Brightmap Sprite MSU1A0 { map "brightmaps/WEAPONS/MS/BMMSU1A0.png" DisableFullbright }
 Brightmap Sprite MSU1B0 { map "brightmaps/WEAPONS/MS/BMMSU1B0.png" DisableFullbright }
 Brightmap Sprite MSU1C0 { map "brightmaps/WEAPONS/MS/BMMSU1C0.png" DisableFullbright }
@@ -57,7 +46,6 @@ Brightmap Sprite MSU1J0 { map "brightmaps/WEAPONS/MS/BMMSU1J0.png" DisableFullbr
 Brightmap Sprite MSU1K0 { map "brightmaps/WEAPONS/MS/BMMSU1K0.png" DisableFullbright }
 Brightmap Sprite MSU1L0 { map "brightmaps/WEAPONS/MS/BMMSU1L0.png" DisableFullbright }
 
-//Raise empty
 Brightmap Sprite MSU0A0 { map "brightmaps/WEAPONS/MS/BMMSU1A0.png" DisableFullbright }
 Brightmap Sprite MSU0B0 { map "brightmaps/WEAPONS/MS/BMMSU1B0.png" DisableFullbright }
 Brightmap Sprite MSU0C0 { map "brightmaps/WEAPONS/MS/BMMSU1C0.png" DisableFullbright }
@@ -71,7 +59,6 @@ Brightmap Sprite MSU0J0 { map "brightmaps/WEAPONS/MS/BMMSU1J0.png" DisableFullbr
 Brightmap Sprite MSU0K0 { map "brightmaps/WEAPONS/MS/BMMSU1K0.png" DisableFullbright }
 Brightmap Sprite MSU0L0 { map "brightmaps/WEAPONS/MS/BMMSU1L0.png" DisableFullbright }
 
-//take mag
 Brightmap Sprite MST1A0 { map "brightmaps/WEAPONS/MS/BMMST1A0.png" DisableFullbright }
 Brightmap Sprite MST1B0 { map "brightmaps/WEAPONS/MS/BMMST1B0.png" DisableFullbright }
 Brightmap Sprite MST1C0 { map "brightmaps/WEAPONS/MS/BMMST1C0.png" DisableFullbright }
@@ -85,7 +72,6 @@ Brightmap Sprite MST1J0 { map "brightmaps/WEAPONS/MS/BMMST1J0.png" DisableFullbr
 Brightmap Sprite MST1K0 { map "brightmaps/WEAPONS/MS/BMMST1K0.png" DisableFullbright }
 Brightmap Sprite MST1L0 { map "brightmaps/WEAPONS/MS/BMMST1L0.png" DisableFullbright }
 
-//take mag empty
 Brightmap Sprite MST0A0 { map "brightmaps/WEAPONS/MS/BMMST1A0.png" DisableFullbright }
 Brightmap Sprite MST0B0 { map "brightmaps/WEAPONS/MS/BMMST1B0.png" DisableFullbright }
 Brightmap Sprite MST0C0 { map "brightmaps/WEAPONS/MS/BMMST1C0.png" DisableFullbright }
@@ -99,7 +85,6 @@ Brightmap Sprite MST0J0 { map "brightmaps/WEAPONS/MS/BMMST1J0.png" DisableFullbr
 Brightmap Sprite MST0K0 { map "brightmaps/WEAPONS/MS/BMMST1K0.png" DisableFullbright }
 Brightmap Sprite MST0L0 { map "brightmaps/WEAPONS/MS/BMMST1L0.png" DisableFullbright }
 
-//insert mag
 Brightmap Sprite MSNRA0 { map "brightmaps/WEAPONS/MS/BMMSNRA0.png" DisableFullbright }
 Brightmap Sprite MSNRB0 { map "brightmaps/WEAPONS/MS/BMMSNRB0.png" DisableFullbright }
 Brightmap Sprite MSNRC0 { map "brightmaps/WEAPONS/MS/BMMSNRC0.png" DisableFullbright }
@@ -119,7 +104,6 @@ Brightmap Sprite MSNRP0 { map "brightmaps/WEAPONS/MS/BMMSNRP0.png" DisableFullbr
 Brightmap Sprite MSNRQ0 { map "brightmaps/WEAPONS/MS/BMMSNRQ0.png" DisableFullbright }
 Brightmap Sprite MSNRR0 { map "brightmaps/WEAPONS/MS/BMMSNRR0.png" DisableFullbright }
 
-//Rechamber
 Brightmap Sprite MSNCA0 { map "brightmaps/WEAPONS/MS/BMMSNCA0.png" DisableFullbright }
 Brightmap Sprite MSNCB0 { map "brightmaps/WEAPONS/MS/BMMSNCB0.png" DisableFullbright }
 Brightmap Sprite MSNCC0 { map "brightmaps/WEAPONS/MS/BMMSNCC0.png" DisableFullbright }
@@ -134,8 +118,6 @@ Brightmap Sprite MSNCK0 { map "brightmaps/WEAPONS/MS/BMMSNCK0.png" DisableFullbr
 Brightmap Sprite MSNCL0 { map "brightmaps/WEAPONS/MS/BMMSNCL0.png" DisableFullbright }
 Brightmap Sprite MSNCM0 { map "brightmaps/WEAPONS/MS/BMMSNCM0.png" DisableFullbright }
 
-//ADS
-//transition
 Brightmap Sprite MSNAA0 { map "brightmaps/WEAPONS/MS/BMMSNAA0.png" DisableFullbright }
 Brightmap Sprite MSNAB0 { map "brightmaps/WEAPONS/MS/BMMSNAB0.png" DisableFullbright }
 Brightmap Sprite MSNAC0 { map "brightmaps/WEAPONS/MS/BMMSNAC0.png" DisableFullbright }
@@ -143,7 +125,6 @@ Brightmap Sprite MSNAD0 { map "brightmaps/WEAPONS/MS/BMMSNAD0.png" DisableFullbr
 Brightmap Sprite MSNAE0 { map "brightmaps/WEAPONS/MS/BMMSNAE0.png" DisableFullbright }
 Brightmap Sprite MSNAF0 { map "brightmaps/WEAPONS/MS/BMMSNAF0.png" DisableFullbright }
 
-//fire
 Brightmap Sprite MSNSA0 { map "brightmaps/WEAPONS/MS/BMMSNSA0.png" DisableFullbright }
 Brightmap Sprite MSNSB0 { map "brightmaps/WEAPONS/MS/BMMSNSB0.png" DisableFullbright }
 Brightmap Sprite MSNSC0 { map "brightmaps/WEAPONS/MS/BMMSNSC0.png" DisableFullbright }
@@ -154,7 +135,6 @@ Brightmap Sprite MSNSG0 { map "brightmaps/WEAPONS/MS/BMMSNSG0.png" DisableFullbr
 Brightmap Sprite MSNSH0 { map "brightmaps/WEAPONS/MS/BMMSNSH0.png" DisableFullbright }
 Brightmap Sprite MSNSI0 { map "brightmaps/WEAPONS/MS/BMMSNSI0.png" DisableFullbright }
 
-//Respect
 Brightmap Sprite MSNIA0 { map "brightmaps/WEAPONS/MS/BMMSNIA0.png" disablefullbright }
 Brightmap Sprite MSNIB0 { map "brightmaps/WEAPONS/MS/BMMSNIB0.png" disablefullbright }
 Brightmap Sprite MSNIC0 { map "brightmaps/WEAPONS/MS/BMMSNIC0.png" disablefullbright }
@@ -195,7 +175,6 @@ Brightmap Sprite MSNJJ0 { map "brightmaps/WEAPONS/MS/BMMSNJJ0.png" DisableFullbr
 Brightmap Sprite MSNJK0 { map "brightmaps/WEAPONS/MS/BMMSNJK0.png" DisableFullbright }
 Brightmap Sprite MSNJL0 { map "brightmaps/WEAPONS/MS/BMMSNJL0.png" DisableFullbright }
 
-//Switch
 Brightmap Sprite MSSWA0 { map "brightmaps/WEAPONS/MS/BMMSSWA0.png" DisableFullbright }
 Brightmap Sprite MSSWB0 { map "brightmaps/WEAPONS/MS/BMMSSWB0.png" DisableFullbright }
 Brightmap Sprite MSSWC0 { map "brightmaps/WEAPONS/MS/BMMSSWC0.png" DisableFullbright }

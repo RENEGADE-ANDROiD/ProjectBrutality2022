@@ -1,5 +1,4 @@
-// Cat's Frozen Addon — optional frost-tier monsters (fold Slice 3).
-// No replaces; spawned by pack spawners + DoomEdNums in zmapinfo.txt.
+
 
 ACTOR PB_FrostBaron : PB_Monster
 {

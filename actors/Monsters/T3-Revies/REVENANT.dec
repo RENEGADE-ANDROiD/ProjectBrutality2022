@@ -92,7 +92,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 	
 	Spawn:
 		SKEL A 1
-		TNT1 A 0 ACS_ExecuteAlways(796, 0, 0, 0, 0)//Check if Vanilla Mode is activated
+		TNT1 A 0 ACS_ExecuteAlways(796, 0, 0, 0, 0)
 		TNT1 A 0 ACS_NamedExecuteAlways("JetpackRevenant", 0)
 	    TNT1 A 0 A_JumpIfInventory("Curbstomp_Marine", 1, "FatalityMarine")
 	Stand:
@@ -708,9 +708,6 @@ Death:
 		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
 		Goto Death
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-		// RevenF3/F4 grant RevenantFatality3/4 -> FatalityRevenant3Eld/4Eld which use El Diablo
-		// KOKO sprites (sourced from satyr2/, depicts a horned satyr/cybersatyr being held) --
-		// completely wrong for a skeletal revenant kill. Skip those rolls.
 		TNT1 A 0 A_Jump(256, "RevenF1", "RevenF1", "RevenF1", "RevenF2", "RevenF2", "RevenF2")
 		Stop
 	RevenF1:
@@ -2180,7 +2177,6 @@ ACTOR BigBlastedRevenant
         Stop
 }}
 
-///////////////////////////======VANILLA======//////////////////////////////////
 
 Actor Vanilla_Revenant: PB_Revenant
 {

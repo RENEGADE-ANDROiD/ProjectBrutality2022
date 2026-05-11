@@ -1,6 +1,3 @@
-// HP Arcade armor. DECORATE `replaces` uses actors/Items/PBHPArcade/PBHP_Bridges_Armor.dec.
-// CVar: use CVar.FindCVar (server bool) — not CVar.GetCVar(name, playerpawn), which UZDoom 4.14.x rejects.
-// BasicArmorPickup has no Armor.MaxSaveAmount in ZScript; cap is the `cap` field below.
 class PBHP_ArmorArcade : BasicArmorPickup
 {
 	int cap;

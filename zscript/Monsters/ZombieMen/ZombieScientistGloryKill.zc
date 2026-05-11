@@ -11,15 +11,15 @@ Class PB_ZombieScientistGK : PB_ZombieScientist Replaces PB_ZombieScientist
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0) //if it isnt healing already
-				{								//will heal and give the token that indicates it's executable
-					A_SpawnItemEx("ZombieHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
-					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+				if(countinv("FinisherToken")==0)
+				{								
+					A_SpawnItemEx("ZombieHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
 				}
 				
-				if(GetCvar("be_MonsterStagger")==1) //will the monsters stagger at all?
+				if(GetCvar("be_MonsterStagger")==1)
 				{
-					return ResolveState("Stagger");	//stays there for a few seconds
+					return ResolveState("Stagger");
 				}
 				else
 				{
@@ -91,9 +91,6 @@ Class PB_ZombieScientistGK : PB_ZombieScientist Replaces PB_ZombieScientist
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1);
-		// Bald lab-coat scientist: only LabGuy first-person fatalities match the visible enemy.
-		// Do not roll into Death.Fatality4-8 (those grant ZombieManFatality4-8 tokens
-		// and play uniformed-zombieman first-person animations, which look wrong on a bald lab guy).
 		TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3");
 		Goto Super::Death.Fatality1;	
 	}
@@ -112,15 +109,15 @@ Class PB_ZombieScientistChainsawGK : PB_ZombieScientistChainsaw Replaces PB_Zomb
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0) //if it isnt healing already
-				{								//will heal and give the token that indicates it's executable
-					A_SpawnItemEx("ZombieHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
-					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+				if(countinv("FinisherToken")==0)
+				{								
+					A_SpawnItemEx("ZombieHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
+					A_GiveInventory("FinisherToken",1);
 				}
 				
-				if(GetCvar("be_MonsterStagger")==1) //will the monsters stagger at all?
+				if(GetCvar("be_MonsterStagger")==1)
 				{
-					return ResolveState("Stagger");	//stays there for a few seconds
+					return ResolveState("Stagger");
 				}
 				else
 				{
@@ -193,9 +190,6 @@ Class PB_ZombieScientistChainsawGK : PB_ZombieScientistChainsaw Replaces PB_Zomb
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1);
-		// Bald chainsaw-toting lab scientist: only Death.Fatality1 (ChainsawZombieFatality / FSF4 lab-coat
-		// strip) visually matches. Death.Fatality2-8 grant ZombieManFatality* tokens that play uniformed
-		// zombieman first-person animations -- always pick the chainsaw-lab-guy fatality instead.
 		Goto Death.Fatality1;
 	
 	}

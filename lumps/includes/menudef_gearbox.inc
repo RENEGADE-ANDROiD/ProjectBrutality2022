@@ -1,5 +1,3 @@
-// Gearbox menus — duplicate of the block at the end of MENUDEF.txt (UZDoom has no MENUDEF #include; edit both or only MENUDEF).
-
 OptionMenu gb_Options
 {
 	Title "$PB_WEAPON_SELECTOR_MENU"

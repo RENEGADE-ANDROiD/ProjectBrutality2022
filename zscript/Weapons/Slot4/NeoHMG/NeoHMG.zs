@@ -2,7 +2,7 @@ const neohmgFullAmmo = 80;
 const neohmgShieldAmmo = 100;
 // World shield uses sector floor + lift; PSprite HMGShield is unrelated (not weapon/HUD offsets).
 const neohmgShieldFloorLift = 36;
-// PSHL WALLSPRITE art sits left of the actor origin; nudge render only (+hitbox unchanged).
+// PSHL WALLSPRITE anchoring vs actor origin — applied to deployed spawn XY so hitbox matches the graphic.
 const neohmgShieldRenderSideNudge = 24.;
 
 class HMGShield : Inventory
@@ -135,9 +135,6 @@ class NeoHMGDeployedShield : Actor
 		Angle = lockYaw;
 		Pitch = 0;
 		Roll = 0;
-		double cr = cos(Angle - 90);
-		double sr = sin(Angle - 90);
-		WorldOffset = (cr, sr, 0) * neohmgShieldRenderSideNudge;
 
 		vel = (0, 0, 0);
 		FindFloorCeiling();
@@ -413,9 +410,14 @@ class PB_NeoHMG : PB_WeaponBase
 		}
 
 		double dist = Owner.Radius + 48;
-		double ca = cos(Owner.Angle);
-		double sa = sin(Owner.Angle);
+		double deployAng = Owner.Angle;
+		double ca = cos(deployAng);
+		double sa = sin(deployAng);
 		Vector2 xy = (Owner.Pos.X + ca * dist, Owner.Pos.Y + sa * dist);
+		double cr = cos(deployAng - 90);
+		double sr = sin(deployAng - 90);
+		xy.X += cr * neohmgShieldRenderSideNudge;
+		xy.Y += sr * neohmgShieldRenderSideNudge;
 		let sec = Owner.Level.PointInSector(xy);
 		double fz = Owner.FloorZ;
 		if (sec)
@@ -427,7 +429,6 @@ class PB_NeoHMG : PB_WeaponBase
 		shield.FindFloorCeiling();
 		shield.SetZ(shield.floorz + neohmgShieldFloorLift);
 
-		double deployAng = Owner.Angle;
 		shield.lockYaw = deployAng;
 		shield.Angle = deployAng;
 		shield.damageCredit = Owner;
@@ -791,6 +792,32 @@ class PB_NeoHMG : PB_WeaponBase
 			HG0R YYZ 1;
 			HG1R ABC 1;
 			Goto Ready3;
+		PDA_Preview_NeoFire:
+			HG0F B 2 Bright;
+			HG0F C 2 Bright;
+			HG0F D 2;
+			HG0F E 2;
+			HG0F F 2;
+			Stop;
+		PDA_Preview_NeoShield:
+			PSHL A 2 Bright;
+			PSHL B 2 Bright;
+			PSHL C 2 Bright;
+			PSHL D 2 Bright;
+			PSHL E 2 Bright;
+			Stop;
+		PDA_Preview_NeoMode:
+			HG0U DDDDCC 2;
+			HG0U CCDDDD 2;
+			Stop;
+		PDA_Preview_NeoReload:
+			HG0R ABCD 2;
+			HG0R EFGH 2;
+			HG0R IJKL 2;
+			HG0R UVWX 2;
+			HG1R ABC 2;
+			Stop;
+
 		FlashPunching:
 			TNT1 A 0 A_Overlay(3, "Cooling", true);
 			TNT1 A 0 A_ClearOverlays(10, 11);

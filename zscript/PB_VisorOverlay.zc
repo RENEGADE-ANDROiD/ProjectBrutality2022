@@ -1,67 +1,9 @@
-// PB_VisorOverlay.zc
-// Helmet/visor HUD overlay folded from Project Brutality v0.3+ Staging (PB_Hud.zs).
-// Renders the four corner shells, lens flares, hologram beam, optional visor glass
-// and the central helmet part BEHIND the existing SBARINFO HUD.
-//
-// Approach: a UI-scope EventHandler that paints the visor in `RenderUnderlay`
-// (NOT `RenderOverlay`). The engine's render order in `D_Display` is:
-//   1. 3D world / view
-//   2. EventHandler `RenderUnderlay` -- paint here so visor is BEHIND the bar
-//   3. SBARINFO HUD draw
-//   4. EventHandler `RenderOverlay`  -- (used elsewhere, e.g. the dash effect
-//      in `PB_EventHandler` which intentionally sits on top of everything)
-// PB Staging didn't need this distinction because it ships a custom ZScript HUD
-// where the visor draws as part of the HUD itself; PB2022 still uses the
-// engine-wrapped SBARINFO bar, so the visor must explicitly render under it
-// or it would cover the bottom-of-screen ammo / health / armor readouts.
-// Subclassing `SBarInfoWrapper` was the original plan but crashes at startup
-// (`AttachToPlayer line 31` reads from a null `script` because the engine only
-// auto-populates that field for the default wrapper, not user subclasses).
-//
-// Coordinate mapping: PB Staging used `BeginHUD(1.0, false, 320, 200)` and
-// SBARINFO-style anchor flags. We replicate that 320x200 virtual HUD by computing
-// actual screen-pixel positions through `hudScale = Screen.GetHeight() / 200`,
-// so a 312x228 PNG drawn at virtual (-24, -24) renders the same on any screen
-// resolution as it does in staging. The hudScale path also avoids the
-// DTA_VirtualWidth + DTA_DestWidth interaction that mis-sized the textures
-// during the first iteration of this fold.
-//
-// CVars (declared in CVARINFO):
-//   pb_showhudvisor          - master toggle for the lit helmet shell
-//   pb_showhudvisorglass     - master toggle for the visor glass tint
-//   pb_showgasmask           - optional fullscreen gas-mask overlay drawn
-//                              BETWEEN the visor glass and the helmet shell;
-//                              moves with a small inertial yaw/pitch offset
-//                              tied to the player's view (the "dynamic
-//                              tilting" the user requested) and fades in on
-//                              the same boot-in counter as the visor pieces.
-//   pb_hudalpha              - visor glass opacity
-//   pb_visorscale            - uniform scale of the visor pieces (also scales
-//                              the corner/brace inset distances so the helmet
-//                              brace remains anchored to the screen edge at
-//                              any scale).
-//   pb_visorofsx / pb_visorofsy - shared edge offset (X used; Y reserved)
-//   pb_visormiddlepartbottom - 0=Top 1=Bottom 2=Both 3=Off (center brace).
-//                              The TOP center brace uses the original
-//                              HUDMDARK + HUDMIDOF pair (346x64 each) AND
-//                              the HUDMIOF2 -> HUDMIDD2 glass crossfade
-//                              (PASS 1b); the BOTTOM center brace uses a
-//                              dedicated HUDMLDOF lump (346x128) for both
-//                              the dark underlay and the sector-lit
-//                              overlay (PASS 3b) and intentionally has
-//                              NO glass layer -- the windshield-style
-//                              dirt / scratch detail in HUDMIDD2 reads as
-//                              an upside-down smear under the chin when
-//                              mirrored along the bottom edge, so the
-//                              bottom branch was dropped on user request.
-//                              `Both` therefore renders top-glass + top-
-//                              helmet + bottom-helmet (no bottom-glass).
-//                              All bottom-strip lumps live in
-//                              `GRAPHICS/HUD/FULLSCRN/VISOR/Off/`.
+// Helmet / visor HUD: `RenderUnderlay` under SBARINFO; optional gas-mask + sector-lit shells.
+// CVars in `CVARINFO` (`pb_showhudvisor`, `pb_showhudvisorglass`, `pb_showgasmask`, …). Pitfalls + scale: **AGENTS.md** §4 (`zscript/PB_VisorOverlay.zc`).
 
 class PB_VisorHandler : EventHandler
 {
-	// Anchor flags for DrawVisorPiece. Horizontal in low bits, vertical in mid bits.
+	// DrawVisorPiece anchor: horizontal low bits, vertical mid bits.
 	const VA_LEFT    = 0;
 	const VA_RIGHT   = 1;
 	const VA_HCENTER = 2;
@@ -71,7 +13,7 @@ class PB_VisorHandler : EventHandler
 	const VA_FLIPX   = 16;
 	const VA_FLIPY   = 32;
 
-	// CVar-cached settings (refreshed each tick)
+	// Cached CVars (WorldTick)
 	bool   showVisor;
 	bool   showVisorGlass;
 	bool   showGasmask;
@@ -80,17 +22,13 @@ class PB_VisorHandler : EventHandler
 	double visorScale;
 	double visorOffsets;
 
-	// Boot-in animation state
 	double m0to1Float;
 	int    m32to0;
 
-	// Live sector light (color + brightness) used to tint the helmet shell
 	color  flsectorlightcolor;
 	double sectorlightlevel;
 
-	// Inertial gas-mask sway: track frame-to-frame yaw / pitch deltas and
-	// drift the gas-mask layer slightly opposite to the view motion. This is
-	// the "dynamic tilting" the user asked the second visor layer to follow.
+	// Gas-mask inertial sway (opposite view delta); updated in WorldTick.
 	double prevYaw;
 	double prevPitch;
 	double tiltX;
@@ -175,11 +113,6 @@ class PB_VisorHandler : EventHandler
 		}
 	}
 
-	// Inertial sway for the optional gas-mask layer. Computes a smoothed,
-	// capped offset that drifts opposite to view motion so the mask appears
-	// to "lag" the player's head. Run every WorldTick (NOT in the render
-	// callback) so the math is bounded by tic rate and stays deterministic
-	// across resolutions.
 	void UpdateGasmaskTilt()
 	{
 		PlayerInfo plr = players[consoleplayer];
@@ -195,29 +128,13 @@ class PB_VisorHandler : EventHandler
 			tiltInited = true;
 		}
 
-		// Frame-to-frame view delta (degrees, signed).
 		double dyaw   = Actor.DeltaAngle(prevYaw, curYaw);
 		double dpitch = Actor.DeltaAngle(prevPitch, curPitch);
 
-		// Target offset: opposite to motion so the visor trails the view.
-		// Original ports (1.6/1.4 px/deg at ±10/±8 cap, 85/15 LPF) read as
-		// "almost no motion" in actual play -- a fast 360° spin produced
-		// barely 5 px of drift, which is invisible on a 1366px-wide screen.
-		// Bumped per user feedback to ~3x stronger response, ~2.6x larger
-		// max excursion, and a snappier 78/22 LPF so the lag is obvious
-		// without being floaty. Values are virtual pixels in a 320x200 HUD
-		// frame and get multiplied by hudScale at draw time (matching the
-		// rest of this overlay). Caps stay below the corner overhang
-		// (24 virtual px for helmet pieces, 30 for glass) so even a peak
-		// excursion times the 0.45 frame-parallax fraction
-		// (PB_VISOR_FRAME_PARALLAX, see DrawVisorPiece) never exposes the
-		// screen edge: 26 * 0.45 = 11.7 < 24.
+		// Virtual 320×200 px; scaled at draw. Caps chosen vs corner overhang × PB_VISOR_FRAME_PARALLAX.
 		double targetX = clamp(-dyaw   * 4.5, -26.0, 26.0);
 		double targetY = clamp(-dpitch * 3.5, -20.0, 20.0);
 
-		// Snappier low-pass: 78% old + 22% new (was 85/15). Smaller "old"
-		// percentage means the sway catches up to the target excursion
-		// faster, so the visor stops feeling glued to the view direction.
 		tiltX = tiltX * 0.78 + targetX * 0.22;
 		tiltY = tiltY * 0.78 + targetY * 0.22;
 
@@ -225,45 +142,19 @@ class PB_VisorHandler : EventHandler
 		prevPitch = curPitch;
 	}
 
-	// RenderUnderlay (NOT RenderOverlay) so the visor sits BEHIND the
-	// SBARINFO HUD. RenderOverlay would paint on top of the bottom ammo /
-	// health / armor readouts.
 	override void RenderUnderlay(RenderEvent e)
 	{
 		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
-		// Bail out only when *every* layer is disabled; the gas-mask is its
-		// own opt-in surface and shouldn't be skipped just because the user
-		// turned the helmet shell or glass off.
 		if (!showVisor && !showVisorGlass && !showGasmask && middlePart == 3) return;
 		PlayerInfo plr = players[consoleplayer];
 		if (!plr || !plr.mo) return;
 
-		// Hide every visor / gas-mask layer during third-person executions
-		// and fatalities. The execution camera scripts (ACS 477 / 171 in
-		// `SRC/SCHASECAM.txt`, called from the `Fatality*` states in
-		// `actors/Player/NEWPLAYE.dec`) grant `CameraRunner` on entry and
-		// revoke it on exit, which is exactly the on/off window we want
-		// the HUD masked for. Same gate is mirrored in `PB_EventHandler.
-		// RenderOverlay` (pickup / mode / dash overlays) and around each
-		// `statusbar` block in `SBARINFO.txt` so SBARINFO clears in lockstep.
 		if (plr.mo.CountInv("CameraRunner") > 0) return;
 
 		DrawVisor();
 	}
 
-	// Draw a visor piece anchored at one of nine edge positions in a virtual
-	// 320x200 HUD frame. `ofsX`/`ofsY` are how far OUTSIDE the screen the
-	// matching edge of the texture sits (positive = farther off-screen). Map
-	// those virtual-pixel positions into actual screen pixels via hudScale.
-	// Helmet / glass / brace pieces get this fraction of the gas-mask sway
-	// applied as a screen-space offset (parallax). 0.45 is enough to make
-	// the visor frame visibly trail the view direction without exposing the
-	// outer overhang (~24 virtual px on corner helmet pieces, ~30 on glass,
-	// ~44-50 on the brace) at peak sway (±26 virtual px → ±11.7 px parallax,
-	// well within the smallest overhang). Set to 0 to lock the frame still
-	// while the gas-mask continues to drift; raise toward 1.0 for a strict
-	// "everything moves together" look.
 	const PB_VISOR_FRAME_PARALLAX = 0.45;
 	ui void DrawVisorPiece(String texName, double ofsX, double ofsY, int anchor,
 		double alpha, double scale, int style = STYLE_Translucent, color tint = 0xffffffff)
@@ -274,14 +165,6 @@ class PB_VisorHandler : EventHandler
 
 		double scrW = Screen.GetWidth();
 		double scrH = Screen.GetHeight();
-		// Engine HUD scale linkage: query GZDoom's active HUD scale (driven
-		// by `hud_scale` + `hud_scalefactor` + `hud_aspectscale` and the
-		// auto-fit fallback when factor=0) so the visor frame tracks the
-		// user's global HUD-size choice instead of a fixed scrH/200 anchor.
-		// Same idiom `SpeedoMeterHandler` (`zscript/PlayerPawn.zc` line
-		// ~2867) uses for its readout. Fallback to the previous 200-virtual-
-		// height anchor if `statusbar.GetHUDScale()` returns a degenerate
-		// value (defensive — shouldn't happen in normal play).
 		double hudScale = scrH / 200.0;
 		let sb = statusbar;
 		if (sb)
@@ -326,17 +209,6 @@ class PB_VisorHandler : EventHandler
 			DTA_Color, tint);
 	}
 
-	// Top-level draw routine. Layered bottom -> top:
-	//   1. Per-side powerup tints + visor glass (corner pieces)
-	//   2. Center brace glass strip
-	//   3. *** Gas-mask layer ***   <-- requested second visor stacking slot:
-	//                                   between glass and helmet shell.
-	//   4. Per-side helmet shell (corner pieces) + lens flares + hologram beam
-	//   5. Center brace helmet
-	// Splitting the per-side loop into glass-only and helmet-only passes is
-	// what lets the gas-mask sit between them; before this change everything
-	// for one side was drawn in a single loop iteration so we couldn't
-	// interleave a fullscreen layer at the right z-order.
 	ui void DrawVisor()
 	{
 		PlayerInfo plr = players[consoleplayer];
@@ -356,7 +228,7 @@ class PB_VisorHandler : EventHandler
 		double cornerInset      = 24.0 * visorScale + ofs + slide;
 		double cornerInsetGlass = 30.0 * visorScale + ofs + slide;
 
-		// PASS 1: glass + powerup tints, both sides.
+		// Pass 1: glass + powerup tints.
 		for (int i = 0; i < 2; i++)
 		{
 			bool left = (i == 0);
@@ -389,25 +261,10 @@ class PB_VisorHandler : EventHandler
 			}
 		}
 
-		// Center helmet brace. The 50/44 base insets ALSO scale with
-		// visorScale: at scale=1.0 PB Staging hangs the brace's top edge 44 px
-		// above the screen, leaving ~20 px of art visible at the very top.
-		// At scale=0.5 the texture is half-size, so the same 44 px inset would
-		// push it fully off-screen -- scaling the inset to 22 px keeps the
-		// brace visible with the same proportional reveal.
 		double cInset     = 50.0 * visorScale + ofs + slide;
 		double cInsetDark = 44.0 * visorScale + ofs + slide;
 
-		// PASS 1b: center brace glass.
-		// Top brace keeps PB Staging's HUDMIOF2 -> HUDMIDD2 glass crossfade;
-		// the BOTTOM brace intentionally has NO glass layer (HUDMLDOF helmet
-		// shell only — see PASS 3b). The HUDMIOF2 / HUDMIDD2 glass strips
-		// are authored to read as a windshield-style band that looked wrong
-		// when mirrored along the bottom (the dirt / scratch detail flips
-		// upside-down and reads as a smear under the chin), so the bottom
-		// branch was dropped on user request. `middlePart == 1` ("Bottom")
-		// and `middlePart == 2` ("Both") therefore *only* draw the helmet
-		// shell at the bottom — `2` still gets the top glass band below.
+		// Center top glass only (no bottom glass band — art reads wrong flipped).
 		if (showVisorGlass && (middlePart == 0 || middlePart == 2))
 		{
 			if (m0to1Float < 1.0)
@@ -419,7 +276,7 @@ class PB_VisorHandler : EventHandler
 				clamp(m0to1Float * playerAlpha, 0.0, playerAlpha), visorScale);
 		}
 
-		// PASS 2: gas-mask layer (between glass and helmet shell).
+		// Pass 2: gas-mask.
 		DrawGasmask();
 
 		// PASS 3: helmet shell (corner pieces), both sides.
@@ -457,23 +314,7 @@ class PB_VisorHandler : EventHandler
 			}
 		}
 
-		// PASS 3b: center brace helmet.
-		// Top branch keeps PB Staging's two-layer composite (HUDMDARK dark
-		// underlay + HUDMIDOF lit shell on top, both 346x64). Bottom branch
-		// swaps to HUDMLDOF -- a dedicated 346x128 asset that the user
-		// authored specifically as the lower middle strip. Per spec, the
-		// same lump fills BOTH the dark-underlay and sector-lit-overlay
-		// slots (the user's "same graphic for 'dark' and 'of'" wording),
-		// preserving the same two-pass lighting gain the top strip uses
-		// (full-alpha base + sector-light alpha overlay) without authoring
-		// a separate dark variant of the new asset. Width matches HUDMIDOF
-		// (346) so `cInsetDark` and the rest of the inset math work
-		// unchanged; the extra height (128 vs 64) gives the bottom strip a
-		// deeper V-curve. VA_FLIPY because HUDMLDOF, like HUDMIDOF, is
-		// authored with the dark side at the TOP of the source image --
-		// flipping vertically orients that dark side toward the screen's
-		// bottom edge. Only drawn when `middlePart` is 1 (Bottom) or 2
-		// (Both); the Top-only and Off cases skip this branch entirely.
+		// Center brace: HUDMLDOF bottom uses same lump twice (base + sector tint); VA_FLIPY orients art.
 		if (showVisor && middlePart != 3)
 		{
 			if (middlePart == 1 || middlePart == 2)
@@ -528,12 +369,6 @@ class PB_VisorHandler : EventHandler
 
 		double scrW = Screen.GetWidth();
 		double scrH = Screen.GetHeight();
-		// Engine HUD scale linkage (mirrors DrawVisorPiece). The gas-mask is
-		// always drawn fullscreen-plus-overhang at scrW/scrH * (1 + overhang)
-		// regardless, but the inertial sway delta has to use the same per-
-		// virtual-px ratio the visor frame uses or the gas-mask would drift
-		// faster / slower than the helmet pieces it sits behind, breaking
-		// the parallax depth feel.
 		double hudScale = scrH / 200.0;
 		let sb = statusbar;
 		if (sb)
@@ -542,18 +377,11 @@ class PB_VisorHandler : EventHandler
 			if (hsv.y > 0.5) hudScale = hsv.y;
 		}
 
-		// Convert virtual-pixel sway to screen pixels through hudScale, the
-		// same conversion the corner / brace draws do via DrawVisorPiece.
 		double offX = tiltX * hudScale;
 		double offY = tiltY * hudScale;
 
 		double a = clamp(m0to1Float * playerAlpha, 0.0, playerAlpha);
 
-		// Overhang dimensions. Position stays at screen center (the sway
-		// offsets shift relative to that center) so the mask remains
-		// visually centered when sway is zero -- the larger texture just
-		// hangs off all four edges by `PB_GASMASK_OVERHANG / 2` of screen
-		// size each.
 		double dw = scrW * (1.0 + PB_GASMASK_OVERHANG);
 		double dh = scrH * (1.0 + PB_GASMASK_OVERHANG);
 

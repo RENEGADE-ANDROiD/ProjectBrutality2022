@@ -136,9 +136,6 @@ class PB_Deagle : PB_WeaponBase
 			}
 			loop;
 
-		// =====================================================================
-		// Main Attacks
-		// =====================================================================
 
 		MuzzleFlash:
 			D2EM AB 1 Bright A_GunFlash();
@@ -195,9 +192,6 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 PB_ReFire();
 			Goto Ready;
 
-		// =====================================================================
-		// Weapon Special — toggle dual-wield (akimbo)
-		// =====================================================================
 
 		WeaponSpecial:
 			TNT1 A 0 A_SetInventory("GoWeaponSpecialAbility",0);
@@ -254,9 +248,6 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 A_SetInventory("CantDoAction", 0);
 			Goto Ready;
 
-		// =====================================================================
-		// Reload / Unload
-		// =====================================================================
 
 		NoAmmo:
 			TNT1 A 0 A_JumpIf(invoker.ammo2 && invoker.ammo2.amount < 1,"NoAmmoUnloaded");
@@ -357,9 +348,6 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 PB_SetReloading(false);
 			goto Ready;
 
-		// =====================================================================
-		// Dual-wield reload paths
-		// =====================================================================
 
 		ReloadDualFromUnload:
 			DR42 STUV 1 PB_SetDualSpriteIfUnload("DR14","DR20","DR00");
@@ -668,9 +656,6 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 PB_SetReloading(false);
 			Goto Ready;
 
-		// =====================================================================
-		// ADS / Alt-fire
-		// =====================================================================
 
 		AltFire:
 			TNT1 A 0 {
@@ -778,9 +763,6 @@ class PB_Deagle : PB_WeaponBase
 			}
 			Goto Ready2;
 
-		// =====================================================================
-		// Dual-wield idle / fire overlays
-		// =====================================================================
 
 		SelectAnimationDualWield:
 			TNT1 A 1;
@@ -1023,9 +1005,6 @@ class PB_Deagle : PB_WeaponBase
 			}
 			Goto IdleRight_Overlay;
 
-		// =====================================================================
-		// Sprite preload + kick / punch flashes
-		// =====================================================================
 
 		LoadSprites:
 			D4U0 A 0;
@@ -1098,9 +1077,6 @@ class PB_Deagle : PB_WeaponBase
 	}
 }
 
-// =============================================================================
-// Companion classes (ammo, projectile, casings, dual-wield + state tokens).
-// =============================================================================
 
 // 8-round magazines (was 12 in PB 2022 DECORATE — staging matches real-world).
 class DeagleAmmo : Ammo

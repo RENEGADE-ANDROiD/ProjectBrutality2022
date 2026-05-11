@@ -23,8 +23,8 @@ Actor PinkySpawner replaces Demon
 	TNT1 A 1 A_Jump(58,"BloodDemonPack")
 	TNT1 A 1 A_Jump(256,"PinkyPack")
 	MidLevelMob:
-	TNT1 A 1 A_Jump(77,"MechPinkyPack")
-	TNT1 A 1 A_Jump(77,"BloodDemonPack")
+	TNT1 A 1 A_Jump(89,"MechPinkyPack")
+	TNT1 A 1 A_Jump(96,"BloodDemonPack")
 	TNT1 A 1 A_Jump(256,"PinkyPack")
 	HighLevelMob:
 	TNT1 A 1 A_Jump(86,"MechPinkyPack")
@@ -83,12 +83,15 @@ Actor PinkyPackSpawner : Demonpickup
 	SpawnBloodDemon1:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleBloodDemons",0)
 	TNT1 A 0 A_SpawnItemEx("PB_MeanDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	Stop
 	SpawnBloodDemon2:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleBloodDemons",0)
 	TNT1 A 0 A_SpawnItemEx("PB_MeanDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "BD2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	BD2Done:
@@ -99,12 +102,14 @@ Actor PinkyPackSpawner : Demonpickup
 	SpawnMechPinky1:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleMechDemons",0)
 	TNT1 A 0 A_SpawnItemEx("PB_MechDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	Stop
 	SpawnMechPinky2:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleMechDemons",0)
 	TNT1 A 0 A_SpawnItemEx("PB_MechDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "MP2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	MP2Done:
@@ -115,11 +120,14 @@ Actor PinkyPackSpawner : Demonpickup
 	stop
 	SpawnPinky1:
 	TNT1 A 0 A_SpawnItemEx("PB_Demon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	Stop
 	SpawnPinky2:
 	TNT1 A 0 A_SpawnItemEx("PB_Demon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "PK2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	PK2Done:

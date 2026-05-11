@@ -1,16 +1,5 @@
-// Realm667 community power-ups folded into PB 2022 as kill-streak reward pool entries.
-// Originals from Realm667 / authors credited per-block; modifications: kill-streak
-// fitness only (auto-activate, dropped Heretic ammo gates, no health pre-pay, no
-// monster pain-state requirement). See ZScript counterparts in
-// zscript/Items/Realm667Powerups/ for the FireAura/FrostAura runtime and the
-// HandOfTheWraith projectile that replaces the Pain.HandOfTheWraith requirement
-// with an inline DoSpecialDamage transfer.
-
-// =====================================================================
 // Boots of the North (Ghastly_dragon, Raven Software sprite edit)
-// 50% Ice damage reduction. Original: level-end. Folded as 60s buff so the
-// kill-streak roll cannot stack a permanent passive on top of subsequent rolls.
-// =====================================================================
+// 50% Ice damage reduction. Original: level-end. Folded as a timed kill-streak buff.
 Actor PowerNorthBoots : PowerProtection
 {
 	DamageFactor "Ice", 0.5
@@ -25,7 +14,7 @@ Actor BootsOfTheNorth : PowerupGiver
 	Inventory.PickupSound "misc/p_pkup"
 	Inventory.PickupMessage "$PB_PICKUP_BootsOfTheNorth"
 	Powerup.Type NorthBoots
-	Powerup.Duration -60
+	Powerup.Duration -15
 	Powerup.Color "80 C0 FF", 0.012
 	+Inventory.PickupFlash
 	+Inventory.AutoActivate
@@ -39,11 +28,9 @@ Actor BootsOfTheNorth : PowerupGiver
 	}
 }
 
-// =====================================================================
 // Bracers of Force (Ghastly_dragon, Raven Software sprite edit)
-// 75% damage reduction for 60s. Original required SkullRodAmmo (Heretic);
+// 75% damage reduction (timed). Original required SkullRodAmmo (Heretic);
 // folded as a self-activating PowerupGiver since PB has no SkullRodAmmo.
-// =====================================================================
 Actor PowerBracers : PowerProtection
 {
 	DamageFactor "Normal", 0.25
@@ -58,7 +45,7 @@ Actor BracersOfForce : PowerupGiver
 	Inventory.PickupSound "misc/p_pkup"
 	Inventory.PickupMessage "$PB_PICKUP_BracersOfForce"
 	Powerup.Type Bracers
-	Powerup.Duration -60
+	Powerup.Duration -13
 	Powerup.Color "Blue", 0.018
 	+Inventory.PickupFlash
 	+Inventory.AutoActivate
@@ -72,12 +59,10 @@ Actor BracersOfForce : PowerupGiver
 	}
 }
 
-// =====================================================================
 // Book of the Dead (zrrion the insect, Raven/id sprites)
 // CustomInventory: on use, summons a swarm of zombie hands at point of impact.
 // Folded with +AutoActivate so the kill-streak roll fires it immediately at
 // whatever the player is aiming at when the reward lands.
-// =====================================================================
 Actor BookOfTheDead : CustomInventory
 {
 	//$Category Powerups
@@ -184,11 +169,9 @@ Actor BookHandDirt
 	}
 }
 
-// =====================================================================
 // Flight Sphere (scalliano, RichardDS90 ZScript port; id sprites)
 // Folded back to DECORATE because PowerFlight is a built-in powerup type
 // and the simpler form keeps it consistent with the other folded spheres.
-// =====================================================================
 Actor FlightSphere : PowerupGiver
 {
 	//$Category Powerups
@@ -198,7 +181,7 @@ Actor FlightSphere : PowerupGiver
 	Inventory.PickupSound "misc/p_pkup"
 	Inventory.PickupMessage "$PB_PICKUP_FlightSphere"
 	Powerup.Type "PowerFlight"
-	Powerup.Duration -60
+	Powerup.Duration -12
 	Powerup.Color "FF 00 FF", 0.018
 	+INVENTORY.AUTOACTIVATE
 	+INVENTORY.ALWAYSPICKUP
@@ -211,12 +194,10 @@ Actor FlightSphere : PowerupGiver
 	}
 }
 
-// =====================================================================
 // Lich Skull (Ghastly_dragon, NeuralStunner; Raven sprites)
-// Original: 75 HP cost + double damage + speed for 30s. Folded without the
+// Original: 75 HP cost + double damage + speed for a timed window. Folded without the
 // HP cost since this is delivered as a kill-streak reward (the player has
 // already paid in blood for the streak); also auto-activates on pickup.
-// =====================================================================
 Actor PowerLSkullDoubleDamage : PowerDamage
 {
 	DamageFactor "Normal", 2.0
@@ -232,7 +213,7 @@ Actor LichSkullDamageGiver : PowerupGiver
 	Powerup.Type LSkullDoubleDamage
 	Powerup.Color "Red", 0.018
 	Inventory.MaxAmount 0
-	Powerup.Duration 1050
+	Powerup.Duration 525
 }
 
 Actor LichSkullSpeedGiver : PowerupGiver
@@ -241,7 +222,7 @@ Actor LichSkullSpeedGiver : PowerupGiver
 	+Inventory.AlwaysPickup
 	Powerup.Type Speed
 	Inventory.MaxAmount 0
-	Powerup.Duration 1050
+	Powerup.Duration 525
 }
 
 Actor ArtiLichSkull : CustomInventory
@@ -271,11 +252,9 @@ Actor ArtiLichSkull : CustomInventory
 	}
 }
 
-// =====================================================================
 // Pentacle of Projection (MagicWazard; Raven blast effect)
 // Wraps the GZDoom-built-in ArtiBlastRadius (Hexen Disc of Repulsion mechanic).
 // Folded with +AutoActivate so the kill-streak roll triggers an instant pulse.
-// =====================================================================
 Actor PentacleOfProjection : ArtiBlastRadius
 {
 	//$Category Powerups
@@ -317,12 +296,10 @@ Actor PentacleBlast : BlastEffect
 	}
 }
 
-// =====================================================================
 // Reflector Sphere (Captain Toenail, RichardDS90 ZScript port)
 // Originally "ShieldSphere" upstream; renamed because PB 2022 already ships
 // a `ShieldSphere` ArmorBonus stub used by the Regret Elemental drop list.
-// Reflective invulnerability for 30s.
-// =====================================================================
+// Reflective invulnerability (timed kill-streak duration).
 Actor ReflectorSphere : PowerupGiver
 {
 	//$Category Powerups
@@ -339,7 +316,7 @@ Actor ReflectorSphere : PowerupGiver
 	Powerup.Type "PowerInvulnerable"
 	Powerup.Mode "Reflective"
 	Powerup.Color "GoldMap"
-	Powerup.Duration -30
+	Powerup.Duration -15
 	RenderStyle "Translucent"
 	Alpha 0.8
 	States
@@ -350,14 +327,6 @@ Actor ReflectorSphere : PowerupGiver
 	}
 }
 
-// =====================================================================
-// Hand of the Wraith DECORATE shell (DECORATE side)
-// The original required Pain.HandOfTheWraith on every monster; in PB 2022
-// the projectile is in ZScript (zscript/Items/Realm667Powerups/HandOfTheWraith.zs)
-// and uses DoSpecialDamage to hand WraithHandShadow / WraithHandDamage to whatever
-// it hits, so it works on any monster without per-actor pain-state edits.
-// The ItemUseable / debuff powerups stay here (DECORATE) for performance.
-// =====================================================================
 Actor PowerWraithHand : PowerProtection
 {
 	DamageFactor "Normal", 2.0
@@ -371,7 +340,7 @@ Actor WraithHandDamage : PowerupGiver
 	+Inventory.AutoActivate
 	Powerup.Type WraithHand
 	Inventory.MaxAmount 0
-	Powerup.Duration -30
+	Powerup.Duration -15
 	States
 	{
 	Spawn:
@@ -385,7 +354,7 @@ Actor WraithHandShadow : PowerupGiver
 	+Inventory.AutoActivate
 	Powerup.Type Ghost
 	Inventory.MaxAmount 0
-	Powerup.Duration -30
+	Powerup.Duration -15
 	States
 	{
 	Spawn:

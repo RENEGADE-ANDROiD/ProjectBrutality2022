@@ -38,11 +38,7 @@ ACTOR PB_NailgunAmmo : Ammo
    Inventory.Icon "NLMGF0"
 }
 
-// --------------------------------------------------------------------------
-//
 // Nailgun
-//	
-// --------------------------------------------------------------------------
 
 
 ACTOR PB_Nailgun : PB_Weapon
@@ -987,6 +983,18 @@ Steady:
 		J3N9 FGHIJ 1
 		Goto RemoveBullets
 
+	PDA_Preview_Nail_Fire:
+		N2N0 A 2 Bright
+		N2N0 B 2
+		N2N0 CDEF 2
+		Stop
+	PDA_Preview_Nail_Reload:
+		N3N0 ABCDEFG 2
+		N3N0 HI 2
+		N3N1 ABCDE 2
+		N3N2 ABCDEF 2
+		Stop
+
 	FlashPunching:
 		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, "FlashPunchingJavelin")
 		N4N0 ABCDEFGHIJKLMN 1
@@ -1169,7 +1177,7 @@ Actor HotMGNail : MGNail
     Loop
   Crash:
   Death:
-    TNT1 A 0 //A_PlaySound("Weapons/NailHit")
+    TNT1 A 0
     TNT1 A 0 A_SpawnItem("HitPuff")
     TNT1 A 0 A_SpawnItemEx ("RedFlare",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	EXPL A 0 A_SpawnItem("ExplosionParticleSpawner")

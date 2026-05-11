@@ -1,8 +1,4 @@
-// Obsidian Ravager (Monster Pack fold) — lights, sprite objects, brightmaps.
-
 hardwareshader sprite 0ORFT0     { Shader "shaders/glorykill.shader" Speed 1.0 }
-
-//////////////////////////////////Obsidian Ravager////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Pulselight ObsidianGlow
 {
@@ -43,8 +39,6 @@ object ChaosBarrage
 {
     frame BAL7 { light ObsidianProjectileGlowSmall }
 }
-
-//////////////////////////////////////brightmaps////////////////////////////////////////////////////////////////////////////
 
 BrightMap Sprite VSTLA1
 {
@@ -1330,8 +1324,6 @@ BrightMap Sprite VSTKF0
 	DisableFullBright
 }
 
-//Fatalized
-
 BrightMap Sprite 0ORFQ0
 {
 	Map "brightmaps/monsters/ObsidianRavager/BM0ORFQ0.png"
@@ -1355,8 +1347,6 @@ BrightMap Sprite 0ORFT0
 	Map "brightmaps/monsters/ObsidianRavager/BM0ORFT0.png"
 	DisableFullBright
 }
-
-//Ch'Thonian Crystals. One brightmap - for all animation letters. It's not a mistake.
 
 BrightMap Sprite V02AA0
 {

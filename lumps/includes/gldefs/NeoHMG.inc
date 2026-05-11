@@ -1,6 +1,3 @@
-// GLDEFS.NeoHMG — brightmap sprite bindings (ported from CRASH GLDEFS.txt, paths under brightmaps/WEAPONS/NeoHMG).
-
-// Fire
 brightmap sprite HG0FA0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0FA0.png" disablefullbright }
 brightmap sprite HG0FB0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0FB0.png" disablefullbright }
 brightmap sprite HG0FC0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0FC0.png" disablefullbright }
@@ -8,19 +5,16 @@ brightmap sprite HG0FD0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0FD0.png" disablefu
 brightmap sprite HG0FE0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0FE0.png" disablefullbright }
 brightmap sprite HG0FF0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0FF0.png" disablefullbright }
 
-// Select
 brightmap sprite HG0UA0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0UA0.png" disablefullbright }
 brightmap sprite HG0UB0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0UB0.png" disablefullbright }
 brightmap sprite HG0UC0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0UC0.png" disablefullbright }
 brightmap sprite HG0UD0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0UD0.png" disablefullbright }
 
-// Deselect
 brightmap sprite HG0DA0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0DA0.png" disablefullbright }
 brightmap sprite HG0DB0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0DB0.png" disablefullbright }
 brightmap sprite HG0DC0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0DC0.png" disablefullbright }
 brightmap sprite HG0DD0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0DD0.png" disablefullbright }
 
-// Kick
 brightmap sprite HG0KA0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0KA0.png" disablefullbright }
 brightmap sprite HG0KB0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0KB0.png" disablefullbright }
 brightmap sprite HG0KC0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0KC0.png" disablefullbright }
@@ -30,7 +24,6 @@ brightmap sprite HG0KF0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0KF0.png" disablefu
 brightmap sprite HG0KG0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0KG0.png" disablefullbright }
 brightmap sprite HG0KH0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0KH0.png" disablefullbright }
 
-// Reload
 brightmap sprite HG0RA0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0RA0.png" disablefullbright }
 brightmap sprite HG0RB0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0RB0.png" disablefullbright }
 brightmap sprite HG0RC0 { map "brightmaps/WEAPONS/NeoHMG/BMHG0RC0.png" disablefullbright }

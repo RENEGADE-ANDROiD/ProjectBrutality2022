@@ -1,5 +1,3 @@
-// Cat's Frozen Addon — lights folded from upstream GLDEFS (class names aligned with PB ZScript).
-
 pointlight PBCF_CryocubusLanzaHieloLite
 {
 	color 0.1 0.1 0.125

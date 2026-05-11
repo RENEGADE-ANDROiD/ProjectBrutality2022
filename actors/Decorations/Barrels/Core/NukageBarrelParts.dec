@@ -63,9 +63,6 @@ ACTOR ThrownBurningBarrel : ThrownBarrel {
 				"####" "#" 0 A_SpawnItemEx ("FlameBarrelBlast",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 				Stop	}}
 
-				
-/////Kicked Barrel Actors Reduced By Inheriting Tokens From The Parent Actor///////////////////////////////////////////////////////
-
 ACTOR KickedBarrel {
 	Scale 0.9
     Speed 10

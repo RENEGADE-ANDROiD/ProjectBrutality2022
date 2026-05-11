@@ -882,7 +882,6 @@ ACTOR BigRicoChet
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////PB
 ACTOR GiantLavaRicochet//: RicoChet
 {
 	+NOBLOCKMAP
@@ -1044,7 +1043,6 @@ DamageType Blackhole
 Species "Marine"
 }
 
-///////////////////////////////////////////////////////////////////////////////PB
 ACTOR WaterRicochet: RicoChet
 {
   renderstyle Translucent
@@ -1089,7 +1087,6 @@ ACTOR SlimeRicochet: RicoChet
   }
 }
 
-//////////////////////////////////////////////////PB
 ACTOR SludgeRicochet: RicoChet
 {
 	+NOINTERACTION
@@ -1139,7 +1136,6 @@ ACTOR LavaRicochet: RicoChet
 		Stop
 	}
 }
-///////////////////////////////////////////////////PB
 
 
 ACTOR SilentHitPuff: hitPuff

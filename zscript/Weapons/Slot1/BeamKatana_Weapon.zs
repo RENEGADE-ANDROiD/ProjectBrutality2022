@@ -1,4 +1,3 @@
-// : PB_WeaponBase: SelectFirstPersonLegs inlined (BaseWeapon.dec)
 class PB_BeamKatana : PB_WeaponBase
 {
 	Default
@@ -346,7 +345,31 @@ class PB_BeamKatana : PB_WeaponBase
 		BKAT L 1 Bright A_ReFire;
 		Goto KatanaReadyToCut;
 
-	WeaponSpecial: //THX to Dox778 AKA Donks Seven Seventy Ate//;
+	PDA_Preview_BK_Ready:
+		BKAT A 2 Bright A_WeaponReady(WRF_NOFIRE);
+		Stop;
+	PDA_Preview_BK_Slash:
+		BKAT B 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKAT C 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKAT D 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKAT E 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKAT G 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKAT H 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKAT I 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKAT J 1 Bright A_WeaponReady(WRF_NOFIRE);
+		Stop;
+	PDA_Preview_BK_Barrier:
+		BKAT L 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKT1 E 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKT1 D 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKT1 C 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKT1 B 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKT1 A 2 Bright A_WeaponReady(WRF_NOFIRE);
+		BKT1 B 1 Bright A_WeaponReady(WRF_NOFIRE);
+		BKAT L 1 Bright A_WeaponReady(WRF_NOFIRE);
+		Stop;
+
+	WeaponSpecial:
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "IdleBarrel");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "IdleIceBarrel");
@@ -357,12 +380,12 @@ class PB_BeamKatana : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("SlashModeToken", 1, "DisableSlashMode");
 		TNT1 A 0 A_Print("\ctAlt fire:\c- \chSlash \c-mode");
 		TNT1 A 0 A_StartSound("CybKatana/SwitchMode",7);
-		TNT1 A 0 A_GiveInventory("SlashModeToken", 1); //include the token give at some point
+		TNT1 A 0 A_GiveInventory("SlashModeToken", 1);
 		Goto KatanaReadyToCut;
 
 	DisableSlashMode:
 		TNT1 A 0 A_StartSound("CybKatana/SwitchMode",7);
-		TNT1 A 0 A_TakeInventory("SlashModeToken", 1); //take the token at some point
+		TNT1 A 0 A_TakeInventory("SlashModeToken", 1);
 		TNT1 A 0 A_Print("\ctAlt fire:\c- \cdShield \c-mode");
 		Goto KatanaReadyToCut;
 
