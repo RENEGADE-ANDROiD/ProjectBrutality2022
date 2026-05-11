@@ -22,6 +22,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/TiltPlus/TiltPlusPlus.zc"
 #include "zscript/TiltPlus/TiltPlusPlusMenu.zc"
 #include "zscript/PBPDA.zc"
+#include "zscript/Items/PB_XP/PB_XPRewards.zc"
 #include "zscript/PB_VisorOverlay.zc"
 #include "zscript/Items/PBKillstreak/PB_Killstreak_Messages.zc"
 #include "zscript/Items/PBKillstreak/PB_Killstreak_Items.zc"

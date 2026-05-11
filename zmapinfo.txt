@@ -106,6 +106,7 @@ GameInfo
 	NoRandomPlayerClass = True
 	AddEventHandlers = "pb_ExecutionHandler"
 	AddEventHandlers = "PB_EventHandler"
+	AddEventHandlers = "PB_XPRewardsHandler"
 	AddEventHandlers = "PB_VisorHandler"
 	AddEventHandlers = "MBlurHandler"
 	AddEventHandlers = "PB_WheelBSSBlurHandler"

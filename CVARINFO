@@ -375,6 +375,8 @@ user	bool	pb_dasheffect			= true;
 
 user	bool	pb_pda_blocky			= true;
 
+server	bool	pb_xp_rewards			= false;
+
 user	bool	pb_showhudvisor			= true;
 user	bool	pb_showhudvisorglass	= true;
 user	bool	pb_showgasmask			= false;

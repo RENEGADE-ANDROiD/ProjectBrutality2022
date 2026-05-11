@@ -4,6 +4,10 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ## [Unreleased]
 
+### Added
+
+- **Optional PDA XP & reward spin (single-player):** `server bool pb_xp_rewards` (default off) under **PB 2022 Enhanced → UI and Feel**. When enabled, monster kills credit XP, crossing rank thresholds grants spendable **reward points**, and the blocky PDA home hub shows a left-side **Reward Spin** tile (3 points per spin) with weighted loot; when disabled there is no XP accrual and no slot-style panel (`CVARINFO`, `MENUDEF.txt`, `language.enu`, `zscript/Items/PB_XP/PB_XPRewards.zc`, `zscript/PBPDA.zc`, `zmapinfo.txt`, `ZSCRIPT.zc`).
+
 ### Removed
 
 - Per-roster spawn toggle for Project Survival fodder — removed (standard Tier‑1 content). The **`pb_disablenewenemies`** gate that previously short-circuited `PB_ProjectSurvivalFodderPassive.PostBeginPlay` was also removed in the same pass — PS fodder now spawns as standard always-on content, ungated alongside vanilla zombieman / shotgunner / chaingunner / imp / pinky / spectre replacements. The unused helper class `PB_ProjectSurvivalFodderPassiveUtil` (one-shot CVar-read wrapper) was deleted with it. The DECORATE-side `A_JumpIf(GetCvar("pb_disablenewenemies")==1,"Die")` in `FodderPassiveSpawn.dec`'s `Create:` state was also removed for consistency.

@@ -396,6 +396,10 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText "$OPTMNU_PB_PDA_BLOCKY_HINT", teal
 	StaticText "$OPTMNU_PB_PDA_BLOCKY_HINT2", teal
 	StaticText " ", teal
+	Option "$OPTMNU_PB_XP_REWARDS", "pb_xp_rewards", "YesNo"
+	StaticText "$OPTMNU_PB_XP_REWARDS_HINT", teal
+	StaticText "$OPTMNU_PB_XP_REWARDS_HINT2", teal
+	StaticText " ", teal
 	Option "Show Helmet Visor", "pb_showhudvisor", "YesNo"
 	StaticText " ", teal
 	Submenu "Helmet Visor Options", "PB_HelmetVisorOptions"

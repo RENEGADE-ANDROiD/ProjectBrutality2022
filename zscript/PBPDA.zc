@@ -477,6 +477,7 @@ class PB_PDAUi_Object
 	bool Clicked;
 	bool UnSelectable;
 	bool MainHubBlockyExit;
+	bool MainHubBlockySlot;
 	virtual string GetString()
 	{
 		Switch(objecttype)
@@ -493,6 +494,9 @@ class PB_PDAUi_Object
 				break;
 			case 14:
 				return "Equipment";
+				break;
+			case 16:
+				return "Reward";
 				break;
 		}
 		return "Exit";
@@ -822,6 +826,12 @@ class PB_EventHandler : EventHandler
 		return null;
 	}
 
+	clearscope static bool PB_XP_RewardsOn()
+	{
+		let cv = CVar.FindCVar("pb_xp_rewards");
+		return cv && cv.GetBool();
+	}
+
 	override void WorldThingDamaged(WorldEvent e)
 	{
 		if (!e) return;
@@ -1104,6 +1114,11 @@ class PB_EventHandler : EventHandler
 						case 12:
 							WeaponTextMode = 0;
 							UpdateDesc();
+							break;
+						case 16:
+							if (!BlockyEnabled() || !PB_EventHandler.PB_XP_RewardsOn() || NonMainMenu || netgame)
+								break;
+							SendNetworkEvent("pb_xp_spin");
 							break;
 						}
 					}
@@ -5020,7 +5035,7 @@ class PB_EventHandler : EventHandler
 			for (int z = 0; z < UiObjects.Size(); z++)
 			{
 				PB_PDAUi_Object zo = UiObjects[z];
-				if (zo && zo.MainHubBlockyExit)
+				if (zo && (zo.MainHubBlockyExit || zo.MainHubBlockySlot))
 				{
 					zo.ImagePos = (-9999, -9999);
 					zo.ImageSize = (1, 1);
@@ -5033,7 +5048,7 @@ class PB_EventHandler : EventHandler
 			for (int z = 0; z < UiObjects.Size(); z++)
 			{
 				PB_PDAUi_Object zo = UiObjects[z];
-				if (zo && zo.MainHubBlockyExit)
+				if (zo && (zo.MainHubBlockyExit || zo.MainHubBlockySlot))
 				{
 					zo.ImagePos = (-9999, -9999);
 					zo.ImageSize = (1, 1);
@@ -5053,16 +5068,45 @@ class PB_EventHandler : EventHandler
 		int exitH = clamp(int(double(tileH) * 0.88), 72, tileH);
 		int vGap = max(gap, tileH / 2);
 		int exitY = y0 + tileH + vGap;
-		int exitX = rowCenterX - tileW / 2;
+		bool xpOn = PB_EventHandler.PB_XP_RewardsOn();
+		int slotX = margin;
+		int slotW = 0;
+		int exitTileW = tileW;
+		int exitX = 0;
+		if (xpOn)
+		{
+			int availableW = sw - margin * 2 - gap;
+			exitTileW = clamp(tileW, 140, min(220, availableW / 3));
+			slotW = max(availableW - gap - exitTileW, tileW * 2);
+			slotX = margin;
+			exitX = margin + slotW + gap;
+		}
 		for (int i = 0; i < UiObjects.Size(); i++)
 		{
 			PB_PDAUi_Object o = UiObjects[i];
 			if (!o)
 				continue;
+			if (o.MainHubBlockySlot)
+			{
+				if (!xpOn)
+				{
+					o.ImagePos = (-9999, -9999);
+					o.ImageSize = (1, 1);
+				}
+				else
+				{
+					o.ImagePos = (slotX, exitY);
+					o.ImageSize = (slotW, exitH);
+				}
+				continue;
+			}
 			if (o.MainHubBlockyExit)
 			{
-				o.ImagePos = (exitX, exitY);
-				o.ImageSize = (tileW, exitH);
+				if (xpOn)
+					o.ImagePos = (exitX, exitY);
+				else
+					o.ImagePos = (rowCenterX - tileW / 2, exitY);
+				o.ImageSize = (exitTileW, exitH);
 				continue;
 			}
 			int col = -1;
@@ -5272,6 +5316,11 @@ class PB_EventHandler : EventHandler
 						UiObjects[i].notdrawn = true;
 						continue;
 					}
+					if (UiObjects[i].MainHubBlockySlot && (!blockyOn || !PB_EventHandler.PB_XP_RewardsOn()))
+					{
+						UiObjects[i].notdrawn = true;
+						continue;
+					}
 					if (UiObjects[i].MainHubBlockyExit
 						&& (MonsterMenuOpened || WeaponMenuOpened || EquipmentMenuOpened))
 					{
@@ -5373,6 +5422,106 @@ class PB_EventHandler : EventHandler
 							lx, ly, lab,
 							DTA_ScaleX, lblSc, DTA_ScaleY, lblSc,
 							DTA_Alpha, globalPDAAlpha);
+						UiObjects[i].notdrawn = false;
+						continue;
+					}
+					if (blockyOn && UiObjects[i].MainHubBlockySlot && PB_EventHandler.PB_XP_RewardsOn() && !NonMainMenu)
+					{
+						bool hovered = UiObjects[i].MouseOvered;
+						int bx = int(UiObjects[i].ImagePos.x);
+						int by = int(UiObjects[i].ImagePos.y);
+						int bw = int(UiObjects[i].ImageSize.x);
+						int bh = int(UiObjects[i].ImageSize.y);
+						DrawBlockyTile(bx, by, bw, bh, hovered, false, globalPDAAlpha);
+						double lblSc = pdaTextScale * 0.68;
+						string lab = UiObjects[i].toDraw;
+						double lw = BigFont.StringWidth(lab) * lblSc;
+						double lx = bx + (bw - lw) / 2;
+						double ly = by + bh * 0.08;
+						Screen.DrawText(BigFont, hovered ? Font.CR_YELLOW : Font.CR_UNTRANSLATED,
+							lx, ly, lab,
+							DTA_ScaleX, lblSc, DTA_ScaleY, lblSc,
+							DTA_Alpha, globalPDAAlpha);
+						int xpV = 0, rkV = 0, spV = 0;
+						if (playeringame[consoleplayer])
+						{
+							let mo = players[consoleplayer].mo;
+							if (mo)
+							{
+								xpV = mo.CountInv("PB_XPBank");
+								rkV = mo.CountInv("PB_XPRank");
+								spV = mo.CountInv("PB_RewardSpin");
+							}
+						}
+						string sub1 = String.Format("XP: %d    RANK: %d", xpV, rkV);
+						string sub2 = String.Format("PTS: %d  (%d to spin)", spV, PB_XPRewardsHandler.SpinCost());
+						double statSc = clamp(pdaTextScale * 0.46, 2.5, 5.5);
+						int statPad = max(8, bh / 22);
+						int margin = max(8, bw / 28);
+						for (int fit = 0; fit < 6; fit++)
+						{
+							double twA = BigFont.StringWidth(sub1) * statSc;
+							double twB = BigFont.StringWidth(sub2) * statSc;
+							if (max(twA, twB) + statPad * 2 <= bw - margin * 2)
+								break;
+							statSc *= 0.9;
+						}
+						double lineH = BigFont.GetHeight() * statSc;
+						double tw1 = BigFont.StringWidth(sub1) * statSc;
+						double tw2 = BigFont.StringWidth(sub2) * statSc;
+						int boxW = int(max(tw1, tw2) + statPad * 2 + 0.5);
+						int boxH = int(lineH * 2.2 + statPad * 2 + 0.5);
+						boxW = min(boxW, bw - margin * 2);
+						int boxX = bx + (bw - boxW) / 2;
+						double titleBottom = ly + BigFont.GetHeight() * lblSc + bh * 0.04;
+						double availBot = by + bh - margin;
+						double extraY = (availBot - titleBottom) - boxH;
+						if (extraY < 0)
+							extraY = 0;
+						int boxY = int(titleBottom + extraY * 0.5 + 0.5);
+						if (boxY + boxH > by + bh - margin)
+							boxY = max(int(titleBottom + 0.5), by + bh - margin - boxH);
+						Screen.Dim(color(4, 8, 14), 0.72 * globalPDAAlpha, boxX, boxY, boxW, boxH);
+						{
+							int brA = int(clamp(200 * globalPDAAlpha, 80, 255));
+							Screen.DrawLine(boxX, boxY, boxX + boxW - 1, boxY, "Gray", brA);
+							Screen.DrawLine(boxX, boxY + boxH - 1, boxX + boxW - 1, boxY + boxH - 1, "Gray", brA);
+							Screen.DrawLine(boxX, boxY, boxX, boxY + boxH - 1, "Gray", brA);
+							Screen.DrawLine(boxX + boxW - 1, boxY, boxX + boxW - 1, boxY + boxH - 1, "Gray", brA);
+						}
+						double tx = boxX + (boxW - tw1) / 2;
+						double ty = double(boxY) + statPad;
+						double statAlph = globalPDAAlpha * 0.98;
+						for (int ox = -1; ox <= 1; ox++)
+						{
+							for (int oy = -1; oy <= 1; oy++)
+							{
+								if (ox == 0 && oy == 0)
+									continue;
+								Screen.DrawText(BigFont, Font.CR_BLACK, tx + ox, ty + oy, sub1,
+									DTA_ScaleX, statSc, DTA_ScaleY, statSc,
+									DTA_Alpha, statAlph * 0.55);
+							}
+						}
+						Screen.DrawText(BigFont, Font.CR_YELLOW, tx, ty, sub1,
+							DTA_ScaleX, statSc, DTA_ScaleY, statSc,
+							DTA_Alpha, statAlph);
+						ty += lineH * 1.12;
+						double tx2 = boxX + (boxW - tw2) / 2;
+						for (int ox2 = -1; ox2 <= 1; ox2++)
+						{
+							for (int oy2 = -1; oy2 <= 1; oy2++)
+							{
+								if (ox2 == 0 && oy2 == 0)
+									continue;
+								Screen.DrawText(BigFont, Font.CR_BLACK, tx2 + ox2, ty + oy2, sub2,
+									DTA_ScaleX, statSc, DTA_ScaleY, statSc,
+									DTA_Alpha, statAlph * 0.55);
+							}
+						}
+						Screen.DrawText(BigFont, Font.CR_WHITE, tx2, ty, sub2,
+							DTA_ScaleX, statSc, DTA_ScaleY, statSc,
+							DTA_Alpha, statAlph);
 						UiObjects[i].notdrawn = false;
 						continue;
 					}
@@ -5709,6 +5858,12 @@ class PB_EventHandler : EventHandler
 		equipmentdialog.InitializeUiObject(BigFont);
 		equipmentdialog.ImagePos = (weapondialog.ImagePos.x, weapondialog.ImagePos.y + weapondialog.ImageSize.y);
 		uiObjects.Push(equipmentdialog);
+		let mainHubSlotBtn = new("PB_PDAUi_Object");
+		mainHubSlotBtn.objecttype = 16;
+		mainHubSlotBtn.MainHubBlockySlot = true;
+		mainHubSlotBtn.toDraw = "REWARD SPIN";
+		mainHubSlotBtn.InitializeUiObject(BigFont);
+		uiObjects.Push(mainHubSlotBtn);
 		let mainHubExitBtn = new("PB_PDAUi_Object");
 		mainHubExitBtn.objecttype = 15;
 		mainHubExitBtn.toDraw = "EXIT";

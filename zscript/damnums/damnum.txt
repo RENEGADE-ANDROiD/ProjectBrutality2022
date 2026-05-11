@@ -84,7 +84,8 @@ class DamNum : Actor
 	/*
 	 * Spawn damage numbers. Does what it says on the tin.
 	 */
-	static int spawnDamageNumbers(Vector3 position = (0,0,0), int damage = 0, Name damagetype = DamNum_DefaultDamagetype) 
+	static int spawnDamageNumbers(Vector3 position = (0,0,0), int damage = 0, Name damagetype = DamNum_DefaultDamagetype,
+		bool pbXPStyle = false, double pbXPDigitScaleMul = 1.15)
 	{
 		// angle toward the console player just a bit. This is safe now
 		// that the nums have +NOINTERACTION.
@@ -156,14 +157,19 @@ class DamNum : Actor
 		int place = 1;
 		int length = log10(dam) + 1;
 		while(dam > 0) {
-			let damnum = DamNum(Spawn("DamNum", position, ALLOW_REPLACE));
+			Actor spawned = pbXPStyle
+				? Spawn("DamNumPBXP", position, ALLOW_REPLACE)
+				: Spawn("DamNum", position, ALLOW_REPLACE);
+			let damnum = DamNum(spawned);
 
 			// init the digits... diginit?
 			if(damnum && font) {
 				damnum.vel = nvel;
 				damnum.angle = ang;
 				damnum.bNoGravity = noGravity;
-				damnum.A_SetScale(font.scale.x, font.scale.y);
+				double sx = font.scale.x * (pbXPStyle ? pbXPDigitScaleMul : 1.0);
+				double sy = font.scale.y * (pbXPStyle ? pbXPDigitScaleMul : 1.0);
+				damnum.A_SetScale(sx, sy);
 				damnum.A_SetRenderStyle(font.alpha, font.GetRenderStyle());
 				damnum.A_SetTranslation(fontTrans);
 				damnum.fontPrefix = font.fontPrefix;
@@ -185,5 +191,26 @@ class DamNum : Actor
 
 		// return the damage, for easy chaining.
 		return damage;
+	}
+}
+
+/*
+ * PB XP / rank floater digits: slightly larger than standard DamNums, slower fade (floats longer).
+ */
+class DamNumPBXP : DamNum
+{
+	const PBXP_FADE_AMT = 0.027;
+
+	Default
+	{
+		Scale 0.75;
+	}
+
+	States
+	{
+	Spawn:
+		#### ########## 1 Bright A_DamNumMovement();
+		#### # 1 Bright A_DamNumMovement(PBXP_FADE_AMT);
+		Loop;
 	}
 }
