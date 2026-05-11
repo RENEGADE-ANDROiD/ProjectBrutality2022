@@ -42,6 +42,8 @@ All notable changes for this working tree are documented here. Earlier history l
 
 - **Fusil PDA ready preview now enters faster.** The weapon codex builder now treats `PB_Fusil` like the other long-intro weapons whose generic ready segment is quartered, shortening the Fusil PDA-ready portion by about 75% without changing the live in-game weapon animation (`zscript/PBPDA.zc`).
 
+- **Fusil scoped art now sits lower and a touch wider.** The ADS `Ready2` / `Fire2` path now uses a lower weapon offset plus a slightly wider `PSP_WEAPON` X scale so the scoped frame aligns closer to the top of the display and lets more of the overscan fall below the screen instead of splitting evenly above and below (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
 - **Fusil scoped overlay no longer drops after each shot.** The zoomed `Ready2` loop was still clearing overlay lanes `10`/`11` on re-entry after `Fire2`; removing that scoped-only clear keeps the scope graphics stable between zoomed shots while leaving the non-scoped overlay clears intact (`actors/Weapons/Slot4/PB_Fusil.dec`).
 
 - **Fusil rifle: PB2022 control-flow parity pass.** Main and sidearm stance now use PB's shared weapon-raise helper on select, the live fire states honor the standard pre-fire `GoFatality` guard instead of shooting through pending finishers, and the sidearm melee branch respects the same fatality handoff. Startup smoke-tested cleanly after the fold (`actors/Weapons/Slot4/PB_Fusil.dec`).
