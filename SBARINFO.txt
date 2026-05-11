@@ -256,6 +256,17 @@ statusbar fullscreen, fullscreenoffsets
 				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 			}
+			IsSelected PB_Fusil {
+				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
+				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
+				DrawImage "BAMBAR1", -149, -30;
+				DrawImage "BAMBAR1", -149, -48;
+				DrawBar "CURBAR1", "BGBARL", ammo2, horizontal, interpolate (64), -146, -45;
+				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
+				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
+				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -150, -50;
+				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
+			}
 			IsSelected ProSurv_Ballista {
 				drawimage "BARBACY1", -121, -12, centerbottom, 180, 22;
 				drawimage "BARBACY2", -121, -32, centerbottom, 180, 22;
@@ -1061,7 +1072,8 @@ statusbar fullscreen, fullscreenoffsets
 			IsSelected not Rifle, PB_Carbine {
 			IsSelected not PB_Nailgun, PB_MetalSniper {
 			IsSelected not PB_MetalSniper, PB_XM21 {
-			IsSelected not PB_XM21, ProSurv_Ballista {
+			IsSelected not PB_XM21, PB_Fusil {
+			IsSelected not PB_Fusil, ProSurv_Ballista {
 			IsSelected not PB_LMG, OldHMG {
 			IsSelected not PB_NeoHMG, PB_M41A {
 			IsSelected not BDPBattleRifle, PB_MG42 {
@@ -1108,6 +1120,7 @@ statusbar fullscreen, fullscreenoffsets
 					DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -150, -32;
 					DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -146, -27;
 				}
+			}
 			}
 			}
 			}

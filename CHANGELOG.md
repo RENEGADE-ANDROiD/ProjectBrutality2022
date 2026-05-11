@@ -6,6 +6,8 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Added
 
+- **Fusil rifle fold (slot 4):** folded the external Fusil addon into the main weapon roster as **`PB_Fusil`** with a hidden sidearm-stance swap on **Weapon Special**, tuned 24-round internal magazine plus conservative **`NewClip`** reserve, chaingun-spawner integration, dedicated HUD ammo block, advanced spawn toggle (**`pb_NoPB_FusilWeapon`**), PDA codex entry + custom preview-strip animation labels, XP reward-spin eligibility, pickup/hint strings, and loose addon art normalized into **`.png`** sprites plus **`.mp3`** support sounds. Credit pass records **TomiikiPro** for the PB2022 port and marks the original Fusil addon authorship as still unverified pending an upstream source (`actors/Weapons/Slot4/PB_Fusil.dec`, `DECORATE`, `actors/Player/PLAYER.dec`, `actors/SPAWNERS/WeaponSpawners/ChaingunWeaponSpawners.dec`, `SBARINFO.txt`, `CVARINFO`, `MENUDEF.txt`, `language.enu`, `SNDINFO.txt`, `zmapinfo.txt`, `PDAWEAP`, `PDAWEAPT`, `zscript/PBPDA.zc`, `zscript/Items/PB_XP/PB_XPRewards.zc`, `README.md`, `CREDITS.txt`, `SPRITES/WEAPONS/Slot4/Fusil/`, `sounds/combat/weapons/Fusil/`).
+
 - **Optional PDA XP & reward spin (single-player):** `server bool pb_xp_rewards` (default off) under **PB 2022 Enhanced → UI and Feel**. When enabled, monster kills credit XP, crossing rank thresholds grants spendable **reward points**, and the blocky PDA home hub shows a left-side **Reward Spin** tile (3 points per spin) that grants **weapons only** from a fixed pool (refunds if none eligible); when disabled there is no XP accrual and no slot-style panel (`CVARINFO`, `MENUDEF.txt`, `language.enu`, `zscript/Items/PB_XP/PB_XPRewards.zc`, `zscript/PBPDA.zc`, `zmapinfo.txt`, `ZSCRIPT.zc`).
 
 ### Removed
@@ -15,6 +17,36 @@ All notable changes for this working tree are documented here. Earlier history l
 - **PDA (blocky mode): dossier icon under description text.** The selected-entry icon that drew below the wrapped dossier body (constants **`PB_PDA_DESC_ICON_*`**) is removed — tile-grid icons and the new right-column preview cover visualization (`zscript/PBPDA.zc`).
 
 ### Fixed
+
+- **Startup log noise: `RevenantRider` invalid-state warnings removed.** The base `Doomer` state table in `PLAYER.dec` referenced `RevenantRider` / `RevenantRiderPain`, but the real ride states live on `PB_Doomer` in `NEWPLAYE.dec`; added base-state shims so startup no longer warns while the subclass keeps the real possession flow (`actors/Player/PLAYER.dec`, `actors/Player/NEWPLAYE.dec`).
+
+- **Fusil reload no longer steps through the upright donor poses on entry.** Both reload branches now skip the early `M201 A-C` climb that was still flashing upward-facing frames immediately after clicking reload, and the PDA reload preview was trimmed to match the lower-angle in-game sequence (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil reload no longer flashes the base ready pose again on entry.** Both main and sidearm reload states were opening with a one-tic visible `RPTG`/`SIDE` ready frame before the lowered donor reload sequence, which read as the weapon sprite "popping up" a second time; the reload path now enters the body animation without that extra visible tic (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil reload rebuilt around the original WAD choreography for testing.** The PB fold keeps the no-entry-pop fix and still uses the source add-on's clip-drop / `Reload` cue, but the upright-looking `M201 G-O` donor tail was removed again after testing; the reload now returns through the lower-angle settle frames and the PDA preview matches that trimmed version (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil firing animation pass:** hip-fire now plays through the extra `RPTF G-I` recovery frames, ADS settles through `SHGA B-D` instead of snapping straight back from the muzzle-blast pose, and the sidearm stance now returns all the way to `SIDE A`; PDA fire previews were updated to match the fuller recoil/recovery cycle (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil fire audio hardened across all three gunfire branches.** Hip-fire, ADS, and sidearm fire now all start `MG42FIR` on the first visible recoil frame via `CHAN_WEAPON` with overlap enabled and a light pitch variance, replacing the mixed one-shot/weapon-channel calls so the file uses a single robust fire-sound pattern throughout (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil weapon-special sidearm now consumes ammo on fire again.** The hidden `PB_SideFusil` branch had its `PB_FusilMag` take on a zero-tic prelude before the first visible `SIDE` recoil frame; moving the ammo subtraction into that visible firing frame fixes the “weapon-special mode shoots for free” regression (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil sidearm knife altfire now has a working swoosh.** The folded addon was still calling the missing `SLICKER` sound on the weapon-special melee branch; it now uses PB’s existing `weapons/gswing` quick-melee swing alias instead (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil scope now follows the TC's hold/toggle ADS pattern.** The scoped `Ready2` loop now respects `pb_toggle_aim_hold` like other PB weapons: hold-mode drops out of zoom on `AltFire` release while still allowing primary fire during the hold, while toggle mode keeps the existing press-to-enter / press-again-to-exit behavior (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil scoped refire now stays on the ADS fire path.** The zoomed `Fire2` tail no longer uses the generic refire path that could fall back into normal-fire behavior while zoomed; it now mirrors PB's scoped-weapon routing so held fire chains stay in `Fire2` and zoom exits still honor the hold/toggle ADS rules (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil scoped shots now consume ammo again.** The ADS `Fire2` branch was still subtracting `PB_FusilMag` on a zero-tic prelude before the first visible `SHGA K` recoil frame; moving the ammo take onto that visible scoped firing frame fixes the remaining “zoomed fire costs nothing” regression (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil PDA ready preview now enters faster.** The weapon codex builder now treats `PB_Fusil` like the other long-intro weapons whose generic ready segment is quartered, shortening the Fusil PDA-ready portion by about 75% without changing the live in-game weapon animation (`zscript/PBPDA.zc`).
+
+- **Fusil scoped art now sits lower and a touch wider.** The ADS `Ready2` / `Fire2` path now uses a lower weapon offset plus a slightly wider `PSP_WEAPON` X scale so the scoped frame aligns closer to the top of the display and lets more of the overscan fall below the screen instead of splitting evenly above and below (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil scoped overlay no longer drops after each shot.** The zoomed `Ready2` loop was still clearing overlay lanes `10`/`11` on re-entry after `Fire2`; removing that scoped-only clear keeps the scope graphics stable between zoomed shots while leaving the non-scoped overlay clears intact (`actors/Weapons/Slot4/PB_Fusil.dec`).
+
+- **Fusil rifle: PB2022 control-flow parity pass.** Main and sidearm stance now use PB's shared weapon-raise helper on select, the live fire states honor the standard pre-fire `GoFatality` guard instead of shooting through pending finishers, and the sidearm melee branch respects the same fatality handoff. Startup smoke-tested cleanly after the fold (`actors/Weapons/Slot4/PB_Fusil.dec`).
 
 - **Project Survival Ballista firing audio restored** — `weapons/ballista/*` logical names were never registered in `SNDINFO.txt`, so primary (`firebolt`), alt (`firerazor`), and demonic (`firedemonic`) shots plus reload / bolt sounds resolved as silence; wired the definitions to the already-shipped `SOUNDS/COMBAT/WEAPONS/ProSurvBallista/*.ogg` set (upstream Project Survival equivalents).
 
@@ -43,6 +75,10 @@ All notable changes for this working tree are documented here. Earlier history l
 - **Realm667 Frost Aura: guard `CurState` sprite-texture reads (UZDoom VM abort fix).** Hardens `FrostAuraPower.Tick` in `zscript/Items/Realm667Powerups/Realm667Powerups.zs` against `State.GetSpriteTexture` null-deref aborts by guarding `mon.CurState != null` before `GetSpriteTexture(0)` and only calling `A_SetSize` when the extracted texture dimensions are non-zero. This matches the earlier Fire Aura hardening pattern used to prevent `VM execution aborted: tried to read from address zero` from `State.GetSpriteTexture [Native]`.
 
 ### Changed
+
+- **M41A ammo balance:** reduced the per-rifle chamber/mag cap from **95** to **30** rounds and kept pickup reserve at **20** rounds of **`NewClip`**, bringing the pulse rifle's ammo economy back toward the Carbine/Fusil slot-4 baseline while keeping its underbarrel and dual-wield identity intact (`zscript/Weapons/Slot4/PB_M41A.zs`).
+
+- **Fusil rifle ammo balance:** reduced the internal mag from **33** to **24** rounds and kept the initial reserve grant at **20** rounds of **`NewClip`**, pulling its total starting loadout closer to the Carbine baseline while keeping the Fusil's stronger damage profile in check (`actors/Weapons/Slot4/PB_Fusil.dec`, `language.enu`, `README.md`).
 
 - **Kill streak — Realm667 reward power-ups:** Durations trimmed to align with the existing PB kill-streak pool (mostly ~20s equivalents); **Flight Sphere** is fixed at **12 seconds**. (`actors/Items/Realm667Powerups/Realm667Powerups.dec`, `zscript/Items/Realm667Powerups/Realm667Powerups.zs`)
 

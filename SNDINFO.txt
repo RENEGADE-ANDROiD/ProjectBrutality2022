@@ -5397,3 +5397,7 @@ $random Book/p_pkup { B_up1 B_up2 B_up3 B_up4 }
 HandOfTheWraith/Fire sounds/Realm667Powerups/HWTHFIRE.ogg
 Pickups/LichSkull    sounds/Realm667Powerups/LCHSUSE.ogg
 pentacle/project     sounds/Realm667Powerups/PROJECT.ogg
+
+// Folded Fusil addon support sounds.
+ENTEIN SOUNDS/COMBAT/WEAPONS/Fusil/ENTEIN.mp3
+MOVIN SOUNDS/COMBAT/WEAPONS/Fusil/MOVIN.mp3
