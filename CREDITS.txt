@@ -100,6 +100,12 @@ Selected weapons and equipment (authors)
   This repo adds **Weapon Special** modes for **12ga underbarrel**, **30mm grenade**
   underbarrel, and **dual-wield** (paired rifles; wheel icon reuses
   `graphics/pywheel/Carbine_Dual.png`).
+- **Fusil (`PB_Fusil`)** — PB2022 fold / port pass by **TomiikiPro**. The source
+  package available to this repository shipped the weapon code, sprites, and sounds
+  without a credits/readme file, and a follow-up public-source search did not produce a
+  verifiable original sprite/code author line. Until upstream authorship is confirmed,
+  keep **TomiikiPro** credited for the PB2022 port and treat the original Fusil addon
+  authors as **unverified / to be corrected when sourced**.
 - Metal Sniper — Sprites: Metalman; animation/code: Jaih1r0; sounds: Ravik
   (actors/Weapons/Slot4/MetalSniper.dec).
 - Riot Shield — add-on source noted in actors/Weapons/Slot2/RiotShield.dec.
@@ -200,7 +206,7 @@ Special thanks
 - **TomiikiPro**: LeverAction weapon-special wheel icons
   (`graphics/pywheel/Magnum.png`, `graphics/pywheel/Marlin.png`) — the
   caliber-swap mode-picker art for the `.357 Revolver` / `.444 Marlin`
-  branches of `specialWheel_LeverAction()`.
+  branches of `specialWheel_LeverAction()`, and the **Fusil** PB2022 port pass.
 
 Licensing
 - Observe per-file licenses and author blocks.

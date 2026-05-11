@@ -738,6 +738,14 @@ class PB_EventHandler : EventHandler
 				if (p.mo.CountInv("XM21HasBallistics") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png", TexMan.Type_Any);
 				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Slug.png", TexMan.Type_Any);
 				break;
+			case 'PB_Fusil':
+				localScale = 0.9;
+				modeIcon = TexMan.CheckForTexture("FUSIF0", TexMan.Type_Any);
+				break;
+			case 'PB_SideFusil':
+				localScale = 0.85;
+				modeIcon = TexMan.CheckForTexture("ENTEJ0", TexMan.Type_Any);
+				break;
 		}
 
 		return modeIcon;
@@ -2471,6 +2479,25 @@ class PB_EventHandler : EventHandler
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 	}
 
+	void PDA_WeaponStrip_AppendPB_FusilPreview(Name nm,
+		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
+		bool useSeg, int hardCap,
+		int fireTicCap, int flashTics, int flashSeek)
+	{
+		if (nm != 'PB_Fusil')
+			return;
+		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Fusil_Hip", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
+			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
+		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Fusil_ADS", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, true,
+			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
+		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Fusil_ModeSwap", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
+			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
+		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Fusil_Sidearm", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
+			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
+		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Fusil_Reload", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
+			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
+	}
+
 	void PDA_WeaponStrip_AppendLeverActionPreview(Name nm,
 		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
 		bool useSeg, int hardCap,
@@ -2703,7 +2730,7 @@ class PB_EventHandler : EventHandler
 		int effReadyFixedTic = readyFixedTic;
 		if (nm == 'BioAcidLauncher' || nm == 'PB_CyberdemonRL' || nm == 'PB_NeoHMG'
 			|| nm == 'PB_Excavator' || nm == 'PB_M41A' || nm == 'PB_CryoElectroRifle'
-			|| nm == 'PB_CryoCannon' || nm == 'PB_CryoASG' || nm == 'Paingiver'
+			|| nm == 'PB_CryoCannon' || nm == 'PB_CryoASG' || nm == 'PB_Fusil' || nm == 'Paingiver'
 			|| nm == 'RiotShield')
 		{
 			effReadyMax = max(1, readyMax / 4);
@@ -2804,6 +2831,12 @@ class PB_EventHandler : EventHandler
 		if (nm == 'PB_XM21')
 		{
 			PDA_WeaponStrip_AppendPB_XM21Preview(nm, outFr, outTi, outSeg, useSeg, hardCap,
+				fireTicCap, flashTics, flashSeek);
+			return;
+		}
+		if (nm == 'PB_Fusil')
+		{
+			PDA_WeaponStrip_AppendPB_FusilPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
 				fireTicCap, flashTics, flashSeek);
 			return;
 		}

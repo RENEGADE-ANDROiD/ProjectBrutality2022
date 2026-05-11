@@ -9,7 +9,7 @@ Class PB_Monster : Actor abstract
 	bool Wandering;
 	bool willBeLooking;
 	int heardOpponent;
-	
+
 	void ExecutionHandler() {
 		if(CheckInventory("ExecutionToken",1)) {
 			SetState(FindState("Execution"));

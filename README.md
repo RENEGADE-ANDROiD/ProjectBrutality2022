@@ -93,6 +93,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **UAC-41 Carbine** — flexible rifle with special-wheel fire modes.
 - **Chex Quest Assault Rifle** — optional Chex-themed rifle variant.
 - **XM-21 Rifle** — sniper/marksman add-on included with dedicated ammo handling.
+- **Fusil Rifle** — compact automatic rifle with a 24-round internal magazine; **Alt-Fire** aims and **Weapon Special** swaps into its sidearm stance.
 - **Light Machine Gun** — belt/magazine support rifle for sustained automatic fire.
 - **Metal Sniper** — heavy precision rifle with custom ammo and unload behavior.
 - **UAC-320 Heavy Machine Gun** — older heavy automatic platform.

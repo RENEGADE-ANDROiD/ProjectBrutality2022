@@ -785,7 +785,7 @@ ACTOR Doomer : PlayerPawnBase Replaces DoomPlayer
 	Player.WeaponSlot 1, PB_Axe, PB_Chainsaw, Melee_Attacks, PB_BeamKatana, PB_ArgentSith, VorpalBlade, DragonSlayer
 	Player.WeaponSlot 2, PB_Pistol, PB_Revolver, PB_MP40, PB_SMG, RiotShield, HellPistoler, PB_Deagle
 	Player.WeaponSlot 3, PB_Shotgun, PB_AutoShotgun, PB_SSG, PB_CSSG, HASG, PB_CryoASG, X12Shotgun, PB_QuadSG, MarauderSSG
-	Player.WeaponSlot 4, Rifle, PB_Carbine, ChexRifle, PB_XM21, PB_LMG, PB_MetalSniper, OldHMG, LeverAction, ProSurv_Ballista, PB_M41A, BDPBattleRifle
+	Player.WeaponSlot 4, Rifle, PB_Carbine, ChexRifle, PB_XM21, PB_Fusil, PB_LMG, PB_MetalSniper, OldHMG, LeverAction, ProSurv_Ballista, PB_M41A, BDPBattleRifle
 	Player.WeaponSlot 5, PB_Minigun, PB_Nailgun, PB_MG42, PB_NeoHMG
 	Player.WeaponSlot 6, PB_SuperGL, PB_RocketLauncher, Paingiver, PB_Excavator, MastermindChaingun, PB_CyberdemonRL
 	Player.WeaponSlot 7, PB_Freezer, PB_Railgun, BioAcidLauncher, MancubusFlameCannon
@@ -4225,6 +4225,19 @@ SFNZ C 16
                 NULL A 0 A_TakeInventory("GoSpecial", 1)
                 Goto See    
   
+        RevenantRider:
+        NULL A 0 A_TakeInventory("GoFatality", 1)
+        NULL A 0 A_TakeInventory("RevenantRider", 1)
+        NULL A 0 A_TakeInventory("RevenantRiderFiring", 1)
+        NULL A 0 A_TakeInventory("RevenantLauncher", 1)
+        NULL A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)
+        NULL A 0 SetPlayerProperty(0,0,0)
+        NULL A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+        Goto Standstill
+
+        RevenantRiderPain:
+        Goto RevenantRider
+
         FatalityChecker:
 		NULL A 0
 		NULL A 0 ACS_ExecuteAlways(477, 0, 0, 0, 0)//Start Camera
