@@ -42,7 +42,7 @@ All notable changes for this working tree are documented here. Earlier history l
 
 - **Fusil PDA ready preview now enters faster.** The weapon codex builder now treats `PB_Fusil` like the other long-intro weapons whose generic ready segment is quartered, shortening the Fusil PDA-ready portion by about 75% without changing the live in-game weapon animation (`zscript/PBPDA.zc`).
 
-- **Fusil scoped art now sits lower and a touch wider.** The ADS `Ready2` / `Fire2` path now uses a lower weapon offset plus a slightly wider `PSP_WEAPON` X scale so the scoped frame aligns closer to the top of the display and lets more of the overscan fall below the screen instead of splitting evenly above and below (`actors/Weapons/Slot4/PB_Fusil.dec`).
+- **Fusil zoom fold now tracks the original addon more closely.** After the placement/scale experiments introduced centering and bobbing issues, the scoped path was refolded around the source `Fusil.wad` behavior: no ADS-only `PSP_WEAPON` scale hack, default weapon offset, original `SHGA A-D` scoped idle cadence, and the original `SHGA K/A/K/A` scoped-fire recovery while preserving the later PB2022 fixes for hold/toggle ADS, scoped refire routing, and visible-frame ammo consumption (`actors/Weapons/Slot4/PB_Fusil.dec`, `C:\\Users\\shawn\\Downloads\\Fusil.wad`).
 
 - **Fusil scoped overlay no longer drops after each shot.** The zoomed `Ready2` loop was still clearing overlay lanes `10`/`11` on re-entry after `Fire2`; removing that scoped-only clear keeps the scope graphics stable between zoomed shots while leaving the non-scoped overlay clears intact (`actors/Weapons/Slot4/PB_Fusil.dec`).
 

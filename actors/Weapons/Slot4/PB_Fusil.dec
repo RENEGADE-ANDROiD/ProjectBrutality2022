@@ -180,7 +180,6 @@ ACTOR PB_Fusil : PB_Weapon
     Fire2:
         TNT1 A 0
         {
-            A_WeaponOffset(0,40);
             if (CountInv("GoFatality") >= 1)
             {
                 SetPlayerProperty(0,1,0);
