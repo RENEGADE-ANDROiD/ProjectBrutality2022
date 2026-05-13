@@ -365,6 +365,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot4/LeverAction.dec"
 #include "actors/Weapons/Slot4/MetalSniper.dec"
 #include "actors/Weapons/Slot4/XM21.dec"
+#include "actors/Weapons/Slot4/PB_Fusil.dec"
 #include "actors/Weapons/Slot4/OldHMG.dec"
 #include "actors/Weapons/Slot4/NeoHMG.dec"
 #include "actors/Weapons/Slot4/M41A.dec"

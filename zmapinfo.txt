@@ -362,6 +362,7 @@ DoomEdNums
 	23217 = PB_CryoCellsPack
 	23218 = PB_CryoCannonCellsPickup
 	23219 = PB_DarkMatterRifle
+	23220 = PB_Fusil
 
 	17003 = CyberdemonLegsFatality
 

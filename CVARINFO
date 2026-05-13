@@ -270,6 +270,7 @@ server int pb_NoHDMRWeapon = 0;
 server int pb_NoMinigunUpgradeWeapon = 0;
 server int pb_NoMetalSniperWeapon = 0;
 server int pb_NoPB_XM21Weapon = 0;
+server int pb_NoPB_FusilWeapon = 0;
 server int pb_NoX12ShotgunWeapon = 0;
 server int pb_NoHASGWeapon = 0;
 server int pb_NoOldHMGWeapon = 1;

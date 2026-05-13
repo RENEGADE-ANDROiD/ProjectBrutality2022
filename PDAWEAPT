@@ -136,6 +136,16 @@ Recoil: Very high
 Alt-Fire: Alt-use chains vary by respect / pickup state (see field manual)
 Firemodes: Bolt-action style discipline / semi marksman
 Akimbo: X#
+Fusil Rifle$Compact automatic rifle package built around a generous 33-round internal magazine and a fast stance swap for close-quarters pressure. The main chassis handles like a light battle rifle, while Weapon Special flips the user into a lighter sidearm stance that keeps the same magazine pool but changes the presentation and close-in handling. The fold in this build feeds from standard NewClip reserves, so it slots cleanly into the existing PB rifle logistics.$PB_Fusil$Manufacturer: Unknown / field conversion
+Magazine Capacity: 33-round internal magazine
+Ammunition: NewClip reserve + PB_FusilMag internal pool
+Effective Range: Medium
+Primary: Automatic rifle fire
+RPM: Automatic
+Recoil: Moderate
+Alt-Fire: Aim down sights
+Firemodes: Rifle stance / sidearm stance via Weapon Special
+Akimbo: X#
 UAC M1893 Mod 0 Lever Action$A modernized lever gun bridging cowboy simplicity with UAC logistics: tube-fed, hard-hitting, and able to swap between .357 and heavier Marlin-class loads from the Weapon Special wheel without replacing the whole weapon.$LeverAction$Manufacturer: UAC (M1893 Mod 0)
 Tube Capacity: Variable tube (reload choreographs to full)
 Ammunition: LeverActionAmmo + NewClip reserve plumbing

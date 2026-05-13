@@ -4322,626 +4322,626 @@ Frame SBALH { Light ShadowBall5 }
 
 BrightMap Sprite ETHSA1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSA1"
+Map "brightmaps/monsters/Etherealsoul/BMETHSA1.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSA8A2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSA8"
+Map "brightmaps/monsters/Etherealsoul/BMETHSA8.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSA7A3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSA6A4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSA5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSB1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSB1"
+Map "brightmaps/monsters/Etherealsoul/BMETHSB1.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSB8B2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSB8"
+Map "brightmaps/monsters/Etherealsoul/BMETHSB8.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSB7B3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSB6B4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSB5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSC1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSC1"
+Map "brightmaps/monsters/Etherealsoul/BMETHSC1.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSC8C2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSC8"
+Map "brightmaps/monsters/Etherealsoul/BMETHSC8.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSC7C3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSC6C4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSC5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSD1"
+Map "brightmaps/monsters/Etherealsoul/BMETHSD1.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD8D2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSD8"
+Map "brightmaps/monsters/Etherealsoul/BMETHSD8.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD7D3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD6D4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSE1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSE1"
+Map "brightmaps/monsters/Etherealsoul/BMETHSE1.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSE8E2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSE8"
+Map "brightmaps/monsters/Etherealsoul/BMETHSE8.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD7D3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD6D4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSF1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSF1"
+Map "brightmaps/monsters/Etherealsoul/BMETHSF1.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSF8F2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSF8"
+Map "brightmaps/monsters/Etherealsoul/BMETHSF8.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSF7F3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSF6F4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSG1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSG1"
+Map "brightmaps/monsters/Etherealsoul/BMETHSG1.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSG6G4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSG7G3
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSG7"
+Map "brightmaps/monsters/Etherealsoul/BMETHSG7.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSG8G2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSG8"
+Map "brightmaps/monsters/Etherealsoul/BMETHSG8.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSH0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSH0"
+Map "brightmaps/monsters/Etherealsoul/BMETHSH0.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSI0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSI0"
+Map "brightmaps/monsters/Etherealsoul/BMETHSI0.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSJ0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSJ0"
+Map "brightmaps/monsters/Etherealsoul/BMETHSJ0.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSK0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSK0"
+Map "brightmaps/monsters/Etherealsoul/BMETHSK0.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSL0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSL0"
+Map "brightmaps/monsters/Etherealsoul/BMETHSL0.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSM0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSM0"
+Map "brightmaps/monsters/Etherealsoul/BMETHSM0.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSN0
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSO0
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSP1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSP1"
+Map "brightmaps/monsters/Etherealsoul/BMETHSP1.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSP5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSP6P4
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSP6"
+Map "brightmaps/monsters/Etherealsoul/BMETHSP6.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSP7P3
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSP7"
+Map "brightmaps/monsters/Etherealsoul/BMETHSP7.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSP8P2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSP8"
+Map "brightmaps/monsters/Etherealsoul/BMETHSP8.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSQ1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSQ1"
+Map "brightmaps/monsters/Etherealsoul/BMETHSQ1.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSQ5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSQ6Q4
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSQ6"
+Map "brightmaps/monsters/Etherealsoul/BMETHSQ6.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSQ7Q3
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSQ7"
+Map "brightmaps/monsters/Etherealsoul/BMETHSQ7.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSQ8Q2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSQ8"
+Map "brightmaps/monsters/Etherealsoul/BMETHSQ8.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSR1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSR1"
+Map "brightmaps/monsters/Etherealsoul/BMETHSR1.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSR5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSR6R4
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSR6"
+Map "brightmaps/monsters/Etherealsoul/BMETHSR6.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSR7R3
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSR7"
+Map "brightmaps/monsters/Etherealsoul/BMETHSR7.png"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSR8R2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSR8"
+Map "brightmaps/monsters/Etherealsoul/BMETHSR8.png"
 DisableFullBright
 }
 
 
 BrightMap Sprite HELEA1
 {
-Map "brightmaps/monsters/Helemental/BMHELEA1"
+Map "brightmaps/monsters/Helemental/BMHELEA1.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEA2A8
 {
-Map "brightmaps/monsters/Helemental/BMHELEA2"
+Map "brightmaps/monsters/Helemental/BMHELEA2.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEA3A7
 {
-Map "brightmaps/monsters/Helemental/BMHELEA3"
+Map "brightmaps/monsters/Helemental/BMHELEA3.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEA4A6
 {
-Map "brightmaps/monsters/Helemental/BMHELEA4"
+Map "brightmaps/monsters/Helemental/BMHELEA4.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEA5
 {
-Map "brightmaps/monsters/Helemental/BMHELEA5"
+Map "brightmaps/monsters/Helemental/BMHELEA5.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEB1
 {
-Map "brightmaps/monsters/Helemental/BMHELEB1"
+Map "brightmaps/monsters/Helemental/BMHELEB1.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEB2B8
 {
-Map "brightmaps/monsters/Helemental/BMHELEB2"
+Map "brightmaps/monsters/Helemental/BMHELEB2.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEB3B7
 {
-Map "brightmaps/monsters/Helemental/BMHELEB3"
+Map "brightmaps/monsters/Helemental/BMHELEB3.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEB4B6
 {
-Map "brightmaps/monsters/Helemental/BMHELEB4"
+Map "brightmaps/monsters/Helemental/BMHELEB4.png"
 DisableFullBright
 }
 
 BrightMap Sprite BMHELEB5
 {
-Map "brightmaps/monsters/Helemental/BMHELEB5"
+Map "brightmaps/monsters/Helemental/BMHELEB5.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEC1
 {
-Map "brightmaps/monsters/Helemental/BMHELEC1"
+Map "brightmaps/monsters/Helemental/BMHELEC1.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEC2C8
 {
-Map "brightmaps/monsters/Helemental/BMHELEC2"
+Map "brightmaps/monsters/Helemental/BMHELEC2.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEC3C7
 {
-Map "brightmaps/monsters/Helemental/BMHELEC3"
+Map "brightmaps/monsters/Helemental/BMHELEC3.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEC4C6
 {
-Map "brightmaps/monsters/Helemental/BMHELEC4"
+Map "brightmaps/monsters/Helemental/BMHELEC4.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEC5
 {
-Map "brightmaps/monsters/Helemental/BMHELEC5"
+Map "brightmaps/monsters/Helemental/BMHELEC5.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELED1
 {
-Map "brightmaps/monsters/Helemental/BMHELED1"
+Map "brightmaps/monsters/Helemental/BMHELED1.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELED2D8
 {
-Map "brightmaps/monsters/Helemental/BMHELED2"
+Map "brightmaps/monsters/Helemental/BMHELED2.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELED3D7
 {
-Map "brightmaps/monsters/Helemental/BMHELED3"
+Map "brightmaps/monsters/Helemental/BMHELED3.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELED4D6
 {
-Map "brightmaps/monsters/Helemental/BMHELED4"
+Map "brightmaps/monsters/Helemental/BMHELED4.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELED5
 {
-Map "brightmaps/monsters/Helemental/BMHELED5"
+Map "brightmaps/monsters/Helemental/BMHELED5.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEE1
 {
-Map "brightmaps/monsters/Helemental/BMHELEE1"
+Map "brightmaps/monsters/Helemental/BMHELEE1.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEE2E8
 {
-Map "brightmaps/monsters/Helemental/BMHELEE2"
+Map "brightmaps/monsters/Helemental/BMHELEE2.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEE3E7
 {
-Map "brightmaps/monsters/Helemental/BMHELEE3"
+Map "brightmaps/monsters/Helemental/BMHELEE3.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEE4E6
 {
-Map "brightmaps/monsters/Helemental/BMHELEE4"
+Map "brightmaps/monsters/Helemental/BMHELEE4.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEE5
 {
-Map "brightmaps/monsters/Helemental/BMHELEE5"
+Map "brightmaps/monsters/Helemental/BMHELEE5.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEF1
 {
-Map "brightmaps/monsters/Helemental/BMHELEF1"
+Map "brightmaps/monsters/Helemental/BMHELEF1.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEF2F8
 {
-Map "brightmaps/monsters/Helemental/BMHELEF2"
+Map "brightmaps/monsters/Helemental/BMHELEF2.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEF3F7
 {
-Map "brightmaps/monsters/Helemental/BMHELEF3"
+Map "brightmaps/monsters/Helemental/BMHELEF3.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEF4F6
 {
-Map "brightmaps/monsters/Helemental/BMHELEF4"
+Map "brightmaps/monsters/Helemental/BMHELEF4.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEF5
 {
-Map "brightmaps/monsters/Helemental/BMHELEF5"
+Map "brightmaps/monsters/Helemental/BMHELEF5.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEG1
 {
-Map "brightmaps/monsters/Helemental/BMHELEG1"
+Map "brightmaps/monsters/Helemental/BMHELEG1.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEG2G8
 {
-Map "brightmaps/monsters/Helemental/BMHELEG2"
+Map "brightmaps/monsters/Helemental/BMHELEG2.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEG3G7
 {
-Map "brightmaps/monsters/Helemental/BMHELEG3"
+Map "brightmaps/monsters/Helemental/BMHELEG3.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEG4G6
 {
-Map "brightmaps/monsters/Helemental/BMHELEG4"
+Map "brightmaps/monsters/Helemental/BMHELEG4.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEG5
 {
-Map "brightmaps/monsters/Helemental/BMHELEG5"
+Map "brightmaps/monsters/Helemental/BMHELEG5.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEH1
 {
-Map "brightmaps/monsters/Helemental/BMHELEH1"
+Map "brightmaps/monsters/Helemental/BMHELEH1.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEH2H8
 {
-Map "brightmaps/monsters/Helemental/BMHELEH2"
+Map "brightmaps/monsters/Helemental/BMHELEH2.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEH3H7
 {
-Map "brightmaps/monsters/Helemental/BMHELEH3"
+Map "brightmaps/monsters/Helemental/BMHELEH3.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEH4H6
 {
-Map "brightmaps/monsters/Helemental/BMHELEH4"
+Map "brightmaps/monsters/Helemental/BMHELEH4.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEH5
 {
-Map "brightmaps/monsters/Helemental/BMHELEH5"
+Map "brightmaps/monsters/Helemental/BMHELEH5.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEI0
 {
-Map "brightmaps/monsters/Helemental/BMHELEI0"
+Map "brightmaps/monsters/Helemental/BMHELEI0.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEJ0
 {
-Map "brightmaps/monsters/Helemental/BMHELEJ0"
+Map "brightmaps/monsters/Helemental/BMHELEJ0.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEK0
 {
-Map "brightmaps/monsters/Helemental/BMHELEK0"
+Map "brightmaps/monsters/Helemental/BMHELEK0.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEL0
 {
-Map "brightmaps/monsters/Helemental/BMHELEL0"
+Map "brightmaps/monsters/Helemental/BMHELEL0.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEM0
 {
-Map "brightmaps/monsters/Helemental/BMHELEM0"
+Map "brightmaps/monsters/Helemental/BMHELEM0.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEN0
 {
-Map "brightmaps/monsters/Helemental/BMHELEN0"
+Map "brightmaps/monsters/Helemental/BMHELEN0.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEO0
 {
-Map "brightmaps/monsters/Helemental/BMHELEO0"
+Map "brightmaps/monsters/Helemental/BMHELEO0.png"
 DisableFullBright
 }
 
 BrightMap Sprite HELEP0
 {
-Map "brightmaps/monsters/Helemental/BMHELEP0"
+Map "brightmaps/monsters/Helemental/BMHELEP0.png"
 DisableFullBright
 }
 

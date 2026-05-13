@@ -1,6 +1,6 @@
 // M41A pulse rifle (PB_M41A add-on fold). Primary 7.62; alt 30mm / 12ga (wheel).
 
-const m41a_ammoFull = 95;
+const m41a_ammoFull = 30;
 
 class M41AChamberAmmo : Ammo
 {
@@ -48,7 +48,7 @@ class PB_M41A : PB_WeaponBase
 		Weapon.SlotPriority 0.08;
 		Weapon.AmmoType1 "NewClip";
 		Weapon.AmmoType2 "M41AChamberAmmo";
-		Weapon.AmmoGive1 30;
+		Weapon.AmmoGive1 20;
 		Weapon.AmmoUse1 0;
 		Weapon.AmmoUse2 0;
 		Inventory.MaxAmount 2;

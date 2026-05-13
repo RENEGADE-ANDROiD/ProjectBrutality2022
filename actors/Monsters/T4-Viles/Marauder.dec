@@ -691,7 +691,7 @@ SeeContinuePart36Continue:
 			TNT1 A 0 A_UnSetInvulnerable
 			TNT1 A 0  A_FaceTarget	
 			TNT1 A 0  A_GiveInventory("CantUseAxe", 150 )
-			TNT1 A 0  A_PlaySound("MSWING")
+			TNT1 A 0  A_PlaySound("weapons/fistwhoosh")
 			TNT1 A 0  A_FaceTarget
 			TNT1 W 0 ThrustThingZ(0, 20, 0, 0)
 			TNT1 A 0  A_Recoil(-10)
@@ -712,7 +712,7 @@ SeeContinuePart36Continue:
 			TNT1 A 0 A_GiveInventory("CantUseAxe", 150 )
 			TNT1 A 0 A_FaceTarget
 			TNT1 A 0 A_GiveInventory("CanBeStunned", 100)
-			TNT1 A 0 A_PlaySound("MSWING")
+			TNT1 A 0 A_PlaySound("weapons/fistwhoosh")
 			TNT1 A 0 A_Recoil(-10)
 			TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",3); } }
 			TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 44,0)
@@ -1317,7 +1317,7 @@ SeeContinuePart36Continue:
 		TNT1 A 0 A_TakeInventory("FatalityHited", 100)
 		TNT1 A 0 A_Jump (128, "FatalityMarauder2")
         //////////////////////////////////////////////////////
-		TNT1 A 0 A_PlaySound("MSWING")
+		TNT1 A 0 A_PlaySound("weapons/fistwhoosh")
         MAFA ABC 6 A_SetTics(6 / GetCVar("cl_fatalityspeed"))
         MAFA DE 4 A_SetTics(4 / GetCVar("cl_fatalityspeed"))
 		TNT1 A 0 A_PlaySound("weapons/fistwhoosh",1)
@@ -1361,10 +1361,12 @@ SeeContinuePart36Continue:
 
 	FatalityMarauder2: // axe mutilator
 		//////////////////////////////////////////////////////
+		NULL A 0 A_PlaySound("weapons/fistwhoosh", 1)
+		NULL A 0 A_PlaySound("MRDPN", 2)
 		FSM4 ABC 4 A_SetTics(4 / GetCVar("cl_fatalityspeed"))
 		NULL A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAAA 0 A_CustomMissile ("Teeth", 15, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_PlaySound("Marauder/Pain", 1)
+		TNT1 A 0 A_PlaySound("MRDPN", 1)
 		TNT1 A 0 A_PlaySound("marine/superfist1", 4)
 		TNT1 AAA 0 A_CustomMissile ("PlayerFlyingBlood", 15, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 ACS_Execute(580, 0, 0, 0, 0)
@@ -1372,7 +1374,12 @@ SeeContinuePart36Continue:
 		TNT1 A 0 ACS_Execute(583, 0, 0, 0, 0)
         TNT1 A 0 ACS_Execute(584, 0, 0, 0, 0)
 		FSM4 D 5 A_SetTics(5 / GetCVar("cl_fatalityspeed"))
+		NULL A 0 A_PlaySound("weapons/fistwhoosh", 3)
+		NULL A 0 A_PlaySound("MRDPN", 5)
 		FSM4 E 5 A_SetTics(5 / GetCVar("cl_fatalityspeed"))
+		NULL A 0 A_PlaySound("weapons/fistwhoosh", 3)
+		NULL A 0 A_PlaySound("MRDPN", 5)
+		NULL A 0 A_PlaySound("marine/superfist1", 4)
 		FSM4 F 15 A_SetTics(15 / GetCVar("cl_fatalityspeed"))
 		NULL A 0 A_CustomMissile ("ShakeShakeShake", 1, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAA 0 A_CustomMissile ("PlayerFlyingBlood", 15, 0, random (0, 360), 2, random (0, 160)) 
