@@ -227,6 +227,7 @@ ACTOR PB_BelphegorGK : PB_Belphegor replaces PB_Belphegor
 		
 	Death.Fatality:
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_PlaySound("baron/pain")
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
         TNT1 A 0 A_GiveToTarget("BelphegorFatality", 1)
         TNT1 A 1 A_NoBlocking
@@ -336,6 +337,7 @@ ACTOR PB_CyberBaronGK: PB_CyberBaron replaces PB_CyberBaron
 		
 	Death.Fatality:
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_PlaySound("cbaron/pain")
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
 		TNT1 A 0 A_Jump(256, "CBaronFin1", "CBaronFin1", "CBaronFin1", "CBaronFin1", "CBaronFin1", "CBaronFin1", "CBaronFin2", "CBaronFin2", "CBaronFin2", "CBaronFin2", "CBaronFin2", "CBaronFin2")
 		Stop
@@ -446,6 +448,7 @@ Actor PB_CyberKnightGK: PB_CyberKnight Replaces PB_CyberKnight
 		
 	Death.Fatality:
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_PlaySound("knight/pain")
 		TNT1 A 0 A_Jump(256, "Fatality1", "Fatality1", "Fatality1", "Fatality1", "Fatality1", "Fatality1", "Fatality2", "Fatality2", "Fatality2", "Fatality2", "Fatality2", "Fatality2")
 		Stop
 	}
@@ -554,6 +557,7 @@ ACTOR PB_CyberPaladinGK: PB_CyberPaladin replaces PB_CyberPaladin
 
 	Death.Fatality:
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_PlaySound("Paladin/Pain")
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
         TNT1 A 0 A_GiveToTarget("CyberPaladinFatality1", 1)
         TNT1 A 1 A_BossDeath

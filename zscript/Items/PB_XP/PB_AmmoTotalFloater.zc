@@ -1,0 +1,127 @@
+class PB_AmmoTotalFloaterHandler : EventHandler
+{
+	bool resyncAmmo[MAXPLAYERS];
+	Array<String> ammoLastKeys;
+	Array<int> ammoLastAmts;
+
+	int FindLastAmt(String key)
+	{
+		for (int i = 0; i < ammoLastKeys.Size(); i++)
+		{
+			if (ammoLastKeys[i] == key)
+				return ammoLastAmts[i];
+		}
+		return -1;
+	}
+
+	void RemovePlayerKeys(int pn)
+	{
+		String prefix = String.Format("%d|", pn);
+		for (int i = ammoLastKeys.Size() - 1; i >= 0; i--)
+		{
+			if (ammoLastKeys[i].IndexOf(prefix) == 0)
+			{
+				ammoLastKeys.Delete(i);
+				ammoLastAmts.Delete(i);
+			}
+		}
+	}
+
+	void UpsertLast(String key, int amt)
+	{
+		for (int i = 0; i < ammoLastKeys.Size(); i++)
+		{
+			if (ammoLastKeys[i] == key)
+			{
+				ammoLastAmts[i] = amt;
+				return;
+			}
+		}
+		ammoLastKeys.Push(key);
+		ammoLastAmts.Push(amt);
+	}
+
+	static void SpawnAmmoTotalFloater(PlayerPawn plr, int total)
+	{
+		if (!PB_XPRewardsHandler.AmmoTotalFloatersEnabled(plr))
+			return;
+		if (plr.CountInv("CameraRunner") > 0)
+			return;
+		if (total < 1)
+			return;
+		Vector3 p = PB_XPRewardsHandler.PB_XP_FloatSpot(plr, 0.52);
+		p.x += frandom(-10., 10.);
+		p.y += frandom(-10., 10.);
+		Name dt = PB_XPRewardsHandler.PB_XP_DamTypeFor(plr, 'PBAMMO', 'Disintegrate');
+		DamNum.spawnDamageNumbers(p, total, dt, true, 1.15);
+	}
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		ammoLastKeys.Clear();
+		ammoLastAmts.Clear();
+		for (int i = 0; i < MAXPLAYERS; i++)
+			resyncAmmo[i] = true;
+	}
+
+	override void PlayerEntered(PlayerEvent e)
+	{
+		if (!e)
+			return;
+		int pn = e.PlayerNumber;
+		if (pn < 0 || pn >= MAXPLAYERS)
+			return;
+		resyncAmmo[pn] = true;
+	}
+
+	override void WorldTick()
+	{
+		for (int pn = 0; pn < MAXPLAYERS; pn++)
+		{
+			if (!PlayerInGame[pn] || !players[pn].mo)
+				continue;
+			let plr = PlayerPawn(players[pn].mo);
+			if (!plr || !plr.player)
+				continue;
+
+			if (resyncAmmo[pn])
+			{
+				RemovePlayerKeys(pn);
+				for (Inventory z = plr.Inv; z; z = z.Inv)
+				{
+					if (!(z is "Ammo"))
+						continue;
+					let am = Ammo(z);
+					String key = String.Format("%d|", pn) .. am.GetClassName();
+					UpsertLast(key, am.Amount);
+				}
+				resyncAmmo[pn] = false;
+				continue;
+			}
+
+			Array<String> curKeys;
+			Array<int> curAmts;
+			for (Inventory z = plr.Inv; z; z = z.Inv)
+			{
+				if (!(z is "Ammo"))
+					continue;
+				let am = Ammo(z);
+				String key = String.Format("%d|", pn) .. am.GetClassName();
+				curKeys.Push(key);
+				curAmts.Push(am.Amount);
+			}
+
+			for (int i = 0; i < curKeys.Size(); i++)
+			{
+				int was = FindLastAmt(curKeys[i]);
+				int now = curAmts[i];
+				if (was >= 0 && now > was)
+					SpawnAmmoTotalFloater(plr, now);
+			}
+
+			RemovePlayerKeys(pn);
+			for (int j = 0; j < curKeys.Size(); j++)
+				UpsertLast(curKeys[j], curAmts[j]);
+		}
+	}
+}

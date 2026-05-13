@@ -1043,6 +1043,7 @@ Goto See2
 
    FatalityZombieman:
        3HF1 A 20
+	   TNT1 A 0 A_PlaySound("grunt/pain", 3)
 	   TNT1 A 0 A_PlaySound("grunt/death")
 	   3HF1 BC 5
 		TNT1 AA 0 A_CustomMissile ("XDeath1", 55, 0, random (0, 360), 2, random (0, 160))
@@ -1050,6 +1051,7 @@ Goto See2
 		TNT1 AA 0 A_CustomMissile ("MuchBlood", 55, 0, random (0, 360), 2, random (0, 160))
 		3HF1 D 10
 		3HF1 E 5
+		 TNT1 A 0 A_PlaySound("misc/xdeath", 4)
 		 TNT1 A 0 A_CustomMissile ("XDeathZombieManHead", 65, 0, random (0, 360), 2, random (70, 120))
 		3HF1 F 30
 		3HF1 G 10
@@ -1068,6 +1070,7 @@ Goto See2
 		
 	FatalitySergeant:
        3HF1 I 15
+	   TNT1 A 0 A_PlaySound("grunt/pain", 3)
 	   TNT1 A 0 A_PlaySound("grunt/death")
 	   3HF1 I 5
 	   
@@ -1075,6 +1078,7 @@ Goto See2
 	   TNT1 AAA 0 A_CustomMissile ("XDeath1", 45, 0, random (0, 360), 2, random (0, 160))
 	   TNT1 AAA 0 A_CustomMissile ("XDeath2", 45, 0, random (0, 360), 2, random (0, 160))
 	   TNT1 AAA 0 A_CustomMissile ("XDeath3", 55, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 	   TNT1 A 0 A_SpawnItem("SergeantFatalizedByBaron")
 	   
 	   3HF1 J 10

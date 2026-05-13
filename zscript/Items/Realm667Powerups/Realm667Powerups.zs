@@ -390,8 +390,10 @@ class FrostAuraPower : Powerup
 							if (mon.tics > 0)
 							{
 								double shp = mon.spawnhealth();
-								double hp  = mon.health;
-								int hpfactor = int(shp / hp * 3);
+								double hpcur = mon.health;
+								if (hpcur < 1)
+									hpcur = 1;
+								int hpfactor = int(shp / hpcur * 3);
 								hpfactor = clamp(hpfactor, 2, 5);
 								mon.tics  += hpfactor;
 								mon.speed -= hpfactor;
