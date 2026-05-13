@@ -1,9 +1,11 @@
 # Smoketest / test logs
 smoketest_baseline.log
 smoketest_*.log
+uzdoom_session.log
 
-# Local maintainer / CI scripts (not part of the mod payload)
+# Local maintainer / CI scripts (not part of the mod payload; nothing here is committed)
 tools/
+scripts/
 
 # Build artifacts
 *.pk3
