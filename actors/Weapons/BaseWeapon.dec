@@ -409,35 +409,42 @@ States
 		
 	FireShoulderCannon:
 		TNT1 A 0
-		{	
-			if(CountInv("FlameBelchSelected") > 0)
-			{
-				A_TakeInventory("Zoomed",1);
-				A_ZoomFactor(1.0);
-				A_TakeInventory("ADSmode",1);
-				A_StopSound(CHAN_WEAPON);
-				A_StopSound(CHAN_6);
-				return ResolveState("FireFlameBelch");
-			}
-			if(CountInv("IceBombSelected") > 0)
-			{
-				A_TakeInventory("Zoomed",1);
-				A_ZoomFactor(1.0);
-				A_TakeInventory("ADSmode",1);
-				A_StopSound(CHAN_WEAPON);
-				A_StopSound(CHAN_6);
-				return ResolveState("FireIceBomb");
-			}
+		{
 			A_TakeInventory("Zoomed",1);
 			A_ZoomFactor(1.0);
 			A_TakeInventory("ADSmode",1);
 			A_StopSound(CHAN_WEAPON);
 			A_StopSound(CHAN_6);
-			return ResolveState("FireFlameBelch");
+			if (CountInv("FlameBelchSelected") > 0 && CountInv("FlameBelchReady") > 0)
+			{
+				return ResolveState("FireFlameBelch");
+			}
+			if (CountInv("IceBombSelected") > 0 && CountInv("IceBombReady") > 0)
+			{
+				return ResolveState("FireIceBomb");
+			}
+			if (CountInv("FlameBelchSelected") > 0 && CountInv("FlameBelchReady") < 1 && CountInv("IceBombReady") > 0)
+			{
+				A_SetInventory("IceBombSelected", 1);
+				A_SetInventory("FlameBelchSelected", 0);
+				return ResolveState("FireIceBomb");
+			}
+			if (CountInv("IceBombSelected") > 0 && CountInv("IceBombReady") < 1 && CountInv("FlameBelchReady") > 0)
+			{
+				A_SetInventory("FlameBelchSelected", 1);
+				A_SetInventory("IceBombSelected", 0);
+				return ResolveState("FireFlameBelch");
+			}
+			if (CountInv("FlameBelchReady") > 0)
+			{
+				return ResolveState("FireFlameBelch");
+			}
+			if (CountInv("IceBombReady") > 0)
+			{
+				return ResolveState("FireIceBomb");
+			}
+			return ResolveState("EmptyCannon");
 		}
-		TNT1 A 0 A_PlaySound("Equip_notready")
-		TNT1 A 0 A_TakeInventory("DoShoulderCannon", 1)
-		Goto GoingToReady	
 		
 	FireFlameBelch:
 		TNT1 A 0

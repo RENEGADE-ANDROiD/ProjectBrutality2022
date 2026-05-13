@@ -428,6 +428,8 @@ OPTMNU_PB_PDA_BLOCKY_HINT2 = "Off = legacy text-list. Up / Down arrows page thro
 OPTMNU_PB_XP_REWARDS = "PDA XP & reward spin (single-player)";
 OPTMNU_PB_XP_REWARDS_HINT = "On: single-player kills grant XP; rank-ups give reward points.";
 OPTMNU_PB_XP_REWARDS_HINT2 = "Blocky PDA home adds Reward Spin (3 pts) — weapons only; refunds if none eligible.";
+OPTMNU_GLORYHUD_STAGING_NOTE1 = "Glory HUD Background: use Eternal (NewHUD) for the DOOM Eternal-style center strip (Crucible / Blood Punch / shoulders).";
+OPTMNU_GLORYHUD_STAGING_NOTE2 = "PB Staging addon configs used value 2 for that strip; in PB2022 value 2 is None — pick Eternal (NewHUD) (value 3) or reset the cvar.";
 PB_WEAPON_WHEEL_EMPTY = "\cgNothing to select\c- (no weapons on bar).";
 PB_WHEELTIP_WPICKSLOT = "Outer ring: weapon slots you are carrying.\nAim toward the \cccenter\c- when a slot lists multiple weapons\nto open the inner ring for that slot.";
 
