@@ -319,12 +319,12 @@ class PB_ArgentSith : PB_WeaponBase
 		JSML ABCDEF 1;
 		PUFF A 0 A_PlaySound("player/cyborg/fist", 3);
 		TNT1 A 0 {
-		     A_FireCustomMissile("Plasma_Ball", 20, 0);
-		     A_FireCustomMissile("Plasma_Ball", -20, 0);
-		     A_FireCustomMissile("Plasma_Ball", 10, 0, 0, 10);
-		     A_FireCustomMissile("Plasma_Ball", -10, 0, 0, -10);
-		     A_FireCustomMissile("Plasma_Ball", -15, 0, 0, -15);
-		     A_FireCustomMissile("Plasma_Ball", -8, 0, 0, -8);
+		     A_FireCustomMissile("Hellbullet", 20, 0);
+		     A_FireCustomMissile("Hellbullet", -20, 0);
+		     A_FireCustomMissile("Hellbullet", 10, 0, 0, 10);
+		     A_FireCustomMissile("Hellbullet", -10, 0, 0, -10);
+		     A_FireCustomMissile("Hellbullet", -15, 0, 0, -15);
+		     A_FireCustomMissile("Hellbullet", -8, 0, 0, -8);
 		     }
 		JSML FGHIJKLMNOP 1;
 		TNT1 A 7 {
