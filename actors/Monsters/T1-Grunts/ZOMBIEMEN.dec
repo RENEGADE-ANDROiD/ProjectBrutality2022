@@ -202,7 +202,7 @@ States
 }
 }
 
-Actor Fatality6ZMan: PB_RifleZombieMan
+Actor Fatality6ZMan: PB_RifleZombieman
 {
 Health 15
 Radius 16
@@ -998,7 +998,7 @@ States{Spawn:
 
 
 
-Actor Vanilla_ZombieMan : PB_RifleZombieMan
+Actor Vanilla_ZombieMan : PB_RifleZombieman
 {
 	DropItem "DropedRifle" 256
 	DropItem "DropedGrenade" 5

@@ -67,7 +67,9 @@ const MAXITERATIONS = 32676;
 
 #include "zscript/damnums/constants.txt"
 #include "zscript/damnums/damnum.txt"
+#include "zscript/Items/PB_XP/PB_AmmoTotalFloater.zc"
 #include "zscript/damnums/events.txt"
+#include "zscript/damnums/PB_HazardDamageHud.zc"
 #include "zscript/damnums/fonts/base.txt"
 #include "zscript/damnums/fonts/doomclassic.txt"
 #include "zscript/damnums/fonts/doomsmall.txt"
@@ -123,6 +125,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/LaserAPI/LaserAPI.txt"
 
 #include "zscript/Weapons/BaseWeapon.zc"
+#include "zscript/Weapons/BaseWeapon_Equipment.zsc"
 #include "zscript/Weapons/RailGunFire.zc"
 #include "zscript/Weapons/PB_SuperBFGBall.zc"
 #include "zscript/Weapons/Slot1/KatanaUpgradeChoiceHelpers.zc"

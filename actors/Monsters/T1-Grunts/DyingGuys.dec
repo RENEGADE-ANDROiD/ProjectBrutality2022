@@ -1284,6 +1284,7 @@ Death.cut:
 	Goto Suffer
 	Suffer:
 	    TNT1 A 0
+		TNT1 A 0 A_PlaySound ("monsters/zombie/suffer", 1, 1, 1)
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 28,0)
         ZZD5 EEEEE 2 A_CustomMissile ("PB_SquirtingBloodTrail", 20, 0, random(0, 360), 2, random (0, 45))
 		TNT1 A 0 A_SpawnItem ("BloodDying", 0, 20)
@@ -4051,6 +4052,7 @@ ACTOR ZombieScientistDyingGuts: DyingZombiemanNoArm
 			TNT1 A 0 A_PlaySound ("monsters/zombie/suffer", 1, 1, 1)
 		Suffer:
 			TNT1 A 0
+			TNT1 A 0 A_PlaySound ("monsters/zombie/suffer", 1, 1, 1)
 			TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
 
 			TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 28,0)
@@ -6291,6 +6293,7 @@ ACTOR HelmetZombieManDyingAfterFatality: DyingHelmetZombiemanNoArm
 	Goto Suffer
 	Suffer:
 	    TNT1 A 0
+		TNT1 A 0 A_PlaySound ("monsters/zombie/suffer", 1, 1, 1)
         
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 28,0)
         5ZD5 EEEEE 2 A_CustomMissile ("PB_SquirtingBloodTrail", 20, 0, random(0, 360), 2, random (0, 45))
@@ -6510,6 +6513,7 @@ Actor DyingFormerScientistNoArm: DyingZombiemanNoArm
 			TNT1 A 0
 			TNT1 A 0 A_PlaySound ("monsters/zombie/suffer", 1, 1, 1)
 		Suffer:
+			TNT1 A 0 A_PlaySound ("monsters/zombie/suffer", 1, 1, 1)
 			TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 48,0)
 			TNT1 A 0 A_FaceTarget
 			
@@ -7102,6 +7106,7 @@ Actor DyingFormerScientistChainsawNoArm: DyingFormerScientistNoArm
 			TNT1 A 0
 			TNT1 A 0 A_PlaySound ("monsters/zombie/suffer", 1, 1, 1)
 		Suffer:
+			TNT1 A 0 A_PlaySound ("monsters/zombie/suffer", 1, 1, 1)
 			TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 48,0)
 			TNT1 A 0 A_FaceTarget
 			
@@ -7903,6 +7908,7 @@ Height 48
 	
 	Suffer:
 	    TNT1 A 0
+		TNT1 A 0 A_PlaySound ("monsters/zombie/suffer", 1, 1, 1)
 	    
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 48,0)
 		PZD7 ABC 3
