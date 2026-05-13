@@ -28,6 +28,18 @@ class PB_RewardSpin : Inventory
 class PB_XPRewardsHandler : EventHandler
 {
 	const SPIN_COST = 3;
+	const PB_XP_HUDFLO_RANK_TTL = 78;
+
+	int pbXpHudRankBorn[MAXPLAYERS];
+	int pbXpHudRankVal[MAXPLAYERS];
+
+	void HudQueueRankFloater(int pn, int newRank)
+	{
+		if (netgame || pn < 0 || pn >= MAXPLAYERS || newRank < 1)
+			return;
+		pbXpHudRankBorn[pn] = level.maptime;
+		pbXpHudRankVal[pn] = newRank;
+	}
 
 	clearscope static int SpinCost()
 	{
@@ -114,6 +126,15 @@ class PB_XPRewardsHandler : EventHandler
 		return cv && cv.GetBool();
 	}
 
+	static bool AmmoTotalFloatersEnabled(PlayerPawn plr)
+	{
+		if (!plr || !plr.player)
+			return false;
+		if (XPDamageNumbersEnabled(plr))
+			return true;
+		return PB_EventHandler.PB_XP_RewardsOn();
+	}
+
 	static Vector3 PB_XP_FloatSpot(Actor at, double zFrac = 0.88)
 	{
 		if (!at)
@@ -148,20 +169,70 @@ class PB_XPRewardsHandler : EventHandler
 	{
 		if (!plr || newRank < 1)
 			return;
-		if (XPDamageNumbersEnabled(plr))
+		if (PB_EventHandler.PB_XP_RewardsOn() && !netgame)
 		{
-			Name dt = PB_XP_DamTypeFor(plr, 'PBRANKUP', 'Rocket');
-			for (int b = 0; b < 2; b++)
-			{
-				Vector3 p = PB_XP_FloatSpot(plr, 0.95);
-				p.x += frandom(-14., 14.);
-				p.y += frandom(-14., 14.);
-				p.z += frandom(0., 16.);
-				DamNum.spawnDamageNumbers(p, newRank, dt, true, 1.15);
-			}
+			let h = PB_XPRewardsHandler(EventHandler.Find("PB_XPRewardsHandler"));
+			if (h)
+				h.HudQueueRankFloater(plr.PlayerNumber(), newRank);
 		}
 		plr.A_SetBlend("Gold", 0.2, 16);
 		plr.A_StartSound("misc/trkey", CHAN_7, CHANF_OVERLAP, 0.75, ATTN_NONE);
+	}
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			pbXpHudRankBorn[i] = -1;
+			pbXpHudRankVal[i] = 0;
+		}
+	}
+
+	override void WorldTick()
+	{
+		int gt = level.maptime;
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			if (pbXpHudRankBorn[i] >= 0 && gt - pbXpHudRankBorn[i] > PB_XP_HUDFLO_RANK_TTL)
+				pbXpHudRankBorn[i] = -1;
+		}
+	}
+
+	override void RenderOverlay(RenderEvent e)
+	{
+		if (!e || gamestate != GS_LEVEL)
+			return;
+		if (!playeringame[consoleplayer])
+			return;
+		let mo = players[consoleplayer].mo;
+		if (!mo || mo.CountInv("CameraRunner") > 0)
+			return;
+		int pn = consoleplayer;
+		if (pn < 0 || pn >= MAXPLAYERS)
+			return;
+
+		int sw = Screen.getWidth();
+		int sh = Screen.getHeight();
+		double txtSc = clamp(sh / 480.0, 1.0, 3.0);
+		double halfSc = txtSc * 0.52;
+
+		if (pbXpHudRankBorn[pn] >= 0)
+		{
+			int age = level.maptime - pbXpHudRankBorn[pn];
+			if (age >= 0 && age <= PB_XP_HUDFLO_RANK_TTL)
+			{
+				double rise = age * 2.55;
+				double fade = clamp(1.0 - double(age) / double(PB_XP_HUDFLO_RANK_TTL), 0., 1.);
+				String s = String.Format("RANK %d", pbXpHudRankVal[pn]);
+				int tw = int(BigFont.StringWidth(s) * halfSc);
+				int tx = int(sw * 0.5 - tw / 2);
+				int ty = int(sh * 0.5 - rise);
+				Screen.DrawText(BigFont, Font.CR_BLACK, tx + 2, ty + 2, s,
+					DTA_ScaleX, halfSc, DTA_ScaleY, halfSc, DTA_Alpha, fade * 0.38);
+				Screen.DrawText(BigFont, Font.CR_GOLD, tx, ty, s,
+					DTA_ScaleX, halfSc, DTA_ScaleY, halfSc, DTA_Alpha, fade);
+			}
+		}
 	}
 
 	override void WorldThingDied(WorldEvent e)
