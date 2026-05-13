@@ -374,18 +374,18 @@ $alias Blighter/Explode Blighter/Death
 $alias Blighter/Arm HSpawnBurster/Arm
 
 $random CyberZ/Sight { CZOMSEE1 CZOMSEE2 }
-CZOMSEE1 "sounds/MONSTERS/CyberFodder/CZOMSEE1"
-CZOMSEE2 "sounds/MONSTERS/CyberFodder/CZOMSEE2"
+CZOMSEE1 "sounds/MONSTERS/CyberFodder/CZOMSEE1.wav"
+CZOMSEE2 "sounds/MONSTERS/CyberFodder/CZOMSEE2.wav"
 
 $random CyberZ/Active { CZOMACT1 CZOMACT2 CZOMACT3 CZOMACT4 CZOMACT5 CZOMACT6 }
-CZOMACT1 "sounds/MONSTERS/CyberFodder/CZOMACT1"
-CZOMACT2 "sounds/MONSTERS/CyberFodder/CZOMACT2"
-CZOMACT3 "sounds/MONSTERS/CyberFodder/CZOMACT3"
-CZOMACT4 "sounds/MONSTERS/CyberFodder/CZOMACT4"
-CZOMACT5 "sounds/MONSTERS/CyberFodder/CZOMACT5"
-CZOMACT6 "sounds/MONSTERS/CyberFodder/CZOMACT6"
+CZOMACT1 "sounds/MONSTERS/CyberFodder/CZOMACT1.wav"
+CZOMACT2 "sounds/MONSTERS/CyberFodder/CZOMACT2.wav"
+CZOMACT3 "sounds/MONSTERS/CyberFodder/CZOMACT3.wav"
+CZOMACT4 "sounds/MONSTERS/CyberFodder/CZOMACT4.wav"
+CZOMACT5 "sounds/MONSTERS/CyberFodder/CZOMACT5.wav"
+CZOMACT6 "sounds/MONSTERS/CyberFodder/CZOMACT6.wav"
 
-CyberZ/Pain			"sounds/MONSTERS/CyberFodder/CZOMPAI"
+CyberZ/Pain			"sounds/MONSTERS/CyberFodder/CZOMPAI.wav"
 
 CyberZ/Death			"sounds/MONSTERS/CyberFodder/CZOMDTH"
 
@@ -5118,13 +5118,13 @@ Sword/SWave4       SHOKWAV4
 Sword/SWave5       SHOKWAV5
 
 
-PUMP "sounds/hasg/PBWP/PUMP"
+PUMP "sounds/hasg/PBWP/PUMP.wav"
 BDOPEN "sounds/hasg/PBWP/BDOPEN.ogg"
 BDLOAD "sounds/hasg/PBWP/BDLOAD.ogg"
 A48PKUP2 "sounds/hasg/PBWP/A48PKUP2.wav"
-weapons/golide/select "sounds/hasg/PBWP/ASG_GOLI"
-weapons/golide/pump "sounds/hasg/PBWP/PUMP"
-weapons/golide/pumpup "sounds/hasg/PBWP/ASGPU"
+weapons/golide/select "sounds/hasg/PBWP/ASG_GOLI.ogg"
+weapons/golide/pump "sounds/hasg/PBWP/PUMP.wav"
+weapons/golide/pumpup "sounds/hasg/PBWP/ASGPU.ogg"
 weapons/golide/drumopen "sounds/hasg/PBWP/BDOPEN.ogg"
 weapons/golide/drumclose "sounds/hasg/PBWP/BDLOAD.ogg"
 weapons/golide/drumpickup "sounds/hasg/Pickup.ogg"
@@ -5140,22 +5140,22 @@ weapons/golide/fire_flech "sounds/hasg/Fire/Flechette.ogg"
 weapons/golide/fire_expl "sounds/hasg/Fire/Explosive.ogg"
 weapons/golide/fire_wp "sounds/hasg/Fire/WhitePhosphorus.ogg"
 
-ASRL1 "sounds/hasg/PBWP/ASRL1"
-ASRL2 "sounds/hasg/PBWP/ASRL2"
-ASRL3 "sounds/hasg/PBWP/ASRL3"
-ASRL4 "sounds/hasg/PBWP/ASRL4"
-ASRL5 "sounds/hasg/PBWP/ASRL5"
+ASRL1 "sounds/hasg/PBWP/ASRL1.wav"
+ASRL2 "sounds/hasg/PBWP/ASRL2.wav"
+ASRL3 "sounds/hasg/PBWP/ASRL3.wav"
+ASRL4 "sounds/hasg/PBWP/ASRL4.wav"
+ASRL5 "sounds/hasg/PBWP/ASRL5.wav"
 $random weapons/golide/reload { ASRL1 ASRL2 ASRL3 ASRL4 ASRL5 }
 
-ASGADD1 "sounds/hasg/PBWP/ASGADD1"
-ASGADD2 "sounds/hasg/PBWP/ASGADD2"
-ASGADD3 "sounds/hasg/PBWP/ASGADD3"
-ASGADD4 "sounds/hasg/PBWP/ASGADD4"
+ASGADD1 "sounds/hasg/PBWP/ASGADD1.ogg"
+ASGADD2 "sounds/hasg/PBWP/ASGADD2.ogg"
+ASGADD3 "sounds/hasg/PBWP/ASGADD3.ogg"
+ASGADD4 "sounds/hasg/PBWP/ASGADD4.ogg"
 $random weapons/golide/add { ASGADD1 ASGADD2 ASGADD3 ASGADD4 }
 
 $random ASG/RL { ASRL1 ASRL2 ASRL3 ASRL4 ASRL5 }
 $random ASG/Add { ASGADD1 ASGADD2 ASGADD3 ASGADD4 }
-ASGLUP "sounds/hasg/PBWP/ASGPU"
+ASGLUP "sounds/hasg/PBWP/ASGPU.ogg"
 APPKUP "sounds/hasg/PBWP/A48PKUP2.wav"
 RANEQ "sounds/hasg/PBWP/BDLOAD.ogg"
 DryFire/Shotgun DRYFIRE
@@ -5346,6 +5346,71 @@ $alias METPULL	cyber/metal
 $alias METTEAR	cyber/metal
 $alias METHITF	bulletimpact/metal/a_1
 $alias METCRSH	misc/xdeath4
+
+// Legacy finisher / third-person fatality cue names (PB_Player + monster death shards).
+// Targets are existing definitions above; aliases avoid silent no-ops when logical names drifted.
+$alias ZOSCRE			monsters/zombie/pain
+$alias BPSLOP			misc/gibbed
+$alias player/comehere		TAUNT
+$alias HKPAIN			knight/pain
+$alias BLAM2			weapons/sg
+$alias PLSM8			PLSM9
+$alias fleshimpact		bulletfleshimpact
+$alias xdeath			misc/xdeath
+$alias xdeath2c			misc/xdeath2c
+$alias vile/pain		archvile/pain
+$alias vile/death		archvile/death
+$alias vile/Death		archvile/death
+$alias skeleton/attack		weapons/fistwhoosh
+$alias XDeath1			misc/xdeath1
+$alias baron/pain		superbaron/pain
+$alias cyber/death		misc/xdeath4
+$alias DSDMPAIN			knight/pain
+$alias DSKNTDTH			baron/death
+$alias DSKNTSIT			knight/sight
+$alias HEADRIP			misc/xdeath4
+$alias player/cyborg/KICK	KICK
+$alias weapons/rockethit	weapons/rocket/rocketignite
+$alias baby/pain		imp/pain
+$alias baby/death		imp/death
+$alias baby/sight		imp/sight
+$alias baby/active		imp/active
+
+// Monster death / finisher shards still calling legacy logical names (no standalone defs in-tree).
+$alias baby/walk			imp/active
+$alias baron/footstep		baron/step
+$alias BIG_BODYF			BODYF
+$alias BLANKSND			world/blank1
+$alias blooddrip			nashgore/blooddrop
+$alias breakfrozenguy/large	IceBreakLarge
+$alias caco/ballloop		caco/active
+$alias caco/shotx			fatso/shotx
+$alias chainguy/death		commando/death
+$alias DamnedSoul/Moan		demon/pain
+$alias DAOOH1			misc/xdeath4
+$alias DSPDIEHI			skeleton/xdeath
+$alias DSRFIRE			weapons/rocket/rocketignite
+$alias fatso/pain			Mancubus/pain
+$alias fatso/death			baron/death
+$alias fatso/footstep		baron/step
+$alias fireball/loop		caco/active
+$alias floorhardZombie		metalboot/steps
+$alias headex			gore/headshot
+$alias knight/death		baron/death
+$alias Marauderguy/death	MRDPN
+$alias Melee/SwingStrong	weapons/fistwhoosh
+$alias misc/PB_XDeath4		misc/xdeath4
+$alias pyro/blastexplosion	misc/xdeath4
+$alias QuadShotgunZombie/Reload2	weapons/sgpump
+$alias skeleton/death		skeleton/xdeath
+$alias skeleton/swing		weapons/fistwhoosh
+$alias tornado/form		icevile/active
+$alias UCHAIN/Steam			HRSteam
+$alias weapons/cryobowhit	IceBreakMedium
+$alias weapons/rocklf		weapons/paingiver/boom
+$alias weapons/sshotc		weapons/sg
+$alias Weapons/YamatoExp	weapons/StachanovHit
+$alias wizard/tele		wizard/active
 
 // Meat hook: DECORATE HookShot + ZScript grapple (PlayerPawn Hook / FireHook)
 hookshot/loop		dspstop

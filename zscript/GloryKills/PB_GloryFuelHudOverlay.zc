@@ -1,0 +1,100 @@
+// Eternal Glory fuel strip (NewHUD). Drawn in RenderOverlay so it sits above fullscreen SBARINFO.
+
+extend class PB_EventHandler
+{
+	ui void DrawGloryKillEternalFuelHud()
+	{
+		if (!playeringame[consoleplayer])
+			return;
+		let plr = players[consoleplayer];
+		if (!plr || !plr.mo)
+			return;
+		if (plr.mo.CountInv("CameraRunner") > 0)
+			return;
+
+		let cvBe = CVar.GetCVar("be_fuelhud", plr);
+		if (!cvBe || !cvBe.GetBool())
+			return;
+		let cvBg = CVar.GetCVar("sv_fuelhud_background", plr);
+		if (!cvBg || cvBg.GetInt() != 3)
+			return;
+
+		let cvSX = CVar.GetCVar("sv_fuelhud_x", plr);
+		let cvSY = CVar.GetCVar("sv_fuelhud_y", plr);
+		int ox = cvSX ? cvSX.GetInt() : 0;
+		int oy = cvSY ? cvSY.GetInt() : 0;
+
+		double vsc = Screen.GetHeight() / 480.0;
+		double cx = Screen.GetWidth() * 0.5 + double(ox) * vsc;
+		double cy = Screen.GetHeight() * 0.5 + double(oy) * vsc;
+		// Center-to-center step per icon (legacy ACS used ~21px then wider gaps; uniform 21 avoids edge overlap at 480p).
+		double step = 21.0 * vsc;
+		double x = cx;
+
+		int cruc = plr.mo.CountInv("CrucibleEnergy");
+		TextureID tCore = TexMan.CheckForTexture(
+			cruc > 0 ? "graphics/hud/glorykills/newhud/CRUCRY01.png" : "graphics/hud/glorykills/newhud/CRUCRY00.png",
+			TexMan.Type_Any);
+		if (!tCore.IsValid())
+			return;
+
+		Screen.DrawTexture(tCore, false, x, cy,
+			DTA_Alpha, 0.85, DTA_CenterOffset, true);
+		x += step;
+
+		if (cruc > 0)
+		{
+			TextureID tCam;
+			if (cruc == 1)
+				tCam = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM01.png", TexMan.Type_Any);
+			else if (cruc == 2)
+				tCam = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM02.png", TexMan.Type_Any);
+			else
+				tCam = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM03.png", TexMan.Type_Any);
+			if (tCam.IsValid())
+			{
+				Screen.DrawTexture(tCam, false, x, cy,
+					DTA_Alpha, 0.85, DTA_CenterOffset, true);
+				x += step;
+			}
+		}
+
+		int bpt = plr.mo.CountInv("BPtoken");
+		TextureID tBP;
+		if (bpt <= 0)
+			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO10.png", TexMan.Type_Any);
+		else if (bpt == 1)
+			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO11.png", TexMan.Type_Any);
+		else if (bpt == 2)
+			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO12.png", TexMan.Type_Any);
+		else if (bpt == 3)
+			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO13.png", TexMan.Type_Any);
+		else
+			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO14.png", TexMan.Type_Any);
+		if (tBP.IsValid())
+		{
+			Screen.DrawTexture(tBP, false, x, cy,
+				DTA_Alpha, 0.85, DTA_CenterOffset, true);
+			x += step;
+		}
+
+		int fb = plr.mo.CountInv("FlameBelchReady");
+		TextureID tFB = TexMan.CheckForTexture(
+			fb == 1 ? "graphics/hud/glorykills/newhud/SCFLM01.png" : "graphics/hud/glorykills/newhud/SCFLM00.png",
+			TexMan.Type_Any);
+		if (tFB.IsValid())
+		{
+			Screen.DrawTexture(tFB, false, x, cy,
+				DTA_Alpha, 0.85, DTA_CenterOffset, true);
+			x += step;
+		}
+
+		int ic = plr.mo.CountInv("IceBombReady");
+		TextureID tIC = TexMan.CheckForTexture(
+			ic == 1 ? "graphics/hud/glorykills/newhud/SCICB01.png" : "graphics/hud/glorykills/newhud/SCICB00.png",
+			TexMan.Type_Any);
+		if (tIC.IsValid())
+			Screen.DrawTexture(tIC, false, x, cy,
+				DTA_Alpha, 0.85, DTA_CenterOffset, true);
+	}
+}

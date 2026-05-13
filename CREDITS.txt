@@ -603,6 +603,7 @@ GloryKillMechanics - BrutalDoom Black Edition's Team
 Pinata pickup sound - BrutalDoom Black Edition's Team
 Glory Kill Shader - D4D Teams
 Crucible sprite , Sound, FlameBelch sound - D4D Teams, EOA Teams
+Crucible first-person CRCB*0 glove refresh (2026) - thedoctorofdoom / glorykills (GitHub commit 3b28b4c)
 Crucible trail - Embers Of Armageddon
 Pinata, Ammo Sprites - D4D Teams, LJG2023
 BloodPunch Effect - EOA Teams
