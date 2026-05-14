@@ -18,7 +18,7 @@ Actor LauncherWeaponSpawner replaces RocketLauncher
 		TNT1 A 1
 		loop
 	DiceRandom:
-		TNT1 A 0 A_Jump(256, "SpawnPB_RocketLauncher", "SpawnPB_SuperGrenadeLauncher", "SpawnPB_Excavator", "SpawnPaingiver", "SpawnMastermindChaingun")
+		TNT1 A 0 A_Jump(256, "SpawnPB_RocketLauncher", "SpawnPB_SuperGrenadeLauncher", "SpawnPB_Excavator", "SpawnPaingiver")
 		Stop	
 	DiceMain:	// Default spawn preset with a slight difficulty curve. Tier 1-4 Monster presets are contained here to provide more variety.
 		EarlyLevelMob:
@@ -32,13 +32,11 @@ Actor LauncherWeaponSpawner replaces RocketLauncher
 		MidLevelMob:
 			TNT1 A 0 A_Jump(128, "SpawnPB_SuperGrenadeLauncher")
 			TNT1 A 0 A_Jump(48, "SpawnPaingiver")
-			TNT1 A 0 A_Jump(18, "SpawnMastermindChaingun")
 			TNT1 A 0 A_Jump(256, "SpawnPB_RocketLauncher")
 		HighLevelMob:
 			TNT1 A 0 A_Jump(128, "SpawnPB_SuperGrenadeLauncher")
 			TNT1 A 0 A_Jump(20, "SpawnPB_Excavator")
 			TNT1 A 0 A_Jump(48, "SpawnPaingiver")
-			TNT1 A 0 A_Jump(24, "SpawnMastermindChaingun")
 			TNT1 A 0 A_Jump(256, "SpawnPB_RocketLauncher")
 	DiceProg:	// Progressive spawn preset enforces strict spawning rules by excluding monsters until they are presented in later levels.
 		DiceTier1:
@@ -51,19 +49,16 @@ Actor LauncherWeaponSpawner replaces RocketLauncher
 			TNT1 A 0 A_Jump(110, "SpawnPB_SuperGrenadeLauncher")
 			TNT1 A 0 A_Jump(20, "SpawnPB_Excavator")
 			TNT1 A 0 A_Jump(48, "SpawnPaingiver")
-			TNT1 A 0 A_Jump(18, "SpawnMastermindChaingun")
 			TNT1 A 0 A_Jump(256, "SpawnPB_RocketLauncher")
 		DiceTier4:
 			TNT1 A 0 A_Jump(110, "SpawnPB_SuperGrenadeLauncher")
 			TNT1 A 0 A_Jump(20, "SpawnPB_Excavator")
 			TNT1 A 0 A_Jump(48, "SpawnPaingiver")
-			TNT1 A 0 A_Jump(24, "SpawnMastermindChaingun")
 			TNT1 A 0 A_Jump(256, "SpawnPB_RocketLauncher")
 		DiceDeathWish:	//Don't wanna make it really hard to actually get a Rocket Launcher while playing Death Wish. That could get frustrating.
 			TNT1 A 0 A_Jump(110, "SpawnPB_SuperGrenadeLauncher")
 			TNT1 A 0 A_Jump(20, "SpawnPB_Excavator")
 			TNT1 A 0 A_Jump(48, "SpawnPaingiver")
-			TNT1 A 0 A_Jump(24, "SpawnMastermindChaingun")
 			TNT1 A 0 A_Jump(256, "SpawnPB_RocketLauncher")
 	SpawnPB_SuperGrenadeLauncher:
 		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponSuperGL",0)
@@ -84,11 +79,6 @@ Actor LauncherWeaponSpawner replaces RocketLauncher
 		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponRocketLauncher",0)
 		TNT1 A 0 A_SpawnItemEx("PB_RocketLauncher",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		TNT1 A 0 A_RadiusGive("IsNearRocketLauncher", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
-		Stop
-	SpawnMastermindChaingun:
-		TNT1 A 0 A_JumpIf(GetCVar("pb_NoMastermindChaingunWeapon"), "SpawnPB_RocketLauncher")
-		TNT1 A 1 A_RadiusGive("IsNearRocketLauncher", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
-		TNT1 A 0 A_SpawnItemEx("MastermindChaingun",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnPB_Excavator:
 		TNT1 A 0 A_JumpIf(GetCVar("pb_NoHeavyGLWeapon"), "ReplaceVanilla")

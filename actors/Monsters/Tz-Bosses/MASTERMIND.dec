@@ -56,7 +56,7 @@ ACTOR PB_Mastermind Replaces SpiderMastermind
 	+MISSILEEVENMORE
 	+SHOOTABLE
 	DropItem "DemonStrengthRune" 25
-	DropItem "MastermindChaingun" 255
+	DropItem "MastermindChaingun" 72
 	SeeSound "spider/sight"
 	AttackSound "spider/attack"
 	PainSound "spider/pain"
