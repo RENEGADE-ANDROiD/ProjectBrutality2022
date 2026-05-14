@@ -14,7 +14,7 @@ class FireAuraSphere : PowerupGiver
 		Inventory.MaxAmount 0;
 		Powerup.Type "FireAuraPower";
 		Powerup.Duration -20;
-		Powerup.Color "FF3000", 0.015;
+		Powerup.Color "FF3000", 0.002;
 		Inventory.PickupMessage "$PB_PICKUP_FireAuraSphere";
 	}
 	States
@@ -341,7 +341,7 @@ class FrostAuraSphere : PowerupGiver
 		Inventory.MaxAmount 0;
 		Powerup.Type "FrostAuraPower";
 		Powerup.Duration -20;
-		Powerup.Color "4040FF", 0.015;
+		Powerup.Color "4040FF", 0.002;
 		Inventory.PickupMessage "$PB_PICKUP_FrostAuraSphere";
 	}
 	States

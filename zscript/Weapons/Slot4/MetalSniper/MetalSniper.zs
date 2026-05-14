@@ -17,9 +17,12 @@ class PB_MetalSniper : PB_WeaponBase
         PB_WeaponBase.UnloaderToken "SniperUnloaded";
         PB_WeaponBase.respectItem "MetalSniperRespect";
         Obituary "%o was sniped by %k's Metal Sniper";
-        scale 0.62;
+        scale 0.72;
+        +FORCEXYBILLBOARD;
+        +FLOORCLIP;
         +weapon.noalert;
         +weapon.noautofire;
+        Inventory.Icon "MSNWA0";
     }
 
     const SniperMode  = 0;
