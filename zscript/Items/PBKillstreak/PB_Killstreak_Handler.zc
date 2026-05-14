@@ -160,9 +160,21 @@ class PB_KillstreakHandler : EventHandler
 
 	void GiveKSReward(PlayerPawn plr, int count)
 	{
-		plr.GiveInventory("PB_KSFreeze", 1);
 		String rewardClass, rewardMsg;
 		PB_KillStreakPowerUp.PBRollReward(plr, rewardClass, rewardMsg);
+		if (rewardClass == "")
+		{
+			if (!PB_KillstreakMessageHandler.PB_BigmsgOn())
+			{
+				plr.A_Print(PBStreakTitle(count), 2.0);
+				return;
+			}
+			PB_KillstreakMessageHandler.PB_KsWaggleMsg(
+				plr.PlayerNumber(), "BIGFONT2", PBStreakTitle(count), (240, 120), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
+				(0.2, 3, 0.5), 0.5, 2.0, 1.0, 0, 11, BaseStatusBar.HUDMSGLayer_OverHUD);
+			return;
+		}
+		plr.GiveInventory("PB_KSFreeze", 1);
 		PB_KillstreakMessageHandler.KS_SetPendingReward(plr, rewardClass, rewardMsg);
 		plr.GiveInventory("PB_KillStreakPowerUp", 1);
 		if (!PB_KillstreakMessageHandler.PB_BigmsgOn())

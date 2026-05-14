@@ -7,6 +7,7 @@ Actor PB_DaedabusGK: PB_Daedabus replaces PB_Daedabus
 	DropItem "Demonpickup2" 30
 	DropItem "Demonpickup2" 250
 	DropItem "Crucible" 3
+	DropItem "MancubusFlameCannon" 56
 	WoundHealth 170
 	
    States
@@ -102,6 +103,7 @@ Actor PB_DaedabusGK: PB_Daedabus replaces PB_Daedabus
 		
 	Death.Fatality:
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_PlaySound("fatso/pain")
 		TNT1 A 0 A_Jump(256, "Fatality1", "Fatality1", "Fatality2", "Fatality2", "Fatality1", "Fatality1", "Fatality2", "Fatality2", "Fatality1", "Fatality1", "Fatality2", "Fatality2")
 		TNT1 A 0
 		Stop
@@ -114,6 +116,7 @@ ACTOR PB_MancubusGK: PB_Mancubus Replaces PB_Mancubus
 	DropItem "Demonpickup2" 60
 	DropItem "Demonpickup2" 250
 	DropItem "Crucible" 3
+	DropItem "MancubusFlameCannon" 56
 	WoundHealth 130
 	
 	States
@@ -209,6 +212,7 @@ ACTOR PB_MancubusGK: PB_Mancubus Replaces PB_Mancubus
 		
 	Death.Fatality:
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_PlaySound("fatso/pain")
 		TNT1 A 0 A_Jump(256, "Fatality1", "Fatality1", "Fatality2", "Fatality2", "Fatality1", "Fatality1", "Fatality2", "Fatality2", "Fatality1", "Fatality1", "Fatality2", "Fatality2")
         TNT1 A 0 
 		Stop	
@@ -225,6 +229,7 @@ Actor PB_VolcabusGK : PB_Volcabus replaces PB_Volcabus
 	DropItem "HasteSphere" 4
 	DropItem "DoubleSphere" 4
 	DropItem "Crucible" 3
+	DropItem "MancubusFlameCannon" 56
 	WoundHealth 210
    
    States
@@ -321,6 +326,7 @@ Actor PB_VolcabusGK : PB_Volcabus replaces PB_Volcabus
 	Death.Fatality:
 		TNT1 A 0	
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn",0,0,32,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_PlaySound("fatso/pain")
 		TNT1 A 0 A_Jump(256, "Fatality1", "Fatality1", "Fatality2", "Fatality2", "Fatality1", "Fatality1", "Fatality2", "Fatality2", "Fatality1", "Fatality1", "Fatality2", "Fatality2")
 		TNT1 A 0
 		Stop

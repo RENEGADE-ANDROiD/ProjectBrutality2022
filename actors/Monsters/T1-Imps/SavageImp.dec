@@ -1588,12 +1588,14 @@ DeathNoGuts:
 
    FatalityMarine:
         TNT1 A 0 A_SetInvulnerable
+		TNT1 A 0 A_PlaySound("grunt/pain", 2)
        9PFP ABCD 4
        TNT1 A 0 A_SpawnItemEx("FootStep5", 0, 0, 40, 0, 0)
        9PFP EE 6
 	   
        9PFP F 6
 	   
+	   TNT1 A 0 A_PlaySound("misc/xdeath2", 5)
 	   TNT1 A 0 A_PlaySound("DSFDTHE")
 	   9PFP G 6
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
@@ -2099,6 +2101,7 @@ Actor DeadSavageImp_Half: DeadSavageImp1
     Death.Kick:
 	Death.ExplosiveImpact:
 	Death.ExtremePunches:
+  	    TNT1 A 0 A_PlaySound("misc/gibbed")
   	    TNT1 A 0 A_SpawnItem("GibsZ")
 		TNT1 AA 0 A_CustomMissile ("XDeath1", 5, 0, random (0, 360), 2, random (0, 160))
 		 TNT1 A 0 A_CustomMissile ("XDeath2", 5, 0, random (0, 360), 2, random (0, 160))

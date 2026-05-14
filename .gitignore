@@ -1,6 +1,7 @@
 # Smoketest / test logs
 smoketest_baseline.log
 smoketest_*.log
+smoketest_*.txt
 uzdoom_session.log
 
 # Local maintainer / CI scripts (not part of the mod payload; nothing here is committed)

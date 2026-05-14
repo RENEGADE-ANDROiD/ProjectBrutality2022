@@ -1,0 +1,38 @@
+// Pseudo-ammo "wear" pools for monster-sourced weapons (PBX-style).
+// Refilled to max when picking up the same weapon again (ZScript AttachToOwner + HandlePickup on each weapon class — duplicate map copies merge without AttachToOwner).
+
+ACTOR CyberRLDurability : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 25
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 25
+	+INVENTORY.UNDROPPABLE
+}
+
+ACTOR MastermindCGDurability : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 100
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 100
+	+INVENTORY.UNDROPPABLE
+}
+
+ACTOR MancubusFlameCannonDurability : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 60
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 60
+	+INVENTORY.UNDROPPABLE
+}
+
+ACTOR MarauderSSGDurability : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 80
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 80
+	+INVENTORY.UNDROPPABLE
+}

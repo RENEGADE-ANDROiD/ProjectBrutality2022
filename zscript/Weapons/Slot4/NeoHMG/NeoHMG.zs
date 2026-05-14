@@ -537,12 +537,6 @@ class PB_NeoHMG : PB_WeaponBase
 		Spawn:
 			HG0W A -1;
 			Stop;
-		Steady:
-			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 SetPlayerProperty(0, 0, 0);
-			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-			Goto Ready3;
 		Select:
 			TNT1 A 0
 			{
@@ -557,20 +551,7 @@ class PB_NeoHMG : PB_WeaponBase
 			TNT1 A 0 A_TakeInventory("GrabbedBarrel", 1);
 			TNT1 A 0 A_TakeInventory("GrabbedIceBarrel", 1);
 			TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel", 1);
-			TNT1 A 0 A_StopSound(1);
-			TNT1 A 0 A_StopSound(5);
-			TNT1 A 0 A_StopSound(6);
-			TNT1 A 0 A_TakeInventory("Spin",1);
-			TNT1 A 0 A_TakeInventory("CantWeaponSpecial",1);
-			TNT1 A 0 A_TakeInventory("MG42Selected",1);
-			TNT1 A 0 A_SetInventory("Grabbing_A_Ledge", 0);
-			TNT1 A 0 A_TakeInventory("RandomHeadExploder",1);
-			TNT1 A 0 A_TakeInventory("DualFireReload",2);
-			TNT1 A 0 A_Overlay(-777, "Melee_Equipment_Handler_Overlay");
-			TNT1 A 0 A_Overlay(-778, "KickHandler_Overlay");
-			TNT1 A 0 A_Overlay(-779, "Equipment_Toggle_Handler_Overlay");
-			TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand");
-			TNT1 A 0 A_Jump(255, "SelectContinue");
+			Goto SelectFirstPersonLegs;
 		SelectContinue:
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 A_StartSound("weapon/HMG/Stop", CHAN_WEAPON);

@@ -92,13 +92,13 @@ class PB_Deagle : PB_WeaponBase
 			goto Ready;
 
 		Select:
+			Goto SelectFirstPersonLegs;
+		SelectContinue:
 			TNT1 A 0 PB_WeaponRaise("weapons/deagle/equip");
 			TNT1 A 0 PB_WeapTokenSwitch("DeagleSelected");
 			TNT1 A 0 A_SetInventory("RandomHeadExploder",1);
 			TNT1 A 0 PB_TakeIfUpgrade("PB_Revolver");
 			TNT1 A 0 PB_RespectIfNeeded();
-		SelectContinue:
-			TNT1 A 0;
 		SelectAnimation:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "SelectAnimationDualWield");
 			D4E0 ABCD 1 PB_SetSpriteIfUnload("D4U0");

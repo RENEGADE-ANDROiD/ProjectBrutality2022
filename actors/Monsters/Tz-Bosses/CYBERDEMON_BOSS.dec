@@ -55,6 +55,7 @@ ACTOR CyberdemonBoss : Cyberdemon Replaces Cyberdemon 2546
 	DropItem "Demonpickup2" 255
 	DropItem "Demonpickup2" 255
 	DropItem "Demonpickup2" 255
+	DropItem "PB_CyberdemonRL" 64
 	WoundHealth 3000
 	BloodType "CyberDemon_Blood", "SawBlood", "SawBlood"
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0

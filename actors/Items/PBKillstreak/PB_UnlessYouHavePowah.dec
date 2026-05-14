@@ -8,7 +8,7 @@ actor KSFreeze : PowerupGiver
 	inventory.pickupmessage "Killstreak Acquired:  You move faster!"
 	inventory.maxamount 0
 	powerup.duration -3
-	powerup.color "FF FF 00", 0.012
+	powerup.color "FF FF 00", 0.002
 	powerup.type Speed
 	-COUNTITEM
 	+FloatBob
@@ -48,7 +48,7 @@ ACTOR CoffeeTime : PowerupGiver
 	Inventory.MaxAmount 0
 	Powerup.Type PowerSpeed
 	Powerup.Duration -15
-	Powerup.Color Gold, 0.012
+	Powerup.Color Gold, 0.002
 	Inventory.PickupMessage "I think it's kickin' in !"
 	Tag "Coffee Time !"
 	States
@@ -69,7 +69,7 @@ Actor TFST : PowerupGiver
 	+FORCEXYBILLBOARD
     Inventory.MaxAmount 0
     Powerup.Type "PB_PowerTimeSlow"
-    Powerup.Color GoldMap, 0.03
+    Powerup.Color GoldMap, 0.008
     Inventory.PickupMessage "Time freeze!"
     States
     {
@@ -90,7 +90,7 @@ Actor AmmoSphere : PowerupGiver
 	Inventory.PickupSound "misc/p_pkup"
 	Powerup.Duration -20
 	Powerup.Type "PowerInfiniteAmmo"
-	Powerup.Color "255 0 0" 0.008
+	Powerup.Color "255 0 0" 0.002
 	States
 	{
 	Spawn:
@@ -110,7 +110,7 @@ Actor Crucifix : PowerupGiver
 	Inventory.MaxAmount 10
 	Inventory.InterHubAmount 10
 	Powerup.Type Frightener
-	Powerup.Color White, 0.005
+	Powerup.Color White, 0.002
 	Powerup.Duration -13
 	Inventory.PickupMessage "You got a crucifix rosary! Make 'em repent!"
 	Inventory.Icon "CRFXZ0"
@@ -154,7 +154,7 @@ Actor PB_GuardsphereST : PowerupGiver 23165
   Inventory.MaxAmount 0
   Powerup.Type "PB_PowerQuarterDamageST"
   Powerup.Duration -15
-  Powerup.Color GreenMap, 0.008
+  Powerup.Color GreenMap, 0.002
   Inventory.PickupMessage "Guardsphere! Gain 75% Damage Reduction"
   States
   {
@@ -174,7 +174,7 @@ ACTOR LegendSphere : PowerupGiver
   Scale 0.73
   Powerup.Type "Buddha"
   Powerup.Duration -18
-  Powerup.Color 00 00 128, 0.005
+  Powerup.Color 00 00 128, 0.002
   Inventory.PickupMessage "Legend Sphere! You Can't Go Below 1 HP! Go Crazy!" 
   States
   {
@@ -195,7 +195,7 @@ ACTOR LifeshieldSphere : PowerupGiver
 	+INVENTORY.ALWAYSPICKUP
 	Powerup.Type "PowerLifeshield"
 	Powerup.Duration -13
-	Powerup.Color 255, 176, 0, 0.005
+	Powerup.Color 255, 176, 0, 0.002
 
   States
   {
@@ -208,7 +208,7 @@ ACTOR LifeshieldSphere : PowerupGiver
 ACTOR PowerLifeshield : PowerProtection
 {
   DamageFactor "Normal", 0
-  Powerup.Color 255, 176, 0, 0.005
+  Powerup.Color 255, 176, 0, 0.002
   Powerup.Duration 0x7FFFFFFF // A VERY long duration
 }
 
@@ -218,7 +218,7 @@ actor RegenSphere : PowerupGiver
 	inventory.pickupmessage "Regeneration!!."
 	inventory.maxamount 0
 	powerup.duration -15
-	powerup.color "FF FF FF", 0.005
+	powerup.color "FF FF FF", 0.002
 	powerup.type Regeneration
 	+COUNTITEM
 	+INVENTORY.AUTOACTIVATE
@@ -234,16 +234,19 @@ actor RegenSphere : PowerupGiver
 actor PB_KSHasteSphere : HasteSphere
 {
 	powerup.duration -15
+	powerup.color "FF FF 00", 0.002
 }
 
 actor PB_KSDoubleSphere : DoubleSphere
 {
 	Powerup.Duration -15
+	Powerup.Color 255, 0, 255, 0.002
 }
 
 actor PB_KSInvulnerabilitySphere : InvulnerabilitySphere_
 {
 	Powerup.Duration -15
+	Powerup.Color White, 0.002
 }
 
 // Kill-streak Familiar: keep class name Familiar (pool, saves). See AGENTS.md §4.
