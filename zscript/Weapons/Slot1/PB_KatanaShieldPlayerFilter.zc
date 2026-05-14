@@ -1,0 +1,56 @@
+// Monster-sourced explosive splash next to beam-katana / Argent barrier tiles should not hurt the player.
+
+class PB_KatanaShieldFilter
+{
+	static bool PlayerAdjacentKatanaShield(PlayerPawn p)
+	{
+		if (!p)
+			return false;
+		let it = BlockThingsIterator.Create(p, 112);
+		while (it.Next())
+		{
+			let a = it.thing;
+			if (!a)
+				continue;
+			Name n = a.GetClassName();
+			if (n == 'KatShieldPart' || n == 'KatShieldPart2')
+				return true;
+		}
+		return false;
+	}
+
+	static bool ExplosiveDamage(Name mod)
+	{
+		return mod == 'Explosive' || mod == 'Rocket' || mod == 'ExplosiveImpact'
+			|| mod == 'BarrelExplosion' || mod == 'Grenade' || mod == 'Frag';
+	}
+
+	static bool MonsterAuthored(PlayerPawn victim, Actor source, Actor inflictor)
+	{
+		if (source && source != victim && source.bIsMonster)
+			return true;
+		if (inflictor && inflictor != victim)
+		{
+			if (inflictor.bIsMonster)
+				return true;
+			if (inflictor.target && inflictor.target != victim && inflictor.target.bIsMonster)
+				return true;
+			if (inflictor.master && inflictor.master != victim && inflictor.master.bIsMonster)
+				return true;
+		}
+		return false;
+	}
+
+	static bool SuppressPlayerSplash(PlayerPawn victim, Actor inflictor, Actor source, int damage, Name mod, int flags)
+	{
+		if (damage <= 0 || !victim || !victim.player)
+			return false;
+		if (!PlayerAdjacentKatanaShield(victim))
+			return false;
+		if (!ExplosiveDamage(mod))
+			return false;
+		if (!MonsterAuthored(victim, source, inflictor))
+			return false;
+		return true;
+	}
+}

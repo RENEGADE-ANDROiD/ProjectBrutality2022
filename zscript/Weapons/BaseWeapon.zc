@@ -469,6 +469,39 @@ class PB_WeaponBase : DoomWeapon
 	
     action bool IsPressingInput(int which){return player.cmd.buttons & which;}
 	
+	void PB_RefillMonsterSourcedWeaponWear(PlayerPawn p)
+	{
+		if (!p || !p.player)
+			return;
+		Name cn = GetClassName();
+		if (cn == 'MastermindChaingun')
+		{
+			let inv = p.FindInventory("MastermindCGDurability");
+			if (!inv || inv.Amount < 100)
+				p.GiveInventory("MastermindCGDurability", 100);
+		}
+		else if (cn == 'MancubusFlameCannon')
+		{
+			let inv = p.FindInventory("MancubusFlameCannonDurability");
+			if (!inv || inv.Amount < 60)
+				p.GiveInventory("MancubusFlameCannonDurability", 60);
+		}
+		else if (cn == 'MarauderSSG')
+		{
+			let inv = p.FindInventory("MarauderSSGDurability");
+			if (!inv || inv.Amount < 80)
+				p.GiveInventory("MarauderSSGDurability", 80);
+		}
+	}
+
+	override bool HandlePickup(Inventory item)
+	{
+		let pl = PlayerPawn(owner);
+		if (pl && pl.player && item && item.GetClass() == GetClass())
+			PB_RefillMonsterSourcedWeaponWear(pl);
+		return Super.HandlePickup(item);
+	}
+
 	Default
 	{
 		PB_WeaponBase.UnloaderToken "HasUnloaded";
@@ -476,8 +509,9 @@ class PB_WeaponBase : DoomWeapon
 
 	override void AttachToOwner(Actor Other)
 	{
-		Super.AttachToOwner(other);
-		let toucher = other;
+		PB_RefillMonsterSourcedWeaponWear(PlayerPawn(Other));
+		Super.AttachToOwner(Other);
+		let toucher = Other;
 		bool IsAlreadyPicked = false;
 		if (toucher.FindInventory("PB_PDAWeaponContainer",true))
 		{

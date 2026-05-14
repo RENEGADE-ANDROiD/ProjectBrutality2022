@@ -5,6 +5,7 @@
 
 Script "SpawnerScript" (int LevelNumber)
 {
+	// Note: this is CLUSTER index from MAPINFO, not MAP number — misnamed local.
 	LevelNumber = GetLevelInfo(LEVELINFO_CLUSTERNUM);
 	int spawnbalancecvar = GetCvar("spawnbalance");
 	switch (spawnbalancecvar)

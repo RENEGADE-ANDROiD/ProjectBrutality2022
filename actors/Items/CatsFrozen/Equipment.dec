@@ -22,6 +22,11 @@ Actor PB_CF_FlameTurretSelected : Inventory { Inventory.MaxAmount 1 }
 Actor WW_PB_CF_FreezeMineSelected : Inventory { Inventory.MaxAmount 1 }
 Actor PB_CF_FreezeMineSelected : Inventory { Inventory.MaxAmount 1 }
 
+ACTOR PBCF_CF_KillHologram : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
 ACTOR PB_CF_SnowCasterAmmo : Ammo
 {
 	Inventory.Amount 1
