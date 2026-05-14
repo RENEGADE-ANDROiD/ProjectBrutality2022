@@ -635,6 +635,20 @@ class PB_EventHandler : EventHandler
 	transient ui int pdaDescAutosizeCacheSh;
 	ui double dashAlpha;
 	ui double dashScale;
+	transient ui Name pbWpnHintPrevClass;
+	transient ui int pbWpnHintExpireGametic;
+	transient ui String pbWpnHintCached;
+
+	clearscope static bool PB2022WeaponHudSkipWeapon(Name weaponClass)
+	{
+		return weaponClass == 'PB_Pistol' || weaponClass == 'PB_SMG' || weaponClass == 'PB_Revolver' || weaponClass == 'PB_Deagle'
+			|| weaponClass == 'PB_Shotgun' || weaponClass == 'PB_Autoshotgun' || weaponClass == 'PB_QuadSG' || weaponClass == 'PB_SSG'
+			|| weaponClass == 'PB_Carbine' || weaponClass == 'Rifle'
+			|| weaponClass == 'PB_Minigun'
+			|| weaponClass == 'PB_M1Plasma' || weaponClass == 'PB_M2Plasma'
+			|| weaponClass == 'PB_Flamethrower';
+	}
+
 	ui double PB2022WeaponHudIconSizeMul(Vector2 texSize)
 	{
 		double w = texSize.x;
@@ -657,15 +671,8 @@ class PB_EventHandler : EventHandler
 		Weapon weap = p.ReadyWeapon;
 		Name weaponClass = weap.GetClassName();
 
-		if (weaponClass == 'PB_Pistol' || weaponClass == 'PB_SMG' || weaponClass == 'PB_Revolver' || weaponClass == 'PB_Deagle'
-			|| weaponClass == 'PB_Shotgun' || weaponClass == 'PB_Autoshotgun' || weaponClass == 'PB_QuadSG' || weaponClass == 'PB_SSG'
-			|| weaponClass == 'PB_Carbine' || weaponClass == 'Rifle'
-			|| weaponClass == 'PB_Minigun'
-			|| weaponClass == 'PB_M1Plasma' || weaponClass == 'PB_M2Plasma'
-			|| weaponClass == 'PB_Flamethrower')
-		{
+		if (PB2022WeaponHudSkipWeapon(weaponClass))
 			return;
-		}
 
 		TextureID iconID = weap.AltHUDIcon.IsValid() ? weap.AltHUDIcon : weap.Icon;
 		if (!iconID) { return; }
@@ -690,6 +697,64 @@ class PB_EventHandler : EventHandler
 			DTA_DestWidth, int(drawW + 0.5), DTA_DestHeight, int(drawH + 0.5),
 			DTA_Alpha, alpha, DTA_CenterOffset, true);
 	}
+
+	ui void DrawPB2022WeaponPickupHint()
+	{
+		int PB_WPN_HINT_TICS = 140;
+
+		if (!playeringame[consoleplayer])
+			return;
+		if (PDAMode)
+			return;
+		let p = players[consoleplayer];
+		if (!p || !p.mo || !p.ReadyWeapon)
+			return;
+		let cvHint = CVar.GetCVar("pb_weapon_pickup_hints", p);
+		if (!cvHint || !cvHint.GetBool())
+			return;
+
+		Weapon weap = p.ReadyWeapon;
+		Name weaponClass = weap.GetClassName();
+		if (PB2022WeaponHudSkipWeapon(weaponClass))
+			return;
+
+		if (weaponClass != pbWpnHintPrevClass)
+		{
+			pbWpnHintPrevClass = weaponClass;
+			pbWpnHintExpireGametic = gametic + PB_WPN_HINT_TICS;
+			String classStr = "" .. weaponClass;
+			String hintLookup = "$PB_WPNHINT_" .. classStr;
+			pbWpnHintCached = StringTable.Localize(hintLookup);
+			if (pbWpnHintCached == hintLookup)
+				pbWpnHintCached = StringTable.Localize("$PB_WPNHINT_GENERIC");
+		}
+
+		if (gametic > pbWpnHintExpireGametic)
+			return;
+
+		int sh = Screen.GetHeight();
+		int sw = Screen.GetWidth();
+		double hintScale = clamp(sh / 360.0, 1.45, 2.65);
+		double fade = clamp((pbWpnHintExpireGametic - gametic) / 28.0, 0.0, 1.0);
+		double lineH = BigFont.GetHeight() * hintScale;
+		Array<String> lines;
+		pbWpnHintCached.Split(lines, "\n", TOK_KEEPEMPTY);
+		double y0 = sh * 0.16;
+		for (uint i = 0; i < lines.Size(); i++)
+		{
+			String ln = lines[i];
+			if (ln.length() < 1)
+				continue;
+			int w = int(BigFont.StringWidth(ln) * hintScale);
+			int tx = int(sw * 0.5 - w * 0.5);
+			int ty = int(y0 + i * lineH);
+			Screen.DrawText(BigFont, Font.CR_BLACK, tx + 2, ty + 2, ln,
+				DTA_ScaleX, hintScale, DTA_ScaleY, hintScale, DTA_Alpha, fade * 0.38);
+			Screen.DrawText(BigFont, Font.CR_GOLD, tx, ty, ln,
+				DTA_ScaleX, hintScale, DTA_ScaleY, hintScale, DTA_Alpha, fade);
+		}
+	}
+
 	ui TextureID PB2022GetModeIcon(PlayerInfo p, Name weaponClass, out double localScale, out double localOffX, out double localOffY)
 	{
 		localScale = 1.0;
@@ -5271,6 +5336,7 @@ class PB_EventHandler : EventHandler
 		{
 			DrawPB2022WeaponPickupOverlay();
 			DrawPB2022WeaponModeOverlay();
+			DrawPB2022WeaponPickupHint();
 		}
 		bool dashEffectOn = false;
 		if (playeringame[consoleplayer])

@@ -1306,6 +1306,53 @@ Class PB_SpecialWheelHandler : EventHandler
 		specialWheel_handleMouse();
 	}
 
+	void specialWheel_ProSurv_Ballista()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.75, 0.75);
+		let pmo = players[consoleplayer].mo;
+		if (!pmo)
+			return;
+
+		PB_SpecialWheel_Mode std = new ("PB_SpecialWheel_Mode");
+		TextureID icStd = TexMan.CheckForTexture("CBOWS0", TexMan.Type_Any);
+		if (!icStd.isValid())
+			icStd = TexMan.CheckForTexture("graphics/pywheel/Carbine_Semi.png", TexMan.Type_Any);
+		std.specialIcon = icStd;
+		std.specialName = "Select_Ballista_StandardMode";
+		std.specialAlias = "Standard Ballista";
+		std.specialPriority = 1;
+		std.iconScale = iconScale;
+		wheelSpecials.Push(std);
+
+		bool upgraded = (pmo.CountInv("BallistaUpgraded") > 0 || pmo.CountInv("Crossbow_Upgraded") > 0);
+		if (upgraded)
+		{
+			PB_SpecialWheel_Mode dem = new ("PB_SpecialWheel_Mode");
+			TextureID icDem = TexMan.CheckForTexture("CRBAB0", TexMan.Type_Any);
+			if (!icDem.isValid())
+				icDem = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+			dem.specialIcon = icDem;
+			dem.specialName = "Select_Ballista_DemonicMode";
+			dem.specialAlias = "Demonic Ballista";
+			dem.specialPriority = 2;
+			dem.iconScale = iconScale;
+			wheelSpecials.Push(dem);
+		}
+		else
+		{
+			PB_SpecialWheel_Mode no = new ("PB_SpecialWheel_Mode");
+			TextureID icNo = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
+			no.specialIcon = icNo;
+			no.specialName = "Select_Ballista_NoUpgrade";
+			no.specialAlias = "Module Not Installed";
+			no.specialPriority = 2;
+			no.iconScale = iconScale;
+			wheelSpecials.Push(no);
+		}
+		specialWheel_handleMouse();
+	}
+
 	void specialWheel_HellPistoler()
 	{
 				wheelSpecials.Clear();
@@ -2138,6 +2185,10 @@ Class PB_SpecialWheelHandler : EventHandler
 
 				case 'HellPistoler':
 					specialWheel_HellPistoler();
+					return;
+
+				case 'ProSurv_Ballista':
+					specialWheel_ProSurv_Ballista();
 					return;
 
 				case 'PB_CryoElectroRifle':

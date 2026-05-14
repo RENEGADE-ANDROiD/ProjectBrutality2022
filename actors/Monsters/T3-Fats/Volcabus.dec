@@ -33,6 +33,7 @@ Actor PB_Volcabus : Fatso replaces Fatso
 	DropItem "DemonStrengthRune" 5
 	DropItem "HasteSphere" 4
 	DropItem "DoubleSphere" 4
+	DropItem "MancubusFlameCannon" 56
 	Species "BigFatAss"
 	+DONTHARMSPECIES
     +DONTHARMCLASS

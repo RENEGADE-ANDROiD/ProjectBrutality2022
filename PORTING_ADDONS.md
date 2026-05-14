@@ -55,6 +55,7 @@ flowchart LR
 - Native fire helpers: `A_FireBullets` with the shared `"HitPuff"` and `"Tracer"` actors.
 - Native FX spawners via `A_FireCustomMissile("GunFireSmoke" / "YellowFlareSpawn" / "ShakeYourAssMinor" / "RifleCaseSpawn" / "EmptyBrassPistol")`.
 - Existing ammo pools: `NewClip`, `PistolBullets`, `RevolverAmmo`, plus the shotgun / rocket / plasma / BFG pools — pick one by damage / class fit, not by name similarity to `PB_LowCalMag`.
+- **Monster-sourced weapon wear:** undroppable `Ammo` + `AttachToOwner` refill + `WeaponBreak` — see **`actors/Weapons/MonsterWeaponDurability.dec`**, **`PB_WeaponBase`** in **`zscript/Weapons/BaseWeapon.zc`**, and **AGENTS.md §5 → “Monster-sourced weapons — PBX-style wear”** (same design language as **PBX-Weapons** / Excavator-style durability).
 
 Authoritative reference files for the 2022 idiom:
 
@@ -403,7 +404,7 @@ When re-auditing every ZScript weapon PB 2022 already ships against its PBX-Weap
 
 **Problem found.** PB 2022's [zscript/Weapons/Slot3/CSSG/CSSG.zs](zscript/Weapons/Slot3/CSSG/CSSG.zs) calls `PB_SpawnCasing("BuckShellCasing", ...)`, `"SlugShellCasing"`, `"DragonShellCasing"`, `"ExplosiveShellCasing"`, `"FlakShellCasing"`, `"FlechetShellCasing"`, `"WhitePShellCasing"` — but **none of those classes existed in this repo**. PBX shipped them as `PB_CasingBase` subclasses with a `CasingSprite` property; PB 2022's casing system is state-machine-driven (`zscript/Effects/Casings.txt`, classes `ShotgunCasing`, `ShotgunCasing2`, `ShotgunCasing3`), so the PBX versions can't be dropped in as-is.
 
-**Fix applied.** New file [zscript/Weapons/Slot3/CSSG/CSSG_Casings.zs](zscript/Weapons/Slot3/CSSG/CSSG_Casings.zs) defines lightweight alias classes that inherit from the matching PB 2022 casing:
+**Fix applied.** The PBX shell-casing class names are defined at the tail of [zscript/Weapons/Slot3/CSSG/CSSG.zs](zscript/Weapons/Slot3/CSSG/CSSG.zs) as lightweight subclasses that inherit from the matching PB 2022 casing:
 
 ```zsc
 class BuckShellCasing      : ShotgunCasing  {}

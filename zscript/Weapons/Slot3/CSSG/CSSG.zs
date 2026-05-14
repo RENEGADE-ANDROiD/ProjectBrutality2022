@@ -1443,3 +1443,12 @@ Class DanmakuProjectile : Actor
 		Super.PostBeginPlay();
 	}
 }
+
+// PBX-Weapons CSSG casing class names -> PB2022 ShotgunCasing state machines (Casings.txt).
+class BuckShellCasing      : ShotgunCasing  {}
+class SlugShellCasing      : ShotgunCasing2 {}
+class DragonShellCasing    : ShotgunCasing3 {}
+class ExplosiveShellCasing : ShotgunCasing  {}
+class FlakShellCasing      : ShotgunCasing  {}
+class FlechetShellCasing   : ShotgunCasing  {}
+class WhitePShellCasing    : ShotgunCasing  {}

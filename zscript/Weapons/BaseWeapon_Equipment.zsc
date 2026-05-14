@@ -884,7 +884,7 @@
 		Goto GoingToReady;
 		TNT1 A 0 A_PlaySound("misc/p_pkup", CHAN_WEAPON);
 		TNT1 A 0 A_TakeInventory("PB_CF_HoloDecoyAmmo", 1);
-		TNT1 A 0 A_SpawnItemEx("PBCF_CF_HoloDecoy", 24, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("PBCF_CF_HoloDecoyPlacer", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
 		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
 		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
 		Goto GoingToReady2;

@@ -5,8 +5,9 @@ Realm667 (community bases), Monster Pack / Glory Kills lines, **Brutal Doom
 *El Diablo* Edition** first-person finisher art (eld_eld_* paths + related),
 **Project Brutality Legacy** execution / stagger handoff behavior folded into core
 actors, **Brutal Pack**-line fragments (selective only; pack not distributed whole),
-and optional **Brutal Doom 22 (BDv22)** gore (`bdv22_*`, `actors/Gore/BDv22Gore/`,
-`SPRITES/GORE/BDv22/`). The list below is retained verbatim for per-sprite history.
+optional **Brutal Doom 22 (BDv22)** gore (`bdv22_*`, `actors/Gore/BDv22Gore/`,
+`SPRITES/GORE/BDv22/`), and **monster-sourced weapon wear** (PBX-style durability
+on select boss-tech guns — see CREDITS.txt index). The list below is retained verbatim for per-sprite history.
 
 ---------------------------------------------------------------------------
 

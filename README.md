@@ -84,7 +84,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **UAC XHAS-SP Lady Golide** — heavy automatic shotgun platform.
 - **X12 Shotgun** — special shotgun with Project Brutality shell handling.
 - **Quad-Barrel Shotgun** — four-barrel burst weapon with special-wheel behavior.
-- **Marauder Shotgun** — Marauder-style super shotgun variant.
+- **Marauder Shotgun** — Marauder-style super shotgun variant; uses a hidden **wear** pool (not reserve shells) that drops by one per meaningful shot, **breaks** the weapon when empty, and **refills wear to max** if you pick up another copy while still holding a depleted one. **Marauders** sometimes leave one on death; scripted fatality floor spawns are only ~50% likely.
 - **Cryo Auto Shotgun** — Cat's Frozen cryo shotgun; shell-fed cryo pellet burst that applies brief cryo slow per pellet (always rolls from shotgun spawners).
 
 **Slot 4 — Rifles, precision & support**
@@ -115,15 +115,15 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **Rocket Launcher** — rocket launcher wired into the Explosive Movement rocket-jump path.
 - **Paingiver** — launcher-class heavy weapon for pain/area damage.
 - **Excavator** — launcher/special weapon with mode-specific ammo behavior.
-- **Mastermind's Chaingun** — boss-derived heavy chaingun.
-- **Cyberdemon Missile Launcher** — cyberdemon-style missile launcher.
+- **Mastermind's Chaingun** — boss-derived heavy chaingun; **wear** drops once per dual-rocket salvo, weapon **breaks** at zero wear, duplicate pickup **refills wear**. Obtained from **spider mastermind** kills (chance-based drop), not from rocket-launcher **map** spawns.
+- **Cyberdemon Missile Launcher** — cyberdemon-style missile launcher; **wear** per two-rocket burst, **break** + duplicate-pickup **refill** like the chaingun. **Baalgar / cyber boss** death tables and the **flying cyber-arm gib** can spawn it with a chance (respects **`pb_NoPB_CyberdemonRLWeapon`** on the gib path).
 
 **Slot 7 — Energy rifles (non-plasma line)**
 
 - **Cryo Rifle** — freezing rifle for slowing or locking down enemies.
-- **MKIII Railgun** — precision rail weapon for piercing high-damage shots.
+- **MKIII Railgun** — precision rail weapon for piercing high-damage shots; **Alt-Fire** toggles the scope zoom when you are not scoped. **Hold Reload and press Alt-Fire** to deploy a holographic decoy (same behavior as the Cat's Frozen equipment holo: line-of-sight anchor, animated decoy, monster retargeting).
 - **UAC-UM-32P Biological Acid Launcher - Unengager** — caustic launcher for acid damage and area denial.
-- **UAC Mancubus Flame Cannon / Daedabus Slime Cannon** — monster-tech cannon with flame/slime-style attacks.
+- **UAC Mancubus Flame Cannon / Daedabus Slime Cannon** — monster-tech cannon with flame/slime-style attacks; **wear** ticks down with fuel spends on primary, alt stream, and slime modes, **breaks** at zero, duplicate pickup **refills wear**. **Mancubus-family** enemies (including Daedabus / Volcabus and Glory-Kill wrappers) sometimes drop it; it is **not** rolled from plasma-rifle **map** spawns.
 
 **Slot 8 — Plasma & heavy energy primaries**
 
@@ -227,7 +227,7 @@ This tier is where projectile density spikes—open yards favor mancubi and caco
 
 - **Arachnotrons** — plasma walkers span stock, elite chrome trims, infernal red edits, and the plant‑chassis Arachnophyte experiment.
 - **Aracnorb** — gravity‑ ignoring plasma jellyfish cousin to arachnotrons *(Aracnorb)*.
-- **Mancubus family** — flame belching fatsos, slower Daedabus arc‑casters, and lava‑themed Volcabus variants sharing the fatso slot behaviors players already fear.
+- **Mancubus family** — flame belching fatsos, slower Daedabus arc‑casters, and lava‑themed Volcabus variants sharing the fatso slot behaviors players already fear; they occasionally drop the **Mancubus Flame Cannon** pickup (chance-based **`DropItem`**, not guaranteed).
 - **Cacodemons and pain elementals** — meatball cannons plus vanilla pain elementals, infernal caco stand‑ins, and suffering elementals that behave like souped‑up pain mothers without stealing the boss spotlight.
 - **Other floaters** — Watchers as silent floating eyes, Overlords as oversized aerial tyrants, Phantasms as smoky lost‑soul upgrades, classic lost souls, and Afrits as winged harassers in the same sky‑pest bucket.
 - **Monster Pack elementals** — Helemental storm pillars *(Helemental)* and drifting ESoul wisps *(ESoul)* that peel off larger fights or environmental kills.
@@ -241,7 +241,7 @@ Knights and barons eat rockets; arch‑viles eat your patience. Bring plasma, co
 
 - **Knights and barons** — hell knights, barons, cyber‑knight/baron/paladin hybrids, sprinting Belphegors, and Infernus bruisers that still respect Baron‑tier spacing.
 - **Arch-viles and specialists** — flame arch‑viles, ice arch‑viles, flesh‑summoning wizards, and Hellions occupying the same raise‑and‑burn psychological lane as vanilla arch‑viles.
-- **Marauder** — Eternal‑inspired hunter demon with shields and shotgun snap‑shots; counts as a noble‑tier duelist when he crashes a fight.
+- **Marauder** — Eternal‑inspired hunter demon with shields and shotgun snap‑shots; counts as a noble‑tier duelist when he crashes a fight. He sometimes drops his **Marauder Shotgun** (weighted death drop; bonus weapon props after certain finishers are also chance-based).
 - **Hierophant** — Monster Pack mastermind‑scale glass cannon that trades armor for offense *(Hierophant)*.
 
 ### Tier 5 — Bosses
@@ -252,7 +252,7 @@ These fights reserve the spotlight: huge hitboxes, splash damage, and arena‑wi
 
 Some boss‑scale fights still reuse Doom II encounter vocabulary—two cyberdemons on a wide staircase still means “empty the backpack,” regardless of which cosmetic variant spawned.
 
-- **Classic Doom bosses** — cyberdemons, spider masterminds, Annihilator missile brutes, Demolisher mastermind variants, and Juggernaut‑class spider edits sized for map climax fights.
+- **Classic Doom bosses** — cyberdemons, spider masterminds, Annihilator missile brutes, Demolisher mastermind variants, and Juggernaut‑class spider edits sized for map climax fights. **Baalgar** (replaces the stock cyber) and related cyber gib FX can sometimes yield the **Cyberdemon Missile Launcher**; masterminds can sometimes drop the **Mastermind's Chaingun** (see weapon list above for wear rules).
 - **Monster Pack megabosses** — Hellduke cyber‑duel *(Hellduke)*, Hellsmith forge terror *(Hellsmith)*, Director spider mastermind remix *(Director)*, and Aracnorb Queen swarm mother *(AracnorbQueen)*.
 
 **Cat's Frozen frost roster** — **Frost Baron** rides Hell Knight / Baron spawns, **Cryocubus** rides mancubus tables, **Frostbrain** rides cacodemon tables, and **Cryotron** rides arachnotron tables. They are standard always‑on cryo guests unless **disable new enemies** hides the broader optional roster. (**SchrödingCat / Cat's Frozen Addon** — see **`CREDITS.txt`**.)
@@ -304,6 +304,7 @@ Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki11
 
 **Recent additions in this line:**
 
+- **Boss-tech weapon wear:** cyber launcher, mastermind chaingun, mancubus / Daedabus flame cannon, and Marauder shotgun use limited **durability** (separate from ammo) with weapon **break** at zero wear and **repair to full wear** when picking up the same gun again; monster **drops** use weighted chances instead of guaranteed boss loot where appropriate. The chaingun and flame cannon are **not** placed by rocket / plasma **map** weapon spawners (monster sources only).
 - Combined **2022 Enhanced Brootality** gore from Brutal Doom 22 and Brutal Pack V10.
 - Expanded first-person executions with art lineage from **Brutal Doom *El Diablo* Edition** and related packs.
 - Glory Kill shoulder launcher art and Eternal-style fuel HUD glyphs aligned with the newer Glory Kills presentation.
