@@ -414,8 +414,6 @@ PB_DUALOPT_DEF = "Default";
 PB_OPT_Molotov = "Molotov cocktails";
 PB_WHEELTIP_WW_MolotovSelected = "Molotov Equipment Slot.\nUser1 Throws; Fire Spreads on Impact.";
 
-PB_PICKUP_HINTS = "Weapon pickup hints";
-PB_PICKUP_HINTS_DESC = "Brief Inventory Tip for Project Brutality Guns.\n(Weapon Special Wheel & Alt-Fire Hints.)";
 PB_WEAPON_WHEEL_ENABLE = "Weapon selection wheel";
 PB_WEAPON_WHEEL_ENABLE_DESC = "Master switch for the integrated Gearbox weapon selector (GPLv3+).\nWhen On, \caWeapon Selection Wheel\c- opens Gearbox. When Off, slot intercept and menu toggle are skipped.\nFull Gearbox options: \caPB 2022 Enhanced\c- → \caGameplay Settings\c- → \caWeapon & Inventory Selector\c-.";
 

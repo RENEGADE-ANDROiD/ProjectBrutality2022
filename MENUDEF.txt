@@ -755,10 +755,6 @@ OptionMenu "GameplaySettings"
 	StaticText "$PB_WEAPON_SELECTOR_MENU_HINT", teal
 	StaticText " ", teal
 	StaticText " ", teal
-	Option "$PB_PICKUP_HINTS",	"pb_weapon_pickup_hints", "OnOff"
-	StaticText "$PB_PICKUP_HINTS_DESC"
-	StaticText " "
-	StaticText " "
 	
 	Option "$PB_RESPECT", "pb_respectweapons", "OnOff"
 	StaticText " "

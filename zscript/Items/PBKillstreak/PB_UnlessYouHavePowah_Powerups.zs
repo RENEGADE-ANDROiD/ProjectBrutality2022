@@ -5,7 +5,7 @@ class PowerDeflect : Powerup
 	Default
 	{
 		Powerup.Duration -15;
-		Powerup.Color "ff 80 00", 0.005;
+		Powerup.Color "ff 80 00", 0.002;
 	}
 	
 	override void InitEffect ()
@@ -68,7 +68,7 @@ Class ElectricAuraSphere : PowerupGiver
 		Inventory.MaxAmount 0;
 		Powerup.Type "ElectricAuraPower";
 		Powerup.Duration -15;
-		Powerup.Color "FFFF00", 0.005;
+		Powerup.Color "FFFF00", 0.002;
 		Inventory.PickupMessage "Electric Aura! Summons an Electric Field that Stuns Nearby Enemies in Area";
 	}
 	States

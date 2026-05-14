@@ -698,7 +698,7 @@ ACTOR PB_XM21 : PB_Weapon
 		Goto Ready3
 
 	Spawn:
-		WM14 A -1
+		WM14 B -1 Bright
 		Stop
 
 	FlashKicking:

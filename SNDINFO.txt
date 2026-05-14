@@ -879,7 +879,8 @@ $limit ONELIN 1
 $random PIKUPTALK { PIKUPTALK1 PIKUPTALK2 }
 PIKUPTALK1 PIKUPTALK1
 PIKUPTALK2 PIKUPTALK2
-DSSALUTE DSSALUTE
+// DSSALUTE: was self-alias (IWAD lump); loose loads often have no lump — use PB grunt sight (marine voice).
+DSSALUTE grunt/sight5
 $limit FUCK 1
 TAUNT TAUNT
 KICK KICK
@@ -931,7 +932,6 @@ land3	jmpland3
 land4	jmpland4
 land5	jmpland5
 land6   jmpland6
-DSSALUTE DSSALUTE
 DBLJUMP DBLJUMP
 $random JMPBOOT { JMPBOT1 JMPBOT2}
 JMPBOT1 JMPBOT1
@@ -4013,13 +4013,13 @@ PLGRNHT1 "sounds/combat/weapons/NeoHMG/PLGRNHT1.ogg"
 PLGRNHT2 "sounds/combat/weapons/NeoHMG/PLGRNHT2.ogg"
 PLGRNHT3 "sounds/combat/weapons/NeoHMG/PLGRNHT3.ogg"
 
-// M41A - SFX: sounds/combat/weapons/M41A/ (M41AFIRE, M41PICUP, mags, bolt)
-M41A/Fire		"sounds/combat/weapons/M41A/M41AFIRE"
+// M41A - SFX: sounds/combat/weapons/M41A/ (explicit extensions — some builds skip extensionless lumps for mixed WAV/OGG)
+M41A/Fire		"sounds/combat/weapons/M41A/M41AFIRE.wav"
 $volume M41A/Fire 1.0
-M41A/MagTake	"sounds/combat/weapons/M41A/CBMGOUT"
-M41A/MagIn		"sounds/combat/weapons/M41A/CBMGINN"
-M41A/Bolt		"sounds/combat/weapons/M41A/ALIEN_CK"
-M41A/PickUp		"sounds/combat/weapons/M41A/M41PICUP"
+M41A/MagTake	"sounds/combat/weapons/M41A/CBMGOUT.ogg"
+M41A/MagIn		"sounds/combat/weapons/M41A/CBMGINN.ogg"
+M41A/Bolt		"sounds/combat/weapons/M41A/ALIEN_CK.ogg"
+M41A/PickUp		"sounds/combat/weapons/M41A/M41PICUP.ogg"
 
 // PB3 XM-21 Sniper  - sounds in sounds/combat/weapons/XM21/
 M14FIRE "sounds/combat/weapons/XM21/M14FIRE.ogg"
@@ -4048,40 +4048,40 @@ weapons/Scope_zoomout "sounds/combat/weapons/XM21/Scopeout.wav"
 // Commander SSG (PB_CSSG)  - SFX from Project-Brutality-Weapons-Pack; files in sounds/combat/weapons/CSSG/
 CSSGOPEN "sounds/combat/weapons/CSSG/CSSGOPEN.ogg"
 CSSGCLOS "sounds/combat/weapons/CSSG/CSSGCLOS.ogg"
-CSSGSNGL "sounds/combat/weapons/CSSG/CSSGSNGL"
-CSSGFULL "sounds/combat/weapons/CSSG/CSSGFULL"
-CSSGSLGS "sounds/combat/weapons/CSSG/CSSGSLGS"
-CSSGSLGF "sounds/combat/weapons/CSSG/CSSGSLGF"
-CSSGDBS "sounds/combat/weapons/CSSG/CSSGDBS"
-CSSGDBF "sounds/combat/weapons/CSSG/CSSGDBF"
-COMSSGUP "sounds/combat/weapons/CSSG/COMSSGUP"
-CSSGFLKS "sounds/combat/weapons/CSSG/CSSGFLKS"
-CSSGFLKF "sounds/combat/weapons/CSSG/CSSGFLKF"
-CSSGFLCS "sounds/combat/weapons/CSSG/CSSGFLCS"
-CSSGFLCF "sounds/combat/weapons/CSSG/CSSGFLCF"
-CSSGEXPS "sounds/combat/weapons/CSSG/CSSGEXPS"
-CSSGEXPF "sounds/combat/weapons/CSSG/CSSGEXPF"
-CSSGDANS "sounds/combat/weapons/CSSG/CSSGDANS"
-CSSGDANF "sounds/combat/weapons/CSSG/CSSGDANF"
+CSSGSNGL "sounds/combat/weapons/CSSG/CSSGSNGL.ogg"
+CSSGFULL "sounds/combat/weapons/CSSG/CSSGFULL.ogg"
+CSSGSLGS "sounds/combat/weapons/CSSG/CSSGSLGS.ogg"
+CSSGSLGF "sounds/combat/weapons/CSSG/CSSGSLGF.ogg"
+CSSGDBS "sounds/combat/weapons/CSSG/CSSGDBS.ogg"
+CSSGDBF "sounds/combat/weapons/CSSG/CSSGDBF.ogg"
+COMSSGUP "sounds/combat/weapons/CSSG/COMSSGUP.ogg"
+CSSGFLKS "sounds/combat/weapons/CSSG/CSSGFLKS.ogg"
+CSSGFLKF "sounds/combat/weapons/CSSG/CSSGFLKF.ogg"
+CSSGFLCS "sounds/combat/weapons/CSSG/CSSGFLCS.ogg"
+CSSGFLCF "sounds/combat/weapons/CSSG/CSSGFLCF.ogg"
+CSSGEXPS "sounds/combat/weapons/CSSG/CSSGEXPS.ogg"
+CSSGEXPF "sounds/combat/weapons/CSSG/CSSGEXPF.ogg"
+CSSGDANS "sounds/combat/weapons/CSSG/CSSGDANS.ogg"
+CSSGDANF "sounds/combat/weapons/CSSG/CSSGDANF.ogg"
 lildead "sounds/combat/weapons/CSSG/lildead.wav"
-CSSGPHOS "sounds/combat/weapons/CSSG/CSSGPHOS"
-CSSGPHOF "sounds/combat/weapons/CSSG/CSSGPHOF"
+CSSGPHOS "sounds/combat/weapons/CSSG/CSSGPHOS.ogg"
+CSSGPHOF "sounds/combat/weapons/CSSG/CSSGPHOF.ogg"
 weapons/cssg/in "sounds/combat/weapons/CSSG/CSSGIN.ogg"
 
-// PB X12 Shotgun  - sounds in sounds/combat/weapons/X12/
-X12FIRE "sounds/combat/weapons/X12/X12FIRE"
+// PB X12 Shotgun — PB_X12_Shotgun add-on samples (typed extensions; loose-folder loaders on Linux need explicit suffix).
+X12FIRE "sounds/combat/weapons/X12/X12FIRE.ogg"
 $volume X12FIRE 1.0
-X12PMP "sounds/combat/weapons/X12/X12PMP"
-X12PMP1 "sounds/combat/weapons/X12/X12PMP1"
-X12PMP2 "sounds/combat/weapons/X12/X12PMP2"
+X12PMP "sounds/combat/weapons/X12/X12PMP.ogg"
+X12PMP1 "sounds/combat/weapons/X12/X12PMP1.wav"
+X12PMP2 "sounds/combat/weapons/X12/X12PMP2.wav"
 
 // Battle Rifle (BDPBattleRifle.zs) — SOUNDS/combat/WEAPONS/BattleRifle
 weapons/battlerifle/up "sounds/combat/weapons/BattleRifle/BR45PICK.ogg"
-weapons/battlerifle/fire "sounds/combat/weapons/BattleRifle/BR45FIRE"
-weapons/battlerifle/magout "sounds/combat/weapons/BattleRifle/BR45OPEN"
-weapons/battlerifle/magin "sounds/combat/weapons/BattleRifle/BR45LOAD"
-weapons/battlerifle/dry "sounds/combat/weapons/BattleRifle/BR45PING"
-weapons/battlerifle/switch "sounds/combat/weapons/BattleRifle/BR45SWCH"
+weapons/battlerifle/fire "sounds/combat/weapons/BattleRifle/BR45FIRE.ogg"
+weapons/battlerifle/magout "sounds/combat/weapons/BattleRifle/BR45OPEN.ogg"
+weapons/battlerifle/magin "sounds/combat/weapons/BattleRifle/BR45LOAD.ogg"
+weapons/battlerifle/dry "sounds/combat/weapons/BattleRifle/BR45PING.ogg"
+weapons/battlerifle/switch "sounds/combat/weapons/BattleRifle/BR45SWCH.wav"
 // Lever Action (LeverAction.dec) — SOUNDS/combat/WEAPONS/LeverAction
 weapons/leveraction/rechamber "sounds/combat/weapons/LeverAction/Lever_Action_Rechamber.ogg"
 weapons/leveraction/inspect "sounds/combat/weapons/LeverAction/Lever_Action_Inspect.ogg"
@@ -4106,19 +4106,19 @@ MS/GrenClose "sounds/combat/weapons/MetalSniper/msGrenClose.ogg"
 MS/Button "sounds/combat/weapons/MetalSniper/msButton.ogg"
 MS/TakeMag "sounds/combat/weapons/MetalSniper/msMagOut.ogg"
 // Marauder SSG (MarauderSSG.dec) — Peacekeeper folder (MSS* rips)
-MSSFR1 "sounds/combat/weapons/Peacekeeper/MSSFR1"
-MSSFR2 "sounds/combat/weapons/Peacekeeper/MSSFR2"
-MSSFR3 "sounds/combat/weapons/Peacekeeper/MSSFR3"
-MSSFR4 "sounds/combat/weapons/Peacekeeper/MSSFR4"
-MSSFR5 "sounds/combat/weapons/Peacekeeper/MSSFR5"
-MSSFR6 "sounds/combat/weapons/Peacekeeper/MSSFR6"
-MSSCL1 "sounds/combat/weapons/Peacekeeper/MSSCL1"
-MSSCL2 "sounds/combat/weapons/Peacekeeper/MSSCL2"
-MSSCL3 "sounds/combat/weapons/Peacekeeper/MSSCL3"
+MSSFR1 "sounds/combat/weapons/Peacekeeper/MSSFR1.ogg"
+MSSFR2 "sounds/combat/weapons/Peacekeeper/MSSFR2.ogg"
+MSSFR3 "sounds/combat/weapons/Peacekeeper/MSSFR3.ogg"
+MSSFR4 "sounds/combat/weapons/Peacekeeper/MSSFR4.ogg"
+MSSFR5 "sounds/combat/weapons/Peacekeeper/MSSFR5.ogg"
+MSSFR6 "sounds/combat/weapons/Peacekeeper/MSSFR6.ogg"
+MSSCL1 "sounds/combat/weapons/Peacekeeper/MSSCL1.ogg"
+MSSCL2 "sounds/combat/weapons/Peacekeeper/MSSCL2.ogg"
+MSSCL3 "sounds/combat/weapons/Peacekeeper/MSSCL3.ogg"
 $random MSSFR { MSSFR1 MSSFR2 MSSFR3 MSSFR4 MSSFR5 MSSFR6 }
 $random MSSCL { MSSCL1 MSSCL2 MSSCL3 }
-MSSOP "sounds/combat/weapons/Peacekeeper/MSSOP"
-MSSLD "sounds/combat/weapons/Peacekeeper/MSSLD"
+MSSOP "sounds/combat/weapons/Peacekeeper/MSSOP.ogg"
+MSSLD "sounds/combat/weapons/Peacekeeper/MSSLD.ogg"
 BFGREADY "sounds/combat/weapons/CyberdemonRL/BFGREADY.ogg"
 // UAC-320 OldHMG (OldHMG.dec) — folded HMG bank (blue HMG + drum); Neo spin/stop stay on NeoHMG lumps
 9HAINAMO "sounds/combat/weapons/HMG/9HAINAMO.ogg"

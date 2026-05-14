@@ -15,7 +15,7 @@ Actor BootsOfTheNorth : PowerupGiver
 	Inventory.PickupMessage "$PB_PICKUP_BootsOfTheNorth"
 	Powerup.Type NorthBoots
 	Powerup.Duration -15
-	Powerup.Color "80 C0 FF", 0.012
+	Powerup.Color "80 C0 FF", 0.002
 	+Inventory.PickupFlash
 	+Inventory.AutoActivate
 	+Inventory.AlwaysPickup
@@ -46,7 +46,7 @@ Actor BracersOfForce : PowerupGiver
 	Inventory.PickupMessage "$PB_PICKUP_BracersOfForce"
 	Powerup.Type Bracers
 	Powerup.Duration -13
-	Powerup.Color "Blue", 0.018
+	Powerup.Color "Blue", 0.002
 	+Inventory.PickupFlash
 	+Inventory.AutoActivate
 	+Inventory.AlwaysPickup
@@ -182,7 +182,7 @@ Actor FlightSphere : PowerupGiver
 	Inventory.PickupMessage "$PB_PICKUP_FlightSphere"
 	Powerup.Type "PowerFlight"
 	Powerup.Duration -12
-	Powerup.Color "FF 00 FF", 0.018
+	Powerup.Color "FF 00 FF", 0.002
 	+INVENTORY.AUTOACTIVATE
 	+INVENTORY.ALWAYSPICKUP
 	+INVENTORY.PICKUPFLASH
@@ -211,7 +211,7 @@ Actor LichSkullDamageGiver : PowerupGiver
 	+Inventory.AutoActivate
 	+Inventory.AlwaysPickup
 	Powerup.Type LSkullDoubleDamage
-	Powerup.Color "Red", 0.018
+	Powerup.Color "Red", 0.002
 	Inventory.MaxAmount 0
 	Powerup.Duration 525
 }
@@ -315,7 +315,7 @@ Actor ReflectorSphere : PowerupGiver
 	Inventory.PickupMessage "$PB_PICKUP_ReflectorSphere"
 	Powerup.Type "PowerInvulnerable"
 	Powerup.Mode "Reflective"
-	Powerup.Color "GoldMap"
+	Powerup.Color "GoldMap", 0.008
 	Powerup.Duration -15
 	RenderStyle "Translucent"
 	Alpha 0.8
