@@ -635,6 +635,17 @@ class PB_EventHandler : EventHandler
 	transient ui int pdaDescAutosizeCacheSh;
 	ui double dashAlpha;
 	ui double dashScale;
+
+	clearscope static bool PB2022WeaponHudSkipWeapon(Name weaponClass)
+	{
+		return weaponClass == 'PB_Pistol' || weaponClass == 'PB_SMG' || weaponClass == 'PB_Revolver' || weaponClass == 'PB_Deagle'
+			|| weaponClass == 'PB_Shotgun' || weaponClass == 'PB_Autoshotgun' || weaponClass == 'PB_QuadSG' || weaponClass == 'PB_SSG'
+			|| weaponClass == 'PB_Carbine' || weaponClass == 'Rifle'
+			|| weaponClass == 'PB_Minigun'
+			|| weaponClass == 'PB_M1Plasma' || weaponClass == 'PB_M2Plasma'
+			|| weaponClass == 'PB_Flamethrower';
+	}
+
 	ui double PB2022WeaponHudIconSizeMul(Vector2 texSize)
 	{
 		double w = texSize.x;
@@ -657,15 +668,8 @@ class PB_EventHandler : EventHandler
 		Weapon weap = p.ReadyWeapon;
 		Name weaponClass = weap.GetClassName();
 
-		if (weaponClass == 'PB_Pistol' || weaponClass == 'PB_SMG' || weaponClass == 'PB_Revolver' || weaponClass == 'PB_Deagle'
-			|| weaponClass == 'PB_Shotgun' || weaponClass == 'PB_Autoshotgun' || weaponClass == 'PB_QuadSG' || weaponClass == 'PB_SSG'
-			|| weaponClass == 'PB_Carbine' || weaponClass == 'Rifle'
-			|| weaponClass == 'PB_Minigun'
-			|| weaponClass == 'PB_M1Plasma' || weaponClass == 'PB_M2Plasma'
-			|| weaponClass == 'PB_Flamethrower')
-		{
+		if (PB2022WeaponHudSkipWeapon(weaponClass))
 			return;
-		}
 
 		TextureID iconID = weap.AltHUDIcon.IsValid() ? weap.AltHUDIcon : weap.Icon;
 		if (!iconID) { return; }
@@ -690,6 +694,7 @@ class PB_EventHandler : EventHandler
 			DTA_DestWidth, int(drawW + 0.5), DTA_DestHeight, int(drawH + 0.5),
 			DTA_Alpha, alpha, DTA_CenterOffset, true);
 	}
+
 	ui TextureID PB2022GetModeIcon(PlayerInfo p, Name weaponClass, out double localScale, out double localOffX, out double localOffY)
 	{
 		localScale = 1.0;
@@ -5292,6 +5297,8 @@ class PB_EventHandler : EventHandler
 				);
 			}
 		}
+		if (!hideHUD && !PDAMode)
+			DrawGloryKillEternalFuelHud();
 		if (MouseX == 1 && MouseY == 1 && !MousePositionSet)
 		{
 			SendNetworkEvent("modifymousepos",Screen.GetWidth() / 2,Screen.GetHeight() / 2);

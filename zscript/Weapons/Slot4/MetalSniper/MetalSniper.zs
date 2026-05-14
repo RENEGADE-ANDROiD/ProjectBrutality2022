@@ -17,9 +17,12 @@ class PB_MetalSniper : PB_WeaponBase
         PB_WeaponBase.UnloaderToken "SniperUnloaded";
         PB_WeaponBase.respectItem "MetalSniperRespect";
         Obituary "%o was sniped by %k's Metal Sniper";
-        scale 0.62;
+        scale 0.72;
+        +FORCEXYBILLBOARD;
+        +FLOORCLIP;
         +weapon.noalert;
         +weapon.noautofire;
+        Inventory.Icon "MSNWA0";
     }
 
     const SniperMode  = 0;
@@ -71,8 +74,9 @@ class PB_MetalSniper : PB_WeaponBase
             goto Ready3;
 
         Select:
-            TNT1 A 0 PB_WeaponRaise("MS/Up");
+            goto SelectFirstPersonLegs;
         SelectContinue:
+            TNT1 A 0 PB_WeaponRaise("MS/Up");
             TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
             TNT1 A 0 PB_WeapTokenSwitch("RifleSelected");
             TNT1 A 0 A_TakeInventory("SniperUnloaded", 1);

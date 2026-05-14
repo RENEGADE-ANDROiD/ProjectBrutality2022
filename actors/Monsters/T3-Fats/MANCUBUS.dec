@@ -56,6 +56,7 @@ ACTOR PB_Mancubus: Fatso Replaces Fatso
 	
 	DropItem "Demonpickup2" 60
 	DropItem "Demonpickup2" 250
+	DropItem "MancubusFlameCannon" 56
 	
 	States
       {

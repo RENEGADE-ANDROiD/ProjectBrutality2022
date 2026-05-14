@@ -300,6 +300,8 @@ class PlayerPawnBase : PlayerPawn
 
 	Override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
 	{
+		if (PB_KatanaShieldFilter.SuppressPlayerSplash(self, inflictor, source, damage, mod, flags))
+			return 0;
 		int ret = Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
 		if(mod == 'Explosive' || mod == 'Rocket' || (inflictor && inflictor.bMISSILE))
 		{

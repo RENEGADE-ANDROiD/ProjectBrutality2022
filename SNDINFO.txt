@@ -374,18 +374,18 @@ $alias Blighter/Explode Blighter/Death
 $alias Blighter/Arm HSpawnBurster/Arm
 
 $random CyberZ/Sight { CZOMSEE1 CZOMSEE2 }
-CZOMSEE1 "sounds/MONSTERS/CyberFodder/CZOMSEE1"
-CZOMSEE2 "sounds/MONSTERS/CyberFodder/CZOMSEE2"
+CZOMSEE1 "sounds/MONSTERS/CyberFodder/CZOMSEE1.wav"
+CZOMSEE2 "sounds/MONSTERS/CyberFodder/CZOMSEE2.wav"
 
 $random CyberZ/Active { CZOMACT1 CZOMACT2 CZOMACT3 CZOMACT4 CZOMACT5 CZOMACT6 }
-CZOMACT1 "sounds/MONSTERS/CyberFodder/CZOMACT1"
-CZOMACT2 "sounds/MONSTERS/CyberFodder/CZOMACT2"
-CZOMACT3 "sounds/MONSTERS/CyberFodder/CZOMACT3"
-CZOMACT4 "sounds/MONSTERS/CyberFodder/CZOMACT4"
-CZOMACT5 "sounds/MONSTERS/CyberFodder/CZOMACT5"
-CZOMACT6 "sounds/MONSTERS/CyberFodder/CZOMACT6"
+CZOMACT1 "sounds/MONSTERS/CyberFodder/CZOMACT1.wav"
+CZOMACT2 "sounds/MONSTERS/CyberFodder/CZOMACT2.wav"
+CZOMACT3 "sounds/MONSTERS/CyberFodder/CZOMACT3.wav"
+CZOMACT4 "sounds/MONSTERS/CyberFodder/CZOMACT4.wav"
+CZOMACT5 "sounds/MONSTERS/CyberFodder/CZOMACT5.wav"
+CZOMACT6 "sounds/MONSTERS/CyberFodder/CZOMACT6.wav"
 
-CyberZ/Pain			"sounds/MONSTERS/CyberFodder/CZOMPAI"
+CyberZ/Pain			"sounds/MONSTERS/CyberFodder/CZOMPAI.wav"
 
 CyberZ/Death			"sounds/MONSTERS/CyberFodder/CZOMDTH"
 
@@ -879,7 +879,8 @@ $limit ONELIN 1
 $random PIKUPTALK { PIKUPTALK1 PIKUPTALK2 }
 PIKUPTALK1 PIKUPTALK1
 PIKUPTALK2 PIKUPTALK2
-DSSALUTE DSSALUTE
+// DSSALUTE: was self-alias (IWAD lump); loose loads often have no lump — use PB grunt sight (marine voice).
+DSSALUTE grunt/sight5
 $limit FUCK 1
 TAUNT TAUNT
 KICK KICK
@@ -931,7 +932,6 @@ land3	jmpland3
 land4	jmpland4
 land5	jmpland5
 land6   jmpland6
-DSSALUTE DSSALUTE
 DBLJUMP DBLJUMP
 $random JMPBOOT { JMPBOT1 JMPBOT2}
 JMPBOT1 JMPBOT1
@@ -4013,13 +4013,13 @@ PLGRNHT1 "sounds/combat/weapons/NeoHMG/PLGRNHT1.ogg"
 PLGRNHT2 "sounds/combat/weapons/NeoHMG/PLGRNHT2.ogg"
 PLGRNHT3 "sounds/combat/weapons/NeoHMG/PLGRNHT3.ogg"
 
-// M41A - SFX: sounds/combat/weapons/M41A/ (M41AFIRE, M41PICUP, mags, bolt)
-M41A/Fire		"sounds/combat/weapons/M41A/M41AFIRE"
+// M41A - SFX: sounds/combat/weapons/M41A/ (explicit extensions — some builds skip extensionless lumps for mixed WAV/OGG)
+M41A/Fire		"sounds/combat/weapons/M41A/M41AFIRE.wav"
 $volume M41A/Fire 1.0
-M41A/MagTake	"sounds/combat/weapons/M41A/CBMGOUT"
-M41A/MagIn		"sounds/combat/weapons/M41A/CBMGINN"
-M41A/Bolt		"sounds/combat/weapons/M41A/ALIEN_CK"
-M41A/PickUp		"sounds/combat/weapons/M41A/M41PICUP"
+M41A/MagTake	"sounds/combat/weapons/M41A/CBMGOUT.ogg"
+M41A/MagIn		"sounds/combat/weapons/M41A/CBMGINN.ogg"
+M41A/Bolt		"sounds/combat/weapons/M41A/ALIEN_CK.ogg"
+M41A/PickUp		"sounds/combat/weapons/M41A/M41PICUP.ogg"
 
 // PB3 XM-21 Sniper  - sounds in sounds/combat/weapons/XM21/
 M14FIRE "sounds/combat/weapons/XM21/M14FIRE.ogg"
@@ -4048,40 +4048,40 @@ weapons/Scope_zoomout "sounds/combat/weapons/XM21/Scopeout.wav"
 // Commander SSG (PB_CSSG)  - SFX from Project-Brutality-Weapons-Pack; files in sounds/combat/weapons/CSSG/
 CSSGOPEN "sounds/combat/weapons/CSSG/CSSGOPEN.ogg"
 CSSGCLOS "sounds/combat/weapons/CSSG/CSSGCLOS.ogg"
-CSSGSNGL "sounds/combat/weapons/CSSG/CSSGSNGL"
-CSSGFULL "sounds/combat/weapons/CSSG/CSSGFULL"
-CSSGSLGS "sounds/combat/weapons/CSSG/CSSGSLGS"
-CSSGSLGF "sounds/combat/weapons/CSSG/CSSGSLGF"
-CSSGDBS "sounds/combat/weapons/CSSG/CSSGDBS"
-CSSGDBF "sounds/combat/weapons/CSSG/CSSGDBF"
-COMSSGUP "sounds/combat/weapons/CSSG/COMSSGUP"
-CSSGFLKS "sounds/combat/weapons/CSSG/CSSGFLKS"
-CSSGFLKF "sounds/combat/weapons/CSSG/CSSGFLKF"
-CSSGFLCS "sounds/combat/weapons/CSSG/CSSGFLCS"
-CSSGFLCF "sounds/combat/weapons/CSSG/CSSGFLCF"
-CSSGEXPS "sounds/combat/weapons/CSSG/CSSGEXPS"
-CSSGEXPF "sounds/combat/weapons/CSSG/CSSGEXPF"
-CSSGDANS "sounds/combat/weapons/CSSG/CSSGDANS"
-CSSGDANF "sounds/combat/weapons/CSSG/CSSGDANF"
+CSSGSNGL "sounds/combat/weapons/CSSG/CSSGSNGL.ogg"
+CSSGFULL "sounds/combat/weapons/CSSG/CSSGFULL.ogg"
+CSSGSLGS "sounds/combat/weapons/CSSG/CSSGSLGS.ogg"
+CSSGSLGF "sounds/combat/weapons/CSSG/CSSGSLGF.ogg"
+CSSGDBS "sounds/combat/weapons/CSSG/CSSGDBS.ogg"
+CSSGDBF "sounds/combat/weapons/CSSG/CSSGDBF.ogg"
+COMSSGUP "sounds/combat/weapons/CSSG/COMSSGUP.ogg"
+CSSGFLKS "sounds/combat/weapons/CSSG/CSSGFLKS.ogg"
+CSSGFLKF "sounds/combat/weapons/CSSG/CSSGFLKF.ogg"
+CSSGFLCS "sounds/combat/weapons/CSSG/CSSGFLCS.ogg"
+CSSGFLCF "sounds/combat/weapons/CSSG/CSSGFLCF.ogg"
+CSSGEXPS "sounds/combat/weapons/CSSG/CSSGEXPS.ogg"
+CSSGEXPF "sounds/combat/weapons/CSSG/CSSGEXPF.ogg"
+CSSGDANS "sounds/combat/weapons/CSSG/CSSGDANS.ogg"
+CSSGDANF "sounds/combat/weapons/CSSG/CSSGDANF.ogg"
 lildead "sounds/combat/weapons/CSSG/lildead.wav"
-CSSGPHOS "sounds/combat/weapons/CSSG/CSSGPHOS"
-CSSGPHOF "sounds/combat/weapons/CSSG/CSSGPHOF"
+CSSGPHOS "sounds/combat/weapons/CSSG/CSSGPHOS.ogg"
+CSSGPHOF "sounds/combat/weapons/CSSG/CSSGPHOF.ogg"
 weapons/cssg/in "sounds/combat/weapons/CSSG/CSSGIN.ogg"
 
-// PB X12 Shotgun  - sounds in sounds/combat/weapons/X12/
-X12FIRE "sounds/combat/weapons/X12/X12FIRE"
+// PB X12 Shotgun — PB_X12_Shotgun add-on samples (typed extensions; loose-folder loaders on Linux need explicit suffix).
+X12FIRE "sounds/combat/weapons/X12/X12FIRE.ogg"
 $volume X12FIRE 1.0
-X12PMP "sounds/combat/weapons/X12/X12PMP"
-X12PMP1 "sounds/combat/weapons/X12/X12PMP1"
-X12PMP2 "sounds/combat/weapons/X12/X12PMP2"
+X12PMP "sounds/combat/weapons/X12/X12PMP.ogg"
+X12PMP1 "sounds/combat/weapons/X12/X12PMP1.wav"
+X12PMP2 "sounds/combat/weapons/X12/X12PMP2.wav"
 
 // Battle Rifle (BDPBattleRifle.zs) — SOUNDS/combat/WEAPONS/BattleRifle
 weapons/battlerifle/up "sounds/combat/weapons/BattleRifle/BR45PICK.ogg"
-weapons/battlerifle/fire "sounds/combat/weapons/BattleRifle/BR45FIRE"
-weapons/battlerifle/magout "sounds/combat/weapons/BattleRifle/BR45OPEN"
-weapons/battlerifle/magin "sounds/combat/weapons/BattleRifle/BR45LOAD"
-weapons/battlerifle/dry "sounds/combat/weapons/BattleRifle/BR45PING"
-weapons/battlerifle/switch "sounds/combat/weapons/BattleRifle/BR45SWCH"
+weapons/battlerifle/fire "sounds/combat/weapons/BattleRifle/BR45FIRE.ogg"
+weapons/battlerifle/magout "sounds/combat/weapons/BattleRifle/BR45OPEN.ogg"
+weapons/battlerifle/magin "sounds/combat/weapons/BattleRifle/BR45LOAD.ogg"
+weapons/battlerifle/dry "sounds/combat/weapons/BattleRifle/BR45PING.ogg"
+weapons/battlerifle/switch "sounds/combat/weapons/BattleRifle/BR45SWCH.wav"
 // Lever Action (LeverAction.dec) — SOUNDS/combat/WEAPONS/LeverAction
 weapons/leveraction/rechamber "sounds/combat/weapons/LeverAction/Lever_Action_Rechamber.ogg"
 weapons/leveraction/inspect "sounds/combat/weapons/LeverAction/Lever_Action_Inspect.ogg"
@@ -4106,19 +4106,19 @@ MS/GrenClose "sounds/combat/weapons/MetalSniper/msGrenClose.ogg"
 MS/Button "sounds/combat/weapons/MetalSniper/msButton.ogg"
 MS/TakeMag "sounds/combat/weapons/MetalSniper/msMagOut.ogg"
 // Marauder SSG (MarauderSSG.dec) — Peacekeeper folder (MSS* rips)
-MSSFR1 "sounds/combat/weapons/Peacekeeper/MSSFR1"
-MSSFR2 "sounds/combat/weapons/Peacekeeper/MSSFR2"
-MSSFR3 "sounds/combat/weapons/Peacekeeper/MSSFR3"
-MSSFR4 "sounds/combat/weapons/Peacekeeper/MSSFR4"
-MSSFR5 "sounds/combat/weapons/Peacekeeper/MSSFR5"
-MSSFR6 "sounds/combat/weapons/Peacekeeper/MSSFR6"
-MSSCL1 "sounds/combat/weapons/Peacekeeper/MSSCL1"
-MSSCL2 "sounds/combat/weapons/Peacekeeper/MSSCL2"
-MSSCL3 "sounds/combat/weapons/Peacekeeper/MSSCL3"
+MSSFR1 "sounds/combat/weapons/Peacekeeper/MSSFR1.ogg"
+MSSFR2 "sounds/combat/weapons/Peacekeeper/MSSFR2.ogg"
+MSSFR3 "sounds/combat/weapons/Peacekeeper/MSSFR3.ogg"
+MSSFR4 "sounds/combat/weapons/Peacekeeper/MSSFR4.ogg"
+MSSFR5 "sounds/combat/weapons/Peacekeeper/MSSFR5.ogg"
+MSSFR6 "sounds/combat/weapons/Peacekeeper/MSSFR6.ogg"
+MSSCL1 "sounds/combat/weapons/Peacekeeper/MSSCL1.ogg"
+MSSCL2 "sounds/combat/weapons/Peacekeeper/MSSCL2.ogg"
+MSSCL3 "sounds/combat/weapons/Peacekeeper/MSSCL3.ogg"
 $random MSSFR { MSSFR1 MSSFR2 MSSFR3 MSSFR4 MSSFR5 MSSFR6 }
 $random MSSCL { MSSCL1 MSSCL2 MSSCL3 }
-MSSOP "sounds/combat/weapons/Peacekeeper/MSSOP"
-MSSLD "sounds/combat/weapons/Peacekeeper/MSSLD"
+MSSOP "sounds/combat/weapons/Peacekeeper/MSSOP.ogg"
+MSSLD "sounds/combat/weapons/Peacekeeper/MSSLD.ogg"
 BFGREADY "sounds/combat/weapons/CyberdemonRL/BFGREADY.ogg"
 // UAC-320 OldHMG (OldHMG.dec) — folded HMG bank (blue HMG + drum); Neo spin/stop stay on NeoHMG lumps
 9HAINAMO "sounds/combat/weapons/HMG/9HAINAMO.ogg"
@@ -5118,13 +5118,13 @@ Sword/SWave4       SHOKWAV4
 Sword/SWave5       SHOKWAV5
 
 
-PUMP "sounds/hasg/PBWP/PUMP"
+PUMP "sounds/hasg/PBWP/PUMP.wav"
 BDOPEN "sounds/hasg/PBWP/BDOPEN.ogg"
 BDLOAD "sounds/hasg/PBWP/BDLOAD.ogg"
 A48PKUP2 "sounds/hasg/PBWP/A48PKUP2.wav"
-weapons/golide/select "sounds/hasg/PBWP/ASG_GOLI"
-weapons/golide/pump "sounds/hasg/PBWP/PUMP"
-weapons/golide/pumpup "sounds/hasg/PBWP/ASGPU"
+weapons/golide/select "sounds/hasg/PBWP/ASG_GOLI.ogg"
+weapons/golide/pump "sounds/hasg/PBWP/PUMP.wav"
+weapons/golide/pumpup "sounds/hasg/PBWP/ASGPU.ogg"
 weapons/golide/drumopen "sounds/hasg/PBWP/BDOPEN.ogg"
 weapons/golide/drumclose "sounds/hasg/PBWP/BDLOAD.ogg"
 weapons/golide/drumpickup "sounds/hasg/Pickup.ogg"
@@ -5140,22 +5140,22 @@ weapons/golide/fire_flech "sounds/hasg/Fire/Flechette.ogg"
 weapons/golide/fire_expl "sounds/hasg/Fire/Explosive.ogg"
 weapons/golide/fire_wp "sounds/hasg/Fire/WhitePhosphorus.ogg"
 
-ASRL1 "sounds/hasg/PBWP/ASRL1"
-ASRL2 "sounds/hasg/PBWP/ASRL2"
-ASRL3 "sounds/hasg/PBWP/ASRL3"
-ASRL4 "sounds/hasg/PBWP/ASRL4"
-ASRL5 "sounds/hasg/PBWP/ASRL5"
+ASRL1 "sounds/hasg/PBWP/ASRL1.wav"
+ASRL2 "sounds/hasg/PBWP/ASRL2.wav"
+ASRL3 "sounds/hasg/PBWP/ASRL3.wav"
+ASRL4 "sounds/hasg/PBWP/ASRL4.wav"
+ASRL5 "sounds/hasg/PBWP/ASRL5.wav"
 $random weapons/golide/reload { ASRL1 ASRL2 ASRL3 ASRL4 ASRL5 }
 
-ASGADD1 "sounds/hasg/PBWP/ASGADD1"
-ASGADD2 "sounds/hasg/PBWP/ASGADD2"
-ASGADD3 "sounds/hasg/PBWP/ASGADD3"
-ASGADD4 "sounds/hasg/PBWP/ASGADD4"
+ASGADD1 "sounds/hasg/PBWP/ASGADD1.ogg"
+ASGADD2 "sounds/hasg/PBWP/ASGADD2.ogg"
+ASGADD3 "sounds/hasg/PBWP/ASGADD3.ogg"
+ASGADD4 "sounds/hasg/PBWP/ASGADD4.ogg"
 $random weapons/golide/add { ASGADD1 ASGADD2 ASGADD3 ASGADD4 }
 
 $random ASG/RL { ASRL1 ASRL2 ASRL3 ASRL4 ASRL5 }
 $random ASG/Add { ASGADD1 ASGADD2 ASGADD3 ASGADD4 }
-ASGLUP "sounds/hasg/PBWP/ASGPU"
+ASGLUP "sounds/hasg/PBWP/ASGPU.ogg"
 APPKUP "sounds/hasg/PBWP/A48PKUP2.wav"
 RANEQ "sounds/hasg/PBWP/BDLOAD.ogg"
 DryFire/Shotgun DRYFIRE
@@ -5346,6 +5346,71 @@ $alias METPULL	cyber/metal
 $alias METTEAR	cyber/metal
 $alias METHITF	bulletimpact/metal/a_1
 $alias METCRSH	misc/xdeath4
+
+// Legacy finisher / third-person fatality cue names (PB_Player + monster death shards).
+// Targets are existing definitions above; aliases avoid silent no-ops when logical names drifted.
+$alias ZOSCRE			monsters/zombie/pain
+$alias BPSLOP			misc/gibbed
+$alias player/comehere		TAUNT
+$alias HKPAIN			knight/pain
+$alias BLAM2			weapons/sg
+$alias PLSM8			PLSM9
+$alias fleshimpact		bulletfleshimpact
+$alias xdeath			misc/xdeath
+$alias xdeath2c			misc/xdeath2c
+$alias vile/pain		archvile/pain
+$alias vile/death		archvile/death
+$alias vile/Death		archvile/death
+$alias skeleton/attack		weapons/fistwhoosh
+$alias XDeath1			misc/xdeath1
+$alias baron/pain		superbaron/pain
+$alias cyber/death		misc/xdeath4
+$alias DSDMPAIN			knight/pain
+$alias DSKNTDTH			baron/death
+$alias DSKNTSIT			knight/sight
+$alias HEADRIP			misc/xdeath4
+$alias player/cyborg/KICK	KICK
+$alias weapons/rockethit	weapons/rocket/rocketignite
+$alias baby/pain		imp/pain
+$alias baby/death		imp/death
+$alias baby/sight		imp/sight
+$alias baby/active		imp/active
+
+// Monster death / finisher shards still calling legacy logical names (no standalone defs in-tree).
+$alias baby/walk			imp/active
+$alias baron/footstep		baron/step
+$alias BIG_BODYF			BODYF
+$alias BLANKSND			world/blank1
+$alias blooddrip			nashgore/blooddrop
+$alias breakfrozenguy/large	IceBreakLarge
+$alias caco/ballloop		caco/active
+$alias caco/shotx			fatso/shotx
+$alias chainguy/death		commando/death
+$alias DamnedSoul/Moan		demon/pain
+$alias DAOOH1			misc/xdeath4
+$alias DSPDIEHI			skeleton/xdeath
+$alias DSRFIRE			weapons/rocket/rocketignite
+$alias fatso/pain			Mancubus/pain
+$alias fatso/death			baron/death
+$alias fatso/footstep		baron/step
+$alias fireball/loop		caco/active
+$alias floorhardZombie		metalboot/steps
+$alias headex			gore/headshot
+$alias knight/death		baron/death
+$alias Marauderguy/death	MRDPN
+$alias Melee/SwingStrong	weapons/fistwhoosh
+$alias misc/PB_XDeath4		misc/xdeath4
+$alias pyro/blastexplosion	misc/xdeath4
+$alias QuadShotgunZombie/Reload2	weapons/sgpump
+$alias skeleton/death		skeleton/xdeath
+$alias skeleton/swing		weapons/fistwhoosh
+$alias tornado/form		icevile/active
+$alias UCHAIN/Steam			HRSteam
+$alias weapons/cryobowhit	IceBreakMedium
+$alias weapons/rocklf		weapons/paingiver/boom
+$alias weapons/sshotc		weapons/sg
+$alias Weapons/YamatoExp	weapons/StachanovHit
+$alias wizard/tele		wizard/active
 
 // Meat hook: DECORATE HookShot + ZScript grapple (PlayerPawn Hook / FireHook)
 hookshot/loop		dspstop

@@ -27,7 +27,7 @@ ACTOR PB_Fusil : PB_Weapon
     Weapon.AmmoUse2 0
     Weapon.AmmoGive2 24
     Weapon.SlotNumber 4
-    Weapon.SlotPriority 0.2
+    Weapon.SlotPriority 0.18
     Weapon.AmmoType1 "NewClip"
     Weapon.AmmoType2 "PB_FusilMag"
     Obituary "%o was shot down by %k's Fusil."
@@ -542,8 +542,7 @@ ACTOR PB_SideFusil : PB_Weapon
     Weapon.AmmoType2 "PB_FusilMag"
     Weapon.AmmoUse2 0
     Weapon.AmmoGive2 0
-    Weapon.SlotNumber 4
-    Weapon.SlotPriority 0.19
+    Weapon.SlotNumber -1
     Weapon.AmmoType1 "NewClip"
     Obituary "%o was shot down by %k's Fusil."
     AttackSound "None"

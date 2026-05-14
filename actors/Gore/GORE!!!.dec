@@ -5999,6 +5999,7 @@ ACTOR DyingDemon
     States
     {
     Spawn:
+		TNT1 A 0 A_PlaySound("misc/gibbed")
 		SARH AAA 4 A_SpawnItem ("Big_Blood", 0, 50)
 		SARH BBB 4 A_SpawnItem ("Big_Blood", 0, 40)
 		SARH CCC 4 A_SpawnItem ("Big_Blood", 0, 30)
@@ -9768,6 +9769,9 @@ ACTOR XDeathCyberdemonGun: XDeathBullArm1
    	Death:
         TNT1 A 0 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
 		TNT1 A 0 A_JumpIf(GetCVar("pb_NoPB_CyberdemonRLWeapon") > 0, "NoWeaponDrop")
+		TNT1 A 0 A_Jump(128, "CyberGunSpawnPBRL")
+		Goto NoWeaponDrop
+	CyberGunSpawnPBRL:
 		TNT1 A 0 A_SpawnItemEx("PB_CyberdemonRL", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION|SXF_TRANSFERPOINTERS, 0)
 		Stop
 	NoWeaponDrop:

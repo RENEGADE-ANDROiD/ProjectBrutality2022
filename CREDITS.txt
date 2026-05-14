@@ -53,6 +53,7 @@ Gameplay and content in this release
   Freezebot, ElecPod. Naming, spawners, menu toggles, and HUD: RENEGADE ANDROID
   and doc.
 - Credit to BeefRice and **Jaih1r0** for PBX HUD elements and many weapon improvements and systems.
+- **Monster-sourced weapon wear (PBX-style durability):** parallel undroppable **`Ammo`** wear pools per boss-tech gun, manual **`TakeInventory`** on meaningful shots, **`WeaponBreak`** when wear hits zero, and **`AttachToOwner`** top-up when picking up the same weapon again below max — aligned with **PBX-Weapons** / Project Brutality X patterns (same family as **Excavator** upstream). Shipped on **`PB_CyberdemonRL`** (ZScript), **`MastermindChaingun`**, **`MancubusFlameCannon`**, **`MarauderSSG`** (**`actors/Weapons/MonsterWeaponDurability.dec`**, **`PB_WeaponBase`** in **`zscript/Weapons/BaseWeapon.zc`**, weapon sources). Drop weights and gib rolls tuned in monster / gore DECORATE (**`MastermindChaingun`** / **`MancubusFlameCannon`** are not rolled from rocket / plasma **map** spawners — monster drops only); maintainers **RENEGADE ANDROID**, **doc**, and repo contributors for the 2025–2026 integration pass.
 - **Shield Saw** (GK_ShieldSaw lineage): **HUNG** — folded as quick-melee **`ShieldSaw_token`** + recall; see **`AGENTS.md`**.
 - Rocket jump, plasma wall climb, and instant weapon switch: included as
   configurable options with PB cvar names.
@@ -603,6 +604,7 @@ GloryKillMechanics - BrutalDoom Black Edition's Team
 Pinata pickup sound - BrutalDoom Black Edition's Team
 Glory Kill Shader - D4D Teams
 Crucible sprite , Sound, FlameBelch sound - D4D Teams, EOA Teams
+Crucible first-person CRCB*0 glove refresh (2026) - thedoctorofdoom / glorykills (GitHub commit 3b28b4c)
 Crucible trail - Embers Of Armageddon
 Pinata, Ammo Sprites - D4D Teams, LJG2023
 BloodPunch Effect - EOA Teams
@@ -632,4 +634,5 @@ Reload, fatality, death, and gore sprites + code + revenge idea - DarthSeeth
 Glory-kill addon code - Headshot_Ev (Brutal Doom BE)
 Additional code - Dox
 PB3.0 build update - Jeniffer/Jenny (2023-05-14): SelectAnimation/Idle rewrites, gun-smoke inventory, kick/slidekick/punch fixes, barrel grab + reload fixes, deselect and weapon-up polish, startup-error cleanup
+Monster-sourced Marauder SSG wear + break + duplicate-pickup refill (PBX-style) — 2025–2026; see CREDITS index “Monster-sourced weapon wear”
 ...

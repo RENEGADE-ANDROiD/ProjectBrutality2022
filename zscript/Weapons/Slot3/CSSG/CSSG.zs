@@ -38,33 +38,13 @@ Class PB_CSSG : PB_WeaponBase
 			SG43 A -1;
 			stop;
 		
-		Steady:
-			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 SetPlayerProperty(0, 0, 0);
-			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-			goto Ready3;
-		
 		Select:
 			TNT1 A 0
 			{
 				A_WeaponOffset(0, 32);
 				A_SetRoll(0);
 			}
-			TNT1 A 0 A_StopSound(1);
-			TNT1 A 0 A_StopSound(5);
-			TNT1 A 0 A_StopSound(6);
-			TNT1 A 0 A_TakeInventory("Spin",1);
-			TNT1 A 0 A_TakeInventory("CantWeaponSpecial",1);
-			TNT1 A 0 A_TakeInventory("MG42Selected",1);
-			TNT1 A 0 A_SetInventory("Grabbing_A_Ledge", 0);
-			TNT1 A 0 A_TakeInventory("RandomHeadExploder",1);
-			TNT1 A 0 A_TakeInventory("DualFireReload",2);
-			TNT1 A 0 A_Overlay(-777, "Melee_Equipment_Handler_Overlay");
-			TNT1 A 0 A_Overlay(-778, "KickHandler_Overlay");
-			TNT1 A 0 A_Overlay(-779, "Equipment_Toggle_Handler_Overlay");
-			TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand");
-			TNT1 A 0 A_Jump(255, "SelectContinue");
+			Goto SelectFirstPersonLegs;
 		SelectContinue:
 			TNT1 A 0 PB_WeapTokenSwitch("SSGSelected");
 			TNT1 A 0 PB_RespectIfNeeded();
@@ -737,9 +717,9 @@ Class PB_CSSG : PB_WeaponBase
 				PB_FireBullets("PB_MGNail",12,3,0,0,3); 
 				break;
 			case Shell_Flak: 
-				CSSG_FireBullets("CSSGChunk1",3,5,0,0,3); 
-				CSSG_FireBullets("CSSGChunk2",3,3,0,0,4);
-				CSSG_FireBullets("CSSGChunk4",1,4,0,0,3);
+				PB_FireBullets("Chunk1",3,5,0,0,3);
+				PB_FireBullets("Chunk2",3,3,0,0,4);
+				PB_FireBullets("Chunk4",1,4,0,0,3);
 				break;
 			case Shell_Drgn: 
 				PB_FireBullets("PB_DragonsBreathTracer",10,6,0,0,6); 
@@ -780,8 +760,8 @@ Class PB_CSSG : PB_WeaponBase
 				PB_FireBullets("PB_MGNail",6,3,0,0,3); 
 				break;
 			case Shell_Flak: 
-				CSSG_FireBullets("CSSGChunk1",3,3,0,0,3); 
-				CSSG_FireBullets("CSSGChunk4",1,3,0,0,3);
+				PB_FireBullets("Chunk1",3,3,0,0,3);
+				PB_FireBullets("Chunk4",1,3,0,0,3);
 				break;
 			case Shell_Drgn: 
 				PB_FireBullets("PB_DragonsBreathTracer",5,6,0,0,6); 
@@ -821,7 +801,7 @@ Class PB_CSSG : PB_WeaponBase
 				PB_FireBullets("PB_MGNail",6,3,0,0,3); 
 				break;
 			case Shell_Flak: 
-				CSSG_FireBullets("CSSGChunk2",3,3,0,0,3); 
+				PB_FireBullets("Chunk2",3,3,0,0,3);
 				break;
 			case Shell_Drgn: 
 				PB_FireBullets("PB_DragonsBreathTracer",5,6,0,0,6); 
@@ -862,8 +842,9 @@ Class PB_CSSG : PB_WeaponBase
 				A_Startsound("CSSGFLKF",22);
 				break;
 			case Shell_Flak: 
-				A_Startsound("CSSGFULL",21);
-				A_Startsound("CSSGFLKF",22);
+				A_PlaySoundEx("FLAKFIRE", "Weapon");
+				A_PlaySoundEx("CSSGFULL", "Soundslot6");
+				A_PlaySoundEx("CSSGFLKF", "Auto");
 				break;
 			case Shell_Drgn: 
 				A_Startsound("SSHFIRE",21);
@@ -904,8 +885,9 @@ Class PB_CSSG : PB_WeaponBase
 				A_Startsound("CSSGFLKS",22);
 				break;
 			case Shell_Flak: 
-				A_Startsound("CSSGSNGL",21);
-				A_Startsound("CSSGFLKS",22);
+				A_PlaySoundEx("FLAKFIRE", "Weapon");
+				A_PlaySoundEx("CSSGSNGL", "Soundslot6");
+				A_PlaySoundEx("CSSGFLKS", "Auto");
 				break;
 			case Shell_Drgn: 
 				A_Startsound("weapons/shh2",21);
@@ -1463,3 +1445,12 @@ Class DanmakuProjectile : Actor
 		Super.PostBeginPlay();
 	}
 }
+
+// PBX-Weapons CSSG casing class names -> PB2022 ShotgunCasing state machines (Casings.txt).
+class BuckShellCasing      : ShotgunCasing  {}
+class SlugShellCasing      : ShotgunCasing2 {}
+class DragonShellCasing    : ShotgunCasing3 {}
+class ExplosiveShellCasing : ShotgunCasing  {}
+class FlakShellCasing      : ShotgunCasing  {}
+class FlechetShellCasing   : ShotgunCasing  {}
+class WhitePShellCasing    : ShotgunCasing  {}

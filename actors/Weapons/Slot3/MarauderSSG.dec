@@ -459,7 +459,7 @@ Actor MarauderSSG : PB_Weapon
 	    MSSG A 1 {
 		     if (CountInv("MarauderShotgunBarrelHeat") >= 60) { A_GunFlash("MarauderShotgunBarrelSmoke");
 		     }
-		     if (PressingFire() && CountInv("MaraudSSGAmmo") > 0){
+		     if (PressingFire() && CountInv("MaraudSSGAmmo") > 0 && CountInv("MarauderSSGDurability") > 0){
 		     return state("Fire");
 		     }
 		     return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
@@ -473,6 +473,30 @@ Actor MarauderSSG : PB_Weapon
 			 A_Takeinventory("MarauderShotgunBarrelHeat",1);
 		    }
 		TNT1 A 0
+		Stop
+
+	WeaponBreak:
+		TNT1 A 0
+		{
+			A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_TakeInventory("MarauderSSG",1);
+			A_StartSound("meleeweapon/break", CHAN_AUTO);
+			A_AlertMonsters;
+		}
 		Stop
 
 	Deselect:
@@ -512,6 +536,8 @@ Actor MarauderSSG : PB_Weapon
 		Wait
 
 	FireDouble:
+		TNT1 A 0 A_JumpIfInventory("MarauderSSGDurability",1,1)
+		Goto WeaponBreak
 		TNT1 A 0 {
 			 If (CountInv("MaraudSSGAmmo") == 2) {
 			 return state ("FireNoAmmoLeft");
@@ -531,6 +557,8 @@ Actor MarauderSSG : PB_Weapon
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel")
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "ThrowFlameBarrel")
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "ThrowIceBarrel")
+	    TNT1 A 0 A_JumpIfInventory("MarauderSSGDurability",1,1)
+	    Goto WeaponBreak
 	    TNT1 A 0 {
 		     if(CountInv("GoFatality") >= 1) {
 		         SetPlayerProperty(0,1,0);
@@ -576,6 +604,7 @@ Actor MarauderSSG : PB_Weapon
 			 Else {
 			 A_TakeInventory("MaraudSSGAmmo", 2);
 			 }
+			 A_TakeInventory("MarauderSSGDurability",1,TIF_NOTAKEINFINITE);
 			 A_AlertMonsters;
 			 }
 			MSSF AB 1 BRIGHT
@@ -595,6 +624,7 @@ Actor MarauderSSG : PB_Weapon
 			A_GunFlash;
 			A_ZoomFactor(0.95);
 			A_TakeInventory("MaraudSSGAmmo", 2);
+			A_TakeInventory("MarauderSSGDurability",1,TIF_NOTAKEINFINITE);
 			A_AlertMonsters;
 			}
 			TNT1 A 0 A_JumpIf(GetCvar("pb_marauderssg_classicreload"), "FireRegularClassic")
@@ -611,6 +641,8 @@ Actor MarauderSSG : PB_Weapon
 			Goto Reload
 	
 	AltFireDouble:
+			TNT1 A 0 A_JumpIfInventory("MarauderSSGDurability",1,1)
+			Goto WeaponBreak
 			TNT1 A 0 {
 				If (CountInv("MaraudSSGAmmo") == 2) {
 				return state ("AltFireBigger");
@@ -630,6 +662,8 @@ Actor MarauderSSG : PB_Weapon
 			TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel")
 	        TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
 	        TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "PlaceIceBarrel")
+			TNT1 A 0 A_JumpIfInventory("MarauderSSGDurability",1,1)
+			Goto WeaponBreak
 	        TNT1 A 0 {
 		         A_WeaponOffset(0,32);
 		         A_SetRoll(0);
@@ -684,6 +718,7 @@ Actor MarauderSSG : PB_Weapon
 		A_GunFlash;
 		A_ZoomFactor(0.95);
 		A_TakeInventory("MaraudSSGAmmo", 2);
+		A_TakeInventory("MarauderSSGDurability",1,TIF_NOTAKEINFINITE);
 		A_AlertMonsters;
 		}
 		MSSF AB 1 BRIGHT
@@ -717,6 +752,7 @@ Actor MarauderSSG : PB_Weapon
 		A_GunFlash;
 		A_ZoomFactor(0.95);
 		A_TakeInventory("MaraudSSGAmmo", 2);
+		A_TakeInventory("MarauderSSGDurability",1,TIF_NOTAKEINFINITE);
 		A_AlertMonsters;
 		}
 		TNT1 A 0 A_JumpIf(GetCvar("pb_marauderssg_classicreload"), "AltFireRegularClassic")
@@ -745,6 +781,7 @@ Actor MarauderSSG : PB_Weapon
 			A_GunFlash;
 			A_ZoomFactor(0.95);
 			A_TakeInventory("MaraudSSGAmmo", 2);
+			A_TakeInventory("MarauderSSGDurability",1,TIF_NOTAKEINFINITE);
 			A_AlertMonsters;
 		}
 		TNT1 A 0 A_JumpIf(GetCvar("pb_marauderssg_classicreload"), "AltFireRegularClassic")

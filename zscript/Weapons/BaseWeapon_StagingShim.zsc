@@ -531,10 +531,12 @@ Extend class PB_WeaponBase
 	}
 
 	// ------------------------------------------------------------------
-	// PB_WeaponRaise â€” "select" wrapper that plays the raise sound and
+	// PB_WeaponRaise — "select" wrapper that plays the raise sound and
 	// registers the standard PB kick/melee/equip overlays. Mirrors staging
-	// flow so ported weapons can do:
-	// and skip PB 2022's SelectFirstPersonLegs chain.
+	// flow; overlaps part of SelectFirstPersonLegs (PB_WeaponBase) via
+	// SetInventory clears + overlay registration — staging ports may chain
+	// Goto SelectFirstPersonLegs then call this from SelectContinue (Deagle,
+	// MetalSniper, VorpalBlade) so equip sound runs after the shared legs pass.
 	// ------------------------------------------------------------------
 	action void PB_WeaponRaise(string upSnd = "")
 	{

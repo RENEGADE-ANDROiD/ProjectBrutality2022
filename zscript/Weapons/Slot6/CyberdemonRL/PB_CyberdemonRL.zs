@@ -11,7 +11,10 @@
 //     so it isn't called — PB2022 has no barrel-heat cooldown effect on this gun.
 //   * PBX's PB_LowAmmoSoundWarning helper is dropped (PB2022 doesn't ship it and the
 //     warning isn't essential for the fold).
-//   * Standard PB2022 Select flow: the SelectFirstPersonLegs chain from BaseWeapon.dec
+//   * Duplicate pickup: PBX only refilled wear in AttachToOwner; the engine merges a
+//     second copy via Weapon.HandlePickup (PickupForAmmo) without AttachToOwner — PB2022
+//     overrides HandlePickup to refill CyberRLDurability (same idea as PB_WeaponBase
+//     PB_RefillMonsterSourcedWeaponWear for DECORATE boss-tech guns).
 //     is inlined here (ZScript weapons don't auto-inherit the DECORATE chain) so legs /
 //     kick / melee / equipment overlays come up correctly.
 //   * FlashPunching / FlashKicking end with "goto Ready3" per the PSP_FLASH-based
@@ -45,6 +48,30 @@ class PB_CyberdemonRL : PB_WeaponBase
 		+DONTGIB
 	}
 
+	void CyberRL_RefillWear(PlayerPawn p)
+	{
+		if (!p || !p.player)
+			return;
+		let inv = p.FindInventory("CyberRLDurability");
+		if (!inv || inv.Amount < 25)
+			p.GiveInventory("CyberRLDurability", 25);
+	}
+
+	override void AttachToOwner(Actor other)
+	{
+		let p = PlayerPawn(other);
+		CyberRL_RefillWear(p);
+		Super.AttachToOwner(other);
+	}
+
+	override bool HandlePickup(Inventory item)
+	{
+		let p = PlayerPawn(owner);
+		if (p && p.player && item && item.GetClass() == GetClass())
+			CyberRL_RefillWear(p);
+		return Super.HandlePickup(item);
+	}
+
 	action void CyberRL_FireWeapon(int weaponSide, int ticCount)
 	{
 		switch (ticCount)
@@ -59,6 +86,7 @@ class PB_CyberdemonRL : PB_WeaponBase
 						A_StartSound("DSCANFIR", CHAN_WEAPON, CHANF_OVERLAP, 1.0, pitch: 0.6);
 						A_ZoomFactor(0.98, SPF_INTERPOLATE);
 						A_TakeInventory(invoker.AmmoType1, 2, TIF_NOTAKEINFINITE);
+						A_TakeInventory("CyberRLDurability", 1, TIF_NOTAKEINFINITE);
 						A_FireProjectile(
 							"CyberBallsPlayer",
 							PB_HitFeedback_Math.LinearMap(pb_weapon_recoil_mod_horizontal, 0.0, 1.0, 1.0, 0.2),
@@ -101,20 +129,7 @@ class PB_CyberdemonRL : PB_WeaponBase
 
 		Select:
 			TNT1 A 0 A_WeaponOffset(0, 32);
-			TNT1 A 0 A_StopSound(1);
-			TNT1 A 0 A_StopSound(5);
-			TNT1 A 0 A_StopSound(6);
-			TNT1 A 0 A_TakeInventory("Spin", 1);
-			TNT1 A 0 A_TakeInventory("CantWeaponSpecial", 1);
-			TNT1 A 0 A_TakeInventory("MG42Selected", 1);
-			TNT1 A 0 A_SetInventory("Grabbing_A_Ledge", 0);
-			TNT1 A 0 A_TakeInventory("RandomHeadExploder", 1);
-			TNT1 A 0 A_TakeInventory("DualFireReload", 2);
-			TNT1 A 0 A_Overlay(-777, "Melee_Equipment_Handler_Overlay");
-			TNT1 A 0 A_Overlay(-778, "KickHandler_Overlay");
-			TNT1 A 0 A_Overlay(-779, "Equipment_Toggle_Handler_Overlay");
-			TNT1 A 0 A_Overlay(-10,  "FirstPersonLegsStand");
-			TNT1 A 0 A_Jump(255, "SelectContinue");
+			Goto SelectFirstPersonLegs;
 		SelectContinue:
 			TNT1 A 0 A_StartSound("BFGREADY", CHAN_AUTO);
 			TNT1 A 0 PB_RespectIfNeeded();
@@ -140,6 +155,8 @@ class PB_CyberdemonRL : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0
 			{
+				if (CountInv("CyberRLDurability") < 1)
+					return ResolveState("WeaponBreak");
 				if (CountInv("PB_RocketAmmo") < 2)
 					return ResolveState("NoAmmo");
 				return ResolveState(null);
@@ -165,6 +182,8 @@ class PB_CyberdemonRL : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0
 			{
+				if (CountInv("CyberRLDurability") < 1)
+					return ResolveState("WeaponBreak");
 				if (CountInv("PB_RocketAmmo") < 2)
 					return ResolveState("NoAmmo");
 				return ResolveState(null);
@@ -176,6 +195,8 @@ class PB_CyberdemonRL : PB_WeaponBase
 			CYBF EFG 1 BRIGHT A_SetPitch(pitch + 0.8, SPF_INTERPOLATE);
 			TNT1 A 0
 			{
+				if (CountInv("CyberRLDurability") < 1)
+					return ResolveState("WeaponBreak");
 				if (CountInv("PB_RocketAmmo") < 2)
 					return ResolveState("AltFireDone");
 				return ResolveState(null);
@@ -187,6 +208,8 @@ class PB_CyberdemonRL : PB_WeaponBase
 			CYBF EFG 1 BRIGHT A_SetPitch(pitch + 0.8, SPF_INTERPOLATE);
 			TNT1 A 0
 			{
+				if (CountInv("CyberRLDurability") < 1)
+					return ResolveState("WeaponBreak");
 				if (CountInv("PB_RocketAmmo") < 2)
 					return ResolveState("AltFireDone");
 				return ResolveState(null);
@@ -198,6 +221,8 @@ class PB_CyberdemonRL : PB_WeaponBase
 			CYBF EFG 1 BRIGHT A_SetPitch(pitch + 0.8, SPF_INTERPOLATE);
 			TNT1 A 0
 			{
+				if (CountInv("CyberRLDurability") < 1)
+					return ResolveState("WeaponBreak");
 				if (CountInv("PB_RocketAmmo") < 2)
 					return ResolveState("AltFireDone");
 				return ResolveState(null);
@@ -214,6 +239,21 @@ class PB_CyberdemonRL : PB_WeaponBase
 			CYBF IJIJIJ 1 BRIGHT;
 			TNT1 A 0 A_FireCustomMissile("SmokeSpawner11", 0, 0, 0, 7);
 			Goto Ready3;
+
+		WeaponBreak:
+			TNT1 A 0
+			{
+				for (int i = 0; i < 5; i++)
+				{
+					A_CustomMissile("MetalShard1", 5, 0, random(-10, -20), 2, random(0, 30));
+					A_CustomMissile("MetalShard2", 5, 0, random(-10, -20), 2, random(0, 30));
+					A_CustomMissile("MetalShard3", 5, 0, random(-10, -20), 2, random(0, 30));
+				}
+				A_TakeInventory("PB_CyberdemonRL", 1);
+				A_StartSound("meleeweapon/break", CHAN_AUTO);
+				A_AlertMonsters();
+			}
+			Stop;
 
 		NoAmmo:
 			TNT1 A 0 A_PlaySound("weapons/empty", 4);
