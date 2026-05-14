@@ -31,6 +31,17 @@ class PB_10GAPellet_LP : PB_10GAPellet
 	}
 }
 
+// Commander / HASG slug: must not inherit DragonsBreathTracer (fire trail + ignite death).
+class PB_12GASlug : PB_10GAPellet
+{
+	Default
+	{
+		Damage 24;
+		DamageType "Bullet";
+		Scale 0.35;
+	}
+}
+
 class PB_8GAPellet : FastProjectile
 {
 	Default

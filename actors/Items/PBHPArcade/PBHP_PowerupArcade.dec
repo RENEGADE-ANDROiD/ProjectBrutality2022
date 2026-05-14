@@ -18,7 +18,7 @@ ACTOR LifeSphere : CustomInventory Replaces SoulSphere
 		Goto Spawn
 	Pickup:
 		TNT1 A 0 A_JumpIf( GetCvar( "pb_hp_arcade" ) == 0, "LifeVanilla" )
-		TNT1 A 0 A_SetBlend("Blue",0.75,16)
+		TNT1 A 0 A_SetBlend("Blue",0.06,16)
 		TNT1 A 0 HealThing(100,0)
 		Stop
 	LifeVanilla:
@@ -48,7 +48,7 @@ ACTOR EnergySphere : CustomInventory Replaces Megasphere
 		Goto Spawn
 	Pickup:
 		TNT1 A 0 A_JumpIf( GetCvar( "pb_hp_arcade" ) == 0, "EnergyVanilla" )
-		TNT1 A 0 A_SetBlend("White",0.75,16)
+		TNT1 A 0 A_SetBlend("White",0.06,16)
 		TNT1 A 0 A_GiveInventory("HeavyArmorForMegaSphere", 1)
 		TNT1 A 0 HealThing(200,0)
 		Stop
@@ -80,7 +80,7 @@ ACTOR MegaBerserk : CustomInventory
 		TNT1 A 0 A_GiveInventory("PowerStrength")
 		TNT1 A 0 HealThing(200,0)
 		TNT1 A 0 A_GiveInventory("SoulSphereHealth", 1)
-		TNT1 A 0 A_SetBlend("Red",0.75,16)
+		TNT1 A 0 A_SetBlend("Red",0.06,16)
 		TNT1 A 0 A_Print("Press Weapon Special key to swap modes")
 		Stop
 	MegaBVanilla:
@@ -112,7 +112,7 @@ ACTOR NormalBerserk : CustomInventory
 		TNT1 A 0 A_JumpIf( GetCvar( "pb_hp_arcade" ) == 0, "NormalBVanilla" )
 		TNT1 A 0 A_GiveInventory("PowerStrength")
 		TNT1 A 0 HealThing(100,0)
-		TNT1 A 0 A_SetBlend("Red",0.75,16)
+		TNT1 A 0 A_SetBlend("Red",0.06,16)
 		TNT1 A 0 A_Print("Press Weapon Special key to swap modes")
 		Stop
 	NormalBVanilla:

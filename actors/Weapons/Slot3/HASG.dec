@@ -67,16 +67,6 @@ Actor PB_12GAPellet_ASG : DragonsBreathTracer
     Alpha 0.6
 }
 
-Actor PB_12GASlug : DragonsBreathTracer
-{
-    Damage 24
-    DamageType Bullet
-    PoisonDamage 0
-    -ADDITIVEPOISONDURATION
-    Speed 90
-    Scale 0.35
-}
-
 // Casing fall-throughs: route HASG-specific spawners to the generic
 // shotgun casings already in zscript/Effects/Casings.txt.
 Actor ShotCaseSpawnHASG5  : ShotCaseSpawn3 {}

@@ -555,7 +555,6 @@ server 	float	V5_Q3Bob			= 0.5;
 server	noarchive	bool	V5_Mlock	= False;
 
 user bool pb_weapon_crosshairs = true;
-user bool pb_weapon_pickup_hints = true;
 user bool pb_weaponhud_enable = false;
 user int pb_weaponhud_x = -96;
 user int pb_weaponhud_y = -84;

@@ -53,9 +53,12 @@ class PB_M41A : PB_WeaponBase
 		Weapon.AmmoUse2 0;
 		Inventory.MaxAmount 2;
 		Scale 0.7;
+		+FORCEXYBILLBOARD;
+		+FLOORCLIP;
 		+WEAPON.NOAUTOAIM;
 		+WEAPON.NOALERT;
 		+WEAPON.NOAUTOFIRE;
+		Inventory.Icon "PMAWA0";
 		Inventory.AltHUDIcon "PMAWA0";
 		Inventory.PickupMessage "M41A Pulse Rifle (Slot 4)";
 		Inventory.PickupSound "M41A/PickUp";
@@ -89,7 +92,7 @@ class PB_M41A : PB_WeaponBase
 		A_Overlay(-7, "MuzzleFlash");
 		PB_IncrementHeat(2);
 		PB_WeaponRecoil(-0.75, frandom(-0.3, 0.3));
-		A_StartSound("M41A/Fire", CHAN_WEAPON, CHANF_OVERLAP, 1.0, 0, frandom(0.98, 1.02));
+		A_StartSound("M41A/Fire", CHAN_WEAPON, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
 		PB_DynamicTail("smg", "smg");
 		PB_GunSmoke(0, 0, 0);
 		PB_MuzzleFlashEffects(0, 0, 0);
@@ -133,7 +136,7 @@ class PB_M41A : PB_WeaponBase
 			PB_FireOffset();
 			PB_IncrementHeat(2, true);
 			PB_WeaponRecoil(-0.85, frandom(0.3, 0.8));
-			A_StartSound("M41A/Fire", 99, CHANF_OVERLAP, 1.0, 0, frandom(0.98, 1.02));
+			A_StartSound("M41A/Fire", 99, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
 			A_Overlay(-8, "MuzzleDualL");
 			PB_SpawnCasing("PB_EmptyBrass", 22, -16, 35, frandom(-4, 1), frandom(5, 8), frandom(1, 2));
 			PB_GunSmoke(4, 0, 0);
@@ -151,7 +154,7 @@ class PB_M41A : PB_WeaponBase
 			PB_FireOffset();
 			PB_IncrementHeat(2);
 			PB_WeaponRecoil(-0.85, frandom(-0.8, -0.3));
-			A_StartSound("M41A/Fire", 100, CHANF_OVERLAP, 1.0, 0, frandom(0.98, 1.02));
+			A_StartSound("M41A/Fire", 100, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
 			A_Overlay(-9, "MuzzleDualR");
 			PB_SpawnCasing("PB_EmptyBrass", 22, 16, 35, frandom(-4, 1), frandom(5, 8), frandom(1, 2));
 			PB_GunSmoke(-4, 0, 0);

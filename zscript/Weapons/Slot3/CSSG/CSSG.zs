@@ -717,9 +717,9 @@ Class PB_CSSG : PB_WeaponBase
 				PB_FireBullets("PB_MGNail",12,3,0,0,3); 
 				break;
 			case Shell_Flak: 
-				CSSG_FireBullets("CSSGChunk1",3,5,0,0,3); 
-				CSSG_FireBullets("CSSGChunk2",3,3,0,0,4);
-				CSSG_FireBullets("CSSGChunk4",1,4,0,0,3);
+				PB_FireBullets("Chunk1",3,5,0,0,3);
+				PB_FireBullets("Chunk2",3,3,0,0,4);
+				PB_FireBullets("Chunk4",1,4,0,0,3);
 				break;
 			case Shell_Drgn: 
 				PB_FireBullets("PB_DragonsBreathTracer",10,6,0,0,6); 
@@ -760,8 +760,8 @@ Class PB_CSSG : PB_WeaponBase
 				PB_FireBullets("PB_MGNail",6,3,0,0,3); 
 				break;
 			case Shell_Flak: 
-				CSSG_FireBullets("CSSGChunk1",3,3,0,0,3); 
-				CSSG_FireBullets("CSSGChunk4",1,3,0,0,3);
+				PB_FireBullets("Chunk1",3,3,0,0,3);
+				PB_FireBullets("Chunk4",1,3,0,0,3);
 				break;
 			case Shell_Drgn: 
 				PB_FireBullets("PB_DragonsBreathTracer",5,6,0,0,6); 
@@ -801,7 +801,7 @@ Class PB_CSSG : PB_WeaponBase
 				PB_FireBullets("PB_MGNail",6,3,0,0,3); 
 				break;
 			case Shell_Flak: 
-				CSSG_FireBullets("CSSGChunk2",3,3,0,0,3); 
+				PB_FireBullets("Chunk2",3,3,0,0,3);
 				break;
 			case Shell_Drgn: 
 				PB_FireBullets("PB_DragonsBreathTracer",5,6,0,0,6); 
@@ -842,8 +842,9 @@ Class PB_CSSG : PB_WeaponBase
 				A_Startsound("CSSGFLKF",22);
 				break;
 			case Shell_Flak: 
-				A_Startsound("CSSGFULL",21);
-				A_Startsound("CSSGFLKF",22);
+				A_PlaySoundEx("FLAKFIRE", "Weapon");
+				A_PlaySoundEx("CSSGFULL", "Soundslot6");
+				A_PlaySoundEx("CSSGFLKF", "Auto");
 				break;
 			case Shell_Drgn: 
 				A_Startsound("SSHFIRE",21);
@@ -884,8 +885,9 @@ Class PB_CSSG : PB_WeaponBase
 				A_Startsound("CSSGFLKS",22);
 				break;
 			case Shell_Flak: 
-				A_Startsound("CSSGSNGL",21);
-				A_Startsound("CSSGFLKS",22);
+				A_PlaySoundEx("FLAKFIRE", "Weapon");
+				A_PlaySoundEx("CSSGSNGL", "Soundslot6");
+				A_PlaySoundEx("CSSGFLKS", "Auto");
 				break;
 			case Shell_Drgn: 
 				A_Startsound("weapons/shh2",21);

@@ -67,6 +67,8 @@ class PB_KillStreakPowerUp : Inventory
 		PB_KillstreakMessageHandler.KS_TakePending(plr, className, msg, hadPending);
 		if (!hadPending)
 			PBRollReward(plr, className, msg);
+		if (className == "")
+			return true;
 		Class<Inventory> rewardClass = className;
 		if (!rewardClass)
 		{
@@ -228,8 +230,8 @@ class PB_KillStreakPowerUp : Inventory
 
 		if (pool.size() < 1)
 		{
-			outClass = "Stimpack2";
-			outMsg   = "Kill streak reward: stimpack (pool empty or all off).";
+			outClass = "";
+			outMsg   = "";
 			return;
 		}
 		int i  = random(0, pool.size() - 1);
