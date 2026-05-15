@@ -246,7 +246,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		
 		TROO A 0 A_Wander
 		TROO AA 2 A_Look
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
 		TNT1 A 0 A_Recoil(-2)
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 12, 48,0)
 		
@@ -257,7 +257,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		
 		TROO C 0 A_Wander
 		TROO CC 2 A_Look
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
 		TNT1 A 0 A_Recoil(-2)
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 12, 48,0)
 		
@@ -272,7 +272,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		
 		TROO A 0 A_Wander
 		TROO AA 2 A_Look
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
 		TNT1 A 0 A_Recoil(-2)
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 12, 48,0)
 		
@@ -283,7 +283,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		
 		TROO C 0 A_Wander
 		TROO CC 2 A_Look
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
 		TNT1 A 0 A_Recoil(-2)
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 12, 48,0)
 		
@@ -348,7 +348,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 	TNT1 A 0 A_JumpIf(CallACS("GetActorZDist") <= 120, 2)
 	TNT1 AAA 0
 	TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "SeeContinue")
-	TNT1 A 0 A_PlaySound("imp/sight",6)
+	TNT1 A 0 A_PlaySound("imp/sight", 6)
 	1M40 A 6
 	TNT1 A 0 A_GiveInventory ("IsJumping")
 	TNT1 A 0 ThrustThingZ(0,50,0,1)
@@ -390,7 +390,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		TNT1 A 0 ThrustThingZ(0,500,0,1)
 		2M40 II 2 A_Chase("CeilingPounce", "CeilingMissile")
 		TNT1 A 0 A_JumpIf(momz != 0, "CeilingPounce")
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
         TNT1 A 0 A_TakeInventory("SKImp", 1)
 		//ContinueCeilingCrawl2:
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 16, 48,0)
@@ -402,7 +402,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
 		TNT1 A 0 ThrustThingZ(0,500,0,1)
 		2M40 JJ 2 A_Chase("CeilingPounce", "CeilingMissile")
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
 		TNT1 A 0 
 		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "CeilingPounce")
 		TNT1 A 0 A_JumpIf(momz != 0, "CeilingPounce")
@@ -416,7 +416,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
 		TNT1 A 0 ThrustThingZ(0,500,0,1)
 		2M40 KK 2 A_Chase("CeilingPounce", "CeilingMissile")
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
 		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "CeilingPounce")
 		TNT1 A 0 A_JumpIf(momz != 0, "CeilingPounce")
 		//ContinueCeilingCrawl6:
@@ -429,7 +429,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
 		TNT1 A 0 ThrustThingZ(0,500,0,1)
 		2M40 HH 2 A_Chase("CeilingPounce", "MaybeCeilingPounce")
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
 		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "CeilingPounce")
 		TNT1 A 0 A_JumpIf(momz != 0, "CeilingPounce")
 		TNT1 A 0 A_JumpIfTargetInLOS(1)
@@ -450,7 +450,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		TROT F 1 A_JumpIf (momz == 0, "CeilingLanding")
 		loop
 	CeilingLanding:
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
 		TROT GHCD 5 A_FaceTarget
 		Goto SeeContinue
 	CeilingMissile:
@@ -539,7 +539,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 16, 48,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
 		TROO AA 2 A_Chase
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
         TNT1 A 0 A_TakeInventory("SKImp", 1)
 		
 		
@@ -556,7 +556,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 16, 48,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
 		TROO CC 2 A_Chase
-		TNT1 A 0 A_PlaySound("flesh/step",4)
+		TNT1 A 0 A_PlaySound("flesh/step", 4)
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 16, 48,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
 		TROO DD 2 A_Chase
@@ -572,7 +572,7 @@ damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood
 	Melee:
 		TNT1 A 0 A_Jump(132, "Melee3")
 		TNT1 A 0 A_FaceTarget
-		TNT1 A 0 A_PlaySound("imp/sight",6)
+		TNT1 A 0 A_PlaySound("imp/sight", 6)
         1M40 ABCD 4 A_Recoil (-1) 
 		1M40 A 5 A_FaceTarget
 		TNT1 A 0 A_JumpIfCloser(60, "Melee2")
@@ -1488,7 +1488,7 @@ Death.MinorLeg:
 	Tear2:
 		TNT1 O 0 A_NoBlocking
 		T5SW A 3
-		T5SW A 1 A_PlaySound("misc/xdeath4f", 9)
+		T5SW A 1 A_PlaySound("misc/xdeath4f", 2)
 		T5SW BBB 2 A_CustomMissile ("Blood", 10, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("XDeath1", 40, 0, random (0, 360), 2, random (0, 160))
 		T5SW CCC 2 A_CustomMissile ("Blood", 10, 0, random (0, 360), 2, random (0, 160))
@@ -1941,8 +1941,10 @@ DeathNoGuts2:
 		TNT1 A 0 A_PlaySound("grunt/pain", 2)
        IPFP ABCD 4
        TNT1 A 0 A_SpawnItemEx("FootStep5", 0, 0, 40, 0, 0)
+	   TNT1 A 0 A_PlaySound("imp/melee", 1)
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
        IPFP EE 6
-	   
+	   TNT1 A 0 A_PlaySound("grunt/pain", 4)
        IPFP F 8
 	   
 	   TNT1 A 0 A_PlaySound("misc/xdeath2", 5)
@@ -1950,55 +1952,74 @@ DeathNoGuts2:
 	   IPFP G 8
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 25, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("grunt/pain", 6)
        IPFP H 8
 
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
        IPFP I 8
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 25, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("grunt/pain", 6)
        IPFP J 8
 
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
        IPFP K 8
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 25, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("grunt/pain", 6)
        IPFP H 8
 
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
        IPFP I 8
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 25, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("grunt/pain", 6)
        IPFP J 8
 
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
        IPFP K 8
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 25, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("grunt/pain", 6)
        IPFP H 8
 
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
        IPFP I 8
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 25, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("grunt/pain", 6)
        IPFP J 8
 	   
 	   
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
 	   IPFP L 8
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 25, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("grunt/pain", 6)
        IPFP M 8
 	   TNT1 A 0 A_CustomMissile ("Instestin", 12, 0, random (0, 360), 2, random (0, 40))
 
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
        IPFP N 8
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 25, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("grunt/pain", 6)
        IPFP O 8
 	   TNT1 A 0 A_CustomMissile ("Instestin", 12, 0, random (0, 360), 2, random (0, 40))
 	   
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
 	   IPFP L 8
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 25, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("grunt/pain", 6)
        IPFP M 8
 	   TNT1 A 0 A_CustomMissile ("Instestin", 12, 0, random (0, 360), 2, random (0, 40))
 
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
        IPFP N 8
 		 TNT1 AA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 25, 0, random (0, 360), 2, random (0, 160))
+	   TNT1 A 0 A_PlaySound("grunt/pain", 6)
        IPFP O 8
 	   TNT1 A 0 A_CustomMissile ("Instestin", 12, 0, random (0, 360), 2, random (0, 40))
        
@@ -2705,8 +2726,8 @@ ACTOR RocketImpVictim
 	{
 	Spawn:
 	    T0KT AB 4 Bright A_FaceTarget 
-		TNT1 A 0 A_PlaySound("weapons/rocketloop",6,1,1)
-		TNT1 A 0 A_PlaySound("imp/pain",7,2,1)
+		TNT1 A 0 A_PlaySound("weapons/rocketloop",6,1, 1)
+		TNT1 A 0 A_PlaySound("imp/pain",0,2, 1)
 		TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater")
 		TNT1 A 0 A_SpawnItem("RocketFlare",-20,0)
 		TNT1 A 0 A_CustomMissile ("brutal_FlyingBlood", 32, 0, random (170, 190), 2, random (0, 40))

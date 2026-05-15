@@ -1017,7 +1017,7 @@ class ExplosiveProjectile : PB_Projectile
 			TNT1 A 0
 			{
 				A_Explode(60,128,XF_HURTSOURCE|RTF_THRUSTZ, 0, 64);
-				A_StopSound(105);
+				A_StopSound(0);
 				A_StartSound("FAREXPL", CHAN_AUTO,CHANF_OVERLAP,0.5,0,1.1);
 				A_QuakeEx (2,2,2,4,0,100,"");
 				A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);

@@ -176,7 +176,7 @@ class PB_XPRewardsHandler : EventHandler
 				h.HudQueueRankFloater(plr.PlayerNumber(), newRank);
 		}
 		plr.A_SetBlend("Gold", 0.2, 16);
-		plr.A_StartSound("misc/trkey", CHAN_7, CHANF_OVERLAP, 0.75, ATTN_NONE);
+		plr.A_StartSound("misc/trkey", CHAN_6, CHANF_OVERLAP, 0.75, ATTN_NONE);
 	}
 
 	override void WorldLoaded(WorldEvent e)

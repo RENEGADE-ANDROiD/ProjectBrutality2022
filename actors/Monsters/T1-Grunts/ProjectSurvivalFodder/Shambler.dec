@@ -48,11 +48,11 @@ Actor Shambler {
 				TNT1 A 0 A_SpawnItem("HeadshotTarget4", 8, 40,0)
 				ZSHA AB 4 A_Wander
 				TNT1 A 0 A_Look
-				TNT1 A 0 A_PlaySound("flesh/step",4)
+				TNT1 A 0 A_PlaySound("flesh/step", 4)
 				TNT1 A 0 A_SpawnItem("HeadshotTarget4", 8, 40,0)
 				ZSHA CD 4 A_Wander
 				TNT1 A 0 A_Look
-				TNT1 A 0 A_PlaySound("flesh/step",4)
+				TNT1 A 0 A_PlaySound("flesh/step", 4)
 				TNT1 A 0 A_Jump(2,"Grumble")
 				Loop
 			SpawnSleeping:
@@ -82,12 +82,12 @@ Actor Shambler {
 				TNT1 A 0 A_SpawnItem("HeadshotTarget4", 8, 40,0)
 				ZSHA AB 4 A_Chase
 				TNT1 A 0 A_Recoil(frandom(-2.0,2.0))
-				TNT1 A 0 A_PlaySound("flesh/step",4)
+				TNT1 A 0 A_PlaySound("flesh/step", 4)
 				TNT1 A 0 A_SpawnItem("HeadshotTarget4", 8, 40,0)
 				ZSHA CD 4 A_Chase
 				TNT1 A 0 A_Recoil(frandom(-2.0,2.0))
 				TNT1 A 0 ThrustThing(random(0,360),random(1,2))
-				TNT1 A 0 A_PlaySound("flesh/step",4)
+				TNT1 A 0 A_PlaySound("flesh/step", 4)
 				TNT1 A 0 A_Jump(2,"Grumble")
 				TNT1 A 0 A_Jump(3,"Lunge")
 				TNT1 A 0 A_Jump(10,"Twitching")

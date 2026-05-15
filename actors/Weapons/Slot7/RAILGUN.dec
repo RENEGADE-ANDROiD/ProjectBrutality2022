@@ -100,7 +100,6 @@ ACTOR PB_Railgun : PB_Weapon
 				A_Takeinventory("Unloading",1);
 				A_StopSound(3);
 				A_StopSound(6);
-				A_StopSound(CHAN_7);
 				A_StopSound(1);
 				A_Takeinventory("RailgunZoomed",1);
 				A_Takeinventory("HasCutingWeapon",1);
@@ -190,7 +189,7 @@ ACTOR PB_Railgun : PB_Weapon
 		Ready3:
 			TNT1 A 0 A_TakeInventory("RailgunLaserCharge", 60) //Fixes incorrect charge level bug
 			TNT1 A 0 {
-				if (CountInv("RailgunZoomed") == 1) { A_StartSound("weapons/railgun/scopeloop", 7, CHANF_LOOPING|CHANF_OVERLAP );}
+				if (CountInv("RailgunZoomed") == 1) { A_StartSound("weapons/railgun/scopeloop", 0, CHANF_LOOPING|CHANF_OVERLAP );}
 				if (CountInv("RailgunAmmo") > 0 && CountInv("RailgunLaserMode") == 1) { A_StartSound("weapons/railgun/loop_red", 6, CHANF_LOOPING|CHANF_OVERLAP );}
 				else {
 					if(CountInv("RailgunAmmo") >= 12){A_StartSound("weapons/railgun/loop_blue", 6, CHANF_LOOPING);}
@@ -327,7 +326,7 @@ ACTOR PB_Railgun : PB_Weapon
 			TNT1 A 0 {
 				A_PlaySound("RAIL_ZM");
 				A_Takeinventory("RailgunZoomed",1);
-				A_StopSound(7);
+				A_StopSound(0);
 				PB_HandleCrosshair(77);
 				A_ZoomFactor(1.0);
 				A_ChangeFlag("DONTBOB", False);
@@ -349,7 +348,7 @@ ACTOR PB_Railgun : PB_Weapon
 			TNT1 A 0 {
 				A_StopSound(1);
 				A_StopSound(6);
-				A_StopSound(7);
+				A_StopSound(0);
 				A_StartSound("Ironsights", CHAN_AUTO, CHANF_OVERLAP);
 			}
 			TNT1 A 0 A_JumpIfInventory("RailgunLaserMode",1,"SwitchToRailgun")
@@ -462,7 +461,7 @@ ACTOR PB_Railgun : PB_Weapon
 			Goto Ready3
 		ZoomOut:
 			TNT1 A 0 {
-				A_StopSound(7);
+				A_StopSound(0);
 				A_StartSound("weapons/railgun/zoomout");
 				A_Takeinventory("RailgunZoomed",1);
 				PB_HandleCrosshair(77);
@@ -914,7 +913,7 @@ ACTOR PB_Railgun : PB_Weapon
 					A_ZoomFactor(1.0);
 					A_TakeInventory("RailgunInfrared", 1);
 					A_StopSound(1);
-					A_StopSound(7);
+					A_StopSound(0);
 					if (CountInv("RailgunAmmo") == 0 ) {
 						A_StopSound(6);
 					}
@@ -1160,7 +1159,7 @@ ACTOR PB_Railgun : PB_Weapon
 			PB_HandleCrosshair(77);
 			A_ZoomFactor(1.0);
 			A_StopSound(1);
-			A_StopSound(7);
+			A_StopSound(0);
 			A_StopSound(6);
 			A_TakeInventory("RailgunInfrared", 1);
 			A_Takeinventory("RailgunZoomed",1);

@@ -107,7 +107,7 @@ class PB_Excavator : PB_WeaponBase
 		{
 		case eDrillChargeMode:
 			PB_HandleCrosshair(78);
-			A_StartSound("excavator/firedigger", 18);
+			A_StartSound("excavator/firedigger", 4);
 			PB_FireBullets("ExcavatorDrill", 1, 0, 0, 0, 3);
 			break;
 		case eDropShotMode:
@@ -187,26 +187,26 @@ class PB_Excavator : PB_WeaponBase
 		WeaponRespect:
 			5DKF IHGF 1 A_DoPBWeaponAction();
 			5DKF E 15 A_DoPBWeaponAction();
-			6DKF A 1 A_PlaySound("Ironsights", 15);
+			6DKF A 1 A_PlaySound("Ironsights", 1);
 			TNT1 A 0 A_SetRoll(roll-0.6,SPF_INTERPOLATE);
 			6DKF BCDEF 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 14);
+			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 0);
 			TNT1 A 0 A_SetRoll(roll+0.6,SPF_INTERPOLATE);
 			6DKF GHIJK 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_PlaySound("RLCYCLE2", 13);
+			TNT1 A 0 A_PlaySound("RLCYCLE2", 6);
 			TNT1 A 0 A_SetRoll(0,SPF_INTERPOLATE);
 			6DKF KKKKK 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_PlaySound("weapons/minigun/respect1", 13);
+			TNT1 A 0 A_PlaySound("weapons/minigun/respect1", 6);
 			TNT1 A 0 A_SetRoll(roll-0.5,SPF_INTERPOLATE);
 			6DKF LMNOPQRS 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_PlaySound("weapons/nailgun/up", 10);
+			TNT1 A 0 A_PlaySound("weapons/nailgun/up", 3);
 			TNT1 A 0 A_SetRoll(roll-0.5,SPF_INTERPOLATE);
 			6DKF TUVWWWWW 1 A_DoPBWeaponAction();
 			TNT1 A 0 A_SetRoll(0,SPF_INTERPOLATE);
-			TNT1 A 0 A_PlaySound("Ironsights", 15);
+			TNT1 A 0 A_PlaySound("Ironsights", 1);
 			TNT1 A 0 A_SetRoll(roll+1.0,SPF_INTERPOLATE);
 			6DKF XYZ 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_PlaySound("weapons/sgl/inspect1", 15);
+			TNT1 A 0 A_PlaySound("weapons/sgl/inspect1", 1);
 			7DKF A 1 A_DoPBWeaponAction();
 			TNT1 A 0 A_SetRoll(roll-1.0,SPF_INTERPOLATE);
 			7DKF BCD 1 A_DoPBWeaponAction();
@@ -217,7 +217,7 @@ class PB_Excavator : PB_WeaponBase
 			goto Ready3;
 		Select:
 			TNT1 A 0 A_WeaponOffset(0,32);
-			TNT1 A 0 A_StartSound("RLANDRAW", 7);
+			TNT1 A 0 A_StartSound("RLANDRAW", 0);
 			Goto SelectFirstPersonLegs;
 		SelectContinue:
 			TNT1 A 0 PB_WeapTokenSwitch("ExcavatorSelected");
@@ -277,28 +277,28 @@ class PB_Excavator : PB_WeaponBase
 
 		Reload:
 			TNT1 A 0 PB_Exc_CheckReload();
-			6DKF A 1 A_PlaySound("Ironsights", 15);
+			6DKF A 1 A_PlaySound("Ironsights", 1);
 			TNT1 A 0 A_SetRoll(roll-0.6,SPF_INTERPOLATE);
 			6DKF BCDEF 1;
-			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 14);
+			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 0);
 			TNT1 A 0 PB_SpawnCasing("SGL_Drum",25,0,20,Frandom(3,4),Frandom(3,4),1);
 			TNT1 A 0 A_SetRoll(roll+0.6,SPF_INTERPOLATE);
 			6DKF GHIJK 1;
-			TNT1 A 0 A_PlaySound("RLCYCLE2", 13);
+			TNT1 A 0 A_PlaySound("RLCYCLE2", 6);
 			TNT1 A 0 A_SetRoll(0,SPF_INTERPOLATE);
 			6DKF KKKKK 1;
-			TNT1 A 0 A_PlaySound("weapons/minigun/respect1", 13);
+			TNT1 A 0 A_PlaySound("weapons/minigun/respect1", 6);
 			TNT1 A 0 A_SetRoll(roll-0.5,SPF_INTERPOLATE);
 		ContinueReload:
 			6DKF LMNOPQRS 1;
-			TNT1 A 0 A_PlaySound("weapons/nailgun/up", 10);
+			TNT1 A 0 A_PlaySound("weapons/nailgun/up", 3);
 			TNT1 A 0 A_SetRoll(roll-0.5,SPF_INTERPOLATE);
 			6DKF TUVWWWWW 1;
 			TNT1 A 0 A_SetRoll(0,SPF_INTERPOLATE);
-			TNT1 A 0 A_PlaySound("Ironsights", 15);
+			TNT1 A 0 A_PlaySound("Ironsights", 1);
 			TNT1 A 0 A_SetRoll(roll+1.0,SPF_INTERPOLATE);
 			6DKF XYZ 1;
-			TNT1 A 0 A_PlaySound("weapons/sgl/inspect1", 15);
+			TNT1 A 0 A_PlaySound("weapons/sgl/inspect1", 1);
 			7DKF A 1;
 			TNT1 A 0 PB_AmmoIntoMag("ExcavatorRounds", "RocketAmmo", excMagMax, 2);
 			TNT1 A 0 A_SetRoll(roll-1.0,SPF_INTERPOLATE);
@@ -314,10 +314,10 @@ class PB_Excavator : PB_WeaponBase
 
 		Unload:
 			TNT1 A 0 A_JumpIf(CountInv(invoker.ammotype2) < 1, "NoAmmo");
-			6DKF A 1 A_PlaySound("Ironsights", 15);
+			6DKF A 1 A_PlaySound("Ironsights", 1);
 			TNT1 A 0 A_SetRoll(roll-0.6,SPF_INTERPOLATE);
 			6DKF BCDEF 1;
-			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 14);
+			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 0);
 			TNT1 A 0 A_SetRoll(roll+0.6,SPF_INTERPOLATE);
 			6DKF GHI 1;
 			6DKF J 1;

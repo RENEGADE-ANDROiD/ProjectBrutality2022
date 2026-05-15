@@ -1093,7 +1093,7 @@ Default
 	"####" "#" 2 Bright
 		{
 		A_FaceTarget();
-		A_StartSound("LGLoop", 7);
+		A_StartSound("LGLoop", CHAN_5);
 		A_SpawnItemEx("ChaosBallVeryBigExplode", 0, random(-20,20), random(15,65));
 		}
 	Goto See;

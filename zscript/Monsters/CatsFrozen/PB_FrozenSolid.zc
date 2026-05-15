@@ -45,7 +45,7 @@ class PB_FrozenSolidImp : PB_FrozenSolidBase
 		Goto Thaw;
 	Thaw:
 		IFZD A 2;
-		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		TNT1 A 0 A_PlaySound("ICEBRK1", 0);
 		IFZD A 50;
 		IFZD B 2;
 		IFZD A 50;
@@ -66,7 +66,7 @@ class PB_FrozenSolidImp : PB_FrozenSolidBase
 		IFZD B 2;
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_StopSound(0);
 		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
@@ -106,7 +106,7 @@ class PB_FrozenSolidBaron : PB_FrozenSolidBase
 		Goto Thaw;
 	Thaw:
 		BFZD A 2;
-		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		TNT1 A 0 A_PlaySound("ICEBRK1", 0);
 		BFZD A 50;
 		BFZD B 2;
 		BFZD A 50;
@@ -127,7 +127,7 @@ class PB_FrozenSolidBaron : PB_FrozenSolidBase
 		BFZD B 2;
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_StopSound(0);
 		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
@@ -167,7 +167,7 @@ class PB_FrozenSolidMancubus : PB_FrozenSolidBase
 		Goto Thaw;
 	Thaw:
 		MFZD A 2;
-		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		TNT1 A 0 A_PlaySound("ICEBRK1", 0);
 		MFZD A 50;
 		MFZD B 2;
 		MFZD A 50;
@@ -188,7 +188,7 @@ class PB_FrozenSolidMancubus : PB_FrozenSolidBase
 		MFZD B 2;
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_StopSound(0);
 		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
@@ -230,7 +230,7 @@ class PB_FrozenSolidCacodemon : PB_FrozenSolidBase
 		Goto Thaw;
 	Thaw:
 		CFZD A 2;
-		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		TNT1 A 0 A_PlaySound("ICEBRK1", 0);
 		CFZD A 50;
 		CFZD B 2;
 		CFZD A 50;
@@ -251,7 +251,7 @@ class PB_FrozenSolidCacodemon : PB_FrozenSolidBase
 		CFZD B 2;
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_StopSound(0);
 		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
@@ -291,7 +291,7 @@ class PB_FrozenSolidPinky : PB_FrozenSolidBase
 		Goto Thaw;
 	Thaw:
 		PFZD A 2;
-		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		TNT1 A 0 A_PlaySound("ICEBRK1", 0);
 		PFZD A 50;
 		PFZD B 2;
 		PFZD A 50;
@@ -312,7 +312,7 @@ class PB_FrozenSolidPinky : PB_FrozenSolidBase
 		PFZD B 2;
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_StopSound(0);
 		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
@@ -352,7 +352,7 @@ class PB_FrozenSolidRevenant : PB_FrozenSolidBase
 		Goto Thaw;
 	Thaw:
 		RFZD A 2;
-		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		TNT1 A 0 A_PlaySound("ICEBRK1", 0);
 		RFZD A 50;
 		RFZD B 2;
 		RFZD A 50;
@@ -373,7 +373,7 @@ class PB_FrozenSolidRevenant : PB_FrozenSolidBase
 		RFZD B 2;
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_StopSound(0);
 		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
@@ -413,7 +413,7 @@ class PB_FrozenSolidCyberdemon : PB_FrozenSolidBase
 		Goto Thaw;
 	Thaw:
 		CYFZ A 2;
-		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		TNT1 A 0 A_PlaySound("ICEBRK1", 0);
 		CYFZ A 50;
 		CYFZ B 2;
 		CYFZ A 50;
@@ -434,7 +434,7 @@ class PB_FrozenSolidCyberdemon : PB_FrozenSolidBase
 		CYFZ B 2;
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_StopSound(0);
 		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
@@ -474,7 +474,7 @@ class PB_FrozenSolidMastermind : PB_FrozenSolidBase
 		Goto Thaw;
 	Thaw:
 		SPFZ A 2;
-		TNT1 A 0 A_PlaySound("ICEBRK1", 7);
+		TNT1 A 0 A_PlaySound("ICEBRK1", 0);
 		SPFZ A 50;
 		SPFZ B 2;
 		SPFZ A 50;
@@ -495,7 +495,7 @@ class PB_FrozenSolidMastermind : PB_FrozenSolidBase
 		SPFZ B 2;
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_StopSound(7);
+		TNT1 A 0 A_StopSound(0);
 		TNT1 A 0 A_PlaySound("IceBreakSmall", 3);
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));
 		TNT1 AAA 0 A_CustomMissile("IceShard1", random(15, 45), 0, random(0, 360), 2, random(20, 140));

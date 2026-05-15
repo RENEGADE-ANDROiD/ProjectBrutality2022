@@ -515,7 +515,7 @@ ACTOR DyingSergeant : SwitchableDecoration
 			TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
 			ZXZ6 BBBBBBBBBBBBBBBBBBB 3 A_CustomMissile ("PB_SquirtingBloodTrail", 26, 0, random (0, 360), 2, random (30, 60))
 			ZXZ6 CCC 3 A_CustomMissile ("PB_SquirtingBloodTrail", 26, 0, random (0, 360), 2, random (10, 40))
-			TNT1 A 0 A_PlaySound("BODYF",6)
+			TNT1 A 0 A_PlaySound("BODYF", 6)
 			ZXZ6 DD 3 A_CustomMissile ("PB_SquirtingBloodTrail", 6, 0, random (0, 360), 2, random (30, 60))
 			TNT1 A 0 A_SpawnItem ("DeadShotgunguyZXZ6E")
 			Stop
@@ -2406,7 +2406,7 @@ Death.Plasma: Death.Plasma2:
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
 		CP04 SSSSS 2 A_CustomMissile ("PB_SquirtingBloodTrail", 44, 0, random (0, 60), 2, random (30, 60))
-		TNT1 A 0 A_PlaySound("BODYF",6)
+		TNT1 A 0 A_PlaySound("BODYF", 6)
 		CP04 UV 9 A_CustomMissile ("PB_SquirtingBloodTrail", 30, 0, random (0, 360), 2, random (0, 40))
 		CP04 VVVVVVVVVVVVVVVVVVVVVV 1 A_CustomMissile ("PB_SquirtingBloodTrail", 12, 0, random (0, 360), 2, random (0, 90))
 		TNT1 A 0 A_SpawnItem("DeadChaingunGuyCP04V")
@@ -2489,7 +2489,7 @@ actor BrutalizedChaingunCommandoStop1: PB_CurbstompedMarine
     {
     Spawn:
 		CP05 CDEFG 5 A_SpawnItem("NashgoreBlood",0,5,0,1)
-		TNT1 A 0 A_PlaySound("BODYF",6)
+		TNT1 A 0 A_PlaySound("BODYF", 6)
 		TNT1 A 0 A_SpawnItem ("DeadChaingunGuyCP05H")
         Stop    }}
 
@@ -2525,7 +2525,7 @@ actor BrutalizedChaingunCommandoStop2: PB_CurbstompedMarine
     {
     Spawn:
 		CP05 OPQR 5 A_SpawnItem("NashgoreBlood",0,5,0,1)
-		TNT1 A 0 A_PlaySound("BODYF",6)
+		TNT1 A 0 A_PlaySound("BODYF", 6)
 		TNT1 A 0 A_SpawnItem ("DeadChaingunGuyCP05S")
         Stop    }}
 
@@ -2560,7 +2560,7 @@ ACTOR BrutalizedChaingunCommando3: BrutalizedZombieMan1
 		CP06 AAAAA 2 A_CustomMissile ("PB_SquirtingBloodTrail", 44, 0, random (0, 60), 2, random (30, 60))
 		CP06 BC 7 A_CustomMissile ("PB_SquirtingBloodTrail", 30, 0, random (0, 360), 2, random (0, 40))
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
-		TNT1 A 0 A_PlaySound("BODYF",6)
+		TNT1 A 0 A_PlaySound("BODYF", 6)
 		CP06 DDDDDDDDDDDDDDDDDDDDDDDDD 1 A_CustomMissile ("PB_SquirtingBloodTrail", 12, 0, random (0, 360), 2, random (0, 90))
 		TNT1 A 0 A_SpawnItem("DeadChaingunGuyCP06D")
 		Stop
@@ -2773,7 +2773,7 @@ Death.Plasma: Death.Plasma2:
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
 		CP04 SSSSS 2 A_CustomMissile ("PB_SquirtingBloodTrail", 44, 0, random (0, 60), 2, random (30, 60))
-		TNT1 A 0 A_PlaySound("BODYF",6)
+		TNT1 A 0 A_PlaySound("BODYF", 6)
 		CP04 UV 9 A_CustomMissile ("PB_SquirtingBloodTrail", 30, 0, random (0, 360), 2, random (0, 40))
 		CP04 VVVVVVVVVVVVVVVVVVVVVV 1 A_CustomMissile ("PB_SquirtingBloodTrail", 12, 0, random (0, 360), 2, random (0, 90))
 		TNT1 A 0 A_SpawnItem("DeadChaingunGuyCP04V")
@@ -2856,7 +2856,7 @@ actor BrutalizedHelmetChaingunCommandoStop1: PB_CurbstompedMarine
     {
     Spawn:
 		C405 CDEFG 5 A_SpawnItem("NashgoreBlood",0,5,0,1)
-		TNT1 A 0 A_PlaySound("BODYF",6)
+		TNT1 A 0 A_PlaySound("BODYF", 6)
 		TNT1 A 0 A_SpawnItem ("DeadChaingunGuyC405H")
         Stop    }}
 
@@ -2892,7 +2892,7 @@ actor BrutalizedHelmetChaingunCommandoStop2: PB_CurbstompedMarine
     {
     Spawn:
 		C405 OPQR 5 A_SpawnItem("NashgoreBlood",0,5,0,1)
-		TNT1 A 0 A_PlaySound("BODYF",6)
+		TNT1 A 0 A_PlaySound("BODYF", 6)
 		TNT1 A 0 A_SpawnItem ("DeadChaingunGuyC405S")
         Stop    }}
 
@@ -3645,7 +3645,7 @@ ACTOR DyingHelmetSergeant : SwitchableDecoration
 		TNT1 A 0 A_NoBlocking
         SZD1 FFGH 6
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
-		TNT1 A 0 A_PlaySound("BODYF",6)
+		TNT1 A 0 A_PlaySound("BODYF", 6)
 		TNT1 A 0 A_SpawnItem ("DeadShotgunguySZD1H")
         Stop	
 
@@ -5429,7 +5429,7 @@ ACTOR DyingARZombiemanZombiemanNoArm: DyingSergeant
 		TNT1 A 0 A_NoBlocking
         ZZD1 EEFFGH 6
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
-		TNT1 A 0 A_PlaySound("BODYF",6)
+		TNT1 A 0 A_PlaySound("BODYF", 6)
 		TNT1 A 0 A_SpawnItem("DeadZombiemanJustLegsAreLeft2")
         Stop	
 
@@ -6492,7 +6492,7 @@ ACTOR DyingARZombieHeadshot: PB_CarbineZombieman
 			A_CustomMissile ("NashGoreBloodSpurt", 35, 0, random (0, 360), 2, random (0, 160));
 		}
 		RMAD CD 8 
-		RMAD E 1 A_PlaySound("BODYF",6)
+		RMAD E 1 A_PlaySound("BODYF", 6)
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
 		TNT1 A 0 A_SpawnItem ("Dead_AR_ZombieMan_RMADE", 1)
 		Stop
@@ -6981,7 +6981,7 @@ ACTOR DyingZombieScientistLostTeeth: PB_ZombieScientist
 		Death:
 			TNT1 A 0 A_Scream
 			FSD5 D 6 A_NoBlocking
-			TNT1 A 0 A_PlaySound("BODYF",6)
+			TNT1 A 0 A_PlaySound("BODYF", 6)
 			TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
 			TNT1 A 0 A_SpawnItem("DeadLabguySCZAL")
 			Stop
@@ -7281,7 +7281,7 @@ Actor DyingChainsawScientistAccident: DyingFormerScientistNoArm
 		Death.Kick:
 		Death.SuperKick:
 			TNT1 A 0 A_StopSound(1)
-			TNT1 A 0 A_StopSound(7)
+			TNT1 A 0 A_StopSound(0)
 			TNT1 A 0 A_ChangeFlag("UseSpecial",0)
 			TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
 			5SD6 E 6 A_Scream
@@ -7294,7 +7294,7 @@ Actor DyingChainsawScientistAccident: DyingFormerScientistNoArm
 		Death.SuperPunch:
 		Active:
 			TNT1 A 0 A_StopSound(1)
-			TNT1 A 0 A_StopSound(7)
+			TNT1 A 0 A_StopSound(0)
 			TNT1 A 0 A_NoBlocking
 			TNT1 A 0 A_GiveToTarget("HasZombieScientistShield", 1)
 			TNT1 A 0 A_GiveToTarget("GotMeatShield", 1)
@@ -7305,7 +7305,7 @@ Actor DyingChainsawScientistAccident: DyingFormerScientistNoArm
 		Death.Head:
 		Death.MinorHead:
 			TNT1 A 0 A_StopSound(1)
-			TNT1 A 0 A_StopSound(7)
+			TNT1 A 0 A_StopSound(0)
 			TNT1 A 0 A_ChangeFlag("UseSpecial",0)
 			TNT1 A 0 A_SpawnItem ("CrueltyBonus5Health")
 			TNT1 A 0 A_SpawnItem("ShotgunGuyHeadExplode", 0, 33)
@@ -7350,7 +7350,7 @@ ACTOR DyingChainsawZombieLostTeeth: PB_ZombieScientistChainsaw
 		Death:
 			TNT1 A 0 A_Scream
 			CSD5 D 6 A_NoBlocking
-			TNT1 A 0 A_PlaySound("BODYF",6)
+			TNT1 A 0 A_PlaySound("BODYF", 6)
 			TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
 			TNT1 A 0 A_SpawnItem("DeadLabguy5CZAN")
 			Stop
