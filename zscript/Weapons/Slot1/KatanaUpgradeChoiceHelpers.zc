@@ -1,3 +1,19 @@
+class PB_KatanaChoicePickSith : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+	}
+}
+
+class PB_KatanaChoicePickJedi : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+	}
+}
+
 extend class PB_WeaponBase
 {
 	action void PB_KatanaUpgradeFreeze(bool on)

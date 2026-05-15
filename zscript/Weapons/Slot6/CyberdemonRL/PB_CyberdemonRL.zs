@@ -4,7 +4,7 @@
 // separate PBX-style EventHandler. See actors/Gore/GORE!!!.dec for the replacement.
 //
 // PB2022 parity notes vs PBX:
-//   * Uses PB_RocketAmmo (compat alias for RocketAmmo, see actors/Compat/WarningStubs.dec)
+//   * Uses PB_RocketAmmo (compat alias for RocketAmmo, see actors/Items/Compat/WarningStubs.dec)
 //     so the weapon consumes the existing rocket pool.
 //   * PB_Math.LinearMap -> PB_HitFeedback_Math.LinearMap (equivalent utility in PB2022).
 //   * PBX's PB_CoolDownBarrel / DisablePBX_Smoke cooldown hook doesn't exist in PB2022,

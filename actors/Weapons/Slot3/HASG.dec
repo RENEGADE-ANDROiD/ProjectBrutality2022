@@ -3,7 +3,7 @@
 // PB2022 adaptations:
 //   - dropped PB_WeaponBase.UsesWheel/WheelInfo (PB2022 wheel uses class-name switch)
 //   - WeaponSpecial jump added to all ready loops
-//   - missing projectile/casing names defined here as inheriting stubs
+//   - Golide-specific pellets / nails / ZScript missiles: HASG_Projectiles.dec + HASG_Projectiles.zs (after M41A + Nailgun)
 //   - 0-tick AHGG / J2FG sprites swapped to TNT1 (no asset gap)
 //   - stripped HASGDrumMag ACS call + DistantRifleFireSound spawn
 // Sprite source: SPRITES/WEAPONS/Slot3/HASG/PBWP/
@@ -42,37 +42,9 @@ Actor ASGChamber : Ammo
 }
 
 // --- Projectile / casing aliases (PBWP -> PB2022) --------------------------
-Actor PB_DragonsBreathTracer    : DragonsBreathTracer    {}
-// Parent cannot be MGNail here: Nailgun.dec is #included after this file.
-Actor IN_MGNail : DragonsBreathTracer
-{
-    Scale 0.22
-    Alpha 0.75
-}
-Actor WPhosphorusProjectile_Golide : WPhosphorusProjectile {}
-Actor DarkDanmakuProjectile     : DanmakuProjectile      {}
-Actor GolideExplosiveProjectile : ExplosiveProjectile    {}
+Actor PB_DragonsBreathTracer : DragonsBreathTracer {}
 
-// Hitscan/slug pellet stubs - these names appear in PB_FireBullets /
-// A_FireProjectile calls; if absent, A_FireProjectile silently no-ops.
-// We make them tracers so they at least visualise and decal a wall.
-Actor PB_12GAPellet_ASG : DragonsBreathTracer
-{
-    Damage 4
-    DamageType Bullet
-    PoisonDamage 0
-    +NODAMAGETHRUST
-    -ADDITIVEPOISONDURATION
-    Scale 0.18
-    Alpha 0.6
-}
-
-// Casing fall-throughs: route HASG-specific spawners to the generic
-// shotgun casings already in zscript/Effects/Casings.txt.
-Actor ShotCaseSpawnHASG5  : ShotCaseSpawn3 {}
-Actor ShotCaseSpawnHASGEXP : ShotCaseSpawn3 {}
-Actor ShotCaseSpawnHASGDAN : ShotCaseSpawn3 {}
-Actor ShotCaseSpawnHASGWP  : ShotCaseSpawn3 {}
+// HASG shell spawners + hull classes: zscript/Weapons/Slot3/HASG/HASG_Casings.zs
 
 // --- Drum upgrade pickup ---------------------------------------------------
 Actor HASGDrum : PB_UpgradeItem
@@ -588,6 +560,11 @@ Actor HASG : PB_Weapon
                 A_FireCustomMissile("DarkDanmakuProjectile", Random(-5, 5), 0, -1, 0, Random(-5, 5), Random(-5, 5));
                 A_FireCustomMissile("DarkDanmakuProjectile", Random(-5, 5), 0, -1, 0, Random(-5, 5), Random(-5, 5));
                 A_FireCustomMissile("DarkDanmakuProjectile", Random(-5, 5), 0, -1, 0, Random(-5, 5), Random(-5, 5));
+                A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
+                A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
+                A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
+                A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
+                A_FireCustomMissile("ShotgunParticles", random(-15, 15), 0, -1, 0, 0, random(-10, 10));
                 A_FireCustomMissile("ShotCaseSpawnHASGDAN", 5, 0, 8, -9);
                 return state("ContDrumFire");
             }

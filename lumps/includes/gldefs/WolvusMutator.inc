@@ -25,22 +25,14 @@ pulselight RAGESPHERE_LT
 	offset 0 18 0
 }
 
-pulselight REDITEM
-{
-	color 1.0 0.0 0.0
-	size 14
-	secondarySize 16
-	interval 0.1
-	offset 0 5 0
-}
-
 pulselight YELLOWITEM
 {
 	color 1.0 1.0 0.0
-	size 14
-	secondarySize 16
-	interval 0.1
+	size 12
+	secondarySize 14
+	interval 0.6
 	offset 0 5 0
+	dontlightself 1
 }
 
 pulselight WOLVX_MEGASPHERE
@@ -75,36 +67,6 @@ object UltraSphere
 object NewLifeSphere
 {
 	frame GZUL { light GTRZOULSPHERE }
-}
-
-object StrongHealthPlus
-{
-	frame BON3 { light BLUEITEM }
-}
-
-object SuperHealthPlus
-{
-	frame BON5 { light REDITEM }
-}
-
-object PristineHealthPlus
-{
-	frame BON7 { light YELLOWITEM }
-}
-
-object StrongArmorShard
-{
-	frame BON4 { light BLUEITEM }
-}
-
-object SuperArmorShard
-{
-	frame BON6 { light REDITEM }
-}
-
-object PristineArmorShard
-{
-	frame BON8 { light YELLOWITEM }
 }
 
 object DemonStrengthRune

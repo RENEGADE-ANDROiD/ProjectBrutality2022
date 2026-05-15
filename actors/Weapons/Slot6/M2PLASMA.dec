@@ -656,6 +656,8 @@ ACTOR PB_M2Plasma : PB_Weapon{
 	NoFireStun:
 		TNT1 A 0 A_Print("\coStun bomb \c-on cooldown",1)
 		Goto ReallyReady2
+	FireDualWield:
+		Goto LeftToRight
 	LeftToRight:
 		TNT1 A 0 A_JumpIfInventory("M2PlasmaAmmo",10,1)
         Goto Reload

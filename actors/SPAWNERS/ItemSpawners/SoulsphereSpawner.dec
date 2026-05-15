@@ -42,7 +42,7 @@ Actor SoulSphereSpawner replaces Soulsphere
 			TNT1 A 0 A_Jump(132,"SpawnNewLifeSphere")
 			TNT1 A 0 A_Jump(256,"SpawnLifeSphere")
 	SpawnNewLifeSphere:
-		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWolvusItemMutators",0)
+		TNT1 A 1 ACS_NamedExecuteAlways("ToggleItemMutators",0)
 		TNT1 A 0 A_SpawnItemEx("NewLifeSphere",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
 		Stop
 	SpawnLifeSphere:
