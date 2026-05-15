@@ -15,6 +15,7 @@ Extend Class PB_SpecialWheelHandler
 		if (specialName == "WW_HookSelected")
 			return pl.CountInv("PB_HookToken") > 0 || pl.CountInv("HookAmmo") > 0
 				|| pl.CountInv("AlreadyHaveMeatHook") > 0;
+		if (specialName == "Select_LeverAction_HellMode") return pl.CountInv("LeverActionHellTier") >= 1;
 		return true;
 	}
 
