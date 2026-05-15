@@ -1,0 +1,5 @@
+#include "actors/Items/Health/CustomShardsPotions/CustomShardsPotionsBridges.dec"
+#include "actors/Items/Health/CustomShardsPotions/DECORATE.Shards.txt"
+#include "actors/Items/Health/CustomShardsPotions/DECORATE.Potions.txt"
+#include "actors/Items/Health/CustomShardsPotions/DECORATE.Stims.txt"
+#include "actors/Items/Health/CustomShardsPotions/DECORATE.Medikits.txt"

@@ -50,6 +50,10 @@ Some fatalities briefly turn you into the demon you just killed. The rides are s
 - **Arachnotron** — the right finish seats you on its plasma turret (third-person view) until the rig tears apart.
 - **Revenant** — revenant fatalities can roll into a third-person rocket-backpack ride: homing rockets fire on a short cadence while the chase camera stays active; leaving the ride restores the normal view.
 
+### Item pickups and armor variety
+
+- Colored health and armor bonuses, stimpacks, and medikits use **DarkShadow**'s **Custom Shards & Potions** content. Optional **Red Armor** (60% protection, 250 points) can appear when the blue-armor spawner rolls a heavy pickup (**Gameplay Settings**). Soulsphere, megasphere, and premium armor extras still use the **Item mutators** toggle in the same menu.
+
 ### Included weapons
 
 Weapons are grouped by their in-game number slots. Individual spawn toggles live in **Weapon Settings** / **Add-On Toggles** where available. Glory Kill tools such as the **Crucible**, shoulder cannon actions, Blood Punch, pinata pickups, and related HUD pieces are separate systems, not normal numbered-slot weapons.

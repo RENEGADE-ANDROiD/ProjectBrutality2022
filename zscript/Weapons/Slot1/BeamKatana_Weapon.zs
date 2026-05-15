@@ -65,32 +65,33 @@ class PB_BeamKatana : PB_WeaponBase
 
 	ChooseUpgradePath:
 		TNT1 A 0 PB_KatanaUpgradeFreeze(true);
-		TNT1 A 0 A_PrintBold(
-			"\c-You have both the \ciJEDI MASTER\c- and \caSITH LORD\c- in inventory.\n\cdFIRE\ci: Keep \ciJEDI MASTER (current)\ci  |  \chALTFIRE\ci: Equip \caSITH LORD\ci (drop JEDI, use pickup as replacement)\c-"
-		);
-		TNT1 A 1;
-		TNT1 A 1;
-		ChooseUpgradePathDebounce:
-		TNT1 A 2;
-		ChooseUpgradePathLoop:
-		TNT1 A 0 A_JumpIf(JustPressed(BT_ATTACK), "KeepBeamPath");
-		TNT1 A 0 A_JumpIf(JustPressed(BT_ALTATTACK), "KeepArgentPath");
-		TNT1 A 1;
-		TNT1 A 1;
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB | WRF_NOSWITCH);
-		Goto ChooseUpgradePathLoop;
+		TNT1 A 0 { EventHandler.SendNetworkEvent("katanachoice_open1"); }
+		Goto WaitKatanaChoice;
+	WaitKatanaChoice:
+		TNT1 A 0 A_JumpIfInventory("PB_KatanaChoicePickSith", 1, "KatanaResolvePickSith");
+		TNT1 A 0 A_JumpIfInventory("PB_KatanaChoicePickJedi", 1, "KatanaResolvePickJedi");
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE | WRF_NOSECONDARY | WRF_NOSWITCH | WRF_NOBOB);
+		Loop;
+	KatanaResolvePickSith:
+		TNT1 A 0 A_TakeInventory("PB_KatanaChoicePickSith", 1);
+		TNT1 A 0 A_TakeInventory("PB_KatanaChoicePickJedi", 1);
+		Goto KeepArgentPath;
+	KatanaResolvePickJedi:
+		TNT1 A 0 A_TakeInventory("PB_KatanaChoicePickSith", 1);
+		TNT1 A 0 A_TakeInventory("PB_KatanaChoicePickJedi", 1);
+		Goto KeepBeamPath;
 
 	KeepArgentPath:
 		TNT1 A 0 PB_KatanaUpgradeFreeze(false);
 		TNT1 A 0 PB_KatanaUpgradeClearAttackButtons();
-		TNT1 A 0 A_PrintBold("\cdSwitched to: \caSITH LORD");
+		TNT1 A 0 A_PrintBold("\crSith Lord");
 		TNT1 A 0 A_SelectWeapon("PB_ArgentSith");
 		TNT1 A 0 A_TakeInventory("PB_BeamKatana", 1);
 		Stop;
 
 	KeepBeamPath:
 		TNT1 A 0 A_TakeInventory("PB_ArgentSith", 1);
-		TNT1 A 0 A_PrintBold("\cdKept: \cIJEDI MASTER");
+		TNT1 A 0 A_PrintBold("\cjJedi Master");
 		Goto ReleaseKatanaButtons;
 
 	ReleaseKatanaButtons:

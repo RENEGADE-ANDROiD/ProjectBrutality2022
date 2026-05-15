@@ -93,7 +93,8 @@ user float cl_step_delaymul = 1.0;
 
 user int SingleDualFire = 1;
 server bool pb_hp_arcade = true;
-server bool pb_wolvus_item_mutators = true;
+server bool pb_item_mutators = true;
+server bool pb_redarmor_spawn = true;
 server int donotsidestep = 0;
 server int donotdoublejump = 0;
 server int donotclimb = 0;

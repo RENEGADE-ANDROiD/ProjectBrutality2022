@@ -54,7 +54,7 @@ ACTOR BigBlackSmokePillarShort : BigBlackSmokePillar {}
 //-------------------------------------------------------------------------
 // PB Staging-style ice crystal random spawners (used by IceBarrelBlast).
 // Aliased to the same no-op particle as RandomSmallIcecrystal already does in
-// actors/Compat/WarningStubs.dec; using IceCrystal2 (a SOLID monster prop) here
+// actors/Items/Compat/WarningStubs.dec; using IceCrystal2 (a SOLID monster prop) here
 // would litter the map with movement-blocking decorations on every blast.
 //-------------------------------------------------------------------------
 ACTOR RandomLargeIcecrystal  : BDExplosionparticlesSmall {}

@@ -724,9 +724,9 @@ Script "ToggleBaalgarDemon" (VOID) NET
 if	(GetCvar("pb_NoBaalgarDemon") == 1) { SetActorState(0,"ReplaceToggle"); }
 }
 
-Script "ToggleWolvusItemMutators" (VOID) NET
+Script "ToggleItemMutators" (VOID) NET
 {
-if	(GetCvar("pb_wolvus_item_mutators") == 0) { SetActorState(0,"ReplaceVanilla"); }
+if	(GetCvar("pb_item_mutators") == 0) { SetActorState(0,"ReplaceVanilla"); }
 }
 
 /////////////////////////////////WEAPON TOGGLES///////////////////////////////

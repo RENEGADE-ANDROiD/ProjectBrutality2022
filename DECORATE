@@ -113,7 +113,7 @@ Actor ShieldSphere : ArmorBonus
 		Stop
 	}
 }
-#include "actors/Compat/WarningStubs.dec"
+#include "actors/Items/Compat/WarningStubs.dec"
 
 Actor PBBlastMomentum : Inventory
 {
@@ -370,6 +370,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot4/OldHMG.dec"
 #include "actors/Weapons/Slot4/NeoHMG.dec"
 #include "actors/Weapons/Slot4/M41A.dec"
+#include "actors/Weapons/Slot3/HASG_Projectiles.dec"
 #include "actors/Weapons/Slot4/BDPBattleRifle.dec"
 #include "actors/Weapons/Slot5/SUPERGL.dec"
 #include "actors/Weapons/Slot5/Paingiver.dec"
@@ -709,9 +710,10 @@ Actor TurboReload : Inventory
 #include "actors/Weapons/Slot1/Crucible.dec"
 #include "actors/Weapons/Slot8/SoulCube.dec"
 #include "actors/Items/Ammo/PinataAmmo.dec"
-#include "actors/Compat/ExecutionFxStubs.dec"
+#include "actors/Items/Compat/ExecutionFxStubs.dec"
 #include "actors/Monsters/ObsidianRavager/SlayerPower.dec"
 #include "actors/Monsters/ObsidianRavager/ObsidianRavagerCompat.dec"
+#include "actors/Items/Health/CustomShardsPotions/CustomShardsPotions.dec"
 #include "actors/Monsters/ObsidianRavager/ObsidianRavagerStuff.dec"
 #include "actors/Monsters/D3Maledict/MaledictCometSupport.dec"
 #include "actors/Monsters/D3Maledict/DyingD3Maledict.dec"
@@ -759,4 +761,4 @@ Actor TurboReload : Inventory
 #include "actors/Monsters/Realm667/Realm667_GloryKills.dec"
 #include "actors/Monsters/CatsFrozen/PB_CatsFrozen_Monsters.dec"
 
-#include "actors/Compat/LateWarningStubs.dec"
+#include "actors/Items/Compat/LateWarningStubs.dec"

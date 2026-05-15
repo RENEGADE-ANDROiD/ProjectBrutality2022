@@ -1,5 +1,23 @@
 class FamiliarBase : Actor
 {
+	int familiarLiveTics;
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		familiarLiveTics = 0;
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+		if (health <= 0)
+			return;
+		familiarLiveTics++;
+		if (familiarLiveTics >= 35 * 20)
+			DamageMobj(null, null, health * 10, 'Massacre');
+	}
+
 	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
 	{
 		if (source && source.player)
@@ -19,5 +37,50 @@ class FamiliarBase : Actor
 			return 0;
 		}
 		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+	}
+}
+
+class FamiliarDroneBurst : Actor
+{
+	Default
+	{
+		+NOINTERACTION
+		+NOBLOCKMAP
+		+NOGRAVITY
+		Radius 1;
+		Height 1;
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		double rad = 192;
+		int fullDmg = 88;
+		BlockThingsIterator it = BlockThingsIterator.Create(self, rad);
+		while (it.Next())
+		{
+			Actor mo = it.thing;
+			if (!mo || mo == self)
+				continue;
+			if (!mo.bShootable || mo.health <= 0)
+				continue;
+			if (mo.player)
+				continue;
+			if (!mo.bIsMonster)
+				continue;
+			if (mo.bFriendly)
+				continue;
+			if (mo is "Familiar")
+				continue;
+			double d3 = Distance3D(mo);
+			if (d3 > rad)
+				continue;
+			int dmg = int(fullDmg * (1.0 - d3 / rad) + 8);
+			if (dmg < 8)
+				dmg = 8;
+			mo.DamageMobj(self, master, dmg, 'ExplosiveImpact');
+		}
+		A_PlaySound("FAREXPL", CHAN_AUTO);
+		Destroy();
 	}
 }

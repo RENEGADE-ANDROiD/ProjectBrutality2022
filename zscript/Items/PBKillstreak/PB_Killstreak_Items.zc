@@ -72,7 +72,7 @@ class PB_KillStreakPowerUp : Inventory
 		Class<Inventory> rewardClass = className;
 		if (!rewardClass)
 		{
-			className = "Stimpack2";
+			className = "PB_Stimpack";
 			msg = "Kill streak reward: stimpack (reward unavailable).";
 		}
 		if (className == "PB_Backpack")
@@ -205,7 +205,7 @@ class PB_KillStreakPowerUp : Inventory
 		PushIf(pool, "pb_ks_r_mega",     "EnergySphere",         plr);
 		PushIf(pool, "pb_ks_r_megaberserk", "MegaBerserk",        plr);
 		PushIf(pool, "pb_ks_r_life",     "LifeSphere",           plr);
-		PushIf(pool, "pb_ks_r_medi",     "Medikit2",             plr);
+		PushIf(pool, "pb_ks_r_medi",     "PB_Medikit",             plr);
 		PushIf(pool, "pb_ks_r_melee",    "DemonStrengthRune",    plr);
 		PushIf(pool, "pb_ks_r_coffee",   "CoffeeTime",           plr);
 		PushIf(pool, "pb_ks_r_timesphere","TFST",                plr);
@@ -243,7 +243,7 @@ class PB_KillStreakPowerUp : Inventory
 		else if (pick == "EnergySphere") outMsg = "Kill streak: Energy sphere (mega) !!";
 		else if (pick == "MegaBerserk") outMsg  = "Kill streak: MEGA BERSERK !";
 		else if (pick == "LifeSphere") outMsg  = "Kill streak: Life sphere !";
-		else if (pick == "Medikit2") outMsg    = "Kill streak: Medikit !!";
+		else if (pick == "PB_Medikit") outMsg    = "Kill streak: Medikit !!";
 		else if (pick == "DemonStrengthRune") outMsg = "Kill streak: Demon strength !";
 		else if (pick == "CoffeeTime") outMsg = "Kill streak: COFFEE TIME!";
 		else if (pick == "TFST") outMsg = "Kill streak: TIME SPHERE!";
