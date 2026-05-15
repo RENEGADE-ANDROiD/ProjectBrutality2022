@@ -157,6 +157,9 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot6/CyberdemonRL/CyberdemonRL_helpers.zs"
 #include "zscript/Weapons/Slot6/CyberdemonRL/PB_CyberdemonRL.zs"
 #include "zscript/Weapons/Slot3/CSSG/CSSG.zs"
+#include "zscript/Weapons/Slot3/HASG/HASG_Projectiles.zs"
+#include "zscript/Weapons/Slot3/CSSG/CSSG_Casings.zs"
+#include "zscript/Weapons/Slot3/HASG/HASG_Casings.zs"
 #include "zscript/Weapons/Slot3/CSSG/CSSGEvent.zs"
 
 #include "zscript/Spawner/PB_SpawnerBase.zc"

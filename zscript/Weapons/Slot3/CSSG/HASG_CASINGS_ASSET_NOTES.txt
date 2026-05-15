@@ -1,0 +1,2 @@
+Lady Golide drum ejecta hulls (CAS8 / WCS1) and spawner behavior: folded from Project-Brutality-Weapons-Pack
+`zscript/Insanity's Nightmare/HASGCasings.zc` + `SPRITES/WEAPONS/Casings/ShotgunShell/` (PBWP). Danmaku row uses DC0S from `SPRITES/WEAPONS/Slot3/CSSG/Casings/` (shared with PB_CSSG).

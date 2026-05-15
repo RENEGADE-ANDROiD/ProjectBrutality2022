@@ -1,0 +1,3 @@
+ACTOR PB_ArmorBonus : ArmorShard {}
+ACTOR PB_Stimpack : Stimpack2 {}
+ACTOR PB_Medikit : Medikit2 {}

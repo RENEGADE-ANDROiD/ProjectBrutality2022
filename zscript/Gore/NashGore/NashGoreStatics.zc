@@ -177,6 +177,7 @@ class NashGoreStatics play
 						mo is "ShotCaseSpawn" ||
 						mo is "ShotCaseSpawn2" ||
 						mo is "ShotCaseSpawn3" ||
+						mo is "ShotCaseSpawnDanmaku" ||
 						mo is "SSGCaseSpawner" ||
 						mo is "FiftyCaseSpawn" ||
 						mo is "FiftyCaseSpawn2" ||
@@ -193,6 +194,10 @@ class NashGoreStatics play
 						mo is "ShotgunCasingSSG" ||
 						mo is "ShotgunCasing2" ||
 						mo is "ShotgunCasing3" ||
+						mo is "ShotgunCasing5HASG" ||
+						mo is "ExplosiveCasingHASG" ||
+						mo is "DanmakuCasingHASG" ||
+						mo is "WPhosphorusCasingHASG" ||
 						mo is "EmptyClipMP40" ||
 						mo.GetClassName() == "EmptyClip" ||
 						mo is "EmptyBrassMP40" ||

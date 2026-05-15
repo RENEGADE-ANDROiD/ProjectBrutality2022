@@ -1,0 +1,3 @@
+White-phosphorus casing composite patches (WCS1K2K8 / WCS1K3K7 / WCS1K4K6): source Project-Brutality-Weapons-Pack
+SPRITES/Effects/Casings/WP/. Not registered as SPRITES lumps (non-standard 8-char sprite names); kept here for TEXTURES or future wiring.
+Playable WCS1 spin/rest frames remain under SPRITES/WEAPONS/Slot3/HASG/Casings/ and SPRITES/WEAPONS/Slot3/CSSG/Casings/ShotgunShell/ (WCS1K0, WCS1K1, WCS1K5).

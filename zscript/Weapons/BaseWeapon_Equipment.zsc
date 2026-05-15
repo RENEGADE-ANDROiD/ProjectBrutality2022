@@ -11,6 +11,11 @@
 				A_TakeInventory("RailgunInfrared", 1);
 				A_Zoomfactor(1.0);
 				A_GiveInventory("KeepLaserDeactivated",1);
+				if (CountInv("DualWieldingM41A") >= 1 && invoker is "PB_M41A")
+				{
+					A_Overlay(10, "IdleLeft_Overlay", false);
+					A_Overlay(11, "IdleRight_Overlay", false);
+				}
 			}
 			TNT1 A 0 A_TakeInventory("UseEquipment", 1);
 			TNT1 A 0 A_GiveInventory("KeepLaserDeactivated",1);

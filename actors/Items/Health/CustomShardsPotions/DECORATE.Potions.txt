@@ -1,0 +1,30 @@
+ACTOR XD_HealthBonusSpawner : RandomSpawner Replaces HealthPlus
+{
+	DropItem "PB_HealthBonus1", 256
+	DropItem "PB_HealthBonusRed", 256
+	DropItem "PB_HealthBonusGreen", 256
+	DropItem "PB_HealthBonusGold", 256
+}
+ACTOR PB_HealthBonus1 : PB_HealthBonus
+{
+	Inventory.PickUpSound "items/bonus1"
+	Inventory.Amount 1
+}
+ACTOR PB_HealthBonusRed : PB_HealthBonus
+{
+	Translation "192:207=[255,0,0]:[50,0,0]", "240:247=[50,0,0]:[0,0,0]"
+	Inventory.PickUpSound "items/bonus5"
+	Inventory.Amount 3
+}
+ACTOR PB_HealthBonusGreen : PB_HealthBonus
+{
+	Translation "192:207=[0,255,0]:[0,50,0]", "240:247=[0,50,0]:[0,0,0]"
+	Inventory.PickUpSound "items/bonus3"
+	Inventory.Amount 2
+}
+ACTOR PB_HealthBonusGold : PB_HealthBonus
+{
+	Translation "192:207=[255,211,0]:[50,50,0]", "240:247=[50,50,0]:[0,0,0]"
+	Inventory.PickUpSound "items/bonus7"
+	Inventory.Amount 4
+}

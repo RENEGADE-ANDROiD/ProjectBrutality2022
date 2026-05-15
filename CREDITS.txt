@@ -25,6 +25,7 @@ Gameplay and content in this release
   content from multiple Doom games) — integrated by replacing matching files under
   SOUNDS/ and by extending a small set of caco/imp SNDINFO pools to use additional
   variants.
+- **DarkShadow — Custom Shards & Potions** (tiered **HealthPlus** / **ArmorShard** / **PB_Stimpack** / **PB_Medikit** randomizers; hi-res bonus art and pickup sounds) and **Custom Red Armor** (**PB_RedArmor**, 60% / 250, mixed into blue-armor heavy rolls when **`pb_redarmor_spawn`** is on). See **`actors/Items/Health/CustomShardsPotions/`**, **`actors/Items/Health/CustomRedArmor.dec`**, **`CHANGELOG.md`**.
 - Universal Kill Streaks and Power-Up Rewards: based on the Universal Kill
   Streaks and PowerUp Rewards add-on, adapted to this project’s names, menus,
   and message paths.
@@ -193,6 +194,7 @@ Audio (overview)
 - `SNDINFO.txt` (merged categories) and related per-lump history credit LiTDoom, freesound users,
   PillowBlaster / Russian Overkill, X-Weapon, Battlefield / Call of Duty–style
   sources, and others — see per-lump comments and the list below.
+- Bare-hand fist / knuckle / **`player/cyborg/fist`** pool (**`sounds/COMBAT/WEAPONS/Melee weapons/Fists/*.ogg`**, **`sounds/Doomguy and Marines/DOOMGUY/Sounds/Fists/plspnch*.ogg`**, **`KNUCKLED.ogg`**): **Project Brutality PB Staging** (0.3.x) pack, same filenames and tree as that line.
 
 Special thanks
 - Carrot (iamcarrotmaster): extensive sprites and weapon art.
