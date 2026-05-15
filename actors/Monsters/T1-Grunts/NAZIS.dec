@@ -2653,7 +2653,7 @@ States{Spawn:
         TNT1 A 0 
 		TNT1 A 0 A_NoBlocking
         NZD1 DEFGH 5
-		TNT1 A 0 A_PlaySound("BODYF",6)
+		TNT1 A 0 A_PlaySound("BODYF", 6)
 		TNT1 A 0 A_SpawnItem("DeadNaziJustLegsAreLeft")
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
 		Stop

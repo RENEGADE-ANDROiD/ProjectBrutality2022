@@ -198,7 +198,7 @@ class PB_VisorHandler : EventHandler
 		if (pl.mo.CountInv("CameraRunner") > 0)
 			return;
 
-		pl.mo.A_StartSound("visor/dyingvisor", CHAN_7,
+		pl.mo.A_StartSound("visor/dyingvisor", CHAN_6,
 			CHANF_OVERLAP | CHANF_LOCAL | CHANF_UI, 1.0, ATTN_NONE);
 	}
 

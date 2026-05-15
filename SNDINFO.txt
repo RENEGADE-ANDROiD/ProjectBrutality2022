@@ -4145,7 +4145,6 @@ MSSCL2 "sounds/combat/weapons/Peacekeeper/MSSCL2.ogg"
 MSSCL3 "sounds/combat/weapons/Peacekeeper/MSSCL3.ogg"
 $random MSSFR { MSSFR1 MSSFR2 MSSFR3 MSSFR4 MSSFR5 MSSFR6 }
 $random MSSCL { MSSCL1 MSSCL2 MSSCL3 }
-$volume MSSFR 2.0
 MSSOP "sounds/combat/weapons/Peacekeeper/MSSOP.ogg"
 MSSLD "sounds/combat/weapons/Peacekeeper/MSSLD.ogg"
 BFGREADY "sounds/combat/weapons/CyberdemonRL/BFGREADY.ogg"

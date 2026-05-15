@@ -323,7 +323,7 @@ ACTOR PB_SMG : PB_Weapon
 	FireLeft_Overlay:
 		A2F1 D 1 BRIGHT {
 			A_AlertMonsters;
-			A_PlaySoundEx("ZSpecOps/MGun", "SoundSlot7");
+			A_PlaySoundEx("ZSpecOps/MGun", 5);
 			A_FireBullets (0.1, 0.1, -1, 13, "HitPuff", FBF_NORANDOM,8192,"Tracer", -4, -8);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,-4,0);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, -4, 0, 0, 0);

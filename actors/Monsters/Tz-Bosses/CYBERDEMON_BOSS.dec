@@ -190,7 +190,12 @@ ACTOR CyberdemonBoss : Cyberdemon Replaces Cyberdemon 2546
 	Death.ExeCution1:
 		TNT1 A 0 A_Pain
 		TNT1 A 0 A_GiveToTarget ("GoExecution", 1)
-		CYBR G 30 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		CYBR G 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("cyber/impact", 6)
+		CYBR G 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
+		CYBR G 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("cyber/melee", 0)
 		Goto Death
 
 	SpecialFatality:

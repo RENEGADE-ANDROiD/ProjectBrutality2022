@@ -1589,7 +1589,7 @@ Class BuildPlayer : PlayerPawn
 			return;
 		}
 		if(HookFired || Grappled) { return; }
-		A_PlaySound("HookLaunch", 7, 0.8);
+		A_PlaySound("HookLaunch", 0, 0.8);
 		HookFired = SpawnPlayerMissile("Hook", Angle, 0, 0, - Height / 14.f); //SpawnPlayerMissile fires a projectile at 8/14 of Player Height, I need it to be fired at half
 	}
 	
@@ -2089,11 +2089,11 @@ Class Hook : Actor
 			Let Monster = Actor(Master);
 			BuildPlayer(Target).GrappledMonster = Monster;
 			SetMonsterSpeed(False);
-			A_PlaySound("HookMeat", 7);
+			A_PlaySound("HookMeat", 0);
 		}
 		else
 		{
-			A_PlaySound("HookWall", 7);
+			A_PlaySound("HookWall", 0);
 		}
 	}
 	
@@ -2210,7 +2210,7 @@ Class Hook : Actor
 			if(HookOwner)
 			{
 				HookOwner.StopHook();
-				HookOwner.A_PlaySound("HookFailed", 7, 0.2);
+				HookOwner.A_PlaySound("HookFailed", 0, 0.2);
 			}
 			
 			Let Monster = Actor(Master);

@@ -245,7 +245,7 @@ Actor ArtiLichSkull : CustomInventory
 		LCHS ABCD 3 Bright
 		Loop
 	Use:
-		TNT1 A 0 A_PlaySound("Pickups/LichSkull", 7, 1.0)
+		TNT1 A 0 A_PlaySound("Pickups/LichSkull", 0, 1.0)
 		TNT1 A 0 A_GiveInventory("LichSkullDamageGiver", 1)
 		TNT1 A 0 A_GiveInventory("LichSkullSpeedGiver", 1)
 		Stop
