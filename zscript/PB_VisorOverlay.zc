@@ -35,6 +35,11 @@ class PB_VisorHandler : EventHandler
 	double tiltY;
 	bool   tiltInited;
 
+	// Staging `PB_Hud_FX` / `PB_Hud` visor SFX (no dirty-screen wiper / kernel stack).
+	int  visorIFAccum;
+	int  lastBloodDropSfxGametic;
+	bool deathVisorSfxDone;
+
 	override void OnRegister()
 	{
 		m0to1Float = 0.0;
@@ -53,6 +58,9 @@ class PB_VisorHandler : EventHandler
 		tiltX = 0;
 		tiltY = 0;
 		tiltInited = false;
+		visorIFAccum = 0;
+		lastBloodDropSfxGametic = -1000;
+		deathVisorSfxDone = false;
 	}
 
 	override void WorldLoaded(WorldEvent e)
@@ -62,12 +70,25 @@ class PB_VisorHandler : EventHandler
 		tiltInited = false;
 		tiltX = 0;
 		tiltY = 0;
+		visorIFAccum = 0;
+		lastBloodDropSfxGametic = -1000;
+		deathVisorSfxDone = false;
+	}
+
+	override void PlayerRespawned(PlayerEvent e)
+	{
+		if (!e || e.PlayerNumber != consoleplayer)
+			return;
+		visorIFAccum = 0;
+		deathVisorSfxDone = false;
 	}
 
 	override void WorldTick()
 	{
 		UpdateVisorState();
 		UpdateGasmaskTilt();
+		VisorHudSfxTick();
+		VisorHudDeathSfxTick();
 	}
 
 	void UpdateVisorState()
@@ -140,6 +161,116 @@ class PB_VisorHandler : EventHandler
 
 		prevYaw = curYaw;
 		prevPitch = curPitch;
+	}
+
+	void VisorHudSfxTick()
+	{
+		PlayerInfo pl = players[consoleplayer];
+		if (!pl || !pl.mo)
+		{
+			visorIFAccum = 0;
+			return;
+		}
+		if (pl.mo.CountInv("CameraRunner") > 0)
+			return;
+		if (!showVisor)
+			return;
+		if (pl.mo.health <= 0)
+			return;
+
+		if (visorIFAccum > 0 && random(0, 255) < 100)
+		{
+			pl.mo.A_StartSound("visor/interference", CHAN_AUTO,
+				CHANF_OVERLAP | CHANF_LOCAL | CHANF_UI, 0.5, ATTN_NONE);
+			visorIFAccum--;
+		}
+	}
+
+	void VisorHudDeathSfxTick()
+	{
+		PlayerInfo pl = players[consoleplayer];
+		if (!pl || !pl.mo || pl.mo.health > 0)
+			return;
+		if (!showVisor || deathVisorSfxDone)
+			return;
+
+		deathVisorSfxDone = true;
+		if (pl.mo.CountInv("CameraRunner") > 0)
+			return;
+
+		pl.mo.A_StartSound("visor/dyingvisor", CHAN_7,
+			CHANF_OVERLAP | CHANF_LOCAL | CHANF_UI, 1.0, ATTN_NONE);
+	}
+
+	override void WorldThingDamaged(WorldEvent e)
+	{
+		if (!e || !e.Thing)
+			return;
+		PlayerInfo pl = players[consoleplayer];
+		if (!pl || !pl.mo || e.Thing != pl.mo)
+			return;
+		if (e.Damage < 1)
+			return;
+		if (pl.mo.CountInv("CameraRunner") > 0)
+			return;
+
+		let cvV = CVar.GetCVar("pb_showhudvisor", pl);
+		let cvG = CVar.GetCVar("pb_showhudvisorglass", pl);
+		bool wantVisor = cvV ? cvV.GetBool() : true;
+		bool wantGlass = cvG ? cvG.GetBool() : true;
+		if (!wantVisor)
+			return;
+
+		Name dt = e.DamageType;
+		if (dt == 'Head' && wantGlass)
+		{
+			pl.mo.A_StartSound("visor/glasscrack", CHAN_AUTO,
+				CHANF_OVERLAP | CHANF_LOCAL | CHANF_UI, 0.7, ATTN_NONE, frandom(0.96, 1.04));
+		}
+		else if (dt == 'Plasma')
+		{
+			int add = e.Damage;
+			if (add > 24)
+				add = 24;
+			visorIFAccum += add;
+			if (visorIFAccum > 200)
+				visorIFAccum = 200;
+		}
+	}
+
+	override void WorldThingSpawned(WorldEvent e)
+	{
+		if (!e || !e.Thing)
+			return;
+		if (!(e.Thing is "Blood"))
+			return;
+
+		PlayerInfo pl = players[consoleplayer];
+		if (!pl || !pl.mo)
+			return;
+		if (pl.mo.CountInv("CameraRunner") > 0)
+			return;
+
+		let cvV = CVar.GetCVar("pb_showhudvisor", pl);
+		if (!(cvV && cvV.GetBool()))
+			return;
+
+		if (!e.Thing.target || !e.Thing.target.bIsMonster)
+			return;
+		if (e.Thing.Distance3D(pl.mo) > 80.0 + pl.mo.radius)
+			return;
+		if (random(0, 100) <= 75)
+			return;
+
+		if (e.Thing is "PB_Bloodmist" || e.Thing is "NashGoreBloodParticle1")
+			return;
+
+		if (level.maptime - lastBloodDropSfxGametic < 4)
+			return;
+		lastBloodDropSfxGametic = level.maptime;
+
+		pl.mo.A_StartSound("visor/blooddrop", CHAN_BODY,
+			CHANF_OVERLAP | CHANF_LOCAL | CHANF_UI, 0.85, ATTN_NONE);
 	}
 
 	override void RenderUnderlay(RenderEvent e)

@@ -809,8 +809,10 @@ class PB_WeaponBase : DoomWeapon
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("BDReadyADS"))||
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready_ADS"))||
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("JavelinReady3"))||
-			   InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyToFire2"))
+			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyToFire2"))
 			 ) 
+			 ||
+			(InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyDualUnloaded")))
 			 ||
 			(InStateSequence(invoker.owner.player.GetPSprite(10).Curstate,invoker.ResolveState("IdleLeft_Overlay")) && 
 			 InStateSequence(invoker.owner.player.GetPSprite(11).Curstate,invoker.ResolveState("IdleRight_Overlay")) && 
@@ -888,9 +890,15 @@ class PB_WeaponBase : DoomWeapon
 			return ResolveState("Unload");
 		}
 		else A_TakeInventory("Unloading", CountInv("Unloading"));
-		if (CountInv(invoker.UnloaderToken) >= 1 && !(pbFlags & PBWEAP_UNLOADED) && invoker.owner && invoker.owner.player && !InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("GunEmpty")))
 		{
-			return ResolveState("GunEmpty");
+			State stGunEmpty = invoker.ResolveState("GunEmpty");
+			PlayerInfo pl = invoker.owner ? invoker.owner.player : null;
+			if (stGunEmpty != null && invoker.UnloaderToken != "" && CountInv(invoker.UnloaderToken) >= 1 && !(pbFlags & PBWEAP_UNLOADED) && pl)
+			{
+				let psp = pl.GetPSprite(PSP_WEAPON);
+				if (psp && !InStateSequence(psp.Curstate, stGunEmpty))
+					return ResolveState("GunEmpty");
+			}
 		}
 		if (ResolveState("LoadChamber"))
 		{

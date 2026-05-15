@@ -49,6 +49,7 @@ Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 }
 
 #include "actors/Items/PBHPArcade/PBHP_Bridges_Armor.dec"
+#include "actors/Items/Health/CustomRedArmor.dec"
 
 Actor HeavyArmorForMegaSphere : HeavyArmor
 {

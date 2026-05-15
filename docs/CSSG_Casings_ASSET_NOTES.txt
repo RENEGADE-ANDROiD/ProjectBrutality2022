@@ -1,0 +1,5 @@
+Commander SSG (`PB_CSSG`) hull strips under `ShotgunShell/` (moved out of `SPRITES/` so GZDoom does not try to load this file as a texture).
+
+- **DC0S** / **TDS1** — PB Weapons Pack (Danmaku / Triple Doom).
+- **WCS1***, **WCS1K***, **XCS1** — pack + HASG fold paths (see `HASG/Casings/ASSET_NOTES.txt` where applicable).
+- **CASX** (buckshot) and **CAF8** (flechette): the pack only ships composite `CASXK*` / `CAF8K*` patches under `SPRITES/Casings/…`, not full `CASXA0`–`CASXT0` / `CAF8A0`–`CAF8T0` tumble strips. Full A–T strips here are copied from the pack’s complete **`CAS2`** and **`CAS6`** sequences in `SPRITES/WEAPONS/Casings/ShotgunShell/` (same geometry as pack `PB_CasingBase.CasingSprite` targets for buck vs dragon; flechette uses the dragon strip so it reads differently from buck brass and from slug `CAS5`, flak `CAS9`, etc.). Pack-only composite art remains in Project-Brutality-Weapons-Pack for reference (`Buckshot Shells/`, `Effects/Casings/Flechette/`).

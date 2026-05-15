@@ -1,0 +1,15 @@
+// Lady Golide (HASG) hitscan helpers — must load after M41A.dec (PB_12GAPellet) and Nailgun.dec (MGNail).
+
+Actor PB_12GAPellet_ASG : PB_12GAPellet
+{
+}
+
+Actor IN_MGNail : MGNail
+{
+    Speed 100
+    Gravity 0.5
+    Damage 25
+    DamageType Nail
+    Scale 0.5
+    DeathSound "Weapons/NailHit"
+}
