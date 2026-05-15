@@ -559,7 +559,7 @@ actor MancFireSpawner : MyFireSpawner
 	}
 }
 
-// Slayer-only cryo orbs (avoid clashing with FREEZER.dec FreezerBall / WarningStubs SmallFreezerBall)
+// Slayer-only cryo orbs (avoid clashing with FREEZER.dec FreezerBall / Items/Compat WarningStubs SmallFreezerBall)
 ACTOR SlayerFreezerBall : FastProjectile
 {
 	Radius 4

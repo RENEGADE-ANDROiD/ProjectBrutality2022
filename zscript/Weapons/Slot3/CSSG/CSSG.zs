@@ -988,20 +988,20 @@ class ExplosiveProjectile : PB_Projectile
 		height 3;
 		Speed 400;
 		DamageType "Explosive";
+		Gravity 1;
 		Scale 0.1;
 		Decal "Scorch";
 		SeeSound "weapons/RLL";
 		Obituary "$OB_MPROCKET";
 		+nogravity;
-		damage 13;
+		damage 12;
 		damagetype "ExplosiveImpact";
 	}
 	
 	States
 	{
 		Spawn:
-			TNT1 A 0;
-			goto Fly;
+			TNT1 A 1;
 		Fly:
 			DBAC A 1 bright Light("ROCKET")
 			{
@@ -1016,7 +1016,7 @@ class ExplosiveProjectile : PB_Projectile
 			TNT1 A 0;
 			TNT1 A 0
 			{
-				A_Explode(66,128,XF_HURTSOURCE|RTF_THRUSTZ, 0, 64);
+				A_Explode(60,128,XF_HURTSOURCE|RTF_THRUSTZ, 0, 64);
 				A_StopSound(105);
 				A_StartSound("FAREXPL", CHAN_AUTO,CHANF_OVERLAP,0.5,0,1.1);
 				A_QuakeEx (2,2,2,4,0,100,"");
@@ -1071,7 +1071,7 @@ Class WPhosphorusProjectile : PB_Projectile
 	{
 		+FORCEXYBILLBOARD;
 		+DONTSPLASH;
-		damagefunction (17*frandom(2.0,3.0));
+		damagefunction (15*frandom(2.0,3.0));
 		Decal "SmallerScorch";
 		PROJECTILE;
 		gravity 0.6;
@@ -1380,7 +1380,12 @@ Class DanmakuProjectile : Actor
 	void SpawnBounceFx(vector3 where)
 	{
 		FSpawnParticleParams DnmkBnc;
-		DnmkBnc.Texture = TexMan.CheckForTexture("SHWKK0");
+		TextureID shw = TexMan.CheckForTexture("SHWKK0");
+		if (!shw.IsValid())
+			shw = TexMan.CheckForTexture("SHwKK0");
+		if (!shw.IsValid())
+			shw = TexMan.CheckForTexture("5PRKA0");
+		DnmkBnc.Texture = shw;
 		DnmkBnc.Color1 = tracercolor;
 		DnmkBnc.Style = STYLE_AddStencil;
 		DnmkBnc.Flags = SPF_ROLL|SPF_FULLBRIGHT;
@@ -1435,14 +1440,14 @@ Class DanmakuProjectile : Actor
 		Level.SpawnParticle(FFLAR);
 	}
 	
-	override void PostBeginPlay()
+	override void BeginPlay()
 	{
 		bxflip = random(0,1);
 		byflip = random(0,1);
 		A_Setroll(random(0,360));
 		int c = random(0, DanmkTracerCol.Size() - 1);
 		tracercolor = DanmkTracerCol[c];
-		Super.PostBeginPlay();
+		Super.BeginPlay();
 	}
 }
 

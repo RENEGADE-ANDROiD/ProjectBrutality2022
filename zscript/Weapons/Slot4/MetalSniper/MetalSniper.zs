@@ -277,11 +277,11 @@ class PB_MetalSniper : PB_WeaponBase
             TNT1 A 0 PB_WeaponRecoil(-3, frandom(-1.5, 1.5));
             MSNG C 1 bright;
             MSNG DEFGA 1;
-            TNT1 A 0 A_JumpIf(CountInv("RocketAmmo") > 0, "Reload_Grenade");
+            TNT1 A 0 A_JumpIf(MS_HasTubeReserve(), "Reload_Grenade");
             goto Ready3;
 
         Reload_Grenade:
-            TNT1 A 0 A_JumpIf(CountInv("RocketAmmo") < 1, "NoAmmo_Grenade");
+            TNT1 A 0 A_JumpIf(!MS_HasTubeReserve(), "NoAmmo_Grenade");
             MSNL ABCDEFGGG 1;
             TNT1 A 0 A_StartSound("MS/GrenOpen", 21);
             MSNL G 1;
@@ -289,10 +289,10 @@ class PB_MetalSniper : PB_WeaponBase
             MSNL HIJKLMN 1;
             TNT1 A 0
             {
-                if (CountInv("RocketAmmo") > 0)
+                if (MS_HasTubeReserve())
                 {
                     MS_SetGrenadeQ(1);
-                    A_TakeInventory("RocketAmmo", 1);
+                    MS_TakeTubeReserve();
                 }
                 A_StartSound("MS/GrenClose", 22);
             }
@@ -800,6 +800,21 @@ class PB_MetalSniper : PB_WeaponBase
 
     action void MS_SetGrenadeQ(bool q) { invoker.grenadeloaded = q; }
     action int  getgrenqtty()          { return invoker.grenadeloaded; }
+
+    action bool MS_HasTubeReserve()
+    {
+        return CountInv("NewRocketAmmo") >= 1 || CountInv("PB_RocketAmmo") >= 1 || CountInv("RocketAmmo") >= 1;
+    }
+
+    action void MS_TakeTubeReserve()
+    {
+        if (CountInv("NewRocketAmmo") >= 1)
+            A_TakeInventory("NewRocketAmmo", 1, TIF_NOTAKEINFINITE);
+        else if (CountInv("PB_RocketAmmo") >= 1)
+            A_TakeInventory("PB_RocketAmmo", 1, TIF_NOTAKEINFINITE);
+        else if (CountInv("RocketAmmo") >= 1)
+            A_TakeInventory("RocketAmmo", 1, TIF_NOTAKEINFINITE);
+    }
 
     action bool MS_getmode()            { return invoker.AltMode; }
     action void MS_SetMode(bool set = SniperMode) { invoker.AltMode = set; }
