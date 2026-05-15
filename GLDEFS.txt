@@ -676,7 +676,7 @@ pulselight HEALTHPOTION
 
 object HealthBonus
 {
-    frame BON1 { light BLUEITEM }
+    frame B0N1 { light BLUEITEM }
 }
 
 pulselight ARMORBONUS
@@ -1161,12 +1161,12 @@ pointlight SPIDERSHADOW
 
 object HealthPlus
 {
-    frame BON1 { light BLUEITEM  }
+    frame B0N1 { light BLUEITEM  }
 }
 
 object ArmorShard
 {
-    frame BON2 { light GREENITEM  }
+    frame B0N2 { light GREENITEM  }
 }
 
 

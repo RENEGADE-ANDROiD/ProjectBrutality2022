@@ -5198,14 +5198,14 @@ $pitchset weapons/golide/fire 0.95 1.05
 $pitchset weapons/golide/pump 0.9 1.1
 $volume weapons/golide/drumpickup 0.9
 
-items/bonus1				HBONUS1
-items/bonus2				ABONUS1
-items/bonus3				HBONUS2
-items/bonus4				ABONUS2
-items/bonus5				HBONUS3
-items/bonus6				ABONUS3
-items/bonus7				HBONUS4
-items/bonus8				ABONUS4
+items/bonus1				"sounds/items/csp/HBONUS1.ogg"
+items/bonus2				"sounds/items/csp/ABONUS1.ogg"
+items/bonus3				"sounds/items/csp/HBONUS2.ogg"
+items/bonus4				"sounds/items/csp/ABONUS2.ogg"
+items/bonus5				"sounds/items/csp/HBONUS3.ogg"
+items/bonus6				"sounds/items/csp/ABONUS3.ogg"
+items/bonus7				"sounds/items/csp/HBONUS4.ogg"
+items/bonus8				"sounds/items/csp/ABONUS4.ogg"
 items/armor1				GARM
 items/armor2				YARM
 items/armor3				BARM

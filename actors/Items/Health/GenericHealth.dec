@@ -15,7 +15,7 @@ ACTOR HealthPlus : Health Replaces HealthBonus
 	States
 	{
 	Spawn:
-		BON1 ABCD 4
+		B0N1 ABCDEFGHIJ 3
 		Loop
 	}
 }
@@ -28,7 +28,7 @@ Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 	Radius 20
 	Height 16
 	Inventory.Pickupmessage "$GOTARMBONUS"
-	Inventory.Icon "BON2A0"
+	Inventory.Icon "B0N2A0"
 	Armor.Savepercent 33.335
 	Armor.Saveamount 2
 	Armor.Maxsaveamount 9999
@@ -40,10 +40,10 @@ Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 	States
 	{
 	Spawn:
-		BON2 AAABCDB 2 //A_SpawnItem("GreenFlareSmall",0,7)
+		B0N2 AAABCDEFGH 2
 		Loop
 	Spawn2:
-		BON2 A 2
+		B0N2 A 2
 		Goto Spawn
 	}
 }
@@ -69,7 +69,7 @@ Actor GiveHealth : Health
 	States
 	{
 	Spawn:
-		BON1 AAABBBCCCDDDCCCBBB 2
+		B0N1 AAABCDEFGHIJ 2
 		Loop
 	}
 }
@@ -81,7 +81,7 @@ Actor GiveArmor : BasicArmorBonus
 	Radius 20
 	Height 16
 	Inventory.Pickupmessage "$GOTARMBONUS"
-	Inventory.Icon "BON2A0"
+	Inventory.Icon "B0N2A0"
 	Armor.Savepercent 33.335
 	Armor.Saveamount 1
 	Armor.Maxsaveamount 9999
@@ -90,7 +90,7 @@ Actor GiveArmor : BasicArmorBonus
 	States
 	{
 	Spawn:
-		BON2 AAABBBCCCDDDCCCBBB 2
+		B0N2 AAABCDEFGH 2
 		loop
 	}
 }

@@ -24,6 +24,8 @@ PB_PICKUP_PB_CRYOCELLSPACK = "Picked up a cryo cell bundle.";
 PB_PICKUP_PB_CRYOCANNONCELLS = "Picked up cryo cannon fuel.";
 PB_PICKUP_PB_CRYOELECTRORIFLE = "Picked up the Cryo Electro Rifle (slot 8).";
 PB_PICKUP_PB_DARKMATTERRIFLE = "Picked up the UAC Prototype Dark Matter Rifle (slot 8).";
+PB_PICKUP_BIOACIDLAUNCHER = "Picked up the UAC Biological Acid Launcher (slot 7).";
+PB_TAG_BIOACIDLAUNCHER = "UAC-UM-32P Biological Acid Launcher";
 PB_PICKUP_PB_CRYOCANNON = "Picked up the Cryo Cannon (slot 9).";
 PB_PICKUP_PB_CRYOASG = "Picked up the Cryo Auto Shotgun (slot 3).";
 
@@ -649,6 +651,16 @@ PB_WHEELTIP_HASG_SelectWPhos = "XHAS Auto-Shotgun: White phosphorus.";
 
 PB_WHEELTIP_Select_LeverAction_357 = "Lever Action: .357 tube.";
 PB_WHEELTIP_Select_LeverAction_Marlin = "Lever Action: Marlin heavy caliber.";
+PB_WHEELTIP_Select_LeverAction_HellMode = "Lever Action: Toggle Demon-Tech hell rounds (needs T3 upgrade; T4 uses caustic slugs). Uses tube ammo per shot.";
+
+PB_LEVER_HELL_NEED_UPGRADE = "\cgHell rounds\c-: Pick up a \ciLever Hell Mod (T3)\c- upgrade first.";
+PB_LEVER_HELL_MODE_ON = "\ccLever Action\c-: \cgHell rounds\c- \cgenabled\c- (Demon-Tech projectiles; T4 = caustic).";
+PB_LEVER_HELL_MODE_OFF = "\ccLever Action\c-: Hell rounds \cjdisabled\c- (normal slugs/tracers).";
+PB_LEVER_HELL_PICKUP_T3 = "Lever Hell Mod (T3)";
+PB_LEVER_HELL_PICKUP_T4 = "Lever Hell Mod (T4)";
+PB_LEVER_HELL_ALREADY_T3 = "You already have the T3 hell mod (or higher).";
+PB_LEVER_HELL_NEED_T3_FIRST = "You need the T3 Lever Hell Mod before installing T4.";
+PB_LEVER_HELL_ALREADY_T4 = "Your tube is already fully hell-tuned (T4).";
 
 PB_WHEELTIP_Select_M1Plasma_Single = "M1 Plasma Rifle: Single gun.";
 PB_WHEELTIP_Select_M1Plasma_Dual = "M1 Plasma Rifle: Dual wield (upgrade).";
@@ -665,7 +677,7 @@ PB_WPNHINT_CommandoShield = "Commando Shield:\nBlock Primary Fire; Alt-Fire / We
 PB_WPNHINT_DarkImpShield = "Dark Imp Shield:\nGuard Primary Fire; Alt-Fire Slash.";
 PB_WPNHINT_Hell_rifle = "Hell Rifle: Alt-Fire Ammo;\nWeapon Special Upgrade Wheel.";
 PB_WPNHINT_ImpShield = "Imp Shield: Block / Alt-Fire Punch;\nSlower While Raised.";
-PB_WPNHINT_LeverAction = "Lever-Action Rifle: Tube Feed.\nAlt-Fire Bash or Alt Shot (Upgrade).";
+PB_WPNHINT_LeverAction = "Lever-Action Rifle: Tube feed.\nAlt-Fire: iron sights / alt shot (upgrade).\nWeapon Special: caliber wheel, dual wield (two rifles), hell rounds toggle after T3/T4 pickups.";
 PB_WPNHINT_X12Shotgun = "X12: Tube + Magazine Reload.\nPB_Shells, 12-Round Magazine.";
 PB_WPNHINT_MarauderSSG = "Marauder Super Shotgun: Alt-Fire Dash / Cryo Mine;\nWeapon Special Eternal vs Classic (Menu).";
 PB_WPNHINT_MastermindChaingun = "Heavy Flame Cannon:\nSustained Alt-Fire Sweep.";
