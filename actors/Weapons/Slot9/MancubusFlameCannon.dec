@@ -72,7 +72,7 @@ ACTOR MancubusFlameCannon : PB_Weapon
 		TNT1 A 0 A_FireCustomMissile("MancubusSwitchModeEffect", 0, 0, 0, random(-12,-5))
 		TNT1 AAAAA 0 A_FireCustomMissile("ShotgunParticles", random(-5,5), 0, random(-3,3),random(-12,-5))
 		FUMY IJJJ 2 A_DoPBWeaponAction
-		TNT1 A 0 A_PlaySound("FLMDRAW", 7)
+		TNT1 A 0 A_PlaySound("FLMDRAW", 0)
 		FUMY HGFEDCBA 2 A_DoPBWeaponAction
 		Goto Ready3
 	SelectAnimation:
@@ -115,7 +115,7 @@ ACTOR MancubusFlameCannon : PB_Weapon
 		TNT1 AAAAA 0 A_FireCustomMissile("GunFireSmoke", random(-5,5), 0, random(-3,3),random(-12,-5))
 		TNT1 AAAAA 0 A_FireCustomMissile("PlasmaParticle", random(-5,5), 0, random(-3,3),random(-12,-5))
 		FUMY IJJJ 2 
-		TNT1 A 0 A_PlaySound("FLMDRAW", 7)
+		TNT1 A 0 A_PlaySound("FLMDRAW", 0)
 		FUMY HGFEDCBA 2
 		Goto Ready2
 
@@ -129,7 +129,7 @@ ACTOR MancubusFlameCannon : PB_Weapon
 		TNT1 A 0 A_FireCustomMissile("MancubusSwitchModeEffect", 0, 0, 0, random(-12,-5))
 		TNT1 AAAAA 0 A_FireCustomMissile("ShotgunParticles", random(-5,5), 0, random(-3,3),random(-12,-5))
 		FUMY IJJJ 2 
-		TNT1 A 0 A_PlaySound("FLMDRAW", 7)
+		TNT1 A 0 A_PlaySound("FLMDRAW", 0)
 		FUMY HGFEDCBA 2
 		Goto Ready3
 

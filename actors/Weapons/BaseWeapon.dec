@@ -1,4 +1,4 @@
-﻿Actor UseEquipment: Inventory {Inventory.maxamount 1}
+Actor UseEquipment: Inventory {Inventory.maxamount 1}
 Actor ToggleEquipment: Inventory{Inventory.maxamount 1}
 
 Actor FragGrenadeSelected : Inventory {inventory.maxamount 1}
@@ -239,7 +239,7 @@ States
 		Goto HoldCrucible
 		
 	HoldCrucible:	
-		CRCB D 1 bright A_StartSound("Crucible_Idle",10,CHANF_LOOP|CHANF_OVERLAP,0.2)
+		CRCB D 1 bright A_StartSound("Crucible_Idle",3,CHANF_LOOP|CHANF_OVERLAP,0.2)
 		CRCB D 1 bright
 		{
 			A_WeaponReady;
@@ -306,7 +306,7 @@ States
 		CRCB D 1 bright A_WeaponOffset(2, -4, WOF_ADD)
 		
 		CRCB JJCCBBAA 2 bright A_WeaponOffset(1, -2, WOF_ADD)
-		CRCB A 1 A_StopSound(10)
+		CRCB A 1 A_StopSound(3)
 		CRCB A 1 A_StartSound("Crucible_Deselect", CHAN_WEAPON, CHANF_OVERLAP)
 		CRCB A 5
 		TNT1 A 1 A_Raise

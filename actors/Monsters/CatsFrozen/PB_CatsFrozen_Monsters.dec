@@ -63,13 +63,13 @@ ACTOR PB_FrostBaron : PB_Monster
 	See:
 		FRBR AA 3 A_Chase
 		FRBR BB 3 A_Chase
-		TNT1 A 0 A_PlaySound("baron/footstep", 7)
+		TNT1 A 0 A_PlaySound("baron/footstep", 0)
 		FRBR DD 3 A_Chase
 		FRBR CC 3 A_Chase
-		TNT1 A 0 A_PlaySound("baron/footstep", 7)
+		TNT1 A 0 A_PlaySound("baron/footstep", 0)
 		FRBR DD 3 A_Chase
 		FRBR BB 3 A_Chase
-		TNT1 A 0 A_PlaySound("baron/footstep", 7)
+		TNT1 A 0 A_PlaySound("baron/footstep", 0)
 		Loop
 	Melee:
 		TNT1 A 0 A_FaceTarget
@@ -117,7 +117,12 @@ ACTOR PB_FrostBaron : PB_Monster
 	Death.ExeCution1:
 		TNT1 A 0 A_Pain
 		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
-		FRBR H 30 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		FRBR H 10 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("PBCF/FrostBaron/Pain", 6)
+		FRBR H 10 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
+		FRBR H 10 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("superbaron/pound", 3)
 		Goto Death
 	SpecialFatality:
 		TNT1 A 0 A_JumpIfInTargetInventory("NoFatality", 1, "Death.ExeCution1")
@@ -229,11 +234,11 @@ ACTOR PB_Cryocubus : PB_Monster
 		HIEL AAA 4 A_Chase
 		HIEL BB 4 A_Chase
 		HIEL CC 4 A_Chase
-		TNT1 A 0 A_PlaySound("fatso/footstep", 7)
+		TNT1 A 0 A_PlaySound("fatso/footstep", 0)
 		HIEL DD 4 A_Chase
 		HIEL EE 4 A_Chase
 		HIEL FF 4 A_Chase
-		TNT1 A 0 A_PlaySound("fatso/footstep", 7)
+		TNT1 A 0 A_PlaySound("fatso/footstep", 0)
 		Loop
 	Missile:
 		HIEL G 20 A_FatRaise
@@ -293,7 +298,12 @@ ACTOR PB_Cryocubus : PB_Monster
 	Death.ExeCution1:
 		TNT1 A 0 A_Pain
 		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
-		HIEL J 30 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		HIEL J 10 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("fatso/pain", 6)
+		HIEL J 10 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
+		HIEL J 10 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("demon/melee", 0)
 		Goto XDeath
 	SpecialFatality:
 		TNT1 A 0 A_JumpIfInTargetInventory("NoFatality", 1, "Death.ExeCution1")
@@ -409,7 +419,12 @@ ACTOR PB_FrostBrain : PB_Monster
 	Death.ExeCution1:
 		TNT1 A 0 A_Pain
 		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
-		Z4RS E 30 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		Z4RS E 10 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("PBCF/FrostBrain/Pain", 6)
+		Z4RS E 10 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
+		Z4RS E 10 A_Warp(AAPTR_TARGET, -50, 0, 0, 180, WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("caco/melee", 0)
 		Goto Death
 	SpecialFatality:
 		TNT1 A 0 A_JumpIfInTargetInventory("NoFatality", 1, "Death.ExeCution1")

@@ -673,7 +673,7 @@ class PlayerPawnBase : PlayerPawn
 		}
 		else {
 			InSlime = false;
-			A_StopSound(12);
+			A_StopSound(5);
 			SlimeSoundCooler = 0;
 		}
 	}
@@ -2072,7 +2072,7 @@ class PlayerPawnBase : PlayerPawn
 		}
 		//First click, fire hook
 		if(HookFired || Grappled) { return; }
-		A_StartSound("HookLaunch", CHAN_7, CHANF_DEFAULT, 0.8);
+		A_StartSound("HookLaunch", CHAN_5, CHANF_DEFAULT, 0.8);
 		HookFired = SpawnPlayerMissile("Hook", Angle, 0, 0, - Height / 14.f);
 	}
 	
@@ -2774,11 +2774,11 @@ Class Hook : Actor
 			Let Monster = Actor(Master);
 			PlayerPawnBase(Target).GrappledMonster = Monster;
 			SetMonsterSpeed(False);
-			A_StartSound("HookMeat", 7);
+			A_StartSound("HookMeat", 0);
 		}
 		else
 		{
-			A_StartSound("HookWall", 7);
+			A_StartSound("HookWall", 0);
 		}
 	}
 	
@@ -2900,7 +2900,7 @@ Class Hook : Actor
 			if(HookOwner)
 			{
 				HookOwner.StopHook();
-				HookOwner.A_StartSound("HookFailed", CHAN_7, CHANF_DEFAULT, 0.2);
+				HookOwner.A_StartSound("HookFailed", CHAN_5, CHANF_DEFAULT, 0.2);
 			}
 			
 			Let Monster = Actor(Master);
@@ -3005,7 +3005,7 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 			DashSpeed=50; // PBv0.3 PlayerPawn: dashSpeed = 50
 			DashTics=10;
 			Owner.A_SetBlend("White",0.05,20);
-			Owner.A_StartSound("player/dash",69,CHANF_OVERLAP);
+			Owner.A_StartSound("player/dash",6,CHANF_OVERLAP);
 			Owner.A_QuakeEx(2,2,2,10,0,1,"",QF_SCALEDOWN, rollintensity:0.2);
 			Owner.A_GiveInventory("PlayerDashed",1);
 			EventHandler.SendInterfaceEvent(Owner.PlayerNumber(), "PB_DashWhatchamacallit");
@@ -3063,7 +3063,7 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 			If(DashCharge==DashMaxCharge)
 			{
 				Waiting=False;
-				Owner.A_StartSound("player/dashready",69,CHANF_OVERLAP);
+				Owner.A_StartSound("player/dashready",6,CHANF_OVERLAP);
 				TakeInventory("EvadeCheck", 2);
 				TakeInventory("EvadeHold", 2);
 			}
@@ -3109,7 +3109,7 @@ Class DashCollisionChecker : Actor
 				Tracer.ApplyKickback(Target,Target,300,Target.Angle,'Normal',0);
 				Tracer.A_TakeInventory("DashStun");
 				Tracer.A_GiveInventory("DashStun");
-				Target.A_StartSound("Weapons/DE/ChaingunShieldDash",9,CHANF_OVERLAP,0.5);
+				Target.A_StartSound("Weapons/DE/ChaingunShieldDash",2,CHANF_OVERLAP,0.5);
 				Target.A_QuakeEx(1,1,1,8,0,1,"",QF_SCALEDOWN);
 				Cg.DashImpact();
 				Cg.DashImpact();

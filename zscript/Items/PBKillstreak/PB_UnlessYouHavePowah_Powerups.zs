@@ -170,7 +170,7 @@ class ElectricAuraPower : Powerup
 
         if (owner)
         {
-            owner.A_StartSound("ElectricAura/aura", 22243, CHANF_LOOPING | ATTN_NONE);
+            owner.A_StartSound("ElectricAura/aura", 4, CHANF_LOOPING | ATTN_NONE);
             owner.A_AttachLight("ELAL1", DynamicLight.PulseLight, "FFFFFF", arad * 0.1, arad * 0.2,
                 flags: DYNAMICLIGHT.LF_NOSHADOWMAP,
                 ofs: (0, 0, owner.height), param: 2.5);
@@ -265,7 +265,7 @@ class ElectricAuraPower : Powerup
         {
             owner.A_RemoveLight("ELAL1");
             owner.A_RemoveLight("ELAL2");
-            owner.A_StopSound(22243);
+            owner.A_StopSound(4);
         }
         super.EndEffect();
     }

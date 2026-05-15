@@ -98,7 +98,7 @@ class PB_Venor : Actor
 		VNR1 A 1 A_GetClosestTarget(256, "Wake");
 		Loop;
 	Wake:
-		VNR2 ABE 8 A_StartSound("venor/choir", 8, CHANF_LOOPING);
+		VNR2 ABE 8 A_StartSound("venor/choir", 1, CHANF_LOOPING);
 		Goto See;
 	See:
 		VNR2 FFFFGGGGCCCCDDDDEEEE 1 A_VoidChase("Melee", "Pulling", "Missile", 512, "Spawn");
@@ -127,7 +127,7 @@ class PB_Venor : Actor
 	Death:
 		VNR2 L 8
 		{
-			A_StopSound(8);
+			A_StopSound(1);
 			A_Scream();
 			A_Fall();
 			A_KillGrabbers();

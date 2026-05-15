@@ -325,7 +325,11 @@ Pain:
 	Death.ExeCution1:
       TNT1 A 0 A_Pain
       TNT1 A 0 A_GiveToTarget ("GoExecution", 1)
-		HEAD E 30 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		HEAD E 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("caco/pain", 6)
+		HEAD E 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("caco/melee", 0)
+		HEAD E 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
 		Goto Death.SSG
 
    SpecialFatality:
@@ -598,8 +602,12 @@ Pain:
 FatalityMarine:
        CFPF A 1
 	   TNT1 A 0 A_PlaySound("grunt/pain", 2)
+	   TNT1 A 0 A_PlaySound("caco/pain", 1)
 	   TNT1 A 0 A_PlaySound("DSFDTHE")
-       CFPF A 10
+       CFPF A 5
+	   TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
+	   TNT1 A 0 A_PlaySound("grunt/pain", 3)
+       CFPF A 5
 		 TNT1 AAA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AA 0 A_CustomMissile ("BrainBlood", 25, 0, random (0, 360), 2, random (0, 160))
 	  CFPF B 9
@@ -607,14 +615,17 @@ FatalityMarine:
 		 TNT1 AAA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AA 0 A_CustomMissile ("BrainBlood", 25, 0, random (0, 360), 2, random (0, 160))
 	  CFPF C 9
+	  	  TNT1 A 0 A_PlaySound("caco/melee", 5)
 	  	  CFPF B 9
 		 TNT1 AAA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AA 0 A_CustomMissile ("BrainBlood", 25, 0, random (0, 360), 2, random (0, 160))
 	  CFPF C 9
+	  	  TNT1 A 0 A_PlaySound("misc/xdeath3", 6)
 	  	  CFPF B 9
 		 TNT1 AAA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
          TNT1 AA 0 A_CustomMissile ("BrainBlood", 25, 0, random (0, 360), 2, random (0, 160))
 	  CFPF C 9
+	  TNT1 A 0 A_PlaySound("caco/melee", 5)
 	  CFPF B 9
 	   TNT1 AAA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
       TNT1 AA 0 A_CustomMissile ("BrainBlood", 25, 0, random (0, 360), 2, random (0, 160))

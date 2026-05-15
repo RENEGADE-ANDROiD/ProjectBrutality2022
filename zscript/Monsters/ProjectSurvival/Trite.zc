@@ -66,13 +66,13 @@ class Trite : Actor
 		}
 		TRIT A 2 A_Chase(null, null, 0);
 		TRIT A 2 A_Chase;
-		TRIT A 0 A_StartSound("Trite/Step", CHAN_7);
+		TRIT A 0 A_StartSound("Trite/Step", CHAN_6);
 		TRIT BB 2 A_Chase("Melee", "Missile", 2);
-		TRIT B 0 A_StartSound("Trite/Step", CHAN_7);
+		TRIT B 0 A_StartSound("Trite/Step", CHAN_6);
 		TRIT CC 2 A_Chase;
-		TRIT C 0 A_StartSound("Trite/Step", CHAN_7);
+		TRIT C 0 A_StartSound("Trite/Step", CHAN_6);
 		TRIT DD 2 A_Chase("Melee", "Missile", 2);
-		TRIT D 0 A_StartSound("Trite/Step", CHAN_7);
+		TRIT D 0 A_StartSound("Trite/Step", CHAN_6);
 		TNT1 A 0 A_Jump(20, "Leap");
 		TNT1 A 0 A_Jump(15, "Fight");
 		TNT1 A 0 A_Jump(45, "CeilingJump");
@@ -134,7 +134,7 @@ class Trite : Actor
 	CeilingLanding:
 		TNT1 A 0
 		{
-			A_StartSound("Trite/Step", CHAN_7);
+			A_StartSound("Trite/Step", CHAN_6);
 			A_SetRoll(0, SPF_INTERPOLATE);
 		}
 		TRIT FF 2 A_FaceTarget();
@@ -241,7 +241,7 @@ class Trite : Actor
 		TNT1 AA 0 A_SpawnProjectile("Brutal_FlyingBlood", 5, 0, random(170, 190), 2, random(0, 40));
 		TNT1 AA 0 A_SpawnProjectile("Brutal_FlyingBloodFaster", 5, 0, random(170, 190), 2, random(0, 40));
 		TNT1 AA 0 A_SpawnProjectile("Brutal_FlyingBloodMuchFaster", 5, 0, random(170, 190), 2, random(0, 40));
-		TRIT H 0 A_StartSound("MinorHeadshot", CHAN_7);
+		TRIT H 0 A_StartSound("MinorHeadshot", CHAN_6);
 		TRIT IJK 5;
 		Stop;
 

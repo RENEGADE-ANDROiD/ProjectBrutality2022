@@ -63,7 +63,11 @@ ACTOR PB_InfernalCaco : PainElemental replaces Cacodemon
 	Death.ExeCution1:
       TNT1 A 0 A_Pain
       TNT1 A 0 A_GiveToTarget ("GoExecution", 1)
-		INFR K 30 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		INFR K 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("monster/infpai", 6)
+		INFR K 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("caco/melee", 0)
+		INFR K 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
 		Goto Death
 
    SpecialFatality:
@@ -111,7 +115,7 @@ ACTOR PB_InfernalCaco : PainElemental replaces Cacodemon
 			Goto See
 		Torch:
 		   INFR HI 4 Bright A_FaceTarget 
-			TNT1 A 0 A_PlaySound("flamersh",2)
+			TNT1 A 0 A_PlaySound("flamersh", 2)
 		   INFR J 0 Bright A_CustomMissile ("EnemyFlamethrowerMissile",24,0,0,0,0)
 		   INFR J 2 BRIGHT
 		   INFR I 2 BRIGHT
