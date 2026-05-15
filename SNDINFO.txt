@@ -60,8 +60,8 @@ $random monsters/Flemoid/death
 
 //  (ported from D4D / BrutalDoom Black Edition)      //
 
-BONECR1 BONECR1
-BONECR2 BONECR2
+BONECR1 "sounds/Gore/gore/GoreBreak.ogg"
+BONECR2 "sounds/gore/nashgore/gib large 02.ogg"
 CYBPAIN CYBPAIN
 
 items/armor/Sshard			armrshrd
@@ -782,12 +782,12 @@ player/dash2 "sounds/doomguy and marines/doomguy/sounds/dash/dash2.ogg"
 player/dashready "sounds/doomguy and marines/doomguy/sounds/dash/dashready.ogg"
 
 $random player/cyborg/fist { marine/superfist1 marine/superfist2 marine/superfist3 marine/superfist4 marine/superfist5 }
-marine/superfist1 plspnch1
-marine/superfist2 plspnch2
-marine/superfist3 plspnch3
-marine/superfist4 plspnch4
-marine/superfist5 plspnch5
-marine/superfist6 plspnch6
+marine/superfist1 "sounds/Doomguy and Marines/DOOMGUY/Sounds/Fists/plspnch1.ogg"
+marine/superfist2 "sounds/Doomguy and Marines/DOOMGUY/Sounds/Fists/plspnch2.ogg"
+marine/superfist3 "sounds/Doomguy and Marines/DOOMGUY/Sounds/Fists/plspnch3.ogg"
+marine/superfist4 "sounds/Doomguy and Marines/DOOMGUY/Sounds/Fists/plspnch4.ogg"
+marine/superfist5 "sounds/Doomguy and Marines/DOOMGUY/Sounds/Fists/plspnch5.ogg"
+marine/superfist6 "sounds/Doomguy and Marines/DOOMGUY/Sounds/Fists/plspnch6.ogg"
 //MARINE VOICES
 $random MRNAT { MRNAT1 MRNAT2 MRNAT3 MRNAT4 MRNAT5 MRNAT6 NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING }
 MRNAT1 MRNAT1
@@ -826,55 +826,55 @@ DSMADTH8 DSMADTH8
 IGOTSAW IGOTSAW
 // Offend Sound
 $random FUCK { FUCK1 FUCK2 FUCK3 FUCK4 FUCK5 FUCK6 }
-FUCK1 FUCK1
-FUCK2 FUCK2
-FUCK3 FUCK3
-FUCK4 FUCK4
-FUCK5 FUCK5
-FUCK6 FUCK6
+FUCK1 "sounds/Glorykill/fistblod.ogg"
+FUCK2 "sounds/gore/nashgore/gib small 01.ogg"
+FUCK3 "sounds/gore/nashgore/gib small 02.ogg"
+FUCK4 "sounds/Gore/gore/GoreTension2.ogg"
+FUCK5 "sounds/gore/nashgore/gib large 02.ogg"
+FUCK6 "sounds/Gore/gore/GoreTension3.ogg"
 // Melee Taunts
 $random MTAUN { MTAUN01 MTAUN02 MTAUN03 MTAUN04 MTAUN05 MTAUN06 MTAUN07 }
-MTAUN01 MTAUN01
-MTAUN02 MTAUN02
-MTAUN03 MTAUN03
-MTAUN04 MTAUN04
-MTAUN05 MTAUN05
-MTAUN06 MTAUN06
-MTAUN07 MTAUN07
+$alias MTAUN01 grunt/pain
+$alias MTAUN02 grunt/pain
+$alias MTAUN03 grunt/pain
+$alias MTAUN04 grunt/pain
+$alias MTAUN05 grunt/pain
+$alias MTAUN06 grunt/pain
+$alias MTAUN07 grunt/pain
 $limit MTAUN 1
 $random TAUNT0 { TAUNT01 TAUNT02 TAUNT03 TAUNT04 TAUNT05 TAUNT06 TAUNT07 TAUNT08 TAUNT09 TAUNT10 TAUNT11 TAUNT12 TAUNT13 TAUNT14 TAUNT15 TAUNT16 }
-TAUNT01 TAUNT01
-TAUNT02 TAUNT02
-TAUNT03 TAUNT03
-TAUNT04 TAUNT04
-TAUNT05 TAUNT05
-TAUNT06 TAUNT06
-TAUNT07 TAUNT07
-TAUNT08 TAUNT08
-TAUNT09 TAUNT09
-TAUNT10 TAUNT10
-TAUNT11 TAUNT11
-TAUNT12 TAUNT12
-TAUNT13 TAUNT13
-TAUNT14 TAUNT14
-TAUNT15 TAUNT15
-TAUNT16 TAUNT16
+TAUNT01 MTAUN01
+TAUNT02 MTAUN02
+TAUNT03 MTAUN03
+TAUNT04 MTAUN04
+TAUNT05 MTAUN05
+TAUNT06 MTAUN06
+TAUNT07 MTAUN07
+TAUNT08 MTAUN01
+TAUNT09 MTAUN02
+TAUNT10 MTAUN03
+TAUNT11 MTAUN04
+TAUNT12 MTAUN05
+TAUNT13 MTAUN06
+TAUNT14 MTAUN07
+TAUNT15 MTAUN01
+TAUNT16 MTAUN02
 $limit TAUNT0 1
 $random CrueltyBonus { TAUNT0 ONELIN NOTHING NOTHING NOTHING NOTHING NOTHING NOTHING }
 BIGSCREA BIGSCREA
 $random ONELIN { ONELIN01 ONELIN02 ONELIN03 ONELIN04 ONELIN05 ONELIN06 ONELIN07 ONELIN08 ONELIN09 ONELIN10 ONELIN11 ONELIN12}
-ONELIN01 ONELIN01
-ONELIN02 ONELIN02
-ONELIN03 ONELIN03
-ONELIN04 ONELIN04
-ONELIN05 ONELIN05
-ONELIN06 ONELIN06
-ONELIN07 ONELIN07
-ONELIN08 ONELIN08
-ONELIN09 ONELIN09
-ONELIN10 ONELIN10
-ONELIN11 ONELIN11
-ONELIN12 ONELIN12
+ONELIN01 MTAUN03
+ONELIN02 MTAUN04
+ONELIN03 MTAUN05
+ONELIN04 MTAUN06
+ONELIN05 MTAUN07
+ONELIN06 MTAUN01
+ONELIN07 MTAUN02
+ONELIN08 MTAUN03
+ONELIN09 MTAUN04
+ONELIN10 MTAUN05
+ONELIN11 MTAUN06
+ONELIN12 MTAUN07
 $limit ONELIN 1
 $random PIKUPTALK { PIKUPTALK1 PIKUPTALK2 }
 PIKUPTALK1 PIKUPTALK1
@@ -883,9 +883,34 @@ PIKUPTALK2 PIKUPTALK2
 DSSALUTE grunt/sight5
 $limit FUCK 1
 TAUNT TAUNT
-KICK KICK
+KICK "sounds/Doomguy and Marines/DOOMGUY/Sounds/Kick/KICK.ogg"
 $pitchshift KICK 5
 FOOTWALL FOOTWALL
+// Helmet / visor HUD (PB Staging `SNDINFO.PBDoomguy and Marines` + root `visor/dyingvisor`); assets in `SOUNDS/HUD Sounds/`.
+HUBLDRS1 "SOUNDS/HUD Sounds/HUBLDRS1.ogg"
+HUBLDRS2 "SOUNDS/HUD Sounds/HUBLDRS2.ogg"
+HUBLDRS3 "SOUNDS/HUD Sounds/HUBLDRS3.ogg"
+HUBLDRS4 "SOUNDS/HUD Sounds/HUBLDRS4.ogg"
+HUBLDRS5 "SOUNDS/HUD Sounds/HUBLDRS5.ogg"
+HUBLDRS6 "SOUNDS/HUD Sounds/HUBLDRS6.ogg"
+$random visor/blooddrop { HUBLDRS1 HUBLDRS2 HUBLDRS3 HUBLDRS4 HUBLDRS5 HUBLDRS6 }
+visor/bulletimpact_1 "SOUNDS/HUD Sounds/impact_helmet_shatter_01.ogg"
+visor/bulletimpact_2 "SOUNDS/HUD Sounds/impact_helmet_shatter_02.ogg"
+visor/bulletimpact_3 "SOUNDS/HUD Sounds/impact_helmet_shatter_03.ogg"
+visor/bulletimpact_4 "SOUNDS/HUD Sounds/impact_helmet_shatter_04.ogg"
+visor/bulletimpact_5 "SOUNDS/HUD Sounds/impact_helmet_shatter_05.ogg"
+visor/bulletimpact_6 "SOUNDS/HUD Sounds/impact_helmet_shatter_06.ogg"
+visor/bulletimpact_7 "SOUNDS/HUD Sounds/impact_helmet_shatter_07.ogg"
+visor/bulletimpact_8 "SOUNDS/HUD Sounds/impact_helmet_shatter_08.ogg"
+$random visor/glasscrack { visor/bulletimpact_1 visor/bulletimpact_2 visor/bulletimpact_3 visor/bulletimpact_4 visor/bulletimpact_5 visor/bulletimpact_6 visor/bulletimpact_7 visor/bulletimpact_8 }
+visor/interference_1 "SOUNDS/HUD Sounds/interference-01.ogg"
+visor/interference_2 "SOUNDS/HUD Sounds/interference-02.ogg"
+visor/interference_3 "SOUNDS/HUD Sounds/interference-03.ogg"
+$random visor/interference { visor/interference_1 visor/interference_2 visor/interference_3 }
+visor/helpnotification "SOUNDS/HUD Sounds/HelpNotification.ogg"
+visor/screenwipe "SOUNDS/HUD Sounds/ScreenWiper.ogg"
+visor/dyingvisor "SOUNDS/HUD Sounds/DyingVisor.wav"
+visor/visorgarbled "SOUNDS/HUD Sounds/VisorGarbled.wav"
 //PLAYER DOOMGUY
 //Climb Ledge
 $random ledgeclimb {CLIMB_1 CLIMB_2}
@@ -964,46 +989,46 @@ gore/tension4 "sounds/Gore/gore/GoreTension4.ogg"
 
 
 $random misc/xdeath	{ misc/xdeath1a misc/xdeath1b misc/xdeath1c misc/xdeath1d misc/xdeath1e misc/xdeath1f misc/xdeath1g misc/xdeath1h misc/xdeath2a misc/xdeath2b misc/xdeath2c misc/xdeath2d misc/xdeath2e misc/xdeath2f misc/xdeath2g misc/xdeath2h misc/xdeath2i misc/xdeath2j misc/xdeath2k misc/xdeath2l misc/xdeath2m misc/xdeath2n misc/xdeath2o misc/xdeath3a misc/xdeath3b misc/xdeath3c misc/xdeath3d misc/xdeath3e misc/xdeath4a misc/xdeath4b misc/xdeath4c misc/xdeath4d misc/xdeath4e misc/xdeath4f misc/xdeath4g misc/xdeath4h misc/xdeath4i }
-misc/xdeath1a		dsxdth1a
-misc/xdeath1b		dsxdth1b
-misc/xdeath1c		dsxdth1c
-misc/xdeath1d		dsxdth1d
-misc/xdeath1e		dsxdth1e
-misc/xdeath1f		dsxdth1f
-misc/xdeath1g		dsxdth1g
-misc/xdeath1h		dsxdth1h
+misc/xdeath1a		"sounds/gore/nashgore/gib large 01.ogg"
+misc/xdeath1b		"sounds/gore/nashgore/gib large 02.ogg"
+misc/xdeath1c		"sounds/gore/nashgore/gib small 01.ogg"
+misc/xdeath1d		"sounds/gore/nashgore/gib small 02.ogg"
+misc/xdeath1e		"sounds/Glorykill/fistblod.ogg"
+misc/xdeath1f		"sounds/Gore/gore/GoreBreak.ogg"
+misc/xdeath1g		"sounds/gore/nashgore/gib large 01.ogg"
+misc/xdeath1h		"sounds/gore/nashgore/gib large 02.ogg"
 $random misc/xdeath1	{ misc/xdeath1a misc/xdeath1b misc/xdeath1c misc/xdeath1d misc/xdeath1e misc/xdeath1f misc/xdeath1g misc/xdeath1h}
-misc/xdeath2a		dsxdth2a
-misc/xdeath2b		dsxdth2b
-misc/xdeath2c	  	dsxdth2c
-misc/xdeath2d		dsxdth2d
-misc/xdeath2e		dsxdth2e
-misc/xdeath2f		dsxdth2f
-misc/xdeath2g		dsxdth2g
-misc/xdeath2h		dsxdth2h
-misc/xdeath2i		dsxdth2i
-misc/xdeath2j		dsxdth2j
-misc/xdeath2k		dsxdth2k
-misc/xdeath2l		dsxdth2l
-misc/xdeath2m		dsxdth2m
-misc/xdeath2n		dsxdth2n
-misc/xdeath2o		dsxdth2o
+misc/xdeath2a		"sounds/gore/nashgore/gib large 01.ogg"
+misc/xdeath2b		"sounds/gore/nashgore/gib large 02.ogg"
+misc/xdeath2c		"sounds/gore/nashgore/gib small 01.ogg"
+misc/xdeath2d		"sounds/gore/nashgore/gib small 02.ogg"
+misc/xdeath2e		"sounds/Glorykill/fistblod.ogg"
+misc/xdeath2f		"sounds/Gore/gore/GoreBreak.ogg"
+misc/xdeath2g		"sounds/gore/nashgore/gib large 01.ogg"
+misc/xdeath2h		"sounds/gore/nashgore/gib large 02.ogg"
+misc/xdeath2i		"sounds/gore/nashgore/gib small 01.ogg"
+misc/xdeath2j		"sounds/gore/nashgore/gib small 02.ogg"
+misc/xdeath2k		"sounds/Glorykill/fistblod.ogg"
+misc/xdeath2l		"sounds/Gore/gore/GoreBreak.ogg"
+misc/xdeath2m		"sounds/gore/nashgore/gib large 01.ogg"
+misc/xdeath2n		"sounds/gore/nashgore/gib large 02.ogg"
+misc/xdeath2o		"sounds/Glorykill/fistblod.ogg"
 $random misc/xdeath2	{ misc/xdeath2a misc/xdeath2b misc/xdeath2c misc/xdeath2d misc/xdeath2e misc/xdeath2f misc/xdeath2g misc/xdeath2h misc/xdeath2i }
-misc/xdeath3a		dsxdth3a
-misc/xdeath3b		dsxdth3b
-misc/xdeath3c		dsxdth3c
-misc/xdeath3d		dsxdth3d
-misc/xdeath3e		dsxdth3e
+misc/xdeath3a		"sounds/gore/nashgore/gib large 01.ogg"
+misc/xdeath3b		"sounds/gore/nashgore/gib large 02.ogg"
+misc/xdeath3c		"sounds/Glorykill/fistblod.ogg"
+misc/xdeath3d		"sounds/gore/nashgore/gib small 01.ogg"
+misc/xdeath3e		"sounds/gore/nashgore/gib small 02.ogg"
 $random misc/xdeath3	{ misc/xdeath3a misc/xdeath3b misc/xdeath3c misc/xdeath4d misc/xdeath4e misc/xdeath4f misc/xdeath4g misc/xdeath4h misc/xdeath4i }
-misc/xdeath4a		dsxdth4a
-misc/xdeath4b		dsxdth4b
-misc/xdeath4c		dsxdth4c
-misc/xdeath4d		dsxdth4d
-misc/xdeath4e		dsxdth4e
-misc/xdeath4f		dsxdth4f
-misc/xdeath4g		dsxdth4g
-misc/xdeath4h		dsxdth4h
-misc/xdeath4i		dsxdth4i
+misc/xdeath4a		"sounds/gore/nashgore/gib large 01.ogg"
+misc/xdeath4b		"sounds/gore/nashgore/gib large 02.ogg"
+misc/xdeath4c		"sounds/Glorykill/fistblod.ogg"
+misc/xdeath4d		"sounds/gore/nashgore/gib small 01.ogg"
+misc/xdeath4e		"sounds/gore/nashgore/gib small 02.ogg"
+misc/xdeath4f		"sounds/gore/nashgore/gib large 01.ogg"
+misc/xdeath4g		"sounds/gore/nashgore/gib large 02.ogg"
+misc/xdeath4h		"sounds/Glorykill/fistblod.ogg"
+misc/xdeath4i		"sounds/Gore/gore/GoreBreak.ogg"
 $random misc/xdeath4		{ misc/xdeath4a misc/xdeath4b misc/xdeath4c }
 $volume misc/xdeath 0.5
 $volume misc/xdeath1 0.5
@@ -1084,8 +1109,8 @@ nashgore/bullethitflesh "sounds/gore/nashgore/bullet hit flesh.ogg"
 $volume nashgore/bullethitflesh 0.23
 //Gore Sound
 $random EYEPULL { EYEPULL1 EYEPULL2 }
-EYEPULL1 "sounds/monsters/ProjectSurvivalPassive/Gore/EYEPULL1"
-EYEPULL2 "sounds/monsters/ProjectSurvivalPassive/Gore/EYEPULL2" 
+EYEPULL1 "sounds/monsters/ProjectSurvivalPassive/Gore/EYEPULL1.ogg"
+EYEPULL2 "sounds/monsters/ProjectSurvivalPassive/Gore/EYEPULL2.ogg" 
 $random bulletfleshimpact { bltf1 bltf2 bltf3 }
 bltf1 BLT_FLS1
 bltf2 BLT_FLS2
@@ -1112,19 +1137,19 @@ BODYF5 BODYF5
 BODYF6 BODYF6
 BODYF7 BODYF7
 $random NECK_BRK { BONEBRK1 BONEBRK2 BONEBRK3 neckb1 neckb2 }
-BONEBRK1 BONEBRK1
-BONEBRK2 BONEBRK2
-BONEBRK3 BONEBRK3
-neckb1 DSXDTH4A
-neckb2 DSXDTH4B
+BONEBRK1 "sounds/Gore/gore/GoreBreak.ogg"
+BONEBRK2 "sounds/gore/nashgore/gib large 02.ogg"
+BONEBRK3 "sounds/Glorykill/fistblod.ogg"
+neckb1 "sounds/Glorykill/fistblod.ogg"
+neckb2 "sounds/gore/nashgore/gib large 02.ogg"
 $random NeckSnap { OHSNAP1 OHSNAP2 OHSNAP3 OHSNAP4 OHSNAP5 OHSNAP6 }
-OHSNAP1 OHSNAP1
-OHSNAP2 OHSNAP2
-OHSNAP3 OHSNAP3
-OHSNAP4 OHSNAP4
-OHSNAP5 OHSNAP5
-OHSNAP6 OHSNAP6
-gore/headshot BMHESHT
+OHSNAP1 "sounds/Gore/gore/GoreTension1.ogg"
+OHSNAP2 "sounds/Gore/gore/GoreTension2.ogg"
+OHSNAP3 "sounds/Gore/gore/GoreTension3.ogg"
+OHSNAP4 "sounds/Gore/gore/GoreTension4.ogg"
+OHSNAP5 "sounds/combat/ShieldSaw/Bash.ogg"
+OHSNAP6 "sounds/Glorykill/fistblod.ogg"
+gore/headshot "sounds/Glorykill/fistblod.ogg"
 $pitchshift gore/headshot 4
 SwarmFly SFLY
 $rolloff SwarmFly 100 200
@@ -1324,7 +1349,9 @@ cyber/impact "sounds/combat/monsters/CyberdemonBoss/CYBIMP.wav"
 $rolloff cyber/charge 200 5000
 $rolloff cyber/melee 200 5000
 $rolloff cyber/impact 200 5000
-CLAP CLAP
+CLAP "sounds/gore/nashgore/gib small 01.ogg"
+SMASH1 "sounds/gore/nashgore/gib large 02.ogg"
+$alias BURNUP Flamebelch
 DSCANFIR DSCANFIR
 $rolloff DSCANFIR 600 2400
 monster/annsit dsannsit
@@ -1637,11 +1664,8 @@ fbx4		fallexp4
 $random skull/pain { lostspain1 lostspain2 }
 lostspain1 LSPAIN1
 lostspain2 LSPAIN2
-$random LSOD {LSOD1 LSOD2 LSOD3 LSOD4}
-LSOD1 LSOD1
-LSOD2 LSOD2
-LSOD3 LSOD3
-LSOD4 LSOD4
+skull/melee "sounds/gore/nashgore/gib small 01.ogg"
+$random LSOD { misc/xdeath4a misc/xdeath4b misc/xdeath4c }
 phantasm/attack SKL2ATK
 Daedabus/Sight		DAEDSIGH
 $Random Daedabus/Active	{ DAEDACT1 DAEDACT2 }
@@ -2776,7 +2800,7 @@ AXECLN AXECLN
 $limit AXECLN 4
 AXEHIT AXEHIT
 AXEWALL AXEWALL
-AXSWING AXSWING
+$alias AXSWING weapons/fistwhoosh
 AXTHROW AXTHROW
 $pitchshift AXEWALL 5
 $pitchshift AXSWING 5
@@ -2784,23 +2808,25 @@ $random weapons/axe/throw { AxeThrow1 AxeThrow2 }
 AxeThrow1 AXTHRW1
 AxeThrow2 AXTHRW2
 
-weapons/fists_up FISTEQ1
-weapons/fists_smash FISTSM1
+weapons/fists_up "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTEQ1.ogg"
+weapons/fists_smash "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTSM1.ogg"
 $random weapons/fistwhoosh2 { F1STWH1 F1STWH2 F1STWH3 }
-F1STWH1    F1STWH1
-F1STWH2    F1STWH2
-F1STWH3    F1STWH3
+F1STWH1 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/F1STWH1.ogg"
+F1STWH2 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/F1STWH2.ogg"
+F1STWH3 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/F1STWH3.ogg"
 $random weapons/fistwhoosh { fwh1 fwh2 fwh3 fwh4 }
-fwh1    fistwh1
-fwh2    fistwh2
-fwh3    fistwh3
-fwh4    fistwh4
+fwh1 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH1.ogg"
+fwh2 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH2.ogg"
+fwh3 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH3.ogg"
+fwh4 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH4.ogg"
 $random weapons/ultrwhoosh { FISTWH5 FISTWH6 }
-FISTWH5 FISTWH5
-FISTWH6 FISTWH6
+FISTWH5 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH5.ogg"
+FISTWH6 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH6.ogg"
+SwingWave1 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH3.ogg"
+SwingWave2 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH4.ogg"
 weapons/gswing                  dsswing
 weapons/gpunch                  dspunch
-KNUCKLED KNUCKLED
+KNUCKLED "sounds/Doomguy and Marines/DOOMGUY/Sounds/Fists/KNUCKLED.ogg"
 
 DSSAWFUL DSSAWFUL
 DSSAWHIT DSSAWHIT
@@ -2819,12 +2845,12 @@ sawswing2 CSAWSW1
 //$volume sawswing 0.5
 CSAWSTAT CSAWSTAT
 $random Machete/Yum { Machete/Yum1 Machete/Yum2 Machete/Yum3 Machete/Yum4 Machete/Yum5 Machete/Yum6 }
-Machete/Yum1    MCHYUM1
-Machete/Yum2    MCHYUM2
-Machete/Yum3    MCHYUM3
-Machete/Yum4    MCHYUM4
-Machete/Yum5    MCHYUM5
-Machete/Yum6    MCHYUM6
+Machete/Yum1 "sounds/gore/nashgore/gib small 01.ogg"
+Machete/Yum2 "sounds/gore/nashgore/gib small 02.ogg"
+Machete/Yum3 "sounds/Glorykill/fistblod.ogg"
+Machete/Yum4 "sounds/Gore/gore/GoreBreak.ogg"
+Machete/Yum5 "sounds/gore/nashgore/gib large 01.ogg"
+Machete/Yum6 "sounds/gore/nashgore/gib large 02.ogg"
 weapons/chainsaw/hitwall1	DSSAWAL1
 weapons/chainsaw/hitwall2	DSSAWAL2
 weapons/chainsaw/hitwall3	DSSAWAL3
@@ -3354,6 +3380,7 @@ weapons/plasma/cellout CELLOUT
 weapons/plasma/cellin CELLIN
 weapons/plasma/startup PLSMAST
 weapons/plasma/fancybutton PSMABTN
+$alias weapons/plasmaloop weapons/bfg_chargeloop
 RELOAD2 RELOAD2 //Sound taken from Insanity's Brutality
 SiphonActive SIPHON1
 SiphonHold SIPHON4
@@ -3366,6 +3393,7 @@ PEXPLO2 PEXPLO2
 PEXPLO3 PEXPLO3
 PEXPLO4 PEXPLO4
 $rolloff weapons/plasma/explode  300 1600
+$alias weapons/plasmax weapons/plasma/explode
 PLSM9 PLSM9
 PLSTHRW PLSTHRW
 BEP BEP
@@ -3416,7 +3444,7 @@ BFGHUM BFGHUM
 LIGHTON LIGHTON
 RA1IF1 RA1IF1
 RA1IF2 RA1IF2
-weapons/railpunch	plspnch6
+weapons/railpunch marine/superfist6
 weapons/railgun/zoomin 			"sounds/combat/weapons/railgun/RG_ZoomIn.ogg"
 weapons/railgun/zoomout 		"sounds/combat/weapons/railgun/RG_ZoomOut.ogg"
 weapons/railgun/loop_red 		"sounds/combat/weapons/railgun/misc/Railgun_Loop_Red.ogg"
@@ -3673,7 +3701,7 @@ MP40 MP40
 //Acid Stuff
 acid/spew SPEWLOOP
 acid/spewstop SPEWSTOP
-FLMDRAW FLMDRAW
+FLMDRAW Flame_belch1
 BREATHOF BREATHOF
 FLMREND FLMREND
 FLMRST1 FLMRST1
@@ -4117,6 +4145,7 @@ MSSCL2 "sounds/combat/weapons/Peacekeeper/MSSCL2.ogg"
 MSSCL3 "sounds/combat/weapons/Peacekeeper/MSSCL3.ogg"
 $random MSSFR { MSSFR1 MSSFR2 MSSFR3 MSSFR4 MSSFR5 MSSFR6 }
 $random MSSCL { MSSCL1 MSSCL2 MSSCL3 }
+$volume MSSFR 2.0
 MSSOP "sounds/combat/weapons/Peacekeeper/MSSOP.ogg"
 MSSLD "sounds/combat/weapons/Peacekeeper/MSSLD.ogg"
 BFGREADY "sounds/combat/weapons/CyberdemonRL/BFGREADY.ogg"
@@ -4143,19 +4172,24 @@ DVZABH1 "sounds/combat/weapons/ArgentSith/DVZAPHT1.ogg"
 DVZABH2 "sounds/combat/weapons/ArgentSith/DVZAPHT2.ogg"
 DVZABH3 "sounds/combat/weapons/ArgentSith/DVZAPHT3.ogg"
 $random ArgentBarrier/Hit { DVZABH1 DVZABH2 DVZABH3 }
-// Shield Saw (ShieldSaw.dec) — SOUNDS/combat/ShieldSaw
-ShieldSawSwing "sounds/combat/ShieldSaw/Swing.ogg"
+// Shield Saw — GK_ShieldSaw (`11 GK_ShieldSaw`); lumps under sounds/combat/ShieldSaw/
+shieldsaw/ripper "sounds/combat/ShieldSaw/SHLDRIPR.wav"
+$random ShieldSawBounce { ShieldSawBounce1 ShieldSawBounce2 ShieldSawBounce3 ShieldSawBounce4 ShieldSawBounce5 }
+ShieldSawBounce1 "sounds/combat/ShieldSaw/Bounce1.ogg"
+ShieldSawBounce2 "sounds/combat/ShieldSaw/Bounce2.ogg"
+ShieldSawBounce3 "sounds/combat/ShieldSaw/Bounce3.ogg"
+ShieldSawBounce4 "sounds/combat/ShieldSaw/Bounce4.ogg"
+ShieldSawBounce5 "sounds/combat/ShieldSaw/Bounce5.ogg"
+$random ShieldSawHit { ShieldSawHit1 ShieldSawHit2 ShieldSawHit3 }
+ShieldSawHit1 "sounds/combat/ShieldSaw/Hit1.ogg"
+ShieldSawHit2 "sounds/combat/ShieldSaw/Hit2.ogg"
+ShieldSawHit3 "sounds/combat/ShieldSaw/Hit3.ogg"
+ShieldSawBash "sounds/combat/ShieldSaw/Bash.ogg"
+ShieldSawBack "sounds/combat/ShieldSaw/Back.ogg"
+ShieldSawFlying "sounds/combat/ShieldSaw/Flying.ogg"
 ShieldSawThrow "sounds/combat/ShieldSaw/aThrow.ogg"
 ShieldSawing "sounds/combat/ShieldSaw/Firing.ogg"
-ShieldSawFlying "sounds/combat/ShieldSaw/Flying.ogg"
-ShieldSawBack "sounds/combat/ShieldSaw/Back.ogg"
-ShSaBn1 "sounds/combat/ShieldSaw/Bounce1.ogg"
-ShSaBn2 "sounds/combat/ShieldSaw/Bounce2.ogg"
-ShSaBn3 "sounds/combat/ShieldSaw/Bounce3.ogg"
-ShSaBn4 "sounds/combat/ShieldSaw/Bounce4.ogg"
-ShSaBn5 "sounds/combat/ShieldSaw/Bounce5.ogg"
-$random ShieldSawBounce { ShSaBn1 ShSaBn2 ShSaBn3 ShSaBn4 ShSaBn5 }
-ShieldSawBash "sounds/combat/ShieldSaw/Bash.ogg"
+ShieldSawSwing "sounds/combat/ShieldSaw/Swing.ogg"
 $volume weapons/deagle/fire 1.0
 $volume weapons/mp40_fire 0.5
 $volume weapons/pistol 0.6
@@ -4500,19 +4534,19 @@ shellin3 shtload3
 shellin4 shtload4
 
 
-weapons/fists_up FISTEQ1
-weapons/fists_smash FISTSM1
+weapons/fists_up "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTEQ1.ogg"
+weapons/fists_smash "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTSM1.ogg"
 
 $random weapons/fistwhoosh2 { F1STWH1 F1STWH2 F1STWH3 }
-F1STWH1	F1STWH1
-F1STWH2	F1STWH2
-F1STWH3	F1STWH3
+F1STWH1 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/F1STWH1.ogg"
+F1STWH2 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/F1STWH2.ogg"
+F1STWH3 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/F1STWH3.ogg"
 
 $random weapons/fistwhoosh { fwh1 fwh2 fwh3 fwh4 }
-fwh1	fistwh1
-fwh2	fistwh2
-fwh3	fistwh3
-fwh4	fistwh4
+fwh1 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH1.ogg"
+fwh2 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH2.ogg"
+fwh3 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH3.ogg"
+fwh4 "sounds/COMBAT/WEAPONS/Melee weapons/Fists/FISTWH4.ogg"
 
 //Saw Stuff
 sawswing CSAWCUT
@@ -4521,12 +4555,12 @@ sawswing2 CSAWSW1
 CSAWSTAT CSAWSTAT
 
 $random Machete/Yum { Machete/Yum1 Machete/Yum2 Machete/Yum3 Machete/Yum4 Machete/Yum5 Machete/Yum6 }
-Machete/Yum1	MCHYUM1
-Machete/Yum2	MCHYUM2
-Machete/Yum3	MCHYUM3
-Machete/Yum4	MCHYUM4
-Machete/Yum5	MCHYUM5
-Machete/Yum6	MCHYUM6
+Machete/Yum1 "sounds/gore/nashgore/gib small 01.ogg"
+Machete/Yum2 "sounds/gore/nashgore/gib small 02.ogg"
+Machete/Yum3 "sounds/Glorykill/fistblod.ogg"
+Machete/Yum4 "sounds/Gore/gore/GoreBreak.ogg"
+Machete/Yum5 "sounds/gore/nashgore/gib large 01.ogg"
+Machete/Yum6 "sounds/gore/nashgore/gib large 02.ogg"
 
 weapons/smg_up DSRAIEQ
 weapons/smg_out DSRAIFOU
@@ -5164,14 +5198,14 @@ $pitchset weapons/golide/fire 0.95 1.05
 $pitchset weapons/golide/pump 0.9 1.1
 $volume weapons/golide/drumpickup 0.9
 
-items/bonus1				HBONUS1
-items/bonus2				ABONUS1
-items/bonus3				HBONUS2
-items/bonus4				ABONUS2
-items/bonus5				HBONUS3
-items/bonus6				ABONUS3
-items/bonus7				HBONUS4
-items/bonus8				ABONUS4
+items/bonus1				"sounds/items/csp/HBONUS1.ogg"
+items/bonus2				"sounds/items/csp/ABONUS1.ogg"
+items/bonus3				"sounds/items/csp/HBONUS2.ogg"
+items/bonus4				"sounds/items/csp/ABONUS2.ogg"
+items/bonus5				"sounds/items/csp/HBONUS3.ogg"
+items/bonus6				"sounds/items/csp/ABONUS3.ogg"
+items/bonus7				"sounds/items/csp/HBONUS4.ogg"
+items/bonus8				"sounds/items/csp/ABONUS4.ogg"
 items/armor1				GARM
 items/armor2				YARM
 items/armor3				BARM

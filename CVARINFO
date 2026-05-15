@@ -93,7 +93,8 @@ user float cl_step_delaymul = 1.0;
 
 user int SingleDualFire = 1;
 server bool pb_hp_arcade = true;
-server bool pb_wolvus_item_mutators = true;
+server bool pb_item_mutators = true;
+server bool pb_redarmor_spawn = true;
 server int donotsidestep = 0;
 server int donotdoublejump = 0;
 server int donotclimb = 0;
@@ -216,6 +217,7 @@ server int pb_NoDBUpgrade = 0;
 server int pb_NoUpgrades = 0;
 server int pb_NoQuadSSG = 0;
 server int pb_NoRifleUpgrade = 0;
+server int pb_NoLeverHellUpgrades = 0;
 server int pb_NoUnmakerUpgrade = 0; //Why would you want this disabled???
 server int pb_NoM2Upgrade = 0;
 
@@ -282,6 +284,7 @@ server int pb_NoDemonExterminatorWeapon = 0;
 server int pb_NoMG42Weapon = 0;
 server int pb_NoPB_CyberdemonRLWeapon = 0;
 server int pb_NoHellPistolerWeapon = 0;
+// pb_NoBioAcidLauncherWeapon removed from plasma spawner; BioAcidLauncher is monster-drop only (legacy cfgs may still set this — ignored).
 server int pb_NoBioAcidLauncherWeapon = 0;
 server int pb_NoArgentSithWeapon = 0;
 server int pb_NoBeamKatanaWeapon = 0;

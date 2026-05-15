@@ -166,6 +166,21 @@ class PB_M41A : PB_WeaponBase
 		}
 	}
 
+	action bool M41A_HasTubeReserve()
+	{
+		return CountInv("NewRocketAmmo") >= 1 || CountInv("PB_RocketAmmo") >= 1 || CountInv("RocketAmmo") >= 1;
+	}
+
+	action void M41A_TakeTubeReserve()
+	{
+		if (CountInv("NewRocketAmmo") >= 1)
+			A_TakeInventory("NewRocketAmmo", 1, TIF_NOTAKEINFINITE);
+		else if (CountInv("PB_RocketAmmo") >= 1)
+			A_TakeInventory("PB_RocketAmmo", 1, TIF_NOTAKEINFINITE);
+		else if (CountInv("RocketAmmo") >= 1)
+			A_TakeInventory("RocketAmmo", 1, TIF_NOTAKEINFINITE);
+	}
+
 	states
 	{
 		Spawn:
@@ -301,7 +316,12 @@ class PB_M41A : PB_WeaponBase
 				A_TakeInventory("PB_LockScreenTilt", 1);
 			}
 			TNT1 A 0 A_JumpIfInventory("M41ChangeCart", 1, "AltShell");
-			TNT1 A 0 A_JumpIfInventory("PB_RocketAmmo", 1, "AltGrenadeFire");
+			TNT1 A 0
+			{
+				if (M41A_HasTubeReserve())
+					return ResolveState("AltGrenadeFire");
+				return ResolveState(null);
+			}
 			Goto M41NoAmmoJ;
 
 		AltGrenadeFire:
@@ -359,7 +379,7 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
 			PMAT H 1 A_PlaySound("weapons/sgpump", CHAN_WEAPON);
 			TNT1 A 0 A_FireCustomMissile("EmptyGrenadeBrass", 5, 0, 8, -4);
-			TNT1 A 0 A_TakeInventory("PB_RocketAmmo", 1, TIF_NOTAKEINFINITE);
+			TNT1 A 0 M41A_TakeTubeReserve();
 			PMAT IJ 1;
 			PMAT IH 1;
 			TNT1 A 0 A_StartSound("weapons/sgpump", CHAN_AUTO, CHANF_OVERLAP);

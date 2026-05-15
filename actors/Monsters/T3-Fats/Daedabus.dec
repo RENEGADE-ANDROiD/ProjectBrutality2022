@@ -61,7 +61,8 @@ Actor PB_Daedabus replaces Fatso
 	DropItem "Demonpickup2" 30
 	DropItem "Demonpickup2" 250
 	DropItem "MancubusFlameCannon" 56
-	
+	DropItem "BioAcidLauncher" 44
+
    States
    {
    

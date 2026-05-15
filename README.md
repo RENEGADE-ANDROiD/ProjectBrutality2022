@@ -50,6 +50,10 @@ Some fatalities briefly turn you into the demon you just killed. The rides are s
 - **Arachnotron** — the right finish seats you on its plasma turret (third-person view) until the rig tears apart.
 - **Revenant** — revenant fatalities can roll into a third-person rocket-backpack ride: homing rockets fire on a short cadence while the chase camera stays active; leaving the ride restores the normal view.
 
+### Item pickups and armor variety
+
+- Colored health and armor bonuses, stimpacks, and medikits use **DarkShadow**'s **Custom Shards & Potions** content. Optional **Red Armor** (60% protection, 250 points) can appear when the blue-armor spawner rolls a heavy pickup (**Gameplay Settings**). Soulsphere, megasphere, and premium armor extras still use the **Item mutators** toggle in the same menu.
+
 ### Included weapons
 
 Weapons are grouped by their in-game number slots. Individual spawn toggles live in **Weapon Settings** / **Add-On Toggles** where available. Glory Kill tools such as the **Crucible**, shoulder cannon actions, Blood Punch, pinata pickups, and related HUD pieces are separate systems, not normal numbered-slot weapons.
@@ -97,7 +101,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **Light Machine Gun** — belt/magazine support rifle for sustained automatic fire.
 - **Metal Sniper** — heavy precision rifle with custom ammo and unload behavior.
 - **UAC-320 Heavy Machine Gun** — older heavy automatic platform.
-- **UAC M1893 Lever Action** — lever rifle with a weapon-special caliber swap.
+- **UAC M1893 Lever Action** — lever rifle with a weapon-special wheel for **.357** vs **.444 Marlin** calibers. **Hell Mod** upgrades (T3/T4 map drops) unlock a third wheel option to toggle **hell rounds**—Demon-Tech projectiles on hip-fire and ADS; T4 fires caustic slugs. Disable Hell Mod drops under **Gameplay Settings** if you do not want them in the loot pool.
 - **Pro-Surv Ballista** — precision projectile weapon for heavy single shots.
 - **M41A Pulse Rifle** — pulse rifle with weapon-special wheel: 12-gauge or 30mm underbarrel Alt-Fire, plus optional dual-wield.
 - **Battle Rifle** — modern rifle with magazine handling and tactical ready/fire flow.
@@ -122,7 +126,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 
 - **Cryo Rifle** — freezing rifle for slowing or locking down enemies.
 - **MKIII Railgun** — precision rail weapon for piercing high-damage shots; **Alt-Fire** toggles the scope zoom when you are not scoped. **Hold Reload and press Alt-Fire** to deploy a holographic decoy (same behavior as the Cat's Frozen equipment holo: line-of-sight anchor, animated decoy, monster retargeting).
-- **UAC-UM-32P Biological Acid Launcher - Unengager** — caustic launcher for acid damage and area denial.
+- **UAC-UM-32P Biological Acid Launcher (Unengager)** — primary fire spits sustained acid slugs for damage and area denial; **hold Alt-Fire** for a **Daedabus-style slime stream** (same liquid feel as the enemy arc, fired as your own stream projectiles). Uses **PB_DTech** cells. **Acquisition:** rare **death drops** from **Daedabus** and **Belphegor** only — it is **not** rolled from plasma-rifle **map** weapon spawns (there is no longer a menu toggle for map placement).
 - **UAC Mancubus Flame Cannon / Daedabus Slime Cannon** — monster-tech cannon with flame/slime-style attacks; **wear** ticks down with fuel spends on primary, alt stream, and slime modes, **breaks** at zero, duplicate pickup **refills wear**. **Mancubus-family** enemies (including Daedabus / Volcabus and Glory-Kill wrappers) sometimes drop it; it is **not** rolled from plasma-rifle **map** spawns.
 
 **Slot 8 — Plasma & heavy energy primaries**
@@ -227,7 +231,7 @@ This tier is where projectile density spikes—open yards favor mancubi and caco
 
 - **Arachnotrons** — plasma walkers span stock, elite chrome trims, infernal red edits, and the plant‑chassis Arachnophyte experiment.
 - **Aracnorb** — gravity‑ ignoring plasma jellyfish cousin to arachnotrons *(Aracnorb)*.
-- **Mancubus family** — flame belching fatsos, slower Daedabus arc‑casters, and lava‑themed Volcabus variants sharing the fatso slot behaviors players already fear; they occasionally drop the **Mancubus Flame Cannon** pickup (chance-based **`DropItem`**, not guaranteed).
+- **Mancubus family** — flame belching fatsos, slower Daedabus arc‑casters, and lava‑themed Volcabus variants sharing the fatso slot behaviors players already fear; they occasionally drop the **Mancubus Flame Cannon** pickup (chance-based **`DropItem`**, not guaranteed). **Daedabus** can also roll a rare **Biological Acid Launcher** (slot 7) on death.
 - **Cacodemons and pain elementals** — meatball cannons plus vanilla pain elementals, infernal caco stand‑ins, and suffering elementals that behave like souped‑up pain mothers without stealing the boss spotlight.
 - **Other floaters** — Watchers as silent floating eyes, Overlords as oversized aerial tyrants, Phantasms as smoky lost‑soul upgrades, classic lost souls, and Afrits as winged harassers in the same sky‑pest bucket.
 - **Monster Pack elementals** — Helemental storm pillars *(Helemental)* and drifting ESoul wisps *(ESoul)* that peel off larger fights or environmental kills.
@@ -239,7 +243,7 @@ Heavy hitters below proper episode bosses—arena anchors and caster nightmares.
 
 Knights and barons eat rockets; arch‑viles eat your patience. Bring plasma, corners, and priority target discipline.
 
-- **Knights and barons** — hell knights, barons, cyber‑knight/baron/paladin hybrids, sprinting Belphegors, and Infernus bruisers that still respect Baron‑tier spacing.
+- **Knights and barons** — hell knights, barons, cyber‑knight/baron/paladin hybrids, sprinting Belphegors, and Infernus bruisers that still respect Baron‑tier spacing. **Belphegor** can rarely drop the same **Biological Acid Launcher** as **Daedabus** (see slot 7).
 - **Arch-viles and specialists** — flame arch‑viles, ice arch‑viles, flesh‑summoning wizards, and Hellions occupying the same raise‑and‑burn psychological lane as vanilla arch‑viles.
 - **Marauder** — Eternal‑inspired hunter demon with shields and shotgun snap‑shots; counts as a noble‑tier duelist when he crashes a fight. He sometimes drops his **Marauder Shotgun** (weighted death drop; bonus weapon props after certain finishers are also chance-based).
 - **Hierophant** — Monster Pack mastermind‑scale glass cannon that trades armor for offense *(Hierophant)*.
@@ -304,7 +308,7 @@ Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki11
 
 **Recent additions in this line:**
 
-- **Boss-tech weapon wear:** cyber launcher, mastermind chaingun, mancubus / Daedabus flame cannon, and Marauder shotgun use limited **durability** (separate from ammo) with weapon **break** at zero wear and **repair to full wear** when picking up the same gun again; monster **drops** use weighted chances instead of guaranteed boss loot where appropriate. The chaingun and flame cannon are **not** placed by rocket / plasma **map** weapon spawners (monster sources only).
+- **Boss-tech weapon wear:** cyber launcher, mastermind chaingun, mancubus / Daedabus flame cannon, and Marauder shotgun use limited **durability** (separate from ammo) with weapon **break** at zero wear and **repair to full wear** when picking up the same gun again; monster **drops** use weighted chances instead of guaranteed boss loot where appropriate. The chaingun and flame cannon are **not** placed by rocket / plasma **map** weapon spawners (monster sources only). The **UAC Biological Acid Launcher** is also **monster-only**: weighted drops from **Daedabus** and **Belphegor**, with no plasma spawner placement.
 - Combined **2022 Enhanced Brootality** gore from Brutal Doom 22 and Brutal Pack V10.
 - Expanded first-person executions with art lineage from **Brutal Doom *El Diablo* Edition** and related packs.
 - Glory Kill shoulder launcher art and Eternal-style fuel HUD glyphs aligned with the newer Glory Kills presentation.

@@ -318,7 +318,7 @@ The **Cyberdemon Missile Launcher** was folded in from `PBX-Weapons-main/Zscript
 | PBX (upstream) | PB 2022 (folded) |
 | --- | --- |
 | `class PBX_CyberdemonRL : PBX_WeaponBase` | `class PB_CyberdemonRL : PB_Weapon` |
-| `Weapon.AmmoType1 "PBX_RocketAmmo"` | `Weapon.AmmoType1 "PB_RocketAmmo"` (compat alias in [actors/Compat/WarningStubs.dec](actors/Compat/WarningStubs.dec)) |
+| `Weapon.AmmoType1 "PBX_RocketAmmo"` | `Weapon.AmmoType1 "PB_RocketAmmo"` (compat alias in [actors/Items/Compat/WarningStubs.dec](actors/Items/Compat/WarningStubs.dec)) |
 | `PB_Math.LinearMap(...)` | `PB_HitFeedback_Math.LinearMap(...)` (PB 2022's math namespace) |
 | `Goto Ready` / `Goto Select` / reused `PB_WeaponRaise` helper | **Inlined** `SelectFirstPersonLegs` chain — calls `Melee_Equipment_Handler_Overlay`, `KickHandler_Overlay`, `Equipment_Toggle_Handler_Overlay`, `FirstPersonLegsStand`, then `PB_WeapTokenSwitch` / `PB_RespectIfNeeded` / `Goto SelectAnimation`. Required because PB 2022's `PB_Weapon : PB_WeaponBase` owns that chain in DECORATE; a pure-ZScript subclass that inherits only from `PB_WeaponBase` would skip it. See AGENTS.md §4, "ZScript-only weapons". |
 | `A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)` inside various flash states, many ending in `Stop` | Flash states end in `Goto Ready3` so that kick-flash / punch-flash transitions don't leave duplicate PSprite layers (see the PB staging finding at the end of this file). |

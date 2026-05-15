@@ -1,0 +1,4 @@
+Custom Shards & Potions — **DarkShadow** (author); bonus sprites/sounds from **Custom Shards&Potions old Sprites.wad** (TDuy item colors, WolVexus mutator sounds lineage per upstream credits).
+Optional item color concepts: TDuy. Legacy WolVexus / Wolvus BON3–BON8 tier bonuses in PB2022 were retired in favor of this fold (see CHANGELOG).
+
+Custom Red Armor (**PB_RedArmor**) — **DarkShadow** (Custom Red Armor.wad); DECORATE + sprites in-repo, **`pb_redarmor_spawn`** gates the blue-armor heavy-roll mix-in.

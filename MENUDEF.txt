@@ -422,10 +422,13 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText "$PB_WEAPON_SELECTOR_MENU_HINT", teal
 	StaticText " ", teal
 	StaticText " ", teal
-	Option "HP Arcade item behavior", "pb_hp_arcade", "OnOff"
+	Option "$OPTMNU_PB_HP_ARCADE", "pb_hp_arcade", "OnOff"
 	StaticText " ", teal
-	Option "Wolvus item mutators", "pb_wolvus_item_mutators", "OnOff"
+	Option "$OPTMNU_PB_ITEM_MUTATORS", "pb_item_mutators", "OnOff"
+	StaticText "$OPTMNU_PB_ITEM_MUTATORS_HINT", teal
 	StaticText " ", teal
+	Option "$OPTMNU_PB_REDARMOR", "pb_redarmor_spawn", "OnOff"
+	StaticText "$OPTMNU_PB_REDARMOR_HINT", teal
 	StaticText " ", teal
 	StaticText "-----------------Content Packs-----------------", gold
 	StaticText " ", teal
@@ -692,8 +695,6 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Hell Pistoler", "pb_NoHellPistolerWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Bio Acid Launcher", "pb_NoBioAcidLauncherWeapon", "SpawnOnOff"
-	StaticText " "
 	Option "Spawn Argent Sith", "pb_NoArgentSithWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Beam Katana", "pb_NoBeamKatanaWeapon", "SpawnOnOff"
@@ -762,6 +763,14 @@ OptionMenu "GameplaySettings"
 
 	Option "HP Arcade item behavior", "pb_hp_arcade", "OnOff"
 	StaticText "PB HP Arcade Armor / Powerup Rule Tweaks."
+	StaticText " "
+	StaticText " "
+	Option "$OPTMNU_PB_ITEM_MUTATORS", "pb_item_mutators", "OnOff"
+	StaticText "$OPTMNU_PB_ITEM_MUTATORS_HINT", teal
+	StaticText " "
+	StaticText " "
+	Option "$OPTMNU_PB_REDARMOR", "pb_redarmor_spawn", "OnOff"
+	StaticText "$OPTMNU_PB_REDARMOR_HINT", teal
 	StaticText " "
 	StaticText " "
 	
@@ -1049,6 +1058,11 @@ OptionMenu "WeaponSettings"
 	
 	Option "Disable DMR Upgrade",				"pb_NoRifleUpgrade", "OnOff"
 	StaticText "Blocks DMR Underbarrel Grenade Launcher Upgrade."
+	StaticText " "
+	StaticText " "
+	
+	Option "Disable Lever Action Hell Mod drops",				"pb_NoLeverHellUpgrades", "OnOff"
+	StaticText "Blocks Lever Hell T3/T4 from UpgradeSpawner and tiered backpack rolls."
 	StaticText " "
 	StaticText " "
 	
