@@ -251,6 +251,141 @@ script "PBUpgradeChecker_M2Upgrade" (void)
 	}
 }
 
+script "PBUpgradeChecker_LeverHellT3" (void)
+{
+	int hasLA = 0;
+	int needT3 = 0;
+	int needT4 = 0;
+	for (int p = 0; p < 8; p++) {
+		if (!PlayerInGame(p)) continue;
+		int tidp = 800 + p;
+		if (!CheckActorInventory(tidp, "LeverAction")) continue;
+		hasLA = 1;
+		int t = CheckActorInventory(tidp, "LeverActionHellTier");
+		if (t < 1) needT3 = 1;
+		else if (t < 2) needT4 = 1;
+	}
+	if (!hasLA) {
+		SetActorState(0, "BackpackSpawn");
+	}
+	else if (needT4) {
+		SetActorState(0, "SpawnLeverHellUpgradeT4");
+	}
+	else if (!needT3) {
+		SetActorState(0, "BackpackSpawn");
+	}
+}
+
+script "PBUpgradeChecker_LeverHellT4" (void)
+{
+	int hasLA = 0;
+	int needT3 = 0;
+	int needT4 = 0;
+	for (int p = 0; p < 8; p++) {
+		if (!PlayerInGame(p)) continue;
+		int tidp = 800 + p;
+		if (!CheckActorInventory(tidp, "LeverAction")) continue;
+		hasLA = 1;
+		int t = CheckActorInventory(tidp, "LeverActionHellTier");
+		if (t < 1) needT3 = 1;
+		else if (t < 2) needT4 = 1;
+	}
+	if (!hasLA) {
+		SetActorState(0, "BackpackSpawn");
+	}
+	else if (needT3) {
+		SetActorState(0, "SpawnLeverHellUpgradeT3");
+	}
+	else if (!needT4) {
+		SetActorState(0, "BackpackSpawn");
+	}
+}
+
+script "PBLeverHellBackpackTier3Bonus" (void)
+{
+	if (GetCvar("pb_NoUpgrades") == 1) {
+		SetActorState(0, "SpawnCombatBackPack");
+	}
+	else if (GetCvar("pb_NoLeverHellUpgrades") == 1) {
+		SetActorState(0, "SpawnCombatBackPack");
+	}
+	else {
+		int hasLA = 0;
+		int needT3 = 0;
+		int needT4 = 0;
+		for (int p = 0; p < 8; p++) {
+			if (!PlayerInGame(p)) continue;
+			int tidp = 800 + p;
+			if (!CheckActorInventory(tidp, "LeverAction")) continue;
+			hasLA = 1;
+			int t = CheckActorInventory(tidp, "LeverActionHellTier");
+			if (t < 1) needT3 = 1;
+			else if (t < 2) needT4 = 1;
+		}
+		if (!hasLA) {
+			SetActorState(0, "SpawnCombatBackPack");
+		}
+		else {
+			int ax = GetActorX(0);
+			int ay = GetActorY(0);
+			int az = GetActorZ(0);
+			if (needT3) {
+				SpawnForced("LeverActionHellUpgradeT3", ax, ay, az, 0);
+				SetActorState(0, "NullBackpackSpawnerStop");
+			}
+			else if (needT4) {
+				SpawnForced("LeverActionHellUpgradeT4", ax, ay, az, 0);
+				SetActorState(0, "NullBackpackSpawnerStop");
+			}
+			else {
+				SetActorState(0, "SpawnCombatBackPack");
+			}
+		}
+	}
+}
+
+script "PBLeverHellBackpackTier4Bonus" (void)
+{
+	if (GetCvar("pb_NoUpgrades") == 1) {
+		SetActorState(0, "SpawnUpgrade");
+	}
+	else if (GetCvar("pb_NoLeverHellUpgrades") == 1) {
+		SetActorState(0, "SpawnUpgrade");
+	}
+	else {
+		int hasLA = 0;
+		int needT3 = 0;
+		int needT4 = 0;
+		for (int p = 0; p < 8; p++) {
+			if (!PlayerInGame(p)) continue;
+			int tidp = 800 + p;
+			if (!CheckActorInventory(tidp, "LeverAction")) continue;
+			hasLA = 1;
+			int t = CheckActorInventory(tidp, "LeverActionHellTier");
+			if (t < 1) needT3 = 1;
+			else if (t < 2) needT4 = 1;
+		}
+		if (!hasLA) {
+			SetActorState(0, "SpawnUpgrade");
+		}
+		else {
+			int ax = GetActorX(0);
+			int ay = GetActorY(0);
+			int az = GetActorZ(0);
+			if (needT4) {
+				SpawnForced("LeverActionHellUpgradeT4", ax, ay, az, 0);
+				SetActorState(0, "NullBackpackSpawnerStop");
+			}
+			else if (needT3) {
+				SpawnForced("LeverActionHellUpgradeT3", ax, ay, az, 0);
+				SetActorState(0, "NullBackpackSpawnerStop");
+			}
+			else {
+				SetActorState(0, "SpawnUpgrade");
+			}
+		}
+	}
+}
 
 Script "CheckIfSinglePlayerGame" (VOID) NET
 {
@@ -775,6 +910,11 @@ if	(GetCvar("pb_NoUnmakerUpgrade") == 1) { SetActorState(0,"BackpackSpawn"); }
 Script "ToggleM2Upgrade" (VOID) NET
 {
 if	(GetCvar("pb_NoM2Upgrade") == 1) { SetActorState(0,"BackpackSpawn"); }
+}
+
+Script "ToggleLeverHellUpgrades" (VOID) NET
+{
+if	(GetCvar("pb_NoLeverHellUpgrades") == 1) { SetActorState(0,"BackpackSpawn"); }
 }
 
 Script "ToggleRevolverUpgraded" (VOID) NET

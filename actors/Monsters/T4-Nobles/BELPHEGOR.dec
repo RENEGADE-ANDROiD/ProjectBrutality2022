@@ -26,6 +26,7 @@ ACTOR PB_Belphegor : BaronofHell replaces BaronofHell
 	DropItem "Demonpickup2" 76
 	DropItem "Demonpickup2" 76
 	DropItem "Demonpickup2" 76
+	DropItem "BioAcidLauncher" 36
 	Obituary "%o was no match for the great Belphegor."
 	MaxStepHeight 24
 	MaxDropOffHeight 32

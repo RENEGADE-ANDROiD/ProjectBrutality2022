@@ -1,5 +1,6 @@
 #include BMAP/Ammo.txt
 #include BMAP/Armor.txt
+#include BMAP/CSPBonuses.txt
 #include BMAP/WolvusMutatorBonuses.txt
 #include BMAP/Shields.txt
 #include BMAP/Realm667Powerups.txt

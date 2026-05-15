@@ -146,7 +146,7 @@ Recoil: Moderate
 Alt-Fire: Aim down sights
 Firemodes: Rifle stance / sidearm stance via Weapon Special
 Akimbo: X#
-UAC M1893 Mod 0 Lever Action$A modernized lever gun bridging cowboy simplicity with UAC logistics: tube-fed, hard-hitting, and able to swap between .357 and heavier Marlin-class loads from the Weapon Special wheel without replacing the whole weapon.$LeverAction$Manufacturer: UAC (M1893 Mod 0)
+UAC M1893 Mod 0 Lever Action$A modernized lever gun bridging cowboy simplicity with UAC logistics: tube-fed, hard-hitting, and able to swap between .357 and heavier Marlin-class loads from the Weapon Special wheel without replacing the whole weapon. With two rifles in inventory, the same wheel enables mirrored dual wield (alternating hip shots; shared tube).$LeverAction$Manufacturer: UAC (M1893 Mod 0)
 Tube Capacity: Variable tube (reload choreographs to full)
 Ammunition: LeverActionAmmo + NewClip reserve plumbing
 Effective Range: Medium
@@ -481,7 +481,7 @@ Recoil: N/A
 Alt-Fire: Blade storm / special melee routing
 Firemodes: Melee soulblade
 Akimbo: X#
-UAC Biological Acid Unengager$Caustic bioslug launcher vomiting sustained acid fog—Ammo ties into Bio acid pickups distinct from standard plasma.$BioAcidLauncher$Manufacturer: UAC hazardous materials branch
+UAC Biological Acid Unengager$Primary hell-slugs; hold Alt-Fire for a Daedabus-style slime stream. Found only as a rare drop from Daedabus and Belphegor. Uses PB_DTech cells.$BioAcidLauncher$Manufacturer: UAC hazardous materials branch
 Magazine Capacity: Bio-acid tanks per launcher plumbing
 Ammunition: Caustic ammo pickups
 Effective Range: Medium arcing splash

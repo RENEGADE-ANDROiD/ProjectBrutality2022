@@ -1730,6 +1730,7 @@ Class PB_SpecialWheelHandler : EventHandler
 		if (specialName == "WW_PB_CF_TeslaTurretSelected") return pl.CountInv("PB_CF_TeslaTurretAmmo") > 0;
 		if (specialName == "WW_PB_CF_FlameTurretSelected") return pl.CountInv("PB_CF_FlameTurretAmmo") > 0;
 		if (specialName == "WW_PB_CF_FreezeMineSelected") return pl.CountInv("PB_CF_FreezeMineAmmo") > 0;
+		if (specialName == "Select_LeverAction_HellMode") return pl.CountInv("LeverActionHellTier") >= 1;
 		return true;
 	}
 
@@ -1737,6 +1738,7 @@ Class PB_SpecialWheelHandler : EventHandler
 	{
 		wheelSpecials.Clear();
 		iconScale = (0.75, 0.75);
+		let pl = PlayerPawn(players[consoleplayer].mo);
 		PB_SpecialWheel_Mode lev_357 = new ("PB_SpecialWheel_Mode");
 		lev_357.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Magnum.png", TexMan.Type_Any);
 		lev_357.specialName = "Select_LeverAction_357";
@@ -1751,6 +1753,13 @@ Class PB_SpecialWheelHandler : EventHandler
 		lev_marlin.specialPriority = 2;
 		lev_marlin.iconScale = iconScale;
 		wheelSpecials.Push(lev_marlin);
+		PB_SpecialWheel_Mode lev_hell = new ("PB_SpecialWheel_Mode");
+		lev_hell.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+		lev_hell.specialName = "Select_LeverAction_HellMode";
+		lev_hell.specialAlias = "Hell rounds (toggle)";
+		lev_hell.specialPriority = 3;
+		lev_hell.iconScale = iconScale;
+		if (pl == null || WheelSliceIsUsable(pl, "Select_LeverAction_HellMode")) { wheelSpecials.Push(lev_hell); }
 		specialWheel_handleMouse();
 	}
 
