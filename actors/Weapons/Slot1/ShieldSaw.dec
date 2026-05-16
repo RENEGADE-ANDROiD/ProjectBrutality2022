@@ -26,6 +26,7 @@ Actor ShieldSawProjectile : FastProjectile
     States
     {
     Spawn:
+        TNT1 A 0 NODELAY A_SpriteOffset(0, -14)
         SHDP A 0 NODELAY A_PlaySound("ShieldSawThrow",0,0.5,0,1)
         SHDP A 0 ACS_NamedExecuteAlways("CallBack",0,0,0,0) // from GK_ShieldSaw: poll until CallBack token or seeker brings saw home
         SHDP A 0 A_PlaySound("ShieldSawing",5,0.7,true,0.5)
@@ -62,11 +63,10 @@ Actor ShieldSawProjectile : FastProjectile
         TNT1 A 0 A_JumpIfInventory("CallBack",1,"ShieldBack")
         Loop
     ShieldBack:
-        SHDP B 0 A_Playsound("ShieldSawBack",5,1.0,false,1.5)
         SHDP B 0 A_StopSound(6)
         TNT1 A 0 A_PrintBold("Slayer's Shield is back!",0.2)
         TNT1 A 0 A_TakeInventory("CallBack",1)
-        SHDP A 1 A_GiveToTarget("ShieldSaw_token",1)
+        TNT1 A 0 A_GiveToTarget("ShieldSaw_token",1)
         TNT1 A 0 A_GiveToTarget("ShieldSawNotifyReturned",1)
         TNT1 A 0 A_ChangeFlag("NOINTERACTION",1)
         Stop
