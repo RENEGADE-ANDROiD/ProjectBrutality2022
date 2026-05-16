@@ -62,6 +62,8 @@ const MAXITERATIONS = 32676;
 #include "zscript/Monsters/Realm667/possessedgibs/possessedgibs.zc"
 #include "zscript/Decorations/PBKeys.zc"
 
+#include "zscript/Hitmarkers/hitmarkers.zsc"
+
 #include "zscript/pb_hitfeedback/sharedmath.zs"
 #include "zscript/pb_hitfeedback/handler.zs"
 #include "zscript/pb_hitfeedback/inventory.zs"

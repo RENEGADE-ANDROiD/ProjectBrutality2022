@@ -385,3 +385,7 @@ DoomEdNums
 	30135 = Hierophant
 	2546  = CyberdemonBoss
 }
+gameinfo
+{
+	addeventhandlers = "hitmarkershandler"
+}

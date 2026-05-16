@@ -366,6 +366,10 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText "Plasma Blast Knockback From Floors, Walls, or Ceilings.", teal
 	StaticText " ", teal
 	StaticText " ", teal
+	StaticText "-----------------Hitmarkers-----------------", gold
+	StaticText " ", teal
+	Option "$HM_OPTION_ENABLED", "hm_enabled", "HM_YesNo"
+	StaticText " ", teal
 	StaticText "-----------------UI and Feel-----------------", gold
 	StaticText " ", teal
 	Option "Enable Voice-Line Taunts", "pb_voicetaunts", YesNo
@@ -2122,4 +2126,9 @@ OptionString gb_FontValues
 	"SmallFont"    , "$GB_OLD_SMALL_FONT"
 	"ConsoleFont"  , "$GB_CONSOLE_FONT"
 	"BigFont"      , "$GB_BIG_FONT"
+}
+OptionValue "HM_YesNo"
+{
+	0, "$HM_VALUE_NO"
+	1, "$HM_VALUE_YES"
 }
