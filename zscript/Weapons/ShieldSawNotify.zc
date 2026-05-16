@@ -6,7 +6,15 @@ class ShieldSawNotifyReturned : Inventory
 	override void AttachToOwner(Actor other)
 	{
 		Super.AttachToOwner(other);
-		if (other) other.TakeInventory("ShieldSawThrown", 1);
+		if (other)
+			other.TakeInventory("ShieldSawThrown", 1);
+		let plr = PlayerPawn(other);
+		if (plr && plr.player && plr.player.ReadyWeapon)
+		{
+			let w = plr.player.ReadyWeapon;
+			if (w && w.FindStateByString("ShieldSawCatchAnim", true))
+				w.A_Overlay(1007, "ShieldSawCatchAnim");
+		}
 		Destroy();
 	}
 }

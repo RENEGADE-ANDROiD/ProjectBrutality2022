@@ -133,7 +133,7 @@ GameInfo
 	AddEventHandlers = "DamNumEventHandler"
 	AddEventHandlers = "PB_HazardDamageHudHandler"
 	AddEventHandlers = "PB_TacticalFeelHandler"
-	AddEventHandlers = "PB_KillstreakMessageHandler"
+	AddEventHandlers = "KSHUDMessageHandler"
 	AddEventHandlers = "PB_KillstreakHandler"
 	AddEventHandlers = "PB_KillstreakRareFlare"
 	AddEventHandlers = "PB_InstantWeaponSwitchHandler"
