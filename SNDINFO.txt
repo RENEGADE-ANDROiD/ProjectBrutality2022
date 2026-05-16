@@ -5500,3 +5500,9 @@ pentacle/project     sounds/Realm667Powerups/PROJECT.ogg
 // Folded Fusil addon support sounds.
 ENTEIN SOUNDS/COMBAT/WEAPONS/Fusil/ENTEIN.mp3
 MOVIN SOUNDS/COMBAT/WEAPONS/Fusil/MOVIN.mp3
+
+//Hitmarkers
+defaulthit			"SOUNDS/Hitmarkers/HMDEFH"
+defaulthithigh		"SOUNDS/Hitmarkers/HMDEFHH"
+defaulthitmedium	"SOUNDS/Hitmarkers/HMDEFHM"
+defaultkill			"SOUNDS/Hitmarkers/HMDEFK"
