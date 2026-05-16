@@ -32,3 +32,4 @@ GloryHUD
 BloodPunch
 Marauder
 Shield_saw
+hitmarkers
