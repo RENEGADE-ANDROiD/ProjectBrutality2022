@@ -69,7 +69,7 @@ Actor TFST : PowerupGiver
 	+FORCEXYBILLBOARD
     Inventory.MaxAmount 0
     Powerup.Type "PB_PowerTimeSlow"
-    Powerup.Color GoldMap, 0.008
+    Powerup.Color GoldMap, 0.002
     Inventory.PickupMessage "Time freeze!"
     States
     {

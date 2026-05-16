@@ -315,7 +315,7 @@ Actor ReflectorSphere : PowerupGiver
 	Inventory.PickupMessage "$PB_PICKUP_ReflectorSphere"
 	Powerup.Type "PowerInvulnerable"
 	Powerup.Mode "Reflective"
-	Powerup.Color "GoldMap", 0.008
+	Powerup.Color "GoldMap", 0.002
 	Powerup.Duration -15
 	RenderStyle "Translucent"
 	Alpha 0.8

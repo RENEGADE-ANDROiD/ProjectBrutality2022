@@ -4200,6 +4200,8 @@ class PB_EventHandler : EventHandler
 	const PB_PDA_BLOCKY_CAT_ARROW_VIS_MUL = 1.65;
 	const PB_PDA_BLOCKY_CAT_ARROW_HIT_PAD = 8;
 	const PB_PDA_BLOCKY_CAT_ARROW_BELOW_DESC = 12;
+	const PB_KATANA_DUAL_TILE_FRAC = 0.5;
+	const PB_KATANA_DUAL_LABEL_MAX_FRAC_OF_TILE_H = 0.36;
 	const PB_PDA_PREVIEW_GAP_768 = 16;
 	const PB_PDA_PREVIEW_WIDTH_768 = 300;
 	const PB_PDA_PREVIEW_SEG_FRAMES = 48;
@@ -5966,18 +5968,23 @@ class PB_EventHandler : EventHandler
 		int gap = max(10, pad / 2);
 		int top = max(28, sh / 22);
 		int bot = max(pad * 2 + SmallFont.GetHeight(), sh / 14);
-		lh = sh - top - bot;
-		if (lh < 120)
-			lh = max(120, sh / 2);
-		lw = (sw - pad * 2 - gap) / 2;
-		if (lw < 80)
-			lw = max(80, sw / 2 - gap);
-		lx = pad;
-		ly = top;
-		rx = pad + lw + gap;
-		ry = top;
+		int fullH = sh - top - bot;
+		if (fullH < 120)
+			fullH = max(120, sh / 2);
+		int fullW = (sw - pad * 2 - gap) / 2;
+		if (fullW < 80)
+			fullW = max(80, sw / 2 - gap);
+		lh = max(96, int(double(fullH) * PB_KATANA_DUAL_TILE_FRAC));
+		lw = max(72, int(double(fullW) * PB_KATANA_DUAL_TILE_FRAC));
 		rw = lw;
 		rh = lh;
+		int pairW = lw + gap + rw;
+		lx = (sw - pairW) / 2;
+		rx = lx + lw + gap;
+		int availH = sh - top - bot;
+		int y0 = top + max(0, (availH - lh) / 2);
+		ly = y0;
+		ry = y0;
 	}
 
 	ui void DrawKatanaDualWeaponInTileArea(int x, int y, int w, int h, TextureID iconTex,
@@ -6037,46 +6044,52 @@ class PB_EventHandler : EventHandler
 		PB_KatanaDualChoiceGetTileLayout(lx, ly, lw, lh, rx, ry, rw, rh);
 		bool hoverL = MouseX >= lx && MouseX < lx + lw && MouseY >= ly && MouseY < ly + lh;
 		bool hoverR = MouseX >= rx && MouseX < rx + rw && MouseY >= ry && MouseY < ry + rh;
-		double lblSc = clamp(sh / 480.0, 1.15, 2.15);
+		int refWpx = max(BigFont.StringWidth("Sith Lord"), BigFont.StringWidth("Jedi Master"));
+		int bh0 = max(1, BigFont.GetHeight());
+		double lblScCap = double(lh) * PB_KATANA_DUAL_LABEL_MAX_FRAC_OF_TILE_H / double(bh0);
+		double hiSc = min(3.75, max(1.05, lblScCap));
+		double lblScL = clamp(double(lw - 12) / double(max(1, refWpx)), 1.05, hiSc);
+		double lblScR = clamp(double(rw - 12) / double(max(1, refWpx)), 1.05, hiSc);
 		bool sithLeft = (KatanaDualVariant == 0);
 		int leftCol = sithLeft ? Font.CR_RED : Font.CR_LIGHTBLUE;
 		int rightCol = sithLeft ? Font.CR_LIGHTBLUE : Font.CR_RED;
-		int labelBarH = int(BigFont.GetHeight() * lblSc) + max(6, lh / 20);
+		int labelBarH = int(ceil(BigFont.GetHeight() * max(lblScL, lblScR))) + max(6, lh / 20);
+		labelBarH = min(labelBarH, max(10, int(double(lh) * (PB_KATANA_DUAL_LABEL_MAX_FRAC_OF_TILE_H + 0.04))));
 		DrawBlockyTile(lx, ly, lw, lh, hoverL, false, 1.0);
 		DrawBlockyTile(rx, ry, rw, rh, hoverR, false, 1.0);
 		{
 			string lt = sithLeft ? "Sith Lord" : "Jedi Master";
 			string ltFull = lt;
 			int maxW = lw - 10;
-			while (lt.length() > 0 && int(BigFont.StringWidth(lt) * lblSc) > maxW)
+			while (lt.length() > 0 && int(BigFont.StringWidth(lt) * lblScL) > maxW)
 				lt = lt.Mid(0, lt.length() - 1);
 			if (lt.length() < ltFull.length() && lt.length() >= 2)
 			{
 				lt.DeleteLastCharacter();
 				lt = lt .. "..";
 			}
-			double lcx = lx + (lw - BigFont.StringWidth(lt) * lblSc) / 2.0;
-			double lcy = ly + (labelBarH - BigFont.GetHeight() * lblSc) / 2.0;
+			double lcx = lx + (lw - BigFont.StringWidth(lt) * lblScL) / 2.0;
+			double lcy = ly + (labelBarH - BigFont.GetHeight() * lblScL) / 2.0;
 			int lc = hoverL ? Font.CR_OLIVE : leftCol;
 			Screen.DrawText(BigFont, lc, int(lcx), int(lcy), lt,
-				DTA_ScaleX, lblSc, DTA_ScaleY, lblSc);
+				DTA_ScaleX, lblScL, DTA_ScaleY, lblScL);
 		}
 		{
 			string rt = sithLeft ? "Jedi Master" : "Sith Lord";
 			string rtFull = rt;
 			int maxWr = rw - 10;
-			while (rt.length() > 0 && int(BigFont.StringWidth(rt) * lblSc) > maxWr)
+			while (rt.length() > 0 && int(BigFont.StringWidth(rt) * lblScR) > maxWr)
 				rt = rt.Mid(0, rt.length() - 1);
 			if (rt.length() < rtFull.length() && rt.length() >= 2)
 			{
 				rt.DeleteLastCharacter();
 				rt = rt .. "..";
 			}
-			double rcx = rx + (rw - BigFont.StringWidth(rt) * lblSc) / 2.0;
-			double rcy = ry + (labelBarH - BigFont.GetHeight() * lblSc) / 2.0;
+			double rcx = rx + (rw - BigFont.StringWidth(rt) * lblScR) / 2.0;
+			double rcy = ry + (labelBarH - BigFont.GetHeight() * lblScR) / 2.0;
 			int rc = hoverR ? Font.CR_OLIVE : rightCol;
 			Screen.DrawText(BigFont, rc, int(rcx), int(rcy), rt,
-				DTA_ScaleX, lblSc, DTA_ScaleY, lblSc);
+				DTA_ScaleX, lblScR, DTA_ScaleY, lblScR);
 		}
 		TextureID texL;
 		TextureID texR;

@@ -5,7 +5,7 @@ class PB_KillstreakHandler : EventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
-		PB_KillstreakMessageHandler.KS_ClearPendingAll();
+		KSHUDMessageHandler.KS_ClearPendingAll();
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
 			currentStreak[i] = 0;
@@ -94,7 +94,7 @@ class PB_KillstreakHandler : EventHandler
 	{
 		if (!who) return;
 		if (who is "PlayerPawn")
-			PB_KillstreakMessageHandler.KS_ClearPendingForPlayer(PlayerPawn(who));
+			KSHUDMessageHandler.KS_ClearPendingForPlayer(PlayerPawn(who));
 		Inventory t;
 		while ((t = who.FindInventory("PB_KillstreakMode"))) t.Destroy();
 		while ((t = who.FindInventory("PB_KillstreakFlare"))) t.Destroy();
@@ -143,17 +143,17 @@ class PB_KillstreakHandler : EventHandler
 	{
 		String cap = PBAnnouncerHookCaption(st);
 		if (cap == "") return;
-		if (!PB_KillstreakMessageHandler.PB_BigmsgOn())
+		if (!KSHUDMessageHandler.BigmsgOn())
 		{
 			plr.A_Print("Kill streak active!", 2.0);
 			plr.A_Print(cap, 2.0);
 			return;
 		}
 		int pn = plr.PlayerNumber();
-		PB_KillstreakMessageHandler.PB_KsPlainMsg(
+		KSHUDMessageHandler.PlainMsg(
 			pn, "BIGFONT2", "Kill streak active!", (240, 110), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
 			(0.2, 2.5, 0.4), 0, 13, BaseStatusBar.HUDMSGLayer_OverHUD);
-		PB_KillstreakMessageHandler.PB_KsPlainMsg(
+		KSHUDMessageHandler.PlainMsg(
 			pn, "BIGFONT2", cap, (240, 140), (480, 360), -1, (0, 0), Font.CR_WHITE,
 			(0.2, 2.5, 0.4), 0, 14, BaseStatusBar.HUDMSGLayer_OverHUD);
 	}
@@ -164,28 +164,28 @@ class PB_KillstreakHandler : EventHandler
 		PB_KillStreakPowerUp.PBRollReward(plr, rewardClass, rewardMsg);
 		if (rewardClass == "")
 		{
-			if (!PB_KillstreakMessageHandler.PB_BigmsgOn())
+			if (!KSHUDMessageHandler.BigmsgOn())
 			{
 				plr.A_Print(PBStreakTitle(count), 2.0);
 				return;
 			}
-			PB_KillstreakMessageHandler.PB_KsWaggleMsg(
+			KSHUDMessageHandler.WaggleMsg(
 				plr.PlayerNumber(), "BIGFONT2", PBStreakTitle(count), (240, 120), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
 				(0.2, 3, 0.5), 0.5, 2.0, 1.0, 0, 11, BaseStatusBar.HUDMSGLayer_OverHUD);
 			return;
 		}
 		plr.GiveInventory("PB_KSFreeze", 1);
-		PB_KillstreakMessageHandler.KS_SetPendingReward(plr, rewardClass, rewardMsg);
+		KSHUDMessageHandler.KS_SetPendingReward(plr, rewardClass, rewardMsg);
 		plr.GiveInventory("PB_KillStreakPowerUp", 1);
-		if (!PB_KillstreakMessageHandler.PB_BigmsgOn())
+		if (!KSHUDMessageHandler.BigmsgOn())
 		{
 			plr.A_Print(PBStreakTitle(count), 2.0);
 			return;
 		}
-		PB_KillstreakMessageHandler.PB_KsWaggleMsg(
+		KSHUDMessageHandler.WaggleMsg(
 			plr.PlayerNumber(), "BIGFONT2", PBStreakTitle(count), (240, 120), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
 			(0.2, 3, 0.5), 0.5, 2.0, 1.0, 0, 11, BaseStatusBar.HUDMSGLayer_OverHUD);
-		PB_KillstreakMessageHandler.PB_KsPlainMsg(
+		KSHUDMessageHandler.PlainMsg(
 			plr.PlayerNumber(), "BIGFONT2", rewardMsg, (240, 154), (480, 360), -1, (0, 0), Font.CR_WHITE,
 			(0.2, 3, 0.5), 0, 12, BaseStatusBar.HUDMSGLayer_OverHUD);
 	}
