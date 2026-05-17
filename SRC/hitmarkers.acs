@@ -1,5 +1,6 @@
 /*-----------------------\
    Hitmarkers by Tekish
+   SUPERSEDED: zscript/Hitmarkers/PB_HitmarkersUi.zsc (removed from LOADACS.txt).
 \-----------------------*/
 
 #library "hitmarkers"

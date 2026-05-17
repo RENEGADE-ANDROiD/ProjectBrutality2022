@@ -1,3 +1,4 @@
+// Homing loops superseded by zscript/Weapons/PB_RLACSHandler.zc — keep lump loaded for lock-on indicator ACS helpers in ROCKETLAUNCHER.dec.
 // Guided rocket launcher ACS — by Scotty. Optional blue rocket trails when cvar SC_DEBUG_MODE == 1.
 
 #include "zcommon.acs"

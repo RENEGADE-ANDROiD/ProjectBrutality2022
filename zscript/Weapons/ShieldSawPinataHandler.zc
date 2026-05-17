@@ -36,7 +36,7 @@ class PB_ShieldSawPinataHandler : EventHandler
 
 	clearscope static bool IsShieldSawActor(Actor a)
 	{
-		return a && (a is "ShieldSawProjectile" || a is "ShieldSawTargetChecker");
+		return a && a is "ShieldSawProjectile";
 	}
 
 	clearscope static class<Actor> PinataTierFor(Actor victim)

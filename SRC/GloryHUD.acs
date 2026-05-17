@@ -1,6 +1,8 @@
 #library "commands"
 #include "zcommon.acs"
 
+// SUPERSEDED: zscript/GloryKills/PB_GloryFuelHudOverlay.zc (removed from LOADACS.txt).
+
 #define GLORYHUDMSG (HUDMSG_PLAIN | HUDMSG_ALPHA | HUDMSG_LAYER_OVERHUD | HUDMSG_NOTWITHFULLMAP)
 
 script "GloryHud" ENTER

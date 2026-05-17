@@ -1,128 +1,181 @@
 /*-----------------------\
    Hitmarkers by Tekish
+   PB 2022 fold: attacker resolve + HeadshotTarget hitboxes (Species "Hitbox")
+   UI + sound: PB_HitmarkersUi.zsc (replaces SRC/hitmarkers.acs)
 \-----------------------*/
 
-class hitmarkersbridge
+class hitmarkershandler : EventHandler
 {
-	ui private static int getconsoleplayer()
-	{
-		return consoleplayer;
-	}
-
-	ui private static bool getdeath()
-	{
-		playerinfo player = players[consoleplayer];
-
-		if (player.mo is "PlayerChunk")
-			return true;
-
-		return false;
-	}
-
-	ui private static bool getnoautosavehint()
-	{
-		if (level.info && level.info.flags2 & LEVEL2_NOAUTOSAVEHINT)
-			return true;
-
-		return false;
-	}
-
-	ui private static int gettop()
-	{
-		return statusbar.gettopofstatusbar();
-	}
-
-	ui private static void playsound(sound sound, int channel, int flags, float volume, float attenuation)
-	{
-		s_startsound(sound, channel, flags, volume, attenuation);
-	}
-}
-
-class hitmarkershandler : eventhandler
-{
-	static const name damagenames[] = { "Acid", "Bleeding", "Fire", "Poison" };
+	static const Name damagenames[] = { "Acid", "Bleeding", "Fire", "Poison" };
 	static const int damagetypes[] = { 4, 2, 3, 5 };
 
-	static const name targetdetections[] =
+	static const Name targetexceptions[] =
 	{
-		// Diamond Dragon: Head Hitboxes
-		"CommandoHeadHitbox", "CommandoHelmetHeadHitbox", "CommandoHelmetHeadHitboxBlue", "HeadHitbox", "HelmetHitbox", "HelmetHitbox2", "HelmetHitbox2Blue", "HelmetHitbox2Blue2", "HelmetHitbox2Blue3", "HelmetHitbox2BlueRedBlood", "HelmetHitbox2RiotShield", "HunterHeadHitbox", "ImpHeadHitbox", "MechaHeadHitbox", "RevenantHeadHitbox", "TerminatorHeadHitbox", "VileHeadHitbox"
+		"ExplosiveBarrel1",
+		"HeavyMachineGunHitsProjectiles",
+		"SZ_ExplosiveBarrel1",
+		"SZ_ExplosiveBarrel2",
+		"SZ_SupplyBarrel"
 	};
 
-	static const name targetdetectionsplayerclass[] =
+	static const string HM_ANIM_DEF_GLYPHS[] =
 	{
-		// Diamond Dragon
-		"Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi", "Kiwi"
+		"A", "B", "C", "D", "E", "F", "G", "H", "I"
 	};
 
-	static const name targetexceptions[] =
+	static const string HM_ANIM_IMP_GLYPHS[] =
 	{
-		"ExplosiveBarrel1", 				// Brutal Doom, Project Brutality: Explosive Barrel
-		"HeavyMachineGunHitsProjectiles",	// Brutal Doom: Helicopter/Tank Projectiles
-		"SZ_ExplosiveBarrel1",				// Doomzone: Explosive Barrel
-		"SZ_ExplosiveBarrel2",				// Doomzone: Explosive Barrel
-		"SZ_SupplyBarrel"					// Doomzone: Supply Barrel
+		"A", "B", "C", "D", "E", "E", "E", "E", "E", "E", "E", "F", "G", "H", "I"
 	};
 
-	private bool targetdetection(name target, name playerclass)
+	clearscope static PlayerPawn HM_ResolvePlayer(Actor a)
 	{
-		for (int i = 0; i < targetdetections.size(); i++)
+		for (int i = 0; a && i < 10; i++)
 		{
-			if (targetdetectionsplayerclass[i] == playerclass && targetdetections[i] == target)
+			if (a is "PlayerPawn" && a.player)
+				return PlayerPawn(a);
+			Actor next = a.target != null ? a.target : (a.master != null ? a.master : a.tracer);
+			if (!next || next == a)
+				break;
+			a = next;
+		}
+		return null;
+	}
+
+	clearscope static PlayerPawn HM_ResolveAttacker(WorldEvent e)
+	{
+		if (!e)
+			return null;
+		PlayerPawn p = HM_ResolvePlayer(e.Inflictor);
+		if (p)
+			return p;
+		p = HM_ResolvePlayer(e.DamageSource);
+		if (p)
+			return p;
+		if (e.Thing)
+			return HM_ResolvePlayer(e.Thing.target);
+		return null;
+	}
+
+	clearscope static bool HM_IsPbHeadHitbox(Actor t)
+	{
+		if (!t)
+			return false;
+		Name cn = t.GetClassName();
+		String sn = cn;
+		return sn.IndexOf("HeadshotTarget") >= 0
+			|| sn.IndexOf("LegTarget") >= 0
+			|| sn.IndexOf("BossTarget") >= 0;
+	}
+
+	clearscope static bool HM_IsValidTarget(Actor t, PlayerPawn attacker, PlayerInfo localPi)
+	{
+		if (!t || !attacker || !localPi || !localPi.mo)
+			return false;
+
+		if (!deathmatch)
+		{
+			if (t.bISMONSTER)
 				return true;
+			if (HM_IsPbHeadHitbox(t))
+				return true;
+			return false;
+		}
+
+		if (t is "PlayerPawn")
+		{
+			let victim = PlayerPawn(t);
+			if (!victim || !victim.player)
+				return false;
+			if (victim.player == localPi)
+				return false;
+			if (victim.isteammate(localPi.mo))
+				return false;
+			return true;
 		}
 
 		return false;
 	}
 
-	private bool targetexception(name target)
+	private bool targetexception(Actor t)
 	{
+		if (!t)
+			return true;
+
+		if (t is "NukageBarrel")
+			return true;
+
+		Name cn = t.GetClassName();
 		for (int i = 0; i < targetexceptions.size(); i++)
 		{
-			if (targetexceptions[i] == target)
+			if (targetexceptions[i] == cn)
 				return true;
 		}
 
 		return false;
 	}
 
-	override void worldthingdamaged(worldevent e)
+	clearscope static bool HM_ShouldRunFor(PlayerInfo plr)
 	{
-		playerinfo player = players[consoleplayer];
-		bool enabled = cvar.getcvar("hm_enabled", player).getbool();
-		bool kill = cvar.getcvar("hm_bridge_kill", player).getbool();
+		if (!plr || !plr.mo)
+			return false;
+		if (level.mapname == "TITLEMAP")
+			return false;
+		if (level.info && (level.info.flags2 & LEVEL2_NOAUTOSAVEHINT))
+			return false;
+		return CVar.GetCVar("hm_enabled", plr).GetBool();
+	}
 
-		/*
-		if (e.damage && e.damagesource && e.damagetype && e.thing)
-			console.printf("\nSource: %s\nTarget: %s\nType: %s\nMonster: %d\nDamage: %d\nHealth: %d", e.damagesource.getclassname(), e.thing.getclassname(), e.damagetype, e.thing.bISMONSTER, e.damage, e.thing.health);
-		*/
-
-		if (enabled && !kill && e.damagesource && e.thing && e.damagesource is "PlayerPawn" && e.damagesource.playernumber() == consoleplayer && ((!deathmatch && (e.thing.bISMONSTER || targetdetection(e.thing.getclassname(), player.mo.getclassname()))) || (e.thing is "PlayerPawn" && e.thing.playernumber() != consoleplayer && !e.thing.isteammate(player.mo))))
+	clearscope static bool HM_StyleType(int style, int type)
+	{
+		switch (type)
 		{
-			if (!targetexception(e.thing.getclassname()))
-			{
-				int type = 1;
-
-				for (int i = 0; i < damagetypes.size(); i++)
-				{
-					if (damagenames[i] == e.damagetype)
-					{
-						if (cvar.getcvar("hm_dot", player).getbool())
-							type = damagetypes[i];
-
-						break;
-					}
-				}
-
-				if (e.thing.health > 0)
-					kill = false;
-				else
-					kill = true;
-
-				cvar.getcvar("hm_bridge_damage", player).setint(cvar.getcvar("hm_bridge_damage", player).getint() + e.damage);
-				cvar.getcvar("hm_bridge_kill", player).setbool(kill);
-				cvar.getcvar("hm_bridge_type", player).setint(type);
-			}
+			case 0:
+				return style >= 0 && style <= 11;
+			case 1:
+				return style == 0 || style == 3 || style == 6 || style == 7
+					|| style == 8 || style == 9;
+			case 2:
+				return style == 1 || style == 2 || style == 4 || style == 5;
+			case 3:
+				return style == 10 || style == 11;
 		}
+		return false;
+	}
+
+	clearscope static int HM_GetColor(int colorIndex)
+	{
+		switch (colorIndex)
+		{
+			case 1: return Font.CR_LIGHTBLUE;
+			case 2: return Font.CR_DARKBROWN;
+			case 3: return Font.CR_CREAM;
+			case 4: return Font.CR_CYAN;
+			case 5: return Font.CR_BLACK;
+			case 6: return Font.CR_DARKGREEN;
+			case 7: return Font.CR_DARKRED;
+			case 8: return Font.CR_DARKGRAY;
+			case 9: return Font.CR_GREEN;
+			case 10: return Font.CR_OLIVE;
+			case 11: return Font.CR_ORANGE;
+			case 12: return Font.CR_BRICK;
+			case 13: return Font.CR_PURPLE;
+			case 14: return Font.CR_RED;
+			case 15: return Font.CR_SAPPHIRE;
+			case 16: return Font.CR_TEAL;
+			case 17: return Font.CR_WHITE;
+			case 18: return Font.CR_YELLOW;
+		}
+		return Font.CR_UNTRANSLATED;
+	}
+
+	clearscope static String HM_FontWithSize(String base, PlayerInfo plr)
+	{
+		int size = CVar.GetCVar("hm_size", plr).GetInt();
+		if (size == 1)
+			return base .. "2";
+		if (size == 2)
+			return base .. "3";
+		return base;
 	}
 }

@@ -89,19 +89,17 @@ ACTOR LockOnIndicator_Painted_1 : LockOnIndicator
 	{
 		Spawn:
 			TNT1 A 0
-			TNT1 A 1 {
-				Thing_ChangeTID(0, 30001);
-				A_SetUserVar("user_zoffset", CallACS("lockOnTargetHeight"));
-			}
+			TNT1 A 1 Thing_ChangeTID(0, 30001)
 			Goto Exist
 		Exist:
-			LCK0 B 1 BRIGHT A_Warp(AAPTR_MASTER, 0, 0, user_zoffset/2, 0, WARPF_NOCHECKPOSITION)
-			LCK0 B 1 BRIGHT ACS_NamedExecuteAlways("getHomingCoords_1",0,x,y,z)
-			LCK0 B 0 A_JumpIf(ACS_NamedExecuteWithResult("checkLockOnTargetState"),"Remove")
+			LCK0 B 1 BRIGHT {
+				A_SetUserVar("user_zoffset", CallACS("lockOnTargetHeight"));
+				A_Warp(AAPTR_MASTER, 0, 0, user_zoffset/2, 0, WARPF_NOCHECKPOSITION);
+			}
+			LCK0 B 0 A_JumpIf(ACS_NamedExecuteWithResult("checkLockOnTargetState"), "Remove")
 			Loop
 		Remove:
 		Death:
-			TNT1 A 1 ACS_NamedExecuteAlways("UnsetHomingTarget1",0)
 			Stop
 	}
 }
@@ -112,21 +110,17 @@ ACTOR LockOnIndicator_Painted_2 : LockOnIndicator_Painted_1
 	{
 		Spawn:
 			TNT1 A 0
-			TNT1 A 1 {
-				Thing_ChangeTID(0, 30002);
-				A_SetUserVar("user_zoffset", CallACS("lockOnTargetHeight"));
-			}
+			TNT1 A 1 Thing_ChangeTID(0, 30002)
 			Goto Exist
 		Exist:
 			LCK0 B 1 BRIGHT {
+				A_SetUserVar("user_zoffset", CallACS("lockOnTargetHeight"));
 				A_Warp(AAPTR_MASTER, 0, 0, user_zoffset/2, 0, WARPF_NOCHECKPOSITION);
-				ACS_NamedExecuteAlways("getHomingCoords_2",0,x,y,z);
 			}
-			LCK0 B 0 A_JumpIf(ACS_NamedExecuteWithResult("checkLockOnTargetState"),"Remove")
+			LCK0 B 0 A_JumpIf(ACS_NamedExecuteWithResult("checkLockOnTargetState"), "Remove")
 			Loop
 		Remove:
 		Death:
-			TNT1 A 1 ACS_NamedExecuteAlways("UnsetHomingTarget2",0)
 			Stop
 	}
 }
@@ -137,21 +131,17 @@ ACTOR LockOnIndicator_Painted_3 : LockOnIndicator_Painted_1
 	{
 		Spawn:
 			TNT1 A 0
-			TNT1 A 1 {
-				Thing_ChangeTID(0, 30003);
-				A_SetUserVar("user_zoffset", CallACS("lockOnTargetHeight"));
-			}
+			TNT1 A 1 Thing_ChangeTID(0, 30003)
 			Goto Exist
 		Exist:
 			LCK0 B 1 BRIGHT {
+				A_SetUserVar("user_zoffset", CallACS("lockOnTargetHeight"));
 				A_Warp(AAPTR_MASTER, 0, 0, user_zoffset/2, 0, WARPF_NOCHECKPOSITION);
-				ACS_NamedExecuteAlways("getHomingCoords_3",0,x,y,z);
 			}
-			LCK0 B 0 A_JumpIf(ACS_NamedExecuteWithResult("checkLockOnTargetState"),"Remove")
+			LCK0 B 0 A_JumpIf(ACS_NamedExecuteWithResult("checkLockOnTargetState"), "Remove")
 			Loop
 		Remove:
 		Death:
-			TNT1 A 1 ACS_NamedExecuteAlways("UnsetHomingTarget3",0)
 			Stop
 	}
 }
@@ -223,7 +213,7 @@ ACTOR GuidedLaser: FastProjectile
     {
 	Spawn:
 		LEYS GG 0
-		LEYS G 1 BRIGHT ACS_NamedExecute("getLaserCoords",0,x,y,z)
+		LEYS G 1 BRIGHT
 		Stop
 	}
 }

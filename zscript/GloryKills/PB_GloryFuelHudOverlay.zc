@@ -1,8 +1,8 @@
-// Eternal Glory fuel strip (NewHUD). Drawn in RenderOverlay so it sits above fullscreen SBARINFO.
+// Glory Kill fuel HUD — all background styles (replaces SRC/GloryHUD.acs).
 
 extend class PB_EventHandler
 {
-	ui void DrawGloryKillEternalFuelHud()
+	ui void DrawGloryKillFuelHud()
 	{
 		if (!playeringame[consoleplayer])
 			return;
@@ -15,10 +15,109 @@ extend class PB_EventHandler
 		let cvBe = CVar.GetCVar("be_fuelhud", plr);
 		if (!cvBe || !cvBe.GetBool())
 			return;
-		let cvBg = CVar.GetCVar("sv_fuelhud_background", plr);
-		if (!cvBg || cvBg.GetInt() != 3)
-			return;
 
+		let cvBg = CVar.GetCVar("sv_fuelhud_background", plr);
+		int bg = cvBg ? cvBg.GetInt() : 3;
+		if (bg == 3)
+			DrawGloryKillEternalFuelHud(plr);
+		else
+			DrawGloryKillLegacyFuelHud(plr, bg);
+	}
+
+	ui void DrawGloryKillLegacyFuelHud(PlayerInfo plr, int bgStyle)
+	{
+		let cvSize = CVar.GetCVar("sv_fuelhud_size", plr);
+		int sizeMode = cvSize ? cvSize.GetInt() : 0;
+		double virtualW, virtualH;
+		if (sizeMode == 2)
+		{
+			virtualW = 640;
+			virtualH = 480;
+		}
+		else if (sizeMode == 1)
+		{
+			virtualW = 800;
+			virtualH = 600;
+		}
+		else
+		{
+			virtualW = 1024;
+			virtualH = 768;
+		}
+
+		let cvSX = CVar.GetCVar("sv_fuelhud_x", plr);
+		let cvSY = CVar.GetCVar("sv_fuelhud_y", plr);
+		int ox = cvSX ? cvSX.GetInt() : 0;
+		int oy = cvSY ? cvSY.GetInt() : 0;
+
+		double scaleX = Screen.GetWidth() / virtualW;
+		double scaleY = Screen.GetHeight() / virtualH;
+		double cx = (virtualW * 0.5 + double(ox)) * scaleX;
+		double cyHud = virtualH * 0.5 + double(oy);
+		int offset = 0;
+
+		String topFont = "FUELPA01";
+		if (bgStyle == 2)
+			topFont = "";
+		else if (bgStyle == 1)
+		{
+			if (plr.mo.CountInv("FlameBelchSelected") == 1)
+				topFont = "CRUCPA01";
+			else if (plr.mo.CountInv("IceBombSelected") == 1)
+				topFont = "CRUCPA02";
+			else
+				topFont = "CRUCPA03";
+			offset = -3;
+		}
+
+		DrawGkHudLump(topFont, cx, (cyHud + double(offset - 12)) * scaleY, 0.75);
+
+		int cruc = plr.mo.CountInv("CrucibleEnergy");
+		String crucFont = "CRAMMO00";
+		if (cruc >= 1 && cruc < 2)
+			crucFont = "CRAMMO01";
+		else if (cruc >= 2 && cruc < 3)
+			crucFont = "CRAMMO02";
+		else if (cruc >= 3)
+			crucFont = "CRAMMO03";
+		DrawGkHudLump(crucFont, cx, (cyHud - 12.0) * scaleY, 0.85);
+
+		String midFont = "";
+		if (bgStyle == 2)
+			midFont = "";
+		else if (bgStyle < 2)
+			midFont = "FUELPA01";
+		DrawGkHudLump(midFont, cx, cyHud * scaleY, 0.75);
+
+		int bpt = plr.mo.CountInv("BPtoken");
+		String bpFont = "BPAMMO00";
+		if (bpt == 1)
+			bpFont = "BPAMMO01";
+		else if (bpt == 2)
+			bpFont = "BPAMMO02";
+		else if (bpt == 3)
+			bpFont = "BPAMMO03";
+		else if (bpt == 4)
+			bpFont = "BPAMMO04";
+		else if (bpt == 5)
+			bpFont = "BPAMMO05";
+		DrawGkHudLump(bpFont, cx, cyHud * scaleY, 0.85);
+	}
+
+	ui void DrawGkHudLump(String lumpBase, double x, double y, double alpha)
+	{
+		if (!lumpBase.Length())
+			return;
+		String path = "graphics/hud/" .. lumpBase .. ".png";
+		TextureID tex = TexMan.CheckForTexture(path, TexMan.Type_Any);
+		if (!tex.IsValid())
+			return;
+		Screen.DrawTexture(tex, false, x, y,
+			DTA_Alpha, alpha, DTA_CenterOffset, true);
+	}
+
+	ui void DrawGloryKillEternalFuelHud(PlayerInfo plr)
+	{
 		let cvSX = CVar.GetCVar("sv_fuelhud_x", plr);
 		let cvSY = CVar.GetCVar("sv_fuelhud_y", plr);
 		int ox = cvSX ? cvSX.GetInt() : 0;
@@ -27,7 +126,6 @@ extend class PB_EventHandler
 		double vsc = Screen.GetHeight() / 480.0;
 		double cx = Screen.GetWidth() * 0.5 + double(ox) * vsc;
 		double cy = Screen.GetHeight() * 0.5 + double(oy) * vsc;
-		// Center-to-center step per icon (legacy ACS used ~21px then wider gaps; uniform 21 avoids edge overlap at 480p).
 		double step = 21.0 * vsc;
 		double x = cx;
 
@@ -94,7 +192,18 @@ extend class PB_EventHandler
 			ic == 1 ? "graphics/hud/glorykills/newhud/SCICB01.png" : "graphics/hud/glorykills/newhud/SCICB00.png",
 			TexMan.Type_Any);
 		if (tIC.IsValid())
+		{
 			Screen.DrawTexture(tIC, false, x, cy,
+				DTA_Alpha, 0.85, DTA_CenterOffset, true);
+			x += step;
+		}
+
+		int ssReady = plr.mo.CountInv("ShieldSawReady");
+		TextureID tSS = TexMan.CheckForTexture(
+			ssReady == 1 ? "graphics/hud/glorykills/newhud/GKSHA01.png" : "graphics/hud/glorykills/newhud/GKSHA00.png",
+			TexMan.Type_Any);
+		if (tSS.IsValid())
+			Screen.DrawTexture(tSS, false, x, cy,
 				DTA_Alpha, 0.85, DTA_CenterOffset, true);
 	}
 }

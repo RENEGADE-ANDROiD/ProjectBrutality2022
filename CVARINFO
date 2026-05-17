@@ -598,6 +598,7 @@ server bool be_UseELammo = false;
 server bool be_FBperformance = false;
 server int sv_Flamebelch_Cool = 10;
 server int sv_Icebomb_Cool = 10;
+server int sv_ShieldSaw_Cool = 10;
 server bool be_LowHealthAlert = true;
 server int sv_LowHealthValue = 30;
 server bool be_LowArmorAlert = true;

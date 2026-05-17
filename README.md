@@ -66,7 +66,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **UAC Nanotech Energy Beam Katana** — energy blade with quick melee integration and barrier-style behavior.
 - **Argent Sith Beam Katana** — argent blade variant with its own energy attacks and shield/barrier handling.
 - **Tiberium's Soulblade / Vorpal Blade** — exotic blade with charged and special attack behavior (*see CREDITS.txt for attribution*).
-- **Dragon Slayer** — heavy energy-melee / bolt-repeater-style attacks (*see CREDITS.txt*).
+- **Dragon Slayer** — heavy energy-melee / bolt-repeater with empowered strikes and an Alt-Fire nail volley. Uses a hidden **wear** pool that drops with slashes and volleys; the blade **breaks** at zero wear and a duplicate pickup **refills wear**. Obtained only from **Obsidian Ravager** kills (cyber-tier spawns can roll the Ravager); it is **not** placed by chainsaw **map** weapon spawners (*see CREDITS.txt*).
 - **Shield Saw** — not a separate weapon slot entry; granted on spawn like other starter gear. With the saw “charged,” Quick Melee throws it at range; **Recall Shield Saw** pulls it back. It no longer drops from the chainsaw map spawner and is not shown on the HUD inventory strip.
 
 **Slot 2 — Sidearms & personal defense**
@@ -308,7 +308,7 @@ Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki11
 
 **Recent additions in this line:**
 
-- **Boss-tech weapon wear:** cyber launcher, mastermind chaingun, mancubus / Daedabus flame cannon, and Marauder shotgun use limited **durability** (separate from ammo) with weapon **break** at zero wear and **repair to full wear** when picking up the same gun again; monster **drops** use weighted chances instead of guaranteed boss loot where appropriate. The chaingun and flame cannon are **not** placed by rocket / plasma **map** weapon spawners (monster sources only). The **UAC Biological Acid Launcher** is also **monster-only**: weighted drops from **Daedabus** and **Belphegor**, with no plasma spawner placement.
+- **Boss-tech weapon wear:** cyber launcher, mastermind chaingun, mancubus / Daedabus flame cannon, Marauder shotgun, and **Dragon Slayer** use limited **durability** (separate from ammo) with weapon **break** at zero wear and **repair to full wear** when picking up the same gun again; monster **drops** use weighted chances instead of guaranteed boss loot where appropriate. The chaingun and flame cannon are **not** placed by rocket / plasma **map** weapon spawners (monster sources only). The **Dragon Slayer** is **not** placed by chainsaw **map** spawners (Obsidian Ravager death only). The **UAC Biological Acid Launcher** is also **monster-only**: weighted drops from **Daedabus** and **Belphegor**, with no plasma spawner placement.
 - Combined **2022 Enhanced Brootality** gore from Brutal Doom 22 and Brutal Pack V10.
 - Expanded first-person executions with art lineage from **Brutal Doom *El Diablo* Edition** and related packs.
 - Glory Kill shoulder launcher art and Eternal-style fuel HUD glyphs aligned with the newer Glory Kills presentation.
