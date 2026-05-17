@@ -36,6 +36,9 @@ Gameplay and content in this release
 - Metal Sniper, XM-21, ShieldSaw, Molotov: weapon packages included in the
   supported weapon and equipment set (see per-file notes). Shield Saw behavior
   traces to **GK_ShieldSaw** (**HUNG**).
+- **HitMarkers** (Tekish — [github.com/Tekkish/HitMarkers](https://github.com/Tekkish/HitMarkers)):
+  hit/kill marker HUD + impact sounds; integrated into PB 2022 by **TomiikiPro**
+  (`zscript/Hitmarkers/hitmarkers.zsc`, `SRC/hitmarkers.acs`, `hm_*` cvars).
 - **UAC Prototype Dark Matter Rifle** (PB 3.x **Pulse Cannon** add-on): folded as
   **`PB_DarkMatterRifle`** — upstream shipped as **`PulseCannon.dec`** without a
   standalone author line in the add-on; credits the original PB 3.x weapon package

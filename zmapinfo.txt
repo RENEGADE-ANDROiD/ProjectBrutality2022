@@ -139,6 +139,13 @@ GameInfo
 	AddEventHandlers = "PB_InstantWeaponSwitchHandler"
 	AddEventHandlers = "CSSGEvent"
 	AddEventHandlers = "PB_ShieldSawPinataHandler"
+	AddEventHandlers = "ShieldSawPlayerHandler"
+	AddEventHandlers = "PB_GKEquipmentCooldownHandler"
+	AddEventHandlers = "PB_LowHealthAlertHandler"
+	AddEventHandlers = "PB_BloodPunchReadyHandler"
+	AddEventHandlers = "PB_MarauderSupportHandler"
+	AddEventHandlers = "PB_RLACSHandler"
+	AddEventHandlers = "PB_DMRReticleHandler"
 	NormForwardMove = 0x32, 0x32
 	NormSideMove = 0x32, 0x32
 }
@@ -384,4 +391,8 @@ DoomEdNums
 	30130 = Helemental
 	30135 = Hierophant
 	2546  = CyberdemonBoss
+}
+gameinfo
+{
+	addeventhandlers = "hitmarkershandler"
 }

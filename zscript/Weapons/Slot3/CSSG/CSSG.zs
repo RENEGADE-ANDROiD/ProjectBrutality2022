@@ -6,6 +6,7 @@ Class PB_CSSG : PB_WeaponBase
 		Obituary "%o was devastated by %k.";
 		Inventory.PickupSound "COMSSGUP";
 		Tag "Commander Shotgun";
+		Inventory.Icon "SGN2A0";
 		Inventory.AltHUDIcon "SGN2A0";
 		scale 0.5;
 		weapon.slotnumber 3;

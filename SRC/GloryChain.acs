@@ -1,6 +1,7 @@
 #library "commands"
 #include "zcommon.acs"
 
+// SUPERSEDED by PB_TacticalFeelHandler NetworkProcess (removed from LOADACS.txt).
 // Glory Kill netevents: glory saw hold/release, shoulder cannon, cryo shoulder selection.
 
 Script 6000 (VOID) NET

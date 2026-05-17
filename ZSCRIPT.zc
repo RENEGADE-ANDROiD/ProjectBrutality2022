@@ -24,6 +24,11 @@ const MAXITERATIONS = 32676;
 #include "zscript/TiltPlus/TiltPlusPlusMenu.zc"
 #include "zscript/PBPDA.zc"
 #include "zscript/GloryKills/PB_GloryFuelHudOverlay.zc"
+#include "zscript/GloryKills/PB_GKEquipmentCooldownHandler.zc"
+#include "zscript/GloryKills/PB_LowHealthAlertHandler.zc"
+#include "zscript/GloryKills/PB_BloodPunchReadyHandler.zc"
+#include "zscript/Weapons/PB_RLACSHandler.zc"
+#include "zscript/Monsters/PB_MarauderSupport.zc"
 #include "zscript/Items/PB_XP/PB_XPRewards.zc"
 #include "zscript/PB_VisorOverlay.zc"
 #include "zscript/Items/PBKillstreak/PB_Killstreak_Messages.zc"
@@ -61,6 +66,9 @@ const MAXITERATIONS = 32676;
 #include "zscript/Monsters/Realm667/possessedgibs/giblets.zc"
 #include "zscript/Monsters/Realm667/possessedgibs/possessedgibs.zc"
 #include "zscript/Decorations/PBKeys.zc"
+
+#include "zscript/Hitmarkers/hitmarkers.zsc"
+#include "zscript/Hitmarkers/PB_HitmarkersUi.zsc"
 
 #include "zscript/pb_hitfeedback/sharedmath.zs"
 #include "zscript/pb_hitfeedback/handler.zs"
@@ -173,6 +181,8 @@ const MAXITERATIONS = 32676;
 #include "zscript/SpecialShit/HatExtravaganza.zc"
 
 #include "zscript/PBVP/PBVP.zc"
+
+#include "zscript/Weapons/PB_DMRReticleOverlay.zc"
 
 Class PB_SpecialWheel_Mode
 {

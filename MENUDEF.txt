@@ -379,6 +379,9 @@ OptionMenu "PB_2022AdditionsMenu"
 	Submenu "Damage Numbers Options", "DamNumsOptions"
 	StaticText " ", teal
 	StaticText " ", teal
+	Submenu "$HM_MENU_TITLE", "HM_Options"
+	StaticText " ", teal
+	StaticText " ", teal
 	Option "Enable tactical weapon motion.", "pb_tac_enable", "YesNo"
 	StaticText " ", teal
 	Submenu "Tactical Weapon Motion Options", "PBTacticalMotionOptions"
@@ -701,7 +704,7 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Vorpal Blade (Tiberium's Soulblade)", "pb_NoVorpalBladeWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Dragon Slayer", "pb_NoDragonSlayerWeapon", "SpawnOnOff"
+	Option "Drop Dragon Slayer (Obsidian Ravager)", "pb_NoDragonSlayerWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Stormcast", "pb_NoStormcastWeapon", "SpawnOnOff"
 	StaticText " "
@@ -1661,6 +1664,7 @@ OptionMenu "Glorykills"
 	StaticText " "
 	Slider "Flame belch cooldown (sec)", "sv_Flamebelch_Cool", 10, 60, 1
 	Slider "Ice bomb cooldown (sec)", "sv_Icebomb_Cool", 10, 60, 1
+	Slider "Shield Saw cooldown (sec)", "sv_ShieldSaw_Cool", 10, 60, 1
 	Option "Shoulder/Equipment Uses Gas & Rockets.", "be_UseELammo", YesNo
 	Option "Flame Belch Performance (Lighter VFX).", "be_FBperformance", YesNo
 	Option "Super GL + Shoulder Cryo: Bounce Behavior.", "pb_sglgrenadeimpact", "SGLGrenadeImpact"
@@ -2122,4 +2126,161 @@ OptionString gb_FontValues
 	"SmallFont"    , "$GB_OLD_SMALL_FONT"
 	"ConsoleFont"  , "$GB_CONSOLE_FONT"
 	"BigFont"      , "$GB_BIG_FONT"
+}
+OptionValue "HM_YesNo"
+{
+	0, "$HM_VALUE_NO"
+	1, "$HM_VALUE_YES"
+}
+
+// HitMarkers (Tekish) — folded by TomiikiPro; full options from upstream menudef.txt
+OptionMenu "HM_Options"
+{
+	Title "$HM_MENU_TITLE"
+	Option "$HM_OPTION_ENABLED", "hm_enabled", "HM_YesNo"
+	StaticText ""
+	StaticText "$HM_MENU_HITMARKER", 1
+	Option "$HM_OPTION_SHOWHITMARKERS", "hm_showhitmarkers", "HM_YesNo"
+	Option "$HM_OPTION_HITSPEED", "hm_hitspeed", "HM_Speed"
+	Option "$HM_OPTION_HITCOLOR", "hm_hitcolor", "HM_Color"
+	Option "$HM_OPTION_HITSTYLE", "hm_hitstyle", "HM_Style"
+	Option "$HM_OPTION_SHOWKILLMARKERS", "hm_showkillmarkers", "HM_YesNo"
+	Option "$HM_OPTION_KILLSPEED", "hm_killspeed", "HM_Speed"
+	Option "$HM_OPTION_KILLCOLOR", "hm_killcolor", "HM_Color"
+	Option "$HM_OPTION_KILLPRIORITY", "hm_killpriority", "HM_YesNo"
+	Option "$HM_OPTION_KILLSTYLE", "hm_killstyle", "HM_Style"
+	Option "$HM_OPTION_SIZE", "hm_size", "HM_Size"
+	Slider "$HM_OPTION_FADEANIMATED", "hm_fadeanimated", 0.1, 1.5, 0.1, 2
+	Slider "$HM_OPTION_FADE", "hm_fade", 0.1, 1.5, 0.1, 2
+	Slider "$HM_OPTION_OPACITY", "hm_opacity", 10, 100, 1, 0
+	StaticText ""
+	StaticText "$HM_MENU_HITSOUND", 1
+	StaticText "$HM_MENU_TEXT_HITSOUND1"
+	StaticText "$HM_MENU_TEXT_HITSOUND2"
+	StaticText "$HM_MENU_TEXT_HITSOUND3"
+	StaticText ""
+	Option "$HM_OPTION_HITSOUNDS", "hm_hitsounds", "HM_YesNo"
+	Option "$HM_OPTION_HITSOUND", "hm_hitsound", "HM_HitSound"
+	Option "$HM_OPTION_KILLSOUNDS", "hm_killsounds", "HM_YesNo"
+	Option "$HM_OPTION_KILLSOUND", "hm_killsound", "HM_KillSound"
+	Option "$HM_OPTION_SOUNDLIMIT", "hm_soundlimit", "HM_YesNo"
+	Slider "$HM_OPTION_VOLUME", "hm_volume", 1, 100, 1, 0
+	StaticText ""
+	StaticText "$HM_MENU_HITDAMAGE", 1
+	StaticText "$HM_MENU_TEXT_HITDAMAGE1"
+	StaticText "$HM_MENU_TEXT_HITDAMAGE2"
+	StaticText "$HM_MENU_TEXT_HITDAMAGE3"
+	StaticText ""
+	Option "$HM_OPTION_HITDAMAGE", "hm_hitdamage", "HM_YesNo"
+	Slider "$HM_OPTION_HITDAMAGEHIGH", "hm_hitdamagehigh", 1, 1000, 1, 0
+	Slider "$HM_OPTION_HITDAMAGEMEDIUM", "hm_hitdamagemedium", 1, 1000, 1, 0
+	StaticText ""
+	StaticText "$HM_MENU_DAMAGEOVERTIME", 1
+	StaticText "$HM_MENU_TEXT_DAMAGEOVERTIME1"
+	StaticText "$HM_MENU_TEXT_DAMAGEOVERTIME2"
+	StaticText "$HM_MENU_TEXT_DAMAGEOVERTIME3"
+	StaticText "$HM_MENU_TEXT_DAMAGEOVERTIME4"
+	StaticText ""
+	Option "$HM_OPTION_DOT", "hm_dot", "HM_YesNo"
+	Option "$HM_OPTION_DOTSPEED", "hm_dotspeed", "HM_Speed"
+	Option "$HM_OPTION_DOTHIT", "hm_dothit", "HM_DotHit"
+	Option "$HM_OPTION_DOTSTYLE", "hm_dotstyle", "HM_Style"
+	Option "$HM_OPTION_DOTSOUNDS", "hm_dotsounds", "HM_DotSound"
+	Option "$HM_OPTION_DOTSOUND", "hm_dotsound", "HM_HitSound"
+}
+
+OptionValue "HM_Color"
+{
+	0, "$HM_VALUE_DEFAULT"
+	1, "$HM_VALUE_BLUE"
+	2, "$HM_VALUE_BROWN"
+	3, "$HM_VALUE_CREAM"
+	4, "$HM_VALUE_CYAN"
+	5, "$HM_VALUE_DARKGRAY"
+	6, "$HM_VALUE_DARKGREEN"
+	7, "$HM_VALUE_DARKRED"
+	8, "$HM_VALUE_GRAY"
+	9, "$HM_VALUE_GREEN"
+	10, "$HM_VALUE_OLIVE"
+	11, "$HM_VALUE_ORANGE"
+	12, "$HM_VALUE_PINK"
+	13, "$HM_VALUE_PURPLE"
+	14, "$HM_VALUE_RED"
+	15, "$HM_VALUE_SAPPHIRE"
+	16, "$HM_VALUE_TEAL"
+	17, "$HM_VALUE_WHITE"
+	18, "$HM_VALUE_YELLOW"
+}
+
+OptionValue "HM_DotHit"
+{
+	0, "$HM_VALUE_NONE"
+	1, "$HM_VALUE_SHOW"
+	2, "$HM_VALUE_COLORIZE"
+}
+
+OptionValue "HM_DotSound"
+{
+	0, "$HM_VALUE_NONE"
+	1, "$HM_VALUE_ONEHUNDREDPERCENTVOLUME"
+	2, "$HM_VALUE_FIFTYPERCENTVOLUME"
+	3, "$HM_VALUE_TWENTYFIVEPERCENTVOLUME"
+	4, "$HM_VALUE_TENPERCENTVOLUME"
+}
+
+OptionValue "HM_HitSound"
+{
+	0, "$HM_VALUE_DEFAULT"
+	2, "$HM_VALUE_CALLOFDUTY4"
+	1, "$HM_VALUE_CALLOFDUTYBLACKOPS4"
+	8, "$HM_VALUE_CALLOFDUTYBLACKOPSCOLDWAR"
+	7, "$HM_VALUE_CALLOFDUTYMODERNWARFARE"
+	9, "$HM_VALUE_CALLOFDUTYMODERNWARFARE3"
+	3, "$HM_VALUE_DOOM2016"
+	4, "$HM_VALUE_OVERWATCH"
+	5, "$HM_VALUE_QUAKE"
+	6, "$HM_VALUE_TEAMFORTRESS2"
+}
+
+OptionValue "HM_KillSound"
+{
+	0, "$HM_VALUE_DEFAULT"
+	1, "$HM_VALUE_CALLOFDUTYBLACKOPS4"
+	8, "$HM_VALUE_CALLOFDUTYBLACKOPSCOLDWAR"
+	7, "$HM_VALUE_CALLOFDUTYMODERNWARFARE"
+	9, "$HM_VALUE_CALLOFDUTYMODERNWARFARE3"
+	2, "$HM_VALUE_OVERWATCH"
+	3, "$HM_VALUE_QUAKECHAMPIONS"
+	6, "$HM_VALUE_QUAKELIVE"
+	4, "$HM_VALUE_TEAMFORTRESS2"
+	5, "$HM_VALUE_TITANFALL2"
+}
+
+OptionValue "HM_Size"
+{
+	0, "$HM_VALUE_NONE"
+	1, "$HM_VALUE_DOUBLE"
+	2, "$HM_VALUE_TRIPLE"
+}
+
+OptionValue "HM_Speed"
+{
+	0, "$HM_VALUE_DEFAULT"
+	1, "$HM_VALUE_DOUBLE"
+}
+
+OptionValue "HM_Style"
+{
+	0, "$HM_VALUE_DEFAULT"
+	1, "$HM_VALUE_DEFAULTANIMATED"
+	2, "$HM_VALUE_DEFAULTANIMATEDREVERSE"
+	6, "$HM_VALUE_CIRCULAR"
+	7, "$HM_VALUE_CIRCULARSMALL"
+	10, "$HM_VALUE_IMPACTANIMATED"
+	11, "$HM_VALUE_IMPACTANIMATEDSMALL"
+	3, "$HM_VALUE_SMALL"
+	4, "$HM_VALUE_SMALLANIMATED"
+	5, "$HM_VALUE_SMALLANIMATEDREVERSE"
+	8, "$HM_VALUE_VERTICAL"
+	9, "$HM_VALUE_VERTICALSMALL"
 }
