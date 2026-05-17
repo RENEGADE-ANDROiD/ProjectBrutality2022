@@ -1,0 +1,101 @@
+// Low health / low armor alert beeps (replaces SRC/lowhealth.acs ENTER scripts).
+
+class PB_LowHealthAlertHandler : EventHandler
+{
+	private bool lowHp[MAXPLAYERS];
+	private bool lowArmorLatched[MAXPLAYERS];
+	private bool wasArmorAbove[MAXPLAYERS];
+
+	override void PlayerEntered(PlayerEvent e)
+	{
+		if (!e)
+			return;
+		int pn = e.PlayerNumber;
+		if (pn < 0 || pn >= MAXPLAYERS)
+			return;
+		lowHp[pn] = false;
+		lowArmorLatched[pn] = false;
+		wasArmorAbove[pn] = false;
+	}
+
+	override void WorldTick()
+	{
+		for (int pn = 0; pn < MAXPLAYERS; pn++)
+		{
+			if (!playeringame[pn])
+				continue;
+			let plr = players[pn];
+			let mo = plr.mo;
+			if (!mo)
+				continue;
+
+			TickLowHealth(pn, plr, mo);
+			TickLowArmor(pn, plr, mo);
+		}
+	}
+
+	private void TickLowHealth(int pn, PlayerInfo plr, Actor mo)
+	{
+		let cvOn = CVar.GetCVar("be_LowHealthAlert", plr);
+		if (!cvOn || !cvOn.GetBool())
+		{
+			lowHp[pn] = false;
+			return;
+		}
+
+		let cvVal = CVar.GetCVar("sv_LowHealthValue", plr);
+		int threshold = cvVal ? cvVal.GetInt() : 30;
+		if (threshold < 0)
+			threshold = 0;
+		if (threshold > 200)
+			threshold = 200;
+
+		if (mo.health <= threshold)
+		{
+			if (!lowHp[pn])
+			{
+				mo.A_StartSound("LOWHEALTH", CHAN_AUTO, CHANF_OVERLAP | CHANF_LOCAL | CHANF_UI);
+				lowHp[pn] = true;
+			}
+		}
+		else
+		{
+			lowHp[pn] = false;
+		}
+	}
+
+	private void TickLowArmor(int pn, PlayerInfo plr, Actor mo)
+	{
+		let cvOn = CVar.GetCVar("be_LowArmorAlert", plr);
+		if (!cvOn || !cvOn.GetBool())
+		{
+			lowArmorLatched[pn] = false;
+			return;
+		}
+
+		let cvVal = CVar.GetCVar("sv_LowArmorValue", plr);
+		int threshold = cvVal ? cvVal.GetInt() : 30;
+		if (threshold < 0)
+			threshold = 0;
+		if (threshold > 100)
+			threshold = 100;
+
+		int armor = mo.CountInv("Armor");
+		if (armor > threshold)
+			wasArmorAbove[pn] = true;
+
+		if (armor <= threshold)
+		{
+			if (!lowArmorLatched[pn] && wasArmorAbove[pn])
+			{
+				mo.A_StartSound("LOWARMOR", CHAN_AUTO, CHANF_OVERLAP | CHANF_LOCAL | CHANF_UI);
+				lowArmorLatched[pn] = true;
+				wasArmorAbove[pn] = false;
+			}
+		}
+		else
+		{
+			lowArmorLatched[pn] = false;
+		}
+	}
+}

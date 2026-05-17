@@ -1,3 +1,4 @@
+// SUPERSEDED by zscript/Weapons/PB_DMRReticleOverlay.zc (removed from LOADACS.txt).
 // Floating HudMessage reticle — CATSVISOR credited for the drift technique (adapted for PB DMR zoom).
 
 #library "Reticle"

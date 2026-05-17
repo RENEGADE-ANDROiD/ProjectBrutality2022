@@ -1,0 +1,139 @@
+// DMR scoped reticle drift (replaces SRC/Reticle.acs DMR_Reticle ENTER loop).
+
+class PB_DMRReticleHandler : EventHandler
+{
+	private transient double dmrX;
+	private transient double dmrY;
+	private transient double dmrXX;
+	private transient double dmrYY;
+
+	private transient double dmrYawIn;
+	private transient double dmrPitchIn;
+	private transient int dmrButtons;
+
+	override void PlayerEntered(PlayerEvent e)
+	{
+		if (!e || e.PlayerNumber != consoleplayer)
+			return;
+		dmrX = dmrY = dmrXX = dmrYY = 0.5;
+	}
+
+	override void WorldTick()
+	{
+		int pn = consoleplayer;
+		if (!playeringame[pn])
+			return;
+		let pp = PlayerPawn(players[pn].mo);
+		if (!pp || !pp.player)
+			return;
+
+		double yaw = pp.GetPlayerInput(MODINPUT_YAW) * (360.0 / 65536.0);
+		double pitch = pp.GetPlayerInput(MODINPUT_PITCH) * (360.0 / 65536.0);
+		dmrYawIn = yaw * 0.3;
+		dmrPitchIn = pitch * 1.1;
+		dmrButtons = pp.player.cmd.buttons;
+
+		let plr = players[consoleplayer];
+		if (plr && plr.mo && plr.mo.GetClassName() == 'Rifle'
+			&& plr.mo.CountInv("Zoomed") >= 1)
+		{
+			let cv = CVar.GetCVar("ReticleStyle", plr);
+			if (cv && cv.GetInt() == 1)
+				DMR_UpdateDrift(plr);
+		}
+	}
+
+	void DMR_UpdateDrift(PlayerInfo plr)
+	{
+		if (dmrX > 0.515)
+			dmrX = 0.515;
+		if (dmrX < 0.485)
+			dmrX = 0.485;
+		if (dmrY > 0.515)
+			dmrY = 0.515;
+		if (dmrY < 0.485)
+			dmrY = 0.485;
+
+		if (dmrButtons & BT_FORWARD)
+			dmrY += 0.0035;
+		if (dmrButtons & BT_BACK)
+			dmrY -= 0.0035;
+		if (dmrButtons & BT_MOVELEFT)
+			dmrX -= 0.0035;
+		if (dmrButtons & BT_MOVERIGHT)
+			dmrX += 0.0035;
+
+		dmrX += dmrYawIn;
+		dmrY += dmrPitchIn;
+
+		if (dmrX > 0.5 && !(dmrButtons & BT_MOVERIGHT) && dmrYawIn == 0)
+			dmrX -= 0.0035;
+		if (dmrX < 0.5 && !(dmrButtons & BT_MOVELEFT) && dmrYawIn == 0)
+			dmrX += 0.0035;
+		if (dmrY > 0.5 && !(dmrButtons & BT_FORWARD) && dmrPitchIn == 0)
+			dmrY -= 0.0035;
+		if (dmrY < 0.5 && !(dmrButtons & BT_BACK) && dmrPitchIn == 0)
+			dmrY += 0.0035;
+
+		if (dmrXX > 0.500)
+			dmrXX = 0.500;
+		if (dmrXX < 0.490)
+			dmrXX = 0.490;
+		if (dmrYY > 0.520)
+			dmrYY = 0.520;
+		if (dmrYY < 0.510)
+			dmrYY = 0.510;
+
+		if (dmrButtons & BT_FORWARD)
+			dmrYY += 0.0035;
+		if (dmrButtons & BT_BACK)
+			dmrYY -= 0.0035;
+		if (dmrButtons & BT_MOVELEFT)
+			dmrXX -= 0.0035;
+		if (dmrButtons & BT_MOVERIGHT)
+			dmrXX += 0.0035;
+
+		dmrXX += dmrYawIn * 0.5;
+		dmrYY += dmrPitchIn / 9.0;
+
+		if (dmrXX > 0.5 && !(dmrButtons & BT_MOVERIGHT) && dmrYawIn == 0)
+			dmrXX -= 0.0035;
+		if (dmrXX < 0.5 && !(dmrButtons & BT_MOVELEFT) && dmrYawIn == 0)
+			dmrXX += 0.0035;
+		if (dmrYY > 0.5 && !(dmrButtons & BT_FORWARD) && dmrPitchIn == 0)
+			dmrYY -= 0.0035;
+		if (dmrYY < 0.5 && !(dmrButtons & BT_BACK) && dmrPitchIn == 0)
+			dmrYY += 0.0035;
+	}
+
+	ui void DMR_DrawReticle(PlayerInfo plr)
+	{
+		String fontName = plr.mo.CountInv("DMRUpgraded") >= 1 ? "HDMR_R" : "DMR_R";
+		Font retFnt = Font.GetFont(fontName);
+		double vW = 1280.0;
+		double vH = 800.0;
+		double px = dmrXX * vW;
+		double py = dmrY * vH;
+
+		Screen.DrawText(retFnt, Font.CR_UNTRANSLATED, px, py, "A",
+			DTA_VirtualWidth, int(vW), DTA_VirtualHeight, int(vH),
+			DTA_KeepRatio, true, DTA_CenterOffset, true, DTA_Alpha, 0.7);
+	}
+
+	override void RenderOverlay(RenderEvent e)
+	{
+		if (!playeringame[consoleplayer])
+			return;
+		let plr = players[consoleplayer];
+		if (!plr || !plr.mo)
+			return;
+		if (plr.mo.GetClassName() != 'Rifle')
+			return;
+		if (plr.mo.CountInv("Zoomed") < 1)
+			return;
+		let cv = CVar.GetCVar("ReticleStyle", plr);
+		if (!cv || cv.GetInt() != 1)
+			return;
+		DMR_DrawReticle(plr);
+	}
+}

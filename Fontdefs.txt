@@ -80,6 +80,8 @@ SCFLM00  { 65 GRAPHICS/HUD/glorykills/newhud/SCFLM00.png }
 SCFLM01  { 65 GRAPHICS/HUD/glorykills/newhud/SCFLM01.png }
 SCICB00  { 65 GRAPHICS/HUD/glorykills/newhud/SCICB00.png }
 SCICB01  { 65 GRAPHICS/HUD/glorykills/newhud/SCICB01.png }
+GKSHA00  { 65 GRAPHICS/HUD/glorykills/newhud/GKSHA00.png }
+GKSHA01  { 65 GRAPHICS/HUD/glorykills/newhud/GKSHA01.png }
 BPAMMO10 { 65 GRAPHICS/HUD/glorykills/newhud/BPAMMO10.png }
 BPAMMO11 { 65 GRAPHICS/HUD/glorykills/newhud/BPAMMO11.png }
 BPAMMO12 { 65 GRAPHICS/HUD/glorykills/newhud/BPAMMO12.png }

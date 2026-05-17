@@ -1,0 +1,679 @@
+// Hitmarkers draw + sound (replaces SRC/hitmarkers.acs OPEN/ENTER loop and hm_bridge_* cvars).
+// ZScript 4.5.0: constants live at file scope (not inside extend class).
+
+const HM_TICK_PERIOD = 35;
+const HM_ANIM_STEP = 1;
+const HM_ANIM_DEFAULT = 9;
+const HM_ANIM_IMPACT = 15;
+const HM_SOUNDLIMIT = 4;
+
+extend class hitmarkershandler
+{
+	transient int hmPendingDamage;
+	transient bool hmPendingKill;
+	transient int hmPendingType;
+	transient bool hmPendingArmed;
+
+	transient int hmAnimHitState;
+	transient int hmAnimKillState;
+	transient int hmAnimHitStyle;
+	transient int hmAnimKillStyle;
+	transient int hmAnimHitSpeed;
+	transient int hmAnimKillSpeed;
+	transient int hmSoundDelay;
+	transient int hmHitMarkerType;
+	transient bool hmGibBlock;
+
+	transient int hmStaticDrawSlot;
+	transient int hmStaticDrawExpire;
+	transient String hmDrawFont;
+	transient String hmDrawGlyph;
+	transient int hmDrawColor;
+	transient double hmDrawFade;
+	transient double hmDrawOpacity;
+	transient double hmDrawX;
+	transient double hmDrawY;
+
+	override void PlayerEntered(PlayerEvent e)
+	{
+		if (!e)
+			return;
+		if (e.PlayerNumber == consoleplayer)
+		{
+			hmGibBlock = false;
+			HM_ClearPending();
+			hmAnimHitState = hmAnimKillState = -1;
+		}
+	}
+
+	override void WorldThingDamaged(WorldEvent e)
+	{
+		if (!e || !e.Thing || e.Damage < 1)
+			return;
+
+		PlayerInfo localPi = players[consoleplayer];
+		if (!localPi)
+			return;
+
+		if (!CVar.GetCVar("hm_enabled", localPi).GetBool())
+			return;
+
+		if (hmPendingArmed && hmPendingKill)
+			return;
+
+		PlayerPawn attacker = HM_ResolveAttacker(e);
+		if (!attacker || !attacker.player || attacker.player != localPi)
+			return;
+
+		if (!HM_IsValidTarget(e.Thing, attacker, localPi))
+			return;
+
+		if (targetexception(e.Thing))
+			return;
+
+		int type = 1;
+		for (int i = 0; i < damagenames.size(); i++)
+		{
+			if (damagenames[i] == e.DamageType)
+			{
+				if (CVar.GetCVar("hm_dot", localPi).GetBool())
+					type = damagetypes[i];
+				break;
+			}
+		}
+
+		bool kill = e.Thing.health <= 0;
+		hmPendingDamage += e.Damage;
+		hmPendingKill = kill;
+		hmPendingType = type;
+		hmPendingArmed = true;
+	}
+
+	override void WorldTick()
+	{
+		int pn = consoleplayer;
+		if (!playeringame[pn])
+			return;
+		let plr = players[pn];
+		if (!plr || !plr.mo)
+			return;
+
+		if (plr.mo is "PlayerChunk")
+			hmGibBlock = true;
+
+		if (hmSoundDelay > 0)
+			hmSoundDelay--;
+
+		if (level.maptime > hmStaticDrawExpire)
+			hmStaticDrawSlot = 0;
+
+		if ((gametic % HM_TICK_PERIOD) == 0)
+		{
+			HM_AnimationStep(plr);
+			HM_ProcessPending(plr);
+		}
+	}
+
+	void HM_ClearPending()
+	{
+		hmPendingDamage = 0;
+		hmPendingKill = false;
+		hmPendingType = 0;
+		hmPendingArmed = false;
+	}
+
+	ui void HM_GetAnchor(out double outX, out double outY)
+	{
+		double h = Screen.GetHeight();
+		double sb = h;
+		let cvScr = CVar.FindCVar("screenblocks");
+		if (!cvScr || cvScr.GetInt() < 11)
+			sb = Statusbar.GetTopOfStatusbar();
+		outX = Screen.GetWidth() * 0.5;
+		outY = (h - sb) * 0.5;
+	}
+
+	ui void HM_DrawGlyph(PlayerInfo plr, String fontName, String glyph, int textColor,
+		double x, double y, double fade, double opacity)
+	{
+		if (!fontName.Length())
+			return;
+		Font hmFnt = Font.GetFont(fontName);
+		Screen.DrawText(hmFnt, textColor, x, y, glyph,
+			DTA_CenterOffset, true,
+			DTA_Alpha, opacity * fade);
+	}
+
+	void HM_PrimeHitMarker(PlayerInfo plr, int hitmarker)
+	{
+		double fade = CVar.GetCVar("hm_fade", plr).GetFloat();
+		if (fade < 0.1 || fade > 1.5)
+			fade = 0.75;
+
+		bool killPriority = CVar.GetCVar("hm_killpriority", plr).GetBool();
+
+		int opacityPct = CVar.GetCVar("hm_opacity", plr).GetInt();
+		if (opacityPct < 10 || opacityPct > 100)
+			opacityPct = 100;
+		double opacity = double(opacityPct) / 100.0;
+
+		int style = 0;
+		bool animation;
+		String fontName = "";
+		String glyph = "A";
+		int markColor = Font.CR_UNTRANSLATED;
+
+		if (hitmarker == -1)
+		{
+			int killStyle = CVar.GetCVar("hm_killstyle", plr).GetInt();
+			if (HM_StyleType(killStyle, 0))
+				style = killStyle;
+		}
+		else
+		{
+			int hitStyle = (hitmarker > 1)
+				? CVar.GetCVar("hm_dotstyle", plr).GetInt()
+				: CVar.GetCVar("hm_hitstyle", plr).GetInt();
+			if (HM_StyleType(hitStyle, 0))
+				style = hitStyle;
+		}
+
+		switch (style)
+		{
+			case 1: case 2: case 4: case 5: case 10: case 11:
+				animation = true;
+				break;
+			case 3:
+				fontName = HM_FontWithSize("hitmarksmall", plr);
+				break;
+			case 6:
+				fontName = HM_FontWithSize("hitmarkcircle", plr);
+				break;
+			case 7:
+				fontName = HM_FontWithSize("hitmarkcirclesmall", plr);
+				break;
+			case 8:
+				fontName = HM_FontWithSize("hitmarkvertical", plr);
+				break;
+			case 9:
+				fontName = HM_FontWithSize("hitmarkverticalsmall", plr);
+				break;
+			default:
+				fontName = HM_FontWithSize("hitmark", plr);
+				break;
+		}
+
+		int killColor = CVar.GetCVar("hm_killcolor", plr).GetInt();
+		if (killColor < 0 || killColor > 18)
+			killColor = 0;
+
+		if (animation)
+		{
+			if (hitmarker == -1)
+			{
+				bool killSpeed = CVar.GetCVar("hm_killspeed", plr).GetBool();
+				switch (style)
+				{
+					case 1:
+						fontName = HM_FontWithSize(killColor ? "hitmarkanimated" : "hitmarkanimatedkill", plr);
+						break;
+					case 2:
+						fontName = HM_FontWithSize(killColor ? "hitmarkanimatedreverse" : "hitmarkanimatedkillreverse", plr);
+						break;
+					case 4:
+						fontName = HM_FontWithSize(killColor ? "hitmarkanimatedsmall" : "hitmarkanimatedsmallkill", plr);
+						break;
+					case 5:
+						fontName = HM_FontWithSize(killColor ? "hitmarkanimatedsmallreverse" : "hitmarkanimatedsmallkillreverse", plr);
+						break;
+					case 10:
+						fontName = HM_FontWithSize(killColor ? "hitmarkimpact" : "hitmarkimpactkill", plr);
+						break;
+					case 11:
+						fontName = HM_FontWithSize(killColor ? "hitmarkimpactsmall" : "hitmarkimpactsmallkill", plr);
+						break;
+				}
+				hmAnimKillSpeed = (killSpeed && !HM_StyleType(style, 3)) ? 2 : 1;
+				hmAnimKillState = 0;
+				hmAnimKillStyle = style;
+			}
+			else
+			{
+				bool hitSpeed = (hitmarker > 1)
+					? CVar.GetCVar("hm_dotspeed", plr).GetBool()
+					: CVar.GetCVar("hm_hitspeed", plr).GetBool();
+				switch (style)
+				{
+					case 1:
+						fontName = HM_FontWithSize("hitmarkanimated", plr);
+						break;
+					case 2:
+						fontName = HM_FontWithSize("hitmarkanimatedreverse", plr);
+						break;
+					case 4:
+						fontName = HM_FontWithSize("hitmarkanimatedsmall", plr);
+						break;
+					case 5:
+						fontName = HM_FontWithSize("hitmarkanimatedsmallreverse", plr);
+						break;
+					case 10:
+						fontName = HM_FontWithSize("hitmarkimpact", plr);
+						break;
+					case 11:
+						fontName = HM_FontWithSize("hitmarkimpactsmall", plr);
+						break;
+				}
+				hmAnimHitSpeed = (hitSpeed && !HM_StyleType(style, 3)) ? 2 : 1;
+				hmAnimHitState = 0;
+				hmAnimHitStyle = style;
+				if (!killPriority)
+					hmAnimKillState = -1;
+			}
+
+			if (HM_StyleType(style, 2))
+			{
+				fade = CVar.GetCVar("hm_fadeanimated", plr).GetFloat();
+				if (fade < 0.1 || fade > 1.5)
+					fade = 0.35;
+			}
+			else if (HM_StyleType(style, 3))
+			{
+				fade = 0;
+			}
+		}
+
+		if (hitmarker == -1)
+		{
+			if (killColor)
+				markColor = HM_GetColor(killColor);
+			else if (!animation)
+				glyph = "B";
+			if (killPriority)
+				hmAnimHitState = -1;
+			else
+				hmAnimHitState = -1;
+		}
+		else
+		{
+			if (hitmarker > 1 && CVar.GetCVar("hm_dothit", plr).GetInt() == 2)
+			{
+				switch (hitmarker)
+				{
+					case 2:
+						markColor = Font.CR_DARKRED;
+						break;
+					case 3:
+						markColor = Font.CR_ORANGE;
+						break;
+					case 4:
+						markColor = Font.CR_OLIVE;
+						break;
+					case 5:
+						markColor = Font.CR_GREEN;
+						break;
+				}
+			}
+			if (markColor == Font.CR_UNTRANSLATED)
+			{
+				int hitColor = CVar.GetCVar("hm_hitcolor", plr).GetInt();
+				if (hitColor < 0 || hitColor > 18)
+					hitColor = 0;
+				if (hitColor)
+					markColor = HM_GetColor(hitColor);
+			}
+		}
+
+		if (!animation)
+		{
+			hmDrawFont = fontName;
+			hmDrawGlyph = glyph;
+			hmDrawColor = markColor;
+			hmDrawFade = fade;
+			hmDrawOpacity = opacity;
+			hmStaticDrawSlot = hitmarker;
+			hmStaticDrawExpire = level.maptime + HM_TICK_PERIOD;
+		}
+	}
+
+	ui void HM_DrawStaticIfAny(PlayerInfo plr)
+	{
+		if (!hmStaticDrawSlot)
+			return;
+		if (level.maptime > hmStaticDrawExpire)
+			return;
+		double x, y;
+		HM_GetAnchor(x, y);
+		HM_DrawGlyph(plr, hmDrawFont, hmDrawGlyph, hmDrawColor, x, y, hmDrawFade, hmDrawOpacity);
+	}
+
+	ui void HM_DrawHitMarker(PlayerInfo plr, int hitmarker)
+	{
+		double x, y;
+		HM_GetAnchor(x, y);
+
+		double fade = CVar.GetCVar("hm_fade", plr).GetFloat();
+		if (fade < 0.1 || fade > 1.5)
+			fade = 0.75;
+
+		int opacityPct = CVar.GetCVar("hm_opacity", plr).GetInt();
+		if (opacityPct < 10 || opacityPct > 100)
+			opacityPct = 100;
+		double opacity = double(opacityPct) / 100.0;
+
+		String fontName = "";
+		String glyph = "A";
+		int markColor = Font.CR_UNTRANSLATED;
+		int style = 0;
+
+		if (hitmarker == -1)
+		{
+			int idx = hmAnimKillState;
+			if (idx < 0)
+				idx = 0;
+			if (HM_StyleType(hmAnimKillStyle, 2))
+			{
+				if (idx >= HM_ANIM_DEFAULT)
+					idx = HM_ANIM_DEFAULT - 1;
+				glyph = HM_ANIM_DEF_GLYPHS[idx];
+			}
+			else if (HM_StyleType(hmAnimKillStyle, 3))
+			{
+				if (idx >= HM_ANIM_IMPACT)
+					idx = HM_ANIM_IMPACT - 1;
+				glyph = HM_ANIM_IMP_GLYPHS[idx];
+			}
+			style = hmAnimKillStyle;
+			int killColor = CVar.GetCVar("hm_killcolor", plr).GetInt();
+			if (killColor < 0 || killColor > 18)
+				killColor = 0;
+			if (killColor)
+				markColor = HM_GetColor(killColor);
+			switch (style)
+			{
+				case 1:
+					fontName = HM_FontWithSize("hitmarkanimatedkill", plr);
+					break;
+				case 2:
+					fontName = HM_FontWithSize("hitmarkanimatedkillreverse", plr);
+					break;
+				case 4:
+					fontName = HM_FontWithSize("hitmarkanimatedsmallkill", plr);
+					break;
+				case 5:
+					fontName = HM_FontWithSize("hitmarkanimatedsmallkillreverse", plr);
+					break;
+				case 10:
+					fontName = HM_FontWithSize("hitmarkimpactkill", plr);
+					break;
+				case 11:
+					fontName = HM_FontWithSize("hitmarkimpactsmallkill", plr);
+					break;
+			}
+			if (HM_StyleType(style, 2))
+			{
+				fade = CVar.GetCVar("hm_fadeanimated", plr).GetFloat();
+				if (fade < 0.1 || fade > 1.5)
+					fade = 0.35;
+			}
+			else if (HM_StyleType(style, 3))
+				fade = 0;
+		}
+		else
+		{
+			int idx = hmAnimHitState;
+			if (idx < 0)
+				idx = 0;
+			if (HM_StyleType(hmAnimHitStyle, 2))
+			{
+				if (idx >= HM_ANIM_DEFAULT)
+					idx = HM_ANIM_DEFAULT - 1;
+				glyph = HM_ANIM_DEF_GLYPHS[idx];
+			}
+			else if (HM_StyleType(hmAnimHitStyle, 3))
+			{
+				if (idx >= HM_ANIM_IMPACT)
+					idx = HM_ANIM_IMPACT - 1;
+				glyph = HM_ANIM_IMP_GLYPHS[idx];
+			}
+			style = hmAnimHitStyle;
+			if (hitmarker > 1 && CVar.GetCVar("hm_dothit", plr).GetInt() == 2)
+			{
+				switch (hitmarker)
+				{
+					case 2: markColor = Font.CR_DARKRED; break;
+					case 3: markColor = Font.CR_ORANGE; break;
+					case 4: markColor = Font.CR_OLIVE; break;
+					case 5: markColor = Font.CR_GREEN; break;
+				}
+			}
+			if (markColor == Font.CR_UNTRANSLATED)
+			{
+				int hitColor = CVar.GetCVar("hm_hitcolor", plr).GetInt();
+				if (hitColor < 0 || hitColor > 18)
+					hitColor = 0;
+				if (hitColor)
+					markColor = HM_GetColor(hitColor);
+			}
+			switch (style)
+			{
+				case 1: fontName = HM_FontWithSize("hitmarkanimated", plr); break;
+				case 2: fontName = HM_FontWithSize("hitmarkanimatedreverse", plr); break;
+				case 4: fontName = HM_FontWithSize("hitmarkanimatedsmall", plr); break;
+				case 5: fontName = HM_FontWithSize("hitmarkanimatedsmallreverse", plr); break;
+				case 10: fontName = HM_FontWithSize("hitmarkimpact", plr); break;
+				case 11: fontName = HM_FontWithSize("hitmarkimpactsmall", plr); break;
+			}
+			if (HM_StyleType(style, 2))
+			{
+				fade = CVar.GetCVar("hm_fadeanimated", plr).GetFloat();
+				if (fade < 0.1 || fade > 1.5)
+					fade = 0.35;
+			}
+			else if (HM_StyleType(style, 3))
+				fade = 0;
+		}
+
+		HM_DrawGlyph(plr, fontName, glyph, markColor, x, y, fade, opacity);
+	}
+
+	void HM_AnimationStep(PlayerInfo plr)
+	{
+		if (hmAnimHitState >= 0)
+		{
+			int max = HM_StyleType(hmAnimHitStyle, 3) ? HM_ANIM_IMPACT : HM_ANIM_DEFAULT;
+			if (hmAnimHitState < max - HM_ANIM_STEP * hmAnimHitSpeed)
+				hmAnimHitState += HM_ANIM_STEP * hmAnimHitSpeed;
+			else
+				hmAnimHitState = -1;
+		}
+
+		if (hmAnimKillState >= 0)
+		{
+			int max = HM_StyleType(hmAnimKillStyle, 3) ? HM_ANIM_IMPACT : HM_ANIM_DEFAULT;
+			if (hmAnimKillState < max - HM_ANIM_STEP * hmAnimKillSpeed)
+				hmAnimKillState += HM_ANIM_STEP * hmAnimKillSpeed;
+			else
+				hmAnimKillState = -1;
+		}
+	}
+
+	String HM_HitDamageSound(PlayerInfo plr, String baseSound)
+	{
+		if (!CVar.GetCVar("hm_hitdamage", plr).GetBool())
+			return baseSound;
+		int dmg = hmPendingDamage;
+		int hi = CVar.GetCVar("hm_hitdamagehigh", plr).GetInt();
+		int med = CVar.GetCVar("hm_hitdamagemedium", plr).GetInt();
+		if (hi < 1 || hi > 1000)
+			hi = 75;
+		if (med < 1 || med > 1000)
+			med = 25;
+		if (dmg >= hi)
+			return baseSound .. "high";
+		if (dmg >= med)
+			return baseSound .. "medium";
+		return baseSound;
+	}
+
+	String HM_SoundLimit(PlayerInfo plr, String sndIn)
+	{
+		if (!sndIn.Length())
+			return sndIn;
+		if (CVar.GetCVar("hm_soundlimit", plr).GetBool())
+		{
+			if (hmSoundDelay > 0)
+				return "";
+			hmSoundDelay = HM_SOUNDLIMIT;
+		}
+		return sndIn;
+	}
+
+	void HM_ProcessPending(PlayerInfo plr)
+	{
+		if (!hmPendingArmed || !hmPendingType)
+			return;
+
+		bool hitsounds = CVar.GetCVar("hm_hitsounds", plr).GetBool();
+		bool killsounds = CVar.GetCVar("hm_killsounds", plr).GetBool();
+		bool showHit = CVar.GetCVar("hm_showhitmarkers", plr).GetBool();
+		bool showKill = CVar.GetCVar("hm_showkillmarkers", plr).GetBool();
+		int type = hmPendingType;
+		bool kill = hmPendingKill;
+		String sndPick = "";
+		int channel = CHAN_VOICE;
+
+		int dothit = CVar.GetCVar("hm_dothit", plr).GetInt();
+		int dotsounds = CVar.GetCVar("hm_dotsounds", plr).GetInt();
+
+		if (hitsounds && (!kill || (kill && !killsounds)) && (type == 1 || (dotsounds && type > 1)))
+		{
+			int hitsound = (type > 1)
+				? CVar.GetCVar("hm_dotsound", plr).GetInt()
+				: CVar.GetCVar("hm_hitsound", plr).GetInt();
+			if (!hitsound)
+				hitsound = CVar.GetCVar("hm_hitsound", plr).GetInt();
+			switch (hitsound)
+			{
+				case 1:
+					sndPick = "blackops4hit";
+					break;
+				case 2:
+					sndPick = "callofduty4hit";
+					break;
+				case 3:
+					sndPick = "doomhit";
+					break;
+				case 4:
+					sndPick = "overwatchhit";
+					break;
+				case 5:
+					sndPick = HM_HitDamageSound(plr, "quakehit");
+					break;
+				case 6:
+					sndPick = "teamfortress2hit";
+					break;
+				case 7:
+					sndPick = "modernwarfarehit";
+					break;
+				case 8:
+					sndPick = "blackopscoldwarhit";
+					break;
+				case 9:
+					sndPick = "modernwarfare3hit";
+					break;
+				default:
+					sndPick = HM_HitDamageSound(plr, "defaulthit");
+					break;
+			}
+			channel = CHAN_VOICE;
+			sndPick = HM_SoundLimit(plr, sndPick);
+		}
+
+		if (kill)
+		{
+			if (killsounds)
+			{
+				int killsound = CVar.GetCVar("hm_killsound", plr).GetInt();
+				switch (killsound)
+				{
+					case 1:
+						sndPick = "blackops4kill";
+						break;
+					case 2:
+						sndPick = "overwatchkill";
+						break;
+					case 3:
+						sndPick = "quakechampionskill";
+						break;
+					case 4:
+						sndPick = "teamfortress2kill";
+						break;
+					case 5:
+						sndPick = "titanfall2kill";
+						break;
+					case 6:
+						sndPick = "quakelivekill";
+						break;
+					case 7:
+						sndPick = "modernwarfarekill";
+						break;
+					case 8:
+						sndPick = "blackopscoldwarkill";
+						break;
+					case 9:
+						sndPick = "modernwarfare3kill";
+						break;
+					default:
+						sndPick = "defaultkill";
+						break;
+				}
+				channel = CHAN_AUTO;
+			}
+			if (showKill)
+			{
+				HM_PrimeHitMarker(plr, -1);
+				showHit = false;
+			}
+		}
+
+		if (showHit && (type == 1 || (dothit && type > 1)))
+		{
+			hmHitMarkerType = type;
+			HM_PrimeHitMarker(plr, type);
+		}
+
+		if (sndPick.Length() && (hitsounds || killsounds))
+		{
+			int volPct = CVar.GetCVar("hm_volume", plr).GetInt();
+			if (volPct < 1 || volPct > 100)
+				volPct = 100;
+			if (dotsounds == 2)
+				volPct = volPct / 2;
+			else if (dotsounds == 3)
+				volPct = volPct / 4;
+			else if (dotsounds == 4)
+				volPct = volPct / 10;
+			double vol = double(volPct) / 100.0;
+			S_StartSound(sndPick, channel, CHANF_UI, vol, ATTN_NONE);
+		}
+
+		HM_ClearPending();
+	}
+
+	override void RenderOverlay(RenderEvent e)
+	{
+		if (!playeringame[consoleplayer])
+			return;
+		let plr = players[consoleplayer];
+		if (!plr || !plr.mo || hmGibBlock)
+			return;
+		if (!hitmarkershandler.HM_ShouldRunFor(plr))
+			return;
+
+		HM_DrawStaticIfAny(plr);
+		if (hmAnimHitState >= 0)
+			HM_DrawHitMarker(plr, hmHitMarkerType);
+		if (hmAnimKillState >= 0)
+			HM_DrawHitMarker(plr, -1);
+	}
+}

@@ -1,4 +1,5 @@
-// Clears ShieldSawThrown when the projectile returns the token (map-enter refund uses this flag).
+// Shield Saw return notify + map-enter token refund (replaces SRC/Shield_saw.acs ENTER).
+
 class ShieldSawNotifyReturned : Inventory
 {
 	Default { Inventory.MaxAmount 1; }
@@ -7,14 +8,40 @@ class ShieldSawNotifyReturned : Inventory
 	{
 		Super.AttachToOwner(other);
 		if (other)
-			other.TakeInventory("ShieldSawThrown", 1);
-		let plr = PlayerPawn(other);
-		if (plr && plr.player && plr.player.ReadyWeapon)
 		{
-			let w = plr.player.ReadyWeapon;
-			if (w && w.FindStateByString("ShieldSawCatchAnim", true))
-				w.A_Overlay(1007, "ShieldSawCatchAnim");
+			other.TakeInventory("ShieldSawThrown", 1);
+			other.GiveInventory("ShieldSawCatchPending", 1);
 		}
 		Destroy();
+	}
+}
+
+class ShieldSawCatchPending : Inventory
+{
+	Default { Inventory.MaxAmount 1; }
+}
+
+class ShieldSawPlayerHandler : EventHandler
+{
+	override void PlayerEntered(PlayerEvent e)
+	{
+		if (!e)
+			return;
+		int pn = e.PlayerNumber;
+		if (pn < 0 || pn >= MAXPLAYERS)
+			return;
+		let mo = players[pn].mo;
+		if (!mo)
+			return;
+
+		if (mo.CountInv("ShieldSawThrown") > 0)
+		{
+			if (mo.CountInv("ShieldSaw_token") < 1)
+				mo.GiveInventory("ShieldSaw_token", 1);
+			mo.TakeInventory("ShieldSawThrown", 1);
+		}
+
+		if (mo.CountInv("FastCall") < 1)
+			mo.GiveInventory("FastCall", 1);
 	}
 }

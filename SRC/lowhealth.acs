@@ -3,6 +3,8 @@
 
 #define MAX_VOLUME 127
 
+// SUPERSEDED: zscript/GloryKills/PB_LowHealthAlertHandler.zc (removed from LOADACS.txt).
+
 script "lowhealth" ENTER
 {
 	while (1)

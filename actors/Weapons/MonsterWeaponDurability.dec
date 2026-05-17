@@ -36,3 +36,12 @@ ACTOR MarauderSSGDurability : Ammo
 	Ammo.BackpackMaxAmount 80
 	+INVENTORY.UNDROPPABLE
 }
+
+ACTOR ObsidianDragonSlayerDurability : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 40
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 40
+	+INVENTORY.UNDROPPABLE
+}

@@ -1,9 +1,22 @@
 #library "Shield_saw"
+
 #include "zcommon.acs"
 
-// Shield Saw recall — map enter refunds token if throw was in flight; FastCall for bound recall.
+// Poll on the thrown saw (spawn state runs this). FastCall gives CallBack to the projectile.
+script "CallBack" (VOID)
+{
+	while (TRUE)
+	{
+		if (CheckInventory("CallBack") >= 1)
+		{
+			SetActorState(0, "ShieldBack");
+			terminate;
+		}
+		Delay(1);
+	}
+}
 
-Script "ShieldSawMapEnter" ENTER
+script "ShieldSawMapEnter" ENTER
 {
 	Delay(1);
 	if (CheckInventory("ShieldSawThrown") >= 1)
@@ -12,18 +25,6 @@ Script "ShieldSawMapEnter" ENTER
 			GiveInventory("ShieldSaw_token", 1);
 		TakeInventory("ShieldSawThrown", 1);
 	}
-	GiveInventory("FastCall", 1);
-}
-
-Script "CallBack" (void)
-{
-	while (true)
-	{
-		if (CheckInventory("CallBack") >= 1)
-		{
-			SetActorState(0, "ShieldBack");
-			break;
-		}
-		Delay(1);
-	}
+	if (CheckInventory("FastCall") < 1)
+		GiveInventory("FastCall", 1);
 }

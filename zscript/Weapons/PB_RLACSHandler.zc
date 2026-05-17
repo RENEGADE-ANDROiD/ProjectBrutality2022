@@ -1,0 +1,107 @@
+// Guided rocket homing (replaces SRC/RLACS.acs). Lock-on TIDs 30001–30003; laser from GuidedLaser actors.
+
+const PB_RLACS_ROCKET_SPEED = 40.0;
+const PB_RLACS_LOCKON_SPEED = 55.0;
+const PB_RLACS_CUTOFF = 32.0;
+
+class PB_RLACSHandler : EventHandler
+{
+	private Vector3 laserPos;
+	private bool laserValid;
+
+	private Vector3 homingPos[3];
+	private bool homingActive[3];
+
+	void ApplyHoming(Actor proj, int mode, double speed)
+	{
+		if (!proj)
+			return;
+
+		Vector3 aimPos;
+		if (mode == 0)
+		{
+			if (!laserValid)
+				return;
+			aimPos = laserPos;
+		}
+		else
+		{
+			int slot = mode - 1;
+			if (slot < 0 || slot > 2 || !homingActive[slot])
+				return;
+			aimPos = homingPos[slot];
+		}
+
+		double dx = aimPos.x - proj.pos.x;
+		double dy = aimPos.y - proj.pos.y;
+		double dz = aimPos.z - proj.pos.z;
+		double range3d = sqrt(dx * dx + dy * dy + dz * dz);
+		if (range3d <= PB_RLACS_CUTOFF)
+			return;
+
+		Vector3 delta = aimPos - proj.pos;
+		double targetAngle = VectorAngle(delta.x, delta.y);
+		double xyLen = sqrt(delta.x * delta.x + delta.y * delta.y);
+		double targetPitch = 0.0;
+		if (xyLen > 0.001)
+			targetPitch = -VectorAngle(xyLen, delta.z);
+
+		proj.angle = targetAngle;
+		proj.pitch = targetPitch;
+
+		double cosp = cos(targetPitch);
+		proj.vel.x = cos(targetAngle) * cosp * speed;
+		proj.vel.y = sin(targetAngle) * cosp * speed;
+		proj.vel.z = sin(targetPitch) * speed;
+
+		let cv = CVar.FindCVar("SC_DEBUG_MODE");
+		if (cv && cv.GetInt() == 1)
+			Actor.Spawn("Trail", proj.pos, NO_REPLACE);
+	}
+
+	void ApplyHomingForClass(Name cls, int mode, double speed)
+	{
+		ThinkerIterator it = ThinkerIterator.Create(cls);
+		Actor mo;
+		while (mo = Actor(it.Next()))
+			ApplyHoming(mo, mode, speed);
+	}
+
+	override void WorldTick()
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			int tid = 30001 + i;
+			ActorIterator it = Level.CreateActorIterator(tid);
+			Actor ind = it.Next();
+			Actor lockRef = ind ? ind.target : null;
+			if (!lockRef && ind)
+				lockRef = ind.master;
+			if (ind && lockRef && lockRef.health > 0)
+			{
+				homingPos[i] = ind.pos;
+				homingActive[i] = true;
+			}
+			else
+				homingActive[i] = false;
+		}
+
+		laserValid = false;
+		ThinkerIterator lit = ThinkerIterator.Create("GuidedLaser");
+		Actor laser;
+		while (laser = Actor(lit.Next()))
+		{
+			laserPos = laser.pos;
+			laserValid = true;
+		}
+
+		ApplyHomingForClass('PB_GuidedRocket', 0, PB_RLACS_ROCKET_SPEED);
+		ApplyHomingForClass('PB_WeavingGuidedRocket_1', 0, PB_RLACS_ROCKET_SPEED);
+		ApplyHomingForClass('PB_WeavingGuidedRocket_2', 0, PB_RLACS_ROCKET_SPEED);
+		ApplyHomingForClass('PB_WeavingGuidedRocket_3', 0, PB_RLACS_ROCKET_SPEED);
+		ApplyHomingForClass('PB_HomingRocket_1', 1, PB_RLACS_LOCKON_SPEED);
+		ApplyHomingForClass('PB_HomingRocket_2', 2, PB_RLACS_LOCKON_SPEED);
+		ApplyHomingForClass('PB_HomingRocket_3', 3, PB_RLACS_LOCKON_SPEED);
+	}
+}
+

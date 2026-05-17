@@ -1,6 +1,8 @@
 #library "Marauder"
 #include "zcommon.acs"
 
+// SUPERSEDED: zscript/Monsters/PB_MarauderSupport.zc (removed from LOADACS.txt).
+
 // Marauder addon — support scripts. Rebuild with acc (see AGENTS.md ACS workflow).
 
 script 1346 (void) {
