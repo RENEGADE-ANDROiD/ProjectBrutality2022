@@ -63,7 +63,7 @@ Actor PB_762x51mm : FastProjectile
 	Radius 2
 	Height 2
 	Speed 250
-	Damage 44
+	Damage 30
 	DamageType Bullet
 	Decal "BulletChip"
 	States
