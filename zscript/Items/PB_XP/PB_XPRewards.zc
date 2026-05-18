@@ -256,7 +256,10 @@ class PB_XPRewardsHandler : EventHandler
 		SpawnXPFloaters(killer, t, add);
 		int newRank = ApplyRankFromXP(killer);
 		if (newRank >= 1)
+		{
 			SpawnRankFloaters(killer, newRank);
+			PB_Achievements.OnRankReached(newRank);
+		}
 	}
 
 	static void DoSpin(PlayerPawn plr)

@@ -2,6 +2,13 @@
 
 class PB_WheelBSSBlurHandler : StaticEventHandler
 {
+	transient gb_EventHandler cachedGearboxHandler;
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		cachedGearboxHandler = gb_EventHandler(EventHandler.Find("gb_EventHandler"));
+	}
+
 	override void UiTick()
 	{
 		bool on = false;
@@ -13,8 +20,8 @@ class PB_WheelBSSBlurHandler : StaticEventHandler
 				let cv = CVar.GetCVar("pb_wheelbackgroundblur", plr);
 				bool pbBlur = cv && cv.GetBool() && plr.mo.FindInventory("PlayerWheelOpen");
 				bool gbBlur = false;
-				let geh = gb_EventHandler(EventHandler.Find("gb_EventHandler"));
-				if (geh) gbBlur = geh.GetGearboxWantsPPBlur();
+				if (cachedGearboxHandler)
+					gbBlur = cachedGearboxHandler.GetGearboxWantsPPBlur();
 				on = pbBlur || gbBlur;
 			}
 		}

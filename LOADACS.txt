@@ -33,4 +33,5 @@ MGSPAWN
 // BloodPunch — PB_BloodPunchReadyHandler (ZScript)
 // Marauder — PB_MarauderSupportHandler (ZScript)
 Shield_saw
+ACHIEVEMENTS_BRIDGE_ACS
 // hitmarkers — hitmarkershandler UI (ZScript; see PB_HitmarkersUi.zsc)

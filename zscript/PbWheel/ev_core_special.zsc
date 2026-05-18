@@ -1,6 +1,7 @@
 Class PB_SpecialWheelHandler : EventHandler
 {
 	bool searchedSpecials;
+	const PB_WHEEL_INIT_MIN_MAPTIME = 35;
 	array<PB_SpecialWheel_Mode> wheelSpecials;
 	array<string> useTheseSpecials;
 	array<string> avoidTheseSpecials;
@@ -516,7 +517,7 @@ Class PB_SpecialWheelHandler : EventHandler
 			return;
 		}
 		
-		if(!searchedSpecials&&level.maptime>12)
+		if (!searchedSpecials && level.maptime >= PB_WHEEL_INIT_MIN_MAPTIME)
 		{
 			initializeSpecialWheel();
 		}
