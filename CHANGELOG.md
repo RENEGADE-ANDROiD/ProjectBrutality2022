@@ -4,6 +4,10 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ## [Unreleased]
 
+### Changed
+
+- **M41A / Lever Action (Garand) rifle damage:** **`PB_762x51mm`** (M41A primary + Battle Rifle) **44 → 30** per projectile — closer to the slot-4 DMR band instead of near-sniper output, especially with M41A’s two-round tap and headshot scaling. **Lever Action** Marlin (`.444`) hitscan **99 → 36** and `.357` **50 → 32** — Marlin was deleting imps/pinkies in one body or head shot; values sit just above the upgraded DMR without outclassing the XM-21 AP line.
+
 ### Fixed
 
 - **Shield Saw catch (`PlayerPawn.zc`):** recall now starts **`ShieldSawCatchAnim`** with **`player.SetPSprite(PSP_WEAPON, …)`** (same pattern as ledge climb) instead of **`ReadyWeapon.SetState`**, which never advanced the view weapon layer. **`ShieldSawCatchPending`** is only consumed when **`FindState("ShieldSawCatchAnim")`** succeeds.

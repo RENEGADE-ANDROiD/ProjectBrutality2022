@@ -406,21 +406,21 @@ ACTOR LeverAction : PB_Weapon
 					A_RailAttack(0, 0, 0, none,none, RGF_SILENT|RGF_NOPIERCING|RGF_EXPLICITANGLE, 0, none,0.1,0.1,700,0,1,1.0,"Tracer_Trail",-6,0,0);
 
 					if (CountInv("LeverActionMarlin") == 1) {
-						A_FireBullets(0.1, 0.1, -1, 99, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 36, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_StartSound("weapons/leveraction/magfire", 4, CHANF_DEFAULT, 1.0);
 					}
 					else {
-						A_FireBullets(0.1, 0.1, -1, 50, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 32, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_PlaySoundeX("weapons/leveraction/fire", "Weapon");
 					}
 				}
 				else {
 					if (CountInv("LeverActionMarlin") == 1) {
-						A_FireBullets(0.1, 0.1, -1, 99, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 36, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_StartSound("weapons/leveraction/magfire", 4, CHANF_DEFAULT, 1.0);
 					}
 					else {
-						A_FireBullets(0.1, 0.1, -1, 50, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 32, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_PlaySoundeX("weapons/leveraction/fire", "Weapon");
 					}
 				}
@@ -520,21 +520,21 @@ ACTOR LeverAction : PB_Weapon
 				if(GetCvar("PB_alttracer") >=1) {
 					A_RailAttack(0, 0, 0, none,none, RGF_SILENT|RGF_NOPIERCING|RGF_EXPLICITANGLE, 0, none,0.1,0.1,700,0,1,1.0,"Tracer_Trail",-6,0,0);
 					if (CountInv("LeverActionMarlin") == 1) {
-						A_FireBullets(0.1, 0.1, -1, 99, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 36, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_StartSound("weapons/leveraction/magfire", 4, CHANF_DEFAULT, 1.0);
 					}
 					else {
-						A_FireBullets(0.1, 0.1, -1, 50, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 32, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_PlaySoundeX("weapons/leveraction/fire", "Weapon");
 					}
 				}
 				else {
 					if (CountInv("LeverActionMarlin") == 1) {
-						A_FireBullets(0.1, 0.1, -1, 99, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 36, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_StartSound("weapons/leveraction/magfire", 4, CHANF_DEFAULT, 1.0);
 					}
 					else {
-						A_FireBullets(0.1, 0.1, -1, 50, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 32, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_PlaySoundeX("weapons/leveraction/fire", "Weapon");
 					}
 				}
