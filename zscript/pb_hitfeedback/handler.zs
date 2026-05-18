@@ -7,6 +7,8 @@ class PB_HitFeedback_Handler : EventHandler
     override void PlayerEntered( PlayerEvent e )
 	{
 		if (!e) return;
+		if (gamestate != GS_LEVEL)
+			return;
 		int pn = e.PlayerNumber;
 		if (pn < 0 || pn >= MAXPLAYERS || !playeringame[pn]) return;
 		let pmo = players[pn].mo;
@@ -19,7 +21,6 @@ class PB_HitFeedback_Handler : EventHandler
         cachedOverlays[0] = TexMan.CheckForTexture( "Graphics/visorcrack1.png" );
         cachedOverlays[1] = TexMan.CheckForTexture( "Graphics/crackflash1.png" );
         cachedOverlays[2] = TexMan.CheckForTexture( "Graphics/fuckasscircle.png" );
-        S_StartSound("hud/shieldbreak", 0, volume: 0);
 	}
 
     ui float shakeMagnitude;

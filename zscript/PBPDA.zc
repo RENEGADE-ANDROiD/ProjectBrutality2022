@@ -171,6 +171,7 @@ class PB_PDAWeaponContainer : Inventory
 	{
 		Super.AttachToOwner(other);
 		InitializePDATexts();
+		SyncWeaponCodexFromOwner(PlayerPawn(other));
 	}
 	static clearscope double lerp(double v0, double v1, double t)
 	{
@@ -257,53 +258,53 @@ class PB_PDAWeaponContainer : Inventory
 		weapstuff.Split(PDAWeaponStrings,",");
 		int weaptlump = Wads.FindLump("PDAWEAPT");
 		string weaptstuff = Wads.ReadLump(weaptlump);
-		Array<String> weaptstrings;
 		Array<String> initialweaptstrings;
 		weaptstuff.Split(initialweaptstrings,"#");
-		for (int splitCounter = 0; splitcounter < initialweaptstrings.Size(); splitcounter++)
+		for (int splitCounter = 0; splitCounter < initialweaptstrings.Size(); splitCounter++)
 		{
-			initialweaptstrings[splitCounter].Split(weaptstrings,"$");
+			string blk = initialweaptstrings[splitCounter];
+			blk.Replace("\r", "");
+			while (blk.Length() > 0 && (blk.ByteAt(0) == 10 || blk.ByteAt(0) == 13))
+				blk = blk.Mid(1, blk.Length() - 1);
+			if (blk.Length() < 1)
+				continue;
+
+			Array<String> fields;
+			blk.Split(fields, "$");
+			if (fields.Size() < 3)
+				continue;
+
+			string PDAWeaponHeader = fields[0];
+			string PDAWeaponText = fields[1];
+			string PDAWeapClassName = fields[2];
+			PDAWeaponHeader.Replace("\n", "");
+			PDAWeapClassName.Replace("\n", "");
+			PDAWeapClassName.Replace(" ", "");
+
+			string PDAWeapExtraText = fields[3];
+			for (int fi = 4; fi < fields.Size(); fi++)
+				PDAWeapExtraText = PDAWeapExtraText .. "\n" .. fields[fi];
+
+			PDAWeaponHeaders.Push(PDAWeaponHeader);
+			PDAWeaponTexts.Push(PDAWeaponText);
+			PDAWeaponExtraTexts.Push(PDAWeapExtraText);
+			EventHandler.SendNetworkEvent("addweaponclass:" .. PDAWeapClassName);
+
+			let pdaTextContainer = new("PB_PDAWeapTextContainer");
+			pdaTextContainer.PDAWeaponExtraText = PDAWeapExtraText;
+			pdaTextContainer.PDAWeaponText = PDAWeaponText;
+			pdaTextContainer.PDAWeapClassName = PDAWeapClassName;
+			pdaTextContainer.PDAWeaponHeader = PDAWeaponHeader;
+			pdaTextContainer.found = false;
+			pdaWeapTextArray.Push(pdaTextContainer);
 		}
-		int forcounter = 1;
+		if (pdaWeapTextArray.Size() > 0 && PDAWeaponStrings.Size() > 0
+			&& pdaWeapTextArray.Size() != PDAWeaponStrings.Size())
+		{
+			Console.PrintF("[PDA] WARNING: PDAWEAP has %d labels but PDAWEAPT registered %d weapon rows.",
+				PDAWeaponStrings.Size(), pdaWeapTextArray.Size());
+		}
 		int iii = 0;
-		string PDAWeaponHeader;
-		string PDAWeaponText;
-		string PDAWeapClassName;
-		string PDAWeapExtraText;
-		for (iii = 0; iii < weaptstrings.Size(); iii++)
-		{
-			if (forcounter == 4)
-			{
-				PDAWeaponExtraTexts.Push(weaptstrings[iii]);
-				PDAWeapExtraText = weaptstrings[iii];
-				forcounter = 0;
-				let pdaTextContainer = new("PB_PDAWeapTextContainer");
-				pdaTextContainer.PDAWeaponExtraText = PDAWeapExtraText;
-				pdaTextContainer.PDAWeaponText = PDAWeaponText;
-				pdaTextContainer.PDAWeapClassName = PDAWeapClassName;
-				pdaTextContainer.PDAWeaponHeader = PDAWeaponHeader;
-				pdaTextContainer.found = false;
-				pdaWeapTextArray.Push(pdaTextContainer);
-			}
-			else if (forcounter == 3)
-			{
-				PDAWeapClassName = weaptstrings[iii];
-				weaptstrings[iii].Replace("\n","");
-				EventHandler.SendNetworkEvent("addweaponclass:"..weaptstrings[iii]);
-			}
-			else if (forcounter == 2)
-			{
-				PDAWeaponText = weaptstrings[iii];
-				PDAWeaponTexts.Push(weaptstrings[iii]);
-			}
-			else if (forcounter == 1)
-			{
-				weaptstrings[iii].Replace("\n","");
-				PDAWeaponHeader = weaptstrings[iii];
-				PDAWeaponHeaders.Push(weaptstrings[iii]);
-			}
-			++forcounter;
-		}
 		BrokenLines WeaponTextLines, WeaponExtraTextLines;
 		string NewWeaponText;
 		font breaklinefont = SmallFont;
@@ -429,16 +430,18 @@ class PB_PDAWeaponContainer : Inventory
 		{
 			Console.PrintF("[PDA] WARNING: equipment codex empty after init (PDAEQUIPT load failed?). Pickups will not unlock catalogue rows.");
 		}
+	}
 
-		ThinkerIterator ti = ThinkerIterator.Create("Weapon");
-		Weapon a;
-		while (a = Weapon(ti.Next()))
+	void SyncWeaponCodexFromOwner(PlayerPawn mo)
+	{
+		if (!mo)
+			return;
+		for (Inventory ch = mo.Inv; ch != null; ch = ch.Inv)
 		{
-			if (a.owner && a.owner is "PlayerPawnBase"
-				&& a.owner.FindInventory(self.GetClassName()) == self)
-			{
-				EventHandler.SendNetworkEvent("FoundWeapon:"..a.GetClassName());
-			}
+			let wpn = Weapon(ch);
+			if (!wpn)
+				continue;
+			EventHandler.SendNetworkEvent("Foundweapon:" .. wpn.GetClassName());
 		}
 	}
 }
@@ -478,6 +481,7 @@ class PB_PDAUi_Object
 	bool UnSelectable;
 	bool MainHubBlockyExit;
 	bool MainHubBlockySlot;
+	bool MainHubBlockyAchievements;
 	virtual string GetString()
 	{
 		Switch(objecttype)
@@ -497,6 +501,9 @@ class PB_PDAUi_Object
 				break;
 			case 16:
 				return "Reward";
+				break;
+			case 17:
+				return "Achievements";
 				break;
 		}
 		return "Exit";
@@ -537,6 +544,9 @@ class PB_EventHandler : EventHandler
 	transient int KatanaDualVariant;
 	transient int KatanaDualFrozenPlr;
 	transient int LastPDAToggleTic;
+	ui transient int pdaAchUnlockedCache;
+	ui transient int pdaAchTotalCache;
+	ui transient int pdaAchCacheGametic;
 	bool isnetgame;
 	ui Vector2 UpArrowPos,DownArrowPos;
 	ui Vector2 LeftCatArrowVisPos, RightCatArrowVisPos;
@@ -544,6 +554,16 @@ class PB_EventHandler : EventHandler
 	transient ui int pdaBlockyXOffset;
 	ui double globalPDAAlpha;
 	bool NonMainMenu;
+	bool AchievementsMenuOpened;
+	transient int pdaAchBrowseInvalidateGen;
+	transient int pdaAchBrowseScrollResetGen;
+	transient ui int pdaAchBrowseScrollResetAppliedGen;
+	transient ui int pdaAchBrowseInvalidateAppliedGen;
+	transient ui int pdaAchBrowseScroll; // vertical pixel offset into achievement list
+	transient ui bool pdaAchBrowseCacheValid;
+	transient ui Array<int> pdaAchBrowseRowKind;
+	transient ui Array<int> pdaAchBrowseRowAch;
+	transient ui Array<String> pdaAchBrowseRowLabel;
 	bool MonsterMenuOpened,MonsterMenuOnly;
 	bool WeaponMenuOpened,WeaponMenuOnly;
 	bool EquipmentMenuOpened;
@@ -861,6 +881,470 @@ class PB_EventHandler : EventHandler
 		return cv && cv.GetBool();
 	}
 
+	void InvalidatePDAAchievementCache()
+	{
+		pdaAchBrowseInvalidateGen++;
+	}
+
+	void RequestPDAAchievementScrollReset()
+	{
+		pdaAchBrowseScrollResetGen++;
+	}
+
+	ui void PDA_SyncAchievementBrowseState()
+	{
+		if (pdaAchBrowseScrollResetAppliedGen != pdaAchBrowseScrollResetGen)
+		{
+			pdaAchBrowseScrollResetAppliedGen = pdaAchBrowseScrollResetGen;
+			pdaAchBrowseScroll = 0;
+		}
+		if (pdaAchBrowseInvalidateAppliedGen == pdaAchBrowseInvalidateGen)
+			return;
+		pdaAchBrowseInvalidateAppliedGen = pdaAchBrowseInvalidateGen;
+		pdaAchBrowseCacheValid = false;
+		pdaAchBrowseRowKind.Clear();
+		pdaAchBrowseRowAch.Clear();
+		pdaAchBrowseRowLabel.Clear();
+	}
+
+	const PDA_ACH_ROW_HEADER = 1;
+	const PDA_ACH_ROW_CATEGORY = 2;
+	const PDA_ACH_ROW_ACHIEVEMENT = 3;
+	const PB_PDA_ACH_BROWSE_SCROLL_LINES = 4;
+	const PB_PDA_ACH_BROWSE_TEXT_SCALE_MUL = 0.66;
+	const PB_PDA_ACH_BROWSE_ICON_TEXT_GAP = 14;
+	// Defer heavy PDA UI object build off the first RenderOverlay frames (Windows busy-cursor / mouse jitter).
+	const PB_PDA_UI_INIT_MIN_GAMETIC = 35;
+
+	ui double PDA_AchievementBrowseTextScale()
+	{
+		return clamp(Screen.GetHeight() / 240.0, 2.0, 6.0) * PB_PDA_ACH_BROWSE_TEXT_SCALE_MUL;
+	}
+
+	ui int PDA_AchievementBrowseCenteredX(String text, double textScale, int listLeft, int listRight)
+	{
+		double w = SmallFont.StringWidth(text) * textScale;
+		return int((listLeft + listRight) * 0.5 - w * 0.5);
+	}
+
+	ui void PDA_AchievementBrowseDrawCenteredLine(int color, int y, String text,
+		double textScale, int listLeft, int listRight, double alpha, bool untranslated = false)
+	{
+		int drawColor = untranslated ? Font.CR_UNTRANSLATED : color;
+		int drawX = PDA_AchievementBrowseCenteredX(text, textScale, listLeft, listRight);
+		Screen.DrawText(SmallFont, drawColor, drawX, y, text,
+			DTA_ScaleX, textScale, DTA_ScaleY, textScale,
+			DTA_ClipLeft, listLeft, DTA_ClipRight, listRight,
+			DTA_Alpha, alpha);
+	}
+
+	ui bool PDA_TryEnsureUiObjects(bool force = false)
+	{
+		if (uiObjects.Size() >= 1)
+			return true;
+		if (gamestate == GS_TITLELEVEL)
+			return false;
+		if (!force)
+		{
+			if (gametic < PB_PDA_UI_INIT_MIN_GAMETIC)
+				return false;
+			if (!PDAMode && !KatanaDualChoiceMode)
+				return false;
+		}
+		return InitializeUiObjects();
+	}
+
+	ui void PDA_AchievementBrowseListMetrics(out int listLeft, out int listTop,
+		out int listRight, out int listBottom)
+	{
+		int sw = Screen.GetWidth();
+		int sh = Screen.GetHeight();
+		listTop = int(sh * 0.14);
+		listBottom = sh - int(sh * 0.12);
+		int sideMargin = max(24, sw / 40);
+		listLeft = sideMargin;
+		listRight = sw - sideMargin;
+	}
+
+	ui int PDA_AchievementBrowseScrollStepPx(int direction, double textScale)
+	{
+		int lineH = max(1, int(SmallFont.GetHeight() * textScale));
+		int targetPx = lineH * PB_PDA_ACH_BROWSE_SCROLL_LINES;
+		int n = pdaAchBrowseRowKind.Size();
+		if (n < 1)
+			return targetPx;
+
+		int scroll = pdaAchBrowseScroll;
+		int y = 0;
+		int anchor = 0;
+
+		if (direction > 0)
+		{
+			for (int i = 0; i < n; i++)
+			{
+				int rh = PDA_AchievementRowPixelHeight(pdaAchBrowseRowKind[i], textScale);
+				if (y + rh > scroll + 1)
+				{
+					anchor = i;
+					break;
+				}
+				y += rh;
+				anchor = i + 1;
+			}
+			int step = 0;
+			for (int i = anchor; i < n && step < targetPx; i++)
+				step += PDA_AchievementRowPixelHeight(pdaAchBrowseRowKind[i], textScale);
+			return max(lineH, step);
+		}
+
+		for (int i = 0; i < n; i++)
+		{
+			int rh = PDA_AchievementRowPixelHeight(pdaAchBrowseRowKind[i], textScale);
+			if (y + rh > scroll + 1)
+			{
+				anchor = i;
+				break;
+			}
+			y += rh;
+		}
+		int stepUp = 0;
+		for (int i = anchor - 1; i >= 0 && stepUp < targetPx; i--)
+			stepUp += PDA_AchievementRowPixelHeight(pdaAchBrowseRowKind[i], textScale);
+		return max(lineH, stepUp);
+	}
+
+	ui void PDA_AchievementBrowseColorCodes(PlayerInfo p, out String ccUnlocked,
+		out String ccLocked, out String ccTitle, out String ccDesc, out String ccProgress)
+	{
+		ccUnlocked = VUAS_RenderSettings.GetColorCode(
+			VUAS_AchievementHandler.GetCVarInt('ach_color_unlocked', p, 3));
+		ccLocked = VUAS_RenderSettings.GetColorCode(
+			VUAS_AchievementHandler.GetCVarInt('ach_color_locked', p, 20));
+		ccTitle = VUAS_RenderSettings.GetColorCode(
+			VUAS_AchievementHandler.GetCVarInt('ach_color_title', p, 10));
+		ccDesc = VUAS_RenderSettings.GetColorCode(
+			VUAS_AchievementHandler.GetCVarInt('ach_color_description', p, 2));
+		ccProgress = VUAS_RenderSettings.GetColorCode(
+			VUAS_AchievementHandler.GetCVarInt('ach_color_progress', p, 10));
+	}
+
+	ui String PDA_AchievementBrowseTitleLine(VUAS_AchievementData ach)
+	{
+		let p = players[consoleplayer];
+		String ccUnlocked, ccLocked, ccTitle, ccDesc, ccProgress;
+		PDA_AchievementBrowseColorCodes(p, ccUnlocked, ccLocked, ccTitle, ccDesc, ccProgress);
+
+		String achTitle = StringTable.Localize(ach.title, false);
+
+		if (ach.isHidden && !ach.isUnlocked)
+			return String.Format("%s[LOCKED]\c- %s??? - Hidden Achievement\c-", ccLocked, ccTitle);
+
+		if (ach.isUnlocked)
+		{
+			String timeStr = "";
+			if (ach.unlockTime > 0)
+				timeStr = String.Format(" %s(%s)\c-", ccDesc, SystemTime.Format("%d %b %Y", ach.unlockTime));
+			return String.Format("%s[UNLOCKED]\c- %s%s\c-%s", ccUnlocked, ccTitle, achTitle, timeStr);
+		}
+
+		String progressStr = "";
+		if (ach.targetCount > 1)
+			progressStr = String.Format(" %s[%d/%d]\c-", ccProgress, ach.currentCount, ach.targetCount);
+		return String.Format("%s[LOCKED]\c- %s%s\c-%s", ccLocked, ccTitle, achTitle, progressStr);
+	}
+
+	ui String PDA_AchievementBrowseDescLine(VUAS_AchievementData ach)
+	{
+		if (ach.isHidden && !ach.isUnlocked)
+			return "";
+
+		let p = players[consoleplayer];
+		String ccUnlocked, ccLocked, ccTitle, ccDesc, ccProgress;
+		PDA_AchievementBrowseColorCodes(p, ccUnlocked, ccLocked, ccTitle, ccDesc, ccProgress);
+
+		String achDesc = StringTable.Localize(ach.description, false);
+		if (achDesc.Length() < 1)
+			return "";
+		return String.Format("%s%s\c-", ccDesc, achDesc);
+	}
+
+	ui int PDA_AchievementRowPixelHeight(int rowKind, double textScale)
+	{
+		int lineH = max(1, int(SmallFont.GetHeight() * textScale));
+		if (rowKind == PDA_ACH_ROW_HEADER) return lineH * 2;
+		if (rowKind == PDA_ACH_ROW_CATEGORY) return int(lineH * 1.35);
+		return int(lineH * 3.85);
+	}
+
+	ui int PDA_AchievementBrowseContentHeight(double textScale)
+	{
+		int h = 0;
+		for (int i = 0; i < pdaAchBrowseRowKind.Size(); i++)
+			h += PDA_AchievementRowPixelHeight(pdaAchBrowseRowKind[i], textScale);
+		return h;
+	}
+
+	ui bool PDA_AchievementPassesBrowseFilter(VUAS_AchievementData ach, bool showHidden, int menuFilter)
+	{
+		if (ach.isHidden && !ach.isUnlocked && !showHidden)
+			return false;
+		if (menuFilter == 1 && !ach.isUnlocked)
+			return false;
+		if (menuFilter == 2 && ach.isUnlocked)
+			return false;
+		return true;
+	}
+
+	ui void RebuildPDAAchievementBrowseCache()
+	{
+		pdaAchBrowseRowKind.Clear();
+		pdaAchBrowseRowAch.Clear();
+		pdaAchBrowseRowLabel.Clear();
+
+		let handler = VUAS_AchievementHandler.GetHandler();
+		if (!handler || handler.achievements.Size() == 0)
+		{
+			pdaAchBrowseCacheValid = true;
+			return;
+		}
+
+		bool showHidden = VUAS_AchievementHandler.GetCVarBool('ach_show_hidden', players[consoleplayer], false);
+		int menuFilter = VUAS_AchievementHandler.GetCVarInt('ach_menu_filter', players[consoleplayer], 0);
+		int totalCount = handler.achievements.Size();
+
+		pdaAchBrowseRowKind.Push(PDA_ACH_ROW_HEADER);
+		pdaAchBrowseRowAch.Push(-1);
+		pdaAchBrowseRowLabel.Push("");
+
+		Array<String> categories;
+		for (int i = 0; i < totalCount; i++)
+		{
+			let ach = handler.achievements[i];
+			bool found = false;
+			for (int c = 0; c < categories.Size(); c++)
+			{
+				if (categories[c] ~== ach.category)
+				{
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+				categories.Push(ach.category);
+		}
+
+		for (int pass = 0; pass < 2; pass++)
+		{
+			bool wantUnlocked = (pass == 0);
+			for (int c = 0; c < categories.Size(); c++)
+			{
+				String cat = categories[c];
+				bool pushedCat = false;
+				for (int i = 0; i < totalCount; i++)
+				{
+					let ach = handler.achievements[i];
+					if (!(ach.category ~== cat))
+						continue;
+					if (ach.isUnlocked != wantUnlocked)
+						continue;
+					if (!PDA_AchievementPassesBrowseFilter(ach, showHidden, menuFilter))
+						continue;
+
+					if (!pushedCat)
+					{
+						String catHeader = "";
+						for (int ch = 0; ch < cat.Length(); ch++)
+						{
+							int byte = cat.ByteAt(ch);
+							if (ch == 0 && byte >= 97 && byte <= 122)
+								catHeader.AppendFormat("%c", byte - 32);
+							else
+								catHeader.AppendFormat("%c", byte);
+						}
+						pdaAchBrowseRowKind.Push(PDA_ACH_ROW_CATEGORY);
+						pdaAchBrowseRowAch.Push(-1);
+						pdaAchBrowseRowLabel.Push(String.Format("--- %s ---", catHeader));
+						pushedCat = true;
+					}
+
+					pdaAchBrowseRowKind.Push(PDA_ACH_ROW_ACHIEVEMENT);
+					pdaAchBrowseRowAch.Push(i);
+					pdaAchBrowseRowLabel.Push("");
+				}
+			}
+		}
+
+		pdaAchBrowseCacheValid = true;
+	}
+
+	ui void DrawPDAAchievementBrowse(double alpha)
+	{
+		if (alpha <= 0) return;
+		PDA_SyncAchievementBrowseState();
+		if (!pdaAchBrowseCacheValid)
+			RebuildPDAAchievementBrowseCache();
+
+		let handler = VUAS_AchievementHandler.GetHandler();
+		int listLeft, listTop, listRight, listBottom;
+		PDA_AchievementBrowseListMetrics(listLeft, listTop, listRight, listBottom);
+		double textScale = PDA_AchievementBrowseTextScale();
+
+		if (!handler)
+		{
+			PDA_AchievementBrowseDrawCenteredLine(Font.CR_GREEN, listTop,
+				"No achievements defined.", textScale, listLeft, listRight, alpha);
+			return;
+		}
+
+		int totalRows = pdaAchBrowseRowKind.Size();
+		if (totalRows < 1)
+		{
+			PDA_AchievementBrowseDrawCenteredLine(Font.CR_GREEN, listTop,
+				"No achievements match the current filter.", textScale, listLeft, listRight, alpha);
+			return;
+		}
+
+		int viewH = listBottom - listTop;
+		int contentH = PDA_AchievementBrowseContentHeight(textScale);
+		int maxScroll = max(0, contentH - viewH);
+		if (pdaAchBrowseScroll < 0)
+			pdaAchBrowseScroll = 0;
+		else if (pdaAchBrowseScroll > maxScroll)
+			pdaAchBrowseScroll = maxScroll;
+		int scrollY = pdaAchBrowseScroll;
+
+		int y = listTop - scrollY;
+		Screen.SetClipRect(listLeft, listTop, listRight - listLeft, viewH);
+
+		for (int rowIdx = 0; rowIdx < totalRows; rowIdx++)
+		{
+			int kind = pdaAchBrowseRowKind[rowIdx];
+			int rowH = PDA_AchievementRowPixelHeight(kind, textScale);
+			int achIdx = pdaAchBrowseRowAch[rowIdx];
+
+			if (y + rowH > listTop && y < listBottom)
+			{
+				if (kind == PDA_ACH_ROW_HEADER)
+				{
+					int unlocked = 0;
+					for (int u = 0; u < handler.achievements.Size(); u++)
+					{
+						if (handler.achievements[u].isUnlocked)
+							unlocked++;
+					}
+					int menuFilter = VUAS_AchievementHandler.GetCVarInt('ach_menu_filter', players[consoleplayer], 0);
+					String filterLabel = "";
+					if (menuFilter == 1) filterLabel = " (Unlocked Only)";
+					else if (menuFilter == 2) filterLabel = " (Locked Only)";
+					String header = String.Format("Achievements: %d / %d%s",
+						unlocked, handler.achievements.Size(), filterLabel);
+					PDA_AchievementBrowseDrawCenteredLine(Font.CR_YELLOW, y, header,
+						textScale, listLeft, listRight, alpha);
+				}
+				else if (kind == PDA_ACH_ROW_CATEGORY)
+				{
+					String catLine = (rowIdx < pdaAchBrowseRowLabel.Size())
+						? pdaAchBrowseRowLabel[rowIdx] : "--- ---";
+					PDA_AchievementBrowseDrawCenteredLine(Font.CR_GOLD, y, catLine,
+						textScale, listLeft, listRight, alpha);
+				}
+				else if (kind == PDA_ACH_ROW_ACHIEVEMENT && achIdx >= 0 && achIdx < handler.achievements.Size())
+				{
+					let ach = handler.achievements[achIdx];
+					String titleLine = PDA_AchievementBrowseTitleLine(ach);
+					String descLine = PDA_AchievementBrowseDescLine(ach);
+					int lineH = int(SmallFont.GetHeight() * textScale);
+					int iconSize = lineH * 2;
+					int titleY = y + int(lineH * 0.08);
+					int descY = y + lineH + int(lineH * 0.22);
+					double titleW = SmallFont.StringWidth(titleLine) * textScale;
+					double descW = descLine.Length() > 0
+						? SmallFont.StringWidth(descLine) * textScale : 0.0;
+					double textW = max(titleW, descW);
+					int blockW = iconSize + PB_PDA_ACH_BROWSE_ICON_TEXT_GAP + int(textW + 0.5);
+					int blockLeft = int((listLeft + listRight) * 0.5 - blockW * 0.5);
+					if (blockLeft < listLeft)
+						blockLeft = listLeft;
+					int textX = blockLeft + iconSize + PB_PDA_ACH_BROWSE_ICON_TEXT_GAP;
+					int iconX = blockLeft;
+
+					TextureID iconTex = TexMan.CheckForTexture(ach.icon, TexMan.Type_Any);
+					if (!(ach.isHidden && !ach.isUnlocked) && iconTex.IsValid())
+					{
+						if (ach.isUnlocked)
+						{
+							Screen.DrawTexture(iconTex, true, iconX, y,
+								DTA_DestWidth, iconSize, DTA_DestHeight, iconSize,
+								DTA_Alpha, alpha);
+						}
+						else
+						{
+							Screen.DrawTexture(iconTex, true, iconX, y,
+								DTA_DestWidth, iconSize, DTA_DestHeight, iconSize,
+								DTA_AlphaChannel, true, DTA_FillColor, 0xBBBBCC,
+								DTA_Alpha, alpha);
+						}
+					}
+
+					Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED, textX, titleY, titleLine,
+						DTA_ScaleX, textScale, DTA_ScaleY, textScale,
+						DTA_ClipLeft, listLeft, DTA_ClipRight, listRight,
+						DTA_Alpha, alpha);
+					if (descLine.Length() > 0)
+					{
+						Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED, textX, descY, descLine,
+							DTA_ScaleX, textScale, DTA_ScaleY, textScale,
+							DTA_ClipLeft, listLeft, DTA_ClipRight, listRight,
+							DTA_Alpha, alpha);
+					}
+				}
+			}
+
+			y += rowH;
+		}
+
+		Screen.ClearClipRect();
+
+		if (scrollY > 0 || contentH > viewH)
+		{
+			double hintSc = textScale * 0.85;
+			int hintY = listBottom - int(SmallFont.GetHeight() * hintSc);
+			PDA_AchievementBrowseDrawCenteredLine(Font.CR_GRAY, hintY,
+				"Use page arrows or BACK / PDA key.", hintSc, listLeft, listRight, alpha * 0.9);
+		}
+	}
+
+	ui void ScrollPDAAchievementBrowse(int direction)
+	{
+		PDA_SyncAchievementBrowseState();
+		if (!pdaAchBrowseCacheValid)
+			RebuildPDAAchievementBrowseCache();
+
+		double textScale = PDA_AchievementBrowseTextScale();
+		int listLeft, listTop, listRight, listBottom;
+		PDA_AchievementBrowseListMetrics(listLeft, listTop, listRight, listBottom);
+		int viewH = listBottom - listTop;
+		int contentH = PDA_AchievementBrowseContentHeight(textScale);
+		int maxScroll = max(0, contentH - viewH);
+		if (maxScroll < 1)
+			return;
+
+		int step = PDA_AchievementBrowseScrollStepPx(direction, textScale);
+		if (direction < 0)
+			pdaAchBrowseScroll -= step;
+		else if (direction > 0)
+			pdaAchBrowseScroll += step;
+		pdaAchBrowseScroll = clamp(pdaAchBrowseScroll, 0, maxScroll);
+	}
+
+	clearscope static bool PB_AchievementsOn()
+	{
+		if (netgame)
+			return false;
+		let cv = CVar.FindCVar("pb_achievements");
+		return !cv || cv.GetBool();
+	}
+
 	override void WorldThingDamaged(WorldEvent e)
 	{
 		if (!e) return;
@@ -954,7 +1438,7 @@ class PB_EventHandler : EventHandler
 		}
 		if (weaponFound == true)
 		{
-			if (uiObjects.Size() < 1) InitializeUiObjects();
+			PDA_TryEnsureUiObjects(true);
 			for (int foundWeapIndex = 0; foundWeapIndex < WeaponFoundName.size(); foundWeapIndex++)
 			for (int weapIndex = 0; weapIndex < pdaWeapTextArray.size(); weapIndex++)
 			{
@@ -980,7 +1464,7 @@ class PB_EventHandler : EventHandler
 		}
 		if (monsterFound == true)
 		{
-			if (uiObjects.Size() < 1) InitializeUiObjects();
+			PDA_TryEnsureUiObjects(true);
 			for (int mfi = 0; mfi < monsterFoundSlots.Size(); mfi++)
 			{
 				int mslot = monsterFoundSlots[mfi];
@@ -1002,7 +1486,7 @@ class PB_EventHandler : EventHandler
 		}
 		if (equipmentFound == true)
 		{
-			if (uiObjects.Size() < 1) InitializeUiObjects();
+			PDA_TryEnsureUiObjects(true);
 			for (int efi = 0; efi < equipmentFoundSlots.Size(); efi++)
 			{
 				int eslot = equipmentFoundSlots[efi];
@@ -1135,7 +1619,9 @@ class PB_EventHandler : EventHandler
 							}
 							break;
 						case 4:
-							if (BlockyEnabled())
+							if (AchievementsMenuOpened)
+								ScrollPDAAchievementBrowse(-1);
+							else if (BlockyEnabled())
 							{
 								if (MonsterMenuOpened)
 									pdaBlockyMonsterPage = max(0, pdaBlockyMonsterPage - 1);
@@ -1147,7 +1633,9 @@ class PB_EventHandler : EventHandler
 							}
 							break;
 						case 5:
-							if (BlockyEnabled())
+							if (AchievementsMenuOpened)
+								ScrollPDAAchievementBrowse(1);
+							else if (BlockyEnabled())
 							{
 								if (MonsterMenuOpened) pdaBlockyMonsterPage++;
 								else if (WeaponMenuOpened) pdaBlockyWeapPage++;
@@ -1168,11 +1656,19 @@ class PB_EventHandler : EventHandler
 								break;
 							SendNetworkEvent("pb_xp_spin");
 							break;
+						case 17:
+							if (!BlockyEnabled() || !PB_EventHandler.PB_AchievementsOn() || NonMainMenu)
+								break;
+							SendNetworkEvent("pb_pda_open_achievements");
+							break;
 						}
 					}
 					if (uiObjects[i].BackButtonTrue)
 					{
-						SendNetworkEvent("closemonstermenu");
+						if (AchievementsMenuOpened)
+							SendNetworkEvent("closepdaachievements");
+						else
+							SendNetworkEvent("closemonstermenu");
 						globalPDAAlpha = 0;
 						descriptiondialog.todraw = "Select a entry to \nview its description";
 						descriptiondialog.ImagePos = descriptiondialog.InitialImagePos;
@@ -1298,11 +1794,25 @@ class PB_EventHandler : EventHandler
 				|| p4 ~== "D3MI" || p4 ~== "D3ML"
 				|| p4 ~== "P1N0" || p4 ~== "P1NK" || p4 ~== "P2NK" || p4 ~== "P3NK" || p4 ~== "P4NK"
 				|| p4 ~== "P1R2" || p4 ~== "P3R0"
+				|| p4 ~== "P1NS" || p4 ~== "P2NS" || p4 ~== "P3NS" || p4 ~== "P4NS"
 				|| p4 ~== "FLK1" || p4 ~== "FLK2"
 				|| p4 ~== "HND1"
 				|| p4 ~== "SHIE"
 				|| p4 ~== "SAWG"
-				|| p4 ~== "XPFF" || p4 ~== "XPFS" || p4 ~== "XHFF")
+				|| p4 ~== "XPFF" || p4 ~== "XPFS" || p4 ~== "XHFF"
+				|| p4 ~== "POSM" || p4 ~== "POSA"
+				|| p4 ~== "FOS1" || p4 ~== "FOS2" || p4 ~== "FOS3" || p4 ~== "FOS4"
+				|| p4 ~== "NZ0D" || p4 ~== "NATT" || p4 ~== "NZFT" || p4 ~== "NFTY"
+				|| p4 ~== "ESCR" || p4 ~== "SOBO"
+				|| p4 ~== "YUTI" || p4 ~== "49AN"
+				|| p4 ~== "HUF1" || p4 ~== "HUF2" || p4 ~== "HUF3" || p4 ~== "HEDF"
+				|| p4 ~== "SAPO"
+				|| p4 ~== "CPUI" || p4 ~== "BOTU"
+				|| p4 ~== "PPLJ" || p4 ~== "TOPI"
+				|| p4 ~== "SATZ"
+				|| p4 ~== "HDF1" || p4 ~== "UH0D" || p4 ~== "H0HE" || p4 ~== "HS0D" || p4 ~== "H0PF" || p4 ~== "HDF0"
+				|| p4 ~== "LSLS"
+				|| p4 ~== "MHML" || p4 ~== "ARF2")
 				return true;
 		}
 		return false;
@@ -2412,10 +2922,27 @@ class PB_EventHandler : EventHandler
 	void PDA_WeaponStrip_AppendPB_DeaglePreview(Name nm,
 		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
 		bool useSeg, int hardCap,
-		int fireTicCap, int flashTics, int flashSeek)
+		int readyFixedTic, int fireTicCap, int flashTics, int flashSeek)
 	{
 		if (nm != 'PB_Deagle')
 			return;
+		readonly<Actor> def = GetDefaultByType((class<Actor>)(nm));
+		if (def)
+		{
+			int effReadyTic = max(1, readyFixedTic / 4);
+			State st = def.FindStateByString("PDA_Preview_Deagle_Ready", true);
+			int steps = 0;
+			while (st && steps < PB_PDA_WEAPON_PREVIEW_READY_SEEK && outFr.Size() < hardCap)
+			{
+				PDA_WeaponStrip_TryPushFrame(st, def, outFr, outTi, outSeg, useSeg,
+					PB_PDA_WEAPON_PREVIEW_SEG_READY, effReadyTic, true, fireTicCap, hardCap);
+				State nx = st.NextState;
+				if (!nx || nx == st)
+					break;
+				st = nx;
+				steps++;
+			}
+		}
 		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Deagle_Fire", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Deagle_AdsFire", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
@@ -2742,6 +3269,12 @@ class PB_EventHandler : EventHandler
 			return;
 		PDA_WeaponStrip_AppendPickup(nm, outFr, outTi, outSeg, useSeg, hardCap, pickupTics, spawnSeek,
 			PB_PDA_WEAPON_PREVIEW_SEG_PICKUP);
+		if (nm == 'PB_Deagle')
+		{
+			PDA_WeaponStrip_AppendPB_DeaglePreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
+				readyFixedTic, fireTicCap, flashTics, flashSeek);
+			return;
+		}
 		if (nm == 'BDPBattleRifle')
 		{
 			PDA_WeaponStrip_AppendBDPBattleRiflePreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
@@ -3085,12 +3618,6 @@ class PB_EventHandler : EventHandler
 		if (nm == 'PB_Revolver')
 		{
 			PDA_WeaponStrip_AppendPB_RevolverPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
-				fireTicCap, flashTics, flashSeek);
-			return;
-		}
-		if (nm == 'PB_Deagle')
-		{
-			PDA_WeaponStrip_AppendPB_DeaglePreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
 				fireTicCap, flashTics, flashSeek);
 			return;
 		}
@@ -3846,7 +4373,7 @@ class PB_EventHandler : EventHandler
 		PDA_Main_AdvanceAnims();
 		ThinkerIterator ti = ThinkerIterator.Create("PlayerPawn");
 		PlayerPawn a;
-		bool eqSweep = (level.time % 7) == 0;
+		bool eqSweep = level.maptime >= PB_PDA_UI_INIT_MIN_GAMETIC && (level.time % 7) == 0;
 		while (a = PlayerPawn(ti.Next()))
 		{
 			if (a.player && a.player.morphTics <= 5)
@@ -3886,6 +4413,9 @@ class PB_EventHandler : EventHandler
 		}
 		if (e.Name ~== "openmonstermenu")
 		{
+			AchievementsMenuOpened = false;
+			RequestPDAAchievementScrollReset();
+			InvalidatePDAAchievementCache();
 			MonsterMenuOpened = true;
 			WeaponMenuOpened = false;
 			EquipmentMenuOpened = false;
@@ -3897,15 +4427,32 @@ class PB_EventHandler : EventHandler
 			MonsterMenuOpened = false;
 			WeaponMenuOpened = false;
 			EquipmentMenuOpened = false;
+			AchievementsMenuOpened = false;
 			NonMainMenu = false;
+			InvalidatePDAAchievementCache();
+			RequestPDAAchievementScrollReset();
 			S_StartSound("PDABACK",CHAN_AUTO);
 			PDA_Play_ClearPreview();
 			pdaPrevPendingKey = "";
 			pdaPrevNeedsBuild = false;
 			pdaMainAnimDirty = true;
 		}
+		if (e.Name ~== "closepdaachievements")
+		{
+			if (!AchievementsMenuOpened)
+				return;
+			AchievementsMenuOpened = false;
+			NonMainMenu = false;
+			InvalidatePDAAchievementCache();
+			RequestPDAAchievementScrollReset();
+			S_StartSound("PDABACK", CHAN_AUTO);
+			pdaMainAnimDirty = true;
+		}
 		if (e.Name ~== "openweaponmenu")
 		{
+			AchievementsMenuOpened = false;
+			RequestPDAAchievementScrollReset();
+			InvalidatePDAAchievementCache();
 			WeaponMenuOpened = true;
 			MonsterMenuOpened = false;
 			EquipmentMenuOpened = false;
@@ -3914,6 +4461,9 @@ class PB_EventHandler : EventHandler
 		}
 		if (e.Name ~== "openequipmentmenu")
 		{
+			AchievementsMenuOpened = false;
+			RequestPDAAchievementScrollReset();
+			InvalidatePDAAchievementCache();
 			EquipmentMenuOpened = true;
 			MonsterMenuOpened = false;
 			WeaponMenuOpened = false;
@@ -3979,13 +4529,29 @@ class PB_EventHandler : EventHandler
 			MonsterMenuOpened = false;
 			WeaponMenuOpened = False;
 			EquipmentMenuOpened = false;
+			AchievementsMenuOpened = false;
 			NonMainMenu = false;
+			InvalidatePDAAchievementCache();
+			RequestPDAAchievementScrollReset();
 			LastPDAToggleTic = gametic;
 			PDA_Play_ClearPreview();
 			pdaPrevPendingKey = "";
 			pdaPrevNeedsBuild = false;
 			PDA_Main_ClearAnimChains();
 			pdaMainAnimDirty = false;
+		}
+		if (e.Name ~== "pb_pda_open_achievements")
+		{
+			if (!PB_AchievementsOn() || isnetgame || !PDAMode)
+				return;
+			MonsterMenuOpened = false;
+			WeaponMenuOpened = false;
+			EquipmentMenuOpened = false;
+			NonMainMenu = true;
+			AchievementsMenuOpened = true;
+			RequestPDAAchievementScrollReset();
+			InvalidatePDAAchievementCache();
+			S_StartSound("PDAOPEN", CHAN_AUTO);
 		}
 		if (e.Name ~== "openpda")
 		{
@@ -3996,6 +4562,11 @@ class PB_EventHandler : EventHandler
 			if (!playeringame[e.Player]) return;
 			if (gametic - LastPDAToggleTic < 6) return;
 			LastPDAToggleTic = gametic;
+			if (AchievementsMenuOpened)
+			{
+				SendNetworkEvent("closepdaachievements");
+				return;
+			}
 			if (PDAMode)
 			{
 				SetPlayerProperty(1,0,4);
@@ -4012,7 +4583,10 @@ class PB_EventHandler : EventHandler
 				MonsterMenuOpened = false;
 				WeaponMenuOpened = false;
 				EquipmentMenuOpened = false;
+				AchievementsMenuOpened = false;
 				NonMainMenu = false;
+				InvalidatePDAAchievementCache();
+				RequestPDAAchievementScrollReset();
 				PDA_Play_ClearPreview();
 				pdaPrevPendingKey = "";
 				pdaPrevNeedsBuild = false;
@@ -4028,6 +4602,12 @@ class PB_EventHandler : EventHandler
 				S_StartSound("PDAOPEN",CHAN_AUTO);
 				PDAMode = true;
 				pdaMainAnimDirty = true;
+				if (playeringame[e.Player] && players[e.Player].mo)
+				{
+					let pda = PB_PDAWeaponContainer(players[e.Player].mo.FindInventory("PB_PDAWeaponContainer"));
+					if (pda)
+						pda.SyncWeaponCodexFromOwner(PlayerPawn(players[e.Player].mo));
+				}
 			}
 		}
 		if (e.Name ~== "modifymousepos")
@@ -4142,6 +4722,7 @@ class PB_EventHandler : EventHandler
 		{
 			weaponFound = true;
 			weaponFoundName.push(splittedStrings[1]);
+			PB_Achievements.OnPDAWeaponFound();
 		}
 		if (splittedStrings.Size() >= 2 && splittedStrings[0] ~== "foundmonster")
 		{
@@ -4150,6 +4731,7 @@ class PB_EventHandler : EventHandler
 			{
 				monsterFound = true;
 				monsterFoundSlots.Push(ms);
+				PB_Achievements.OnPDAMonsterFound();
 			}
 		}
 		if (splittedStrings.Size() >= 2 && splittedStrings[0] ~== "foundequip")
@@ -4159,6 +4741,7 @@ class PB_EventHandler : EventHandler
 			{
 				equipmentFound = true;
 				equipmentFoundSlots.Push(es);
+				PB_Achievements.OnPDAEquipFound();
 			}
 		}
 	}
@@ -4171,6 +4754,9 @@ class PB_EventHandler : EventHandler
 		MouseX = 1;
 		MouseY = 1;
 		PDAMode = false;
+		AchievementsMenuOpened = false;
+		RequestPDAAchievementScrollReset();
+		InvalidatePDAAchievementCache();
 		KatanaDualChoiceMode = 0;
 		KatanaDualVariant = 0;
 		KatanaDualFrozenPlr = -1;
@@ -5065,7 +5651,31 @@ class PB_EventHandler : EventHandler
 		int sh = Screen.GetHeight();
 		int midX = sw / 2;
 
-		if (BlockyEnabled() && descriptiondialog != null)
+		if (AchievementsMenuOpened && BlockyEnabled())
+		{
+			font pageFont = NULL;
+			for (int pi = 0; pi < UiObjects.Size(); pi++)
+			{
+				PB_PDAUi_Object po = UiObjects[pi];
+				if (po && po.objecttype == 4 && po.usefont)
+				{
+					pageFont = po.usefont;
+					break;
+				}
+			}
+			double pageVisH = SmallFont.GetHeight() * pdaTextScale
+				* PB_PDA_BLOCKY_PAGE_ARROW_VIS_MUL;
+			if (pageFont)
+				pageVisH = pageFont.GetHeight() * pdaTextScale
+					* PB_PDA_BLOCKY_PAGE_ARROW_VIS_MUL;
+			double om = PB_PDA_BLOCKY_PAGE_ARROW_OUTSIDE_MARGIN;
+			int listLeft, listTop, listRight, listBottom;
+			PDA_AchievementBrowseListMetrics(listLeft, listTop, listRight, listBottom);
+			int arrowX = (listLeft + listRight) / 2;
+			UpArrowPos = (arrowX, double(listTop) - pageVisH - om);
+			DownArrowPos = (arrowX, double(listBottom) + om);
+		}
+		else if (BlockyEnabled() && descriptiondialog != null)
 		{
 			font pageFont = NULL;
 			for (int pi = 0; pi < UiObjects.Size(); pi++)
@@ -5192,7 +5802,7 @@ class PB_EventHandler : EventHandler
 			for (int z = 0; z < UiObjects.Size(); z++)
 			{
 				PB_PDAUi_Object zo = UiObjects[z];
-				if (zo && (zo.MainHubBlockyExit || zo.MainHubBlockySlot))
+				if (zo && (zo.MainHubBlockyExit || zo.MainHubBlockySlot || zo.MainHubBlockyAchievements))
 				{
 					zo.ImagePos = (-9999, -9999);
 					zo.ImageSize = (1, 1);
@@ -5205,7 +5815,7 @@ class PB_EventHandler : EventHandler
 			for (int z = 0; z < UiObjects.Size(); z++)
 			{
 				PB_PDAUi_Object zo = UiObjects[z];
-				if (zo && (zo.MainHubBlockyExit || zo.MainHubBlockySlot))
+				if (zo && (zo.MainHubBlockyExit || zo.MainHubBlockySlot || zo.MainHubBlockyAchievements))
 				{
 					zo.ImagePos = (-9999, -9999);
 					zo.ImageSize = (1, 1);
@@ -5221,23 +5831,21 @@ class PB_EventHandler : EventHandler
 		int tileW = (sw - margin * 2 - gap * 2) / 3;
 		int tileH = clamp(sh / 3, 120, sh - botReserve - margin * 2);
 		int y0 = margin + sh / 16;
-		int rowCenterX = margin + (3 * tileW + 2 * gap) / 2;
 		int exitH = clamp(int(double(tileH) * 0.88), 72, tileH);
 		int vGap = max(gap, tileH / 2);
 		int exitY = y0 + tileH + vGap;
 		bool xpOn = PB_EventHandler.PB_XP_RewardsOn();
-		int slotX = margin;
-		int slotW = 0;
-		int exitTileW = tileW;
-		int exitX = 0;
+		bool achOn = PB_EventHandler.PB_AchievementsOn();
+		int footerCount = 1;
 		if (xpOn)
-		{
-			int availableW = sw - margin * 2 - gap;
-			exitTileW = clamp(tileW, 140, min(220, availableW / 3));
-			slotW = max(availableW - gap - exitTileW, tileW * 2);
-			slotX = margin;
-			exitX = margin + slotW + gap;
-		}
+			footerCount++;
+		if (achOn)
+			footerCount++;
+		int availableW = sw - margin * 2;
+		int footerGap = gap;
+		int footerGaps = max(0, footerCount - 1);
+		int btnW = max(120, (availableW - footerGap * footerGaps) / footerCount);
+		int cx = margin;
 		for (int i = 0; i < UiObjects.Size(); i++)
 		{
 			PB_PDAUi_Object o = UiObjects[i];
@@ -5252,18 +5860,31 @@ class PB_EventHandler : EventHandler
 				}
 				else
 				{
-					o.ImagePos = (slotX, exitY);
-					o.ImageSize = (slotW, exitH);
+					o.ImagePos = (cx, exitY);
+					o.ImageSize = (btnW, exitH);
+					cx += btnW + footerGap;
+				}
+				continue;
+			}
+			if (o.MainHubBlockyAchievements)
+			{
+				if (!achOn)
+				{
+					o.ImagePos = (-9999, -9999);
+					o.ImageSize = (1, 1);
+				}
+				else
+				{
+					o.ImagePos = (cx, exitY);
+					o.ImageSize = (btnW, exitH);
+					cx += btnW + footerGap;
 				}
 				continue;
 			}
 			if (o.MainHubBlockyExit)
 			{
-				if (xpOn)
-					o.ImagePos = (exitX, exitY);
-				else
-					o.ImagePos = (rowCenterX - tileW / 2, exitY);
-				o.ImageSize = (exitTileW, exitH);
+				o.ImagePos = (cx, exitY);
+				o.ImageSize = (btnW, exitH);
 				continue;
 			}
 			int col = -1;
@@ -5385,13 +6006,14 @@ class PB_EventHandler : EventHandler
 	{
 		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
+		bool coldStart = gametic < PB_PDA_UI_INIT_MIN_GAMETIC;
 		bool hideHUD = false;
 		if (playeringame[consoleplayer])
 		{
 			let plr = players[consoleplayer];
 			if (plr && plr.mo && plr.mo.CountInv("CameraRunner") > 0) hideHUD = true;
 		}
-		if (!hideHUD)
+		if (!coldStart && !hideHUD)
 		{
 			DrawPB2022WeaponPickupOverlay();
 			DrawPB2022WeaponModeOverlay();
@@ -5402,7 +6024,7 @@ class PB_EventHandler : EventHandler
 			let cvDash = CVar.GetCVar("pb_dasheffect", players[consoleplayer]);
 			if (cvDash) { dashEffectOn = cvDash.GetBool(); }
 		}
-		if (!hideHUD && dashAlpha > 0 && dashEffectOn)
+		if (!coldStart && !hideHUD && dashAlpha > 0 && dashEffectOn)
 		{
 			TextureID dashTex = TexMan.CheckForTexture("graphics/hud/fullscrn/pb_dashoverlay.png", TexMan.Type_Any);
 			if (dashTex)
@@ -5416,19 +6038,18 @@ class PB_EventHandler : EventHandler
 				);
 			}
 		}
-		if (!hideHUD && !PDAMode && !KatanaDualChoiceMode)
+		if (!coldStart && !hideHUD && !PDAMode && !KatanaDualChoiceMode)
 			DrawGloryKillFuelHud();
-		if (MouseX == 1 && MouseY == 1 && !MousePositionSet && (PDAMode || KatanaDualChoiceMode))
+		if (gametic >= PB_PDA_UI_INIT_MIN_GAMETIC
+			&& MouseX == 1 && MouseY == 1 && !MousePositionSet
+			&& (PDAMode || KatanaDualChoiceMode))
 		{
 			SendNetworkEvent("modifymousepos",Screen.GetWidth() / 2,Screen.GetHeight() / 2);
 		}
-		if (uiObjects.Size() < 1)
-		{
-			WeaponTextMode = 0;
-			InitializeUiObjects();
-		}
 		if (PDAMode == true)
 		{
+			if (!PDA_TryEnsureUiObjects(true))
+				return;
 			globalPDAAlpha = 1.0;
 			TextureID cursortex = Texman.CheckForTexture("ZCURSOR",TexMan.Type_Any);
 			double pdaTextScale = clamp(Screen.GetHeight() / 240.0, 2.0, 6.0);
@@ -5446,25 +6067,23 @@ class PB_EventHandler : EventHandler
 				pdaPreviewPaneH = (descriptiondialog != null)
 					? (descriptiondialog.descClipH - descriptiondialog.descClipY) : 0;
 			}
-			Screen.Dim("Black",0.50,0,0,Screen.GetWidth(),Screen.GetHeight());
-			for (int ii = 0; ii < Screen.GetHeight(); ii += Screen.GetHeight() / 20)
-			{
-				Screen.DrawLine(0,ii,Screen.GetWidth(),ii,"Cyan",255/2);
-			}
-			for (int iii = 0; iii < Screen.GetWidth(); iii += Screen.GetWidth() / 20)
-			{
-				Screen.DrawLine(iii,0,iii,Screen.GetHeight(),"Cyan",255/2);
-			}
-			int height = Screen.GetHeight();
-			for (int inc = 0; inc < Screen.GetHeight(); inc += 1)
-			{
-				Screen.DrawLine(0,inc,Screen.GetWidth(),inc,"Cyan",255 * inc / height);
-			}
-			Screen.DrawTexture(TexMan.CheckForTexture("PDAUACICO",TexMan.Type_Any),true,0,0,DTA_Clean,true);
+			PB_PDAUiBackdrop.DrawFullScreen(globalPDAAlpha);
+			if (AchievementsMenuOpened)
+				DrawPDAAchievementBrowse(globalPDAAlpha);
 			if (UiObjects.Size() >= 1)
 			{
 				for (int i = 0; i < UiObjects.Size(); i++)
 				{
+					if (AchievementsMenuOpened)
+					{
+						if (UiObjects[i].objecttype != 4 && UiObjects[i].objecttype != 5
+							&& !UiObjects[i].BackButtonTrue
+							&& !(UiObjects[i].ExitButtonTrue && !UiObjects[i].MainHubBlockyExit))
+						{
+							UiObjects[i].notdrawn = true;
+							continue;
+						}
+					}
 					if (UiObjects[i].dontdraw == true)
 					{
 						UiObjects[i].notdrawn = true;
@@ -5476,6 +6095,12 @@ class PB_EventHandler : EventHandler
 						continue;
 					}
 					if (UiObjects[i].MainHubBlockySlot && (!blockyOn || !PB_EventHandler.PB_XP_RewardsOn()))
+					{
+						UiObjects[i].notdrawn = true;
+						continue;
+					}
+					if (UiObjects[i].MainHubBlockyAchievements
+						&& (!blockyOn || !PB_EventHandler.PB_AchievementsOn() || NonMainMenu))
 					{
 						UiObjects[i].notdrawn = true;
 						continue;
@@ -5561,6 +6186,66 @@ class PB_EventHandler : EventHandler
 						Screen.DrawText(BigFont, hovered ? Font.CR_OLIVE : Font.CR_GREEN, lx, ly, lab,
 							DTA_ScaleX, lblSc, DTA_ScaleY, lblSc,
 							DTA_Alpha, globalPDAAlpha);
+						UiObjects[i].notdrawn = false;
+						continue;
+					}
+					if (blockyOn && UiObjects[i].MainHubBlockyAchievements && PB_EventHandler.PB_AchievementsOn() && !NonMainMenu)
+					{
+						bool hovered = UiObjects[i].MouseOvered;
+						int bx = int(UiObjects[i].ImagePos.x);
+						int by = int(UiObjects[i].ImagePos.y);
+						int bw = int(UiObjects[i].ImageSize.x);
+						int bh = int(UiObjects[i].ImageSize.y);
+						DrawBlockyTile(bx, by, bw, bh, hovered, false, globalPDAAlpha);
+						double lblSc = pdaTextScale * 0.62;
+						string lab = UiObjects[i].toDraw;
+						double lw = BigFont.StringWidth(lab) * lblSc;
+						double lx = bx + (bw - lw) / 2;
+						double ly = by + bh * 0.1;
+						Screen.DrawText(BigFont, hovered ? Font.CR_OLIVE : Font.CR_GREEN,
+							lx, ly, lab,
+							DTA_ScaleX, lblSc, DTA_ScaleY, lblSc,
+							DTA_Alpha, globalPDAAlpha);
+						int unlocked = 0, total = 0;
+						if (gametic - pdaAchCacheGametic > 28)
+						{
+							let achHandler = VUAS_AchievementHandler.GetHandler();
+							unlocked = 0;
+							total = 0;
+							if (achHandler)
+							{
+								total = achHandler.achievements.Size();
+								for (int ai = 0; ai < total; ai++)
+								{
+									if (achHandler.achievements[ai].isUnlocked)
+										unlocked++;
+								}
+							}
+							pdaAchUnlockedCache = unlocked;
+							pdaAchTotalCache = total;
+							pdaAchCacheGametic = gametic;
+						}
+						else
+						{
+							unlocked = pdaAchUnlockedCache;
+							total = pdaAchTotalCache;
+						}
+						string sub = total > 0
+							? String.Format("%d / %d unlocked", unlocked, total)
+							: "View progress";
+						double statSc = clamp(pdaTextScale * 0.46, 2.5, 5.5);
+						double tw = BigFont.StringWidth(sub) * statSc;
+						for (int fit = 0; fit < 6 && tw > bw - 16; fit++)
+						{
+							statSc *= 0.9;
+							tw = BigFont.StringWidth(sub) * statSc;
+						}
+						double tx = bx + (bw - tw) / 2;
+						double ty = by + bh * 0.52;
+						Screen.DrawText(BigFont, hovered ? Font.CR_OLIVE : Font.CR_GRAY,
+							tx, ty, sub,
+							DTA_ScaleX, statSc, DTA_ScaleY, statSc,
+							DTA_Alpha, globalPDAAlpha * 0.95);
 						UiObjects[i].notdrawn = false;
 						continue;
 					}
@@ -5800,7 +6485,7 @@ class PB_EventHandler : EventHandler
 					else UiObjects[i].notdrawn = true;
 				}
 			}
-			if (descriptiondialog != null && NonMainMenu == true)
+			if (descriptiondialog != null && NonMainMenu == true && !AchievementsMenuOpened)
 			{
 				int paneRight = int(min(UpArrowPos.X, pdaDescClipRight));
 				if (blockyOn)
@@ -5847,8 +6532,6 @@ class PB_EventHandler : EventHandler
 				double(MouseY) + pdaCursorAnchorOfsY,
 				DTA_DestWidthF, pdaCursorW, DTA_DestHeightF, pdaCursorH,
 				DTA_CenterOffset, true);
-			if (UiObjects.Size() >= 1) return;
-			InitializeUiObjects();
 		}
 		if (!hideHUD && KatanaDualChoiceMode)
 			DrawKatanaDualChoiceOverlay();
@@ -6167,13 +6850,13 @@ class PB_EventHandler : EventHandler
 		PB_KatanaDualChoiceClose();
 	}
 
-	ui void InitializeUiObjects()
+	ui bool InitializeUiObjects()
 	{
-		if (!playeringame[consoleplayer]) { return; }
+		if (!playeringame[consoleplayer]) { return false; }
 		let pmo = players[consoleplayer].mo;
-		if (!pmo) { return; }
+		if (!pmo) { return false; }
 		PB_PDAWeaponContainer weaptextcontainer = PB_PDAWeaponContainer(pmo.FindInventory("PB_PDAWeaponContainer",true));
-		if (!weaptextcontainer) { return; }
+		if (!weaptextcontainer) { return false; }
 		blockyWeaponIconKeys.Clear();
 		blockyWeaponIconVals.Clear();
 		blockyMonsterIconKeys.Clear();
@@ -6339,6 +7022,12 @@ class PB_EventHandler : EventHandler
 		mainHubSlotBtn.toDraw = "REWARD SPIN";
 		mainHubSlotBtn.InitializeUiObject(BigFont);
 		uiObjects.Push(mainHubSlotBtn);
+		let mainHubAchBtn = new("PB_PDAUi_Object");
+		mainHubAchBtn.objecttype = 17;
+		mainHubAchBtn.MainHubBlockyAchievements = true;
+		mainHubAchBtn.toDraw = "ACHIEVEMENTS";
+		mainHubAchBtn.InitializeUiObject(BigFont);
+		uiObjects.Push(mainHubAchBtn);
 		let mainHubExitBtn = new("PB_PDAUi_Object");
 		mainHubExitBtn.objecttype = 15;
 		mainHubExitBtn.toDraw = "EXIT";
@@ -6354,11 +7043,12 @@ class PB_EventHandler : EventHandler
 		ApplyBlockyLayout();
 		SyncBlockyPageArrowHitboxes(pdaTextScale);
 		SendNetworkEvent("addbaseweapons");
+		return true;
 	}
 
 	override bool InputProcess(InputEvent e)
 	{
-		if (gamestate == GS_TITLELEVEL || gametic <= 1) return false;
+		if (gamestate == GS_TITLELEVEL || gametic < PB_PDA_UI_INIT_MIN_GAMETIC) return false;
 		if (!e) return false;
 		if (!PDAMode && !KatanaDualChoiceMode) return false;
 		int mouseinput = 0;
