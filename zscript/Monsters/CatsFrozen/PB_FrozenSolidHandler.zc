@@ -57,6 +57,7 @@ class PB_FrozenSolidHandler : EventHandler
 
 		n.angle = ang;
 		n.pitch = 0.;
+		PB_Achievements.OnFrozenSolidKill();
 		t.Destroy();
 	}
 }

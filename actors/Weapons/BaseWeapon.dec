@@ -383,6 +383,7 @@ States
 		SCF0 A 5 bright A_GunFlash
 		TNT1 A 0 A_AlertMonsters
 		TNT1 A 0 A_TakeInventory("FlameBelchReady",1)
+		TNT1 A 0 A_PB_AchShoulderFlame
 		TNT1 A 0
 		{
 			if (GetCvar("be_UseELammo") == 1)
@@ -410,6 +411,7 @@ States
 		SCF0 A 5 bright A_GunFlash
 		TNT1 A 0 A_AlertMonsters
 		TNT1 A 0 A_TakeInventory("FlameBelchReady",1)
+		TNT1 A 0 A_PB_AchShoulderFlame
 		TNT1 A 0
 		{
 			if (GetCvar("be_UseELammo") == 1)
@@ -453,6 +455,7 @@ States
 		LCF0 A 3 bright A_GunFlash
 		TNT1 A 0 A_AlertMonsters
 		TNT1 A 0 A_TakeInventory("IceBombReady",1)
+		TNT1 A 0 A_PB_AchShoulderIce
 		TNT1 A 0
 		{
 			if (GetCvar("be_UseELammo") == 1)

@@ -120,6 +120,8 @@ GameInfo
 	AddEventHandlers = "BDv22GoreMergeHandler"
 	AddEventHandlers = "BPv10GoreHandler"
 	AddEventHandlers = "PB_DeathGoreBoostHandler"
+	AddEventHandlers = "AccuDeathHandler"
+	AddEventHandlers = "AccuDeathSpawnHandler"
 	AddEventHandlers = "TiltPlusPlusHandler"
 	AddEventHandlers = "DeathFadeBootstrap"
 	AddEventHandlers = "DEDashJumpHandler"
@@ -146,6 +148,13 @@ GameInfo
 	AddEventHandlers = "PB_MarauderSupportHandler"
 	AddEventHandlers = "PB_RLACSHandler"
 	AddEventHandlers = "PB_DMRReticleHandler"
+	AddEventHandlers = "TeleporterEffects"
+	AddEventHandlers = "VUAS_AchievementHandler"
+	AddEventHandlers = "VUAS_PersistentTracker"
+	AddEventHandlers = "VUAS_AchievementRenderer"
+	AddEventHandlers = "VUAS_AchievementCommands"
+	AddEventHandlers = "PB_AchievementSetup"
+	AddEventHandlers = "PB_AchievementCombatHandler"
 	NormForwardMove = 0x32, 0x32
 	NormSideMove = 0x32, 0x32
 }

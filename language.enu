@@ -121,6 +121,22 @@ BDV22GOREMNU_MIX_TIP = "Controls Extra Gore Style.\nLower = More PB Gore.\nHighe
 BDV22GOREMNU_ENHANCED2022 = "2022 Enhanced Brootality";
 BDV22GOREMNU_ENHANCED2022_TIP = "Master Switch For\nThe Full 2022 Gore Mix.\nEnables BDv22 Mist,\nMeat, Organs, BPv10 Death\nExtras, And Shiny PBR Nash\nBlood (Decals + Pools).";
 
+OPTMNU_PB_ACCUDEATH = "AccuDeath (corpse tints)";
+OPTMNU_PB_ACCUDEATH_TIP = "AccuDeath V3.2.2.\nApplies fire/plasma/electric\ncorpse translations and\nparticle death FX. On by\ndefault; stacks with Nash\nand Enhanced Brootality.";
+OPTMNU_PB_ACCUDEATH_SUB = "AccuDeath Options";
+OPTMNU_PB_ACCUDEATH_HINT = "Credits: Airehnr66 (AccuDeath V3.2.2). PB fork skips Explosive fire tint and respects custom Death.* states unless overridden below.";
+OPTMNU_PB_ACCUDEATH_BARREL = "Doom barrel damage type";
+OPTMNU_PB_ACCUDEATH_ROCKET = "Rocket damage type";
+OPTMNU_PB_ACCUDEATH_CACOBALL = "Cacodemon ball damage type";
+OPTMNU_PB_ACCUDEATH_STATEOVERRIDE = "Apply to custom Death.* states";
+OPTMNU_PB_ACCUDEATH_DYNLIGHTS = "Dynamic lights on corpses";
+OPTMNU_PB_ACCUDEATH_LIGHTSIZE = "Corpse light size";
+
+OPTMNU_PB_ACHIEVEMENTS = "Achievements";
+OPTMNU_PB_ACHIEVEMENTS_HINT = "Persistent meta goals (Vortex Universal Achievement System).\nToasts, browse menu, and PB-specific unlocks.\nOpen the list from the Blocky PDA home screen (Achievements tile) or PB 2022 Enhanced settings.";
+OPTMNU_PB_ACHIEVEMENTS_MENU = "Achievement Settings";
+OPTMNU_PB_ACHIEVEMENTS_BROWSE = "PB 2022 Achievements";
+
 BPV10GOREMNU_ENABLE = "Brutal Pack V10: Enable Extra Gore";
 BPV10GOREMNU_ENABLE_TIP = "Master Switch For\nBrutal Pack V10 Gore.\nAdds Extra Death FX\nFor Humanoids And Imps.";
 BPV10GOREMNU_BURNCORPSE = "Brutal Pack V10: Burned Corpse Husk";

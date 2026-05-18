@@ -5533,3 +5533,9 @@ quakelivekill		"SOUNDS/Hitmarkers/HMQLK"
 teamfortress2hit	"SOUNDS/Hitmarkers/HMTF2H"
 teamfortress2kill	"SOUNDS/Hitmarkers/HMTF2K"
 titanfall2kill		"SOUNDS/Hitmarkers/HMT2K"
+
+vuas/unlock1		sounds/achievements/achievement_unlock1.ogg
+vuas/unlock2		sounds/achievements/achievement_unlock2.ogg
+vuas/unlock3		sounds/achievements/achievement_unlock3.ogg
+vuas/unlock4		sounds/achievements/achievement_unlock4.ogg
+
