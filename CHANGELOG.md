@@ -10,6 +10,8 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Fixed
 
+- **Shield Saw throw / catch (`BaseWeapon.zc`, `BaseWeapon.dec`):** view strip is **`SHIE K → J → I → L → M → N → O`** on **`PSP_WEAPON`** (projectile still spawns on **`I`**); recall is the reverse **`O → N → M → L → I → J → K`**. Removed the split layer-**1006** overlay path that only played **L/M** on throw and **N/O** before catch.
+
 - **Shield Saw catch (`PlayerPawn.zc`):** recall now starts **`ShieldSawCatchAnim`** with **`player.SetPSprite(PSP_WEAPON, …)`** (same pattern as ledge climb) instead of **`ReadyWeapon.SetState`**, which never advanced the view weapon layer. **`ShieldSawCatchPending`** is only consumed when **`FindState("ShieldSawCatchAnim")`** succeeds.
 
 - **Title screen (`titlemap.wad` + `language.enu`):** `SubtitleMessage` ACS draws localized `TITLEMAP0` and random `TITLEMAP1`–`TITLEMAP23` under the logo; without language entries the engine showed raw keys like `TITLEMAP12`. Added empty strings so only the logo art remains visible.
