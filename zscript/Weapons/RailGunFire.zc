@@ -1,3 +1,5 @@
+// Railgun fire modes — PB Staging parity (BaseWeapon_Functions PB_FireRail / PB_FireLaser / PB_VisualLaser).
+
 class PB_RailLine : LineTracer
 {
 	array<Actor> hitActors;
@@ -21,12 +23,213 @@ class PB_RailLine : LineTracer
 
 extend class PB_WeaponBase
 {
+	const PB_RED_RAIL_AIM = 0;
+	const PB_RED_RAIL_FIRE = 1;
+	const PB_RAIL_PART_STEP = 20;
+	const PB_RAIL_LASER_AIM_STEP = 5;
+
+	static const Name PB_RailSmokeLumps[] =
+	{
+		"SMO1A0", "SMO1B0", "SMO1C0", "SMO1D0"
+	};
+
+	Vector3 PB_SafeUnit3(Vector3 v)
+	{
+		double len = v.Length();
+		if (len < 0.001)
+			return v;
+		return v / len;
+	}
+
+	Vector3 PB_LaserReflectDir(Vector3 dir, PB_Laser laser)
+	{
+		if (!laser)
+			return dir;
+
+		Vector3 ndir;
+		if (laser.results.HitType == TRACE_HitWall && laser.results.HitLine != null)
+		{
+			if (laser.results.Side == Line.front)
+				ndir = PB_SafeUnit3((laser.results.HitLine.delta.y, -laser.results.HitLine.delta.x, 0));
+			else
+				ndir = PB_SafeUnit3((-laser.results.HitLine.delta.y, laser.results.HitLine.delta.x, 0));
+		}
+		else if (laser.results.HitType == TRACE_HitFloor)
+			ndir = laser.results.HitSector.floorplane.normal;
+		else if (laser.results.HitType == TRACE_HitCeiling)
+			ndir = laser.results.HitSector.ceilingplane.normal;
+		else
+			return dir;
+		return dir - 2 * ndir * (dir dot ndir);
+	}
+
+	void PB_DrawRailFxRed(Vector3 where, int beamType, double alfa, int power)
+	{
+		int fm = random(1, 4);
+		TextureID coreTex;
+		if (beamType == PB_RED_RAIL_FIRE)
+			coreTex = TexMan.CheckForTexture("RedR" .. fm);
+		else
+		{
+			coreTex = TexMan.CheckForTexture("CPSQB0");
+			if (!coreTex.IsValid())
+				coreTex = TexMan.CheckForTexture("YAE4A0");
+		}
+		if (!coreTex.IsValid())
+			return;
+
+		FSpawnParticleParams core;
+		core.Texture = coreTex;
+		core.Color1 = "FFFFFF";
+		core.Style = STYLE_Add;
+		core.Flags = SPF_ROLL | SPF_FULLBRIGHT | SPF_NOTIMEFREEZE;
+		core.Vel = (0, 0, 0);
+		core.Startroll = randompick(0, 180);
+		core.RollVel = 0;
+		core.StartAlpha = alfa;
+		if (beamType == PB_RED_RAIL_FIRE)
+		{
+			core.FadeStep = power >= 60 ? 0.08 : 0.15;
+			core.Size = 60;
+			core.Lifetime = power >= 60 ? random(15, 17) : random(8, 10);
+		}
+		else
+		{
+			core.FadeStep = 0;
+			core.Size = 12;
+			core.Lifetime = 1;
+		}
+		core.SizeStep = 0.01;
+		core.Pos = where;
+		Level.SpawnParticle(core);
+	}
+
+	action void PB_FireLaser(int power = 0)
+	{
+		PlayerPawn pp = PlayerPawn(invoker.owner);
+		if (!pp || !pp.player)
+			return;
+
+		PB_WeaponBase weap = PB_WeaponBase(invoker);
+		int bounce = int(power / 10) + 2;
+		double vz = (pp.height * 0.5 - pp.floorclip + pp.AttackZOffset * pp.player.crouchFactor) - 8.;
+		Vector3 dir = (AngleToVector(pp.angle, cos(pp.pitch)), -sin(pp.pitch));
+		Vector3 spos = (pp.pos.xy, pp.pos.z + vz);
+
+		for (int b = bounce; b > 0; b--)
+		{
+			let laser = PB_Laser(new("PB_Laser"));
+			if (!laser)
+				break;
+			laser.Trace(spos, pp.cursector, dir, 8192, TRACE_NoSky,
+				Line.ML_BLOCKEVERYTHING | Line.ML_BLOCKHITSCAN, false, pp);
+
+			let res = laser.results;
+			Vector3 fpos = res.HitPos;
+			fpos -= res.HitVector;
+
+			Vector3 dif = Level.Vec3Diff(spos, fpos);
+			double dis = dif.Length();
+			Vector3 dr;
+			if (dis > 0.001)
+				dr = weap.PB_SafeUnit3(dif);
+			else
+				dr = weap.PB_SafeUnit3(dir);
+
+			if (res.HitType != TRACE_HitNone && power == 60 && b == 1)
+			{
+				Actor blast = Actor.Spawn("RailgunLaserBlast1", fpos, ALLOW_REPLACE);
+				if (blast)
+					blast.target = pp;
+			}
+
+			for (int h = 0; h < laser.hitActors.Size(); h++)
+			{
+				Actor vic = laser.hitActors[h];
+				if (!vic || vic.health <= 0)
+					continue;
+				vic.DamageMobj(pp, pp, 10 * power, 'Incinerate', DMG_THRUSTLESS);
+			}
+
+			int q = int(dis / PB_RAIL_PART_STEP) + 1;
+			for (int i = 0; i < q; i++)
+			{
+				spos += (dr * PB_RAIL_PART_STEP);
+				if (i > 0)
+					weap.PB_DrawRailFxRed(spos, PB_RED_RAIL_FIRE, 1.0, power);
+
+				if (i % 4 == 0)
+				{
+					if (power == 60)
+						weap.PB_SpawnRailShockWave(spos, true, i / 4);
+					let p = RailgunAOEPuff(Actor.Spawn("RailgunAOEPuff", spos));
+					if (p)
+					{
+						p.target = pp;
+						p.dmg = power * 3;
+						p.rad = power * 3;
+					}
+				}
+			}
+
+			dir = weap.PB_LaserReflectDir(dir, laser);
+			spos = fpos;
+		}
+	}
+
+	action void PB_VisualLaser(int power = 0)
+	{
+		PlayerPawn pp = PlayerPawn(invoker.owner);
+		if (!pp || !pp.player)
+			return;
+
+		PB_WeaponBase weap = PB_WeaponBase(invoker);
+		int bounce = int(power / 10) + 2;
+		double vz = (pp.height * 0.5 - pp.floorclip + pp.AttackZOffset * pp.player.crouchFactor) - 8.;
+		Vector3 dir = (AngleToVector(pp.angle, cos(pp.pitch)), -sin(pp.pitch));
+		Vector3 spos = (pp.pos.xy, pp.pos.z + vz);
+
+		for (int b = bounce; b > 0; b--)
+		{
+			let laser = PB_Laser(new("PB_Laser"));
+			if (!laser)
+				break;
+			laser.Trace(spos, pp.cursector, dir, 8192, TRACE_NoSky,
+				Line.ML_BLOCKEVERYTHING | Line.ML_BLOCKHITSCAN, false, pp);
+
+			let res = laser.results;
+			Vector3 fpos = res.HitPos;
+			fpos -= res.HitVector;
+
+			Vector3 dif = Level.Vec3Diff(spos, fpos);
+			double dis = dif.Length();
+			Vector3 dr;
+			if (dis > 0.001)
+				dr = weap.PB_SafeUnit3(dif);
+			else
+				dr = weap.PB_SafeUnit3(dir);
+
+			double alfa = frandom(0.2, 0.3) * max(1, power / 20);
+			int q = int(dis / PB_RAIL_LASER_AIM_STEP) + 1;
+			for (int i = 0; i < q; i++)
+			{
+				spos += (dr * PB_RAIL_LASER_AIM_STEP);
+				if (i > 0)
+					weap.PB_DrawRailFxRed(spos, PB_RED_RAIL_AIM, alfa, power);
+			}
+
+			dir = weap.PB_LaserReflectDir(dir, laser);
+			spos = fpos;
+		}
+	}
+
 	action void PB_FireRail()
 	{
 		PlayerPawn pp = PlayerPawn(invoker.owner);
 		if (!pp || !pp.player || !pp.player.mo)
 			return;
 
+		PB_WeaponBase weap = PB_WeaponBase(invoker);
 		double vz = (pp.height * 0.5 - pp.floorclip + pp.AttackZOffset * pp.player.crouchFactor) - 8.;
 		Vector3 dir = (AngleToVector(pp.angle, cos(pp.pitch)), -sin(pp.pitch));
 		Vector3 spos = (pp.pos.xy, pp.pos.z + vz);
@@ -59,7 +262,109 @@ extend class PB_WeaponBase
 			vic.DamageMobj(pp, pp, 220, 'Railgun');
 		}
 
+		Vector3 dif = Level.Vec3Diff(spos, fpos);
+		double dis = dif.Length();
+		Vector3 dr;
+		if (dis > 0.001)
+			dr = dif / dis;
+		else
+			dr = dir;
+		int q = int(dis / PB_RAIL_PART_STEP) + 1;
+
+		for (int i = 0; i < q; i++)
+		{
+			spos += (dr * PB_RAIL_PART_STEP);
+			if (i > 0)
+			{
+				weap.PB_DrawRailFxBlue(spos);
+				weap.PB_SpawnRailTrailSparks(pp, spos);
+				if (i % 4 == 0)
+					weap.PB_SpawnRailShockWave(spos, false, i / 4);
+			}
+		}
+
 		A_RailAttack(0, 0, 0, "9F 9F FF", "04 7C FF", RGF_SILENT | RGF_FULLBRIGHT | RGF_CENTERZ,
-			0, "NullPuff", 0, 0, 8192, 35, 0.55, 0.48, "ElectroBlastTrail2", 0, frandom(0., 360.));
+			0, "NullPuff", 0, 0, 8192, 35, 0.55, 0.48, "none", 0, 0.);
+	}
+
+	void PB_DrawRailFxBlue(Vector3 where)
+	{
+		int fm = random(1, 4);
+		TextureID coreTex = TexMan.CheckForTexture("BlueR" .. fm);
+		if (!coreTex.IsValid())
+			coreTex = TexMan.CheckForTexture("YAE5A0");
+
+		FSpawnParticleParams core;
+		core.Texture = coreTex;
+		core.Color1 = "FFFFFF";
+		core.Style = STYLE_Add;
+		core.Flags = SPF_ROLL | SPF_FULLBRIGHT | SPF_NOTIMEFREEZE;
+		core.Vel = (0, 0, 0);
+		core.Startroll = randompick(0, 90, 180, 270);
+		core.RollVel = frandom(-4, 4);
+		core.StartAlpha = 1.0;
+		core.FadeStep = 0.032;
+		core.Size = 52;
+		core.SizeStep = -1.5;
+		core.Lifetime = random(42, 58);
+		core.Pos = where;
+		Level.SpawnParticle(core);
+
+		TextureID smokeTex = TexMan.CheckForTexture(PB_RailSmokeLumps[random(0, 3)]);
+		if (!smokeTex.IsValid())
+			return;
+
+		FSpawnParticleParams smoke;
+		smoke.Texture = smokeTex;
+		smoke.Color1 = "33B2FF";
+		smoke.Style = STYLE_Add;
+		smoke.Flags = SPF_ROLL | SPF_FULLBRIGHT | SPF_NOTIMEFREEZE;
+		Vector3 offsv = (frandom(-6, 6), frandom(-6, 6), frandom(-5, 5));
+		smoke.Vel = (0, 0, 0);
+		smoke.Startroll = randompick(0, 180);
+		smoke.RollVel = frandom(-3, 3);
+		smoke.StartAlpha = 0.7;
+		smoke.FadeStep = 0.008;
+		smoke.Size = random(22, 38);
+		smoke.SizeStep = -0.35;
+		smoke.Lifetime = random(90, 130);
+		smoke.Pos = where + offsv;
+		Level.SpawnParticle(smoke);
+		smoke.Pos = where - offsv;
+		Level.SpawnParticle(smoke);
+	}
+
+	void PB_SpawnRailShockWave(Vector3 where, bool red, int it)
+	{
+		string tx = red ? "PBSWV1" : "PBSWV2";
+		TextureID shockTex = TexMan.CheckForTexture(tx);
+		if (!shockTex.IsValid())
+			return;
+
+		FSpawnParticleParams shock;
+		shock.Texture = shockTex;
+		shock.Style = STYLE_Add;
+		shock.Color1 = "FFFFFF";
+		shock.Flags = SPF_ROLL | SPF_FULLBRIGHT | SPF_NOTIMEFREEZE;
+		shock.Startroll = random(0, 359);
+		shock.RollVel = frandom(-2, 2);
+		shock.StartAlpha = 1.0;
+		shock.Lifetime = 24 + it;
+		shock.FadeStep = 0.04;
+		shock.Size = red ? 20 : 6;
+		shock.SizeStep = red ? 10 : 5;
+		shock.Pos = where;
+		Level.SpawnParticle(shock);
+	}
+
+	void PB_SpawnRailTrailSparks(Actor mo, Vector3 where)
+	{
+		for (int n = 0; n < 3; n++)
+		{
+			Vector3 off = (frandom(-7, 7), frandom(-7, 7), frandom(-5, 5));
+			Actor sp = Actor.Spawn("RailGunTrailSpark", where + off, NO_REPLACE);
+			if (sp)
+				sp.target = mo;
+		}
 	}
 }

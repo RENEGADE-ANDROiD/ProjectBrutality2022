@@ -1,8 +1,4 @@
-// Lady Golide (HASG) hitscan helpers — must load after M41A.dec (PB_12GAPellet) and Nailgun.dec (MGNail).
-
-Actor PB_12GAPellet_ASG : PB_12GAPellet
-{
-}
+// Lady Golide (HASG) hitscan helpers — PB_12GAPellet_ASG is ZScript (BulletDef.Shell.zsc); load after Nailgun.dec (MGNail).
 
 Actor IN_MGNail : MGNail
 {

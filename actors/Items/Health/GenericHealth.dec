@@ -6,6 +6,7 @@ ACTOR HealthPlus : Health Replaces HealthBonus
 	+COUNTITEM
 	+FLOORCLIP
 	+DONTGIB
+	+BRIGHT
 	+INVENTORY.ALWAYSPICKUP
 	Inventory.Amount 2
 	Inventory.MaxAmount 9999
@@ -35,6 +36,7 @@ Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 	+COUNTITEM
 	+FLOORCLIP
 	+DONTGIB
+	+BRIGHT
 	+INVENTORY.ALWAYSPICKUP
 	Inventory.PickUpSound "items/bonus2"
 	States
@@ -62,6 +64,7 @@ Actor GiveHealth : Health
 	Game Doom
 	SpawnID 152
 	+COUNTITEM
+	+BRIGHT
 	+INVENTORY.ALWAYSPICKUP
 	Inventory.Amount 1
 	Inventory.MaxAmount 9999
@@ -86,6 +89,7 @@ Actor GiveArmor : BasicArmorBonus
 	Armor.Saveamount 1
 	Armor.Maxsaveamount 9999
 	+COUNTITEM
+	+BRIGHT
 	+INVENTORY.ALWAYSPICKUP
 	States
 	{

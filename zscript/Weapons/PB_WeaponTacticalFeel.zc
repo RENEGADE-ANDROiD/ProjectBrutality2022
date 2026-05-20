@@ -50,8 +50,7 @@ class PB_WeaponTilterInventory : Inventory
 		'PB_BLACKHOLE',
 		'PB_Unmaker',
 		'PB_DemonExterminator',
-		'MastermindChaingun',
-		'PB_RiotShield'
+		'MastermindChaingun'
 	};
 
 	static const Name SCOPED_TACTICAL_WEAPONS[] =
@@ -581,6 +580,9 @@ class PB_TacticalFeelHandler : EventHandler
 		}
 		else if (e.Name ~== "pb_shouldercannon")
 		{
+			while (mo.CountInv("IceBombSelected") > 0)
+				mo.TakeInventory("IceBombSelected", 1);
+			mo.GiveInventory("FlameBelchSelected", 1);
 			mo.GiveInventory("DoShoulderCannon", 1);
 		}
 	}

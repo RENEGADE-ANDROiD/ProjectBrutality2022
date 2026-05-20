@@ -1,0 +1,52 @@
+// M1 Plasma support (weapon + mag ammo + runtime tokens are ZScript).
+
+// This is to make the no doomguy talk cvar work, as it's impossible to
+// use cvars on sndinfo and on Inventory.PickupSound
+ACTOR PB_M1PlasmaPickup : PB_UpgradeItem
+{
+	Inventory.PickupSound ""
+	Inventory.PickupMessage "You got the UAC-M1 Plasma Rifle! (Slot 8)"
+	Inventory.MaxAmount 3
+	Scale 0.51
+	FloatBobStrength 0.5
+	States
+	{
+	Spawn:
+		VLAS A 0 NoDelay
+		PLAS A 10 A_PbvpFramework("VLAS")
+		"####" "#" 0 A_PbvpInterpolate()
+		LOOP
+	Pickup:
+		TNT1 A 0 {
+			if(CountInv("Cell") == 300 && CountInv("PB_M1Plasma") >=3 && CountInv("GotAPack") < 1 && CountInv("GotAPack_h") < 1) {
+				return state("FullAmmo");
+				}
+			else if(CountInv("Cell") == 600 && CountInv("PB_M1Plasma") >=3 && CountInv("GotAPack") >= 1 && CountInv("GotAPack_h") < 1) {
+				return state("FullAmmo");
+				}
+			else if(CountInv("Cell") == 800 && CountInv("PB_M1Plasma") >=3 && CountInv("GotAPack") >= 1 && CountInv("GotAPack_h") >= 1) {
+				return state("FullAmmo");
+				}
+				return state("");
+			}
+		TNT1 A 0 {
+			A_GiveInventory("PB_M1Plasma");
+			if(GetCvar("nodoomguytalk") >= 1) {
+				A_StartSound("7LSPICK",3,CHANF_NOPAUSE );
+				}
+			else {
+				A_StartSound("PLSPICK",3,CHANF_NOPAUSE );
+				}
+		}
+		Stop
+	FullAmmo:
+		TNT1 A 1
+		TNT1 A 0
+		Fail
+	}
+}
+
+Actor PlasmaRifleHasUnloaded : Inventory {}
+
+Actor Select_M1Plasma_Single : Inventory { Inventory.MaxAmount 1 }
+Actor Select_M1Plasma_Dual : Inventory { Inventory.MaxAmount 1 }

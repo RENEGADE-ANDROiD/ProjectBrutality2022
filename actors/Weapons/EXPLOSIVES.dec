@@ -504,9 +504,6 @@ States    {
 		  XELC AABBCCDDEEFF 1 Bright Light("LightningImpactLight") A_CustomMissile("ElectroBlastTrail3",6,0,random(0,359),CMF_AIMDIRECTION|CMF_TRACKOWNER,random(30,270))
         Stop}}
 
-actor PB_StunGrenadeExplosion : StunGrenadeExplosion
-{}
-
 actor RocketExplosion
 {
 +NOBLOCKMAP

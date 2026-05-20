@@ -76,7 +76,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **Revolver** — high-impact sidearm for heavier single shots.
 - **Maschinenpistole 40** — compact automatic ballistic weapon.
 - **UAC-17 SMG** — fast sidearm-class automatic with weapon-special handling.
-- **Riot Shield** — defensive sidearm slot weapon built around shield blocking and close fighting.
+- **UAC Ballistic Shield Module** — inventory upgrade (icon **`5L1DI0`**) from **riot-shield sergeants**; not a weapon-slot gun. With the module, open **Weapon Special** on the **.45 Pistol** or **Fire Axe** to toggle **ballistic shield + pistol** (block, bash, shielded reload) or **shield + axe** loadouts. Settings: **Weapon Settings → Ballistic Shield Module** (optional fire-axe requirement for the axe loadout).
 - **Hell Pistoler** — demon sidearm with a special wheel for Hell Rounds, Shrink Beam, and rate-of-fire toggle behavior.
 - **Desert Eagle .50** — heavy pistol for high-damage precision sidearm shots.
 
@@ -207,7 +207,7 @@ Those hazards are optional encounters—many maps never place them—but when th
 
 - **Project Survival fodder — the standard fodder backbone of this build.** Shambler, Puker, Blighter, Screamer, Burster, Spiker, and Cyber Fodder *(CyberFodder)* are the **default Tier 1 reinforcement roster**, not an opt-in pool: every zombieman, shotgunner, chaingunner, imp, pinky, and spectre spawn rolls extra PS fodder alongside the classic enemy, and PS fodder ignores the broader *disable new enemies* switch because it is treated as core content. Distribution skews toward variety — Shambler ~20%, the other five each ~16% — so the supporting cast carries the visual identity of the fodder layer instead of one face dominating. **Trite** pods on floors or ceilings burst into throngs of small **Trite** critters *(Trite)* for swarm panic. (**Project Survival** by **The Pope of Dope / ThePopeOfDope** — see **`CREDITS.txt`**.)
 - **Zombieman family** — pistol grunts, rifle grunts, carbine specialists, plasma zombies and their trooper-weight sibling, helmeted Phobos-style guards (pistol and rifle versions), and lab-coated scientists who still count as rank‑and‑file despite their animation set.
-- **Shotgun sergeants** — classic shotgun guys plus helmeted variants, quad‑shot and auto‑shotgun heavies, riot‑shield entries, rocket‑salvo zombies, demon‑tech shotgun troopers, and Z‑spec squads built on the same sergeant chassis.
+- **Shotgun sergeants** — classic shotgun guys plus helmeted variants, quad‑shot and auto‑shotgun heavies, **riot‑shield sergeants** (**`PB_RiotShieldGuy`** — always drop the ballistic shield module on death; see drop table below), rocket‑salvo zombies, demon‑tech shotgun troopers, and Z‑spec squads built on the same sergeant chassis.
 - **Chaingun commandos** — modern chaingunners next to the slower classic chaingunner rig; expect helmet chaingunners and nailgun‑style majors when spawns budget extra spice.
 - **Nazi soldiers** — Wolfenstein‑flavored SS rips drop wherever Nazi episodes or replacement tables still call for them.
 - **Imp family** — everyday fireball imps, frost‑breathing ice imps, infected savage imps, four themed dark imps (Nami, Nether, ST, Void), and three nightmare palette variants (DNImpVariant1–3) that read as imp squad remixes at a glance.
@@ -269,6 +269,27 @@ Frozen-solid corpse statues are a separate Cat's Frozen presentation layer: most
 The in-game **PDA** codex mirrors many of these families with dossiers that unlock as you kill matching creatures—use it when you forget which cryo cousin interrupted your Baron fight.
 
 Unlocked codex rows persist across saves, so long campaigns slowly fill out the same roster this guide outlines.
+
+### Monster-sourced weapons, modules, and drop chances
+
+These are **not** rolled from normal map weapon spawners unless noted. **`DropItem "Class" N`** means roughly **`N / 256`** chance per death roll (engine picks one drop from the monster’s list). **`A_Jump(128, …)`** is a **50%** branch. Omitted probability = **always** when that drop is chosen.
+
+| Source monster(s) | Pickup / module | Death-drop chance |
+| --- | --- | --- |
+| **`PB_RiotShieldGuy`** (riot-shield sergeant) | **`RiotShieldPickup`** → **`PB_RiotShieldModule`** | **100%** (guaranteed module when the sergeant dies) |
+| **`PB_Mastermind`**, **`PB_MastermindGK`** | **`MastermindChaingun`** | **72 / 256** (~**28%**) |
+| **`CyberdemonBoss`** (Baalgar / map cyber boss) | **`PB_CyberdemonRL`** | **64 / 256** (**25%**) |
+| Cyber **arm gib** (`XDeathCyberdemonGun`, fatality / gore) | **`PB_CyberdemonRL`** | **50%** if **`pb_NoPB_CyberdemonRLWeapon`** is off |
+| **`PB_Marauder`**, **`PB_MarauderGK`** | **`MarauderSSG`** | **80 / 256** (~**31%**) |
+| Marauder scripted fatality floor props | **`MarauderSSG`** | **50%** (`A_Jump(128, …)`) |
+| **`PB_Mancubus`**, **`PB_Daedabus`**, **`PB_Volcabus`**, GK fatso variants | **`MancubusFlameCannon`** | **56 / 256** (~**22%**) |
+| **`PB_Daedabus`** | **`BioAcidLauncher`** (slot 7) | **44 / 256** (~**17%**) |
+| **`PB_Belphegor`** | **`BioAcidLauncher`** | **36 / 256** (~**14%**) |
+| **`PB_ObsidianRavager`** (cyber-tier spawns) | **`PB_ObsidianDragonSlayer`** | **Always** on Ravager death (unless **`pb_NoDragonSlayerWeapon`**) |
+
+**Spawn rate vs. drop rate:** Riot-shield sergeants are an **extra** shotgun-guy variant from **`ShotgunGuySpawner`** (weighted **`A_Jump`** into **`RiotShieldGuyPack`** — e.g. **16 / 256** on one early tier, up to **36 / 256** on another). That controls how often the enemy appears, not whether the module drops (**always** once you kill one).
+
+**`give all` / `idfa`:** Monster-drop guns and the ballistic shield module are excluded from bulk cheat grants; use **`give <ClassName>`** or play the drops above.
 
 The base zombie, imp, pinky, floater, revenant, noble, arch‑vile, and Doom boss rosters come from **Project Brutality** and the **Monster Pack** line — see **`CREDITS.txt`** and **`DetailedCredits.txt`** for full per‑creature authorship.
 

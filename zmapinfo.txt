@@ -104,11 +104,12 @@ GameInfo
 	DimColor = "Black"
 	DimAmount = 0.70
 	NoRandomPlayerClass = True
+	StatusBarClass = "PB2022_Hud_ZS"
 	AddEventHandlers = "pb_ExecutionHandler"
 	AddEventHandlers = "PB_EventHandler"
 	AddEventHandlers = "PB_XPRewardsHandler"
-	AddEventHandlers = "PB_AmmoTotalFloaterHandler"
 	AddEventHandlers = "PB_VisorHandler"
+	AddEventHandlers = "PB_HUDFXHandler"
 	AddEventHandlers = "MBlurHandler"
 	AddEventHandlers = "PB_WheelBSSBlurHandler"
 	AddEventHandlers = "gb_EventHandler"
@@ -155,6 +156,29 @@ GameInfo
 	AddEventHandlers = "VUAS_AchievementCommands"
 	AddEventHandlers = "PB_AchievementSetup"
 	AddEventHandlers = "PB_AchievementCombatHandler"
+	// Combat SFX warm-cache (~45 logical names): decoded at each map load (incl. TITLEMAP) to cut first-play hitches from PK3/OGG decode. Expand via maint_scripts or SNDINFO + gameplay profiling — do not list all ~4k PB sounds here.
+	PrecacheSounds =
+		"weapons/pistol", "weapons/pistolup",
+		"weapons/rifle", "weapons/rifle/up", "Weapons/Rifle/SFire",
+		"weapons/sg", "weapons/sgpump", "insertshell",
+		"weapons/plasmarifle", "weapons/plasma/cellin", "weapons/plasma/startup", "PLREADY",
+		"weapons/minigunfire", "weapons/minigunfirefast",
+		"CHAINSTA", "CHAINSPI", "CHAINSTO",
+		"weapons/minigun/chaingunmode/spinup", "weapons/minigun/chaingunmode/spin",
+		"weapons/minigun/chaingunmode/spindown",
+		"player/cyborg/fist", "weapons/fistwhoosh", "weapons/fists_smash",
+		"grunt/pain", "player/pain100", "player/pain75", "player/pain50", "player/pain25",
+		"ARMOR", "misc/abonus_pickup", "items/armor/Sshard",
+		"AmmoSmall", "misc/shell_pickup",
+		"nashgore/bloodsplash", "gore/break", "misc/xdeath", "misc/xdeath4",
+		"weapons/atmo/int/pistol", "weapons/atmo/ext/pistol",
+		"weapons/atmo/int/pistol_mag", "weapons/atmo/ext/pistol_mag",
+		"weapons/atmo/int/shotgun", "weapons/atmo/ext/shotgun",
+		"weapons/atmo/int/ar", "weapons/atmo/ext/ar",
+		"weapons/atmo/int/smg", "weapons/atmo/ext/smg",
+		"Equip_Activate", "IceBomb/icebombfire",
+		"Flame_belch1", "Flame_belch2", "Flame_belch3", "Flame_belch4",
+		"Equip_flameready", "Equip_Iceready", "Equip_notready"
 	NormForwardMove = 0x32, 0x32
 	NormSideMove = 0x32, 0x32
 }
@@ -293,7 +317,7 @@ DoomEdNums
 	23131 = PB_Juggernaut
 	23132 = PB_Nazi
 	23133 = LeverAction
-	23134 = RiotShield
+	23134 = RiotShieldPickup
 	23135 = PB_MetalSniper
 	23136 = Paingiver
 	23137 = OldHMG

@@ -1,6 +1,12 @@
 //$Category Weapons
 Actor RespectX12 : Inventory { Inventory.MaxAmount 1 }
 
+// Reload pump-after-empty-chamber latch (was in retired SHOTGUN.dec).
+Actor ShotgunWasEmpty : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
 Actor X12Ammo : Ammo
 {
    Inventory.Amount 0

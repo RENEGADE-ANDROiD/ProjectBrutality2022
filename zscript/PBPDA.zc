@@ -75,11 +75,26 @@ class PB_PDAWeaponContainer : Inventory
 		}
 	}
 
+	void TryUnlockEquipmentCodexSlot(int i)
+	{
+		if (i < 0 || i >= PDA_CodexEquipClasses.Size())
+			return;
+		int sl = PDA_CodexEquipSlots[i];
+		if (sl < 0 || sl >= PDAEquipFound.Size() || PDAEquipFound[sl])
+			return;
+		PDAEquipFound[sl] = true;
+		EventHandler.SendNetworkEvent("FoundEquip:" .. sl);
+		if (PDA_DebugOn())
+		{
+			Console.PrintF("[PDA-DBG] equip tier slot=" .. sl .. " reg='" .. PDA_CodexEquipClassNames[i] .. "'");
+			Console.PrintF("[PDA-DBG] equip unlock slot=" .. sl);
+		}
+	}
+
 	void NotifyEquipmentInventoryGranted(class<Inventory> itemtype)
 	{
 		if (!itemtype || !owner || !owner.player) return;
 		if (PDA_CodexEquipClasses.Size() < 1) return;
-		bool dbg = PDA_DebugOn();
 		for (class<Object> oc = itemtype; oc != null; oc = oc.GetParentClass())
 		{
 			class<Inventory> ic = (class<Inventory>)(oc);
@@ -88,19 +103,27 @@ class PB_PDAWeaponContainer : Inventory
 			{
 				if (PDA_CodexEquipClasses[i] == null) continue;
 				if (ic != PDA_CodexEquipClasses[i]) continue;
-				int sl = PDA_CodexEquipSlots[i];
-				if (sl >= 0 && sl < PDAEquipFound.Size() && !PDAEquipFound[sl])
-				{
-					PDAEquipFound[sl] = true;
-					EventHandler.SendNetworkEvent("FoundEquip:" .. sl);
-					if (dbg)
-					{
-						Console.PrintF("[PDA-DBG] equip tier slot=" .. sl .. " reg='" .. PDA_CodexEquipClassNames[i] .. "'");
-						Console.PrintF("[PDA-DBG] equip unlock slot=" .. sl);
-					}
-				}
+				TryUnlockEquipmentCodexSlot(i);
 				return;
 			}
+		}
+	}
+
+	void SweepEquipmentCodexFromPawn(PlayerPawn a)
+	{
+		if (!a || PDA_CodexEquipClasses.Size() < 1)
+			return;
+		for (int i = 0; i < PDA_CodexEquipClasses.Size(); i++)
+		{
+			class<Inventory> ic = PDA_CodexEquipClasses[i];
+			if (ic == null)
+				continue;
+			int sl = PDA_CodexEquipSlots[i];
+			if (sl >= 0 && sl < PDAEquipFound.Size() && PDAEquipFound[sl])
+				continue;
+			if (!a.FindInventory(ic))
+				continue;
+			TryUnlockEquipmentCodexSlot(i);
 		}
 	}
 
@@ -441,7 +464,18 @@ class PB_PDAWeaponContainer : Inventory
 			let wpn = Weapon(ch);
 			if (!wpn)
 				continue;
-			EventHandler.SendNetworkEvent("Foundweapon:" .. wpn.GetClassName());
+			String cn = wpn.GetClassName();
+			bool already = false;
+			for (int i = 0; i < pdaWeapTextArray.Size(); i++)
+			{
+				if (pdaWeapTextArray[i].PDAWeapClassName ~== cn && pdaWeapTextArray[i].found)
+				{
+					already = true;
+					break;
+				}
+			}
+			if (!already)
+				EventHandler.SendNetworkEvent("Foundweapon:" .. cn);
 		}
 	}
 }
@@ -613,6 +647,8 @@ class PB_EventHandler : EventHandler
 	transient ui Array<TextureID> blockyEquipIconVals;
 	transient ui Array<String> blockyEquipIconMissed;
 	transient ui string pdaPrevUILastQueuedKey;
+	int taunttimer[MAXPLAYERS];
+	const tauntCooldownTics = 40;
 	Array<TextureID> pdaPrevFrames;
 	Array<int> pdaPrevFrameTics;
 	Array<int> pdaPrevSegIdx;
@@ -673,26 +709,11 @@ class PB_EventHandler : EventHandler
 
 	clearscope static bool PB2022WeaponHudSkipWeapon(Name weaponClass)
 	{
-		return weaponClass == 'Melee_Attacks'
-			|| weaponClass == 'PB_Pistol' || weaponClass == 'PB_SMG' || weaponClass == 'PB_Revolver' || weaponClass == 'PB_Deagle'
-			|| weaponClass == 'PB_Shotgun' || weaponClass == 'PB_Autoshotgun' || weaponClass == 'PB_QuadSG' || weaponClass == 'PB_SSG'
-			|| weaponClass == 'PB_Carbine' || weaponClass == 'Rifle'
-			|| weaponClass == 'PB_Minigun'
-			|| weaponClass == 'PB_M1Plasma' || weaponClass == 'PB_M2Plasma'
-			|| weaponClass == 'PB_Flamethrower';
+		// Corner weapon portrait (Icon / AltHUDIcon) — not the integrated HUD's AMMOIC* ammo-type glyph.
+		// Bare hands: wheel uses MLDFA0; no meaningful weapon portrait in the PBX corner slot.
+		return weaponClass == 'Melee_Attacks';
 	}
 
-	ui double PB2022WeaponHudIconSizeMul(Vector2 texSize)
-	{
-		double w = texSize.x;
-		double h = texSize.y;
-		if (w < 1.0 || h < 1.0)
-			return 1.0;
-		double maxEdge = max(w, h);
-		double refEdge = 52.0;
-		double mul = refEdge / maxEdge;
-		return clamp(mul, 0.70, 1.35);
-	}
 	ui void DrawPB2022WeaponPickupOverlay()
 	{
 		if (!playeringame[consoleplayer]) { return; }
@@ -714,21 +735,18 @@ class PB_EventHandler : EventHandler
 		let cvScale = CVar.GetCVar("pb_weaponhud_scale", p);
 		let cvOffX  = CVar.GetCVar("pb_weaponhud_x", p);
 		let cvOffY  = CVar.GetCVar("pb_weaponhud_y", p);
+		let cvMaxW  = CVar.GetCVar("pb_weaponhud_maxwidth", p);
+		let cvMaxH  = CVar.GetCVar("pb_weaponhud_maxheight", p);
 		double alpha = cvAlpha ? clamp(cvAlpha.GetFloat(), 0.0, 1.0) : 1.0;
 		double userScale = cvScale ? max(0.1, cvScale.GetFloat()) : 1.0;
 		int offX = cvOffX ? cvOffX.GetInt() : 0;
 		int offY = cvOffY ? cvOffY.GetInt() : 0;
+		double boxW = (cvMaxW ? max(16.0, cvMaxW.GetFloat()) : 96.0) * userScale;
+		double boxH = (cvMaxH ? max(16.0, cvMaxH.GetFloat()) : 72.0) * userScale;
+		double cx = double(Screen.GetWidth() + offX);
+		double cy = double(Screen.GetHeight() + offY);
 
-		Vector2 texSize = TexMan.GetScaledSize(iconID);
-		double scale = userScale * PB2022WeaponHudIconSizeMul(texSize);
-		double drawW = texSize.x * scale;
-		double drawH = texSize.y * scale;
-		double drawX = (Screen.GetWidth() - (drawW / 2.0)) + offX;
-		double drawY = (Screen.GetHeight() - (drawH / 2.0)) + offY;
-
-		Screen.DrawTexture(iconID, false, drawX, drawY,
-			DTA_DestWidth, int(drawW + 0.5), DTA_DestHeight, int(drawH + 0.5),
-			DTA_Alpha, alpha, DTA_CenterOffset, true);
+		DrawClipFittedTexture(iconID, cx, cy, boxW, boxH, alpha);
 	}
 
 	ui TextureID PB2022GetModeIcon(PlayerInfo p, Name weaponClass, out double localScale, out double localOffX, out double localOffY)
@@ -810,21 +828,18 @@ class PB_EventHandler : EventHandler
 		let cvScale = CVar.GetCVar("pb_weaponmodehud_scale", p);
 		let cvOffX  = CVar.GetCVar("pb_weaponmodehud_x", p);
 		let cvOffY  = CVar.GetCVar("pb_weaponmodehud_y", p);
+		let cvMaxW  = CVar.GetCVar("pb_weaponmodehud_maxwidth", p);
+		let cvMaxH  = CVar.GetCVar("pb_weaponmodehud_maxheight", p);
 		double alpha = cvAlpha ? clamp(cvAlpha.GetFloat(), 0.0, 1.0) : 1.0;
 		double userScale = (cvScale ? max(0.1, cvScale.GetFloat()) : 1.0) * modeScaleAdjust;
 		int offX = cvOffX ? cvOffX.GetInt() : 0;
 		int offY = cvOffY ? cvOffY.GetInt() : 0;
+		double boxW = (cvMaxW ? max(12.0, cvMaxW.GetFloat()) : 56.0) * userScale;
+		double boxH = (cvMaxH ? max(12.0, cvMaxH.GetFloat()) : 56.0) * userScale;
+		double cx = double(Screen.GetWidth() + offX + modeOffX);
+		double cy = double(Screen.GetHeight() + offY + modeOffY);
 
-		Vector2 texSize = TexMan.GetScaledSize(modeIcon);
-		double scale = userScale * PB2022WeaponHudIconSizeMul(texSize);
-		double drawW = texSize.x * scale;
-		double drawH = texSize.y * scale;
-		double drawX = (Screen.GetWidth() - (drawW / 2.0)) + offX + modeOffX;
-		double drawY = (Screen.GetHeight() - (drawH / 2.0)) + offY + modeOffY;
-
-		Screen.DrawTexture(modeIcon, false, drawX, drawY,
-			DTA_DestWidth, int(drawW + 0.5), DTA_DestHeight, int(drawH + 0.5),
-			DTA_Alpha, alpha, DTA_CenterOffset, true);
+		DrawClipFittedTexture(modeIcon, cx, cy, boxW, boxH, alpha);
 	}
 
 	clearscope static string PB_PDA_NormClassStr(string cn)
@@ -2324,7 +2339,7 @@ class PB_EventHandler : EventHandler
 		bool useSeg, int hardCap,
 		int fireTicCap, int flashTics, int flashSeek)
 	{
-		if (nm != 'DragonSlayer')
+		if (nm != 'PB_ObsidianDragonSlayer')
 			return;
 		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_DS_EnhancedSwing", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
@@ -2337,19 +2352,20 @@ class PB_EventHandler : EventHandler
 		bool useSeg, int hardCap,
 		int fireTicCap, int flashTics, int flashSeek)
 	{
-		if (nm != 'RiotShield')
+		if (nm != 'PB_RiotShieldModule')
 			return;
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_ShieldBlockIdle", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
+		Name prevNm = 'RiotShieldPDAPreview';
+		PDA_WeaponStrip_AppendFireLike(prevNm, "PDA_Preview_ShieldBlockIdle", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_ShieldBash", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
+		PDA_WeaponStrip_AppendFireLike(prevNm, "PDA_Preview_ShieldBash", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_ShieldPistolFire", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
+		PDA_WeaponStrip_AppendFireLike(prevNm, "PDA_Preview_ShieldPistolFire", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_ShieldAltRaise", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
+		PDA_WeaponStrip_AppendFireLike(prevNm, "PDA_Preview_ShieldAltRaise", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_ShieldReload", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
+		PDA_WeaponStrip_AppendFireLike(prevNm, "PDA_Preview_ShieldReload", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_ShieldAxeSwing", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
+		PDA_WeaponStrip_AppendFireLike(prevNm, "PDA_Preview_ShieldAxeSwing", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 	}
 
@@ -3304,7 +3320,7 @@ class PB_EventHandler : EventHandler
 		if (nm == 'BioAcidLauncher' || nm == 'PB_CyberdemonRL' || nm == 'PB_NeoHMG'
 			|| nm == 'PB_Excavator' || nm == 'PB_M41A' || nm == 'PB_CryoElectroRifle'
 			|| nm == 'PB_CryoCannon' || nm == 'PB_CryoASG' || nm == 'PB_Fusil' || nm == 'Paingiver'
-			|| nm == 'RiotShield')
+			|| nm == 'PB_RiotShieldModule')
 		{
 			effReadyMax = max(1, readyMax / 4);
 			effReadyFixedTic = max(1, readyFixedTic / 4);
@@ -3323,7 +3339,7 @@ class PB_EventHandler : EventHandler
 			PDA_WeaponStrip_AppendReady(nm, outFr, outTi, outSeg, useSeg, hardCap,
 				effReadyMax, readySeek, effReadyFixedTic, readyAuthoredTicCap, PB_PDA_WEAPON_PREVIEW_SEG_READY);
 		}
-		if (nm == 'RiotShield')
+		if (nm == 'PB_RiotShieldModule')
 		{
 			PDA_WeaponStrip_AppendRiotShieldPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
 				fireTicCap, flashTics, flashSeek);
@@ -3667,7 +3683,7 @@ class PB_EventHandler : EventHandler
 			PDA_WeaponStrip_AppendOverlayIfPresent(nm, "Pump", outFr, outTi, outSeg, useSeg, hardCap,
 				PB_PDA_WEAPON_PREVIEW_SEG_OVERLAY, overlayMaxSteps, overlayTicCap);
 		}
-		if (nm == 'DragonSlayer')
+		if (nm == 'PB_ObsidianDragonSlayer')
 			PDA_WeaponStrip_AppendDragonSlayerPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
 				fireTicCap, flashTics, flashSeek);
 		if (nm == 'PB_Axe')
@@ -4351,6 +4367,11 @@ class PB_EventHandler : EventHandler
 	override void WorldTick()
 	{
 		if (gamestate == GS_TITLELEVEL) return;
+		for (int i = 0; i < taunttimer.Size(); i++)
+		{
+			if (taunttimer[i] > 0)
+				taunttimer[i]--;
+		}
 		if (MouseClicked == false)
 		{
 			MouseHeldDown = false;
@@ -4373,7 +4394,7 @@ class PB_EventHandler : EventHandler
 		PDA_Main_AdvanceAnims();
 		ThinkerIterator ti = ThinkerIterator.Create("PlayerPawn");
 		PlayerPawn a;
-		bool eqSweep = level.maptime >= PB_PDA_UI_INIT_MIN_GAMETIC && (level.time % 7) == 0;
+		bool eqSweep = level.maptime >= PB_PDA_UI_INIT_MIN_GAMETIC && (level.time % 14) == 0;
 		while (a = PlayerPawn(ti.Next()))
 		{
 			if (a.player && a.player.morphTics <= 5)
@@ -4390,18 +4411,73 @@ class PB_EventHandler : EventHandler
 			{
 				let pda = PB_PDAWeaponContainer(a.FindInventory("PB_PDAWeaponContainer", true));
 				if (pda)
-				{
-					for (Inventory ch = a.Inv; ch != null; ch = ch.Inv)
-						pda.NotifyEquipmentInventoryGranted(ch.GetClass());
-				}
+					pda.SweepEquipmentCodexFromPawn(a);
 			}
 		}
 	}
+	bool PB_WeaponReadyForTaunt(Weapon wpn, PlayerInfo plr)
+	{
+		if (!plr)
+			return false;
+		if (!wpn)
+			return true;
+		let pbw = PB_WeaponBase(wpn);
+		if (!pbw)
+			return true;
+		let psp = plr.GetPSprite(PSP_WEAPON);
+		if (!psp || !psp.Curstate)
+			return false;
+		if (pbw.InStateSequence(psp.Curstate, pbw.ResolveState("Ready"))
+			|| pbw.InStateSequence(psp.Curstate, pbw.ResolveState("ReallyReady"))
+			|| pbw.InStateSequence(psp.Curstate, pbw.ResolveState("ReadyToFire"))
+			|| pbw.InStateSequence(psp.Curstate, pbw.ResolveState("Ready2"))
+			|| pbw.InStateSequence(psp.Curstate, pbw.ResolveState("Ready3"))
+			|| pbw.InStateSequence(psp.Curstate, pbw.ResolveState("Ready4"))
+			|| pbw.InStateSequence(psp.Curstate, pbw.ResolveState("Ready5"))
+			|| pbw.InStateSequence(psp.Curstate, pbw.ResolveState("ReadyToFire2"))
+			|| pbw.InStateSequence(psp.Curstate, pbw.ResolveState("ReadyDualUnloaded"))
+			|| pbw.InStateSequence(psp.Curstate, pbw.ResolveState("Ready_ADS"))
+			|| pbw.InStateSequence(psp.Curstate, pbw.ResolveState("JavelinReady3")))
+			return true;
+		return false;
+	}
+
+	void PB_TryRequestTaunt(int pnum)
+	{
+		if (pnum < 0 || pnum >= MAXPLAYERS)
+			return;
+		if (taunttimer[pnum] > 0)
+			return;
+		let pm = players[pnum].mo;
+		if (!pm || !pm.player)
+			return;
+		if (PDAMode || pm.CountInv("GoFatality") > 0 || pm.CountInv("CantFire") > 0)
+			return;
+		if (pm.player.ReadyWeapon && pm.player.ReadyWeapon is "PB_TauntWeapon")
+			return;
+		if (!PB_WeaponReadyForTaunt(pm.player.ReadyWeapon, pm.player))
+			return;
+		taunttimer[pnum] = tauntCooldownTics;
+		pm.GiveInventory("PB_TauntWeapon", 1);
+		let wp = PB_TauntWeapon(pm.FindInventory("PB_TauntWeapon"));
+		if (!wp)
+			return;
+		if (pm.player.ReadyWeapon && !(pm.player.ReadyWeapon is "PB_TauntWeapon"))
+			wp.PrevWeapon = Weapon(pm.player.ReadyWeapon);
+		pm.player.ReadyWeapon = wp;
+		pm.player.SetPSprite(PSP_WEAPON, wp.FindState("Ready"));
+	}
+
 	override void NetworkProcess(ConsoleEvent e)
 	{
 		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
 		if (HeldDownTics <= 0) mouseclicked = false;
+		if (e.Name ~== "RequestTaunt")
+		{
+			PB_TryRequestTaunt(e.Player);
+			return;
+		}
 		if (e.Name ~== "netgametrue")
 		{
 			isnetgame = true;

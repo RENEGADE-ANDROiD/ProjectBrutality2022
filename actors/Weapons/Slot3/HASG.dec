@@ -42,7 +42,7 @@ Actor ASGChamber : Ammo
 }
 
 // --- Projectile / casing aliases (PBWP -> PB2022) --------------------------
-Actor PB_DragonsBreathTracer : DragonsBreathTracer {}
+// PB_DragonsBreathTracer: zscript/Weapons/Projectiles/DragonsBreath.zs
 
 // HASG shell spawners + hull classes: zscript/Weapons/Slot3/HASG/HASG_Casings.zs
 

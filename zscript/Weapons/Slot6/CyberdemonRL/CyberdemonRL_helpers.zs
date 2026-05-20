@@ -1,6 +1,6 @@
 // Cyberdemon Missile Launcher — projectile (folded from PBX-Weapons CyberRL_helpers).
 // PBX inherited from PB_ProjectileAlt (PB Staging); PB2022's projectile base is
-// PB_Projectile (alias of FastProjectile in zscript/Weapons/Slot3/CSSG/CSSG_PBProjectile.zs),
+// PB_Projectile (ZScript: zscript/Weapons/Projectiles/BulletProjectile.zsc),
 // which provides everything we need here.
 
 class CyberBallsPlayer : PB_Projectile
