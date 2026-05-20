@@ -1,0 +1,15 @@
+// Minimal stub so PB_Projectile can tag NashGore blood spawns; full VFX live in PBBloodImpacts.zs (staging fold).
+class PB_GunshotBlood : NashGoreBlood
+{
+	bool sourceIsProjectile, smallCal, isBloodExplosionGenerator;
+	int projectileDamage, targetRadius;
+	float dmgScalar;
+	double angToTarget;
+
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+		Stop;
+	}
+}

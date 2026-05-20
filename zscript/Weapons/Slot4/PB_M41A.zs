@@ -94,11 +94,10 @@ class PB_M41A : PB_WeaponBase
 		PB_WeaponRecoil(-0.75, frandom(-0.3, 0.3));
 		A_StartSound("M41A/Fire", CHAN_WEAPON, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
 		PB_DynamicTail("smg", "smg");
-		PB_GunSmoke(0, 0, 0);
+		invoker.PB_M41A_ApplyFireCosmetics(0);
 		PB_MuzzleFlashEffects(0, 0, 0);
 		A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
 		A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
-		PB_SpawnCasing("PB_EmptyBrass", 22, 2, 26, frandom(-4, 1), frandom(6, 9), frandom(0, 2));
 		A_TakeInventory("M41AChamberAmmo", 1);
 	}
 
@@ -138,8 +137,7 @@ class PB_M41A : PB_WeaponBase
 			PB_WeaponRecoil(-0.85, frandom(0.3, 0.8));
 			A_StartSound("M41A/Fire", 1, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
 			A_Overlay(-8, "MuzzleDualL");
-			PB_SpawnCasing("PB_EmptyBrass", 22, -16, 35, frandom(-4, 1), frandom(5, 8), frandom(1, 2));
-			PB_GunSmoke(4, 0, 0);
+			invoker.PB_M41A_ApplyFireCosmetics(-4);
 			PB_MuzzleFlashEffects(4, 0, 0);
 			PB_DynamicTail("smg", "smg");
 			A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
@@ -156,8 +154,7 @@ class PB_M41A : PB_WeaponBase
 			PB_WeaponRecoil(-0.85, frandom(-0.8, -0.3));
 			A_StartSound("M41A/Fire", 2, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
 			A_Overlay(-9, "MuzzleDualR");
-			PB_SpawnCasing("PB_EmptyBrass", 22, 16, 35, frandom(-4, 1), frandom(5, 8), frandom(1, 2));
-			PB_GunSmoke(-4, 0, 0);
+			invoker.PB_M41A_ApplyFireCosmetics(4);
 			PB_MuzzleFlashEffects(-4, 0, 0);
 			PB_DynamicTail("smg", "smg");
 			A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);

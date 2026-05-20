@@ -627,11 +627,16 @@ Class FiftyCaseSpawn : Actor
 {
 		override void BeginPlay(void)
 	{
+		if (target && target.CountInv("LowGraphicsMode") > 0)
+		{
+			Destroy();
+			return;
+		}
 		ChangeStatNum(STAT_PB_BULLETS);
 		NashGoreStatics.QueueCasings();
 		Super.BeginPlay();
 	}
-		Default
+	Default
 	  {
 		Speed 20;
 		PROJECTILE;
@@ -2896,6 +2901,11 @@ Class MiniBeltPieceSpawn : Actor
 {
 		override void BeginPlay(void)
 	{
+		if (target && target.CountInv("LowGraphicsMode") > 0)
+		{
+			Destroy();
+			return;
+		}
 		ChangeStatNum(STAT_PB_BULLETS);
 		NashGoreStatics.QueueCasings();
 		Super.BeginPlay();

@@ -1143,38 +1143,6 @@ class LeftDeagleAmmo : Ammo
 	}
 }
 
-// .50 AE projectile used by the staging port. Modeled as a fast piercing
-// projectile — staging's true definition is in their bullet system; we use
-// a sane equivalent that matches the gunfeel (single-shot, alerts, gibs).
-class PB_50AE : FastProjectile
-{
-	default
-	{
-		Radius 5;
-		Height 4;
-		Speed 100;
-		Damage 90;
-		PROJECTILE;
-		+BLOODSPLATTER;
-		+FORCEXYBILLBOARD;
-		+THRUGHOST;
-		+RIPPER;
-		MissileType "BulletPuff";
-		DamageType "Tracer";
-		DeathSound "";
-		Decal "BulletChip";
-	}
-	states
-	{
-		Spawn:
-			TNT1 A 1 BRIGHT;
-			Loop;
-		Death:
-			TNT1 A 1;
-			Stop;
-	}
-}
-
 // Empty mag drop (used during reload / unload).
 class EmptyDeagleMag : Inventory
 {

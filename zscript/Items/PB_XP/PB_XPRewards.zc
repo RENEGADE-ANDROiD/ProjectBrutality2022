@@ -126,7 +126,7 @@ class PB_XPRewardsHandler : EventHandler
 		return cv && cv.GetBool();
 	}
 
-	static bool AmmoTotalFloatersEnabled(PlayerPawn plr)
+	static bool PB_FloatingHudExtrasEnabled(PlayerPawn plr)
 	{
 		if (!plr || !plr.player)
 			return false;

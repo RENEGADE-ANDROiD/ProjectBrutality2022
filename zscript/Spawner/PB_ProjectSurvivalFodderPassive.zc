@@ -26,14 +26,16 @@ class PB_ProjectSurvivalFodderPassive : Actor
 	{
 		if (random(0, 9) < 2) return "Shambler";
 
-		switch (random(0, 4))
+		// Burster is the hardest fodder — half the rate of Puker / Blighter / Screamer / Spiker.
+		if (random(0, 9) < 1) return "Burster";
+
+		switch (random(0, 3))
 		{
 		default:
 		case 0: return "Puker";
 		case 1: return "Blighter";
 		case 2: return "Screamer";
-		case 3: return "Burster";
-		case 4: return "Spiker";
+		case 3: return "Spiker";
 		}
 	}
 }
