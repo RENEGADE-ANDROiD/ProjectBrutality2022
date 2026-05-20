@@ -3,8 +3,22 @@ Class PB_Monster : Actor abstract
 	int	HitBoxTimerNew;
 	int HitBoxTimerOld;
 	int EnemyLastSighted;
-	
-	
+
+	double posHeadHB;
+	double posTorsoHB;
+	double posDickHB;
+	double posLegHB;
+	double dmgHeadMult;
+	double dmgTorsoMult;
+	double dmgArmMult;
+	double dmgLowTorsoMult;
+	double dmgDickMult;
+	double dmgLegMult;
+	bool ignoreArmDamage;
+	bool ignoreHeadDamage;
+	bool ignoreDickDamage;
+	bool ignoreLegDamage;
+
 	bool HitBoxSpawned;
 	bool Wandering;
 	bool willBeLooking;
@@ -92,7 +106,20 @@ Class PB_Monster : Actor abstract
 		Super.PostBeginPlay();
 		heardOpponent = 0;
 		HitBoxSpawned = False;
-	
+
+		if (posTorsoHB == 0)
+		{
+			posHeadHB = 0.80;
+			posTorsoHB = 0.65;
+			posDickHB = 0.38;
+			posLegHB = 0.40;
+			dmgHeadMult = 2.0;
+			dmgTorsoMult = 1.5;
+			dmgArmMult = 0.70;
+			dmgLowTorsoMult = 1.0;
+			dmgDickMult = 0.95;
+			dmgLegMult = 0.80;
+		}
 	}
 	
 	double A_PrepairDrop()

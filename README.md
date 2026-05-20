@@ -33,10 +33,11 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 
 - **Player and systems:** Movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump and plasma climb — **PB 2022 Enhanced → Explosive Movement**), tactical weapon feel, layered gore, HUD, weapon-special wheel, and related flows.
 - **In-game codex (PDA):** Press **BACKSLASH** (rebindable) to flip through **Weapons**, **Monsters**, and **Equipment**. Entries unlock as you pick up gear or kill enemies; progress persists across saves. Pick an entry for its dossier and a small looping preview. Time pauses while the codex is open. Optional plain-text layout: **PB 2022 Enhanced → UI and Feel**. The same submenu offers **PDA XP & reward spin (single-player)** (default **Off**): when **On**, kills grant XP, rank-ups award spendable reward points, and—with the usual **blocky** PDA home layout—a **Reward Spin** tile appears on the left; each spin costs **3** points and tries to grant a **weapon** you do not already carry **and** that is not already unlocked in your PDA weapon codex (the roll rerolls within the pool); if nothing qualifies, **points are refunded**. With the toggle **Off**, the codex is unchanged and **no** spin panel appears.
+- **Achievements (single-player):** PB ships a built-in achievement system (based on **Vortex Universal Achievement System**, MIT). Goals track combat, bosses, Glory Kills, PDA codex progress, movement, secrets, multi-kill shots (explosives, railgun, BFG, snipers, plasma, equipment), and **Explosive Movement** feats (**rocket jump** / **plasma wall climb** when those options are on). Unlock toasts appear as you play; browse everything under **PB 2022 Enhanced → Achievement Settings → PB 2022 Achievements**, or bind **Achievement Menu** in **Customize Controls → PB 2022 Achievements**. Turn the feature off with **Achievements** in **PB 2022 Enhanced** (disabled in multiplayer). Do not load a separate Vortex achievement WAD on top of this folder.
 - **Combat depth:** Brutality-style damage and reactions, plus the weapon and monster variety below—all adjustable from **PB 2022 Enhanced** and related submenus.
 - **Content breadth:** Large weapon roster, extra monsters, kill streaks, power-up hooks, and announcer support.
 - **Configuration:** Use **Options → PB 2022 Enhanced** (same screen from the main menu, bound to **P** when available). That hub groups **Gameplay Settings**, **Weapon Settings**, **Global Settings**, **Visual Settings**, the **Finishers, Gore, Taunts** block (including **Experimental weapon executions** and **Glory Kill**), **Explosive Movement**, **UI and Feel** (damage numbers, tactical motion, weapon HUD modes, PDA blocky layout, optional **PDA XP & reward spin** for single-player, kill streaks), and **Content Packs**. Deeper monster and spawn options also live under **Global Settings** and **Monster Pack Settings**.
-- **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** (Options → PB 2022 Enhanced → *Finishers, Gore, Taunts*) is the single On/Off switch that adds Brutal Doom 22 mist and meat, Brutal Pack V10 death extras, and extra blood pools and trails on top of the base mix — no per-pack sliders to fiddle with.
+- **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** (Options → PB 2022 Enhanced → *Finishers, Gore, Taunts*) is the single On/Off switch that adds Brutal Doom 22 mist and meat, Brutal Pack V10 death extras, and extra blood pools and trails on top of the base mix — no per-pack sliders to fiddle with. **AccuDeath** (by **Airehnr66**) is also included: kills from fire, plasma, and electric attacks can tint corpses and add light particle death FX on top of the normal gore stack (on by default; turn off under **Options → Gore/Debris Settings → AccuDeath (corpse tints)**).
 - **Shield Saw:** Standard equipment—you start every new game with it. Quick Melee throws the ricocheting saw at range (close targets still get normal melee), and **Recall Shield Saw** brings it back.
 
 ### Possession finishers
@@ -75,7 +76,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **Revolver** — high-impact sidearm for heavier single shots.
 - **Maschinenpistole 40** — compact automatic ballistic weapon.
 - **UAC-17 SMG** — fast sidearm-class automatic with weapon-special handling.
-- **Riot Shield** — defensive sidearm slot weapon built around shield blocking and close fighting.
+- **UAC Ballistic Shield Module** — inventory upgrade (icon **`5L1DI0`**) from **riot-shield sergeants**; not a weapon-slot gun. With the module, open **Weapon Special** on the **.45 Pistol** or **Fire Axe** to toggle **ballistic shield + pistol** (block, bash, shielded reload) or **shield + axe** loadouts. Settings: **Weapon Settings → Ballistic Shield Module** (optional fire-axe requirement for the axe loadout).
 - **Hell Pistoler** — demon sidearm with a special wheel for Hell Rounds, Shrink Beam, and rate-of-fire toggle behavior.
 - **Desert Eagle .50** — heavy pistol for high-damage precision sidearm shots.
 
@@ -206,7 +207,7 @@ Those hazards are optional encounters—many maps never place them—but when th
 
 - **Project Survival fodder — the standard fodder backbone of this build.** Shambler, Puker, Blighter, Screamer, Burster, Spiker, and Cyber Fodder *(CyberFodder)* are the **default Tier 1 reinforcement roster**, not an opt-in pool: every zombieman, shotgunner, chaingunner, imp, pinky, and spectre spawn rolls extra PS fodder alongside the classic enemy, and PS fodder ignores the broader *disable new enemies* switch because it is treated as core content. Distribution skews toward variety — Shambler ~20%, the other five each ~16% — so the supporting cast carries the visual identity of the fodder layer instead of one face dominating. **Trite** pods on floors or ceilings burst into throngs of small **Trite** critters *(Trite)* for swarm panic. (**Project Survival** by **The Pope of Dope / ThePopeOfDope** — see **`CREDITS.txt`**.)
 - **Zombieman family** — pistol grunts, rifle grunts, carbine specialists, plasma zombies and their trooper-weight sibling, helmeted Phobos-style guards (pistol and rifle versions), and lab-coated scientists who still count as rank‑and‑file despite their animation set.
-- **Shotgun sergeants** — classic shotgun guys plus helmeted variants, quad‑shot and auto‑shotgun heavies, riot‑shield entries, rocket‑salvo zombies, demon‑tech shotgun troopers, and Z‑spec squads built on the same sergeant chassis.
+- **Shotgun sergeants** — classic shotgun guys plus helmeted variants, quad‑shot and auto‑shotgun heavies, **riot‑shield sergeants** (**`PB_RiotShieldGuy`** — always drop the ballistic shield module on death; see drop table below), rocket‑salvo zombies, demon‑tech shotgun troopers, and Z‑spec squads built on the same sergeant chassis.
 - **Chaingun commandos** — modern chaingunners next to the slower classic chaingunner rig; expect helmet chaingunners and nailgun‑style majors when spawns budget extra spice.
 - **Nazi soldiers** — Wolfenstein‑flavored SS rips drop wherever Nazi episodes or replacement tables still call for them.
 - **Imp family** — everyday fireball imps, frost‑breathing ice imps, infected savage imps, four themed dark imps (Nami, Nether, ST, Void), and three nightmare palette variants (DNImpVariant1–3) that read as imp squad remixes at a glance.
@@ -268,6 +269,27 @@ Frozen-solid corpse statues are a separate Cat's Frozen presentation layer: most
 The in-game **PDA** codex mirrors many of these families with dossiers that unlock as you kill matching creatures—use it when you forget which cryo cousin interrupted your Baron fight.
 
 Unlocked codex rows persist across saves, so long campaigns slowly fill out the same roster this guide outlines.
+
+### Monster-sourced weapons, modules, and drop chances
+
+These are **not** rolled from normal map weapon spawners unless noted. **`DropItem "Class" N`** means roughly **`N / 256`** chance per death roll (engine picks one drop from the monster’s list). **`A_Jump(128, …)`** is a **50%** branch. Omitted probability = **always** when that drop is chosen.
+
+| Source monster(s) | Pickup / module | Death-drop chance |
+| --- | --- | --- |
+| **`PB_RiotShieldGuy`** (riot-shield sergeant) | **`RiotShieldPickup`** → **`PB_RiotShieldModule`** | **100%** (guaranteed module when the sergeant dies) |
+| **`PB_Mastermind`**, **`PB_MastermindGK`** | **`MastermindChaingun`** | **72 / 256** (~**28%**) |
+| **`CyberdemonBoss`** (Baalgar / map cyber boss) | **`PB_CyberdemonRL`** | **64 / 256** (**25%**) |
+| Cyber **arm gib** (`XDeathCyberdemonGun`, fatality / gore) | **`PB_CyberdemonRL`** | **50%** if **`pb_NoPB_CyberdemonRLWeapon`** is off |
+| **`PB_Marauder`**, **`PB_MarauderGK`** | **`MarauderSSG`** | **80 / 256** (~**31%**) |
+| Marauder scripted fatality floor props | **`MarauderSSG`** | **50%** (`A_Jump(128, …)`) |
+| **`PB_Mancubus`**, **`PB_Daedabus`**, **`PB_Volcabus`**, GK fatso variants | **`MancubusFlameCannon`** | **56 / 256** (~**22%**) |
+| **`PB_Daedabus`** | **`BioAcidLauncher`** (slot 7) | **44 / 256** (~**17%**) |
+| **`PB_Belphegor`** | **`BioAcidLauncher`** | **36 / 256** (~**14%**) |
+| **`PB_ObsidianRavager`** (cyber-tier spawns) | **`PB_ObsidianDragonSlayer`** | **Always** on Ravager death (unless **`pb_NoDragonSlayerWeapon`**) |
+
+**Spawn rate vs. drop rate:** Riot-shield sergeants are an **extra** shotgun-guy variant from **`ShotgunGuySpawner`** (weighted **`A_Jump`** into **`RiotShieldGuyPack`** — e.g. **16 / 256** on one early tier, up to **36 / 256** on another). That controls how often the enemy appears, not whether the module drops (**always** once you kill one).
+
+**`give all` / `idfa`:** Monster-drop guns and the ballistic shield module are excluded from bulk cheat grants; use **`give <ClassName>`** or play the drops above.
 
 The base zombie, imp, pinky, floater, revenant, noble, arch‑vile, and Doom boss rosters come from **Project Brutality** and the **Monster Pack** line — see **`CREDITS.txt`** and **`DetailedCredits.txt`** for full per‑creature authorship.
 

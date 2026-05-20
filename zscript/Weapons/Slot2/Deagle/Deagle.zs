@@ -1074,6 +1074,45 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 A_ClearOverlays(10,11);
 			D7E0 GFEDCBA 1 PB_SetDualSpriteIfUnload("D7E2","D7E3","D7E1");
 			goto Ready;
+
+		PDA_Preview_Deagle_Ready:
+			D4E0 E 1;
+			D4E0 E 1;
+			Stop;
+		PDA_Preview_Deagle_Fire:
+			D2E0 A 1 BRIGHT;
+			D2E0 B 1 BRIGHT;
+			D2E0 C 1;
+			D2E0 D 1;
+			D2E0 E 1;
+			D2E0 F 1;
+			D2E0 G 1;
+			Stop;
+		PDA_Preview_Deagle_AdsFire:
+			D3E0 B 1 BRIGHT;
+			D3E0 C 1 BRIGHT;
+			D3E0 D 1;
+			D3E0 E 1;
+			D3E0 F 1;
+			D3E0 G 1;
+			Stop;
+		PDA_Preview_Deagle_AltAds:
+			D3E1 A 1;
+			D3E1 B 1;
+			D3E1 C 1;
+			D3E1 D 1;
+			D3E1 E 1;
+			Stop;
+		PDA_Preview_Deagle_Reload:
+			D0E0 A 1;
+			D0E0 D 1;
+			D0E0 H 1;
+			D0E0 L 1;
+			D0E0 R 1;
+			D0E0 Y 1;
+			D0E1 A 1;
+			D0E1 F 1;
+			Stop;
 	}
 }
 
@@ -1101,38 +1140,6 @@ class LeftDeagleAmmo : Ammo
 		Ammo.BackpackMaxAmount 8;
 		+INVENTORY.IGNORESKILL;
 		Inventory.Icon "D4E0Z0";
-	}
-}
-
-// .50 AE projectile used by the staging port. Modeled as a fast piercing
-// projectile — staging's true definition is in their bullet system; we use
-// a sane equivalent that matches the gunfeel (single-shot, alerts, gibs).
-class PB_50AE : FastProjectile
-{
-	default
-	{
-		Radius 5;
-		Height 4;
-		Speed 100;
-		Damage 90;
-		PROJECTILE;
-		+BLOODSPLATTER;
-		+FORCEXYBILLBOARD;
-		+THRUGHOST;
-		+RIPPER;
-		MissileType "BulletPuff";
-		DamageType "Tracer";
-		DeathSound "";
-		Decal "BulletChip";
-	}
-	states
-	{
-		Spawn:
-			TNT1 A 1 BRIGHT;
-			Loop;
-		Death:
-			TNT1 A 1;
-			Stop;
 	}
 }
 

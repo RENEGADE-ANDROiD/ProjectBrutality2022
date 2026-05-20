@@ -134,7 +134,7 @@ class PB_HazardDamageHudHandler : EventHandler
 
 	void PushHazardPop(PlayerPawn pl, int dmg, Name dt)
 	{
-		if (!PB_XPRewardsHandler.AmmoTotalFloatersEnabled(pl))
+		if (!PB_XPRewardsHandler.PB_FloatingHudExtrasEnabled(pl))
 			return;
 		if (pl.PlayerNumber() != consoleplayer)
 			return;
@@ -160,7 +160,7 @@ class PB_HazardDamageHudHandler : EventHandler
 		let plp = PlayerPawn(players[consoleplayer].mo);
 		if (!plp || !plp.player)
 			return;
-		if (!PB_XPRewardsHandler.AmmoTotalFloatersEnabled(plp))
+		if (!PB_XPRewardsHandler.PB_FloatingHudExtrasEnabled(plp))
 			return;
 		let cvD = CVar.GetCVar("dam_enabled", plp.player);
 		if (cvD && cvD.GetBool())

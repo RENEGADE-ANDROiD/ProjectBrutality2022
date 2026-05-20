@@ -207,23 +207,56 @@ OptionMenu "PBWeaponHudOptions"
 	Slider "Pickup icon X offset.", "pb_weaponhud_x", -1024, 1024, 1
 	Slider "Pickup icon Y offset.", "pb_weaponhud_y", -768, 768, 1
 	Slider "Pickup icon scale.", "pb_weaponhud_scale", 0.1, 3.0, 0.05, 2
+	Slider "Pickup icon max width.", "pb_weaponhud_maxwidth", 32.0, 256.0, 4.0, 0
+	Slider "Pickup icon max height.", "pb_weaponhud_maxheight", 32.0, 256.0, 4.0, 0
 	Slider "Pickup icon alpha.", "pb_weaponhud_alpha", 0.0, 1.0, 0.05, 2
 	StaticText " ", teal
 	Option "Enable weapon mode icon overlay.", "pb_weaponmodehud_enable", "YesNo"
 	Slider "Mode icon X offset.", "pb_weaponmodehud_x", -1024, 1024, 1
 	Slider "Mode icon Y offset.", "pb_weaponmodehud_y", -768, 768, 1
 	Slider "Mode icon scale.", "pb_weaponmodehud_scale", 0.1, 3.0, 0.05, 2
+	Slider "Mode icon max width.", "pb_weaponmodehud_maxwidth", 24.0, 128.0, 4.0, 0
+	Slider "Mode icon max height.", "pb_weaponmodehud_maxheight", 24.0, 128.0, 4.0, 0
 	Slider "Mode icon alpha.", "pb_weaponmodehud_alpha", 0.0, 1.0, 0.05, 2
 	StaticText " "
+}
+
+OptionMenu "PB2022_FullscreenHudOptions"
+{
+	Title "Fullscreen HUD (PB2022)"
+	StaticText " ", teal
+	StaticText "--------- Presets ---------", gold
+	Command "Full Style (Recommended)", "pb_full_hud_style"
+	Command "Minimal Style", "pb_minimal_hud_style"
+	StaticText " ", teal
+	StaticText "--------- Widgets ---------", gold
+	Option "Show Level Stats", "pb_showlevelstats", "OnOff"
+	Option "Show Ammo List", "pb_showammolist", "YesNo"
+	Option "Show Current/Max Amount", "pb_curmaxammolist", "YesNo", "pb_showammolist"
+	Option "Hide Unused Ammo Types", "pb_hideunusedtypes", "YesNo", "pb_showammolist"
+	StaticText " ", teal
+	StaticText "--------- Visual ---------", gold
+	Slider "Horizontal Deadzone", "pb_hudxmargin", -9, 50, 1, 0
+	Slider "Vertical Deadzone", "pb_hudymargin", -9, 50, 1, 0
+	Slider "Bar Background Transparency", "pb_hudboxalpha", 0, 1, 0.02, 2
+	Option "Slanted Ammo/Health Bars (Staging)", "pb_hud_slanted_bars", "YesNo"
+	Option "HUD Sways With Movement", "PB_HudDynamics", "YesNo"
+	Option "Disable PB Mugshot", "pb_newmugshot", "NoYes"
+	StaticText " ", teal
+	Option "Show Blood Droplets", "pb_showblooddrops", "YesNo"
+	Slider "Blood Droplets Transparency", "pb_blooddropsalpha", 0, 1, 0.02, 2, "pb_showblooddrops"
+	Option "Show Visor Cracks (HUD FX)", "pb_showglasscracks", "YesNo"
+	Slider "Visor Cracks Transparency", "pb_glasscracksalpha", 0, 1, 0.02, 2, "pb_showglasscracks"
+	StaticText "Helmet corner/glass toggles live under", teal
+	StaticText "Helmet Visor Options (PB_VisorHandler).", teal
 }
 
 OptionMenu "PB_HelmetVisorOptions"
 {
 	Title "Helmet Visor (PB2022)"
 	StaticText " ", teal
-	StaticText "Folded from Project Brutality Staging (PBv0.3+).", teal
-	StaticText "Drawn on top of the SBARINFO HUD by", teal
-	StaticText "PB_VisorHandler (RenderOverlay).", teal
+	StaticText "Drawn under the ZScript fullscreen HUD by", teal
+	StaticText "PB_VisorHandler (RenderUnderlay).", teal
 	StaticText " ", teal
 	Option "Show Helmet Corners",            "pb_showhudvisor",         "YesNo"
 	Option "Show Visor Glass",               "pb_showhudvisorglass",    "YesNo"
@@ -232,10 +265,10 @@ OptionMenu "PB_HelmetVisorOptions"
 	StaticText "with subtle yaw/pitch sway when you turn or look up/down.", green
 	StaticText " ", teal
 	Slider "Visor Glass Transparency",       "pb_hudalpha",             0, 1, 0.02, 2
-	Slider "Visor Scale",                    "pb_visorscale",           0.2, 0.5, 0.02, 2
+	Slider "Visor Scale",                    "pb_visorscale",           0.4, 1.0, 0.02, 2
 	StaticText "Visor Scale is a multiplier on top of GZDoom's HUD scale", green
 	StaticText "(Display Options -> HUD Scale / Scale Factor): the visor",  green
-	StaticText "tracks your global HUD-size choice. 0.5 = full visor frame", green
+	StaticText "tracks your global HUD-size choice. 1.0 = full visor frame", green
 	StaticText "as authored by PB Staging (default + slider max).",         green
 	StaticText "Lower values shrink the visor while keeping the rest of",   green
 	StaticText "the HUD at your chosen size; raise GZDoom's HUD scale if",  green
@@ -372,6 +405,7 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText " ", teal
 	StaticText "Taunt / Fatality Voice Lines.", teal
 	StaticText "(Separate from Idle Doomguy Quips.)", teal
+	StaticText "Flip-off anim: Project Brutality menu - Taunt (default X).", teal
 	StaticText " ", teal
 	StaticText " ", teal
 	Option "Enable Damage Numbers.", "dam_enabled", "DamEnabled"
@@ -403,11 +437,19 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText "$OPTMNU_PB_XP_REWARDS_HINT", teal
 	StaticText "$OPTMNU_PB_XP_REWARDS_HINT2", teal
 	StaticText " ", teal
+	Option "$OPTMNU_PB_ACHIEVEMENTS", "pb_achievements", "OnOff"
+	StaticText "$OPTMNU_PB_ACHIEVEMENTS_HINT", teal
+	StaticText " ", teal
+	Submenu "$OPTMNU_PB_ACHIEVEMENTS_MENU", "PBAchievementsMenu"
+	StaticText " ", teal
 	Option "Show Helmet Visor", "pb_showhudvisor", "YesNo"
 	StaticText " ", teal
 	Submenu "Helmet Visor Options", "PB_HelmetVisorOptions"
 	StaticText " ", teal
-	StaticText "Helmet shell + visor glass overlay (folded from PB Staging).", teal
+	Submenu "Fullscreen HUD (ZScript)", "PB2022_FullscreenHudOptions"
+	StaticText "PB Staging-style status bar via PB2022_Hud_ZS.", teal
+	StaticText " ", teal
+	StaticText "Helmet shell + visor glass: PB_VisorHandler (under the bar).", teal
 	StaticText " ", teal
 	StaticText " ", teal
 	Option "Enable Kill Streak System", "pb_ks_enable", "OnOff"
@@ -925,7 +967,8 @@ OptionMenu "RenderingSettings"
 	StaticText "Dynamic Lights From Tracers."
 	StaticText " "
 	Option "Alternate Tracers","PB_alttracer", "OnOff"
-	StaticText "Longer Tracers (Rifle / Minigun)."
+	StaticText "Longer Tracers (Rifle / Minigun). Heavy on"
+	StaticText "Minigun fire rate — use Low Graphics if needed."
 	StaticText " "
 	
 	
@@ -1014,11 +1057,13 @@ OptionMenu "WeaponSettings"
 {
 	Title "---------Weapon Settings---------"
 	StaticText " ", teal
-	StaticText "-----------------RiotShield Settings-----------------", 1
+	StaticText "-----------Ballistic Shield Module-----------", 1
+	StaticText " ", teal
+	StaticText "Weapon Special on .45 Pistol / Fire Axe", 1
 	StaticText " ", teal
 	StaticText "Optional: Axe Pickup Required", 1
 	StaticText " ", teal
-	StaticText "Before Axe Shield Mode.", 1
+	StaticText "Before Shield + Axe loadout.", 1
 	StaticText " ", teal
 	Option "Require Axe For Axe Mode", "RS_AxeCheck", "OnOff"
 	StaticText " ", teal
@@ -1558,6 +1603,10 @@ OptionMenu "GoreDebrisMenu"
 	Submenu "Open 2022 Enhanced Brootality options", "PB_2022_BDv22GoreMenu"
 	NashGoreOption "$BDV22GOREMNU_ENHANCED2022",	"$BDV22GOREMNU_ENHANCED2022_TIP",	"pb_enhanced_brutality_2022",	"OnOff"
 	StaticText "Single master switch for folded BDv22 / BPv10 gore extras.", teal
+	StaticText ""
+	NashGoreOption "$OPTMNU_PB_ACCUDEATH", "$OPTMNU_PB_ACCUDEATH_TIP", "pb_accudeath", "OnOff"
+	Submenu "$OPTMNU_PB_ACCUDEATH_SUB", "AccuDeathOptions"
+	StaticText "$OPTMNU_PB_ACCUDEATH_HINT", teal
 	StaticText ""
 
 	StaticText "$NASHGOREMNU_GIB_TITLE", 1
@@ -2283,4 +2332,169 @@ OptionValue "HM_Style"
 	5, "$HM_VALUE_SMALLANIMATEDREVERSE"
 	8, "$HM_VALUE_VERTICAL"
 	9, "$HM_VALUE_VERTICALSMALL"
+}
+
+OptionValue "AccuDeathBarrelDamageType"
+{
+	0, "Nukage"
+	1, "Fire"
+	2, "None"
+}
+
+OptionValue "AccuDeathRocketDamageType"
+{
+	0, "None"
+	1, "Fire"
+}
+
+OptionValue "AccuDeathCacoBallDamageType"
+{
+	0, "Electric"
+	1, "Fire"
+	2, "None"
+}
+
+OptionMenu "AccuDeathOptions"
+{
+	Title "$OPTMNU_PB_ACCUDEATH_SUB"
+	Option "$OPTMNU_PB_ACCUDEATH_BARREL", "accudeath_barreltype", "AccuDeathBarrelDamageType"
+	Option "$OPTMNU_PB_ACCUDEATH_ROCKET", "accudeath_rockettype", "AccuDeathRocketDamageType"
+	Option "$OPTMNU_PB_ACCUDEATH_CACOBALL", "accudeath_cacoballtype", "AccuDeathCacoBallDamageType"
+	Option "$OPTMNU_PB_ACCUDEATH_STATEOVERRIDE", "accudeath_stateoverride", "OnOff"
+	Option "$OPTMNU_PB_ACCUDEATH_DYNLIGHTS", "accudeath_dynamiclights", "OnOff"
+	Slider "$OPTMNU_PB_ACCUDEATH_LIGHTSIZE", "accudeath_lightsize", 1.0, 3.0, 0.1, 1, "accudeath_dynamiclights", 0
+}
+
+OptionValue "AchToastPositionValues"
+{
+	0, "Top-Right"
+	1, "Top-Left"
+	2, "Bottom-Right"
+	3, "Bottom-Left"
+	4, "Top-Center"
+	5, "Bottom-Center"
+}
+
+OptionValue "AchToastAnimationValues"
+{
+	0, "None"
+	1, "Slide"
+	2, "Fade"
+}
+
+OptionValue "AchToastSlideEdgeValues"
+{
+	0, "Vertical"
+	1, "Horizontal"
+}
+
+OptionValue "AchToastStyleValues"
+{
+	0, "Procedural"
+	1, "Textured"
+}
+
+OptionValue "AchSoundChoiceValues"
+{
+	0, "Sound 1"
+	1, "Sound 2"
+	2, "Sound 3"
+	3, "Sound 4"
+}
+
+OptionValue "AchMenuFilterValues"
+{
+	0, "All"
+	1, "Unlocked Only"
+	2, "Locked Only"
+}
+
+OptionValue "AchColorValues"
+{
+	0, "Brick"
+	1, "Tan"
+	2, "Gray"
+	3, "Green"
+	4, "Brown"
+	5, "Gold"
+	6, "Red"
+	7, "Blue"
+	8, "Orange"
+	9, "White"
+	10, "Yellow"
+	11, "Untranslated"
+	12, "Black"
+	13, "Light Blue"
+	14, "Cream"
+	15, "Olive"
+	16, "Dark Green"
+	17, "Dark Red"
+	18, "Dark Brown"
+	19, "Purple"
+	20, "Dark Gray"
+	21, "Cyan"
+	22, "Ice"
+	23, "Fire"
+	24, "Sapphire"
+	25, "Teal"
+}
+
+OptionMenu "VUASAchievementBrowse"
+{
+	Class "VUAS_AchievementBrowseMenu"
+	Title "$OPTMNU_PB_ACHIEVEMENTS_BROWSE"
+}
+
+OptionMenu "PBAchievementsMenu"
+{
+	Title "$OPTMNU_PB_ACHIEVEMENTS_MENU"
+
+	StaticText "Toast Notifications", 1
+	Option "Show Toast Popups", "ach_toast_enabled", "OnOff"
+	Option "Toast Position", "ach_toast_position", "AchToastPositionValues"
+	Option "Animation", "ach_toast_animation", "AchToastAnimationValues"
+	Option "Slide Direction", "ach_toast_slide_edge", "AchToastSlideEdgeValues"
+	Option "Toast Style", "ach_toast_style", "AchToastStyleValues"
+	Slider "Toast Scale", "ach_toast_scale", 0.5, 2.0, 0.05, 2
+	Slider "Toast Opacity", "ach_toast_opacity", 0.1, 1.0, 0.05, 2
+	Slider "Toast Duration (tics)", "ach_toast_duration", 35, 350, 5, 0
+	Slider "Toast X Adjustment", "ach_toast_offset_x", -200, 200, 5, 0
+	Slider "Toast Y Adjustment", "ach_toast_offset_y", -200, 200, 5, 0
+
+	StaticText ""
+
+	StaticText "Sound", 1
+	Option "Play Unlock Sound", "ach_sound_enabled", "OnOff"
+	Option "Unlock Sound", "ach_sound_choice", "AchSoundChoiceValues"
+
+	StaticText ""
+
+	StaticText "Colors", 1
+	Option "Unlocked Color", "ach_color_unlocked", "AchColorValues"
+	Option "Locked Color", "ach_color_locked", "AchColorValues"
+	Option "Title Color", "ach_color_title", "AchColorValues"
+	Option "Description Color", "ach_color_description", "AchColorValues"
+	Option "Border Accent Color", "ach_color_border", "AchColorValues"
+	Option "Border Inner Color", "ach_color_border_inner", "AchColorValues"
+	Option "Progress Color", "ach_color_progress", "AchColorValues"
+
+	StaticText ""
+
+	StaticText "Achievement Menu", 1
+	Submenu "$OPTMNU_PB_ACHIEVEMENTS_BROWSE", "VUASAchievementBrowse"
+	Option "Show Hidden Achievements", "ach_show_hidden", "OnOff"
+	Option "Filter", "ach_menu_filter", "AchMenuFilterValues"
+
+	StaticText ""
+
+	StaticText "Test and Clear", 1
+	Command "Show Test Achievement", "netevent vuas_test_toast"
+	SafeCommand "Clear All Achievements", "netevent ach_clear_all"
+
+	StaticText ""
+
+	StaticText "System", 1
+	Option "Encode Save Data", "vuas_encode_data", "OnOff"
+	Option "Cheat Detection", "vuas_cheat_detection", "OnOff"
+	Option "Debug Console Output", "vuas_debug", "OnOff"
 }

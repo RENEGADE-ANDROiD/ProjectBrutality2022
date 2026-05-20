@@ -126,7 +126,7 @@ class PB_XPRewardsHandler : EventHandler
 		return cv && cv.GetBool();
 	}
 
-	static bool AmmoTotalFloatersEnabled(PlayerPawn plr)
+	static bool PB_FloatingHudExtrasEnabled(PlayerPawn plr)
 	{
 		if (!plr || !plr.player)
 			return false;
@@ -256,7 +256,10 @@ class PB_XPRewardsHandler : EventHandler
 		SpawnXPFloaters(killer, t, add);
 		int newRank = ApplyRankFromXP(killer);
 		if (newRank >= 1)
+		{
 			SpawnRankFloaters(killer, newRank);
+			PB_Achievements.OnRankReached(newRank);
+		}
 	}
 
 	static void DoSpin(PlayerPawn plr)

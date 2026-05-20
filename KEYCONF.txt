@@ -67,6 +67,10 @@ addplayerclass PB_Doomer
         alias unreloader "puke 363"
         defaultbind U unreloader
 
+	addMenuKey "Taunt" "RequestTaunt"
+	alias RequestTaunt "netevent RequestTaunt"
+	defaultbind X RequestTaunt
+
 	AddMenuKey "Open PDA" openpda
 	alias openpda "netevent openpda"
 	defaultbind BACKSLASH openpda
@@ -79,3 +83,14 @@ addplayerclass PB_Doomer
 
 	weaponsection "PB_RocketLauncher"
 	addslotdefault 6 PB_RocketLauncher
+
+alias ach_open_menu "openmenu VUASAchievementBrowse"
+alias ach_help "netevent ach_help"
+alias ach_list "netevent ach_list"
+alias ach_debug "netevent ach_debug"
+alias ach_clear_all "netevent ach_clear_all"
+alias ach_unlock_all "netevent ach_unlock_all"
+
+alias pb_minimal_hud_style "pb_hudxmargin -9; pb_hudymargin -9; pb_hudboxalpha 0; pb_hud_slanted_bars 0; pb_hideunusedtypes 1; pb_curmaxammolist 0; pb_showlevelstats 0; pb_showammolist 0; PB_HudDynamics 0; pb_showblooddrops 0; pb_showglasscracks 0"
+alias pb_full_hud_style "pb_hudxmargin 0; pb_hudymargin 0; pb_hudboxalpha 1; pb_hud_slanted_bars 1; pb_hideunusedtypes 1; pb_curmaxammolist 1; pb_showlevelstats 0; pb_showammolist 1; PB_HudDynamics 1; pb_showblooddrops 0; pb_showglasscracks 1"
+alias ResetPB_HUDOptions "resetcvar pb_showlevelstats; resetcvar pb_showammolist; resetcvar pb_curmaxammolist; resetcvar pb_hideunusedtypes; resetcvar pb_hudxmargin; resetcvar pb_hudymargin; resetcvar pb_hudboxalpha; resetcvar pb_hud_slanted_bars; resetcvar pb_showblooddrops; resetcvar pb_blooddropsalpha; resetcvar pb_showglasscracks; resetcvar pb_glasscracksalpha; resetcvar PB_HudDynamics; resetcvar pb_newmugshot"

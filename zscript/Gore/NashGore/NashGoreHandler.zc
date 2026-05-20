@@ -66,9 +66,14 @@ class NashGoreHandler : EventHandler
 
 
 
+	private void EnsureBloodTypes(void)
+	{
+		if (bloodTypes.Size() < 1)
+			BuildBloodTypes();
+	}
+
 	override void WorldLoaded(WorldEvent e)
 	{
-		BuildBloodTypes();
 	}
 
 	override void WorldTick(void)
@@ -96,13 +101,10 @@ class NashGoreHandler : EventHandler
 	{
 		if (!e) return;
 		Actor t = e.Thing;
-		if (!t) return;
+		if (!t || !t.bIsMonster) return;
 
-		// monster?
-		bool isMonster = t.bIsMonster;
-		
 		// plug in generic monster behaviour
-		if ((t is "PB_Monster") && isMonster && !t.CountInv("NashGoreActor"))
+		if ((t is "PB_Monster") && !t.CountInv("NashGoreActor"))
 		{
 			t.A_GiveInventory("NashGoreActor", 1);
 
@@ -151,6 +153,8 @@ class NashGoreHandler : EventHandler
 	override void CheckReplacement(ReplaceEvent e)
 	{
 		if (!e) return;
+
+		EnsureBloodTypes();
 
 		// blood stuff
 		for (int i = 0; i < bloodTypes.Size(); i++)

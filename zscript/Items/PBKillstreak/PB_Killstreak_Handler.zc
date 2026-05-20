@@ -21,7 +21,11 @@ class PB_KillstreakHandler : EventHandler
 			if (pendingRewardStreak[i] <= 0) continue;
 			PlayerPawn plr = PlayerPawn(players[i].mo);
 			if (plr && plr.player && PB_CvarEnabled(plr) && plr.FindInventory("PB_KillstreakMode"))
-				GiveKSReward(plr, pendingRewardStreak[i]);
+			{
+				int st = pendingRewardStreak[i];
+				GiveKSReward(plr, st);
+				PB_Achievements.OnKillstreakReward(st);
+			}
 			pendingRewardStreak[i] = 0;
 		}
 	}

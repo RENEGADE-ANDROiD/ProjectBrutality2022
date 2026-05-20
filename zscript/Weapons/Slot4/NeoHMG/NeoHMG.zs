@@ -347,10 +347,9 @@ class PB_NeoHMG : PB_WeaponBase
 			HMG_fireBullet();
 			PB_WeaponRecoil(-1.1, frandom(-0.82, 0.82));
 			PB_ModifyOverheat(2);
-			PB_GunSmoke(0, 0, 0);
+			invoker.PB_NeoHMG_ApplyFireCosmetics();
 			PB_LowAmmoSoundWarning("hdmr");
 			PB_FireOffset();
-			A_FireCustomMissile("MinigunTracer", random(-3, 3), 0, -1, random(-3, 3));
 			A_QuakeEx(0, 1, 0, 12, 0, 10, "",
 				QF_WAVE | QF_RELATIVE | QF_SCALEDOWN,
 				0.6, 0, 0.2, 0, 0, 0.3, 0.40);
