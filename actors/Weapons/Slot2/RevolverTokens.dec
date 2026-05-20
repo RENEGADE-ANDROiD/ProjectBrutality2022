@@ -1,0 +1,26 @@
+// Companion inventory tokens for ZScript PB_Revolver (weapon states live in Revolver.zs).
+
+Actor RevolverHasUnloaded: Inventory
+{
+	Inventory.maxamount 1
+}
+
+ACTOR RespectRevolver : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR SwitchingFromDualWieldRevolver : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR SwitchingToDualWieldRevolver : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR DualWieldingRevolver: Inventory
+{
+	Inventory.MaxAmount 1
+}

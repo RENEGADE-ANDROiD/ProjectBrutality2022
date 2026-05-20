@@ -1,0 +1,56 @@
+// Super GL inventory tokens (weapon + tube ammo are ZScript PB_SuperGL).
+
+ACTOR RespectSGL : Inventory
+{
+Inventory.MaxAmount 1
+}
+
+ACTOR GrenadeTypeImpact : Inventory
+{
+Inventory.MaxAmount 1
+}
+
+ACTOR GrenadeTypeSticky : Inventory
+{
+Inventory.MaxAmount 1
+}
+
+ACTOR GrenadeTypeIncendiary : Inventory
+{
+Inventory.MaxAmount 1
+}
+
+ACTOR GrenadeTypeCryo : Inventory
+{
+Inventory.MaxAmount 1
+}
+
+ACTOR GrenadeTypeAcid : Inventory
+{
+Inventory.MaxAmount 1
+}
+
+Actor JustFiredSGL: Inventory
+{
+Inventory.maxamount 200
+}
+
+Actor SGLDetonateSoundCooldown : Inventory
+{
+	Inventory.MaxAmount 22
+}
+
+Actor SGLUnloaded : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+Actor GrenadeDetonator : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+Actor CycleAnimation : Inventory
+{
+	Inventory.MaxAmount 1
+}
