@@ -279,6 +279,7 @@ ACTOR GunFireSmoke: ExplosionSmoke
         SMOK A 0
         Goto Death
 	Death:
+		TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stop")
 		TNT1 A 0
 		TNT1 A 0 A_JUmp(256, "Death1", "Death2", "Death3", "Death4")
 		

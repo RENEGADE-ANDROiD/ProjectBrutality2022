@@ -6,6 +6,7 @@ class SwordSequence3 : Inventory { Default { Inventory.MaxAmount 1; } }
 class DamageMultiplier : Inventory { Default { Inventory.MaxAmount 20; } }
 class Energy : Inventory { Default { Inventory.MaxAmount 20; } }
 
+// Implementation base — players only receive PB_ObsidianDragonSlayer (Obsidian Ravager drop).
 class DragonSlayer : PB_WeaponBase
 {
 
@@ -59,6 +60,7 @@ class DragonSlayer : PB_WeaponBase
 		+WEAPON.NOALERT
 		+WEAPON.MELEEWEAPON
 		+WEAPON.AXEBLOOD
+		+WEAPON.CHEATNOTWEAPON
 		+DONTGIB
 		Weapon.AmmoType "DragonSlayerEnergy";
 		Weapon.AmmoUse 0;
@@ -527,6 +529,7 @@ class PB_ObsidianDragonSlayer : DragonSlayer
 		Inventory.PickupMessage "$PB_PICKUP_PB_ObsidianDragonSlayer";
 		Tag "PB_ObsidianDragonSlayer";
 		Obituary "%o was carved up with %k's Obsidian Dragon Slayer.";
+		+WEAPON.CHEATNOTWEAPON;
 	}
 
 	void RefillObsidianWear(PlayerPawn p)

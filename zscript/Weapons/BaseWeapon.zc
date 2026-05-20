@@ -1026,7 +1026,10 @@ class PB_WeaponBase : DoomWeapon
 		}
 		if (CountInv("DoShoulderCannon")>=1) 
 		{
-			return ResolveState("FireShoulderCannon");
+			State stShoulder = invoker.ResolveState("FireShoulderCannon");
+			if (stShoulder)
+				return stShoulder;
+			A_TakeInventory("DoShoulderCannon", 1);
 		}
 		if (CountInv("Unloading")>=1 && ResolveState("Unload") && !(pbFlags & PBWEAP_UNLOADED) && CountInv(invoker.UnloaderToken) != 1)
 		{
@@ -1243,13 +1246,10 @@ class PB_WeaponBase : DoomWeapon
 			PB_SpawnLooseRounds(spawnRound, per, xoff, zoff);
 	}
 	action void PB_FireOffset() {}
-	action void PB_DynamicTail(string a, string b) {}
 	action void PB_GunSmoke(double x, double y, double z)
 	{
 		A_FireCustomMissile("GunFireSmoke", x, y, 0, 0, 0, 0);
 	}
-	action void PB_VisualLaser(int mode) {}
-
 	action void PB_FireAltBFGRail()
 	{
 		PlayerPawn pp = PlayerPawn(invoker.owner);

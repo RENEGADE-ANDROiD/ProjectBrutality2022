@@ -57,8 +57,6 @@ ACTOR XM21_762x51mmAP : FastProjectile
 	}
 }
 
-ACTOR PB_762x51mmAP : XM21_762x51mmAP {}
-
 Actor PB_XM21Upgrade : Custominventory
 {
 //$Category Ammunition

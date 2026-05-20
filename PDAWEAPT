@@ -427,7 +427,7 @@ Recoil: Extreme platform shove
 Alt-Fire: Guard / black-hole variant payloads via Weapon Special
 Firemodes: Classic / guard / singularity selectable
 Akimbo: X#
-Riot Shield$Law-enforcement shield line pairing ballistic plate with optional sidearm integration—primary bash / guard gameplay loop.$RiotShield$Manufacturer: UAC peacekeeping bureau
+UAC Ballistic Shield Module$Peacekeeping ballistic plate kit—installs on the .45 Pistol or Fire Axe via Weapon Special (shield + sidearm or shield + axe loadouts). Dropped by riot-shield sergeants.$PB_RiotShieldModule$Manufacturer: UAC peacekeeping bureau
 Magazine Capacity: N/A (shield durability tokens)
 Ammunition: N/A
 Effective Range: Melee guard arc
@@ -463,7 +463,7 @@ Recoil: High
 Alt-Fire: Alt seeker behaviors per states
 Firemodes: Semi-auto rocket launcher
 Akimbo: X#
-Dragon Slayer$Heavy runic greatblade pairing melee cleaves with DragonSlayerEnergy bolt repeater stance. Found only on Obsidian Ravager death; limited wear on salvage—not rolled from chainsaw map spawns.$DragonSlayer$Manufacturer: Classified (Craneo lineage / Ravager salvage)
+Dragon Slayer$Heavy runic greatblade pairing melee cleaves with DragonSlayerEnergy bolt repeater stance. Found only on Obsidian Ravager death; limited wear on salvage—not rolled from chainsaw map spawns.$PB_ObsidianDragonSlayer$Manufacturer: Classified (Craneo lineage / Ravager salvage)
 Magazine Capacity: DragonSlayerEnergy pool
 Ammunition: Internal energy stacks
 Effective Range: Melee / short bolt lane

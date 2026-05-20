@@ -31,10 +31,11 @@ Extend class PB_WeaponBase
 	Ammo AmmoLeft;
 	Property AmmoTypeLeft : AmmoTypeLeft;
 
-	// PB_DynamicTail pitch knob (Deagle/Revolver/Carbine). Staging exposes this on PB_WeaponBase;
-	// PB 2022's PB_DynamicTail body is a no-op so the value is currently advisory only.
+	// PB_DynamicTail pitch/volume (Deagle/Revolver/Carbine). Staging exposes these on PB_WeaponBase.
 	float tailPitch;
 	Property TailPitch : tailPitch;
+	float tailVolume;
+	Property TailVolume : tailVolume;
 
 	// Reserveâ†’mag refill ratio used by staging's reload helpers. PB 2022's
 	// PB_AmmoIntoMag already takes an explicit `per` argument so this is
@@ -577,23 +578,177 @@ Extend class PB_WeaponBase
 	}
 
 	// ------------------------------------------------------------------
-	// Lightweight muzzle smoke / flash effect stubs.
-	// Staging ships PB_GunSmoke_Deagle / PB_MuzzleFlashEffects that drive
-	// PB_MuzzleSpark / PB_GunFireSmoke / PB_CasingEjectionSmoke (none of
-	// which are present in PB 2022). These wrappers fall back to PB 2022's
-	// existing GunFireSmoke actor so ported staging weapons compile and
-	// still produce visible muzzle smoke. Per-weapon ports can override
-	// for a fancier look later without touching every call-site.
+	// Muzzle smoke / sparks (PB Staging `BaseWeapon_Functions.zsc` fold).
 	// ------------------------------------------------------------------
-	action void PB_GunSmoke_Deagle(double xOff = 0, double yOff = 0, double zOff = 6)
+	action void PB_GunSmokeSpawn(vector3 ofs, vector3 vofs, string SActor = "PB_GunFireSmoke", double scalemul = 1.0, double alphamul = 1.0, double blowspeed = 1.02, double fadeSpeed = 1.0, bool rollSprite = true, double slowBlowSpeed = 1.0)
 	{
-		A_FireProjectile("GunFireSmoke", 0, false, yOff, zOff, FPF_NOAUTOAIM, 0);
+		if (!player)
+			return;
+
+		ofs.z -= 10.5;
+		ofs.y += 15;
+		double fovOfs = (120 - player.desiredfov) / 3.;
+
+		Vector3 spos = PB_Math.RelativeToGlobalCoords((pos.xy, player.viewz), (angle, pitch, roll), (radius + ofs.y - (5.0 * abs(sin(pitch))) + fovOfs, -ofs.x, ofs.z), true);
+		Vector3 svel = PB_Math.RelativeToGlobalCoords((vel.xy, 0), (angle, pitch, roll), vofs);
+
+		PB_GunFireSmoke smoke = PB_GunFireSmoke(Spawn(SActor, spos));
+		if (smoke)
+		{
+			smoke.master = invoker.owner;
+			smoke.vel += svel;
+			if (rollSprite)
+			{
+				smoke.A_SetRoll(random(0, 359));
+				smoke.bXFLIP = randompick(0, 1);
+				smoke.bYFLIP = randompick(0, 1);
+			}
+			smoke.scale *= scalemul;
+			smoke.alpha *= alphamul;
+			smoke.blowSpeed = blowspeed;
+			smoke.fadeSpeed = fadeSpeed;
+			smoke.angle = angle;
+			smoke.pitch = pitch;
+			smoke.slowBlowSpeed = slowBlowSpeed;
+
+			if (invoker.smokeColor != "FFFFFF" && invoker.smokeColor != "")
+			{
+				smoke.A_SetRenderStyle(smoke.alpha, STYLE_STENCIL);
+				smoke.SetShade(invoker.smokeColor);
+			}
+		}
 	}
 
-	action void PB_MuzzleFlashEffects(double xOff = 0, double yOff = 0, double zOff = 6)
+	action void PB_GunSmoke_Basic(double d1 = 0, double d2 = 0, double d3 = 0, string SActor = "PB_GunFireSmoke")
 	{
-		// Intentionally empty â€” PB 2022 already draws a flash overlay via
-		// here that depend on PB_MuzzleSpark; revisit if/when that actor
-		// is folded in.
+		let ow = invoker.owner;
+		if (!ow || ow.CountInv("LowGraphicsMode") > 0)
+			return;
+		PB_GunSmokeSpawn((d1, d2, d3), (0, 0, 0), SActor, 0.7, 1.0, 1.2, 1.2);
+	}
+
+	action void PB_GunSmoke_Deagle(double d1 = 0, double d2 = 0, double d3 = 6, string SActor = "PB_GunFireSmoke")
+	{
+		PB_GunSmokeSpawn((d1, d2, d3), (0, 0, 0), "PB_GunFireSmoke_Var3", 0.7, 1.0, 1.2, 1.2);
+	}
+
+	action void PB_GunSmoke_Sniper(double d1 = 0, double d2 = 0, double d3 = 0, string SActor = "PB_GunFireSmoke")
+	{
+		PB_GunSmokeSpawn((d1, d2, d3), (0, 0, 0), "PB_GunFireSmoke_Var3", 0.7, 1.0, 1.2, 1.2);
+	}
+
+	action void PB_GunSmoke_Launcher(double d1 = 0, double d2 = 0, double d3 = 0, string SActor = "PB_GunFireSmoke")
+	{
+		PB_GunSmokeSpawn((d1, d2, d3), (0, 0, 0), "PB_GunFireSmoke_Var4", 0.7, 1.0, 1.2, 1.2);
+	}
+
+	action void PB_MuzzleFlashEffects(double d1 = 0, double d2 = 0, double d3 = 0, string color = "")
+	{
+		color col = color("FF9D2E");
+		if (color != "")
+			col = color(color);
+		_SpawnMuzzleSparks(d1, d2, d3, 0, 1.0, col);
+	}
+
+	action void _SpawnMuzzleSparks(double d1, double d2, double d3, double angleOfs = 0, double size = 1.0, color col = 0xFF9D2E)
+	{
+		if (!player)
+			return;
+
+		int sparkcount = randompick(0, random(5, 7));
+		double fovOfs = (120 - player.desiredfov) / 3.;
+		for (int i = 0; i < sparkcount; i++)
+		{
+			vector3 randvel = (frandom(0, 12), frandom(-5, 5), frandom(-5, 5));
+			vector3 spos = PB_Math.RelativeToGlobalCoords((pos.xy, player.viewz), (angle + angleOfs, pitch, roll), (radius + d2 - (5.0 * abs(sin(pitch))) + fovOfs, -d1, d3) + randvel, true);
+			vector3 svel = PB_Math.RelativeToGlobalCoords((0, 0, 0), (angle + angleOfs, pitch, roll), randvel + (7, 0, 0));
+
+			let act = Spawn('PB_MuzzleSpark', spos);
+			if (act)
+			{
+				act.vel = svel;
+				act.SetShade(col);
+				act.scale *= size;
+			}
+		}
+	}
+
+	action void _SpawnMuzzleSparksSG(double d1 = 0, double d2 = 0, double d3 = 0, double angleOfs = 0, double size = 1.0, color col = 0xFF9D2E)
+	{
+		_SpawnMuzzleSparks(d1, d2, d3, angleOfs, size, col);
+	}
+
+	action void PB_RevolverCasingSpawn(string ammoSide)
+	{
+		int n = 6 - CountInv(ammoSide);
+		for (; n > 0; n--)
+			A_FireProjectile("EmptyBrassMagnum", frandom(-5, 5), 0, 0, -30);
+	}
+
+	// Interior/exterior tail sounds (staging `weapons/atmo/*` in SNDINFO.Atmosphere_*).
+	// No-ops when S_FindSound misses — shipped via sounds/combat/Atmosphere/ + root shards.
+	action void PB_DynamicTail(string tailInside, string tailOutside)
+	{
+		let ow = invoker.owner;
+		if (!ow || !ow.player)
+			return;
+
+		int tailExtSamples = 4;
+		double tailExtStep = 40.0 / 4.0;
+		int intSamples;
+		FLineTraceData ltrace;
+		double traceZ = ow.player.viewz - ow.pos.z;
+
+		for (int i = 0; i < tailExtSamples; i++)
+		{
+			LineTrace(ow.angle, int.max, -90 + (i * tailExtStep),
+				TRF_THRUHITSCAN | TRF_THRUACTORS,
+				offsetz: traceZ, data: ltrace);
+			if (ltrace.HitTexture && ltrace.HitTexture != SkyFlatNum)
+				intSamples++;
+		}
+
+		double sndPitch = frandom(0.95, 1.05) * invoker.tailPitch;
+		if (sndPitch <= 0)
+			sndPitch = 1.0;
+		double intSndVolume = intSamples / double(tailExtSamples);
+		double extSndVolume = 1.0 - intSndVolume;
+		double volBase = invoker.tailVolume > 0 ? invoker.tailVolume : 1.0;
+
+		for (int i = 0; i < 2; i++)
+		{
+			string tmpTailSound;
+			double vol;
+
+			if (i == 1)
+			{
+				if (extSndVolume <= 0.001 || tailOutside.Length() == 0)
+					continue;
+				tmpTailSound = "weapons/atmo/ext/"..tailOutside;
+				vol = volBase * extSndVolume;
+			}
+			else
+			{
+				if (intSndVolume <= 0.001 || tailInside.Length() == 0)
+					continue;
+				tmpTailSound = "weapons/atmo/int/"..tailInside;
+				vol = volBase * intSndVolume;
+			}
+
+			bool notPlayer = multiplayer && ow.player != players[consoleplayer];
+			A_StartSound(tmpTailSound, notPlayer ? 19 + (i * 4) : CHAN_AUTO,
+				CHANF_OVERLAP, vol * 0.5, ATTN_NORM, sndPitch);
+
+			if (notPlayer)
+			{
+				string tailMp = (i == 1) ? tailOutside : tailInside;
+				string distSnd = "weapons/atmo/dist/"..tailMp;
+				string farSnd = "weapons/atmo/far/"..tailMp;
+				string medSnd = "weapons/atmo/med/"..tailMp;
+				A_StartSound(distSnd, 20 + (i * 4), CHANF_OVERLAP, vol, ATTN_NORM, sndPitch);
+				A_StartSound(farSnd, 21 + (i * 4), CHANF_OVERLAP, vol, ATTN_NORM, sndPitch);
+				A_StartSound(medSnd, 22 + (i * 4), CHANF_OVERLAP, vol, ATTN_NORM, sndPitch);
+			}
+		}
 	}
 }
