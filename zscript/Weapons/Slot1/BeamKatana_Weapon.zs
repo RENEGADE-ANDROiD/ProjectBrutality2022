@@ -237,6 +237,7 @@ class PB_BeamKatana : PB_WeaponBase
 				A_StopSound(CHAN_WEAPON);
 				A_StopSound(CHAN_VOICE);
 				A_StopSound(CHAN_6);
+				A_StopSound(CHAN_5);
 				A_StopSound(CHAN_7);
 			}
 			TNT1 A 0 A_JumpIfInventory("CantFire", 1, "FailOverlay");
@@ -294,7 +295,7 @@ class PB_BeamKatana : PB_WeaponBase
 		BKAT O 1 Bright;
 		BKAT P 1 Bright;
 		BKAT Q 1 Bright;
-		BKT1 E 0 Bright A_StartSound("ForceBarrier/On", 7);
+		BKT1 E 0 Bright A_StartSound("ForceBarrier/On", CHAN_5);
 		BKT1 E 1 Bright;
 		BKT1 D 1 Bright;
 		BKT1 C 1 Bright;
@@ -308,7 +309,7 @@ class PB_BeamKatana : PB_WeaponBase
 		Goto AltEnd;
 
 	AltHoldContinue:
-		BKT1 A 1 Bright A_StartSound("ForceBarrier/Loop", 7);
+		BKT1 A 1 Bright A_StartSound("ForceBarrier/Loop", CHAN_5);
 		BKT1 A 1 Bright A_FireCustomMissile("KatanaShieldSpawnerYEET", 0, 0, 0, -35);
 		BKT1 A 1 Bright A_FireCustomMissile("KatanaShieldSpawnerYEET", 0, 0, 0, -35);
 		BKT1 A 1 Bright A_FireCustomMissile("KatanaShieldSpawnerYEET", 0, 0, 0, -35);
@@ -324,7 +325,7 @@ class PB_BeamKatana : PB_WeaponBase
 		BKT1 C 1 Bright A_ReFire;
 		BKT1 D 1 Bright A_ReFire;
 		BKT1 E 1 Bright A_ReFire;
-		BKT1 E 0 Bright A_StartSound("ForceBarrier/Off", 7);
+		BKT1 E 0 Bright A_StartSound("ForceBarrier/Off", CHAN_5);
 		BKAT Q 1 Bright A_ReFire;
 		BKAT P 1 Bright A_ReFire;
 		BKAT O 1 Bright A_ReFire;
@@ -367,12 +368,12 @@ class PB_BeamKatana : PB_WeaponBase
 	ActivateWeaponSpecial:
 		TNT1 A 0 A_JumpIfInventory("SlashModeToken", 1, "DisableSlashMode");
 		TNT1 A 0 A_Print("\ctAlt fire:\c- \chSlash \c-mode");
-		TNT1 A 0 A_StartSound("CybKatana/SwitchMode",7);
+		TNT1 A 0 A_StartSound("CybKatana/SwitchMode",0);
 		TNT1 A 0 A_GiveInventory("SlashModeToken", 1);
 		Goto KatanaReadyToCut;
 
 	DisableSlashMode:
-		TNT1 A 0 A_StartSound("CybKatana/SwitchMode",7);
+		TNT1 A 0 A_StartSound("CybKatana/SwitchMode",0);
 		TNT1 A 0 A_TakeInventory("SlashModeToken", 1);
 		TNT1 A 0 A_Print("\ctAlt fire:\c- \cdShield \c-mode");
 		Goto KatanaReadyToCut;
@@ -386,7 +387,7 @@ class PB_BeamKatana : PB_WeaponBase
 		BKAT A 0 A_JumpIfInventory("KatanaSwitchHands", 1, "SpecialCutAlt");
 		BKAT A 1 Bright;
 		BKAT C 1 Bright;
-		BKAT D 1 Bright A_StartSound("CybKatana/Swing",7);
+		BKAT D 1 Bright A_StartSound("CybKatana/Swing", CHAN_WEAPON);
 		BKAT E 1 Bright A_FireCustomMissile("SwordPlasmaSlash", 0, 1, 0, -5);
 		BKAT F 1 Bright A_TakeInventory("PB_Cell",5);
 		BKAT G 1 Bright;
@@ -406,7 +407,7 @@ class PB_BeamKatana : PB_WeaponBase
 		BKT2 A 1 Bright;
 		BKT2 B 1 Bright;
 		BKT2 C 1 Bright;
-		BKT2 D 1 Bright A_StartSound("CybKatana/Swing",7);
+		BKT2 D 1 Bright A_StartSound("CybKatana/Swing", CHAN_WEAPON);
 		BKT2 E 1 Bright A_FireCustomMissile("SwordPlasmaSlashAlt", 0, 1, 0, -5);
 		BKT2 F 1 Bright A_TakeInventory("PB_Cell",5);
 		BKT2 G 1 Bright;

@@ -94,11 +94,10 @@ class PB_M41A : PB_WeaponBase
 		PB_WeaponRecoil(-0.75, frandom(-0.3, 0.3));
 		A_StartSound("M41A/Fire", CHAN_WEAPON, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
 		PB_DynamicTail("smg", "smg");
-		PB_GunSmoke(0, 0, 0);
+		invoker.PB_M41A_ApplyFireCosmetics(0);
 		PB_MuzzleFlashEffects(0, 0, 0);
 		A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
 		A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
-		PB_SpawnCasing("PB_EmptyBrass", 22, 2, 26, frandom(-4, 1), frandom(6, 9), frandom(0, 2));
 		A_TakeInventory("M41AChamberAmmo", 1);
 	}
 
@@ -136,10 +135,9 @@ class PB_M41A : PB_WeaponBase
 			PB_FireOffset();
 			PB_IncrementHeat(2, true);
 			PB_WeaponRecoil(-0.85, frandom(0.3, 0.8));
-			A_StartSound("M41A/Fire", 99, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
+			A_StartSound("M41A/Fire", 1, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
 			A_Overlay(-8, "MuzzleDualL");
-			PB_SpawnCasing("PB_EmptyBrass", 22, -16, 35, frandom(-4, 1), frandom(5, 8), frandom(1, 2));
-			PB_GunSmoke(4, 0, 0);
+			invoker.PB_M41A_ApplyFireCosmetics(-4);
 			PB_MuzzleFlashEffects(4, 0, 0);
 			PB_DynamicTail("smg", "smg");
 			A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
@@ -154,10 +152,9 @@ class PB_M41A : PB_WeaponBase
 			PB_FireOffset();
 			PB_IncrementHeat(2);
 			PB_WeaponRecoil(-0.85, frandom(-0.8, -0.3));
-			A_StartSound("M41A/Fire", 100, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
+			A_StartSound("M41A/Fire", 2, CHANF_OVERLAP, volume: 1.0, pitch: frandom(0.98, 1.02));
 			A_Overlay(-9, "MuzzleDualR");
-			PB_SpawnCasing("PB_EmptyBrass", 22, 16, 35, frandom(-4, 1), frandom(5, 8), frandom(1, 2));
-			PB_GunSmoke(-4, 0, 0);
+			invoker.PB_M41A_ApplyFireCosmetics(4);
 			PB_MuzzleFlashEffects(-4, 0, 0);
 			PB_DynamicTail("smg", "smg");
 			A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
@@ -435,7 +432,7 @@ class PB_M41A : PB_WeaponBase
 
 		SwitchToDualWieldM41A:
 			TNT1 A 0 {
-				A_StartSound("IronSights", 15, CHANF_OVERLAP);
+				A_StartSound("IronSights", 1, CHANF_OVERLAP);
 				A_SetAkimbo(true);
 				A_SetInventory("DualWieldingM41A", 1);
 				M41A_ClearDualOverlays();
@@ -447,7 +444,7 @@ class PB_M41A : PB_WeaponBase
 
 		StopDualWieldM41A:
 			TNT1 A 0 {
-				A_StartSound("IronSights", 15, CHANF_OVERLAP);
+				A_StartSound("IronSights", 1, CHANF_OVERLAP);
 				A_SetAkimbo(false);
 				A_SetInventory("DualWieldingM41A", 0);
 				M41A_ClearDualOverlays();
@@ -500,17 +497,17 @@ class PB_M41A : PB_WeaponBase
 			PMAR IJKL 1;
 			PMAR MNOP 1;
 			PMAR QQRST 1;
-			TNT1 A 0 A_StartSound("M41A/MagTake", 33);
+			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
 			PMAR UVWX 1;
 			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
-			TNT1 A 0 A_StartSound("M41A/MagIn", 34);
+			TNT1 A 0 A_StartSound("M41A/MagIn", 6);
 			PMAT ABCD 1;
 			TNT1 A 0 PB_AmmoIntoMag("M41AChamberAmmo", "NewClip", m41a_ammoFull, 1);
 			TNT1 A 0 A_TakeInventory("M41AUnloaded", 1);
 			PMAT EFGH 1;
 			PMAT IJKL 1;
 			PMAT MNOP 1;
-			TNT1 A 0 A_StartSound("M41A/Bolt", 35);
+			TNT1 A 0 A_StartSound("M41A/Bolt", 0);
 			PMAT QRRRST 1;
 			PMAT UVWX 1;
 			PMAT YYYY 1;
@@ -526,17 +523,17 @@ class PB_M41A : PB_WeaponBase
 			PMAR IJKL 1;
 			PMAR MNOP 1;
 			PMAR QQRST 1;
-			TNT1 A 0 A_StartSound("M41A/MagTake", 33);
+			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
 			PMAR UVWX 1;
 			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
-			TNT1 A 0 A_StartSound("M41A/MagIn", 34);
+			TNT1 A 0 A_StartSound("M41A/MagIn", 6);
 			PMAT ABCD 1;
 			TNT1 A 0 PB_DumpMagToPool("M41AChamberAmmo", "NewClip", 1);
 			TNT1 A 0 A_GiveInventory("M41AUnloaded", 1);
 			PMAT EFGH 1;
 			PMAT IJKL 1;
 			PMAT MNOP 1;
-			TNT1 A 0 A_StartSound("M41A/Bolt", 35);
+			TNT1 A 0 A_StartSound("M41A/Bolt", 0);
 			PMAT QRRRST 1;
 			PMAT UVWX 1;
 			PMAT YYYY 1;
@@ -594,7 +591,7 @@ class PB_M41A : PB_WeaponBase
 						return ResolveState("FireLeft_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 10, CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 3, CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -606,7 +603,7 @@ class PB_M41A : PB_WeaponBase
 							return ResolveState("FireLeft_Overlay");
 						else
 						{
-							A_StartSound("weapons/empty", 10, CHANF_OVERLAP);
+							A_StartSound("weapons/empty", 3, CHANF_OVERLAP);
 							return ResolveState(null);
 						}
 					}
@@ -629,7 +626,7 @@ class PB_M41A : PB_WeaponBase
 							return ResolveState("FireRight_Overlay");
 						else
 						{
-							A_StartSound("weapons/empty", 10, CHANF_OVERLAP);
+							A_StartSound("weapons/empty", 3, CHANF_OVERLAP);
 							return ResolveState(null);
 						}
 					}
@@ -640,7 +637,7 @@ class PB_M41A : PB_WeaponBase
 						return ResolveState("FireRight_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 10, CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 3, CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -650,7 +647,7 @@ class PB_M41A : PB_WeaponBase
 						return ResolveState("FireRight_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 10, CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 3, CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -676,7 +673,7 @@ class PB_M41A : PB_WeaponBase
 						return ResolveState("FireLeft_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 10, CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 3, CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -686,7 +683,7 @@ class PB_M41A : PB_WeaponBase
 						return ResolveState("FireLeft_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 10, CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 3, CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -716,7 +713,7 @@ class PB_M41A : PB_WeaponBase
 						return ResolveState("FireRight_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 10, CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 3, CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -726,7 +723,7 @@ class PB_M41A : PB_WeaponBase
 						return ResolveState("FireRight_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 10, CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 3, CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -757,22 +754,22 @@ class PB_M41A : PB_WeaponBase
 			}
 		ReloadRight:
 			TNT1 A 0 A_JumpIf(invoker.Ammo2 && invoker.Ammo2.Amount >= m41a_ammoFull, "StartReloadFromLeft");
-			TNT1 A 0 A_StartSound("IronSights", 15, CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("IronSights", 1, CHANF_OVERLAP);
 			PMDE ABCD 1;
 			PMDE EFGH 1;
 			PMAR P 1;
 			PMAR QQRST 1;
-			TNT1 A 0 A_StartSound("M41A/MagTake", 33);
+			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
 			PMAR UVWX 1;
 			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
-			TNT1 A 0 A_StartSound("M41A/MagIn", 34);
+			TNT1 A 0 A_StartSound("M41A/MagIn", 6);
 			PMAT ABCD 1;
 			TNT1 A 0 PB_AmmoIntoMag("M41AChamberAmmo", "NewClip", m41a_ammoFull, 1);
 			TNT1 A 0 A_TakeInventory("M41AUnloaded", 1);
 			PMAT EFGH 1;
 			PMAT IJKL 1;
 			PMAT MNOP 1;
-			TNT1 A 0 A_StartSound("M41A/Bolt", 35);
+			TNT1 A 0 A_StartSound("M41A/Bolt", 0);
 			PMAT QRRRST 1;
 			PMAT UVWX 1;
 			PMAT YYYY 1;
@@ -781,27 +778,27 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 5;
 		ReloadLeft:
 			TNT1 A 0 A_JumpIf(invoker.AmmoLeft && invoker.AmmoLeft.Amount >= m41a_ammoFull, "BackToReadyDual");
-			TNT1 A 0 A_StartSound("IronSights", 15, CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("IronSights", 1, CHANF_OVERLAP);
 			PMDX ABCDEE 1;
 			PMAR P 1;
 			PMAR QQRST 1;
-			TNT1 A 0 A_StartSound("M41A/MagTake", 33);
+			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
 			PMAR UVWX 1;
 			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, -6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
-			TNT1 A 0 A_StartSound("M41A/MagIn", 34);
+			TNT1 A 0 A_StartSound("M41A/MagIn", 6);
 			PMAT ABCD 1;
 			TNT1 A 0 PB_AmmoIntoMag("M41AChamberAmmoLeft", "NewClip", m41a_ammoFull, 1);
 			TNT1 A 0 A_TakeInventory("M41AUnloaded", 1);
 			PMAT EFGH 1;
 			PMAT IJKL 1;
 			PMAT MNOP 1;
-			TNT1 A 0 A_StartSound("M41A/Bolt", 35);
+			TNT1 A 0 A_StartSound("M41A/Bolt", 0);
 			PMAT QRRRST 1;
 			PMAT UVWX 1;
 			PMAT YYYY 1;
 		BackToReadyDualFromLeft:
 			PMDL ABCDEF 1;
-			TNT1 A 0 A_StartSound("IronSights", 15, CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("IronSights", 1, CHANF_OVERLAP);
 			PMDL GHI 1;
 			Goto ReadyDualWield;
 		BackToReadyDual:
@@ -809,7 +806,7 @@ class PB_M41A : PB_WeaponBase
 			Goto ReadyDualWield;
 		BackToReadyDualFromRight:
 			PMDE HGFE 1;
-			TNT1 A 0 A_StartSound("IronSights", 15, CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("IronSights", 1, CHANF_OVERLAP);
 			PMDE DCBA 1;
 			Goto ReadyDualWield;
 		StartReloadFromLeft:
@@ -822,11 +819,11 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 M41A_ClearDualOverlays();
 			PMDU DCBA 1;
 			TNT1 A 15;
-			TNT1 A 0 A_StartSound("M41A/MagTake", 33);
+			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
 			TNT1 A 0 PB_UnloadMag("M41AChamberAmmo", "NewClip", 1);
 			TNT1 A 0 A_GiveInventory("M41AUnloaded", 1);
 			TNT1 A 15;
-			TNT1 A 0 A_StartSound("M41A/MagTake", 33);
+			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
 			TNT1 A 0 PB_UnloadMag("M41AChamberAmmoLeft", "NewClip", 1);
 			TNT1 A 0 A_GiveInventory("M41AUnloaded", 1);
 			Goto BackToReadyDual;

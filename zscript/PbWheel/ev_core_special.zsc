@@ -1,6 +1,7 @@
 Class PB_SpecialWheelHandler : EventHandler
 {
 	bool searchedSpecials;
+	const PB_WHEEL_INIT_MIN_MAPTIME = 35;
 	array<PB_SpecialWheel_Mode> wheelSpecials;
 	array<string> useTheseSpecials;
 	array<string> avoidTheseSpecials;
@@ -516,7 +517,7 @@ Class PB_SpecialWheelHandler : EventHandler
 			return;
 		}
 		
-		if(!searchedSpecials&&level.maptime>12)
+		if (!searchedSpecials && level.maptime >= PB_WHEEL_INIT_MIN_MAPTIME)
 		{
 			initializeSpecialWheel();
 		}
@@ -1106,9 +1107,32 @@ Class PB_SpecialWheelHandler : EventHandler
 	{
 				wheelSpecials.Clear();
 				iconScale = (0.75, 0.75);
-				
-				
-				
+
+				if (players[consoleplayer].mo.FindInventory("PB_RiotShieldModule"))
+				{
+					TextureID icShield = TexMan.CheckForTexture("5L1DI0", TexMan.Type_Any);
+					if (players[consoleplayer].mo.FindInventory("PistolShieldLoadout"))
+					{
+						PB_SpecialWheel_Mode pistol_std = new ("PB_SpecialWheel_Mode");
+						pistol_std.specialIcon = icShield;
+						pistol_std.specialName = "Select_PistolStandardLoadout";
+						pistol_std.specialAlias = "Standard Pistol";
+						pistol_std.specialPriority = 0;
+						pistol_std.iconScale = iconScale;
+						wheelSpecials.Push(pistol_std);
+					}
+					else
+					{
+						PB_SpecialWheel_Mode pistol_shield = new ("PB_SpecialWheel_Mode");
+						pistol_shield.specialIcon = icShield;
+						pistol_shield.specialName = "Select_PistolShieldLoadout";
+						pistol_shield.specialAlias = "Ballistic Shield";
+						pistol_shield.specialPriority = 0;
+						pistol_shield.iconScale = iconScale;
+						wheelSpecials.Push(pistol_shield);
+					}
+				}
+
 				if(players[consoleplayer].mo.FindInventory("SilencerEquipped")) {
 				
 				
@@ -1129,23 +1153,26 @@ Class PB_SpecialWheelHandler : EventHandler
 					pistol_silencer.iconScale = iconScale;
 					wheelSpecials.Push(pistol_silencer);
 				}
-				if(players[consoleplayer].mo.FindInventory("DualWieldingPistols")) {
-					PB_SpecialWheel_Mode pistol_single = new ("PB_SpecialWheel_Mode");
-					pistol_single.specialIcon = TexMan.CheckForTexture("graphics/pywheel/PISTOL_0.png",TexMan.Type_Any);
-					pistol_single.specialName = "SelectDualWieldPistols";
-					pistol_single.specialAlias = "Single Pistol";
-					pistol_single.specialPriority = 1;
-					pistol_single.iconScale = iconScale;
-					wheelSpecials.Push(pistol_single);
-				}
-				else {
-					PB_SpecialWheel_Mode pistol_dual = new ("PB_SpecialWheel_Mode");
-					pistol_dual.specialIcon = TexMan.CheckForTexture("graphics/pywheel/PISTOL_4.png",TexMan.Type_Any);
-					pistol_dual.specialName = "SelectDualWieldPistols";
-					pistol_dual.specialAlias = "Akimbo Pistols";
-					pistol_dual.specialPriority = 3;
-					pistol_dual.iconScale = iconScale;
-					wheelSpecials.Push(pistol_dual);
+				if (!players[consoleplayer].mo.FindInventory("PistolShieldLoadout"))
+				{
+					if(players[consoleplayer].mo.FindInventory("DualWieldingPistols")) {
+						PB_SpecialWheel_Mode pistol_single = new ("PB_SpecialWheel_Mode");
+						pistol_single.specialIcon = TexMan.CheckForTexture("graphics/pywheel/PISTOL_0.png",TexMan.Type_Any);
+						pistol_single.specialName = "SelectDualWieldPistols";
+						pistol_single.specialAlias = "Single Pistol";
+						pistol_single.specialPriority = 1;
+						pistol_single.iconScale = iconScale;
+						wheelSpecials.Push(pistol_single);
+					}
+					else {
+						PB_SpecialWheel_Mode pistol_dual = new ("PB_SpecialWheel_Mode");
+						pistol_dual.specialIcon = TexMan.CheckForTexture("graphics/pywheel/PISTOL_4.png",TexMan.Type_Any);
+						pistol_dual.specialName = "SelectDualWieldPistols";
+						pistol_dual.specialAlias = "Akimbo Pistols";
+						pistol_dual.specialPriority = 3;
+						pistol_dual.iconScale = iconScale;
+						wheelSpecials.Push(pistol_dual);
+					}
 				}
 				
 				
@@ -1172,8 +1199,39 @@ Class PB_SpecialWheelHandler : EventHandler
 				
 				specialWheel_handleMouse();
 	}
-	
-	
+
+	void specialWheel_Axe()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.75, 0.75);
+
+		if (players[consoleplayer].mo.FindInventory("PB_RiotShieldModule"))
+		{
+			TextureID icShield = TexMan.CheckForTexture("5L1DI0", TexMan.Type_Any);
+			if (players[consoleplayer].mo.FindInventory("AxeShieldLoadout"))
+			{
+				PB_SpecialWheel_Mode axe_std = new ("PB_SpecialWheel_Mode");
+				axe_std.specialIcon = icShield;
+				axe_std.specialName = "Select_AxeStandardLoadout";
+				axe_std.specialAlias = "Standard Axe";
+				axe_std.specialPriority = 0;
+				axe_std.iconScale = iconScale;
+				wheelSpecials.Push(axe_std);
+			}
+			else
+			{
+				PB_SpecialWheel_Mode axe_shield = new ("PB_SpecialWheel_Mode");
+				axe_shield.specialIcon = icShield;
+				axe_shield.specialName = "Select_AxeShieldLoadout";
+				axe_shield.specialAlias = "Shield + Axe";
+				axe_shield.specialPriority = 0;
+				axe_shield.iconScale = iconScale;
+				wheelSpecials.Push(axe_shield);
+			}
+		}
+
+		specialWheel_handleMouse();
+	}
 
 	void specialWheel_Carbine()
 	{
@@ -1730,6 +1788,7 @@ Class PB_SpecialWheelHandler : EventHandler
 		if (specialName == "WW_PB_CF_TeslaTurretSelected") return pl.CountInv("PB_CF_TeslaTurretAmmo") > 0;
 		if (specialName == "WW_PB_CF_FlameTurretSelected") return pl.CountInv("PB_CF_FlameTurretAmmo") > 0;
 		if (specialName == "WW_PB_CF_FreezeMineSelected") return pl.CountInv("PB_CF_FreezeMineAmmo") > 0;
+		if (specialName == "Select_LeverAction_HellMode") return pl.CountInv("LeverActionHellTier") >= 1;
 		return true;
 	}
 
@@ -1737,6 +1796,7 @@ Class PB_SpecialWheelHandler : EventHandler
 	{
 		wheelSpecials.Clear();
 		iconScale = (0.75, 0.75);
+		let pl = PlayerPawn(players[consoleplayer].mo);
 		PB_SpecialWheel_Mode lev_357 = new ("PB_SpecialWheel_Mode");
 		lev_357.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Magnum.png", TexMan.Type_Any);
 		lev_357.specialName = "Select_LeverAction_357";
@@ -1751,6 +1811,13 @@ Class PB_SpecialWheelHandler : EventHandler
 		lev_marlin.specialPriority = 2;
 		lev_marlin.iconScale = iconScale;
 		wheelSpecials.Push(lev_marlin);
+		PB_SpecialWheel_Mode lev_hell = new ("PB_SpecialWheel_Mode");
+		lev_hell.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+		lev_hell.specialName = "Select_LeverAction_HellMode";
+		lev_hell.specialAlias = "Hell rounds (toggle)";
+		lev_hell.specialPriority = 3;
+		lev_hell.iconScale = iconScale;
+		if (pl == null || WheelSliceIsUsable(pl, "Select_LeverAction_HellMode")) { wheelSpecials.Push(lev_hell); }
 		specialWheel_handleMouse();
 	}
 
@@ -2152,6 +2219,10 @@ Class PB_SpecialWheelHandler : EventHandler
 					
 				case 'PB_Pistol':
 					specialWheel_Pistol();
+					return;
+
+				case 'PB_Axe':
+					specialWheel_Axe();
 					return;
 					
 				case 'PB_Shotgun':

@@ -56,61 +56,10 @@ ACTOR M41AGrenade : FastProjectile
 	}
 }
 
-// Shared 7.62x51mm rifle bullet (PB_M41A primary + BDPBattleRifle).
-Actor PB_762x51mm : FastProjectile
-{
-	Projectile
-	Radius 2
-	Height 2
-	Speed 250
-	Damage 44
-	DamageType Bullet
-	Decal "BulletChip"
-	States
-	{
-	Spawn:
-		TNT1 A 1
-		Loop
-	Death:
-		TNT1 A 0 A_SpawnItem("HitPuff")
-		Stop
-	}
-}
-
 ACTOR M41AEjectedMag : LMGCasingStandard
 {
 	Scale 0.17
 	Mass 6
 	Speed 10
 	SeeSound "weapons/casing"
-}
-
-Actor PB_12GAPellet : FastProjectile
-{
-	Projectile
-	+RANDOMIZE
-	+FORCEXYBILLBOARD
-	+DONTSPLASH
-	+NOEXTREMEDEATH
-	+NODAMAGETHRUST
-	Damage 4
-	DamageType Bullet
-	radius 2
-	height 2
-	speed 80
-	Gravity 0.4
-	renderstyle ADD
-	alpha 0.6
-	scale 0.18
-	Decal "SmallerScorch"
-	States
-	{
-	Spawn:
-		DBAC A 3 BRIGHT
-		Loop
-	Death:
-	XDeath:
-		TNT1 A 0 A_SpawnItem("HitPuff")
-		Stop
-	}
 }

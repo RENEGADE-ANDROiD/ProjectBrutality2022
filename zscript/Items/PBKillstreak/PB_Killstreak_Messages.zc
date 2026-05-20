@@ -1,4 +1,4 @@
-class PB_KsHudMessage : HUDMessageBase
+class KSHUDMessage : HUDMessageBase
 {
 	transient BrokenLines lines;
 	transient Font rFont;
@@ -97,11 +97,11 @@ class PB_KsHudMessage : HUDMessageBase
 
 	void Init() { tics = 0; }
 
-	static clearscope PB_KsMsgQueued Create(
+	static clearscope KS_QueuedMsg Create(
 		int targetplayer, Name fnt, String txt, Vector2 pos, Vector2 vsize = (0, 0), int talign = -1, Vector2 balign = (0, 0), int color = Font.CR_UNTRANSLATED,
 		Vector3 time = (0, 0, 0), int wrap = 0, uint id = 0, int layer = BaseStatusBar.HUDMSGLayer_OverHUD)
 	{
-		let q = new("PB_KsMsgQueued");
+		let q = new("KS_QueuedMsg");
 		q.targetplayer = targetplayer;
 		q.fnt = fnt;
 		q.txt = txt;
@@ -121,7 +121,7 @@ class PB_KsHudMessage : HUDMessageBase
 	}
 }
 
-class PB_KsHudMessageWaggle : PB_KsHudMessage
+class KSHUDMessageWaggle : KSHUDMessage
 {
 	double phase, speed, strength, frequency;
 
@@ -143,11 +143,11 @@ class PB_KsHudMessageWaggle : PB_KsHudMessage
 
 	override void Setup() { Super.Setup(); phase = 0; }
 
-	static clearscope PB_KsMsgQueuedWaggle Create(
+	static clearscope KS_QueuedMsgWaggle Create(
 		int targetplayer, Name fnt, String txt, Vector2 pos, Vector2 vsize = (0, 0), int talign = -1, Vector2 balign = (0, 0), int color = Font.CR_UNTRANSLATED,
 		Vector3 time = (0, 0, 0), double speed = 1.0, double strength = 1.0, double frequency = 1.0, int wrap = 0, uint id = 0, int layer = BaseStatusBar.HUDMSGLayer_OverHUD)
 	{
-		let q = new("PB_KsMsgQueuedWaggle");
+		let q = new("KS_QueuedMsgWaggle");
 		q.targetplayer = targetplayer;
 		q.fnt = fnt;
 		q.txt = txt;
@@ -170,7 +170,7 @@ class PB_KsHudMessageWaggle : PB_KsHudMessage
 	}
 }
 
-class PB_KsMsgQueued
+class KS_QueuedMsg
 {
 	int targetplayer;
 	Name fnt;
@@ -184,7 +184,7 @@ class PB_KsMsgQueued
 
 	virtual ui void AddSelf()
 	{
-		let msg = new("PB_KsHudMessage");
+		let msg = new("KSHUDMessage");
 		msg.targetplayer = targetplayer;
 		msg.fnt = fnt;
 		msg.txt = txt;
@@ -203,13 +203,13 @@ class PB_KsMsgQueued
 	}
 }
 
-class PB_KsMsgQueuedWaggle : PB_KsMsgQueued
+class KS_QueuedMsgWaggle : KS_QueuedMsg
 {
 	double speed, strength, frequency;
 
 	override void AddSelf()
 	{
-		let msg = new("PB_KsHudMessageWaggle");
+		let msg = new("KSHUDMessageWaggle");
 		msg.targetplayer = targetplayer;
 		msg.fnt = fnt;
 		msg.txt = txt;
@@ -231,21 +231,21 @@ class PB_KsMsgQueuedWaggle : PB_KsMsgQueued
 	}
 }
 
-class PB_KillstreakMessageHandler : EventHandler
+class KSHUDMessageHandler : EventHandler
 {
-	Array<PB_KsMsgQueued> queue;
+	Array<KS_QueuedMsg> queue;
 	String ksPendingClass[MAXPLAYERS];
 	String ksPendingMsg[MAXPLAYERS];
 	bool ksPendingSet[MAXPLAYERS];
 
-	static PB_KillstreakMessageHandler KS_Get()
+	static KSHUDMessageHandler Instance()
 	{
-		return PB_KillstreakMessageHandler(EventHandler.Find("PB_KillstreakMessageHandler"));
+		return KSHUDMessageHandler(EventHandler.Find("KSHUDMessageHandler"));
 	}
 
 	static play void KS_SetPendingReward(PlayerPawn plr, String className, String msg)
 	{
-		let h = KS_Get();
+		let h = Instance();
 		if (!h || !plr || !plr.player) return;
 		int p = plr.PlayerNumber();
 		if (p < 0 || p >= MAXPLAYERS) return;
@@ -256,7 +256,7 @@ class PB_KillstreakMessageHandler : EventHandler
 
 	static void KS_ClearPendingAll()
 	{
-		let h = KS_Get();
+		let h = Instance();
 		if (!h) return;
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
@@ -268,7 +268,7 @@ class PB_KillstreakMessageHandler : EventHandler
 
 	static void KS_ClearPendingForPlayer(PlayerPawn plr)
 	{
-		let h = KS_Get();
+		let h = Instance();
 		if (!h || !plr || !plr.player) return;
 		int p = plr.PlayerNumber();
 		if (p < 0 || p >= MAXPLAYERS) return;
@@ -282,7 +282,7 @@ class PB_KillstreakMessageHandler : EventHandler
 		className = "";
 		msg = "";
 		had = false;
-		let h = KS_Get();
+		let h = Instance();
 		if (!h || !plr || !plr.player) return;
 		int p = plr.PlayerNumber();
 		if (p < 0 || p >= MAXPLAYERS || !h.ksPendingSet[p]) return;
@@ -294,7 +294,7 @@ class PB_KillstreakMessageHandler : EventHandler
 		had = true;
 	}
 
-	static bool PB_BigmsgOn()
+	static bool BigmsgOn()
 	{
 		let c = CVar.FindCVar("pb_ks_bigmsg");
 		return c == null || c.GetBool();
@@ -328,29 +328,29 @@ class PB_KillstreakMessageHandler : EventHandler
 		}
 	}
 
-	static play void QueueMsg(PB_KsMsgQueued tosend)
+	static play void QueueMsg(KS_QueuedMsg tosend)
 	{
-		PB_KillstreakMessageHandler h = PB_KillstreakMessageHandler(EventHandler.Find("PB_KillstreakMessageHandler"));
+		KSHUDMessageHandler h = KSHUDMessageHandler(EventHandler.Find("KSHUDMessageHandler"));
 		if (!h) return;
 		h.queue.Push(tosend);
 	}
 
 	static bool CheckFont(Name fnt) { return Font.GetFont(fnt) != null; }
 
-	static void PB_KsPlainMsg(
+	static void PlainMsg(
 		int targetplayer, Name fnt, String txt, Vector2 pos, Vector2 vsize = (0, 0), int talign = -1, Vector2 balign = (0, 0), int color = Font.CR_UNTRANSLATED,
 		Vector3 time = (0, 0, 0), int wrap = 0, uint id = 0, int layer = BaseStatusBar.HUDMSGLayer_OverHUD)
 	{
 		if (!CheckFont(fnt)) return;
-		QueueMsg(PB_KsHudMessage.Create(targetplayer, fnt, txt, pos, vsize, talign, balign, color, time, wrap, id, layer));
+		QueueMsg(KSHUDMessage.Create(targetplayer, fnt, txt, pos, vsize, talign, balign, color, time, wrap, id, layer));
 	}
 
-	static void PB_KsWaggleMsg(
+	static void WaggleMsg(
 		int targetplayer, Name fnt, String txt, Vector2 pos, Vector2 vsize = (0, 0), int talign = -1, Vector2 balign = (0, 0), int color = Font.CR_UNTRANSLATED,
 		Vector3 time = (0, 0, 0), double speed = 1.0, double strength = 1.0, double frequency = 1.0, int wrap = 0, uint id = 0, int layer = BaseStatusBar.HUDMSGLayer_OverHUD)
 	{
 		if (!CheckFont(fnt)) return;
-		PB_KsMsgQueuedWaggle wq = PB_KsHudMessageWaggle.Create(
+		KS_QueuedMsgWaggle wq = KSHUDMessageWaggle.Create(
 			targetplayer, fnt, txt, pos, vsize, talign, balign, color, time, speed, strength, frequency, wrap, id, layer);
 		QueueMsg(wq);
 	}

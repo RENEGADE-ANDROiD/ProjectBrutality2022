@@ -35,7 +35,7 @@ class FireAuraPower : Powerup
 		arad = 160;
 		if (owner)
 		{
-			owner.A_StartSound("FireAura/aura", 22241, CHANF_LOOPING | ATTN_NONE);
+			owner.A_StartSound("FireAura/aura", 2, CHANF_LOOPING | ATTN_NONE);
 			owner.A_AttachLight("FIAL1", DynamicLight.FlickerLight, "FF8000", arad * 1.0, arad * 1.05,
 				flags: DYNAMICLIGHT.LF_NOSHADOWMAP,
 				ofs: (0, 0, owner.height / 2), param: 0.5);
@@ -143,7 +143,7 @@ class FireAuraPower : Powerup
 			owner.A_RemoveLight("FIAL1");
 			owner.A_RemoveLight("FIAL2");
 			owner.A_RemoveLight("FIAL3");
-			owner.A_StopSound(22241);
+			owner.A_StopSound(2);
 		}
 		super.EndEffect();
 	}
@@ -362,7 +362,7 @@ class FrostAuraPower : Powerup
 		arad = 448;
 		if (owner)
 		{
-			owner.A_StartSound("FrostAura/aura", 22242, CHANF_LOOPING | ATTN_NONE);
+			owner.A_StartSound("FrostAura/aura", 3, CHANF_LOOPING | ATTN_NONE);
 			owner.A_AttachLight("FRAL1", DynamicLight.PulseLight, "C0C0FF", arad * 1.0, arad * 1.1,
 				flags: DYNAMICLIGHT.LF_NOSHADOWMAP | DYNAMICLIGHT.LF_ATTENUATE,
 				ofs: (0, 0, owner.height), param: 1.0);
@@ -447,7 +447,7 @@ class FrostAuraPower : Powerup
 		{
 			owner.A_RemoveLight("FRAL1");
 			owner.A_RemoveLight("FRAL2");
-			owner.A_StopSound(22242);
+			owner.A_StopSound(3);
 			let it = BlockThingsIterator.Create(owner, arad);
 			while (it.Next())
 			{

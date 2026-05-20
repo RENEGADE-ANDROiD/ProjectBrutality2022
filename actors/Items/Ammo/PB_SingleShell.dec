@@ -15,3 +15,7 @@ Actor PB_SingleShell : NewShell
 		Stop
 	}
 }
+
+Actor PB_SingleShellDragonsBreath : PB_SingleShell
+{
+}

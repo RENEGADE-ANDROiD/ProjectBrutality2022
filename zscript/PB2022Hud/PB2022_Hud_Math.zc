@@ -1,0 +1,95 @@
+// PB_Math helpers (HUD + staging weapon/projectile fold).
+class PB_Math
+{
+	static int PB_RandInt(int lo, int hi, int seed = 0)
+	{
+		int span = hi - lo + 1;
+		if (span <= 1)
+			return lo;
+		return lo + (abs(seed) % span);
+	}
+
+	static int PB_RandIntFromChars(String lo, String hi, int seed = 0)
+	{
+		int loC = lo.ByteAt(0);
+		int hiC = hi.ByteAt(0);
+		if (loC > hiC)
+		{
+			int t = loC;
+			loC = hiC;
+			hiC = t;
+		}
+		return PB_RandInt(loC, hiC, seed);
+	}
+
+	static Color PB_DesaturateColor(Color baseColor, double desaturate = 0.0, double brightness = 1.0)
+	{
+		double luma = (0.2126 * baseColor.r) + (0.7152 * baseColor.g) + (0.0722 * baseColor.b);
+		int desat_r = int(baseColor.r + (desaturate * (luma - baseColor.r)));
+		int desat_g = int(baseColor.g + (desaturate * (luma - baseColor.g)));
+		int desat_b = int(baseColor.b + (desaturate * (luma - baseColor.b)));
+		return Color(255, int(desat_r * brightness), int(desat_g * brightness), int(desat_b * brightness));
+	}
+
+	clearscope static Color PB_MultiplyColors(Color baseColor, Color mixColor)
+	{
+		int desat_r = int(baseColor.r * (mixColor.r / 255.));
+		int desat_g = int(baseColor.g * (mixColor.g / 255.));
+		int desat_b = int(baseColor.b * (mixColor.b / 255.));
+		return Color(255, desat_r, desat_g, desat_b);
+	}
+
+	clearscope static Color PB_MixWhiteWithColor(Color baseColor, double percent = 0.0, double brightness = 1.0)
+	{
+		int desat_r = int(baseColor.r + (percent * 255));
+		int desat_g = int(baseColor.g + (percent * 255));
+		int desat_b = int(baseColor.b + (percent * 255));
+		return Color(255, int(desat_r * brightness), int(desat_g * brightness), int(desat_b * brightness));
+	}
+
+	clearscope static vector2 GetLineNormal(int iSide, Line vLine)
+	{
+		vector2 lineNormal = (-vLine.delta.y, vLine.delta.x).Unit();
+		if (!iSide)
+			lineNormal *= -1;
+		return lineNormal;
+	}
+
+	clearscope static Vector3 VecFromAngles(double angle, double pitch, double mag = 1.)
+	{
+		double cosp = cos(pitch);
+		return (cos(angle) * cosp, sin(angle) * cosp, -sin(pitch)) * mag;
+	}
+
+	static Vector3 RelativeToGlobalCoords(Vector3 startpos, Vector3 viewAngles, Vector3 offset, bool isPosition = true)
+	{
+		Quat dir = Quat.FromAngles(viewAngles.x, viewAngles.y, viewAngles.z);
+		vector3 ofs = dir * (offset.x, -offset.y, offset.z);
+		if (isPosition)
+			return Level.Vec3Offset(startpos, ofs);
+		return ofs;
+	}
+
+	clearscope static double LinearMap(double val, double o_Min, double o_Max, double n_Min, double n_Max, bool clamp = false)
+	{
+		double result = (val - o_Min) * (n_Max - n_Min) / (o_Max - o_Min) + n_Min;
+		return clamp ? clamp(result, n_Min, n_Max) : result;
+	}
+
+	clearscope static Vector3 Vec3OffsetRelative(Actor other, Vector3 offs, bool noPortal = false, int flags = 0)
+	{
+		if (!other)
+			return (double.NaN, double.NaN, double.NaN);
+		double ang = other.angle;
+		double pit = other.pitch;
+		double rol = other.roll;
+		if (flags & 1)
+			ang = 0;
+		if (flags & 2)
+			pit = 0;
+		if (flags & 4)
+			rol = 0;
+		Quat dir = Quat.FromAngles(ang, pit, rol);
+		return Level.Vec3Offset(other.pos, dir * offs, noPortal);
+	}
+}

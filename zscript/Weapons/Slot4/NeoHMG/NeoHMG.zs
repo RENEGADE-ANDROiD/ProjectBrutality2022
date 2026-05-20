@@ -347,10 +347,9 @@ class PB_NeoHMG : PB_WeaponBase
 			HMG_fireBullet();
 			PB_WeaponRecoil(-1.1, frandom(-0.82, 0.82));
 			PB_ModifyOverheat(2);
-			PB_GunSmoke(0, 0, 0);
+			invoker.PB_NeoHMG_ApplyFireCosmetics();
 			PB_LowAmmoSoundWarning("hdmr");
 			PB_FireOffset();
-			A_FireCustomMissile("MinigunTracer", random(-3, 3), 0, -1, random(-3, 3));
 			A_QuakeEx(0, 1, 0, 12, 0, 10, "",
 				QF_WAVE | QF_RELATIVE | QF_SCALEDOWN,
 				0.6, 0, 0.2, 0, 0, 0.3, 0.40);
@@ -728,12 +727,12 @@ class PB_NeoHMG : PB_WeaponBase
 			TNT1 A 0 A_TakeInventory("Unloading", 1);
 			HG0R ABCD 1;
 			HG0R EFGH 1;
-			TNT1 A 0 A_StartSound("weapons/sgl/detach", 33);
+			TNT1 A 0 A_StartSound("weapons/sgl/detach", 5);
 			HG0R IJKL 1;
 			HG0R MNOOPP 1;
 			HG0R QQQ 1;
 			HG0R QRST 1;
-			TNT1 A 0 A_StartSound("weapon/HMG/Reload1", 34);
+			TNT1 A 0 A_StartSound("weapon/HMG/Reload1", 6);
 			TNT1 A 0 { PB_DumpMagToPool("HMGChamberAmmo", "NewClip", 1, "PB_HighCalUnloadProp"); }
 			TNT1 A 0 A_GiveInventory("HMGIsUnloaded", 1);
 			HG0R UVWXX 1;
@@ -756,7 +755,7 @@ class PB_NeoHMG : PB_WeaponBase
 		StartReloadHMG:
 			HG0R ABCD 1;
 			HG0R EFGH 1;
-			TNT1 A 0 A_StartSound("weapons/sgl/detach", 33);
+			TNT1 A 0 A_StartSound("weapons/sgl/detach", 5);
 			TNT1 A 0
 			{
 				if (CountInv("HMGChamberAmmo") < 1 && !CheckInventory("HMGIsUnloaded", 1))
@@ -767,7 +766,7 @@ class PB_NeoHMG : PB_WeaponBase
 			HG0R MNOOPP 1;
 			HG0R QQQ 1;
 			HG0R QRST 1;
-			TNT1 A 0 A_StartSound("weapon/HMG/Reload1", 34);
+			TNT1 A 0 A_StartSound("weapon/HMG/Reload1", 6);
 			TNT1 A 0 PB_AmmoIntoMag("HMGChamberAmmo", "NewClip", neohmgFullAmmo, 1);
 			HG0R UVWXX 1;
 			HG0R YYZ 1;

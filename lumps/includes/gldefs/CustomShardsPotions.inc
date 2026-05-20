@@ -1,5 +1,4 @@
-// Custom Shards & Potions (DarkShadow) — pulselights synced to updated addon reference (Downloads “GLDEFS (1)”).
-// PB_* object frames use BON1/BON2 (vanilla bonus sprites); upstream file used B0N* which does not match real lumps.
+// Custom Shards & Potions (DarkShadow) — pulselights + B0N1/B0N2 pickup sprites (sprites.wad fold).
 
 pulselight REDITEM
 {
@@ -73,40 +72,40 @@ pulselight ORANGEITEM
 
 object PB_ArmorBonus1
 {
-	frame BON2 { light GREENITEM }
+	frame B0N2 { light GREENITEM }
 }
 
 object PB_ArmorBonusBlue
 {
-	frame BON2 { light BLUEITEM }
+	frame B0N2 { light BLUEITEM }
 }
 
 object PB_ArmorBonusRed
 {
-	frame BON2 { light REDITEM }
+	frame B0N2 { light REDITEM }
 }
 
 object PB_ArmorBonusGold
 {
-	frame BON2 { light GOLDITEM }
+	frame B0N2 { light GOLDITEM }
 }
 
 object PB_HealthBonus1
 {
-	frame BON1 { light BLUEITEM }
+	frame B0N1 { light BLUEITEM }
 }
 
 object PB_HealthBonusGreen
 {
-	frame BON1 { light GREENITEM }
+	frame B0N1 { light GREENITEM }
 }
 
 object PB_HealthBonusRed
 {
-	frame BON1 { light REDITEM }
+	frame B0N1 { light REDITEM }
 }
 
 object PB_HealthBonusGold
 {
-	frame BON1 { light GOLDITEM }
+	frame B0N1 { light GOLDITEM }
 }

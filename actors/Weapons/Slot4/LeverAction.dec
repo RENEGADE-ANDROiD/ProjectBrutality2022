@@ -30,6 +30,17 @@ Inventory.maxamount 1
 
 Actor Select_LeverAction_357 : Inventory { Inventory.MaxAmount 1 }
 Actor Select_LeverAction_Marlin : Inventory { Inventory.MaxAmount 1 }
+Actor Select_LeverAction_HellMode : Inventory { Inventory.MaxAmount 1 }
+
+Actor LeverActionHellTier : Inventory
+{
+	Inventory.MaxAmount 2
+}
+
+Actor LeverActionHellMode : Inventory
+{
+	Inventory.MaxAmount 1
+}
 
 Actor JustFiredLeverAction: Inventory
 {
@@ -258,6 +269,7 @@ ACTOR LeverAction : PB_Weapon
 				PB_HandleCrosshair(76);
 			A_ClearOverlays(10,11);
 			}
+			TNT1 A 0 A_JumpIfInventory("Select_LeverAction_HellMode", 1, "LeverWheelHell")
 			TNT1 A 0 A_JumpIfInventory("Select_LeverAction_357", 1, "LeverW_To357")
 			TNT1 A 0 A_JumpIfInventory("Select_LeverAction_Marlin", 1, "LeverW_ToMarlin")
 			TNT1 A 0 A_JumpIfInventory("LeverActionMarlin",1,"Normal")
@@ -299,6 +311,23 @@ ACTOR LeverAction : PB_Weapon
 			TNT1 A 0 A_PlaySound("weapons/leveraction/loadshell",CHAN_AUTO)
 			LVR3 CDEFG 1 A_SetRoll(roll-0.2,SPF_INTERPOLATE)
 			Goto NormalReload
+
+		LeverWheelHell:
+			TNT1 A 0 A_TakeInventory("Select_LeverAction_HellMode", 10)
+			TNT1 A 0 A_JumpIfInventory("LeverActionHellTier", 1, "LeverHellToggle")
+			TNT1 A 0 A_PrintBold("$PB_LEVER_HELL_NEED_UPGRADE")
+			Goto Ready3
+		LeverHellToggle:
+			TNT1 A 0 A_JumpIfInventory("LeverActionHellMode", 1, "LeverHellOff")
+			TNT1 A 0 A_GiveInventory("LeverActionHellMode", 1)
+			TNT1 A 0 A_PlaySound("menu/choose", CHAN_AUTO)
+			TNT1 A 0 A_Print("$PB_LEVER_HELL_MODE_ON")
+			Goto Ready3
+		LeverHellOff:
+			TNT1 A 0 A_TakeInventory("LeverActionHellMode", 10)
+			TNT1 A 0 A_PlaySound("menu/choose", CHAN_AUTO)
+			TNT1 A 0 A_Print("$PB_LEVER_HELL_MODE_OFF")
+			Goto Ready3
 
 		Deselect:
 			TNT1 A 0 {
@@ -371,26 +400,27 @@ ACTOR LeverAction : PB_Weapon
 			TNT1 A 0 A_JumpIfInventory("LeverActionChamberEmpty", 1, "Pump")
 			TNT1 A 0
 			TNT1 A 0 A_GiveInventory ("LeverActionChamberEmpty",1)
+			TNT1 A 0 A_JumpIfInventory("LeverActionHellMode", 1, "FireLeverHellEntry")
 			LVR2 F 1 BRIGHT {
 				if(GetCvar("PB_alttracer") >=1) {
 					A_RailAttack(0, 0, 0, none,none, RGF_SILENT|RGF_NOPIERCING|RGF_EXPLICITANGLE, 0, none,0.1,0.1,700,0,1,1.0,"Tracer_Trail",-6,0,0);
 
 					if (CountInv("LeverActionMarlin") == 1) {
-						A_FireBullets(0.1, 0.1, -1, 99, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
-						A_StartSound("weapons/leveraction/magfire", 11, CHANF_DEFAULT, 1.0);
+						A_FireBullets(0.1, 0.1, -1, 46, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_StartSound("weapons/leveraction/magfire", 4, CHANF_DEFAULT, 1.0);
 					}
 					else {
-						A_FireBullets(0.1, 0.1, -1, 50, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 42, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_PlaySoundeX("weapons/leveraction/fire", "Weapon");
 					}
 				}
 				else {
 					if (CountInv("LeverActionMarlin") == 1) {
-						A_FireBullets(0.1, 0.1, -1, 99, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
-						A_StartSound("weapons/leveraction/magfire", 11, CHANF_DEFAULT, 1.0);
+						A_FireBullets(0.1, 0.1, -1, 46, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_StartSound("weapons/leveraction/magfire", 4, CHANF_DEFAULT, 1.0);
 					}
 					else {
-						A_FireBullets(0.1, 0.1, -1, 50, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 42, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_PlaySoundeX("weapons/leveraction/fire", "Weapon");
 					}
 				}
@@ -404,6 +434,56 @@ ACTOR LeverAction : PB_Weapon
 				A_ZoomFactor(0.98);
 				PB_WeaponRecoil(-1.83,+0.75);
 			}
+			LVR2 G 1 BRIGHT {
+				A_ZoomFactor(0.99);
+				PB_WeaponRecoil(-1.83,+0.75);
+			}
+			LVR2 H 1 {
+				A_ZoomFactor(1.0);
+				A_FireCustomMissile("EmptyBrassPistol",0,0,4,-8);
+			}
+			LVR2 IJKL 1
+			LVRA A 1
+			TNT1 A 0 {
+				A_Takeinventory("Zoomed",1);
+				A_Takeinventory("ADSmode",1);
+			}
+			Goto Pump
+
+		FireLeverHellEntry:
+			TNT1 A 0 A_JumpIfInventory("LeverActionHellTier", 2, "FireLeverHellBullet2")
+		FireLeverHellBullet1:
+			LVR2 F 1 BRIGHT {
+				A_Giveinventory("HasIncendiaryWeapon",1);
+				A_FireCustomMissile("Hellbullet", 0, 0, 0, 0, 0, random(-1,1));
+				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+				A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
+				A_PlaySoundEx("HRFire", "Weapon");
+				A_Takeinventory("LeverActionAmmo",1);
+				A_AlertMonsters;
+				A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
+				A_Giveinventory("JustFiredLeverAction",20);
+				A_GunFlash;
+				A_ZoomFactor(0.98);
+				PB_WeaponRecoil(-1.83,+0.75);
+			}
+			Goto FireLeverHellJoin
+		FireLeverHellBullet2:
+			LVR2 F 1 BRIGHT {
+				A_Takeinventory("HasIncendiaryWeapon",1);
+				A_FireCustomMissile("Hellbullet2", 0, 0, 0, 0, 0, random(-1,1));
+				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+				A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
+				A_PlaySoundEx("8FGGFIRE", "Weapon");
+				A_Takeinventory("LeverActionAmmo",1);
+				A_AlertMonsters;
+				A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
+				A_Giveinventory("JustFiredLeverAction",20);
+				A_GunFlash;
+				A_ZoomFactor(0.98);
+				PB_WeaponRecoil(-1.83,+0.75);
+			}
+		FireLeverHellJoin:
 			LVR2 G 1 BRIGHT {
 				A_ZoomFactor(0.99);
 				PB_WeaponRecoil(-1.83,+0.75);
@@ -435,25 +515,26 @@ ACTOR LeverAction : PB_Weapon
 			TNT1 A 0 A_JumpIfInventory("LeverActionWasEmpty", 1, "Pump")
 			TNT1 A 0 A_JumpIfInventory("LeverActionChamberEmpty", 1, "Pump")
 			TNT1 A 0 A_GiveInventory ("LeverActionChamberEmpty",1)
+			TNT1 A 0 A_JumpIfInventory("LeverActionHellMode", 1, "Fire2LeverHellEntry")
 			LVR3 R 1 BRIGHT {
 				if(GetCvar("PB_alttracer") >=1) {
 					A_RailAttack(0, 0, 0, none,none, RGF_SILENT|RGF_NOPIERCING|RGF_EXPLICITANGLE, 0, none,0.1,0.1,700,0,1,1.0,"Tracer_Trail",-6,0,0);
 					if (CountInv("LeverActionMarlin") == 1) {
-						A_FireBullets(0.1, 0.1, -1, 99, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
-						A_StartSound("weapons/leveraction/magfire", 11, CHANF_DEFAULT, 1.0);
+						A_FireBullets(0.1, 0.1, -1, 46, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_StartSound("weapons/leveraction/magfire", 4, CHANF_DEFAULT, 1.0);
 					}
 					else {
-						A_FireBullets(0.1, 0.1, -1, 50, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 42, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_PlaySoundeX("weapons/leveraction/fire", "Weapon");
 					}
 				}
 				else {
 					if (CountInv("LeverActionMarlin") == 1) {
-						A_FireBullets(0.1, 0.1, -1, 99, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
-						A_StartSound("weapons/leveraction/magfire", 11, CHANF_DEFAULT, 1.0);
+						A_FireBullets(0.1, 0.1, -1, 46, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_StartSound("weapons/leveraction/magfire", 4, CHANF_DEFAULT, 1.0);
 					}
 					else {
-						A_FireBullets(0.1, 0.1, -1, 50, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
+						A_FireBullets(0.1, 0.1, -1, 42, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -2, 0);
 						A_PlaySoundeX("weapons/leveraction/fire", "Weapon");
 					}
 				}
@@ -467,6 +548,70 @@ ACTOR LeverAction : PB_Weapon
 				A_ZoomFactor(1.48);
 				PB_WeaponRecoil(-1.75,+0.50);
 			}
+			LVR3 S 1 BRIGHT {
+				A_ZoomFactor(1.49);
+				PB_WeaponRecoil(-1.75,+0.50);
+			}
+			LVR3 TU 1
+			LVR3 VWX 1
+			TNT1 A 0 {
+			if(GetCvar("pb_toggle_aim_hold")) {
+				if(!PressingAltfire() || JustReleased(BT_ALTATTACK)){
+					return state("Pump");
+				}
+
+				if (PressingFire() && PressingAltfire() && CountInv("LeverActionAmmo") > 0){
+						return state("Pump2");
+				}
+
+
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
+
+			}
+			else {
+				if (PressingFire() && CountInv("LeverActionAmmo") > 0){
+					return state("Pump2");
+				}
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			}
+			return state("");
+		}
+			Goto Pump2
+
+		Fire2LeverHellEntry:
+			TNT1 A 0 A_JumpIfInventory("LeverActionHellTier", 2, "Fire2LeverHellBullet2")
+		Fire2LeverHellBullet1:
+			LVR3 R 1 BRIGHT {
+				A_Giveinventory("HasIncendiaryWeapon",1);
+				A_FireCustomMissile("Hellbullet", 0, 0, 0, 0, 0, random(-1,1));
+				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+				A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
+				A_PlaySoundEx("HRFire", "Weapon");
+				A_Takeinventory("LeverActionAmmo",1);
+				A_AlertMonsters;
+				A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
+				A_Giveinventory("JustFiredLeverAction",20);
+				A_GunFlash;
+				A_ZoomFactor(1.48);
+				PB_WeaponRecoil(-1.75,+0.50);
+			}
+			Goto Fire2LeverHellJoin
+		Fire2LeverHellBullet2:
+			LVR3 R 1 BRIGHT {
+				A_Takeinventory("HasIncendiaryWeapon",1);
+				A_FireCustomMissile("Hellbullet2", 0, 0, 0, 0, 0, random(-1,1));
+				A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+				A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
+				A_PlaySoundEx("8FGGFIRE", "Weapon");
+				A_Takeinventory("LeverActionAmmo",1);
+				A_AlertMonsters;
+				A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
+				A_Giveinventory("JustFiredLeverAction",20);
+				A_GunFlash;
+				A_ZoomFactor(1.48);
+				PB_WeaponRecoil(-1.75,+0.50);
+			}
+		Fire2LeverHellJoin:
 			LVR3 S 1 BRIGHT {
 				A_ZoomFactor(1.49);
 				PB_WeaponRecoil(-1.75,+0.50);

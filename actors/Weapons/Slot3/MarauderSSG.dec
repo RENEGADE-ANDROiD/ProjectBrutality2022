@@ -219,7 +219,8 @@ Actor MarauderSSG : PB_Weapon
 	Weapon.AmmoType "NewShell"
 	Weapon.AmmoType2 "MaraudSSGAmmo"
     +WEAPON.NOAUTOAIM
-	+WEAPON.NOAUTOFIRE
+    +WEAPON.NOAUTOFIRE
+    +WEAPON.CHEATNOTWEAPON
     +WEAPON.MELEEWEAPON
 	+FLOORCLIP
 	+DONTGIB
@@ -321,7 +322,7 @@ Actor MarauderSSG : PB_Weapon
 	      A_SetRoll(roll-1.5,SPF_INTERPOLATE);
 		  return A_DoPBWeaponAction;
 		  }
-	 TNT1 A 0 A_PlaySound("MSSOP", 51)
+	 TNT1 A 0 A_PlaySound("MSSOP", 2)
 	 MSS2 E 1 {
 	      A_SetRoll(roll-0.5,SPF_INTERPOLATE);
 		  return A_DoPBWeaponAction;
@@ -354,7 +355,7 @@ Actor MarauderSSG : PB_Weapon
 	      A_SetRoll(roll+2.3,SPF_INTERPOLATE);
 		  return A_DoPBWeaponAction;
 		  }
-	 TNT1 A 0 A_PlaySound("MSSLD", 52)
+	 TNT1 A 0 A_PlaySound("MSSLD", 3)
 	 MSS2 E 1 {
 	      A_SetRoll(roll+2.1,SPF_INTERPOLATE);
 		  return A_DoPBWeaponAction;
@@ -815,15 +816,15 @@ Actor MarauderSSG : PB_Weapon
 		TNT1 A 0 A_JumpIf(GetCvar("pb_marauderssg_classicreload"), "ReloadClassic")
 		MSSG MNO 1
 		TNT1 A 0 {
-		     A_PlaySound("MSSOP", 51);
+		     A_PlaySound("MSSOP", 2);
 		     A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
 		     A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
 			 }
 		MSSG PQRSTUVWX 1
-		TNT1 A 0 A_PlaySound("MSSLD", 52)
+		TNT1 A 0 A_PlaySound("MSSLD", 3)
 		MSSG YZ 1
 		MSS2 ABCDEF 1
-		TNT1 A 0 A_PlaySound("MSSCL", 52)
+		TNT1 A 0 A_PlaySound("MSSCL", 3)
 		MSS2 GHIJKLMNOPQR 1
 		TNT1 A 0 {
 		     A_GiveInventory("MaraudSSGAmmo", 2);
@@ -833,14 +834,14 @@ Actor MarauderSSG : PB_Weapon
 	ReloadClassic:
 		MSS3 JKLM 1
 		TNT1 A 0 {
-		     A_PlaySound("MSSOP", 51);
+		     A_PlaySound("MSSOP", 2);
 		     A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
 		     A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
 			 }
 		MSS3 NOPQRSTUVWXYZ 1
-		TNT1 A 0 A_PlaySound("MSSLD", 52)
+		TNT1 A 0 A_PlaySound("MSSLD", 3)
 		MSS6 ABCDEF 1
-		TNT1 A 0 A_PlaySound("MSSCL", 52)
+		TNT1 A 0 A_PlaySound("MSSCL", 3)
 		MSS6 GHIJKLMNOPQ 1
 		TNT1 A 0 {
 		A_GiveInventory("MaraudSSGAmmo", 2);
@@ -852,15 +853,15 @@ Actor MarauderSSG : PB_Weapon
 		TNT1 A 0 A_JumpIf(GetCvar("pb_marauderssg_classicreload"), "ReloadOneClassic")
 		MSSG MNO 1
 		TNT1 A 0 {
-		A_PlaySound("MSSOP", 51);
+		A_PlaySound("MSSOP", 2);
 		A_FireCustomMissile("ShotCaseSpawn",0,0,-5,-21);
 		}
 		MSSG PQR 1
 		MSS2 STUVWX 1
-		TNT1 A 0 A_PlaySound("MSSLD", 52)
+		TNT1 A 0 A_PlaySound("MSSLD", 3)
 		MSSG YZ 1
 		MSS2 ABCDEF 1
-		TNT1 A 0 A_PlaySound("MSSCL", 52)
+		TNT1 A 0 A_PlaySound("MSSCL", 3)
 		MSS2 GHIJKLMNOPQR 1
 		TNT1 A 0 {
 		A_GiveInventory("MaraudSSGAmmo", 1);
@@ -870,14 +871,14 @@ Actor MarauderSSG : PB_Weapon
 	ReloadClassic:
 		MSS3 JKLM 1
 		TNT1 A 0 {
-		A_PlaySound("MSSOP", 51);
+		A_PlaySound("MSSOP", 2);
 		A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
 		A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
 		}
 		MSS3 NOPQRSTUVWXYZ 1
-		TNT1 A 0 A_PlaySound("MSSLD", 52)
+		TNT1 A 0 A_PlaySound("MSSLD", 3)
 		MSS5 ABCDEF 1
-		TNT1 A 0 A_PlaySound("MSSCL", 52)
+		TNT1 A 0 A_PlaySound("MSSCL", 3)
 		MSS5 GHIJKLMNOP 1
 		TNT1 A 0 {
 		A_GiveInventory("MaraudSSGAmmo", 2);
@@ -887,15 +888,15 @@ Actor MarauderSSG : PB_Weapon
 	ReloadOneClassic:
 		MSS3 JKLM 1
 		TNT1 A 0 {
-		A_PlaySound("MSSOP", 51);
+		A_PlaySound("MSSOP", 2);
 		A_FireCustomMissile("ShotCaseSpawn",0,0,-10);
 		}
 		MSS3 NO 1
 		MSS5 RSTUVWXYZ 1
 		MSS6 ABC 1
-		TNT1 A 0 A_PlaySound("MSSLD", 52)
+		TNT1 A 0 A_PlaySound("MSSLD", 3)
 		MSS5 ABCDEF 1
-		TNT1 A 0 A_PlaySound("MSSCL", 52)
+		TNT1 A 0 A_PlaySound("MSSCL", 3)
 		MSS5 GHIJKLMNOP 1
 		TNT1 A 0 {
 		A_GiveInventory("MaraudSSGAmmo", 1);
@@ -936,12 +937,12 @@ Actor MarauderSSG : PB_Weapon
 			}
 		}
 		MSSG MNO 1
-		TNT1 A 0 A_PlaySound("MSSOP", 51)
+		TNT1 A 0 A_PlaySound("MSSOP", 2)
 		MSSG PQRSTUVWX 1
-		TNT1 A 0 A_PlaySound("MSSLD", 52)
+		TNT1 A 0 A_PlaySound("MSSLD", 3)
 		MSSG YZ 1
 		MSS2 ABCDEF 1
-		TNT1 A 0 A_PlaySound("MSSCL", 52)
+		TNT1 A 0 A_PlaySound("MSSCL", 3)
 		MSS2 GHIJKLMNOPQR 1
 		Goto MarauderShotgunReadyToFire
 

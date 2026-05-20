@@ -1,0 +1,142 @@
+// Simple Teleporter Effects v1.4 (tunbridgep) — map scan + TeleportDest hooks.
+
+class TeleporterEffects : StaticEventHandler
+{
+	const TELEPORT_SPECIAL = 70;
+	const EXIT_SPECIAL = 243;
+	const EXIT_SPECIAL_SECRET = 244;
+
+	const WALK_ACTIVATION = 1;
+	const MONSTER_ACTIVATION = 4;
+
+	// Spread the sector pass across tics so huge maps do not freeze on load.
+	const PB_ST_SECTORS_PER_TIC = 1024;
+
+	transient int pb_st_scanIndex;
+	transient bool pb_st_scanActive;
+
+	private bool IsPBTeleportDest(Actor mo)
+	{
+		if (!mo)
+			return false;
+		return mo is "TeleportDest"
+			|| mo is "BrutalTeleportDest"
+			|| mo is "BrutalTeleportDest2"
+			|| mo is "BrutalTeleportDest3";
+	}
+
+	private bool CollectTeleportLineFlags(Sector sect, out bool walk, out bool monster,
+		out bool exit, out bool usable)
+	{
+		walk = false;
+		monster = false;
+		exit = false;
+		usable = false;
+		bool found = false;
+
+		for (int j = 0; j < sect.lines.size(); j++)
+		{
+			Line ln = sect.lines[j];
+			int special = ln.Special;
+			if (special != TELEPORT_SPECIAL && special != EXIT_SPECIAL
+				&& special != EXIT_SPECIAL_SECRET)
+				continue;
+
+			int activation = ln.Activation;
+			if (activation != WALK_ACTIVATION && activation != MONSTER_ACTIVATION)
+				continue;
+
+			found = true;
+			walk = walk || activation == WALK_ACTIVATION;
+			monster = monster || activation == MONSTER_ACTIVATION;
+			exit = exit || special == EXIT_SPECIAL || special == EXIT_SPECIAL_SECRET;
+			usable = usable || special == TELEPORT_SPECIAL;
+		}
+
+		return found;
+	}
+
+	private void TryPlaceSectorFountain(Sector sect)
+	{
+		bool walk;
+		bool monster;
+		bool exit;
+		bool usable;
+
+		if (!CollectTeleportLineFlags(sect, walk, monster, exit, usable))
+			return;
+
+		vector2 center = sect.CenterSpot;
+		Sector centerSector = level.PointInSector(center);
+
+		if (centerSector == null || centerSector.Index() != sect.Index())
+		{
+			if (teleporter_debug)
+			{
+				Console.Printf("Sector #"..sect.Index()
+					.."'s midpoint is outside of sector. Skipping...");
+			}
+			else
+			{
+				Console.Printf("SimpleTeleporterEffects: Sector #"..sect.Index()
+					.." has teleporter lines but its centre point falls outside the sector; no effect will be placed. Enable teleporter_debug for details.");
+			}
+			return;
+		}
+
+		if ((monster && exit) || (walk && monster) || (usable && exit))
+			return;
+
+		if ((walk || monster) && (usable || exit))
+		{
+			let fountain = TeleporterEffect(Actor.Spawn("TeleporterEffect",
+				(center.x, center.y, 0)));
+			fountain.SetExit(exit);
+			fountain.SetMonster(monster);
+			if (teleporter_debug)
+			{
+				Console.Printf("Spawning fountain at "..center.x..", "..center.y
+					.." (exit: "..exit..", monster: "..monster..") in sector #"
+					..sect.Index());
+			}
+		}
+	}
+
+	override void WorldThingSpawned(WorldEvent e)
+	{
+		if (!IsPBTeleportDest(e.Thing))
+			return;
+
+		let pos = e.Thing.pos;
+		let fountain = TeleporterEffect(Actor.Spawn("TeleporterEffect",
+			(pos.x, pos.y, pos.z)));
+		fountain.SetDest(true);
+		if (teleporter_debug)
+			Console.Printf("Spawning fountain at "..pos.x..", "..pos.y.." (dest)");
+	}
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		if (e.IsReopen)
+			return;
+
+		pb_st_scanIndex = 0;
+		pb_st_scanActive = level.sectors.size() > 0;
+	}
+
+	override void WorldTick()
+	{
+		if (!pb_st_scanActive)
+			return;
+
+		int total = level.sectors.size();
+		int end = min(pb_st_scanIndex + PB_ST_SECTORS_PER_TIC, total);
+
+		for (int i = pb_st_scanIndex; i < end; i++)
+			TryPlaceSectorFountain(level.sectors[i]);
+
+		pb_st_scanIndex = end;
+		if (pb_st_scanIndex >= total)
+			pb_st_scanActive = false;
+	}
+}

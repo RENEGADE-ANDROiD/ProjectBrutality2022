@@ -167,7 +167,7 @@ ACTOR Hellsmith : Cyberdemon
 	HSMI A 0 A_JumpIf(health <= 4000,"Missile6")
     Goto See
   Missile3: //Pentagram Fire
-    HSMI L 6 {A_PlaySound("hellsmith/melee",1); A_FaceTarget;}
+    HSMI L 6 {A_PlaySound("hellsmith/melee", 1); A_FaceTarget;}
 	HSMI M 6 A_FaceTarget
 	HSMI N 12 bright
 	{
@@ -182,7 +182,7 @@ ACTOR Hellsmith : Cyberdemon
 		
   Missile4: //Charge
     HSMI G 35 {A_FaceTarget; A_SetInvulnerable; A_ChangeFlag("NOPAIN",1);}
-	HSMI H 4 {A_PlaySound("hellsmith/charge",1); A_SkullAttack(32); A_SpawnItemEx("HellsmithTrail",0,0,0,0,0,0);}
+	HSMI H 4 {A_PlaySound("hellsmith/charge", 1); A_SkullAttack(32); A_SpawnItemEx("HellsmithTrail",0,0,0,0,0,0);}
 	HSMI HHHHHHHHHHH 4 {A_SkullAttack(32); A_SpawnItemEx("HellsmithTrail",0,0,0,0,0,0);}
 	HSMI H 0 A_Stop
 	HSMI A 2 {A_UnsetInvulnerable; A_ChangeFlag("NOPAIN",0);}
@@ -205,11 +205,11 @@ ACTOR Hellsmith : Cyberdemon
 	HSMI A 0 A_JumpIf(health <= 4000,"Missile6")
 	Goto See
   Missile6: //Summon Hellspirit  
-    HSMI L 8 {A_KillChildren; A_PlaySound("hellsmith/melee",1); A_FaceTarget;}
+    HSMI L 8 {A_KillChildren; A_PlaySound("hellsmith/melee", 1); A_FaceTarget;}
 	HSMI M 8 
 	HSMI N 15
 	{
-	A_PlaySound("hellsmith/laugh4",1);
+	A_PlaySound("hellsmith/laugh4", 1);
 	A_CustomMissile("HSPentagramSpawner",16,0,0);
 	A_CustomMissile("ChargeLightning",16,0,0);
 	A_CustomMissile("ChargeLightning",16,0,72);
@@ -226,13 +226,13 @@ ACTOR Hellsmith : Cyberdemon
 	Goto See
   Melee:
     HSMI L 0 A_Jump(128,"Missile3")
-    HSMI L 6 {A_FaceTarget; A_PlaySound("hellsmith/melee",1);}
+    HSMI L 6 {A_FaceTarget; A_PlaySound("hellsmith/melee", 1);}
 	HSMI M 6 A_FaceTarget
 	HSMI N 12 A_CustomMeleeAttack(random(1,10)*50,"hellsmith/hit","hellsmith/miss","wepnormal",0)
 	Goto See
   Pain:
     HSMI O 0 A_JumpIfHealthLower(4000,"Pain2")
-    HSMI O 10 A_PlaySound("hellsmith/laugh",1)
+    HSMI O 10 A_PlaySound("hellsmith/laugh", 1)
     Goto See
   Pain2:
     HSMI O 10 A_Pain	
@@ -307,7 +307,7 @@ ACTOR HSFireSpirit : HellSmith
     HSMI CDD 3 A_Chase
     Loop
   Missile: //Pentagram Fire
-    HSMI L 6 {A_PlaySound("hellsmith/melee",1); A_FaceTarget;}
+    HSMI L 6 {A_PlaySound("hellsmith/melee", 1); A_FaceTarget;}
 	HSMI M 6 {A_FaceTarget; A_TakeInventory("HSAttackToken",1);}
 	HSMI N 15
 	{
@@ -328,7 +328,7 @@ ACTOR HSFireSpirit : HellSmith
 	}
 	Goto See
   Melee:
-    HSMI L 6 {A_FaceTarget; A_PlaySound("hellsmith/melee",1);}
+    HSMI L 6 {A_FaceTarget; A_PlaySound("hellsmith/melee", 1);}
 	HSMI M 6 A_FaceTarget
 	HSMI N 12 A_CustomMeleeAttack(random(1,10)*20,"hellsmith/hit","hellsmith/miss","wepnormal",0)
 	Goto See
@@ -490,7 +490,7 @@ ACTOR HSSoulSpirit : HSFireSpirit
     Loop  
   Missile: //Charge
     HSMI G 35 {A_FaceTarget; A_TakeInventory("HSAttackToken",1);}
-	HSMI H 4 {A_PlaySound("hellsmith/charge",1); A_FaceTarget; A_SkullAttack(32); A_SpawnItemEx("HellsmithTrail2",0,0,0,0,0,0);}
+	HSMI H 4 {A_PlaySound("hellsmith/charge", 1); A_FaceTarget; A_SkullAttack(32); A_SpawnItemEx("HellsmithTrail2",0,0,0,0,0,0);}
 	HSMI HHHHHHHHHHH 4 {A_SpawnItemEx("HellsmithTrail2",0,0,0,0,0,0);}	
 	HSMI H 0
 	{

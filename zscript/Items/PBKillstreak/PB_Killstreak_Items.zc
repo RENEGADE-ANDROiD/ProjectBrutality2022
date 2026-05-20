@@ -29,8 +29,8 @@ class PB_KillstreakFlare : Inventory
 			if (plr && !plr.FindInventory("PB_KillstreakMode"))
 			{
 				plr.GiveInventory("PB_KillstreakMode", 1);
-				if (PB_KillstreakMessageHandler.PB_BigmsgOn())
-					PB_KillstreakMessageHandler.PB_KsPlainMsg(
+				if (KSHUDMessageHandler.BigmsgOn())
+					KSHUDMessageHandler.PlainMsg(
 						plr.PlayerNumber(), "BIGFONT", "Kill streak active!", (240, 120), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
 						(0.2, 3, 0.5), 0, 11, BaseStatusBar.HUDMSGLayer_OverHUD);
 				else plr.A_Print("Kill streak active!", 2.0);
@@ -64,7 +64,7 @@ class PB_KillStreakPowerUp : Inventory
 		let plr = PlayerPawn(Owner);
 		String className, msg;
 		bool hadPending;
-		PB_KillstreakMessageHandler.KS_TakePending(plr, className, msg, hadPending);
+		KSHUDMessageHandler.KS_TakePending(plr, className, msg, hadPending);
 		if (!hadPending)
 			PBRollReward(plr, className, msg);
 		if (className == "")
@@ -79,7 +79,7 @@ class PB_KillStreakPowerUp : Inventory
 			GrantKillstreakBackpack(plr);
 		else
 			plr.GiveInventory(className, 1);
-		if (!PB_KillstreakMessageHandler.PB_BigmsgOn())
+		if (!KSHUDMessageHandler.BigmsgOn())
 			plr.A_Print(msg, 2.0);
 		return true;
 	}

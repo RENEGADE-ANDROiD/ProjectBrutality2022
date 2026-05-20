@@ -126,7 +126,7 @@ class PB_XPRewardsHandler : EventHandler
 		return cv && cv.GetBool();
 	}
 
-	static bool AmmoTotalFloatersEnabled(PlayerPawn plr)
+	static bool PB_FloatingHudExtrasEnabled(PlayerPawn plr)
 	{
 		if (!plr || !plr.player)
 			return false;
@@ -176,7 +176,7 @@ class PB_XPRewardsHandler : EventHandler
 				h.HudQueueRankFloater(plr.PlayerNumber(), newRank);
 		}
 		plr.A_SetBlend("Gold", 0.2, 16);
-		plr.A_StartSound("misc/trkey", CHAN_7, CHANF_OVERLAP, 0.75, ATTN_NONE);
+		plr.A_StartSound("misc/trkey", CHAN_6, CHANF_OVERLAP, 0.75, ATTN_NONE);
 	}
 
 	override void WorldLoaded(WorldEvent e)
@@ -256,7 +256,10 @@ class PB_XPRewardsHandler : EventHandler
 		SpawnXPFloaters(killer, t, add);
 		int newRank = ApplyRankFromXP(killer);
 		if (newRank >= 1)
+		{
 			SpawnRankFloaters(killer, newRank);
+			PB_Achievements.OnRankReached(newRank);
+		}
 	}
 
 	static void DoSpin(PlayerPawn plr)

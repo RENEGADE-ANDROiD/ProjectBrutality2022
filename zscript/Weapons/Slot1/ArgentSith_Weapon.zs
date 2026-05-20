@@ -298,6 +298,7 @@ class PB_ArgentSith : PB_WeaponBase
 				A_StopSound(CHAN_WEAPON);
 				A_StopSound(CHAN_VOICE);
 				A_StopSound(CHAN_6);
+				A_StopSound(CHAN_5);
 				A_StopSound(CHAN_7);
 			}
 			TNT1 A 0 A_JumpIfInventory("CantFire", 1, "FailOverlay");
@@ -355,7 +356,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVAT O 1 Bright;
 		BVAT P 1 Bright;
 		BVAT Q 1 Bright;
-		BVT1 E 0 Bright A_StartSound("ArgentBarrier/On", 7);
+		BVT1 E 0 Bright A_StartSound("ArgentBarrier/On", CHAN_5);
 		BVT1 E 1 Bright;
 		BVT1 D 1 Bright;
 		BVT1 C 1 Bright;
@@ -369,7 +370,7 @@ class PB_ArgentSith : PB_WeaponBase
 		Goto AltEnd;
 
 	AltHoldContinue:
-		BVT1 A 1 Bright A_StartSound("ArgentBarrier/Loop", 7);
+		BVT1 A 1 Bright A_StartSound("ArgentBarrier/Loop", CHAN_5);
 		BVT1 A 1 Bright A_FireCustomMissile("KatanaShieldSpawnerYEET2", 0, 0, 0, -35);
 		BVT1 A 1 Bright A_FireCustomMissile("KatanaShieldSpawnerYEET2", 0, 0, 0, -35);
 		BVT1 A 1 Bright A_FireCustomMissile("KatanaShieldSpawnerYEET2", 0, 0, 0, -35);
@@ -385,7 +386,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVT1 C 1 Bright A_ReFire;
 		BVT1 D 1 Bright A_ReFire;
 		BVT1 E 1 Bright A_ReFire;
-		BVT1 E 0 Bright A_StartSound("ArgentBarrier/Off", 7);
+		BVT1 E 0 Bright A_StartSound("ArgentBarrier/Off", CHAN_5);
 		BVAT Q 1 Bright A_ReFire;
 		BVAT P 1 Bright A_ReFire;
 		BVAT O 1 Bright A_ReFire;
@@ -404,12 +405,12 @@ class PB_ArgentSith : PB_WeaponBase
 	ActivateWeaponSpecial:
 		TNT1 A 0 A_JumpIfInventory("ArgentSlashModeToken", 1, "DisableSlashMode");
 		TNT1 A 0 A_Print("\ctAlt fire:\c- \chSlash \c-mode");
-		TNT1 A 0 A_StartSound("CybKatana/SwitchMode",7);
+		TNT1 A 0 A_StartSound("CybKatana/SwitchMode",0);
 		TNT1 A 0 A_GiveInventory("ArgentSlashModeToken", 1); //include the token give at some point
 		Goto KatanaReadyToCut;
 
 	DisableSlashMode:
-		TNT1 A 0 A_StartSound("CybKatana/SwitchMode",7);
+		TNT1 A 0 A_StartSound("CybKatana/SwitchMode",0);
 		TNT1 A 0 A_TakeInventory("ArgentSlashModeToken", 1); //take the token at some point
 		TNT1 A 0 A_Print("\ctAlt fire:\c- \cdShield \c-mode");
 		Goto KatanaReadyToCut;
@@ -423,7 +424,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVAT A 0 A_JumpIfInventory("ArgentSithSwitchHands", 1, "SpecialCutAlt");
 		BVAT A 1 BRIGHT;
 		BVAT C 1 BRIGHT;
-		BVAT D 1 BRIGHT A_StartSound("ArgKatana/Swing",7);
+		BVAT D 1 BRIGHT A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
 		BVAT E 1 BRIGHT A_FireCustomMissile("SwordArgentSlash", 0, 1, 0, -5);
 		BVAT F 1 BRIGHT A_TakeInventory("PB_DTech",5);
 		BVAT G 1 BRIGHT;
@@ -443,7 +444,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVT2 A 1 BRIGHT;
 		BVT2 B 1 BRIGHT;
 		BVT2 C 1 BRIGHT;
-		BVT2 D 1 BRIGHT A_StartSound("ArgKatana/Swing",7);
+		BVT2 D 1 BRIGHT A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
 		BVT2 E 1 BRIGHT A_FireCustomMissile("SwordArgentSlashAlt", 0, 1, 0, -5);
 		BVT2 F 1 BRIGHT A_TakeInventory("PB_DTech",5);
 		BVT2 G 1 BRIGHT;

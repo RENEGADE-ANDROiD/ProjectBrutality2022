@@ -137,7 +137,7 @@ ACTOR ArcOfDeath_Fake : PB_Weapon
 	TNT1 A 0 A_TakeInventory("PowerChargeStorm", 200)
 	TNT1 A 0 A_FireCustomMissile("ShakeYourAssQuad", 0, 0, 0, 0)
 
-	TNT1 A 0 A_PlaySound("LIGHTNA2", 7) 
+	TNT1 A 0 A_PlaySound("LIGHTNA2", 0) 
 	TNT1 A 0 A_PlaySound("SPELLCL1", CHAN_VOICE) 		
 	TNT1 A 0 A_PlaySound("PZAPFIRE", CHAN_WEAPON,2)
 
@@ -159,7 +159,7 @@ ACTOR ArcOfDeath_Fake : PB_Weapon
 		TNT1 A 0 A_TakeInventory("PowerChargeStorm", 200)
 		TNT1 A 0 A_FireCustomMissile("ShakeYourAssQuad", 0, 0, 0, 0)
 
-		TNT1 A 0 A_PlaySound("LIGHTNA2", 7) 
+		TNT1 A 0 A_PlaySound("LIGHTNA2", 0) 
 		TNT1 A 0 A_PlaySound("SPELLCL1", CHAN_VOICE) 		
 		TNT1 A 0 A_PlaySound("PZAPFIRE", CHAN_WEAPON,2)
 
@@ -2615,7 +2615,7 @@ Actor ElectroBomb2
    States
    {
    Spawn:
-	  TNT1 A 0 A_PlaySoundEx("electogun/fly", 7, 1)
+	  TNT1 A 0 A_PlaySoundEx("electogun/fly", 5, 1)
       NKON ABCDE 1 Bright
 	  Loop
    Death:

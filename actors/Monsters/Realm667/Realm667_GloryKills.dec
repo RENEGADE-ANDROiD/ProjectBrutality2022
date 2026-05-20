@@ -87,6 +87,7 @@ ACTOR PB_Realm667_FusionCyberImpGK : PB_Realm667_FusionCyberImp Replaces PB_Real
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		// UCIM GK forces imp Eld jumps; Realm667_FP1 NATT strip is zombieman-shaped.
 		TNT1 A 0 A_Jump(255, "CFF1","CFF1","CFF2","CFF2","CFF3","CFF3")
 	CFF1:
@@ -183,6 +184,7 @@ ACTOR PB_Realm667_VulgarGK : PB_Realm667_Vulgar Replaces PB_Realm667_Vulgar
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		// Vulgar GK reroutes third branch to imp Eld; Realm667_FP2 uses NZ0D zombie art.
 		TNT1 A 0 A_Jump(255, "VGF1","VGF1","VGF2","VGF2","VGF3")
 	VGF1:
@@ -264,6 +266,7 @@ ACTOR PB_Realm667_BehemothGK : PB_Realm667_Behemoth Replaces PB_Realm667_Behemot
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		// Behemoth GK keeps manc-shaped fatso tokens; Realm667_FP3 tries 49AN imp art.
 		TNT1 A 0 A_Jump(256, "BHF1","BHF1","BHF2","BHF2")
 	BHF1:
@@ -341,6 +344,7 @@ ACTOR PB_Realm667_BabyCacoGK : PB_Realm667_BabyCaco Replaces PB_Realm667_BabyCac
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		// Baby caco skips CacoFatality3/4 Hunger strips (same as stock caco GK).
 		TNT1 A 0 A_Jump(256, "BCF1","BCF1","BCF2")
 	BCF1:
@@ -415,6 +419,7 @@ ACTOR PB_Realm667_SlayerKnightGK : PB_Realm667_SlayerKnight Replaces PB_Realm667
 		TNT1 A 0 A_Pain
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		TNT1 A 0 A_Jump(256, "SKF1","SKF1","SKF2","SKF2")
 	SKF1:
 		TNT1 A 0 A_GiveToTarget("BaronFatality3",1)
@@ -485,6 +490,7 @@ ACTOR PB_Realm667_DroneGK : PB_Realm667_Drone Replaces PB_Realm667_Drone
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		// Realm drone GK uses revenant Eld pool only — drop satyr/KOKO Hunger branches.
 		TNT1 A 0 A_Jump(256, "DGF1","DGF1","DGF2","DGF2","DGF3")
 	DGF1:
@@ -550,6 +556,7 @@ ACTOR PB_Realm667_BlotGK : PB_Realm667_Blot Replaces PB_Realm667_Blot
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,4,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		// Tiny blob GK: GoFatality only — no zomb-compatible FPS puppet available.
 		Stop
 	}
@@ -618,6 +625,7 @@ ACTOR PB_VenorGK : PB_Venor replaces PB_Venor
 		TNT1 A 0 A_Pain
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		TNT1 A 0 A_Jump(256, "VNF1","VNF1","VNF2","VNF2")
 	VNF1:
 		TNT1 A 0 A_GiveToTarget("BaronFatality3",1)
@@ -693,6 +701,7 @@ ACTOR PB_Realm667_BloodGhostGK : PB_Realm667_BloodGhost Replaces PB_Realm667_Blo
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		TNT1 A 0 A_Jump(256, "BGF1","BGF1","BGF2","BGF2","BGF3")
 	BGF1:
 		TNT1 A 0 A_GiveToTarget("RevenantFatality",1)
@@ -768,6 +777,7 @@ ACTOR PB_Realm667_BloodSkullGK : PB_Realm667_BloodSkull Replaces PB_Realm667_Blo
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height/2,random(0,8),0,random(0,8),random(0,360))
 		TNT1 A 0 A_GiveToTarget("GoFatality",1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		Stop
 	}
 }

@@ -3,6 +3,8 @@
 
 #define MAX_VOLUME 127
 
+// SUPERSEDED: zscript/GloryKills/PB_BloodPunchReadyHandler.zc (removed from LOADACS.txt).
+
 // Blood Punch charge-ready sting (Glory Kills HUD inventory).
 
 script "BloodPunchCheck" ENTER

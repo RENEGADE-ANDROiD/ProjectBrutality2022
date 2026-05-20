@@ -71,8 +71,9 @@ Health_Med				"Sounds/SOULCUBE/HealthMed.ogg"
 
 LOWHEALTH	"sounds/Player/LowHealth.ogg"
 LOWARMOR		"sounds/Player/LowHealth.ogg"
-Equip_flameready		"sounds/Player/Beep.ogg"
-Equip_Iceready		"sounds/Player/Beep.ogg"
+Equip_flameready		"sounds/FlameBelch/flamebelchready.ogg"
+Equip_Iceready		"sounds/FlameBelch/icebombready.ogg"
+Equip_shieldsawready	"sounds/Player/Beep.ogg"
 AmmoBig			"sounds/Pickups/AmmoBigger.ogg"
 AmmoSmall			"sounds/Pickups/Ammo.ogg"
 Beep				"sounds/Player/Beep.ogg"
@@ -82,6 +83,8 @@ Bloodpunch				"sounds/Glorykill/fistblod.ogg"
 BpunchReady				"sounds/Glorykill/BPCharge.ogg"
 
 Equip_notready				"sounds/FlameBelch/equipnotready.ogg"
+Equip_Activate				"sounds/FlameBelch/cannonlaunch.ogg"
+IceBomb/icebombfire			"sounds/IceBomb/icebombfire.ogg"
 Flame_belch1				"sounds/FlameBelch/flamebelch1.ogg"
 Flame_belch2				"sounds/FlameBelch/flamebelch2.ogg"
 Flame_belch3				"sounds/FlameBelch/flamebelch3.ogg"
@@ -173,6 +176,8 @@ $limit Eternal/Crucible/Return 0
 
 
 // GZDoom auto-loads every `SNDINFO*` lump; no include line needed.
+// Weapon fire tails (PB_Staging): SNDINFO.Atmosphere_Exterior + SNDINFO.Atmosphere_Interior
+// (weapons/atmo/*) with audio under sounds/combat/Atmosphere/ — used by PB_DynamicTail.
 // The following four logical names collided with identical definitions in
 // NOTE: the original MP add-on file redefines ZPTank/{see,pain,death,Run,explode}
 // twice within itself (once for Zombieplasmatank, once for Zombietankelite).
@@ -824,6 +829,17 @@ DSMADTH6 DSMADTH6
 DSMADTH7 DSMADTH7
 DSMADTH8 DSMADTH8
 IGOTSAW IGOTSAW
+// Middle-finger taunt voice (PB Staging Doomguy lines; separate from gore FUCK* pool below)
+$random PB_FLIPOFF { PB_FLIPOFF1 PB_FLIPOFF2 PB_FLIPOFF3 PB_FLIPOFF4 PB_FLIPOFF5 PB_FLIPOFF6 PB_FLIPOFF7 }
+PB_FLIPOFF1 "sounds/Doomguy and Marines/DOOMGUY/Voice/FUCK1.ogg"
+PB_FLIPOFF2 "sounds/Doomguy and Marines/DOOMGUY/Voice/FUCK2.ogg"
+PB_FLIPOFF3 "sounds/Doomguy and Marines/DOOMGUY/Voice/FUCK3.ogg"
+PB_FLIPOFF4 "sounds/Doomguy and Marines/DOOMGUY/Voice/FUCK4.ogg"
+PB_FLIPOFF5 "sounds/Doomguy and Marines/DOOMGUY/Voice/FUCK5.ogg"
+PB_FLIPOFF6 "sounds/Doomguy and Marines/DOOMGUY/Voice/FUCK6.ogg"
+PB_FLIPOFF7 "sounds/Doomguy and Marines/DOOMGUY/Voice/FUCK7.ogg"
+$limit PB_FLIPOFF 1
+
 // Offend Sound
 $random FUCK { FUCK1 FUCK2 FUCK3 FUCK4 FUCK5 FUCK6 }
 FUCK1 "sounds/Glorykill/fistblod.ogg"
@@ -4145,7 +4161,6 @@ MSSCL2 "sounds/combat/weapons/Peacekeeper/MSSCL2.ogg"
 MSSCL3 "sounds/combat/weapons/Peacekeeper/MSSCL3.ogg"
 $random MSSFR { MSSFR1 MSSFR2 MSSFR3 MSSFR4 MSSFR5 MSSFR6 }
 $random MSSCL { MSSCL1 MSSCL2 MSSCL3 }
-$volume MSSFR 2.0
 MSSOP "sounds/combat/weapons/Peacekeeper/MSSOP.ogg"
 MSSLD "sounds/combat/weapons/Peacekeeper/MSSLD.ogg"
 BFGREADY "sounds/combat/weapons/CyberdemonRL/BFGREADY.ogg"
@@ -5198,14 +5213,14 @@ $pitchset weapons/golide/fire 0.95 1.05
 $pitchset weapons/golide/pump 0.9 1.1
 $volume weapons/golide/drumpickup 0.9
 
-items/bonus1				HBONUS1
-items/bonus2				ABONUS1
-items/bonus3				HBONUS2
-items/bonus4				ABONUS2
-items/bonus5				HBONUS3
-items/bonus6				ABONUS3
-items/bonus7				HBONUS4
-items/bonus8				ABONUS4
+items/bonus1				"sounds/items/csp/HBONUS1.ogg"
+items/bonus2				"sounds/items/csp/ABONUS1.ogg"
+items/bonus3				"sounds/items/csp/HBONUS2.ogg"
+items/bonus4				"sounds/items/csp/ABONUS2.ogg"
+items/bonus5				"sounds/items/csp/HBONUS3.ogg"
+items/bonus6				"sounds/items/csp/ABONUS3.ogg"
+items/bonus7				"sounds/items/csp/HBONUS4.ogg"
+items/bonus8				"sounds/items/csp/ABONUS4.ogg"
 items/armor1				GARM
 items/armor2				YARM
 items/armor3				BARM
@@ -5500,3 +5515,36 @@ pentacle/project     sounds/Realm667Powerups/PROJECT.ogg
 // Folded Fusil addon support sounds.
 ENTEIN SOUNDS/COMBAT/WEAPONS/Fusil/ENTEIN.mp3
 MOVIN SOUNDS/COMBAT/WEAPONS/Fusil/MOVIN.mp3
+
+//Hitmarkers (Tekish — logical names used by SRC/hitmarkers.acs)
+defaulthit			"SOUNDS/Hitmarkers/HMDEFH"
+defaulthithigh		"SOUNDS/Hitmarkers/HMDEFHH"
+defaulthitmedium	"SOUNDS/Hitmarkers/HMDEFHM"
+defaultkill			"SOUNDS/Hitmarkers/HMDEFK"
+blackops4hit		"SOUNDS/Hitmarkers/HMBO4H"
+$random blackops4kill { blackops4kill1 blackops4kill2 blackops4kill3 }
+blackops4kill1		"SOUNDS/Hitmarkers/HMBO4K1"
+blackops4kill2		"SOUNDS/Hitmarkers/HMBO4K2"
+blackops4kill3		"SOUNDS/Hitmarkers/HMBO4K3"
+blackopscoldwarhit	"SOUNDS/Hitmarkers/HMBOCWH"
+blackopscoldwarkill	"SOUNDS/Hitmarkers/HMBOCWK"
+callofduty4hit		"SOUNDS/Hitmarkers/HMCOD4H"
+$random doomhit { doomhit1 doomhit2 doomhit3 doomhit4 }
+doomhit1			"SOUNDS/Hitmarkers/HMDH1"
+doomhit2			"SOUNDS/Hitmarkers/HMDH2"
+doomhit3			"SOUNDS/Hitmarkers/HMDH3"
+doomhit4			"SOUNDS/Hitmarkers/HMDH4"
+modernwarfarehit	"SOUNDS/Hitmarkers/HMMWH"
+modernwarfarekill	"SOUNDS/Hitmarkers/HMMWK"
+modernwarfare3hit	"SOUNDS/Hitmarkers/HMMW3H"
+modernwarfare3kill	"SOUNDS/Hitmarkers/HMMW3K"
+overwatchhit		"SOUNDS/Hitmarkers/HMOWH"
+overwatchkill		"SOUNDS/Hitmarkers/HMOWK"
+quakehit			"SOUNDS/Hitmarkers/HMQH"
+quakehithigh		"SOUNDS/Hitmarkers/HMQHH"
+quakehitmedium		"SOUNDS/Hitmarkers/HMQHM"
+quakechampionskill	"SOUNDS/Hitmarkers/HMQCK"
+quakelivekill		"SOUNDS/Hitmarkers/HMQLK"
+teamfortress2hit	"SOUNDS/Hitmarkers/HMTF2H"
+teamfortress2kill	"SOUNDS/Hitmarkers/HMTF2K"
+titanfall2kill      "SOUNDS/Hitmarkers/HMT2K"

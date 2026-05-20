@@ -65,13 +65,13 @@ ACTOR CacoPlayer : PB_Weapon
 		CAPL JKLMNOOO 2
 		TNT1 A 0 A_TakeInventory("CacoTimer", 2)
 		TNT1 A 0 A_Jump(20, "CacoShout")
-		TNT1 A 0 A_PlaySound("caco/active", 8)
+		TNT1 A 0 A_PlaySound("caco/active", 1)
 		CAPL PQRSRQRSRSQRQRSRQRSRSQRQRSRQRSRSQR 1 A_SetRoll(roll + 1.5)
 		CAPL PONMLKJ 2 A_SetRoll(roll + 7)
 		TNT1 A 0 A_SetRoll(0)
 		Goto Ready
 	CacoShout:
-		TNT1 A 0 A_PlaySound("caco/sight", 8)
+		TNT1 A 0 A_PlaySound("caco/sight", 1)
 		CAPL PQRSRQRSRSQRQRSRQRSRSQRQRSRQRSRSQR 1 A_SetRoll(roll + 3)
 		CAPL PONMLKJ 2 A_SetRoll(roll + 7)
 		TNT1 A 0 A_SetRoll(0)

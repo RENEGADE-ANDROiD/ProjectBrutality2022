@@ -1,0 +1,53 @@
+// Pickups for LeverActionHellTier — included after DemonTech.dec so Hellbullet classes exist.
+
+ACTOR LeverActionHellUpgradeT3 : CustomInventory
+{
+	//$Title Lever Hell Mod (T3)
+	//$Category Powerups
+	//$Sprite LVR4E0
+	+INVENTORY.ALWAYSPICKUP
+	Inventory.MaxAmount 0
+	Inventory.PickupMessage "$PB_LEVER_HELL_PICKUP_T3"
+	Inventory.PickupSound "misc/p_pkup"
+	States
+	{
+	Spawn:
+		LVR4 E 10
+		Loop
+	Pickup:
+		TNT1 A 0 A_JumpIfInventory("LeverActionHellTier", 1, "PickupT3Fail")
+		TNT1 A 0 A_GiveInventory("LeverActionHellTier", 1)
+		Stop
+	PickupT3Fail:
+		TNT1 A 0 A_Print("$PB_LEVER_HELL_ALREADY_T3")
+		Fail
+	}
+}
+
+ACTOR LeverActionHellUpgradeT4 : CustomInventory
+{
+	//$Title Lever Hell Mod (T4)
+	//$Category Powerups
+	//$Sprite LVR4E0
+	+INVENTORY.ALWAYSPICKUP
+	Inventory.MaxAmount 0
+	Inventory.PickupMessage "$PB_LEVER_HELL_PICKUP_T4"
+	Inventory.PickupSound "misc/p_pkup"
+	States
+	{
+	Spawn:
+		LVR4 E 10
+		Loop
+	Pickup:
+		TNT1 A 0 A_JumpIfInventory("LeverActionHellTier", 2, "PickupT4Max")
+		TNT1 A 0 A_JumpIfInventory("LeverActionHellTier", 1, "PickupT4Grant")
+		TNT1 A 0 A_Print("$PB_LEVER_HELL_NEED_T3_FIRST")
+		Fail
+	PickupT4Grant:
+		TNT1 A 0 A_GiveInventory("LeverActionHellTier", 1)
+		Stop
+	PickupT4Max:
+		TNT1 A 0 A_Print("$PB_LEVER_HELL_ALREADY_T4")
+		Fail
+	}
+}

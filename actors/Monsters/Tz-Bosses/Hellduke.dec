@@ -77,7 +77,7 @@ ACTOR Hellduke : Cyberdemon
 	DodgeLeft:
 	TNT1 A 0 A_ChangeFlag("NODROPOFF",true)
 	DUKE E 1 A_FaceTarget
-	TNT1 A 0 A_PlaySound("DUKESLIDER",CHAN_7)
+	TNT1 A 0 A_PlaySound("DUKESLIDER",CHAN_6)
 	DUKE E 0 ThrustThing (angle*256/360+192, 20,0,0)
 	DUKE EEEEEEEEEEEEEEEEEE 1
 	{
@@ -90,7 +90,7 @@ ACTOR Hellduke : Cyberdemon
 	DodgeRight:
     TNT1 A 0 A_ChangeFlag("NODROPOFF",true)
 	DUKE E 1 A_FaceTarget
-    TNT1 A 0 A_PlaySound("DUKESLIDER",CHAN_7)
+    TNT1 A 0 A_PlaySound("DUKESLIDER",CHAN_6)
 	DUKE E 0 ThrustThing (angle*256/360+64, 20,0,0)
 	DUKE EEEEEEEEEEEEEEEEEE 1
 	{
@@ -476,9 +476,9 @@ ACTOR Hellduke : Cyberdemon
 	TNT1 A 0 A_GiveToTarget("HelldukeFatality6", 1)
 	Stop
   Death:
-    TNT1 A 0 A_StopSound(CHAN_7)
+    TNT1 A 0 A_StopSound(CHAN_6)
     DUKE H 11 Bright A_Scream 
-	TNT1 A 0 A_PlaySound("Monsters/DKDIE",CHAN_7) 
+	TNT1 A 0 A_PlaySound("Monsters/DKDIE",CHAN_6) 
     DUKE I 10 Light("TyrantFire")
     DUKE JKL 10 Light("TyrantFire")
 	TNT1 A 0 A_NoBlocking

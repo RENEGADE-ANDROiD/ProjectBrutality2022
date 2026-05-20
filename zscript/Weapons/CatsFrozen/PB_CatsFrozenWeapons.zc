@@ -45,8 +45,12 @@ class PBCF_CryoPellet : FastProjectile
 	}
 	override int SpecialMissileHit(Actor victim)
 	{
-		if (victim && victim.bSHOOTABLE && victim.health > 0)
-			victim.A_GiveInventory("PBCF_CryocubusSlowdown");
+		// Match PBCF_IceOrbCryo / PBCF_CryoWind: never slow the shooter (ASG pellets spawn at the muzzle).
+		if (victim && (!target || victim != target) && victim.bSHOOTABLE && victim.health > 0)
+		{
+			if (victim.ApplyDamageFactor("Ice", 1))
+				victim.A_GiveInventory("PBCF_CryocubusSlowdown");
+		}
 		return Super.SpecialMissileHit(victim);
 	}
 }

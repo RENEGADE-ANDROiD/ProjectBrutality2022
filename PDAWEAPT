@@ -146,7 +146,7 @@ Recoil: Moderate
 Alt-Fire: Aim down sights
 Firemodes: Rifle stance / sidearm stance via Weapon Special
 Akimbo: X#
-UAC M1893 Mod 0 Lever Action$A modernized lever gun bridging cowboy simplicity with UAC logistics: tube-fed, hard-hitting, and able to swap between .357 and heavier Marlin-class loads from the Weapon Special wheel without replacing the whole weapon.$LeverAction$Manufacturer: UAC (M1893 Mod 0)
+UAC M1893 Mod 0 Lever Action$A modernized lever gun bridging cowboy simplicity with UAC logistics: tube-fed, hard-hitting, and able to swap between .357 and heavier Marlin-class loads from the Weapon Special wheel without replacing the whole weapon. With two rifles in inventory, the same wheel enables mirrored dual wield (alternating hip shots; shared tube).$LeverAction$Manufacturer: UAC (M1893 Mod 0)
 Tube Capacity: Variable tube (reload choreographs to full)
 Ammunition: LeverActionAmmo + NewClip reserve plumbing
 Effective Range: Medium
@@ -427,7 +427,7 @@ Recoil: Extreme platform shove
 Alt-Fire: Guard / black-hole variant payloads via Weapon Special
 Firemodes: Classic / guard / singularity selectable
 Akimbo: X#
-Riot Shield$Law-enforcement shield line pairing ballistic plate with optional sidearm integration—primary bash / guard gameplay loop.$RiotShield$Manufacturer: UAC peacekeeping bureau
+UAC Ballistic Shield Module$Peacekeeping ballistic plate kit—installs on the .45 Pistol or Fire Axe via Weapon Special (shield + sidearm or shield + axe loadouts). Dropped by riot-shield sergeants.$PB_RiotShieldModule$Manufacturer: UAC peacekeeping bureau
 Magazine Capacity: N/A (shield durability tokens)
 Ammunition: N/A
 Effective Range: Melee guard arc
@@ -463,7 +463,7 @@ Recoil: High
 Alt-Fire: Alt seeker behaviors per states
 Firemodes: Semi-auto rocket launcher
 Akimbo: X#
-Dragon Slayer$Heavy runic greatblade pairing melee cleaves with DragonSlayerEnergy bolt repeater stance.$DragonSlayer$Manufacturer: Classified (Craneo lineage)
+Dragon Slayer$Heavy runic greatblade pairing melee cleaves with DragonSlayerEnergy bolt repeater stance. Found only on Obsidian Ravager death; limited wear on salvage—not rolled from chainsaw map spawns.$PB_ObsidianDragonSlayer$Manufacturer: Classified (Craneo lineage / Ravager salvage)
 Magazine Capacity: DragonSlayerEnergy pool
 Ammunition: Internal energy stacks
 Effective Range: Melee / short bolt lane
@@ -481,7 +481,7 @@ Recoil: N/A
 Alt-Fire: Blade storm / special melee routing
 Firemodes: Melee soulblade
 Akimbo: X#
-UAC Biological Acid Unengager$Caustic bioslug launcher vomiting sustained acid fog—Ammo ties into Bio acid pickups distinct from standard plasma.$BioAcidLauncher$Manufacturer: UAC hazardous materials branch
+UAC Biological Acid Unengager$Primary hell-slugs; hold Alt-Fire for a Daedabus-style slime stream. Found only as a rare drop from Daedabus and Belphegor. Uses PB_DTech cells.$BioAcidLauncher$Manufacturer: UAC hazardous materials branch
 Magazine Capacity: Bio-acid tanks per launcher plumbing
 Ammunition: Caustic ammo pickups
 Effective Range: Medium arcing splash
