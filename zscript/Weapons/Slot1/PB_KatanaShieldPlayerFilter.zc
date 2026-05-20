@@ -1,4 +1,4 @@
-// Monster-sourced explosive splash next to beam-katana / Argent barrier tiles should not hurt the player.
+//Monster-sourced explosive splash next to beam-katana / Argent barrier tiles should not hurt the player.
 
 class PB_KatanaShieldFilter
 {
