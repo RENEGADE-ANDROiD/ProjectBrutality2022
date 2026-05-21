@@ -633,15 +633,15 @@ user int pb_weaponhud_x = -96;
 user int pb_weaponhud_y = -84;
 user float pb_weaponhud_scale = 1.0;
 user float pb_weaponhud_alpha = 1.0;
-user float pb_weaponhud_maxwidth = 96.0;
-user float pb_weaponhud_maxheight = 72.0;
+user float pb_weaponhud_maxwidth = 128.0;
+user float pb_weaponhud_maxheight = 96.0;
 user bool pb_weaponmodehud_enable = false;
 user int pb_weaponmodehud_x = -195;
 user int pb_weaponmodehud_y = -247;
 user float pb_weaponmodehud_scale = 1.0;
 user float pb_weaponmodehud_alpha = 1.0;
-user float pb_weaponmodehud_maxwidth = 56.0;
-user float pb_weaponmodehud_maxheight = 56.0;
+user float pb_weaponmodehud_maxwidth = 64.0;
+user float pb_weaponmodehud_maxheight = 64.0;
 
 // Glory Kills cvars (ported from D4D / Brutal Doom Black Edition)
 server cheat bool be_ExecutionsON = true;

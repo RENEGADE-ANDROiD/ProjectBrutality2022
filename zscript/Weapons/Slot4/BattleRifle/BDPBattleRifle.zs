@@ -177,14 +177,18 @@ class BDPBattleRifle : PB_WeaponBase
 				A_SetRoll(0);
 				PB_HandleCrosshair(5);
 				A_SetInventory("PB_LockScreenTilt", 0);
-				if (CVar.GetCVar("pb_toggle_aim_hold", player).GetInt() == 1)
+				bool holdMode = CVar.GetCVar("pb_toggle_aim_hold", player).GetInt() == 1;
+				if (holdMode)
 				{
-					if (!PressingAltfire() || JustReleased(BT_ALTATTACK)) return resolvestate("ZoomOut");
-					if (PressingFire() && PressingAltfire() && CountInv("BR_Ammo") > 0)
+					if (!PressingAltfire() || JustReleased(BT_ALTATTACK))
+						return resolvestate("ZoomOut");
+					if (JustPressed(BT_ATTACK) && getBRMag() > 0)
 						return resolvestate("FireADS");
 					return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOSECONDARY);
 				}
-				if (PressingFire() && CountInv("BR_Ammo") > 0)
+				if (PressingAltfire())
+					return resolvestate("ZoomOut");
+				if (JustPressed(BT_ATTACK) && getBRMag() > 0)
 					return resolvestate("FireADS");
 				return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 			}
@@ -256,17 +260,30 @@ class BDPBattleRifle : PB_WeaponBase
 			TNT1 A 0 { invoker.burstCount = 0; }
 			BR4Z D 1 BRIGHT { BDP_ShotADS(); }
 			BR4Z D 2 BRIGHT;
-			BR4Z D 1 BRIGHT { BDP_ShotADS(); }
-			BR4Z D 2 BRIGHT;
-			BR4Z D 1 BRIGHT { BDP_ShotADS(); }
+			BR4Z D 1 BRIGHT;
 			BR4Z D 1 BRIGHT
 			{
 				if (getBRMag() < 1)
 					PB_SpawnCasing("EmptyCarbineMag", 5, 15, -7, 0, frandom(2, 4), frandom(2, 4));
 			}
 			BR4Z D 2 BRIGHT;
-			TNT1 A 0 { invoker.burstCount = 0; }
-			TNT1 A 0 A_Refire("FireADS");
+			BR4Z D 1 BRIGHT
+			{
+				bool holdMode = CVar.GetCVar("pb_toggle_aim_hold", player).GetInt() == 1;
+				if (holdMode)
+				{
+					if (JustReleased(BT_ALTATTACK))
+						return resolvestate("ZoomOut");
+					if (JustPressed(BT_ATTACK) && getBRMag() > 0)
+						return resolvestate("FireADS");
+					return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOSECONDARY);
+				}
+				if (PressingAltfire())
+					return resolvestate("ZoomOut");
+				if (JustPressed(BT_ATTACK) && getBRMag() > 0)
+					return resolvestate("FireADS");
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			}
 			goto ReadyADS;
 		FireADSDry:
 			TNT1 A 0 A_StartSound("weapons/battlerifle/dry", CHAN_WEAPON);

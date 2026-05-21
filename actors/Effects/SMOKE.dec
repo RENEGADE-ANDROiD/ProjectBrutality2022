@@ -636,7 +636,7 @@ Actor OldschoolRocketSmokeTrail1: AltSmoke
 {
 	Alpha 0.6
 Speed 1
-+CLIENTSIDEONLY
+//+CLIENTSIDEONLY
 Scale 1.5
 States
     {
@@ -651,7 +651,7 @@ Actor OldschoolRocketSmokeTrail2: AltSmoke
 {
 	Alpha 0.8
 	Speed 1
-	+CLIENTSIDEONLY
+	//+CLIENTSIDEONLY
 +RollSprite
 	Scale 0.25
 	States
@@ -670,7 +670,7 @@ Actor OldschoolRocketSmokeTrailDarker: AltSmoke
 {
 	Alpha 0.95
 Speed 1
-+CLIENTSIDEONLY
+//+CLIENTSIDEONLY
 Scale 0.2
 States
     {
