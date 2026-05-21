@@ -433,13 +433,16 @@ class PB2022_Hud_ZS : BaseStatusBar
 
 	override void Tick()
 	{
-        if(!plr) plr = PlayerPawn(CPlayer.mo);
+		plr = PlayerPawn(CPlayer.mo);
 		Super.Tick();
 
         if(interference > 0 && gametic % 2) tickRandSeed = crandom(0, 2147483648);
 
         Health = CPlayer.Health;
-        Armor = GetAmount("BasicArmor");
+		if (plr)
+			Armor = GetAmount("BasicArmor");
+		else
+			Armor = 0;
 
         if(Health <= 0) 
         {
@@ -511,9 +514,10 @@ class PB2022_Hud_ZS : BaseStatusBar
         else if(dirtyScreenTimer != -1 && wiperWarningIndScale > 0)
             wiperWarningIndScale -= 0.25;
 
-        if(interference > 0 && crandom() < 100)
+        if (interference > 0)
         {
-            if(!muteinterference)
+            // crandom() is ~[-1,1]; comparing to 100 always passed and spammed SFX every tic.
+            if (!muteinterference && (gametic % 8) == 0 && random(0, 255) < 48)
                 S_StartSound("visor/interference", CHAN_AUTO, CHANF_OVERLAP, 0.5);
             interference--;
         }
@@ -521,6 +525,9 @@ class PB2022_Hud_ZS : BaseStatusBar
 		PBHUD_TickMessages();
 		TickBloodDrops();
 		TickGlassCracks();
+
+		if (!plr)
+			return;
 		
 		if(!CheckInventory("sae_extcam") && !HasCompletedHelmetSequence)
 		{
@@ -574,7 +581,7 @@ class PB2022_Hud_ZS : BaseStatusBar
 		pbWeap = PB_WeaponBase(weap);
 
 		[Primary, Secondary] = GetCurrentAmmo();
-		if(pbWeap) Left = Ammo(plr.FindInventory(pbWeap.AmmoTypeLeft));
+		if(pbWeap && plr) Left = Ammo(plr.FindInventory(pbWeap.AmmoTypeLeft));
 	
 		//console.printf("%s", weap.GetClassName());
 
@@ -610,7 +617,7 @@ class PB2022_Hud_ZS : BaseStatusBar
                 flsectorlightcolor = 0xffffffff;
         }
 
-		if(m0to1Float > 0.99) {
+		if(plr && m0to1Float > 0.99) {
 			mHealthInterpolator.Update(Health);
 			mArmorInterpolator.Update(GetAmount("BasicArmor"));
 			mSwayInterpolator.Update(mSway);
@@ -1611,6 +1618,7 @@ class PB2022_Hud_ZS : BaseStatusBar
                     weaponBarAccent = Font.CR_UNTRANSLATED;
 				
 				PB2022_DrawZScriptOverheatMeters();
+				PB2022_DrawWeaponModeLabel();
 				
 				PBHud_DrawString(mDefaultFont, weap.GetTag(), (-110, -24), DI_SCREEN_RIGHT_BOTTOM | DI_TEXT_ALIGN_RIGHT, weaponBarAccent, scale: (0.5, 0.5));
 				

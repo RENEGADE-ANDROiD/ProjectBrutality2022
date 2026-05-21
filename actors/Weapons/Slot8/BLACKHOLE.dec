@@ -21,6 +21,8 @@ Weapon.SlotNumber 9
 Weapon.SlotPriority 0.1
 Obituary "%o got vaporized by %k's Black Hole Generator."
 Tag "Black Hole Generator"
+Inventory.Icon "PRDCZ0"
+Inventory.AltHUDIcon "PRDCZ0"
 States
 {
 Spawn:

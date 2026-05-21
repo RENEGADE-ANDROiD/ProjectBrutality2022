@@ -174,8 +174,7 @@ OptionString "DamTranslations"
 OptionMenu "PBTacticalMotionOptions"
 {
 	Title "Tactical Weapon Motion"
-	StaticText "Rotational Tilt, Lowering, Wall Near-Field,"
-	StaticText "Tactical motion & lean (PB2022)."
+	StaticText "Rotational tilt, movement lowering, lean (PB2022)."
 	StaticText " "
 	Option "Enable tactical weapon motion.", "pb_tac_enable", "YesNo"
 	Option "Apply only while in ready states.", "pb_tac_ready_only", "YesNo"
@@ -185,9 +184,6 @@ OptionMenu "PBTacticalMotionOptions"
 	Option "Cap rotational tilt.", "pb_tac_roll_cap", "TacticalRollCap"
 	Slider "Rotational tilt cap amount.", "pb_tac_roll_cap_value", 0.5, 6.0, 0.1, 1
 	Slider "Weapon lowering scale.", "pb_tac_lowering_scale", 0.0, 2.0, 0.05, 2
-	Option "Enable wall detection lowering.", "pb_tac_wall_detect", "YesNo"
-	Slider "Wall detection distance.", "pb_tac_wall_distance", 8.0, 48.0, 1.0, 1
-	Slider "Wall lowering bonus.", "pb_tac_wall_lowering", 0.0, 16.0, 0.5, 1
 	Option "Enable lean.", "pb_tac_lean_enable", "YesNo"
 	Slider "Lean angle.", "pb_tac_lean_angle", 0.0, 25.0, 0.5, 1
 	Slider "Lean smoothing.", "pb_tac_lean_smoothing", 0.05, 0.50, 0.01, 2
@@ -201,23 +197,27 @@ OptionMenu "PBTacticalMotionOptions"
 OptionMenu "PBWeaponHudOptions"
 {
 	Title "PBX 2022 Weapon HUD"
-	StaticText "Corner Overlays: Pickup Icon + Fire-Mode Icon."
+	StaticText "Bottom-right: weapon portrait + fire-mode glyph (shotgun, carbine, etc.)."
 	StaticText "Weapon HUD by BeefRice"
-	Option "Enable weapon pickup icon overlay.", "pb_weaponhud_enable", "YesNo"
-	Slider "Pickup icon X offset.", "pb_weaponhud_x", -1024, 1024, 1
-	Slider "Pickup icon Y offset.", "pb_weaponhud_y", -768, 768, 1
-	Slider "Pickup icon scale.", "pb_weaponhud_scale", 0.1, 3.0, 0.05, 2
-	Slider "Pickup icon max width.", "pb_weaponhud_maxwidth", 32.0, 256.0, 4.0, 0
-	Slider "Pickup icon max height.", "pb_weaponhud_maxheight", 32.0, 256.0, 4.0, 0
-	Slider "Pickup icon alpha.", "pb_weaponhud_alpha", 0.0, 1.0, 0.05, 2
-	StaticText " ", teal
-	Option "Enable weapon mode icon overlay.", "pb_weaponmodehud_enable", "YesNo"
-	Slider "Mode icon X offset.", "pb_weaponmodehud_x", -1024, 1024, 1
-	Slider "Mode icon Y offset.", "pb_weaponmodehud_y", -768, 768, 1
-	Slider "Mode icon scale.", "pb_weaponmodehud_scale", 0.1, 3.0, 0.05, 2
-	Slider "Mode icon max width.", "pb_weaponmodehud_maxwidth", 24.0, 128.0, 4.0, 0
-	Slider "Mode icon max height.", "pb_weaponmodehud_maxheight", 24.0, 128.0, 4.0, 0
-	Slider "Mode icon alpha.", "pb_weaponmodehud_alpha", 0.0, 1.0, 0.05, 2
+	Option "Enable corner weapon icons.", "pb_weaponhud_enable", "YesNo"
+	Slider "Icon X offset.", "pb_weaponhud_x", -1024, 1024, 1
+	Slider "Icon Y offset.", "pb_weaponhud_y", -768, 768, 1
+	Slider "Portrait max width.", "pb_weaponhud_maxwidth", 32.0, 256.0, 4.0, 0
+	Slider "Portrait max height.", "pb_weaponhud_maxheight", 32.0, 256.0, 4.0, 0
+	Slider "Icon scale.", "pb_weaponhud_scale", 0.1, 3.0, 0.05, 2
+	Slider "Icon opacity.", "pb_weaponhud_alpha", 0.0, 1.0, 0.05, 2
+	StaticText " "
+	StaticText "--------- Fire-mode glyph ---------", gold
+	StaticText "Shotgun slug, carbine burst, cryo/electric, etc."
+	Option "Mode glyph without portrait.", "pb_weaponmodehud_enable", "YesNo"
+	StaticText "Off: glyph only when portrait is on."
+	StaticText "On: glyph can show with portrait off."
+	Slider "Mode glyph X offset.", "pb_weaponmodehud_x", -1024, 1024, 1
+	Slider "Mode glyph Y offset.", "pb_weaponmodehud_y", -768, 768, 1
+	Slider "Mode glyph max width.", "pb_weaponmodehud_maxwidth", 32.0, 256.0, 4.0, 0
+	Slider "Mode glyph max height.", "pb_weaponmodehud_maxheight", 32.0, 256.0, 4.0, 0
+	Slider "Mode glyph scale.", "pb_weaponmodehud_scale", 0.1, 3.0, 0.05, 2
+	Slider "Mode glyph opacity.", "pb_weaponmodehud_alpha", 0.0, 1.0, 0.05, 2
 	StaticText " "
 }
 
@@ -421,7 +421,7 @@ OptionMenu "PB_2022AdditionsMenu"
 	Submenu "Tactical Weapon Motion Options", "PBTacticalMotionOptions"
 	StaticText " ", teal
 	StaticText " ", teal
-	Option "Enable weapon pickup icon overlay.", "pb_weaponhud_enable", "YesNo"
+	Option "Enable corner weapon icons.", "pb_weaponhud_enable", "YesNo"
 	StaticText " ", teal
 	Submenu "PBX 2022 Weapon HUD Options", "PBWeaponHudOptions"
 	StaticText " ", teal
@@ -439,6 +439,7 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText " ", teal
 	Option "$OPTMNU_PB_ACHIEVEMENTS", "pb_achievements", "OnOff"
 	StaticText "$OPTMNU_PB_ACHIEVEMENTS_HINT", teal
+	StaticText " ", teal
 	StaticText " ", teal
 	Submenu "$OPTMNU_PB_ACHIEVEMENTS_MENU", "PBAchievementsMenu"
 	StaticText " ", teal
@@ -748,7 +749,7 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Drop Dragon Slayer (Obsidian Ravager)", "pb_NoDragonSlayerWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Stormcast", "pb_NoStormcastWeapon", "SpawnOnOff"
+	Option "Drop Stormcast (D3 Maledict)", "pb_NoStormcastWeapon", "SpawnOnOff"
 	StaticText " "
 }
 
@@ -1759,6 +1760,11 @@ OptionMenu "PB_HorrorspawnSettings"
 	Slider "Unwilling reinforcement multiplier", "UnwillingMultiplier", 0, 100, 1
 	StaticText "Default: 4."
 	StaticText " "
+	StaticText "---------------Project Survival fodder (main roster)---------------", gold
+	Slider "$PB_OPT_PS_FODDER_THRESHOLD", "pb_fodder_passive_threshold", 0, 255, 1
+	StaticText "$PB_OPT_PS_FODDER_THRESHOLD_HINT"
+	StaticText "$PB_OPT_PS_FODDER_THRESHOLD_HINT2"
+	StaticText " "
 	StaticText "---------------Horrorspawn variant blocks (On = do not allow)---------------", gold
 	Option "T1 — Fresh horrorspawn", "NoFresh", "OffOn"
 	Option "T1 — Horrorspawn", "NoHorror", "OffOn"
@@ -1849,7 +1855,9 @@ OptionMenu "SimplerMonsterSettings"
 	Command "Disable all zombie tanks + flyer", "set NoZombieTank 1; set NoZombieplasmatank 1; set NoZombiemissiletank 1; set NoZombieFlyer 1; set NoZombietankelite 1"
 	StaticText " "
 
-	StaticText "---- Reinforcement / Horrorspawn fodder pool ----"
+	StaticText "---- Reinforcement (Horrorspawn + optional PS passives) ----"
+	StaticText " ", teal
+	StaticText "PS Shambler/Puker/etc. are main roster — tuned via pb_fodder_passive_threshold.", teal
 	StaticText " ", teal
 	Command "Enable all reinforcement fodder",  "set NoHorror 0; set NoFresh 0; set NoHunger 0; set NoMeleeZombie 0; set NoMeleeSergeant 0; set NoCyberFodder 0; set NoUnwilling 0; set pb_NoProjectSurvivalPassive 0"
 	Command "Disable all reinforcement fodder", "set NoHorror 1; set NoFresh 1; set NoHunger 1; set NoMeleeZombie 1; set NoMeleeSergeant 1; set NoCyberFodder 1; set NoUnwilling 1; set pb_NoProjectSurvivalPassive 1"

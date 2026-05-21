@@ -75,7 +75,7 @@ Class PB_CSSG : PB_WeaponBase
 			TNT1 A 3 A_DoPBWeaponAction();
 			
 			C0RO NO 1 A_DoPBWeaponAction();
-			TNT1 AA 0 PB_GunSmoke(random(0,1),0,-2);
+			TNT1 AA 0 A_PB_ThrottledMuzzleFX(0, 0, -2, "", 'CSSGFXPhase');
 			C0RO P 1 A_DoPBWeaponAction();
 			C0RB A 1;
 			C0RB BCDFGH 1 {
@@ -149,14 +149,12 @@ Class PB_CSSG : PB_WeaponBase
 			TNT1 A 0 A_takeinventory(invoker.ammotype2,2);
 			TNT1 A 0 PB_WeaponRecoil(-7,frandom(-1.5,1.5));
 			TNT1 A 0 {
-				PB_GunSmoke(2,0,-1);
-				PB_GunSmoke(-2,0,-1);
+				A_PB_ThrottledMuzzleFXDual(2, -2, 0, -1, "", 'CSSGFXPhase');
 				A_FireProjectile("ShotgunWad",random(-2,2),0,3,-4,FPF_NOAUTOAIM,random(-2,2));
 				A_FireProjectile("ShotgunWad",random(-2,2),0,-3,-4,FPF_NOAUTOAIM,random(-2,2));
 			}
 			C0FF B 1 bright {
-				PB_GunSmoke(-2,0,-1);
-				PB_GunSmoke(2,0,-1);
+				A_PB_ThrottledMuzzleFXDual(-2, 2, 0, -1, "", 'CSSGFXPhase');
 			}
 			TNT1 A 0 A_ZoomFactor(0.95);
 			TNT1 A 0 A_recoil(6);
@@ -210,10 +208,10 @@ Class PB_CSSG : PB_WeaponBase
 			TNT1 A 0 A_ZoomFactor(0.975);
 			TNT1 A 0 PB_WeaponRecoil(-3,frandom(-0.5,0.5));
 			TNT1 A 0 {
-				PB_GunSmoke(-2,0,-1);
+				A_PB_ThrottledMuzzleFX(-2, 0, -1, "", 'CSSGFXPhase');
 				A_FireProjectile("ShotgunWad",random(-2,2),0,3,-4,FPF_NOAUTOAIM,random(-2,2));
 			}
-			C0FH C 1 PB_GunSmoke(-2,0,-1);
+			C0FH C 1 A_PB_ThrottledMuzzleFX(-2, 0, -1, "", 'CSSGFXPhase');
 			TNT1 A 0 A_ZoomFactor(0.985);
 			C0FH C 1;
 			TNT1 A 0 A_ZoomFactor(0.995);
@@ -230,10 +228,10 @@ Class PB_CSSG : PB_WeaponBase
 			TNT1 A 0 A_ZoomFactor(0.975);
 			TNT1 A 0 PB_WeaponRecoil(-3,frandom(-0.5,0.5));
 			TNT1 A 0 {
-				PB_GunSmoke(2,0,-1);
+				A_PB_ThrottledMuzzleFX(2, 0, -1, "", 'CSSGFXPhase');
 				A_FireProjectile("ShotgunWad",random(-2,2),0,-3,-4,FPF_NOAUTOAIM,random(-2,2));
 			}
-			C0FH C 1 PB_GunSmoke(2,0,-1);
+			C0FH C 1 A_PB_ThrottledMuzzleFX(2, 0, -1, "", 'CSSGFXPhase');
 			TNT1 A 0 A_ZoomFactor(0.985);
 			C0FH C 1;
 			TNT1 A 0 A_ZoomFactor(0.995);
@@ -255,7 +253,7 @@ Class PB_CSSG : PB_WeaponBase
 			C0RO N 1;
 			TNT1 AA 0 A_spawnCSSGCasing();
 			C0RO O 1;
-			TNT1 AA 0 PB_GunSmoke(random(0,1),0,-2);
+			TNT1 AA 0 A_PB_ThrottledMuzzleFX(0, 0, -2, "", 'CSSGFXPhase');
 			C0RO P 1;
 			C0RB A 1;
 			C0RB BCDFGH 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM');
@@ -282,7 +280,7 @@ Class PB_CSSG : PB_WeaponBase
 			C0HO D 1;
 			TNT1 A 0 A_spawnCSSGCasing();
 			C0HO EFGH 1;
-			TNT1 A 0 PB_GunSmoke(0,0,-2);
+			TNT1 A 0 A_PB_ThrottledMuzzleFX(0, 0, -2, "", 'CSSGFXPhase');
 			C0HO II 1;
 			C0HB ABC 1 ChangeCSSGShellsLook('C0HB','C0HS','C0HN','C0HK','C0HD','C0HX','C0HW','C0HT','C0HM');
 			C0HB DEF 1 ChangeCSSGShellsLook('C0HB','C0HS','C0HN','C0HK','C0HD','C0HX','C0HW','C0HT','C0HM');

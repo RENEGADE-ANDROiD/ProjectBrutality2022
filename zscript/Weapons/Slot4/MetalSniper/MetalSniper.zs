@@ -13,6 +13,8 @@ class PB_MetalSniper : PB_WeaponBase
         Inventory.AltHudIcon "MSNWA0";
         weapon.ammotype1 "NewClip";
         weapon.ammogive1 10;
+        weapon.ammouse1 0;
+        weapon.ammouse2 0;
         weapon.ammotype2 "SniperAmmo";
         PB_WeaponBase.UnloaderToken "SniperUnloaded";
         PB_WeaponBase.respectItem "MetalSniperRespect";
@@ -202,26 +204,7 @@ class PB_MetalSniper : PB_WeaponBase
                 PB_CoolDownBarrel(-5, 0, 7, 0,  1);
                 PB_CoolDownBarrel( 5, 0, 7, 0, -1);
                 A_SetInventory("PB_LockScreenTilt", 0);
-
-                bool holdMode = (CVar.GetCVar("pb_toggle_aim_hold", player).GetInt() == 1);
-
-                if (holdMode)
-                {
-                    if (!PressingAltfire() || JustReleased(BT_ALTATTACK))
-                        return resolvestate("ZoomOut");
-
-                    if (PressingFire() && PressingAltfire() && CountInv(invoker.ammotype2) > 0)
-                        return resolvestate("Fire_ADS");
-
-                    return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOSECONDARY, CheckUnloaded("SniperUnloaded"));
-                }
-                else
-                {
-                    if (PressingFire() && CountInv(invoker.ammotype2) > 0)
-                        return resolvestate("Fire_ADS");
-
-                    return A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("SniperUnloaded"));
-                }
+                return PB_ReadyFire("Fire_ADS", "Fire_ADS", "ZoomOut", true, true, 'None', true, "SniperUnloaded");
             }
             loop;
 
@@ -273,7 +256,7 @@ class PB_MetalSniper : PB_WeaponBase
             MSNG B 1 bright A_FireProjectile("PB_FragGrenade", 0, 0);
             TNT1 A 0 MS_SetGrenadeQ(0);
             TNT1 A 0 PB_FireOffset();
-            TNT1 A 0 PB_GunSmoke(0, 0, -2);
+            TNT1 A 0 A_PB_ThrottledMuzzleFX(0, 0, -2, "", 'MetalSniperFXPhase');
             TNT1 A 0 PB_WeaponRecoil(-3, frandom(-1.5, 1.5));
             MSNG C 1 bright;
             MSNG DEFGA 1;
@@ -770,7 +753,7 @@ class PB_MetalSniper : PB_WeaponBase
         PB_IncrementHeat(4);
         PB_IncrementHeat(4, true);
         PB_FireOffset();
-        PB_GunSmoke(0, 0, -2);
+        A_PB_ThrottledMuzzleFX(0, 0, -2, "", 'MetalSniperFXPhase');
         PB_WeaponRecoil(-5, frandom(-1.5, 1.5));
         PB_SpawnCasing("LMGCasingStandard", 26, 2, 28, 0, frandom(5, 8), frandom(1, 4));
     }
@@ -786,7 +769,7 @@ class PB_MetalSniper : PB_WeaponBase
         PB_IncrementHeat(4);
         PB_IncrementHeat(4, true);
         PB_FireOffset();
-        PB_GunSmoke(0, 0, -1);
+        A_PB_ThrottledMuzzleFX(0, 0, -1, "", 'MetalSniperFXPhase');
         PB_WeaponRecoil(-4, frandom(-1.5, 1.5));
         PB_SpawnCasing("LMGCasingStandard", 26, 2, 28, 0, frandom(5, 8), frandom(1, 4));
         PB_WeaponRecoil(-3, frandom(-0.5, 0.5));

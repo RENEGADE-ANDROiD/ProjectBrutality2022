@@ -989,6 +989,17 @@ class PB_WeaponBase : DoomWeapon
 			return ResolveState("Steady");
 		}
 
+		if (CountInv("DoGloryMelee") >= 1)
+			return ResolveState("GloryMelee");
+
+		if (CountInv("DoShoulderCannon") >= 1)
+		{
+			State stShoulder = invoker.ResolveState("FireShoulderCannon");
+			if (stShoulder)
+				return stShoulder;
+			A_TakeInventory("DoShoulderCannon", 1);
+		}
+
 		if (invoker.usingMelee || CountInv("ShieldSawThrowAnim") >= 1 || CountInv("CantFire") >= 1)
 		{
 			A_WeaponReady(WRF_NOFIRE | WRF_NOSECONDARY | WRF_NOSWITCH);
@@ -1008,6 +1019,12 @@ class PB_WeaponBase : DoomWeapon
 			else if (ResolveState("NoDualWield")) return ResolveState("NoDualWield");
 			else return ResolveState("WeaponSpecial");
 		}
+		if (CountInv("HasBarrel") >= 1)
+			return ResolveState("ReadyBarrel");
+		if (CountInv("HasBurningBarrel") >= 1)
+			return ResolveState("ReadyFlameBarrel");
+		if (CountInv("HasIceBarrel") >= 1)
+			return ResolveState("ReadyIceBarrel");
 		if (CountInv("GrabbedBarrel")>=1) 
 		{
 			return ResolveState("GrabBarrel");
@@ -1019,17 +1036,6 @@ class PB_WeaponBase : DoomWeapon
 		if (CountInv("GrabbedIceBarrel")>=1) 
 		{
 			return ResolveState("GrabBarrel");
-		}
-		if (CountInv("DoGloryMelee")>=1) 
-		{
-			return ResolveState("GloryMelee");
-		}
-		if (CountInv("DoShoulderCannon")>=1) 
-		{
-			State stShoulder = invoker.ResolveState("FireShoulderCannon");
-			if (stShoulder)
-				return stShoulder;
-			A_TakeInventory("DoShoulderCannon", 1);
 		}
 		if (CountInv("Unloading")>=1 && ResolveState("Unload") && !(pbFlags & PBWEAP_UNLOADED) && CountInv(invoker.UnloaderToken) != 1)
 		{
@@ -1126,15 +1132,18 @@ class PB_WeaponBase : DoomWeapon
 	action state PB_RespectIfNeeded()
 	{
 		Actor own = invoker.owner;
-		bool shouldHelmet = ACS_NamedExecuteWithResult("ToggleHelmetAnimation",0,0,0) == 0 && own.CountInv("IntroductionSequence") == 0;
+		CVar cvNoHelmet = CVar.FindCVar("pb_NoHelmetAnimation");
+		bool helmetDisabled = cvNoHelmet && cvNoHelmet.GetInt() != 0;
+		bool needIntroToken = own.CountInv("IntroductionSequence") == 0;
 		bool shouldRespect = invoker.respectInventoryItem != "" && own.CountInv(invoker.respectInventoryItem) == 0;
 		bool dontRespect = Cvar.FindCVar('pb_respectweapons').GetBool() == false && own.CountInv(invoker.respectInventoryItem) == 0;
-		if (shouldHelmet)
+		if (needIntroToken)
 		{
-			own.GiveInventory("IntroductionSequence",1);
-			return invoker.resolveState("HelmetAnimation");
-		}	
-		else if (dontRespect)
+			own.GiveInventory("IntroductionSequence", 1);
+			if (!helmetDisabled)
+				return invoker.resolveState("HelmetAnimation");
+		}
+		if (dontRespect)
 		{
 			own.GiveInventory(invoker.respectInventoryItem,1);
 			if(!invoker.owner || !invoker.owner.player || !invoker.owner.player.ReadyWeapon)
@@ -1152,22 +1161,17 @@ class PB_WeaponBase : DoomWeapon
 				PB_SetCurrentRocketMode("Standard");
 				return invoker.A_Jump(256,"SelectAnimation");
 				}
-			else {
 			return invoker.A_Jump(256,"SelectAnimation");
-			}
 		}
-		else if (shouldRespect)
+		if (shouldRespect)
 		{
 			own.GiveInventory(invoker.respectInventoryItem,1);
 			return invoker.resolveState("WeaponRespect");
 		}
-		else
-		{
-			return invoker.A_Jump(256,"SelectAnimation");
-		}
+		return invoker.A_Jump(256,"SelectAnimation");
 	}
 
-	action void PB_IncrementHeat(int amount, bool secondBarrel = false) {}
+	// PB_IncrementHeat — BaseWeapon_StagingShim.zsc
 	action void PB_AmmoIntoMag(name mag, name pool, int magMax, int per)
 	{
 		int n;
@@ -1209,9 +1213,7 @@ class PB_WeaponBase : DoomWeapon
 				PB_SpawnLooseRounds(looseFx, taken);
 		}
 	}
-	action void PB_CheckBarrelPlace1() {}
-	action void PB_CheckBarrelThrow1() {}
-	action void PB_CheckBarrelIdle1() {}
+	// PB_CheckBarrel* + barrel carry states — BaseWeapon_Barrels.zsc
 	action void PB_ReFire (StateLabel st = 'Fire')
 	{
 		A_Refire (st);
@@ -1248,7 +1250,10 @@ class PB_WeaponBase : DoomWeapon
 	action void PB_FireOffset() {}
 	action void PB_GunSmoke(double x, double y, double z)
 	{
-		A_FireCustomMissile("GunFireSmoke", x, y, 0, 0, 0, 0);
+		let ow = invoker.owner;
+		if (!ow || ow.CountInv("LowGraphicsMode") > 0)
+			return;
+		A_FireCustomMissile("GunFireSmoke", 0, 0, x, y, 0, 0);
 	}
 	action void PB_FireAltBFGRail()
 	{
@@ -1466,8 +1471,8 @@ class PB_WeaponBase : DoomWeapon
 			Goto Ready3;
 		WeaponRespect:
 		Ready3:
-			TNT1 A 1 A_Jump(255, "Ready3");
-			Loop;	
+			TNT1 A 0 A_Jump(256, "SelectAnimation");
+			Stop;	
 		
 		Flash:
 			TNT1 A 1;
