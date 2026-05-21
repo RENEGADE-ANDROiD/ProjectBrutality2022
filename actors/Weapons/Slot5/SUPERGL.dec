@@ -230,7 +230,7 @@ ACTOR PB_SuperGL: PB_Weapon
 			TNT1 A 0 A_TakeInventory("GrenadeDetonator",1)
 			TNT1 AAAAAAAAAAAAAAAAAA 0 A_Raise
 			TNT1 AAAAAAAA 1 A_Raise
-			Wait
+			Goto Ready3
 				
 		WeaponSpecial:
 			//First, check if player selected different grenade type

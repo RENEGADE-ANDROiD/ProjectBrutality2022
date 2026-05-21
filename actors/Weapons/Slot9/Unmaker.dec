@@ -55,6 +55,8 @@ ACTOR PB_Unmaker : PB_Weapon
 	Weapon.AmmoType2 "Demonpower"
     Inventory.PickupSound "UNMPCK"
 	Tag "Unmaker"
+	Inventory.Icon "UNHDA0"
+	Inventory.AltHUDIcon "UNHDA0"
     +WEAPON.NOAUTOAIM
 	+WEAPON.NOAUTOFIRE
 	//Weapon.SisterWeapon PB_Flamethrower

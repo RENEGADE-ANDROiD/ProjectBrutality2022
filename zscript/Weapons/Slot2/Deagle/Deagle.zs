@@ -117,6 +117,7 @@ class PB_Deagle : PB_WeaponBase
 
 		Ready3:
 		Ready:
+			TNT1 A 0 PB_CheckBarrelThrow1();
 			TNT1 A 0 A_WeaponOffset(0,32);
 			TNT1 A 0 PB_HandleCrosshair(32);
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyDualWield");
@@ -160,8 +161,7 @@ class PB_Deagle : PB_WeaponBase
 				A_FireProjectile("PB_50AE", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
 				A_AlertMonsters();
 				PB_IncrementHeat(2);
-				PB_GunSmoke_Deagle(0,5,5);
-				PB_MuzzleFlashEffects(0,5,5);
+				A_PB_ThrottledMuzzleFX(0, 5, 5, "", 'DeagleFXPhase');
 				A_FireProjectile("YellowFlareSpawn",0,0,0,0);
 				PB_SpawnCasing("EmptyBrassDeagle",30,0,31,-frandom(1.0, 2.0),frandom(2.0,6.0),frandom(3.0,6.0));
 				PB_TakeAmmo("DeagleAmmo",1);
@@ -692,24 +692,7 @@ class PB_Deagle : PB_WeaponBase
 			D3E0 A 1
 			{
 				PB_CoolDownBarrel(0, 0, 4);
-				if(CVar.GetCvar("pb_toggle_aim_hold",player).getint() == 1)
-				{
-					if(!PressingAltfire() || JustReleased(BT_ALTATTACK))
-						return ResolveState("Zoomout");
-
-					if (PressingFire() && PressingAltfire() && CountInv(invoker.ammotype2) > 0)
-						return ResolveState("Fire2");
-
-					return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOSECONDARY);
-				}
-				else
-				{
-					if (PressingFire() && CountInv(invoker.ammotype2) > 0 )
-						return ResolveState("Fire2");
-
-					return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-				}
-				return ResolveState(null);
+				return PB_ReadyFire("Fire2", "Fire2", "Zoomout", true);
 			}
 			Loop;
 
@@ -727,8 +710,7 @@ class PB_Deagle : PB_WeaponBase
 				PB_LowAmmoSoundWarning("pistol");
 				A_FireProjectile("PB_50AE", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
 				A_AlertMonsters();
-				PB_GunSmoke_Deagle(0,5,5);
-				PB_MuzzleFlashEffects(0,5,5);
+				A_PB_ThrottledMuzzleFX(0, 5, 5, "", 'DeagleFXPhase');
 				PB_IncrementHeat(2);
 				A_FireProjectile("YellowFlareSpawn",0,0,0,0);
 				PB_SpawnCasing("EmptyBrassDeagle",26,0,38,-frandom(1.0, 2.0),frandom(2.0,6.0),frandom(3.0,6.0));
@@ -822,8 +804,7 @@ class PB_Deagle : PB_WeaponBase
 				PB_IncrementHeat(2, true);
 				A_SetFiringLeftWeapon(true);
 				A_FireProjectile("PB_50AE", frandom(-0.1,0.1),0,-6,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
-				PB_GunSmoke_Deagle(15,0,6);
-				PB_MuzzleFlashEffects(15,0,6);
+				A_PB_ThrottledMuzzleFX(15, 0, 6, "", 'DeagleDWFXPhase');
 				PB_SpawnCasing("EmptyBrassDeagle",26,-12,38,-frandom(1.0, 2.0),frandom(2.0,6.0),frandom(3.0,6.0));
 				A_StartSound("weapons/deagle/fire", 0, CHANF_OVERLAP, 1.0);
 				A_StartSound("weapons/deagle/afire", 0, CHANF_OVERLAP, 0.70);
@@ -919,8 +900,7 @@ class PB_Deagle : PB_WeaponBase
 				PB_IncrementHeat(2);
 				A_SetFiringRightWeapon(true);
 				A_FireProjectile("PB_50AE", frandom(-0.1,0.1),0,6,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
-				PB_GunSmoke_Deagle(-15,0,6);
-				PB_MuzzleFlashEffects(-15,0,6);
+				A_PB_ThrottledMuzzleFX(-15, 0, 6, "", 'DeagleDWFXPhase');
 				PB_SpawnCasing("EmptyBrassDeagle",26,25,38,-frandom(1.0, 2.0),frandom(2.0,6.0),frandom(3.0,6.0));
 				A_StartSound("weapons/deagle/fire", 0, CHANF_OVERLAP, 1.0);
 				A_StartSound("weapons/deagle/afire", 0, CHANF_OVERLAP, 0.70);

@@ -22,6 +22,7 @@ class Stormcast : PB_WeaponBase
         Obituary "%o was electrocuted by %k";
         +WEAPON.AMMO_OPTIONAL
         +WEAPON.NOAUTOAIM
+        +WEAPON.CHEATNOTWEAPON
         Scale 0.5;
         Height 20;
     }
@@ -764,7 +765,7 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_TakeInventory("CastingArcOfDeath", 1);
             CONE AAAAAAAAAAAAAAAAAA 0 A_Raise;
             CONE AAAAAAAA 1 A_Raise;
-            Wait;
+            Goto Ready3;
 
         // Spawn state for the pickup
         Spawn:

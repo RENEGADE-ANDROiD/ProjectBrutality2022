@@ -94,12 +94,26 @@ Class PB_Monster : Actor abstract
 	}
 
 
+	bool PB_MonsterHandlersDueThisTic()
+	{
+		if (HitBoxSpawned)
+			return true;
+		if (CheckInventory("HeadshotToken", 1))
+			return true;
+		if (CheckInventory("ExecutionToken", 1))
+			return true;
+		return (Level.MapTime & 7) == 0;
+	}
+
 	override void Tick()
 	{
 		Super.Tick();
 
-		HitboxerHandler();
-		ExecutionHandler();
+		if (PB_MonsterHandlersDueThisTic())
+		{
+			HitboxerHandler();
+			ExecutionHandler();
+		}
 	}
 
 	override void PostBeginPlay() {
