@@ -748,6 +748,30 @@ class PB_EventHandler : EventHandler
 		return PB2022_NoTex();
 	}
 
+	ui static bool PB2022_SpawnSpriteUnfitForWeaponHud(string tn)
+	{
+		if (tn.Length() < 4)
+			return true;
+		string p = tn.Mid(0, 4);
+		return p ~== "PLAY" || p ~== "MARN" || p ~== "MARJ" || p ~== "PLA1"
+			|| p ~== "STAN" || p ~== "STAL" || p ~== "PUNG" || p ~== "PUNS";
+	}
+
+	ui static TextureID PB2022_HudIconFromWeaponDefaults(Name weaponClass)
+	{
+		class<Weapon> wcls = (class<Weapon>)(weaponClass);
+		if (!wcls)
+			return PB2022_NoTex();
+		readonly<Weapon> wdef = GetDefaultByType(wcls);
+		if (!wdef)
+			return PB2022_NoTex();
+		if (wdef.Icon.IsValid())
+			return wdef.Icon;
+		if (wdef.AltHUDIcon.IsValid())
+			return wdef.AltHUDIcon;
+		return PB2022_NoTex();
+	}
+
 	ui static TextureID PB2022_FirstHudIconFromSpawn(Name cls)
 	{
 		class<Actor> acl = (class<Actor>)(cls);
@@ -764,6 +788,11 @@ class PB_EventHandler : EventHandler
 			{
 				string tn = TexMan.GetName(sid);
 				if (tn.Length() >= 4 && tn.Mid(0, 4) ~== "TNT1")
+				{
+					st = st.NextState;
+					continue;
+				}
+				if (PB2022_SpawnSpriteUnfitForWeaponHud(tn))
 				{
 					st = st.NextState;
 					continue;
@@ -793,8 +822,28 @@ class PB_EventHandler : EventHandler
 		if (PB2022_TexValid(wheel))
 			return wheel;
 
-		TextureID iconID = weap.AltHUDIcon.IsValid() ? weap.AltHUDIcon : weap.Icon;
-		if (weaponClass == 'HASG' || PB2022_WeaponHudIconExtremeAspect(iconID))
+		TextureID iconID = PB2022_NoTex();
+		if (weap)
+		{
+			if (weap.Icon.IsValid())
+				iconID = weap.Icon;
+			else if (weap.AltHUDIcon.IsValid())
+				iconID = weap.AltHUDIcon;
+		}
+		if (!PB2022_TexValid(iconID))
+			iconID = PB2022_HudIconFromWeaponDefaults(weaponClass);
+
+		if (!PB2022_TexValid(iconID))
+		{
+			TextureID classIcon = TexMan.CheckForTexture(
+				String.Format("%sICON", weaponClass), TexMan.Type_Any);
+			if (PB2022_TexValid(classIcon))
+				iconID = classIcon;
+		}
+
+		bool needsSpawnFallback = !PB2022_TexValid(iconID)
+			|| (weaponClass == 'HASG' && PB2022_WeaponHudIconExtremeAspect(iconID));
+		if (needsSpawnFallback)
 		{
 			TextureID spawn = PB2022_FirstHudIconFromSpawn(weaponClass);
 			if (PB2022_TexValid(spawn))
@@ -840,10 +889,11 @@ class PB_EventHandler : EventHandler
 		int offY = cvOffY ? cvOffY.GetInt() : 0;
 		double boxW = (cvMaxW ? max(16.0, cvMaxW.GetFloat()) : 96.0) * userScale;
 		double boxH = (cvMaxH ? max(16.0, cvMaxH.GetFloat()) : 72.0) * userScale;
-		double cx = double(Screen.GetWidth() + offX);
-		double cy = double(Screen.GetHeight() + offY);
+		// pb_weaponhud_x/y offset the box anchor from the screen bottom-right corner.
+		double cx = double(Screen.GetWidth() + offX) - boxW * 0.5;
+		double cy = double(Screen.GetHeight() + offY) - boxH * 0.5;
 
-		DrawClipFittedTexture(iconID, cx, cy, boxW, boxH, alpha, true);
+		DrawClipFittedTexture(iconID, cx, cy, boxW, boxH, alpha, false, false);
 	}
 
 	ui TextureID PB2022GetModeIcon(PlayerInfo p, Name weaponClass, out double localScale, out double localOffX, out double localOffY)
@@ -854,7 +904,7 @@ class PB_EventHandler : EventHandler
 		if (!p || !p.mo)
 			return PB2022_NoTex();
 
-		TextureID modeIcon;
+		TextureID modeIcon = PB2022_NoTex();
 		Actor mo = p.mo;
 
 		switch (weaponClass)
@@ -1161,6 +1211,9 @@ class PB_EventHandler : EventHandler
 				if (mo.CountInv("AxeShieldLoadout") >= 1)
 					modeIcon = PB2022_ModeHudLump("5L1DI0");
 				break;
+
+			default:
+				break;
 		}
 
 		return modeIcon;
@@ -1195,10 +1248,10 @@ class PB_EventHandler : EventHandler
 		int offY = (cvOffY ? cvOffY.GetInt() : 0) + int(modeOffY);
 		double boxW = (cvMaxW ? max(12.0, cvMaxW.GetFloat()) : 56.0) * userScale;
 		double boxH = (cvMaxH ? max(12.0, cvMaxH.GetFloat()) : 56.0) * userScale;
-		double cx = double(Screen.GetWidth() + offX);
-		double cy = double(Screen.GetHeight() + offY);
+		double cx = double(Screen.GetWidth() + offX) - boxW * 0.5;
+		double cy = double(Screen.GetHeight() + offY) - boxH * 0.5;
 
-		DrawClipFittedTexture(modeIcon, cx, cy, boxW, boxH, alpha);
+		DrawClipFittedTexture(modeIcon, cx, cy, boxW, boxH, alpha, false, false);
 	}
 
 	clearscope static string PB_PDA_NormClassStr(string cn)
@@ -6397,7 +6450,10 @@ class PB_EventHandler : EventHandler
 		return zz;
 	}
 
-	ui void DrawClipFittedTexture(TextureID tex, double cx, double cy, double maxW, double maxH, double alpha, bool coverFit = false) const
+	// cx/cy = center of the layout box (maxW x maxH). DTA_CenterOffset aligns texture center to that point.
+	// clipToMaxBox: only for UI tiles that must stay inside a slot; corner weapon/mode HUD must not clip
+	// (cover-fit + DTA_Clip* was cutting wide/tall Inventory.Icon art at the box edge).
+	ui void DrawClipFittedTexture(TextureID tex, double cx, double cy, double maxW, double maxH, double alpha, bool coverFit = false, bool clipToMaxBox = false) const
 	{
 		if (!tex.IsValid())
 			return;
@@ -6407,12 +6463,12 @@ class PB_EventHandler : EventHandler
 		double sc = coverFit ? max(maxW / ts.X, maxH / ts.Y) : min(maxW / ts.X, maxH / ts.Y);
 		double dw = ts.X * sc;
 		double dh = ts.Y * sc;
-		if (coverFit)
+		if (clipToMaxBox)
 		{
-			int clipL = int(cx - maxW);
-			int clipT = int(cy - maxH);
-			int clipR = int(cx);
-			int clipB = int(cy);
+			int clipL = int(cx - maxW * 0.5);
+			int clipT = int(cy - maxH * 0.5);
+			int clipR = int(cx + maxW * 0.5);
+			int clipB = int(cy + maxH * 0.5);
 			Screen.DrawTexture(tex, false, cx, cy,
 				DTA_DestWidthF, dw, DTA_DestHeightF, dh,
 				DTA_Alpha, alpha, DTA_CenterOffset, true,
@@ -6623,7 +6679,7 @@ class PB_EventHandler : EventHandler
 						else if (UiObjects[i].objecttype == 14 && pdaMainEquipFrames.Size() > 0)
 							anim = pdaMainEquipFrames[pdaMainEquipCur];
 						if (anim.IsValid())
-							DrawClipFittedTexture(anim, midX, midCont, slotW, slotH, globalPDAAlpha * 0.92);
+							DrawClipFittedTexture(anim, midX, midCont, slotW, slotH, globalPDAAlpha * 0.92, false, true);
 						Screen.Dim(color(6, 10, 18), 0.62 * globalPDAAlpha, bx + 4, contentBottom - 4, bw - 8, bandH + 8);
 						string lab = UiObjects[i].toDraw;
 						double lblSc = pdaTextScale * 0.72;
