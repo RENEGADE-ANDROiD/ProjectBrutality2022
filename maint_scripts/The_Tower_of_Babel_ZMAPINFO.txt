@@ -1,0 +1,754 @@
+//This whole lump was created for the sole purpose of making MAP39 playable in
+//GZDoom, because that mistake of a port doesn't support the walking corpse bug
+//when the voodoo dolls get hurt but survive, and the real player dies. Also
+//MAP39's GREYMAP doesn't work with Hardware ands True Color renderers, and I
+//doubt all of GZDoomers use the Software one, so I had to recreate the map in
+//UDMF format. 
+//Commentary is omitted because it's already present in UMAPINFO.
+//Words cannot express how much I hate GZDoom right now.
+//- Djoga
+
+// I understand the suffering man, or maybe I don't, idk
+// - Rafael2100
+// Ok now I understand ;_; wtf is this bullshit
+
+defaultmap
+{
+nocrouch
+nojump
+}
+
+MAP MAP01 "Unwanted Reception"
+{
+	music = "D_MAP01"
+	Next = "map02"
+	titlepatch = "CWILV00"
+	cluster = 1
+	sky1 = "sky2",0
+}
+MAP MAP02 "Hell's Incursion"
+{
+	music = "D_MESSAG"
+	Next = "map03"
+	titlepatch = "CWILV01"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP03 "Claustrophobia"
+{
+	music = "D_MAP03"
+	Next = "map04"
+	titlepatch = "CWILV02"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP04 "Growing Pains"
+{
+	music = "D_MAP04"
+	Next = "map05"
+	titlepatch = "CWILV03"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP05  "Coldspot"
+{
+	music = "D_MAP05"
+	Next = "map06"
+	titlepatch = "CWILV04"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP06 "Skylab"
+{
+	music = "D_MAP06"
+	Next = "map07"
+	titlepatch = "CWILV05"
+	cluster = 1
+	sky1 = "sky2",0
+	secretnext = "map45"
+	
+}
+
+MAP MAP07 "Brain Dead"
+{
+	music = "D_MAP07"
+	Next = "map08"
+	titlepatch = "CWILV06"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP08 "Nuke Testing Floor"
+{
+	music = "D_MAP08"
+	Next = "map09"
+	secretnext = "map41"
+	titlepatch = "CWILV07"
+	cluster = 2
+	sky1 = "sky2",0
+}
+
+MAP MAP09 "No rest for the hamstrings"
+{
+	music = "D_MAP09"
+	Next = "map10"
+	titlepatch = "CWILV08"
+	cluster = 3
+	sky1 = "sky2",0
+}
+
+MAP MAP10 "Garten of Caco"
+{
+	music = "D_MAP10"
+	Next = "map11"
+	titlepatch = "CWILV09"
+	cluster = 1
+	sky1 = "sky2",0
+
+}
+
+MAP MAP11 "Welcome to the Gutzeria"
+{
+	music = "D_MAP11"
+	Next = "map12"
+	titlepatch = "CWILV10"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP12 "Dark Rite"
+{
+	music = "D_THEDA2"
+	titlepatch = "CWILV11"
+	Next = "map13"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP13 "Data Stream"
+{
+	music = "D_MAP13"
+	titlepatch = "CWILV12"
+	Next = "map14"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP14 "Construction Site"
+{
+	music = "D_MAP14"
+	titlepatch = "CWILV13"
+	next = "map15"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP15 "Dilapidation"
+{
+	label = "Flr15"
+	music = "D_MAP15"
+	titlepatch = "CWILV14"
+	next = "map16"
+	specialaction = "BaronOfHell", "Floor_LowerToLowest", 666,8
+	specialaction = "Cyberdemon", "Floor_LowerToLowest", 667,8
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP16 "Flesh cage"
+{
+	music = "D_MAP16"
+	next = "map17"
+	titlepatch = "CWILV15"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP17 "Unholy Fortress"
+{
+	music = "D_MAP17"
+	next = "map18"
+	titlepatch = "CWILV16"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP18 "Pick your Poison"
+{
+	music = "D_MAP18"
+	next = "map19"
+	titlepatch = "CWILV17"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP19 "Claustrophobier"
+{
+	music = "D_MAP19"
+	next = "map20"
+	titlepatch = "CWILV18"
+	specialaction = "BaronOfHell", "Floor_LowerToNearest", 10, 8
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP20 "Cistern of Damnnation"
+{
+	next = "map21"
+	music = "D_MAP20" 
+	titlepatch = "CWILV19"
+	cluster = 9
+	sky1 = "sky2",0
+}
+
+MAP MAP21 "Neglected Space"
+{
+	next = "map22"
+	titlepatch = "CWILV20"
+	music = "D_MAP21"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP22 "Violent Employment"
+{
+	next = "map23"
+	titlepatch = "CWILV21"
+	music = "D_MAP22"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP23 "Timber Trance"
+{
+	music = "D_MAP23"
+	next = "map24"
+	titlepatch = "CWILV22"
+	sky1 = "sky1",0
+	cluster = 1
+}
+
+MAP MAP24 "Emerald Dive"
+{
+	titlepatch = "CWILV23"
+	music = "D_MAP24"
+	cluster = 1
+	sky1 = "sky2",0
+	next = "map25"
+}
+
+MAP MAP25 "Bound icon"
+{
+	next = "map26"
+	titlepatch = "CWILV24"
+	music = "D_MAP25"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP26 "Blood reavers"
+{
+	next = "map27"
+	titlepatch = "CWILV25"
+	music = "D_MAP26"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP27 "The Living Word"
+{
+	next = "map28"
+	music = "D_MAP27"
+	titlepatch = "CWILV26"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP28 "Rust"
+{
+	label = "Flr28"
+	music = "D_MAP28"
+	next = "map29"
+	titlepatch = "CWILV27"
+	cluster = 1
+	sky1 = "sky2",0
+	
+}
+
+MAP MAP29 "Stinkbug"
+{
+	music = "D_MAP29"
+	next = "map30"
+	titlepatch = "CWILV28"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+map map30  "Space Cadet"
+{
+	music = "D_MAP30"
+	next = "map31"
+	titlepatch = "CWILV29"
+	par = 300
+	secretnext = "map69"
+	cluster = 1
+	specialaction = "Arachnotron", "Floor_LowerByValue", 666, 32, 32
+	specialaction = "BaronOfHell", "Floor_LowerToNearest", 667, 32
+	sky1 = "sky2",0
+}
+
+MAP MAP31 "But why should I care?" 
+{
+	next = "map32"
+	music = "D_MAP31"
+	titlepatch = "CWILV30"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP32  "Vermilion Flux"
+{
+	next = "map33"
+	music = "D_MAP32"
+	titlepatch = "CWILV31"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP33 "Exile on 33"
+{
+	next = "map34"
+	music = "D_MAP33"
+	titlepatch = "CWILV32"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP34 "Chrivale Shipping"
+{
+	Music = "D_MAP34"
+	Next = "map35"
+	titlepatch = "CWILV33"
+	cluster = 5
+	sky1 = "sky2",0
+}
+MAP MAP35 "Exiternity"
+{
+	next = "map36"
+	titlepatch = "CWILV34"
+	music = "D_MAP35"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP36 "Weaving Wiles"
+{
+	titlepatch = "Flr36"
+	music = "D_MAP36"
+	next = "map37"
+	sky1 = "sky1",0
+	titlepatch = "CWILV35"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP37 "The Floor is Pizza"
+{
+	next = "map38"
+	music = "D_DDTBLU"
+	titlepatch = "CWILV36"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP38 "Attic Asphyxiation"
+{
+	next = "zmap39"
+	music = "D_MAP38"
+	cluster = 6
+	titlepatch = "CWILV37"
+	sky1 = "sky2",0
+}
+
+MAP ZMAP39 "Is this Heaven?"
+//Here is the initiator of this whole ordeal.
+{
+	next = "map40"
+	music = "D_MAP39"
+	titlepatch = "CWILV38"
+	cluster = 11
+	sky1 = "FIREBLU1",0
+	specialaction = "deadlostsoul", "Floor_LowerToNearest", 666, 32
+}
+
+MAP MAP40 "Ufobia"
+{
+	music = "D_MAP40"
+	next = endsequence, "doom2cast"
+	cluster = 7
+	titlepatch = "CWILV39"
+	resethealth
+	resetinventory
+	sky1 = "Horizonc",0
+}
+
+map map41 "Castles in Dream"
+{
+	next = "map44"
+	secretnext = "map42"
+	music = "D_MAP41"
+	ExitPic = "FWATER1"
+	cluster = 1
+	titlepatch = "CWILV40"
+	sky1 = "sky2",0
+}
+
+map map42 "128 Shades of Red and Blue"
+{
+	music = "D_MAP42"
+	next = "MAP44"
+	sky1 = "FIREBLU1",0
+	specialaction = "Baalgar","Exit_Normal",0
+	titlepatch = "CWILV41"
+	cluster = 8
+	sky1 = "fireblu1",0
+}
+
+map map44 "Aftermath"
+{
+	next = "map09"
+	music = "D_BITCH"
+	titlepatch = "CWILV43"
+	sky1 = "sky2",0
+	//ytp sexer
+	// What ? Who put this here ? - Rafael2100
+}
+
+map map69 "KBAPTNPA 69"
+{
+	sky1 = "SKY2",0
+	music = "D_MAP69"
+	next = "map31"
+	titlepatch = "CWILV68"
+	cluster = 4
+	specialaction = "Baronofhell", "Floor_LowerToNearest", 666, 8
+	specialaction = "wolfensteinss", "DOOR_OPEN", 667, 8
+}
+
+map map43 "Sanctuary"
+{
+	music = "D_MAP00"
+	next = "map05"
+	titlepatch = "CWILV42"
+	cluster = 1
+	sky1 = "sky2",0
+}
+
+MAP MAP45 "Wait what?"
+{
+	next = "map07"
+	music = "D_MAP45"
+	titlepatch = "CWILV44"
+	cluster = 10
+	sky1 = "sky2",0
+}
+cluster 1
+{
+	Pic = "INTERPIC"
+}
+cluster 2
+{
+	music = "D_READ_M"
+	exittext = "I toss aside the corpse and even",
+	"out the poorly set up sleeping bag. It's a",
+	"bit poor quality, and there's a faint",
+	"dripping sound outside, but it's fine",
+	"enough for the current situation. It's a",
+	"gamble to stay in here, but I'll be",
+	"wearing my full suit of armor like usual,",
+	"so it's probably okay. Not that",
+	"comfortable, but nothing here's",
+	"comfortable.",
+	"",
+	"I burrow into a deep slumber, my mind",
+	"spinning from the previous 7 floors.",
+	"",
+	"It just keeps going up."
+	Flat = "FLAT19"
+}
+cluster 3
+{
+	music = "D_READ_M"
+	exittext = "Whoops! It seems my", 
+	"statistically improbable and physically",
+	"impractical assortment of weaponry's", 
+	"impossible to carry up this ladder with",
+	"me. I toss aside all the weaponry I've",
+	"collected, where I assume it will return",
+	"to the circle of life. All I'm able to",
+	"keep on my person is a pistol and a few",
+	"magazines.",
+	"",
+	"Hopefully, nobody is expecting my arrival."
+	Flat = "FLOOR4_6"
+}
+cluster 4
+{
+	music = "D_READ_M"
+	entertext =  "Entering a teleporter",
+	"to a secret level, I'm likely in for",
+	"another floor of bloodshed. Another",
+	"floor of torment. Another floor of",
+	"tiring and grueling abstra-",
+	"",
+	"I wake with a start, body drenched in",
+	"sweat. My cat resting next to me in a",
+	"comfortable, plush bed.",
+	"",
+	"I rub my eyes (not realizing I'm still",
+	"wearing my helmet) and stand up.",
+	"",
+	"Something seems fishy. I feel watched."
+	Flat = "FLOOR0_3"
+}
+cluster 5
+{
+	music = "D_READ_M"
+	exittext = "As I enter the teleporter, there is a door", 
+	"in front of me. I open that door, and behind it",
+	"is a light bright room. It is a very uncomplicated room.",
+	"There is no issues I couldn't tolerate, as I am.",
+	"",
+	"Time for it."
+	Flat = "FLOOR0_3"
+}
+Cluster 6
+{
+	music = "D_MAP00"
+	exittext = "You are not welcome here."
+	Flat = "CRATOP1"
+}
+cluster 7
+{
+	music = "D_READ_M"
+	exittext = "I hurriedly press the button,",
+	"repeatedly slamming it in my panicked.",
+	"state. Whatever it does, it can't be any",
+	"worse than this, right?",
+	"",
+	"The spacecraft raises into the sky, the", 
+	"path it's set on unknown to me. I'm sure",
+	"it's yet another mission sure to either",
+	"kill or severely maim me. Because the last",
+	"one went so well, right? Well, if I die in",
+	"space, at least I'll have fought to the end.",
+	"If there's one thing that'd disappoint me",
+	"in my final moments, it'd be going out like",
+	"a coward.",
+	"",
+	"Well, if there's one thing I expected going", 
+	"to work today, it definitely wasn't this."
+	Flat = "FLOOR0_3"
+}
+cluster 8
+{
+	music = "D_READ_M"
+	entertext = "Upon landing, i'm instantly hit",
+	"with the smell of smoke and rotting meat,",
+	"The air hums dull with the ambient noise",
+	"of pulsing electricity, underpinned by",
+	"the rhythmic crackling of a hearth.",
+	"The room is humid, hostile, almost frothing",
+	"at the mouth to attack me. I feel the",
+	"blood rush to my head, just hanging there",
+	"from the roof. There's only 2 things I know",
+	"for certain.",
+	"",
+	"I am not on Earth here.",
+	"I am not safe here."
+	Flat = "FWATER1"
+}
+cluster 9
+{
+	music = "D_READ_M"
+	entertext = "This staircase, it reaches high,",
+	"so high.",
+	"Numb legs",
+	"Numb head",
+	"the hot air from the previous floor,",
+	"slowly gets colder by the steps.",
+	"I feel exhausted, conjuring thoughts",
+	"is draining me mentally.",
+	"But without noticing, I step on the",
+	"concrete ground of the next floor.",
+	"The stairway behind closes shut",
+	"leaving me trapped, in this",
+	"desolate, freezing, lonely place.",
+	"As hostile as it looks, I feel", 
+	"at home here.",
+	"we have a lot in common-",
+	"I mutter to myself"
+	Flat = "FLAT5_4"
+}
+cluster 10
+{
+	music = "D_READ_M"
+	entertext = "Looking more closely at the light",
+	"emitting from the back of the teleporter",
+	"I notice something unusual",
+	"that peaks my curiosity.",
+	"entering it, I feel... weird...",
+	"You know that gentle tickle", 
+	"that crawls through your body", 
+	"from toe to head when being",
+	"teleported ?",
+	"At this point I'm used to it.",
+	"But this time ... it is different.", 
+	"Like a ... ripping and tearing",
+	"inside of me !",
+	"Ouch! That hurts! That hurts plenty !",
+	"What is happening !?"
+	Flat = "FLOOR0_3"
+}
+cluster 11
+{
+	music = "D_READ_M"
+	exittext = "I raise into the sky,",
+	"elevated by the spacecraft above me",
+	"I take one last look at the sun",
+	"one last look at the clouds...",
+	"below those, everyone still lives.",
+	"living a life of struggle and despair",
+	"with only the hope of the ",
+	"promised utopia fueling them...",
+	"and mostly, what was that place-",
+	"my thoughts are interrupted by the",
+	"interior of the spacecraft",
+	"it is raising fast, and I don't ",
+	"have time to think about all this",
+	"let's end this"
+	Flat = "SLIME15"
+}
+Intermission Doom2Cast
+//Taken directly from Eviternity because I have no clue if there is already a
+//predefined one.
+//- Djoga
+{
+	Cast
+	{
+		CastClass = "Zombieman"
+		CastName = "$CC_ZOMBIE"
+		AttackSound = "Missile", 1, "grunt/attack"
+		background = "bossback"
+	}
+	Cast
+	{
+		CastClass = "ShotgunGuy"
+		CastName = "$CC_SHOTGUN"
+		AttackSound = "Missile", 1, "shotguy/attack"
+	}
+	Cast
+	{
+		CastClass = "ChaingunGuy"
+		CastName = "$CC_HEAVY"
+		AttackSound = "Missile", 1, "chainguy/attack"
+		AttackSound = "Missile", 2, "chainguy/attack"
+		AttackSound = "Missile", 3, "chainguy/attack"
+	}
+	Cast
+	{
+		CastClass = "DoomImp"
+		CastName = "$CC_IMP"
+		AttackSound = "Missile", 2, "imp/attack"
+	}
+	Cast
+	{
+		CastClass = "Demon"
+		CastName = "$CC_DEMON"
+		AttackSound = "Melee", 1, "demon/melee"
+	}
+	Cast
+	{
+		CastClass = "LostSoul"
+		CastName = "$CC_LOST"
+		AttackSound = "Missile", 1, "skull/melee"
+	}
+	Cast
+	{
+		CastClass = "Cacodemon"
+		CastName = "$CC_CACO"
+		AttackSound = "Missile", 1, "caco/attack"
+	}
+	Cast
+	{
+		CastClass = "HellKnight"
+		CastName = "$CC_HELL"
+		AttackSound = "Missile", 1, "baron/attack"
+	}
+	Cast
+	{
+		CastClass = "BaronOfHell"
+		CastName = "$CC_BARON"
+		AttackSound = "Missile", 1, "baron/attack"
+	}
+	Cast
+	{
+		CastClass = "Arachnotron"
+		CastName = "$CC_ARACH"
+		AttackSound = "Missile", 1, "baby/attack"
+	}
+	Cast
+	{
+		CastClass = "PainElemental"
+		CastName = "$CC_PAIN"
+		AttackSound = "Missile", 2, "skull/melee"
+	}
+	Cast
+	{
+		CastClass = "Revenant"
+		CastName = "$CC_REVEN"
+		AttackSound = "Missile", 1, "skeleton/attack"
+		AttackSound = "Melee", 1, "skeleton/swing"
+		AttackSound = "Melee", 3, "skeleton/melee"
+	}
+	Cast
+	{
+		CastClass = "Fatso"
+		CastName = "$CC_MANCU"
+		AttackSound = "Missile", 1, "fatso/attack"
+		AttackSound = "Missile", 4, "fatso/attack"
+		AttackSound = "Missile", 7, "fatso/attack"
+	}
+	Cast
+	{
+		CastClass = "Archvile"
+		CastName = "$CC_ARCH"
+		AttackSound = "Missile", 1, "vile/start"
+	}
+	Cast
+	{
+		CastClass = "SpiderMastermind"
+		CastName = "$CC_SPIDER"
+		AttackSound = "Missile", 1, "spider/attack"
+		AttackSound = "Missile", 2, "spider/attack"
+	}
+	Cast
+	{
+		CastClass = "Cyberdemon"
+		CastName = "$CC_CYBER"
+		AttackSound = "Missile", 1, "weapons/rocklf"
+		AttackSound = "Missile", 3, "weapons/rocklf"
+		AttackSound = "Missile", 5, "weapons/rocklf"
+	}
+	Cast
+	{
+		CastClass = "DoomPlayer"
+		CastName = "$CC_HERO"
+		AttackSound = "Missile", 0, "weapons/sshotf"
+	}
+	Link = Doom2Cast
+}

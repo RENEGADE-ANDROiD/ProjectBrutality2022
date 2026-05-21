@@ -264,7 +264,7 @@ ACTOR PB_XM21 : PB_Weapon
 		SelectContinue:
 		TNT1 A 0 
 		TNT1 A 0 A_Raise
-		Wait
+		Goto Ready3
 
 	Fire:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel")
@@ -298,8 +298,8 @@ ACTOR PB_XM21 : PB_Weapon
 				A_FireProjectile("XM21_762x51mmAP", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
 			}
 			 A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
-		     A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
-		     A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+			A_PB_ThrottledGunSmoke(0, 0, 0, 'XM21SmokePhase');
+			A_PB_ThrottledGunSmoke(0, 0, 0, 'XM21SmokePhase');
 		     A_GunFlash;
 			 }
 		X21F B 1 {
@@ -339,8 +339,8 @@ ACTOR PB_XM21 : PB_Weapon
 		X21F A 1 Bright {
 		     A_FireCustomMissile ("XM21BalisticProjectile",0,0,0,0);
 			 A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
-		     A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
-		     A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+			A_PB_ThrottledGunSmoke(0, 0, 0, 'XM21SmokePhase');
+			A_PB_ThrottledGunSmoke(0, 0, 0, 'XM21SmokePhase');
 		     A_GunFlash;
 			 }
 		X21F B 1 {
@@ -384,8 +384,8 @@ ACTOR PB_XM21 : PB_Weapon
 				A_FireProjectile("XM21_762x51mmAP", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
 			}
 			 A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
-		     A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
-		     A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+			A_PB_ThrottledGunSmoke(0, 0, 0, 'XM21SmokePhase');
+			A_PB_ThrottledGunSmoke(0, 0, 0, 'XM21SmokePhase');
 		     A_GunFlash;
 			 }
 		SNIP A 1 {
@@ -425,8 +425,8 @@ ACTOR PB_XM21 : PB_Weapon
 		SNIP A 1 Bright {
 		     A_FireCustomMissile ("XM21BalisticProjectile",0,0,0,0);
 		     A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
-		     A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
-		     A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+			A_PB_ThrottledGunSmoke(0, 0, 0, 'XM21SmokePhase');
+			A_PB_ThrottledGunSmoke(0, 0, 0, 'XM21SmokePhase');
 		     A_GunFlash;
 			 }
 		SNIP A 1 {

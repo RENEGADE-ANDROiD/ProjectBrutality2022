@@ -19,7 +19,7 @@ Actor BFGWeaponSpawner : SpawnerBase replaces BFG9000
 		TNT1 A 1
 		loop
 	DiceRandom:
-		TNT1 A 0 A_Jump(256, "SpawnPB_BFG9000", "SpawnBlackHoleGenerator", "SpawnPB_DemonExterminator", "SpawnStormcast", "SpawnPB_CryoCannon")
+		TNT1 A 0 A_Jump(256, "SpawnPB_BFG9000", "SpawnBlackHoleGenerator", "SpawnPB_DemonExterminator", "SpawnPB_CryoCannon")
 		Stop	
 	DiceMain:	// Default spawn preset with a slight difficulty curve. Tier 1-4 Monster presets are contained here to provide more variety.
 		EarlyLevelMob:
@@ -79,12 +79,6 @@ Actor BFGWeaponSpawner : SpawnerBase replaces BFG9000
 			TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponDemonExterminator",0)
 			TNT1 A 1 A_RadiusGive("IsNearBFG", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 			TNT1 A 0 A_SpawnItemEx("PB_DemonExterminator",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-			Stop
-		SpawnStormcast:
-			TNT1 A 0 A_JumpIf(GetCVar("pb_NoStormcastWeapon"), "SpawnPB_BFG9000")
-			TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponBFG",0)
-			TNT1 A 1 A_RadiusGive("IsNearBFG", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
-			TNT1 A 0 A_SpawnItemEx("Stormcast",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 			Stop
 		SpawnPB_CryoCannon:
 			TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponBFG",0)

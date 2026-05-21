@@ -1,5 +1,6 @@
 const PB_SCREENWIPER_THRESHOLD = 50;
 const PB_SCREENWIPER_DELAY = 2 * Thinker.TICRATE;
+const PB_HUD_INTERFERENCE_MAX = 36;
 
 extend class PB2022_Hud_ZS
 {
@@ -9,7 +10,13 @@ extend class PB2022_Hud_ZS
     uint8 interference;
     void RFInterference(int damage)
     {
-        interference = damage;
+        int add = damage;
+        if (add < 1)
+            add = 1;
+        else if (add > PB_HUD_INTERFERENCE_MAX)
+            add = PB_HUD_INTERFERENCE_MAX;
+        if (add > interference)
+            interference = add;
     }
 	
 	void CreateBloodDrop(int enemybloodcolor)

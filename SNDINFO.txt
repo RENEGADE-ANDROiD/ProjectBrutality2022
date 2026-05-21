@@ -3645,6 +3645,7 @@ HRSwitch HRSWI
 HRFire2 BLASTR
 Shrink	DSSHRINK
 Shrinker  SHRINKR
+Shrinker "sounds/combat/weapons/Demon weapons and Nazi weapons/Demon Tech/SHRINKR.ogg"
 weapons/demontech/weaponspecial1 HRSWTC1
 weapons/demontech/weaponspecial2 HRSWTC2
 weapons/demontech/respect1 HRRSPT1

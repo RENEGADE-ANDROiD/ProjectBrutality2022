@@ -98,6 +98,14 @@ Default
   WoundHealth 1000;
 }
 
+	action void A_PB_DropStormcastBossLoot()
+	{
+		let cv = CVar.FindCVar("pb_NoStormcastWeapon");
+		if (cv && cv.GetInt() != 0)
+			return;
+		A_SpawnItemEx("Stormcast", 0, 0, 32, 0, 0, 0, random(0, 359), SXF_NOCHECKPOSITION);
+	}
+
 	void AngryAttack()
 	{
 		if(Self.Health > 0 && target && target.Health > 0 && CheckSight(target))
@@ -1496,6 +1504,7 @@ Default
 		TNT1 A 0 A_JumpIfIntargetInventory("QSGSelected", 1, "Death.SSG");
 
 		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		TNT1 A 0 {bSHOOTABLE = false; bSOLID = false;}
 		TNT1 A 0 A_StartSound("MLDD01");
 		TNT1 A 0 A_JumpIf(Flight == 1, 7);
@@ -1517,6 +1526,7 @@ Default
 
 	Death.SSG:
 		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		TNT1 A 0 {bSHOOTABLE = false; bSOLID = false;}
 		TNT1 A 0 A_FaceTarget;
 		TNT1 A 0 A_SpawnProjectile ("XDeathWingD3Maledict", 91, -24, random (170, 190), 2, random (0, 40));
@@ -1542,6 +1552,7 @@ Default
 
 	Death.Railgun:
 		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		TNT1 A 0 {bSHOOTABLE = false; bSOLID = false;}
 		TNT1 AAAAA 0 A_SpawnItemEX("NashgoreGibs", 50, 0, 0, random (4, 12), 0, random (4, 12), random(0, 360));
 		TNT1 AAA 0 A_SpawnProjectile ("MeatDeathsmall", 50, 0, random (0, 360), 2, random (0, 160));
@@ -1568,6 +1579,7 @@ Default
 	Death.Incinerate:
 		TNT1 A 0;
 		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		TNT1 A 0 {bSHOOTABLE = false; bSOLID = false;}
 		TNT1 A 0
 		{
@@ -1584,6 +1596,7 @@ Default
 	Death.Disintegrate:
 		TNT1 A 0;
 		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		TNT1 A 0 {bSHOOTABLE = false; bSOLID = false;}
 		TNT1 A 0
 		{
@@ -1601,6 +1614,7 @@ Default
 		TNT1 A 0;
 		TNT1 A 0 A_JumpIfInTargetInventory("HasIncendiaryWeapon",1,"Death.Incinerate");
 		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		TNT1 A 0 {bSHOOTABLE = false; bSOLID = false;}
 		TNT1 A 0
 		{
@@ -1619,6 +1633,7 @@ Default
 	Death.Cut:
 		TNT1 A 0;
 		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		TNT1 A 0 {bSHOOTABLE = false; bSOLID = false;}
 		TNT1 A 0 A_StartSound("MLDD01");
 		TNT1 A 0 A_JumpIf(Flight == 1, "DeathNoHead1");
@@ -1670,6 +1685,7 @@ Default
 	Death.Landmine:
 		TNT1 A 0;
 		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		TNT1 A 0 {bSHOOTABLE = false; bSOLID = false;}
 		TNT1 A 0 A_SpawnItem("BloodSplasher3");
 		TNT1 AAAAAAAAAAAAAA 0 A_SpawnProjectile ("BloodMistXXBig", 30, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_SAVEPITCH, -random (70, 90));
@@ -1699,6 +1715,7 @@ Default
 	Death.Frost:
 		TNT1 A 0;
 		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		TNT1 A 0 {bSHOOTABLE = false; bSOLID = false;}
 		TNT1 A 0 A_JumpIf (flight > 0, "FD2");
 		TNT1 A 0 A_SpawnItem("FrozenD3Maledict");
@@ -1712,6 +1729,7 @@ Default
 
 	Death.Blackhole:
 		TNT1 A 0 A_BossDeath;
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		TNT1 A 0 {bSHOOTABLE = false; bSOLID = false;}
 		TNT1 A 0 A_SpawnItem("BlackHoledD3Maledict");
 	Stop;
@@ -1733,6 +1751,7 @@ Default
 		TNT1 A 1 A_SpawnItemEx ("D3MaledictShrinkFX9", 0, 0, 5, 0, 0);
 		TNT1 A 1 A_SpawnItemEx ("D3MaledictShrinkFX10", 0, 0, 5, 0, 0);
 		TNT1 A 1 A_SpawnItemEx ("LilD3Maledict", 1);
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 	Stop;
 
 	Death.Fire:
@@ -1757,6 +1776,7 @@ Default
 		TNT1 A 0 A_FaceTarget;
 		TNT1 A 0 A_NoBlocking;
 		TNT1 A 0 A_GiveToTarget("BPtoken",5);
+		TNT1 A 0 A_PB_DropStormcastBossLoot;
 		Stop;
 	}
 }

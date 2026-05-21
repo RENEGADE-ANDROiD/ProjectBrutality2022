@@ -56,6 +56,9 @@ OPTMNU_MarauderSSGClassicReload = "Marauder SSG classic reload";
 OPTMNU_TILTPLUSPLUS = "Customize Tilt++";
 
 PB_OPT_PS_PASSIVE_SPAWN = "Project Survival passives (pustule, mimic, pods, etc.)";
+PB_OPT_PS_FODDER_THRESHOLD = "PS Fodder spawn roll (main roster)";
+PB_OPT_PS_FODDER_THRESHOLD_HINT = "Higher = more Shambler/Puker/Blighter/Screamer/Spiker/Burster when a seeker sees the player.";
+PB_OPT_PS_FODDER_THRESHOLD_HINT2 = "Default 160 (~63% roll). 255 = nearly always; 0 = off. Map-placed fodder unaffected.";
 
 TILTPLUSPLUSMNU_TITLE = "Tilt++ Options";
 
@@ -389,6 +392,18 @@ PB_RLNORM = "\cdStandard \c-rockets selected";
 
 PB_FLAMER_FLAME = "\ctFlamethrower:\c- \ciStandard \c-flame";
 PB_FLAMER_ACID = "\ctFlamethrower:\c- \cgnukage / acid \c-mode";
+
+PB_HUD_UNMAKER_INFERNO = "INFERNO";
+PB_HUD_UNMAKER_INCIN = "INCINERATION";
+PB_HUD_FLAMER_FLAME = "FLAME";
+PB_HUD_FLAMER_ACID = "ACID";
+PB_HUD_CRYO_CRYO = "CRYO";
+PB_HUD_CRYO_ELECTRIC = "ELECTRIC";
+PB_HUD_SMG_STD = "SEMI";
+PB_HUD_SMG_AKIMBO = "AKIMBO";
+PB_HUD_SMG_LASER = "LASER";
+PB_HUD_BIOACID_STREAM = "ACID STREAM";
+PB_HUD_BHGEN_CHARGE = "CHARGE";
 
 CM_BUCKLD = "\cd\cgBuckshot \c-shells \cdloaded";
 CM_SLUGLD = "\cd\ctSlug \c-shells \cdloaded";
@@ -737,6 +752,8 @@ PB_WPNHINT_PB_M1Plasma = "M1 Plasma Rifle: Bolts;\nAlt-Fire Overcharge; Weapon S
 PB_WPNHINT_PB_M2Plasma = "M2 Lightning Gun:\nAlt-Fire Arc; Upgrade Chain Modes.";
 PB_WPNHINT_PB_M41A = "M41A: Quick 7.62 Primary.\nWeapon Special Wheel — underbarrel 12ga or 30mm grenade, or Dual Wield.\nCarry two M41As: tap Special (no wheel token pending) to enter or exit dual wield.";
 PB_WPNHINT_PB_MetalSniper = "Anti-Materiel Sniper:\nWeapon Special — wheel: ammo type, scope vs grenade.\nAlt-Fire zooms (sniper mode) or primes grenade.";
+PB_CARBINE_TAG = "UAC-41 Carbine";
+PB_CARBINE_PICKUP = "You got the UAC-41 Carbine! (Slot 4)";
 PB_MSNI_PICKUP = "Metal Sniper (slot 4)";
 PB_MSNI_TAG = "Metal Sniper";
 PB_MSNI_STANDARD = "\ctAmmo:\c- \cd7.62 AP magazine\c-";

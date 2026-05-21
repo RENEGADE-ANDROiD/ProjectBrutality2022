@@ -104,9 +104,6 @@ Class PB_ZombieMan : PB_Monster
 			else {
 				self.Height = 56;
 			}
-			
-			HitboxerHandler();
-			
 		}
 		
 		States

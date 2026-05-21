@@ -1,11 +1,6 @@
 // DragonSlayer — see actors/Weapons/MeleeWeaponPack/DragonSlayer.dec (credits header).
 // Original: Craneo (PB_MeleeWeaponPack CREDITS). PB 0.4.2+ rework: Renegade Android.
 
-class SwordSequence2 : Inventory { Default { Inventory.MaxAmount 1; } }
-class SwordSequence3 : Inventory { Default { Inventory.MaxAmount 1; } }
-class DamageMultiplier : Inventory { Default { Inventory.MaxAmount 20; } }
-class Energy : Inventory { Default { Inventory.MaxAmount 20; } }
-
 // Implementation base — players only receive PB_ObsidianDragonSlayer (Obsidian Ravager drop).
 class DragonSlayer : PB_WeaponBase
 {
@@ -25,6 +20,34 @@ class DragonSlayer : PB_WeaponBase
 			A_Face(lt.hitActor);
 			A_Recoil3D(-20);
 		}
+	}
+
+	Action Actor A_BDPMelee(double range = 200, name projectile = "MeleeAttack", double spawnheight = -7, bool doHitThrust = true)
+	{
+		Actor victim;
+		FLineTraceData lt;
+		double aimz = player ? player.viewheight : (height * 0.5);
+		LineTrace(angle, range, pitch, 0, aimz, data:lt);
+		victim = lt.hitActor;
+		int aimCheck = -6;
+		while (aimCheck++ < 6 && !victim)
+		{
+			LineTrace(angle + (aimCheck * 8), range, pitch, 0, aimz, data:lt);
+			victim = lt.hitActor;
+		}
+		if (victim && victim.bSHOOTABLE)
+		{
+			A_Face(victim);
+			if (doHitThrust && victim.bSOLID)
+			{
+				vel = (0, 0, 0);
+				vel += VecFromAngles(angle, pitch, -12);
+			}
+		}
+		Actor proj = A_FireProjectile(projectile, 0, 0, 0, spawnheight);
+		if (proj && victim && victim.bSHOOTABLE)
+			proj.SetOrigin(victim.pos, false);
+		return victim;
 	}
 
 	Action double A_CheckMeleeRange(double maxrange = 512, bool skipWalls = false)
@@ -62,9 +85,6 @@ class DragonSlayer : PB_WeaponBase
 		+WEAPON.AXEBLOOD
 		+WEAPON.CHEATNOTWEAPON
 		+DONTGIB
-		Weapon.AmmoType "DragonSlayerEnergy";
-		Weapon.AmmoUse 0;
-		Weapon.AmmoGive 0;
 		Weapon.AmmoType2 "PB_NailgunAmmo";
 		Weapon.AmmoGive2 90;
 		Weapon.AmmoUse2 1;
@@ -201,98 +221,29 @@ class DragonSlayer : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
-			TNT1 A 0 A_JumpIfInventory("DragonSlayerEnergy", 5, "HasEnergyForEnhancedFire");
-			Goto Fire2;
-
-		HasEnergyForEnhancedFire:
-			TNT1 A 0 A_TakeInventory("DragonSlayerEnergy", 5);
-			SLAY D 1;
-			SLAY D 1 offset(-33,33);
-			SLAY D 1 offset(-32,32);
-			SLAY D 1 offset(-33,33);
-			SLAY D 1 offset(-32,32);
-			SLAY E 1 offset(-33,33);
-			SLAY E 1 offset(-32,32);
-			SLAY E 1 offset(-33,33);
-			SLAY E 1 offset(-32,32);
-			SLAY F 1 A_PlaySound("Weapons/Slayerswing", 1);
-			SLAY G 1 A_CustomPunch(50,0,0,"SlayerPuff",256);
-			SLAY G 0 A_Quake(3,10,0,10);
-			SLAY G 0 A_FireCustomMissile("RealFlameTrailsSmall", 0,0,1,0,0);
-			TNT1 A 0 A_RailAttack(50,64,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY H 1 A_RailAttack(50,10,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY G 0 A_FireCustomMissile("SmallBlueFlameTrails", 0,0,1,0,0);
-			TNT1 A 0 A_RailAttack(50,24,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY I 1 A_RailAttack(50,2,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY G 0 A_FireCustomMissile("RealFlameTrailsSmall", 0,0,1,0,0);
-			TNT1 A 0 A_RailAttack(50,24,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY J 1 A_RailAttack(50,2,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY G 0 A_FireCustomMissile("SmallBlueFlameTrails", 0,0,1,0,0);
-			SLAY K 1 A_RailAttack(50,24,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY L 1 A_RailAttack(50,2,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
+			SLAY D 1 offset(-33, 33);
+			SLAY D 1 offset(-32, 32);
+			SLAY D 1 offset(-33, 33);
+			SLAY D 1 offset(-32, 32);
+			SLAY D 1
+			{
+				A_BDPMeleeStart(250);
+				A_PlaySound("Weapons/Slayerswing", CHAN_WEAPON);
+			}
+			TNT1 A 0
+			{
+				A_BDPMelee(500, "DragonSlayerLungeImpact", 0, false);
+			}
+			SLAY E 1 A_Recoil3D(6);
+			SLAY F 1 A_PlaySound("Weapons/Slayerswing", CHAN_WEAPON);
+			SLAY G 1 A_CustomPunch(50, 0, 0, "SlayerPuff", 256);
+			SLAY G 0 A_Quake(3, 10, 0, 10);
+			TNT1 A 0 A_RailAttack(50, 64, 0, "", "", RGF_SILENT, 0, "SlayerPuff2", 0, 0, 256);
+			SLAY H 1 A_RailAttack(50, 10, 0, "", "", RGF_SILENT, 0, "SlayerPuff2", 0, 0, 256);
+			SLAY I 1 A_RailAttack(50, 2, 0, "", "", RGF_SILENT, 0, "SlayerPuff2", 0, 0, 256);
 			TNT1 A 3;
 			SLAY MN 2;
-			SLAY A 1 PB_ReFire("Fire2");
-			Goto Ready;
-
-		Fire2:
-			TNT1 A 0 A_GiveInventory("DragonSlayerEnergy", 3);
-			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
-			SLAY D 1;
-			TNT1 A 0 A_JumpIfTargetInLOS("HasTarget", 30.0, JLOSF_NOAUTOAIM | JLOSF_DEADNOJUMP, 100.0);
-			Goto Fire2Continue;
-
-		HasTarget:
-			SLBY D 1 offset(-33,33);
-			SLBY D 1 offset(-32,32);
-			SLBY E 1 offset(-33,33);
-			SLBY E 1 offset(-32,32);
-			SLBY E 1 offset(-33,33);
-			TNT1 A 0 A_Quake(3,10,0,10);
-			SLBY F 1 A_PlaySound("Weapons/Slayerswing", 1);
-			SLBY F 0 A_FireProjectile("FireballBlocker",0,0,0,-7,0);
-			SLBY G 1 A_CustomPunch(50,0,0,"SlayerPuff",256);
-			SLBY G 0 A_FireCustomMissile("FireballBlocker",0,0,0,0);
-			TNT1 A 0 A_RailAttack(50,64,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY H 1 A_RailAttack(50,10,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY G 0 A_FireCustomMissile("FastSmallFlameTrails", random(-2,2),0,0, random(0,-1));
-			TNT1 A 0 A_RailAttack(50,24,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY I 1 A_RailAttack(50,2,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY G 0 A_FireCustomMissile("FireballBlocker", random(-2,2),0,0, random(0,-1));
-			TNT1 A 0 A_RailAttack(50,-8,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY J 1 A_RailAttack(50,0,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY G 0 A_FireCustomMissile("RealFlameTrailsBlue", random(-2,2),0,0, random(0,-1));
-			SLBY K 1 A_RailAttack(50,-32,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY L 1 A_RailAttack(50,-64,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY MN 2;
-			SLBY A 1 PB_ReFire;
-			Goto Ready;
-
-		Fire2Continue:
-			SLAY D 1;
-			SLAY D 1 offset(-33,33);
-			SLAY D 1 offset(-32,32);
-			SLAY E 1 offset(-33,33);
-			SLAY E 1 offset(-32,32);
-			SLAY E 1 offset(-33,33);
-			SLAY F 1 A_PlaySound("Weapons/Slayerswing", 1);
-			SLAY G 1 A_CustomPunch(50,0,0,"SlayerPuff",256);
-			SLAY G 0 A_Quake(3,10,0,10);
-			SLAY G 0 A_FireCustomMissile("FastSmallFlameTrails", random(-2,2),0,0, random(0,-1));
-			TNT1 A 0 A_RailAttack(50,64,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY H 1 A_RailAttack(50,10,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY G 0 A_FireCustomMissile("RealFlameTrailsBlue", random(-2,2),0,0, random(0,-1));
-			TNT1 A 0 A_RailAttack(50,24,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY I 1 A_RailAttack(50,2,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY G 0 A_FireCustomMissile("FastSmallFlameTrails", random(-2,2),0,0, random(0,-1));
-			SLAY J 1 A_RailAttack(50,0,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY K 1 A_RailAttack(50,-32,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY L 1 A_RailAttack(50,-64,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			TNT1 A 3;
-			SLAY MN 2;
-			SLAY A 1 PB_ReFire("Fire2");
+			TNT1 A 0 PB_ReFire("Hold");
 			Goto Ready;
 
 		AltFire:
@@ -339,90 +290,21 @@ class DragonSlayer : PB_WeaponBase
 			Goto Ready;
 
 		Hold:
+			SLAY B 1 offset(-33, 33);
+			SLAY B 1 offset(-32, 32);
+			TNT1 A 0 PB_ReFire("Hold");
+			SLAY C 1 Offset(-50, 33)
+			{
+				A_BDPMeleeStart(500);
+				A_PlaySound("Weapons/Slayerswing", CHAN_WEAPON);
+			}
+			SLAY C 1 Offset(-120, 36);
+			SLAY C 1 Offset(-260, 40);
+			SLAY C 1 Offset(-320, 49);
 			TNT1 A 0
 			{
-				A_BDPMeleeStart(200);
+				A_BDPMelee(500, "DragonSlayerLungeImpact", 0, false);
 			}
-			SLAY B 1 offset(-33,33);
-			SLAY B 1 offset(-32,32);
-			SLAY B 1 offset(-33,33);
-			SLAY B 1 offset(-32,32);
-			TNT1 A 0 PB_ReFire;
-			TNT1 A 0 A_JumpIfInventory("DragonSlayerEnergy", 3, "HasEnergyForHold");
-			SLAY D 1 A_JumpIfTargetInLOS("HasEnergyForHold", 30.0, JLOSF_NOAUTOAIM | JLOSF_DEADNOJUMP, 100.0);
-			SLAY D 1 ;
-			Goto Ready;
-
-		HasEnergyForHold:
-			TNT1 A 0 A_TakeInventory("DragonSlayerEnergy", 3);
-			TNT1 A 0 A_GiveInventory("DamageMultiplier", 1);
-			SLAY E 1
-			{
-				if(CountInv("DamageMultiplier") >= 20)
-				{
-					A_WeaponOffset(random(1,-1), 32+random(1,-1));
-				}
-				return null;
-			}
-			TNT1 A 0 A_PlaySound("GRENEXPL", CHAN_AUTO);
-			TNT1 A 0
-			{
-				A_Quake(3,10,0,10);
-				A_FireCustomMissile("DSAttack", 1,1,1,1,1);
-				A_FireCustomMissile("DSAttack2", 1,1,1,1,1);
-				A_FireCustomMissile("DSAttack3", 1,1,1,1,1);
-				A_FireCustomMissile("DSAttack4", 1,1,1,1,1);
-			}
-			SLAY C 1 Offset(-50,33);
-			SLAY C 1 Offset(-120,36);
-			SLAY C 1 Offset(-260,40);
-			SLAY C 1 Offset(-320,49);
-			SLAY C 1 Offset(-490,59);
-			SLAY C 1 Offset(-620,72);
-			TNT1 A 0 A_JumpIfInventory("SwordSequence2", 1, "Ready");
-			SLAY D 1;
-			SLAY A 0;
-			Goto Ready;
-
-		SwordSequence2:
-			SLAY F 1 A_PlaySound("Weapons/Slayerswing", 1);
-			SLAY G 1 A_CustomPunch(50,0,0,"SlayerPuff",256);
-			SLAY G 0 A_FireCustomMissile("FireballBlocker",0,0,0,0);
-			TNT1 A 0 A_RailAttack(50,64,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY H 1 A_RailAttack(50,10,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY G 0 A_FireCustomMissile("FireballBlocker",0,0,0,0);
-			TNT1 A 0 A_RailAttack(50,24,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY I 1 A_RailAttack(50,2,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY G 0 A_FireCustomMissile("FireballBlocker",0,0,0,0);
-			TNT1 A 0 A_RailAttack(50,24,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY J 1 A_RailAttack(50,2,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY G 0 A_FireCustomMissile("FireballBlocker",0,0,0,0);
-			SLAY K 1 A_RailAttack(50,24,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLAY L 1 A_RailAttack(50,2,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			TNT1 A 3;
-			SLAY MN 2;
-			SLAY A 1 PB_ReFire("Fire2");
-			Goto Ready;
-
-		SwordSequence3:
-			SLBY F 1 A_PlaySound("Weapons/Slayerswing", 1);
-			SLBY F 0 A_FireProjectile("FireballBlocker",0,0,0,-7,0);
-			SLBY G 1 A_CustomPunch(50,0,0,"SlayerPuff",256);
-			SLBY G 0 A_FireCustomMissile("FireballBlocker",0,0,0,0);
-			TNT1 A 0 A_RailAttack(50,64,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY H 1 A_RailAttack(50,10,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY G 0 A_FireCustomMissile("FireballBlocker",0,0,0,0);
-			TNT1 A 0 A_RailAttack(50,24,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY I 1 A_RailAttack(50,2,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY G 0 A_FireCustomMissile("FireballBlocker",0,0,0,0);
-			TNT1 A 0 A_RailAttack(50,-8,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY J 1 A_RailAttack(50,0,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY G 0 A_FireCustomMissile("FireballBlocker",0,0,0,0);
-			SLBY K 1 A_RailAttack(50,-32,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			SLBY L 1 A_RailAttack(50,-64,0,"","",RGF_SILENT,0,"SlayerPuff2",0,0,256);
-			TNT1 A 3;
-			SLBY MN 2;
-			SLBY A 1 PB_ReFire;
 			Goto Ready;
 
 		FlashKicking:
@@ -562,12 +444,6 @@ class PB_ObsidianDragonSlayer : DragonSlayer
 			Goto WeaponBreak;
 			TNT1 A 0 A_TakeInventory("ObsidianDragonSlayerDurability", 1, TIF_NOTAKEINFINITE);
 			Goto Super::Fire;
-
-		Fire2:
-			TNT1 A 0 A_JumpIfInventory("ObsidianDragonSlayerDurability", 1, 1);
-			Goto WeaponBreak;
-			TNT1 A 0 A_TakeInventory("ObsidianDragonSlayerDurability", 1, TIF_NOTAKEINFINITE);
-			Goto Super::Fire2;
 
 		AltFire:
 			TNT1 A 0 A_JumpIfInventory("ObsidianDragonSlayerDurability", 1, 1);
