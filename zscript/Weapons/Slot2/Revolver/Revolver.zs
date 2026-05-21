@@ -109,6 +109,7 @@ Class PB_Revolver : PB_WeaponBase
 			
 		ready:
 		Ready3:
+			TNT1 A 0 PB_CheckBarrelThrow1();
 			TNT1 A 0 A_JumpIfInventory("Zoomed",1,"Ready2");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyDualWield");
 			TNT1 A 0 {
@@ -140,8 +141,7 @@ Class PB_Revolver : PB_WeaponBase
 					PB_DynamicTail("pistol", "shotgun");
 					A_FireProjectile("PB_500SW", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
 					A_AlertMonsters();
-					PB_GunSmoke_Basic(0,0,2);
-                    PB_MuzzleFlashEffects(0, 0, 0);
+					A_PB_ThrottledMuzzleFX(0, 0, 2, "", 'RevolverFXPhase');
 					A_Fireprojectile("YellowFlareSpawn",0,0,0,0);
 					PB_LowAmmoSoundWarning("revolver");
 					PB_TakeAmmo("RevolverAmmo",1,0);
@@ -192,8 +192,7 @@ Class PB_Revolver : PB_WeaponBase
 					PB_DynamicTail("pistol", "shotgun");
 					A_FireProjectile("PB_500SW", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
 					A_AlertMonsters();
-					PB_GunSmoke_Basic(0,0,2);
-                    PB_MuzzleFlashEffects(0, 0, 0);
+					A_PB_ThrottledMuzzleFX(0, 0, 2, "", 'RevolverFXPhase');
 					A_FireProjectile("YellowFlareSpawn",0,0,0,0);
 					PB_LowAmmoSoundWarning("revolver");
 					PB_TakeAmmo("RevolverAmmo",1,0);
@@ -225,8 +224,7 @@ Class PB_Revolver : PB_WeaponBase
 					PB_DynamicTail("pistol", "shotgun");
 					A_FireProjectile("PB_500SW", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
 					A_AlertMonsters();
-					PB_GunSmoke_Basic(0,0,2);
-                    PB_MuzzleFlashEffects(0, 0, 0);
+					A_PB_ThrottledMuzzleFX(0, 0, 2, "", 'RevolverFXPhase');
 					A_FireProjectile("YellowFlareSpawn",0,0,0,0);
 					PB_LowAmmoSoundWarning("revolver");
 					PB_TakeAmmo("RevolverAmmo",1,0);
@@ -537,24 +535,8 @@ Class PB_Revolver : PB_WeaponBase
 			}
 		ReadyToFire2:
 			R4V2 F 1
-			{		
-				if(Cvar.GetCvar("pb_toggle_aim_hold",player).getint() == 1) 
-				{
-					if(!PressingAltfire() || JustReleased(BT_ALTATTACK))
-						return resolvestate("Zoomout");
-					if (PressingFire() && CountInv("RevolverAmmo") > 0 )
-						return resolvestate("Fire2");
-					
-					return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOSECONDARY);
-				}
-				else 
-				{
-					if (PressingFire() && CountInv("RevolverAmmo") > 0 )
-						return resolvestate("Fire2");
-					
-					return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-				}
-				return resolvestate(null);
+			{
+				return PB_ReadyFire("Fire2", "Fire2", "Zoomout", true, true, "RevolverAmmo", false);
 			}
 			Loop;
 		
@@ -573,8 +555,7 @@ Class PB_Revolver : PB_WeaponBase
 					A_OverlayRenderStyle(-6,STYLE_Add);
 					A_FireProjectile("PB_500SW", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
 					A_AlertMonsters();
-					PB_GunSmoke_Basic(0,0,2);
-                    PB_MuzzleFlashEffects(0, 0, 0);
+					A_PB_ThrottledMuzzleFX(0, 0, 2, "", 'RevolverFXPhase');
 					A_Fireprojectile("YellowFlareSpawn",0,0,0,0);
 					PB_LowAmmoSoundWarning("revolver");
 					PB_TakeAmmo("RevolverAmmo",1,0);
@@ -656,8 +637,7 @@ Class PB_Revolver : PB_WeaponBase
 				A_OverlayFlags(-5,PSPF_RENDERSTYLE,true);
 				A_OverlayRenderStyle(-5,STYLE_Add);
 				A_FireProjectile("PB_500SW", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
-				PB_GunSmoke(5,0,0);
-                PB_MuzzleFlashEffects(5, 0, 0);
+				A_PB_ThrottledMuzzleFX(5, 0, 0, "", 'RevolverDWFXPhase');
 				PB_LowAmmoSoundWarning("revolver", "LeftRevolverAmmo");
 				PB_TakeAmmo("LeftRevolverAmmo",1,0,0,true);
 				A_ZoomFactor(0.99);
@@ -720,8 +700,7 @@ Class PB_Revolver : PB_WeaponBase
 				A_OverlayFlags(-6,PSPF_RENDERSTYLE,true);
 				A_OverlayRenderStyle(-6,STYLE_Add);
 				A_FireProjectile("PB_500SW", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
-				PB_GunSmoke(-5,0,0);
-                PB_MuzzleFlashEffects(-5, 0, 0);
+				A_PB_ThrottledMuzzleFX(-5, 0, 0, "", 'RevolverDWFXPhase');
 				PB_LowAmmoSoundWarning("revolver");
 				PB_TakeAmmo("RevolverAmmo",1,0);
 				A_ZoomFactor(0.99);

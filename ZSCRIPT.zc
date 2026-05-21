@@ -182,9 +182,12 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/BaseWeapon.zc"
 #include "zscript/Weapons/BaseWeapon_Equipment.zsc"
 #include "zscript/Weapons/RailGunFire.zc"
+#include "zscript/Weapons/Slot7/Railgun/Railgun.zs"
 #include "zscript/Weapons/PB_SuperBFGBall.zc"
 #include "zscript/Weapons/Slot1/KatanaUpgradeChoiceHelpers.zc"
 #include "zscript/Weapons/BaseWeapon_StagingShim.zsc"
+#include "zscript/Weapons/BaseWeapon_Barrels.zsc"
+#include "zscript/Weapons/BaseWeapon_ShoulderCannon.zsc"
 #include "zscript/Weapons/BaseWeapon_MPExecutionHelpers.zsc"
 #include "zscript/Weapons/BaseWeapon_MPExecutions.zsc"
 #include "zscript/Weapons/Slot4/PB_MinigunFX.zc"
@@ -196,6 +199,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot4/NeoHMG/NeoHMG.zs"
 #include "zscript/Weapons/Slot4/MetalSniper/MetalSniper_helpers.zs"
 #include "zscript/Weapons/Slot4/MetalSniper/MetalSniper.zs"
+//#include "zscript/Weapons/Slot4/Carbine/Carbine.zs" // TODO: re-enable when Carbine.zs parse fixes land
 #include "zscript/Weapons/Slot1/ArgentSith_Weapon.zs"
 #include "zscript/Weapons/Slot1/BeamKatana_Weapon.zs"
 #include "zscript/Weapons/Slot1/VorpalBlade.zc"
@@ -206,6 +210,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot2/Deagle/Deagle.zs"
 #include "zscript/Weapons/Slot2/Revolver/Revolver.zs"
 #include "zscript/Weapons/Slot3/Shotgun/Shotgun.zs"
+#include "zscript/Weapons/Slot3/QuadSG/QuadSG.zs"
 #include "zscript/Weapons/Slot6/SuperGL/SuperGL.zs"
 #include "zscript/Weapons/Slot7/PlasmaM1/PlasmaM1.zs"
 #include "zscript/Weapons/PB_WeaponTacticalFeel.zc"
@@ -222,7 +227,7 @@ const MAXITERATIONS = 32676;
 
 #include "zscript/Spawner/PB_SpawnerBase.zc"
 #include "zscript/Spawner/PB_HorrorPassiveController.zc"
-#include "zscript/Spawner/PB_ProjectSurvivalFodderPassive.zc"
+#include "zscript/Spawner/PB_ProjectSurvivalFodderPassive.zc" // PS fodder roster + FodderExtraPassiveSpawn seeker
 #include "zscript/Monsters/ProjectSurvival/Trite.zc"
 #include "zscript/Spawner/PB_ProjectSurvivalPassiveSpawner.zc"
 #include "zscript/Spawner/Weapons/PB_ShotgunSpawner.zc"

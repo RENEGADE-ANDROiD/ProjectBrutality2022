@@ -714,6 +714,103 @@ class PB_EventHandler : EventHandler
 		return weaponClass == 'Melee_Attacks';
 	}
 
+	ui static bool PB2022_TexValid(TextureID t)
+	{
+		return t && t.IsValid();
+	}
+
+	// 4.5.0: TextureID() needs a tex name; default-local is the invalid sentinel.
+	ui static TextureID PB2022_NoTex()
+	{
+		TextureID none;
+		return none;
+	}
+
+	ui static TextureID PB2022_ModeHudWheel(String path)
+	{
+		TextureID t = TexMan.CheckForTexture(path, TexMan.Type_Any);
+		return PB2022_TexValid(t) ? t : PB2022_NoTex();
+	}
+
+	ui static TextureID PB2022_ModeHudLump(String lump)
+	{
+		TextureID t = TexMan.CheckForTexture(lump, TexMan.Type_Any);
+		return PB2022_TexValid(t) ? t : PB2022_NoTex();
+	}
+
+	ui static TextureID PB2022_ModeHudWheelOrLump(String wheelPath, String lumpFallback = "")
+	{
+		TextureID t = PB2022_ModeHudWheel(wheelPath);
+		if (PB2022_TexValid(t))
+			return t;
+		if (lumpFallback.Length() > 0)
+			return PB2022_ModeHudLump(lumpFallback);
+		return PB2022_NoTex();
+	}
+
+	ui static TextureID PB2022_FirstHudIconFromSpawn(Name cls)
+	{
+		class<Actor> acl = (class<Actor>)(cls);
+		if (!acl)
+			return PB2022_NoTex();
+		readonly<Actor> adef = GetDefaultByType(acl);
+		if (!adef)
+			return PB2022_NoTex();
+		State st = adef.SpawnState;
+		for (int n = 0; n < 48 && st; n++)
+		{
+			TextureID sid = st.GetSpriteTexture(0);
+			if (PB2022_TexValid(sid))
+			{
+				string tn = TexMan.GetName(sid);
+				if (tn.Length() >= 4 && tn.Mid(0, 4) ~== "TNT1")
+				{
+					st = st.NextState;
+					continue;
+				}
+				return sid;
+			}
+			st = st.NextState;
+		}
+		return PB2022_NoTex();
+	}
+
+	ui static bool PB2022_WeaponHudIconExtremeAspect(TextureID tex)
+	{
+		if (!PB2022_TexValid(tex))
+			return true;
+		Vector2 ts = TexMan.GetScaledSize(tex);
+		if (ts.X < 1.0 || ts.Y < 1.0)
+			return true;
+		double ar = ts.X / ts.Y;
+		return ar < 0.55 || ar > 1.85;
+	}
+
+	ui static TextureID PB2022_ResolveWeaponPortraitIcon(Weapon weap, Name weaponClass)
+	{
+		TextureID wheel = TexMan.CheckForTexture(
+			String.Format("graphics/pywheel/weapons/%s.png", weaponClass), TexMan.Type_Any);
+		if (PB2022_TexValid(wheel))
+			return wheel;
+
+		TextureID iconID = weap.AltHUDIcon.IsValid() ? weap.AltHUDIcon : weap.Icon;
+		if (weaponClass == 'HASG' || PB2022_WeaponHudIconExtremeAspect(iconID))
+		{
+			TextureID spawn = PB2022_FirstHudIconFromSpawn(weaponClass);
+			if (PB2022_TexValid(spawn))
+				return spawn;
+		}
+		if (PB2022_TexValid(iconID))
+			return iconID;
+		if (weaponClass == 'HASG')
+		{
+			TextureID lump = PB2022_ModeHudLump("0ESGA0");
+			if (PB2022_TexValid(lump))
+				return lump;
+		}
+		return PB2022_NoTex();
+	}
+
 	ui void DrawPB2022WeaponPickupOverlay()
 	{
 		if (!playeringame[consoleplayer]) { return; }
@@ -728,8 +825,8 @@ class PB_EventHandler : EventHandler
 		if (PB2022WeaponHudSkipWeapon(weaponClass))
 			return;
 
-		TextureID iconID = weap.AltHUDIcon.IsValid() ? weap.AltHUDIcon : weap.Icon;
-		if (!iconID) { return; }
+		TextureID iconID = PB2022_ResolveWeaponPortraitIcon(weap, weaponClass);
+		if (!PB2022_TexValid(iconID)) { return; }
 
 		let cvAlpha = CVar.GetCVar("pb_weaponhud_alpha", p);
 		let cvScale = CVar.GetCVar("pb_weaponhud_scale", p);
@@ -746,7 +843,7 @@ class PB_EventHandler : EventHandler
 		double cx = double(Screen.GetWidth() + offX);
 		double cy = double(Screen.GetHeight() + offY);
 
-		DrawClipFittedTexture(iconID, cx, cy, boxW, boxH, alpha);
+		DrawClipFittedTexture(iconID, cx, cy, boxW, boxH, alpha, true);
 	}
 
 	ui TextureID PB2022GetModeIcon(PlayerInfo p, Name weaponClass, out double localScale, out double localOffX, out double localOffY)
@@ -754,56 +851,315 @@ class PB_EventHandler : EventHandler
 		localScale = 1.0;
 		localOffX = 0.0;
 		localOffY = 0.0;
+		if (!p || !p.mo)
+			return PB2022_NoTex();
 
 		TextureID modeIcon;
-		modeIcon = TexMan.CheckForTexture("", TexMan.Type_Any);
+		Actor mo = p.mo;
+
 		switch (weaponClass)
 		{
 			case 'PB_Shotgun':
 				localScale = 0.9;
-				if (p.mo.CountInv("SelectShotgun_Dragonsbreath") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png", TexMan.Type_Any);
-				else if (p.mo.CountInv("SelectShotgun_Slugshot") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Slug.png", TexMan.Type_Any);
-				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
+				if (mo.CountInv("SelectShotgun_Dragonsbreath") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_DB.png");
+				else if (mo.CountInv("SelectShotgun_Slugshot") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_Slug.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_Buck.png");
 				break;
+
+			case 'PB_CSSG':
+				localScale = 0.9;
+				if (p.ReadyWeapon is "PB_CSSG")
+				{
+					int shellMode = PB_CSSG(p.ReadyWeapon).shellsmode + 1;
+					if (shellMode == 9)
+						modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Danmaku.png");
+					else if (shellMode == 8)
+						modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Doom.png");
+					else if (shellMode == 7)
+						modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_WPhosphorus.png");
+					else if (shellMode == 6)
+						modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Explosive.png");
+					else if (shellMode == 5)
+						modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_DB.png");
+					else if (shellMode == 4)
+						modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Flak.png");
+					else if (shellMode == 3)
+						modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Flechette.png");
+					else if (shellMode == 2)
+						modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Slug.png");
+					else
+						modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Buck.png");
+				}
+				break;
+
+			case 'HASG':
+				localScale = 0.9;
+				if (mo.CountInv("HASG_Danmaku") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Danmaku.png");
+				else if (mo.CountInv("HASG_WPhos") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_WPhosphorus.png");
+				else if (mo.CountInv("HASG_Explosive") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Explosive.png");
+				else if (mo.CountInv("HASG_DRBT") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_DB.png");
+				else if (mo.CountInv("HASG_Flech") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Flechette.png");
+				else if (mo.CountInv("HASG_Slug") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Slug.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/CSSG/SG_Buck.png");
+				break;
+
 			case 'PB_Carbine':
 				localScale = 0.9;
-				if (p.mo.CountInv("SelectCarbine_DualWield") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_dualwield.png", TexMan.Type_Any);
-				else if (p.mo.CountInv("SelectCarbine_FullAutoFire") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_fulla.png", TexMan.Type_Any);
-				else if (p.mo.CountInv("SelectCarbine_BurstFire") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_burst.png", TexMan.Type_Any);
-				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_semifire.png", TexMan.Type_Any);
+				if (mo.CountInv("SelectCarbine_DualWield") >= 1 || mo.CountInv("DualWieldingCarbines") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Carbine_Dual.png");
+				else if (mo.CountInv("SelectCarbine_FullAutoFire") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Carbine_Auto.png");
+				else if (mo.CountInv("SelectCarbine_BurstFire") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Carbine_Burst.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Carbine_Semi.png");
 				break;
+
 			case 'PB_Minigun':
 				localScale = 0.9;
-				if (p.mo.CountInv("SelectMinigun_Triple") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_3.png", TexMan.Type_Any);
-				else if (p.mo.CountInv("SelectMinigun_Gatling") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
-				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_1.png", TexMan.Type_Any);
+				if (mo.CountInv("SelectMinigun_Triple") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Minigun_3.png");
+				else if (mo.CountInv("SelectMinigun_Gatling") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Minigun_2.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Minigun_1.png");
 				break;
+
 			case 'PB_NeoHMG':
 				localScale = 0.9;
-				if (p.mo.CountInv("HMG_Select_Charged") >= 1 || p.mo.CountInv("HMGModeCharged") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png", TexMan.Type_Any);
-				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
+				if (mo.CountInv("HMG_Select_Charged") >= 1 || mo.CountInv("HMGModeCharged") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_DB.png");
+				else if (mo.CountInv("HMG_Select_Heated") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_Buck.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_Buck.png");
 				break;
+
 			case 'PB_M41A':
 				localScale = 0.85;
-				if (p.mo.CountInv("DualWieldingM41A") >= 1)
-					modeIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Dual.png", TexMan.Type_Any);
-				else if (p.mo.CountInv("M41ChangeCart") >= 1)
-					modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Buck.png", TexMan.Type_Any);
+				if (mo.CountInv("DualWieldingM41A") >= 1)
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/M41DW0.png", "graphics/pywheel/Carbine_Dual.png");
+				else if (mo.CountInv("SelectM41A_30mmGrenade") >= 1 || mo.CountInv("M41ChangeCart") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/rocket_standard.png");
+				else if (mo.CountInv("SelectM41A_12Gauge") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_Buck.png");
 				else
-					modeIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/rocket_standard.png");
 				break;
+
 			case 'PB_XM21':
 				localScale = 0.85;
-				if (p.mo.CountInv("XM21HasBallistics") >= 1) modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png", TexMan.Type_Any);
-				else modeIcon = TexMan.CheckForTexture("graphics/pywheel/SG_Slug.png", TexMan.Type_Any);
+				if (mo.CountInv("XM21HasBallistics") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_DB.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_Slug.png");
 				break;
+
 			case 'PB_Fusil':
 				localScale = 0.9;
-				modeIcon = TexMan.CheckForTexture("FUSIF0", TexMan.Type_Any);
+				modeIcon = PB2022_ModeHudLump("FUSIF0");
 				break;
+
 			case 'PB_SideFusil':
 				localScale = 0.85;
-				modeIcon = TexMan.CheckForTexture("ENTEJ0", TexMan.Type_Any);
+				modeIcon = PB2022_ModeHudLump("ENTEJ0");
+				break;
+
+			case 'PB_Unmaker':
+				localScale = 0.85;
+				localOffY = -40.0;
+				if (mo.CountInv("UnmakerFireSelected") >= 1)
+					modeIcon = PB2022_ModeHudLump("AMMOIC6");
+				else
+					modeIcon = PB2022_ModeHudLump("AMMOIC7");
+				break;
+
+			case 'PB_Flamethrower':
+				localScale = 0.9;
+				localOffY = -40.0;
+				if (mo.CountInv("FlamerNukageMode") >= 1)
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/grenade_cryo.png", "AMMOIC6");
+				else
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/SG_DB.png", "AMMOIC6");
+				break;
+
+			case 'BioAcidLauncher':
+				localScale = 0.85;
+				localOffY = -40.0;
+				modeIcon = PB2022_ModeHudLump("AMMOIC7");
+				if (!PB2022_TexValid(modeIcon))
+					modeIcon = PB2022_ModeHudLump("AMMOIC5");
+				break;
+
+			case 'BHGen':
+				localScale = 0.85;
+				localOffY = -40.0;
+				modeIcon = PB2022_ModeHudLump("PRDCZ0");
+				if (!PB2022_TexValid(modeIcon))
+					modeIcon = PB2022_ModeHudLump("AMMOIC5");
+				break;
+
+			case 'PB_CryoElectroRifle':
+				localScale = 0.9;
+				localOffY = -40.0;
+				if (mo.CountInv("PB_CryoElectroRifle_ElectricMode") >= 1)
+				{
+					modeIcon = PB2022_ModeHudLump("ZAP6A1");
+					if (!PB2022_TexValid(modeIcon))
+						modeIcon = PB2022_ModeHudLump("CELLA0");
+				}
+				else
+				{
+					modeIcon = PB2022_ModeHudLump("BXPLA0");
+					if (!PB2022_TexValid(modeIcon))
+						modeIcon = PB2022_ModeHudWheel("graphics/pywheel/grenade_cryo.png");
+				}
+				break;
+
+			case 'PB_SMG':
+				localScale = 0.85;
+				localOffY = -40.0;
+				if (mo.CountInv("DualWieldingSMGs") >= 1)
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/SMG/SMG_DUAL.png", "graphics/pywheel/Carbine_Dual.png");
+				else if (mo.CountInv("LaserSightActivated") >= 1)
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/SMG/SMG_LASER.png", "graphics/pywheel/SG_Slug.png");
+				else
+					modeIcon = PB2022_ModeHudLump("ATFLA0");
+				break;
+
+			case 'PB_QuadSG':
+				localScale = 0.85;
+				if (mo.CountInv("QuadAkimboMode") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Quad_Dual.png");
+				else if (mo.CountInv("FullBlastMode") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Quad_Full.png");
+				else if (mo.CountInv("BreathMode") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Quad_Demonic.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Quad_Shells.png");
+				break;
+
+			case 'Rifle':
+				localScale = 0.85;
+				if (mo.CountInv("DualWieldingDMRs") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/hdmr_dual.png");
+				else if (mo.CountInv("HDMRGrenadeMode") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/hdmr_grenade_on.png");
+				else if (mo.CountInv("HDMRSniperMode") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/hdmr_sniper.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/hdmr_normal.png");
+				break;
+
+			case 'PB_MetalSniper':
+				localScale = 0.85;
+				if (p.ReadyWeapon is "PB_MetalSniper")
+				{
+					let ms = PB_MetalSniper(p.ReadyWeapon);
+					if (ms.AltMode == 1)
+						modeIcon = PB2022_ModeHudWheel("graphics/pywheel/rocket_standard.png");
+					else if (ms.resonanceAmmoLoaded)
+						modeIcon = PB2022_ModeHudWheel("graphics/pywheel/ResonanceRounds.png");
+					else
+						modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Normalrounds.png");
+				}
+				break;
+
+			case 'LeverAction':
+				localScale = 0.85;
+				if (mo.CountInv("LeverActionHellMode") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Minigun_2.png");
+				else if (mo.CountInv("Select_LeverAction_Marlin") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Marlin.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Magnum.png");
+				break;
+
+			case 'HellPistoler':
+				localScale = 0.85;
+				if (mo.CountInv("HellPistolerBeamMode") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Minigun_1.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Minigun_2.png");
+				break;
+
+			case 'PB_SuperGL':
+				localScale = 0.85;
+				if (mo.CountInv("GrenadeTypeAcid") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/grenade_acid.png");
+				else if (mo.CountInv("GrenadeTypeCryo") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/grenade_cryo.png");
+				else if (mo.CountInv("GrenadeTypeIncendiary") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/grenade_incendiary.png");
+				else if (mo.CountInv("GrenadeTypeSticky") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/grenade_sticky.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/grenade_impact.png");
+				break;
+
+			case 'PB_Excavator':
+				localScale = 0.85;
+				if (mo.CountInv("EX_Select_DrillMode") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Excavator/DrillAlt.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Excavator/DropAlt.png");
+				break;
+
+			case 'PB_RocketLauncher':
+				localScale = 0.85;
+				if (mo.CountInv("RocketLauncher_Homing") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/rocket_homing.png");
+				else if (mo.CountInv("RocketLauncher_Laser") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/rocket_laser.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/rocket_standard.png");
+				break;
+
+			case 'PB_M1Plasma':
+				localScale = 0.85;
+				if (mo.CountInv("PB_M1Plasma") >= 2)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Quad_Dual.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Quad_Single.png");
+				break;
+
+			case 'PB_DarkMatterRifle':
+				localScale = 0.9;
+				localOffY = -40.0;
+				if (mo.CountInv("PB_DMR_GravityAltMode") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/rocket_standard.png");
+				else
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Minigun_2.png");
+				break;
+
+			case 'ProSurv_Ballista':
+				localScale = 0.85;
+				if (mo.CountInv("BallistaDemonicMode") >= 1)
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/Minigun_2.png", "CRBAB0");
+				else
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/Carbine_Semi.png", "CBOWS0");
+				break;
+
+			case 'PB_Pistol':
+				localScale = 0.85;
+				if (mo.CountInv("PistolShieldLoadout") >= 1)
+					modeIcon = PB2022_ModeHudLump("5L1DI0");
+				break;
+
+			case 'PB_Axe':
+				localScale = 0.85;
+				if (mo.CountInv("AxeShieldLoadout") >= 1)
+					modeIcon = PB2022_ModeHudLump("5L1DI0");
 				break;
 		}
 
@@ -814,15 +1170,18 @@ class PB_EventHandler : EventHandler
 		if (!playeringame[consoleplayer]) { return; }
 		let p = players[consoleplayer];
 		if (!p || !p.mo || !p.ReadyWeapon) { return; }
-		let cvEnable = CVar.GetCVar("pb_weaponmodehud_enable", p);
-		if (!cvEnable || !cvEnable.GetBool()) { return; }
+		let cvPortrait = CVar.GetCVar("pb_weaponhud_enable", p);
+		let cvModeOnly = CVar.GetCVar("pb_weaponmodehud_enable", p);
+		bool portraitOn = cvPortrait && cvPortrait.GetBool();
+		bool modeOnlyOn = cvModeOnly && cvModeOnly.GetBool();
+		if (!portraitOn && !modeOnlyOn) { return; }
 
 		Weapon weap = p.ReadyWeapon;
 		Name weaponClass = weap.GetClassName();
 
 		double modeScaleAdjust, modeOffX, modeOffY;
 		TextureID modeIcon = PB2022GetModeIcon(p, weaponClass, modeScaleAdjust, modeOffX, modeOffY);
-		if (!modeIcon) { return; }
+		if (!PB2022_TexValid(modeIcon)) { return; }
 
 		let cvAlpha = CVar.GetCVar("pb_weaponmodehud_alpha", p);
 		let cvScale = CVar.GetCVar("pb_weaponmodehud_scale", p);
@@ -832,12 +1191,12 @@ class PB_EventHandler : EventHandler
 		let cvMaxH  = CVar.GetCVar("pb_weaponmodehud_maxheight", p);
 		double alpha = cvAlpha ? clamp(cvAlpha.GetFloat(), 0.0, 1.0) : 1.0;
 		double userScale = (cvScale ? max(0.1, cvScale.GetFloat()) : 1.0) * modeScaleAdjust;
-		int offX = cvOffX ? cvOffX.GetInt() : 0;
-		int offY = cvOffY ? cvOffY.GetInt() : 0;
+		int offX = (cvOffX ? cvOffX.GetInt() : 0) + int(modeOffX);
+		int offY = (cvOffY ? cvOffY.GetInt() : 0) + int(modeOffY);
 		double boxW = (cvMaxW ? max(12.0, cvMaxW.GetFloat()) : 56.0) * userScale;
 		double boxH = (cvMaxH ? max(12.0, cvMaxH.GetFloat()) : 56.0) * userScale;
-		double cx = double(Screen.GetWidth() + offX + modeOffX);
-		double cy = double(Screen.GetHeight() + offY + modeOffY);
+		double cx = double(Screen.GetWidth() + offX);
+		double cy = double(Screen.GetHeight() + offY);
 
 		DrawClipFittedTexture(modeIcon, cx, cy, boxW, boxH, alpha);
 	}
@@ -6038,16 +6397,28 @@ class PB_EventHandler : EventHandler
 		return zz;
 	}
 
-	ui void DrawClipFittedTexture(TextureID tex, double cx, double cy, double maxW, double maxH, double alpha) const
+	ui void DrawClipFittedTexture(TextureID tex, double cx, double cy, double maxW, double maxH, double alpha, bool coverFit = false) const
 	{
 		if (!tex.IsValid())
 			return;
 		Vector2 ts = TexMan.GetScaledSize(tex);
 		if (ts.X < 1 || ts.Y < 1)
 			return;
-		double sc = min(maxW / ts.X, maxH / ts.Y);
+		double sc = coverFit ? max(maxW / ts.X, maxH / ts.Y) : min(maxW / ts.X, maxH / ts.Y);
 		double dw = ts.X * sc;
 		double dh = ts.Y * sc;
+		if (coverFit)
+		{
+			int clipL = int(cx - maxW);
+			int clipT = int(cy - maxH);
+			int clipR = int(cx);
+			int clipB = int(cy);
+			Screen.DrawTexture(tex, false, cx, cy,
+				DTA_DestWidthF, dw, DTA_DestHeightF, dh,
+				DTA_Alpha, alpha, DTA_CenterOffset, true,
+				DTA_ClipLeft, clipL, DTA_ClipTop, clipT, DTA_ClipRight, clipR, DTA_ClipBottom, clipB);
+			return;
+		}
 		Screen.DrawTexture(tex, false, cx, cy,
 			DTA_DestWidthF, dw, DTA_DestHeightF, dh,
 			DTA_Alpha, alpha, DTA_CenterOffset, true);

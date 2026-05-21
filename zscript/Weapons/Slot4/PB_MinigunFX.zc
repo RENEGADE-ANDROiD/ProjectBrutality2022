@@ -178,15 +178,73 @@ extend class PB_WeaponBase
 		}
 	}
 
-	action void A_PB_ThrottledGunSmoke(double x = 0, double y = 0, double z = 0)
+	action void A_PB_ThrottledGunSmoke(double x = 0, double y = 0, double z = 0, Name phaseToken = 'AutoGunSmokePhase')
 	{
 		if (invoker.PB_MinigunSkipCosmeticFX())
 			return;
 		let pp = PlayerPawn(invoker.owner);
 		if (!pp)
 			return;
-		if (!invoker.PB_AutoFXToggle(pp, 'AutoGunSmokePhase'))
+		if (!invoker.PB_AutoFXToggle(pp, phaseToken))
 			A_FireCustomMissile("GunFireSmoke", 0, 0, x, y, 0, 0);
+	}
+
+	// Legacy GunFireSmoke + PB_MuzzleFlashEffects, every other shot (full-auto safe).
+	action void A_PB_ThrottledMuzzleFX(double x = 0, double y = 0, double z = 0, string color = "", Name phaseToken = 'AutoMuzzleFXPhase')
+	{
+		if (invoker.PB_MinigunSkipCosmeticFX())
+			return;
+		let pp = PlayerPawn(invoker.owner);
+		if (!pp)
+			return;
+		if (!invoker.PB_AutoFXToggle(pp, phaseToken))
+		{
+			A_FireCustomMissile("GunFireSmoke", 0, 0, x, y, 0, 0);
+			if (color == "")
+				PB_MuzzleFlashEffects(x, y, z);
+			else
+				PB_MuzzleFlashEffects(x, y, z, color);
+		}
+	}
+
+	// Dual-barrel same tic: one toggle, two smoke offsets, one spark burst.
+	action void A_PB_ThrottledMuzzleFXDual(double xL, double xR, double y = 0, double z = 0, string color = "", Name phaseToken = 'AutoMuzzleFXPhase')
+	{
+		if (invoker.PB_MinigunSkipCosmeticFX())
+			return;
+		let pp = PlayerPawn(invoker.owner);
+		if (!pp)
+			return;
+		if (!invoker.PB_AutoFXToggle(pp, phaseToken))
+		{
+			A_FireCustomMissile("GunFireSmoke", 0, 0, xL, y, 0, 0);
+			A_FireCustomMissile("GunFireSmoke", 0, 0, xR, y, 0, 0);
+			if (color == "")
+				PB_MuzzleFlashEffects(0, y, z);
+			else
+				PB_MuzzleFlashEffects(0, y, z, color);
+		}
+	}
+
+	action void A_PB_ThrottledMuzzleSparks(double x = 0, double y = 0, double z = 0, string color = "", Name phaseToken = 'AutoMuzzleSparkPhase')
+	{
+		if (invoker.PB_MinigunSkipCosmeticFX())
+			return;
+		let pp = PlayerPawn(invoker.owner);
+		if (!pp)
+			return;
+		if (!invoker.PB_AutoFXToggle(pp, phaseToken))
+		{
+			if (color == "")
+				PB_MuzzleFlashEffects(x, y, z);
+			else
+				PB_MuzzleFlashEffects(x, y, z, color);
+		}
+	}
+
+	action void A_PB_CarbineFireFX(double smokeX = 0)
+	{
+		A_PB_ThrottledMuzzleFX(smokeX, 0, 0, "", 'CarbineFXPhase');
 	}
 
 	void PB_M41A_ApplyFireCosmetics(double smokeX = 0)
@@ -197,7 +255,7 @@ extend class PB_WeaponBase
 		if (!pp)
 			return;
 		if (!PB_AutoFXToggle(pp, 'M41AFXPhase'))
-			PB_GunSmoke(smokeX, 0, 0);
+			A_FireCustomMissile("GunFireSmoke", 0, 0, smokeX, 0, 0, 0);
 		if (!PB_AutoFXThrottle(pp, 'M41ABrassThrottle', 2))
 			PB_SpawnCasing("PB_EmptyBrass", 22, smokeX != 0 ? (smokeX > 0 ? 16 : -16) : 2,
 				smokeX != 0 ? 35 : 26, frandom(-4, 1), frandom(5, 9), smokeX != 0 ? frandom(1, 2) : frandom(0, 2));
@@ -211,7 +269,7 @@ extend class PB_WeaponBase
 		if (!pp)
 			return;
 		if (!PB_AutoFXToggle(pp, 'NeoHMGFXPhase'))
-			PB_GunSmoke(0, 0, 0);
+			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
 		if (!PB_AutoFXThrottle(pp, 'NeoHMGTracerThrottle', 2))
 			A_FireCustomMissile("MinigunTracer", random(-3, 3), 0, -1, random(-3, 3));
 	}

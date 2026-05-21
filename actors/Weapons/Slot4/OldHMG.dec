@@ -192,7 +192,7 @@ Prompt2:
 		SelectContinue:
 		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Raise
 		TNT1 AAAAAAAA 1 A_Raise
-		Wait
+		Goto Ready3
 
     NoAmmo:
 		TNT1 A 0 A_JumpIfINventory("EquippedNailRounds", 1, 2)
@@ -237,7 +237,7 @@ Prompt2:
 		TNT1 A 0 PB_WeaponRecoil(frandom(-0.36, -0.38), +0.2)
 		TNT1 A 0 A_Firecustommissile("FiftyCaseSpawn",0,0,-12,-18)
 		HMAF B 1 
-		RIFF A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 1, 0, 0)
+		RIFF A 0 A_PB_ThrottledGunSmoke(0, 1, 0, 'OldHMGSmokePhase')
 		
 		HMAF C 1 
 		HMAF D 1
@@ -272,7 +272,7 @@ Prompt2:
 		TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0)
 		TNT1 A 0 A_FireCustomMissile("Alerter", 0, 0, 0, 0)
 		TNT1 A 0 A_Takeinventory("OldHMGAmmo",1)
-		RIFF A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, -2, 1, 0, 0)
+		RIFF A 0 A_PB_ThrottledGunSmoke(-2, 1, 0, 'OldHMGSmokePhase')
 		TNT1 A 0 PB_WeaponRecoil(frandom(-0.56, -0.58), +0.30)
 		NLGF B 2 BRIGHT
 		TNT1 A 0 A_ZoomFactor(0.945)
@@ -283,7 +283,7 @@ Prompt2:
 		TNT1 A 0 A_FireCustomMissile("YellowFlareSpawn",0,0,3,0)
 		TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0)
 		TNT1 A 0 A_Takeinventory("OldHMGAmmo",1)
-		RIFF A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 2, 1, 0, 0)
+		RIFF A 0 A_PB_ThrottledGunSmoke(2, 1, 0, 'OldHMGSmokePhase')
 		TNT1 A 0 PB_WeaponRecoil(frandom(-0.56, -0.58), +0.30)
 		NLGF E 2 BRIGHT
 		TNT1 A 0 A_ZoomFactor(0.945)

@@ -20,21 +20,15 @@ class PB_WeaponTilterInventory : Inventory
 	bool hasNeutralWeaponY;
 	double smoothedWeaponRoll;
 	double prevStrafeDot;
-	int wallOnCount;
-	int wallOffCount;
-	bool wallDebouncedActive;
 
 	double cvRollResistance;
 	double cvRollVelocity;
 	double cvRollCap;
 	double cvLoweringScale;
-	double cvWallLowering;
 	double cvLeanAngle;
 	double cvLeanSmoothing;
 	double cvTiltSmoothing;
-	double cvWallDistance;
 	bool cvEnabled;
-	bool cvWallDetect;
 	bool cvEnableLean;
 	bool cvEnableReadyOnly;
 	bool cvEnableMoveOnly;
@@ -62,10 +56,6 @@ class PB_WeaponTilterInventory : Inventory
 		'PB_LeverAction'
 	};
 
-	// Wall proximity: fan traces (deg from view yaw) + distance scale per ray.
-	static const double TAC_WALL_YAW[] = { 0., 22.5, -22.5, 45., -45., 90., -90. };
-	static const double TAC_WALL_DISTSCALE[] = { 1., 0.95, 0.95, 0.9, 0.9, 0.85, 0.85 };
-
 	// PSprite layers that mirror PSP_WEAPON roll (see ApplyWeaponTiltToAttachedOverlays).
 	// 10/11: dual-wield idle/fire weapon halves (BaseWeapon + PLASMA/M2/Carbine/etc.).
 	// 60/61/63/64: UAC-M1 Plasma (PLASMA.dec) segmented ammo overlays — tens/ones left + tens/ones right.
@@ -82,10 +72,8 @@ class PB_WeaponTilterInventory : Inventory
 		let o64 = pi.FindPSprite(64); if (o64) { o64.Rotation = roll; }
 	}
 
-	// Caps movement-derived weapon lowering before wall bonus — keeps sprite bottoms
-	// anchored during strafe roll (tall slot firearms exposed gap below gun otherwise).
-	// Wall path still adds pb_tac_wall_lowering via min(32, …) below. See also
-	// UsesAuthoredFireOffset for per-weapon Y suppression during authored fire states.
+	// Caps movement-derived weapon lowering — keeps sprite bottoms anchored during strafe roll.
+	// UsesAuthoredFireOffset suppresses Y on weapons with state-owned A_WeaponOffset during fire.
 
 	Default
 	{
@@ -99,9 +87,6 @@ class PB_WeaponTilterInventory : Inventory
 		motionEnableBlend = 1.;
 		smoothedWeaponRoll = 0.;
 		prevStrafeDot = 0.;
-		wallOnCount = 0;
-		wallOffCount = 0;
-		wallDebouncedActive = false;
 	}
 
 	private bool IsOnFloor()
@@ -202,30 +187,6 @@ class PB_WeaponTilterInventory : Inventory
 		return false;
 	}
 
-	private bool TraceHitsWall(double traceAngle, double dist)
-	{
-		FLineTraceData wallCheck;
-		double zOff = owner.Height * 0.55;
-		owner.LineTrace(traceAngle, dist, 0, TRF_THRUACTORS, offsetz: zOff, data: wallCheck);
-		if (wallCheck.HitType == TRACE_HitWall) { return true; }
-		owner.LineTrace(traceAngle, dist, owner.Pitch, TRF_THRUACTORS, offsetz: zOff, data: wallCheck);
-		return wallCheck.HitType == TRACE_HitWall;
-	}
-
-	private bool FacingWall(double distance)
-	{
-		if (distance < 1.0) { return false; }
-		// Single forward trace misses geometry when you slide along a wall (trace parallels the surface).
-		// Fan traces catch adjacent walls and corners without touching roll / lean / tilt smoothing.
-		for (int i = 0; i < 7; i++)
-		{
-			double ang = owner.Angle + TAC_WALL_YAW[i];
-			double dist = distance * TAC_WALL_DISTSCALE[i];
-			if (TraceHitsWall(ang, dist)) { return true; }
-		}
-		return false;
-	}
-
 	private bool IsFiringState(Weapon weap, PSprite psp)
 	{
 		State st;
@@ -307,9 +268,6 @@ class PB_WeaponTilterInventory : Inventory
 		cvRollVelocity = CVar.GetCVar("pb_tac_roll_velocity", pi).GetFloat();
 		cvRollCap = CVar.GetCVar("pb_tac_roll_cap_value", pi).GetFloat();
 		cvLoweringScale = CVar.GetCVar("pb_tac_lowering_scale", pi).GetFloat();
-		cvWallDetect = CVar.GetCVar("pb_tac_wall_detect", pi).GetBool();
-		cvWallDistance = CVar.GetCVar("pb_tac_wall_distance", pi).GetFloat();
-		cvWallLowering = CVar.GetCVar("pb_tac_wall_lowering", pi).GetFloat();
 		cvEnableLean = CVar.GetCVar("pb_tac_lean_enable", pi).GetBool();
 		cvLeanAngle = CVar.GetCVar("pb_tac_lean_angle", pi).GetFloat();
 		cvLeanSmoothing = CVar.GetCVar("pb_tac_lean_smoothing", pi).GetFloat();
@@ -338,9 +296,6 @@ class PB_WeaponTilterInventory : Inventory
 			currentRoll = 0;
 			smoothedWeaponRoll = 0;
 			prevStrafeDot = 0;
-			wallOnCount = 0;
-			wallOffCount = 0;
-			wallDebouncedActive = false;
 			loweringAmount = 0;
 			landingKick = 0;
 			reloadBlend = 0;
@@ -422,26 +377,6 @@ class PB_WeaponTilterInventory : Inventory
 			}
 			targetLower = min(lowerCap, baseLower) * cvLoweringScale;
 			targetLower = min(targetLower, 7.0);
-		}
-		// Wall detection should not depend on movement-only lowering gates.
-		bool allowWallDetect = !blocked && !excluded && !fireSuppressed;
-		if (cvEnableReadyOnly) { allowWallDetect = allowWallDetect && ready; }
-		bool rawWall = cvWallDetect && allowWallDetect && !authoredFireOffset && FacingWall(cvWallDistance);
-		if (rawWall)
-		{
-			wallOnCount = min(wallOnCount + 1, 10);
-			wallOffCount = 0;
-		}
-		else
-		{
-			wallOffCount = min(wallOffCount + 1, 10);
-			wallOnCount = 0;
-		}
-		if (wallOnCount >= 6) { wallDebouncedActive = true; }
-		else if (wallOffCount >= 6) { wallDebouncedActive = false; }
-		if (wallDebouncedActive)
-		{
-			targetLower = min(32.0, targetLower + cvWallLowering);
 		}
 		loweringAmount += (targetLower - loweringAmount) * 0.20;
 

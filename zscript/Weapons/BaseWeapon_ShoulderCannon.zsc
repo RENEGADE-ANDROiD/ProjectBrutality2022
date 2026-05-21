@@ -1,0 +1,169 @@
+// Glory Kill shoulder flame belch / ice bomb — shared on PB_WeaponBase (ZScript guns
+// do not inherit DECORATE PB_Weapon states). Mirrors actors/Weapons/BaseWeapon.dec.
+
+extend class PB_WeaponBase
+{
+	states
+	{
+		FireShoulderCannon:
+			TNT1 A 0
+			{
+				A_TakeInventory("Zoomed", 1);
+				A_ZoomFactor(1.0);
+				A_TakeInventory("ADSmode", 1);
+				A_StopSound(CHAN_WEAPON);
+				A_StopSound(CHAN_6);
+				if (CountInv("FlameBelchSelected") > 0 && CountInv("FlameBelchReady") > 0)
+					return ResolveState("FireFlameBelch");
+				if (CountInv("IceBombSelected") > 0 && CountInv("IceBombReady") > 0)
+					return ResolveState("FireIceBomb");
+				if (CountInv("FlameBelchSelected") > 0 && CountInv("FlameBelchReady") < 1 && CountInv("IceBombReady") > 0)
+				{
+					A_SetInventory("IceBombSelected", 1);
+					A_SetInventory("FlameBelchSelected", 0);
+					return ResolveState("FireIceBomb");
+				}
+				if (CountInv("IceBombSelected") > 0 && CountInv("IceBombReady") < 1 && CountInv("FlameBelchReady") > 0)
+				{
+					A_SetInventory("FlameBelchSelected", 1);
+					A_SetInventory("IceBombSelected", 0);
+					return ResolveState("FireFlameBelch");
+				}
+				if (CountInv("FlameBelchReady") > 0)
+					return ResolveState("FireFlameBelch");
+				if (CountInv("IceBombReady") > 0)
+					return ResolveState("FireIceBomb");
+				return ResolveState("EmptyCannon");
+			}
+
+		FireFlameBelch:
+			TNT1 A 0
+			{
+				let pl = invoker.owner ? invoker.owner.player : null;
+				if (CountInv("FlameBelchReady") < 1)
+					return ResolveState("EmptyCannon");
+				if (pl && CVar.GetCVar("be_UseELammo", pl).GetInt() == 1 && CountInv("Gas") < 50)
+					return ResolveState("EmptyCannon");
+				if (pl && CVar.GetCVar("be_FBperformance", pl).GetInt() == 1)
+					return ResolveState("FireFlameBelchSimple");
+				return ResolveState("FireFlameBelch_Fire");
+			}
+
+		FireFlameBelch_Fire:
+			TNT1 A 0 {
+				A_TakeInventory("Zoomed", 1);
+				A_ZoomFactor(1.0);
+				A_TakeInventory("ADSmode", 1);
+			}
+			SCL0 A 0 A_ClearOverlays(-5, 80);
+			SCL0 A 0 A_GunFlash("Null");
+			SCL0 ABCD 1 A_PlaySound("Equip_Activate", CHAN_ITEM);
+			SCL0 EFGHIJ 1;
+			SCL0 K 1 A_Quake(8, 8, 0, 32);
+			TNT1 A 0 A_Recoil(4);
+			TNT1 A 0 A_PlaySoundEx("Flamebelch", "Weapon");
+			SCF0 A 5 bright A_GunFlash;
+			TNT1 A 0 A_AlertMonsters;
+			TNT1 A 0 A_TakeInventory("FlameBelchReady", 1);
+			TNT1 A 0 A_PB_AchShoulderFlame;
+			TNT1 A 0
+			{
+				let pl = invoker.owner ? invoker.owner.player : null;
+				if (pl && CVar.GetCVar("be_UseELammo", pl).GetInt() == 1)
+					A_TakeInventory("Gas", 50);
+			}
+			SCF0 BCDBCDBCD 1 bright
+			{
+				A_FireCustomMissile("GloryFireMissile", -3, 0, Random(-25, -20), 12, FPF_NOAUTOAIM, 0);
+			}
+			SCF0 EF 1;
+			SCL0 KJIHGFEDCBA 1;
+			TNT1 A 0 A_TakeInventory("DoShoulderCannon", 1);
+			TNT1 A 1 A_Raise;
+			Goto GoingToReady2;
+
+		FireFlameBelchSimple:
+			SCL0 A 0 A_ClearOverlays(-5, 80);
+			SCL0 A 0 A_GunFlash("Null");
+			SCL0 ABCD 1 A_PlaySound("Equip_Activate", CHAN_ITEM);
+			SCL0 EFGHIJ 1;
+			SCL0 K 1 A_Quake(8, 8, 0, 32);
+			TNT1 A 0 A_Recoil(4);
+			TNT1 A 0 A_PlaySoundEx("Flamebelch", "Weapon");
+			SCF0 A 5 bright A_GunFlash;
+			TNT1 A 0 A_AlertMonsters;
+			TNT1 A 0 A_TakeInventory("FlameBelchReady", 1);
+			TNT1 A 0 A_PB_AchShoulderFlame;
+			TNT1 A 0
+			{
+				let pl = invoker.owner ? invoker.owner.player : null;
+				if (pl && CVar.GetCVar("be_UseELammo", pl).GetInt() == 1)
+					A_TakeInventory("Gas", 50);
+			}
+			SCF0 BCD 1 bright
+			{
+				A_FireCustomMissile("GloryFireMissile", -3, 0, Random(-25, -20), 12, FPF_NOAUTOAIM, 0);
+			}
+			SCF0 BCD 1 bright
+			{
+				A_FireCustomMissile("GloryFireMissile", -3, 0, Random(-25, -20), 12, FPF_NOAUTOAIM, 0);
+			}
+			SCF0 EF 1;
+			SCL0 KJIHGFEDCBA 1;
+			TNT1 A 0 A_TakeInventory("DoShoulderCannon", 1);
+			TNT1 A 1 A_Raise;
+			Goto GoingToReady2;
+
+		FireIceBomb:
+			TNT1 A 0
+			{
+				let pl = invoker.owner ? invoker.owner.player : null;
+				if (CountInv("IceBombReady") < 1)
+					return ResolveState("EmptyCannon");
+				if (pl && CVar.GetCVar("be_UseELammo", pl).GetInt() == 1 && CountInv("RocketAmmo") < 1)
+					return ResolveState("EmptyCannon");
+				return ResolveState("FireIceBomb_Fire");
+			}
+
+		FireIceBomb_Fire:
+			TNT1 A 0
+			{
+				A_TakeInventory("Zoomed", 1);
+				A_ZoomFactor(1.0);
+				A_TakeInventory("ADSmode", 1);
+			}
+			LCL0 A 0 A_ClearOverlays(-5, 80);
+			LCL0 A 0 A_GunFlash("Null");
+			LCL0 ABCD 1 A_PlaySound("Equip_Activate", CHAN_ITEM);
+			LCL0 EFGHIJ 1;
+			LCL0 K 1 A_Quake(8, 8, 0, 32);
+			TNT1 A 0 A_Recoil(4);
+			LCF0 A 3 bright A_GunFlash;
+			TNT1 A 0 A_AlertMonsters;
+			TNT1 A 0 A_TakeInventory("IceBombReady", 1);
+			TNT1 A 0 A_PB_AchShoulderIce;
+			TNT1 A 0
+			{
+				let pl = invoker.owner ? invoker.owner.player : null;
+				if (pl && CVar.GetCVar("be_UseELammo", pl).GetInt() == 1)
+					A_TakeInventory("RocketAmmo", 1);
+			}
+			LCF0 BC 1 bright;
+			LCF0 D 1 bright
+			{
+				A_PlaySound("IceBomb/icebombfire", CHAN_WEAPON);
+				A_FireCustomMissile("SC_CryoGrenade", 1, 0, Random(18, 22), 12, FPF_NOAUTOAIM, 0);
+			}
+			LCF0 EF 1;
+			LCL0 KJIHGFEDCBA 1;
+			TNT1 A 0 A_TakeInventory("DoShoulderCannon", 1);
+			TNT1 A 1 A_Raise;
+			Goto GoingToReady2;
+
+		EmptyCannon:
+			TNT1 A 0 A_StopSoundEx("Weapon");
+			TNT1 A 0 A_PlaySound("Equip_notready");
+			TNT1 A 0 A_TakeInventory("DoShoulderCannon", 1);
+			Goto GoingToReady2;
+	}
+}

@@ -534,7 +534,7 @@ Actor MarauderSSG : PB_Weapon
 		Goto SelectFirstPersonLegs
 		SelectContinue:
 		TNT1 A 0 A_Raise
-		Wait
+		Goto Ready3
 
 	FireDouble:
 		TNT1 A 0 A_JumpIfInventory("MarauderSSGDurability",1,1)

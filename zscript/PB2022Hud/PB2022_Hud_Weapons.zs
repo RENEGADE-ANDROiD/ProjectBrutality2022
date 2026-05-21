@@ -154,6 +154,11 @@ extend class PB2022_Hud_ZS
 				weaponBarAccent = Font.CR_PURPLE;
 				return true;
 
+			case 'PB_SMG':
+				weaponBarAccent = Font.CR_TAN;
+				DrawAmmoBar("BARBACT1", "BARBACT2", "BARBACT3", "BAMBAR2", "ABAR2", "ABAR2", "AMMOIC2", Font.CR_TAN, drawDual: PB2022_WantsDualAmmoRow() && Left != null);
+				return true;
+
 			case 'PB_Flamethrower':
 				DrawAmmoBar("BARBACD1", "BARBACD2", "BARBACD3", "BAMBAR6", "ABAR6", "ABAR6", "AMMOIC6", cachedFontColors[FUELAMMO], drawSecondary: !CheckInventory("FlamerUpgraded"));
 				weaponBarAccent = cachedFontColors[FUELAMMO];
@@ -201,6 +206,89 @@ extend class PB2022_Hud_ZS
 		}
 
 		return false;
+	}
+
+	bool PB2022_DrawWeaponModeLabel()
+	{
+		if (!weap || !plr)
+			return false;
+
+		String label;
+		int col = Font.CR_UNTRANSLATED;
+		Name wn = weap.GetClassName();
+
+		switch (wn)
+		{
+			case 'PB_Unmaker':
+				if (CheckInventory("UnmakerFireSelected"))
+				{
+					label = StringTable.Localize("$PB_HUD_UNMAKER_INFERNO", false);
+					col = Font.CR_ORANGE;
+				}
+				else
+				{
+					label = StringTable.Localize("$PB_HUD_UNMAKER_INCIN", false);
+					col = cachedFontColors[DTECHAMMO];
+				}
+				break;
+			case 'PB_Flamethrower':
+				if (CheckInventory("FlamerNukageMode"))
+				{
+					label = StringTable.Localize("$PB_HUD_FLAMER_ACID", false);
+					col = Font.CR_GREEN;
+				}
+				else
+				{
+					label = StringTable.Localize("$PB_HUD_FLAMER_FLAME", false);
+					col = Font.CR_ORANGE;
+				}
+				break;
+			case 'PB_CryoElectroRifle':
+				if (CheckInventory("PB_CryoElectroRifle_ElectricMode"))
+				{
+					label = StringTable.Localize("$PB_HUD_CRYO_ELECTRIC", false);
+					col = Font.CR_WHITE;
+				}
+				else
+				{
+					label = StringTable.Localize("$PB_HUD_CRYO_CRYO", false);
+					col = Font.CR_CYAN;
+				}
+				break;
+			case 'PB_SMG':
+				if (CheckInventory("DualWieldingSMGs"))
+				{
+					label = StringTable.Localize("$PB_HUD_SMG_AKIMBO", false);
+					col = Font.CR_TAN;
+				}
+				else if (CheckInventory("LaserSightActivated"))
+				{
+					label = StringTable.Localize("$PB_HUD_SMG_LASER", false);
+					col = Font.CR_LIGHTBLUE;
+				}
+				else
+				{
+					label = StringTable.Localize("$PB_HUD_SMG_STD", false);
+					col = Font.CR_TAN;
+				}
+				break;
+			case 'BioAcidLauncher':
+				label = StringTable.Localize("$PB_HUD_BIOACID_STREAM", false);
+				col = Font.CR_PURPLE;
+				break;
+			case 'BHGen':
+				label = StringTable.Localize("$PB_HUD_BHGEN_CHARGE", false);
+				col = Font.CR_PURPLE;
+				break;
+			default:
+				return false;
+		}
+
+		if (!label.Length())
+			return false;
+
+		PBHud_DrawString(mBoldFont, label, (-145, -64), DI_SCREEN_RIGHT_BOTTOM | DI_TEXT_ALIGN_LEFT, col, scale: (0.5, 0.5));
+		return true;
 	}
 
 	void PB2022_DrawEquipmentSlot()
