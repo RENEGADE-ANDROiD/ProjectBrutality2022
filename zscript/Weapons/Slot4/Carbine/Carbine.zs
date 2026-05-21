@@ -21,7 +21,7 @@ class PB_Carbine : PB_WeaponBase
 	+FLOORCLIP;
 	+DONTGIB;
 	Obituary "%o was shot down by %k's Combat Rifle.";
-    AttackSound "None";
+    AttackSound "";
     Inventory.PickupSound "CLIPIN";
 	Inventory.Pickupmessage "You got the UAC41 Carbine! (Slot 4)";
 	Inventory.MaxAmount 3;
@@ -33,6 +33,7 @@ class PB_Carbine : PB_WeaponBase
     +WEAPON.NOAUTOFIRE;
     Scale 0.51;
 	PB_WeaponBase.UnloaderToken "CarbineHasUnloaded";
+	Inventory.Icon "CB00Z0";
 	Inventory.AltHUDIcon "CB00Z0";
 	PB_WeaponBase.respectItem "RespectCarbine";
 	PB_WeaponBase.TailPitch 1.5;
@@ -57,53 +58,53 @@ class PB_Carbine : PB_WeaponBase
 				A_GiveInventory("RespectCarbine");
 				A_PlaySoundEx("weapons/carbine/up", "Auto");
 			}
-			4A11 ABCDEFFFF 1 A_DoPBWeaponAction;
+			"4A11" ABCDEFFFF 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/empty",CHAN_AUTO );
-			4A11 JKLKFF 1 A_DoPBWeaponAction;
+			"4A11" JKLKFF 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/empty",CHAN_AUTO );
-			4A11 JKLKFF 1 A_DoPBWeaponAction;
+			"4A11" JKLKFF 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/empty",CHAN_AUTO );
-			4A11 JKLKF 1 A_DoPBWeaponAction;
+			"4A11" JKLKF 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectbeep",CHAN_AUTO );
-			4A12 DABABBADDABADDD  1 A_DoPBWeaponAction;
-			4A12 PQRSTUVWXYZ 1 A_DoPBWeaponAction;
+			"4A12" DABABBADDABADDD  1 A_DoPBWeaponAction;
+			"4A12" PQRSTUVWXYZ 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectbeep",CHAN_AUTO );
-			4A12 WXYZYXWXYZYXW 1 A_DoPBWeaponAction;
+			"4A12" WXYZYXWXYZYXW 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
-			4A13 JKLMNOP 1 A_DoPBWeaponAction;
+			"4A13" JKLMNOP 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
-			4A13 QRSTUV 1 A_DoPBWeaponAction;
-			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
-			TNT1 A 0 A_Startsound("weapons/carbine/respectbeep",CHAN_AUTO );
-			4A14 ABCDEFEDCCDEFEDCCDEFEDCCDEFEDCC 1 A_DoPBWeaponAction;
-			4A15 NOPQRS 1 A_DoPBWeaponAction;
+			"4A13" QRSTUV 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
 			TNT1 A 0 A_Startsound("weapons/carbine/respectbeep",CHAN_AUTO );
-			4A15 TUVWQRS 1 A_DoPBWeaponAction;
+			"4A14" ABCDEFEDCCDEFEDCCDEFEDCCDEFEDCC 1 A_DoPBWeaponAction;
+			"4A15" NOPQRS 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
 			TNT1 A 0 A_Startsound("weapons/carbine/respectbeep",CHAN_AUTO );
-			4A15 TUVWQRS 1 A_DoPBWeaponAction;
+			"4A15" TUVWQRS 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
 			TNT1 A 0 A_Startsound("weapons/carbine/respectbeep",CHAN_AUTO );
-			4A15 TUVWQRS 1 A_DoPBWeaponAction;
+			"4A15" TUVWQRS 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
 			TNT1 A 0 A_Startsound("weapons/carbine/respectbeep",CHAN_AUTO );
-			4A15 TUVWQRS 1 A_DoPBWeaponAction;
+			"4A15" TUVWQRS 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
 			TNT1 A 0 A_Startsound("weapons/carbine/respectbeep",CHAN_AUTO );
-			4A15 TUVWQRS 1 A_DoPBWeaponAction;
+			"4A15" TUVWQRS 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
 			TNT1 A 0 A_Startsound("weapons/carbine/respectbeep",CHAN_AUTO );
-			4A15 TUVW 1 A_DoPBWeaponAction;
+			"4A15" TUVWQRS 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
-			4A17 AAADEFGGGG 1 A_DoPBWeaponAction;
+			TNT1 A 0 A_Startsound("weapons/carbine/respectbeep",CHAN_AUTO );
+			"4A15" TUVW 1 A_DoPBWeaponAction;
+			TNT1 A 0 A_Startsound("weapons/carbine/respectwhack",CHAN_AUTO );
+			"4A17" AAADEFGGGG 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_Startsound("weapons/carbine/respectyes",CHAN_AUTO );
-			4A17 KLMNNNNNSTUVWWWWWWWWWWWWVUTSNNNNN 1 A_DoPBWeaponAction;
-			4A18 RSTUVW 1 A_DoPBWeaponAction;
+			"4A17" KLMNNNNNSTUVWWWWWWWWWWWWVUTSNNNNN 1 A_DoPBWeaponAction;
+			"4A18" RSTUVW 1 A_DoPBWeaponAction;
 			TNT1 A 0 {
 				A_PlaySoundEx("weapons/carbine/down", "Auto");
 				A_Setroll(0);
-				A_DoPBWeaponAction;
+				return A_DoPBWeaponAction();
 				}
 			Goto Ready3;
 		
@@ -111,7 +112,7 @@ class PB_Carbine : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "SelectAnimationDualWield");
 			TNT1 A 0 A_PlaySoundEx("weapons/carbine/up", "Auto");
-			4A1S ABCD 1 A_JumpIfInventory("GoFatality", 1, "Steady");
+			"4A1S" ABCD 1 A_JumpIfInventory("GoFatality", 1, "Steady");
 		Ready3:
 			TNT1 A 0 {
 				A_TakeInventory("PB_LockScreenTilt",1);
@@ -129,7 +130,7 @@ class PB_Carbine : PB_WeaponBase
 		
 	SelectAnimationDualWield:
 		TNT1 A 0 A_PlaySoundEx("weapons/carbine/up", "Auto");
-		CB01 ACDE 1;
+		"CB01" ACDE 1;
 		TNT1 A 0 A_PlaySoundEx("weapons/carbine/up", "Auto");
 	ReadyDualWield:
 		CB01 E 0 {
@@ -169,7 +170,7 @@ class PB_Carbine : PB_WeaponBase
 			}
 			if(!A_CheckAkimbo() || CountInv("PB_Carbine") < 2) {
 				A_ClearOverlays(10,11);
-				return state("StopDualWield");
+				return ResolveState("StopDualWield");
 			}
 			return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
 		}
@@ -189,17 +190,17 @@ class PB_Carbine : PB_WeaponBase
 				if(PressingFire() || JustPressed(BT_ATTACK)){
 					if(CountInv("LeftXRifleAmmo") > 0){
 						if(CountInv("SemiFire") > 0 && CountInv("FiringCarbineL") >= 1) {
-							return state("");
+							return ResolveState(null);
 						}
-						return state("FireLeft_Overlay");
+						return ResolveState("FireLeft_Overlay");
 					}
 					else {
 						A_PlaySoundEx("weapons/empty", "Auto");
-						return state("");
+						return ResolveState(null);
 					}
 				}
 			}
-			return state("");
+			return ResolveState(null);
 		}
 		Loop;
 	IdleRight_Overlay:
@@ -216,45 +217,45 @@ class PB_Carbine : PB_WeaponBase
 				if((PressingFire() || JustPressed(BT_ATTACK)) && GetCvar("SingleDualFire")==0){
 					if(CountInv("XRifleAmmo") > 0){
 						if(CountInv("SemiFire") > 0 && CountInv("FiringCarbineR") >= 1) {
-							return state("");
+							return ResolveState(null);
 						}
-						return state("FireRight_Overlay");
+						return ResolveState("FireRight_Overlay");
 					}
 					else {
 						A_PlaySoundEx("weapons/empty", "Auto");
-						return state("");
+						return ResolveState(null);
 					}
 				}
 			}
 			if((PressingAltFire() || JustPressed(BT_ALTATTACK)) && GetCvar("SingleDualFire")==1){
 				if(CountInv("XRifleAmmo") > 0){
 					if(CountInv("SemiFire") > 0 && CountInv("FiringCarbineR") >= 1) {
-						return state("");
+						return ResolveState(null);
 					}
-					return state("FireRight_Overlay");
+					return ResolveState("FireRight_Overlay");
 				}
 				else {
 					A_PlaySoundEx("weapons/empty", "Auto");
-					return state("");
+					return ResolveState(null);
 				}
 			}
-			return state("");
+			return ResolveState(null);
 		}
 		Loop;
 	
 	FireLeft_Overlay:
 		CB02 A 1 BRIGHT {
-			A_AlertMonsters;
+			A_AlertMonsters();
 			A_GiveInventory("FiringCarbineL",1);
-			A_PlaySoundEx("Weapons/Rifle/SFire", 5);
-			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM,8192,"Tracer", -4,-8);
+			A_PlaySoundEx("Weapons/Rifle/SFire", "SoundSlot5");
+			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM, 8192, "Tracer", -4, 0);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,-4,0);
 			A_FireCustomMissile("GunFireSmoke", 0, 0, -4, 0, 0, 0);
 			A_FireCustomMissile("RifleCaseSpawn",5,0,-14,-6);
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_Takeinventory("LeftXRifleAmmo",1);
 			A_ZoomFactor(0.985);
-			A_GunFlash;
+			A_GunFlash();
             PB_WeaponRecoil(-1.6,+1.2);
 			}
 		CB02 B 1 {
@@ -266,7 +267,7 @@ class PB_Carbine : PB_WeaponBase
 				A_GiveInventory("DualFiring",1);
 			}
 		}
-		CB02 C 1;
+		"CB02" C 1;
 		TNT1 A 0 {
 			if(CountInv("LeftXRifleAmmo")<=0){
 				A_GiveInventory("DualFireReload",1);
@@ -276,7 +277,7 @@ class PB_Carbine : PB_WeaponBase
 		
 	FireRight_Overlay:
 		CB03 A 1 BRIGHT {
-			A_AlertMonsters;
+			A_AlertMonsters();
 			A_GiveInventory("FiringCarbineR",1);
 			A_PlaySoundEx("Weapons/Rifle/SFire", "SoundSlot6");
 			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM,8192,"Tracer", -4, 8);
@@ -286,7 +287,7 @@ class PB_Carbine : PB_WeaponBase
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_Takeinventory("XRifleAmmo",1);
 			A_ZoomFactor(0.985);
-			A_GunFlash;
+			A_GunFlash();
             PB_WeaponRecoil(-1.6,-1.2);
 			}
 		CB03 B 1 {
@@ -298,7 +299,7 @@ class PB_Carbine : PB_WeaponBase
 				A_TakeInventory("DualFiring",1);
 			}
 		}
-		CB03 C 1;
+		"CB03" C 1;
 		TNT1 A 0 {
 			if(CountInv("XRifleAmmo")<=0){
 				A_GiveInventory("DualFireReload",1);
@@ -350,17 +351,17 @@ class PB_Carbine : PB_WeaponBase
 			if(GetCvar("pb_toggle_aim_hold")) {
 				if(!PressingAltfire() || JustReleased(BT_ALTATTACK)) {
 					A_ClearOverlays(6,6);
-					return state("Zoomout");
+					return ResolveState("Zoomout");
 				}
 				if (PressingFire() && PressingAltfire() && CountInv("XRifleAmmo") > 0) {
 					if(CountInv("CarbineFullAuto") >= 1 || (CountInv("SemiFire") >= 1 && JustPressed(BT_ATTACK))) {
-						return state("Fire2");
+						return ResolveState("Fire2");
 					}
 					if(CountInv("BurstFire") >= 1) {
 						if(CountInv("CarbineBurstCounter") >= 3) {
-							return state("ReadyToFire2");
+							return ResolveState("ReadyToFire2");
 						} else {
-							return state("Fire2");
+							return ResolveState("Fire2");
 						}
 					}
 				}
@@ -368,12 +369,12 @@ class PB_Carbine : PB_WeaponBase
 			} else {
 				if (PressingFire() && CountInv("XRifleAmmo") > 0) {
 					if(CountInv("CarbineFullAuto") >= 1) {
-						return state("Fire2");
+						return ResolveState("Fire2");
 					}
 					if(CountInv("BurstFire") >= 1) {
 						if(CountInv("CarbineBurstCounter") >= 3) {
 							A_SetInventory("CarbineBurstCounter",0);
-							return state("ReadyToFire2");
+							return ResolveState("ReadyToFire2");
 						}
 					}
 				}
@@ -403,11 +404,11 @@ class PB_Carbine : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GotMeatShield", 1, "GrabEnemy");
 		TNT1 A 0 A_JumpIfInventory("PB_LMG",1,"DeselectUpgrade");
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "DeselectAkimbo");
-        4A1S DCBA 1;
+        "4A1S" DCBA 1;
 		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower;
 		Wait;
 	DeselectAkimbo:
-		CB01 EDBA 1;
+		"CB01" EDBA 1;
 		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower;
 		Wait;
 	DeselectUpgrade:
@@ -438,52 +439,62 @@ class PB_Carbine : PB_WeaponBase
 			A_ClearOverlays(20,21);
 		}
 	
-	TNT1 A 0{
-		if(CountInv("SelectCarbine_DualWield") >=1) {
-			{A_Overlay(-19,"WheelCancel"); Return State("SwitchToDualWield");}
-		if(CountInv("SelectCarbine_SemiFire") && CountInv("SemiFire") >=1) {
-			{A_Overlay(-19,"WheelCancel"); A_Log("Fire control already selected: Semi-Auto"); Return State("Ready3");}
-		if(CountInv("SelectCarbine_BurstFire") && CountInv("BurstFire") >=1) {
-			{A_Overlay(-19,"WheelCancel"); A_Log("Fire control already selected: Burst-Fire"); Return State("Ready3");}
-		if(CountInv("SelectCarbine_FullAutoFire") && CountInv("CarbineFullAuto") >=1) {
-			{A_Overlay(-19,"WheelCancel"); A_Log("Fire control already selected: Full-Auto"); Return State("Ready3");}
-		
-		if(CountInv("SelectCarbine_FullAutoFire") || CountInv("SelectCarbine_BurstFire") || CountInv("SelectCarbine_SemiFire") >=1) {
-			{Return State("ToggleFireMode");}
-
-		if(CountInv("SelectCarbine_Sights") == 1) {
-			{Return State("ToggleScope");}
-			
-		A_Overlay(-19,"WheelCancel");
-		Return State("");
+		TNT1 A 0 {
+			if (CountInv("SelectCarbine_DualWield") >= 1) {
+				A_Overlay(-19, "WheelCancel");
+				return ResolveState("SwitchToDualWield");
+			}
+			if (CountInv("SelectCarbine_SemiFire") && CountInv("SemiFire") >= 1) {
+				A_Overlay(-19, "WheelCancel");
+				A_Log("Fire control already selected: Semi-Auto");
+				return ResolveState("Ready3");
+			}
+			if (CountInv("SelectCarbine_BurstFire") && CountInv("BurstFire") >= 1) {
+				A_Overlay(-19, "WheelCancel");
+				A_Log("Fire control already selected: Burst-Fire");
+				return ResolveState("Ready3");
+			}
+			if (CountInv("SelectCarbine_FullAutoFire") && CountInv("CarbineFullAuto") >= 1) {
+				A_Overlay(-19, "WheelCancel");
+				A_Log("Fire control already selected: Full-Auto");
+				return ResolveState("Ready3");
+			}
+			if (CountInv("SelectCarbine_FullAutoFire") || CountInv("SelectCarbine_BurstFire") || CountInv("SelectCarbine_SemiFire") >= 1) {
+				return ResolveState("ToggleFireMode");
+			}
+			if (CountInv("SelectCarbine_Sights") == 1) {
+				return ResolveState("ToggleScope");
+			}
+			A_Overlay(-19, "WheelCancel");
+			return ResolveState(null);
 		}
 
-	SwitchToDualWield:
+		SwitchToDualWield:
 		TNT1 A 0 {
 			if(CountInv("PB_Carbine") < 2) {
-			A_Print("\ckNeed two \ctcarbines \c-to dual-wield"); Return State("Ready3");}
-			Return State("");
+			A_Print("\ckNeed two \ctcarbines \c-to dual-wield"); return ResolveState("Ready3");}
+			return ResolveState(null);
 			}
 		TNT1 A 0 {
 			if (A_CheckAkimbo()) {
 				A_Takeinventory("DualWieldingCarbines",1);
 				A_SetAkimbo(False);
-				return state("SwitchFromDualWield");
+				return ResolveState("SwitchFromDualWield");
 			}
 			else {
 				A_Giveinventory("DualWieldingCarbines",1);
 				A_SetAkimbo(True);
-				return state("");
+				return ResolveState(null);
 			}
 		}
-		CB00 ABCD 1 A_SetRoll(roll+.8, SPF_INTERPOLATE);
-		CB00 E 1;
-		CB00 FGHI 1 A_SetRoll(roll-.8, SPF_INTERPOLATE);
+		"CB00" ABCD 1 A_SetRoll(roll+.8, SPF_INTERPOLATE);
+		"CB00" E 1;
+		"CB00" FGHI 1 A_SetRoll(roll-.8, SPF_INTERPOLATE);
 		Goto ReadyDualWield;
 	SwitchFromDualWield:
-		CB00 IHGF 1 A_SetRoll(roll-.8, SPF_INTERPOLATE);
-		CB00 E 1;
-		CB00 DCBA 1 A_SetRoll(roll+.8, SPF_INTERPOLATE);
+		"CB00" IHGF 1 A_SetRoll(roll-.8, SPF_INTERPOLATE);
+		"CB00" E 1;
+		"CB00" DCBA 1 A_SetRoll(roll+.8, SPF_INTERPOLATE);
 		Goto Ready3;
 		
 		
@@ -492,7 +503,7 @@ class PB_Carbine : PB_WeaponBase
 			if (A_CheckAkimbo()) {
 				A_Log("Fire control not available while dual-wielding");
 				A_Overlay(-19,"WheelCancel");
-				return state("");
+				return ResolveState(null);
 				}
 			if(CountInv("SelectCarbine_SemiFire") >= 1) {
 				A_Setinventory("CarbineFullAuto",0);
@@ -500,7 +511,7 @@ class PB_Carbine : PB_WeaponBase
  				A_SetInventory("SemiFire",1);
 				A_Overlay(-19,"WheelCancel");
 				A_Log("Fire control mode selected: Semi-Auto");
- 				return state("FiremodeAnimation");
+ 				return ResolveState("FiremodeAnimation");
 				}
  			if(CountInv("SelectCarbine_BurstFire") >= 1) {
 				A_Setinventory("CarbineFullAuto",0);
@@ -508,7 +519,7 @@ class PB_Carbine : PB_WeaponBase
  				A_SetInventory("SemiFire",0);
 				A_Overlay(-19,"WheelCancel");
 				A_Log("Fire control mode selected: Burst-Fire");
- 				return state("FiremodeAnimation");
+ 				return ResolveState("FiremodeAnimation");
 				}
 			if(CountInv("SelectCarbine_FullAutoFire") >= 1) {
 				A_Setinventory("CarbineFullAuto",1);
@@ -516,9 +527,9 @@ class PB_Carbine : PB_WeaponBase
  				A_SetInventory("SemiFire",0);
 				A_Overlay(-19,"WheelCancel");
 				A_Log("Fire control mode selected: Full-Auto");
- 				return state("FiremodeAnimation");
+ 				return ResolveState("FiremodeAnimation");
 				}
- 			return state("");	
+ 			return ResolveState(null);	
  		}
  		Goto Ready3;
 	ToggleScope:
@@ -526,7 +537,7 @@ class PB_Carbine : PB_WeaponBase
 			if (A_CheckAkimbo()) {
 				A_Overlay(-19,"WheelCancel");
 				A_Log("Sight toggle not available while dual-wielding");
-				return state("");
+				return ResolveState(null);
 			}
 			if(CountInv("CarbineScope") == 0) {
 				A_Setinventory("CarbineScope",1);
@@ -538,13 +549,13 @@ class PB_Carbine : PB_WeaponBase
 				A_Overlay(-19,"WheelCancel");
 				A_Log("Optic switched: Reflex");
 			}
-			return state("");
+			return ResolveState(null);
  		}
  		Goto Ready3;
  	FiremodeAnimation:
- 		4A1W ABCDEF 1 A_Setroll(roll+0.8, SPF_INTERPOLATE);
+ 		"4A1W" ABCDEF 1 A_Setroll(roll+0.8, SPF_INTERPOLATE);
  		TNT1 A 0 A_PlaySound("LIGHTON");
- 		4A1W FEDCBA 1 A_Setroll(roll-0.8, SPF_INTERPOLATE);
+ 		"4A1W" FEDCBA 1 A_Setroll(roll-0.8, SPF_INTERPOLATE);
  		Goto Ready3;
 		
 	Select:
@@ -564,13 +575,13 @@ class PB_Carbine : PB_WeaponBase
 	MuzzleFlash:
 		TNT1 A 0 A_Jump(256,"Flash1","Flash2","Flash3");
 	Flash1:
-		4AFM AB 1 BRIGHT A_GunFlash;
+		"4AFM" AB 1 BRIGHT A_GunFlash();
 		Stop;
 	Flash2:
-		4AFM CD 1 BRIGHT A_GunFlash;
+		"4AFM" CD 1 BRIGHT A_GunFlash();
 		Stop;
 	Flash3:
-		4AFM EF 1 BRIGHT A_GunFlash;
+		"4AFM" EF 1 BRIGHT A_GunFlash();
 		Stop;
 		
     Fire:
@@ -588,9 +599,9 @@ class PB_Carbine : PB_WeaponBase
 			A_TakeInventory("PB_LockScreenTilt",1);
 			A_ClearOverlays(10,11);
 		}
-		4AFF AB 0;
-		4BFF AB 0;
-		4CFF AB 0;
+		"4AFF" AB 0;
+		"4BFF" AB 0;
+		"4CFF" AB 0;
 		
 		TNT1 A 0 A_JumpIfInventory("Zoomed",1,"Fire2");
 		TNT1 A 0 {
@@ -607,7 +618,7 @@ class PB_Carbine : PB_WeaponBase
 			A_Overlay(-3, "MuzzleFlash");
 			A_OverlayFlags(-3,PSPF_RENDERSTYLE,true);
 			A_OverlayRenderStyle(-3,STYLE_Add);
-			A_GunFlash;
+			A_GunFlash();
 			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
@@ -617,7 +628,7 @@ class PB_Carbine : PB_WeaponBase
 			A_Takeinventory("XRifleAmmo",1);
 			A_Giveinventory("CarbineBarrelHeat",10);
 			A_PlaySoundEx("Weapons/Rifle/SFire", "Weapon");
-			A_AlertMonsters;
+			A_AlertMonsters();
 			A_ZoomFactor(0.98);
             PB_WeaponRecoil(-0.48,-0.18);
 			}
@@ -646,17 +657,21 @@ class PB_Carbine : PB_WeaponBase
 			}
 		}
 		TNT1 A 0 {
-			if(CountInv("SemiFire") >= 1) {
- 				return state("ReadyToFire");
+			if (CountInv("SemiFire") >= 1) {
+				return ResolveState("ReadyToFire");
+			}
+			if (CountInv("BurstFire") >= 1) {
+				if (CountInv("CarbineBurstCounter") <= 1) {
+					A_GiveInventory("CarbineBurstCounter", 1);
+					A_Refire();
+				} else {
+					return ResolveState("ReadyToFire");
 				}
- 			if(CountInv("BurstFire") >= 1) {
-				if(CountInv("CarbineBurstCounter") <=1) {
-					{A_GiveInventory("CarbineBurstCounter",1); A_Refire;}
- 				else {
-					{Return State("ReadyToFire");}
-				}
-			if(CountInv("CarbineFullAuto") >= 1) {A_Refire;}
-			Return State ("");
+			}
+			if (CountInv("CarbineFullAuto") >= 1) {
+				A_Refire();
+			}
+			return ResolveState(null);
 		}
 		Goto ReadyToFire;
 	
@@ -667,11 +682,11 @@ class PB_Carbine : PB_WeaponBase
 			}
         TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,1);
         Goto Reload;
-		4A2F A 0 A_Jump(256,"Fire2_Flash1","Fire2_Flash2");
+		"4A2F" A 0 A_Jump(256,"Fire2_Flash1","Fire2_Flash2");
 		Fire2_Flash1:
 		"4A2F" A 1 BRIGHT {
 			if(CountInv("CarbineScope")==1) { A_SetWeaponSprite("TNT1"); A_ZoomFactor(3.0); }
-			A_GunFlash;
+			A_GunFlash();
 			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
@@ -681,7 +696,7 @@ class PB_Carbine : PB_WeaponBase
 			A_Takeinventory("XRifleAmmo",1);
 			A_Giveinventory("CarbineBarrelHeat",10);
 			A_PlaySoundEx("Weapons/Rifle/SFire", "Weapon");
-			A_AlertMonsters;
+			A_AlertMonsters();
 			if(CountInv("CarbineScope")==0) { A_ZoomFactor(1.485); }
             PB_WeaponRecoil(-0.30,-0.12);
 			}
@@ -696,50 +711,55 @@ class PB_Carbine : PB_WeaponBase
 			else { A_ZoomFactor(1.5); }
 		}
 		TNT1 A 0 {
-			if(GetCvar("pb_toggle_aim_hold")) {
-				if(JustReleased(BT_ALTATTACK)) {
-					{return state("Zoomout");}
-		
-				if ((JustPressed(BT_ATTACK) || PressingFire())  && PressingAltfire()) {
-					if(CountInv("SemiFire") >= 1) {
-						{return state("Ready2");}
-					if(CountInv("BurstFire") >= 1) {
-							if(CountInv("CarbineBurstCounter") <=1) {
-								{A_GiveInventory("CarbineBurstCounter",1); A_Refire("Fire2");}
-							else {
-								{Return State("ReadyToFire2");}
-						}
-					if(CountInv("CarbineFullAuto") >= 1) { A_Refire("Fire2");}
+			if (GetCvar("pb_toggle_aim_hold")) {
+				if (JustReleased(BT_ALTATTACK)) {
+					return ResolveState("Zoomout");
 				}
-			
-			Return State ("");
+				if ((JustPressed(BT_ATTACK) || PressingFire()) && PressingAltfire()) {
+					if (CountInv("SemiFire") >= 1) {
+						return ResolveState("Ready2");
+					}
+					if (CountInv("BurstFire") >= 1) {
+						if (CountInv("CarbineBurstCounter") <= 1) {
+							A_GiveInventory("CarbineBurstCounter", 1);
+							A_Refire("Fire2");
+						} else {
+							return ResolveState("ReadyToFire2");
+						}
+					}
+					if (CountInv("CarbineFullAuto") >= 1) {
+						A_Refire("Fire2");
+					}
+				}
+				return ResolveState(null);
+			} else {
+				if (PressingAltfire()) {
+					return ResolveState("Zoomout");
+				}
+				if (CountInv("SemiFire") >= 1) {
+					return ResolveState("Ready2");
+				}
+				if (CountInv("BurstFire") >= 1) {
+					if (CountInv("CarbineBurstCounter") <= 1) {
+						A_GiveInventory("CarbineBurstCounter", 1);
+						A_Refire("Fire2");
+					} else {
+						return ResolveState("ReadyToFire2");
+					}
+				}
+				if (CountInv("CarbineFullAuto") >= 1) {
+					A_Refire("Fire2");
+				}
+				return ResolveState(null);
 			}
-			
-			else {
-				if(PressingAltfire()) {
-					{return state("Zoomout");}
-				
-
-				if(CountInv("SemiFire") >= 1) {
-						{return state("Ready2");}
-				if(CountInv("BurstFire") >= 1) {
-								if(CountInv("CarbineBurstCounter") <=1) {
-									{A_GiveInventory("CarbineBurstCounter",1); A_Refire("Fire2");}
-								else {
-									{Return State("ReadyToFire2");}
-							}
-				if(CountInv("CarbineFullAuto") >= 1) {A_Refire("Fire2");}
-					
-			Return State ("");
-			}
-			return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
+			return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 		}
 		Goto ReadyToFire2;
 		
 		Fire2_Flash2:
 		"4A3F" A 1 BRIGHT {
 			if(CountInv("CarbineScope")==1) { A_SetWeaponSprite("TNT1"); A_ZoomFactor(3.0); }
-			A_GunFlash;
+			A_GunFlash();
 			A_FireBullets (0.1, 0.1, -1, 22, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
@@ -749,7 +769,7 @@ class PB_Carbine : PB_WeaponBase
 			A_Takeinventory("XRifleAmmo",1);
 			A_Giveinventory("CarbineBarrelHeat",10);
 			A_PlaySoundEx("Weapons/Rifle/SFire", "Weapon");
-			A_AlertMonsters;
+			A_AlertMonsters();
 			if(CountInv("CarbineScope")==0) { A_ZoomFactor(1.485); }
             PB_WeaponRecoil(-0.30,-0.12);
 			}
@@ -777,7 +797,7 @@ class PB_Carbine : PB_WeaponBase
 			A_Giveinventory("ADSmode",1);
 		}
 		TNT1 A 0 A_JumpIfInventory("CarbineScope",1,"ZoomInLower");
-        4AFZ ABCD 1;
+        "4AFZ" ABCD 1;
 		TNT1 A 0 {
 			A_Overlay(6,"Reticle1");
 			A_OverlayPivotAlign(6,PSPA_CENTER,PSPA_CENTER);
@@ -790,10 +810,10 @@ class PB_Carbine : PB_WeaponBase
         Goto Ready2;
 
 	LowerZoomFrame:
-		4AFZ F 3;
+		"4AFZ" F 3;
 		Stop;
 	ZoomInLower:
-		4AFZ ABC 1;
+		"4AFZ" ABC 1;
 		TNT1 A 1 {
 			A_Overlay(6,"LowerZoomFrame");
 			A_OverlayPivotAlign(6,PSPA_CENTER,PSPA_CENTER);
@@ -822,13 +842,13 @@ class PB_Carbine : PB_WeaponBase
 		}
 		Goto Ready2;
 	Reticle1:
-		4AFZ Y 1 BRIGHT;
+		"4AFZ" Y 1 BRIGHT;
 		Loop;
 	ScopeReticle:
-		4AFZ Y 1 BRIGHT;
+		"4AFZ" Y 1 BRIGHT;
 		Loop;
 	ScopeBackground:
-		4AFZ Z 1 BRIGHT;
+		"4AFZ" Z 1 BRIGHT;
 		Loop;
 		
    ZoomOut:
@@ -842,7 +862,7 @@ class PB_Carbine : PB_WeaponBase
 			PB_HandleCrosshair(59);
 			}
 		TNT1 A 0 A_JumpIfInventory("CarbineScope",1,"ZoomOutLower");
-        4AFZ DCBA 1;
+        "4AFZ" DCBA 1;
 		TNT1 A 0 A_WeaponReady(WRF_NOSECONDARY);
         Goto Ready3;
 	ZoomOutLower:
@@ -861,7 +881,7 @@ class PB_Carbine : PB_WeaponBase
 			A_OverlayOffset(6,0,0,WOF_INTERPOLATE);
 			A_ZoomFactor(1);
 		}
-		4AFZ DCBA 1;
+		"4AFZ" DCBA 1;
 		TNT1 A 0 PB_HandleCrosshair(59);
 		Goto Ready3;
 		
@@ -889,10 +909,10 @@ class PB_Carbine : PB_WeaponBase
 			TNT1 AAAAAAAAAAAAAA 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 0, 6, 0, 0);
 			TNT1 A 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 1, 6, 0, 0);
 			TNT1 A 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 2, 6, 0, 0);
-			TNT1 A 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 2, 6, 0, 0) ;//z
+			TNT1 A 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 2, 6, 0, 0) ;//z;
 			TNT1 AAAAAA 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 2, 5, 0, 0);
-			TNT1 A 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 1, 5, 0, 0) ;//G
-			TNT1 AAAAAAAAA 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 0, 5, 0, 0) ;//H
+			TNT1 A 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 1, 5, 0, 0) ;//G;
+			TNT1 AAAAAAAAA 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 0, 5, 0, 0) ;//H;
 			TNT1 AAAAAA 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 1, 5, 0, 0);
 			TNT1 AAAA 1 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 0, 5, 0, 0);
 			Stop;
@@ -902,9 +922,9 @@ class PB_Carbine : PB_WeaponBase
 			A_ClearOverlays(6,7);
 			A_ClearOverlays(20,21);
 			if (CountInv("XRifleAmmo") >= 41 && CountInv("LeftXRifleAmmo") >= 41) {
-				return state("ReadyDualWield");
+				return ResolveState("ReadyDualWield");
 			}
-			return state("");
+			return ResolveState(null);
 		}
         TNT1 A 0 A_JumpIfInventory("NewClip",1,1);
         Goto ReadyDualWield;
@@ -913,7 +933,7 @@ class PB_Carbine : PB_WeaponBase
 			A_SetCrosshair(5);
 			A_PlaySoundEx("Ironsights", "Auto");
 		}
-		CB01 ABCDE 1;
+		"CB01" ABCDE 1;
 		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",41,"ReloadLeftCarbine");
 		Goto ReloadCheckPoint1;
 		
@@ -929,29 +949,29 @@ class PB_Carbine : PB_WeaponBase
 	ReloadLeftCarbine:
 		TNT1 A 0 A_Takeinventory("CarbineHasUnloaded",1);
 		TNT1 A 0 A_JumpIfInventory("LeftXRifleAmmo",41,"SelectAnimationDualWield");
-		4B20 G 1 A_SetRoll(roll+0.8);
+		"4B20" G 1 A_SetRoll(roll+0.8);
 		TNT1 A 0 A_JumpIfInventory("LeftCarbineHasUnloaded",1,"ReloadLeftUnloadedStart");
-        4B20 H 1;
-        4B20 IJKLMNO 1 A_SetRoll(roll-0.8);
+        "4B20" H 1;
+        "4B20" IJKLMNO 1 A_SetRoll(roll-0.8);
 		
-		4B20 PQRST 1;
-		4B20 UVWXY 1 A_SetRoll(roll-0.6);
+		"4B20" PQRST 1;
+		"4B20" UVWXY 1 A_SetRoll(roll-0.6);
 		TNT1 A 0 A_PlaySoundEx("weapons/carbine/magout", "Auto");
-		4B20 Z 1 A_SetRoll(roll-0.6);
+		"4B20" Z 1 A_SetRoll(roll-0.6);
 	ContinueLeftReload:
-        4B21 AB 1 A_SetRoll(roll-0.6);
-		4B21 CDEF 1;
+        "4B21" AB 1 A_SetRoll(roll-0.6);
+		"4B21" CDEF 1;
 		TNT1 A 0 A_JumpIfInventory("LeftXRifleAmmo",1,3);
 		TNT1 A 0 A_JumpIfInventory("LeftCarbineHasUnloaded",1,2);
 		TNT1 A 0 PB_SpawnCasing("EmptyCarbineMag",38,-16,13,frandom(0, 3.5),frandom(3.3, 7.2),frandom(3,7));
-		4B21 GHIJKLMN 1 A_SetRoll(roll+0.6);
+		"4B21" GHIJKLMN 1 A_SetRoll(roll+0.6);
 		TNT1 A 0 A_PlaySoundEx("weapons/carbine/magin", "Auto");
-		4B21 OPQRS 1 A_SetRoll(roll+1.5);
+		"4B21" OPQRS 1 A_SetRoll(roll+1.5);
 		
-		4B21 TUV 1 A_SetRoll(roll-0.5);
+		"4B21" TUV 1 A_SetRoll(roll-0.5);
 		TNT1 A 0 A_PlaySoundEx("weapons/riflemagslap", "Auto");
-		4B21 WXYZ 1 A_SetRoll(roll+1.5);
-        4B22 ABCDEFGH 1 A_SetRoll(roll-1.5);
+		"4B21" WXYZ 1 A_SetRoll(roll+1.5);
+        "4B22" ABCDEFGH 1 A_SetRoll(roll-1.5);
 		TNT1 A 0 A_TakeInventory("LeftCarbineHasUnloaded",1);
 	InsertBulletsLeft:
 		TNT1 A 0 A_JumpIfInventory("LeftXRifleAmmo",41,"SelectAnimationDualwield");
@@ -963,10 +983,10 @@ class PB_Carbine : PB_WeaponBase
 			}
 		Goto InsertBulletsLeft;
 	ReloadLeftUnloadedStart:
-		4B21 A 1 Offset(4,34) A_SetRoll(roll-0.6);
-		4B21 A 0 A_WeaponOffset(0,32);
-		4B21 A 1 A_SetRoll(roll-0.1);
-		GOTO ContinueLeftReload;
+		"4B21" A 1 Offset(4,34) A_SetRoll(roll-0.6);
+		"4B21" A 0 A_WeaponOffset(0,32);
+		"4B21" A 1 A_SetRoll(roll-0.1);
+		Goto ContinueLeftReload;
 
 	Reload:
 		TNT1 A 0 {
@@ -990,41 +1010,41 @@ class PB_Carbine : PB_WeaponBase
 					A_Gunflash("BarrelSmoke3");
 			}
 			
-			return state("");
+			return ResolveState(null);
 		}
-        4A20 ABCDEF 1 A_SetRoll(roll+0.8);
+        "4A20" ABCDEF 1 A_SetRoll(roll+0.8);
 	ReloadCheckPoint1:
-        4A20 G 1 A_SetRoll(roll+0.8);
-        4A20 H 1;
+        "4A20" G 1 A_SetRoll(roll+0.8);
+        "4A20" H 1;
 		TNT1 A 0 A_JumpIfInventory("CarbineHasUnloaded",1,"ReloadUnloadedStart");
-        4A20 IJKLMNO 1 A_SetRoll(roll-0.8);
+        "4A20" IJKLMNO 1 A_SetRoll(roll-0.8);
 		
-		4A20 PQRST 1;
-		4A20 UVWXY 1 A_SetRoll(roll-0.6);
+		"4A20" PQRST 1;
+		"4A20" UVWXY 1 A_SetRoll(roll-0.6);
 		TNT1 A 0 A_PlaySoundEx("weapons/carbine/magout", "Auto");
-		4A20 Z 1 A_SetRoll(roll-0.6);
-	ReloadFromUnload:	
-        4A21 AB 1 A_SetRoll(roll-0.6);
-		4A21 CDEF 1;
+		"4A20" Z 1 A_SetRoll(roll-0.6);
+	ReloadFromUnload:
+        "4A21" AB 1 A_SetRoll(roll-0.6);
+		"4A21" CDEF 1;
 		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,3);
 		TNT1 A 0 A_JumpIfInventory("CarbineHasUnloaded",1,2);
 		TNT1 A 0 PB_SpawnCasing("EmptyCarbineMag",38,20,13,frandom(0, 3.5),frandom(-7.2, -3.3),frandom(3,7));
-		4A21 GHIJKLMN 1 A_SetRoll(roll+0.6);
+		"4A21" GHIJKLMN 1 A_SetRoll(roll+0.6);
 		TNT1 A 0 A_PlaySoundEx("weapons/carbine/magin", "Auto");
-		4A21 OPQRS 1 A_SetRoll(roll+1.5);
+		"4A21" OPQRS 1 A_SetRoll(roll+1.5);
 		
-		4A21 TUV 1 A_SetRoll(roll-0.5);
+		"4A21" TUV 1 A_SetRoll(roll-0.5);
 		TNT1 A 0 A_PlaySoundEx("weapons/riflemagslap", "Auto");
-		4A21 WXYZ 1 A_SetRoll(roll+1.5);
-        4A22 ABCDEF 1 A_SetRoll(roll-1.5);
+		"4A21" WXYZ 1 A_SetRoll(roll+1.5);
+        "4A22" ABCDEF 1 A_SetRoll(roll-1.5);
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "InsertBulletsRight");
-        4A22 IJ 1 A_SetRoll(roll-1.5);
+        "4A22" IJ 1 A_SetRoll(roll-1.5);
 		TNT1 A 0 A_SetRoll(0);
-		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,5);//30+1 effect
-		4A22 KL 1;
+		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,5);//30+1 effect;
+		"4A22" KL 1;
 		TNT1 A 0 A_Takeinventory("CarbineHasUnloaded",1);
 		TNT1 A 0 A_SetCrosshair(0);
-		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,"InsertBullets2");//30+1 effect
+		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,"InsertBullets2");//30+1 effect;
 		TNT1 A 0 A_GiveInventory("RifleWasEmpty", 1);
 	InsertBullets:
 		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",40,"Ready3");
@@ -1051,22 +1071,22 @@ class PB_Carbine : PB_WeaponBase
 		TNT1 A 0 A_SetCrosshair(5);
 		TNT1 A 0 A_Takeinventory("RifleWasEmpty",1);
 		TNT1 A 0 A_PlaySoundEx("weapons/magpull", "Auto");
-		4A23 BDEFGHI 1 A_SetRoll(roll-.6, SPF_INTERPOLATE);
-		4A23 JKLMNO 1 A_SetRoll(roll+1.5, SPF_INTERPOLATE);
+		"4A23" BDEFGHI 1 A_SetRoll(roll-.6, SPF_INTERPOLATE);
+		"4A23" JKLMNO 1 A_SetRoll(roll+1.5, SPF_INTERPOLATE);
 		TNT1 A 0 A_SetCrosshair(0);
 		Goto Ready3;
 		
 	ReloadUnloadedStart:
-		4A21 TUV 1 Offset(-4,34) A_SetRoll(roll-0.6);
-		4A21 A 0 A_WeaponOffset(0,32);
-		4A21 WX 1 A_SetRoll(roll-0.1);
-		GOTO ReloadFromUnload;
+		"4A21" TUV 1 Offset(-4,34) A_SetRoll(roll-0.6);
+		"4A21" A 0 A_WeaponOffset(0,32);
+		"4A21" WX 1 A_SetRoll(roll-0.1);
+		Goto ReloadFromUnload;
 	AlreadyUnloaded:
 		TNT1 A 0 A_Takeinventory("Unloading",1);
 		Goto Ready3;
 
 	UnLoadDualWieldStart:
-		4A20 ABCDEF 1;
+		"4A20" ABCDEF 1;
 		Goto UnloadCheckPoint;
 		
 	
@@ -1086,26 +1106,26 @@ class PB_Carbine : PB_WeaponBase
 		TNT1 A 0 A_SetCrosshair(5);
 		TNT1 A 0 A_PlaySoundEx("Ironsights", "Auto");
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "UnLoadDualWieldStart");
-		 4A20 ABCDEF 1 A_SetRoll(roll+0.8);
+		 "4A20" ABCDEF 1 A_SetRoll(roll+0.8);
 	UnloadCheckPoint:
-        4A20 G 1 A_SetRoll(roll+0.8);
-        4A20 H 1;
-        4A20 IJKLMNO 1 A_SetRoll(roll-0.8);
+        "4A20" G 1 A_SetRoll(roll+0.8);
+        "4A20" H 1;
+        "4A20" IJKLMNO 1 A_SetRoll(roll-0.8);
 		
-		4A20 PQRST 1;
-		4A20 UVWXY 1 A_SetRoll(roll-0.6);
+		"4A20" PQRST 1;
+		"4A20" UVWXY 1 A_SetRoll(roll-0.6);
 		TNT1 A 0 A_PlaySoundEx("weapons/carbine/magout", "Auto");
-		4A20 Z 1 A_SetRoll(roll-0.6);
-        4A21 AB 1 A_SetRoll(roll-0.6);
-		4A21 CDEF 1;
-		4A21 GHIJK 1 A_SetRoll(roll+0.6);
-		4A21 K 5;
-		4A22 F 1 Offset(-10,32) A_SetRoll(roll-1.5);
-		4A22 G 0 A_WeaponOffset(0,32);
-		4A22 G 1 A_SetRoll(roll-1.5);
+		"4A20" Z 1 A_SetRoll(roll-0.6);
+        "4A21" AB 1 A_SetRoll(roll-0.6);
+		"4A21" CDEF 1;
+		"4A21" GHIJK 1 A_SetRoll(roll+0.6);
+		"4A21" K 5;
+		"4A22" F 1 Offset(-10,32) A_SetRoll(roll-1.5);
+		"4A22" G 0 A_WeaponOffset(0,32);
+		"4A22" G 1 A_SetRoll(roll-1.5);
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "RemoveBullets");
-		4A22 HIJ 1 A_SetRoll(roll-1.5);
-		4A22 KLMN 1;
+		"4A22" HIJ 1 A_SetRoll(roll-1.5);
+		"4A22" KLMN 1;
 	RemoveBullets:
 		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,1);
 		Goto FinishUnload;
@@ -1124,29 +1144,29 @@ class PB_Carbine : PB_WeaponBase
 	UnloadLeftCarbine:
 		
 		
-		4A22 H 1 A_SetRoll(roll-1.5);
-		4A22 H 1 Offset(-18,44) A_SetRoll(roll-1.5);
-		4A22 H 1 Offset(-30,56) A_SetRoll(roll-1.5);
+		"4A22" H 1 A_SetRoll(roll-1.5);
+		"4A22" H 1 Offset(-18,44) A_SetRoll(roll-1.5);
+		"4A22" H 1 Offset(-30,56) A_SetRoll(roll-1.5);
 		TNT1 A 5 A_WeaponOffset(0,32);
 		TNT1 A 0 A_JumpIf(CountInv("LeftXRifleAmmo") < 1,"SelectAnimationDualWield");
-		4B20 G 1 A_SetRoll(roll+0.8);
-        4B20 H 1;
-        4B20 IJKLMNO 1 A_SetRoll(roll-0.8);
+		"4B20" G 1 A_SetRoll(roll+0.8);
+        "4B20" H 1;
+        "4B20" IJKLMNO 1 A_SetRoll(roll-0.8);
 		
-		4B20 PQRST 1;
-		4B20 UVWXY 1 A_SetRoll(roll-0.6);
+		"4B20" PQRST 1;
+		"4B20" UVWXY 1 A_SetRoll(roll-0.6);
 		TNT1 A 0 A_PlaySoundEx("weapons/carbine/magout", "Auto");
-		4B20 Z 1 A_SetRoll(roll-0.6);
-        4B21 AB 1 A_SetRoll(roll-0.6);
-		4B21 ABC 1;
-		4B21 DE 1;
-		4B21 K 5;
-		4B21 E 1 Offset(10,32) A_SetRoll(roll-1.5);
-		4A22 G 0 A_WeaponOffset(0,32);
-		4B22 G 1 A_SetRoll(roll-1.5);
-		4B22 H 1 A_SetRoll(roll-1.5);
-		4B22 H 1 Offset(18,44) A_SetRoll(roll-1.5);
-		4B22 H 1 Offset(30,56) A_SetRoll(roll-1.5);
+		"4B20" Z 1 A_SetRoll(roll-0.6);
+        "4B21" AB 1 A_SetRoll(roll-0.6);
+		"4B21" ABC 1;
+		"4B21" DE 1;
+		"4B21" K 5;
+		"4B21" E 1 Offset(10,32) A_SetRoll(roll-1.5);
+		"4A22" G 0 A_WeaponOffset(0,32);
+		"4B22" G 1 A_SetRoll(roll-1.5);
+		"4B22" H 1 A_SetRoll(roll-1.5);
+		"4B22" H 1 Offset(18,44) A_SetRoll(roll-1.5);
+		"4B22" H 1 Offset(30,56) A_SetRoll(roll-1.5);
 		TNT1 A 5 A_WeaponOffset(0,32);
 		RemoveBullets_Left:
 		TNT1 A 0 A_JumpIfInventory("LeftXRifleAmmo",1,1);
@@ -1164,33 +1184,33 @@ class PB_Carbine : PB_WeaponBase
 		Goto SelectAnimationDualWield;
 		
 	Spawn:
-		VB00 Z 0 NoDelay;
-		CB00 Z 10 A_PbvpFramework("VB00");
+		"VB00" Z 0 NoDelay;
+		"CB00" Z 10 A_PbvpFramework("VB00");
 		"####" "#" 0 A_PbvpInterpolate();
 		LOOP;
 		
     
 	PDA_Preview_Carb_HipFire:
-		4AFF A 2 Bright;
-		4AFF B 2;
-		4AFF C 2;
+		"4AFF" A 2 Bright;
+		"4AFF" B 2;
+		"4AFF" C 2;
 		Stop;
 	PDA_Preview_Carb_ADSFire:
-		4A2F A 2 Bright;
-		4A2F B 2;
+		"4A2F" A 2 Bright;
+		"4A2F" B 2;
 		Stop;
 	PDA_Preview_Carb_Reload:
-		4A20 ABCDEF 2;
-		4A20 IJKL 2;
-		4A21 CDEF 2;
-		4A21 GHI 2;
+		"4A20" ABCDEF 2;
+		"4A20" IJKL 2;
+		"4A21" CDEF 2;
+		"4A21" GHI 2;
 		Stop;
 	PDA_Preview_Carb_Dual:
-		CB02 A 2 Bright;
-		CB02 B 2;
-		CB02 C 2;
-		CB03 A 2 Bright;
-		CB03 B 2;
+		"CB02" A 2 Bright;
+		"CB02" B 2;
+		"CB02" C 2;
+		"CB03" A 2 Bright;
+		"CB03" B 2;
 		Stop;
 
 	FlashAirKicking:
@@ -1198,41 +1218,41 @@ class PB_Carbine : PB_WeaponBase
     FlashKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashKickingDW");
-		C1KI ABCDEEEEFFEEDCBA 1;
+		"C1KI" ABCDEEEEFFEEDCBA 1;
 		Goto Ready3;
 	FlashKickingDW:
-		CB01 ABCDEEEEFFEEDCBA 1;
+		"CB01" ABCDEEEEFFEEDCBA 1;
 		Goto Ready3;
 	FlashAirKickingDW:
-		CB01 ABCDEEEEFFEEDCBA 1;
+		"CB01" ABCDEEEEFFEEDCBA 1;
 		Goto Ready3;
 		
 	FlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingDW");
-		C1KI ABCDEEEEEEFFFFFFEEEEEEEDCBA 1;
+		"C1KI" ABCDEEEEEEFFFFFFEEEEEEEDCBA 1;
 		Goto Ready3;
 	FlashSlideKickingDW:
-		CB01 ABCDEEEEEEFFFFFFEEEEEEEDCBA 1;
+		"CB01" ABCDEEEEEEFFFFFFEEEEEEEDCBA 1;
 		Goto Ready3;
 	FlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingStopDW");
-		C1KI FEEDCBA 1;
+		"C1KI" FEEDCBA 1;
 		Goto Ready3;
 	FlashSlideKickingStopDW:
-		CB01 FEEDCBA 1;
+		"CB01" FEEDCBA 1;
 		Goto Ready3;
 		
 	FlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashPunchingDW");
-		C1KI ABCDEEFFEEDCBA 1;
+		"C1KI" ABCDEEFFEEDCBA 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 		Goto Ready3;
 	FlashPunchingDW:
 		TNT1 A 0 A_ClearOverlays(10,11);
-		CB01 ABCDEEFFEEDCBA 1;
+		"CB01" ABCDEEFFEEDCBA 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 		Goto Ready3;
 		
