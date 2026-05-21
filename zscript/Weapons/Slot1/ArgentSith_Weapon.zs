@@ -31,6 +31,10 @@ class PB_ArgentSith : PB_WeaponBase
    {
    Steady:
 	    TNT1 A 1;
+	    TNT1 A 0 {
+			PB_SetUsingMelee(false);
+			A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+		}
 	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 	    TNT1 A 0 SetPlayerProperty(0, 0, 0);
 	    TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
@@ -294,51 +298,113 @@ class PB_ArgentSith : PB_WeaponBase
 			Goto Ready3;
 
 	QuickMelee:
-        	"####" A 0 {
-				A_StopSound(CHAN_WEAPON);
-				A_StopSound(CHAN_VOICE);
-				A_StopSound(CHAN_6);
-				A_StopSound(CHAN_5);
-				A_StopSound(CHAN_7);
-			}
-			TNT1 A 0 A_JumpIfInventory("CantFire", 1, "FailOverlay");
-			TNT1 A 0 A_JumpIfHealthLower(0, "FailOverlay");
-			TNT1 A 0 {
-				A_ClearOverlays(-10,65);
-				A_Gunflash("Null");
-			}
-		"####" AAA 0 PB_Execute();
-	GoMeleeInstead:
+		"####" A 0 {
+			A_StopSound(CHAN_WEAPON);
+			A_StopSound(CHAN_VOICE);
+			A_StopSound(CHAN_6);
+			A_StopSound(CHAN_5);
+			A_StopSound(CHAN_7);
+		}
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "QuickMeleeAbort");
+		TNT1 A 0 A_JumpIfInventory("CantFire", 1, "FailOverlay");
+		TNT1 A 0 A_JumpIfHealthLower(0, "FailOverlay");
 		TNT1 A 0 {
+			if (CountInv("FinisherToken", AAPTR_PLAYER_GETTARGET) >= 1
+				&& A_CheckLOF("Null", CLOFF_SETTARGET | CLOFF_NOAIM_VERT | CLOFF_IGNOREGHOST | CLOFF_MUSTBESOLID, 180))
+				return ResolveState("PermormGloryKill");
+			return ResolveState(null);
+		}
+		TNT1 A 0 A_ClearOverlays(3, 65);
+		TNT1 A 0 A_GunFlash("Null");
+		TNT1 A 0 A_JumpIfInventory("ShieldSawThrown", 1, "GoMeleeInstead");
+		TNT1 A 0 A_JumpIfCloser(99, "GoMeleeInstead");
+		TNT1 A 0 {
+			State st = PB_ResolveQuickMeleeShieldThrow();
+			if (st)
+				return st;
+			return ResolveState(null);
+		}
+		TNT1 A 1 {
+			State st = PB_Execute();
+			if (st)
+				return st;
+			return ResolveState(null);
+		}
+		TNT1 A 0 A_JumpIfInventory("ShieldSawThrown", 1, "GoMeleeInstead");
+		TNT1 A 0 A_JumpIfCloser(99, "GoMeleeInstead");
+	GoMeleeInstead:
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "QuickMeleeAbort");
+		TNT1 A 0 {
+			PB_SetUsingMelee(true);
+			A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			A_PB_AirMeleeLunge(10);
 			A_Overlay(PSP_FLASH, "FlashPunching");
-			A_TakeInventory("Zoomed",1);
+			A_GiveInventory("HasCutingWeapon", 1);
+			A_TakeInventory("Zoomed", 1);
 			A_ZoomFactor(1.0);
-			A_TakeInventory("ADSmode",1);
+			A_TakeInventory("ADSmode", 1);
 			A_SetRoll(0);
 			A_Overlay(-10, "FirstPersonLegsStand");
 		}
-		JSML ABCDEF 1;
+		JSML ABCDEF 1 {
+			if (CountInv("GoFatality") >= 1)
+				return ResolveState("QuickMeleeAbort");
+			if (JustPressed(BT_USER2))
+			{
+				State st = PB_Execute();
+				if (st)
+					return st;
+			}
+			return ResolveState(null);
+		}
 		PUFF A 0 A_PlaySound("player/cyborg/fist", 3);
 		TNT1 A 0 {
-		     A_FireCustomMissile("Hellbullet", 20, 0);
-		     A_FireCustomMissile("Hellbullet", -20, 0);
-		     A_FireCustomMissile("Hellbullet", 10, 0, 0, 10);
-		     A_FireCustomMissile("Hellbullet", -10, 0, 0, -10);
-		     A_FireCustomMissile("Hellbullet", -15, 0, 0, -15);
-		     A_FireCustomMissile("Hellbullet", -8, 0, 0, -8);
-		     }
-		JSML FGHIJKLMNOP 1;
+			A_FireCustomMissile("Hellbullet", 20, 0);
+			A_FireCustomMissile("Hellbullet", -20, 0);
+			A_FireCustomMissile("Hellbullet", 10, 0, 0, 10);
+			A_FireCustomMissile("Hellbullet", -10, 0, 0, -10);
+			A_FireCustomMissile("Hellbullet", -15, 0, 0, -15);
+			A_FireCustomMissile("Hellbullet", -8, 0, 0, -8);
+		}
+		JSML FGHIJKLMNOP 1 {
+			if (CountInv("GoFatality") >= 1)
+				return ResolveState("QuickMeleeAbort");
+			if (JustPressed(BT_USER2))
+			{
+				State st = PB_Execute();
+				if (st)
+					return st;
+			}
+			return ResolveState(null);
+		}
 		TNT1 A 7 {
-			 if(JustPressed(BT_USER2)) {return PB_Execute();}
-			 return resolveState(null);
-		     }
+			if (CountInv("GoFatality") >= 1)
+				return ResolveState("QuickMeleeAbort");
+			if (JustPressed(BT_USER2))
+			{
+				State st = PB_Execute();
+				if (st)
+					return st;
+			}
+			return ResolveState(null);
+		}
 		TNT1 A 0 {
-			 PB_SetUsingMelee(false);
-		     }
+			PB_SetUsingMelee(false);
+			A_TakeInventory("HasCutingWeapon", 1);
+		}
 		TNT1 A 0 PB_CheckBarrelIdle1();
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready;
+		Goto Ready3;
+
+	QuickMeleeAbort:
+		TNT1 A 0 {
+			PB_SetUsingMelee(false);
+			A_TakeInventory("HasCutingWeapon", 1);
+			A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+			A_ClearOverlays(3, 65);
+			A_GunFlash("Null");
+		}
+		Goto Steady;
 
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel");
@@ -543,12 +609,13 @@ class PB_ArgentSith : PB_WeaponBase
 		Stop;
 
 	FlashPunching:
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "QuickMeleeAbort");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
-		TNT1 A 0 A_ClearOverlays(10,11);
-		TNT1 A 15;
+		TNT1 A 0 A_ClearOverlays(10, 11);
+		TNT1 A 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 	}
 }

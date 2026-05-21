@@ -236,8 +236,8 @@ Class PB_Shotgun : PB_WeaponBase
 				A_fireprojectile("YellowFlareSpawn", 0, 0, 0, 0);
 				A_fireprojectile("ShakeYourAssDouble", 0, 0, 0, 0);
 				_SpawnMuzzleSparksSG(0,0,-4);
-				PB_GunSmoke_Sniper(1,0,-4);
-                PB_MuzzleFlashEffects(0,0,-4);
+				A_PB_ThrottledMuzzleFX(1, 0, -4, "", 'ShotgunFXPhase');
+                A_PB_ThrottledMuzzleSparks(0, 0, -4, "", 'ShotgunFXPhase');
                 A_QuakeEx(-3, 0, 0, 15, 0, 2, "", QF_RELATIVE | QF_WAVE | QF_SCALEDOWN | QF_SCALEUP | QF_FULLINTENSITY, 2, 0, 0, 0, 2, frandom(-0.5, 0.5), 2);
                 //A_QuakeEx(2, 2, 2, 10, 0, 2, "", QF_RELATIVE | QF_SCALEDOWN);
 				A_Overlay(-6, "ShotFlash",true);
@@ -717,31 +717,12 @@ Class PB_Shotgun : PB_WeaponBase
 			}
 		ReadyToFire2:
 			SHT8 A 1
-			{		
+			{
 				PB_CoolDownBarrel(0,-2,6);
 				PB_SetShellSprite("SHT8","SHT6","SHT4");
-				if (CountInv("PumpshotgunMagNotInserted") >= 1 ) 
-					return resolvestate("InsertMagShotgunRespectAlreadyRespected"); 
-							
-				//Updated code for far superior smooth gameplay
-				if(Cvar.GetCvar("pb_toggle_aim_hold",player).getint() == 1) 
-				{
-					if(!PressingAltfire() || JustReleased(BT_ALTATTACK))
-						return resolvestate("Zoomout");
-					
-					if (PressingFire() && PressingAltfire() && CountInv("ShotgunAmmo") > 0)
-							return resolvestate("Fire2");
-					
-					return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOSECONDARY);
-				}
-				else 
-				{
-					if (PressingFire() && CountInv("ShotgunAmmo") > 0 )
-						return resolvestate("Fire2");
-					
-					return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-				}
-				return resolvestate(null);
+				if (CountInv("PumpshotgunMagNotInserted") >= 1 )
+					return resolvestate("InsertMagShotgunRespectAlreadyRespected");
+				return PB_ReadyFire("Fire2", "Fire2", "Zoomout", true, true, "ShotgunAmmo");
 			}
 			Loop;
 		
@@ -761,8 +742,8 @@ Class PB_Shotgun : PB_WeaponBase
 				else PB_TakeAmmo("ShotgunAmmo", 1,0);
 				 _SpawnMuzzleSparksSG(0,0,-4);
 				 _SpawnMuzzleSparksSG(0,0,-4);
-				 PB_GunSmoke_Sniper(1,0,0);
-                 PB_MuzzleFlashEffects(0,0,0);
+				 A_PB_ThrottledMuzzleFX(1, 0, 0, "", 'ShotgunFXPhase');
+				 A_PB_ThrottledMuzzleSparks(0, 0, 0, "", 'ShotgunFXPhase');
                  A_QuakeEx(-3, 0, 0, 15, 0, 2, "", QF_RELATIVE | QF_WAVE | QF_SCALEDOWN | QF_SCALEUP | QF_FULLINTENSITY, 2, 0, 0, 0, 2, frandom(-0.5, 0.5), 2);
                 //A_QuakeEx(2, 2, 2, 10, 0, 2, "", QF_RELATIVE | QF_SCALEDOWN);
 				 PB_DynamicTail("shotgun", "shotgun");

@@ -161,7 +161,6 @@ Actor ShotgunGuyPackSpawner : Demonpickup
 	TNT1 A 0 A_SpawnItemEx("PB_DemonTechZombie",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop
 	SpawnPyroSergeant: //This will temporarily spawn a Rocket Launcher Guy instead. This comment can be removed when the Pyro Sergeant gets overhauled.
@@ -176,7 +175,6 @@ Actor ShotgunGuyPackSpawner : Demonpickup
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleQuadShotgunZombie",0)
 	TNT1 A 0 A_SpawnItemEx("PB_QSGZombie",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop
@@ -218,7 +216,6 @@ Actor ShotgunGuyPackSpawner : Demonpickup
 	ReplaceToggle:
 	TNT1 A 0 A_SpawnItemEx("PB_ShotgunGuy",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop

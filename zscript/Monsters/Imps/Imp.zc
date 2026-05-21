@@ -234,10 +234,6 @@ Class PB_Imp1 : PB_Monster
 			else {
 				self.Height = 56;
 			}
-			
-			HitboxerHandler();
-			
-			ExecutionHandler();
 		}
 		
 		States

@@ -199,13 +199,7 @@ ACTOR PB_SMG : PB_Weapon
 	ReadyToFire:
 		A1F1 E 1 {
 			A_Overlay(-16,"LaserOverlay");
-			if (PressingFire() && PressingAltfire() && CountInv("SMGAmmo") > 0){
-					return state("Fire");
-			}
-			if (PressingFire() && CountInv("SMGAmmo") > 0){
-					return state("Fire");
-			}
-			return A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("UACSMGHasUnloaded"));	
+			return PB_ReadyFire("Fire", "Fire", "Zoomout", false, false, "SMGAmmo", true, "UACSMGHasUnloaded");
 		}
 		Loop
 		
@@ -217,23 +211,7 @@ ACTOR PB_SMG : PB_Weapon
 			}
 	ReadyToFire2:
         A1F3 D 1 {
-			//Updated code for far superior smooth gameplay
-			if(GetCvar("pb_toggle_aim_hold")) {
-				if(!PressingAltfire() || JustReleased(BT_ALTATTACK)){
-					return state("Zoomout");
-				}
-				if (PressingFire() && PressingAltfire() && CountInv("SMGAmmo") > 0){
-						return state("Fire2");
-				}
-				return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOSECONDARY, CheckUnloaded("UACSMGHasUnloaded"));
-			}
-			else {
-				if (PressingFire() && CountInv("SMGAmmo") > 0 ){
-					return state("Fire2");
-				}
-				return A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("UACSMGHasUnloaded"));
-			}
-			return state("");
+			return PB_ReadyFire("Fire2", "Fire2", "Zoomout", true, false, "SMGAmmo", true, "UACSMGHasUnloaded");
 		}
 		Loop
 		
@@ -326,7 +304,7 @@ ACTOR PB_SMG : PB_Weapon
 			A_PlaySoundEx("ZSpecOps/MGun", 5);
 			A_FireBullets (0.1, 0.1, -1, 13, "HitPuff", FBF_NORANDOM,8192,"Tracer", -4, -8);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,-4,0);
-			A_FireCustomMissile("GunFireSmoke", 0, 0, -4, 0, 0, 0);
+			A_PB_ThrottledGunSmoke(-4, 0, 0, 'UACSMGSmokePhase');
 			A_FireCustomMissile("SMGCasingSpawner",5,0,-14,-6);
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_Takeinventory("LeftSMGAmmo",1);
@@ -367,7 +345,7 @@ ACTOR PB_SMG : PB_Weapon
 			A_PlaySoundEx("ZSpecOps/MGun", "SoundSlot6");
 			A_FireBullets (0.1, 0.1, -1, 13, "HitPuff", FBF_NORANDOM,8192,"Tracer", -4, 8);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,4,0);
-			A_FireCustomMissile("GunFireSmoke", 0, 0, 4, 0, 0, 0);
+			A_PB_ThrottledGunSmoke(4, 0, 0, 'UACSMGSmokePhase');
 			A_FireCustomMissile("SMGCasingSpawner",5,0,16,-5);
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_Takeinventory("SMGAmmo",1);
@@ -522,7 +500,7 @@ ACTOR PB_SMG : PB_Weapon
 		TNT1 A 0 PB_WeapTokenSwitch("UACSMGSelected")
 		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Raise
 		TNT1 AAAAAAAA 1 A_Raise
-		Wait
+		Goto Ready3
 		
     Fire:
 		TNT1 A 0 {
@@ -546,7 +524,7 @@ ACTOR PB_SMG : PB_Weapon
 			A_PlaySoundEx("ZSpecOps/MGun", "Weapon");
 			A_FireBullets (0.1, 0.1, -1, 13, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
-			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+			A_PB_ThrottledGunSmoke(0, 0, 0, 'UACSMGSmokePhase');
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_FireCustomMissile("SMGCasingSpawner",5,0,0,-9);
 			A_Takeinventory("SMGAmmo",1);
@@ -592,7 +570,7 @@ ACTOR PB_SMG : PB_Weapon
 			A_PlaySoundEx("ZSpecOps/MGun", "Weapon");
 			A_FireBullets (0.1, 0.1, -1, 13, "HitPuff", FBF_NORANDOM,8192,"Tracer", -2,0);
 			A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
-			A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 3, 0, 0);
+			A_PB_ThrottledGunSmoke(0, 3, 0, 'UACSMGSmokePhase');
 			A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			A_FireCustomMissile("SMGCasingSpawner",-2,0,2,0);
 			A_Takeinventory("SMGAmmo",1);

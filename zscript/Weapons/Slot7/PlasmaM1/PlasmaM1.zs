@@ -224,8 +224,7 @@ Class PB_M1Plasma : PB_WeaponBase
 				A_StartSound("PLSM9", CHAN_WEAPON, CHANF_OVERLAP);
 				A_FireProjectile("Plasma_Ball", 0, 1, 0, 0);
 				//A_FireProjectile("ShakeYourAssMinor", 0, 0, 0, 0);
-				PB_GunSmoke(0,0,0);
-                PB_MuzzleFlashEffects(0, 0, 0, "1265ff");
+				A_PB_ThrottledMuzzleFX(0, 0, 0, "1265ff", 'PlasmaM1FXPhase');
 				PB_LowAmmoSoundWarning("hdmr");
 				PB_TakeAmmo("PlasmaAmmo",1,0);
 				A_ZoomFactor(.98);
@@ -900,8 +899,7 @@ Class PB_M1Plasma : PB_WeaponBase
 		FireLeft_Overlay:
 			DPR2 A 1 BRIGHT {
 					A_FireProjectile("Plasma_Ball", 0.1, 0, -6, -4, 0, 0);
-					PB_GunSmoke(4,0,0);//A_FireProjectile("GunFireSmoke", 0, 0, -4, 0, 0, 0);
-                    PB_MuzzleFlashEffects(4, 0, 0, "1265ff");
+					A_PB_ThrottledMuzzleFX(4, 0, 0, "1265ff", 'PlasmaM1FXPhase');
 					A_StartSound("PLSM9", CHAN_WEAPON);
 					A_AlertMonsters();
 					A_ZoomFactor(0.99);
@@ -932,8 +930,7 @@ Class PB_M1Plasma : PB_WeaponBase
 		FireRight_Overlay:
 			DPR1 A 1 BRIGHT {
 					A_FireProjectile("Plasma_Ball", 0.1, 0, 6, -4, 0, 0);
-					PB_GunSmoke(-4,0,0);//A_FireProjectile("GunFireSmoke", 0, 0, 4, 0, 0, 0);
-                    PB_MuzzleFlashEffects(-4, 0, 0, "1265ff");
+					A_PB_ThrottledMuzzleFX(-4, 0, 0, "1265ff", 'PlasmaM1FXPhase');
 					A_StartSound("PLSM9", CHAN_WEAPON);
 					A_AlertMonsters();
 					A_ZoomFactor(0.98);

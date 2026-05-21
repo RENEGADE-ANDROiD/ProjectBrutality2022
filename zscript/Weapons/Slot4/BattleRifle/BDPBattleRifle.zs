@@ -50,7 +50,7 @@ class BDPBattleRifle : PB_WeaponBase
 		PB_IncrementHeat(4);
 		A_StartSound("weapons/battlerifle/fire", CHAN_WEAPON, CHANF_OVERLAP, 1.0, 0, 1.12);
 		PB_WeaponRecoil(-1.8, frandom(-0.3, 0.3));
-		PB_GunSmoke(0, 0, 0);
+		A_PB_ThrottledMuzzleFX(0, 0, 0, "", 'BattleRifleFXPhase');
 		invoker.burstCount++;
 	}
 
@@ -63,7 +63,7 @@ class BDPBattleRifle : PB_WeaponBase
 		PB_IncrementHeat(4);
 		A_StartSound("weapons/battlerifle/fire", CHAN_WEAPON, CHANF_OVERLAP, 1.0, 0, 1.12);
 		PB_WeaponRecoil(-1.1, frandom(-0.2, 0.2));
-		PB_GunSmoke(0, 0, -1);
+		A_PB_ThrottledMuzzleFX(0, 0, -1, "", 'BattleRifleFXPhase');
 		invoker.burstCount++;
 	}
 

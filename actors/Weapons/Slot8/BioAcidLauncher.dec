@@ -25,6 +25,8 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 	AttackSound "None"
 	Scale 0.8
 	Tag "$PB_TAG_BIOACIDLAUNCHER"
+	Inventory.Icon "BPBLM0"
+	Inventory.AltHUDIcon "BPBLM0"
 	States
 	{
 	Spawn:
@@ -97,7 +99,7 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 		Goto SelectFirstPersonLegs
 	SelectContinue:
 		TNT1 A 0 A_Raise
-		Wait
+		Goto Ready3
 
 	NoAmmo:
 		BAWL A 1 A_PlaySOund("UNMSTO", 8)

@@ -182,13 +182,73 @@ Extend class PB_WeaponBase
 	}
 
 	// ------------------------------------------------------------------
-	// Heat bump used by staging weapons with barrel-heat visuals.
-	// PB 2022's BaseWeapon.zc already declares PB_IncrementHeat as an
-	// empty stub (int amount, bool secondBarrel) â€” we promote it to an
-	// actual increment here. Signature kept compatible with both conventions
-	// via parameter defaults.
-	// NOTE: This replaces the PB_WeaponBase stub at BaseWeapon.zc:871.
+	// Heat bump (staging: amount * 10, cap 200) for PB_CoolDownBarrel smoke.
 	// ------------------------------------------------------------------
+	action void PB_IncrementHeat(int amount, bool secondBarrel = false)
+	{
+		int nh = (secondBarrel ? invoker.leftBarrelHeat : invoker.barrelHeat) + amount * 10;
+		if (nh > 200)
+			nh = 200;
+		if (!secondBarrel)
+			invoker.barrelHeat = nh;
+		else
+			invoker.leftBarrelHeat = nh;
+	}
+
+	// ------------------------------------------------------------------
+	// ADS / dual-input ready helper (PB Staging PB_ReadyFire; renamed from PB_ReadyZoom).
+	// ------------------------------------------------------------------
+	action state PB_ReadyFire(
+		statelabel fire = "Fire",
+		statelabel firezoom = "Fire2",
+		statelabel zoomout = "Zoomout",
+		bool ads = false,
+		bool useMag = true,
+		Name ammoInv = 'None',
+		bool adsFireNeedsAlt = true,
+		string unloaderToken = "",
+		int adsHoldWrFlags = WRF_NOSECONDARY,
+		bool adsTapUsesHipFire = false)
+	{
+		int ammoToCheck;
+		if (ammoInv != 'None')
+			ammoToCheck = CountInv(ammoInv);
+		else
+			ammoToCheck = useMag ? CountInv(invoker.ammotype2) : CountInv(invoker.ammotype1);
+
+		int unloadFlags = (unloaderToken != "") ? CheckUnloaded(unloaderToken) : 0;
+
+		if (ads && PB_GetAimMode())
+		{
+			if (!PressingAltfire() || JustReleased(BT_ALTATTACK))
+				return ResolveState(zoomout);
+			if (PressingFire() && ammoToCheck > 0)
+			{
+				if (!adsFireNeedsAlt || PressingAltfire())
+					return ResolveState(firezoom);
+			}
+			return A_DoPBWeaponAction(WRF_ALLOWRELOAD | adsHoldWrFlags, unloadFlags);
+		}
+
+		if (PressingFire() && PressingAltfire() && ammoToCheck > 0)
+			return ResolveState(ads ? firezoom : fire);
+		if (PressingFire() && ammoToCheck > 0)
+			return ResolveState((ads && adsTapUsesHipFire) ? fire : (ads ? firezoom : fire));
+
+		return A_DoPBWeaponAction(WRF_ALLOWRELOAD, unloadFlags);
+	}
+
+	action void PB_SetZoom(bool set)
+	{
+		A_SetInventory("Zoomed", set);
+		if (!set)
+			A_ZoomFactor(1.0);
+	}
+
+	action bool PB_GetZoom()
+	{
+		return CountInv("Zoomed") > 0;
+	}
 
 	// ------------------------------------------------------------------
 	// Barrel-heat cooldown smoke â€” emitted periodically while the weapon
@@ -457,7 +517,7 @@ Extend class PB_WeaponBase
 						return ResolveState("FireLeft_Overlay");
 					break;
 				case 2:
-					if(PressingAltFire() && !A_IsFiringLeftWeapon())
+					if(PressingAltfire() && !A_IsFiringLeftWeapon())
 						return ResolveState("FireLeft_Overlay");
 					break;
 			}
@@ -499,7 +559,7 @@ Extend class PB_WeaponBase
 						return ResolveState("FireRight_Overlay");
 					break;
 				case 1:
-					if(PressingAltFire() && !A_IsFiringRightWeapon())
+					if(PressingAltfire() && !A_IsFiringRightWeapon())
 						return ResolveState("FireRight_Overlay");
 					break;
 				case 2:
