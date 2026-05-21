@@ -32,6 +32,7 @@ class PB_Railgun : PB_WeaponBase
 	Tag "MKIII Railgun";
 	Scale 0.46;
 	PB_WeaponBase.UnloaderToken "RailgunUnloaded";
+	Inventory.Icon "SRCGA0";
 	Inventory.AltHUDIcon "SRCGA0";
 	PB_WeaponBase.respectItem "RespectRailgun";
 	FloatBobStrength 0.5;

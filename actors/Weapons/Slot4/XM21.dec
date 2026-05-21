@@ -128,7 +128,8 @@ ACTOR PB_XM21 : PB_Weapon
 	Scale 0.95
 	FloatBobStrength 0.35
 	Tag "XM-21 Rifle"
-    Inventory.AltHudIcon "WM14B0"
+    Inventory.Icon "WM14B0"
+    Inventory.AltHUDIcon "WM14B0"
     PB_WeaponBase.respectItem "Respect-XM-21Rifle"
 	States
 	{
