@@ -37,6 +37,8 @@ class PB_QuadSG : PB_WeaponBase
     Inventory.PickupSound "CLIPINSS";
 	PB_WeaponBase.respectItem "QSGRespected";
 	PB_WeaponBase.UnloaderToken "QuadShotgunHasUnloaded";
+	Inventory.Icon "QSPGA0";
+	Inventory.AltHUDIcon "QSPGA0";
 	Weapon.SlotNumber 3;
 	Weapon.SlotPriority 0.45;
 	}

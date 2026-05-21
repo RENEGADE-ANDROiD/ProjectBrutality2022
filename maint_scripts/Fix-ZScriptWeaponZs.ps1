@@ -73,16 +73,21 @@ function Fix-WeaponZsFile([string]$path) {
                 [void]$out.Add($line)
                 continue
             }
-            # State label only: "Ready:" or "WeaponRespect:"
-            if ($t -match '^[A-Za-z_][A-Za-z0-9_]*:\s*$') {
-                [void]$out.Add($line)
+            # State label only: "Ready:" (repair "Ready:;" from an earlier pass)
+            if ($t -match '^[A-Za-z_][A-Za-z0-9_]*:\s*;?\s*$') {
+                $label = ($t -replace ':\s*;?\s*$', ':')
+                [void]$out.Add(($line -replace '\S+\s*:\s*;?\s*$', $label.Trim()))
                 continue
             }
-            # Unquote digit-led sprites (quoted form breaks ZScript parse).
-            if ($line -match '^(\s+)"(\d+[A-Za-z][A-Za-z0-9]*)"(\s+)(.*)$') {
-                $rest = $Matches[4].TrimEnd()
-                if ($rest -notmatch ';$' -and $rest -notmatch '\{$' -and $rest.Length -gt 0) { $rest += ';' }
-                [void]$out.Add("$($Matches[1])$($Matches[2])$($Matches[3])$rest")
+            # DECORATE "else;" before a block -> ZScript "else"
+            if ($t -match '^else;\s*$') {
+                [void]$out.Add(($line -replace 'else;', 'else'))
+                continue
+            }
+            # Bare sprite lump on a state frame line (4A17, CB01, PZCR, 8HAF, etc.)
+            if ($inStates -and $line -cmatch '^\s+([A-Z0-9]{2,8})\s+(.+)$' -and $Matches[1] -notin @('TNT1','Goto','Stop','Wait','Loop') -and $line -notmatch '^\s+"') {
+                $spr = $Matches[1]
+                [void]$out.Add(($line -replace "^(\s+)$([regex]::Escape($spr))\s+", "`$1`"$spr`" "))
                 continue
             }
             if ($t.Length -eq 0) {
@@ -134,6 +139,32 @@ function PostProcess-WeaponZsLines([string[]]$lines) {
         }
 
         # Do not rewrite DECORATE "if ();" deferrals — invalid in ZScript but needs manual porting.
+
+        if ($t -eq 'A_DoPBWeaponAction;') {
+            [void]$result.Add(($line -replace 'A_DoPBWeaponAction;', 'return A_DoPBWeaponAction();'))
+            $i++
+            continue
+        }
+        if ($line -match 'return state\(') {
+            [void]$result.Add(($line -replace 'return state\(', 'return State('))
+            $i++
+            continue
+        }
+        if ($t -eq 'A_AlertMonsters;') {
+            [void]$result.Add(($line -replace 'A_AlertMonsters;', 'A_AlertMonsters();'))
+            $i++
+            continue
+        }
+        if ($line -match 'return null\b') {
+            [void]$result.Add(($line -replace 'return null\b', 'return ResolveState(null)'))
+            $i++
+            continue
+        }
+        if ($line -match 'return State\(""\)') {
+            [void]$result.Add(($line -replace 'return State\(""\)', 'return ResolveState(null)'))
+            $i++
+            continue
+        }
 
         # Sprite frame line immediately followed by lone { -> merge.
         if ($t -match '^[A-Za-z0-9#"].* \d+.*;\s*$' -and $i + 1 -lt $lines.Count -and $lines[$i + 1].Trim() -eq '{') {
