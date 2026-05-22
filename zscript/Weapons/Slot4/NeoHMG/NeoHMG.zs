@@ -2,7 +2,7 @@ const neohmgFullAmmo = 80;
 const neohmgShieldAmmo = 100;
 // World shield uses sector floor + lift; PSprite HMGShield is unrelated (not weapon/HUD offsets).
 const neohmgShieldFloorLift = 36;
-// PSHL WALLSPRITE anchoring vs actor origin — applied to deployed spawn XY so hitbox matches the graphic.
+// PSHL WALLSPRITE anchoring vs actor origin â€” applied to deployed spawn XY so hitbox matches the graphic.
 const neohmgShieldRenderSideNudge = 24.;
 
 class HMGShield : Inventory
@@ -63,7 +63,7 @@ class NeoHMGDeployedShield : Actor
 		YScale 0.48;
 		RenderStyle "Add";
 		Alpha 0.62;
-		// 90° with +WALLSPRITE lays the wall in the floor plane (rug); 0 keeps a vertical barrier.
+		// 90Â° with +WALLSPRITE lays the wall in the floor plane (rug); 0 keeps a vertical barrier.
 		SpriteRotation 0;
 		+SOLID;
 		+SHOOTABLE;
@@ -141,7 +141,7 @@ class NeoHMGDeployedShield : Actor
 		double standZ = floorz + neohmgShieldFloorLift;
 		if (pos.Z < standZ - 1 || pos.Z > standZ + 24)
 			SetOrigin((pos.X, pos.Y, standZ), false);
-		// Every other game tic + smaller bursts — constant per-tic spawns can choke FPS.
+		// Every other game tic + smaller bursts â€” constant per-tic spawns can choke FPS.
 		if ((level.maptime & 1) == 0)
 		{
 			SpawnFrontEnergy(3, 4.5);

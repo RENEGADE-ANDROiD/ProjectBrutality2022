@@ -201,7 +201,7 @@ DamageFactor "Fatality", 5.0
 		 EXPL AA 0 A_SpawnItem("ExplosionParticleSpawner")
 	    EXPL AAAAA 0 A_CustomMissile ("SmallGreenFlameTrails", 32, 0, random (0, 360), 2, random (0, 360))
 		TNT1 AAAA 0 A_CustomMissile ("PlasmaSmoke", 32, 0, random (0, 360), 2, random (0, 360))
-		TNT1 A 0 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 360))
 	TNT1 A 0 A_PlaySound("BFGALPP")
 		 EXPL A 0 A_SpawnItem("GreenExplosionMushroom",0,6)
     STLK GH 1 BRIGHT A_SpawnItem("GreenFlare",0,0)

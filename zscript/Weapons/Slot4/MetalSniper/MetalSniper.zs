@@ -556,7 +556,7 @@ class PB_MetalSniper : PB_WeaponBase
         FlashPunching:
             MSNQ ABCDEFGHFEDCBA 1;
             TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-            goto Ready3;
+            Goto Ready3;
 
         FlashKicking:
             MSNK ABCDEFGHGFEDCBA 1;

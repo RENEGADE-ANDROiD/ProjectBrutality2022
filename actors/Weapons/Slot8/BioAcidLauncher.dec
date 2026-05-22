@@ -1,4 +1,4 @@
-ACTOR BioAcidLauncherSlimeStream : DaedabusLiquidAcid
+﻿ACTOR BioAcidLauncherSlimeStream : DaedabusLiquidAcid
 {
 	Speed 21
 	PoisonDamage 2, 8
@@ -21,12 +21,12 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 	+WEAPON.NO_AUTO_SWITCH
 	Inventory.PickupSound "BFGPICKUP"
 	Inventory.Pickupmessage "$PB_PICKUP_BIOACIDLAUNCHER"
+	Inventory.Icon "BPBLM0"
+	Inventory.AltHUDIcon "BPBLM0"
 	Obituary "%o was decapitated by %k's Unknown Weapon."
 	AttackSound "None"
 	Scale 0.8
 	Tag "$PB_TAG_BIOACIDLAUNCHER"
-	Inventory.Icon "BPBLM0"
-	Inventory.AltHUDIcon "BPBLM0"
 	States
 	{
 	Spawn:
@@ -65,6 +65,8 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 		Goto ReadyLoop
 
 	Deselect:
+		TNT1 A 0 A_ClearOverlays(-4, -4, false)
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel")
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel")
@@ -99,7 +101,7 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 		Goto SelectFirstPersonLegs
 	SelectContinue:
 		TNT1 A 0 A_Raise
-		Goto Ready3
+		Wait
 
 	NoAmmo:
 		BAWL A 1 A_PlaySOund("UNMSTO", 8)
@@ -145,6 +147,7 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 		BAWF D 1
 		BAWF A 0 PB_ReFire
 		TNT1 A 0 A_PlaySoundEx("HRSteam", "Auto")
+		TNT1 A 0 A_ClearOverlays(-4, -4, false)
 		Goto ReadyLoop
 
 	AltFire:
@@ -173,7 +176,25 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 		TNT1 A 0 PB_ReFire("SlimeSprayLoop")
 	SlimeSprayEnd:
 		TNT1 A 0 A_PlaySoundEx("HRSteam", "Auto")
+		TNT1 A 0 A_ClearOverlays(-4, -4, false)
 		Goto ReadyLoop
+
+	CausticFlash:
+		BAWF A 0 BRIGHT
+		BAWF B 1 BRIGHT
+		BAWF C 1 BRIGHT
+		Stop
+
+	FlashPunching:
+		BAWF A 1 BRIGHT
+		BAWF B 1 BRIGHT
+		BAWF C 1 BRIGHT
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Stop
+
+	FlashPunchingStop:
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Goto Ready3
 
 	PDA_Preview_AcidPrimary:
 		BAWF A 1

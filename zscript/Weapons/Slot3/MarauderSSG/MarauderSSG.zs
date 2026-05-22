@@ -1,0 +1,886 @@
+// MarauderSSG - ZScript port (DECORATE PB_Weapon retired).
+
+class MarauderSSG : PB_WeaponBase
+{
+	default
+	{
+		// Game Doom (DECORATE only)
+		// SpawnID (DECORATE editor only)
+	Weapon.BobRangeX 0.3;
+	Weapon.BobRangeY 0.5;
+		Weapon.BobStyle "InverseSmooth";
+	Weapon.BobSpeed 2.4;
+    Weapon.Kickback 100;
+	Weapon.AmmoUse1 0;
+	Weapon.AmmoUse2 0;
+	Weapon.AmmoGive1 2;
+	Weapon.AmmoGive2 0;
+	Weapon.AmmoType "NewShell";
+	Weapon.AmmoType2 "MaraudSSGAmmo";
+    +WEAPON.NOAUTOAIM;
+    +WEAPON.NOAUTOFIRE;
+    +WEAPON.CHEATNOTWEAPON;
+    +WEAPON.MELEEWEAPON;
+	+FLOORCLIP;
+	+DONTGIB;
+	Inventory.PickupMessage "You got the Marauder Shotgun. (Slot 3)";
+	Obituary "Demon Killer Marauder-SSG. Run Demons!";
+    Inventory.PickupSound "CLIPINQS";
+	Weapon.SlotNumber 3;
+    Weapon.SlotPriority 1;
+	Weapon.SelectionOrder 600;
+	Scale 0.5;
+	Tag "Marauder Shotgun";
+	Inventory.AltHUDIcon "MSSSI0";
+	PB_WeaponBase.RespectItem "RespectMarauderSSG";
+	FloatBobStrength 0.5;
+	}
+	states
+	{
+		Steady:
+		TNT1 A 1;
+		TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
+		TNT1 A 0 SetPlayerProperty(0,0,0);
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+		Goto Ready;
+
+		Ready:
+	    TNT1 A 0;
+		TNT1 A 0 {
+			if (CountInv("PB_SSG") >= 1) {
+				return ResolveState(null);
+			}
+			return ResolveState(null);
+		}
+		TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
+	    TNT1 A 0 PB_RespectIfNeeded;
+		WeaponRespect:
+	TNT1 A 0 {
+		  A_GiveInventory("RespectMarauderSSG",1);
+		  A_GiveInventory("MaraudSSGAmmo", 2);
+		  A_GiveInventory("PB_LockScreenTilt",1);
+		  A_PlaySoundEx("weapons/ssg/inspect4", "Auto");
+		  }
+     MSSS ABCD 1 {
+		  return A_DoPBWeaponAction();
+		  }
+	 MSSG AAAAAA 3 {
+		  A_SetRoll(roll-1.5,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 R 1 {
+		  A_SetRoll(roll-1.5,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 Q 1 {
+	      A_SetRoll(roll-1.4,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 P 1 {
+	      A_SetRoll(roll-1.2,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 O 1 {
+	      A_SetRoll(roll-1.1,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 N 1 {
+	      A_SetRoll(roll+2.0,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 M 1 {
+	      A_SetRoll(roll+2.2,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 L 1 {
+	      A_SetRoll(roll+2.4,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 K 1 {
+	      A_SetRoll(roll+2.6,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 J 1 {
+	      A_SetRoll(roll+2.3,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 I 1 {
+	      A_SetRoll(roll+2.1,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 H 1 {
+	      A_SetRoll(roll-1.1,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 G 1 {
+	      A_SetRoll(roll-1.3,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 F 1 {
+	      A_SetRoll(roll-1.5,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 TNT1 A 0 A_PlaySound("MSSOP", 2);
+	 MSS2 E 1 {
+	      A_SetRoll(roll-0.5,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 D 1 {
+	      A_SetRoll(roll-0.3,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 C 1 {
+	      A_SetRoll(roll-0.1,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 B 1 {
+	      A_SetRoll(roll-0.1,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 AAAAAA 3 {
+	      A_SetRoll(roll+2.0,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 B 1 {
+	      A_SetRoll(roll+2.4,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 C 1 {
+	      A_SetRoll(roll+2.6,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 D 1 {
+	      A_SetRoll(roll+2.3,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 TNT1 A 0 A_PlaySound("MSSLD", 3);
+	 MSS2 E 1 {
+	      A_SetRoll(roll+2.1,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 F 1 {
+	      A_SetRoll(roll+2.0,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 G 1 {
+	      A_SetRoll(roll-0.5,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 H 1 {
+	      A_SetRoll(roll-0.5,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 I 1 {
+	      A_SetRoll(roll-1.0,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 J 1 {
+	      A_SetRoll(roll-1.3,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 K 1 {
+	      A_SetRoll(roll-1.5,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 L 1 {
+	      A_SetRoll(roll-1.7,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 M 1 {
+	      A_SetRoll(roll+2.0,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 N 1 {
+	      A_SetRoll(roll+2.1,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 O 1 {
+	      A_SetRoll(roll+2.3,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 P 1 {
+	      A_SetRoll(roll+2.5,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 Q 1 {
+	      A_SetRoll(roll+2.7,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 MSS2 R 1 {
+	      A_SetRoll(roll+2.4,SPF_INTERPOLATE);
+		  return A_DoPBWeaponAction();
+		  }
+	 TNT1 A 0;
+	 Goto Ready3;
+		SelectAnimation:
+	    TNT1 A 0 {
+		     A_WeaponOffset(0,32);
+		     A_SetRoll(0);
+		     A_TakeInventory("PB_LockScreenTilt",1);
+		     }
+	    TNT1 A 0 A_PlaySoundEx("weapons/ssg/inspect4", "Auto");
+	    MSSS ABCD 1 {
+	         A_GunFlash();
+		     return A_DoPBWeaponAction(WRF_NOFIRE);
+		     }
+	    TNT1 A 0;
+	    TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
+		Ready3:
+	    TNT1 A 0 {
+		     A_WeaponOffset(0,32);
+		     A_SetRoll(0);
+		     PB_HandleCrosshair(92);
+		     A_TakeInventory("PB_LockScreenTilt",1);
+		     }
+	    TNT1 A 0;
+	    Goto MarauderShotgunReadyToFire;
+		ChooseUpgradePath:
+		TNT1 A 0 A_PrintBold("\cfChoose your path:\n\caFIRE = MARAUDER\n\ciALTFIRE = SSG");
+		TNT1 A 1;
+		TNT1 A 1;
+		ChooseUpgradePathDebounce:
+		TNT1 A 2;
+		ChooseUpgradePathLoop:
+		TNT1 A 0 A_JumpIf(JustPressed(BT_ATTACK), "KeepMarauderPath");
+		TNT1 A 0 A_JumpIf(JustPressed(BT_ALTATTACK), "KeepSSGPath");
+		TNT1 A 1;
+		TNT1 A 1;
+		KeepMarauderPath:
+		TNT1 A 0 A_TakeInventory("PB_SSG", 1);
+		TNT1 A 0 A_PrintBold("\caPath selected: MARAUDER");
+		Goto Ready3;
+		KeepSSGPath:
+		TNT1 A 0 A_TakeInventory("MarauderSSG", 1);
+		TNT1 A 0 A_PrintBold("\ciPath selected: SSG");
+		TNT1 A 0 A_SelectWeapon("PB_SSG");
+		Stop;
+		MarauderShotgunReadyToFire:
+	    MSSG A 1 {
+		     if (CountInv("MarauderShotgunBarrelHeat") >= 60) {
+			     A_GunFlash("MarauderShotgunBarrelSmoke");
+		     }
+		     if (PressingFire() && CountInv("MaraudSSGAmmo") > 0 && CountInv("MarauderSSGDurability") > 0){
+		     return ResolveState("Fire");
+		     }
+		     return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		     }
+	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+	    Loop;
+		MarauderShotgunBarrelSmoke:
+		TNT1 A 1 {
+			 A_FireCustomMissile("GunBarrelSmoke", 0, 0, -0.7, 0, 0, 0);
+			 A_FireCustomMissile("GunBarrelSmoke", 0, 0, 0.7, 0, 0, 0);
+			 A_Takeinventory("MarauderShotgunBarrelHeat",1);
+		    }
+		TNT1 A 0;
+		Stop;
+
+		WeaponBreak:
+		TNT1 A 0 {
+			A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
+			A_TakeInventory("MarauderSSG",1);
+			A_StartSound("meleeweapon/break", CHAN_AUTO);
+			A_AlertMonsters();
+		}
+		Stop;
+
+		Deselect:
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "PlaceIceBarrel");
+		TNT1 A 0 {
+			 A_ClearOverlays(10,11);
+			 A_WeaponOffset(0,32);
+			 A_SetRoll(0);
+			 PB_HandleCrosshair(92);
+			 A_TakeInventory("PB_LockScreenTilt",1);
+		     }
+		TNT1 A 0 A_Takeinventory("Unloading",1);
+		TNT1 A 0 A_TakeInventory("NewPB_MaraudergunSelected",1);
+		"MSSS" "DCBA" 1;
+		TNT1 A 1 A_Lower;
+		Wait;
+
+		Select:
+		TNT1 A 0 {
+			 A_ClearOverlays(10,11);
+			 A_WeaponOffset(0,32);
+			 A_SetRoll(0);
+			 PB_HandleCrosshair(92);
+			 A_TakeInventory("PB_LockScreenTilt",1);
+		     }
+		TNT1 A 0 A_TakeInventory("HasBarrel",1);
+		TNT1 A 0 A_TakeInventory("HasIceBarrel",1);
+		TNT1 A 0 A_TakeInventory("HasBurningBarrel",1);
+		TNT1 A 0 A_TakeInventory("GrabbedBarrel",1);
+		TNT1 A 0 A_TakeInventory("GrabbedIceBarrel",1);
+		TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel",1);
+		Goto SelectFirstPersonLegs;
+		SelectContinue:
+		TNT1 A 0 A_Raise;
+		Goto Ready3;
+
+		FireDouble:
+		TNT1 A 0 A_JumpIfInventory("MarauderSSGDurability",1,1);
+		Goto WeaponBreak;
+		TNT1 A 0 {
+			 If (CountInv("MaraudSSGAmmo") == 2) {
+			 return ResolveState("FireNoAmmoLeft");
+			 }
+			 Else If (CountInv("NewShell") >= 2 && CountInv("MaraudSSGAmmo") == 1) {
+			 return ResolveState("FireRegular");
+			 }
+			 Else If (CountInv("MaraudSSGAmmo") == 1 && CountInv("NewShell") <= 1) {
+			 return ResolveState("FireNoAmmoLeft");
+			 }
+			 Else {
+			 return ResolveState("Reload");
+			 }
+			 }
+		Goto MarauderShotgunReadyToFire;
+		Fire:
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "ThrowIceBarrel");
+	    TNT1 A 0 A_JumpIfInventory("MarauderSSGDurability",1,1);
+	    Goto WeaponBreak;
+	    TNT1 A 0 {
+		     if(CountInv("GoFatality") >= 1) {
+		         SetPlayerProperty(0,1,0);
+		     }
+		     else {
+		         SetPlayerProperty(0,0,0);
+		         SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+		     }
+		     A_WeaponOffset(0,32);
+		     A_SetRoll(0);
+		     PB_HandleCrosshair(92);
+		     A_TakeInventory("PB_LockScreenTilt",1);
+		     }
+		TNT1 A 0 {
+			 If (CountInv("SSGDoubleTrouble") >= 1) {
+			 return ResolveState("FireDouble");
+			 }
+			 If (CountInv("NewShell") >= 2 && CountInv("MaraudSSGAmmo") == 2) {
+			 return ResolveState("FireRegular");
+			 }
+			 Else if (CountInv("MaraudSSGAmmo") == 2 && CountInv("NewShell") <= 1 ) {
+			 return ResolveState("FireNoAmmoLeft");
+			 }
+			 Else {
+			 return ResolveState("Reload");
+			 }
+			 }
+		     Goto MarauderShotgunReadyToFire;
+		FireNoAmmoLeft:
+		TNT1 A 0 {
+			 A_StartSound("MSSFR", CHAN_WEAPON, CHANF_DEFAULT, 1.0, ATTN_NORM);
+			 A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
+			 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
+			 A_FireBullets (12, 6, 20, 8, "ShotgunPuff");
+			 A_FireCustomMissile("GunFireSmoke", 0, 0, 2, 0, 0, 0);
+			 A_FireCustomMissile("GunFireSmoke", 0, 0, -2, 0, 0, 0);
+			 A_GiveInventory("MarauderShotgunBarrelHeat",120);
+			 A_GunFlash();
+			 A_ZoomFactor(0.95);
+			 if (CountInv("SSGDoubleTrouble") == 1) {
+			 A_TakeInventory("MaraudSSGAmmo", 1);
+			 }
+			 Else {
+			 A_TakeInventory("MaraudSSGAmmo", 2);
+			 }
+			 A_TakeInventory("MarauderSSGDurability",1,TIF_NOTAKEINFINITE);
+			 A_AlertMonsters();
+			 }
+			"MSSF" "AB" 1 BRIGHT;
+			TNT1 A 0 A_SetPitch(pitch-6);
+			TNT1 A 0 A_ZoomFactor(1);
+			"MSSF" "DDECFGH" 1 A_SetPitch(pitch+0.5);
+		    Goto MarauderShotgunReadyToFire;
+		FireRegular:
+		TNT1 A 0 {
+			A_StartSound("MSSFR", CHAN_WEAPON, CHANF_DEFAULT, 1.0, ATTN_NORM);
+			A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
+			A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
+			A_FireBullets (12, 6, 20, 8, "ShotgunPuff");
+			A_FireCustomMissile("GunFireSmoke", 0, 0, 2, 0, 0, 0);
+			A_FireCustomMissile("GunFireSmoke", 0, 0, -2, 0, 0, 0);
+			A_GiveInventory("MarauderShotgunBarrelHeat",120);
+			A_GunFlash();
+			A_ZoomFactor(0.95);
+			A_TakeInventory("MaraudSSGAmmo", 2);
+			A_TakeInventory("MarauderSSGDurability",1,TIF_NOTAKEINFINITE);
+			A_AlertMonsters();
+			}
+			TNT1 A 0 A_JumpIf(GetCvar("pb_marauderssg_classicreload"), "FireRegularClassic");
+			"MSSG" "CD" 1 BRIGHT;
+			TNT1 A 0 A_SetPitch(pitch-6);
+			TNT1 A 0 A_ZoomFactor(1);
+			"MSSG" "EFGHIJKL" 1 A_SetPitch(pitch+0.5);
+			Goto Reload;
+		FireRegularClassic:
+			"MSS3" "AB" 1 BRIGHT;
+			TNT1 A 0 A_SetPitch(pitch-6);
+			TNT1 A 0 A_ZoomFactor(1);
+			"MSS3" "CDEFGHI" 1 A_SetPitch(pitch+0.5);
+			Goto Reload;
+	
+		AltFireDouble:
+			TNT1 A 0 A_JumpIfInventory("MarauderSSGDurability",1,1);
+			Goto WeaponBreak;
+			TNT1 A 0 {
+				If (CountInv("MaraudSSGAmmo") == 2) {
+				return ResolveState("AltFireBigger");
+				}
+				Else If (CountInv("NewShell") >= 2 && CountInv("MaraudSSGAmmo") == 1) {
+				return ResolveState("Reload");
+				}
+				Else If (CountInv("MaraudSSGAmmo") == 1 && CountInv("NewShell") <= 1) {
+				return ResolveState("Reload");
+				}
+				Else {
+				return ResolveState("Reload");
+				}
+			}
+			Goto MarauderShotgunReadyToFire;
+		AltFire:
+			TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel");
+	        TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
+	        TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "PlaceIceBarrel");
+			TNT1 A 0 A_JumpIfInventory("MarauderSSGDurability",1,1);
+			Goto WeaponBreak;
+	        TNT1 A 0 {
+		         A_WeaponOffset(0,32);
+		         A_SetRoll(0);
+		         PB_HandleCrosshair(92);
+		         A_TakeInventory("PB_LockScreenTilt",1);
+		         }
+			TNT1 A 0 {
+			If (CountInv("SSGDoubleTrouble") >= 1) {
+			return ResolveState("AltFireDouble");
+			}
+			If (CountInv("NewShell") >= 2 && CountInv("MaraudSSGAmmo") == 2) {
+			return ResolveState("AltFireRegular");
+			}
+			Else if (CountInv("MaraudSSGAmmo") == 2 && CountInv("NewShell") <= 1 ) {
+			return ResolveState("AltFireBigger");
+			}
+			Else {
+			return ResolveState("Reload");
+			}
+		}
+		Goto MarauderShotgunReadyToFire;
+		AltFireBigger:
+		TNT1 A 0 A_JumpIfInventory("MarauderCryoMode", 1, "AltFireCryo");
+		TNT1 A 0 {
+		A_StartSound("MSSFR", CHAN_WEAPON, CHANF_DEFAULT, 1.0, ATTN_NORM);
+		A_FireCustomMissile("Chunk1", 0, 0, 0, 0);
+		A_FireCustomMissile("Chunk1", 5, 1, -1, 10);
+		A_FireCustomMissile("Chunk2", -7, 1, 3, 0);
+		A_FireCustomMissile("Chunk2", 7, 1, -3, 0);
+		A_FireCustomMissile("Chunk3", 5, 1, 1, -10);
+		A_FireCustomMissile("Chunk3", -5, 1, 1, 10);
+		A_FireCustomMissile("Chunk4", -5, 1, -1, -10);
+		A_FireCustomMissile("Chunk1", -3, 1, 0, 0);
+		A_FireCustomMissile("Chunk1", 0, 0, 0, -7);
+		A_FireCustomMissile("Chunk2", -1, 0, 0, 0);
+		A_FireCustomMissile("Chunk2", 0, 0, 0, 0);
+		A_FireCustomMissile("Chunk3", 1, 0, 0, 0);
+		A_FireCustomMissile("Chunk3", 0, 0, 0, 7);
+		A_FireCustomMissile("Chunk4", 3, 1, 0, 0);
+		A_FireCustomMissile("Chunk1", 5, 1, -1, 10);
+		A_FireCustomMissile("Chunk1", -7, 1, 3, 0);
+		A_FireCustomMissile("Chunk2", 7, 1, -3, 0);
+		A_FireCustomMissile("Chunk2", 5, 1, 1, -10);
+		A_FireCustomMissile("Chunk3", -5, 0, 1, 10);
+		A_FireCustomMissile("Chunk3", -5, 0, -1, -10);
+		A_FireCustomMissile("Chunk4", -1, 0, 1, -10);
+		A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
+		A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
+		A_FireCustomMissile("GunFireSmoke", 0, 0, 2, 0, 0, 0);
+		A_FireCustomMissile("GunFireSmoke", 0, 0, -2, 0, 0, 0);
+		A_GiveInventory("MarauderShotgunBarrelHeat",120);
+		A_GunFlash();
+		A_ZoomFactor(0.95);
+		A_TakeInventory("MaraudSSGAmmo", 2);
+		A_TakeInventory("MarauderSSGDurability",1,TIF_NOTAKEINFINITE);
+		A_AlertMonsters();
+		}
+		"MSSF" "AB" 1 BRIGHT;
+		TNT1 A 0 A_SetPitch(pitch-6);
+		TNT1 A 0 A_ZoomFactor(1);
+		"MSSF" "DDECFGH" 1 A_SetPitch(pitch+0.5);
+		Goto Reload;
+		AltFireRegular:
+		TNT1 A 0 A_JumpIfInventory("MarauderCryoMode", 1, "AltFireCryo");
+		TNT1 A 0 {
+		A_StartSound("MSSFR", CHAN_WEAPON, CHANF_DEFAULT, 1.0, ATTN_NORM);
+		A_FireCustomMissile("Chunk1", 0, 0, 0, 0);
+		A_FireCustomMissile("Chunk1", 5, 1, -1, 10);
+		A_FireCustomMissile("Chunk2", -7, 1, 3, 0);
+		A_FireCustomMissile("Chunk2", 7, 1, -3, 0);
+		A_FireCustomMissile("Chunk3", 5, 1, 1, -10);
+		A_FireCustomMissile("Chunk3", -5, 1, 1, 10);
+		A_FireCustomMissile("Chunk4", -5, 1, -1, -10);
+		A_FireCustomMissile("Chunk1", -3, 1, 0, 0);
+		A_FireCustomMissile("Chunk1", 0, 0, 0, -7);
+		A_FireCustomMissile("Chunk2", -1, 0, 0, 0);
+		A_FireCustomMissile("Chunk2", 0, 0, 0, 0);
+		A_FireCustomMissile("Chunk3", 1, 0, 0, 0);
+		A_FireCustomMissile("Chunk3", 0, 0, 0, 7);
+		A_FireCustomMissile("Chunk4", -1, 0, 1, -10);
+		A_FireCustomMissile("YellowFlareSpawn",0,0,0,0);
+		A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
+		A_FireCustomMissile("GunFireSmoke", 0, 0, 2, 0, 0, 0);
+		A_FireCustomMissile("GunFireSmoke", 0, 0, -2, 0, 0, 0);
+		A_GiveInventory("MarauderShotgunBarrelHeat",120);
+		A_GunFlash();
+		A_ZoomFactor(0.95);
+		A_TakeInventory("MaraudSSGAmmo", 2);
+		A_TakeInventory("MarauderSSGDurability",1,TIF_NOTAKEINFINITE);
+		A_AlertMonsters();
+		}
+		TNT1 A 0 A_JumpIf(GetCvar("pb_marauderssg_classicreload"), "AltFireRegularClassic");
+		"MSSG" "CD" 1 BRIGHT;
+		TNT1 A 0 A_SetPitch(pitch-6);
+		TNT1 A 0 A_ZoomFactor(1);
+		"MSSG" "EFGHIJKL" 1 A_SetPitch(pitch+0.5);
+		Goto Reload;
+		AltFireRegularClassic:
+		"MSS3" "AB" 1 BRIGHT;
+		TNT1 A 0 A_SetPitch(pitch-6);
+		TNT1 A 0 A_ZoomFactor(1);
+		"MSS3" "CDEFGHI" 1 A_SetPitch(pitch+0.5);
+		Goto Reload;
+
+		AltFireCryo:
+		TNT1 A 0 {
+			A_PlaySoundEx("weapons/CryoRifle/missile", "Body");
+			A_SpawnItem("BlueFlareSpawn",0,0,-3,0);
+			A_SpawnItem("BlueFlareSpawn",0,0,3,0);
+			A_FireCustomMissile("IceKeeperBlaster", 0, 0, -1, 0);
+			A_FireBullets(8, 6, 10, 20, "ShotKeeperPuff", FBF_NORANDOM, 8192, "MaruderSSGFrozenTracer", -12);
+			A_FireBullets(8, 6, 10, 20, "IceKeeperPuff", FBF_NORANDOM, 8192, "MaruderSSGFrozenTracer", -12);
+			A_GiveInventory("MarauderShotgunBarrelHeat",120);
+			A_GunFlash();
+			A_ZoomFactor(0.95);
+			A_TakeInventory("MaraudSSGAmmo", 2);
+			A_TakeInventory("MarauderSSGDurability",1,TIF_NOTAKEINFINITE);
+			A_AlertMonsters();
+		}
+		TNT1 A 0 A_JumpIf(GetCvar("pb_marauderssg_classicreload"), "AltFireRegularClassic");
+		"MSSG" "CD" 1 BRIGHT;
+		TNT1 A 0 A_SetPitch(pitch-6);
+		TNT1 A 0 A_ZoomFactor(1);
+		"MSSG" "EFGHIJKL" 1 A_SetPitch(pitch+0.5);
+		Goto Reload;
+			
+		Reload:
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "IdleBarrel");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "IdleIceBarrel");
+	    TNT1 A 0 {
+		     A_TakeInventory("PB_LockScreenTilt",1);
+		     }
+		TNT1 A 0 {
+			 If (CountInv("NewShell") >= 1 && CountInv("MaraudSSGAmmo") == 0) {
+			 return ResolveState("ReloadNormally");
+			 }
+			 If (CountInv("NewShell") >= 1 && CountInv("MaraudSSGAmmo") == 1) {
+			 return ResolveState("ReloadOneShell");
+			 }
+			 Else {
+			 return ResolveState(null);
+		     }
+		  }
+		Goto MarauderShotgunReadyToFire;
+		ReloadNormally:
+		TNT1 A 0 A_JumpIfInventory("MaraudSSGAmmo", 2, "MarauderShotgunReadyToFire");
+		TNT1 A 0 A_JumpIf(GetCvar("pb_marauderssg_classicreload"), "ReloadClassic");
+		"MSSG" "MNO" 1;
+		TNT1 A 0 {
+		     A_PlaySound("MSSOP", 2);
+		     A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
+		     A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
+			 }
+		"MSSG" "PQRSTUVWX" 1;
+		TNT1 A 0 A_PlaySound("MSSLD", 3);
+		"MSSG" "YZ" 1;
+		"MSS2" "ABCDEF" 1;
+		TNT1 A 0 A_PlaySound("MSSCL", 3);
+		"MSS2" "GHIJKLMNOPQR" 1;
+		TNT1 A 0 {
+		     A_GiveInventory("MaraudSSGAmmo", 2);
+		     A_TakeInventory("NewShell", 2);
+		     }
+		Goto MarauderShotgunReadyToFire;
+		ReloadClassic:
+		"MSS3" "JKLM" 1;
+		TNT1 A 0 {
+		     A_PlaySound("MSSOP", 2);
+		     A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
+		     A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
+			 }
+		"MSS3" "NOPQRSTUVWXYZ" 1;
+		TNT1 A 0 A_PlaySound("MSSLD", 3);
+		"MSS6" "ABCDEF" 1;
+		TNT1 A 0 A_PlaySound("MSSCL", 3);
+		"MSS6" "GHIJKLMNOPQ" 1;
+		TNT1 A 0 {
+		A_GiveInventory("MaraudSSGAmmo", 2);
+		A_TakeInventory("NewShell", 2);
+		}
+		Goto MarauderShotgunReadyToFire;
+		ReloadOneShell:
+		TNT1 A 0 A_JumpIfInventory("MaraudSSGAmmo", 2, "MarauderShotgunReadyToFire");
+		TNT1 A 0 A_JumpIf(GetCvar("pb_marauderssg_classicreload"), "ReloadOneClassic");
+		"MSSG" "MNO" 1;
+		TNT1 A 0 {
+		A_PlaySound("MSSOP", 2);
+		A_FireCustomMissile("ShotCaseSpawn",0,0,-5,-21);
+		}
+		"MSSG" "PQR" 1;
+		"MSS2" "STUVWX" 1;
+		TNT1 A 0 A_PlaySound("MSSLD", 3);
+		"MSSG" "YZ" 1;
+		"MSS2" "ABCDEF" 1;
+		TNT1 A 0 A_PlaySound("MSSCL", 3);
+		"MSS2" "GHIJKLMNOPQR" 1;
+		TNT1 A 0 {
+		A_GiveInventory("MaraudSSGAmmo", 1);
+		A_TakeInventory("NewShell", 1);
+		}
+		Goto MarauderShotgunReadyToFire;
+		ReloadClassic:
+		"MSS3" "JKLM" 1;
+		TNT1 A 0 {
+		A_PlaySound("MSSOP", 2);
+		A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
+		A_FireCustomMissile("SSGCaseSpawner",0,0,-10);
+		}
+		"MSS3" "NOPQRSTUVWXYZ" 1;
+		TNT1 A 0 A_PlaySound("MSSLD", 3);
+		"MSS5" "ABCDEF" 1;
+		TNT1 A 0 A_PlaySound("MSSCL", 3);
+		"MSS5" "GHIJKLMNOP" 1;
+		TNT1 A 0 {
+		A_GiveInventory("MaraudSSGAmmo", 2);
+		A_TakeInventory("NewShell", 2);
+		}
+		Goto MarauderShotgunReadyToFire;
+		ReloadOneClassic:
+		"MSS3" "JKLM" 1;
+		TNT1 A 0 {
+		A_PlaySound("MSSOP", 2);
+		A_FireCustomMissile("ShotCaseSpawn",0,0,-10);
+		}
+		"MSS3" "NO" 1;
+		"MSS5" "RSTUVWXYZ" 1;
+		"MSS6" "ABC" 1;
+		TNT1 A 0 A_PlaySound("MSSLD", 3);
+		"MSS5" "ABCDEF" 1;
+		TNT1 A 0 A_PlaySound("MSSCL", 3);
+		"MSS5" "GHIJKLMNOP" 1;
+		TNT1 A 0 {
+		A_GiveInventory("MaraudSSGAmmo", 1);
+		A_TakeInventory("NewShell", 1);
+		}
+		Goto MarauderShotgunReadyToFire;
+		Unload:
+		TNT1 A 0 A_Takeinventory("Unloading",1);
+		Goto MarauderShotgunReadyToFire;
+
+		Spawn:
+	    "MSSS" Z 0 NoDelay;
+	    "MSSS" Z 10 A_PbvpFramework("MSSS");
+	   "####" A 0 A_PbvpInterpolate();
+	    Loop;
+
+		WeaponSpecial:
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "IdleBarrel");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "IdleIceBarrel");
+	    TNT1 A 0 {
+		     A_WeaponOffset(0,32);
+		     A_SetRoll(0);
+		     A_TakeInventory("PB_LockScreenTilt",1);
+		     A_Takeinventory("GoWeaponSpecialAbility",1);
+		     }
+		TNT1 A 0 {
+			if (CountInv("MarauderCryoMode") == 1) {
+				A_TakeInventory("MarauderCryoMode", 1);
+				A_Print("\ctCryo Hell:\c- \c-off");
+			}
+			else
+			{
+				A_GiveInventory("MarauderCryoMode", 1);
+				A_Print("\ctCryo Hell:\c- \cdon");
+			}
+		}
+		"MSSG" "MNO" 1;
+		TNT1 A 0 A_PlaySound("MSSOP", 2);
+		"MSSG" "PQRSTUVWX" 1;
+		TNT1 A 0 A_PlaySound("MSSLD", 3);
+		"MSSG" "YZ" 1;
+		"MSS2" "ABCDEF" 1;
+		TNT1 A 0 A_PlaySound("MSSCL", 3);
+		"MSS2" "GHIJKLMNOPQR" 1;
+		Goto MarauderShotgunReadyToFire;
+
+		FlashKicking:
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelKicking");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelKicking");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelKicking");
+	    TNT1 A 0 A_ClearOverlays(10,11);
+		"MSSG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		"MSS5" P 1;
+		"MSS5" O 1;
+		"MSS5" N 1;
+		"MSS5" M 1;
+		"MSS5" L 1;
+		"MSS5" K 6;
+		"MSS5" L 1;
+		"MSS5" M 1;
+		"MSS5" N 1;
+		"MSS5" O 1;
+		"MSS5" P 1;
+		"MSSG" A 1;
+		Goto MarauderShotgunReadyToFire;
+
+		FlashAirKicking:
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelAirKicking");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelAirKicking");
+	    TNT1 A 0 A_ClearOverlays(10,11);
+		"MSSG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		"MSS5" P 1;
+		"MSS5" O 1;
+		"MSS5" N 1;
+		"MSS5" M 1;
+		"MSS5" L 1;
+		"MSS5" K 7;
+		"MSS5" L 1;
+		"MSS5" M 1;
+		"MSS5" N 1;
+		"MSS5" O 1;
+		"MSS5" P 1;
+		"MSSG" A 1;
+		Goto MarauderShotgunReadyToFire;
+
+		FlashSlideKicking:
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKicking");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking");
+	    TNT1 A 0 A_ClearOverlays(10,11);
+		"MSSG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		"MSS5" P 1;
+		"MSS5" O 1;
+		"MSS5" N 1;
+		"MSS5" M 1;
+		"MSS5" L 1;
+		"MSS5" K 13;
+		"MSS5" L 1;
+		"MSS5" M 1;
+		"MSS5" N 1;
+		"MSS5" O 1;
+		"MSS5" P 1;
+		"MSSG" A 1;
+		Goto MarauderShotgunReadyToFire;
+
+		FlashSlideKickingStop:
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop");
+	    TNT1 A 0 A_ClearOverlays(10,11);
+		"MSSG" A 1 A_DoPBWeaponAction();
+		Goto MarauderShotgunReadyToFire;
+
+		FlashPunching:
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
+	    TNT1 A 0 A_ClearOverlays(10,11);
+		"MSSG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		"MSS5" P 1;
+		"MSS5" O 1;
+		"MSS5" N 1;
+		"MSS5" M 1;
+		"MSS5" L 1;
+		"MSS5" K 3;
+		"MSS5" L 1;
+		"MSS5" M 1;
+		"MSS5" N 1;
+		"MSS5" O 1;
+		"MSS5" P 1;
+		"MSSG" A 1;
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+		Goto Ready3;
+
+		FlashPunchingStop:
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
+	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
+	    TNT1 A 0 A_ClearOverlays(10,11);
+		"MSSG" A 1 A_DoPBWeaponAction();
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+		Goto Ready3;
+
+		PDA_Preview_Fire:
+		"MSSG" C 1 Bright;
+		"MSSG" D 1 Bright;
+		"MSSG" E 1;
+		"MSSG" F 1;
+		"MSSG" G 1;
+		"MSSG" H 1;
+		"MSSG" I 1;
+		"MSSG" J 1;
+		"MSSG" K 1;
+		"MSSG" L 1;
+		Stop;
+		PDA_Preview_AltFire:
+		"MSS3" A 1 Bright;
+		"MSS3" B 1 Bright;
+		"MSS3" C 1;
+		"MSS3" D 1;
+		"MSS3" E 1;
+		"MSS3" F 1;
+		"MSS3" G 1;
+		Stop;
+		PDA_Preview_Reload:
+		"MSSG" M 1;
+		"MSSG" N 1;
+		"MSSG" O 1;
+		"MSSG" P 1;
+		"MSSG" Q 1;
+		"MSSG" R 1;
+		"MSSG" S 1;
+		"MSSG" T 1;
+		"MSSG" U 1;
+		"MSSG" V 1;
+		"MSSG" W 1;
+		"MSSG" X 1;
+		"MSSG" Y 1;
+		"MSSG" Z 1;
+		"MSS2" A 1;
+		"MSS2" B 1;
+		"MSS2" C 1;
+		"MSS2" D 1;
+		"MSS2" E 1;
+		"MSS2" F 1;
+		Stop;
+	}
+}

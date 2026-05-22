@@ -46,8 +46,8 @@ ACTOR FodderLaser {
 		TNT1 B 0 A_Explode(10,70,1)
 		TNT1 AAAA 0 A_SpawnItem("BlueFlare")
 		TNT1 AAA 0 A_CustomMissile ("HeavyPlasmaProjectileHit", 0, 0, random (0, 360), 2, random (0, 360))
-		TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 360))
-		TNT1 AAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 40))
+		TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180))
+		TNT1 AAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 180), 2, random (0, 180))
 		TNT1 AAA 0 A_CustomMissile ("PlasmaSmoke", 2, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 1
 		Stop

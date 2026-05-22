@@ -7,13 +7,26 @@ param(
     [Parameter(Mandatory = $true)][string]$ZsPath
 )
 
+function Get-BraceCountsForLine {
+    param([string]$line)
+    $t = $line
+    if ($t.Trim().StartsWith('/*')) { return @{ Open = 0; Close = 0 } }
+    $idx = $t.IndexOf('//')
+    if ($idx -ge 0) { $t = $t.Substring(0, $idx) }
+    return @{
+        Open  = ([regex]::Matches($t, '\{')).Count
+        Close = ([regex]::Matches($t, '\}')).Count
+    }
+}
+
 function Get-BraceBlockEnd {
     param([string[]]$Lines, [int]$OpenLineIdx)
     $depth = 0
     for ($i = $OpenLineIdx; $i -lt $Lines.Count; $i++) {
-        $depth += ([regex]::Matches($Lines[$i], '\{')).Count
-        $depth -= ([regex]::Matches($Lines[$i], '\}')).Count
-        if ($depth -le 0 -and $i -gt $OpenLineIdx) { return $i }
+        $bc = Get-BraceCountsForLine $Lines[$i]
+        $depth += $bc.Open - $bc.Close
+        if ($depth -lt 0) { return -1 }
+        if ($depth -eq 0 -and $i -gt $OpenLineIdx) { return $i }
     }
     return -1
 }
@@ -89,8 +102,20 @@ $propLines = if ($statesIdx -ge 0) { $body[0..($statesIdx - 1)] } else { $body }
 $stateLines = @()
 if ($statesIdx -ge 0) {
     if ($statesInlineBrace) {
-        $sEnd = Get-BraceBlockEnd $body $statesIdx
-        if ($sEnd -gt $statesIdx) { $stateLines = $body[($statesIdx + 1)..($sEnd - 1)] }
+        # Inline "States {" often closes on the actor's last line ("Goto Ready3 }}") which is
+        # outside $body (body ends at $end - 1). Include the actor close line for brace matching only.
+        $stateScan = $body
+        if ($end -ge 0 -and $end -lt $lines.Count) { $stateScan = $body + @($lines[$end]) }
+        $sEnd = -1
+        $sDepth = 0
+        for ($k = $statesIdx; $k -lt $stateScan.Count; $k++) {
+            $bc = Get-BraceCountsForLine $stateScan[$k]
+            $sDepth += $bc.Open - $bc.Close
+            if ($sDepth -le 0 -and $k -gt $statesIdx) { $sEnd = $k; break }
+        }
+        if ($sEnd -gt $statesIdx) {
+            $stateLines = $stateScan[($statesIdx + 1)..($sEnd - 1)]
+        }
     } else {
         $s = $statesIdx + 1
         while ($s -lt $body.Count -and $body[$s] -notmatch '\{') { $s++ }

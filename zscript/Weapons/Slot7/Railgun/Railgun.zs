@@ -1,4 +1,4 @@
-// PB_Railgun — ZScript port (DECORATE PB_Weapon retired).
+// PB_Railgun â€” ZScript port (DECORATE PB_Weapon retired).
 
 class PB_Railgun : PB_WeaponBase
 {
@@ -70,9 +70,9 @@ class PB_Railgun : PB_WeaponBase
 					A_StartSound("weapons/railgun/deselectblue", CHAN_AUTO, CHANF_OVERLAP);
 				}
 			}
-			R024 ABCD 0 ;//Red
-			R023 ABCD 0 ;//Empty, Blue
-			R025 ABCD 0 ;//Empty, Red
+			"R024" ABCD 0 ;//Red;
+			"R023" ABCD 0 ;//Empty, Blue;
+			"R025" ABCD 0 ;//Empty, Red;
 			R022 ABCD 1 {
 				if (CountInv("RailgunAmmo") < 12 ) { A_SetWeaponSprite("R023");}
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R024");}
@@ -104,35 +104,35 @@ class PB_Railgun : PB_WeaponBase
 				A_StartSound("weapons/railgun/inspect1", CHAN_AUTO, CHANF_OVERLAP);
 			}
 			TNT1 A 0 A_TakeInventory("RailgunCooldown",25);
-			R000 ABCDEFGHIJKLMNOPQRSTUV 1 A_DoPBWeaponAction;
+			"R000" ABCDEFGHIJKLMNOPQRSTUV 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_StartSound("weapons/nailgun/up", CHAN_AUTO, CHANF_OVERLAP);
-			R000 WXYZ 1 A_DoPBWeaponAction;
-			R001 ABCDEFGH 1 A_DoPBWeaponAction;
+			"R000" WXYZ 1 A_DoPBWeaponAction;
+			"R001" ABCDEFGH 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect2", CHAN_AUTO, CHANF_OVERLAP);
-			R001 IJKLMNOPQRSTUVWXYZ 1 A_DoPBWeaponAction;
+			"R001" IJKLMNOPQRSTUVWXYZ 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect2", CHAN_AUTO, CHANF_OVERLAP);
-			R002 ABCD 1 A_DoPBWeaponAction;
-			R002 EFGHIJKLMNOPQRST 1 A_DoPBWeaponAction;
+			"R002" ABCD 1 A_DoPBWeaponAction;
+			"R002" EFGHIJKLMNOPQRST 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect4", CHAN_AUTO, CHANF_OVERLAP);
-			R002 UVWXYZ 1 A_DoPBWeaponAction;
-			R003 ABCDEFG 1 A_DoPBWeaponAction;
+			"R002" UVWXYZ 1 A_DoPBWeaponAction;
+			"R003" ABCDEFG 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_StartSound("weapons/nailgun/up", CHAN_AUTO, CHANF_OVERLAP);
-			R003 HIJKLMNOPQRSTUV 1;
+			"R003" HIJKLMNOPQRSTUV 1;
 			TNT1 A 0 A_StartSound("LIGHTON", CHAN_AUTO, CHANF_OVERLAP);
-			R003 WXYZ 1 A_DoPBWeaponAction;
-			R004 ABC 1 A_DoPBWeaponAction;
+			"R003" WXYZ 1 A_DoPBWeaponAction;
+			"R004" ABC 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_StartSound("weapons/carbine/fancybutton", CHAN_AUTO, CHANF_OVERLAP);
-			R004 DEFGHIJKLMNO 1 A_DoPBWeaponAction;
+			"R004" DEFGHIJKLMNO 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect5", CHAN_AUTO, CHANF_OVERLAP);
-			R004 PQRSTUVWXYZ 1 BRIGHT A_DoPBWeaponAction;
+			"R004" PQRSTUVWXYZ 1 BRIGHT A_DoPBWeaponAction;
 			TNT1 A 0 A_SetBlend("Blue",0.3,12);
-			R005 ABCDEFGHIJK 1 BRIGHT A_DoPBWeaponAction;
+			"R005" ABCDEFGHIJK 1 BRIGHT A_DoPBWeaponAction;
 			Goto Ready3;
 			
 		SelectAnimation:
-			R010 ABCD 0 ;//Red
-			R009 ABCD 0 ;//Empty, Blue
-			R011 ABCD 0 ;//Empty, Red
+			"R010" ABCD 0 ;//Red;
+			"R009" ABCD 0 ;//Empty, Blue;
+			"R011" ABCD 0 ;//Empty, Red;
 			TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect1", CHAN_AUTO, CHANF_OVERLAP);
 			R008 ABCD 1 {
@@ -141,7 +141,7 @@ class PB_Railgun : PB_WeaponBase
 				if (CountInv("RailgunAmmo") < 12 && CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R011");}		
 			}
 		Ready3:
-			TNT1 A 0 A_TakeInventory("RailgunLaserCharge", 60) ;//Fixes incorrect charge level bug
+			TNT1 A 0 A_TakeInventory("RailgunLaserCharge", 60) ;//Fixes incorrect charge level bug;
 			TNT1 A 0 {
 				if (CountInv("RailgunZoomed") == 1) { A_StartSound("weapons/railgun/scopeloop", 0, CHANF_LOOPING|CHANF_OVERLAP );}
 				if (CountInv("RailgunAmmo") > 0 && CountInv("RailgunLaserMode") == 1) { A_StartSound("weapons/railgun/loop_red", 6, CHANF_LOOPING|CHANF_OVERLAP );}
@@ -236,7 +236,7 @@ class PB_Railgun : PB_WeaponBase
 			Loop;
 			
 		ReadyToFire_Scoped_Empty:
-			R030 GH 0 ;// <-- Initialize sprites into virtual memory
+			"R030" GH 0 ;// <-- Initialize sprites into virtual memory;
 			R007 GGGGGGGGGGHHHHHHHHHH 1 {
 				//Change Sprite if in Laser Mode
 				if(CountInv("InfraredActivated") == 1) {A_GiveInventory("RailgunInfrared", 1);}
@@ -285,9 +285,9 @@ class PB_Railgun : PB_WeaponBase
 				A_ZoomFactor(1.0);
 				A_ChangeFlag("DONTBOB", False);
 			}
-			R033 ABCDE 0 ;// Blue, Empty
-			R034 ABCDE 0 ;// Red
-			R035 ABCDE 0 ;// Red, Empty
+			"R033" ABCDE 0 ;// Blue, Empty;
+			"R034" ABCDE 0 ;// Red;
+			"R035" ABCDE 0 ;// Red, Empty;
 			R032 ABCDE 1 {
 				if (CountInv("RailgunAmmo") < 12 ) { A_SetWeaponSprite("R033");}
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R034");}
@@ -311,35 +311,35 @@ class PB_Railgun : PB_WeaponBase
 			TNT1 A 0 A_Giveinventory("RailgunLaserMode",1);
 			TNT1 A 0 A_JumpIf(CountInv("RailgunAmmo") == 0, "SwitchToLaser_Empty");
 			TNT1 A 0 A_JumpIf(CountInv("RailgunAmmo") < 12, "SwitchToLaser_Partial");
-			R014 ABCDEF 1;
+			"R014" ABCDEF 1;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect4", CHAN_AUTO, CHANF_OVERLAP);
 			TNT1 A 0 A_StartSound("weapons/railgun/powerdownblue", CHAN_AUTO, CHANF_OVERLAP);
-			R014 GHIJKLMNOP 1;
+			"R014" GHIJKLMNOP 1;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect6", CHAN_AUTO, CHANF_OVERLAP);
-			R014 QRSTUVWXYZ 1;
-			R015 ABCD 1;
+			"R014" QRSTUVWXYZ 1;
+			"R015" ABCD 1;
 			TNT1 A 0 A_StartSound("Ironsights", CHAN_AUTO, CHANF_OVERLAP);
-			R015 EFGHI 1;
+			"R015" EFGHI 1;
 			Goto Ready3;
 		
 		SwitchToLaser_Partial:
-			R017 ABCDEF 1;
+			"R017" ABCDEF 1;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect4", CHAN_AUTO, CHANF_OVERLAP);
-			R017 GHIJKLM 1;
-			R014 LMNOP 1;
+			"R017" GHIJKLM 1;
+			"R014" LMNOP 1;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect6", CHAN_AUTO, CHANF_OVERLAP);
-			R014 QRSTUVWXYZ 1;
-			R015 ABCD 1;
+			"R014" QRSTUVWXYZ 1;
+			"R015" ABCD 1;
 			TNT1 A 0 A_StartSound("Ironsights", CHAN_AUTO, CHANF_OVERLAP);
-			R015 EFGHI 1;
+			"R015" EFGHI 1;
 			Goto Ready3;
 			
 		SwitchToLaser_Empty:
-			R016 ABCDEF 1;
+			"R016" ABCDEF 1;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect4", CHAN_AUTO, CHANF_OVERLAP);
-			R016 GHIJKLMNOPQRSTUVW 1;
+			"R016" GHIJKLMNOPQRSTUVW 1;
 			TNT1 A 0 A_StartSound("Ironsights", CHAN_AUTO, CHANF_OVERLAP);
-			R016 XYZ 1;
+			"R016" XYZ 1;
 			Goto Ready3;
 			
 		SwitchToRailgun:
@@ -347,42 +347,42 @@ class PB_Railgun : PB_WeaponBase
 			TNT1 A 0 A_Takeinventory("RailgunLaserMode",1);
 			TNT1 A 0 A_JumpIf(CountInv("RailgunAmmo") == 0, "SwitchToRailgun_Empty");
 			TNT1 A 0 A_JumpIf(CountInv("RailgunAmmo") < 12, "SwitchToRailgun_Partial");
-			R018 ABCDEF 1;
+			"R018" ABCDEF 1;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect4", CHAN_AUTO, CHANF_OVERLAP);
 			TNT1 A 0 A_StartSound("weapons/railgun/powerdownred", CHAN_AUTO, CHANF_OVERLAP);
-			R018 GHIJKLMNOP 1;
+			"R018" GHIJKLMNOP 1;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect5", CHAN_AUTO, CHANF_OVERLAP);
-			R018 QRSTUVWXYZ 1;
-			R019 ABC 1;
+			"R018" QRSTUVWXYZ 1;
+			"R019" ABC 1;
 			TNT1 A 0 A_StartSound("Ironsights", CHAN_AUTO, CHANF_OVERLAP);
-			R019 DEFGH 1;
+			"R019" DEFGH 1;
 			Goto Ready3;
 			
 		SwitchToRailgun_Partial:
-			R018 ABCDEF 1;
+			"R018" ABCDEF 1;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect4", CHAN_AUTO, CHANF_OVERLAP);
 			TNT1 A 0 A_StartSound("weapons/railgun/powerdownred", CHAN_AUTO, CHANF_OVERLAP);
-			R018 GHIJK 1;
-			R020 LMNOPQ 1;
+			"R018" GHIJK 1;
+			"R020" LMNOPQ 1;
 			TNT1 A 0 A_StartSound("weapons/carbine/fancybutton", CHAN_AUTO, CHANF_OVERLAP);
-			R020 RSTUVWXYZ 1;
-			R021 ABCDE 1;
+			"R020" RSTUVWXYZ 1;
+			"R021" ABCDE 1;
 			Goto Ready3;
 			
 		SwitchToRailgun_Empty:
-			R020 ABCDEF 1;
+			"R020" ABCDEF 1;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect4", CHAN_AUTO, CHANF_OVERLAP);
-			R020 GHIJKLMNOPQ 1;
+			"R020" GHIJKLMNOPQ 1;
 			TNT1 A 0 A_StartSound("weapons/carbine/fancybutton", CHAN_AUTO, CHANF_OVERLAP);
-			R020 RSTUVW 1;
+			"R020" RSTUVW 1;
 			TNT1 A 0 A_StartSound("Ironsights", CHAN_AUTO, CHANF_OVERLAP);
-			R020 XYZ 1;
-			R021 ABCDE 1;
+			"R020" XYZ 1;
+			"R021" ABCDE 1;
 			Goto Ready3;
 		
 		ScopeOverlayPeriphery:
-			H4F6 Z 1;
-			H4F6 Z 0 A_JumpIf(CountInv("RailgunZoomed") < 1, 1);
+			"H4F6" Z 1;
+			"H4F6" Z 0 A_JumpIf(CountInv("RailgunZoomed") < 1, 1);
 			Loop;
 			TNT1 A 0;
 			Stop;
@@ -403,9 +403,9 @@ class PB_Railgun : PB_WeaponBase
 				A_ChangeFlag("DONTBOB", True);
 				
 			}
-			R029 ABCDEF 0 ;// Blue, Empty
-			R030 ABCDEF 0 ;// Red
-			R031 ABCDEF 0 ;// Red, Empty
+			"R029" ABCDEF 0 ;// Blue, Empty;
+			"R030" ABCDEF 0 ;// Red;
+			"R031" ABCDEF 0 ;// Red, Empty;
 			R028 ABCDEF 1 {
 				if (CountInv("RailgunAmmo") < 12 ) { A_SetWeaponSprite("R029");}
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R030");}
@@ -423,9 +423,9 @@ class PB_Railgun : PB_WeaponBase
 				A_ChangeFlag("DONTBOB", False);
 				A_TakeInventory("RailgunInfrared", 1);
 			}
-			R033 ABCDE 0 ;// Blue, Empty
-			R034 ABCDE 0 ;// Red
-			R035 ABCDE 0 ;// Red, Empty
+			"R033" ABCDE 0 ;// Blue, Empty;
+			"R034" ABCDE 0 ;// Red;
+			"R035" ABCDE 0 ;// Red, Empty;
 			R032 ABCDE 1 {
 				if (CountInv("RailgunAmmo") < 12 ) { A_SetWeaponSprite("R033");}
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R034");}
@@ -480,24 +480,24 @@ class PB_Railgun : PB_WeaponBase
 				PB_WeaponRecoil(-2.5,-0.2);
 				A_Overlay(-6, "RailFireSparks", true);
 			}
-			R026 DE 1;
+			"R026" DE 1;
 			TNT1 A 0 A_JumpIf(CountInv("RailgunAmmo") < 12, "FireRailgun_Empty");
-			R026 F 1 Offset(0,33);
-			R026 G 1 Offset(0,34);
-			R026 G 1 Offset(0,34);
-			R026 G 1 Offset(0,35);
-			R026 G 12 Offset(0,35);
-			R026 GHI 1 Offset(0,34);
-			R026 JK 1 Offset(0,33);
-			R026 LMNOPQRSTUVWXYZ 1 Offset(0,32);
+			"R026" F 1 Offset(0,33);
+			"R026" G 1 Offset(0,34);
+			"R026" G 1 Offset(0,34);
+			"R026" G 1 Offset(0,35);
+			"R026" G 12 Offset(0,35);
+			"R026" GHI 1 Offset(0,34);
+			"R026" JK 1 Offset(0,33);
+			"R026" LMNOPQRSTUVWXYZ 1 Offset(0,32);
 			goto Ready3;
 		FireRailgun_Empty:
-			R026 FG 1;
-			R027 ABCDEFGHIJK 1;
+			"R026" FG 1;
+			"R027" ABCDEFGHIJK 1;
 			goto Ready3;
 		
 		RailFireSparks:
-			R126 CDE 1 BRIGHT;
+			"R126" CDE 1 BRIGHT;
 			Stop;
 
 		Fire_Laser:
@@ -616,7 +616,7 @@ class PB_Railgun : PB_WeaponBase
 				return ResolveState("Laser_Stage_4");
 			}
 		HoldLaser:
-			RAIL A 0 A_StartSound("weapons/railgun/laserfullycharged", CHAN_5, CHANF_OVERLAP|CHANF_LOOPING,0.37, ATTN_NORM, 1.1);
+			"RAIL" A 0 A_StartSound("weapons/railgun/laserfullycharged", CHAN_5, CHANF_OVERLAP|CHANF_LOOPING,0.37, ATTN_NORM, 1.1);
 			R036 TUVWXY 1 BRIGHT {
 				PB_FireOffset();
 				PB_VisualLaser(CountInv("RailgunLaserCharge"));
@@ -637,8 +637,8 @@ class PB_Railgun : PB_WeaponBase
 				A_StartSound("weapons/railgun/powerdownred", CHAN_AUTO, CHANF_OVERLAP);
 				A_StartSound("RA1IF2", CHAN_AUTO, CHANF_OVERLAP, 0.4);
 			}
-			R039 A 0 A_JumpIfInventory("RailgunZoomed",1,2);
-			R036 A 0;
+			"R039" A 0 A_JumpIfInventory("RailgunZoomed",1,2);
+			"R036" A 0;
 		Cancel_Stage1:
 			"####" YXWVU 1 BRIGHT {
 				if(CountInv("RailgunZoomed") >= 1) {
@@ -762,13 +762,13 @@ class PB_Railgun : PB_WeaponBase
 				A_TakeInventory("RailgunLaserCharge", 60);
 				A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			}
-			R037 A 1 BRIGHT A_ZoomFactor(0.92);
-			R037 B 1 BRIGHT A_ZoomFactor(0.94);
-			R037 C 1 BRIGHT A_ZoomFactor(0.96);
-			R037 D 1 BRIGHT A_ZoomFactor(0.98);
-			R037 E 1 BRIGHT A_ZoomFactor(1.0);
-			R037 FG 1;
-			R037 HIJKLMNOPQRSTU 1 BRIGHT;
+			"R037" A 1 BRIGHT A_ZoomFactor(0.92);
+			"R037" B 1 BRIGHT A_ZoomFactor(0.94);
+			"R037" C 1 BRIGHT A_ZoomFactor(0.96);
+			"R037" D 1 BRIGHT A_ZoomFactor(0.98);
+			"R037" E 1 BRIGHT A_ZoomFactor(1.0);
+			"R037" FG 1;
+			"R037" HIJKLMNOPQRSTU 1 BRIGHT;
 			Goto Ready3;
 			
 		Fire_Scope:
@@ -791,11 +791,11 @@ class PB_Railgun : PB_WeaponBase
 			R038 D 1 BRIGHT {
 				PB_WeaponRecoil(-2.5,-0.2);
 			}
-			R038 EFGHIJKLMNOPQ 1 BRIGHT;
+			"R038" EFGHIJKLMNOPQ 1 BRIGHT;
 			TNT1 A 0 A_JumpIf(CountInv("RailgunAmmo") < 12, "FireScope_Empty");
-			R038 Q 18 BRIGHT;
+			"R038" Q 18 BRIGHT;
 			FireScope_Empty:
-			R038 RSTUVWXY 1 BRIGHT;
+			"R038" RSTUVWXY 1 BRIGHT;
 			Goto Ready3;
 			
 		Fire_Scope_Laser:
@@ -914,7 +914,7 @@ class PB_Railgun : PB_WeaponBase
 				return ResolveState("Laser_Stage_4_Scope");
 			}
 		HoldLaser_Scope:
-			RAIL A 0 A_StartSound("weapons/railgun/laserfullycharged", CHAN_5, CHANF_OVERLAP|CHANF_LOOPING,0.37, ATTN_NORM, 1.1);
+			"RAIL" A 0 A_StartSound("weapons/railgun/laserfullycharged", CHAN_5, CHANF_OVERLAP|CHANF_LOOPING,0.37, ATTN_NORM, 1.1);
 			R039 TUVWXY 1 BRIGHT {
 				PB_VisualLaser(CountInv("RailgunLaserCharge"));
 				A_SetBlend("Red",0.32,6);
@@ -929,10 +929,10 @@ class PB_Railgun : PB_WeaponBase
 			}
 			Loop;
 		Laser_Blast_Scope:
-			R096 Z 0;
-			R097 Z 0;
-			R098 Z 0;
-			R039 Z 0;
+			"R096" Z 0;
+			"R097" Z 0;
+			"R098" Z 0;
+			"R039" Z 0;
 			
 			R096 Z 1 BRIGHT {
 				A_StopSound(5);
@@ -958,7 +958,7 @@ class PB_Railgun : PB_WeaponBase
 				A_TakeInventory("RailgunLaserCharge", 60);
 				A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 			}
-			R040 BCDEFGHIJKLMNOPQRST 1 BRIGHT;
+			"R040" BCDEFGHIJKLMNOPQRST 1 BRIGHT;
 			Goto Ready3;
 			
 		// I swear I'm not trying to code like Yandere Dev (if... if... if...)
@@ -983,22 +983,22 @@ class PB_Railgun : PB_WeaponBase
 					A_StartSound("weapons/nailgun/up", CHAN_AUTO, CHANF_OVERLAP);
 				}
 		Reload_Part1:
-			R042 ABCD 0;
-			R043 ABCD 0;
-			R044 ABCD 0;
+			"R042" ABCD 0;
+			"R043" ABCD 0;
+			"R044" ABCD 0;
 			R041 ABCD 1 BRIGHT {
 				if (CountInv("RailgunAmmo") < 12 ) { A_SetWeaponSprite("R042");}
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R043");}
 				if (CountInv("RailgunAmmo") < 12 && CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R044");}		
 			}
 		Reload_Part2:
-			R045 ABCDEFGHIJKLMNOPQRSTUVWXY 0;
-			R046 ABCDEFGHIJKLMNOPQRSTUVWXY 0;
-			R048 ABC 0;
-			R049 ABCDEFGHIJKLMNOPQRSTUVWXY 0;
-			R050 ABCDEFGHIJKLMNOPQRSTUVWXY 0;
-			R051 ABCDEFGHIJKLMNOPQRSTUVWXY 0;
-			R052 ABC 0;
+			"R045" ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+			"R046" ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+			"R048" ABC 0;
+			"R049" ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+			"R050" ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+			"R051" ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+			"R052" ABC 0;
 		
 			R047 ABC 1 BRIGHT {
 				//Blue
@@ -1049,25 +1049,25 @@ class PB_Railgun : PB_WeaponBase
 			}
 		// Let's get complicated...
 		Reload_Part3:
-			R059 ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
-			R055 ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
-			R061 ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
-			R057 ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
-			R064 ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
-			R070 ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
-			R072 ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
-			R068 ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
-			R066 ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
-			R060 ABCDEF 0;
-			R059 ABCDEF 0;
-			R056 ABCDEF 0;
-			R062 ABCDEF 0;
-			R058 ABCDEF 0;
-			R065 ABCDEF 0;
-			R071 ABCDEF 0;
-			R067 ABCDEF 0;
-			R073 ABCDEF 0;
-			R069 ABCDEF 0;
+			"R059" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
+			"R055" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
+			"R061" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
+			"R057" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
+			"R064" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
+			"R070" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
+			"R072" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
+			"R068" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
+			"R066" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
+			"R060" ABCDEF 0;
+			"R059" ABCDEF 0;
+			"R056" ABCDEF 0;
+			"R062" ABCDEF 0;
+			"R058" ABCDEF 0;
+			"R065" ABCDEF 0;
+			"R071" ABCDEF 0;
+			"R067" ABCDEF 0;
+			"R073" ABCDEF 0;
+			"R069" ABCDEF 0;
 		
 			TNT1 A 0 A_StartSound("Ironsights", CHAN_AUTO, CHANF_OVERLAP);
 			R053 ABCDE 1 BRIGHT {
@@ -1157,32 +1157,32 @@ class PB_Railgun : PB_WeaponBase
 		Reload_Part4:
 			TNT1 A 0 A_JumpIf(CountInv("RailgunAmmo") == 0, "Reload_Part4_Rechamber");
 		Reload_Part4_Chambered:
-			R076 ABCDE 0;
+			"R076" ABCDE 0;
 			R075 ABCDE 1 {
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R076");}
 			}
 			Goto InsertBullets;
 		Reload_Part4_Rechamber:
 			TNT1 A 0 A_JumpIf(CountInv("RailgunLaserMode") == 1, "Reload_Part4_Rechamber_Red");
-			R077 ABCDE 1;
+			"R077" ABCDE 1;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect5", CHAN_AUTO, CHANF_OVERLAP);
-			R077 FGHIJKLMNOPQRSTUVWXYZ 1 BRIGHT;
-			R078 AB 1 BRIGHT;
+			"R077" FGHIJKLMNOPQRSTUVWXYZ 1 BRIGHT;
+			"R078" AB 1 BRIGHT;
 			Goto InsertBullets;
 		Reload_Part4_Rechamber_Red:
-			R079 ABCDEFG 1 BRIGHT;
+			"R079" ABCDEFG 1 BRIGHT;
 			TNT1 A 0 A_StartSound("weapons/railgun/inspect6", CHAN_AUTO, CHANF_OVERLAP);
-			R079 HIJKLMNOPQRSTUVW 1 BRIGHT;
+			"R079" HIJKLMNOPQRSTUVW 1 BRIGHT;
 			Goto InsertBullets;
 		
 		ReloadUnloaded:
-			R052 D 0 A_JumpIfInventory("RailgunLaserMode",1,2) ;//Red
-			R048 D 0 ;//Blue
+			"R052" D 0 A_JumpIfInventory("RailgunLaserMode",1,2) ;//Red;
+			"R048" D 0 ;//Blue;
 			"####" DDDDEFGHI 1;
 			"####" A 0 A_StartSound("weapons/plasma/cellin", CHAN_AUTO, CHANF_OVERLAP);
 			"####" JKLMNOPQRSTUVWX 1;
 			TNT1 A 0 A_StartSound("weapons/riflemagslap", CHAN_AUTO, CHANF_OVERLAP);
-			Goto ReloadUnloadedContinue+2 ;//Jumps two frames ahead of this state so less code is being used
+			Goto ReloadUnloadedContinue+2 ;//Jumps two frames ahead of this state so less code is being used;
 		InsertBullets:
 			TNT1 A 0 A_JumpIfInventory("RailgunAmmo",60,"Ready3");
 			TNT1 A 0 A_JumpIfInventory("Cell",1,1);
@@ -1195,7 +1195,7 @@ class PB_Railgun : PB_WeaponBase
 			Goto InsertBullets;
 //I had to make this NoAmmo state to fix a major bug with the game crashing when you 
 //attempted to fire the Railgun in rail mode with no reserve cell ammo.
-	NoAmmo: 
+	NoAmmo:
 		TNT1 A 0 A_JumpIfInventory("RailgunZoomed",1,"NoAmmoScoped");
 		R007 E 1 {
 		if(CountInv("RailgunLaserMode") == 1) {A_SetWeaponSprite("R013");}
@@ -1212,7 +1212,7 @@ class PB_Railgun : PB_WeaponBase
 		Goto Ready3;
 	
 	Unload:
-		TNT1 A 0 A_Takeinventory("Unloading",1) ;//Prevents crash when unloading with no railgun ammo.
+		TNT1 A 0 A_Takeinventory("Unloading",1) ;//Prevents crash when unloading with no railgun ammo.;
 		TNT1 A 0 A_JumpIfInventory("RailgunUnloaded", 1, "AlreadyUnloaded");
 		TNT1 A 0 A_JumpIfInventory("RailgunAmmo", 1,1);
         Goto Ready3;
@@ -1228,22 +1228,22 @@ class PB_Railgun : PB_WeaponBase
 			A_StartSound("weapons/nailgun/up", CHAN_AUTO, CHANF_OVERLAP);
 		}
 	Unload_Part1:
-		R042 ABCD 0;
-		R043 ABCD 0;
-		R044 ABCD 0;
+		"R042" ABCD 0;
+		"R043" ABCD 0;
+		"R044" ABCD 0;
 		R041 ABCD 1 BRIGHT {
 			if (CountInv("RailgunAmmo") < 12 ) { A_SetWeaponSprite("R042");}
 			if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R043");}
 			if (CountInv("RailgunAmmo") < 12 && CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R044");}		
 		}
 	Unload_Part2:
-			R045 ABCDEFGHIJKLMNOPQRSTUVWXY 0;
-			R046 ABCDEFGHIJKLMNOPQRSTUVWXY 0;
-			R048 ABC 0;
-			R049 ABCDEFGHIJKLMNOPQRSTUVWXY 0;
-			R050 ABCDEFGHIJKLMNOPQRSTUVWXY 0;
-			R051 ABCDEFGHIJKLMNOPQRSTUVWXY 0;
-			R052 ABC 0;
+			"R045" ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+			"R046" ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+			"R048" ABC 0;
+			"R049" ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+			"R050" ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+			"R051" ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+			"R052" ABC 0;
 		
 			R047 A 1 BRIGHT {
 				//Blue
@@ -1308,7 +1308,7 @@ class PB_Railgun : PB_WeaponBase
 				if (CountInv("RailgunLaserMode") == 1 && CountInv("RailgunAmmo") == 0 && CountInv("Cell") <= 30) { A_SetWeaponSprite("R069");}
 			}
 		Unload_Part3:
-			R074 ABCD 0;
+			"R074" ABCD 0;
 			TNT1 A 0 A_StartSound("weapons/nailgun/inspect1", CHAN_AUTO, CHANF_OVERLAP);
 			R063 ABCD 1 BRIGHT {
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R074");}
@@ -1331,8 +1331,8 @@ class PB_Railgun : PB_WeaponBase
 //////////////////////////////////////////Unloading
 
 		Spawn:
-			VRCG A 0 NoDelay;
-			SRCG A 10 A_PbvpFramework("VRCG");
+			"VRCG" A 0 NoDelay;
+			"SRCG" A 10 A_PbvpFramework("VRCG");
 			"####" "#" 0 A_PbvpInterpolate();
 			LOOP;
 
@@ -1340,9 +1340,9 @@ class PB_Railgun : PB_WeaponBase
     FlashKicking:
 		
 		TNT1 A 0 A_TakeInventory("RailgunInfrared", 1);
-		R083 ABCDEFGHIJKLM 0;
-		R082 ABCDEFGHIJKLM 0;
-		R081 ABCDEFGHIJKLM 0;
+		"R083" ABCDEFGHIJKLM 0;
+		"R082" ABCDEFGHIJKLM 0;
+		"R081" ABCDEFGHIJKLM 0;
 		R080 ABCDEFGGHIJKLM 1 {
 				if (CountInv("RailgunAmmo") < 12 ) { A_SetWeaponSprite("R081");}
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R082");}
@@ -1352,9 +1352,9 @@ class PB_Railgun : PB_WeaponBase
 		
 	FlashAirKicking:
 		TNT1 A 0 A_TakeInventory("RailgunInfrared", 1);
-		R083 ABCDEFGHIJKLM 0;
-		R082 ABCDEFGHIJKLM 0;
-		R081 ABCDEFGHIJKLM 0;
+		"R083" ABCDEFGHIJKLM 0;
+		"R082" ABCDEFGHIJKLM 0;
+		"R081" ABCDEFGHIJKLM 0;
 		R080 ABCDEFGGGGHIJKLM 1 {
 				if (CountInv("RailgunAmmo") < 12 ) { A_SetWeaponSprite("R081");}
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R082");}
@@ -1364,11 +1364,11 @@ class PB_Railgun : PB_WeaponBase
 		
 	FlashSlideKicking:
 		TNT1 A 0 A_TakeInventory("RailgunInfrared", 1);
-		R086 AB 0;
-		R089 AB 0;
-		R085 ABCDEFGHIJKLMNOPQRQPOPQRSTUV 0;
-		R087 ABCDEFGHIJKLMNOPQRQPOPQRSTUV 0;
-		R088 ABCDEFGHIJKLMNOPQRQPOPQRSTUV 0;
+		"R086" AB 0;
+		"R089" AB 0;
+		"R085" ABCDEFGHIJKLMNOPQRQPOPQRSTUV 0;
+		"R087" ABCDEFGHIJKLMNOPQRQPOPQRSTUV 0;
+		"R088" ABCDEFGHIJKLMNOPQRQPOPQRSTUV 0;
 	
 		R084 AB 1 {
 				if (CountInv("RailgunAmmo") < 12 ) { A_SetWeaponSprite("R085");}
@@ -1394,11 +1394,11 @@ class PB_Railgun : PB_WeaponBase
 
 	FlashPunching:
 		TNT1 A 0 A_TakeInventory("RailgunInfrared", 1);
-		R091 ABCDEFGHIJKLM 0;
-		R092 A 0;
-		R093 ABCDEFGHIJKLM 0;
-		R094 ABCDEFGHIJKLM 0;
-		R095 A 0;
+		"R091" ABCDEFGHIJKLM 0;
+		"R092" A 0;
+		"R093" ABCDEFGHIJKLM 0;
+		"R094" ABCDEFGHIJKLM 0;
+		"R095" A 0;
 		
 		R090 A 1 {
 				if (CountInv("RailgunAmmo") < 12 ) { A_SetFlashWeaponSprite("R091");}
@@ -1416,35 +1416,35 @@ class PB_Railgun : PB_WeaponBase
 		Goto Ready3;
 
 		PDA_Preview_RailReady:
-			R006 A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R006 B 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R007 A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R006" A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R006" B 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R007" A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
 			Stop;
 		PDA_Preview_RailShot:
-			R026 A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R026 B 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R026 C 1 A_WeaponReady(WRF_NOFIRE);
-			R026 D 1 A_WeaponReady(WRF_NOFIRE);
-			R026 E 1 A_WeaponReady(WRF_NOFIRE);
+			"R026" A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R026" B 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R026" C 1 A_WeaponReady(WRF_NOFIRE);
+			"R026" D 1 A_WeaponReady(WRF_NOFIRE);
+			"R026" E 1 A_WeaponReady(WRF_NOFIRE);
 			Stop;
 		PDA_Preview_RailLaserCharge:
-			R036 A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R036 B 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R036 C 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R036 D 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R036 E 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R036 F 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R036 G 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R036" A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R036" B 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R036" C 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R036" D 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R036" E 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R036" F 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R036" G 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
 			Stop;
 		PDA_Preview_RailLaserBlast:
-			R036 Z 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R037 A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R037 B 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
-			R037 C 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R036" Z 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R037" A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R037" B 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"R037" C 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
 			Stop;
 		PDA_Preview_RailModeSwitch:
-			R014 AB 1 A_WeaponReady(WRF_NOFIRE);
-			R018 AB 1 A_WeaponReady(WRF_NOFIRE);
+			"R014" AB 1 A_WeaponReady(WRF_NOFIRE);
+			"R018" AB 1 A_WeaponReady(WRF_NOFIRE);
 			Stop;
 	}
 }
