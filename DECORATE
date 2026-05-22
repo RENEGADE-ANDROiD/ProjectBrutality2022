@@ -399,7 +399,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot1/VorpalBlade.dec"
 #include "actors/Weapons/Slot9/Unmaker.dec"
 #include "actors/Weapons/Slot9/Flamethrower.dec"
-#include "actors/Weapons/Slot9/DemonExterminator.dec"
+//#include "actors/Weapons/Slot9/DemonExterminator.dec" // disabled — see README Slot 9
 #include "actors/Weapons/Slot9/PB_CryoCannon.dec"
 #include "actors/Weapons/Slot4/ProSurv_Ballista.dec"
 #include "actors/Weapons/Slot9/MancubusFlameCannon.dec"

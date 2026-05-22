@@ -770,10 +770,11 @@ ExplosionDamage 8
 	TNT1 AAA 0 A_SpawnItemEx("BurningEmberParticlesFloating_Bigger_Faster", random(12,-12), random(12,-12), random(2,12), 0, 0, 0, 0, 128, 0)
 	EXPL AAA 0 A_CustomMissile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (0, 90))
 	TNT1 AA 0 A_CustomMissile ("FireworkSFXType2", 0, 0, random (0, 360), 2, random (30, 60))
-	TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15))
-	TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35))
-	TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35))
+	TNT1 A 0 A_SpawnItemEx ("TinyBurningPiece", random (-15, 15), random (-15, 15))
+	TNT1 A 0 A_SpawnItemEx ("TinyBurningPiece2", random (-35, 35), random (-35, 35))
+	TNT1 A 0 A_SpawnItemEx ("TinyBurningPiece3", random (-45, 45), random (-45, 35))
 	TNT1 A 1 Light("BIGREDTORCH")
+
 	TNT1 AAAAAA 20 A_CustomMissile ("BigBlackSmoke", 0, 0, random (0, 360), 2, random (40, 160))
 	Stop
 		

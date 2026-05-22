@@ -31,9 +31,9 @@ class PB_KillstreakFlare : Inventory
 				plr.GiveInventory("PB_KillstreakMode", 1);
 				if (KSHUDMessageHandler.BigmsgOn())
 					KSHUDMessageHandler.PlainMsg(
-						plr.PlayerNumber(), "BIGFONT", "Kill streak active!", (240, 120), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
+						plr.PlayerNumber(), "BIGFONT", "Streak active!", (240, 120), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
 						(0.2, 3, 0.5), 0, 11, BaseStatusBar.HUDMSGLayer_OverHUD);
-				else plr.A_Print("Kill streak active!", 2.0);
+				else plr.A_Print("Streak active!", 2.0);
 			}
 		}
 		return true;
@@ -54,7 +54,7 @@ class PB_KillStreakPowerUp : Inventory
 		+INVENTORY.ALWAYSPICKUP;
 		+INVENTORY.AUTOACTIVATE;
 		Inventory.PickupSound "misc/p_pkup";
-		Inventory.PickupMessage "Kill streak reward!";
+		Inventory.PickupMessage "Reward!";
 		Inventory.MaxAmount 100;
 	}
 
@@ -73,7 +73,7 @@ class PB_KillStreakPowerUp : Inventory
 		if (!rewardClass)
 		{
 			className = "PB_Stimpack";
-			msg = "Kill streak reward: stimpack (reward unavailable).";
+			msg = "Stimpack (pool empty).";
 		}
 		if (className == "PB_Backpack")
 			GrantKillstreakBackpack(plr);
@@ -136,16 +136,16 @@ class PB_KillStreakPowerUp : Inventory
 
 	static String SuppliesRewardMsg(String pick)
 	{
-		if (pick == "HealthPinataPermL2" || pick == "HealthPinataPermL3") return "Kill streak: health bonus!";
-		if (pick == "ArmorPinataL1" || pick == "ArmorPinataL2") return "Kill streak: armor bonus!";
-		if (pick == "ClipPinata") return "Kill streak: clip pinata!";
-		if (pick == "ShellPinata") return "Kill streak: shell pinata!";
-		if (pick == "CellPinata") return "Kill streak: cell pinata!";
-		if (pick == "RocketPinata") return "Kill streak: rocket pinata!";
-		if (pick == "CartridgePinata") return "Kill streak: cartridge pinata!";
-		if (pick == "GasPinata") return "Kill streak: gas pinata!";
-		if (pick == "GrenadePinata") return "Kill streak: grenade pinata!";
-		return "Kill streak: bonus supplies!";
+		if (pick == "HealthPinataPermL2" || pick == "HealthPinataPermL3") return "Health bonus!";
+		if (pick == "ArmorPinataL1" || pick == "ArmorPinataL2") return "Armor bonus!";
+		if (pick == "ClipPinata") return "Clip pinata!";
+		if (pick == "ShellPinata") return "Shell pinata!";
+		if (pick == "CellPinata") return "Cell pinata!";
+		if (pick == "RocketPinata") return "Rocket pinata!";
+		if (pick == "CartridgePinata") return "Cartridge pinata!";
+		if (pick == "GasPinata") return "Gas pinata!";
+		if (pick == "GrenadePinata") return "Grenade pinata!";
+		return "Bonus supplies!";
 	}
 
 	static void PushIf(Array<String> a, String itemCvar, String className, PlayerPawn p)
@@ -165,7 +165,7 @@ class PB_KillStreakPowerUp : Inventory
 				if (bpc)
 				{
 					outClass = "PB_Backpack";
-					outMsg = "Kill streak: backpack!";
+					outMsg = "Backpack!";
 					return;
 				}
 			}
@@ -237,34 +237,34 @@ class PB_KillStreakPowerUp : Inventory
 		int i  = random(0, pool.size() - 1);
 		String pick = pool[i];
 		outClass = pick;
-		if (pick == "PB_KSHasteSphere") outMsg   = "Kill streak: Haste!";
-		else if (pick == "PB_KSDoubleSphere") outMsg = "Kill streak: Doom sphere (double damage)!";
-		else if (pick == "PB_KSInvulnerabilitySphere") outMsg = "Kill streak: Invulnerability!";
-		else if (pick == "EnergySphere") outMsg = "Kill streak: Energy sphere (mega) !!";
-		else if (pick == "MegaBerserk") outMsg  = "Kill streak: MEGA BERSERK !";
-		else if (pick == "LifeSphere") outMsg  = "Kill streak: Life sphere !";
-		else if (pick == "PB_Medikit") outMsg    = "Kill streak: Medikit !!";
-		else if (pick == "DemonStrengthRune") outMsg = "Kill streak: Demon strength !";
-		else if (pick == "CoffeeTime") outMsg = "Kill streak: COFFEE TIME!";
-		else if (pick == "TFST") outMsg = "Kill streak: TIME SPHERE!";
-		else if (pick == "FamiliarSummon") outMsg = "Kill streak: Drone summon!";
-		else if (pick == "PB_GuardsphereST") outMsg = "Kill streak: Guard sphere!";
-		else if (pick == "Crucifix") outMsg = "Kill streak: Crucifix!";
-		else if (pick == "RegenSphere") outMsg = "Kill streak: Regen sphere!";
-		else if (pick == "DeflectionSphere") outMsg = "Kill streak: Deflection sphere!";
-		else if (pick == "LifeshieldSphere") outMsg = "Kill streak: Lifeshield!";
-		else if (pick == "ElectricAuraSphere") outMsg = "Kill streak: Electric aura!";
-		else if (pick == "LegendSphere") outMsg = "Kill streak: LEGEND SPHERE!";
-		else if (pick == "BootsOfTheNorth") outMsg = "Kill streak: Boots of the North!";
-		else if (pick == "BracersOfForce") outMsg = "Kill streak: Bracers of Force!";
-		else if (pick == "BookOfTheDead") outMsg = "Kill streak: Book of the Dead!";
-		else if (pick == "FireAuraSphere") outMsg = "Kill streak: Fire aura!";
-		else if (pick == "FlightSphere") outMsg = "Kill streak: Flight!";
-		else if (pick == "FrostAuraSphere") outMsg = "Kill streak: Frost aura!";
-		else if (pick == "HandOfTheWraith") outMsg = "Kill streak: Hand of the Wraith!";
-		else if (pick == "ArtiLichSkull") outMsg = "Kill streak: Lich Skull!";
-		else if (pick == "PentacleOfProjection") outMsg = "Kill streak: Pentacle of Projection!";
-		else if (pick == "ReflectorSphere") outMsg = "Kill streak: Reflector Sphere!";
-		else outMsg = "Kill streak power-up!";
+		if (pick == "PB_KSHasteSphere") outMsg   = "Haste!";
+		else if (pick == "PB_KSDoubleSphere") outMsg = "Doom sphere!";
+		else if (pick == "PB_KSInvulnerabilitySphere") outMsg = "Invulnerability!";
+		else if (pick == "EnergySphere") outMsg = "Energy sphere!";
+		else if (pick == "MegaBerserk") outMsg  = "Mega berserk!";
+		else if (pick == "LifeSphere") outMsg  = "Life sphere!";
+		else if (pick == "PB_Medikit") outMsg    = "Medikit!";
+		else if (pick == "DemonStrengthRune") outMsg = "Demon strength!";
+		else if (pick == "CoffeeTime") outMsg = "Coffee time!";
+		else if (pick == "TFST") outMsg = "Time sphere!";
+		else if (pick == "FamiliarSummon") outMsg = "Drone summon!";
+		else if (pick == "PB_GuardsphereST") outMsg = "Guard sphere!";
+		else if (pick == "Crucifix") outMsg = "Crucifix!";
+		else if (pick == "RegenSphere") outMsg = "Regen sphere!";
+		else if (pick == "DeflectionSphere") outMsg = "Deflection sphere!";
+		else if (pick == "LifeshieldSphere") outMsg = "Lifeshield!";
+		else if (pick == "ElectricAuraSphere") outMsg = "Electric aura!";
+		else if (pick == "LegendSphere") outMsg = "Legend sphere!";
+		else if (pick == "BootsOfTheNorth") outMsg = "Boots of the North!";
+		else if (pick == "BracersOfForce") outMsg = "Bracers of force!";
+		else if (pick == "BookOfTheDead") outMsg = "Book of the Dead!";
+		else if (pick == "FireAuraSphere") outMsg = "Fire aura!";
+		else if (pick == "FlightSphere") outMsg = "Flight!";
+		else if (pick == "FrostAuraSphere") outMsg = "Frost aura!";
+		else if (pick == "HandOfTheWraith") outMsg = "Hand of the Wraith!";
+		else if (pick == "ArtiLichSkull") outMsg = "Lich skull!";
+		else if (pick == "PentacleOfProjection") outMsg = "Pentacle!";
+		else if (pick == "ReflectorSphere") outMsg = "Reflector sphere!";
+		else outMsg = "Power-up!";
 	}
 }

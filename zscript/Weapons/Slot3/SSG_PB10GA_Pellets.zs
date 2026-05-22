@@ -7,14 +7,14 @@ class PB_10GAPellet : FastProjectile
 		Speed 480;
 		Damage 18;
 		Projectile;
-		+NOGRAVITY
+		+NOGRAVITY;
 		DamageType "Shotgun";
 		Obituary "%o was turned inside out by %k.";
 	}
 	States
 	{
 	Spawn:
-		TRAC A 1 Bright;
+		"TRAC" A 1 Bright;
 		Loop;
 	Death:
 		TNT1 A 0;
@@ -51,14 +51,14 @@ class PB_8GAPellet : FastProjectile
 		Speed 480;
 		Damage 17;
 		Projectile;
-		+NOGRAVITY
+		+NOGRAVITY;
 		DamageType "Shotgun";
 		Obituary "%o was turned inside out by %k.";
 	}
 	States
 	{
 	Spawn:
-		TRAC A 1 Bright;
+		"TRAC" A 1 Bright;
 		Loop;
 	Death:
 		TNT1 A 0;

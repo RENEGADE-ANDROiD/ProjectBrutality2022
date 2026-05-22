@@ -785,6 +785,7 @@ Class PB_Revolver : PB_WeaponBase
 		FlashPunching:
 			TNT1 A 0 A_JumpIF(A_CheckAkimbo(), "DualFlashPunching");
 			R0V1 ABCDEFGHIJKLMN 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashSlideKicking:
 			TNT1 A 0 A_JumpIF(A_CheckAkimbo(), "DualFlashSlideKicking");
@@ -803,6 +804,7 @@ Class PB_Revolver : PB_WeaponBase
 		DualFlashPunching:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 AAAAAAAAAAAAAAA 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		DualFlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10,11);

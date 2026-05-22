@@ -547,7 +547,7 @@ ACTOR PurplePlasmaBall: FastProjectile
   Death:
     TNT1 A 0 A_SpawnItem ("IonPuff", 0)
     TNT1 A 0 A_Explode(24,40,1)
-    TNT1 AAAAA 19 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
+    TNT1 AAAAA 19 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 360))
     Stop
   }
 }

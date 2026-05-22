@@ -133,7 +133,6 @@ extend class PB2022_Hud_ZS
 				return false;
 
 			case 'PB_Unmaker':
-			case 'PB_DemonExterminator':
 				DrawAmmoBar("BARBACD1", "BARBACZ2", "BARBACZ2", "BAMBAR7", "ABAR7", "ABAR6", "AMMOIC6", Font.CR_ORANGE, drawNumbers: false, drawIcon: false);
 				PBHud_DrawImage("AMMOIC7", (-66, -37), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, playerBoxAlpha, (17, 17));
 				PBHud_DrawImage("AMMOIC6", (-66, -17), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, playerBoxAlpha, (17, 17));

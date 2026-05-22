@@ -2779,6 +2779,8 @@ Class Hook : Actor
 			{
 				Vector3 TargetPos = Pos - (HookToPlayer * b / 15.f);
 				Ball.Vel = TargetPos - Ball.Pos;
+				let trail = HookTrail(Ball);
+				if (trail) { trail.OrientAlongRope(self); }
 			}
 		}
 	}
@@ -2950,7 +2952,7 @@ Class HookTrail : Actor
 {
 	Default
 	{
-		+FORCEXYBILLBOARD;
+		+ROLLSPRITE;
 		+MISSILE;
 		+NOGRAVITY;
 		+NOTELEPORT;
@@ -2958,8 +2960,36 @@ Class HookTrail : Actor
 		+THRUSPECIES;
 		Radius 2;
 		Height 4;
-		Scale 0.5;
+		Scale 0.45;
 		Species "HookTrail";
+	}
+
+	// TEND art is authored upright; align each link along the rope (hook -> player).
+	void OrientAlongRope(Hook hook)
+	{
+		if (!hook) { return; }
+		Vector3 along = hook.HookToPlayer;
+		double len = along.Length();
+		if (len < 0.01) { return; }
+		along = (-along) / len;
+		double xyLen = along.xy.Length();
+		if (xyLen < 0.01)
+		{
+			Angle = hook.Angle;
+			Pitch = along.z > 0 ? 90.0 : -90.0;
+		}
+		else
+		{
+			Angle = VectorAngle(along.x, along.y);
+			Pitch = atan2(along.z, xyLen) * (180.0 / 3.141592653589793);
+		}
+		Roll = 90.0;
+	}
+
+	Override void Tick()
+	{
+		Super.Tick();
+		OrientAlongRope(Hook(Target));
 	}
 	
 	States

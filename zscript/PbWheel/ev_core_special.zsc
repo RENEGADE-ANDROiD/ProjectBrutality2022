@@ -1475,6 +1475,47 @@ Class PB_SpecialWheelHandler : EventHandler
 		specialWheel_handleMouse();
 	}
 
+	void specialWheel_PB_DemonExterminator()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.75, 0.75);
+
+		PB_SpecialWheel_Mode m_laser = new ("PB_SpecialWheel_Mode");
+		TextureID icLaser = TexMan.CheckForTexture("AMMOIC7", TexMan.Type_Any);
+		if (!icLaser.isValid())
+			icLaser = TexMan.CheckForTexture("UNMXA0", TexMan.Type_Any);
+		m_laser.specialIcon = icLaser;
+		m_laser.specialName = "Select_PB_DemonEx_Laser";
+		m_laser.specialAlias = "Laser";
+		m_laser.specialPriority = 1;
+		m_laser.iconScale = iconScale;
+		wheelSpecials.Push(m_laser);
+
+		PB_SpecialWheel_Mode m_incin = new ("PB_SpecialWheel_Mode");
+		TextureID icIncin = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png", TexMan.Type_Any);
+		if (!icIncin.isValid())
+			icIncin = TexMan.CheckForTexture("AMMOIC6", TexMan.Type_Any);
+		m_incin.specialIcon = icIncin;
+		m_incin.specialName = "Select_PB_DemonEx_Incin";
+		m_incin.specialAlias = "Incineration";
+		m_incin.specialPriority = 2;
+		m_incin.iconScale = iconScale;
+		wheelSpecials.Push(m_incin);
+
+		PB_SpecialWheel_Mode m_lightning = new ("PB_SpecialWheel_Mode");
+		TextureID icLightning = TexMan.CheckForTexture("graphics/weap/DemonExt/LightningAlt.png", TexMan.Type_Any);
+		if (!icLightning.isValid())
+			icLightning = TexMan.CheckForTexture("AMMOIC6", TexMan.Type_Any);
+		m_lightning.specialIcon = icLightning;
+		m_lightning.specialName = "Select_PB_DemonEx_Lightning";
+		m_lightning.specialAlias = "Lightning";
+		m_lightning.specialPriority = 3;
+		m_lightning.iconScale = iconScale;
+		wheelSpecials.Push(m_lightning);
+
+		specialWheel_handleMouse();
+	}
+
 	void specialWheel_PB_DarkMatterRifle()
 	{
 		wheelSpecials.Clear();
