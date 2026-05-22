@@ -333,7 +333,7 @@ DoomEdNums
 	23148 = PB_NeoHMG
 	23149 = PB_M41A
 	23150 = BDPBattleRifle
-	23151 = PB_DemonExterminator
+	// 23151 reserved/unused while PB_DemonExterminator is disabled; do not reassign without re-enabling the weapon (DECORATE / ZSCRIPT.zc includes commented out).
 	23152 = MastermindChaingun
 	23153 = ShieldSaw_token
 	23154 = PB_MolotovAmmoPickup
