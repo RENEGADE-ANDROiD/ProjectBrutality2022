@@ -71,6 +71,8 @@ Class AccuDeathEffectsBase : Thinker //Creates appropriate effects based on thin
 	
 	static void CreateFireParticles(Actor victim, String particleColor = "Orange")
 	{
+		if (!PB_BurnFXThrottleHandler.ShouldSpawnBurnParticles())
+			return;
 		if(victim)
 		{
 			FSpawnParticleParams p;

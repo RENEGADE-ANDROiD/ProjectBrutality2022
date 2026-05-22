@@ -16,12 +16,12 @@ class CyberBallsPlayer : PB_Projectile
 		Gravity 0.00;
 		Decal "Scorch";
 		RenderStyle "Add";
-		-NOGRAVITY
-		+EXTREMEDEATH
-		+BLOODSPLATTER
-		+THRUSPECIES
-		+MTHRUSPECIES
-		+RANDOMIZE
+		-NOGRAVITY;
+		+EXTREMEDEATH;
+		+BLOODSPLATTER;
+		+THRUSPECIES;
+		+MTHRUSPECIES;
+		+RANDOMIZE;
 		Species "Marines";
 		Scale 1.7;
 		SeeSound "DSCANFIR";
@@ -35,16 +35,16 @@ class CyberBallsPlayer : PB_Projectile
 			TNT1 A 0;
 		Spawn1:
 			TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater");
-			WYVB A 1 Bright A_SpawnItem("RedFlareSmall22", 0, 0);
+			"WYVB" A 1 Bright A_SpawnItem("RedFlareSmall22", 0, 0);
 			TNT1 A 0 A_CustomMissile("OldschoolRocketSmokeTrail2", 2, 0, random(160, 210), 2, random(-30, 30));
 			TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "SpawnCheap");
 			Loop;
 		SpawnCheap:
 			TNT1 A 0;
-			WYVB A 1 Bright A_SpawnItem("RedFlareSmall22", 0, 0);
+			"WYVB" A 1 Bright A_SpawnItem("RedFlareSmall22", 0, 0);
 			Loop;
 		SpawnUnderwater:
-			WYVB A 1 Bright A_SpawnItem("YellowFlareSmall", 0, 0);
+			"WYVB" A 1 Bright A_SpawnItem("YellowFlareSmall", 0, 0);
 			Goto Spawn1;
 		XDeath:
 		Crash:

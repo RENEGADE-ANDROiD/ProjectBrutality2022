@@ -41,7 +41,6 @@ OPTMNU_KS_HandOfTheWraith = "Hand of the Wraith (Curse Projectile)";
 OPTMNU_KS_LichSkull       = "Lich Skull (Damage + Speed)";
 OPTMNU_KS_Pentacle        = "Pentacle of Projection (Repulsion Blast)";
 OPTMNU_KS_ReflectorSphere = "Reflector Sphere (Reflective Invulnerability)";
-
 GOTCLIP = "Picked up a Magazine.";
 GOTHTHNEED = "Picked up a health bonus. It's not enough health to manage, but you needed it anyway." ;
 GOTMEDPAKNEED = "Picked up a medipack that you DESPERATELY needed!";
@@ -123,6 +122,13 @@ BDV22GOREMNU_MIX = "Brutal Doom 22 / PB Gore Mix";
 BDV22GOREMNU_MIX_TIP = "Controls Extra Gore Style.\nLower = More PB Gore.\nHigher = More BDv22 Gore.\n50 = Balanced Mix.";
 BDV22GOREMNU_ENHANCED2022 = "2022 Enhanced Brootality";
 BDV22GOREMNU_ENHANCED2022_TIP = "Master Switch For\nThe Full 2022 Gore Mix.\nEnables BDv22 Mist,\nMeat, Organs, BPv10 Death\nExtras, And Shiny PBR Nash\nBlood (Decals + Pools).";
+
+OPTMNU_PB_BURNFX_TITLE = "Burning corpse FX";
+OPTMNU_PB_BURNFX_THROTTLE = "Throttle live burn particles";
+OPTMNU_PB_BURNFX_THROTTLE_TIP = "When several enemies are on fire at once,\nreduces melt FX (Death.Incinerate) and\nburning-corpse particles, embers, and lights.\nImproves FPS in molotov / flame-heavy fights.";
+OPTMNU_PB_BURNFX_SOFT_LIMIT = "Start throttling at N burners";
+OPTMNU_PB_BURNFX_SOFT_LIMIT_TIP = "Full FX while active burners stay below\nthis count + 1 (default 3 â†’ four corpses\nbefore light throttle). Higher counts\nstep down particles more gradually.";
+OPTMNU_PB_BURNFX_HINT = "Respects Low Graphics Mode / pb_lowgraphicsmode (minimal burn FX).";
 
 OPTMNU_PB_ACCUDEATH = "AccuDeath (corpse tints)";
 OPTMNU_PB_ACCUDEATH_TIP = "AccuDeath V3.2.2.\nApplies fire/plasma/electric\ncorpse translations and\nparticle death FX. On by\ndefault; stacks with Nash\nand Enhanced Brootality.";
@@ -399,6 +405,9 @@ PB_HUD_FLAMER_FLAME = "FLAME";
 PB_HUD_FLAMER_ACID = "ACID";
 PB_HUD_CRYO_CRYO = "CRYO";
 PB_HUD_CRYO_ELECTRIC = "ELECTRIC";
+PB_HUD_DEMONEX_LASER = "LASER";
+PB_HUD_DEMONEX_INCIN = "INCINERATION";
+PB_HUD_DEMONEX_LIGHTNING = "LIGHTNING";
 PB_HUD_SMG_STD = "SEMI";
 PB_HUD_SMG_AKIMBO = "AKIMBO";
 PB_HUD_SMG_LASER = "LASER";
@@ -449,7 +458,7 @@ PB_OPT_Molotov = "Molotov cocktails";
 PB_WHEELTIP_WW_MolotovSelected = "Molotov Equipment Slot.\nUser1 Throws; Fire Spreads on Impact.";
 
 PB_WEAPON_WHEEL_ENABLE = "Weapon selection wheel";
-PB_WEAPON_WHEEL_ENABLE_DESC = "Master switch for the integrated Gearbox weapon selector (GPLv3+).\nWhen On, \caWeapon Selection Wheel\c- opens Gearbox. When Off, slot intercept and menu toggle are skipped.\nFull Gearbox options: \caPB 2022 Enhanced\c- → \caGameplay Settings\c- → \caWeapon & Inventory Selector\c-.";
+PB_WEAPON_WHEEL_ENABLE_DESC = "Master switch for the integrated Gearbox weapon selector (GPLv3+).\nWhen On, \caWeapon Selection Wheel\c- opens Gearbox. When Off, slot intercept and menu toggle are skipped.\nFull Gearbox options: \caPB 2022 Enhanced\c- â†’ \caGameplay Settings\c- â†’ \caWeapon & Inventory Selector\c-.";
 
 PB_WEAPON_SELECTOR_MENU = "Weapon & Inventory Selector";
 PB_WEAPON_SELECTOR_MENU_HINT = "Gearbox: wheel / blocks / text layout, keys, colors, and reset.";
@@ -459,21 +468,47 @@ OPTMNU_PB_PDA_BLOCKY_HINT = "Blocky layout: weapon / monster entries render as a
 OPTMNU_PB_PDA_BLOCKY_HINT2 = "Off = legacy text-list. Up / Down arrows page through tiles when blocky is on.";
 OPTMNU_PB_XP_REWARDS = "PDA XP & reward spin (single-player)";
 OPTMNU_PB_XP_REWARDS_HINT = "On: single-player kills grant XP; rank-ups give reward points.";
-OPTMNU_PB_XP_REWARDS_HINT2 = "Blocky PDA home adds Reward Spin (3 pts) — weapons only; refunds if none eligible.";
+OPTMNU_PB_XP_REWARDS_HINT2 = "Blocky PDA home adds Reward Spin (3 pts) â€” weapons only; refunds if none eligible.";
 OPTMNU_PB_HP_ARCADE = "HP Arcade item behavior";
 OPTMNU_PB_ITEM_MUTATORS = "Item mutators";
 OPTMNU_PB_ITEM_MUTATORS_HINT = "Off: soulsphere / megasphere / blue-armor spawners skip premium rolls (no NewLifeSphere / UltraSphere / EliteArmor / PristineArmor).";
 OPTMNU_PB_REDARMOR = "DarkShadow Custom Red Armor (blue heavy rolls)";
 OPTMNU_PB_REDARMOR_HINT = "On: blue-armor spawner heavy path can roll PB_RedArmor (60% / 250) instead of HeavyArmor (~25%).";
 OPTMNU_GLORYHUD_STAGING_NOTE1 = "Glory HUD Background: use Eternal (NewHUD) for the DOOM Eternal-style center strip (Crucible / Blood Punch / shoulders).";
-OPTMNU_GLORYHUD_STAGING_NOTE2 = "PB Staging addon configs used value 2 for that strip; in PB2022 value 2 is None — pick Eternal (NewHUD) (value 3) or reset the cvar.";
+OPTMNU_GLORYHUD_STAGING_NOTE2 = "PB Staging addon configs used value 2 for that strip; in PB2022 value 2 is None â€” pick Eternal (NewHUD) (value 3) or reset the cvar.";
+
+OPTMNU_PB2022_HUB_INTRO1 = "Project Brutality 2022 add-ons and options.";
+OPTMNU_PB2022_HUB_INTRO2 = "Use Quick Presets, then open a category.";
+OPTMNU_PB2022_PRESET_FULL = "Full Brutality (Glory Kills + Enhanced Gore)";
+OPTMNU_PB2022_PRESET_VANILLA = "Vanilla-Style Roster (Classic Monsters)";
+OPTMNU_PB2022_PRESET_PERF = "Performance-Friendly (Lighter FX)";
+OPTMNU_PB2022_SEC_GAMEPLAY = "Gameplay & Movement";
+OPTMNU_PB2022_SEC_COMBAT = "Combat & Finishers";
+OPTMNU_PB2022_SEC_GORE = "Gore & Performance";
+OPTMNU_PB2022_SEC_HUD = "HUD & Interface";
+OPTMNU_PB2022_SEC_WEAPONS = "Weapons & Spawns";
+OPTMNU_PB2022_SEC_MONSTERS = "Monsters & Spawns";
+OPTMNU_PB2022_SEC_VISUAL = "Visual & Screen FX";
+OPTMNU_PB2022_SEC_EXTRAS = "Extras & Content";
+OPTMNU_PB2022_GORE_TIP1 = "pb_enhanced_brutality_2022 = master gore mix.";
+OPTMNU_PB2022_GORE_TIP2 = "Nash blood/gibs: Visual & Screen FX -> Gore/Debris.";
+OPTMNU_PB2022_COMBAT_TIP1 = "Glory Kills use be_ExecutionsON and Glory Kill submenu.";
+OPTMNU_PB2022_COMBAT_TIP2 = "Auto-fatality needs Glory Kills on for finisher attempts.";
+OPTMNU_PB2022_MOVE_TIP1 = "pb_rocketjump / pb_plasma_wallclimb = explosive movement.";
+OPTMNU_PB2022_MOVE_TIP2 = "More movement: Gameplay & Movement -> Gameplay Settings.";
+OPTMNU_PB2022_HUD_TIP1 = "Helmet visor, fullscreen HUD, PDA, and wheels live here.";
+OPTMNU_PB2022_HUD_TIP2 = "Gearbox weapon wheel: one submenu in this section.";
+OPTMNU_PB2022_MON_TIP1 = "Simpler Monster Settings = bundles + quick toggles.";
+OPTMNU_PB2022_MON_TIP2 = "Global Settings = spawn presets and advanced spawns.";
+OPTMNU_PB2022_CROSS_WHEEL = "Weapon wheel moved here from Gameplay Settings.";
+OPTMNU_PB2022_CROSS_TAC = "Tactical motion moved to HUD & Interface menu.";
 PB_WEAPON_WHEEL_EMPTY = "\cgNothing to select\c- (no weapons on bar).";
 PB_WHEELTIP_WPICKSLOT = "Outer ring: weapon slots you are carrying.\nAim toward the \cccenter\c- when a slot lists multiple weapons\nto open the inner ring for that slot.";
 
 OPTVAL_OFF = "Off";
 SCALEMNU_HUDASPECT = "Preserve HUD aspect ratio";
 
-GB_OPTIONS = "\ch⚙\c- Gearbox Options";
+GB_OPTIONS = "\châš™\c- Gearbox Options";
 
 GB_UI_OPTIONS       = "UI options";
 GB_UI_OPTIONS_TITLE = "Gearbox UI Options";
@@ -569,7 +604,7 @@ GB_BIG_FONT       = "Big font";
 
 PB_PICKUP_ShieldSaw_token = "Picked up the Shield Saw.";
 
-PB_WPNBASEPICKUP_ShieldSaw_token = "Shield Saw charge ready — Quick Melee throws the ricocheting blade at range.";
+PB_WPNBASEPICKUP_ShieldSaw_token = "Shield Saw charge ready â€” Quick Melee throws the ricocheting blade at range.";
 PB_WPNHINT_ShieldSaw_token = "Quick Melee (out of hug range) throws the saw.\nRecall with the Shield Saw key (uses FastCall) or when it returns.";
 
 PB_PICKUP_VorpalBlade = "You picked up Tiberium's Soulblade! (Slot 1)";
@@ -579,7 +614,7 @@ PB_PICKUP_Stormcast = "You got the Arcane Power of Stormcasting! (Slot 9)";
 PB_WPNHINT_DragonSlayer = "Dragon Slayer: build Slayer energy with slashes; spend for empowered strikes.\nAlt-Fire: nail launcher Volley.\nObsidian Ravager drop only (limited durability on boss pickup).";
 PB_WPNHINT_Stormcast = "Stormcast (slot 9): PowerChargeStorm fuels the lightning beam (Fire) and alt-fire charge releases.\nHold Fire while charging alt for orb spells; hold Activate Equipment (User1) for stunwall variants; hold Weapon Special for Arc of Death charge tiers; tap Reload during charge for Lightning Warper; hold Alt-Fire while airborne after Fire for air lightning.\nSpawns from BFG pickups when enabled in Weapon Spawns.";
 PB_WPNHINT_PB_CryoElectroRifle = "Cryo Electro Rifle (slot 8): Weapon Special toggles Cryo vs Electric.\nPrimary: cryo orb or lightning missile (shared PB_CryoCells).\nReload trades PB_Cell packs into cryo ammo.";
-PB_WPNHINT_PB_DARKMATTERRIFLE = "Dark Matter Rifle (slot 8): Weapon Special wheel picks Alt-Fire payload — charged Super Plasma Ball or Gravity Singularity.\nPrimary: fast plasma orb (PB_DarkMatterMag).\nReload feeds the magazine from Cell reserve; unload supported.";
+PB_WPNHINT_PB_DARKMATTERRIFLE = "Dark Matter Rifle (slot 8): Weapon Special wheel picks Alt-Fire payload â€” charged Super Plasma Ball or Gravity Singularity.\nPrimary: fast plasma orb (PB_DarkMatterMag).\nReload feeds the magazine from Cell reserve; unload supported.";
 PB_WPNHINT_PB_CryoCannon = "Cryo Cannon (slot 9): cone of cryo wind; uses PB_CryoCannonCells.\nReload trades PB_Cell into cannon fuel.";
 PB_WPNHINT_PB_CryoASG = "Cryo Auto Shotgun (slot 3): cryo pellet burst; uses PB_Shell (2 per shot).\nEach pellet applies brief cryo slow.";
 PB_WPNHINT_VorpalBlade = "Lifesteal Sword: Lunges Lock Targets.\nBerserk Alt-Fire: BladeStorm.";
@@ -592,8 +627,8 @@ PB_WPNHINT_GENERIC = "Added to Inventory.\nWeapon Special & Alt-Fire Per Gun;\nC
 
 PB_WHEELTIP_GrenadeTypeImpact = "Super Grenade Launcher: Impact Frags.\nPrimary Throw; Alt-Fire Throw / Detonate Modes.";
 PB_WHEELTIP_GrenadeTypeSticky = "Super Grenade Launcher: Sticks to Surfaces or Targets,\nThen Detonates.";
-PB_WHEELTIP_GrenadeTypeIncendiary = "Super Grenade Launcher: Incendiary — Area Burn\non Detonation.";
-PB_WHEELTIP_GrenadeTypeCryo = "Super Grenade Launcher: Cryo — Slow / Freeze Groups.";
+PB_WHEELTIP_GrenadeTypeIncendiary = "Super Grenade Launcher: Incendiary â€” Area Burn\non Detonation.";
+PB_WHEELTIP_GrenadeTypeCryo = "Super Grenade Launcher: Cryo â€” Slow / Freeze Groups.";
 PB_WHEELTIP_GrenadeTypeAcid = "Super Grenade Launcher: Acid Pools\nAfter Splash.";
 
 PB_WHEELTIP_SelectDualWieldRifles = "DMR / HDMR: Single or Akimbo.\nAmmo / Reload Rules Apply to Both.";
@@ -648,8 +683,8 @@ PB_WHEELTIP_WW_HookSelected = "Equipment Wheel: Meat Hook.\nUser1 Grapples; User
 PB_WHEELTIP_GK_FlamebelchSelected = "Glory Kill Equipment: Flame Belch.";
 PB_WHEELTIP_GK_IcebombSelected = "Glory Kill Equipment: Ice Bomb.";
 
-PB_WHEELTIP_EX_Select_DropMode = "Excavator: Drop shot — burrowing charge on impact.";
-PB_WHEELTIP_EX_Select_DrillMode = "Excavator: Drill shot — tunneling primary blast.";
+PB_WHEELTIP_EX_Select_DropMode = "Excavator: Drop shot â€” burrowing charge on impact.";
+PB_WHEELTIP_EX_Select_DrillMode = "Excavator: Drill shot â€” tunneling primary blast.";
 
 PB_WHEELTIP_Select_MS_Standard = "Metal Sniper: Standard magazines.";
 PB_WHEELTIP_Select_MS_Resonance = "Metal Sniper: Resonance / anti-armor load.";
@@ -743,15 +778,15 @@ PB_WPNHINT_PB_BFGBeam = "BFG Beam Rifle: Sustained Alt-Fire;\nWeapon Special Ove
 PB_WPNHINT_PB_Carbine = "Carbine: Weapon Special Wheel\n(Modes, Akimbo, Sights).\nAlt-Fire Grenade Launcher / Secondary.";
 PB_WPNHINT_PB_Chainsaw = "Chainsaw: Grind Primary Fire;\nAlt-Fire Vertical; Berserk Heals.";
 PB_WPNHINT_PB_Deagle = "Desert Eagle: Alt-Fire Aim / Fan Hammer.";
-PB_WPNHINT_PB_DemonExterminator = "Flame Cannon: Alt-Fire Wide Blast;\nWeapon Special Fuel.";
+PB_WPNHINT_PB_DemonExterminator = "Demon Exterminator: Laser / Incineration / Lightning\n(Weapon Special wheel). All modes use Demon Tech ammo.";
 PB_WPNHINT_PB_DualWeapon = "Dual Wield: Primary Left / Alt-Fire Right.\nSingle-Button Dual Mode in Menu Overrides.";
 PB_WPNHINT_PB_Flamethrower = "Flamethrower: Cone Primary Fire;\nAlt-Fire Napalm / Burst; Heat Meter.";
 PB_WPNHINT_PB_Freezer = "Freeze Rifle:\nCryo Primary Fire; Alt-Fire Bomb / Beam.";
 PB_WPNHINT_PB_LMG = "LMG: Belt Fed; Alt-Fire Micro-Missiles\nWhen Upgraded.";
 PB_WPNHINT_PB_M1Plasma = "M1 Plasma Rifle: Bolts;\nAlt-Fire Overcharge; Weapon Special Mode.";
 PB_WPNHINT_PB_M2Plasma = "M2 Lightning Gun:\nAlt-Fire Arc; Upgrade Chain Modes.";
-PB_WPNHINT_PB_M41A = "M41A: Quick 7.62 Primary.\nWeapon Special Wheel — underbarrel 12ga or 30mm grenade, or Dual Wield.\nCarry two M41As: tap Special (no wheel token pending) to enter or exit dual wield.";
-PB_WPNHINT_PB_MetalSniper = "Anti-Materiel Sniper:\nWeapon Special — wheel: ammo type, scope vs grenade.\nAlt-Fire zooms (sniper mode) or primes grenade.";
+PB_WPNHINT_PB_M41A = "M41A: Quick 7.62 Primary.\nWeapon Special Wheel â€” underbarrel 12ga or 30mm grenade, or Dual Wield.\nCarry two M41As: tap Special (no wheel token pending) to enter or exit dual wield.";
+PB_WPNHINT_PB_MetalSniper = "Anti-Materiel Sniper:\nWeapon Special â€” wheel: ammo type, scope vs grenade.\nAlt-Fire zooms (sniper mode) or primes grenade.";
 PB_CARBINE_TAG = "UAC-41 Carbine";
 PB_CARBINE_PICKUP = "You got the UAC-41 Carbine! (Slot 4)";
 PB_MSNI_PICKUP = "Metal Sniper (slot 4)";
@@ -1006,7 +1041,7 @@ HM_VALUE_WHITE = "White";
 HM_VALUE_YELLOW = "Yellow";
 HM_VALUE_YES = "Yes";
 
-// titlemap.wad SubtitleMessage (StrParam TITLEMAP1..23 + TITLEMAP0) — blank = logo only, no subtitle HUD
+// titlemap.wad SubtitleMessage (StrParam TITLEMAP1..23 + TITLEMAP0) â€” blank = logo only, no subtitle HUD
 TITLEMAP0 = "";
 TITLEMAP1 = "";
 TITLEMAP2 = "";

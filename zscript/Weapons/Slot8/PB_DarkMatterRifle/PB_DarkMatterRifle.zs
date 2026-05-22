@@ -478,6 +478,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"PZCG" W 1;
 		"PZCG" A 1;
 		"PZCG" AAA 1;
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 		Goto Ready3;
 
 		PDA_Preview_DMRReady:

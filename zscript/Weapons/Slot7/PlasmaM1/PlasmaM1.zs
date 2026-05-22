@@ -997,9 +997,11 @@ Class PB_M1Plasma : PB_WeaponBase
 			P1R2 CDEEDC 1;
 			PLSG ZYXW 1;
 			PLSG AA 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashPunchingDualWield:
 			TNT1 A 15;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 			
 		FlashKickingDualWield:

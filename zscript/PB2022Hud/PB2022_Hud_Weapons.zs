@@ -133,7 +133,6 @@ extend class PB2022_Hud_ZS
 				return false;
 
 			case 'PB_Unmaker':
-			case 'PB_DemonExterminator':
 				DrawAmmoBar("BARBACD1", "BARBACZ2", "BARBACZ2", "BAMBAR7", "ABAR7", "ABAR6", "AMMOIC6", Font.CR_ORANGE, drawNumbers: false, drawIcon: false);
 				PBHud_DrawImage("AMMOIC7", (-66, -37), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, playerBoxAlpha, (17, 17));
 				PBHud_DrawImage("AMMOIC6", (-66, -17), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, playerBoxAlpha, (17, 17));
@@ -142,6 +141,11 @@ extend class PB2022_Hud_ZS
 				if (Secondary)
 					PBHud_DrawAmmoNumber(String.Format("%u%%", Secondary.Amount / 6), (-205, -69), cachedFontColors[DTECHAMMO]);
 				weaponBarAccent = cachedFontColors[DTECHAMMO];
+				return true;
+
+			case 'PB_DemonExterminator':
+				weaponBarAccent = cachedFontColors[DTECHAMMO];
+				DrawAmmoBar("BARBACD1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO], drawSecondary: false, drawDual: false);
 				return true;
 
 			case 'PB_M1Plasma':
@@ -253,6 +257,23 @@ extend class PB2022_Hud_ZS
 				{
 					label = StringTable.Localize("$PB_HUD_CRYO_CRYO", false);
 					col = Font.CR_CYAN;
+				}
+				break;
+			case 'PB_DemonExterminator':
+				if (CheckInventory("DEx_Cur2"))
+				{
+					label = StringTable.Localize("$PB_HUD_DEMONEX_LIGHTNING", false);
+					col = Font.CR_CYAN;
+				}
+				else if (CheckInventory("DEx_Cur1"))
+				{
+					label = StringTable.Localize("$PB_HUD_DEMONEX_INCIN", false);
+					col = Font.CR_ORANGE;
+				}
+				else
+				{
+					label = StringTable.Localize("$PB_HUD_DEMONEX_LASER", false);
+					col = Font.CR_LIGHTBLUE;
 				}
 				break;
 			case 'PB_SMG':

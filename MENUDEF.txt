@@ -1,7 +1,7 @@
 OptionMenu "OptionsMenu"
 {
 	Title "OPTIONS"
-	Submenu "PB2022 Enhanced",	"PB_2022AdditionsMenu"
+	Submenu "PB 2022 Enhanced",	"PB_2022AdditionsMenu"
 	StaticText " "
 	Submenu "Customize Controls",		"CustomizeControls"
 	Submenu "Mouse options",			"MouseOptions"
@@ -347,151 +347,322 @@ OptionMenu "PB_KillstreakRewardOptions"
 	StaticText " "
 }
 
+OptionMenu "PB2022_MovementMenu"
+{
+	Title "Gameplay & Movement"
+	StaticText "$OPTMNU_PB2022_MOVE_TIP1", cyan
+	StaticText "$OPTMNU_PB2022_MOVE_TIP2", cyan
+	StaticText " "
+	StaticText "======== Quick Bundles ========", gold
+	StaticText " "
+	Command "Enable Explosive Movement (Rocket + Plasma)", "set pb_rocketjump 1; set pb_plasma_wallclimb 1"
+	Command "Disable Explosive Movement", "set pb_rocketjump 0; set pb_plasma_wallclimb 0"
+	StaticText "Sets pb_rocketjump and pb_plasma_wallclimb.", teal
+	StaticText " "
+	Command "Enable Advanced Movement (Jump + Hazards)", "set pb_doublejump 2; set pb_hazardmovement 1"
+	Command "Disable Advanced Movement Extras", "set pb_doublejump 0; set pb_hazardmovement 0"
+	StaticText "Sets pb_doublejump and pb_hazardmovement.", teal
+	StaticText " "
+	StaticText "======== Explosive Movement ========", gold
+	StaticText " "
+	Option "Rocket Jumping", "pb_rocketjump", "OnOff"
+	StaticText "Rocket Splash Can Launch From Floors,", green
+	StaticText "Walls, Or Ceilings (pb_rocketjump).", green
+	StaticText " "
+	Option "Plasma Wall Climbing", "pb_plasma_wallclimb", "OnOff"
+	StaticText "Plasma Blast Knockback From Floors,", green
+	StaticText "Walls, Or Ceilings (pb_plasma_wallclimb).", green
+	StaticText " "
+	StaticText "======== Full Gameplay List ========", gold
+	StaticText " "
+	Submenu "Gameplay Settings (Weapons, Barrels, Recoil)", "GameplaySettings"
+	StaticText "Dual Wield, Crosshairs, Per-Weapon Toggles,", teal
+	StaticText "Marines, Fatalities Speed, And More.", teal
+}
+
+OptionMenu "PB2022_CombatMenu"
+{
+	Title "Combat & Finishers"
+	StaticText "$OPTMNU_PB2022_COMBAT_TIP1", cyan
+	StaticText "$OPTMNU_PB2022_COMBAT_TIP2", cyan
+	StaticText " "
+	StaticText "======== Quick Bundles ========", gold
+	StaticText " "
+	Command "Enable Glory Kill Suite", "set be_ExecutionsON 1; set pb_auto_fatality_fire 1"
+	Command "Disable Glory Kill Suite", "set be_ExecutionsON 0; set pb_auto_fatality_fire 0; set pb_experimental 0"
+	StaticText "Sets be_ExecutionsON, pb_auto_fatality_fire.", teal
+	StaticText "Disable Also Clears pb_experimental.", teal
+	StaticText " "
+	StaticText "======== Glory Kills ========", gold
+	StaticText " "
+	Option "Glory Kills", "be_ExecutionsON", YesNo
+	StaticText "Master Toggle (be_ExecutionsON).", teal
+	StaticText " "
+	Submenu "Glory Kill Options", "Glorykills"
+	StaticText "Pinatas, Stagger, HUD Fuel, Shoulder Cannon.", teal
+	StaticText " "
+	StaticText "======== Finishers ========", gold
+	StaticText " "
+	Option "Auto-Fatality On Primary Fire", "pb_auto_fatality_fire", YesNo
+	StaticText "Requires Glory Kills On For Finisher Attempt.", orange
+	StaticText " "
+	Slider "Auto-Fatality Distance", "pb_auto_fatality_dist", 64, 400, 4
+	StaticText "pb_auto_fatality_dist (map units).", teal
+	StaticText " "
+	Option "$PB_EXPERIMENTAL_EXECUTIONS", "pb_experimental", "OnOff"
+	StaticText "$PB_EXPERIMENTAL_EXECUTIONS_DESC", cyan
+	StaticText "pb_experimental — First-Person Executions.", teal
+}
+
+OptionMenu "PB2022_GoreMenu"
+{
+	Title "Gore & Performance"
+	StaticText "$OPTMNU_PB2022_GORE_TIP1", cyan
+	StaticText "$OPTMNU_PB2022_GORE_TIP2", cyan
+	StaticText " "
+	StaticText "======== Quick Bundles ========", gold
+	StaticText " "
+	Command "Enable Heavy Gore Package", "set pb_enhanced_brutality_2022 1; set pb_accudeath 1; set pb_burnfx_throttle 1"
+	Command "Disable Heavy Gore Package", "set pb_enhanced_brutality_2022 0; set pb_accudeath 0"
+	StaticText "Sets pb_enhanced_brutality_2022, pb_accudeath.", teal
+	StaticText "Throttle Keeps pb_burnfx_throttle On.", teal
+	StaticText " "
+	Command "Enable Performance Gore Mode", "set pb_enhanced_brutality_2022 0; set pb_burnfx_throttle 1; set nashgore_maxgore 500; set nashgore_maxcasings 200"
+	Command "Disable Performance Limits (Defaults)", "set nashgore_maxgore 0; set nashgore_maxcasings 0"
+	StaticText "Lighter Mix + Cap nashgore_maxgore / maxcasings.", teal
+	StaticText " "
+	StaticText "======== Master Switches ========", gold
+	StaticText " "
+	NashGoreOption "$BDV22GOREMNU_ENHANCED2022", "$BDV22GOREMNU_ENHANCED2022_TIP", "pb_enhanced_brutality_2022", "OnOff"
+	StaticText "On: BDv22 Mist/Meat + BPv10 Death Extras.", green
+	StaticText "Off: Standard Nash / PB Gore Only.", green
+	StaticText " "
+	NashGoreOption "$OPTMNU_PB_ACCUDEATH", "$OPTMNU_PB_ACCUDEATH_TIP", "pb_accudeath", "OnOff"
+	StaticText " "
+	Submenu "$OPTMNU_PB_ACCUDEATH_SUB", "AccuDeathOptions"
+	StaticText " "
+	StaticText "======== Detailed Gore Tuning ========", gold
+	StaticText " "
+	Submenu "Gore / Debris Settings (Nash + Limits)", "GoreDebrisMenu"
+	StaticText "Blood Amount, Gibs, Janitor, Burn FX,", teal
+	StaticText "Clear Gore Key, And Nash Controls.", teal
+}
+
+OptionMenu "PB2022_HudMenu"
+{
+	Title "HUD & Interface"
+	StaticText "$OPTMNU_PB2022_HUD_TIP1", cyan
+	StaticText "$OPTMNU_PB2022_HUD_TIP2", cyan
+	StaticText " "
+	StaticText "======== Quick Bundles ========", gold
+	StaticText " "
+	Command "Enable Full HUD Package", "set pb_showhudvisor 1; set pb_showhudvisorglass 1; set pb_weaponhud_enable 1; set pb_weaponmodehud_enable 1; set dam_enabled 1; set pb_tac_enable 1; set pb_ks_enable 1"
+	Command "Disable Optional HUD Extras", "set pb_showhudvisor 0; set pb_showgasmask 0; set pb_weaponhud_enable 0; set pb_weaponmodehud_enable 0; set dam_enabled 0; set pb_tac_enable 0; set pb_dasheffect 0"
+	StaticText "Visor, Corner Icons, Damage Numbers,", teal
+	StaticText "Tactical Motion, Kill Streaks (pb_ks_enable).", teal
+	StaticText " "
+	Command "Enable Weapon Wheels Only", "set pb_weapon_wheel_enable 1; set py_weaponwheel_freeze 0; set pb_wheelbackgroundblur 1"
+	Command "Disable Weapon Wheels", "set pb_weapon_wheel_enable 0"
+	StaticText "pb_weapon_wheel_enable, py_weaponwheel_freeze,", teal
+	StaticText "pb_wheelbackgroundblur.", teal
+	StaticText " "
+	StaticText "======== Helmet & Fullscreen HUD ========", gold
+	StaticText " "
+	Option "Show Helmet Visor", "pb_showhudvisor", YesNo
+	StaticText "pb_showhudvisor — Corner Shell + Glass.", teal
+	StaticText " "
+	Submenu "Helmet Visor Options", "PB_HelmetVisorOptions"
+	StaticText " "
+	Submenu "Fullscreen HUD (ZScript)", "PB2022_FullscreenHudOptions"
+	StaticText "Status Bar Via PB2022_Hud_ZS (Under Visor).", teal
+	StaticText " "
+	StaticText "======== Corner HUD & Numbers ========", gold
+	StaticText " "
+	Option "Enable Corner Weapon Icons", "pb_weaponhud_enable", YesNo
+	StaticText " "
+	Submenu "PBX 2022 Weapon HUD Options", "PBWeaponHudOptions"
+	StaticText " "
+	Option "Enable Damage Numbers", "dam_enabled", "DamEnabled"
+	StaticText " "
+	Submenu "Damage Numbers Options", "DamNumsOptions"
+	StaticText " "
+	StaticText "======== PDA & Meta ========", gold
+	StaticText " "
+	StaticText "$OPTMNU_PB_PDA_HINT", cyan
+	StaticText "$OPTMNU_PB_PDA_HINT2", cyan
+	StaticText " "
+	Option "PDA Blocky Layout (Tile Grid)", "pb_pda_blocky", YesNo
+	StaticText "$OPTMNU_PB_PDA_BLOCKY_HINT", cyan
+	StaticText "$OPTMNU_PB_PDA_BLOCKY_HINT2", cyan
+	StaticText " "
+	Option "$OPTMNU_PB_XP_REWARDS", "pb_xp_rewards", YesNo
+	StaticText "$OPTMNU_PB_XP_REWARDS_HINT", cyan
+	StaticText "$OPTMNU_PB_XP_REWARDS_HINT2", cyan
+	StaticText " "
+	Option "$OPTMNU_PB_ACHIEVEMENTS", "pb_achievements", "OnOff"
+	StaticText "$OPTMNU_PB_ACHIEVEMENTS_HINT", cyan
+	StaticText " "
+	Submenu "$OPTMNU_PB_ACHIEVEMENTS_MENU", "PBAchievementsMenu"
+	StaticText " "
+	StaticText "======== Weapon Wheels ========", gold
+	StaticText " "
+	Option "$PB_WEAPON_WHEEL_ENABLE", "pb_weapon_wheel_enable", "OnOff"
+	StaticText "$PB_WEAPON_WHEEL_ENABLE_DESC", cyan
+	StaticText " "
+	Option "Weapon Special Wheel Freezes Time", "py_weaponwheel_freeze", "OnOff"
+	StaticText "py_weaponwheel_freeze", teal
+	StaticText " "
+	Option "Weapon Wheel Background Blur", "pb_wheelbackgroundblur", "OnOff"
+	StaticText "pb_wheelbackgroundblur (gb_blur Shader).", teal
+	StaticText " "
+	Submenu "$PB_WEAPON_SELECTOR_MENU", "gb_Options"
+	StaticText "$PB_WEAPON_SELECTOR_MENU_HINT", cyan
+	StaticText " "
+	StaticText "======== Feel & Motion ========", gold
+	StaticText " "
+	Option "Enable Tactical Weapon Motion", "pb_tac_enable", YesNo
+	StaticText " "
+	Submenu "Tactical Weapon Motion Options", "PBTacticalMotionOptions"
+	StaticText " "
+	Option "Instant Weapon Switch", "pb_instantweaponswitch", "OnOff"
+	StaticText "Doom-Style Instant Raise/Lower.", teal
+	StaticText " "
+	Option "Enable Voice-Line Taunts", "pb_voicetaunts", YesNo
+	StaticText "Taunt / Fatality Lines (Not Idle Quips).", teal
+	StaticText " "
+	Submenu "$HM_MENU_TITLE", "HM_Options"
+}
+
+OptionMenu "PB2022_WeaponsHubMenu"
+{
+	Title "Weapons & Spawns"
+	StaticText "Weapon Upgrades, Progression, And Spawn Toggles.", gold
+	StaticText " "
+	Submenu "Weapon Settings (Upgrades & Progression)", "WeaponSettings"
+	StaticText " "
+	Submenu "Advanced Weapon Spawns", "WeaponSpawns"
+	StaticText "Per-Weapon pb_No* Spawn Toggles.", teal
+}
+
+OptionMenu "PB2022_MonstersHubMenu"
+{
+	Title "Monsters & Spawns"
+	StaticText "$OPTMNU_PB2022_MON_TIP1", cyan
+	StaticText "$OPTMNU_PB2022_MON_TIP2", cyan
+	StaticText " "
+	StaticText "======== Quick Bundles ========", gold
+	StaticText " "
+	Command "Vanilla-Style Roster (Classic + No New)", "set pb_classicmonsters 1; set pb_disablenewenemies 1; set pb_disablenewguns 0"
+	Command "Restore PB Roster (Non-Classic)", "set pb_classicmonsters 0; set pb_disablenewenemies 0"
+	StaticText "Sets pb_classicmonsters, pb_disablenewenemies.", teal
+	StaticText " "
+	StaticText "======== Master Switches ========", gold
+	StaticText " "
+	Option "Classic Monster Roster", "pb_classicmonsters", "YesOrNo"
+	StaticText "pb_classicmonsters — Vanilla-Style Replaces.", teal
+	StaticText " "
+	Option "Disable All New Enemy Content", "pb_disablenewenemies", "YesOrNo"
+	StaticText "pb_disablenewenemies — Folded Add-On Gate.", teal
+	StaticText " "
+	Option "Disable All New Weapon Content", "pb_disablenewguns", "YesOrNo"
+	StaticText " "
+	Option "Disable Map Decoration Enhancements", "pb_disabledecorations", "YesOrNo"
+	StaticText " "
+	Option "Disable Map Gameplay Enhancements", "pb_disablemapenhancements", "YesOrNo"
+	StaticText " "
+	StaticText "======== Menus ========", gold
+	StaticText " "
+	Submenu "Simpler Monster Settings (Recommended)", "SimplerMonsterSettings"
+	StaticText "Bundles: Realm667, Monster Pack, Tanks.", teal
+	StaticText " "
+	Submenu "Global Settings (Spawn Presets)", "GlobalSettings"
+	StaticText " "
+	Submenu "Content & Add-On Toggles", "ContentCompatOptions"
+	StaticText " "
+	Submenu "Classic Monster Pack (Per-Creature)", "MonsterPackSettings"
+	StaticText " "
+	Submenu "Advanced Monster Spawns", "MonsterSpawns"
+	StaticText " "
+	Submenu "Configure Monster Abilities", "MonsterSettings"
+}
+
+OptionMenu "PB2022_ExtrasMenu"
+{
+	Title "Extras & Content"
+	StaticText "Optional Fun And Side Systems.", gold
+	StaticText " "
+	StaticText "======== Pickup Rules ========", gold
+	StaticText " "
+	Option "$OPTMNU_PB_HP_ARCADE", "pb_hp_arcade", "OnOff"
+	StaticText "pb_hp_arcade — Life / Energy / Berserk Arcade Flashes.", teal
+	StaticText " "
+	Option "$OPTMNU_PB_ITEM_MUTATORS", "pb_item_mutators", "OnOff"
+	StaticText "$OPTMNU_PB_ITEM_MUTATORS_HINT", cyan
+	StaticText " "
+	Option "$OPTMNU_PB_REDARMOR", "pb_redarmor_spawn", "OnOff"
+	StaticText "$OPTMNU_PB_REDARMOR_HINT", cyan
+	StaticText " "
+	StaticText "======== Quick Bundles ========", gold
+	StaticText " "
+	Command "Enable Kill Streaks + Hats", "set pb_ks_enable 1; set PB_HatExtravaganza 1"
+	Command "Disable Kill Streaks + Hats", "set pb_ks_enable 0; set PB_HatExtravaganza 0"
+	StaticText "pb_ks_enable, PB_HatExtravaganza.", teal
+	StaticText " "
+	StaticText "======== Kill Streaks ========", gold
+	StaticText " "
+	Option "Enable Kill Streak System", "pb_ks_enable", "OnOff"
+	StaticText " "
+	Submenu "Kill Streaks & Power-Up Rewards", "PB_KillstreakOptions"
+	StaticText " "
+	StaticText "======== Other ========", gold
+	StaticText " "
+	Option "Festive Hat Simulator Mode", "PB_HatExtravaganza", "YesOrNo"
+	StaticText " "
+}
+
 OptionMenu "PB_2022AdditionsMenu"
 {
-	Title "PB2022 ENHANCED"
-	StaticText " ", teal
-	Submenu "Gameplay Settings",		"GameplaySettings"
-	Submenu "Advanced Weapon Spawns",		"WeaponSpawns"
-	Submenu "Simpler Monster Settings", "SimplerMonsterSettings"
-	Submenu "Weapon Settings",		"WeaponSettings"
-	Submenu "Global Settings",		"GlobalSettings"
-	Submenu "Visual Settings",		"RenderingSettings"
-	StaticText " ", teal
-	StaticText " ", teal
-	StaticText "-----------------Finishers, Gore, Taunts-----------------", gold
-	StaticText " ", teal
-	Option "Auto-Fatality On Primary Fire", "pb_auto_fatality_fire", YesNo
-	StaticText " ", teal
-	Slider "Auto-Fatality Distance", "pb_auto_fatality_dist", 64, 400, 4
-	StaticText " ", teal
-	StaticText "Requires Glory Kills On: Finisher Attempt", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "$PB_EXPERIMENTAL_EXECUTIONS", "pb_experimental", "OnOff"
-	StaticText " ", teal
-	StaticText "$PB_EXPERIMENTAL_EXECUTIONS_DESC", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "Glory Kill.", "be_ExecutionsON", YesNo
-	StaticText " ", teal
-	Submenu "Glorykill Options",		"Glorykills"
-	StaticText " ", teal
-	StaticText " ", teal
-	NashGoreOption "$BDV22GOREMNU_ENHANCED2022",	"$BDV22GOREMNU_ENHANCED2022_TIP",	"pb_enhanced_brutality_2022",	"OnOff"
-	StaticText " ", teal
-	StaticText "One switch for the folded BDv22 / BPv10 gore mix.", teal
-	StaticText "Nash and PB base blood/gib/casing settings: ", teal
-	StaticText "Project Brutality Settings, Visual, Gore/Debris.", teal
-	StaticText " ", teal
-	StaticText "On: full BDv22 mist/meat/organs + BPv10 death extras.", green
-	StaticText "Off: standard Project Brutality / Nash gore only.", green
-	StaticText " ", teal
-	StaticText " ", teal
-	StaticText "-----------------Explosive Movement-----------------", gold
-	StaticText " ", teal
-	Option "Rocket Jumping", "pb_rocketjump", "OnOff"
-	StaticText " ", teal
-	StaticText "Rocket Splash Can Launch From Floors, Walls, or Ceilings.", teal
-	StaticText " ", teal
-	Option "Plasma Wall Climbing", "pb_plasma_wallclimb", "OnOff"
-	StaticText " ", teal
-	StaticText "Plasma Blast Knockback From Floors, Walls, or Ceilings.", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	StaticText "-----------------UI and Feel-----------------", gold
-	StaticText " ", teal
-	Option "Enable Voice-Line Taunts", "pb_voicetaunts", YesNo
-	StaticText " ", teal
-	StaticText "Taunt / Fatality Voice Lines.", teal
-	StaticText "(Separate from Idle Doomguy Quips.)", teal
-	StaticText "Flip-off anim: Project Brutality menu - Taunt (default X).", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "Enable Damage Numbers.", "dam_enabled", "DamEnabled"
-	StaticText " ", teal
-	Submenu "Damage Numbers Options", "DamNumsOptions"
-	StaticText " ", teal
-	StaticText " ", teal
-	Submenu "$HM_MENU_TITLE", "HM_Options"
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "Enable tactical weapon motion.", "pb_tac_enable", "YesNo"
-	StaticText " ", teal
-	Submenu "Tactical Weapon Motion Options", "PBTacticalMotionOptions"
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "Enable corner weapon icons.", "pb_weaponhud_enable", "YesNo"
-	StaticText " ", teal
-	Submenu "PBX 2022 Weapon HUD Options", "PBWeaponHudOptions"
-	StaticText " ", teal
-	StaticText " ", teal
-	StaticText "$OPTMNU_PB_PDA_HINT", teal
-	StaticText "$OPTMNU_PB_PDA_HINT2", teal
-	StaticText " ", teal
-	Option "PDA Blocky Layout (tile grid)", "pb_pda_blocky", "YesNo"
-	StaticText "$OPTMNU_PB_PDA_BLOCKY_HINT", teal
-	StaticText "$OPTMNU_PB_PDA_BLOCKY_HINT2", teal
-	StaticText " ", teal
-	Option "$OPTMNU_PB_XP_REWARDS", "pb_xp_rewards", "YesNo"
-	StaticText "$OPTMNU_PB_XP_REWARDS_HINT", teal
-	StaticText "$OPTMNU_PB_XP_REWARDS_HINT2", teal
-	StaticText " ", teal
-	Option "$OPTMNU_PB_ACHIEVEMENTS", "pb_achievements", "OnOff"
-	StaticText "$OPTMNU_PB_ACHIEVEMENTS_HINT", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	Submenu "$OPTMNU_PB_ACHIEVEMENTS_MENU", "PBAchievementsMenu"
-	StaticText " ", teal
-	Option "Show Helmet Visor", "pb_showhudvisor", "YesNo"
-	StaticText " ", teal
-	Submenu "Helmet Visor Options", "PB_HelmetVisorOptions"
-	StaticText " ", teal
-	Submenu "Fullscreen HUD (ZScript)", "PB2022_FullscreenHudOptions"
-	StaticText "PB Staging-style status bar via PB2022_Hud_ZS.", teal
-	StaticText " ", teal
-	StaticText "Helmet shell + visor glass: PB_VisorHandler (under the bar).", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "Enable Kill Streak System", "pb_ks_enable", "OnOff"
-	StaticText " ", teal
-	Submenu "Kill Streaks & Power-Up Rewards Options", "PB_KillstreakOptions"
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "Instant Weapon Switch", "pb_instantweaponswitch", "OnOff"
-	StaticText " ", teal
-	StaticText "Doom-Style Instant Weapon Raise/Lower.", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	Submenu "$PB_WEAPON_SELECTOR_MENU", "gb_Options"
-	StaticText " ", teal
-	StaticText "$PB_WEAPON_SELECTOR_MENU_HINT", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "$OPTMNU_PB_HP_ARCADE", "pb_hp_arcade", "OnOff"
-	StaticText " ", teal
-	Option "$OPTMNU_PB_ITEM_MUTATORS", "pb_item_mutators", "OnOff"
-	StaticText "$OPTMNU_PB_ITEM_MUTATORS_HINT", teal
-	StaticText " ", teal
-	Option "$OPTMNU_PB_REDARMOR", "pb_redarmor_spawn", "OnOff"
-	StaticText "$OPTMNU_PB_REDARMOR_HINT", teal
-	StaticText " ", teal
-	StaticText "-----------------Content Packs-----------------", gold
-	StaticText " ", teal
-	Submenu "Classic Monster Pack Menu (per-creature)", "MonsterPackSettings"
-	StaticText " ", teal
-	Option "Festive Hat Simulator Mode", "PB_HatExtravaganza", "YesOrNo"
-	StaticText " ", teal
+	Title "PB 2022 Enhanced"
+	StaticText "$OPTMNU_PB2022_HUB_INTRO1", gold
+	StaticText "$OPTMNU_PB2022_HUB_INTRO2", cyan
+	StaticText " "
+	StaticText "======== Quick Presets ========", gold
+	StaticText " "
+	Command "$OPTMNU_PB2022_PRESET_FULL", "set pb_classicmonsters 0; set pb_disablenewenemies 0; set be_ExecutionsON 1; set pb_enhanced_brutality_2022 1; set pb_ks_enable 1; set pb_rocketjump 1; set pb_plasma_wallclimb 1"
+	Command "$OPTMNU_PB2022_PRESET_VANILLA", "set pb_classicmonsters 1; set pb_disablenewenemies 1; set be_ExecutionsON 0; set pb_enhanced_brutality_2022 0; set pb_experimental 0"
+	Command "$OPTMNU_PB2022_PRESET_PERF", "set pb_enhanced_brutality_2022 0; set pb_ks_enable 0; set pb_wheelbackgroundblur 0; set py_weaponwheel_freeze 0; set pb_burnfx_throttle 1; set PB_HatExtravaganza 0; set pb_accudeath 0; set pb_dasheffect 0"
+	StaticText "Re-Open Menus After Presets To See Toggles.", orange
+	StaticText " "
+	StaticText "======== Categories ========", gold
+	StaticText " "
+	Submenu "$OPTMNU_PB2022_SEC_GAMEPLAY", "PB2022_MovementMenu"
+	Submenu "$OPTMNU_PB2022_SEC_COMBAT", "PB2022_CombatMenu"
+	Submenu "$OPTMNU_PB2022_SEC_GORE", "PB2022_GoreMenu"
+	Submenu "$OPTMNU_PB2022_SEC_HUD", "PB2022_HudMenu"
+	Submenu "$OPTMNU_PB2022_SEC_WEAPONS", "PB2022_WeaponsHubMenu"
+	Submenu "$OPTMNU_PB2022_SEC_MONSTERS", "PB2022_MonstersHubMenu"
+	Submenu "$OPTMNU_PB2022_SEC_VISUAL", "RenderingSettings"
+	Submenu "$OPTMNU_PB2022_SEC_EXTRAS", "PB2022_ExtrasMenu"
+	StaticText " "
+	StaticText "======== Session Shortcuts ========", gold
+	StaticText " "
+	Option "Glory Kills", "be_ExecutionsON", YesNo
+	StaticText "be_ExecutionsON", teal
+	StaticText " "
+	NashGoreOption "$BDV22GOREMNU_ENHANCED2022", "$BDV22GOREMNU_ENHANCED2022_TIP", "pb_enhanced_brutality_2022", "OnOff"
+	StaticText "pb_enhanced_brutality_2022", teal
+	StaticText " "
+	Option "Classic Monster Roster", "pb_classicmonsters", "YesOrNo"
+	StaticText "pb_classicmonsters", teal
 }
 
 OptionMenu "GlobalSettings"
 {
-	Title "--------- Global Settings ---------"
-	StaticText " ", teal
-	StaticText " ", teal
+	Title "Global Spawn Settings"
+	StaticText "Weapon / Enemy Mix And Progression Tier.", gold
+	StaticText " "
 	Submenu "Spawn Preset Configuration",		"SpawnPresets"
-	StaticText " ", teal
-	StaticText "Pick Weapon / Enemy Mix & Progression Tier.", teal
+	StaticText "SpawnBalance Preset And Tier Submenus.", teal
 	StaticText " ", teal
 	Title "--------- Advanced Preferences ---------"
 	StaticText " ", teal
@@ -733,7 +904,6 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Pro-Surv Ballista", "pb_NoProSurvBallistaWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Demon Exterminator", "pb_NoDemonExterminatorWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn MG42", "pb_NoMG42Weapon", "SpawnOnOff"
 	StaticText " "
@@ -763,10 +933,12 @@ OptionValue "ReticleCode"
 
 OptionMenu "GameplaySettings"
 {
-	Title "---------Game Settings---------"
-	
-	
-	StaticText " ", teal
+	Title "Gameplay Settings"
+	StaticText "Weapons, Movement, Marines, And Per-Gun Toggles.", gold
+	StaticText "$OPTMNU_PB2022_CROSS_WHEEL", cyan
+	StaticText " "
+	StaticText "-------- Movement & Aim --------", gold
+	StaticText " "
 	Option "Red Foot Prints Only (In Blood)",	"pb_red_footprints_only", "OnOff"
 	StaticText "In Colored Blood Puddles: Red Smears Only", teal
 	StaticText "(PB3 Footprint Style).", teal
@@ -786,41 +958,18 @@ OptionMenu "GameplaySettings"
 	StaticText " "
 	StaticText " "
   
-	Option "Weapon Special Wheel Freezes Time",	"py_weaponwheel_freeze", "OnOff"
-	StaticText "Freezes Time While Weapon Special Wheel Open.", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "Weapon Special Wheel Background Blur (0.3 Shader)",	"pb_wheelbackgroundblur", "OnOff"
-	StaticText "Background Blur While Wheel Open", teal
-	StaticText "(PPShader gb_blur).", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	Option "$PB_WEAPON_WHEEL_ENABLE",	"pb_weapon_wheel_enable", "OnOff"
-	StaticText "$PB_WEAPON_WHEEL_ENABLE_DESC", teal
-	StaticText " ", teal
-	Submenu "$PB_WEAPON_SELECTOR_MENU", "gb_Options"
-	StaticText "$PB_WEAPON_SELECTOR_MENU_HINT", teal
-	StaticText " ", teal
-	StaticText " ", teal
-	
+	StaticText "-------- Weapon Wheels --------", gold
+	StaticText "Moved To PB 2022 Enhanced -> HUD & Interface.", cyan
+	StaticText " "
+	StaticText "-------- Combat Feel --------", gold
+	StaticText " "
 	Option "$PB_RESPECT", "pb_respectweapons", "OnOff"
 	StaticText " "
 	StaticText " "
 
-	Option "HP Arcade item behavior", "pb_hp_arcade", "OnOff"
-	StaticText "PB HP Arcade Armor / Powerup Rule Tweaks."
+	StaticText "Pickup Rules: PB 2022 Enhanced -> Extras & Content.", cyan
 	StaticText " "
-	StaticText " "
-	Option "$OPTMNU_PB_ITEM_MUTATORS", "pb_item_mutators", "OnOff"
-	StaticText "$OPTMNU_PB_ITEM_MUTATORS_HINT", teal
-	StaticText " "
-	StaticText " "
-	Option "$OPTMNU_PB_REDARMOR", "pb_redarmor_spawn", "OnOff"
-	StaticText "$OPTMNU_PB_REDARMOR_HINT", teal
-	StaticText " "
-	StaticText " "
-	
-	Option "Aiming mode","pb_toggle_aim_hold", "AimingStyle"
+	Option "Aiming Mode","pb_toggle_aim_hold", "AimingStyle"
 	StaticText " "
 	StaticText " "
 	
@@ -902,7 +1051,7 @@ OptionMenu "GameplaySettings"
 	
 	Option "Disable Auto-Doomguy Talk.",				"nodoomguytalk", "OnOff"
 	StaticText "Disables Random Idle Taunts."
-	StaticText "Taunt Lines: Brutality 2022 Additions Menu."
+	StaticText "Taunt Lines: PB 2022 Enhanced -> HUD & Interface.", cyan
 	StaticText " "
 	StaticText " "
 	
@@ -928,21 +1077,20 @@ OptionMenu "GameplaySettings"
 
 OptionMenu "RenderingSettings"
 {
-	Title "---------Rendering Settings---------"
+	Title "Visual & Screen FX"
+	StaticText "Gore Tuning: Gore & Performance Menu.", cyan
 	StaticText " "
-	Submenu "Gore/Debris Settings", "GoreDebrisMenu"
+	Submenu "Gore / Debris Settings (Nash)", "GoreDebrisMenu"
 	StaticText " "
-	
+	StaticText "-------- Screen FX --------", gold
+	StaticText " "
 	Submenu "Motion Blur Settings", "MBlurOpts"
 	StaticText " "
-	
 	Submenu "Screen Tilt Settings", "TiltPlusPlusMenu"
 	StaticText " "
-	
 	Submenu "Weapon Visual Settings", "WeaponVisuals"
 	StaticText " "
-	
-	Submenu "PBVP settings", "PBVPOptions"
+	Submenu "PBVP Settings", "PBVPOptions"
 	StaticText " "
 	
 	Slider "Maximum Wall Decals", "cl_maxdecals", 0, 10000, 100
@@ -1093,13 +1241,8 @@ OptionMenu "WeaponSettings"
 	StaticText "Blocks Triple-Barrel Minigun Upgrade."
 	StaticText " "
 	StaticText " "
-	StaticText "-----------------Tactical Motion (Merged)-----------------", gold
-	StaticText " ", teal
-	Submenu "Tactical Weapon Motion (Full List)", "PBTacticalMotionOptions"
-	StaticText " ", teal
-	StaticText "Same Submenu Under Brutality 2022 Additions."
+	StaticText "Tactical Motion: PB 2022 Enhanced -> HUD & Interface.", cyan
 	StaticText " "
-	
 	Option "Disable Pump Shotgun Upgrade",				"pb_NoDBUpgrade", "OnOff"
 	StaticText "Blocks Pump Shotgun Magazine Upgrade."
 	StaticText " "
@@ -1445,12 +1588,12 @@ ListMenu "MainMenu"
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 			TextItem "Options", "o", "OptionsMenu"
-			TextItem "PB2022 ENHANCED", "p", "PB_2022AdditionsMenu"
+			TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
 		}
 		else
 		{
 			TextItem "Options", "o", "OptionsMenu"
-			TextItem "PB2022 ENHANCED", "p", "PB_2022AdditionsMenu"
+			TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 		}
@@ -1465,7 +1608,7 @@ ListMenu "MainMenu"
 	{
 		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
 		TextItem "$MNU_OPTIONS", "o", "OptionsMenu"
-		TextItem "PB2022 ENHANCED", "p", "PB_2022AdditionsMenu"
+		TextItem "PB 2022 Enhanced", "p", "PB_2022AdditionsMenu"
 		TextItem "$MNU_GAMEFILES", "g", "GameFilesMenu"
 		TextItem "$MNU_INFO", "i", "ReadThisMenu"
 		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
@@ -1601,9 +1744,10 @@ OptionMenu "GoreDebrisMenu"
 	NashGoreOption "$NASHGOREMNU_BLOOD_SPURTS",		"$NASHGOREMNU_HELPTEXT_BLOOD_SPURTS",		"nashgore_bloodspurt",	"OnOff"
 	StaticText ""
 	StaticText "2022 Enhanced Brootality", 1
-	Submenu "Open 2022 Enhanced Brootality options", "PB_2022_BDv22GoreMenu"
+	StaticText "Master Switch: PB 2022 Enhanced ->", cyan
+	StaticText "Gore & Performance (pb_enhanced_brutality_2022).", cyan
 	NashGoreOption "$BDV22GOREMNU_ENHANCED2022",	"$BDV22GOREMNU_ENHANCED2022_TIP",	"pb_enhanced_brutality_2022",	"OnOff"
-	StaticText "Single master switch for folded BDv22 / BPv10 gore extras.", teal
+	StaticText "Duplicate Toggle For Convenience Here.", teal
 	StaticText ""
 	NashGoreOption "$OPTMNU_PB_ACCUDEATH", "$OPTMNU_PB_ACCUDEATH_TIP", "pb_accudeath", "OnOff"
 	Submenu "$OPTMNU_PB_ACCUDEATH_SUB", "AccuDeathOptions"
@@ -1626,6 +1770,12 @@ OptionMenu "GoreDebrisMenu"
 	NashGoreOption "$NASHGOREMNU_MISC_SQUISH",				"$NASHGOREMNU_HELPTEXT_MISC_SQUISH",		"nashgore_squish",		"OnOff"
 	NashGoreOption "$NASHGOREMNU_MISC_ICEDEATH",			"$NASHGOREMNU_HELPTEXT_MISC_ICEDEATH",		"nashgore_icedeath",	"OnOff"
 	NashGoreOption "$NASHGOREMNU_MISC_SPLAT",				"$NASHGOREMNU_HELPTEXT_MISC_SPLAT",			"nashgore_splat",		"OnOff"
+
+	StaticText ""
+	StaticText "$OPTMNU_PB_BURNFX_TITLE", 1
+	NashGoreOption "$OPTMNU_PB_BURNFX_THROTTLE", "$OPTMNU_PB_BURNFX_THROTTLE_TIP", "pb_burnfx_throttle", "OnOff"
+	NashGoreSlider "$OPTMNU_PB_BURNFX_SOFT_LIMIT", "$OPTMNU_PB_BURNFX_SOFT_LIMIT_TIP", "pb_burnfx_soft_limit", 2, 8, 1, 0
+	StaticText "$OPTMNU_PB_BURNFX_HINT", teal
 
 	StaticText ""
 
@@ -1683,8 +1833,8 @@ OptionValue "SGLGrenadeImpact"
 
 OptionMenu "Glorykills"
 {
-	Title "Glorykill Options"
-	Option "Glory Kill.", "be_ExecutionsON", YesNo
+	Title "Glory Kill Options"
+	Option "Glory Kills", "be_ExecutionsON", YesNo
 	Option "Holdable Crucible.", "be_holdablesaw", YesNo
 	Option "Protection During Glory Kill.", "be_Protection", YesNo
 	Option "Fear During Glory Kill.", "be_Fear", YesNo
@@ -1699,7 +1849,7 @@ OptionMenu "Glorykills"
 	Option "Fatality kill Health Bonus.", "be_HealthBonus", YesNo
 	StaticText " "
 	StaticText "Auto-Fatality Fire / Range Rules:"
-	StaticText "Brutality 2022 Additions Menu."
+	StaticText "PB 2022 Enhanced -> Combat & Finishers.", cyan
 	StaticText " "
 	StaticText "Needs \"Fatality Kill Health Bonus\" ON."
 	Option "Only Berserk Kill Health Bonus.", "be_OnlyBerserk", YesNo

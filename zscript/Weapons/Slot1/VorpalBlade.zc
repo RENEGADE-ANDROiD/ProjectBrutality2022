@@ -265,19 +265,29 @@ class VorpalBlade : PB_WeaponBase
 		Goto Ready3;
 
 	QuickMelee:
-        	"####" A 0 {
-				A_StopSound(CHAN_WEAPON);
-				A_StopSound(CHAN_VOICE);
-				A_StopSound(CHAN_6);
-				A_StopSound(CHAN_7);
-			}
-			TNT1 A 0 A_JumpIfInventory("CantFire", 1, "FailOverlay");
-			TNT1 A 0 A_JumpIfHealthLower(0, "FailOverlay");
-			TNT1 A 0 {
-				A_ClearOverlays(-10,65);
-				A_Gunflash("Null");
-			}
+		"####" A 0 {
+			A_StopSound(CHAN_WEAPON);
+			A_StopSound(CHAN_VOICE);
+			A_StopSound(CHAN_6);
+			A_StopSound(CHAN_7);
+		}
+		TNT1 A 0 A_JumpIfInventory("CantFire", 1, "FailOverlay");
+		TNT1 A 0 A_JumpIfHealthLower(0, "FailOverlay");
+		TNT1 A 0 {
+			A_ClearOverlays(-10, 65);
+			A_GunFlash("Null");
+		}
+		TNT1 A 0 A_JumpIfInventory("ShieldSawThrown", 1, "GoMeleeInstead");
+		TNT1 A 0 A_JumpIfCloser(99, "GoMeleeInstead");
+		TNT1 A 0 {
+			State st = PB_ResolveQuickMeleeShieldThrow();
+			if (st)
+				return st;
+			return ResolveState(null);
+		}
 		"####" AAA 0 PB_Execute();
+		TNT1 A 0 A_JumpIfInventory("ShieldSawThrown", 1, "GoMeleeInstead");
+		TNT1 A 0 A_JumpIfCloser(99, "GoMeleeInstead");
 	GoMeleeInstead:
 		TNT1 A 0 {
 			A_PB_AirMeleeLunge(10);
