@@ -1,3 +1,5 @@
+// Health bonus -------------------------------------------------------------
+
 ACTOR HealthPlus : Health Replaces HealthBonus
 {
 	//$Title Health Bonus
@@ -6,7 +8,6 @@ ACTOR HealthPlus : Health Replaces HealthBonus
 	+COUNTITEM
 	+FLOORCLIP
 	+DONTGIB
-	+BRIGHT
 	+INVENTORY.ALWAYSPICKUP
 	Inventory.Amount 2
 	Inventory.MaxAmount 9999
@@ -16,10 +17,12 @@ ACTOR HealthPlus : Health Replaces HealthBonus
 	States
 	{
 	Spawn:
-		B0N1 ABCDEFGHIJ 3
+		BON1 ABCD 4
 		Loop
 	}
 }
+
+// Armor bonus --------------------------------------------------------------
 
 Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 {
@@ -29,29 +32,27 @@ Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 	Radius 20
 	Height 16
 	Inventory.Pickupmessage "$GOTARMBONUS"
-	Inventory.Icon "B0N2A0"
+	Inventory.Icon "BON2A0"
 	Armor.Savepercent 33.335
 	Armor.Saveamount 2
 	Armor.Maxsaveamount 9999
 	+COUNTITEM
 	+FLOORCLIP
 	+DONTGIB
-	+BRIGHT
 	+INVENTORY.ALWAYSPICKUP
 	Inventory.PickUpSound "items/bonus2"
 	States
 	{
 	Spawn:
-		B0N2 AAABCDEFGH 2
+		BON2 AAABCDB 2 //A_SpawnItem("GreenFlareSmall",0,7)
 		Loop
 	Spawn2:
-		B0N2 A 2
+		BON2 A 2
 		Goto Spawn
 	}
 }
 
 #include "actors/Items/PBHPArcade/PBHP_Bridges_Armor.dec"
-#include "actors/Items/Health/CustomRedArmor.dec"
 
 Actor HeavyArmorForMegaSphere : HeavyArmor
 {
@@ -64,7 +65,6 @@ Actor GiveHealth : Health
 	Game Doom
 	SpawnID 152
 	+COUNTITEM
-	+BRIGHT
 	+INVENTORY.ALWAYSPICKUP
 	Inventory.Amount 1
 	Inventory.MaxAmount 9999
@@ -72,10 +72,12 @@ Actor GiveHealth : Health
 	States
 	{
 	Spawn:
-		B0N1 AAABCDEFGHIJ 2
+		BON1 AAABBBCCCDDDCCCBBB 2
 		Loop
 	}
 }
+
+// Armor bonus --------------------------------------------------------------
 
 Actor GiveArmor : BasicArmorBonus
 {
@@ -84,17 +86,16 @@ Actor GiveArmor : BasicArmorBonus
 	Radius 20
 	Height 16
 	Inventory.Pickupmessage "$GOTARMBONUS"
-	Inventory.Icon "B0N2A0"
+	Inventory.Icon "BON2A0"
 	Armor.Savepercent 33.335
 	Armor.Saveamount 1
 	Armor.Maxsaveamount 9999
 	+COUNTITEM
-	+BRIGHT
 	+INVENTORY.ALWAYSPICKUP
 	States
 	{
 	Spawn:
-		B0N2 AAABCDEFGH 2
+		BON2 AAABBBCCCDDDCCCBBB 2
 		loop
 	}
 }

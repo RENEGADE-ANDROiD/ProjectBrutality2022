@@ -1,6 +1,6 @@
 // Cyberdemon Missile Launcher — projectile (folded from PBX-Weapons CyberRL_helpers).
 // PBX inherited from PB_ProjectileAlt (PB Staging); PB2022's projectile base is
-// PB_Projectile (ZScript: zscript/Weapons/Projectiles/BulletProjectile.zsc),
+// PB_Projectile (alias of FastProjectile in zscript/Weapons/Slot3/CSSG/CSSG_PBProjectile.zs),
 // which provides everything we need here.
 
 class CyberBallsPlayer : PB_Projectile
@@ -11,17 +11,17 @@ class CyberBallsPlayer : PB_Projectile
 		Radius 10;
 		Height 8;
 		Speed 90;
-		Damage 220;
+		Damage 200;
 		DamageType "ExplosiveImpact";
 		Gravity 0.00;
 		Decal "Scorch";
 		RenderStyle "Add";
-		-NOGRAVITY;
-		+EXTREMEDEATH;
-		+BLOODSPLATTER;
-		+THRUSPECIES;
-		+MTHRUSPECIES;
-		+RANDOMIZE;
+		-NOGRAVITY
+		+EXTREMEDEATH
+		+BLOODSPLATTER
+		+THRUSPECIES
+		+MTHRUSPECIES
+		+RANDOMIZE
 		Species "Marines";
 		Scale 1.7;
 		SeeSound "DSCANFIR";
@@ -35,16 +35,16 @@ class CyberBallsPlayer : PB_Projectile
 			TNT1 A 0;
 		Spawn1:
 			TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater");
-			"WYVB" A 1 Bright A_SpawnItem("RedFlareSmall22", 0, 0);
+			WYVB A 1 Bright A_SpawnItem("RedFlareSmall22", 0, 0);
 			TNT1 A 0 A_CustomMissile("OldschoolRocketSmokeTrail2", 2, 0, random(160, 210), 2, random(-30, 30));
 			TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "SpawnCheap");
 			Loop;
 		SpawnCheap:
 			TNT1 A 0;
-			"WYVB" A 1 Bright A_SpawnItem("RedFlareSmall22", 0, 0);
+			WYVB A 1 Bright A_SpawnItem("RedFlareSmall22", 0, 0);
 			Loop;
 		SpawnUnderwater:
-			"WYVB" A 1 Bright A_SpawnItem("YellowFlareSmall", 0, 0);
+			WYVB A 1 Bright A_SpawnItem("YellowFlareSmall", 0, 0);
 			Goto Spawn1;
 		XDeath:
 		Crash:

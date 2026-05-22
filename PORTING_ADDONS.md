@@ -55,7 +55,6 @@ flowchart LR
 - Native fire helpers: `A_FireBullets` with the shared `"HitPuff"` and `"Tracer"` actors.
 - Native FX spawners via `A_FireCustomMissile("GunFireSmoke" / "YellowFlareSpawn" / "ShakeYourAssMinor" / "RifleCaseSpawn" / "EmptyBrassPistol")`.
 - Existing ammo pools: `NewClip`, `PistolBullets`, `RevolverAmmo`, plus the shotgun / rocket / plasma / BFG pools — pick one by damage / class fit, not by name similarity to `PB_LowCalMag`.
-- **Monster-sourced weapon wear:** undroppable `Ammo` + `AttachToOwner` refill + `WeaponBreak` — see **`actors/Weapons/MonsterWeaponDurability.dec`**, **`PB_WeaponBase`** in **`zscript/Weapons/BaseWeapon.zc`**, and **AGENTS.md §5 → “Monster-sourced weapons — PBX-style wear”** (same design language as **PBX-Weapons** / Excavator-style durability).
 
 Authoritative reference files for the 2022 idiom:
 
@@ -130,7 +129,7 @@ Mirror the conventions from AGENTS.md section 5, with these add-on-specific note
 - **Sprites** → `SPRITES/WEAPONS/<Name>/**`. Preserve whatever subfolder layout the add-on shipped — GZDoom does not care about paths under `SPRITES/`; it matches by the 4-character frame prefix in the filename (`LVR2`, `LVR4`, etc.), so frame names pass straight through.
 - **Sounds** → `SOUNDS/COMBAT/WEAPONS/<Name>/*.ogg` (or whatever extension the add-on ships), with the paths matching the `sounds/...` strings you put in SNDINFO.
 - **SNDINFO** → append to [SNDINFO.txt](SNDINFO.txt) in the `// SNDINFO.PBWeapons` (or a new) section. A single merged file keeps everything discoverable; match the `sounds/...` paths your weapon uses.
-- **SBARINFO** → append a per-weapon `IsSelected <WeaponClass> { ... }` block to [SBARINFO.txt](SBARINFO.txt). **This is mandatory for any weapon that should show up on the fullscreen HUD** — without it, the HUD silently falls through to the "no ammo panel" default and the player sees no magazine / reserve readout while the weapon is ready. Use the actual DECORATE class name (no automatic `PB_` prefix — e.g. `Paingiver`, `OldHMG` are unprefixed; `PB_MetalSniper` is prefixed). Pick the layout by ammo family, not by slot:
+- **SBARINFO** → append a per-weapon `IsSelected <WeaponClass> { ... }` block to [SBARINFO.txt](SBARINFO.txt). **This is mandatory for any weapon that should show up on the fullscreen HUD** — without it, the HUD silently falls through to the "no ammo panel" default and the player sees no magazine / reserve readout while the weapon is ready. Use the actual DECORATE class name (no automatic `PB_` prefix — e.g. `Paingiver` is unprefixed; `PB_MetalSniper` is prefixed). Pick the layout by ammo family, not by slot:
     - **Rifle / `NewClip`** → mirror `PB_LMG` (yellow: `BARBACY1/2`, `BAMBAR1`, `CURBAR1`, `AMMOIC1`, `RESBAR1`).
     - **Pistol / SMG** → mirror `PB_SMG` (tan: `BARBACT1/2`, `BAMBAR2`, `CURBAR2`, `AMMOIC2`, `RESBAR2`).
     - **Shotgun** → mirror `PB_Shotgun` / `PB_SSG`.
@@ -318,11 +317,11 @@ The **Cyberdemon Missile Launcher** was folded in from `PBX-Weapons-main/Zscript
 | PBX (upstream) | PB 2022 (folded) |
 | --- | --- |
 | `class PBX_CyberdemonRL : PBX_WeaponBase` | `class PB_CyberdemonRL : PB_Weapon` |
-| `Weapon.AmmoType1 "PBX_RocketAmmo"` | `Weapon.AmmoType1 "PB_RocketAmmo"` (compat alias in [actors/Items/Compat/WarningStubs.dec](actors/Items/Compat/WarningStubs.dec)) |
+| `Weapon.AmmoType1 "PBX_RocketAmmo"` | `Weapon.AmmoType1 "PB_RocketAmmo"` (compat alias in [actors/Compat/WarningStubs.dec](actors/Compat/WarningStubs.dec)) |
 | `PB_Math.LinearMap(...)` | `PB_HitFeedback_Math.LinearMap(...)` (PB 2022's math namespace) |
 | `Goto Ready` / `Goto Select` / reused `PB_WeaponRaise` helper | **Inlined** `SelectFirstPersonLegs` chain — calls `Melee_Equipment_Handler_Overlay`, `KickHandler_Overlay`, `Equipment_Toggle_Handler_Overlay`, `FirstPersonLegsStand`, then `PB_WeapTokenSwitch` / `PB_RespectIfNeeded` / `Goto SelectAnimation`. Required because PB 2022's `PB_Weapon : PB_WeaponBase` owns that chain in DECORATE; a pure-ZScript subclass that inherits only from `PB_WeaponBase` would skip it. See AGENTS.md §4, "ZScript-only weapons". |
 | `A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)` inside various flash states, many ending in `Stop` | Flash states end in `Goto Ready3` so that kick-flash / punch-flash transitions don't leave duplicate PSprite layers (see the PB staging finding at the end of this file). |
-| Projectile `CyberBalls : PBX_Projectile` | `CyberBallsPlayer : PB_Projectile` — `PB_Projectile` in PB 2022 is just an alias for `FastProjectile` (see AGENTS.md §4). Explosion uses existing `EXPLA0` sprite already shipped under `SPRITES/Effects/Flames/`. |
+| Projectile `CyberBalls : PBX_Projectile` | `CyberBallsPlayer : PB_Projectile` — `PB_Projectile` in PB 2022 is just an alias for `FastProjectile` (see AGENTS.md §4). Explosion uses existing `EXPLA0` sprite already shipped under `SPRITES/FLAMES/`. |
 | `A_ReFire()` → direct refire loop | `PB_ReFire()` wrapper, so we pick up PB 2022's shared refire token / cancel logic. |
 
 ### 9.8.2 Fire/AltFire parity fix
@@ -385,7 +384,7 @@ Assets landed at:
 Projectile and explosion reuse existing assets:
 
 - Missile sprite `WYVBA1` from `SPRITES/MONSTERS/Cyberdemons/CYBERDEMON/`.
-- Explosion sprite `EXPLA0` from `SPRITES/Effects/Flames/`.
+- Explosion sprite `EXPLA0` from `SPRITES/FLAMES/`.
 
 ### 9.8.4 File list delta
 
@@ -404,7 +403,7 @@ When re-auditing every ZScript weapon PB 2022 already ships against its PBX-Weap
 
 **Problem found.** PB 2022's [zscript/Weapons/Slot3/CSSG/CSSG.zs](zscript/Weapons/Slot3/CSSG/CSSG.zs) calls `PB_SpawnCasing("BuckShellCasing", ...)`, `"SlugShellCasing"`, `"DragonShellCasing"`, `"ExplosiveShellCasing"`, `"FlakShellCasing"`, `"FlechetShellCasing"`, `"WhitePShellCasing"` — but **none of those classes existed in this repo**. PBX shipped them as `PB_CasingBase` subclasses with a `CasingSprite` property; PB 2022's casing system is state-machine-driven (`zscript/Effects/Casings.txt`, classes `ShotgunCasing`, `ShotgunCasing2`, `ShotgunCasing3`), so the PBX versions can't be dropped in as-is.
 
-**Fix applied.** The PBX shell-casing class names are defined at the tail of [zscript/Weapons/Slot3/CSSG/CSSG.zs](zscript/Weapons/Slot3/CSSG/CSSG.zs) as lightweight subclasses that inherit from the matching PB 2022 casing:
+**Fix applied.** New file [zscript/Weapons/Slot3/CSSG/CSSG_Casings.zs](zscript/Weapons/Slot3/CSSG/CSSG_Casings.zs) defines lightweight alias classes that inherit from the matching PB 2022 casing:
 
 ```zsc
 class BuckShellCasing      : ShotgunCasing  {}
@@ -445,14 +444,14 @@ Staging's **actively included** weapons (via its `DECORATE` and `ZSCRIPT.zc`):
 | Slot | Staging lump | PB 2022 counterpart | Status |
 | --- | --- | --- | --- |
 | 1 | `MELEE.dec`, `Axe.dec`, `SAW.dec` | same names + `ShieldSaw.dec`, `BeamKatana.dec`, `ArgentSith.dec`, `Crucible.dec`, `BloodPunch.dec` | PB 2022 has more. |
-| 2 | `PBPISTOL.dec` (DECORATE), `Revolver.zs` (ZScript), `Deagle.zs` (ZScript), `UACSMG.dec`, `MP40.dec` | Same + `HellPistoler.dec`, `RiotShield.dec`, Deagle / Revolver still DECORATE | Staging has **newer ZScript Deagle + Revolver**. See 9.10.2. |
+| 2 | `PBPISTOL.dec` (DECORATE), `Revolver.zs` (ZScript), `Deagle.zs` (ZScript), `UACSMG.dec`, `MP40.dec` | Same + `RiotShield.dec`, Deagle / Revolver still DECORATE | Staging has **newer ZScript Deagle + Revolver**. See 9.10.2. |
 | 3 | `SSG.dec`, `AUTOSHOTGUN.dec`, `QUADBARREL.dec`, `Shotgun.zs` (ZScript) | Same + `X12Shotgun.dec`, `MarauderSSG.dec`, `SHOTGUN.dec` (DECORATE still) | Staging moved the basic shotgun to ZScript. PB 2022 has more variants but the stock SG is still DECORATE. |
-| 4 | `Carbine.dec`, `LMG.dec`, `Nailgun.dec`, `MG42.dec`, `PBRIFLE.dec`, `ChexRifle.dec` (temp) | Same + `LeverAction.dec`, `MetalSniper.dec`, `XM21.dec`, `OldHMG.dec`, `NeoHMG.dec`, `M41A.dec`, `BDPBattleRifle.dec`, `ProSurv_Ballista.dec` | PB 2022 has **vastly more** slot-4 weapons. Carbine is a real divergence. See 9.10.3. |
+| 4 | `Carbine.dec`, `LMG.dec`, `Nailgun.dec`, `MG42.dec`, `PBRIFLE.dec` | Same + `LeverAction.dec`, `MetalSniper.dec`, `NeoHMG.dec`, `BDPBattleRifle.dec`, `ProSurv_Ballista.dec` | PB 2022 has **more** slot-4 weapons. Carbine is a real divergence. See 9.10.3. |
 | 5 | `MINIGUN.dec` | `MINIGUN.dec` + `SUPERGL.dec`, `Paingiver.dec`, `ROCKETLAUNCHER.dec` | PB 2022 has more. |
-| 6 | `ROCKETLAUNCHER.dec`, `SuperGL.zs` (ZScript), `PulseCannon.dec` | PB 2022 keeps RL / SuperGL as DECORATE and adds `PLASMA.dec`, `M2PLASMA.dec`, `MastermindChaingun.dec`, `Excavator/`, `CyberdemonRL/` | Staging moved SuperGL to ZScript. PB 2022 has more variants overall, but **no longer ships a Pulse Cannon** — `PB_PulseCannon` and `PB_DualPulseCannons` were removed 2026-05-02 (see `CHANGELOG.md` `[Unreleased]` and `docs/weapon_cycle_bug_investigation.md`). |
+| 6 | `ROCKETLAUNCHER.dec`, `SuperGL.zs` (ZScript), `PulseCannon.dec` | PB 2022 keeps RL / SuperGL as DECORATE and adds `PLASMA.dec`, `M2PLASMA.dec`, `MastermindChaingun.dec`, `Excavator/`, `CyberdemonRL/` | Staging moved SuperGL to ZScript. PB 2022 dropped its Pulse Cannon / Dual Pulse Cannons fold (see "Removed weapons" in `AGENTS.md`). |
 | 7 | `M2PLASMA.dec`, `DemonTech.dec`, `PlasmaM1.zs` (ZScript) | `RAILGUN.dec`, `FREEZER.dec`, `M2PLASMA.dec` (DECORATE) | Staging moved plasma to ZScript (`PlasmaM1.zs`). PB 2022 has M2PLASMA in DECORATE. |
-| 8 | `CRYORIFLE.dec`, `Flamethrower.dec` | `BFGMKIV.dec`, `BLACKHOLE.dec`, `BioAcidLauncher.dec`, `BFGPickups.dec`, `SoulCube.dec`, `VORTEX.dec` | Roles diverge: staging's Slot 8 is fire/ice, PB 2022 Slot 8 is BFG + exotic. Not a deletion. |
-| 9 | `RAILGUN.dec`, `BFGMKIV.dec`, `Unmaker.dec`, `UnmakerCharge.zsc`, `BlackHole.zc`, `SuperBFGBall.zc` | `DemonTech.dec`, `Unmaker.dec`, `Flamethrower.dec`, `DemonExterminator.dec`, `MancubusFlameCannon.dec`, `DTechMinigun.dec`, `ShoulderCannon.dec` | PB 2022 dramatically more content; staging's Slot 9 is sparse. |
+| 8 | `CRYORIFLE.dec`, `Flamethrower.dec` | `BFGMKIV.dec`, `BLACKHOLE.dec`, `BFGPickups.dec`, `SoulCube.dec`, `VORTEX.dec` | Roles diverge: staging's Slot 8 is fire/ice, PB 2022 Slot 8 is BFG + exotic. Not a deletion. |
+| 9 | `RAILGUN.dec`, `BFGMKIV.dec`, `Unmaker.dec`, `UnmakerCharge.zsc`, `BlackHole.zc`, `SuperBFGBall.zc` | `DemonTech.dec`, `Unmaker.dec`, `Flamethrower.dec`, `DemonExterminator.dec`, `MancubusFlameCannon.dec`, `ShoulderCannon.dec` | PB 2022 dramatically more content; staging's Slot 9 is sparse. |
 
 **Net: PB 2022 has more weapons than staging.** No weapon in staging is completely absent from PB 2022. The *real* divergences are:
 
@@ -575,7 +574,7 @@ First weapon ported on top of [9.10.5](#9105-staging-helper-back-fill-baseweapon
 
 **What this port gives you over the DECORATE version:**
 
-- All staging slide / mag-toss / dual-wield animations preserved (D4E0–D4E2, D6E0–D6E5, DR00–DR42 prefixes). PB 2022's older Deagle tree had byte-different copies of every shared frame plus 122 stale frames in 5 PB22-only subdirs (`DualFire/`, `DualReload/`, `Kick/`, `Selection/`, `SlideForward/`) that were referenced only by the retired DECORATE `Deagle.dec`. The shared 601 frames were force-overwritten from staging (`robocopy /IS /IT`) and the 5 stale subdirs deleted, so `SPRITES/WEAPONS/Slot2/Deagle/` is now byte-identical to staging's tree (699 files, ~13.17 MB).
+- All staging slide / mag-toss / dual-wield animations preserved (D4E0–D4E2, D6E0–D6E5, DR00–DR42 prefixes). PB 2022's older Deagle tree had byte-different copies of every shared frame plus 122 stale frames in 5 PB22-only subdirs (`DualFire/`, `DualReload/`, `Kick/`, `Selection/`, `SlideForward/`) that were referenced only by the retired DECORATE `Deagle.dec`. The shared 601 frames were force-overwritten from staging (`robocopy /IS /IT`) and the 5 stale subdirs deleted, so `SPRITES/WEAPONS/Slot 2/Deagle/` is now byte-identical to staging's tree (699 files, ~13.17 MB).
 - Real chamber tracking via the shim (`PB_GetChamberEmpty`, etc.) — the gun now *visually* shows an unloaded slide on the last shot, plus a separate `EmptyReload` path that racks the chamber afterward.
 - Full akimbo + per-hand fire / reload / overlay rotation, including the staging "swap" animation when only one hand needs reloading.
 - ADS / zoomed altfire with `pb_toggle_aim_hold` honoured.

@@ -10,49 +10,19 @@ const MAXITERATIONS = 32676;
 
 #include "zscript/PbWheel/parse.zsc"
 #include "zscript/PbWheel/ev_core_special.zsc"
-#include "zscript/PbWheel/pb_weapon_pick_wheel.zsc"
 #include "zscript/PbWheel/ev_drawer_special.zsc"
-#include "zscript/gearbox_fold.zs"
 #include "zscript/PbWheel/wheel_bss_postblur.zsc"
 #include "zscript/DeathFader.zc"
-#include "zscript/Weapons/Slot1/PB_KatanaShieldPlayerFilter.zc"
 #include "zscript/PlayerPawn.zc"
-#include "zscript/Weapons/PB_InstantWeaponSwitch.zc"
 #include "zscript/ZMoveMenu.ZMV"
 #include "zscript/PBHitbox.zc"
 #include "zscript/TiltPlus/TiltPlusPlus.zc"
 #include "zscript/TiltPlus/TiltPlusPlusMenu.zc"
 #include "zscript/PBPDA.zc"
-#include "zscript/GloryKills/PB_GloryFuelHudOverlay.zc"
-#include "zscript/GloryKills/PB_GKEquipmentCooldownHandler.zc"
-#include "zscript/GloryKills/PB_LowHealthAlertHandler.zc"
-#include "zscript/GloryKills/PB_BloodPunchReadyHandler.zc"
-#include "zscript/Weapons/PB_RLACSHandler.zc"
-#include "zscript/Monsters/PB_MarauderSupport.zc"
-#include "zscript/Items/PB_XP/PB_XPRewards.zc"
-#include "zscript/PB_VisorOverlay.zc"
-#include "zscript/PB2022Hud/PB2022_Hud_Math.zc"
-#include "zscript/PB2022Hud/PB2022_Hud.zs"
-#include "zscript/PB2022Hud/PB2022_Hud_FX.zs"
-#include "zscript/PB2022Hud/PB2022_HudMessages.zs"
-#include "zscript/PB2022Hud/PB2022_Hud_Weapons.zs"
-#include "zscript/PB2022Hud/PB2022_Hud_HelpStub.zc"
-#include "zscript/Items/PBKillstreak/PB_Killstreak_Messages.zc"
-#include "zscript/Items/PBKillstreak/PB_Killstreak_Items.zc"
-#include "zscript/Items/PBKillstreak/PB_PowerTimeSlow.zc"
-#include "zscript/Items/PBKillstreak/PB_KillstreakThrottle.zc"
-#include "zscript/Items/PBKillstreak/PB_Killstreak_Handler.zc"
-#include "zscript/Items/PBKillstreak/PB_UnlessYouHavePowah_Powerups.zs"
-#include "zscript/Items/PBKillstreak/FamiliarBase.zc"
-#include "zscript/Items/CatsFrozen/PBCF_FriendlyDeployableBase.zc"
-#include "zscript/Items/CatsFrozen/PBCF_CatsFrozenEquipment.zc"
-#include "zscript/Items/Realm667Powerups/Realm667Powerups.zs"
-#include "zscript/Gore/PB_EnhancedBrutality2022.zc"
 #include "zscript/Gore/NashGore/NashGoreCommon.zc"
 #include "zscript/Gore/NashGore/NashGoreStatics.zc"
 #include "zscript/Gore/NashGore/NashGoreHandler.zc"
 #include "zscript/Gore/NashGore/NashGoreBlood.zc"
-#include "zscript/Gore/PB_GunshotBloodStub.zc"
 #include "zscript/Gore/NashGore/NashGoreBloodPlane.zc"
 #include "zscript/Gore/NashGore/NashGoreGibs.zc"
 #include "zscript/Gore/NashGore/NashGoreCrushedGibs.zc"
@@ -64,16 +34,10 @@ const MAXITERATIONS = 32676;
 #include "zscript/Gore/NashGore/NashGoreMenu.zc"
 #include "zscript/Gore/PBBlood.zc"
 #include "zscript/Gore/BDv22GoreHandler.zc"
+// BDv22GoreMist (Brutal Doom 22; extends PB_Bloodmist): after PBBlood, before PBGore
 #include "zscript/Gore/BDv22Gore/BDv22GoreMist.zc"
 #include "zscript/Gore/BDv22GoreMergeHandler.zc"
 #include "zscript/Gore/BPv10Gore/BPv10GoreHandler.zc"
-#include "zscript/Gore/PB_BurnFXThrottle.zc"
-#include "zscript/Gore/PB_DeathGoreBoostHandler.zc"
-#include "zscript/Gore/AccuDeath/AccuDeathArrays.zs"
-#include "zscript/Gore/AccuDeath/AccuDeathBloodDummies.zs"
-#include "zscript/Gore/AccuDeath/AccuDeathThinkers.zs"
-#include "zscript/Gore/AccuDeath/PB_AccuDeathCompat.zc"
-#include "zscript/Gore/AccuDeath/AccuDeathHandlers.zs"
 #include "zscript/Gore/PBGore.zc"
 #include "zscript/Gore/PBGoreEffects.zc"
 #include "zscript/Decorations/PBDeadGeneric.zc"
@@ -81,39 +45,13 @@ const MAXITERATIONS = 32676;
 #include "zscript/Monsters/Realm667/possessedgibs/possessedgibs.zc"
 #include "zscript/Decorations/PBKeys.zc"
 
-#include "zscript/Hitmarkers/hitmarkers.zsc"
-#include "zscript/Hitmarkers/PB_HitmarkersUi.zsc"
-
+//HitFeedback
 #include "zscript/pb_hitfeedback/sharedmath.zs"
 #include "zscript/pb_hitfeedback/handler.zs"
 #include "zscript/pb_hitfeedback/inventory.zs"
 
-#include "zscript/damnums/constants.txt"
-#include "zscript/damnums/damnum.txt"
-#include "zscript/damnums/events.txt"
-#include "zscript/damnums/PB_HazardDamageHud.zc"
-#include "zscript/damnums/fonts/base.txt"
-#include "zscript/damnums/fonts/doomclassic.txt"
-#include "zscript/damnums/fonts/doomsmall.txt"
-#include "zscript/damnums/fonts/doommodern.txt"
-#include "zscript/damnums/fonts/ravenbig.txt"
-#include "zscript/damnums/fonts/ravensmall.txt"
-#include "zscript/damnums/fonts/raventory.txt"
-#include "zscript/damnums/fonts/strife.txt"
-#include "zscript/damnums/fonts/chex.txt"
-#include "zscript/damnums/fonts/hacx.txt"
-#include "zscript/damnums/fonts/harmony.txt"
-#include "zscript/damnums/fonts/square.txt"
-#include "zscript/damnums/fonts/urbanbrawl.txt"
-#include "zscript/damnums/fonts/borderlands.txt"
-#include "zscript/damnums/fonts/gamedefaults.txt"
-
-#include "zscript/Items/HelmetDrops/HelmetDropHandler.zc"
-
+//Monsters
 #include "zscript/Monsters/PBMonster.zc"
-#include "zscript/Monsters/CatsFrozen/PB_Cryotron.zc"
-#include "zscript/Monsters/CatsFrozen/PB_FrozenSolid.zc"
-#include "zscript/Monsters/CatsFrozen/PB_FrozenSolidHandler.zc"
 #include "zscript/Monsters/ZombieMen/ZombieMan.zc"
 #include "zscript/Monsters/ZombieMen/ZombieManDeath.zc"
 #include "zscript/Monsters/ZombieMen/ZombieManHelmet.zc"
@@ -127,151 +65,52 @@ const MAXITERATIONS = 32676;
 #include "zscript/Monsters/Sergeants/ZombieSergeantHelmet.zc"
 #include "zscript/Monsters/Sergeants/ZombieSergeantShield.zc"
 #include "zscript/Monsters/Imps/Imp.zc"
-#include "zscript/Effects/SummonerFunctions.zc"
-#include "zscript/Effects/RavagerPortals.zc"
-#include "zscript/Monsters/ObsidianRavager.zc"
-#include "zscript/Monsters/D3Maledict.zc"
-#include "zscript/Monsters/Realm667/Venor.zc"
 
+//Glory Kills
 #include "zscript/Monsters/Imps/ImpGloryKill.zc"
 #include "zscript/Monsters/Sergeants/SergeantsGloryKill.zc"
 #include "zscript/Monsters/ZombieMen/ZombieMenGloryKill.zc"
 #include "zscript/Monsters/ZombieMen/ZombieScientistGloryKill.zc"
 
+//Effects
 #include "zscript/Effects/Casings.txt"
 #include "zscript/Effects/IceShards.txt"
-#include "zscript/Effects/PBCF_CryoSlowProjectiles.zc"
-#include "zscript/Weapons/CatsFrozen/PB_CatsFrozenWeapons.zc"
 #include "zscript/Effects/JunkedBarrel.txt"
-#include "zscript/Effects/SimpleTeleporter/fountain.zsc"
-#include "zscript/Effects/SimpleTeleporter/teleporter_effects.zsc"
 
-#include "zscript/Achievements/VUAS/AchievementData.zs"
-#include "zscript/Achievements/VUAS/AchievementHandler.zs"
-#include "zscript/Achievements/VUAS/AchievementPersistentTracker.zs"
-#include "zscript/Achievements/VUAS/AchievementSetup.zs"
-#include "zscript/Achievements/VUAS/AchievementCommands.zs"
-#include "zscript/Achievements/VUAS/AchievementNotification.zs"
-#include "zscript/Achievements/VUAS/AchievementRenderer.zs"
-#include "zscript/Achievements/VUAS/AchievementMenu.zs"
-#include "zscript/Achievements/VUAS/AchievementPDAView.zs"
-#include "zscript/Achievements/PB_Achievements.zc"
-#include "zscript/Achievements/PB_AchievementSetup.zs"
-#include "zscript/Achievements/PB_AchievementCombatHandler.zc"
-
+//Lewisk3Lasers
 #include "zscript/LaserAPI/LaserAPI.txt"
 
-#include "zscript/FastMaterialCheck_PB2022.zsc"
-#include "zscript/Effects/FxBase.zs"
-#include "zscript/Effects/BulletImpacts.zs"
-#include "zscript/Effects/PB_BulletPuffStub.zs"
-#include "zscript/Effects/RailgunAOEPuff.zs"
-#include "zscript/Effects/Smoke.zs"
-#include "zscript/Effects/MuzzleSparks.zs"
-#include "zscript/Weapons/Projectiles/BulletProjectile.zsc"
-#include "zscript/Weapons/Projectiles/BulletDef.SmallCal.zsc"
-#include "zscript/Weapons/Projectiles/BulletDef.Shell.zsc"
-#include "zscript/Weapons/Projectiles/BulletDef.HighCal.zsc"
-#include "zscript/Weapons/Projectiles/BulletDef.SpecialProjectiles.zsc"
-#include "zscript/Weapons/Projectiles/BulletDef.EnemyProjectiles.zsc"
-#include "zscript/Weapons/Projectiles/AltBulletProjectile.zs"
-#include "zscript/Weapons/Projectiles/RailGunPj.zs"
-#include "zscript/Weapons/Projectiles/DragonsBreath.zs"
-#include "zscript/Weapons/Projectiles/Leech.zsc"
-#include "zscript/Weapons/Projectiles/Shrapnel.zsc"
-#include "zscript/Weapons/ThrownGrenades.zs"
-
+//Weapons
 #include "zscript/Weapons/BaseWeapon.zc"
-#include "zscript/Weapons/BaseWeapon_Equipment.zsc"
-#include "zscript/Weapons/RailGunFire.zc"
-#include "zscript/Weapons/Slot7/Railgun/Railgun.zs"
-#include "zscript/Weapons/PB_SuperBFGBall.zc"
-#include "zscript/Weapons/Slot1/KatanaUpgradeChoiceHelpers.zc"
+// Staging-parity helper back-fill on PB_WeaponBase (chamber/mag tracking,
+// PB_WeaponRaise, PB_CheckReload, PB_jumpIfNoAmmo, upgrade handoff, etc.)
+// so future ZScript weapon drops from PB Staging (Deagle, Revolver, Shotgun,
+// SuperGL, PlasmaM1, ...) compile without per-weapon re-implementation.
 #include "zscript/Weapons/BaseWeapon_StagingShim.zsc"
-#include "zscript/Weapons/BaseWeapon_Barrels.zsc"
-#include "zscript/Weapons/BaseWeapon_ShoulderCannon.zsc"
-#include "zscript/Weapons/BaseWeapon_MPExecutionHelpers.zsc"
-#include "zscript/Weapons/BaseWeapon_MPExecutions.zsc"
-#include "zscript/Weapons/Slot4/PB_MinigunFX.zc"
-#include "zscript/Weapons/PB_Taunting.zc"
-#include "zscript/Weapons/LooseRounds.zc"
 #include "zscript/Weapons/Slot4/BattleRifle/BDPBattleRifle_helpers.zs"
 #include "zscript/Weapons/Slot4/BattleRifle/BDPBattleRifle.zs"
-#include "zscript/Weapons/Slot4/PB_M41A.zs"
 #include "zscript/Weapons/Slot4/NeoHMG/NeoHMG.zs"
-#include "zscript/Weapons/Slot4/MetalSniper/MetalSniper_helpers.zs"
-#include "zscript/Weapons/Slot4/MetalSniper/MetalSniper.zs"
-#include "zscript/Weapons/Slot4/Carbine/Carbine.zs"
-#include "zscript/Weapons/Slot4/LeverAction/LeverAction.zs"
-#include "zscript/Weapons/Slot4/Minigun/PB_Minigun.zs"
-#include "zscript/Weapons/Slot4/MG42/PB_MG42.zs"
-#include "zscript/Weapons/Slot1/ArgentSith_Weapon.zs"
-#include "zscript/Weapons/Slot1/BeamKatana_Weapon.zs"
-#include "zscript/Weapons/Slot1/VorpalBlade.zc"
-#include "zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc"
-#include "zscript/Weapons/MeleeWeaponPack/Stormcast.zc"
-#include "zscript/Weapons/ShieldSawNotify.zc"
-#include "zscript/Weapons/ShieldSawPinataHandler.zc"
 #include "zscript/Weapons/Slot2/Deagle/Deagle.zs"
-#include "zscript/Weapons/Slot2/Revolver/Revolver.zs"
-#include "zscript/Weapons/Slot2/PB_SMG/PB_SMG.zs"
-#include "zscript/Weapons/Slot3/Shotgun/Shotgun.zs"
-#include "zscript/Weapons/Slot3/Autoshotgun/PB_Autoshotgun.zs"
-#include "zscript/Weapons/Slot3/SSG/PB_SSG.zs"
-#include "zscript/Weapons/Slot3/QuadSG/QuadSG.zs"
-#include "zscript/Weapons/Slot6/SuperGL/SuperGL.zs"
-#include "zscript/Weapons/Slot7/PlasmaM1/PlasmaM1.zs"
-#include "zscript/Weapons/PB_WeaponTacticalFeel.zc"
 #include "zscript/Weapons/Slot3/CSSG/CSSG_Upgrades.zs"
+#include "zscript/Weapons/Slot3/CSSG/CSSG_PBProjectile.zs"
+#include "zscript/Weapons/Slot3/CSSG/CSSG_Casings.zs"
 #include "zscript/Weapons/Slot6/Excavator/Excavator_helpers.zs"
-#include "zscript/Weapons/Slot5/RocketLauncher/PB_RocketLauncher.zs"
 #include "zscript/Weapons/Slot6/Excavator/PB_Excavator.zs"
 #include "zscript/Weapons/Slot6/CyberdemonRL/CyberdemonRL_helpers.zs"
 #include "zscript/Weapons/Slot6/CyberdemonRL/PB_CyberdemonRL.zs"
 #include "zscript/Weapons/Slot3/CSSG/CSSG.zs"
-#include "zscript/Weapons/Slot3/HASG/HASG_Projectiles.zs"
-#include "zscript/Weapons/Slot3/CSSG/CSSG_Casings.zs"
-#include "zscript/Weapons/Slot3/HASG/HASG_Casings.zs"
-#include "zscript/Weapons/Slot3/HASG/HASG.zs"
-#include "zscript/Weapons/Slot8/PB_DarkMatterRifle/PB_DarkMatterRifle.zs"
-// === Remaining DECORATE weapon ports (auto) ===
-#include "zscript/Weapons/Slot2/MP40/PB_MP40.zs"
-#include "zscript/Weapons/Slot2/Pistol/PB_Pistol.zs"
-#include "zscript/Weapons/Slot4/Rifle/Rifle.zs"
-#include "zscript/Weapons/Slot4/LMG/PB_LMG.zs"
-#include "zscript/Weapons/Slot4/Nailgun/PB_Nailgun.zs"
-#include "zscript/Weapons/Slot4/XM21/PB_XM21.zs"
-#include "zscript/Weapons/Slot4/Fusil/PB_Fusil.zs"
-#include "zscript/Weapons/Slot4/Fusil/PB_SideFusil.zs"
-#include "zscript/Weapons/Slot4/Ballista/ProSurv_Ballista.zs"
-#include "zscript/Weapons/Slot3/MarauderSSG/MarauderSSG.zs"
-#include "zscript/Weapons/Slot3/X12Shotgun/X12Shotgun.zs"
-#include "zscript/Weapons/Slot3/CryoASG/PB_CryoASG.zs"
-#include "zscript/Weapons/Slot6/M2Plasma/PB_M2Plasma.zs"
-#include "zscript/Weapons/Slot7/Freezer/PB_Freezer.zs"
-#include "zscript/Weapons/Slot8/CryoElectroRifle/PB_CryoElectroRifle.zs"
-#include "zscript/Weapons/Slot8/BFG9000/PB_BFG9000.zs"
-#include "zscript/Weapons/Slot9/Flamethrower/PB_Flamethrower.zs"
-#include "zscript/Weapons/Slot9/HellRifle/Hell_rifle.zs"
-#include "zscript/Weapons/Slot9/Unmaker/PB_Unmaker.zs"
-//#include "zscript/Weapons/Slot9/DemonExterminator/PB_DemonExterminator.zs" // disabled
-//#include "zscript/Weapons/Slot9/DemonExterminator/PB_DemonExterminator_Functions.zsc"
-#include "zscript/Weapons/Slot9/CryoCannon/PB_CryoCannon.zs"
 #include "zscript/Weapons/Slot3/CSSG/CSSGEvent.zs"
 
+//Spawners
 #include "zscript/Spawner/PB_SpawnerBase.zc"
 #include "zscript/Spawner/PB_HorrorPassiveController.zc"
-#include "zscript/Spawner/PB_ProjectSurvivalFodderPassive.zc" // PS fodder roster + FodderExtraPassiveSpawn seeker
-#include "zscript/Monsters/ProjectSurvival/Trite.zc"
-#include "zscript/Spawner/PB_ProjectSurvivalPassiveSpawner.zc"
 #include "zscript/Spawner/Weapons/PB_ShotgunSpawner.zc"
-#include "zscript/Items/HPArcade/PBHPArcade.zc"
 
+//Le Funny Hat Simulator
 #include "zscript/SpecialShit/HatExtravaganza.zc"
 
+//PBVP
 #include "zscript/PBVP/PBVP.zc"
-
-#include "zscript/Weapons/PB_DMRReticleOverlay.zc"
 
 Class PB_SpecialWheel_Mode
 {
@@ -331,14 +170,14 @@ class Demonpickup2: Demonpickup
         Stop;
 	}
 }
+// global constants
 const STAT_NashGore_Gore = Thinker.STAT_USER + 1;
-const STAT_PB_SMOKE = Thinker.STAT_USER_MAX - 2;
 const STAT_PB_BULLETS = Thinker.STAT_USER_MAX - 1;
 
-const C_TID	= 1000;
-const  MAX_R	= 56+32;
-const  ADJUST_R = 8;
-const  VIEW_HEIGHT = 61.0;
+const C_TID	= 1000;	//Default camera tid
+const  MAX_R	= 56+32;	//Maximum radius (or distance from the player)
+const  ADJUST_R = 8;	//Amount to adjust the camera by
+const  VIEW_HEIGHT = 61.0;	//The approximate hight of the player's view
 
 class DoNotDoubleJump : Inventory {}
 class BossBrainBase : Actor
@@ -354,6 +193,8 @@ class BossBrainBase : Actor
 		}
 	}
 }
+
+// Spawner code courtesy of Marisa Kirisame.
 
 class SpawnerBase : Actor
 {
@@ -411,9 +252,9 @@ extend class Demonpickup
 }
 enum EPBWeaponFlags
 {
-	PBWEAP_KEEPYOFFSET = 1<<0,
-	PBWEAP_ISPISTOLSILENCERSTATE = 1<<3,
-	PBWEAP_UNLOADED = 1<<4
+	PBWEAP_KEEPYOFFSET = 1<<0, //Weapon must not move up/down when looking up/down.
+	PBWEAP_ISPISTOLSILENCERSTATE = 1<<3, // Weapon is equipped with a silencer.
+	PBWEAP_UNLOADED = 1<<4 // Weapon has been unloaded.
 }
 class InvisiblePuff : BulletPuff
 {
@@ -511,12 +352,9 @@ class CameraRunner : Inventory
 			players[consoleplayer].mo.SetCamera(null);
 		}
 	}
-	const PB_CHASECAM_DISTANCE = 160.0;
-	const PB_CHASECAM_MAX_DOWN_PITCH = 25.0;
 	Vector3, double, double, actor ReturnCamPos(Actor a)
 	{
-		double cinePitch = clamp(a.pitch, -90.0, PB_CHASECAM_MAX_DOWN_PITCH);
-		Actor linepuff = a.LineAttack(a.angle - 180,PB_CHASECAM_DISTANCE + (a.radius*2),-cinePitch,0,'None',"InvisiblePuffAlways",LAF_NOINTERACT|LAF_NORANDOMPUFFZ,null,-(a.height/2) + a.player.viewheight);
+		Actor linepuff = a.LineAttack(a.angle - 180,128 + (a.radius*2),-a.pitch,0,'None',"InvisiblePuffAlways",LAF_NOINTERACT|LAF_NORANDOMPUFFZ,null,-(a.height/2) + a.player.viewheight);
 		if (linepuff)
 		{
 			let vec3 = linepuff.pos + a.vel;
@@ -527,12 +365,13 @@ class CameraRunner : Inventory
 		}
 		return a.pos, a.angle, a.pitch, null;
 	}
+	//ACS Prefab chasecam script ported to ZScript with changes by Cacodemon345.
 	void RunCameraNew()
 	{
-		if (!owner.player || !owner) return;
+		if (!owner.player || !owner) return; //Don't start camera if the owner isn't a player or is null.
 		Double anglevalue;
 		Double pitchvalue;
-		Double actualpitch = clamp(owner.pitch, -90.0, PB_CHASECAM_MAX_DOWN_PITCH);
+		Double actualpitch = owner.pitch;
 		actor linepuff;
 		Vector3 campos;
 		int plrnum = PlayerPawn(owner).PlayerNumber();
@@ -601,6 +440,7 @@ class XDeathGibBase : Actor
 	}
 }
 
+// Optional Motion Blur by Pixel Eater
 class MBlurHandler : StaticEventHandler
 {
 	int			pitch, yaw ;
@@ -661,7 +501,7 @@ class MBlurHandler : StaticEventHandler
 		{
 			let player = players[ consoleplayer ].mo;
 			
-			if(  plr.health > 0 && Cvar.GetCVar( "mblur", plr ).GetBool() && !plr.mo.FindInventory("PlayerWheelOpen"))
+			if(  plr.health > 0 && Cvar.GetCVar( "mblur", plr ).GetBool() && !plr.mo.FindInventory("PlayerWheelOpen"))//&& yaw && pitch )
 			{
 				EventHandler.SendNetworkEvent( "liveupdate" );
 				int copies			= 1 + Cvar.GetCVar( "mblur_samples", plr ).GetInt() ;

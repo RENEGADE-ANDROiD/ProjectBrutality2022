@@ -199,7 +199,7 @@ ACTOR PlasmaZombieShield : PB_Weapon
 		stop
 		
  	Spawn:
-		TNT1 A -1
+		8876 A -1
 		Stop
 	}
 }

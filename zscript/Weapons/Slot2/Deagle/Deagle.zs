@@ -1,9 +1,9 @@
 // =============================================================================
-// PB_Deagle  â€”  Desert Eagle .50, full ZScript port from PB Staging.
+// PB_Deagle  —  Desert Eagle .50, full ZScript port from PB Staging.
 //
 // Source : PB Staging zscript/Weapons/Slot2/Deagle.zs (PBv0.3.X_Final).
 // Replaces: actors/Weapons/Slot2/Deagle.dec (DECORATE version retired alongside
-//           this drop; see PORTING_ADDONS.md Â§9.10.6).
+//           this drop; see PORTING_ADDONS.md §9.10.6).
 //
 // Adjustments vs upstream staging:
 //   * Pool ammo is PB 2022's PistolBullets (staging used PB_LowCalMag).
@@ -32,7 +32,7 @@ class PB_Deagle : PB_WeaponBase
 		PB_WeaponBase.respectItem "RespectDeagle";
 		Inventory.MaxAmount 2;
 		Inventory.PickupSound "weapons/deagle/equip";
-		Inventory.PickupMessage "$PB_PICKUP_PB_Deagle";
+		Inventory.PickupMessage "You found the UAC .50 Caliber Hand Cannon! (Slot 2, Upgrade)";
 		Obituary "%o was popped by %k's .50 Caliber Hand Cannon.";
 		Inventory.AltHUDIcon "D4E0Z0";
 		PB_WeaponBase.TailPitch 0.6;
@@ -66,10 +66,10 @@ class PB_Deagle : PB_WeaponBase
 			}
 			D4E1 ABCDEEE 1 A_DoPBWeaponAction();
 			D4E1 FGHIJK 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_StartSound("weapons/smg_magfly1",4,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/smg_magfly1",18,CHANF_OVERLAP);
 			TNT1 A 0 A_QuakeEx(0,0,0,12,0,10,"",QF_WAVE|QF_RELATIVE|QF_SCALEDOWN,0.6,0,0.2,0,0,0.3,0.40);
 			D4E1 LMNOPQR 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_StartSound("weapons/deagle/catchf",4,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/catchf",18,CHANF_OVERLAP);
 			D4E1 ST 1 A_DoPBWeaponAction();
 			D4E1 UU 1 A_DoPBWeaponAction();
 			D4E1 UUUUU 1 { A_DoPBWeaponAction(); A_WeaponOffset(-0.25,-0.25,WOF_ADD); }
@@ -78,7 +78,7 @@ class PB_Deagle : PB_WeaponBase
 			D4E1 U 1 A_DoPBWeaponAction();
 			D4E1 U 1 { A_DoPBWeaponAction(); A_WeaponOffset(0,32,WOF_INTERPOLATE); }
 			TNT1 A 0 A_QuakeEx(0,0,0,10,0,10,"",QF_WAVE|QF_RELATIVE|QF_SCALEDOWN,0.75,0,0.25,0,0,-0.3,0.45);
-			TNT1 A 0 A_StartSound("weapons/deagle/RotateFol",4,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/RotateFol",18,CHANF_OVERLAP);
 			D4E1 VWXYZ 1 A_DoPBWeaponAction();
 			D4E2 A 1 A_DoPBWeaponAction();
 			D4E2 B 1 A_DoPBWeaponAction();
@@ -86,19 +86,19 @@ class PB_Deagle : PB_WeaponBase
 			D4E2 BB 1 A_DoPBWeaponAction();
 			D4E2 BBBBBBB 1 { A_DoPBWeaponAction(); A_WeaponOffset(0.75,0.4,WOF_ADD); }
 			D4E2 B 1 { A_DoPBWeaponAction(); A_WeaponOffset(0,32,WOF_INTERPOLATE); }
-			TNT1 A 0 A_StartSound("weapons/deagle/swapfol",4,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/swapfol",18,CHANF_OVERLAP);
 			D4E2 CDEFG 1 A_DoPBWeaponAction();
 			TNT1 A 0 PB_HandleCrosshair(32);
 			goto Ready;
 
 		Select:
-			Goto SelectFirstPersonLegs;
-		SelectContinue:
 			TNT1 A 0 PB_WeaponRaise("weapons/deagle/equip");
 			TNT1 A 0 PB_WeapTokenSwitch("DeagleSelected");
 			TNT1 A 0 A_SetInventory("RandomHeadExploder",1);
 			TNT1 A 0 PB_TakeIfUpgrade("PB_Revolver");
 			TNT1 A 0 PB_RespectIfNeeded();
+		SelectContinue:
+			TNT1 A 0;
 		SelectAnimation:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "SelectAnimationDualWield");
 			D4E0 ABCD 1 PB_SetSpriteIfUnload("D4U0");
@@ -117,7 +117,6 @@ class PB_Deagle : PB_WeaponBase
 
 		Ready3:
 		Ready:
-			TNT1 A 0 PB_CheckBarrelThrow1();
 			TNT1 A 0 A_WeaponOffset(0,32);
 			TNT1 A 0 PB_HandleCrosshair(32);
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyDualWield");
@@ -137,6 +136,9 @@ class PB_Deagle : PB_WeaponBase
 			}
 			loop;
 
+		// =====================================================================
+		// Main Attacks
+		// =====================================================================
 
 		MuzzleFlash:
 			D2EM AB 1 Bright A_GunFlash();
@@ -161,7 +163,8 @@ class PB_Deagle : PB_WeaponBase
 				A_FireProjectile("PB_50AE", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
 				A_AlertMonsters();
 				PB_IncrementHeat(2);
-				A_PB_ThrottledMuzzleFX(0, 5, 5, "", 'DeagleFXPhase');
+				PB_GunSmoke_Deagle(0,5,5);
+				PB_MuzzleFlashEffects(0,5,5);
 				A_FireProjectile("YellowFlareSpawn",0,0,0,0);
 				PB_SpawnCasing("EmptyBrassDeagle",30,0,31,-frandom(1.0, 2.0),frandom(2.0,6.0),frandom(3.0,6.0));
 				PB_TakeAmmo("DeagleAmmo",1);
@@ -192,6 +195,9 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 PB_ReFire();
 			Goto Ready;
 
+		// =====================================================================
+		// Weapon Special — toggle dual-wield (akimbo)
+		// =====================================================================
 
 		WeaponSpecial:
 			TNT1 A 0 A_SetInventory("GoWeaponSpecialAbility",0);
@@ -214,7 +220,7 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 {
 				A_SetAkimbo(true);
 				A_SetInventory("DualWieldingDeagles", 1);
-				A_StartSound("Ironsights",1,CHANF_OVERLAP);
+				A_StartSound("Ironsights",15,CHANF_OVERLAP);
 			}
 			D6E2 A 1 PB_SetDualSpriteIfUnload("D6E3","D6E4","D6E5");
 			D6E2 BCD 1 {
@@ -233,7 +239,7 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 {
 				A_SetAkimbo(false);
 				A_SetInventory("DualWieldingDeagles", 0);
-				A_StartSound("Ironsights",1,CHANF_OVERLAP);
+				A_StartSound("Ironsights",15,CHANF_OVERLAP);
 				A_ClearOverlays(10,11);
 			}
 			D6E2 GFE 1 {
@@ -248,6 +254,9 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 A_SetInventory("CantDoAction", 0);
 			Goto Ready;
 
+		// =====================================================================
+		// Reload / Unload
+		// =====================================================================
 
 		NoAmmo:
 			TNT1 A 0 A_JumpIf(invoker.ammo2 && invoker.ammo2.amount < 1,"NoAmmoUnloaded");
@@ -263,15 +272,15 @@ class PB_Deagle : PB_WeaponBase
 		Reload:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"ReloadDualWield");
 			TNT1 A 0 PB_CheckReload(null,"EmptyReload","Rechamber","Ready","Ready",8,2);
-			TNT1 A 0 A_StartSound("Ironsights",2,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("Ironsights",16,CHANF_OVERLAP);
 			D0E0 ABCDEFGHIJKLMN 1;
 			TNT1 A 0 A_JumpIf(PB_GetMagUnloaded(),"ContinueReload");
 			D0E0 OPQ 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/magrelease",4,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/magrelease",18,CHANF_OVERLAP);
 			D0E0 RS 2;
 			TNT1 A 0 {
-				A_StartSound("weapons/deagle/magout",4,CHANF_OVERLAP);
-				A_StartSound("PSRLOUT",3,CHANF_OVERLAP);
+				A_StartSound("weapons/deagle/magout",18,CHANF_OVERLAP);
+				A_StartSound("PSRLOUT",24,CHANF_OVERLAP);
 				PB_SetMagUnloaded(true);
 			}
 			D0E0 TUVW 1;
@@ -286,7 +295,7 @@ class PB_Deagle : PB_WeaponBase
 				PB_SetMagUnloaded(false);
 				PB_SetMagEmpty(false);
 			}
-			TNT1 A 0 A_StartSound("weapons/deagle/magin",4,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/magin",11,CHANF_OVERLAP);
 			D0E0 Z 1 A_WeaponOffset(1.725,-1.325,WOF_ADD);
 			TNT1 A 0 A_WeaponOffset(0,32,WOF_INTERPOLATE);
 			D0E1 AB 1;
@@ -294,22 +303,22 @@ class PB_Deagle : PB_WeaponBase
 			D0E1 CC 1 A_WeaponOffset(-0.3,-0.15,WOF_ADD);
 			TNT1 A 0 A_WeaponOffset(0,32,WOF_INTERPOLATE);
 			D0E1 DEFG 1;
-			TNT1 A 0 A_StartSound("Ironsights",6,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("Ironsights",13,CHANF_OVERLAP);
 			D0E1 HIJKL 1;
 			TNT1 A 0 PB_SetReloading(false);
 			goto Ready;
 		EmptyReload:
-			TNT1 A 0 A_StartSound("Ironsights",2,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("Ironsights",16,CHANF_OVERLAP);
 			D1E0 ABCDE 1;
-			TNT1 A 0 A_StartSound("weapons/smg_magfly1",4,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/smg_magfly1",11,CHANF_OVERLAP);
 			D1E0 FGHIJKLM 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/CatchF",5,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/CatchF",19,CHANF_OVERLAP);
 			D1E0 NOPQ 1;
 			TNT1 A 0 A_JumpIf(PB_GetMagUnloaded(),"ContinueReloadEmpty");
 			TNT1 A 0 A_StartSound("weapons/deagle/MagRelease",0,CHANF_OVERLAP);
 			D1E0 R 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/magout",6,CHANF_OVERLAP);
-			TNT1 A 0 A_StartSound("PSRLOUT",3,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/magout",13,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("PSRLOUT",24,CHANF_OVERLAP);
 			TNT1 A 0 {
 				PB_SpawnCasing("EmptyDeagleMag",30,12,16,1,-2,-2);
 				PB_SetMagUnloaded(true);
@@ -333,12 +342,12 @@ class PB_Deagle : PB_WeaponBase
 		Rechamber:
 			D1E1 TUVWXYZ 1;
 			D1E2 A 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/click1",0,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/click1",14,CHANF_OVERLAP);
 			D1E2 BCD 1;
 			D1E2 DDD 1 A_WeaponOffset(-0.5,0.2,WOF_ADD);
 			D1E2 DD 1 A_WeaponOffset(0.75,-0.3,WOF_ADD);
 			D1E2 E 1 A_WeaponOffset(0,32,WOF_INTERPOLATE);
-			TNT1 A 0 A_StartSound("weapons/deagle/click2",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/click2",15,CHANF_OVERLAP);
 			D1E2 FFGH 1;
 			TNT1 A 0 {
 				A_StartSound("Ironsights",0,CHANF_OVERLAP);
@@ -348,6 +357,9 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 PB_SetReloading(false);
 			goto Ready;
 
+		// =====================================================================
+		// Dual-wield reload paths
+		// =====================================================================
 
 		ReloadDualFromUnload:
 			DR42 STUV 1 PB_SetDualSpriteIfUnload("DR14","DR20","DR00");
@@ -361,7 +373,7 @@ class PB_Deagle : PB_WeaponBase
 				A_Overlay(11,"StartReloadRight_Overlay");
 			}
 			TNT1 A 5;
-			TNT1 A 0 A_StartSound("Ironsights", 2,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("Ironsights", 23,CHANF_OVERLAP);
 			TNT1 A 2;
 			TNT1 A 0 A_JumpIf(PB_GetMagUnloaded() && PB_GetMagUnloaded(true),"ReloadDualFromUnload");
 			TNT1 A 8;
@@ -372,11 +384,11 @@ class PB_Deagle : PB_WeaponBase
 					PB_SpawnCasing("EmptyDeagleMag",30,-12,16,1,2,-2);
 				PB_SetMagUnloaded(true);
 				PB_SetMagUnloaded(true,true);
-				A_StartSound("weapons/deagle/magout",1,CHANF_OVERLAP);
-				A_StartSound("PSRLOUT",3,CHANF_OVERLAP);
+				A_StartSound("weapons/deagle/magout",22,CHANF_OVERLAP);
+				A_StartSound("PSRLOUT",24,CHANF_OVERLAP);
 			}
 			TNT1 A 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",29,CHANF_OVERLAP);
 			TNT1 A 2;
 			Goto ReloadRightFromUnload;
 		StartReloadLeft_Overlay:
@@ -444,7 +456,7 @@ class PB_Deagle : PB_WeaponBase
 				A_Overlay(11,"StartReloadRight_Overlay");
 			}
 			TNT1 A 5;
-			TNT1 A 0 A_StartSound("Ironsights", 2,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("Ironsights", 23,CHANF_OVERLAP);
 			TNT1 A 2;
 			TNT1 A 0 {
 				if(PB_GetMagUnloaded()) {
@@ -458,11 +470,11 @@ class PB_Deagle : PB_WeaponBase
 				if(PB_GetMagEmpty())
 					PB_SpawnCasing("EmptyDeagleMag",30,12,16,1,-2,-2);
 				PB_SetMagUnloaded(true);
-				A_StartSound("weapons/deagle/magout",1,CHANF_OVERLAP);
-				A_StartSound("PSRLOUT",3,CHANF_OVERLAP);
+				A_StartSound("weapons/deagle/magout",22,CHANF_OVERLAP);
+				A_StartSound("PSRLOUT",24,CHANF_OVERLAP);
 			}
 			TNT1 A 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",29,CHANF_OVERLAP);
 			TNT1 A 2;
 		ReloadRightFromUnload:
 			TNT1 A 4;
@@ -475,9 +487,9 @@ class PB_Deagle : PB_WeaponBase
 				PB_SetMagUnloaded(false);
 				PB_SetMagEmpty(false);
 			}
-			TNT1 A 0 A_StartSound("weapons/deagle/magin",0,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/magin",21,CHANF_OVERLAP);
 			DR32 FGHIJ 1 PB_SetDualSpriteIfUnload("DR15","DR21","DR01");
-			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",29,CHANF_OVERLAP);
 			DR32 KLMNO 1 PB_SetDualSpriteIfUnload("DR15","DR21","DR01");
 			TNT1 A 2;
 			TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(),"RechamberRight");
@@ -494,7 +506,7 @@ class PB_Deagle : PB_WeaponBase
 				A_Overlay(11,"StartReloadLeft_Overlay");
 			}
 			TNT1 A 5;
-			TNT1 A 0 A_StartSound("Ironsights", 2,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("Ironsights", 23,CHANF_OVERLAP);
 			TNT1 A 2;
 			TNT1 A 0 {
 				if(PB_GetMagUnloaded(true)) {
@@ -509,11 +521,11 @@ class PB_Deagle : PB_WeaponBase
 				if(PB_GetMagEmpty(true))
 					PB_SpawnCasing("EmptyDeagleMag",30,-12,16,1,2,-2);
 				PB_SetMagUnloaded(true,true);
-				A_StartSound("weapons/deagle/magout",1,CHANF_OVERLAP);
-				A_StartSound("PSRLOUT",3,CHANF_OVERLAP);
+				A_StartSound("weapons/deagle/magout",22,CHANF_OVERLAP);
+				A_StartSound("PSRLOUT",24,CHANF_OVERLAP);
 			}
 			TNT1 A 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",29,CHANF_OVERLAP);
 			TNT1 A 2;
 		ReloadLeftFromUnload:
 			TNT1 A 4;
@@ -528,9 +540,9 @@ class PB_Deagle : PB_WeaponBase
 				PB_SetMagUnloaded(false,true);
 				PB_SetMagEmpty(false,true);
 			}
-			TNT1 A 0 A_StartSound("weapons/deagle/magin",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/magin",22,CHANF_OVERLAP);
 			DR31 FGHIJ 1 PB_SetSpriteIfUnload("DR11",true);
-			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",29,CHANF_OVERLAP);
 			DR31 KLMNO 1 PB_SetSpriteIfUnload("DR11",true);
 			TNT1 A 2;
 			TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(true),"RechamberLeft");
@@ -551,12 +563,12 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 4;
 		RechamberRight:
 			DR02 ABCDE 1 PB_SetDualSpriteIfUnload("DR02","DR22","DR02");
-			TNT1 A 0 A_StartSound("weapons/deagle/click1",4,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/click1",18,CHANF_OVERLAP);
 			DR02 FGHIJ 1 PB_SetDualSpriteIfUnload("DR02","DR22","DR02");
-			TNT1 A 0 A_StartSound("weapons/deagle/click2",3,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/click2",17,CHANF_OVERLAP);
 			TNT1 A 0 PB_SetChamberEmpty(false);
 			DR02 K 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",29,CHANF_OVERLAP);
 			DR02 LMNOP 1 PB_SetDualSpriteIfUnload("DR02","DR22","DR02");
 			TNT1 A 2;
 			TNT1 A 0 A_JumpIf(CountInv("LeftDeagleAmmo") == 8 || CountInv(invoker.ammotype1) < 2,"FinishDualReload");
@@ -570,12 +582,12 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 3;
 		RechamberLeft:
 			DR12 ABCDE 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/click1",6,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/click1",20,CHANF_OVERLAP);
 			DR12 FGHIJ 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/click2",4,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/click2",18,CHANF_OVERLAP);
 			TNT1 A 0 PB_SetChamberEmpty(false,true);
 			DR12 K 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/SwapF",29,CHANF_OVERLAP);
 			DR12 LMNOP 1;
 			TNT1 A 0 PB_SetChamberEmpty(false,true);
 			TNT1 A 2;
@@ -586,15 +598,15 @@ class PB_Deagle : PB_WeaponBase
 			D0E0 ABCDEFGHIJ 1;
 			D0E0 KLMM 1;
 			D2E1 ABCD 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/magout",2,CHANF_OVERLAP);
-			TNT1 A 0 A_StartSound("PSRLOUT",3,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/magout",16,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("PSRLOUT",24,CHANF_OVERLAP);
 			TNT1 A 0 {
 				PB_UnloadMag("DeagleAmmo","PistolBullets",2,goal:1);
 				PB_UnloadMag("DeagleAmmo","PistolBullets",2,1,2,0,"PB_DeagleRound");
 				PB_SetMagEmpty(true); PB_SetMagUnloaded(true); PB_SetChamberEmpty(true);
 			}
 			D2E1 E 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/click2",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/click2",22,CHANF_OVERLAP);
 			D2E1 FGHIJK 1;
 			D1E0 HGFEDCBA 1;
 			TNT1 A 0 PB_SetReloading(false);
@@ -627,7 +639,7 @@ class PB_Deagle : PB_WeaponBase
 				}
 			}
 			TNT1 A 5;
-			TNT1 A 0 A_StartSound("Ironsights", 2,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("Ironsights", 23,CHANF_OVERLAP);
 			TNT1 A 2;
 			TNT1 A 8;
 			TNT1 A 0 {
@@ -647,15 +659,18 @@ class PB_Deagle : PB_WeaponBase
 					PB_SetMagEmpty(true); PB_SetMagUnloaded(true); PB_SetChamberEmpty(true);
 					A_Overlay(11,"EndUnloadRight_Overlay");
 				}
-				A_StartSound("weapons/deagle/magout",1,CHANF_OVERLAP);
-				A_StartSound("PSRLOUT",3,CHANF_OVERLAP);
+				A_StartSound("weapons/deagle/magout",22,CHANF_OVERLAP);
+				A_StartSound("PSRLOUT",24,CHANF_OVERLAP);
 			}
 			TNT1 A 1;
-			TNT1 A 0 A_StartSound("weapons/deagle/click2",1,CHANF_OVERLAP);
+			TNT1 A 0 A_StartSound("weapons/deagle/click2",22,CHANF_OVERLAP);
 			TNT1 A 5;
 			TNT1 A 0 PB_SetReloading(false);
 			Goto Ready;
 
+		// =====================================================================
+		// ADS / Alt-fire
+		// =====================================================================
 
 		AltFire:
 			TNT1 A 0 {
@@ -667,7 +682,7 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(),"Ready");
 			TNT1 A 0 {
 				A_WeaponOffset(0,32);
-				A_StartSound("IronSights", 6,CHANF_OVERLAP);
+				A_StartSound("IronSights", 13,CHANF_OVERLAP);
 				A_SetInventory("Zoomed",1);
 				A_ZoomFactor(1.25);
 				A_SetCrosshair(-1);
@@ -692,7 +707,24 @@ class PB_Deagle : PB_WeaponBase
 			D3E0 A 1
 			{
 				PB_CoolDownBarrel(0, 0, 4);
-				return PB_ReadyFire("Fire2", "Fire2", "Zoomout", true);
+				if(CVar.GetCvar("pb_toggle_aim_hold",player).getint() == 1)
+				{
+					if(!PressingAltfire() || JustReleased(BT_ALTATTACK))
+						return ResolveState("Zoomout");
+
+					if (PressingFire() && PressingAltfire() && CountInv(invoker.ammotype2) > 0)
+						return ResolveState("Fire2");
+
+					return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOSECONDARY);
+				}
+				else
+				{
+					if (PressingFire() && CountInv(invoker.ammotype2) > 0 )
+						return ResolveState("Fire2");
+
+					return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+				}
+				return ResolveState(null);
 			}
 			Loop;
 
@@ -710,7 +742,8 @@ class PB_Deagle : PB_WeaponBase
 				PB_LowAmmoSoundWarning("pistol");
 				A_FireProjectile("PB_50AE", frandom(-0.1,0.1),0,0,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
 				A_AlertMonsters();
-				A_PB_ThrottledMuzzleFX(0, 5, 5, "", 'DeagleFXPhase');
+				PB_GunSmoke_Deagle(0,5,5);
+				PB_MuzzleFlashEffects(0,5,5);
 				PB_IncrementHeat(2);
 				A_FireProjectile("YellowFlareSpawn",0,0,0,0);
 				PB_SpawnCasing("EmptyBrassDeagle",26,0,38,-frandom(1.0, 2.0),frandom(2.0,6.0),frandom(3.0,6.0));
@@ -745,6 +778,9 @@ class PB_Deagle : PB_WeaponBase
 			}
 			Goto Ready2;
 
+		// =====================================================================
+		// Dual-wield idle / fire overlays
+		// =====================================================================
 
 		SelectAnimationDualWield:
 			TNT1 A 1;
@@ -804,7 +840,8 @@ class PB_Deagle : PB_WeaponBase
 				PB_IncrementHeat(2, true);
 				A_SetFiringLeftWeapon(true);
 				A_FireProjectile("PB_50AE", frandom(-0.1,0.1),0,-6,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
-				A_PB_ThrottledMuzzleFX(15, 0, 6, "", 'DeagleDWFXPhase');
+				PB_GunSmoke_Deagle(15,0,6);
+				PB_MuzzleFlashEffects(15,0,6);
 				PB_SpawnCasing("EmptyBrassDeagle",26,-12,38,-frandom(1.0, 2.0),frandom(2.0,6.0),frandom(3.0,6.0));
 				A_StartSound("weapons/deagle/fire", 0, CHANF_OVERLAP, 1.0);
 				A_StartSound("weapons/deagle/afire", 0, CHANF_OVERLAP, 0.70);
@@ -837,7 +874,7 @@ class PB_Deagle : PB_WeaponBase
 						return ResolveState("FireLeft_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 3,CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 10,CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -849,7 +886,7 @@ class PB_Deagle : PB_WeaponBase
 					}
 					else
 					{
-						A_StartSound("weapons/empty", 3,CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 10,CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -870,7 +907,7 @@ class PB_Deagle : PB_WeaponBase
 						return ResolveState("FireLeft_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 3,CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 10,CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -880,7 +917,7 @@ class PB_Deagle : PB_WeaponBase
 						return ResolveState("FireLeft_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 3,CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 10,CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -900,7 +937,8 @@ class PB_Deagle : PB_WeaponBase
 				PB_IncrementHeat(2);
 				A_SetFiringRightWeapon(true);
 				A_FireProjectile("PB_50AE", frandom(-0.1,0.1),0,6,0, FPF_NOAUTOAIM, frandom(-0.1,0.1));
-				A_PB_ThrottledMuzzleFX(-15, 0, 6, "", 'DeagleDWFXPhase');
+				PB_GunSmoke_Deagle(-15,0,6);
+				PB_MuzzleFlashEffects(-15,0,6);
 				PB_SpawnCasing("EmptyBrassDeagle",26,25,38,-frandom(1.0, 2.0),frandom(2.0,6.0),frandom(3.0,6.0));
 				A_StartSound("weapons/deagle/fire", 0, CHANF_OVERLAP, 1.0);
 				A_StartSound("weapons/deagle/afire", 0, CHANF_OVERLAP, 0.70);
@@ -934,7 +972,7 @@ class PB_Deagle : PB_WeaponBase
 						return ResolveState("FireRight_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 3,CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 10,CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -943,7 +981,7 @@ class PB_Deagle : PB_WeaponBase
 						return ResolveState("FireRight_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 3,CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 10,CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -964,7 +1002,7 @@ class PB_Deagle : PB_WeaponBase
 						return ResolveState("FireRight_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 3,CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 10,CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -973,7 +1011,7 @@ class PB_Deagle : PB_WeaponBase
 						return ResolveState("FireRight_Overlay");
 					else
 					{
-						A_StartSound("weapons/empty", 3,CHANF_OVERLAP);
+						A_StartSound("weapons/empty", 10,CHANF_OVERLAP);
 						return ResolveState(null);
 					}
 				}
@@ -985,6 +1023,9 @@ class PB_Deagle : PB_WeaponBase
 			}
 			Goto IdleRight_Overlay;
 
+		// =====================================================================
+		// Sprite preload + kick / punch flashes
+		// =====================================================================
 
 		LoadSprites:
 			D4U0 A 0;
@@ -1015,12 +1056,10 @@ class PB_Deagle : PB_WeaponBase
 		FlashPunching:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashPunchingDual");
 			D8E0 ABCDEFGGFEDCBA 1 PB_SetSpriteIfUnload("D8E1");
-			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashPunchingDual:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 ABCDEFGGFEDCBA 1;
-			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashKicking:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashKickingDual");
@@ -1054,50 +1093,14 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 A_ClearOverlays(10,11);
 			D7E0 GFEDCBA 1 PB_SetDualSpriteIfUnload("D7E2","D7E3","D7E1");
 			goto Ready;
-
-		PDA_Preview_Deagle_Ready:
-			D4E0 E 1;
-			D4E0 E 1;
-			Stop;
-		PDA_Preview_Deagle_Fire:
-			D2E0 A 1 BRIGHT;
-			D2E0 B 1 BRIGHT;
-			D2E0 C 1;
-			D2E0 D 1;
-			D2E0 E 1;
-			D2E0 F 1;
-			D2E0 G 1;
-			Stop;
-		PDA_Preview_Deagle_AdsFire:
-			D3E0 B 1 BRIGHT;
-			D3E0 C 1 BRIGHT;
-			D3E0 D 1;
-			D3E0 E 1;
-			D3E0 F 1;
-			D3E0 G 1;
-			Stop;
-		PDA_Preview_Deagle_AltAds:
-			D3E1 A 1;
-			D3E1 B 1;
-			D3E1 C 1;
-			D3E1 D 1;
-			D3E1 E 1;
-			Stop;
-		PDA_Preview_Deagle_Reload:
-			D0E0 A 1;
-			D0E0 D 1;
-			D0E0 H 1;
-			D0E0 L 1;
-			D0E0 R 1;
-			D0E0 Y 1;
-			D0E1 A 1;
-			D0E1 F 1;
-			Stop;
 	}
 }
 
+// =============================================================================
+// Companion classes (ammo, projectile, casings, dual-wield + state tokens).
+// =============================================================================
 
-// 8-round magazines (was 12 in PB 2022 DECORATE â€” staging matches real-world).
+// 8-round magazines (was 12 in PB 2022 DECORATE — staging matches real-world).
 class DeagleAmmo : Ammo
 {
 	default
@@ -1120,6 +1123,38 @@ class LeftDeagleAmmo : Ammo
 		Ammo.BackpackMaxAmount 8;
 		+INVENTORY.IGNORESKILL;
 		Inventory.Icon "D4E0Z0";
+	}
+}
+
+// .50 AE projectile used by the staging port. Modeled as a fast piercing
+// projectile — staging's true definition is in their bullet system; we use
+// a sane equivalent that matches the gunfeel (single-shot, alerts, gibs).
+class PB_50AE : FastProjectile
+{
+	default
+	{
+		Radius 5;
+		Height 4;
+		Speed 100;
+		Damage 90;
+		PROJECTILE;
+		+BLOODSPLATTER;
+		+FORCEXYBILLBOARD;
+		+THRUGHOST;
+		+RIPPER;
+		MissileType "BulletPuff";
+		DamageType "Tracer";
+		DeathSound "";
+		Decal "BulletChip";
+	}
+	states
+	{
+		Spawn:
+			TNT1 A 1 BRIGHT;
+			Loop;
+		Death:
+			TNT1 A 1;
+			Stop;
 	}
 }
 

@@ -34,13 +34,13 @@ ACTOR BPv10_FlyingTorso1
         XMT1 N 0 A_Jump(256, "Smear0", "Smear1", "Smear2")
         Stop
     Smear0:
-        BL00 ABCDEFGHIJKLMNOPQR 2
+        BL00 ABCDEFGHIJKLMNOPQR 3
         Goto Settle
     Smear1:
-        BL02 ABCDEFGHIJKLMNOPQR 2
+        BL02 ABCDEFGHIJKLMNOPQR 3
         Goto Settle
     Smear2:
-        BL04 ABCDEFGHIJKLMN 2
+        BL04 ABCDEFGHIJKLMN 3
         Goto Settle
     Settle:
         XMT1 N 350
@@ -78,15 +78,15 @@ ACTOR BPv10_FlyingTorso2
         XMT2 O 0 A_Jump(256, "Smear0", "Smear1", "Smear2")
         Stop
     Smear0:
-        BL01 ABCDEF 2
-        BL01 HIJKLMNOPQ 2
+        BL01 ABCDEF 3
+        BL01 HIJKLMNOPQ 3
         Goto Settle
     Smear1:
-        BL03 ABCDEFGHIJKLMN 2
-        BL03 OPQRSTWXYZ 2
+        BL03 ABCDEFGHIJKLMN 3
+        BL03 OPQRSTWXYZ 3
         Goto Settle
     Smear2:
-        BL04 ABCDEFGHIJKLMN 2
+        BL04 ABCDEFGHIJKLMN 3
         Goto Settle
     Settle:
         XMT2 O 350

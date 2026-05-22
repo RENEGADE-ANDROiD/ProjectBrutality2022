@@ -1,5 +1,0 @@
-Minigun / LMG belt-link sprites (LMLN*): folded from Project-Brutality-Weapons-Pack
-SPRITES/WEAPONS/Casings/ShotgunShell/CAS8K0.png and SPRITES/Casings/Mastermind/CAS8K*.png
-(Mastermind chaingun casing sheet family), renamed to valid 4+frame+rotation lump names for LMGBeltLink.
-
-(Kept under docs/ so GZDoom does not treat this file as a graphic under SPRITES/.)

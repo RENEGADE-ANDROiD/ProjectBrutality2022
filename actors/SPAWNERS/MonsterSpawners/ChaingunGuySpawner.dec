@@ -29,11 +29,11 @@ Actor ChaingunGuySpawner replaces ChaingunGuy
 			TNT1 A 0 A_Jump(36,"HelmetChaingunGuyPack")
 			TNT1 A 0 A_Jump(256,"NormalChaingunGuyPack")
 		MidLevelMob:
-			TNT1 A 0 A_Jump(7,"HellTrooperPack")
-			TNT1 A 0 A_Jump(29,"ZspecOpsGuyPack")
-			TNT1 A 0 A_Jump(33,"ClassicChaingunGuyPack")
-			TNT1 A 0 A_Jump(65,"NailgunMajorPack")
-			TNT1 A 0 A_Jump(69,"HelmetChaingunGuyPack")
+			TNT1 A 0 A_Jump(10,"HellTrooperPack")
+			TNT1 A 0 A_Jump(40,"ZspecOpsGuyPack")
+			TNT1 A 0 A_Jump(6,"ClassicChaingunGuyPack")
+			TNT1 A 0 A_Jump(83,"NailgunMajorPack")
+			TNT1 A 0 A_Jump(38,"HelmetChaingunGuyPack")
 			TNT1 A 0 A_Jump(256,"NormalChaingunGuyPack")
 		HighLevelMob:
 			TNT1 A 0 A_Jump(20,"HellTrooperPack")
@@ -120,14 +120,12 @@ Actor ChaingunGuyPackSpawner : Demonpickup
 	SpawnClassicChaingunGuy1:	
 		TNT1 A 1 ACS_NamedExecuteAlways("ToggleClassicCommando",0)
 		TNT1 A 0 A_SpawnItemEx("PB_ClassicCommando",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		Stop
 	SpawnClassicChaingunGuy2:	
 		TNT1 A 1 ACS_NamedExecuteAlways("ToggleClassicCommando",0)
 		TNT1 A 0 A_SpawnItemEx("PB_ClassicCommando",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		TNT1 A 0 A_SpawnItemEx("Zombieflyerpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop	
 	SpawnNailgunMajor:
@@ -136,14 +134,12 @@ Actor ChaingunGuyPackSpawner : Demonpickup
 	SpawnNailgunMajor1:	
 		TNT1 A 1 ACS_NamedExecuteAlways("ToggleNailgunMajor",0)
 		TNT1 A 0 A_SpawnItemEx("PB_NailgunMajor",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		Stop
 	SpawnNailgunMajor2:	
 		TNT1 A 1 ACS_NamedExecuteAlways("ToggleNailgunMajor",0)
 		TNT1 A 0 A_SpawnItemEx("PB_NailgunMajor",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		TNT1 A 0 A_SpawnItemEx("Zombieflyerpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop	
 	SpawnHelmetChaingunGuy:
@@ -151,13 +147,11 @@ Actor ChaingunGuyPackSpawner : Demonpickup
 		stop
 	SpawnHelmetChaingunGuy1:	
 		TNT1 A 0 A_SpawnItemEx("PB_HelmetCommando",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		Stop
 	SpawnHelmetChaingunGuy2:	
 		TNT1 A 0 A_SpawnItemEx("PB_HelmetCommando",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		TNT1 A 0 A_SpawnItemEx("Zombieflyerpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnZspecOpsGuy:
@@ -166,14 +160,12 @@ Actor ChaingunGuyPackSpawner : Demonpickup
 	SpawnZspecOpsGuy1:	
 		TNT1 A 1 ACS_NamedExecuteAlways("ToggleZSpecOps",0)
 		TNT1 A 0 A_SpawnItemEx("PB_ZSpecOps",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		Stop
 	SpawnZspecOpsGuy2:
 	    TNT1 A 1 ACS_NamedExecuteAlways("ToggleZSpecOps",0)
 		TNT1 A 0 A_SpawnItemEx("PB_ZSpecOps",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		TNT1 A 0 A_SpawnItemEx("Zombieflyerpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnHellTrooper:
@@ -182,14 +174,12 @@ Actor ChaingunGuyPackSpawner : Demonpickup
 	SpawnHellTrooper1:	
 		TNT1 A 1 ACS_NamedExecuteAlways("ToggleDemonTechSoldier",0)
 		TNT1 A 0 A_SpawnItemEx("PB_DemonTechZombie",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		Stop
 	SpawnHellTrooper2:	
 		TNT1 A 1 ACS_NamedExecuteAlways("ToggleDemonTechSoldier",0)
 		TNT1 A 0 A_SpawnItemEx("PB_DemonTechZombie",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		TNT1 A 0 A_SpawnItemEx("Zombieflyerpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop	
 	SpawnNormalChaingunGuy:
@@ -199,14 +189,12 @@ Actor ChaingunGuyPackSpawner : Demonpickup
 	SpawnNormalChaingunGuy1:
 	    ReplaceToggle:
 		TNT1 A 0 A_SpawnItemEx("PB_Commando",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		Stop
 	SpawnNormalChaingunGuy2:
 	    ReplaceToggle:
 		TNT1 A 0 A_SpawnItemEx("PB_Commando",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-		TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+		TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 		TNT1 A 0 A_SpawnItemEx("Zombieflyerpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop		
 	}

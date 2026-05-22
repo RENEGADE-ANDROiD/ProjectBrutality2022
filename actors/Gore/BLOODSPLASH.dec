@@ -1,4 +1,4 @@
-﻿Actor RedBloodSplatterz : Inventory
+Actor RedBloodSplatterz : Inventory
 {
 inventory.maxamount 1
 }
@@ -100,7 +100,7 @@ states
 
 actor SuperGore
 {
-+NODECAL
+Decal BloodSplat
  game Doom
 	Alpha 0.45
 +FORCEXYBILLBOARD
@@ -117,14 +117,9 @@ Scale 0.57
  states
  {
   Spawn:
-        TNT1 A 0 A_JumpIf(GetCVar("pb_enhanced_brutality_2022") >= 1, "DecalShiny")
-        TNT1 A 0 A_SprayDecal("BloodSplat")
-        Goto DecalDone
-   DecalShiny:
-        TNT1 A 0 A_SprayDecal("BloodSplatPB2022")
-   DecalDone:
+        TNT1 A 0
 		TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater")
-        BLER FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG 1 A_FadeOut(0.01)
+        BLER FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG 1 A_FadeOut(0.01)
 		stop
  SpawnUnderwater:
  TNT1 A 0
@@ -161,11 +156,6 @@ actor BlueSuperGore: SuperGore
 translation "168:191=192:207","16:47=240:247"
 States
 {
-  Spawn:
-        TNT1 A 0 A_SprayDecal("BlueBloodSplat")
-		TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater")
-        BLER FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG 1 A_FadeOut(0.01)
-		stop
  SpawnUnderwater:
  TNT1 A 0
  TNT1 AA 0 A_CustomMissile ("UnderbloodBlue3", 32, 0, random (0, 360), 2, random (0, 160))
@@ -187,13 +177,9 @@ states
 actor GreenSuperGore: SuperGore
 {
 translation "168:191=112:127","16:47=120:127"
+Decal GreenBloodSplat
 States
 {
-	Spawn:
-        TNT1 A 0 A_SprayDecal("GreenBloodSplat")
-		TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater")
-        BLER FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG 1 A_FadeOut(0.01)
-		stop
 	SpawnUnderwater:
 		TNT1 A 0
 		TNT1 AA 0 A_CustomMissile ("UnderbloodGreen3", 32, 0, random (0, 360), 2, random (0, 160))
@@ -262,7 +248,7 @@ game Doom
  mass 1
   renderstyle Translucent
   alpha 0.9
-+NODECAL
+Decal BloodSplat
  +LOWGRAVITY
  +NOTELEPORT
  +NOBLOCKMAP
@@ -282,13 +268,6 @@ BLOD ABCDDEEFFF 4
 Death:
 TNT1 A 0
 Stop
-Crash:
-	TNT1 A 0 A_JumpIf(GetCVar("pb_enhanced_brutality_2022") >= 1, "CrashDecalShiny")
-	TNT1 A 0 A_SprayDecal("BloodSplat")
-	Stop
-CrashDecalShiny:
-	TNT1 A 0 A_SprayDecal("BloodSplatPB2022")
-	Stop
 
 	Splash:
         BLOD A 0
@@ -298,6 +277,7 @@ CrashDecalShiny:
 }
 
 
+// Red Blood
 ACTOR BloodSplasher
 {
 	Game Doom
@@ -392,6 +372,7 @@ ACTOR BloodSplasher3: BloodSplasher2
 	}
 }
 
+// Blue Blood
 ACTOR BlueBloodSplasher : BloodSplasher
 {
 	Game Doom
@@ -433,6 +414,7 @@ ACTOR BlueBloodSplasher : BloodSplasher
 	}
 }
 
+// Green Blood
 ACTOR GreenBloodSplasher : BloodSplasher
 {
 	Game Doom
@@ -477,7 +459,7 @@ ACTOR GreenBloodSplasher : BloodSplasher
 
 actor SmallSuperGore
 {
-+NODECAL
+Decal BloodSplat
  game Doom
 	Alpha 0.5
 +FORCEXYBILLBOARD
@@ -495,12 +477,7 @@ Scale 2
  states
  {
   Spawn:
-        TNT1 A 0 A_JumpIf(GetCVar("pb_enhanced_brutality_2022") >= 1, "SGDecalShiny")
-        TNT1 A 0 A_SprayDecal("BloodSplat")
-        Goto SGDecalDone
-   SGDecalShiny:
-        TNT1 A 0 A_SprayDecal("BloodSplatPB2022")
-   SGDecalDone:
+        TNT1 A 0
 		TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater")
         BLOD EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 A_FadeOut(0.03)
 		stop
@@ -553,14 +530,10 @@ Gravity 0.1
 }
 actor GreenSmallSuperGore : SmallSuperGore
 {
+Decal GreenBloodSplat
 Translation	"168:191=112:127", "16:47=123:127"
 States
 {
-  Spawn:
-        TNT1 A 0 A_SprayDecal("GreenBloodSplat")
-		TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater")
-        BLOD EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 A_FadeOut(0.03)
-		stop
  SpawnUnderwater:
  TNT1 A 0
  TNT1 AA 0 A_CustomMissile ("UnderbloodGreen3", 32, 0, random (0, 360), 2, random (0, 160))
@@ -572,6 +545,7 @@ actor GreenSmallSuperGore2: GreenSmallSuperGore
 Alpha 0.3
 Scale 0.6
 Speed 1
+Decal GreenBloodSplat
 }
 
 
@@ -579,10 +553,13 @@ actor GreenMediumSuperGore: GreenSmallSuperGore
 {
 Scale 2.0
 Speed 4
+Decal GreenBloodSplat
 }
 
 actor GiantGreenSuperGore: GreenSmallSuperGore
 {
 Scale 4.0
 Speed 8
+
+Decal GreenBloodSplat
 }

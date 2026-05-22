@@ -140,6 +140,7 @@ ACTOR PB_RegretElemental : PB_PainElemental
 	}
 }
 
+///////////////////////////======VANILLA MODE======//////////////////////////////////
 Actor Vanilla_RegretElemental1 : PB_RegretElemental
 {
 	DropItem "DemonStrengthRune" 5

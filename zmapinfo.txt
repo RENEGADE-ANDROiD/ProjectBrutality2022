@@ -14,6 +14,7 @@ Skill baby
    SlowMonsters
    SpawnFilter = Baby
    Textcolor = Green
+   //DisableCheats
    Name = "Power Fantasy"
    MustConfirm = "The Recommended Difficulty For The Dead. Press Y to Continue or N to Select Other Skill?"
 }
@@ -25,6 +26,7 @@ Skill easy
    MonsterHealth = 0.75
    SpawnFilter = Easy
    Textcolor = Purple
+   //DisableCheats
    Name = "Can I Play Daddy?"
    MustConfirm = "The Recommended Difficulty For The Weak. Press Y to Continue or N to Select Other Skill?"
 }
@@ -36,6 +38,7 @@ Skill normal
    MonsterHealth = 0.90
    SpawnFilter = Normal
    Textcolor = White
+   //DisableCheats
    Name = "Harsh"
    MustConfirm = "The Recommended Difficulty For Slayers. Press Y to Continue or N to Select Other Skill?"
 }
@@ -44,18 +47,21 @@ Skill Hard
 {
    AmmoFactor = 1
    DamageFactor = 1.0
+ //  Aggressiveness = .10
    SpawnFilter = Hard
    Textcolor = Brown
+   //DisableCheats
    Name = "Project Brutality"
    MustConfirm = "The Recommended Project Brutality Experience. Press Y to Continue or N to Select Other Skill."
 }
 
 Skill Brutal
-{
+{  
    AmmoFactor = 1
    DamageFactor = 1.25
    SpawnFilter = Nightmare
    Aggressiveness = 0.10
+   //DisableCheats
    Textcolor = "Orange"
    Name = "Man and a Half"
    MustConfirm = "Demons Are More Aggressive, Inflict More Damage To The Slayer, and are very proficient. Press Y to Continue or N to Select Other Skill."
@@ -69,6 +75,7 @@ Skill Superbad
    FastMonsters
    SpawnFilter = Nightmare
    Textcolor = "Blue"
+   //DisableCheats
    Name = "12 on 10 Point Scale of Bad"
    MustConfirm = "Demons Are Faster. Press Y to Continue or N to Select Other Skill."
 }
@@ -80,6 +87,7 @@ Skill BlackMetal
    MonsterHealth = 1.20
    SpawnFilter = Nightmare
    Aggressiveness = 0.15
+   //DisableCheats
    Name = "I AM THE PAINKILLER!!!"
    Textcolor = "Gold"
    MustConfirm = "Demons Have More Health, Extremely Aggressive, Inflict More Damage To The Slayer. Press Y to Continue if you can take it or N to Select Other Skill."
@@ -94,6 +102,8 @@ Skill HELL
    Aggressiveness = 0.20
    SpawnFilter = Nightmare
    Textcolor = Red
+   //DisableCheats
+  // PicName = "M_NMARE"
    name = "Last Man on Earth"
    mustconfirm = "You Shall Die And Taste The Fear Of Demonic Terror In The Depths Of Hell, Slayer!. Press Y to start your death wish or N to Select Other Skill?"
 }
@@ -104,26 +114,14 @@ GameInfo
 	DimColor = "Black"
 	DimAmount = 0.70
 	NoRandomPlayerClass = True
-	StatusBarClass = "PB2022_Hud_ZS"
 	AddEventHandlers = "pb_ExecutionHandler"
 	AddEventHandlers = "PB_EventHandler"
-	AddEventHandlers = "PB_XPRewardsHandler"
-	AddEventHandlers = "PB_VisorHandler"
-	AddEventHandlers = "PB_HUDFXHandler"
 	AddEventHandlers = "MBlurHandler"
 	AddEventHandlers = "PB_WheelBSSBlurHandler"
-	AddEventHandlers = "gb_EventHandler"
-	AddEventHandlers = "gb_PreviousWeaponEventHandler"
-	AddEventHandlers = "gb_PreviousWeaponStorage"
-	AddEventHandlers = "gb_VmAbortHandler"
 	AddEventHandlers = "NashGoreHandler"
 	AddEventHandlers = "BDv22GoreHandler"
 	AddEventHandlers = "BDv22GoreMergeHandler"
 	AddEventHandlers = "BPv10GoreHandler"
-	AddEventHandlers = "PB_BurnFXThrottleHandler"
-	AddEventHandlers = "PB_DeathGoreBoostHandler"
-	AddEventHandlers = "AccuDeathHandler"
-	AddEventHandlers = "AccuDeathSpawnHandler"
 	AddEventHandlers = "TiltPlusPlusHandler"
 	AddEventHandlers = "DeathFadeBootstrap"
 	AddEventHandlers = "DEDashJumpHandler"
@@ -133,65 +131,22 @@ GameInfo
 	AddEventHandlers = "PB_SpecialWheelHandler"
 	AddEventHandlers = "HatExtravaganza"
 	AddEventHandlers = "PB_HitFeedback_Handler"
-	AddEventHandlers = "HelmetDropHandler"
-	AddEventHandlers = "DamNumEventHandler"
-	AddEventHandlers = "PB_HazardDamageHudHandler"
-	AddEventHandlers = "PB_TacticalFeelHandler"
-	AddEventHandlers = "KSHUDMessageHandler"
-	AddEventHandlers = "PB_KillstreakThrottleHandler"
-	AddEventHandlers = "PB_KillstreakHandler"
-	AddEventHandlers = "PB_KillstreakRareFlare"
-	AddEventHandlers = "PB_InstantWeaponSwitchHandler"
 	AddEventHandlers = "CSSGEvent"
-	AddEventHandlers = "PB_ShieldSawPinataHandler"
-	AddEventHandlers = "ShieldSawPlayerHandler"
-	AddEventHandlers = "PB_GKEquipmentCooldownHandler"
-	AddEventHandlers = "PB_LowHealthAlertHandler"
-	AddEventHandlers = "PB_BloodPunchReadyHandler"
-	AddEventHandlers = "PB_MarauderSupportHandler"
-	AddEventHandlers = "PB_RLACSHandler"
-	AddEventHandlers = "PB_DMRReticleHandler"
-	AddEventHandlers = "TeleporterEffects"
-	AddEventHandlers = "VUAS_AchievementHandler"
-	AddEventHandlers = "VUAS_PersistentTracker"
-	AddEventHandlers = "VUAS_AchievementRenderer"
-	AddEventHandlers = "VUAS_AchievementCommands"
-	AddEventHandlers = "PB_AchievementSetup"
-	AddEventHandlers = "PB_AchievementCombatHandler"
-	// Combat SFX warm-cache (~45 logical names): decoded at each map load (incl. TITLEMAP) to cut first-play hitches from PK3/OGG decode. Expand via maint_scripts or SNDINFO + gameplay profiling — do not list all ~4k PB sounds here.
-	PrecacheSounds =
-		"weapons/pistol", "weapons/pistolup",
-		"weapons/rifle", "weapons/rifle/up", "Weapons/Rifle/SFire",
-		"weapons/sg", "weapons/sgpump", "insertshell",
-		"weapons/plasmarifle", "weapons/plasma/cellin", "weapons/plasma/startup", "PLREADY",
-		"weapons/minigunfire", "weapons/minigunfirefast",
-		"CHAINSTA", "CHAINSPI", "CHAINSTO",
-		"weapons/minigun/chaingunmode/spinup", "weapons/minigun/chaingunmode/spin",
-		"weapons/minigun/chaingunmode/spindown",
-		"player/cyborg/fist", "weapons/fistwhoosh", "weapons/fists_smash",
-		"grunt/pain", "player/pain100", "player/pain75", "player/pain50", "player/pain25",
-		"ARMOR", "misc/abonus_pickup", "items/armor/Sshard",
-		"AmmoSmall", "misc/shell_pickup",
-		"nashgore/bloodsplash", "gore/break", "misc/xdeath", "misc/xdeath4",
-		"weapons/atmo/int/pistol", "weapons/atmo/ext/pistol",
-		"weapons/atmo/int/pistol_mag", "weapons/atmo/ext/pistol_mag",
-		"weapons/atmo/int/shotgun", "weapons/atmo/ext/shotgun",
-		"weapons/atmo/int/ar", "weapons/atmo/ext/ar",
-		"weapons/atmo/int/smg", "weapons/atmo/ext/smg",
-		"Equip_Activate", "IceBomb/icebombfire",
-		"Flame_belch1", "Flame_belch2", "Flame_belch3", "Flame_belch4",
-		"Equip_flameready", "Equip_Iceready", "Equip_notready"
-	NormForwardMove = 0x32, 0x32
-	NormSideMove = 0x32, 0x32
+	NormForwardMove = 0x32, 0x32		//Walk speed is modulated through
+	NormSideMove = 0x32, 0x32			//CVar in the menu options
 }
+
+//[inkoalawetrust] These are all the editor numbers Project Brutality's custom actors use.
 
 DoomEdNums
 {
+	//Items
 	23000 = LightArmor
 	23001 = MediumArmor
 	23002 = Medikit2
 	23003 = NewMedipack
-
+	
+	//Ammunition
 	23004 = BulletKit
 	23005 = BulletCartridge
 	23007 = NewClipBox
@@ -202,19 +157,23 @@ DoomEdNums
 	23015 = Gas
 	23016 = DemonPower
 	23017 = LargeDemonPower
-
+	
+	//Powerups
 	23018 = UpgradeSpawner
 	23019 = ExplosivesCrate
 	23020 = DoubleSphere
 	23021 = HasteSphere
-
+	
+	//Friendly marines (That don't replace any ZDoom marines.)
 	23022 = PrePlacedMarineAutoShotgun
-
+	
+	//Decorations
 	23024 = BarrelEmpty
 	23025 = BarrelFrozen
 	23026 = FlameBarrel
 	23027 = NukageBarrel
-
+	
+	//Weapons
 	23028 = HandGrenade
 	23029 = LeechGrenade
 	23030 = GroundProxMine
@@ -229,7 +188,7 @@ DoomEdNums
 	23039 = PB_SSG
 	23040 = PB_QuadSG
 	23041 = PB_Autoshotgun
-	23042 = Rifle
+	23042 = Rifle //Where's the prefix ? //SoonTM
 	23043 = PB_Carbine
 	23044 = PB_LMG
 	23045 = PB_Minigun
@@ -241,12 +200,14 @@ DoomEdNums
 	23052 = PB_M2Plasma
 	23054 = PB_Railgun
 	23055 = PB_Freezer
+//	23056 = PB_BFG11K
 	23057 = PB_BFGPickup
 	23058 = PB_BHG
 	23059 = PB_DemonTech
 	23060 = PB_Flamethrower
 	23061 = PB_Unmaker
 
+	//Monsters
 	23062 = PB_Zombieman
 	23063 = PB_CarbineZombieman
 	23064 = PB_HelmetZombieman
@@ -302,7 +263,7 @@ DoomEdNums
 	23114 = PB_BeamRev
 	23115 = PB_Draugr
 	23116 = PB_Baron
-	23117 = PB_Knight
+	23117 = PB_Knight //Much like God, UDB works in mysterious ways, so it refuses to parse the Hell Knight if it uses this particular editor number.
 	23118 = PB_CyberBaron
 	23119 = PB_CyberKnight
 	23120 = PB_CyberPaladin
@@ -319,11 +280,11 @@ DoomEdNums
 	23131 = PB_Juggernaut
 	23132 = PB_Nazi
 	23133 = LeverAction
-	23134 = RiotShieldPickup
+	23134 = RiotShield
 	23135 = PB_MetalSniper
 	23136 = Paingiver
-	23137 = OldHMG
 
+	//Marauder add-on (ported from PB3.0 Marauder + Peacekeeper SSG)
 	23138 = MarauderSSG
 	23139 = PB_Marauder
 	23140 = MarauderWolfSummon
@@ -331,87 +292,19 @@ DoomEdNums
 	23143 = ProSurv_Ballista
 	23147 = PB_Excavator
 	23148 = PB_NeoHMG
-	23149 = PB_M41A
 	23150 = BDPBattleRifle
 	23151 = PB_DemonExterminator
 	23152 = MastermindChaingun
-	23153 = ShieldSaw_token
 	23154 = PB_MolotovAmmoPickup
 	23155 = PB_MolotovOrUpgradeSpawner
-	23156 = PB_XM21
-	23157 = PB_XM21Upgrade
 	23158 = X12Shotgun
 	23159 = PossessedGibs
 	23160 = PB_CyberdemonRL
-	23161 = VorpalBlade
-	23162 = HASG
-	23163 = HASGDrum
-	23164 = PossessedGibsSlither
-	23165 = PB_GuardsphereST
-	23166 = ShieldGrenade
-	23167 = Shambler
-	23168 = Burster
-	23169 = Blighter
-	23170 = CyberFodder
-	23171 = Screamer
-	23172 = Spiker
-	23173 = Puker
-	23174 = FodderExtraPassiveSpawn
-	23175 = Pustule
-	23176 = Mimic
-	23177 = Tentacle
-	23178 = TritePod
-	23179 = TritePodCeiling
-	23180 = Hangman
-	23181 = Trite
-	23182 = ProjectSurvivalPassiveExtraSpawn
-	23183 = FrozenMimic
-	23184 = FrozenTentacle
-	23185 = FrozenTritePod
-	23186 = FrozenTritePodCeiling
-	23187 = FrozenHangman
-	23188 = PB_VenorGK
 
-	23189 = BootsOfTheNorth
-	23190 = BracersOfForce
-	23191 = BookOfTheDead
-	23192 = FireAuraSphere
-	23193 = FlightSphere
-	23194 = FrostAuraSphere
-	23195 = HandOfTheWraith
-	23196 = ArtiLichSkull
-	23197 = PentacleOfProjection
-	23198 = ReflectorSphere
-
-	23199 = PB_Realm667_BloodGhostGK
-	23200 = PB_Realm667_BloodSkullGK
-
-	23201 = PB_FrostBaron
-	23202 = PB_Cryocubus
-	23203 = PB_FrostBrain
-	23204 = PB_Cryotron
-
-	23205 = PB_CF_SnowCasterPickup
-	23206 = PB_CF_FreezeBotDeployPickup
-	23207 = PB_CF_IceWallGenPickup
-	23208 = PB_CF_HoloDecoyPickup
-	23209 = PB_CF_TeslaTurretPickup
-	23210 = PB_CF_FlameTurretPickup
-	23211 = PB_CF_FreezeMinePickup
-
-	23212 = PB_CryoASG
-	23214 = PB_CryoElectroRifle
-	23215 = PB_CryoCannon
-	23216 = PB_CryoCellsPickup
-	23217 = PB_CryoCellsPack
-	23218 = PB_CryoCannonCellsPickup
-	23219 = PB_DarkMatterRifle
-	23220 = PB_Fusil
-	23221 = LeverActionHellUpgradeT3
-	23222 = LeverActionHellUpgradeT4
-
+	//Glory Kills
 	17003 = CyberdemonLegsFatality
 
+	//Monster Pack (editor numbers inherited from the add-on — not renumbered into the 23000 block so map-placed instances keep working)
 	5123  = CrackoDemon
 	6333  = AracnorbQueen
 	21012 = ZombieTank
@@ -421,13 +314,8 @@ DoomEdNums
 	30107 = Director
 	30108 = Hellduke
 	30109 = Hellsmith
-	30110 = D3Maledict
-	30111 = ObsidianRavager
 	30130 = Helemental
 	30135 = Hierophant
+	// Weapons pack — Baalgar Demon (Doom1-style cyber boss, separate from PB_Cyberdemon)
 	2546  = CyberdemonBoss
-}
-gameinfo
-{
-	addeventhandlers = "hitmarkershandler"
 }

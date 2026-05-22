@@ -71,8 +71,8 @@ Actor PB_Afrit replaces Cacodemon
 		Stop
    
   Spawn:
-	FRIT A 1 ACS_NamedExecuteAlways("MonsterPerformanceMode", 0, 0, 0, 0)
-	FRIT A 1 ACS_ExecuteAlways(796, 0, 0, 0, 0)
+	FRIT A 1 ACS_NamedExecuteAlways("MonsterPerformanceMode", 0, 0, 0, 0)//Check Effects
+	FRIT A 1 ACS_ExecuteAlways(796, 0, 0, 0, 0)//Check if Vanilla Mode is activated
     FRIT A 0
     FRIT AABB 4 Bright A_Look
     Goto Spawn+3
@@ -306,7 +306,7 @@ Actor PB_Afrit replaces Cacodemon
 		TNT1 AAA 0 A_CustomMissile ("BigPlasmaParticleX", 42, 0, random (0, 360), 2, random (0, 360))
 		FR1C DE 5 A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 180), 2, random (0, 180))
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
-		TNT1 A 0 A_PlaySound("BIG_BODYF", 2)
+		TNT1 A 0 A_PlaySound("BIG_BODYF", 9)
         FR1C FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF 6 A_CustomMissile ("PlasmaSmoke", 24, 0, random (0, 180), 2, random (0, 180))
 		FR1C F -1
         Stop
@@ -316,12 +316,7 @@ Actor PB_Afrit replaces Cacodemon
 	Death.ExeCution1:
       TNT1 A 0 A_Pain
       TNT1 A 0 A_GiveToTarget ("GoExecution", 1)
-		FRIT H 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-		TNT1 A 0 A_PlaySound("Baron/Pain", 6)
-		FRIT H 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-		TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
-		FRIT H 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-		TNT1 A 0 A_PlaySound("demon/melee", 0)
+		FRIT H 30 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
 		Goto Death.Explosive
 
    SpecialFatality:
@@ -806,6 +801,7 @@ Speed 13
 BounceFactor 0.4
 }
 
+///////////////////////////======VANILLA======//////////////////////////////////
 
 Actor Vanilla_Afrit : PB_Afrit
 {
@@ -814,7 +810,7 @@ Actor Vanilla_Afrit : PB_Afrit
 	{
 		Spawn:
 		FRIT A 0
-	TNT1 A 0 ACS_NamedExecuteAlways("MonsterPerformanceMode", 0, 0, 0, 0)
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterPerformanceMode", 0, 0, 0, 0)//Check Effects
 		FRIT AABB 4 Bright A_Look
 		Goto Spawn+3
 	}

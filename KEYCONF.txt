@@ -1,36 +1,22 @@
 clearplayerclasses
 addplayerclass PB_Doomer
 
-        addkeysection "PB 2022 Enhanced - Interactions" PBInteractions             
+   addkeysection "Project Brutality - Interactions" PBInteractions             
       
-        addkeysection "Project Brutality" PBAdvMoves   
+   addkeysection "Project Brutality" PBAdvMoves   
    
 	AddMenuKey "Activate Weapon Special" "+PBWeaponSpecial"
 	alias "+PBWeaponSpecial" "netevent PBWeaponSpecialOn"
 	alias "-PBWeaponSpecial" "netevent PBWeaponSpecialOff"
    
-        AddMenuKey "Equipment Selection Wheel" "+PBEquipSpecial"
+   AddMenuKey "Equipment Selection Wheel" "+PBEquipSpecial"
 	alias "+PBEquipSpecial" "netevent PBEquipSpecialOn"
 	alias "-PBEquipSpecial" "netevent PBEquipSpecialOff"
 
-	AddMenuKey "Weapon Selection Wheel" "+PBWeaponWheel"
-	alias "+PBWeaponWheel" "event gb_toggle_weapon_menu"
-	alias "-PBWeaponWheel" "event gb_toggle_weapon_menu_up"
-
-	AddKeySection "Gearbox" gb_Keys
-	AddMenuKey "$GB_TOGGLE_INVENTORY_MENU" "+gb_toggle_inventory_menu"
-	alias "+gb_toggle_inventory_menu" "event gb_toggle_inventory_menu"
-	alias "-gb_toggle_inventory_menu" "event gb_toggle_inventory_menu_up"
-	AddMenuKey "$GB_PREV_WEAPON" "gb_prev_weapon"
-	alias gb_prev_weapon "netevent gb_prev_weapon"
-	AddMenuKey "$GB_ROTATE_WEAPON_PRIORITY" "gb_rotate_weapon_priority"
-	alias gb_rotate_weapon_priority "event gb_rotate_weapon_priority"
-	AddMenuKey "$GB_ROTATE_WEAPON_SLOT" "gb_rotate_weapon_slot"
-	alias gb_rotate_weapon_slot "event gb_rotate_weapon_slot"
-	alias gb_reset_custom_order "netevent gb_reset_custom_order"
-	alias zabor "event zabor"
-	alias gb_copy_player_color "gb_color $color"
-	alias gb_reset "ResetCvar gb_scale; ResetCvar gb_color; ResetCvar gb_dim_color; ResetCvar gb_show_tags; ResetCvar gb_view_type; ResetCvar gb_enable_dim; ResetCvar gb_enable_blur; ResetCvar gb_wheel_position; ResetCvar gb_wheel_scale; ResetCvar gb_wheel_tint; ResetCvar gb_multiwheel_limit; ResetCvar gb_blocks_position_x; ResetCvar gb_blocks_position_y; ResetCvar gb_text_scale; ResetCvar gb_text_position_x; ResetCvar gb_text_position_y; ResetCvar gb_text_position_y_max; ResetCvar gb_text_usual_color; ResetCvar gb_text_selected_color; ResetCvar gb_open_on_scroll; ResetCvar gb_open_on_slot; ResetCvar gb_reverse_slot_cycle_order; ResetCvar gb_select_first_slot_weapon; ResetCvar gb_mouse_in_wheel; ResetCvar gb_select_on_key_up; ResetCvar gb_no_menu_if_one; ResetCvar gb_on_automap; ResetCvar gb_lock_positions; ResetCvar gb_enable_sounds; ResetCvar gb_frozen_can_open; ResetCvar gb_time_freeze; ResetCvar gb_mouse_sensitivity_x; ResetCvar gb_mouse_sensitivity_y; ResetCvar gb_zabor_enabled"
+   addmenukey "Unload Gun" unreloader
+   alias unreloader "puke 363"
+   defaultbind U unreloader
+   
    
 	AddMenuKey "Activate Equipment" +User1
 	Alias +User1
@@ -48,49 +34,27 @@ addplayerclass PB_Doomer
 	alias +User4
 	defaultbind Q +User4
 
-	addmenukey "Crucible" +glorysaw
-	addmenukey "Shoulder Cannon" shouldercannon
-	addmenukey "Shoulder cryo (ice bomb)" glorycryo
-	alias +glorysaw "netevent pb_glorysaw_on"
-	alias -glorysaw "netevent pb_glorysaw_off"
-	alias shouldercannon "netevent pb_shouldercannon"
-	alias glorycryo "netevent pb_glorycryo"
-
-	addmenukey "Recall Shield Saw (FastCall)" TShieldsaw
-	alias TShieldsaw "use FastCall"
-	defaultbind T TShieldsaw
-
-	addmenukey "Leaning Movement" PBLeanToggle
-	alias PBLeanToggle "netevent pb_lean_toggle"
-
-        addmenukey "Unload Gun" unreloader
-        alias unreloader "puke 363"
-        defaultbind U unreloader
-
-	addMenuKey "Taunt" "RequestTaunt"
-	alias RequestTaunt "netevent RequestTaunt"
-	defaultbind X RequestTaunt
-
-	AddMenuKey "Open PDA" openpda
-	alias openpda "netevent openpda"
-	defaultbind BACKSLASH openpda
+//Needs to actually be finished.    
+//    AddMenuKey "Open PDA" openpda
+//    alias openpda "netevent openpda"
    
-        addmenukey "Clear All Debris" "netevent EV_ClearGore"
-	defaultbind L "netevent EV_ClearGore"
+   addmenukey "Clear All Debris" "netevent EV_ClearGore"
+defaultbind L "netevent EV_ClearGore"
 
 	AddMenuKey "Toggle PBVP Models" togglepbvp
 	Alias togglepbvp "Toggle V5_MODELS"
 
-	weaponsection "PB_RocketLauncher"
-	addslotdefault 6 PB_RocketLauncher
+// Glory Kills
+addkeysection "Glory kill" GloryKill
+addmenukey "Crucible" +glorysaw
+addmenukey "Shoulder Cannon" shouldercannon
+addmenukey "Shoulder cryo (ice bomb)" glorycryo
 
-alias ach_open_menu "openmenu VUASAchievementBrowse"
-alias ach_help "netevent ach_help"
-alias ach_list "netevent ach_list"
-alias ach_debug "netevent ach_debug"
-alias ach_clear_all "netevent ach_clear_all"
-alias ach_unlock_all "netevent ach_unlock_all"
+alias +glorysaw "netevent pb_glorysaw_on"
+alias -glorysaw "netevent pb_glorysaw_off"
 
-alias pb_minimal_hud_style "pb_hudxmargin -9; pb_hudymargin -9; pb_hudboxalpha 0; pb_hud_slanted_bars 0; pb_hideunusedtypes 1; pb_curmaxammolist 0; pb_showlevelstats 0; pb_showammolist 0; PB_HudDynamics 0; pb_showblooddrops 0; pb_showglasscracks 0"
-alias pb_full_hud_style "pb_hudxmargin 0; pb_hudymargin 0; pb_hudboxalpha 1; pb_hud_slanted_bars 1; pb_hideunusedtypes 1; pb_curmaxammolist 1; pb_showlevelstats 0; pb_showammolist 1; PB_HudDynamics 1; pb_showblooddrops 0; pb_showglasscracks 1"
-alias ResetPB_HUDOptions "resetcvar pb_showlevelstats; resetcvar pb_showammolist; resetcvar pb_curmaxammolist; resetcvar pb_hideunusedtypes; resetcvar pb_hudxmargin; resetcvar pb_hudymargin; resetcvar pb_hudboxalpha; resetcvar pb_hud_slanted_bars; resetcvar pb_showblooddrops; resetcvar pb_blooddropsalpha; resetcvar pb_showglasscracks; resetcvar pb_glasscracksalpha; resetcvar PB_HudDynamics; resetcvar pb_newmugshot"
+alias shouldercannon "netevent pb_shouldercannon"
+alias glorycryo "netevent pb_glorycryo"
+
+weaponsection "PB_RocketLauncher"
+addslotdefault 6 PB_RocketLauncher

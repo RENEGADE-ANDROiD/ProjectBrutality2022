@@ -1,4 +1,6 @@
-﻿
+//Sergeant Gibs
+
+//Sergeant Arm
 ACTOR XDeathNewSergeantArm1: XDeathArm1
 {
     Scale 1.0
@@ -83,6 +85,7 @@ ACTOR XDeathNewSergeantArm1Kicked: XDeathNewSergeantArm1
 	}
 }
 
+//Sergeant Upper Torso
 ACTOR XDeathNewSergeantUpperTorso
 {
     Radius 8
@@ -124,6 +127,7 @@ Scale 1.1
 4N06 J -1
        Stop    }}
 	   
+//Sergeant Lower Torso
 ACTOR XDeathNewSergeantLowerTorso
 {
     Radius 8
@@ -165,6 +169,7 @@ Scale 1.1
 4N05 J -1
        Stop    }}
 	   
+//Nazi Lower Torso
 ACTOR XDeathNewNaziLowerTorso : XDeathNewSergeantLowerTorso
 {
     States
@@ -192,6 +197,7 @@ NZ05 J -1
        Stop    }}
 	   
 
+//Sergeant Leg
 ACTOR XDeathNewSergeantLeg1: XDeathArm1
 {
     Scale 1.35
@@ -276,6 +282,7 @@ ACTOR XDeathNewSergeantLeg1Kicked: XDeathNewSergeantLeg1
 	}
 }
 
+//Nazi Leg
 ACTOR XDeathNewNaziLeg: XDeathNewSergeantLeg1
 {
     +Rollsprite
@@ -364,7 +371,9 @@ ACTOR XDeathNewNaziLegKicked: XDeathNewNaziLeg
 	}
 }
 
+//Imps Gibs
 
+//Imp Upper Torso
 ACTOR XDeathNewImpUpperTorso
 {
     Radius 8
@@ -406,6 +415,7 @@ Scale 1.0
 4N04 J -1
        Stop    }}
 	   
+//Imp Lower Torso
 ACTOR XDeathNewImpLowerTorso
 {
     Radius 8
@@ -447,6 +457,7 @@ Scale 1.0
 4N03 J -1
        Stop    }}
 	   
+//Infernus Leg
 ACTOR XDeathInfernusLeg
 {
     Radius 8
@@ -554,6 +565,7 @@ ACTOR InfernusHoofGib: InfernusLegGib
     }
 }
 	   
+//Infernus Arm
 ACTOR XDeathInfernusArm
 {
     Radius 8
@@ -661,6 +673,7 @@ ACTOR InfernusHandGib: InfernusLegGib
     }
 }
 	   
+//Infernus Torso
 ACTOR XDeathInfernusTorso
 {
     Radius 8
@@ -741,6 +754,7 @@ Scale 1.0
 			Stop
 	   }}
 	   
+//Infernus Head
 ACTOR XDeathInfernusHead
 {
     Radius 8
@@ -808,6 +822,7 @@ G0RV I -1
 			Stop
 	   }}
 
+//Infernus Torso Upper
 ACTOR XDeathInfernusUpperTorso
 {
     Radius 8
@@ -968,6 +983,7 @@ ACTOR InfernusXDeath
 	}
 }
 
+//Belphegor Gibs
 ACTOR XDeathBelphegorHead: XDeathHellKnightHead
 {
 +RollSprite

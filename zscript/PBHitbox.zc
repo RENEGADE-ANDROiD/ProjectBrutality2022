@@ -1,3 +1,4 @@
+//A Smarter Alternative to spam spawning Hitboxes
 Class PB_HeadshotHitbox : Actor
 	{
 	
@@ -5,6 +6,8 @@ Class PB_HeadshotHitbox : Actor
 		{
 		Health 	0x7FFFFFFF;
 		Mass 	0x7FFFFFFF;
+		//Renderstyle "Add";
+		//Translation "t_hitbox";
 		Species "Hitbox";
 		
 		
@@ -22,6 +25,7 @@ Class PB_HeadshotHitbox : Actor
 		damagefactor "SSG", 8.0;
 		damagefactor "ExplosiveImpact", 0.0;
 		damagefactor "Bullet", 1.5;
+		damagefactor "GibRemoving", 0.0;
 		damagefactor "TeleportRemover", 0.0;
 		DamageFactor "Freeze", 0.0;
 		DamageFactor "Shrink", 0.0;
@@ -34,6 +38,7 @@ Class PB_HeadshotHitbox : Actor
 		BloodType "Brutal_Blood", "SawBlood", "SawBlood";
 		-COUNTKILL;
 		+NOTARGET;
+		//+MISSILE;
 		+NOGRAVITY;
 		+SHOOTABLE;
 		+NOTELEPORT;
@@ -44,6 +49,7 @@ Class PB_HeadshotHitbox : Actor
 		+GHOST;
 		+NOTAUTOAIMED;
 		+DONTTHRUST;
+		//+NEVERTARGET;
 		+SERVERSIDEONLY;
 
 		}
@@ -61,9 +67,9 @@ Class PB_HeadshotHitbox : Actor
 		
 		}	
 	
-	action void hs_SpawnBlood(int amount)
-		{
-		while(amount > 0)
+	action void hs_SpawnBlood(int amount)			// function to spawn the correct coloured blood
+		{											// amount is configurable, could be made to spawn more blood 
+		while(amount > 0) 							// based on enemy size or health, damage dealt etc.
 			{
 			if(master)
 				{
@@ -79,8 +85,9 @@ Class PB_HeadshotHitbox : Actor
 	{
 		
 		Super.Tick();
-		bINVISIBLE = !hs_hitbox;
-		hsfactor = hs_factor;
+													// special cvars control behaviour of the hitbox
+		bINVISIBLE = !hs_hitbox;					// debug visible hitbox also gives a good reference point on where to shoot
+		hsfactor = hs_factor;						// factor of which the damage is multiplied. 
 		HitBoxTimerNew = Level.MapTime;
 		
 		if(abs(HitBoxTimerNew - HitBoxTimerOld) > 350) {
@@ -91,7 +98,7 @@ Class PB_HeadshotHitbox : Actor
 			{ Destroy(); } 
 			
 			
-		if (master)
+		if (master)									// sets the hitbox radius to be just a fraction bigger 
 		{					
 			if(radius != master.radius || height != master.height)
 				{ A_SetSize(master.radius+1, master.height/9);  } 
@@ -156,6 +163,8 @@ Default
 	{
 	Health 	0x7FFFFFFF;
 	Mass 	0x7FFFFFFF;
+//	Renderstyle "Add";
+//	Translation "t_leghitbox";
 	Species "Hitbox";
 	
 	
@@ -174,6 +183,7 @@ Default
 	damagefactor "ExplosiveImpact", 0.0;
 	damagefactor "Bullet", 1.5;
 	damagefactor "Shotgun", 1.5;
+	damagefactor "GibRemoving", 0.0;
 	damagefactor "TeleportRemover", 0.0;
 	DamageFactor "Freeze", 0.0;
 	DamageFactor "Shrink", 0.0;
@@ -205,9 +215,9 @@ Default
 		
 		}	
 
-	action void hs_SpawnBlood(int amount)
-		{
-		while(amount > 0)
+	action void hs_SpawnBlood(int amount)			// function to spawn the correct coloured blood
+		{											// amount is configurable, could be made to spawn more blood 
+		while(amount > 0) 							// based on enemy size or health, damage dealt etc.
 			{
 			if(master)
 				{
@@ -223,8 +233,9 @@ Default
 		{
 		
 		Super.Tick();
-		bINVISIBLE = !hs_hitbox;
-		hsfactor = hs_factor;
+													// special cvars control behaviour of the hitbox
+		bINVISIBLE = !hs_hitbox;					// debug visible hitbox also gives a good reference point on where to shoot
+		hsfactor = hs_factor;						// factor of which the damage is multiplied. 
 		HitBoxTimerNew = Level.MapTime;
 		
 		if(abs(HitBoxTimerNew - HitBoxTimerOld) > 350) {
@@ -235,7 +246,7 @@ Default
 			{ Destroy(); } 
 			
 			
-		if (master)
+		if (master)									// sets the hitbox radius to be just a fraction bigger 
 			{					
 			if(radius != master.radius || height != master.height)
 				{ A_SetSize(master.radius+5, master.height/5);  } 
@@ -245,6 +256,8 @@ Default
 			if(master.health < 1)
 				{ Destroy(); } 
 		
+		//		hs_SpawnBlood(1);
+				
 			if(self.health < self.lastHealth) { 
 					if (CheckInventory("Kicking", 1, AAPTR_TARGET)){
 						hs_SpawnBlood(1);

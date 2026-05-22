@@ -1,9 +1,0 @@
-PB_Staging weapon atmosphere tails (folded for PB_DynamicTail).
-
-- SNDINFO: root lumps SNDINFO.Atmosphere_Exterior + SNDINFO.Atmosphere_Interior (auto-loaded with other SNDINFO* shards).
-- Audio: .ogg / .wav only (not extensionless lumps); logical names like weapons/atmo/ext/ar map to sounds/combat/Atmosphere/...
-- Carbine uses PB_DynamicTail("ar", "ar") in Carbine.dec.
-- Exterior AR close tails on disk are weap_ar3_fire_* (not weap_ar_fire_* in upstream SNDINFO).
-- Sniper MP “far” layer files are sniper_atmo_ext_ext_*; interior LMG far tails are .ogg (not .wav).
-
-Source: Project Brutality PB_Staging branch (pa1nki113r/Project_Brutality).

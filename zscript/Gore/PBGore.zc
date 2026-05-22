@@ -224,20 +224,7 @@ class PB_LimbBase: PB_GibBase
 
 
 class FlyingGibBase : PB_LimbBase
-{
-	bool gibSpinFrozen;
-	double gibSpinSnapYaw;
-	int gibSpinStableCt;
-
-	override void Tick(void)
-	{
-		Super.Tick();
-		if (!bNoTimeFreeze && (isFrozen() || Level.isFrozen())) return;
-		if (NashGoreStatics.CheckSky(self)) { Destroy(); return; }
-		if (bMissile)
-			NashGoreStatics.TickStabilizeMissileGibSprite(self, gibSpinFrozen, gibSpinSnapYaw, gibSpinStableCt);
-	}
-}
+{}
 
 class PB_XDeath1 : Actor
 {
@@ -797,6 +784,11 @@ class PB_XDeathBurnedSkull : PB_XDeathBurnedMeat
 }
 
 
+/////////////////
+//ARMS
+/////////////////
+
+
 class PB_XDeathArm1 : FlyingGibBase
 {
 	Default
@@ -823,6 +815,10 @@ class PB_XDeathArm1 : FlyingGibBase
 		deathsound "bloood";
 	}
 
+	bool gibSpinFrozen;
+	double gibSpinSnapYaw;
+	int gibSpinStableCt;
+
 	override void BeginPlay(void)
 	{
 		ChangeStatNum(STAT_NashGore_Gore);
@@ -835,6 +831,14 @@ class PB_XDeathArm1 : FlyingGibBase
 	{
 		if (random() < (255 - nashgore_gibamount)) { Destroy(); return; }
 		Super.PostBeginPlay();
+	}
+
+	override void Tick(void)
+	{
+		Super.Tick();
+		if (!bNoTimeFreeze && (isFrozen() || Level.isFrozen())) return;
+		if (NashGoreStatics.CheckSky(self)) { Destroy(); return; }
+		NashGoreStatics.TickStabilizeMissileGibSprite(self, gibSpinFrozen, gibSpinSnapYaw, gibSpinStableCt);
 	}
 
     States
@@ -959,6 +963,7 @@ class PB_GibHand: PB_TinyGibBase
 	}
 }
 
+// Nazi Arm
 class PB_NaziArm : PB_XDeathArm1
 {
 	Default
@@ -1078,6 +1083,10 @@ class PB_GibNaziArmPart: PB_GibArmPart
 			Stop;
 	}
 }
+
+/////////////////////
+//LEGS
+/////////////////////
 
 class PB_XDeathZombieLeg: PB_XDeathArm1
 {
@@ -2196,7 +2205,9 @@ class PB_XDeathZombiemanHeadKicked: PB_XDeathZombieManHead
 }
 
 
-class PB_XDeathNaziHelmet: PB_XDeathZombieManHead
+// NAZI GORE
+
+class PB_XDeathNaziHelmet: PB_XDeathZombieManHead //White skinned piece 1
 {
 	Default 
 	{
@@ -3108,6 +3119,7 @@ class PB_XDeathHalfARZombieman : PB_XDeathHalfZombieman
     }
 }
 
+//
 class PB_XDeathHalfZombieScientistChainsaw : PB_XDeathHalfZombieman
 {
     States
@@ -3274,6 +3286,7 @@ class PB_XDeathHalfHelmetZombieman2 : PB_XDeathHalfZombieman
     }
 }
 
+//
 Class PB_Gib_HalfSergeant1: PB_GibBase
 {
     States

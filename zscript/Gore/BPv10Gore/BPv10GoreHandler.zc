@@ -1,26 +1,24 @@
-// Sprites: AWEZ (Brutal Pack V10).
+// Brutal Pack V10 (BPv10) gore add-on handler. Sibling to BDv22GoreMergeHandler.
+// Hooks WorldThingDied, gated by bpv10_* cvars, and only spawns extra gore when
+// the dead actor is one of our humanoid grunts (ZombieMan, ShotgunGuy, Commando,
+// Nazi, ZombieScientist, RifleCommando) or an Imp variant. Imps skip the
+// gear-debris path. All spawned actors live in actors/Gore/BPv10Gore/*.dec.
+// Original sprites by AWEZ (Brutal Pack V10).
+//
+// Burn deaths roll BPv10_BurnedHusk; plasma/disintegrate roll BPv10_CarbonizedBody;
+// x-death rolls flying torso + flop organs + zombie-gear debris + a big blood splat.
+
 class BPv10GoreHandler : EventHandler
 {
-	clearscope static PlayerPawn BPv10_ResolvePlayer(Actor a)
-	{
-		for (int i = 0; a && i < 10; i++)
-		{
-			if (a is "PlayerPawn" && a.player) return PlayerPawn(a);
-			Actor next = a.target != null ? a.target : (a.master != null ? a.master : a.tracer);
-			if (!next || next == a) break;
-			a = next;
-		}
-		return null;
-	}
-
 	clearscope static PlayerPawn BPv10_ResolveKiller(WorldEvent e)
 	{
 		if (!e) return null;
-		PlayerPawn p = BPv10_ResolvePlayer(e.Inflictor);
-		if (p) return p;
-		p = BPv10_ResolvePlayer(e.DamageSource);
-		if (p) return p;
-		if (e.Thing) return BPv10_ResolvePlayer(e.Thing.target);
+		if (e.Inflictor && e.Inflictor is "PlayerPawn") return PlayerPawn(e.Inflictor);
+		if (e.Inflictor && e.Inflictor.target && e.Inflictor.target is "PlayerPawn")
+			return PlayerPawn(e.Inflictor.target);
+		if (e.DamageSource && e.DamageSource is "PlayerPawn") return PlayerPawn(e.DamageSource);
+		if (e.Thing && e.Thing.target && e.Thing.target is "PlayerPawn")
+			return PlayerPawn(e.Thing.target);
 		return null;
 	}
 
@@ -84,7 +82,8 @@ class BPv10GoreHandler : EventHandler
 		PlayerPawn k = BPv10_ResolveKiller(e);
 		if (!k || !k.player) return;
 
-		if (!PB_EnhancedBrutality2022.IsOn(k.player)) return;
+		let cvEnable = CVar.GetCVar("bpv10_enable", k.player);
+		if (!cvEnable || !cvEnable.GetBool()) return;
 		let cvLow = CVar.GetCVar("pb_lowgraphicsmode", k.player);
 		if (!cvLow || cvLow.GetInt() > 0) return;
 		let cvBloodAmt = CVar.GetCVar("pb_bloodamount", k.player);
@@ -98,7 +97,9 @@ class BPv10GoreHandler : EventHandler
 
 		vector3 base = (t.pos.x, t.pos.y, t.pos.z + t.height * 0.4);
 
-		if (burn && random(0, 99) < PB_EnhancedBrutality2022.ScaleDeathChancePct(60, k.player))
+		let cvBurn = CVar.GetCVar("bpv10_burn_corpse", k.player);
+		let cvCarb = CVar.GetCVar("bpv10_carbonized", k.player);
+		if (burn && cvBurn && cvBurn.GetBool() && random(0, 99) < 60)
 		{
 			String c = random(0, 1) == 0 ? "BPv10_BurnedHusk" : "BPv10_BurnedHusk2";
 			Class<Actor> cls = c;
@@ -108,7 +109,7 @@ class BPv10GoreHandler : EventHandler
 				if (a) a.angle = random(0, 359);
 			}
 		}
-		else if (plasma && random(0, 99) < PB_EnhancedBrutality2022.ScaleDeathChancePct(70, k.player))
+		else if (plasma && cvCarb && cvCarb.GetBool() && random(0, 99) < 70)
 		{
 			Class<Actor> cls = "BPv10_CarbonizedBody";
 			if (cls)
@@ -118,25 +119,10 @@ class BPv10GoreHandler : EventHandler
 			}
 		}
 
-		int splatPct = xdeath ? 62 : 32;
-		if (random(0, 99) < PB_EnhancedBrutality2022.ScaleDeathChancePct(splatPct, k.player))
-		{
-			int p = random(0, 4);
-			String c = p == 0 ? "BPv10_BloodSplat0" :
-				p == 1 ? "BPv10_BloodSplat1" :
-				p == 2 ? "BPv10_BloodSplat2" :
-				p == 3 ? "BPv10_BloodSplat3" : "BPv10_BloodSplat4";
-			Class<Actor> cls = c;
-			if (cls)
-			{
-				Actor a = Actor.Spawn(cls, (t.pos.x, t.pos.y, t.floorz + 0.25), NO_REPLACE);
-				if (a) a.angle = t.angle + frandom(-20, 20);
-			}
-		}
-
 		if (!xdeath) return;
 
-		if (random(0, 99) < PB_EnhancedBrutality2022.ScaleDeathChancePct(35, k.player))
+		let cvTorso = CVar.GetCVar("bpv10_xdeath_torso", k.player);
+		if (cvTorso && cvTorso.GetBool() && random(0, 99) < 35)
 		{
 			String c = random(0, 1) == 0 ? "BPv10_FlyingTorso1" : "BPv10_FlyingTorso2";
 			Class<Actor> cls = c;
@@ -146,7 +132,8 @@ class BPv10GoreHandler : EventHandler
 				if (a) a.vel = (frandom(-7, 7), frandom(-7, 7), frandom(4, 9));
 			}
 		}
-		if (random(0, 99) < PB_EnhancedBrutality2022.ScaleDeathChancePct(45, k.player))
+		let cvFlop = CVar.GetCVar("bpv10_flop_organs", k.player);
+		if (cvFlop && cvFlop.GetBool() && random(0, 99) < 45)
 		{
 			Class<Actor> cls = "BPv10_FlopOrgans";
 			if (cls)
@@ -159,7 +146,8 @@ class BPv10GoreHandler : EventHandler
 				}
 			}
 		}
-		if (grunt && random(0, 99) < PB_EnhancedBrutality2022.ScaleDeathChancePct(50, k.player))
+		let cvZGear = CVar.GetCVar("bpv10_zgear", k.player);
+		if (grunt && cvZGear && cvZGear.GetBool() && random(0, 99) < 50)
 		{
 			Class<Actor> cls = "BPv10_ZombieGearDebris";
 			if (cls)
@@ -170,6 +158,21 @@ class BPv10GoreHandler : EventHandler
 					Actor a = Actor.Spawn(cls, (base.x, base.y, base.z + 4), NO_REPLACE);
 					if (a) a.vel = (frandom(-6, 6), frandom(-6, 6), frandom(3, 8));
 				}
+			}
+		}
+		let cvSplat = CVar.GetCVar("bpv10_blood_splat", k.player);
+		if (cvSplat && cvSplat.GetBool() && random(0, 99) < 40)
+		{
+			int p = random(0, 4);
+			String c = p == 0 ? "BPv10_BloodSplat0" :
+				p == 1 ? "BPv10_BloodSplat1" :
+				p == 2 ? "BPv10_BloodSplat2" :
+				p == 3 ? "BPv10_BloodSplat3" : "BPv10_BloodSplat4";
+			Class<Actor> cls = c;
+			if (cls)
+			{
+				Actor a = Actor.Spawn(cls, (t.pos.x, t.pos.y, t.pos.z + 1), NO_REPLACE);
+				if (a) a.angle = random(0, 359);
 			}
 		}
 	}

@@ -15,16 +15,16 @@ ACTOR PB_ArchvileGK: PB_Archvile Replaces PB_Archvile
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0)
-				{
-					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
-					A_GiveInventory("FinisherToken",1);
-					A_GiveToTarget("BloodPunchKilled",1);
+				if(countinv("FinisherToken")==0) //if it isnt healing already
+				{								//will heal and give the token that indicates it's executable
+					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
+					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1)
+				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
 				{
-					return state("Stagger");
+					return state("Stagger");	//stays there for a few seconds
 				}
 				else
 				{
@@ -122,16 +122,16 @@ actor PB_FleshWizardGK: PB_FleshWizard Replaces PB_FleshWizard
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0)
-				{
-					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
-					A_GiveInventory("FinisherToken",1);
-					A_GiveToTarget("BloodPunchKilled",1);
+				if(countinv("FinisherToken")==0) //if it isnt healing already
+				{								//will heal and give the token that indicates it's executable
+					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
+					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1)
+				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
 				{
-					return state("Stagger");
+					return state("Stagger");	//stays there for a few seconds
 				}
 				else
 				{
@@ -206,7 +206,6 @@ actor PB_FleshWizardGK: PB_FleshWizard Replaces PB_FleshWizard
   
 	Death.Fatality:
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-		TNT1 A 0 A_PlaySound("wizard/pain")
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
         TNT1 A 0 A_GiveToTarget("FleshWizardFatality", 1)
         TNT1 A 1 A_NoBlocking
@@ -232,16 +231,16 @@ Actor PB_HellionGK: PB_Hellion Replaces PB_Hellion
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0)
-				{
-					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
-					A_GiveInventory("FinisherToken",1);
-					A_GiveToTarget("BloodPunchKilled",1);
+				if(countinv("FinisherToken")==0) //if it isnt healing already
+				{								//will heal and give the token that indicates it's executable
+					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
+					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1)
+				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
 				{
-					return state("Stagger");
+					return state("Stagger");	//stays there for a few seconds
 				}
 				else
 				{
@@ -341,16 +340,16 @@ ACTOR PB_IcevileGK: PB_Icevile Replaces PB_Icevile
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0)
-				{
-					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
-					A_GiveInventory("FinisherToken",1);
-					A_GiveToTarget("BloodPunchKilled",1);
+				if(countinv("FinisherToken")==0) //if it isnt healing already
+				{								//will heal and give the token that indicates it's executable
+					A_SpawnItemEx("ArchHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
+					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1)
+				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
 				{
-					return state("Stagger");
+					return state("Stagger");	//stays there for a few seconds
 				}
 				else
 				{
@@ -425,7 +424,6 @@ ACTOR PB_IcevileGK: PB_Icevile Replaces PB_Icevile
 
 	Death.Fatality:
 		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-		TNT1 A 0 A_PlaySound("icevile/pain")
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
         TNT1 A 0 A_GiveToTarget("IceVileFatality", 1)
         TNT1 A 1 A_BossDeath

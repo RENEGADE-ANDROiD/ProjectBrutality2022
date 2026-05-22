@@ -3,11 +3,6 @@ Actor MastermindChaingunFired : Inventory
     Inventory.MaxAmount 200
 }
 
-Actor MastermindChainBurstShots : Inventory
-{
-    Inventory.MaxAmount 200
-}
-
 Actor MastermindChaingun : PB_Weapon
 {
     Game Doom
@@ -23,31 +18,35 @@ Actor MastermindChaingun : PB_Weapon
     +WEAPON.NOAUTOAIM
     +WEAPON.NOALERT
     +WEAPON.NOAUTOFIRE
-    +WEAPON.CHEATNOTWEAPON
     +INVENTORY.ALWAYSPICKUP
     +FLOORCLIP
     +DONTGIB
-    Inventory.Icon "RMN1H0"
+    Inventory.Icon "RMN2A0"
     Inventory.PickupSound "CBOXPKUP"
     Inventory.PickupMessage "You got the Mastermind's Chaingun! (Slot 6)"
     AttackSound "None"
     Weapon.SlotNumber 6
-    Weapon.SlotPriority 0.15
+    Weapon.SlotPriority 0
     Weapon.SelectionOrder 3500
     Scale 0.9
     Tag "Mastermind's Chaingun"
-    Inventory.AltHudIcon "RMN1H0"
+    Inventory.AltHudIcon "RMN2A0"
     FloatBobStrength 0.5
     States
     {
     Steady:
-        TNT1 A 1
-        TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-        TNT1 A 0 SetPlayerProperty(0,0,0)
-        TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+        TNT1 A 0
         Goto Ready
 
     Ready:
+        TNT1 A 0
+        {
+            if (CountInv("PB_DemonExterminator") >= 1)
+            {
+                return state("");
+            }
+            return state("");
+        }
         TNT1 A 0
     SelectAnimation:
         TNT1 A 0
@@ -76,16 +75,32 @@ Actor MastermindChaingun : PB_Weapon
     MastermindChaingunReadyToFire:
         RMNG F 1
         {
-            if (!PressingFire())
-            {
-                A_SetInventory("MastermindChainBurstShots", 0);
-            }
             if (CountInv("MastermindChaingunFired") >= 60) { A_GunFlash("MastermindChaingunBarrelSmoke"); }
-            if (PressingFire() && CountInv("RocketAmmo") > 0 && CountInv("MastermindCGDurability") > 0) { return state("Fire"); }
+            if (PressingFire() && CountInv("RocketAmmo") > 0) { return state("Fire"); }
             return A_DoPBWeaponAction;
         }
         TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
         Loop
+    ChooseUpgradePath:
+        TNT1 A 0 A_PrintBold("\cfChoose your path:\n\caFIRE = CACOTROLL 1\n\ciALTFIRE = CACOTROLL 2")
+        TNT1 A 1
+        TNT1 A 1
+        ChooseUpgradePathDebounce:
+        TNT1 A 2
+        ChooseUpgradePathLoop:
+        TNT1 A 0 A_JumpIf(JustPressed(BT_ATTACK), "KeepDemonExPath")
+        TNT1 A 0 A_JumpIf(JustPressed(BT_ALTATTACK), "KeepMastermindPath")
+        TNT1 A 1
+        TNT1 A 1
+    KeepDemonExPath:
+        TNT1 A 0 A_TakeInventory("MastermindChaingun", 1)
+        TNT1 A 0 A_PrintBold("\caPath selected: CACOTROLL 1")
+        TNT1 A 0 A_SelectWeapon("PB_DemonExterminator")
+        Stop
+    KeepMastermindPath:
+        TNT1 A 0 A_TakeInventory("PB_DemonExterminator", 1)
+        TNT1 A 0 A_PrintBold("\ciPath selected: CACOTROLL 2")
+        Goto MastermindChaingunReadyToFire
     MastermindChaingunBarrelSmoke:
         TNT1 A 0
         {
@@ -96,9 +111,8 @@ Actor MastermindChaingun : PB_Weapon
         Stop
 
     Deselect:
-        TNT1 A 0 A_SetInventory("MastermindChainBurstShots", 0)
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel")
         TNT1 A 0
         {
@@ -123,21 +137,19 @@ Actor MastermindChaingun : PB_Weapon
         }
         TNT1 A 0 A_TakeInventory("HasBarrel",1)
         TNT1 A 0 A_TakeInventory("HasIceBarrel",1)
-        TNT1 A 0 A_TakeInventory("HasBurningBarrel",1)
+        TNT1 A 0 A_TakeInventory("HasFlameBarrel",1)
         TNT1 A 0 A_TakeInventory("GrabbedBarrel",1)
         TNT1 A 0 A_TakeInventory("GrabbedIceBarrel",1)
-        TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel",1)
+        TNT1 A 0 A_TakeInventory("GrabbedFlameBarrel",1)
         Goto SelectFirstPersonLegs
     SelectContinue:
         TNT1 A 0 A_Raise
-        Goto Ready3
+        Wait
 
     Fire:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "ThrowFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel")
-        TNT1 A 0 A_JumpIfInventory("MastermindCGDurability",1,1)
-        Goto WeaponBreak
         TNT1 A 0
         {
             A_WeaponOffset(0,32);
@@ -152,28 +164,27 @@ Actor MastermindChaingun : PB_Weapon
         RMNG A 1 BRIGHT
         {
             A_TakeInventory("RocketAmmo",1,TIF_NOTAKEINFINITE);
-            A_TakeInventory("MastermindCGDurability",1,TIF_NOTAKEINFINITE);
             A_SpawnItemEx("PlayerMuzzle2",30,5,27);
             A_AlertMonsters;
             A_FireCustomMissile("YellowFlareSpawn", 15, 0, 0, 0);
             A_FireCustomMissile("YellowFlareSpawn", -15, 0, 0, 0);
-            A_MastermindChaingunShake();
+            A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
             A_FireCustomMissile("MastermindTracerDoomguy",random(-2,2),0,0,-12,random(3,-3));
-            A_PB_ThrottledGunSmoke(0, 0, 0, 'MastermindCGSmokePhase');
+            A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+            A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
             A_GiveInventory("MastermindChaingunFired",20);
             A_GunFlash;
         }
-        TNT1 A 0 PB_WeaponRecoil(0.92, 0.38)
+        TNT1 A 0 PB_WeaponRecoil(0.75,0.75)
         RMNG A 0 A_ZoomFactor(1.0)
         CHAF A 0 BRIGHT
         {
             A_FireCustomMissile("EmptyGrenadeBrass", random(-2,2), 0, 0, -12, 0, random(-2,2));
         }
+        TNT1 A 0 A_Recoil(1)
         TNT1 A 0
-        RMNG GHI 1
+        RMNG GHI 1 PB_WeaponRecoil(0.75,0.75)
     FireSecondShot:
-        TNT1 A 0 A_JumpIfInventory("MastermindCGDurability",1,1)
-        Goto WeaponBreak
         TNT1 AA 0
         RMNG A 0 A_PlaySound("CHGNSHOT", 1)
         RMNG A 0 A_PlaySound("FARMGN", 5)
@@ -181,25 +192,25 @@ Actor MastermindChaingun : PB_Weapon
         RMNG B 1 BRIGHT
         {
             A_TakeInventory("RocketAmmo",1,TIF_NOTAKEINFINITE);
-            A_TakeInventory("MastermindCGDurability",1,TIF_NOTAKEINFINITE);
             A_SpawnItemEx("PlayerMuzzle2",30,5,27);
             A_AlertMonsters;
             A_FireCustomMissile("YellowFlareSpawn", 15, 0, 0, 0);
             A_FireCustomMissile("YellowFlareSpawn", -15, 0, 0, 0);
-            A_MastermindChaingunShake();
+            A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
             A_FireCustomMissile("MastermindTracerDoomguy",random(-2,2),0,0,-12,random(3,-3));
-            A_PB_ThrottledGunSmoke(0, 0, 0, 'MastermindCGSmokePhase');
+            A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
+            A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0);
             A_GiveInventory("MastermindChaingunFired",20);
             A_GunFlash;
         }
-        TNT1 A 0 PB_WeaponRecoil(0.92, 0.38)
+        TNT1 A 0 PB_WeaponRecoil(0.75,0.75)
         RMNG A 0 A_ZoomFactor(1.0)
         CHAF A 0 BRIGHT
         {
             A_FireCustomMissile("EmptyGrenadeBrass", random(-2,2), 0, 0, -12, 0, random(-2,2));
         }
         TNT1 A 0
-        RMNG GHI 1
+        RMNG GHI 1 PB_WeaponRecoil(0.75,0.75)
         RMNG A 0 A_Refire
         RMNG FCDEF 1 A_WeaponReady
         RMNG CDEF 2 A_WeaponReady
@@ -208,7 +219,7 @@ Actor MastermindChaingun : PB_Weapon
 
     AltFire:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel")
         TNT1 A 0
         {
@@ -221,14 +232,13 @@ Actor MastermindChaingun : PB_Weapon
 
     Reload:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "IdleBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "IdleFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel")
         TNT1 A 0 A_TakeInventory("PB_LockScreenTilt",1)
         TNT1 A 0
         Goto NoAmmo
 
     NoAmmo:
-        TNT1 A 0 A_SetInventory("MastermindChainBurstShots", 0)
         RMNG A 0
         RMNG A 0 A_ZoomFactor(1.0)
         RMNG A 0 A_TakeInventory("Zoomed",1)
@@ -240,30 +250,6 @@ Actor MastermindChaingun : PB_Weapon
         RMNG A 0 A_PlaySound("weapons/empty", 4)
         Goto MastermindChaingunReadyToFire
 
-    WeaponBreak:
-        TNT1 A 0
-        {
-            A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard1", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard2", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_CustomMissile ("MetalShard3", 5, 0, random (-10, -20), 2, random (0, 30));
-            A_TakeInventory("MastermindChaingun",1);
-            A_StartSound("meleeweapon/break", CHAN_AUTO);
-            A_AlertMonsters;
-        }
-        Stop
-
     Spawn:
         RMN1 H 1
         RMN1 H -1
@@ -271,7 +257,7 @@ Actor MastermindChaingun : PB_Weapon
 
     WeaponSpecial:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "IdleBarrel")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "IdleFlameBarrel")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel")
         TNT1 A 0
         {
@@ -285,7 +271,7 @@ Actor MastermindChaingun : PB_Weapon
 
     FlashKicking:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelKicking")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelKicking")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelKicking")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelKicking")
         TNT1 A 0 A_ClearOverlays(10,11)
         RMNG F 1 A_DoPBWeaponAction
@@ -303,7 +289,7 @@ Actor MastermindChaingun : PB_Weapon
 
     FlashAirKicking:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelAirKicking")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelAirKicking")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelAirKicking")
         TNT1 A 0 A_ClearOverlays(10,11)
         RMNG F 1 A_DoPBWeaponAction
@@ -321,7 +307,7 @@ Actor MastermindChaingun : PB_Weapon
 
     FlashSlideKicking:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKicking")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelSlideKicking")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking")
         TNT1 A 0 A_ClearOverlays(10,11)
         RMNG F 1 A_DoPBWeaponAction
@@ -339,7 +325,7 @@ Actor MastermindChaingun : PB_Weapon
 
     FlashSlideKickingStop:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelSlideKickingStop")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop")
         TNT1 A 0 A_ClearOverlays(10,11)
         RMNG F 1 A_DoPBWeaponAction
@@ -347,7 +333,7 @@ Actor MastermindChaingun : PB_Weapon
 
     FlashPunching:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelPunching")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelPunching")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelPunching")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelPunching")
         TNT1 A 0 A_ClearOverlays(10,11)
         RMNG F 1 A_DoPBWeaponAction
@@ -361,27 +347,14 @@ Actor MastermindChaingun : PB_Weapon
         RMNG P 1
         RMNG O 1
         RMNG F 1
-        TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
-        Goto Ready3
+        Stop
 
     FlashPunchingStop:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelPunching")
-        TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelPunching")
+        TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelPunching")
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelPunching")
         TNT1 A 0 A_ClearOverlays(10,11)
         RMNG F 1 A_DoPBWeaponAction
-        TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
-        Goto Ready3
-
-    PDA_Preview_MMReady:
-        RMNG F 1 A_WeaponReady(WRF_NOFIRE)
-        Stop
-    PDA_Preview_MMFire:
-        RMNG A 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
-        RMNG B 1 BRIGHT A_WeaponReady(WRF_NOFIRE)
-        RMNG G 1 A_WeaponReady(WRF_NOFIRE)
-        RMNG H 1 A_WeaponReady(WRF_NOFIRE)
-        RMNG I 1 A_WeaponReady(WRF_NOFIRE)
         Stop
     }
 }
@@ -401,6 +374,7 @@ Actor MinigunExplosion
         TNT1 A 0
         TNT1 A 0 A_SpawnItem("WhiteShockwave")
         TNT1 A 3
+		TNT1 A 0 A_Explode(120,140,XF_NOSPLASH)
         Stop
     }
 }
@@ -444,7 +418,7 @@ Actor MastermindTracerDoomguy : FastProjectile
     -DONTSPLASH
     +FORCERADIUSDMG
     Speed 280
-    Damage (random(341,341))
+    Damage (random(310,310))
     Scale 1.0
     RenderStyle Add
     Alpha 0.9
@@ -460,18 +434,6 @@ Actor MastermindTracerDoomguy : FastProjectile
         Loop
     XDeath:
     Death:
-        TNT1 A 0 A_JumpIf(GetCvar("pb_plasma_wallclimb"), "MMTracerWallClimb")
-        Goto MMTracerNoClimb
-    MMTracerNoClimb:
-        TNT1 A 1 A_Explode(120, 140, XF_NOSPLASH|XF_HURTSOURCE)
-        Goto MMTracerDeathVfx
-    MMTracerWallClimb:
-        TNT1 A 1 A_Explode(8, 50, XF_NOSPLASH)
-        TNT1 A 0 A_RadiusThrust(900, 50, RTF_AFFECTSOURCE|RTF_THRUSTZ|RTF_NOIMPACTDAMAGE)
-        TNT1 A 0 A_RadiusGive("PBBlastMomentum", 160, RGF_PLAYERS|RGF_CUBE, 28)
-        TNT1 A 0 A_Explode(120, 140, XF_NOSPLASH)
-        Goto MMTracerDeathVfx
-    MMTracerDeathVfx:
         EXPL A 0 Radius_Quake (4, 30, 0, 15, 0)
         TNT1 A 0 A_PlaySound("Explosion")
         TNT1 A 0 A_SpawnItem("WhiteShockwaveSmall")

@@ -48,6 +48,8 @@ Actor PB_Infernus : PB_Baron replaces BaronOfHell
 		Stop
 		
 	Spawn:
+		//TNT1 A 0 ACS_ExecuteAlways(796, 0, 0, 0, 0)//Check if Vanilla Mode is activated
+		TNT1 A 0 //ACS_NamedExecuteAlways("BaronBarrelFun", 0)
 	Stand:
 		TNT1 A 0 A_JumpIfInventory("Curbstomp_Marine", 1, "CurbstompMarine")
 		BRUS Z 10 A_Look
@@ -520,35 +522,34 @@ Actor PB_Infernus : PB_Baron replaces BaronOfHell
         TNT1 A 0 A_Playsound("MELT")
         TNT1 A 0 A_NoBlocking
         TNT1 AAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 32, 0, random (0, 360), 2, random (0, 360))
-        TNT1 AAAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 32, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 32, 0, random (0, 360), 2, random (0, 360))
         TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,32,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		TNT1 A 0 A_SpawnItemEx ("TinyBurningPiece", random (-15, 15), random (-15, 15))
-		TNT1 A 0 A_SpawnItemEx ("TinyBurningPiece2", random (-35, 35), random (-35, 35))
-		TNT1 A 0 A_SpawnItemEx ("TinyBurningPiece3", random (-45, 45), random (-45, 35))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35))
 		TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("Ashes1", 28, 0, random (0, 360), 2, random (0, 180))
-
 		TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("Ashes2", 40, 0, random (0, 360), 2, random (0, 180))
 		TNT1 AA 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),40,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
 		B4UD AAAA 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 36, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 32, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
 		B4UD BBBB 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 32, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),28,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
 		B4UD CCCCC 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 28, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_Playsound("SZZLL", 3)
-		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 24, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),24,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
 		B4UD DDDDD 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 20, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
 		B4UD EEEEE 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 12, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 12, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),12,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
 		B4UD FFFFF 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 10, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
 		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn")
 		B4UD GGGG 2 BRIGHT Light("IncinerationGlow")
-		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
 		B4UD HHGGHHGGHHGGHHGG 2 BRIGHT Light("IncinerationGlow") A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
 		B4UD HHGGHHGGHHGGHHGG 2 Light("IncinerationGlow") A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
 		B4UD HHGGHHGGHHGGHHGG 2
 		B4UD IIIIIII 12 A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
 		B4UD I -1
@@ -678,7 +679,7 @@ Death.SuperPlasma:
 		TNT1 AAA 0 A_CustomMissile ("BigPlasmaParticleX", 42, 0, random (0, 360), 2, random (0, 360))
 		8RSC DE 5 A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 180), 2, random (0, 180))
 		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool")
-		TNT1 A 0 A_PlaySound("BIG_BODYF", 2)
+		TNT1 A 0 A_PlaySound("BIG_BODYF", 9)
         8RSC FFFFFFFFFFFFFFFFFFFFFFF 6 A_CustomMissile ("PlasmaSmoke", 24, 0, random (0, 180), 2, random (0, 180))
 		8RSC F -1
         Stop
@@ -745,12 +746,7 @@ Death.SuperPlasma:
 	Death.ExeCution1:
       TNT1 A 0 A_Pain
       TNT1 A 0 A_GiveToTarget ("GoExecution", 1)
-		BT01 B 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-		TNT1 A 0 A_PlaySound("superbaron/pain", 6)
-		BT01 B 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-		TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
-		BT01 B 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-		TNT1 A 0 A_PlaySound("superbaron/smash", 0)
+		BT01 B 30 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
 		Goto Death
 
    SpecialFatality:
@@ -841,7 +837,7 @@ Actor BruiserBall
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 AAAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180))
-		TNT1 AAAA 19 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAA 19 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
 		Stop
 		
 	XDeath:
@@ -904,8 +900,8 @@ Actor BruiserBallBig:BruiserBall
 	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
         TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-        TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180))
-      	TNT1 AAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 180), 2, random (0, 180))
+        TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
+      	TNT1 AAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 360))
         TNT1 AAAA 0 A_CustomMissile ("MediumExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
         EXPL AAA 0 A_CustomMissile ("ExplosionSmokeFast22", 0, 0, random (0, 360), 2, random (0, 360))
 		Stop
@@ -924,11 +920,11 @@ Actor BruiserBallBig:BruiserBall
 	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
         TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-        TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180))
-      	TNT1 AAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 180), 2, random (0, 180))
+        TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
+      	TNT1 AAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 360))
         TNT1 AAAA 0 A_CustomMissile ("MediumExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
         EXPL AAA 0 A_CustomMissile ("ExplosionSmokeFast22", 0, 0, random (0, 360), 2, random (0, 360))
-		TNT1 AAAA 19 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAA 19 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
 		Stop
   }
 }
@@ -1021,8 +1017,8 @@ ACTOR BruiserSpike
 		SPIK A 1 A_PlaySoundEx("superbaron/spike", "Auto")
 	    EXPL A 0 Radius_Quake (2, 24, 0, 15, 0)        
 		TNT1 AA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
-        TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180))
-		TNT1 AAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 180), 2, random (0, 180))
+        TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 360))
         TNT1 AAA 0 A_CustomMissile ("MediumExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
 		SPIK BC 1
 		SPIK D 1 Radius_Quake(2,5,0,2,0)
@@ -1191,6 +1187,7 @@ Actor Vanilla_Infernus : PB_Infernus Replaces BaronofHell
 	States
 	{
 	Spawn:
+		TNT1 A 0 //ACS_NamedExecuteAlways("BaronBarrelFun", 0)
 	Stand:
 		TNT1 A 0 A_JumpIfInventory("Curbstomp_Marine", 1, "CurbstompMarine")
 		TNT1 A 0 A_JumpIfInventory("ZombiemanFatality", 1, "FatalityZombieman")

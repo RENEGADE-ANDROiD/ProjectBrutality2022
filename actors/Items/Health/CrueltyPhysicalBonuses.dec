@@ -1,3 +1,5 @@
+// PB_PhysicalBonuses — bouncy 1BON shards for Cruelty bonus drops (replaces abstract pickups in GenericHealth.dec)
+
 ACTOR TauntSnd : SwitchableDecoration
 {
 	-SOLID

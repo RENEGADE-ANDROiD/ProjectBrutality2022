@@ -2,37 +2,29 @@
 #include "zcommon.acs"
 #define MAX_VOLUME 127
 
-// SUPERSEDED: zscript/GloryKills/PB_GKEquipmentCooldownHandler.zc (removed from LOADACS.txt).
-// Recompile only if you revert to ACS; keep in sync when changing cooldown logic.
-
-// Glory Kills shoulder flame / ice / Shield Saw cooldowns (lineage: PB Staging equipment launcher).
+// Cooldowns for shoulder flame / ice: mirrors glorykills-PB_Staging Source/EquipmentLanucher.acs
 script "GKEquipmentLauncher" ENTER
 {
-	int FBCooldown_tic, IBCooldown_tic, SSCooldown_tic;
-	int FlameBelch_Cooldown, IceBomb_Cooldown, ShieldSaw_Cooldown;
-	int FlameBelch_Ready, IceBomb_Ready, ShieldSaw_Ready;
+	int FBCooldown_tic, IBCooldown_tic;
+	int FlameBelch_Cooldown, IceBomb_Cooldown;
+	int FlameBelch_Ready, IceBomb_Ready;
 	
 	GiveInventory("FlameBelchReady", 1);
 	GiveInventory("IceBombReady", 1);
-	GiveInventory("ShieldSawReady", 1);
 
 	while(true) 
 	{
 		FBCooldown_tic = CheckInventory("CoolFlameBelch");
 		IBCooldown_tic = CheckInventory("CoolIceBomb");
-		SSCooldown_tic = CheckInventory("CoolShieldSaw");
 		
 		FlameBelch_Cooldown = GetCVar("sv_Flamebelch_Cool");
 		IceBomb_Cooldown = GetCVar("sv_Icebomb_Cool");
-		ShieldSaw_Cooldown = GetCVar("sv_ShieldSaw_Cool");
 		
 		FlameBelch_Ready = CheckInventory("FlameBelchReady");
 		IceBomb_Ready = CheckInventory("IceBombReady");
-		ShieldSaw_Ready = CheckInventory("ShieldSawReady");
 		
 		if (FlameBelch_Cooldown < 1) FlameBelch_Cooldown = 1;
 		if (IceBomb_Cooldown < 1) IceBomb_Cooldown = 1;
-		if (ShieldSaw_Cooldown < 1) ShieldSaw_Cooldown = 1;
 		
 		if(FBCooldown_tic < FlameBelch_Cooldown && FlameBelch_Ready != 1)
 		{
@@ -41,10 +33,6 @@ script "GKEquipmentLauncher" ENTER
 		if(IBCooldown_tic < IceBomb_Cooldown && IceBomb_Ready != 1)
 		{
 			GiveInventory("CoolIceBomb",1);
-		}
-		if(SSCooldown_tic < ShieldSaw_Cooldown && ShieldSaw_Ready != 1)
-		{
-			GiveInventory("CoolShieldSaw",1);
 		}
 		
 		if(FBCooldown_tic == FlameBelch_Cooldown)
@@ -58,12 +46,6 @@ script "GKEquipmentLauncher" ENTER
 			TakeInventory("CoolIceBomb", IceBomb_Cooldown);
 			GiveInventory("IceBombReady", 1);
 			LocalAmbientSound("Equip_Iceready", MAX_VOLUME);
-		}
-		if(SSCooldown_tic == ShieldSaw_Cooldown)
-		{
-			TakeInventory("CoolShieldSaw", ShieldSaw_Cooldown);
-			GiveInventory("ShieldSawReady", 1);
-			LocalAmbientSound("Equip_shieldsawready", MAX_VOLUME);
 		}
 		Delay(35);
 	}

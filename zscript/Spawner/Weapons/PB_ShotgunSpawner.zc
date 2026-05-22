@@ -6,6 +6,11 @@ Class PB_ShotgunSpawner : PB_SpawnerBase
 		Super.Tick();
 		
 		
+		//Check CVARs if tiered preset and, if so, select appropriate tier (I, II, III, IV) ... else go with default spawn
+		//Check CVARs for spawn value pulled from presets
+		
+		//If monster, check surrounding actors for same class name
+		
 	}
 	
 	States
@@ -37,3 +42,4 @@ Class PB_ShotgunSpawner : PB_SpawnerBase
 			stop;
 	}
 }
+

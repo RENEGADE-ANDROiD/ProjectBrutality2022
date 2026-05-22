@@ -14,8 +14,4 @@ Model NashGoreCorpseBlood
 	// states
 	FrameIndex NGMV A 0 0
 	FrameIndex NGMV B 0 1
-
-	Skin 0 "GRAPHICS/PB2022/ShinyNashGore/CorpseBlood/CorpseBlood01.png"
-	FrameIndex NGMV C 0 0
-	FrameIndex NGMV D 0 1
 }

@@ -1,24 +1,32 @@
-
+/*
+#include "BMAP/Shields.txt"
+#include "BMAP/Ammo.txt"
+#include "BMAP/Armor.txt"
+#include "BMAP/Weapons.txt"
+#include "BMAP/Carbine.txt"
+#include "BMAP/AutoShotgun.txt"
+#include "BMAP/Minigun.txt"
+#include "BMAP/Nailgun.txt"
+#include "BMAP/LMG.txt"
+#include "BMAP/M2Plasma.txt"
+#include "BMAP/Railgun.txt"
+#include "BMAP/BHG.txt"
+#include "BMAP/Revolver.txt"
+#include "BMAP/Flamecannon.txt"
+#include "BMAP/Freezer.txt"
+#include "BMAP/Excavator.txt"
+#include "BMAP/Throwables.txt"
+#include "BMAP/VoidSpectre.txt"
+*/
 #include "models/nashgore/CorpseBlood/_materials.txt"
 #include "models/nashgore/Footprint/_materials.txt"
-#include "lumps/includes/gldefs/ShinyNashGore.inc"
 #include "lumps/includes/gldefs/Overlord.inc"
 #include "lumps/includes/gldefs/MetalSniper.inc"
-#include "lumps/includes/gldefs/OldHMG.inc"
 #include "lumps/includes/gldefs/NeoHMG.inc"
 #include "lumps/includes/gldefs/CSSG.inc"
 #include "lumps/includes/gldefs/CyberdemonRL.inc"
-#include "lumps/includes/gldefs/ShieldSaw.inc"
 #include "lumps/includes/gldefs/MolotovCocktail.inc"
 #include "lumps/includes/gldefs/CrueltyPhysicalBonuses.inc"
-#include "lumps/includes/gldefs/HelmetDrops.inc"
-#include "lumps/includes/gldefs/D3Maledict.inc"
-#include "lumps/includes/gldefs/ObsidianRavager.inc"
-#include "lumps/includes/gldefs/Realm667Powerups.inc"
-#include "lumps/includes/gldefs/Realm667_Monsters_BloodGhostSkull.inc"
-#include "lumps/includes/gldefs/FriendlyDrone.inc"
-#include "lumps/includes/gldefs/PB_DarkMatterRifle.inc"
-#include "lumps/includes/gldefs/CatsFrozen.inc"
 
 flickerlight2 FT_GroundFire
 {
@@ -42,6 +50,7 @@ flickerlight2 TinyBurningPiece
 
 
 
+// New PB Imp Fireball
 flickerlight PB_IMPBALL
 {
     color 1.0 0.5 0.0
@@ -106,6 +115,7 @@ object PB_DoomImpBallGravity
 
 }
 
+// Yellow Keys
 pulselight YELLOWKEY
 {
     color 1 1 0.0
@@ -114,6 +124,7 @@ pulselight YELLOWKEY
     interval 2.0
 }
 
+// Blue Keys
 pulselight BLUEKEY
 {
     color 0.0 0.0 1
@@ -122,6 +133,7 @@ pulselight BLUEKEY
     interval 2.0
 }
 
+// Red Keys
 pulselight REDKEY
 {
     color 1.0 0.0 0.0
@@ -163,6 +175,7 @@ object PB_RedSkull
     frame RSKL { light REDKEY }
 }
 
+// SGL Grenades
 pointlight SGL_FRAG
 {
     color 1.0 1.0 0.0
@@ -194,6 +207,7 @@ pointlight SGL_ACID
     size 10
 }
 
+//Motion Blur by Pixel Eater
 HardwareShader PostProcess beforebloom
 {
 	Name "MBlur"
@@ -204,12 +218,14 @@ HardwareShader PostProcess beforebloom
 	Uniform int blendmode
 }
 
+// PB 0.3+ (Gearbox / MariENB): subtle scene blur when weapon special wheel is open; ZScript: PPShader.SetEnabled("gb_blur", …)
 HardwareShader PostProcess scene
 {
 	Name "gb_blur"
 	Shader "shaders/mfx_bss_blur.fp" 330
 }
 
+//Siphon Effect Lights
 pulselight SiphonLight
 {
     color 1.0 0.0 0.0
@@ -218,6 +234,7 @@ pulselight SiphonLight
     interval 0.02
 }
 
+//Lightning Gun
 pointlight M2PlasmaLight1
 {
     color 0.0 0.8 1.0
@@ -239,6 +256,7 @@ pointlight LightningImpactLight
     size 128
 }
 
+// Armour Helmet
 pulselight WeaponUpgradeSpawner
 {
     color 0.0 0.6 0.0
@@ -247,6 +265,7 @@ pulselight WeaponUpgradeSpawner
     interval 0.8
 }
 
+//Tracer light (TRAC)
 pulselight TracerLight
 {
     color 1.0 1.0 0.9
@@ -270,6 +289,7 @@ flickerlight2 IncinerationGlow
     offset 0 0 0
 }
 
+//Explosive Barrel Remains
 flickerlight2 BarrelDeadLight
 {
     color 0.8 0.3 0.0
@@ -279,6 +299,7 @@ flickerlight2 BarrelDeadLight
     offset 0 0 0
 }
 
+//Demon Energy Lights
 pulselight DemonEnergyLight
 {
     color 1.0 0.0 0.0
@@ -319,6 +340,7 @@ object LargeDemonpower
     frame MSP1D { light DemonEnergyLight }
 }
 
+//More Fireballs for PB
 
 pointlight FireshotFX
 {
@@ -334,6 +356,7 @@ object FireShot
     frame FSHTD { light FireshotFX }
 }
 
+//New Powerups
 pointlight HasteSphereGlow
 {
     color 1.0 1.0 0.0
@@ -360,6 +383,7 @@ object DoubleSphere
     frame DDMGC { light DoubleSphereGlow }
 }
 
+//Explosion
 pulselight EXPLOSIONFLASH
 {
     color 1.0 0.3 0.0
@@ -399,17 +423,6 @@ object SuperBFGBall
 	frame BFE1E { light BFGEXPLO }
 }
 
-object PB_SuperBFGBall
-{
-    frame BFS1A { light BFGBALL }
-    frame BFS1B { light BFGBALL }
-    frame BFE1A { light BFGEXPLO }
-    frame BFE1B { light BFGEXPLO }
-	frame BFE1C { light BFGEXPLO }
-	frame BFE1D { light BFGEXPLO }
-	frame BFE1E { light BFGEXPLO }
-}
-
 flickerlight BFGEXPLO
 {
     color 0.1 1.0 0.0
@@ -433,7 +446,11 @@ secondarysize 25
 interval 3
 }
 
+// ------------------
+// -- Doom Weapons --
+// ------------------
 
+// Bullet puff
 flickerlight BPUFF1
 {
     color 0.5 0.5 0.0
@@ -462,40 +479,11 @@ object MachinegunBulletPuff
     frame PUFFB { light BPUFF2 }
 }
 
+// Rocket
 pointlight ROCKET
 {
     color 1.0 0.7 0.0
     size 60
-}
-
-pointlight PB_ROCKET
-{
-    color 1.0 0.7 0.0
-    size 60
-}
-
-flickerlight PB_ROCKET_X1
-{
-    color 1.0 0.7 0.0
-    size 64
-    secondarySize 72
-    chance 0.3
-}
-
-flickerlight PB_ROCKET_X2
-{
-    color 0.5 0.1 0.0
-    size 80
-    secondarySize 88
-    chance 0.3
-}
-
-flickerlight PB_ROCKET_X3
-{
-    color 0.3 0.0 0.0
-    size 96
-    secondarySize 104
-    chance 0.3
 }
 
 flickerlight ROCKET_X1
@@ -522,6 +510,7 @@ flickerlight ROCKET_X3
     chance 0.3
 }
 
+// Plasma
 pointlight PLASMABALL
 {
     color 0.0 0.7 1.0
@@ -544,6 +533,7 @@ object HotPlasmaGas
     frame FIR5 { light PLASMABALL }
 }
 
+// Demon Tech Rifle
 pointlight CausticProjectile
 {
 	color 0.0 1.0 0.0
@@ -551,37 +541,35 @@ pointlight CausticProjectile
 }
 
 
+// ----------------------
+// -- Doom Decorations --
+// ----------------------
 
+// Barrel
 
 object NukageBarrel
 {
+   // frame BAR1  { light GREENGOOZ    }
+   // frame BARB  { light GREENGOOZ    }
 
 
-    frame BBLAA { light ROCKET_X1 }
-    frame BBLAB { light ROCKET_X1 }
-    frame BBLAC { light ROCKET_X1 }
-    frame BBLAD { light ROCKET_X1 }
-    frame BBLAE { light ROCKET_X1 }
-    frame BBLAF { light ROCKET_X1 }
-    frame BFEXA { light ROCKET_X1 }
-    frame BFEXB { light ROCKET_X1 }
-    frame BFEXC { light ROCKET_X1 }
-    frame BIXPD { light ROCKET_X1 }
-    frame BIXPE { light ROCKET_X1 }
-    frame BIXPF { light ROCKET_X1 }
-    frame BIXPG { light ROCKET_X2 }
-    frame BIXPH { light ROCKET_X2 }
-    frame BIXPI { light ROCKET_X2 }
-    frame BIXPJ { light ROCKET_X2 }
-    frame BIXPK { light ROCKET_X2 }
-    frame BIXPL { light ROCKET_X3 }
-    frame BIXPM { light ROCKET_X3 }
-    frame BIXPN { light ROCKET_X3 }
-    frame BIXPO { light ROCKET_X3 }
-    frame BIXPP { light ROCKET_X3 }
-    frame BIXPQ { light ROCKET_X3 }
+    frame BEXPC { light ROCKET_X1 }
+    frame BEXPD { light ROCKET_X1 }
+    frame BEXPE { light ROCKET_X1 }
+    frame BEXPF { light ROCKET_X1 }
+    frame BEXPG { light ROCKET_X2 }
+    frame BEXPH { light ROCKET_X2 }
+    frame BEXPI { light ROCKET_X2 }
+    frame BEXPJ { light ROCKET_X2 }
+    frame BEXPK { light ROCKET_X2 }
+    frame BEXPL { light ROCKET_X3 }
+    frame BEXPM { light ROCKET_X3 }
+    frame BEXPN { light ROCKET_X3 }
+    frame BEXPO { light ROCKET_X3 }
+    frame BEXPP { light ROCKET_X3 }
 }
 
+// Floor lamp
 pointlight LAMP
 {
     color 1.0 1.0 1.0
@@ -616,6 +604,7 @@ object SmallFireFocus24
 	frame F1RE { light SMALLREDTORCH }
 }
 
+// Burning barrel
 pulselight FIREBARREL
 {
     color 1.0 0.9 0.0
@@ -625,6 +614,7 @@ pulselight FIREBARREL
     offset 0 32 0
 }
 
+// Skulls w/candles
 
 pointlight HUEHUE
 {
@@ -672,7 +662,11 @@ object OrangeLensFlareAlt
 }
 
 
+// ----------------
+// -- Doom Items --
+// ----------------
 
+// Soul Sphere
 pulselight SOULSPHERE
 {
     color 0.0 0.0 1.0
@@ -687,6 +681,7 @@ object LifeSphere
     frame SOUL { light SOULSPHERE }
 }
 
+// Invulnerability Sphere
 pulselight INVULN
 {
     color 0.0 1.0 0.0
@@ -706,17 +701,20 @@ pulselight HEALTHPOTION
 
 object HealthBonus
 {
-    frame B0N1 { light BLUEITEM }
+    frame BON1 { light BLUEITEM }
 }
 
+// Armour Helmet
 pulselight ARMORBONUS
 {
     color 0.0 0.6 0.0
     size 14
     secondarySize 16
     interval 1.0
+	//dontlightself 1
 }
 
+// Green armour
 pointlight GREENARMOR1
 {
     color 0.0 0.6 0.0
@@ -731,6 +729,7 @@ pointlight GREENARMOR2
 
 
 
+// Blue armour
 pointlight BLUEARMOR1
 {
     color 0.0 0.0 0.6
@@ -745,7 +744,11 @@ pointlight BLUEARMOR2
 
 
 
+// ------------------
+// -- Doom Enemies --
+// ------------------
 
+// Zombies
 flickerlight2 ZOMBIEATK
 {
     color 1.0 0.8 0.2
@@ -767,12 +770,14 @@ object PB_Sergeant
 
 
 
+// Doom Imp Fireball
 flickerlight IMPBALL
 {
     color 1.0 0.5 0.0
     size 64
 }
 
+// Doom imp fireball explosion
 flickerlight IMPBALL_X1
 {
     color 0.7 0.2 0.0
@@ -871,9 +876,10 @@ object NewImpBall
 }
 
 
+// Cacodemon fireball
 flickerlight CACOBALL
 {
-    color 0.8 0.1 1.0
+    color 0.8 0.1 1.0 
     size 56
     secondarySize 64
     chance 0.5
@@ -912,7 +918,14 @@ object CacodemonBall_
     frame BAL2D { light CACOBALL_X2 }
 	frame BAL2E { light CACOBALL_X2 }
 }
-
+/*
+object PurplePlasmaBall
+{
+    frame PBALD { light CACOBALL }
+    frame PBALE { light CACOBALL }
+}
+*/
+// Baron / Hell Knight fireball
 pointlight BARONBALL
 {
     color 0.0 1.0 0.0
@@ -978,6 +991,7 @@ object DaedFire
     frame EXPGG { light BARONBALL_X3 }
 }
 
+// Lost Soul
 flickerlight LOSTSOUL
 {
     color 1.0 0.3 0.0
@@ -1024,6 +1038,7 @@ object PB_LostSoul
     frame LSOL { light LOSTSOUL_X1 }
 }
 
+// Mancubus Fireball
 object BigFireBall
 {
     frame BLHDA  { light IMPBALL   }
@@ -1032,12 +1047,13 @@ object BigFireBall
 	frame F1RE { light IMPBALL   }
 	frame F2RE { light IMPBALL   }
 	frame FRFX { light ROCKETLIGHT }
-
-    frame MISLB { light PB_ROCKET_X1 }
-    frame MISLC { light PB_ROCKET_X2 }
-    frame MISLD { light PB_ROCKET_X3 }
+	
+    frame MISLB { light ROCKET_X1 }
+    frame MISLC { light ROCKET_X2 }
+    frame MISLD { light ROCKET_X3 }
 }
 
+// Arachnotron Fireball
 pointlight ARACHPLAS
 {
     color 0.6 1.0 0.0
@@ -1076,6 +1092,7 @@ flickerlight ARACHPLAS_X4
     chance 0.3
 }
 
+// Revenant tracer
 pointlight TRACER
 {
     color 1.0 0.3 0.0
@@ -1106,6 +1123,7 @@ flickerlight TRACER_X3
     chance 0.25
 }
 
+// Shadows
 
 pointlight GUNSHADOW
 {
@@ -1191,12 +1209,12 @@ pointlight SPIDERSHADOW
 
 object HealthPlus
 {
-    frame B0N1 { light BLUEITEM  }
+    frame BON1 { light BLUEITEM  }
 }
 
 object ArmorShard
 {
-    frame B0N2 { light GREENITEM  }
+    frame BON2 { light GREENITEM  }
 }
 
 
@@ -1297,6 +1315,10 @@ pointlight SpecialLightz
 	dontlightself 1
 }
 
+//object Doomer
+//{
+ //   frame MARN { light SpecialLightz }
+//}
 
 
 
@@ -1315,27 +1337,79 @@ pulselight GREENGOOZ
 
 pulselight GREENITEM
 {
-    color 0.1 1.0 0.1
-    size 12
-    secondarySize 14
-    interval 0.6
+    color 0.3 1.0 0.0
+    size 14
+    secondarySize 16
+    interval 0.1
     offset 0 5 0
-    dontlightself 1
 }
 
 
 pulselight BLUEITEM
 {
     color 0.1 0.1 1.0
-    size 12
-    secondarySize 14
-    interval 0.6
+    size 14
+    secondarySize 16
+    interval 0.1
     offset 0 5 0
-    dontlightself 1
 }
 
-#include "lumps/includes/gldefs/WolvusMutator.inc"
-#include "lumps/includes/gldefs/CustomShardsPotions.inc"
+// --- Non-Wolvus light bindings preserved from the deleted WolvusMutator.inc ---
+pulselight GTRZOULSPHERE
+{
+	color 1.0 0.0 0.0
+	size 40
+	secondarySize 42
+	interval 2.0
+	offset 0 16 0
+}
+
+pulselight TIMEFREEZESPHERE
+{
+	color 0.8 0.8 0.8
+	size 40
+	secondarySize 42
+	interval 2.0
+	offset 0 16 0
+}
+
+pulselight RAGESPHERE_LT
+{
+	color 0.3 0.3 0.0
+	size 32
+	secondarySize 48
+	interval 3.0
+	offset 0 18 0
+}
+
+pulselight WOLVX_MEGASPHERE
+{
+	color 0.5 0.5 0.4
+	size 40
+	secondarySize 42
+	interval 2.0
+	offset 0 16 0
+}
+
+object TimeSphere
+{
+	frame TIME { light TIMEFREEZESPHERE }
+}
+
+object RageSphere
+{
+	frame RAGE { light RAGESPHERE_LT }
+}
+
+object EnergySphere
+{
+	frame MEGA { light WOLVX_MEGASPHERE }
+}
+
+object DemonStrengthRune
+{
+	frame DPRF { light GTRZOULSPHERE }
+}
 
 
 
@@ -1385,6 +1459,7 @@ object BurnParticles
 frame TNT1 { light BIGREDTORCH }
 }
 
+//Dark Imp (Nami Fuckers)
 Pointlight DarkBallSeeker1
 {
 Color 0.8 0.1 0.8
@@ -1435,6 +1510,7 @@ Frame DRKIF { Light NamiDarkImpFire }
 Frame DRKIG { Light NamiDarkImpFire }
 }
 
+//Dark Imp Nether
 Pointlight InfernoBall
 {
 Color 0.0 0.8 0.0
@@ -1498,6 +1574,7 @@ Object NetherLightning
 Frame NLITA { Light NetherLightning }
 }
 
+//Dark Imp Skulltag
 
 Pointlight DarkBallFast1
 {
@@ -1548,6 +1625,7 @@ Frame DRKSF { Light STDarkImpFire }
 Frame DRKSG { Light STDarkImpFire }
 }
 
+//Dark Imp Void
 
 Pointlight VoidBallNormal
 {
@@ -1644,6 +1722,7 @@ Frame DRKVJ { Light VoidDarkImpFire2 }
 Frame DRKVK { Light VoidDarkImpFire2 }
 }
 
+// Paladin
 
 Pointlight PaladinExplode1
 {
@@ -1794,6 +1873,9 @@ object PaladinGrenade
 
 
 
+//===========================
+//======Dynamic Lights=======
+//===========================
 
 FlickerLight2 BruiserDemon
 {
@@ -2124,7 +2206,6 @@ object PurplePlasmaFire
 	frame FIR9 { light PulsePlasmaball }
 }
 
-
 pOINTlight BIGORANGELAMP
 {
     color 1.0 0.5 0.0
@@ -2163,8 +2244,13 @@ pointlight ALARMORANGELAMP
 }
 
 
+// =============================================================================
+// Glory Kills shaders (ported from D4D / BrutalDoom Black Edition)
+// =============================================================================
 
+//GLORY KILL SHADER
 
+//ZOMBIE
 hardwareshader sprite PGSSG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PGSSG2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PGSSG3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2174,6 +2260,7 @@ hardwareshader sprite PGSSG6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PGSSG7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PGSSG8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//SERGEANT
 hardwareshader sprite SPGSG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SPGSG2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SPGSG3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2183,6 +2270,7 @@ hardwareshader sprite SPGSG6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SPGSG7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SPGSG8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//CHAINGUNGUY
 hardwareshader sprite MPGSG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MPGSG2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MPGSG3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2192,6 +2280,7 @@ hardwareshader sprite MPGSG6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MPGSG7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MPGSG8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//IMP
 hardwareshader sprite TRGOH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRGOH2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRGOH3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2201,6 +2290,7 @@ hardwareshader sprite TRGOH6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRGOH7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRGOH8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//DEMON AND SPECTRE
 hardwareshader sprite SGRGH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SGRGH2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SGRGH3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2210,6 +2300,7 @@ hardwareshader sprite SGRGH6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SGRGH7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SGRGH8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//HELLKNIGHT
 hardwareshader sprite BGS2H1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGS2H2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGS2H3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2219,6 +2310,7 @@ hardwareshader sprite BGS2H6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGS2H7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGS2H8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//BARONOFHELL
 hardwareshader sprite BGSSH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGSSH2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGSSH3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2229,12 +2321,14 @@ hardwareshader sprite BGSSH7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGSSH8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
 
+//PAINELEMENTAL
 hardwareshader sprite PGING1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PGING2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PGING3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PGING4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PGING5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Arachnotron
 hardwareshader sprite BGPII1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGPII2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGPII3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2244,12 +2338,14 @@ hardwareshader sprite BGPII6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGPII7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGPII8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//CACODEMON
 hardwareshader sprite HGADF1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HGADF2F8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HGADF3F7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HGADF4F6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HGADF5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//REVENANT
 hardwareshader sprite SKGLL1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SKGLL2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SKGLL3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2259,6 +2355,7 @@ hardwareshader sprite SKGLL6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SKGLL7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SKGLL8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//FATSO
 hardwareshader sprite FGTTJ1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FGTTJ2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FGTTJ3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2268,6 +2365,7 @@ hardwareshader sprite FGTTJ6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FGTTJ7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FGTTJ8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//ARCHVILLE
 hardwareshader sprite DIGBQ1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DIGBQ2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DIGBQ3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2277,19 +2375,23 @@ hardwareshader sprite DIGBQ6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DIGBQ7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DIGBQ8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Project Brutality
 
+//Zombie Scientist
 hardwareshader sprite SCGAG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SCGAG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SCGAG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SCGAG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SCGAG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//ChainsawZombie
 hardwareshader sprite 5CGAI1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 5CGAI2I8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 5CGAI3I7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 5CGAI4I6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 5CGAI5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//ZOMBIEMAN2
 hardwareshader sprite ZPG1A1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZPG1A2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZPG1A3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2299,66 +2401,77 @@ hardwareshader sprite ZPG1A6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZPG1A7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZPG1A8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//ASSAULT ZOMBIE
 hardwareshader sprite RFTGG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RFTGG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RFTGG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RFTGG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RFTGG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//PISTOL ZOMBIE 1
 hardwareshader sprite PSPGG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PSPGG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PSPGG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PSPGG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PSPGG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//PISTOL ZOMBIE 2
 hardwareshader sprite 9GS2G1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 9GS2G2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 9GS2G3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 9GS2G4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 9GS2G5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//MINIGUN ZOMBIE
 hardwareshader sprite MGGMG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MGGMG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MGGMG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MGGMG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MGGMG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//ShotgunHelmet
 hardwareshader sprite SPG1A1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SPG1A2A8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SPG1A3A7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SPG1A4A6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SPG1A5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//RocketSergeant
 hardwareshader sprite MP0GG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MP0GG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MP0GG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MP0GG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MP0GG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//DemonTech
 hardwareshader sprite HGPAA1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HGPAA2A8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HGPAA3A7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HGPAA4A6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HGPAA5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//AutoShotgunguy
 hardwareshader sprite ASGGG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ASGGG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ASGGG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ASGGG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ASGGG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//QUADZOMBIE
 hardwareshader sprite QSGMG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite QSGMG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite QSGMG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite QSGMG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite QSGMG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Zspec
 hardwareshader sprite ZSG2G1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZSG2G2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZSG2G3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZSG2G4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZSG2G5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//HelmetCommando
 hardwareshader sprite MP2GG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MP2GG2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MP2GG3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2368,66 +2481,77 @@ hardwareshader sprite MP2GG6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MP2GG7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MP2GG8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//RifleCommando
 hardwareshader sprite ACPGG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ACPGG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ACPGG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ACPGG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ACPGG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//HMG Major
 hardwareshader sprite CPG2G1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CPG2G2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CPG2G3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CPG2G4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CPG2G5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//PlazmaZombie
 hardwareshader sprite ZMAGG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZMAGG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZMAGG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZMAGG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ZMAGG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Darkimpvoid
 hardwareshader sprite DRGVH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGVH2H8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGVH3H7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGVH4H6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGVH5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//DarkimpST
 hardwareshader sprite DRGSH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGSH2H8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGSH3H7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGSH4H6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGSH5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Darkimpnether
 hardwareshader sprite DRGFH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGFH2H8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGFH3H7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGFH4H6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGFH5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Darkimpnami
 hardwareshader sprite DRGIH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGIH2H8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGIH3H7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGIH4H6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DRGIH5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Imp variant1
 hardwareshader sprite TRG5H1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG5H2H8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG5H3H7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG5H4H6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG5H5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Imp variant2
 hardwareshader sprite TRG3H1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG3H2H8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG3H3H7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG3H4H6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG3H5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Imp variant3
 hardwareshader sprite TRG4H1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG4H2H8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG4H3H7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG4H4H6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TRG4H5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Salvageimp
 hardwareshader sprite 1RGOH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 1RGOH2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 1RGOH3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2437,6 +2561,7 @@ hardwareshader sprite 1RGOH6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 1RGOH7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite 1RGOH8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//MechDemon
 hardwareshader sprite SGG2H1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SGG2H2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SGG2H3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2446,6 +2571,7 @@ hardwareshader sprite SGG2H6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SGG2H7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SGG2H8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//MeanDemon
 hardwareshader sprite SAG2H1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SAG2H2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SAG2H3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2455,6 +2581,7 @@ hardwareshader sprite SAG2H6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SAG2H7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SAG2H8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//MeanDemon
 hardwareshader sprite NDEGH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NDEGH2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NDEGH3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2464,6 +2591,7 @@ hardwareshader sprite NDEGH6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NDEGH7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NDEGH8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Afrit
 hardwareshader sprite FRIGH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FRIGH2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FRIGH3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2473,30 +2601,35 @@ hardwareshader sprite FRIGH6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FRIGH7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FRIGH8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//MagCaco
 hardwareshader sprite INFGK1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite INFGK2K8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite INFGK3K7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite INFGK4K6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite INFGK5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//TriteElemental
 hardwareshader sprite TORGG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TORGG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TORGG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TORGG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite TORGG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//SufferingElemental
 hardwareshader sprite PL3GG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PL3GG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PL3GG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PL3GG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite PL3GG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Overlord
 hardwareshader sprite OVEGL1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite OVEGL2L8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite OVEGL3L7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite OVEGL4L6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite OVEGL5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//BeamRev
 hardwareshader sprite RGSKL1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RGSKL2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RGSKL3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2506,6 +2639,7 @@ hardwareshader sprite RGSKL6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RGSKL7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RGSKL8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//HeavyRev
 hardwareshader sprite R4GKL1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite R4GKL2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite R4GKL3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2515,6 +2649,7 @@ hardwareshader sprite R4GKL6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite R4GKL7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite R4GKL8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Draugr
 hardwareshader sprite SKG2M1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SKG2M2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SKG2M3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2524,6 +2659,7 @@ hardwareshader sprite SKG2M6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SKG2M7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SKG2M8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//EliteArachnotron
 hardwareshader sprite ARGCI1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ARGCI2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ARGCI3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2533,6 +2669,7 @@ hardwareshader sprite ARGCI6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ARGCI7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ARGCI8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//InfernalArachnotron
 hardwareshader sprite RSGII1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RSGII2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RSGII3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2542,6 +2679,7 @@ hardwareshader sprite RSGII6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RSGII7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite RSGII8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Cyber Knight
 hardwareshader sprite CYGSJ1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CYGSJ2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CYGSJ3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2551,6 +2689,7 @@ hardwareshader sprite CYGSJ6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CYGSJ7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CYGSJ8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Cyber Baron
 hardwareshader sprite CBGSH1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CBGSH2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CBGSH3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2560,6 +2699,7 @@ hardwareshader sprite CBGSH6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CBGSH7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CBGSH8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Cyber Paladin
 hardwareshader sprite HPGLP1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HPGLP2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HPGLP3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2569,6 +2709,7 @@ hardwareshader sprite HPGLP6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HPGLP7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HPGLP8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Infernus
 hardwareshader sprite BRGSN1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BRGSN2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BRGSN3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2578,24 +2719,28 @@ hardwareshader sprite BRGSN6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BRGSN7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BRGSN8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//BELPHEGOR
 hardwareshader sprite BGS3E1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGS3E2E8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGS3E3E7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGS3E4E6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite BGS3E5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Volcabus
 hardwareshader sprite FAG2J1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FAG2J2J8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FAG2J3J7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FAG2J4J6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite FAG2J5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Daedabus
 hardwareshader sprite DAGDJ1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DAGDJ2J8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DAGDJ3J7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DAGDJ4J6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DAGDJ5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Hellion
 hardwareshader sprite HELGM1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HELGM2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HELGM3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2605,30 +2750,36 @@ hardwareshader sprite HELGM6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HELGM7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HELGM8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//FreshWizard
 hardwareshader sprite LMWGI1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite LMWGI2I8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite LMWGI3I7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite LMWGI4I6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite LMWGI5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//ICEVILE
 hardwareshader sprite DIGFQ1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DIGFQ2Q8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DIGFQ3Q7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DIGFQ4Q6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite DIGFQ5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Aracnorb
 hardwareshader sprite ACNGI1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ACNGI2I8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ACNGI3I7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ACNGI4I6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ACNGI5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//Arachnophyte
 hardwareshader sprite MARGE0 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//MASTERMIND
 hardwareshader sprite SPFGA0 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SPFGB0 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite SPFGC0 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//CYBERDEMON
 hardwareshader sprite CYGRG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CYGRG2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CYGRG3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
@@ -2638,24 +2789,35 @@ hardwareshader sprite CYGRG6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CYGRG7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite CYGRG8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//ANNIHILATOR
 hardwareshader sprite ANNFG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ANNFG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ANNFG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ANNFG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite ANNFG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//NAZIS
 hardwareshader sprite NGZIG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NGZIG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NGZIG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NGZIG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite NGZIG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//PB_MARAUDER
 hardwareshader sprite MAUKG1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MAUKG2G8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MAUKG3G7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MAUKG4G6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite MAUKG5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 
+//===========================================================================
+// Monster Pack lights
+// Merged from Monster Pack Add-On/GLDEFS.txt (dynamic lights, objects,
+// brightmaps for MP monsters: ZombieTank family, Queen/BFG, Crackodemon,
+// BluSoul, ZombieFlyer, Hellduke, Hierophant, Etherealsoul, Helemental).
+// No light/object/brightmap name collisions with the main mod's GLDEFS.
+//===========================================================================
+//ZombieFodder
 BRIGHTMAP SPRITE zfoda1 { MAP "brightmaps/Monsters/ZombieFodder/bfoda1.png" }
 BRIGHTMAP SPRITE zfoda2a8 { MAP "brightmaps/Monsters/ZombieFodder/bfoda2a8.png" }
 BRIGHTMAP SPRITE zfoda3a7 { MAP "brightmaps/Monsters/ZombieFodder/bfoda3a7.png" }
@@ -2686,6 +2848,7 @@ BRIGHTMAP SPRITE zfoda1 { MAP "brightmaps/Monsters/ZombieFodder/bfoda1.png" }
 BRIGHTMAP SPRITE zfoda1 { MAP "brightmaps/Monsters/ZombieFodder/bfoda1.png" }
 BRIGHTMAP SPRITE zfoda1 { MAP "brightmaps/Monsters/ZombieFodder/bfoda1.png" }
 
+//Hunger
 BRIGHTMAP SPRITE zhuna1 { MAP "brightmaps/Monsters/ZombieFodder/bfoda1.png" }
 BRIGHTMAP SPRITE zhuna2a8 { MAP "brightmaps/Monsters/ZombieFodder/bfoda2a8.png" }
 BRIGHTMAP SPRITE zhuna3a7 { MAP "brightmaps/Monsters/ZombieFodder/bfoda3a7.png" }
@@ -2716,6 +2879,7 @@ BRIGHTMAP SPRITE zfoda1 { MAP "brightmaps/Monsters/ZombieFodder/bfoda1.png" }
 BRIGHTMAP SPRITE zfoda1 { MAP "brightmaps/Monsters/ZombieFodder/bfoda1.png" }
 BRIGHTMAP SPRITE zfoda1 { MAP "brightmaps/Monsters/ZombieFodder/bfoda1.png" }
 
+//Zombietank
 
 FlickerLight2 ZombieTankAttack
 {
@@ -2877,6 +3041,7 @@ Frame ZTNKE { Light ZombieTankAttack }
 }
 
 
+//Zombietank
 BrightMap Sprite ZTNKD1 { MAP "brightmaps/Monsters/Zombietank/BMZTNKD1.png" }
 BrightMap Sprite ZTNKD2 { MAP "brightmaps/Monsters/Zombietank/BMZTNKD2.png" }
 BrightMap Sprite ZTNKD3 { MAP "brightmaps/Monsters/Zombietank/BMZTNKD3.png" }
@@ -2894,6 +3059,7 @@ BrightMap Sprite ZTNKE6 { MAP "brightmaps/Monsters/Zombietank/BMZTNKE6.png" }
 BrightMap Sprite ZTNKE7 { MAP "brightmaps/Monsters/Zombietank/BMZTNKE7.png" }
 BrightMap Sprite ZTNKE8 { MAP "brightmaps/Monsters/Zombietank/BMZTNKE8.png" }
 
+//Zombiemissiletank
 
 FlickerLight2 ZombieMissileTankAttack
 {
@@ -3055,6 +3221,7 @@ Frame ZMTKE { Light ZombieMissileTankAttack }
 }
 
 
+//Zombiemissiletank
 BrightMap Sprite ZMTKD1 { MAP "brightmaps/Monsters/Zombiemissiletank/BMZMTKD1.png" }
 BrightMap Sprite ZMTKD2 { MAP "brightmaps/Monsters/Zombiemissiletank/BMZMTKD2.png" }
 BrightMap Sprite ZMTKD3 { MAP "brightmaps/Monsters/Zombiemissiletank/BMZMTKD3.png" }
@@ -3102,6 +3269,7 @@ SecondarySize 104
 Chance 0.3
 }
 
+// ZMIS* was for a cut class; missiles use Rocket family sprites — attach to zombie tank rocket
 Object ZombieRocket2
 {
 Frame ZMISA { Light ZombieTankMissile1 }
@@ -3110,6 +3278,7 @@ Frame ZMISC { Light ZombieTankMissile3 }
 Frame ZMISD { Light ZombieTankMissile4 }
 }
 
+//Zombieplasmatank
 
 FlickerLight2 ZombieplasmaTankAttack
 {
@@ -3270,6 +3439,7 @@ Frame ZPTKD { Light ZombieTankAttack }
 Frame ZETKE { Light ZombieTankAttack }
 }
 
+//Zombietankelite
 FlickerLight2 ZombieTankeliteAttack
 {
 	Color 0.2 0.8 1.0
@@ -3429,6 +3599,7 @@ Object ZombieTankelite
 	Frame ZETKE { Light ZombieTankeliteAttack }
 }
 
+//BFG
 Pointlight DCBMiss1
 {
 Color 0.0 1.0 0.0
@@ -3522,6 +3693,7 @@ Frame CBTSV { Light DCBMiss111 }
 Frame CBTSW { Light DCBMiss111 }
 }
 
+//Note: the lights for the "ZWAVE" particle trail can cause a lot of slowdown.  Use at your discretion.
 Pointlight ZWAVE_01
 {
 	Color 0.2 0.0 0.2
@@ -3639,6 +3811,7 @@ Object ZWAVE
 }
 
 
+//Energy shots
 pointlight QUEENPLASMA
 {
     color 0.0 1.0 0.1
@@ -3690,6 +3863,7 @@ object QueenPainPlasmaBlast
     frame EBLTK { light QUEENPLASMA_X2 }
 }
 
+//Note: the lights for the "QueenPlasmaBlastTrail" particle trail can cause a lot of slowdown.  Use at your discretion.
 flickerlight QUEENPLASMATRAIL_1
 {
 	color 0.0 0.4 0.1
@@ -3724,6 +3898,7 @@ object QueenPlasmaBlastTrail
 	frame EBLTF { light QUEENPLASMATRAIL_3 }
 }
 
+//Crackodemon
 
 Pointlight CrackoBall1
 {
@@ -3800,6 +3975,7 @@ Frame SKUDJ { Light BlueLostSoul4 }
 Frame SKUDK { Light BlueLostSoul5 }
 }
 
+//Zombie Flyer
 
 Pointlight ZombieFlyerAttack1
 {
@@ -3821,7 +3997,7 @@ Frame FLYCC { Light ZombieFlyerAttack2 }
 
 PointLight FodderLaser
 {
-Color 1.0 0.8 0.0
+Color 1.0 0.8 0.0	
 Size 20
 }
 
@@ -3956,6 +4132,7 @@ Color 0.2 0.0 0.0
 Size 16
 }
 
+//Aracnorb
 
 brightmap sprite ACNBA1
 {
@@ -4058,6 +4235,7 @@ brightmap sprite ACNFI5
 	map "brightmaps/monsters/Aracnorb/ACNFI5.png"
 }
 
+//Hellduke
 
 brightmap sprite DUKEA1
 {
@@ -4066,55 +4244,55 @@ brightmap sprite DUKEA1
 brightmap sprite DUKEA2
 {
     map "brightmaps/monsters/Hellduke/DUKEA2.png"
-}
+}	
 brightmap sprite DUKEA3
 {
     map "brightmaps/monsters/Hellduke/DUKEA3.png"
-}
+}	
 brightmap sprite DUKEA7
 {
     map "brightmaps/monsters/Hellduke/DUKEA7.png"
-}
+}	
 brightmap sprite DUKEA8
 {
     map "brightmaps/monsters/Hellduke/DUKEA8.png"
-}
+}	
 brightmap sprite DUKEB2
 {
     map "brightmaps/monsters/Hellduke/DUKEB2.png"
-}
+}	
 brightmap sprite DUKEB3
 {
     map "brightmaps/monsters/Hellduke/DUKEB3.png"
-}
+}	
 brightmap sprite DUKEB7
 {
     map "brightmaps/monsters/Hellduke/DUKEB7.png"
-}
+}	
 brightmap sprite DUKEB8
 {
     map "brightmaps/monsters/Hellduke/DUKEB8.png"
-}
+}	
 brightmap sprite DUKEC1
 {
     map "brightmaps/monsters/Hellduke/DUKEC1.png"
-}
+}	
 brightmap sprite DUKEC2
 {
     map "brightmaps/monsters/Hellduke/DUKEC2.png"
-}
+}	
 brightmap sprite DUKEC3
 {
     map "brightmaps/monsters/Hellduke/DUKEC3.png"
-}
+}	
 brightmap sprite DUKED8
 {
     map "brightmaps/monsters/Hellduke/DUKED8.png"
-}
+}	
 brightmap sprite DUKEE1
 {
     map "brightmaps/monsters/Hellduke/DUKEE1.png"
-}
+}	
 brightmap sprite DUKEE2
 {
     map "brightmaps/monsters/Hellduke/DUKEE2.png"
@@ -4122,7 +4300,7 @@ brightmap sprite DUKEE2
 brightmap sprite DUKEE3
 {
     map "brightmaps/monsters/Hellduke/DUKEE3.png"
-}
+}	
 brightmap sprite DUKEE7
 {
     map "brightmaps/monsters/Hellduke/DUKEE7.png"
@@ -4134,11 +4312,11 @@ brightmap sprite DUKEE8
 brightmap sprite DUKEF1
 {
     map "brightmaps/monsters/Hellduke/DUKEF1.png"
-}
+}	
 brightmap sprite DUKEF2
 {
     map "brightmaps/monsters/Hellduke/DUKEF2.png"
-}
+}		
 brightmap sprite DUKEF3
 {
     map "brightmaps/monsters/Hellduke/DUKEF3.png"
@@ -4146,19 +4324,19 @@ brightmap sprite DUKEF3
 brightmap sprite DUKEF4
 {
     map "brightmaps/monsters/Hellduke/DUKEF4.png"
-}
+}	
 	brightmap sprite DUKEF5
 {
     map "brightmaps/monsters/Hellduke/DUKEF5.png"
-}
+}	
 brightmap sprite DUKEF6
 {
     map "brightmaps/monsters/Hellduke/DUKEF6.png"
-}
+}	
 brightmap sprite DUKEF7
 {
     map "brightmaps/monsters/Hellduke/DUKEF7.png"
-}
+}	
 brightmap sprite DUKEF8
 {
     map "brightmaps/monsters/Hellduke/DUKEF8.png"
@@ -4178,23 +4356,23 @@ brightmap sprite DUKEG3
 brightmap sprite DUKEG8
 {
     map "brightmaps/monsters/Hellduke/DUKEG8.png"
-}
+}	
 brightmap sprite DUKEH0
 {
     map "brightmaps/monsters/Hellduke/DUKEH0.png"
-}
+}	
 brightmap sprite DUKEI0
 {
     map "brightmaps/monsters/Hellduke/DUKEI0.png"
-}
+}	
 brightmap sprite DUKEJ0
 {
     map "brightmaps/monsters/Hellduke/DUKEJ0.png"
-}
+}	
 brightmap sprite DUKEK0
 {
     map "brightmaps/monsters/Hellduke/DUKEK0.png"
-}
+}	
 brightmap sprite DUKEL0
 {
     map "brightmaps/monsters/Hellduke/DUKEL0.png"
@@ -4202,11 +4380,11 @@ brightmap sprite DUKEL0
 brightmap sprite DUKEM0
 {
     map "brightmaps/monsters/Hellduke/DUKEM0.png"
-}
+}	
 brightmap sprite DUKEN0
 {
     map "brightmaps/monsters/Hellduke/DUKEN0.png"
-}
+}	
 brightmap sprite DUKEO0
 {
     map "brightmaps/monsters/Hellduke/DUKEO0.png"
@@ -4228,8 +4406,9 @@ Pointlight TyrantMExp
 {
 Color 1.0 0.6 0.0
 Size 75
-}
+}	
 
+//Hierophant
 
 Pointlight Hierophant1
 {
@@ -4306,7 +4485,9 @@ Frame HIB2H { Light Hieroball25 }
 Frame HIB2I { Light Hieroball26 }
 Frame HIB2J { Light Hieroball27 }
 }
-
+		
+//Etherealsoul
+//Dynamic lights
 
 Pointlight ShadowBall
 {
@@ -4351,633 +4532,636 @@ Frame SBALH { Light ShadowBall5 }
 }
 
 
+//Brightmaps
 
 
 BrightMap Sprite ETHSA1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSA1.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSA1"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSA8A2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSA8.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSA8"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSA7A3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSA6A4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSA5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSB1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSB1.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSB1"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSB8B2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSB8.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSB8"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSB7B3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSB6B4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSB5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSC1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSC1.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSC1"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSC8C2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSC8.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSC8"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSC7C3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSC6C4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSC5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSD1.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSD1"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD8D2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSD8.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSD8"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD7D3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD6D4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSE1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSE1.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSE1"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSE8E2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSE8.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSE8"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD7D3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD6D4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSD5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSF1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSF1.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSF1"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSF8F2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSF8.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSF8"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSF7F3
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSF6F4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSG1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSG1.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSG1"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSG6G4
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSG7G3
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSG7.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSG7"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSG8G2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSG8.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSG8"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSH0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSH0.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSH0"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSI0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSI0.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSI0"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSJ0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSJ0.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSJ0"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSK0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSK0.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSK0"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSL0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSL0.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSL0"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSM0
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSM0.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSM0"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSN0
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSO0
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSP1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSP1.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSP1"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSP5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSP6P4
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSP6.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSP6"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSP7P3
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSP7.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSP7"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSP8P2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSP8.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSP8"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSQ1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSQ1.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSQ1"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSQ5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSQ6Q4
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSQ6.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSQ6"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSQ7Q3
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSQ7.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSQ7"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSQ8Q2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSQ8.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSQ8"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSR1
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSR1.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSR1"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSR5
 {
-Map "brightmaps/monsters/Etherealsoul/BMBLACK.png"
+Map "brightmaps/monsters/Etherealsoul/BMBLACK"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSR6R4
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSR6.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSR6"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSR7R3
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSR7.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSR7"
 DisableFullBright
 }
 
 BrightMap Sprite ETHSR8R2
 {
-Map "brightmaps/monsters/Etherealsoul/BMETHSR8.png"
+Map "brightmaps/monsters/Etherealsoul/BMETHSR8"
 DisableFullBright
 }
 
+//Hades Elemental
 
 BrightMap Sprite HELEA1
 {
-Map "brightmaps/monsters/Helemental/BMHELEA1.png"
+Map "brightmaps/monsters/Helemental/BMHELEA1"
 DisableFullBright
 }
 
 BrightMap Sprite HELEA2A8
 {
-Map "brightmaps/monsters/Helemental/BMHELEA2.png"
+Map "brightmaps/monsters/Helemental/BMHELEA2"
 DisableFullBright
 }
 
 BrightMap Sprite HELEA3A7
 {
-Map "brightmaps/monsters/Helemental/BMHELEA3.png"
+Map "brightmaps/monsters/Helemental/BMHELEA3"
 DisableFullBright
 }
 
 BrightMap Sprite HELEA4A6
 {
-Map "brightmaps/monsters/Helemental/BMHELEA4.png"
+Map "brightmaps/monsters/Helemental/BMHELEA4"
 DisableFullBright
 }
 
 BrightMap Sprite HELEA5
 {
-Map "brightmaps/monsters/Helemental/BMHELEA5.png"
+Map "brightmaps/monsters/Helemental/BMHELEA5"
 DisableFullBright
 }
 
 BrightMap Sprite HELEB1
 {
-Map "brightmaps/monsters/Helemental/BMHELEB1.png"
+Map "brightmaps/monsters/Helemental/BMHELEB1"
 DisableFullBright
 }
 
 BrightMap Sprite HELEB2B8
 {
-Map "brightmaps/monsters/Helemental/BMHELEB2.png"
+Map "brightmaps/monsters/Helemental/BMHELEB2"
 DisableFullBright
 }
 
 BrightMap Sprite HELEB3B7
 {
-Map "brightmaps/monsters/Helemental/BMHELEB3.png"
+Map "brightmaps/monsters/Helemental/BMHELEB3"
 DisableFullBright
 }
 
 BrightMap Sprite HELEB4B6
 {
-Map "brightmaps/monsters/Helemental/BMHELEB4.png"
+Map "brightmaps/monsters/Helemental/BMHELEB4"
 DisableFullBright
 }
 
 BrightMap Sprite BMHELEB5
 {
-Map "brightmaps/monsters/Helemental/BMHELEB5.png"
+Map "brightmaps/monsters/Helemental/BMHELEB5"
 DisableFullBright
 }
 
 BrightMap Sprite HELEC1
 {
-Map "brightmaps/monsters/Helemental/BMHELEC1.png"
+Map "brightmaps/monsters/Helemental/BMHELEC1"
 DisableFullBright
 }
 
 BrightMap Sprite HELEC2C8
 {
-Map "brightmaps/monsters/Helemental/BMHELEC2.png"
+Map "brightmaps/monsters/Helemental/BMHELEC2"
 DisableFullBright
 }
 
 BrightMap Sprite HELEC3C7
 {
-Map "brightmaps/monsters/Helemental/BMHELEC3.png"
+Map "brightmaps/monsters/Helemental/BMHELEC3"
 DisableFullBright
 }
 
 BrightMap Sprite HELEC4C6
 {
-Map "brightmaps/monsters/Helemental/BMHELEC4.png"
+Map "brightmaps/monsters/Helemental/BMHELEC4"
 DisableFullBright
 }
 
 BrightMap Sprite HELEC5
 {
-Map "brightmaps/monsters/Helemental/BMHELEC5.png"
+Map "brightmaps/monsters/Helemental/BMHELEC5"
 DisableFullBright
 }
 
 BrightMap Sprite HELED1
 {
-Map "brightmaps/monsters/Helemental/BMHELED1.png"
+Map "brightmaps/monsters/Helemental/BMHELED1"
 DisableFullBright
 }
 
 BrightMap Sprite HELED2D8
 {
-Map "brightmaps/monsters/Helemental/BMHELED2.png"
+Map "brightmaps/monsters/Helemental/BMHELED2"
 DisableFullBright
 }
 
 BrightMap Sprite HELED3D7
 {
-Map "brightmaps/monsters/Helemental/BMHELED3.png"
+Map "brightmaps/monsters/Helemental/BMHELED3"
 DisableFullBright
 }
 
 BrightMap Sprite HELED4D6
 {
-Map "brightmaps/monsters/Helemental/BMHELED4.png"
+Map "brightmaps/monsters/Helemental/BMHELED4"
 DisableFullBright
 }
 
 BrightMap Sprite HELED5
 {
-Map "brightmaps/monsters/Helemental/BMHELED5.png"
+Map "brightmaps/monsters/Helemental/BMHELED5"
 DisableFullBright
 }
 
 BrightMap Sprite HELEE1
 {
-Map "brightmaps/monsters/Helemental/BMHELEE1.png"
+Map "brightmaps/monsters/Helemental/BMHELEE1"
 DisableFullBright
 }
 
 BrightMap Sprite HELEE2E8
 {
-Map "brightmaps/monsters/Helemental/BMHELEE2.png"
+Map "brightmaps/monsters/Helemental/BMHELEE2"
 DisableFullBright
 }
 
 BrightMap Sprite HELEE3E7
 {
-Map "brightmaps/monsters/Helemental/BMHELEE3.png"
+Map "brightmaps/monsters/Helemental/BMHELEE3"
 DisableFullBright
 }
 
 BrightMap Sprite HELEE4E6
 {
-Map "brightmaps/monsters/Helemental/BMHELEE4.png"
+Map "brightmaps/monsters/Helemental/BMHELEE4"
 DisableFullBright
 }
 
 BrightMap Sprite HELEE5
 {
-Map "brightmaps/monsters/Helemental/BMHELEE5.png"
+Map "brightmaps/monsters/Helemental/BMHELEE5"
 DisableFullBright
 }
 
 BrightMap Sprite HELEF1
 {
-Map "brightmaps/monsters/Helemental/BMHELEF1.png"
+Map "brightmaps/monsters/Helemental/BMHELEF1"
 DisableFullBright
 }
 
 BrightMap Sprite HELEF2F8
 {
-Map "brightmaps/monsters/Helemental/BMHELEF2.png"
+Map "brightmaps/monsters/Helemental/BMHELEF2"
 DisableFullBright
 }
 
 BrightMap Sprite HELEF3F7
 {
-Map "brightmaps/monsters/Helemental/BMHELEF3.png"
+Map "brightmaps/monsters/Helemental/BMHELEF3"
 DisableFullBright
 }
 
 BrightMap Sprite HELEF4F6
 {
-Map "brightmaps/monsters/Helemental/BMHELEF4.png"
+Map "brightmaps/monsters/Helemental/BMHELEF4"
 DisableFullBright
 }
 
 BrightMap Sprite HELEF5
 {
-Map "brightmaps/monsters/Helemental/BMHELEF5.png"
+Map "brightmaps/monsters/Helemental/BMHELEF5"
 DisableFullBright
 }
 
 BrightMap Sprite HELEG1
 {
-Map "brightmaps/monsters/Helemental/BMHELEG1.png"
+Map "brightmaps/monsters/Helemental/BMHELEG1"
 DisableFullBright
 }
 
 BrightMap Sprite HELEG2G8
 {
-Map "brightmaps/monsters/Helemental/BMHELEG2.png"
+Map "brightmaps/monsters/Helemental/BMHELEG2"
 DisableFullBright
 }
 
 BrightMap Sprite HELEG3G7
 {
-Map "brightmaps/monsters/Helemental/BMHELEG3.png"
+Map "brightmaps/monsters/Helemental/BMHELEG3"
 DisableFullBright
 }
 
 BrightMap Sprite HELEG4G6
 {
-Map "brightmaps/monsters/Helemental/BMHELEG4.png"
+Map "brightmaps/monsters/Helemental/BMHELEG4"
 DisableFullBright
 }
 
 BrightMap Sprite HELEG5
 {
-Map "brightmaps/monsters/Helemental/BMHELEG5.png"
+Map "brightmaps/monsters/Helemental/BMHELEG5"
 DisableFullBright
 }
 
 BrightMap Sprite HELEH1
 {
-Map "brightmaps/monsters/Helemental/BMHELEH1.png"
+Map "brightmaps/monsters/Helemental/BMHELEH1"
 DisableFullBright
 }
 
 BrightMap Sprite HELEH2H8
 {
-Map "brightmaps/monsters/Helemental/BMHELEH2.png"
+Map "brightmaps/monsters/Helemental/BMHELEH2"
 DisableFullBright
 }
 
 BrightMap Sprite HELEH3H7
 {
-Map "brightmaps/monsters/Helemental/BMHELEH3.png"
+Map "brightmaps/monsters/Helemental/BMHELEH3"
 DisableFullBright
 }
 
 BrightMap Sprite HELEH4H6
 {
-Map "brightmaps/monsters/Helemental/BMHELEH4.png"
+Map "brightmaps/monsters/Helemental/BMHELEH4"
 DisableFullBright
 }
 
 BrightMap Sprite HELEH5
 {
-Map "brightmaps/monsters/Helemental/BMHELEH5.png"
+Map "brightmaps/monsters/Helemental/BMHELEH5"
 DisableFullBright
 }
 
 BrightMap Sprite HELEI0
 {
-Map "brightmaps/monsters/Helemental/BMHELEI0.png"
+Map "brightmaps/monsters/Helemental/BMHELEI0"
 DisableFullBright
 }
 
 BrightMap Sprite HELEJ0
 {
-Map "brightmaps/monsters/Helemental/BMHELEJ0.png"
+Map "brightmaps/monsters/Helemental/BMHELEJ0"
 DisableFullBright
 }
 
 BrightMap Sprite HELEK0
 {
-Map "brightmaps/monsters/Helemental/BMHELEK0.png"
+Map "brightmaps/monsters/Helemental/BMHELEK0"
 DisableFullBright
 }
 
 BrightMap Sprite HELEL0
 {
-Map "brightmaps/monsters/Helemental/BMHELEL0.png"
+Map "brightmaps/monsters/Helemental/BMHELEL0"
 DisableFullBright
 }
 
 BrightMap Sprite HELEM0
 {
-Map "brightmaps/monsters/Helemental/BMHELEM0.png"
+Map "brightmaps/monsters/Helemental/BMHELEM0"
 DisableFullBright
 }
 
 BrightMap Sprite HELEN0
 {
-Map "brightmaps/monsters/Helemental/BMHELEN0.png"
+Map "brightmaps/monsters/Helemental/BMHELEN0"
 DisableFullBright
 }
 
 BrightMap Sprite HELEO0
 {
-Map "brightmaps/monsters/Helemental/BMHELEO0.png"
+Map "brightmaps/monsters/Helemental/BMHELEO0"
 DisableFullBright
 }
 
 BrightMap Sprite HELEP0
 {
-Map "brightmaps/monsters/Helemental/BMHELEP0.png"
+Map "brightmaps/monsters/Helemental/BMHELEP0"
 DisableFullBright
 }
 
+// Baalgar Demon (CyberdemonBoss) — stagger / GK highlight (weapons pack)
 hardwareshader sprite HXBDV1 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HXBDV2 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HXBDV3 	{ Shader "shaders/glorykill.shader" Speed 1.0 }

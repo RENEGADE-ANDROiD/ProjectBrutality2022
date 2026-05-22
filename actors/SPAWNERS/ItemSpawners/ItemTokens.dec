@@ -1,3 +1,4 @@
+//Armor Bonus Spawner
 Actor IsArmorCharge : AmmoCounter { }
 Actor IsStrongArmorCharge : AmmoCounter { }
 Actor IsRegularT1ArmorBonus : AmmoCounter {}
@@ -11,6 +12,8 @@ Actor IsRegularT3HealthBonus : AmmoCounter { }
 Actor IsHealthInfusionKitT1 : AmmoCounter { }
 Actor IsHealthInfusionKitT2 : AmmoCounter { }
 Actor IsHealthInfusionKitT3 : AmmoCounter { }
+
+//Medikit and Stimpack*/
 
 Actor IsHealthBackpack : AmmoCounter {}
 Actor IsHealthSatchel : AmmoCounter {}

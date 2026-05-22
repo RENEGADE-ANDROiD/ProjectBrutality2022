@@ -51,7 +51,9 @@ Actor MedikitSpawner replaces Medikit
 		Stop
 	SpawnMedikit:
 		ReplaceVanilla:
-			TNT1 A 0 A_SpawnItemEx("PB_Medikit",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-			Stop
+		
+		ReplaceVanilla:
+		TNT1 A 0 A_SpawnItemEx("Medikit2",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
 	}
 }

@@ -11,17 +11,17 @@ ACTOR PB_ArachnophyteGK: PB_Arachnophyte replaces PB_Arachnophyte
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0)
-				{
-					A_SpawnItemEx("ArachnoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
-					A_GiveInventory("FinisherToken",1);
-					A_GiveToTarget("BloodPunchKilled",1);
+				if(countinv("FinisherToken")==0) //if it isnt healing already
+				{								//will heal and give the token that indicates it's executable
+					A_SpawnItemEx("ArachnoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
+					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1)
+				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
 				{
 					A_ChangeFlag (NOGRAVITY, 0);
-					return state("Stagger");
+					return state("Stagger");	//stays there for a few seconds
 				}
 				else
 				{
@@ -97,7 +97,6 @@ ACTOR PB_ArachnophyteGK: PB_Arachnophyte replaces PB_Arachnophyte
 		
 	Death.Fatality:
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-		TNT1 A 0 A_PlaySound("arachnophyte/pain")
 		TNT1 A 0 A_BossDeath
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
         TNT1 A 0 A_NoBlocking
@@ -121,16 +120,16 @@ ACTOR PB_ArachnotronGK: PB_Arachnotron replaces PB_Arachnotron
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0)
-				{
-					A_SpawnItemEx("ArachnoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
-					A_GiveInventory("FinisherToken",1);
-					A_GiveToTarget("BloodPunchKilled",1);
+				if(countinv("FinisherToken")==0) //if it isnt healing already
+				{								//will heal and give the token that indicates it's executable
+					A_SpawnItemEx("ArachnoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
+					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1)
+				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
 				{
-					return state("Stagger");
+					return state("Stagger");	//stays there for a few seconds
 				}
 				else
 				{
@@ -207,7 +206,7 @@ ACTOR PB_ArachnotronGK: PB_Arachnotron replaces PB_Arachnotron
 	    TNT1 A 1 A_BossDeath
 		TNT1 A 0 A_Pain
 		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
-	    TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality3", "Death.Fatality3", "Death.Fatality4", "Death.Fatality4", "Death.Fatality5", "Death.Fatality5")
+	    TNT1 A 0 A_Jump(256, "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality1", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality2", "Death.Fatality3", "Death.Fatality3", "Death.Fatality3", "Death.Fatality3")
 		Stop
 	}
 }
@@ -224,17 +223,17 @@ actor AracnorbGK: Aracnorb replaces Aracnorb
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0)
-				{
-					A_SpawnItemEx("ArachnoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
-					A_GiveInventory("FinisherToken",1);
-					A_GiveToTarget("BloodPunchKilled",1);
+				if(countinv("FinisherToken")==0) //if it isnt healing already
+				{								//will heal and give the token that indicates it's executable
+					A_SpawnItemEx("ArachnoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
+					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1)
+				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
 				{
 					A_ChangeFlag (NOGRAVITY, 0);
-					return state("Stagger");
+					return state("Stagger");	//stays there for a few seconds
 				}
 				else
 				{
@@ -339,16 +338,16 @@ ACTOR PB_EliteArachnotronGK: PB_EliteArachnotron replaces PB_EliteArachnotron
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0)
-				{
-					A_SpawnItemEx("ArachnoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
-					A_GiveInventory("FinisherToken",1);
-					A_GiveToTarget("BloodPunchKilled",1);
+				if(countinv("FinisherToken")==0) //if it isnt healing already
+				{								//will heal and give the token that indicates it's executable
+					A_SpawnItemEx("ArachnoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
+					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1)
+				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
 				{
-					return state("Stagger");
+					return state("Stagger");	//stays there for a few seconds
 				}
 				else
 				{
@@ -449,16 +448,16 @@ ACTOR PB_InfernalArachnotronGK: PB_InfernalArachnotron replaces PB_InfernalArach
 		{
 			if(GetCvar("be_ExecutionsON"))
 			{
-				if(countinv("FinisherToken")==0)
-				{
-					A_SpawnItemEx("ArachnoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION);
-					A_GiveInventory("FinisherToken",1);
-					A_GiveToTarget("BloodPunchKilled",1);
+				if(countinv("FinisherToken")==0) //if it isnt healing already
+				{								//will heal and give the token that indicates it's executable
+					A_SpawnItemEx("ArachnoHighlight",0,0,0,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION); //to highlight if ON, and to remove the token after the monster heals
+					A_GiveInventory("FinisherToken",1);	//token to allow melee attack to execute
+					A_GiveToTarget("BloodPunchKilled",1); // Check BloodPunch
 				}
 				
-				if(GetCvar(be_MonsterStagger)==1)
+				if(GetCvar(be_MonsterStagger)==1) //will the monsters stagger at all?
 				{
-					return state("Stagger");
+					return state("Stagger");	//stays there for a few seconds
 				}
 				else
 				{

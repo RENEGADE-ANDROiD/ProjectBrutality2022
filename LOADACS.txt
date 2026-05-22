@@ -21,17 +21,15 @@ SCAVPB
 nanostim
 PREDICTION
 RLACS
-// RLACS: homing in PB_RLACSHandler (ZScript); lockOnTargetHeight + checkLockOnTargetState still used by ROCKETLAUNCHER.dec
 BerserkPrompt
 MGSPAWN
-// ExecutionsACS — unused; pb_execution_handler uses spawnHealth/health directly
-// Reticle — PB_DMRReticleHandler (ZScript)
-// lowhealth — PB_LowHealthAlertHandler (ZScript)
-// EquipCooldown — PB_GKEquipmentCooldownHandler (ZScript)
-// GloryMelee — PB_TacticalFeelHandler NetworkProcess (pb_glorysaw_* / pb_shouldercannon / pb_glorycryo)
-// GloryHUD — PB_GloryFuelHudOverlay (ZScript)
-// BloodPunch — PB_BloodPunchReadyHandler (ZScript)
-// Marauder — PB_MarauderSupportHandler (ZScript)
-Shield_saw
-ACHIEVEMENTS_BRIDGE_ACS
-// hitmarkers — hitmarkershandler UI (ZScript; see PB_HitmarkersUi.zsc)
+ExecutionsACS
+Reticle //This is for ACS DMR reticle
+// Glory Kills
+lowhealth
+EquipCooldown
+GloryMelee
+GloryHUD
+BloodPunch
+// Marauder add-on
+Marauder

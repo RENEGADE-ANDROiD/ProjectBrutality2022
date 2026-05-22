@@ -3,27 +3,13 @@ Class PB_Monster : Actor abstract
 	int	HitBoxTimerNew;
 	int HitBoxTimerOld;
 	int EnemyLastSighted;
-
-	double posHeadHB;
-	double posTorsoHB;
-	double posDickHB;
-	double posLegHB;
-	double dmgHeadMult;
-	double dmgTorsoMult;
-	double dmgArmMult;
-	double dmgLowTorsoMult;
-	double dmgDickMult;
-	double dmgLegMult;
-	bool ignoreArmDamage;
-	bool ignoreHeadDamage;
-	bool ignoreDickDamage;
-	bool ignoreLegDamage;
-
+	
+	
 	bool HitBoxSpawned;
 	bool Wandering;
 	bool willBeLooking;
 	int heardOpponent;
-
+	
 	void ExecutionHandler() {
 		if(CheckInventory("ExecutionToken",1)) {
 			SetState(FindState("Execution"));
@@ -94,46 +80,20 @@ Class PB_Monster : Actor abstract
 	}
 
 
-	bool PB_MonsterHandlersDueThisTic()
-	{
-		if (HitBoxSpawned)
-			return true;
-		if (CheckInventory("HeadshotToken", 1))
-			return true;
-		if (CheckInventory("ExecutionToken", 1))
-			return true;
-		return (Level.MapTime & 7) == 0;
-	}
-
 	override void Tick()
 	{
 		Super.Tick();
-
-		if (PB_MonsterHandlersDueThisTic())
-		{
-			HitboxerHandler();
-			ExecutionHandler();
-		}
+		
+		//Handle Hitbox system
+		HitboxerHandler();
+		ExecutionHandler();
 	}
 
 	override void PostBeginPlay() {
-		Super.PostBeginPlay();
+		Super.PostBeginPlay(); // call the super function for virtual functions so we don't break shit if GZdoom update.
 		heardOpponent = 0;
 		HitBoxSpawned = False;
-
-		if (posTorsoHB == 0)
-		{
-			posHeadHB = 0.80;
-			posTorsoHB = 0.65;
-			posDickHB = 0.38;
-			posLegHB = 0.40;
-			dmgHeadMult = 2.0;
-			dmgTorsoMult = 1.5;
-			dmgArmMult = 0.70;
-			dmgLowTorsoMult = 1.0;
-			dmgDickMult = 0.95;
-			dmgLegMult = 0.80;
-		}
+	
 	}
 	
 	double A_PrepairDrop()
@@ -159,8 +119,8 @@ Class PB_Monster : Actor abstract
 	void A_DropAdjust(class<actor> missiletype, class<actor> missiletype2,double offX, double offY, double offZ,double PredAngle=0,
 						double dist=0,double speedmult=1.,double gravity=0,actor target=null,double spawnOffsetY=0,bool flipped=0,int minRange=0,int maxRange=1000)
 	{
-		if (getdefaultbytype(missiletype).gravity != 0) { PredAngle = ACS_NamedExecuteWithResult("PredictAim", 1, 20, 32); }
-		else {PredAngle = ACS_NamedExecuteWithResult("PredictAim", 1, getdefaultbytype(missiletype).speed, offZ);}
+		if (getdefaultbytype(missiletype).gravity != 0) { PredAngle = ACS_NamedExecuteWithResult("PredictAim", 1, 20, 32); }	//(int retAngle, int projectileSpeed, int projectileZ)
+		else {PredAngle = ACS_NamedExecuteWithResult("PredictAim", 1, getdefaultbytype(missiletype).speed, offZ);}	//(int retAngle, int projectileSpeed, int projectileZ)
 			
 		if(!target)target=self.target;
 		if(!target)return;
@@ -213,75 +173,10 @@ Class PB_Monster : Actor abstract
 				self.A_SpawnItemEx(
 					missiletype,offX,offY,offZ,
 					cos(pitch)*abs(offY),0,-sin(pitch)*abs(offY),
-					PredictAngle*360/65536,
+					PredictAngle*360/65536,												// atan(offY/targdist)
 					flags:SXF_NOCHECKPOSITION|SXF_SETTARGET|SXF_TRANSFERPITCH
 				);
 			}
 	}
-
-}
-
-extend class PB_Monster
-{
-	action void A_PB_BurnFX_TinyBurningPieces()
-	{
-		if (!PB_BurnFXThrottleHandler.ShouldSpawnTinyPiece())
-			return;
-		A_SpawnItemEx("TinyBurningPiece", random(-15, 15), random(-15, 15));
-		A_SpawnItemEx("TinyBurningPiece2", random(-35, 35), random(-35, 35));
-		A_SpawnItemEx("TinyBurningPiece3", random(-45, 45), random(-45, 35));
-	}
-
-	action void A_PB_BurnFX_RealisticFireSparks1(int zofs)
-	{
-		if (!PB_BurnFXThrottleHandler.ShouldSpawnBurnParticles())
-			return;
-		A_SpawnItemEx("RealisticFireSparks1", random(-2, 2), random(-2, 2), zofs, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
-	}
-
-	action void A_PB_BurnFX_ExplosionHeavy(int height)
-	{
-		if (!PB_BurnFXThrottleHandler.ShouldSpawnExplosionVerySlow())
-			return;
-		A_CustomMissile("ExplosionParticleHeavy", height, 0, random(0, 360), 2, random(0, 360));
-	}
-
-	action void A_PB_BurnFX_ExplosionHeavyBurst(int height, int count = 4)
-	{
-		if (!PB_BurnFXThrottleHandler.ShouldSpawnExplosionVerySlow())
-			return;
-		int n = max(1, count);
-		for (int i = 0; i < n; i++)
-			A_CustomMissile("ExplosionParticleHeavy", height, 0, random(0, 360), 2, random(0, 360));
-	}
-
-	action void A_PB_BurnFX_ExplosionVeryFast(int height)
-	{
-		if (!PB_BurnFXThrottleHandler.ShouldSpawnExplosionVerySlow())
-			return;
-		A_CustomMissile("ExplosionParticleVeryFast", height, 0, random(0, 360), 2, random(0, 360));
-	}
-
-	action void A_PB_BurnFX_ExplosionVeryFastBurst(int height, int count = 4)
-	{
-		if (!PB_BurnFXThrottleHandler.ShouldSpawnExplosionVerySlow())
-			return;
-		int n = max(1, count);
-		for (int i = 0; i < n; i++)
-			A_CustomMissile("ExplosionParticleVeryFast", height, 0, random(0, 360), 2, random(0, 360));
-	}
-
-	action void A_PB_BurnFX_BurningEmberBigger(int height)
-	{
-		if (!PB_BurnFXThrottleHandler.ShouldSpawnBurnParticles())
-			return;
-		A_CustomMissile("BurningEmberParticlesFloating_Bigger", height, 0, random(0, 360), 2, random(0, 160));
-	}
-
-	action void A_PB_BurnFX_PlasmaSmoke(int height)
-	{
-		if (!PB_BurnFXThrottleHandler.ShouldSpawnBurnParticles())
-			return;
-		A_CustomMissile("PlasmaSmoke", height, 0, random(0, 360), 2, random(0, 160));
-	}
+	
 }

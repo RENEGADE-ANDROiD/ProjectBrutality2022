@@ -23,7 +23,11 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+//===========================================================================
+//
+//
+//
+//===========================================================================
 
 class NashGoreGibs : Actor
 {
@@ -50,7 +54,11 @@ class NashGoreGibs : Actor
 	double gibSpinSnapYaw;
 	int gibSpinStableCt;
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	override void BeginPlay(void)
 	{
@@ -74,7 +82,11 @@ class NashGoreGibs : Actor
 		NashGoreStatics.TickStabilizeMissileGibSprite(self, gibSpinFrozen, gibSpinSnapYaw, gibSpinStableCt);
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	static void SpawnGibs(Actor mo)
 	{
@@ -84,6 +96,7 @@ class NashGoreGibs : Actor
 		double spawnRadius = mo.Default.Radius;
 		double spawnHeight = mo.Default.Height / 2;
 
+		// get monster's "size" and cap it to something sensible
 		int size = int(mo.Mass * 0.2);
 		size = clamp(size, 0, 50);
 
@@ -92,6 +105,7 @@ class NashGoreGibs : Actor
 			bool result;
 			Actor obj;
 
+			// spawn gibs
 			[result, obj] =
 			mo.A_SpawnItemEx("NashGoreGibs",
 				zofs: spawnHeight,
@@ -99,6 +113,7 @@ class NashGoreGibs : Actor
 				flags: SXF_USEBLOODCOLOR, 100);
 			if (obj) obj.target = mo;
 
+			// spawn lots of blood
 			if (random() < 70)
 			{
 				[result, obj] =
@@ -109,6 +124,7 @@ class NashGoreGibs : Actor
 				if (obj) obj.target = mo;
 			}
 
+			// spawn sticky gibs and ceiling blood
 			if (nashgore_gibtype == 0)
 			{
 				FLineTraceData t;
@@ -123,6 +139,7 @@ class NashGoreGibs : Actor
 					bool result;
 					Actor obj;
 
+					// ceiling blood
 					if (nashgore_bloodtype == 0 || nashgore_bloodtype == 1)
 					{
 						class<Actor> cls;
@@ -136,10 +153,12 @@ class NashGoreGibs : Actor
 							obj.SetOrigin(t.HitLocation, true);
 							NashGoreBloodSpot(obj).bOnCeiling = true;
 
+							// flip sprite Y
 							if (nashgore_spriteblood) obj.Scale.Y *= -1;
 						}
 					}
 
+					// ceiling gib
 					[result, obj] = mo.A_SpawnItemEx("NashGoreStickyGibsCeiling", flags: SXF_USEBLOODCOLOR | SXF_NOCHECKPOSITION, 200);
 					if (obj)
 					{
@@ -148,8 +167,10 @@ class NashGoreGibs : Actor
 					}
 				}
 
+				// spawn wall gibs
 				if (t.HitType == t.TRACE_HitWall)
 				{
+					// wall gib
 					bool result;
 					Actor obj;
 					[result, obj] = mo.A_SpawnItemEx("NashGoreStickyGibsWall", flags: SXF_USEBLOODCOLOR | SXF_NOCHECKPOSITION, 100);
@@ -164,7 +185,11 @@ class NashGoreGibs : Actor
 		}
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	States
 	{
@@ -172,22 +197,22 @@ class NashGoreGibs : Actor
 		TNT1 A 0 NoDelay A_Jump(256, "Gib1", "Gib2", "Gib3", "Gib4", "Gib5", "Gib6", "Gib7", "Gib8", "Gib9", "Gib0");
 		Stop;
 	Gib1:
-		NSG1 A 0;
+		GIB1 A 0;
 		Goto SpawnLoop;
 	Gib2:
 		GIB2 A 0;
 		Goto SpawnLoop;
 	Gib3:
-		NSG3 A 0;
+		GIB3 A 0;
 		Goto SpawnLoop;
 	Gib4:
-		NSG4 A 0;
+		GIB4 A 0;
 		Goto SpawnLoop;
 	Gib5:
-		NSG5 A 0;
+		GIB5 A 0;
 		Goto SpawnLoop;
 	Gib6:
-		NSG6 A 0;
+		GIB6 A 0;
 		Goto SpawnLoop;
 	Gib7:
 		GIB7 A 0;
@@ -222,7 +247,11 @@ class NashGoreGibs : Actor
 	}
 }
 
-
+//===========================================================================
+//
+//
+//
+//===========================================================================
 
 class NashGoreStickyGibs : NashGoreGibs
 {
@@ -239,7 +268,11 @@ class NashGoreStickyGibs : NashGoreGibs
 
 	bool bOnCeiling;
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	override void BeginPlay(void)
 	{
@@ -282,7 +315,11 @@ class NashGoreStickyGibsCeiling : NashGoreStickyGibs
 		-MOVEWITHSECTOR
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	States
 	{
@@ -317,7 +354,11 @@ class NashGoreStickyGibsWall : NashGoreStickyGibs
 		-FORCEXYBILLBOARD
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	override void Tick(void)
 	{
@@ -336,7 +377,11 @@ class NashGoreStickyGibsWall : NashGoreStickyGibs
 		}
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	States
 	{

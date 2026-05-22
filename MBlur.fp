@@ -1,4 +1,3 @@
-// Motion blur postprocess fragment shader (Project Brutality optional HUD effect).
 
 void main()
 {

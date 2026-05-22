@@ -627,6 +627,8 @@ ACTOR StunGrenadePinata : StunGrenadeAmmo
 	}
 }
 
+// Random ammo Spawner
+
 Actor RandomDice
 {
 States
@@ -812,6 +814,7 @@ States
 	}
 }
 
+// Tighter random pools for be_GKHard (GloryKills add-on)
 Actor RandomDiceH
 {
 States

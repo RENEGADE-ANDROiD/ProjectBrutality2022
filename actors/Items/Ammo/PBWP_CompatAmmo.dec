@@ -1,3 +1,6 @@
+// Compatibility aliases for PBWP-folded weapons that still reference PB ammo class names.
+// Keep these lightweight so existing PB2022 ammo economy remains intact.
+
 ACTOR PB_HighCalMag : NewClip
 {
 }

@@ -31,22 +31,11 @@ ACTOR BPv10_FlopOrgans
     Flop1:
         MANA A 2 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
         MANA BCDEFGH 2
-        MANA A 2 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
-        MANA BCDEFGH 2
-        Goto Settle
+        Loop
     Flop2:
         MANA E 2 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
         MANA FGHABCD 2
-        MANA E 2 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
-        MANA FGHABCD 2
-        Goto Settle
-    Settle:
-        TNT1 A 0 A_ChangeVelocity(0, 0, 0, 1)
-        TNT1 A 0 A_SetRoll(0)
-        TNT1 A 0 A_SetPitch(0)
-        TNT1 A 0 A_ChangeFlag("DOOMBOUNCE", 0)
-        MANA A 350
-        Goto Linger
+        Loop
     Death:
         MANA A 35 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
         Goto Linger

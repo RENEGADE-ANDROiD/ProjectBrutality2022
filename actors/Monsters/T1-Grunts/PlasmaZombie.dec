@@ -208,13 +208,13 @@ Death.Shotgun:
 
 Actor FatalizedPlasmaZombie
 {States{Spawn:
-	    FPMA PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP 5 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 360))
+	    FPMA PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP 5 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
 		FPMA P -1
         Stop }}
 		
 Actor FatalizedPlasmaZombie2
 {States{Spawn:
-	    FPMA SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 5 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 360))
+	    FPMA SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 5 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
 		FPMA S -1
         Stop }}	
 		

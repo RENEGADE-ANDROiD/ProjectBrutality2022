@@ -1,2 +1,0 @@
-// RS_Pistol* states live in actors/Weapons/Slot2/PBPISTOL.dec (PB_Pistol weapon states block).
-// Do not add a second PB_Pistol merge lump here — duplicate class merge breaks startup.

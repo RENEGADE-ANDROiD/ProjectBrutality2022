@@ -1,5 +1,6 @@
 const BDP_BR_MAG = 15;
 
+// : PB_WeaponBase: was PB_Weapon (ZScript only sees ZScript types in UZDoom; SelectFirstPersonLegs inlined from BaseWeapon.dec)
 class BDPBattleRifle : PB_WeaponBase
 {
 	bool isADS;
@@ -50,7 +51,7 @@ class BDPBattleRifle : PB_WeaponBase
 		PB_IncrementHeat(4);
 		A_StartSound("weapons/battlerifle/fire", CHAN_WEAPON, CHANF_OVERLAP, 1.0, 0, 1.12);
 		PB_WeaponRecoil(-1.8, frandom(-0.3, 0.3));
-		A_PB_ThrottledMuzzleFX(0, 0, 0, "", 'BattleRifleFXPhase');
+		PB_GunSmoke(0, 0, 0);
 		invoker.burstCount++;
 	}
 
@@ -63,7 +64,7 @@ class BDPBattleRifle : PB_WeaponBase
 		PB_IncrementHeat(4);
 		A_StartSound("weapons/battlerifle/fire", CHAN_WEAPON, CHANF_OVERLAP, 1.0, 0, 1.12);
 		PB_WeaponRecoil(-1.1, frandom(-0.2, 0.2));
-		A_PB_ThrottledMuzzleFX(0, 0, -1, "", 'BattleRifleFXPhase');
+		PB_GunSmoke(0, 0, -1);
 		invoker.burstCount++;
 	}
 
@@ -93,9 +94,6 @@ class BDPBattleRifle : PB_WeaponBase
 			Stop;
 		Steady:
 			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 SetPlayerProperty(0, 0, 0);
-			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			goto Ready3;
 
 		Select:
@@ -108,11 +106,24 @@ class BDPBattleRifle : PB_WeaponBase
 			TNT1 A 0 A_TakeInventory("PB_LockScreenTilt", 1);
 			TNT1 A 0 A_TakeInventory("HasBarrel", 1);
 			TNT1 A 0 A_TakeInventory("HasIceBarrel", 1);
-			TNT1 A 0 A_TakeInventory("HasBurningBarrel", 1);
+			TNT1 A 0 A_TakeInventory("HasFlameBarrel", 1);
 			TNT1 A 0 A_TakeInventory("GrabbedBarrel", 1);
 			TNT1 A 0 A_TakeInventory("GrabbedIceBarrel", 1);
-			TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel", 1);
-			Goto SelectFirstPersonLegs;
+			TNT1 A 0 A_TakeInventory("GrabbedFlameBarrel", 1);
+			TNT1 A 0 A_StopSound(1);
+			TNT1 A 0 A_StopSound(5);
+			TNT1 A 0 A_StopSound(6);
+			TNT1 A 0 A_TakeInventory("Spin",1);
+			TNT1 A 0 A_TakeInventory("CantWeaponSpecial",1);
+			TNT1 A 0 A_TakeInventory("MG42Selected",1);
+			TNT1 A 0 A_SetInventory("Grabbing_A_Ledge", 0);
+			TNT1 A 0 A_TakeInventory("RandomHeadExploder",1);
+			TNT1 A 0 A_TakeInventory("DualFireReload",2);
+			TNT1 A 0 A_Overlay(-777, "Melee_Equipment_Handler_Overlay");
+			TNT1 A 0 A_Overlay(-778, "KickHandler_Overlay");
+			TNT1 A 0 A_Overlay(-779, "Equipment_Toggle_Handler_Overlay");
+			TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand");
+			TNT1 A 0 A_Jump(255, "SelectContinue");
 		SelectContinue:
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 A_StartSound("weapons/battlerifle/up", CHAN_WEAPON);
@@ -148,7 +159,7 @@ class BDPBattleRifle : PB_WeaponBase
 			TNT1 A 0 A_TakeInventory("Zoomed", 1);
 			TNT1 A 0 setADS(false);
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
+			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel");
 			BR4S ABCDE 1;
 			TNT1 A 0 A_StopSound(1);
@@ -177,18 +188,14 @@ class BDPBattleRifle : PB_WeaponBase
 				A_SetRoll(0);
 				PB_HandleCrosshair(5);
 				A_SetInventory("PB_LockScreenTilt", 0);
-				bool holdMode = CVar.GetCVar("pb_toggle_aim_hold", player).GetInt() == 1;
-				if (holdMode)
+				if (CVar.GetCVar("pb_toggle_aim_hold", player).GetInt() == 1)
 				{
-					if (!PressingAltfire() || JustReleased(BT_ALTATTACK))
-						return resolvestate("ZoomOut");
-					if (JustPressed(BT_ATTACK) && getBRMag() > 0)
+					if (!PressingAltfire() || JustReleased(BT_ALTATTACK)) return resolvestate("ZoomOut");
+					if (PressingFire() && PressingAltfire() && CountInv("BR_Ammo") > 0)
 						return resolvestate("FireADS");
 					return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOSECONDARY);
 				}
-				if (PressingAltfire())
-					return resolvestate("ZoomOut");
-				if (JustPressed(BT_ATTACK) && getBRMag() > 0)
+				if (PressingFire() && CountInv("BR_Ammo") > 0)
 					return resolvestate("FireADS");
 				return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 			}
@@ -205,16 +212,12 @@ class BDPBattleRifle : PB_WeaponBase
 			TNT1 A 0
 			{
 				if (CountInv("GoFatality") >= 1) SetPlayerProperty(0, 1, 0);
-				else
-				{
-					SetPlayerProperty(0, 0, 0);
-					SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-				}
+				else SetPlayerProperty(0, 0, 0);
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 PB_CheckBarrelThrow1();
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
+			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "ThrowFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 			TNT1 A 0
 			{
@@ -260,30 +263,17 @@ class BDPBattleRifle : PB_WeaponBase
 			TNT1 A 0 { invoker.burstCount = 0; }
 			BR4Z D 1 BRIGHT { BDP_ShotADS(); }
 			BR4Z D 2 BRIGHT;
-			BR4Z D 1 BRIGHT;
+			BR4Z D 1 BRIGHT { BDP_ShotADS(); }
+			BR4Z D 2 BRIGHT;
+			BR4Z D 1 BRIGHT { BDP_ShotADS(); }
 			BR4Z D 1 BRIGHT
 			{
 				if (getBRMag() < 1)
 					PB_SpawnCasing("EmptyCarbineMag", 5, 15, -7, 0, frandom(2, 4), frandom(2, 4));
 			}
 			BR4Z D 2 BRIGHT;
-			BR4Z D 1 BRIGHT
-			{
-				bool holdMode = CVar.GetCVar("pb_toggle_aim_hold", player).GetInt() == 1;
-				if (holdMode)
-				{
-					if (JustReleased(BT_ALTATTACK))
-						return resolvestate("ZoomOut");
-					if (JustPressed(BT_ATTACK) && getBRMag() > 0)
-						return resolvestate("FireADS");
-					return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOSECONDARY);
-				}
-				if (PressingAltfire())
-					return resolvestate("ZoomOut");
-				if (JustPressed(BT_ATTACK) && getBRMag() > 0)
-					return resolvestate("FireADS");
-				return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-			}
+			TNT1 A 0 { invoker.burstCount = 0; }
+			TNT1 A 0 A_Refire("FireADS");
 			goto ReadyADS;
 		FireADSDry:
 			TNT1 A 0 A_StartSound("weapons/battlerifle/dry", CHAN_WEAPON);
@@ -323,7 +313,7 @@ class BDPBattleRifle : PB_WeaponBase
 			TNT1 A 0 A_TakeInventory("Zoomed", 10);
 			TNT1 A 0 setADS(false);
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "IdleBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
+			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "IdleFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel");
 			TNT1 A 0 BDP_CheckReload(1, "NoAmmoH", "RaiseFromEmpty", "Ready3", 15);
 			TNT1 A 0 A_StartSound("weapons/battlerifle/magout", 3, CHANF_OVERLAP);
@@ -363,7 +353,7 @@ class BDPBattleRifle : PB_WeaponBase
 				if (getBRMag() > 0)
 					PB_SpawnCasing("EmptyCarbineMag", 0, 0, -14, 0, frandom(1, 3), frandom(1, 3));
 			}
-			TNT1 A 0 { PB_DumpMagToPool("BR_Ammo", "NewClip", 1, "PB_HighCalUnloadProp"); }
+			TNT1 A 0 PB_DumpMagToPool("BR_Ammo", "NewClip", 1);
 			BR4R S 1;
 			BR4R R 1;
 			BR4R Q 1;
@@ -375,37 +365,11 @@ class BDPBattleRifle : PB_WeaponBase
 			TNT1 A 0 A_Print("\ctWeapon Special:\c- \cdutility \c-");
 			goto Ready3;
 
-		PDA_Preview_BR_HipReady:
-			BR45 B 4;
-			stop;
-		PDA_Preview_BR_FireHip:
-			BR4F C 2 bright;
-			BR45 D 2;
-			BR4F C 2 bright;
-			BR45 D 2;
-			stop;
-		PDA_Preview_BR_FireADS:
-			BR4Z D 2 bright;
-			BR4Z D 2 bright;
-			BR4Z D 2 bright;
-			stop;
-		PDA_Preview_BR_AltZoom:
-			BR4Z A 2;
-			BR4Z B 2;
-			BR4Z C 2;
-			stop;
-		PDA_Preview_BR_Reload:
-			BR4R ABCDE 2;
-			BR4R GHI 2;
-			BR4R QRST 2;
-			stop;
-
 		FlashPunching:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			BR4K C 1;
 			BR4K D 1;
 			BR4K E 1;
-			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashKicking:
 			goto FlashAirKicking;

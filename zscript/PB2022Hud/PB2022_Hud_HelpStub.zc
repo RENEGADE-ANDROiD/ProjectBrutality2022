@@ -1,5 +1,0 @@
-// PB Staging ships tooltips via PB_HelpNotifications.zs; stubbed for Phase A.
-extend class PB2022_Hud_ZS
-{
-	void DrawTooltip() {}
-}

@@ -11,7 +11,7 @@ ACTOR FreezenadeAmmo : Ammo
 	Inventory.MaxAmount 6
 	Ammo.BackpackAmount 5
 	Ammo.BackpackMaxAmount 10
-	Inventory.Icon "FGNDH0"
+	Inventory.Icon "FGNDA"
 	XScale 0.8
 	Yscale 0.7
 	States
@@ -94,23 +94,10 @@ States    {
 		TNT1 A 0 A_PlaySound("FRZFIRE2", 3, 3)
 		TNT1 A 0 A_SpawnItem("CryoSmoke")
 
-		TNT1 A 0 A_RadiusGive("PBCF_CryocubusSlowdown", 440, RGF_MONSTERS, 40)
-		TNT1 AA 0 A_SpawnItemEx("PBCF_CryocubusLanzaHielo", random(-48, 48), random(-48, 48), 24, random(-6, 6), random(-6, 6), random(4, 14), random(0, 359), SXF_NOCHECKPOSITION)
-		TNT1 AA 0 A_SpawnItemEx("PBCF_CryocubusLanzaHielo", random(-48, 48), random(-48, 48), 24, random(-6, 6), random(-6, 6), random(4, 14), random(0, 359), SXF_NOCHECKPOSITION)
 		BXPL A 0 Bright A_ChangeFlag("ICEDAMAGE", 1)
 		BXPL A 0 Bright A_ChangeFlag("NODAMAGETHRUST", 0)
 		BXPL A 0 Bright A_Explode(30*random(5,6),500)
-		// Rocket Jump integration: when pb_rocketjump is enabled, also kick the
-		// player + grant PBBlastMomentum so freezenades behave like other
-		// player explosives (HandGrenade / ImpactGrenade / Sticky / rocket).
-		// Cryo grenades stay non-self-damaging either way (A_Explode above
-		// already omits XF_HURTSOURCE).
-		BXPL A 0 A_JumpIf(GetCvar("pb_rocketjump"), "FreezenadeRJ")
-		Goto FreezenadePostBlast
-	FreezenadeRJ:
-		BXPL A 0 A_RadiusThrust(900, 320, RTF_AFFECTSOURCE|RTF_THRUSTZ|RTF_NOIMPACTDAMAGE)
-		BXPL A 0 A_RadiusGive("PBBlastMomentum", 320, RGF_PLAYERS|RGF_CUBE, 30)
-	FreezenadePostBlast:
+		
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorIce",0,0,1,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorIce2",0,0,1,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_SpawnItemEx ("DetectCeilIce",0,0,1,0,0,0,0,SXF_NOCHECKPOSITION,0)

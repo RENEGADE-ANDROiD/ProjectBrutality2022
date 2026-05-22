@@ -35,6 +35,7 @@ class GibbedChaingunGuy : GibbedMarine
 	}
 }
 			
+//================================== Giblets ==================================
 class PGGiblet : Actor
 {
 	int rolldir;
@@ -161,6 +162,7 @@ class PGGibChunk : PGGiblet
 
 }
 
+//=================================== Blood ===================================
 class PGblood : Actor
 {
 	Default
@@ -229,6 +231,7 @@ class PGbloodDebrisXL : PGblood
 	}
 }
 
+//============================== Gibs Projectile ==============================
 class PGProjectile : Actor
 {
 	static const Name gibsprites[] = { "VGTO", "VGBO", "VGAR", "VGHE" };
@@ -239,16 +242,15 @@ class PGProjectile : Actor
 		rolldir = randompick(-25,-15,15,25);
 		sprite = GetSpriteIndex(gibsprites[random(0, gibsprites.Size() - 1)]);
 		frame = random(0,7);
-		A_StartSound("PossessedGibs/throw", CHAN_WEAPON, CHANF_OVERLAP);
     }
 	
 	Default
 	{
 		Radius 6;
 		Height 8;
-		Speed 17;
-		FastSpeed 26;
-		Damage 2;
+		Speed 20;
+		FastSpeed 30;
+		Damage 3;
 		Projectile;
 		Species "PossessedGibs";
 		+THRUSPECIES;
@@ -275,51 +277,5 @@ class PGProjectile : Actor
 		VBSH C 4 A_SpawnDebris("PGbloodDebris");
 		VBSH D 4;
 		Stop;
-	}
-}
-
-class PGTendrilLashSeg : Actor
-{
-	Default
-	{
-		+NOGRAVITY
-		+NOBLOCKMAP
-		+DROPOFF
-		+NOTELEPORT
-		+NOTONAUTOMAP
-		+ROLLSPRITE
-		+ROLLCENTER
-		RenderStyle "Add";
-		Alpha 0.6;
-	}
-	override void PostBeginPlay()
-	{
-		Super.PostBeginPlay();
-		sprite = GetSpriteIndex(GibSpritePick(random(0, 3)));
-		frame = random(0, 5);
-		roll = frandom(0, 360);
-		double sx = frandom(0.28, 0.5);
-		scale = (random(0, 1) ? sx : -sx, frandom(1.15, 2.1));
-	}
-
-	static Name GibSpritePick(int i)
-	{
-		switch (i & 3)
-		{
-		case 0: return 'VGTO';
-		case 1: return 'VGBO';
-		case 2: return 'VGAR';
-		default: return 'VGHE';
-		}
-	}
-	States
-	{
-	Spawn:
-		#### # 2
-		{
-			roll += 22;
-			A_FadeOut(0.1);
-		}
-		Loop;
 	}
 }

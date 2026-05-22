@@ -1,14 +1,8 @@
-// Fullscreen blur while wheel open: `gb_blur` + `pb_wheelbackgroundblur` / Gearbox. See **AGENTS.md** §4 (`zscript/PbWheel/wheel_bss_postblur.zsc`).
+// PB 0.3+ staging: shaders/mfx_bss_blur.fp → GLDEFS "gb_blur" (MariENB / m8f) + PPShader (Gearbox pattern).
+// Enables a light fullscreen blur while the weapon special wheel is open (PlayerWheelOpen). Toggle: pb_wheelbackgroundblur.
 
 class PB_WheelBSSBlurHandler : StaticEventHandler
 {
-	transient gb_EventHandler cachedGearboxHandler;
-
-	override void WorldLoaded(WorldEvent e)
-	{
-		cachedGearboxHandler = gb_EventHandler(EventHandler.Find("gb_EventHandler"));
-	}
-
 	override void UiTick()
 	{
 		bool on = false;
@@ -18,11 +12,10 @@ class PB_WheelBSSBlurHandler : StaticEventHandler
 			if (plr && plr.mo)
 			{
 				let cv = CVar.GetCVar("pb_wheelbackgroundblur", plr);
-				bool pbBlur = cv && cv.GetBool() && plr.mo.FindInventory("PlayerWheelOpen");
-				bool gbBlur = false;
-				if (cachedGearboxHandler)
-					gbBlur = cachedGearboxHandler.GetGearboxWantsPPBlur();
-				on = pbBlur || gbBlur;
+				if (cv && cv.GetBool() && plr.mo.FindInventory("PlayerWheelOpen"))
+				{
+					on = true;
+				}
 			}
 		}
 		PPShader.SetEnabled("gb_blur", on);

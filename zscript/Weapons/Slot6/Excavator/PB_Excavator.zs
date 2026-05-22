@@ -1,4 +1,4 @@
-// UAC-M2 Excavator Launcher â€” ZScript (folded from PBX-Weapons; logic adapted for Project Brutality 2022).
+// UAC-M2 Excavator Launcher — ZScript (folded from PBX-Weapons; logic adapted for Project Brutality 2022).
 // State flow uses PB2022 conventions: Select -> SelectContinue -> SelectAnimation per
 // BaseWeapon.dec, A_DoPBWeaponAction() on Ready, PB_WeapTokenSwitch / PB_RespectIfNeeded
 // on bring-up, and FlashPunching / FlashKicking end with `goto Ready3` (PSP_FLASH-based
@@ -11,7 +11,7 @@ class PB_Excavator : PB_WeaponBase
 	default
 	{
 		Weapon.SlotNumber 6;
-		Weapon.SlotPriority 0.18;
+		Weapon.SlotPriority 0;
 		Weapon.SelectionOrder 506;
 		Inventory.AltHudIcon "5DUNA0";
 		Weapon.AmmoType1 "RocketAmmo";
@@ -45,7 +45,7 @@ class PB_Excavator : PB_WeaponBase
 	}
 
 	// PB_GetMagUnloaded is now provided by PB_WeaponBase (staging-parity shim)
-	// with (bool dual) signature â€” local override removed to avoid the signature
+	// with (bool dual) signature — local override removed to avoid the signature
 	// collision. The Unload state inlines the zero-rounds check directly.
 
 	action void pb_takeAmmoMag(int n = 1)
@@ -107,7 +107,7 @@ class PB_Excavator : PB_WeaponBase
 		{
 		case eDrillChargeMode:
 			PB_HandleCrosshair(78);
-			A_StartSound("excavator/firedigger", 4);
+			A_StartSound("excavator/firedigger", 18);
 			PB_FireBullets("ExcavatorDrill", 1, 0, 0, 0, 3);
 			break;
 		case eDropShotMode:
@@ -175,10 +175,7 @@ class PB_Excavator : PB_WeaponBase
 			5DUN A -1;
 			Stop;
 		Steady:
-			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 SetPlayerProperty(0, 0, 0);
-			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+			TNT1 A 0;
 			goto Ready3;
 		Deselect:
 			5DKF EFGHI 1;
@@ -187,26 +184,26 @@ class PB_Excavator : PB_WeaponBase
 		WeaponRespect:
 			5DKF IHGF 1 A_DoPBWeaponAction();
 			5DKF E 15 A_DoPBWeaponAction();
-			6DKF A 1 A_PlaySound("Ironsights", 1);
+			6DKF A 1 A_PlaySound("Ironsights", 15);
 			TNT1 A 0 A_SetRoll(roll-0.6,SPF_INTERPOLATE);
 			6DKF BCDEF 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 0);
+			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 14);
 			TNT1 A 0 A_SetRoll(roll+0.6,SPF_INTERPOLATE);
 			6DKF GHIJK 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_PlaySound("RLCYCLE2", 6);
+			TNT1 A 0 A_PlaySound("RLCYCLE2", 13);
 			TNT1 A 0 A_SetRoll(0,SPF_INTERPOLATE);
 			6DKF KKKKK 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_PlaySound("weapons/minigun/respect1", 6);
+			TNT1 A 0 A_PlaySound("weapons/minigun/respect1", 13);
 			TNT1 A 0 A_SetRoll(roll-0.5,SPF_INTERPOLATE);
 			6DKF LMNOPQRS 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_PlaySound("weapons/nailgun/up", 3);
+			TNT1 A 0 A_PlaySound("weapons/nailgun/up", 10);
 			TNT1 A 0 A_SetRoll(roll-0.5,SPF_INTERPOLATE);
 			6DKF TUVWWWWW 1 A_DoPBWeaponAction();
 			TNT1 A 0 A_SetRoll(0,SPF_INTERPOLATE);
-			TNT1 A 0 A_PlaySound("Ironsights", 1);
+			TNT1 A 0 A_PlaySound("Ironsights", 15);
 			TNT1 A 0 A_SetRoll(roll+1.0,SPF_INTERPOLATE);
 			6DKF XYZ 1 A_DoPBWeaponAction();
-			TNT1 A 0 A_PlaySound("weapons/sgl/inspect1", 1);
+			TNT1 A 0 A_PlaySound("weapons/sgl/inspect1", 15);
 			7DKF A 1 A_DoPBWeaponAction();
 			TNT1 A 0 A_SetRoll(roll-1.0,SPF_INTERPOLATE);
 			7DKF BCD 1 A_DoPBWeaponAction();
@@ -217,8 +214,21 @@ class PB_Excavator : PB_WeaponBase
 			goto Ready3;
 		Select:
 			TNT1 A 0 A_WeaponOffset(0,32);
-			TNT1 A 0 A_StartSound("RLANDRAW", 0);
-			Goto SelectFirstPersonLegs;
+			TNT1 A 0 A_StartSound("RLANDRAW", 7);
+			TNT1 A 0 A_StopSound(1);
+			TNT1 A 0 A_StopSound(5);
+			TNT1 A 0 A_StopSound(6);
+			TNT1 A 0 A_TakeInventory("Spin",1);
+			TNT1 A 0 A_TakeInventory("CantWeaponSpecial",1);
+			TNT1 A 0 A_TakeInventory("MG42Selected",1);
+			TNT1 A 0 A_SetInventory("Grabbing_A_Ledge", 0);
+			TNT1 A 0 A_TakeInventory("RandomHeadExploder",1);
+			TNT1 A 0 A_TakeInventory("DualFireReload",2);
+			TNT1 A 0 A_Overlay(-777, "Melee_Equipment_Handler_Overlay");
+			TNT1 A 0 A_Overlay(-778, "KickHandler_Overlay");
+			TNT1 A 0 A_Overlay(-779, "Equipment_Toggle_Handler_Overlay");
+			TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand");
+			TNT1 A 0 A_Jump(255, "SelectContinue");
 		SelectContinue:
 			TNT1 A 0 PB_WeapTokenSwitch("ExcavatorSelected");
 			TNT1 A 0 PB_RespectIfNeeded();
@@ -244,11 +254,7 @@ class PB_Excavator : PB_WeaponBase
 			TNT1 A 0 { A_WeaponOffset(0,32); A_SetRoll(0); A_SetInventory("PB_LockScreenTilt",0); }
 			TNT1 A 0 {
 				if (CountInv("GoFatality") >= 1) SetPlayerProperty(0, 1, 0);
-				else
-				{
-					SetPlayerProperty(0, 0, 0);
-					SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-				}
+				else SetPlayerProperty(0, 0, 0);
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 PB_CheckBarrelThrow1();
@@ -277,28 +283,28 @@ class PB_Excavator : PB_WeaponBase
 
 		Reload:
 			TNT1 A 0 PB_Exc_CheckReload();
-			6DKF A 1 A_PlaySound("Ironsights", 1);
+			6DKF A 1 A_PlaySound("Ironsights", 15);
 			TNT1 A 0 A_SetRoll(roll-0.6,SPF_INTERPOLATE);
 			6DKF BCDEF 1;
-			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 0);
+			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 14);
 			TNT1 A 0 PB_SpawnCasing("SGL_Drum",25,0,20,Frandom(3,4),Frandom(3,4),1);
 			TNT1 A 0 A_SetRoll(roll+0.6,SPF_INTERPOLATE);
 			6DKF GHIJK 1;
-			TNT1 A 0 A_PlaySound("RLCYCLE2", 6);
+			TNT1 A 0 A_PlaySound("RLCYCLE2", 13);
 			TNT1 A 0 A_SetRoll(0,SPF_INTERPOLATE);
 			6DKF KKKKK 1;
-			TNT1 A 0 A_PlaySound("weapons/minigun/respect1", 6);
+			TNT1 A 0 A_PlaySound("weapons/minigun/respect1", 13);
 			TNT1 A 0 A_SetRoll(roll-0.5,SPF_INTERPOLATE);
 		ContinueReload:
 			6DKF LMNOPQRS 1;
-			TNT1 A 0 A_PlaySound("weapons/nailgun/up", 3);
+			TNT1 A 0 A_PlaySound("weapons/nailgun/up", 10);
 			TNT1 A 0 A_SetRoll(roll-0.5,SPF_INTERPOLATE);
 			6DKF TUVWWWWW 1;
 			TNT1 A 0 A_SetRoll(0,SPF_INTERPOLATE);
-			TNT1 A 0 A_PlaySound("Ironsights", 1);
+			TNT1 A 0 A_PlaySound("Ironsights", 15);
 			TNT1 A 0 A_SetRoll(roll+1.0,SPF_INTERPOLATE);
 			6DKF XYZ 1;
-			TNT1 A 0 A_PlaySound("weapons/sgl/inspect1", 1);
+			TNT1 A 0 A_PlaySound("weapons/sgl/inspect1", 15);
 			7DKF A 1;
 			TNT1 A 0 PB_AmmoIntoMag("ExcavatorRounds", "RocketAmmo", excMagMax, 2);
 			TNT1 A 0 A_SetRoll(roll-1.0,SPF_INTERPOLATE);
@@ -314,14 +320,14 @@ class PB_Excavator : PB_WeaponBase
 
 		Unload:
 			TNT1 A 0 A_JumpIf(CountInv(invoker.ammotype2) < 1, "NoAmmo");
-			6DKF A 1 A_PlaySound("Ironsights", 1);
+			6DKF A 1 A_PlaySound("Ironsights", 15);
 			TNT1 A 0 A_SetRoll(roll-0.6,SPF_INTERPOLATE);
 			6DKF BCDEF 1;
-			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 0);
+			TNT1 A 0 A_PlaySound("weapons/sgl/cycle", 14);
 			TNT1 A 0 A_SetRoll(roll+0.6,SPF_INTERPOLATE);
 			6DKF GHI 1;
 			6DKF J 1;
-			TNT1 A 0 { PB_UnloadMag("ExcavatorRounds", "RocketAmmo", 2, 0, 4, 12, "PB_RocketRoundUnloadProp"); }
+			TNT1 A 0 PB_UnloadMag("ExcavatorRounds", "RocketAmmo", 2);
 			6DKF K 1;
 			8DKF ABCD 1;
 			goto NoAmmo;
@@ -329,24 +335,6 @@ class PB_Excavator : PB_WeaponBase
 		NoAmmo:
 			5DKF S 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 			Loop;
-
-		PDA_Preview_EXC_Fire:
-			6DKF A 1 BRIGHT;
-			6DKF A 1 BRIGHT;
-			5DKF L 1 BRIGHT;
-			5DKF M 1 BRIGHT;
-			5DKF N 1 BRIGHT;
-			5DKF OPQRDDD 1;
-			Stop;
-		PDA_Preview_EXC_Reload:
-			6DKF LMN 1;
-			7DKF A 1;
-			7DKF BCD 1;
-			Stop;
-		PDA_Preview_EXC_ModeSwitch:
-			7DKF LMNOP 1;
-			7DKF PONML 1;
-			Stop;
 
 		Weaponspecial:
 			TNT1 A 0 {
@@ -398,7 +386,6 @@ class PB_Excavator : PB_WeaponBase
 			7DKF MNOP 1;
 			7DKF P 4;
 			7DKF PONML 1;
-			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashKicking:
 			5DKF E 1;

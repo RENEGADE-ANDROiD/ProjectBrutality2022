@@ -1,3 +1,6 @@
+//NOTE: All Pyro Sergeant related spawns are temporarily commented out.
+// If the Pyro Sergeant officially gets overhauled and is complete, the comment outs can be removed.
+
 Actor ShotgunnerSpawner replaces ShotgunGuy
 {
 	+LOOKALLAROUND
@@ -19,46 +22,46 @@ Actor ShotgunnerSpawner replaces ShotgunGuy
 	TNT1 A 0 A_Jump(254, 2) // Quad-Shotgunguy dropping QuadSSG upgrade is too OP early on
 	TNT1 A 0 A_Jump(1,"QuadShotgunGuyPack")
 	TNT1 A 0 A_Jump(1,"HellTrooperPack")
-	TNT1 A 0 A_Jump(8,"MixedShotgunGuyPack")		
-	TNT1 A 0 A_Jump(8,"RocketLauncherGuyPack")		
-	TNT1 A 0 A_Jump(16,"RiotShieldGuyPack")
-	TNT1 A 0 A_Jump(20,"ZspecOpsGuyPack")
-	TNT1 A 0 A_Jump(20,"AutoShotgunGuyPack")
-	TNT1 A 0 A_Jump(60,"HelmetShotgunGuyPack")
+	TNT1 A 0 A_Jump(1,"MixedShotgunGuyPack")		
+	TNT1 A 0 A_Jump(1,"RocketLauncherGuyPack")		
+	TNT1 A 0 A_Jump(2,"RiotShieldGuyPack")
+	TNT1 A 0 A_Jump(1,"ZspecOpsGuyPack")
+	TNT1 A 0 A_Jump(1,"AutoShotgunGuyPack")
+	TNT1 A 0 A_Jump(20,"HelmetShotgunGuyPack")
 	TNT1 A 0 A_Jump(256,"NormalShotgunGuyPack")
 	LowLevelMob:
 	TNT1 A 0 A_Jump(1,"QuadShotgunGuyHappened")
 	TNT1 A 0 A_Jump(253, 2) // Quad-Shotgunguy dropping QuadSSG upgrade is too OP early on
 	TNT1 A 0 A_Jump(1,"QuadShotgunGuyPack")
 	TNT1 A 0 A_Jump(1,"HellTrooperPack")
-	TNT1 A 0 A_Jump(23,"MixedShotgunGuyPack")
-	TNT1 A 0 A_Jump(5,"RocketLauncherGuyPack")
-	TNT1 A 0 A_Jump(36,"RiotShieldGuyPack")
-	TNT1 A 0 A_Jump(36,"ZspecOpsGuyPack")
-	TNT1 A 0 A_Jump(48,"AutoShotgunGuyPack")
-	TNT1 A 0 A_Jump(64,"HelmetShotgunGuyPack")
+	TNT1 A 0 A_Jump(5,"MixedShotgunGuyPack")
+	TNT1 A 0 A_Jump(6,"RocketLauncherGuyPack")
+	TNT1 A 0 A_Jump(7,"RiotShieldGuyPack")
+	TNT1 A 0 A_Jump(39,"ZspecOpsGuyPack")
+	TNT1 A 0 A_Jump(68,"AutoShotgunGuyPack")
+	TNT1 A 0 A_Jump(20,"HelmetShotgunGuyPack")
 	TNT1 A 0 A_Jump(256,"NormalShotgunGuyPack")
 	MidLevelMob:
-	TNT1 A 0 A_Jump(1,"QuadShotgunGuyHappened")
+	TNT1 A 0 A_Jump(2,"QuadShotgunGuyHappened")
 	TNT1 A 0 A_Jump(1,"QuadShotgunGuyPack")
-	TNT1 A 0 A_Jump(18,"HellTrooperPack")
-	TNT1 A 0 A_Jump(47,"MixedShotgunGuyPack")
-	TNT1 A 0 A_Jump(8,"RocketLauncherGuyPack")
-	TNT1 A 0 A_Jump(10,"RiotShieldGuyPack")
-	TNT1 A 0 A_Jump(34,"ZspecOpsGuyPack")
-	TNT1 A 0 A_Jump(63,"AutoShotgunGuyPack")
-	TNT1 A 0 A_Jump(88,"HelmetShotgunGuyPack")
+	TNT1 A 0 A_Jump(3,"HellTrooperPack")
+	TNT1 A 0 A_Jump(9,"MixedShotgunGuyPack")
+	TNT1 A 0 A_Jump(10,"RocketLauncherGuyPack")
+	TNT1 A 0 A_Jump(13,"RiotShieldGuyPack")
+	TNT1 A 0 A_Jump(45,"ZspecOpsGuyPack")
+	TNT1 A 0 A_Jump(80,"AutoShotgunGuyPack")
+	TNT1 A 0 A_Jump(20,"HelmetShotgunGuyPack")
 	TNT1 A 0 A_Jump(256,"NormalShotgunGuyPack")
 	HighLevelMob:
-	TNT1 A 0 A_Jump(1,"QuadShotgunGuyHappened")
-	TNT1 A 0 A_Jump(1,"QuadShotgunGuyPack")
-	TNT1 A 0 A_Jump(21,"HellTrooperPack")
-	TNT1 A 0 A_Jump(56,"MixedShotgunGuyPack")
-	TNT1 A 0 A_Jump(9,"RocketLauncherGuyPack")
-	TNT1 A 0 A_Jump(11,"RiotShieldGuyPack")
-	TNT1 A 0 A_Jump(38,"ZspecOpsGuyPack")
-	TNT1 A 0 A_Jump(71,"AutoShotgunGuyPack")
-	TNT1 A 0 A_Jump(104,"HelmetShotgunGuyPack")
+	TNT1 A 0 A_Jump(4,"QuadShotgunGuyHappened")
+	TNT1 A 0 A_Jump(2,"QuadShotgunGuyPack")
+	TNT1 A 0 A_Jump(7,"HellTrooperPack")
+	TNT1 A 0 A_Jump(12,"MixedShotgunGuyPack")
+	TNT1 A 0 A_Jump(13,"RocketLauncherGuyPack")
+	TNT1 A 0 A_Jump(14,"RiotShieldGuyPack")
+	TNT1 A 0 A_Jump(54,"ZspecOpsGuyPack")
+	TNT1 A 0 A_Jump(110,"AutoShotgunGuyPack")
+	TNT1 A 0 A_Jump(20,"HelmetShotgunGuyPack")
 	TNT1 A 0 A_Jump(256,"NormalShotgunGuyPack")
 	DiceProg:	// Progressive spawn preset enforces strict spawning rules by excluding monsters until they are presented in later levels.
 	DiceTier1:
@@ -100,6 +103,7 @@ Actor ShotgunnerSpawner replaces ShotgunGuy
 	HellTrooperPack:	// This is where the pack tokens are distributed
 	TNT1 A 0 A_RadiusGive("IsHellTrooper", 290, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 	Stop
+//	PyroSergeantPack:
 	RocketLauncherGuyPack:
 	TNT1 A 0 A_RadiusGive("IsRocketLauncherGuy", 290, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 	Stop
@@ -159,38 +163,28 @@ Actor ShotgunGuyPackSpawner : Demonpickup
 	SpawnHellTrooper:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleDemonTechSoldier",0)
 	TNT1 A 0 A_SpawnItemEx("PB_DemonTechZombie",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
-	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop
 	SpawnPyroSergeant: //This will temporarily spawn a Rocket Launcher Guy instead. This comment can be removed when the Pyro Sergeant gets overhauled.
 	SpawnRocketLauncherGuy:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleRocketSergeant",0)
 	TNT1 A 0 A_SpawnItemEx("PB_RocketZombie",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
-	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop
 	SpawnQuadShotgunGuy:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleQuadShotgunZombie",0)
 	TNT1 A 0 A_SpawnItemEx("PB_QSGZombie",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
-	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop
 	SpawnRiotShieldGuy:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleRiotShieldGuy",0)
 	TNT1 A 0 A_SpawnItemEx("PB_RiotShieldGuy",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
-	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop
 	SpawnZspecOpsGuy:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleZSpecOps",0)
 	TNT1 A 0 A_SpawnItemEx("PB_ZSpecOps",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
-	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	TNT1 A 0 A_JumpIf(GetCvar("NoZombieFlyer") == 1, "ZSpecFlyDone")
 	TNT1 A 0 A_SpawnItemEx("PB_ZombieFlyer",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	ZSpecFlyDone:
@@ -198,9 +192,7 @@ Actor ShotgunGuyPackSpawner : Demonpickup
 	SpawnAutoShotgunGuy:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleAutoshotgunSergeant",0)
 	TNT1 A 0 A_SpawnItemEx("ASGGuy",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
-	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	TNT1 A 0 A_JumpIf(GetCvar("NoZombieFlyer") == 1, "ASGFlyDone")
 	TNT1 A 0 A_SpawnItemEx("PB_ZombieFlyer",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	ASGFlyDone:
@@ -208,16 +200,12 @@ Actor ShotgunGuyPackSpawner : Demonpickup
 	SpawnHelmetShotgunGuy:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleHelmetSergeant",0)
 	TNT1 A 0 A_SpawnItemEx("PB_ShotgunGuyHelmet",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
-	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop
 	SpawnNormalShotgunGuy:
 	ReplaceToggle:
 	TNT1 A 0 A_SpawnItemEx("PB_ShotgunGuy",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
-	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop
 	}
 }

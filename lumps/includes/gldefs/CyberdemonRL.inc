@@ -1,3 +1,5 @@
+// GLDEFS.CyberdemonRL — brightmap sprite bindings (ported from PBX-Weapons Brightmaps/CyberdemonRL.txt).
+
 brightmap sprite CYBFA0 { map "brightmaps/WEAPONS/Slot6/CyberdemonRL/CYBFA0.png" disablefullbright }
 brightmap sprite CYBFB0 { map "brightmaps/WEAPONS/Slot6/CyberdemonRL/CYBFB0.png" disablefullbright }
 brightmap sprite CYBFC0 { map "brightmaps/WEAPONS/Slot6/CyberdemonRL/CYBFC0.png" disablefullbright }

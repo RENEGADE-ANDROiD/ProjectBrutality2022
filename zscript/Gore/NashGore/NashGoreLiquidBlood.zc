@@ -24,7 +24,11 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
+//===========================================================================
+//
+//
+//
+//===========================================================================
 
 class NashGoreLiquidBlood : Actor
 {
@@ -40,7 +44,11 @@ class NashGoreLiquidBlood : Actor
 		+FLATSPRITE
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	static void SpawnLiquidBlood(Actor self)
 	{
@@ -48,7 +56,11 @@ class NashGoreLiquidBlood : Actor
 		self.A_SpawnItemEx("NashGoreLiquidBlood", angle: NashGoreStatics.RandomAngle4(), flags: NashGoreBloodBase.BLOOD_FLAGS);
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	override void Tick(void)
 	{
@@ -72,7 +84,11 @@ class NashGoreLiquidBlood : Actor
 		}
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	States
 	{

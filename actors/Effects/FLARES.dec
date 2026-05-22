@@ -1,3 +1,7 @@
+//Alternative Flares
+// SMU new flares using special flare graphic designed to eliminate overlap with 
+// decoration sprites.
+
 Actor Flare_TallTorch_Green
 {
 +NOINTERACTION
@@ -490,6 +494,8 @@ states
 	}
 }
 
+/////////////////
+
 Actor Flare_General
 {
 +NOINTERACTION
@@ -517,6 +523,7 @@ states
 	}
 }
 
+//New Dragon's Breath flare
 Actor DragonsBreathFlare : Flare_General
 {
 XScale 0.8
@@ -1031,6 +1038,41 @@ ACTOR PlayerMuzzle2
 	}
 }
 
+ACTOR MarineMuzzle1
+{
+	Speed 0
+	PROJECTILE
+	+NOCLIP
+	+NOGRAVITY
+	Speed 5
+	States
+	{
+	Spawn:
+	    TNT1 A 4
+		TNT1 A 0 A_Stop
+		PLMZ A 2 BRIGHT
+		Stop
+	}
+}
+
+ACTOR MarineMuzzle2
+{
+	Speed 0
+	PROJECTILE
+	+NOCLIP
+	+NOGRAVITY
+	Speed 5
+	Scale 1.8
+	States
+	{
+	Spawn:
+	    TNT1 A 4
+		TNT1 A 0 A_Stop
+		PLMZ A 2 BRIGHT
+		Stop
+	}
+}
+
 ACTOR BlueFlareSpawn
 {
 	Speed 20
@@ -1363,39 +1405,5 @@ ACTOR FlashlightSource: FlashlightProjectile
 	Death:
 	Xdeath:
 	Stop
-	}
-}
-
-Actor PurplePlasmaFlare : Flare_General
-{
-alpha 0.2
-scale 0.1
-states
-	{
-	Spawn:
-		TNT1 A 0
-		TNT1 A 0 A_Jump(128,2)
-		L3NP A 1 bright
-		stop
-		TNT1 A 0
-		L3NP B 1 bright
-		stop
-	}
-}
-
-Actor PurpleFlareSmall : Flare_General
-{
-alpha 0.4
-scale 0.2
-states
-	{
-	Spawn:
-        TNT1 A 0
-	    TNT1 A 0 A_Jump(128,2)
-		LENP A 2 bright
-		stop
-		TNT1 A 0
-		LENP B 2 bright
-		stop
 	}
 }

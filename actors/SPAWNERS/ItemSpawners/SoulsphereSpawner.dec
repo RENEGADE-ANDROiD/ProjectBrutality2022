@@ -10,41 +10,21 @@ Actor SoulSphereSpawner replaces Soulsphere
 		TNT1 A 1
 		loop
 	DiceRandom:
-		TNT1 A 0 A_Jump(256, "SpawnNewLifeSphere", "SpawnLifeSphere")
+		TNT1 A 0 A_Jump(256, "SpawnLifeSphere")
 		Stop
 	DiceMain:
 		EarlyLevelMob:
-			TNT1 A 0 A_Jump(44,"SpawnNewLifeSphere")
-			TNT1 A 0 A_Jump(256,"SpawnLifeSphere")
 		LowLevelMob:
-			TNT1 A 0 A_Jump(66,"SpawnNewLifeSphere")
-			TNT1 A 0 A_Jump(256,"SpawnLifeSphere")
 		MidLevelMob:
-			TNT1 A 0 A_Jump(132,"SpawnNewLifeSphere")
-			TNT1 A 0 A_Jump(256,"SpawnLifeSphere")
 		HighLevelMob:
-			TNT1 A 0 A_Jump(176,"SpawnNewLifeSphere")
 			TNT1 A 0 A_Jump(256,"SpawnLifeSphere")
 	DiceProg:
 		DiceTier1:
-			TNT1 A 0 A_Jump(24,"SpawnNewLifeSphere")
-			TNT1 A 0 A_Jump(256,"SpawnLifeSphere")
 		DiceTier2:
-			TNT1 A 0 A_Jump(48,"SpawnNewLifeSphere")
-			TNT1 A 0 A_Jump(256,"SpawnLifeSphere")
 		DiceTier3:
-			TNT1 A 0 A_Jump(96,"SpawnNewLifeSphere")
-			TNT1 A 0 A_Jump(256,"SpawnLifeSphere")
 		DiceTier4:
-			TNT1 A 0 A_Jump(128,"SpawnNewLifeSphere")
-			TNT1 A 0 A_Jump(256,"SpawnLifeSphere")
 		DiceDeathWish:
-			TNT1 A 0 A_Jump(132,"SpawnNewLifeSphere")
 			TNT1 A 0 A_Jump(256,"SpawnLifeSphere")
-	SpawnNewLifeSphere:
-		TNT1 A 1 ACS_NamedExecuteAlways("ToggleItemMutators",0)
-		TNT1 A 0 A_SpawnItemEx("NewLifeSphere",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
-		Stop
 	SpawnLifeSphere:
 	ReplaceVanilla:
 		TNT1 A 0 A_SpawnItemEx("LifeSphere",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)

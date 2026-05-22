@@ -20,15 +20,10 @@ Maintainers (this distribution)
 - Wintermute
 
 Gameplay and content in this release
-- **AccuDeath V3.2.2** (Airehnr66) — optional corpse translation / death particle FX; folded under **`zscript/Gore/AccuDeath/`**, gated by **`pb_accudeath`**.
-- **Simple Teleporter Effects v1.4** ([tunbridgep](https://github.com/tunbridgep/doom-simpleteleportereffects)) — colored particle fountains on teleporter gate flats; always-on ZScript under **`zscript/Effects/SimpleTeleporter/`** (`TeleporterEffects` handler). Works alongside PB **`TeleportationFog`** / **`BrutalTeleportDest`**.
-- **Vortex Universal Achievement System v0.1.0** (Vortex, MIT) — achievement toasts, browse menu, persistence; folded under **`zscript/Achievements/VUAS/`** with PB definitions in **`PB_AchievementSetup.zs`**. Do not also load external **`Vortex_Universal_Achievement_System_v010.wad`**.
-- Revolver sprites by IDKFA
 - DarkShadow’s Monster Sounds Overhaul: monster SFX (based on Ravik’s Soundpack, with
   content from multiple Doom games) — integrated by replacing matching files under
   SOUNDS/ and by extending a small set of caco/imp SNDINFO pools to use additional
   variants.
-- **DarkShadow — Custom Shards & Potions** (tiered **HealthPlus** / **ArmorShard** / **PB_Stimpack** / **PB_Medikit** randomizers; hi-res bonus art and pickup sounds) and **Custom Red Armor** (**PB_RedArmor**, 60% / 250, mixed into blue-armor heavy rolls when **`pb_redarmor_spawn`** is on). See **`actors/Items/Health/CustomShardsPotions/`**, **`actors/Items/Health/CustomRedArmor.dec`**, **`CHANGELOG.md`**.
 - Universal Kill Streaks and Power-Up Rewards: based on the Universal Kill
   Streaks and PowerUp Rewards add-on, adapted to this project’s names, menus,
   and message paths.
@@ -37,83 +32,36 @@ Gameplay and content in this release
 - UT announcer: kill-streak announcer audio, menu routing, and volume
   handling wired to the project cvars and options.
 - Metal Sniper, XM-21, ShieldSaw, Molotov: weapon packages included in the
-  supported weapon and equipment set (see per-file notes). Shield Saw behavior
-  traces to **GK_ShieldSaw** (**HUNG**).
-- **HitMarkers** (Tekish — [github.com/Tekkish/HitMarkers](https://github.com/Tekkish/HitMarkers)):
-  hit/kill marker HUD + impact sounds; integrated into PB 2022 by **TomiikiPro**
-  (`zscript/Hitmarkers/hitmarkers.zsc`, `SRC/hitmarkers.acs`, `hm_*` cvars).
-- **UAC Prototype Dark Matter Rifle** (PB 3.x **Pulse Cannon** add-on): folded as
-  **`PB_DarkMatterRifle`** — upstream shipped as **`PulseCannon.dec`** without a
-  standalone author line in the add-on; credits the original PB 3.x weapon package
-  contributors and **id Software** base resources where applicable.
+  supported weapon and equipment set (see per-file notes).
 - Commander Shotgun (Combat Shotgun, CSSG, `PB_CSSG`): ZScript stack — special
   wheel, magazine flow, upgrade tokens, projectiles — on `PB_WeaponBase`, with
   spawners, status bar, spawn toggles, and test utilities. RENEGADE ANDROID, doc,
   and repository contributors.
 - Excavator (UAC-M2) launcher: based on the PBX-Weapons / Project Brutality
   X Excavator (ThePopeofDope, BeefRice; ZScript on `PB_WeaponBase` in this
-  build). Special thanks in upstream: Nemesis_Vampy, Popguy12, Jaih1r0.
+  build). Special thanks in upstream: Nemesis_Vampy, Popguy12, Jaih1ro.
 - Project Brutality Weapons Pack (weapons in this build include): Hell
-  Pistoler, Bio Acid Launcher, Mancubus Flame Cannon, Demon
+  Pistoler, Mancubus Flame Cannon, Demon
   Tech Minigun, Argent Sith, Beam Katana, **Pro-Surv Ballista**
   (The Pope of Dope), with supporting projectiles and tokens. Equipment: Freeze Nade, Hook, Void Grenade,
   Freezebot, ElecPod. Naming, spawners, menu toggles, and HUD: RENEGADE ANDROID
   and doc.
-- Credit to BeefRice and **Jaih1r0** for PBX HUD elements and many weapon improvements and systems.
-- **Monster-sourced weapon wear (PBX-style durability):** parallel undroppable **`Ammo`** wear pools per boss-tech gun, manual **`TakeInventory`** on meaningful shots, **`WeaponBreak`** when wear hits zero, and **`AttachToOwner`** top-up when picking up the same weapon again below max — aligned with **PBX-Weapons** / Project Brutality X patterns (same family as **Excavator** upstream). Shipped on **`PB_CyberdemonRL`** (ZScript), **`MastermindChaingun`**, **`MancubusFlameCannon`**, **`MarauderSSG`** (**`actors/Weapons/MonsterWeaponDurability.dec`**, **`PB_WeaponBase`** in **`zscript/Weapons/BaseWeapon.zc`**, weapon sources). Drop weights and gib rolls tuned in monster / gore DECORATE (**`MastermindChaingun`** / **`MancubusFlameCannon`** are not rolled from rocket / plasma **map** spawners — monster drops only); maintainers **RENEGADE ANDROID**, **doc**, and repo contributors for the 2025–2026 integration pass.
-- **Shield Saw** (GK_ShieldSaw lineage): **HUNG** — folded as quick-melee **`ShieldSaw_token`** + recall; see **`AGENTS.md`**.
+- Credit to BeefRice for PBX HUD elements and many weapon improvements and systems.
 - Rocket jump, plasma wall climb, and instant weapon switch: included as
   configurable options with PB cvar names.
-- **Cat's Frozen Addon** (SchrödingCat): frozen-monster statue sprites under
-  **`SPRITES/Monsters/CatsFrozenFrozen/`** (**`PB_FrozenSolidHandler`** /
-  **`PB_FrozenSolid*`**, always on — see **`AGENTS.md`**). Frost combat monsters
-  (always-on; rolled directly by the vanilla baron / mancubus / cacodemon / arachnotron
-  spawners — **no** `pb_No*` cvars per the explicit "no toggles" directive for the
-  Cat's Frozen fold; only `pb_disablenewenemies` still gates them as part of the
-  global new-enemies blanket switch):
-  **Frost Baron** sprites / fatality-adjacent art (upstream credits Electro7777,
-  Eriance/Amuscaria, Sergeant_Mark_IV, TypicalSF, IDDQD_1337, id Software per addon README);
-  **Cryotron** (Captain Toenail base, Rifleman sprite-edit pass, Gothic sounds — addon README);
-  **Cryocubus** ZScript lineage (Thanuris, Ganbare-Lucifer, DeVloek); Slice 1 cryo projectiles
-  also cite Bloax / ZZrionTheInsect / Xaser / Ethril (CryoBow). **`SPRITES/Monsters/CatsFrozen/`**,
-  **`SPRITES/Effects/CatsFrozenIce/`**, **`sounds/monsters/CatsFrozen/`**. **Slice 4 equipment wheel**
-  (Freezenade, Snow Caster, Freezebot, traps/turrets, ice wall, holo decoy, freeze mines) folded from
-  the add-on’s **`Actors/Weapons/*`** + **`Actors/Items/Traps&Turrets.dec`** lineage — same SchrödingCat /
-  Cat's Frozen umbrella credit; per-piece sprite/audio authors as listed in the upstream addon sources
-  where they differ from core PB lumps (**`actors/Items/CatsFrozen/Equipment.dec`**, **`zscript/Items/CatsFrozen/`**).
-  **Slice 5 weapons** (**`SPRITES/Weapons/CatsFrozen/`**): **Cryo / Electro rifle** — TypicalSF base,
-  Mike12-style edits, Sergeant_Mark_IV, IDDQD_1337 (addon CryoRifle / ElectroRifle README lineage);
-  **Cryo Cannon** — Thanuris, Ganbare-Lucifer, DeVloek, SchrödingCat; **Cryo ASG** — Sergeant_Mark_IV /
-  SchrödingCat; Cat's Frozen Addon weapon / equipment art (see **`SPRITES/WEAPONS/CatsFrozen/`** and related trees).
 
 Code systems and libraries
 - Nash Muhandes: NashGore (zscript/Gore/NashGore/*); Tilt++ (zscript/TiltPlus
   / TiltPlusPlus.zc), “Written by Nash Muhandes.”
 - Xaser Acheron: DamNums (zscript/damnums/damnum.txt).
 - Lewisk3 (Redxone): Laser API (zscript/LaserAPI/LaserAPI.txt).
-- Gearbox (Alexander Kromm / m8f et al.; GPLv3+): folded weapon/inventory selector under
-  `zscript/gearbox/`, `zscript/MD5/`, `zscript/m_gizmos/`, `zscript/zabor/`; license
-  `zscript/gearbox/COPYING_Gearbox_GPLv3.txt`. Upstream: https://github.com/mmaulwurff/gearbox
-
-- DrPyspy: early PB weapon wheel basis; superseded for the primary bind by folded Gearbox.
-- 3saster: MD5 ZScript (Gearbox fold).
-- m8f: wheel crash fix, MariENB blur lineage, Gearbox.
+- DrPyspy: weapon wheel basis (see gearbox / wheel credits in-tree).
+- 3saster: MD5 ZScript reference (see gearbox notes).
+- m8f: wheel crash fix and related notes.
 - Marisa Kirisame (OrdinaryMagician): Blur work derived from MariFX (GPLv3);
   see shader / staging path notes.
 
 Selected weapons and equipment (authors)
-- **M41A Pulse Rifle (`PB_M41A`)** — ZScript in `zscript/Weapons/Slot4/PB_M41A.zs`;
-  folded from the **PB_M41A** / Aliens pulse-rifle add-on: sprites **Mike12**;
-  animations & code **Jaih1r0** (see upstream `credits.txt` in that package).
-  This repo adds **Weapon Special** modes for **12ga underbarrel**, **30mm grenade**
-  underbarrel, and **dual-wield** (paired rifles; wheel icon reuses
-  `graphics/pywheel/Carbine_Dual.png`).
-- **Fusil (`PB_Fusil`)** — PB2022 fold / port pass by **TomiikiPro**. The source
-  package available to this repository shipped the weapon code, sprites, and sounds
-  without a credits/readme file, and a follow-up public-source search did not produce a
-  verifiable original sprite/code author line. Until upstream authorship is confirmed,
-  keep **TomiikiPro** credited for the PB2022 port and treat the original Fusil addon
-  authors as **unverified / to be corrected when sourced**.
 - Metal Sniper — Sprites: Metalman; animation/code: Jaih1r0; sounds: Ravik
   (actors/Weapons/Slot4/MetalSniper.dec).
 - Riot Shield — add-on source noted in actors/Weapons/Slot2/RiotShield.dec.
@@ -121,44 +69,13 @@ Selected weapons and equipment (authors)
 - Molotov Cocktail — from Project Brutality 3.0 Molotov Cocktail v15
   (actors/Weapons/MolotovCocktail/MolotovCocktail.dec).
 - LeverAction — original sprites and code: ThePopeOfDope; later staging polish:
-  Vampy. **Weapon-special wheel icons** (caliber-swap mode picker —
-  `graphics/pywheel/Magnum.png` for `Select_LeverAction_357` and
-  `graphics/pywheel/Marlin.png` for `Select_LeverAction_Marlin`, dispatched in
-  `zscript/PbWheel/ev_core_special.zsc` `specialWheel_LeverAction()`):
-  **TomiikiPro**.
+  Vampy.
 - Pro-Surv Ballista — The Pope of Dope (ThePopeOfDope), slot-4 crossbow; **Rail
   Ballista** is the slot-9 weapon and is a separate system.
-- **Dragon Slayer (`DragonSlayer`)** — `actors/Weapons/MeleeWeaponPack/DragonSlayer.dec`,
-  `zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc`. Folded from **PB_MeleeWeaponPack**
-  (Project Brutality 0.4.2+ compatibility rework by **Renegade Android**). Per that
-  package’s `CREDITS.txt`: **Dragon Slayer** swords and bolt-repeater by **Craneo**
-  (upstream note: Hexen ModDB).
-- **Stormcast (`Stormcast`)** — `actors/Weapons/MeleeWeaponPack/Stormcast.dec`,
-  `zscript/Weapons/MeleeWeaponPack/Stormcast.zc`. Same **PB_MeleeWeaponPack** fold /
-  **Renegade Android** rework. Per upstream `CREDITS.txt`: **Battle Axe & Shield** /
-  **Stormcast** by **Dreo** & **Lord Lothar** (*Schism*).
-- **Vorpal Blade (`VorpalBlade`, Tiberium's Soulblade)** —
-  `actors/Weapons/Slot1/VorpalBlade.dec`, `zscript/Weapons/Slot1/VorpalBlade.zc`.
-  Same pack fold / **Renegade Android** rework. Per upstream `CREDITS.txt`: sprites
-  **Eriance**; sword from *Insanity's Requiem Mk.2* by **TiberiumSoul** (RIP).
 
 Monsters and packs
-- **Project Survival** monster additions (fodder zombies + passive hazards):
-  **The Pope of Dope (ThePopeOfDope)**. Folded under
-  `actors/Monsters/T1-Grunts/ProjectSurvivalFodder/` and
-  `actors/Monsters/T1-Grunts/ProjectSurvivalPassive/` plus
-  `zscript/Monsters/ProjectSurvival/` and `zscript/Spawner/PB_ProjectSurvival*`.
-  Includes Shambler, Burster, Blighter, Screamer, Spiker, Puker, CyberFodder
-  (fodder set) and Pustule, Mimic, Tentacle, TritePod / TritePodCeiling, Hangman,
-  Trite (passive set) — sprites, sounds, monster behavior, and original
-  spawner / passive-pod coding by The Pope of Dope; integrated as opt-in
-  reinforcement spawns alongside vanilla zombies in this build.
 - Glory Kills: lineage from D4D / Brutal Doom Black Edition
-  (SNDINFO.GloryKills and related). **Glory Kill Eternal HUD** PNGs live under
-  **`GRAPHICS/HUD/glorykills/newhud/`**; **equipment launcher** first-person overlays
-  (**Flame Belch** / **Ice Bomb**) use **`SPRITES/WEAPONS/GloryKillLauncher/ShoulderCannon/`** (**`SCL0`/`SCF0`**
-  and **`LCL0`/`LCF0`**) updated from the **Project Brutality PB_Staging** Glory Kills
-  line (shoulder placement: flame right, ice left).
+  (SNDINFO.GloryKills and related).
 - Monster Pack: content line documented with SNDINFO.MonsterPack and tier files.
 - Brutal Doom *El Diablo* Edition: additional first-person and expanded execution /
   finisher sprite sets (`SPRITES/MONSTERS/fatalitys/eld_eld_*` and related) merged
@@ -181,7 +98,7 @@ Gore: optional Brutal Doom 22 (BDv22) add-on
   meat, organs / small-brain style props, limb subset, and a PB/BDv22 gore
   *mix* cvar. Implemented with separate `BDv22_*` class names, `zscript/Gore/`
   handlers (`BDv22GoreHandler`, `BDv22GoreMergeHandler`, `BDv22GoreMist`), and
-  assets under `SPRITES/GORE/BDv22/` and `lumps/includes/bdv22_modeldef.inc` (included from `modeldef.txt`) where used. Credited to
+  assets under `SPRITES/BDv22/` and `lumps/includes/bdv22_modeldef.inc` (included from `modeldef.txt`) where used. Credited to
   the **Brutal Doom 22** project and its artists; that content remains third-party
   — keep upstream credits and any distribution limits the BDv22 project requires.
   Does *not* replace core Project Brutality or Nash gore; it layers on when enabled
@@ -189,7 +106,6 @@ Gore: optional Brutal Doom 22 (BDv22) add-on
   **Gore/Debris** in visual settings).
 
 Graphics, shaders, HUD
-- Main menu cursor: **C⛧rrot** and **JP_valle20/DOOM**.
 - Glory Kill shader: traceable to D4D shader work (shaders/glorykill.shader).
 - Gearbox / wheel UI: CC BY-SA 4.0 and CC0 as marked in those assets.
 - Gas mask overlay: TEXTURES.GasMask (HUD-GAS-MASK line).
@@ -200,22 +116,13 @@ Audio (overview)
 - `SNDINFO.txt` (merged categories) and related per-lump history credit LiTDoom, freesound users,
   PillowBlaster / Russian Overkill, X-Weapon, Battlefield / Call of Duty–style
   sources, and others — see per-lump comments and the list below.
-- Bare-hand fist / knuckle / **`player/cyborg/fist`** pool (**`sounds/COMBAT/WEAPONS/Melee weapons/Fists/*.ogg`**, **`sounds/Doomguy and Marines/DOOMGUY/Sounds/Fists/plspnch*.ogg`**, **`KNUCKLED.ogg`**): **Project Brutality PB Staging** (0.3.x) pack, same filenames and tree as that line.
 
 Special thanks
 - Carrot (iamcarrotmaster): extensive sprites and weapon art.
 - Dithered Output: lean / wall-detection work.
-- ThePopeOfDope (The Pope of Dope): LeverAction, Pro-Surv Ballista, the
-  **Project Survival** fodder + passive monster sets (Shambler, Burster,
-  Blighter, Screamer, Spiker, Puker, CyberFodder, Pustule, Mimic, Tentacle,
-  TritePod / TritePodCeiling, Hangman, Trite — sprites, sounds, monster /
-  spawner code), and other contributions noted in staging (ice effects,
-  barrels, Cryo-adjacent work).
+- ThePopeOfDope (The Pope of Dope): LeverAction, Pro-Surv Ballista, and other
+  contributions noted in staging (ice effects, barrels, Cryo-adjacent work).
 - Vampy: fixes and improvements (e.g. LMG reload) on the staging line.
-- **TomiikiPro**: LeverAction weapon-special wheel icons
-  (`graphics/pywheel/Magnum.png`, `graphics/pywheel/Marlin.png`) — the
-  caliber-swap mode-picker art for the `.357 Revolver` / `.444 Marlin`
-  branches of `specialWheel_LeverAction()`, and the **Fusil** PB2022 port pass.
 
 Licensing
 - Observe per-file licenses and author blocks.
@@ -250,9 +157,6 @@ Sergeant_Mark_IV
 
 POSSITEM
 Realm667, Blue Shadow
-
-VNR1*, VNR2*, VNRH*, VNRD* (Venor)
-Kan3 / Realm667
 
 Cheering Marine MWAV A to F
 Unknown
@@ -399,8 +303,8 @@ Loismustdie555 for support, coding, content scouting, etc.
 SkyMarshall
 Brightmaps, bug fixes, various visual enhancements, extra monsters
 
-Pulse Cannon and other works
 AnKeburu
+Various works
 
 Desert Eagle sprites
 Base by DoomNukem, edits by iamcarrotmaster
@@ -612,7 +516,6 @@ GloryKillMechanics - BrutalDoom Black Edition's Team
 Pinata pickup sound - BrutalDoom Black Edition's Team
 Glory Kill Shader - D4D Teams
 Crucible sprite , Sound, FlameBelch sound - D4D Teams, EOA Teams
-Crucible first-person CRCB*0 glove refresh (2026) - thedoctorofdoom / glorykills (GitHub commit 3b28b4c)
 Crucible trail - Embers Of Armageddon
 Pinata, Ammo Sprites - D4D Teams, LJG2023
 BloodPunch Effect - EOA Teams
@@ -627,10 +530,6 @@ Sprites - Metalman
 Animations / code - Jaih1r0
 Sounds - Ravik
 
-Old HMG (UAC-320 Heavy Machine Gun)
-Testing - goldenmob72
-Bug fixes - JMartinez209
-HMG shooting sounds - PC1073
 Nailgun sound and HMG windup sounds - WolVexus
 
 Marauder / Peacekeeper SSG (PB3.0 addon fold-in)
@@ -642,5 +541,3 @@ Reload, fatality, death, and gore sprites + code + revenge idea - DarthSeeth
 Glory-kill addon code - Headshot_Ev (Brutal Doom BE)
 Additional code - Dox
 PB3.0 build update - Jeniffer/Jenny (2023-05-14): SelectAnimation/Idle rewrites, gun-smoke inventory, kick/slidekick/punch fixes, barrel grab + reload fixes, deselect and weapon-up polish, startup-error cleanup
-Monster-sourced Marauder SSG wear + break + duplicate-pickup refill (PBX-style) — 2025–2026; see CREDITS index “Monster-sourced weapon wear”
-...

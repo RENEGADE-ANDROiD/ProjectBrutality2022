@@ -1,3 +1,4 @@
+﻿// GLDEFS.CSSG — brightmap sprite bindings (Project-Brutality-Weapons-Pack). Paths use brightmaps/WEAPONS/ for Linux case-match.
 brightmap sprite C0FFA0 { map "brightmaps/WEAPONS/CSSG/BMC0FFA0.png" disablefullbright }
 brightmap sprite C0FFB0 { map "brightmaps/WEAPONS/CSSG/BMC0FFB0.png" disablefullbright }
 brightmap sprite C0FFC0 { map "brightmaps/WEAPONS/CSSG/BMC0FFC0.png" disablefullbright }

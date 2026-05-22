@@ -5,9 +5,8 @@ Realm667 (community bases), Monster Pack / Glory Kills lines, **Brutal Doom
 *El Diablo* Edition** first-person finisher art (eld_eld_* paths + related),
 **Project Brutality Legacy** execution / stagger handoff behavior folded into core
 actors, **Brutal Pack**-line fragments (selective only; pack not distributed whole),
-optional **Brutal Doom 22 (BDv22)** gore (`bdv22_*`, `actors/Gore/BDv22Gore/`,
-`SPRITES/GORE/BDv22/`), and **monster-sourced weapon wear** (PBX-style durability
-on select boss-tech guns — see CREDITS.txt index). The list below is retained verbatim for per-sprite history.
+and optional **Brutal Doom 22 (BDv22)** gore (`bdv22_*`, `actors/Gore/BDv22Gore/`,
+`SPRITES/BDv22/`). The list below is retained verbatim for per-sprite history.
 
 ---------------------------------------------------------------------------
 
@@ -180,8 +179,8 @@ Loismustdie555 for support, coding, content scouting, etc.
 SkyMarshall
 Brightmaps, bug fixes, various visual enhancements, extra monsters
 
-Pulse Cannon and other works
 AnKeburu
+Various works
 
 Desert Eagle sprites
 Base by DoomNukem, edits by iamcarrotmaster
@@ -407,10 +406,6 @@ Sprites - Metalman
 Animations / code - Jaih1r0
 Sounds - Ravik
 
-Old HMG (UAC-320 Heavy Machine Gun)
-Testing - goldenmob72
-Bug fixes - JMartinez209
-HMG shooting sounds - PC1073
 Nailgun sound and HMG windup sounds - WolVexus
 
 Marauder / Peacekeeper SSG (PB3.0 addon fold-in)

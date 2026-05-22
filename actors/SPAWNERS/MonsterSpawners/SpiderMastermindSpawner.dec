@@ -34,22 +34,13 @@ Actor SpiderMastermindDice replaces SpiderMastermind
 	DiceTier2:
 	TNT1 A 0 A_Jump(256,"NormalSpiderMastermind")
     DiceTier3:
-	TNT1 A 0 A_JumpIf(GetCvar("NoD3Maledict") == 1, "DiceTier3NoMal")
-	TNT1 A 0 A_Jump(28, "MaledictSpawn")
-	DiceTier3NoMal:
 	TNT1 A 0 A_Jump(72,"Demolisher")
 	TNT1 A 0 A_Jump(256,"NormalSpiderMastermind")
 	DiceTier4:
-	TNT1 A 0 A_JumpIf(GetCvar("NoD3Maledict") == 1, "DiceTier4NoMal")
-	TNT1 A 0 A_Jump(36, "MaledictSpawn")
-	DiceTier4NoMal:
 	TNT1 A 0 A_Jump(40,"Juggernaut")
 	TNT1 A 0 A_Jump(76,"Demolisher")
 	TNT1 A 0 A_Jump(256,"NormalSpiderMastermind")
 	DiceDeathWish:
-	TNT1 A 0 A_JumpIf(GetCvar("NoD3Maledict") == 1, "DiceDeathWishNoMal")
-	TNT1 A 0 A_Jump(48, "MaledictSpawn")
-	DiceDeathWishNoMal:
 	TNT1 A 0 A_Jump(64,"Juggernaut")
 	TNT1 A 0 A_Jump(92,"Demolisher")
 	TNT1 A 0 A_Jump(256,"NormalSpiderMastermind")
@@ -128,10 +119,6 @@ Actor SpiderMastermindDice replaces SpiderMastermind
 	TNT1 A 0 A_JumpIf(GetCvar("NoDirector") == 1, "Jug3Done")
 	TNT1 A 0 A_SpawnItemEx("Directorpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	Jug3Done:
-	Stop
-	MaledictSpawn:
-	TNT1 AA 0
-	TNT1 A 0 A_SpawnItemEx("D3Maledict",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	Stop
 	}
 }

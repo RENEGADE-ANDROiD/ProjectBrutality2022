@@ -79,9 +79,6 @@ Actor ArachnotronPackSpawner : Demonpickup
 	{
 	Spawn:	// Checks for the tokens distributed above and spawns the correct monster accordingly
 	TNT1 A 3
-	TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "SkipCryotronRoll")
-	TNT1 A 0 A_Jump(12, "SpawnPB_Cryotron")
-	SkipCryotronRoll:
 	TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 	TNT1 A 0 A_JumpIfInventory("IsArachnophyte", 1, "SpawnArachnophyte")
 	TNT1 A 0 A_JumpIfInventory("IsEliteArachnotron", 1, "SpawnEliteArachnotron")
@@ -90,10 +87,6 @@ Actor ArachnotronPackSpawner : Demonpickup
 	Loop
 	RandomSpawn:
 	TNT1 A 0 A_Jump(256, "SpawnArachnotron", "SpawnInfernalArachnotron", "SpawnEliteArachnotron", "SpawnArachnophyte")
-	SpawnPB_Cryotron:
-	TNT1 A 0 A_JumpIf(GetCvar("pb_NoCryotron")==1, "SkipCryotronRoll")
-	TNT1 A 0 A_SpawnItemEx("PB_Cryotron",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	Stop
 	SpawnArachnotron:
 	ReplaceToggle:
 	TNT1 A 0 A_Jump(256, "SpawnArachnotron1", "SpawnArachnotron2")

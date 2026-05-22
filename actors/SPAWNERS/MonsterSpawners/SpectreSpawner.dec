@@ -73,13 +73,11 @@ Actor SpectrePackSpawner : Demonpickup
 	stop
 	SpawnSpectre1:	
 	TNT1 A 0 A_SpawnItemEx("PB_Spectre",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop
 	SpawnSpectre2:
 	TNT1 A 0 A_SpawnItemEx("PB_Spectre",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "SpSpec2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	SpSpec2Done:
@@ -90,14 +88,12 @@ Actor SpectrePackSpawner : Demonpickup
 	SpawnVoidSpectre1:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleVoidSpectre",0)
 	TNT1 A 0 A_SpawnItemEx("PB_VoidSpectre",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	Stop
 	SpawnVoidSpectre2:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleVoidSpectre",0)
 	TNT1 A 0 A_SpawnItemEx("PB_VoidSpectre",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 AA 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "VSp2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	VSp2Done:

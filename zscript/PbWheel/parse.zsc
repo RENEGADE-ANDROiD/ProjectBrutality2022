@@ -142,7 +142,7 @@ Class PyWheel_Tokenizer
 				tk.type = PTK_Minus;
 				tk.value = "-";
 				break;
-			case 59: // ';'
+			case 59: // '-'
 				tk.type = PTK_Semicolon;
 				tk.value = ";";
 				break;

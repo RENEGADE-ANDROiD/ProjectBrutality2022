@@ -1,4 +1,4 @@
-// Brutal Doom 22 (BDv22) gut props; B22G* in SPRITES/GORE/BDv22/.
+// Brutal Doom 22 (BDv22) gut props; B22G* in SPRITES/BDv22/.
 // Does not replace PB Guts/Teeth (GORE!!!.dec); extra layer when bdv22_corpse_meat is on.
 
 ACTOR BDv22_Guts

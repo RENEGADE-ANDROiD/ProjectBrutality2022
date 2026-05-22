@@ -131,7 +131,7 @@ class DropShotExplode : ExcavatorExplode
 		+Ripper
 		+NOBOSSRIP
 		+SKYEXPLODE
-		Damage 22;
+		Damage 20;
 	}
 	states
 	{
@@ -192,7 +192,7 @@ class DrillBombExplode : ExcavatorExplode
 				A_CustomMissile("BrownCloud", 0, 0, random(0, 90), 2, random(30, 150));
 			}
 			XXXX A 0 A_CustomMissile("ExplosionQuake", 1, 0, random(0, 360), 2, random(0, 160));
-			TNT1 A 0 A_Explode(17, 32, 0, 12);
+			TNT1 A 0 A_Explode(15, 32, 0, 12);
 			5DKP EFGHIJIKLMNOONNML 1 BRIGHT ;
 			EXPL A 0 Radius_Quake(3, 8, 0, 15, 0);
 			TNT1 AAAAAAAAA 0 {

@@ -1447,6 +1447,7 @@ actor GreenMediumBloodSpot2: Green_BloodSpot
 game Doom
 Scale 0.4
 }
+////////////////////////////////////////////////////////
 
 ACTOR AcidSpot
 {

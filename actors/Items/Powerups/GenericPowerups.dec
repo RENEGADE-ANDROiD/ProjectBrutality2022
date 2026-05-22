@@ -1,3 +1,4 @@
+//All Map
 ACTOR NewAllmap : Allmap Replaces Allmap
 {
 	Inventory.PickUpSound "misc/map_PickUp"
@@ -5,6 +6,8 @@ ACTOR NewAllmap : Allmap Replaces Allmap
 	+DONTGIB
 	+COUNTITEM
 }
+
+// Invulnerability Sphere ---------------------------------------------------
 
 ACTOR InvulnerabilitySphere_  : PowerupGiver Replaces InvulnerabilitySphere
 {
@@ -18,7 +21,7 @@ ACTOR InvulnerabilitySphere_  : PowerupGiver Replaces InvulnerabilitySphere
 	+DONTGIB
 	Inventory.MaxAmount 0
 	Powerup.Type Invulnerable
-	Powerup.Color White, 0.002
+	Powerup.Color White //InverseMap
 	Inventory.PickupMessage "$GOTINVUL"
 	Inventory.PickupSound "INVUL"
 	States

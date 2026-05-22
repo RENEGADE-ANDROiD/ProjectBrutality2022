@@ -172,6 +172,7 @@ class PB_CurbstompedMarine : Actor
 		+FORCEXYBILLBOARD;
 		+SHOOTABLE;
 		+GHOST;
+		//+CLIENTSIDEONLY;
 		+NOTAUTOAIMED;
 		+CORPSE;
 		+NOTELEPORT;

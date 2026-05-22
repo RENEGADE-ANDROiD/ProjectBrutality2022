@@ -1,5 +1,7 @@
-// Brutal Doom 22 (BDv22) flying meat (XDeath2/3, ribs, smear/ceil); actors BDv22_*; B22M/B22T/B22R/B22S in SPRITES/GORE/BDv22/.
+// Brutal Doom 22 (BDv22) flying meat (XDeath2/3, ribs, smear/ceil); actors BDv22_*; B22M/B22T/B22R/B22S in SPRITES/BDv22/.
 // Uses PB XDeath1 / Brutal_FlyingBlood* / Brutal_BloodSpot (no BD ACS). Does not replace GORE!!! XDeath*.
+
+// --- Meat2 (B22M) -----------------------------------------------------------
 
 ACTOR BDv22_MeatChunk2 : XDeath1
 {
@@ -163,6 +165,8 @@ ACTOR BDv22_MeatChunk2NoStick : BDv22_MeatChunk2
 	}
 }
 
+// --- Meat3 (B22T) -----------------------------------------------------------
+
 ACTOR BDv22_MeatChunk3 : BDv22_MeatChunk2
 {
 	DeathSound "misc/xdeath3"
@@ -298,6 +302,8 @@ ACTOR BDv22_MeatChunk3NoStick : BDv22_MeatChunk2NoStick
 	}
 }
 
+// --- Ribs (B22R, B22S) ------------------------------------------------------
+
 ACTOR BDv22_RibCageA : BDv22_MeatChunk2
 {
 	Scale 1.0
@@ -392,6 +398,8 @@ ACTOR BDv22_RibCageCBig : BDv22_RibCageC
 	YScale 1.5
 	Speed 6
 }
+
+// --- Micro gibs (B22E eye / brain, B22P teeth) ------------------------------
 
 ACTOR BDv22_MicroGib0 : XDeath1
 {

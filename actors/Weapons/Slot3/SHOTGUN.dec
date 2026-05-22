@@ -237,8 +237,6 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 	Inventory.AltHUDIcon "SHTCA0"
 	PB_WeaponBase.respectItem "RespectShotgun"
 	FloatBobStrength 0.5
-	Weapon.SlotNumber 3
-	Weapon.SlotPriority 0
 	States
 	{
 	
@@ -291,16 +289,16 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 			A_DoPBWeaponAction(WRF_NOBOB);
 			return state("");
 		}
-		SH0G A 1 {
+		SHTG A 1 {
 			If(CountInv("HasSlugs") >=1 ) {A_SetWeaponSprite("SHTS");}
 			If(CountInv("HasDragonBreath") >=1 ) {A_SetWeaponSprite("SHTD");}
 			A_DoPBWeaponAction(WRF_NOBOB);
 			return state("");
 		}
-		SH0G BCDEFGHIJ 1 A_DoPBWeaponAction(WRF_NOBOB)
+		SHTG BCDEFGHIJ 1 A_DoPBWeaponAction(WRF_NOBOB)
 		SSHR H 1 A_DoPBWeaponAction(WRF_NOBOB)
 		TNT1 A 0 A_PlaySoundEx("weapons/sgmvpump","Auto")
-		SH0G L 5 A_DoPBWeaponAction(WRF_NOBOB)
+		SHTG L 5 A_DoPBWeaponAction(WRF_NOBOB)
 		SSHR I 1 A_DoPBWeaponAction(WRF_NOBOB)
 		SSHR JK 1 {
 			If(CountInv("HasSlugs") >=1 ) {A_SetWeaponSprite("SHTS");}
@@ -332,10 +330,10 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		TNT1 A 0 A_PlaySoundEx("insertshell", "Auto")
 		SSHR EFG 1 A_DoPBWeaponAction(WRF_NOBOB)
 		TNT1 A 0 A_JumpIfInventory("PumpshotgunMagNotInserted", 1, "InsertMagBegin")
-		SH0G JIHGFEDCB 1 A_DoPBWeaponAction(WRF_NOBOB)
+		SHTG JIHGFEDCB 1 A_DoPBWeaponAction(WRF_NOBOB)
 		Goto Ready3
 		
-	InsertMagBegin:
+	InsertMagBegin: // Straight Into Inserting The Mag After Chambering a shell. 
 		TNT1 A 0 A_TakeInventory("PumpshotgunMagNotInserted",1)
 		TNT1 A 0 A_GiveInventory("ShotgunAmmo",11)
 		TNT1 A 0 A_GiveInventory("PumpShotgunMagazine",1)
@@ -351,7 +349,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		TNT1 A 0 A_PlaySound("weapons/shotgunmag/magin", 3)
 		SHTM I 1 A_DoPBWeaponAction(WRF_NOBOB)
 		SHTM JKLMNOPQR 1 A_DoPBWeaponAction(WRF_NOBOB)
-		SH0G EDCB 1 A_DoPBWeaponAction(WRF_NOBOB)
+		SHTG EDCB 1 A_DoPBWeaponAction(WRF_NOBOB)
 		TNT1 A 0 A_JumpIfInventory("PumpShotgunMagazine", 2, "Ready3")
 		Goto Ready3
 	InsertMagShotgunRespectAlreadyRespected:
@@ -360,7 +358,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 			A_GiveInventory("ShotgunAmmo",11);
 			A_GiveInventory("PumpShotgunMagazine",1);
 			}
-		SH0G BCDEFGH 1 A_DoPBWeaponAction(WRF_NOBOB)
+		SHTG BCDEFGH 1 A_DoPBWeaponAction(WRF_NOBOB)
 		SHTM A 1 A_DoPBWeaponAction(WRF_NOBOB)
 		SHTM BCDEFG 1 {
 		 If(CountInv("HasSlugs") >=1 ) {A_SetWeaponSprite("SHMS");} 
@@ -391,12 +389,20 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 			}
 		}
 	ReadyToFire:
-		SH0G A 1
+		SHTG A 1
 		{
 			if (CountInv("HasSlugs") >= 1 )                  { A_SetWeaponSprite("SHTS"); }
 			if (CountInv("HasDragonBreath") >= 1 )           { A_SetWeaponSprite("SHTD"); }
-			if (CountInv("PumpshotgunMagNotInserted") >= 1 ) { return state("InsertMagShotgunRespectAlreadyRespected"); }
-			return PB_ReadyFire("Fire", "Fire", "Zoomout", false, false, "ShotgunAmmo", true, "PBPumpShotgunHasUnloaded");
+			// This token is given upon picking up the magazine upgrade.
+			if (CountInv("PumpshotgunMagNotInserted") >= 1 ) { return state("InsertMagShotgunRespectAlreadyRespected"); } // Insert magazine upon picking it up
+			
+			if (PressingFire() && PressingAltfire() && CountInv("ShotgunAmmo") > 0){
+					return state("Fire");
+			}
+			if (PressingFire() && CountInv("ShotgunAmmo") > 0){
+					return state("Fire");
+			}
+			return A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("PBPumpShotgunHasUnloaded"));	 
 		}
 		Loop
 			 
@@ -408,11 +414,28 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		}
 	ReadyToFire2:
 		SHT8 A 1
-		{
+		{		
 			if (CountInv("HasSlugs") >= 1 )        { A_SetWeaponSprite("SHT6"); }
 			if (CountInv("HasDragonBreath") >= 1 ) { A_SetWeaponSprite("SHT4"); }
 			if (CountInv("PumpshotgunMagNotInserted") >= 1 ) { return state("InsertMagShotgunRespectAlreadyRespected"); }
-			return PB_ReadyFire("Fire2", "Fire2", "Zoomout", true, false, "ShotgunAmmo", true, "PBPumpShotgunHasUnloaded");
+						
+			//Updated code for far superior smooth gameplay
+			if(GetCvar("pb_toggle_aim_hold")) {
+				if(!PressingAltfire() || JustReleased(BT_ALTATTACK)){
+					return state("Zoomout");
+				}
+				if (PressingFire() && PressingAltfire() && CountInv("ShotgunAmmo") > 0){
+						return state("Fire2");
+				}
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOSECONDARY, CheckUnloaded("PBPumpShotgunHasUnloaded"));
+			}
+			else {
+				if (PressingFire() && CountInv("ShotgunAmmo") > 0 ){
+					return state("Fire2");
+				}
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("PBPumpShotgunHasUnloaded"));
+			}
+			return state("");
 	    }
 		Loop
 				
@@ -484,7 +507,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 			 if (CountInv("SelectShotgun_Slugshot") >= 1 )        { A_SetWeaponSprite("SHZA"); }
 			 if (CountInv("SelectShotgun_Dragonsbreath") >= 1 ) { A_SetWeaponSprite("SHZB"); }
 			}
-		SH0G A 1 {	
+		SHTG A 1 {	
 			 if (CountInv("SelectShotgun_Slugshot") >= 1 )        { A_SetWeaponSprite("SHTS"); }
 			 if (CountInv("SelectShotgun_Dragonsbreath") >= 1 ) { A_SetWeaponSprite("SHTD"); }
 			}
@@ -529,11 +552,11 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 return state("");
 		 }
 		TNT1 A 0 A_GiveInventory("SG_IsSwapping",1)
-		SH0G BCDEFGHI 1
+		SHTG BCDEFGHI 1
 		TNT1 A 0 A_JumpIf(CountInv("ShotgunAmmo") >= 1,"EmptyTube")
-		SH0G I 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
-		SH0G Z 1 
-		SH0G L 1
+		SHTG I 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
+		SHTG Z 1 
+		SHTG L 1
 		{
 		 A_SetRoll(roll-0.4,SPF_INTERPOLATE);
 		 A_SetPitch(pitch+0.1,SPF_INTERPOLATE);
@@ -544,24 +567,25 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		//also a park token for excess ammo
 		TNT1 A 0 A_JumpIf(CountInv("ShotgunAmmo") == 1,"ClearChamberForTubeSwap")
 		TNT1 A 0 A_PlaySound("weapons/sgmvpump")
-		SH0G K 1{
+		SHTG K 1{
 		 If(CountInv("HasSlugs") >=1 ) {A_SetWeaponSprite("SHTA");} 
 		 If(CountInv("HasDragonBreath") >=1 ) {A_SetWeaponSprite("SHTF");}
 		 A_SetRoll(roll-0.1,SPF_INTERPOLATE);
 		 return state("");
 		}
-		SH0G L 1 {
+		SHTG L 1 {
 			A_SetRoll(roll-0.4,SPF_INTERPOLATE);
 			A_SetPitch(pitch+0.1,SPF_INTERPOLATE);
 		}
-		SH0G M 1
-		SH0G L 1 {
+		SHTG M 1
+		SHTG L 1 {
 			A_SetRoll(roll+0.4,SPF_INTERPOLATE);
 			A_SetPitch(pitch-0.1,SPF_INTERPOLATE);
 		}
 		TNT1 A 0 A_JumpIfInventory("NewShell", 1,3) 
 		SSHR H 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE) // So the chamber shows as being empty
-		SH0G K 1 {
+		//TNT1 A 0 { return state (2); } // Skip This Frame if the shotgun isn't loaded.
+		SHTG K 1 {
 		 If(CountInv("HasSlugs") >=1 )        
 		   {A_SetWeaponSprite("SHTA");} 
 		 If(CountInv("HasDragonBreath") >=1 )        
@@ -569,7 +593,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 A_SetRoll(roll-0.1,SPF_INTERPOLATE);
 		 return state("");
 		}
-		SH0G J 1 {
+		SHTG J 1 {
 			A_SetRoll(roll+0.1,SPF_INTERPOLATE);
 			A_PlaySoundEx("weapons/sgpump", "Auto");
 			A_Takeinventory("ShotgunAmmo",1);
@@ -579,11 +603,11 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
         TNT1 A 0 A_DoPBWeaponAction(WRF_NOBOB)
 		goto EmptyTube
 	ClearChamberForTubeSwap:
-		SH0G I 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
+		SHTG I 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
 		TNT1 A 0 A_WeaponOffset(0,32)
-		SH0G J 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
+		SHTG J 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 		TNT1 A 0 A_TakeInventory("ShotgunAmmo",1)
-		SH0G K 1 
+		SHTG K 1 
 		{
 		 If(CountInv("HasBuckShot") >=1 ) {A_FireCustomMissile("LiveRed_ShotCaseSpawn",0,0,-5,-21);} 
 		 If(CountInv("HasSlugs") >=1 ) {A_SetWeaponSprite("SHTA");A_FireCustomMissile("LiveGreen_ShotCaseSpawn",0,0,-5,-21);} 
@@ -641,7 +665,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		}
 		SHTS KLMNOPP 0
 		SHTD KLMNOPP 0
-		SH0G L 1
+		SHTG L 1
 			{
 			A_SetRoll(roll-0.4,SPF_INTERPOLATE);
 			A_SetPitch(pitch+0.1,SPF_INTERPOLATE);
@@ -683,7 +707,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
         TNT1 A 0 A_DoPBWeaponAction(WRF_NOBOB)
 		goto LoadTube
 	TubeSwapFinal:
-		SH0G IHGFEDCB 1
+		SHTG IHGFEDCB 1
 		goto Ready3
 	
 	AltMagAmmoSwap:
@@ -701,11 +725,11 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 			}
 		Return State("");
 		}
-		SH0G BCDE 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
+		SHTG BCDE 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 		TNT1 A 0 A_JumpIfInventory("PBPumpShotgunHasUnloaded",1,5)
 		SHMG FGHI 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 		Goto BeginMagAmmoSwap
-		SH0G GH 1
+		SHTG GH 1
 		Goto InsertMagAmmoSwap
 	BeginMagAmmoSwap:	
 		SHTN ABCDEFG 1
@@ -717,9 +741,9 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		}
 	goto InsertMagAmmoSwap	
 	EmptyMagReloadSwap:
-		SHTN GHI 1
+		SHTN GHIJKL 1
 		TNT1 A 0 A_JumpIfInventory("ShotgunAmmo",1,2)
-		TNT1 A 0 PB_SpawnCasing("EmptyClipMP40", 22, 10, 18, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8))
+		TNT1 A 0 A_FireCustomMissile("EmptyClipMP40",-5,0,8,-4)
 	InsertMagAmmoSwap:
 	    SHMS BCDEFG 0
 		SHMD BCDEFG 0
@@ -751,7 +775,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 A_SetRoll(roll-0.4,SPF_INTERPOLATE);
 		 A_SetPitch(pitch+0.1,SPF_INTERPOLATE);
 		}
-		SH0G M 2
+		SHTG M 2
 		SHMG L 1 
 		{
 		 A_SetRoll(roll+0.4,SPF_INTERPOLATE);
@@ -825,7 +849,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 			}
 		}
 	    SHTM OPQR 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
-		SH0G EDCB 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
+		SHTG EDCB 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
 		TNT1 A 0
 		{
 		 A_Takeinventory("Reloading",1);
@@ -847,7 +871,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		}
 	PumpFromHip2:
 		TNT1 A 0 A_PlaySoundEx("weapons/sgpump","Auto")
-		SH0F GFEDC 1
+		SHTF GFEDC 1
 		TNT1 A 0 A_Refire
 		goto Ready3
 	
@@ -887,7 +911,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 PB_WeapTokenSwitch("ShotgunSelected");
 		}
 		TNT1 A 0 A_Raise
-		Goto Ready3
+		Wait
 	
    Fire:
 		TNT1 A 0 {
@@ -903,7 +927,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 			}
 		SH2F A 0 A_JumpIfInventory("HasDragonBreath",1,3)
 		SH1F A 0 A_JumpIfInventory("HasSlugs",1,2)
-		SH0F A 0
+		SHTF A 0
 		"####" A 1 BRIGHT 
 		{
 		 A_TakeInventory("ShotgunAmmo", 1);
@@ -921,7 +945,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 
 		 If (CountInv("HasSlugs") >=1 )        
 		    {A_PlaySoundEx("SlugShot", "Weapon");
-              A_FireBullets(1.5, 0.5, 1, 154, "ShotgunPuff",FBF_NORANDOM);
+              A_FireBullets(1.5, 0.5, 1, 140, "ShotgunPuff",FBF_NORANDOM);
 			   A_FireCustomMissile("Tracer", 0, 0, 0, -14, 0, 0);
 			    return state("FireAnimBegin");}
 		 If (CountInv("HasDragonBreath") >=1 ) 
@@ -929,19 +953,19 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		      A_FireBullets(frandom(5.85,6.65), frandom(5.32,6.75),8,0,"None",FBF_NORANDOM,8192,"DragonsBreathTracer",-14,0);
 		       return state("FireAnimBegin");}
 		  A_PlaySoundEx("weapons/sg", "Weapon");   
-		  A_FireBullets(frandom(5.85,6.65), frandom(5.32,6.75),10,15,"ShotgunPuff",FBF_NORANDOM); 
+		  A_FireBullets(frandom(5.85,6.65), frandom(5.32,6.75),10,14,"ShotgunPuff",FBF_NORANDOM); 
 		  return state("FireAnimBegin");
 		}
 		"####" B 1
-		SH0F C 1 {
+		SHTF C 1 {
 			A_FireCustomMissile("ShotgunWad",random(-2,2),0,random(-2,2),-4,FPF_NOAUTOAIM,random(-2,2));
             PB_WeaponRecoil(-1.24,+0.44);
 		}
 
-		SH0F D 1 {
+		SHTF D 1 {
             PB_WeaponRecoil(-1.24,+0.44);
 		}
-		SH0F EFG 1
+		SHTF EFG 1
 	Pump1:
 		TNT1 A 0 {
 			A_Giveinventory("PB_LockScreenTilt",1);
@@ -949,11 +973,11 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		}
 		TNT1 A 0 A_JumpIfInventory("PumpshotgunMagazine", 1, "MagPump")
 		TNT1 A 0 A_JumpIf(CountInv("PowerStrength") && GetCvar("pb_SGPumpFromHip") == 1, "PumpFromHip")
-		SH0G BCDEFGHIJ 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
+		SHTG BCDEFGHIJ 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 	P1Begin:
 	    SHTA K 0
 		SHTF K 0
-		SH0G K 1 
+		SHTG K 1 
 		{
 		 If(CountInv("HasSlugs") >=1 )        
 		   {A_SetWeaponSprite("SHTA");} 
@@ -974,13 +998,13 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 return state("");
 		}
 	P1C:
-		SH0G L 1
+		SHTG L 1
 		{
 		 A_SetRoll(roll-0.4,SPF_INTERPOLATE);
 		 A_SetPitch(pitch+0.1,SPF_INTERPOLATE);
 		}
-		SH0G M 2
-		SH0G L 1 
+		SHTG M 2
+		SHTG L 1 
 		{
 		 A_SetRoll(roll+0.4,SPF_INTERPOLATE);
 		 A_SetPitch(pitch-0.1,SPF_INTERPOLATE);
@@ -992,7 +1016,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 A_PlaySoundEx("weapons/sgpump","Auto"); 
 		 return state (2); // Skip the frame with shell showing
 		}
-		SH0G K 1 
+		SHTG K 1 
 		{
 		 If( CountInv("HasSlugs") >=1 ) {A_SetWeaponSprite("SHTA");} 
 		 If (CountInv("HasDragonBreath") >=1 ) {A_SetWeaponSprite("SHTF");}
@@ -1000,14 +1024,14 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 A_PlaySoundEx("weapons/sgpump", "Auto");
 		 return state("");
 		}
-		SH0G JIHGFEDCB 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
-	P1End:
+		SHTG JIHGFEDCB 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
+	P1End: // Pump End for mag & regular.
 	    TNT1 A 0
 		{
 		 A_SetRoll(0,SPF_INTERPOLATE);
 		 A_Takeinventory("PB_LockScreenTilt",1);
 		}
-        SH0G A 1
+        SHTG A 1
 		{
 		 If(CountInv("HasSlugs") >=1 ) {A_SetWeaponSprite("SHTS");} 
 		 If(CountInv("HasDragonBreath") >=1 ) {A_SetWeaponSprite("SHTD");}
@@ -1025,7 +1049,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 			Return State("");
 			}
 		TNT1 A 0 A_WeaponOffset(0,32)
-	    SH0G BCDE 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
+	    SHTG BCDE 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 		SHMG FGHIJ 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 	    SHMA K 0
 		SHMF K 0
@@ -1053,7 +1077,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 A_SetRoll(roll-0.4,SPF_INTERPOLATE);
 		 A_SetPitch(pitch+0.1,SPF_INTERPOLATE);
 		}
-		SH0G M 2
+		SHTG M 2
 		SHMG L 1 
 		{
 		 A_SetRoll(roll+0.4,SPF_INTERPOLATE);
@@ -1077,7 +1101,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 return state("");
 		}	
 		SHMG JIHGF 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
-		SH0G EDCB 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
+		SHTG EDCB 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
 		Goto P1End
 	ShotFlash:
 		TNT1 A 0 A_Jump(256, "Flash1", "Flash2", "Flash3")
@@ -1112,7 +1136,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 
          If (CountInv("HasSlugs") >=1 ) {
 			A_PlaySoundEx("SlugShot", "Weapon"); 
-		    A_FireBullets(1.25, 0.25, 1, 154, "ShotgunPuff",FBF_NORANDOM);
+		    A_FireBullets(1.25, 0.25, 1, 140, "ShotgunPuff",FBF_NORANDOM);
 		    A_FireCustomMissile("Tracer", random(-2,2), 0, 0, -14, 0, random(-1,1));
 			return state("AltFireAnimBegin");
 			}  
@@ -1123,7 +1147,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 			}
 		 else {
 			  A_PlaySoundEx("weapons/sg", "Weapon");    
-			  A_FireBullets(frandom(5.1,5.86), frandom(4.57,6),10,15,"ShotgunPuff",FBF_NORANDOM);
+			  A_FireBullets(frandom(5.1,5.86), frandom(4.57,6),10,14,"ShotgunPuff",FBF_NORANDOM);
 		  return state("");
 		  }
 		}
@@ -1291,7 +1315,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
          A_ZoomFactor(1.0);
 		 A_Giveinventory("PB_LockScreenTilt",1);
 		}
-		SH0G A 1 {
+		SHTG A 1 {
 		 If(CountInv("HasSlugs") >=1 ) {A_SetWeaponSprite("SHTS");} 
 		 If(CountInv("HasDragonBreath") >=1 ) {A_SetWeaponSprite("SHTD");}
 		 PB_HandleCrosshair(69);
@@ -1305,7 +1329,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		TNT1 A 0 A_GiveInventory("PBPumpShotgunWasEmpty", 1)		
 	ReloadNormally:	
 		TNT1 A 0 A_JumpIf(CountInv("NewShell") == 0,"NoAmmo")
-		SH0G BCDEFGHIJ 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
+		SHTG BCDEFGHIJ 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 		TNT1 A 0 A_TakeInventory("PBPumpShotgunHasUnloaded", 1)
     ShellChecker:
 		TNT1 A 0 A_JumpIf(CountInv("NewShell") == 0,"ReloadFinished")
@@ -1356,7 +1380,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 	
 	ReloadFinished:
 	    SSHR A 1
-		SH0G JIHGFEDCBA 1
+		SHTG JIHGFEDCBA 1
 		{
 		 A_DoPBWeaponAction(WRF_NOBOB);
 		 A_SetRoll(roll+0.1,SPF_INTERPOLATE);
@@ -1373,11 +1397,11 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 	BeginMagReload:
 		TNT1 A 0 A_JumpIfInventory("ShotgunAmmo",11,"Ready3")
 		TNT1 A 0 A_JumpIf(CountInv("NewShell") == 0,"NoAmmo")
-		SH0G BCDE 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
+		SHTG BCDE 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 		TNT1 A 0 A_JumpIfInventory("PBPumpShotgunHasUnloaded",1,5)
 		SHMG FGHI 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 		Goto ActuallyBeginMagReload
-		SH0G GH 1
+		SHTG GH 1
 		Goto InsertMag
 	ActuallyBeginMagReload:	
 	    TNT1 A 0 A_JumpIfInventory("ShotgunAmmo",11,"Ready3")
@@ -1391,9 +1415,9 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		
 		goto InsertMag	
 	EmptyMagReload:
-		SHTN GHI 1
+		SHTN GHIJKL 1
 		TNT1 A 0 A_JumpIfInventory("ShotgunAmmo",1,2)
-		TNT1 A 0 PB_SpawnCasing("EmptyClipMP40", 22, 10, 18, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8))
+		TNT1 A 0 A_FireCustomMissile("EmptyClipMP40",-5,0,8,-4)
 	InsertMag:
 	    SHTM A 4
 	    SHTM BCDEFG 1 {
@@ -1436,7 +1460,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 A_SetRoll(roll-0.4,SPF_INTERPOLATE);
 		 A_SetPitch(pitch+0.1,SPF_INTERPOLATE);
 		}
-		SH0G M 2
+		SHTG M 2
 		SHMG L 1 
 		{
 		 A_SetRoll(roll+0.4,SPF_INTERPOLATE);
@@ -1455,7 +1479,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		SHMG J 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
 	ReloadMagFinished:
 	    SHTM OPQR 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
-		SH0G EDCB 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
+		SHTG EDCB 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
 		TNT1 A 0
 		{
 		 A_Takeinventory("Reloading",1);
@@ -1466,7 +1490,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		TNT1 A 0 A_Refire
 		Goto Ready3			
 	Unload:
-		SH0G A 1{
+		SHTG A 1{
 			A_ZoomFactor(1.0);
 			A_WeaponOffset(0,32);
 			A_Takeinventory("Unloading",1);
@@ -1477,9 +1501,9 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 			}
         TNT1 A 0 A_JumpIfInventory("ShotgunAmmo",1,1)
         Goto Ready3
-		SH0G BCDE 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
+		SHTG BCDE 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 		TNT1 A 0 A_JumpIfInventory("PumpshotgunMagazine",1,"MagUnload")
-		SH0G FGHIJ 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
+		SHTG FGHIJ 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
 		Goto RemoveBullets
 	MagUnload:	
 	    SHMG FGHIJ 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE)
@@ -1492,25 +1516,25 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		TNT1 A 0 A_JumpIf(CountInv("ShotgunAmmo") == 0,"FinishUnload")
 		TNT1 A 0 A_PlaySound("weapons/sgmvpump")
 	ActuallyUnload:
-		SH0G K 1{
+		SHTG K 1{
 		 If(CountInv("HasSlugs") >=1 ) {A_SetWeaponSprite("SHTA");} 
 		 If(CountInv("HasDragonBreath") >=1 ) {A_SetWeaponSprite("SHTF");}
 		 A_SetRoll(roll-0.1,SPF_INTERPOLATE);
 		 return state("");
 		}
-		SH0G L 1 {
+		SHTG L 1 {
 			A_SetRoll(roll-0.4,SPF_INTERPOLATE);
 			A_SetPitch(pitch+0.1,SPF_INTERPOLATE);
 		}
-		SH0G M 1
-		SH0G L 1 {
+		SHTG M 1
+		SHTG L 1 {
 			A_SetRoll(roll+0.4,SPF_INTERPOLATE);
 			A_SetPitch(pitch-0.1,SPF_INTERPOLATE);
 		}
 		TNT1 A 0 A_JumpIfInventory("NewShell", 1,3) 
 		SSHR H 1 A_SetRoll(roll-0.1,SPF_INTERPOLATE) // So the chamber shows as being empty
 		TNT1 A 0 { return state (2); } // Skip This Frame if the shotgun isn't loaded.
-		SH0G K 1 {
+		SHTG K 1 {
 		 If(CountInv("HasSlugs") >=1 )        
 		   {A_SetWeaponSprite("SHTA");} 
 		 If(CountInv("HasDragonBreath") >=1 )        
@@ -1518,7 +1542,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		 A_SetRoll(roll-0.1,SPF_INTERPOLATE);
 		 return state("");
 		}
-		SH0G J 1 {
+		SHTG J 1 {
 			A_SetRoll(roll+0.1,SPF_INTERPOLATE);
 			A_PlaySoundEx("weapons/sgmvpump", "Auto");
 			A_Takeinventory("ShotgunAmmo",1);
@@ -1535,7 +1559,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		Goto RemMagBullets
 		
 	FInishUnload:
-		SH0G IHGFEDCB 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
+		SHTG IHGFEDCB 1 A_SetRoll(roll+0.1,SPF_INTERPOLATE)
 		TNT1 A 0 {
 			A_SetRoll(0,SPF_INTERPOLATE);
 			A_GiveInventory("PBPumpShotgunHasUnloaded", 1);
@@ -1553,133 +1577,73 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
     FlashKicking:
 	    TNT1 A 0 A_WeaponOffset(0,32)
 		TNT1 A 0 A_JumpIfInventory("PumpshotgunMagazine", 1, "MagFlashKick")
-	    SH0G CDFGHI 1
-		SH0G J 2
-		SH0G IHGEDB 1
+	    SHTG CDFGHI 1
+		SHTG J 2
+		SHTG IHGEDB 1
 		Goto Ready3
 	
 	MagFlashKick:
-	    SH0G CD 1
+	    SHTG CD 1
 		SHMG FGH 1
 		SHMG I 1
 		SHMG J 2
 		SHMG IHG 1
-		SH0G EDB 1
+		SHTG EDB 1
 		Goto Ready3
 		
 	FlashAirKicking:
 	    TNT1 A 0 A_WeaponOffset(0,32)
 		TNT1 A 0 A_JumpIfInventory("PumpshotgunMagazine", 1, "MagFlashAirKick")
-	    SH0G CDFGHI 1
-		SH0G J 4
-		SH0G IHGEDBB 1
+	    SHTG CDFGHI 1
+		SHTG J 4
+		SHTG IHGEDBB 1
 		Goto Ready3
 	
 	MagFlashAirKick:
-	    SH0G CD 1
+	    SHTG CD 1
 		SHMG FGHI 1
 		SHMG I 4
 		SHMG IHG 1
-		SH0G EDBB 1
+		SHTG EDBB 1
 		Goto Ready3
 		
 	FlashSlideKicking:
 	    TNT1 A 0 A_WeaponOffset(0,32)
 		TNT1 A 0 A_JumpIfInventory("PumpshotgunMagazine", 1, "MagFlashSlideKicking")
-		SH0G CDFGHIJJJJJJJJJJJJJIHGEDB 1
+		SHTG CDFGHIJJJJJJJJJJJJJIHGEDB 1
 		Goto Ready3
 	
 	MagFlashSlideKicking:
-	    SH0G CD 1
+	    SHTG CD 1
 		SHMG FGHIJJJJJJJJJJJJJIHGE 1
-	    SH0G DC 1
+	    SHTG DC 1
 		Goto Ready3
 
 	FlashSlideKickingStop:
 	    TNT1 A 0 A_WeaponOffset(0,32)
 		TNT1 A 0 A_JumpIfInventory("PumpshotgunMagazine", 1, "MagFlashSlideKickingStop")
-		SH0G JIHGEDB 1
+		SHTG JIHGEDB 1
 		Goto Ready3
 	
 	MagFlashSlideKickingStop:
 	    SHMG JIHGF 1
-		SH0G DC 1
+		SHTG DC 1
 		Goto Ready3
 		
 	FlashPunching:
 	    TNT1 A 0 A_WeaponOffset(0,32)
 		TNT1 A 0 A_JumpIfInventory("PumpshotgunMagazine", 1, "MagFlashPunch")
-	    SH0G CDFGHI 1
-		SH0G J 2
-		SH0G IHGEDB 1
-		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
-		Goto Ready3
+	    SHTG CDFGHI 1
+		SHTG J 2
+		SHTG IHGEDB 1
+		Stop
 	MagFlashPunch:
-	    SH0G CD 1
+	    SHTG CD 1
 		SHMG FGH 1
 		SHMG I 1
 		SHMG J 2
 		SHMG IHG 1
-		SH0G EDB 1
-		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
-		Goto Ready3
-
-	PDA_Preview_Fire:
-		SH0F A 1 Bright
-		SH0F B 1
-		SH0F C 1
-		SH0F D 1
-		SH0F E 1
-		SH0F F 1
-		SH0F G 1
-		Stop
-	PDA_Preview_Pump:
-		SH0G B 1
-		SH0G C 1
-		SH0G D 1
-		SH0G E 1
-		SH0G F 1
-		SH0G G 1
-		SH0G H 1
-		SH0G I 1
-		SH0G J 1
-		SH0G K 1
-		SH0G L 1
-		SH0G M 2
-		SH0G L 1
-		SH0G K 1
-		SH0G J 1
-		SH0G I 1
-		SH0G H 1
-		SH0G G 1
-		SH0G F 1
-		SH0G E 1
-		SH0G D 1
-		SH0G C 1
-		SH0G B 1
-		SH0G A 1
-		Stop
-	PDA_Preview_AltFire:
-		SHT8 E 1
-		SHT8 E 1
-		SHT8 D 1
-		SHT8 K 1
-		Stop
-	PDA_Preview_Reload:
-		SH0G B 1
-		SH0G C 1
-		SH0G D 1
-		SH0G E 1
-		SH0G F 1
-		SH0G G 1
-		SH0G H 1
-		SH0G I 1
-		SH0G J 1
-		SSHR A 1
-		SSHR B 1
-		SSHR C 1
-		SSHR D 1
-		SSHR E 1
+		SHTG EDB 1
 		Stop
 	}
 }

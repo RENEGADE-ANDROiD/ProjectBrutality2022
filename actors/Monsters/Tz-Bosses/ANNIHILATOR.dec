@@ -1,4 +1,4 @@
-ACTOR PB_Annihilator: Cyberdemon
+ACTOR PB_Annihilator: Cyberdemon Replaces Cyberdemon
 {
 	//$Title Annihilator
 	//$Category Project Brutality - Monsters/Bosses
@@ -90,7 +90,7 @@ DamageFactor "Blood", 0.0 DamageFactor "BlueBlood", 0.0 DamageFactor "GreenBlood
 	
 	
 	Spawn:
-		TNT1 A 0 ACS_ExecuteAlways(796, 0, 0, 0, 0)
+		TNT1 A 0 ACS_ExecuteAlways(796, 0, 0, 0, 0)//Check if Vanilla Mode is activated
 	Stand:
 		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 100,0)
 		TNT1 A 0
@@ -100,7 +100,7 @@ DamageFactor "Blood", 0.0 DamageFactor "BlueBlood", 0.0 DamageFactor "GreenBlood
 		
 	See: 
 	TNT1 A 0
-	TNT1 A 0 A_PlaySound("monster/anhoof", 4)
+	TNT1 A 0 A_PlaySound("monster/anhoof",4)
 	Goto Rage
 	
 	RAGE:
@@ -325,16 +325,12 @@ DamageFactor "Blood", 0.0 DamageFactor "BlueBlood", 0.0 DamageFactor "GreenBlood
 	Death.ExeCution:
       TNT1 A 0 A_Pain
       TNT1 A 0 A_GiveToTarget ("GoExecution", 1)
-		4NNI H 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-		TNT1 A 0 A_PlaySound("monster/annpain", 6)
-		4NNI H 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-		TNT1 A 0 A_PlaySound("misc/xdeath3", 5)
-		4NNI H 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		4NNI H 30 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
 		Goto Death
 	
 	Death:
 		4NNI HHHHH 2 A_CustomMissile ("ExplosionSpawner", 90, 0, random (0, 360), 2, random (0, 180))
-		//TNT1 A 0 ACS_NamedExecuteAlways("CyberDemonDoorFix", 0, 0, 0, 0)
+		//TNT1 A 0 ACS_NamedExecuteAlways("CyberDemonDoorFix", 0, 0, 0, 0)//Fix for map 26 of starter pack
 		EXPL A 0 Radius_Quake (6, 100, 0, 22, 0)
         TNT1 AA 0 A_CustomMissile ("ExplosionSpawner", 90, 0, random (0, 360), 2, random (0, 180))
         TNT1 AA 0 A_CustomMissile ("ExplosionSpawner", 90, 0, random (0, 360), 2, random (0, 180))
@@ -358,7 +354,7 @@ DamageFactor "Blood", 0.0 DamageFactor "BlueBlood", 0.0 DamageFactor "GreenBlood
 		TNT1 A 0 A_SpawnItem ("ShoqueAzul")
 		TNT1 A 0 A_PlaySound("caco/shotx")
 		TNT1 AAAAAAAAA 0 A_CustomMissile ("XDeath1", 120, 0, random (0, 360), 2, random (0, 180))
-		//TNT1 A 0 ACS_NamedExecuteAlways("CyberDemonDoorFix", 0, 0, 0, 0)
+		//TNT1 A 0 ACS_NamedExecuteAlways("CyberDemonDoorFix", 0, 0, 0, 0)//Fix for map 26 of starter pack
 		CYBB AAA 8 A_SpawnItem("MuchBlood", 0, 120)
 		CYBB ABCABCB 8 A_SpawnItem("MuchBlood", 0, 120)
 		EXPL A 0 Radius_Quake (6, 100, 0, 22, 0)
@@ -454,6 +450,7 @@ DamageFactor "Blood", 0.0 DamageFactor "BlueBlood", 0.0 DamageFactor "GreenBlood
 	}
 }
 
+///////////////////////////======VANILLA======//////////////////////////////////
 
 Actor Vanilla_Annihilator : PB_Annihilator
 {

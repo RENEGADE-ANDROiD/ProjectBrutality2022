@@ -1,0 +1,477 @@
+Class VenorHands : Actor //grabbers actor
+{
+	Default
+	{
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+NOCLIP
+		+MISSILE
+		Scale 0.75;
+	}
+	States
+	{
+	Spawn:
+		VNRD ABBCCDDEEEFFFGGG 2;
+		Goto Grab;
+	Grab:
+		VNRH ABCDEFGH 4;
+		Loop;
+	Death:
+		VNRD G 8;
+		VNRD FE 6;
+		VNRD DCBA 4;
+		Stop;
+	}
+}
+
+Class Venor : Actor
+{
+	actor void; //grabbers pointer
+	bool grabbed; //pull check
+	bool tryGrab; //grab check
+	Vector3 emergePos; //teleport position
+	static const string venorgore[] = { "VenorGib1", "VenorGib2", "VenorGib3", "VenorGib4", "VenorBlood" };
+	Default
+	{
+		//$Category Monsters
+		Health 100;
+		Radius 32;
+		Height 8;
+		Scale 0.8;
+		Speed 4;
+		Mass 1000;
+		MeleeRange 48;
+		MaxTargetRange 256; //maximum range at which try to pull and range for target teleportation after grab
+		MinMissileChance 1; //maximum chance to use a ranged attack out of 256 (~0.78%)
+		MaxSlopeSteepness 0.2;
+		PainChance 64;
+		PainChance "Crush", 0;
+		DamageFactor "Melee", 0.33;
+		DamageFactor "Crush", 0.0;
+		BloodColor "Black";
+		Monster;
+		+FLATSPRITE
+		+FLOORHUGGER
+		+INTERPOLATEANGLES
+		+NOCLIP
+		+DONTGIB
+		+FLOORCLIP
+		+DROPOFF
+		+NOTAUTOAIMED
+		-SHOOTABLE
+		Obituary "%o has been dragged into the void by a Venor.";
+		SeeSound "venor/sight";
+		PainSound "venor/pain";
+		AttackSound "venor/attack";
+		ActiveSound "venor/active";
+		DeathSound "venor/death";
+		Tag "Venor";
+	}
+	States
+	{
+	Spawn:
+		VNR1 A 1 A_GetClosestTarget(256, "Wake");
+		Loop;
+	Wake:
+		VNR2 ABE 8 A_StartSound("venor/choir", 8, CHANF_LOOPING);
+		Goto See;
+	See:
+		VNR2 FFFFGGGGCCCCDDDDEEEE 1 A_VoidChase("Melee", "Pulling", "Missile", 512, "Spawn");
+		Loop;
+	Pulling:
+		VNR2 FFFFGGGGCCCCDDDDEEEE 1 A_VoidPull(1, 300, 24, "VenorHands", "Melee", "See");
+		Loop;
+	Melee:
+		VNR2 IIIIIJJJJJKKKKKLLLLL 1 A_VoidPull(0.5, 300, 0, "VenorHands", null, null);
+		VNR2 L 6 A_KillGrabbers();
+		VNR2 F 4 A_CustomMeleeAttack(random(7,9)*3, "venor/bite", "venor/bite");
+		VNR2 GCD 4;
+		Goto Chomp;
+	Chomp:
+		VNR2 E 4 A_StartSound("venor/chomp", 0, CHANF_OVERLAP);
+		VNR2 BABEBABEBABEBABE 4;
+		Goto Spawn;
+	Missile:
+		VNR2 FFFFGGGGCCCCDDDDEEEE 1 A_VoidGrab("Wake", "Venorhands", "venor/void");
+		Loop;
+	Pain:
+		TNT1 A 0 A_KillGrabbers();
+		TNT1 A 0 A_AbortGrab();
+		VNR2 H 10 A_Pain;
+		Goto See;
+	Death:
+		VNR2 L 8 {
+			A_StopSound(8);
+			A_Scream();
+			A_Fall();
+			A_KillGrabbers();
+			A_AbortGrab();
+		}
+		VNR2 LMMMMMO 2 {
+			for(int g = 0; g <= 4; g++) {
+				A_SpawnDebris(venorgore[g], FALSE, frandom(0.5,1.0), frandom(0.5,1.5));
+			}
+		}
+		VNR2 OP 6;
+		VNR2 Q -1;
+		Stop;
+	}
+	
+	state A_GetClosestTarget(double rad, StateLabel label) { //make the closest living actor my target
+		let it = BlockThingsIterator.Create(self, rad); //create area detection
+		while(it.Next()) { //scroll through actors detected
+			actor victim = it.thing;
+			if(victim && victim != self && victim.Health > 0 && abs(victim.pos.z - victim.GetZAt()) <= 32 && CheckSight(victim) && Distance3D(victim) <= rad &&
+			!victim.bDORMANT && victim.bSHOOTABLE && !victim.bNOCLIP && (victim.Player || victim.bISMONSTER)) { //if valid living actor, close enough and on sight (and it's not another venor or myself)
+				target = victim; //set the actor I found as my target
+				tracer = victim; //and tracer (necessary for A_SeekerMissile)
+				break; //stop the searching
+			}
+		}
+		if(tracer && target) { //if I have a valid target and tracer
+			A_StartSound(SeeSound); //play the see sound
+			bSHOOTABLE = true;
+			return FindState(label); //go to selected state
+		}
+		return null; //or continue to look for targets
+	}
+	
+	state A_VoidChase(StateLabel meleestate, StateLabel pullstate, StateLabel missilestate, double minRange, StateLabel idlestate) { //custom chasing function
+		if(target && target.Health > 0) { //if I have a target and it's alive
+			A_FaceTarget(); //look at him
+			if(Level.IsPointInLevel(pos)) { //check if I'm not in the void
+				if(Distance3D(target) <= MaxTargetRange) { //check if the target is close enough
+					if(CheckSight(target)) { //if on sight
+						A_Stop(); //stop there
+						if(CheckMeleeRange()) { //if the target is within melee range
+							return FindState(meleestate); //go to the melee state
+						}
+						else if(random() <= MinMissileChance + 16 && pos.z <= target.pos.z + target.MaxStepHeight) { //otherwise, if the target is lower or higher than his maximum step height, then there's ~7% chance
+							return FindState(pullstate); //to start the pulling
+						}
+					}
+				}
+				else if(random() <= MinMissileChance && Distance3D(target) >= minRange && minRange > MaxTargetRange) { //if the target if farther than the minum choosed range (needs to be grater than MaxTargetRange), then there's ~0,78% chance
+					A_Stop();
+					return FindState(missilestate); //to start the grabbing
+				}
+			}
+			if(random() <= 1) {
+				A_StartSound(ActiveSound); //make the actor play the active sound 0.78% of the time
+			}
+			A_SeekerMissile(30, 45); //chase the target with no direction turns
+		}
+		else { //if there's no target or is dead
+			A_ClearTarget();
+			A_StopAllSounds();
+			bSHOOTABLE = false;
+			return FindState(idlestate); //and go to the spawn state
+		}
+		return null; //or continue the chasing
+	}
+	
+	void A_KillGrabbers() { //function to make the grabbers go back to the ground
+		if(void && !void.bFLOORHUGGER) { //check if there are grabbers around
+			void.ExplodeMissile(); //make them enter the death state
+			void.bFLOORHUGGER = true; //and pin them to the floor
+		}
+	}
+	
+	state A_VoidPull(double force, double maxRange, double minRange, class<Actor> grabber, StateLabel attackstate, StateLabel seestate) { //pulling function
+		if(target && target.Health > 0 && target.bSHOOTABLE && !target.bDONTTHRUST && !target.bBOSS && Distance3D(target) <= maxRange) { //if the target is alive, is shootable, is not a boss, can be thrusted and is not too far away
+			//SPAWN GRABBERS
+			grabbed = true; //check if the grabbers have already been spawned
+			target.A_Face(self, 2, 2, 0, 0, FAF_BOTTOM, 0); //force the target to face me
+			if(!void) { //if there are no grabbers
+				void = Spawn(grabber, target.pos, ALLOW_REPLACE); //spawn them to the target position
+			}
+			if(void) { //if they've been spawned succesfully
+				if(!void.target || !void.tracer) {
+					void.target = self; //make me the grabbers target
+					void.tracer = self.target; //and my target their tracer
+				}
+				void.A_Fire(0); //and teleport the grabbers to the target location
+			}
+			//PULLING
+			vector3 pull = target.Vec3To(self); //vector from the target to me
+			double d = 2.0; //distance coefficient
+			double b = 0.75; //screen bland coefficient
+			if(pull.length() >= minRange) { //if the vector lenght (target distance) is grater than the minimum range
+				if(maxRange > minRange + 1) { //if the maximum range is greater than the minimum + 1 to not get 0
+					d = 2.0 + 2 * (pull.length() - minRange) / (minRange - maxRange + 1); //set the distance coefficient (the farther, the weaker)
+					b = 0.75 + 0.75 * (pull.length() - minRange) / (minRange - maxRange); //set the screen blend coefficient (the farther, the weaker)
+				}
+				target.vel += pull.unit() * force / (target.Mass + 1000) * 1000 * d; //apply the pull depending on force variable, target mass and distance
+				if(target.Player) { //if the target is a player
+					target.A_SetBlend("Black", b, 5, "Black", b); //set the screen blend
+				}
+			}
+			else { //if target is close
+				target.A_Stop(); //stop the target
+				if(target.Player) {
+					target.A_SetBlend("Black", 0.75, 5, "Black", 0.75);
+				}
+				A_StartSound(AttackSound, 0, CHANF_OVERLAP);
+				return FindState(attackstate); //and attack the target
+			}
+		}
+		//ABORT
+		else if(grabbed) { //if there's no valid target or is dead and there are grabbers around
+			A_KillGrabbers(); //call them back
+			if(target.Player) {
+				target.A_SetBlend("Black", 0.75, 70);
+			}
+			grabbed = false;
+			return FindState(seestate); //and go back to the see state
+		}
+		A_FaceTarget();
+		return null; //or continue the pulling
+	}
+	
+	state A_VoidGrab(StateLabel seestate, class<Actor> grabber, string voidsound) { //Grabbing/teleporting function
+		if(target && target.Health > 0 && target.bSHOOTABLE && !target.bDONTTHRUST && !target.bBOSS) {
+			if(!tryGrab) { //if I haven't tried to grab the target yet
+				A_FaceTarget();
+				//TELEPORT POSITION CHECK
+				actor posCheck; //set my position checker actor
+				if(!posCheck) { //if it's not there already
+					posCheck = Spawn("PosCheckActor", pos, ALLOW_REPLACE); //spawn the checker actor
+					posCheck.MaxStepHeight = target.MaxStepHeight; //ang give it the same maximum step height of the target
+				}
+				if(posCheck) { //if the checker has been spawned succesfully
+					for(int ang = 0; ang <= 60 || ang >= -60; ang += randompick(-30,30)) { //check different angles randomly for the teleport vector
+						Vector2 emergeXY = Vec2Angle(MaxTargetRange, Angle + ang); //get the direction of the 2d vector
+						emergePos = (emergeXY, GetZAt(MaxTargetRange, 0, ang)); //set up the 3D vector for teleportation
+						if(posCheck.CheckMove(emergeXY, PCM_NOACTORS) || target.CheckMove(emergeXY, PCM_NOACTORS)) { //if the checker can move where the 2d vector points to or if the target can do that
+							posCheck.SetOrigin(emergePos, false); //move the checker in the exact position the 3D vector points to
+							if(Level.IsPointInLevel(emergePos) && posCheck.A_SetSize(target.Radius, target.Height, true)) { //check if the new position of the checker is not in the void and if the checker would have the hitbox of the target would fit the new position correctly
+								posCheck.Destroy(); //then remove the checker
+								tryGrab = true; //grab succesful
+								break; //stop checking for new random angles
+							}
+						}
+					}
+					posCheck.Destroy(); //if I couldn't find a right spot to move the checker, remove it
+				}
+			}
+			if(tryGrab) { //if the grab was succesful
+				//DRAGGING
+				A_DragDown(); //start the dragging into the floor
+				double sinkZ = target.pos.z - (target.GetZAt() - target.Height / 4 * 3); //get how deep you want the target to be dragged down before teleporting it
+				if(target.Player) { //if target is a player, set the blend again
+					double b;
+					if(sinkZ > 0) {
+						b = 1.0 / sinkZ;
+					}
+					else {
+						b = 1.0;
+					}
+					target.A_SetBlend("Black", b, 5, "Black", b);
+				}
+				if(!void) { //if there are no grabbers, spawn them and set target and tracer again
+					void = Spawn(grabber, target.pos, ALLOW_REPLACE);
+					void.target = self;
+					void.tracer = self.target;
+					void.A_StartSound(voidsound); //play the sound you want
+				}
+				//TELEPORT CLOSER
+				if(void && sinkZ <= 0) { //if there are grabbers and the set up dept has been reached
+					target.SetOrigin(emergePos, false); //teleport the target to the position checked by the checker actor
+					A_AbortGrab(); //remove any flag set up with A_DragDown() 
+					void.A_Fire(0); //teleport the grabbers too
+					A_KillGrabbers(); //and call them back
+					if(target.Player) {
+						target.A_SetBlend("Black", 1.0, 70);
+					}
+					tryGrab = false; //reset the grab
+					return FindState(seestate); //and go the see state
+				}
+			}
+		}
+		//ABORT
+		else { //if there's novalid target or is dead 
+			A_AbortGrab(); //remove any possible flag
+			return FindState(seestate); //still go to the see state
+		}
+		return null; //or continue the grabbing
+	}
+	
+	void A_AbortGrab() {
+		if(target) {
+			target.A_ChangeLinkFlags(false); //remove game breaking flags from the target
+			target.bNOINTERACTION = false;
+			if(!target.TestMobjLocation()) { //and if the target was already inside the floor
+				target.SetOrigin((target.pos.xy, target.GetZAt()), false); //teleport him on top of the floor
+			}
+		}
+	}
+	
+	void A_DragDown() {
+		if(target && target.Health > 0 && target.bSHOOTABLE && !target.bDONTTHRUST && !target.bBOSS) {
+			target.A_Stop(); //stop target velocity
+			target.SetStateLabel("Pain"); //set the target into the pain state to lock monsters in place
+			target.A_ChangeLinkFlags(true); //remove the target from the "blockmap"
+			target.bNOINTERACTION = true; //make the actor incapable of interacting with the map
+			target.SetOrigin((target.pos.xy, target.pos.z - 2), true); //slowly drag the actor into the floor
+		}
+	}
+}
+
+Class PosCheckActor : Actor //position checker actor
+{
+	Default
+	{
+		+SOLID
+		+NOGRAVITY
+	}
+	States
+	{
+	Spawn:
+		TNT1 A -1;
+		Stop;
+	}
+}
+//DEATH VENOR GORE
+Class VenorBlood : Blood
+{
+	Default
+	{
+		Health 10;
+		Translation "176:191=5:8";
+		Scale 2.0;
+		+NOINTERACTION
+	}
+}
+
+Class VenorGib1 : Actor
+{
+	int gib;
+	static const string GibsSpawns[] = { "VenorPust1", "VenorPust2", "VenorHand1", "VenorHand2" };
+	Default
+	{
+		Mass 20;
+		Health 2;
+		Scale 0.3;
+		Gravity 0.5;
+		+CORPSE
+		+ROLLSPRITE
+	}
+	States
+	{
+	Spawn:
+		VNG1 A 2 NoDelay { if(!gib) gib = 0; }
+		Loop;
+	Crash:
+		TNT1 A 1 A_SpawnItemEx(GibsSpawns[gib], 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 128);
+		Stop;
+	}
+	
+	override void Tick() {
+		A_SetRoll(roll + 1);
+		super.tick();
+	}
+}
+
+Class VenorGib2 : VenorGib1
+{
+	States
+	{
+	Spawn:
+		VNG2 A 2 NoDelay { if(!gib) gib = 1; }
+		Loop;
+	}
+}
+
+Class VenorGib3 : VenorGib1
+{
+	Default
+	{
+		Scale 0.5;
+		Health 1;
+	}
+	States
+	{
+	Spawn:
+		VNG3 B 2 NoDelay { if(!gib) gib = 2; }
+		Loop;
+	}
+}
+
+Class VenorGib4 : VenorGib3
+{
+	States
+	{
+	Spawn:
+		VNG4 B 2 NoDelay { if(!gib) gib = 3; }
+		Loop;
+	}
+}
+
+Class VenorPust1 : Actor
+{
+	Default
+	{
+		Height 8;
+		Radius 8;
+		Health 5;
+		Mass 5;
+		Scale 0.3;
+		BloodColor "Black";
+		+SHOOTABLE
+		+TOUCHY
+		+FLOORCLIP
+		SeeSound "venor/splat";
+	}
+	States
+	{
+	Spawn:
+		VNG1 AH random(4,12);
+		Loop;
+	Death:
+		TNT1 A 1 {
+			A_StartSound("venor/splat", 0, 0, 0.3, ATTN_NORM, frandom(1.5,3.0));
+			A_SpawnDebris("VenorBlood", FALSE, frandom(0.1,0.3), frandom(0.1,0.3));
+		}
+		Stop;
+	}
+	
+	override void PostBeginPlay() {
+		Super.PostBeginPlay();
+		A_StartSound(SeeSound, 0, 0, 0.5, ATTN_NORM, frandom(1.5,3.0), 0.25);
+	}
+}
+
+Class VenorPust2 : VenorPust1
+{
+	States
+	{
+	Spawn:
+		VNG2 AH random(4,12);
+		Loop;
+	}
+}
+
+Class VenorHand1 : VenorPust1
+{
+	Default
+	{
+		Scale 0.5;
+		Speed 2;
+	}
+	States
+	{
+	Spawn:
+		VNG3 BC random(6,14);
+		Loop;
+	}
+}
+
+Class VenorHand2 : VenorHand1
+{
+	States
+	{
+	Spawn:
+		VNG4 BC random(6,14) A_Wander;
+		Loop;
+	}
+}

@@ -1,3 +1,5 @@
+//Tracing projectiles goes here
+
 Actor Tracer: FastProjectile
 {
 	Projectile
@@ -74,6 +76,7 @@ Death:
 }
 }
 
+///////////////////////////////////////////////////////////////////////////////PB
 
 ACTOR ExplosiveChaingunTracer : Tracer
 {
@@ -187,6 +190,7 @@ Death:
 }
 }
 
+//////////////////////////////////////////////////////////////////////////////////
 
 Actor MonsterTracer: Tracer
 {

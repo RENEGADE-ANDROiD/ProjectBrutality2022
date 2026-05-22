@@ -45,7 +45,6 @@ Actor GreenBodyArmorSpawner replaces GreenArmor
 			TNT1 A 0 A_Jump(136,"SpawnMediumArmor")
 			TNT1 A 0 A_Jump(256,"SpawnLightArmor") 
 	SpawnHeavyArmor:
-		TNT1 A 1 ACS_NamedExecuteAlways("ToggleItemMutators",0)
 		TNT1 A 0 A_SpawnItemEx("HeavyArmor",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnMediumArmor:
@@ -70,61 +69,24 @@ Actor BlueBodyArmorSpawner replaces BlueArmor
 		TNT1 A 1
 		loop
 	DiceRandom:
-		TNT1 A 0 A_Jump(256, "SpawnHeavyArmor", "SpawnEliteArmor", "SpawnPristineArmor")
+		TNT1 A 0 A_Jump(256, "SpawnHeavyArmor")
 		Stop
 	DiceMain:
 		EarlyLevelMob:
-			TNT1 A 0 A_Jump(4,"SpawnPristineArmor")
-			TNT1 A 0 A_Jump(24,"SpawnEliteArmor")
-			TNT1 A 0 A_Jump(256,"SpawnHeavyArmor")
 		LowLevelMob:
-			TNT1 A 0 A_Jump(8,"SpawnPristineArmor")
-			TNT1 A 0 A_Jump(48,"SpawnEliteArmor")
-			TNT1 A 0 A_Jump(256,"SpawnHeavyArmor")
 		MidLevelMob:
-			TNT1 A 0 A_Jump(12,"SpawnPristineArmor")
-			TNT1 A 0 A_Jump(96,"SpawnEliteArmor")
-			TNT1 A 0 A_Jump(256,"SpawnHeavyArmor")
 		HighLevelMob:
-			TNT1 A 0 A_Jump(16,"SpawnPristineArmor")
-			TNT1 A 0 A_Jump(128,"SpawnEliteArmor")
 			TNT1 A 0 A_Jump(256,"SpawnHeavyArmor")
 	DiceProg:
 		DiceTier1:
-			TNT1 A 0 A_Jump(256,"SpawnHeavyArmor")
 		DiceTier2:
-			TNT1 A 0 A_Jump(4,"SpawnPristineArmor")
-			TNT1 A 0 A_Jump(24,"SpawnEliteArmor")
-			TNT1 A 0 A_Jump(256,"SpawnHeavyArmor")
 		DiceTier3:
-			TNT1 A 0 A_Jump(8,"SpawnPristineArmor")
-			TNT1 A 0 A_Jump(96,"SpawnEliteArmor")
-			TNT1 A 0 A_Jump(256,"SpawnHeavyArmor")
 		DiceTier4:
-			TNT1 A 0 A_Jump(12,"SpawnPristineArmor")
-			TNT1 A 0 A_Jump(128,"SpawnEliteArmor")
-			TNT1 A 0 A_Jump(256,"SpawnHeavyArmor")
 		DiceDeathWish:
-			TNT1 A 0 A_Jump(16,"SpawnPristineArmor")
-			TNT1 A 0 A_Jump(136,"SpawnEliteArmor")
 			TNT1 A 0 A_Jump(256,"SpawnHeavyArmor")
-	SpawnEliteArmor:
-		TNT1 A 1 ACS_NamedExecuteAlways("ToggleItemMutators",0)
-		TNT1 A 0 A_SpawnItemEx("EliteArmor",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		Stop
-	SpawnPristineArmor:
-		TNT1 A 1 ACS_NamedExecuteAlways("ToggleItemMutators",0)
-		TNT1 A 0 A_SpawnItemEx("PristineArmor",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		Stop
 	SpawnHeavyArmor:
 	ReplaceVanilla:
-		TNT1 A 0 A_JumpIf(GetCVar("pb_redarmor_spawn") <= 0, "SpawnHeavyArmorOnly")
-		TNT1 A 0 A_Jump(64, "SpawnPB_RedArmorPick")
-	SpawnHeavyArmorOnly:
 		TNT1 A 0 A_SpawnItemEx("HeavyArmor",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		Stop
-	SpawnPB_RedArmorPick:
-		TNT1 A 0 A_SpawnItemEx("PB_RedArmor",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	}
 }

@@ -251,141 +251,6 @@ script "PBUpgradeChecker_M2Upgrade" (void)
 	}
 }
 
-script "PBUpgradeChecker_LeverHellT3" (void)
-{
-	int hasLA = 0;
-	int needT3 = 0;
-	int needT4 = 0;
-	for (int p = 0; p < 8; p++) {
-		if (!PlayerInGame(p)) continue;
-		int tidp = 800 + p;
-		if (!CheckActorInventory(tidp, "LeverAction")) continue;
-		hasLA = 1;
-		int t = CheckActorInventory(tidp, "LeverActionHellTier");
-		if (t < 1) needT3 = 1;
-		else if (t < 2) needT4 = 1;
-	}
-	if (!hasLA) {
-		SetActorState(0, "BackpackSpawn");
-	}
-	else if (needT4) {
-		SetActorState(0, "SpawnLeverHellUpgradeT4");
-	}
-	else if (!needT3) {
-		SetActorState(0, "BackpackSpawn");
-	}
-}
-
-script "PBUpgradeChecker_LeverHellT4" (void)
-{
-	int hasLA = 0;
-	int needT3 = 0;
-	int needT4 = 0;
-	for (int p = 0; p < 8; p++) {
-		if (!PlayerInGame(p)) continue;
-		int tidp = 800 + p;
-		if (!CheckActorInventory(tidp, "LeverAction")) continue;
-		hasLA = 1;
-		int t = CheckActorInventory(tidp, "LeverActionHellTier");
-		if (t < 1) needT3 = 1;
-		else if (t < 2) needT4 = 1;
-	}
-	if (!hasLA) {
-		SetActorState(0, "BackpackSpawn");
-	}
-	else if (needT3) {
-		SetActorState(0, "SpawnLeverHellUpgradeT3");
-	}
-	else if (!needT4) {
-		SetActorState(0, "BackpackSpawn");
-	}
-}
-
-script "PBLeverHellBackpackTier3Bonus" (void)
-{
-	if (GetCvar("pb_NoUpgrades") == 1) {
-		SetActorState(0, "SpawnCombatBackPack");
-	}
-	else if (GetCvar("pb_NoLeverHellUpgrades") == 1) {
-		SetActorState(0, "SpawnCombatBackPack");
-	}
-	else {
-		int hasLA = 0;
-		int needT3 = 0;
-		int needT4 = 0;
-		for (int p = 0; p < 8; p++) {
-			if (!PlayerInGame(p)) continue;
-			int tidp = 800 + p;
-			if (!CheckActorInventory(tidp, "LeverAction")) continue;
-			hasLA = 1;
-			int t = CheckActorInventory(tidp, "LeverActionHellTier");
-			if (t < 1) needT3 = 1;
-			else if (t < 2) needT4 = 1;
-		}
-		if (!hasLA) {
-			SetActorState(0, "SpawnCombatBackPack");
-		}
-		else {
-			int ax = GetActorX(0);
-			int ay = GetActorY(0);
-			int az = GetActorZ(0);
-			if (needT3) {
-				SpawnForced("LeverActionHellUpgradeT3", ax, ay, az, 0);
-				SetActorState(0, "NullBackpackSpawnerStop");
-			}
-			else if (needT4) {
-				SpawnForced("LeverActionHellUpgradeT4", ax, ay, az, 0);
-				SetActorState(0, "NullBackpackSpawnerStop");
-			}
-			else {
-				SetActorState(0, "SpawnCombatBackPack");
-			}
-		}
-	}
-}
-
-script "PBLeverHellBackpackTier4Bonus" (void)
-{
-	if (GetCvar("pb_NoUpgrades") == 1) {
-		SetActorState(0, "SpawnUpgrade");
-	}
-	else if (GetCvar("pb_NoLeverHellUpgrades") == 1) {
-		SetActorState(0, "SpawnUpgrade");
-	}
-	else {
-		int hasLA = 0;
-		int needT3 = 0;
-		int needT4 = 0;
-		for (int p = 0; p < 8; p++) {
-			if (!PlayerInGame(p)) continue;
-			int tidp = 800 + p;
-			if (!CheckActorInventory(tidp, "LeverAction")) continue;
-			hasLA = 1;
-			int t = CheckActorInventory(tidp, "LeverActionHellTier");
-			if (t < 1) needT3 = 1;
-			else if (t < 2) needT4 = 1;
-		}
-		if (!hasLA) {
-			SetActorState(0, "SpawnUpgrade");
-		}
-		else {
-			int ax = GetActorX(0);
-			int ay = GetActorY(0);
-			int az = GetActorZ(0);
-			if (needT4) {
-				SpawnForced("LeverActionHellUpgradeT4", ax, ay, az, 0);
-				SetActorState(0, "NullBackpackSpawnerStop");
-			}
-			else if (needT3) {
-				SpawnForced("LeverActionHellUpgradeT3", ax, ay, az, 0);
-				SetActorState(0, "NullBackpackSpawnerStop");
-			}
-			else {
-				SetActorState(0, "SpawnUpgrade");
-			}
-		}
-	}
-}
 
 Script "CheckIfSinglePlayerGame" (VOID) NET
 {
@@ -859,11 +724,6 @@ Script "ToggleBaalgarDemon" (VOID) NET
 if	(GetCvar("pb_NoBaalgarDemon") == 1) { SetActorState(0,"ReplaceToggle"); }
 }
 
-Script "ToggleItemMutators" (VOID) NET
-{
-if	(GetCvar("pb_item_mutators") == 0) { SetActorState(0,"ReplaceVanilla"); }
-}
-
 /////////////////////////////////WEAPON TOGGLES///////////////////////////////
 
 Script "ToggleUpgrades" (VOID) NET
@@ -912,11 +772,6 @@ Script "ToggleM2Upgrade" (VOID) NET
 if	(GetCvar("pb_NoM2Upgrade") == 1) { SetActorState(0,"BackpackSpawn"); }
 }
 
-Script "ToggleLeverHellUpgrades" (VOID) NET
-{
-if	(GetCvar("pb_NoLeverHellUpgrades") == 1) { SetActorState(0,"BackpackSpawn"); }
-}
-
 Script "ToggleRevolverUpgraded" (VOID) NET
 {
 	if	(GetCvar("pb_UpgradeRevolver") == 1)
@@ -953,14 +808,9 @@ Script "ToggleShotgunUpgraded" (VOID) NET
 {
 	if	(GetCvar("pb_UpgradeShotgun") == 1)
 	{
-		// Do not strip PB_Shotgun during its own Select while ASGSelected is stale; switch to autos instead.
 		if (CheckInventory("ASGSelected") == TRUE)
 		{
-			if (CheckInventory("PB_AutoShotgun") == TRUE)
-			{
-				TakeInventory("PB_Shotgun", 99);
-				SetWeapon("PB_AutoShotgun");
-			}
+			TakeInventory("PB_Shotgun", 99);
 		}
 		
 		else if (CheckInventory("PB_AutoShotgun") == TRUE)
@@ -1014,7 +864,7 @@ Script "PumpShotgunMag" (void)
 	SetAmmoCapacity("ShotgunAmmo", 11);
 	if (CheckInventory("ShotgunSelected") == TRUE)
 	{
-	SetWeapon("PB_Shotgun");
+	SetWeapon("Shot_Mag");
 	}
 }
 
@@ -1373,19 +1223,9 @@ Script "ToggleWeaponMetalSniper" (VOID) NET
 if	(GetCvar("pb_NoMetalSniperWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
 }
 
-Script "ToggleWeaponOldHMG" (VOID) NET
-{
-if	(GetCvar("pb_NoOldHMGWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
-}
-
 Script "ToggleWeaponNeoHMG" (VOID) NET
 {
 if	(GetCvar("pb_NoNeoHMGWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
-}
-
-Script "ToggleWeaponM41A" (VOID) NET
-{
-if	(GetCvar("pb_NoM41AWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
 }
 
 Script "ToggleWeaponBattleRifle" (VOID) NET

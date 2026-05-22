@@ -96,7 +96,6 @@ ACTOR DyingDarkImpNoArm : SwitchableDecoration
     D1S5 B 1
 	Goto Suffer
 	Suffer:
-		TNT1 A 0 A_PlaySound("dimp/pain", CHAN_VOICE)
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 32,0)
         D1S5 BB 4 A_CustomMissile ("brutal_FlyingBlood", 26, 0, random (0, 360), 2, random (0, 45))
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 32,0)
@@ -259,7 +258,6 @@ ACTOR DyingDarkImpNoLeg : SwitchableDecoration
 	TNT1 A 0 A_Jump(192, "Colapse")
 	Goto Suffer
 	Suffer:
-		TNT1 A 0 A_PlaySound("dimp/pain", CHAN_VOICE)
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 32,0)
         D1S4 DD 4 A_SpawnItem ("brutal_FlyingBlood", 0, 10)
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 32,0)
@@ -387,7 +385,6 @@ ACTOR DyingDarkImp : SwitchableDecoration
     D1S6 D 1
 	Goto Suffer
 	Suffer:
-		TNT1 A 0 A_PlaySound("dimp/pain", CHAN_VOICE)
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 34,0)
         D1S6 DDDDD 2 A_CustomMissile ("brutal_FlyingBlood", 16, 0, random (0, 360), 2, random (0, 45))
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 34,0)
@@ -537,7 +534,6 @@ States
     V3D2 D 1
 	Goto Suffer
 	Suffer:
-		TNT1 A 0 A_PlaySound("dimp/pain", CHAN_VOICE)
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 34,0)
         V3D2 DDDDD 2 A_CustomMissile ("brutal_FlyingBlood", 16, 0, random (0, 360), 2, random (0, 45))
         TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 34,0)

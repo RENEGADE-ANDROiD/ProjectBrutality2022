@@ -1,2 +1,0 @@
-// RS_Axe* states live in actors/Weapons/Slot1/Axe.dec (PB_Axe weapon states block).
-// Do not add a second PB_Axe merge lump here — breaks startup (A_GunFlash / duplicate class).

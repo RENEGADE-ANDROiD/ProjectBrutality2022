@@ -1,33 +1,28 @@
 Class HatExtravaganza : EventHandler
 {
-	transient bool pb_he_hatsOn;
-
-	override void WorldLoaded(WorldEvent e)
-	{
-		PB_HE_RefreshCvar();
-	}
-
-	void PB_HE_RefreshCvar()
-	{
-		let cv = CVar.FindCVar("PB_HatExtravaganza");
-		pb_he_hatsOn = cv && cv.GetInt() == 1;
-	}
-
 	Override Void WorldThingSpawned(WorldEvent e)
 	{
-		if (!pb_he_hatsOn)
-			return;
 		if (!e) return;
 		Actor t = e.Thing;
-		if (!t || !t.bIsMonster) return;
-		if (t.bCORPSE || t.bFRIENDLY || !(t is 'PB_Monster'))
-			return;
-
-		Class<Actor> hatCls = "FunnyHat";
-		if (!hatCls) return;
-		Actor LeFunnyHat = Actor.Spawn(hatCls, t.pos);
-		if (LeFunnyHat)
-			LeFunnyHat.master = t;
+		if (!t) return;
+		if(!t.bCORPSE && !t.bFRIENDLY && t is 'PB_Monster') //e.thing is 'PB_Monster'
+		{
+			CVar HatsEnabled = Cvar.FindCvar("PB_HatExtravaganza");
+			if(HatsEnabled)
+			{
+				if(HatsEnabled.GetInt() == 1)
+				{
+					Class<Actor> hatCls = "FunnyHat";
+					if (!hatCls) return;
+					vector3 spawnPos = t.pos;
+					Actor LeFunnyHat = Actor.Spawn(hatCls, spawnPos);
+					if(LeFunnyHat)
+					{
+						LeFunnyHat.master = t;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -62,3 +57,4 @@ Class FunnyHat : Actor
             stop;
     }
 }
+		

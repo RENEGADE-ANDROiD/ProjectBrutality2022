@@ -14,7 +14,7 @@ Actor PlasmaWeaponSpawner replaces PlasmaRifle
 		TNT1 A 1
 		loop
 	DiceRandom:
-		TNT1 A 0 A_Jump(256, "SpawnPB_Railgun", "SpawnPB_FreezerRifle", "SpawnPB_M2Plasma", "SpawnPB_PlasmaRifle", "SpawnPB_LightningGun", "SpawnPB_CryoElectroRifle", "SpawnPB_DarkMatterRifle")
+		TNT1 A 0 A_Jump(256, "SpawnPB_Railgun", "SpawnPB_FreezerRifle", "SpawnPB_M2Plasma", "SpawnPB_PlasmaRifle", "SpawnPB_LightningGun", "SpawnMancubusFlameCannon")
 		Stop	
 	DiceMain:	// Default spawn preset with a slight difficulty curve. Tier 1-4 Monster presets are contained here to provide more variety.
 		EarlyLevelMob:
@@ -22,69 +22,56 @@ Actor PlasmaWeaponSpawner replaces PlasmaRifle
 			TNT1 A 0 A_Jump(22, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(23, "SpawnPB_FreezerRifle")
 			TNT1 A 0 A_Jump(28, "SpawnPB_Flamethrower")
-			TNT1 A 0 A_Jump(4, "SpawnPB_DarkMatterRifle")
 			TNT1 A 0 A_Jump(54, "SpawnPB_M2Plasma")
-			TNT1 A 0 A_Jump(48, "SpawnPB_CryoElectroRifle")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		LowLevelMob:
 			TNT1 A 0 A_Jump(8, "SpawnPB_LightningGun")
 			TNT1 A 0 A_Jump(28, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(31, "SpawnPB_FreezerRifle")
 			TNT1 A 0 A_Jump(40, "SpawnPB_Flamethrower")
-			TNT1 A 0 A_Jump(10, "SpawnPB_DarkMatterRifle")
 			TNT1 A 0 A_Jump(77, "SpawnPB_M2Plasma")
-			TNT1 A 0 A_Jump(48, "SpawnPB_CryoElectroRifle")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		MidLevelMob:
 			TNT1 A 0 A_Jump(12, "SpawnPB_LightningGun")
 			TNT1 A 0 A_Jump(38, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(36, "SpawnPB_FreezerRifle")
 			TNT1 A 0 A_Jump(50, "SpawnPB_Flamethrower")
-			TNT1 A 0 A_Jump(18, "SpawnPB_DarkMatterRifle")
-			TNT1 A 0 A_Jump(48, "SpawnPB_CryoElectroRifle")
 			TNT1 A 0 A_Jump(84, "SpawnPB_M2Plasma")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		HighLevelMob:
+			TNT1 A 0 A_Jump(2, "SpawnMancubusFlameCannon")
 			TNT1 A 0 A_Jump(32, "SpawnPB_LightningGun")
 			TNT1 A 0 A_Jump(64, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(75, "SpawnPB_Flamethrower")
 			TNT1 A 0 A_Jump(96, "SpawnPB_FreezerRifle")
-			TNT1 A 0 A_Jump(26, "SpawnPB_DarkMatterRifle")
-			TNT1 A 0 A_Jump(52, "SpawnPB_CryoElectroRifle")
 			TNT1 A 0 A_Jump(120, "SpawnPB_M2Plasma")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 	DiceProg:	// Progressive spawn preset enforces strict spawning rules by excluding monsters until they are presented in later levels.
 		DiceTier1:
-			TNT1 A 0 A_Jump(48, "SpawnPB_CryoElectroRifle")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		DiceTier2:
 			TNT1 A 0 A_Jump(96, "SpawnPB_M2Plasma")
-			TNT1 A 0 A_Jump(48, "SpawnPB_CryoElectroRifle")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		DiceTier3:
 			TNT1 A 0 A_Jump(32, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(64, "SpawnPB_FreezerRifle")
-			TNT1 A 0 A_Jump(36, "SpawnPB_DarkMatterRifle")
 			TNT1 A 0 A_Jump(128, "SpawnPB_M2Plasma")
-			TNT1 A 0 A_Jump(48, "SpawnPB_CryoElectroRifle")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		DiceTier4:
+			TNT1 A 0 A_Jump(2, "SpawnMancubusFlameCannon")
 			TNT1 A 0 A_Jump(32, "SpawnPB_LightningGun")
 			TNT1 A 0 A_Jump(100, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(96, "SpawnPB_FreezerRifle")
 			TNT1 A 0 A_Jump(110, "SpawnPB_Flamethrower")
-			TNT1 A 0 A_Jump(44, "SpawnPB_DarkMatterRifle")
 			TNT1 A 0 A_Jump(128, "SpawnPB_M2Plasma")
-			TNT1 A 0 A_Jump(48, "SpawnPB_CryoElectroRifle")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 		DiceDeathWish:
+			TNT1 A 0 A_Jump(2, "SpawnMancubusFlameCannon")
 			TNT1 A 0 A_Jump(108, "SpawnPB_Railgun")
 			TNT1 A 0 A_Jump(90, "SpawnPB_Flamethrower")
 			TNT1 A 0 A_Jump(88, "SpawnPB_FreezerRifle")
-			TNT1 A 0 A_Jump(40, "SpawnPB_DarkMatterRifle")
 			TNT1 A 0 A_Jump(54, "SpawnPB_M2Plasma")
 			TNT1 A 0 A_Jump(28, "SpawnPB_LightningGun")
-			TNT1 A 0 A_Jump(48, "SpawnPB_CryoElectroRifle")
 			TNT1 A 0 A_Jump(256, "SpawnPB_PlasmaRifle")
 	SpawnPB_Railgun:
 		TNT1 A 1 ACS_NamedExecuteAlways("ToggleWeaponRailgun",0)
@@ -120,14 +107,10 @@ Actor PlasmaWeaponSpawner replaces PlasmaRifle
 		TNT1 A 1 A_RadiusGive("IsNearPlasmaWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 		TNT1 A 0 A_SpawnItemEx("DropedPlasma",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
-	SpawnPB_CryoElectroRifle:
+	SpawnMancubusFlameCannon:
+		TNT1 A 0 A_JumpIf(GetCVar("pb_NoMancubusFlameCannonWeapon"), "SpawnPB_PlasmaRifle")
 		TNT1 A 1 A_RadiusGive("IsNearPlasmaWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
-		TNT1 A 0 A_SpawnItemEx("PB_CryoElectroRifle",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		Stop
-	SpawnPB_DarkMatterRifle:
-		TNT1 A 0 A_JumpIf(GetCVar("pb_NoPB_DarkMatterRifleWeapon") == 1, "SpawnPB_PlasmaRifle")
-		TNT1 A 1 A_RadiusGive("IsNearPlasmaWeapon", 480, RGF_GIVESELF | RGF_CUBE | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
-		TNT1 A 0 A_SpawnItemEx("PB_DarkMatterRifle",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		TNT1 A 0 A_SpawnItemEx("MancubusFlameCannon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	}
 }

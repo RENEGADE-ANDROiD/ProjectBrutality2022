@@ -3,8 +3,7 @@
 
 #define MAX_VOLUME 127
 
-// SUPERSEDED: zscript/GloryKills/PB_LowHealthAlertHandler.zc (removed from LOADACS.txt).
-
+// Low health — BoA / Glory Kills add-on: thresholds from menu cvars
 script "lowhealth" ENTER
 {
 	while (1)
@@ -39,6 +38,7 @@ script "lowhealth" ENTER
 	}
 }
 
+// Low armor — from GloryKills add-on; plays once when dropping below threshold after being above
 script "lowarmor" ENTER
 {
 	while (1)

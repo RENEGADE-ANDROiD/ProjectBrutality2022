@@ -32,68 +32,25 @@
 
 class NashGoreHandler : EventHandler
 {
-	const MONSTER_SCAN_CAP = 2048;
-
 	int maxgore;
 	int maxgore_old, maxgore_new;
 	int maxcasings;
 	int maxcasings_old, maxcasings_new;
-	int livingMonsters;
-	int livingMonstersTic;
 
 	Array<String> bloodTypes;
 
-	clearscope static int CountLivingMonsters()
-	{
-		int n;
-		int scanned;
-		ThinkerIterator it = ThinkerIterator.Create("Actor");
-		Actor mo;
-		while (mo = Actor(it.Next()))
-		{
-			if (++scanned > MONSTER_SCAN_CAP)
-				break;
-			if (!mo.bISMONSTER || mo.health < 1)
-				continue;
-			if (mo is "PlayerPawn")
-				continue;
-			n++;
-		}
-		return n;
-	}
-
-	clearscope static int EffectiveMaxGore(int baseCap, int living)
-	{
-		if (baseCap < 1)
-			return baseCap;
-		if (living <= 20)
-			return baseCap;
-		if (living <= 40)
-			return max(64, baseCap * 3 / 4);
-		if (living <= 64)
-			return max(48, baseCap / 2);
-		return max(32, baseCap * 2 / 5);
-	}
-
-	clearscope static int EffectiveMaxCasings(int baseCap, int living)
-	{
-		if (baseCap < 1)
-			return baseCap;
-		if (living <= 24)
-			return baseCap;
-		if (living <= 48)
-			return max(24, baseCap * 3 / 4);
-		return max(16, baseCap / 2);
-	}
-
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	override void PlayerEntered(PlayerEvent e)
 	{
 		if (!e) return;
 		int pn = e.PlayerNumber;
 		if (pn < 0 || pn >= MAXPLAYERS || !playeringame[pn]) return;
-		PlayerPawn plr = PlayerPawn(players[pn].mo);
+		PlayerPawn plr = players[pn].mo;
 		if (!plr) return;
 		if (!plr.CountInv("NashGoreActor"))
 		{
@@ -106,60 +63,58 @@ class NashGoreHandler : EventHandler
 		if (!e) return;
 		int pn = e.PlayerNumber;
 		if (pn < 0 || pn >= MAXPLAYERS || !playeringame[pn]) return;
-		PlayerPawn plr = PlayerPawn(players[pn].mo);
+		PlayerPawn plr = players[pn].mo;
 		if (!plr) return;
 		DoThingRevive(plr);
 	}
 
-
-
-	private void EnsureBloodTypes(void)
-	{
-		if (bloodTypes.Size() < 1)
-			BuildBloodTypes();
-	}
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	override void WorldLoaded(WorldEvent e)
 	{
+		BuildBloodTypes();
 	}
 
 	override void WorldTick(void)
 	{
-		if (gamestate == GS_LEVEL && level.maptime - livingMonstersTic >= 35)
-		{
-			livingMonstersTic = level.maptime;
-			livingMonsters = CountLivingMonsters();
-		}
-		else if (gamestate != GS_LEVEL)
-			livingMonsters = 0;
-
 		// update gore queue
 		maxgore_new = nashgore_maxgore;
 		if (maxgore_old != maxgore_new)
 		{
+			maxgore = maxgore_new;
 			maxgore_old = maxgore_new;
 		}
-		maxgore = EffectiveMaxGore(maxgore_new, livingMonsters);
 		
 		// update casings queue
 		maxcasings_new = nashgore_maxcasings;
 		if (maxcasings_old != maxcasings_new)
 		{
+			maxcasings = maxcasings_new;
 			maxcasings_old = maxcasings_new;
 		}
-		maxcasings = EffectiveMaxCasings(maxcasings_new, livingMonsters);
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	override void WorldThingSpawned(WorldEvent e)
 	{
 		if (!e) return;
 		Actor t = e.Thing;
-		if (!t || !t.bIsMonster) return;
+		if (!t) return;
 
+		// monster?
+		bool isMonster = t.bIsMonster;
+		
 		// plug in generic monster behaviour
-		if ((t is "PB_Monster") && !t.CountInv("NashGoreActor"))
+		if ((t is "PB_Monster") && isMonster && !t.CountInv("NashGoreActor"))
 		{
 			t.A_GiveInventory("NashGoreActor", 1);
 
@@ -203,13 +158,15 @@ class NashGoreHandler : EventHandler
 		DoThingRevive(t);
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	override void CheckReplacement(ReplaceEvent e)
 	{
 		if (!e) return;
-
-		EnsureBloodTypes();
 
 		// blood stuff
 		for (int i = 0; i < bloodTypes.Size(); i++)
@@ -246,7 +203,11 @@ class NashGoreHandler : EventHandler
 		if (nashgore_icedeath == true && e.Replacee == "IceChunk") e.Replacement = "NashGoreIceChunk";
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	override void NetworkProcess(ConsoleEvent e)
 	{
@@ -259,7 +220,11 @@ class NashGoreHandler : EventHandler
 		}
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	void BuildBloodTypes(void)
 	{
@@ -294,7 +259,6 @@ class NashGoreHandler : EventHandler
 		for (int i = 0; i < bloodTypes.Size(); i++)
 		{
 			// delete that weird character that gets added at the end
-			if (bloodTypes[i].Length() <= 0) continue;
 			bloodTypes[i].Truncate(bloodTypes[i].Length() - 1);
 
 			/*
@@ -306,11 +270,14 @@ class NashGoreHandler : EventHandler
 		}
 	}
 
-
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
 
 	void DoThingDie(Actor mo)
 	{
-		if (!mo) return;
 		bool isMonster = mo.bIsMonster;
 		bool isPlayer = (mo is "PlayerPawn");
 
@@ -327,7 +294,6 @@ class NashGoreHandler : EventHandler
 
 	void DoThingRevive(Actor mo)
 	{
-		if (!mo) return;
 		let a = NashGoreActor(mo.FindInventory("NashGoreActor", true));
 		if (a)
 		{

@@ -5,10 +5,8 @@ Actor GK_IcebombSelected : Inventory {inventory.maxamount 1}
 Actor DoShoulderCannon : Inventory {inventory.maxamount 1}
 Actor CoolFlameBelch : Inventory { inventory.maxamount 60 }
 Actor CoolIceBomb : Inventory { inventory.maxamount 60 }
-Actor CoolShieldSaw : Inventory { inventory.maxamount 60 }
 Actor FlameBelchReady : Inventory { inventory.maxamount 1 }
 Actor IceBombReady : Inventory { inventory.maxamount 1 }
-Actor ShieldSawReady : Inventory { inventory.maxamount 1 }
 
 ACTOR SC_CryoGrenade: PB_FragGrenade
 {

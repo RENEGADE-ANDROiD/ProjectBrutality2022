@@ -1,6 +1,10 @@
-// Taken from Realm667 (Credits: Eriance, Dreadopp, Ghastly Dragon, Keksdose, MagicWazard)
-// GLDefs for Overlord
+//This is so that the main GLDEFS file doesn't get flooded.
+//Taken from Realm667 (Credits: Eriance, Dreadopp, Ghastly Dragon, Keksdose, MagicWazard)
+//GLDefs for Overlord
 
+// [MagicWazard] Note: Some of these light definitions are shared with the
+// Hades Elemental. You don't need to copy them all if you're already using the
+// Hades Elemental!
 Pointlight HadesBall1
 {
 Color 0.8 0.0 0.0

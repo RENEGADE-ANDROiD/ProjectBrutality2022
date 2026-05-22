@@ -1,4 +1,4 @@
-// Ported from legacy PB_Addons NeoHMG — full-auto HMG, reserve NewClip, belt magazine HMGChamberAmmo.
+// Ported from CRASH PB_Addons/NeoHMG.zs — full-auto HMG, reserve NewClip, belt magazine HMGChamberAmmo.
 // Weapon class PB_NeoHMG is ZScript: zscript/Weapons/Slot4/NeoHMG/NeoHMG.zs
 
 ACTOR HMGJustRespect : Inventory
@@ -24,48 +24,6 @@ ACTOR HMG_Select_Charged : Inventory
 ACTOR HMGModeCharged : Inventory
 {
 	Inventory.MaxAmount 1
-}
-
-// PB_792x57mm (standard) is ZScript: BulletDef.HighCal.zsc. Heated/Charged stay DECORATE for NeoHMG modes.
-ACTOR PB_792x57mm_Heated : FastProjectile
-{
-	Projectile
-	Radius 2
-	Height 2
-	Speed 260
-	Damage 50
-	DamageType Fire
-	+RIPPER
-	Decal "BulletChip"
-	States
-	{
-	Spawn:
-		TNT1 A 1
-		Loop
-	Death:
-		TNT1 A 0 A_SpawnItem("HitPuff")
-		Stop
-	}
-}
-
-ACTOR PB_792x57mm_Charged : FastProjectile
-{
-	Projectile
-	Radius 2
-	Height 2
-	Speed 250
-	Damage 44
-	DamageType Plasma
-	Decal "BulletChip"
-	States
-	{
-	Spawn:
-		TNT1 A 1
-		Loop
-	Death:
-		TNT1 A 0 A_SpawnItem("HitPuff")
-		Stop
-	}
 }
 
 ACTOR HMGChamberAmmo : Ammo

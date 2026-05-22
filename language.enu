@@ -1,63 +1,16 @@
 [enu default]
 
-PB_PICKUP_BootsOfTheNorth   = "Boots of the North! Cold damage halved.";
-PB_PICKUP_BracersOfForce    = "Bracers of Force! 75% damage reduction.";
-PB_PICKUP_BookOfTheDead     = "Book of the Dead! The graves are restless...";
-PB_PICKUP_FireAuraSphere    = "Fire Aura! Incinerates anything that gets close.";
-PB_PICKUP_FlightSphere      = "Flight Sphere! You feel lighter.";
-PB_PICKUP_FrostAuraSphere   = "Frost Aura! Slows and freezes anything that gets close.";
-PB_PICKUP_HandOfTheWraith   = "Hand of the Wraith! Curse with one shot.";
-PB_PICKUP_LichSkull         = "Lich Skull! Double damage and speed.";
-PB_PICKUP_Pentacle          = "Pentacle of Projection! Pushed everything away.";
-PB_PICKUP_ReflectorSphere   = "Reflector Sphere! Invulnerability with reflected projectiles.";
-PB_PICKUP_REDARMOR = "Picked up the Red Armor.";
-
-PB_PICKUP_PB_CF_SNOWCASTER = "Picked up Snow Caster charges.";
-PB_PICKUP_PB_CF_FREEZEBOT = "Picked up Freezebot deploy charges.";
-PB_PICKUP_PB_CF_ICEWALL = "Picked up ice wall generator charges.";
-PB_PICKUP_PB_CF_HOLODECOY = "Picked up holographic decoy charges.";
-PB_PICKUP_PB_CF_TESLATURRET = "Picked up Tesla turret charges.";
-PB_PICKUP_PB_CF_FLAMETURRET = "Picked up flame turret charges.";
-PB_PICKUP_PB_CF_FREEZMINE = "Picked up freeze mine charges.";
-PB_PICKUP_PB_CRYOCELLS = "Picked up cryo cells.";
-PB_PICKUP_PB_CRYOCELLSPACK = "Picked up a cryo cell bundle.";
-PB_PICKUP_PB_CRYOCANNONCELLS = "Picked up cryo cannon fuel.";
-PB_PICKUP_PB_CRYOELECTRORIFLE = "Picked up the Cryo Electro Rifle (slot 8).";
-PB_PICKUP_PB_DARKMATTERRIFLE = "Picked up the UAC Prototype Dark Matter Rifle (slot 8).";
-PB_PICKUP_BIOACIDLAUNCHER = "Picked up the UAC Biological Acid Launcher (slot 7).";
-PB_TAG_BIOACIDLAUNCHER = "UAC-UM-32P Biological Acid Launcher";
-PB_PICKUP_PB_CRYOCANNON = "Picked up the Cryo Cannon (slot 9).";
-PB_PICKUP_PB_CRYOASG = "Picked up the Cryo Auto Shotgun (slot 3).";
-
-PB_PICKUP_GhostHealthBonus  = "Picked up a ghostly health bonus.";
-
-OPTMNU_KS_BootsOfTheNorth = "Boots of the North (50 Percent Cold Reduction)";
-OPTMNU_KS_BracersOfForce  = "Bracers of Force (75 Percent Damage Reduction)";
-OPTMNU_KS_BookOfTheDead   = "Book of the Dead (Zombie Hand Swarm)";
-OPTMNU_KS_FireAuraSphere  = "Fire Aura Sphere (Burn Aura)";
-OPTMNU_KS_FlightSphere    = "Flight Sphere";
-OPTMNU_KS_FrostAuraSphere = "Frost Aura Sphere (Freeze Aura)";
-OPTMNU_KS_HandOfTheWraith = "Hand of the Wraith (Curse Projectile)";
-OPTMNU_KS_LichSkull       = "Lich Skull (Damage + Speed)";
-OPTMNU_KS_Pentacle        = "Pentacle of Projection (Repulsion Blast)";
-OPTMNU_KS_ReflectorSphere = "Reflector Sphere (Reflective Invulnerability)";
 GOTCLIP = "Picked up a Magazine.";
 GOTHTHNEED = "Picked up a health bonus. It's not enough health to manage, but you needed it anyway." ;
 GOTMEDPAKNEED = "Picked up a medipack that you DESPERATELY needed!";
+// Glory Kills pinata pickups
 GOTPINATAHEALTH = "Picked up some Health.";
 GOTPINATAARMOR = "Picked up some Armor.";
-PB_PICKUP_DroppedHelmet = "Picked up a dropped helmet. (+5 armor)";
-PB_PICKUP_PB_XM21 = "Picked up the XM-21 sniper rifle (slot 4).";
-PB_PICKUP_PB_Fusil = "Picked up the Fusil rifle (slot 4).";
 PB_PICKUP_X12Shotgun = "Picked up the X12 shotgun (slot 3).";
-PB_PICKUP_PB_XM21Upgrade = "Picked up the XM-21 explosive upgrade kit (Weapon Special: ballistic mode).";
+// Marauder SSG (Peacekeeper)
 OPTMNU_MarauderSSGClassicReload = "Marauder SSG classic reload";
+// Tilt Screen
 OPTMNU_TILTPLUSPLUS = "Customize Tilt++";
-
-PB_OPT_PS_PASSIVE_SPAWN = "Project Survival passives (pustule, mimic, pods, etc.)";
-PB_OPT_PS_FODDER_THRESHOLD = "PS Fodder spawn roll (main roster)";
-PB_OPT_PS_FODDER_THRESHOLD_HINT = "Higher = more Shambler/Puker/Blighter/Screamer/Spiker/Burster when a seeker sees the player.";
-PB_OPT_PS_FODDER_THRESHOLD_HINT2 = "Default 160 (~63% roll). 255 = nearly always; 0 = off. Map-placed fodder unaffected.";
 
 TILTPLUSPLUSMNU_TITLE = "Tilt++ Options";
 
@@ -67,12 +20,15 @@ TILTPLUSPLUSMNU_TURNTILT_TITLE = "Turn Tilting";
 TILTPLUSPLUSMNU_UNDERWATERTILT_TITLE = "Underwater Tilting";
 TILTPLUSPLUSMNU_DEATHTILT_TITLE = "Death Tilting";
 
+// Generic reusable labels
 TILTPLUSPLUSMNU_ENABLED = "Enabled";
 TILTPLUSPLUSMNU_SPEED = "Speed";
 TILTPLUSPLUSMNU_ANGLE = "Angle";
 TILTPLUSPLUSMNU_SCALAR = "Intensity";
 TILTPLUSPLUSMNU_INVERT = "Invert";
 
+
+// Help text (\\n splits multi-line tooltips where the menu supports it)
 TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT = "Enable Strafe Tilting.";
 TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_INVERT = "Invert Strafe Tilt Direction.";
 TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_SPEED = "How Fast Strafe Tilt Ramps.";
@@ -94,6 +50,8 @@ TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SCALAR = "Underwater Tilt Intensity\n(Ov
 
 TILTPLUSPLUSMNU_HELPTEXT_DEATHTILT = "Tilt View After Death.";
 
+
+//NashGore
 [enu default]
 
 OPTMNU_NASHGORE = "Customize Nash's Gore Mod";
@@ -109,57 +67,32 @@ NASHGOREMNU_BLOOD_TYPE = "Blood Type";
 NASHGOREMNU_BLOOD_AMOUNT = "Blood Amount";
 NASHGOREMNU_BLOOD_SPRITES = "Blood Spot Type";
 NASHGOREMNU_BLOOD_SPURTS = "Blood Spurts";
-BDV22GOREMNU_MIST = "Brutal Doom 22: Extra Hit Mist";
-BDV22GOREMNU_MIST_TIP = "Adds Extra Blood Mist\nWhen Enemies Are Hit.\nNeeds Blood Amount 2+\nAnd Normal Graphics.";
+BDV22GOREMNU_MIST = "Brutal Doom 22: extra hit mist";
+BDV22GOREMNU_MIST_TIP = "BDv22 hit mist (P22M); may add Nash spurts on some hits.\nNeeds pb_bloodamount 2+, normal graphics, Fall Splat on.\nSprites under SPRITES/BDv22/. Default off.";
 
-BDV22GOREMNU_CORPSEMEAT = "Brutal Doom 22: Gut Props";
-BDV22GOREMNU_CORPSEMEAT_TIP = "Adds Extra Guts\nOn Some Monster Deaths.\nWorks Alongside\nNormal PB Gore.";
-BDV22GOREMNU_FLYINGMEAT = "Brutal Doom 22: Flying Meat / Ribs / Gibs";
-BDV22GOREMNU_FLYINGMEAT_TIP = "Adds Flying Meat,\nRibs, And Gibs\nOn Some Kills.";
-BDV22GOREMNU_ORGANS = "Brutal Doom 22: Organs And Small Brain";
-BDV22GOREMNU_ORGANS_TIP = "Adds Rare Organs\nAnd Small Brain Chunks\nOn Some Deaths.";
-BDV22GOREMNU_MIX = "Brutal Doom 22 / PB Gore Mix";
-BDV22GOREMNU_MIX_TIP = "Controls Extra Gore Style.\nLower = More PB Gore.\nHigher = More BDv22 Gore.\n50 = Balanced Mix.";
-BDV22GOREMNU_ENHANCED2022 = "2022 Enhanced Brootality";
-BDV22GOREMNU_ENHANCED2022_TIP = "Master Switch For\nThe Full 2022 Gore Mix.\nEnables BDv22 Mist,\nMeat, Organs, BPv10 Death\nExtras, And Shiny PBR Nash\nBlood (Decals + Pools).";
+BDV22GOREMNU_CORPSEMEAT = "Brutal Doom 22: gut props";
+BDV22GOREMNU_CORPSEMEAT_TIP = "Extra BDv22_Guts / BDv22_Guts2 (B22G) on some corpses, on top of PB gore.\nUses the same gates as mist (blood amount, splat, etc.).\nDefault on; turn off to skip.";
+BDV22GOREMNU_FLYINGMEAT = "Brutal Doom 22: flying meat / ribs / gibs";
+BDV22GOREMNU_FLYINGMEAT_TIP = "BDv22 meat chunks, ribs, or B22E/B22P gibs on some kills.\nSame gates as gut props (e.g. pb_bloodamount 2+, nashgore_splat).\nDefault on; turn off to skip.";
+BDV22GOREMNU_ORGANS = "Brutal Doom 22: organs and small brain";
+BDV22GOREMNU_ORGANS_TIP = "Rare organs (B22O) or small brain chunk (B22U) with smear/ceil.\nSame BDv22 gates as the other options here.\nDefault on; turn off to skip.";
+BDV22GOREMNU_MIX = "Brutal Doom 22/PB gore mix";
+BDV22GOREMNU_MIX_TIP = "Randomizes extra gore between PB and Brutal Doom 22.\n50 is balanced default.\nLower favors PB; higher favors BDv22.";
 
-OPTMNU_PB_BURNFX_TITLE = "Burning corpse FX";
-OPTMNU_PB_BURNFX_THROTTLE = "Throttle live burn particles";
-OPTMNU_PB_BURNFX_THROTTLE_TIP = "When several enemies are on fire at once,\nreduces melt FX (Death.Incinerate) and\nburning-corpse particles, embers, and lights.\nImproves FPS in molotov / flame-heavy fights.";
-OPTMNU_PB_BURNFX_SOFT_LIMIT = "Start throttling at N burners";
-OPTMNU_PB_BURNFX_SOFT_LIMIT_TIP = "Full FX while active burners stay below\nthis count + 1 (default 3 â†’ four corpses\nbefore light throttle). Higher counts\nstep down particles more gradually.";
-OPTMNU_PB_BURNFX_HINT = "Respects Low Graphics Mode / pb_lowgraphicsmode (minimal burn FX).";
-
-OPTMNU_PB_ACCUDEATH = "AccuDeath (corpse tints)";
-OPTMNU_PB_ACCUDEATH_TIP = "AccuDeath V3.2.2.\nApplies fire/plasma/electric\ncorpse translations and\nparticle death FX. On by\ndefault; stacks with Nash\nand Enhanced Brootality.";
-OPTMNU_PB_ACCUDEATH_SUB = "AccuDeath Options";
-OPTMNU_PB_ACCUDEATH_HINT = "Credits: Airehnr66 (AccuDeath V3.2.2). PB fork skips Explosive fire tint and respects custom Death.* states unless overridden below.";
-OPTMNU_PB_ACCUDEATH_BARREL = "Doom barrel damage type";
-OPTMNU_PB_ACCUDEATH_ROCKET = "Rocket damage type";
-OPTMNU_PB_ACCUDEATH_CACOBALL = "Cacodemon ball damage type";
-OPTMNU_PB_ACCUDEATH_STATEOVERRIDE = "Apply to custom Death.* states";
-OPTMNU_PB_ACCUDEATH_DYNLIGHTS = "Dynamic lights on corpses";
-OPTMNU_PB_ACCUDEATH_LIGHTSIZE = "Corpse light size";
-
-OPTMNU_PB_ACHIEVEMENTS = "Achievements";
-OPTMNU_PB_ACHIEVEMENTS_HINT = "Persistent meta goals (Vortex Universal Achievement System).\nToasts, browse menu, and PB-specific unlocks.\nOpen the list from the Blocky PDA home screen (Achievements tile) or PB 2022 Enhanced settings.";
-OPTMNU_PB_ACHIEVEMENTS_MENU = "Achievement Settings";
-OPTMNU_PB_ACHIEVEMENTS_BROWSE = "PB 2022 Achievements";
-
-BPV10GOREMNU_ENABLE = "Brutal Pack V10: Enable Extra Gore";
-BPV10GOREMNU_ENABLE_TIP = "Master Switch For\nBrutal Pack V10 Gore.\nAdds Extra Death FX\nFor Humanoids And Imps.";
-BPV10GOREMNU_BURNCORPSE = "Brutal Pack V10: Burned Corpse Husk";
-BPV10GOREMNU_BURNCORPSE_TIP = "Adds Burned Bodies\nFor Fire, FlameBelch,\nAnd Napalm Deaths.";
-BPV10GOREMNU_CARBONIZED = "Brutal Pack V10: Carbonized Body";
-BPV10GOREMNU_CARBONIZED_TIP = "Adds Charred Bodies\nFor Plasma, BFG,\nAnd Lightning Deaths.";
-BPV10GOREMNU_XDTORSO = "Brutal Pack V10: Flying Torso X-Deaths";
-BPV10GOREMNU_XDTORSO_TIP = "Adds Flying Torsos\nOn Extreme Deaths.\nLeaves Blood Trails\nAnd Landing Splats.";
-BPV10GOREMNU_FLOP = "Brutal Pack V10: Flopping Organs";
-BPV10GOREMNU_FLOP_TIP = "Adds Bouncing Organs\nOn Extreme Deaths.\nLeaves Extra Blood Spots.";
-BPV10GOREMNU_ZGEAR = "Brutal Pack V10: Zombie Gear Debris";
-BPV10GOREMNU_ZGEAR_TIP = "Adds Gear Debris\nFrom Humanoid Zombies.\nSkipped For Imps.";
-BPV10GOREMNU_SPLAT = "Brutal Pack V10: Big Animated Blood Splat";
-BPV10GOREMNU_SPLAT_TIP = "Adds A Large Animated\nBlood Splat Near The Corpse\nOn Extreme Deaths.";
+BPV10GOREMNU_ENABLE = "Brutal Pack V10: enable extra gore";
+BPV10GOREMNU_ENABLE_TIP = "Master toggle for optional BPv10 gore (sprites by AWEZ).\nHusks, carbon chars, organs, torsos, gear debris, splats on humanoids/imps.\nDefault off.";
+BPV10GOREMNU_BURNCORPSE = "Brutal Pack V10: burn corpse husk";
+BPV10GOREMNU_BURNCORPSE_TIP = "Burn / fire / FlameBelch / Napalm deaths.\nBPv10_BurnedHusk (BDT1 + NJEX).\nRequires BPv10 enabled.";
+BPV10GOREMNU_CARBONIZED = "Brutal Pack V10: carbonized body";
+BPV10GOREMNU_CARBONIZED_TIP = "Plasma / disintegrate / BFG / lightning deaths.\nBPv10_CarbonizedBody (CARB sprites).\nRequires BPv10 enabled.";
+BPV10GOREMNU_XDTORSO = "Brutal Pack V10: flying torso x-deaths";
+BPV10GOREMNU_XDTORSO_TIP = "On x-deaths: BPv10_FlyingTorso1/2 with trails (XMT1/XMT2).\nBlood lands and smears.\nRequires BPv10 enabled.";
+BPV10GOREMNU_FLOP = "Brutal Pack V10: flopping organs";
+BPV10GOREMNU_FLOP_TIP = "On x-deaths: BPv10_FlopOrgans (MANA).\nBounce and leave blood spots.\nRequires BPv10 enabled.";
+BPV10GOREMNU_ZGEAR = "Brutal Pack V10: zombie gear debris";
+BPV10GOREMNU_ZGEAR_TIP = "Humanoid x-deaths only; BPv10_ZombieGearDebris (ZGEA-D).\nSkipped for imps.\nRequires BPv10 enabled.";
+BPV10GOREMNU_SPLAT = "Brutal Pack V10: big animated blood splat";
+BPV10GOREMNU_SPLAT_TIP = "On x-deaths: one of five BPv10_BloodSplat# (BL00–04) at the corpse.\nRequires BPv10 enabled.";
 
 NASHGOREMNU_GIB_TYPE = "Gib Type";
 NASHGOREMNU_GIB_AMOUNT = "Gib Amount";
@@ -176,16 +109,19 @@ NASHGOREMNU_MISC_SPLAT = "Fall Splat";
 
 NASHGOREMNU_CONTROLS_CLEARGORE = "Clear Gore Effects";
 
+// Generic reusable labels
 NASHGOREMNU_ENABLED = "Enabled";
 NASHGOREMNU_DEFAULT = "Default";
 NASHGOREMNU_VANILLA = "Vanilla";
 NASHGOREMNU_REALISTIC = "Realistic";
 
+// Specific labels
 NASHGOREMNU_BLOOD_TYPE_CLASSIC = "Classic";
 NASHGOREMNU_GIB_TYPE_NOSTICKYGIBS = "No wall & ceiling gibs";
 NASHGOREMNU_BLOOD_SPRITE_DECALS = "Decals";
 NASHGOREMNU_BLOOD_SPRITE_SPRITES = "Sprites";
 
+// Help text
 NASHGOREMNU_HELPTEXT_BLOOD_TYPE = "Hitscan Blood Effect Style.";
 NASHGOREMNU_HELPTEXT_BLOOD_AMOUNT = "Blood Quantity Scaler.";
 NASHGOREMNU_HELPTEXT_BLOOD_SPRITES = "Blood Spots: Decals vs Sprites.";
@@ -204,8 +140,15 @@ NASHGOREMNU_HELPTEXT_MISC_CLEARGORENOW = "Instant Clear:\nAll Active Gore FX.";
 
 NASHGOREMNU_HELPTEXT_CONTROLS_CLEARGORE = "Bind: Wipe Spawned Gore\nObjects & Decals.";
 
+// Footsteps V4
+// Language Definitions
 
+// This is where the footstep sounds for each texture are defined.
+// The definition MUST be STEP_<texturename>
+// If you are adding a new texture, in addition to defining its sound
+// here, see the ACS source code.
 
+// You can also change a few settings for the mod here
 
 [enu default]
 CONTROLWITHCVARS = "FALSE";
@@ -214,13 +157,16 @@ DELAYMULTIPLIER_CVAR = "cl_step_delaymul";
 VOLUMEMULTIPLIER = "7.0";
 DELAYMULTIPLIER = "1.0";
 
+// Sounds
 STEP_DEFAULT = "step/default";
 
+// Water
 STEP_FWATER1 = "step/water";
 STEP_FWATER2 = "step/water";
 STEP_FWATER3 = "step/water";
 STEP_FWATER4 = "step/water";
 
+// Ground
 STEP_FLOOR0_1 = "step/default";
 STEP_FLOOR0_3 = "step/default";
 STEP_FLOOR1_7 = "step/default";
@@ -249,6 +195,7 @@ STEP_FLAT19 = "step/default";
 STEP_COMP01 = "step/default";
 STEP_GRNLITE1 = "step/default";
 
+// Carpet
 STEP_FLOOR1_1 = "step/carpet";
 STEP_FLAT14 = "step/carpet";
 STEP_FLAT5_5 = "step/carpet";
@@ -257,9 +204,11 @@ STEP_CEIL4_1 = "step/carpet";
 STEP_GRASS1 = "step/carpet";
 STEP_GRASS2 = "step/carpet";
 
+// Dirt
 STEP_RROCK16 = "step/dirt";
 STEP_RROCK19 = "step/dirt";
 
+// Gravel
 STEP_FLOOR6_1 = "step/gravel";
 STEP_FLOOR6_2 = "step/gravel";
 STEP_FLAT10 = "step/gravel";
@@ -268,6 +217,7 @@ STEP_MFLR8_4 = "step/gravel";
 STEP_RROCK17 = "step/gravel";
 STEP_RROCK18 = "step/gravel";
 
+// Hard
 STEP_FLOOR0_6 = "step/hard";
 STEP_FLOOR4_8 = "step/hard";
 STEP_FLOOR5_1 = "step/hard";
@@ -284,6 +234,7 @@ STEP_CEIL3_6 = "step/hard";
 STEP_FLAT8 = "step/hard";
 STEP_SLIME13 = "step/hard";
 
+// Metal A
 STEP_STEP1 = "step/metal/a";
 STEP_STEP2 = "step/metal/a";
 STEP_GATE1 = "step/metal/a";
@@ -295,6 +246,7 @@ STEP_SLIME14 = "step/metal/a";
 STEP_SLIME15 = "step/metal/a";
 STEP_SLIME16 = "step/metal/a";
 
+// Metal B
 STEP_FLAT22 = "step/metal/b";
 STEP_FLAT23 = "step/metal/b";
 STEP_CONS1_1 = "step/metal/b";
@@ -303,6 +255,7 @@ STEP_CONS1_7 = "step/metal/b";
 STEP_GATE4 = "step/metal/b";
 STEP_FLAT4 = "step/metal/b";
 
+// Rock
 STEP_FLAT1 = "step/rock";
 STEP_FLAT5_4 = "step/rock";
 STEP_MFLR8_2 = "step/rock";
@@ -333,14 +286,17 @@ STEP_SLIME10 = "step/rock";
 STEP_SLIME11 = "step/rock";
 STEP_SLIME12 = "step/rock";
 
+// Snow
 STEP_FLAT5_6 = "step/snow";
 
+// Tile A
 STEP_FLOOR3_3 = "step/tile/a";
 STEP_FLAT20 = "step/tile/a";
 STEP_CEIL3_3 = "step/tile/a";
 STEP_CEIL3_4 = "step/tile/a";
 STEP_FLAT3 = "step/tile/a";
 
+// Tile B
 STEP_FLOOR7_2 = "step/tile/b";
 STEP_DEM1_1 = "step/tile/b";
 STEP_DEM1_2 = "step/tile/b";
@@ -349,10 +305,12 @@ STEP_DEM1_4 = "step/tile/b";
 STEP_DEM1_5 = "step/tile/b";
 STEP_DEM1_6 = "step/tile/b";
 
+// Wood
 STEP_CEIL1_1 = "step/wood";
 STEP_FLAT5_1 = "step/wood";
 STEP_FLAT5_2 = "step/wood";
 
+// Slime
 STEP_NUKAGE1 = "step/slime";
 STEP_NUKAGE2 = "step/slime";
 STEP_NUKAGE3 = "step/slime";
@@ -367,18 +325,22 @@ STEP_SLIME06 = "step/slime";
 STEP_SLIME07 = "step/slime";
 STEP_SLIME08 = "step/slime";
 
+// Slimy
 STEP_SFLR6_1 = "step/slimy";
 STEP_SFLR6_4 = "step/slimy";
 STEP_SFLR7_1 = "step/slimy";
 STEP_SFLR7_4 = "step/slimy";
 
+// Lava
 STEP_LAVA1 = "step/lava";
 STEP_LAVA2 = "step/lava";
 STEP_LAVA3 = "step/lava";
 STEP_LAVA4 = "step/lava";
 
+// None
 STEP_F_SKY1 = "";
 
+//PB Gameplay Messages
 PB_LMGMICRO = "\ctLMG:\c- \chMicro missiles \c-selected";
 PB_LMGBULLET = "\ctLMG:\c- \cdBullet \c-feed";
 PB_SGBUCKLD = "\cg Buckshot \c-Shells Loaded";
@@ -392,28 +354,16 @@ PB_SGLACID = "\ctGrenade:\c- \cdAcid \c-selected";
 PB_HDMRGRN = "\cuUnderbarrel grenade launcher\c- selected";
 PB_HDMRAIM = "\cjAiming secondary fire\c- selected";
 
+//Rocket Launcher
 PB_RLGUID = "\ciLaser Guided \c-rockets selected";
 PB_RLLOCK = "\cyLock-on \c-rockets selected";
 PB_RLNORM = "\cdStandard \c-rockets selected";
 
+// Flamethrower (Slot9/Flamethrower.dec — $PB_FLAMER_*)
 PB_FLAMER_FLAME = "\ctFlamethrower:\c- \ciStandard \c-flame";
 PB_FLAMER_ACID = "\ctFlamethrower:\c- \cgnukage / acid \c-mode";
 
-PB_HUD_UNMAKER_INFERNO = "INFERNO";
-PB_HUD_UNMAKER_INCIN = "INCINERATION";
-PB_HUD_FLAMER_FLAME = "FLAME";
-PB_HUD_FLAMER_ACID = "ACID";
-PB_HUD_CRYO_CRYO = "CRYO";
-PB_HUD_CRYO_ELECTRIC = "ELECTRIC";
-PB_HUD_DEMONEX_LASER = "LASER";
-PB_HUD_DEMONEX_INCIN = "INCINERATION";
-PB_HUD_DEMONEX_LIGHTNING = "LIGHTNING";
-PB_HUD_SMG_STD = "SEMI";
-PB_HUD_SMG_AKIMBO = "AKIMBO";
-PB_HUD_SMG_LASER = "LASER";
-PB_HUD_BIOACID_STREAM = "ACID STREAM";
-PB_HUD_BHGEN_CHARGE = "CHARGE";
-
+// Commander SSG (CSSG.zs — $CM_* load confirms)
 CM_BUCKLD = "\cd\cgBuckshot \c-shells \cdloaded";
 CM_SLUGLD = "\cd\ctSlug \c-shells \cdloaded";
 CM_FLCHLD = "\cd\cjFlechette \c-shells \cdloaded";
@@ -424,6 +374,7 @@ CM_WPLOAD = "\cd\c[WPBronze]White phosphorous \c-shells \cdloaded";
 CM_DOOMLD = "\cd\ctTriple Doom \c-shells \cdloaded";
 CM_DNMKULD = "\cd\c[DanmakuYellow]Danmaku \c-shells \cdloaded";
 
+//Gameplay Settings
 PB_DISABLE_PRONE = "Disable Prone Attacks";
 PB_DISABLE_PRONE_DESC = "Sergeants Cannot Enter Prone\nShooting Attacks.";
 
@@ -433,202 +384,41 @@ PB_RECOIL_DESC = "Recoil Strength Multiplier.\n1.0 = Normal; 0 = Off; Higher = S
 PB_RECOIL_EXTRA = "Add Recoil to more Weapons";
 PB_RECOIL_EXTRA_DESC = "Adds Kick to Rocket Launcher, Railgun Laser,\nBFG-Slot Guns, Mancubus Flame, Unmaker.";
 
+//No M1 Plasma Rifle cooldown
 PB_NO_M1PLASMACOOLDOWN = "No M1 Plasma Rifle cooldown";
 PB_NO_M1PLASMACOOLDOWN_DESC = "Skips Post-Shot Cooldown\non M1 Plasma Primary Fire.";
 PB_NO_M1PLASMACOOLDOWN_NOTICE = "Primary Fire Only.";
-PB_NO_M1PLASMACOOLDOWN_EXTRA = "Also Affects Pulse Cannon\nUpgrade When Equipped.";
+PB_NO_M1PLASMACOOLDOWN_EXTRA = "";
 
+//Quiet marines
 PB_SILENCE_MARINES = "Silence Marine Chatter";
 PB_SILENCE_MARINES_DESC = "Mutes Idle & Attack Voice Lines\nFrom Marine Allies.";
 PB_SILENCE_MARINES_DESC2 = "Pain & Death Sounds Unchanged.";
 
+//Weapon Respect animations
 PB_RESPECT = "Weapon Respect animations";
 
-PB_EXPERIMENTAL_EXECUTIONS = "Experimental weapon executions";
-PB_EXPERIMENTAL_EXECUTIONS_DESC = "Enables a mix of modern first person executions with third person";
-
+//Dual Wielding Style
 PB_DUALSTYLE = "Dual-Wield Fire Mode";
 PB_DUALSTYLE_SIN = "Single Button: Primary Fire Shoots Both Guns.\n(Similar to Brutal Doom v21 Dual Style.)";
 PB_DUALSTYLE_DEF = "Default: Primary Fire = Left Weapon;\nAlt-Fire = Right Weapon.";
-PB_DUALSTYLE_SINEXTRA = "(Extra) Single-button dual details.\nSee PB_DUALSTYLE_SIN.";
 PB_DUALOPT_SN = "Single Button";
 PB_DUALOPT_DEF = "Default";
 
+// Molotov (melee equipment; pb_NoMolotov)
 PB_OPT_Molotov = "Molotov cocktails";
 PB_WHEELTIP_WW_MolotovSelected = "Molotov Equipment Slot.\nUser1 Throws; Fire Spreads on Impact.";
 
-PB_WEAPON_WHEEL_ENABLE = "Weapon selection wheel";
-PB_WEAPON_WHEEL_ENABLE_DESC = "Master switch for the integrated Gearbox weapon selector (GPLv3+).\nWhen On, \caWeapon Selection Wheel\c- opens Gearbox. When Off, slot intercept and menu toggle are skipped.\nFull Gearbox options: \caPB 2022 Enhanced\c- â†’ \caGameplay Settings\c- â†’ \caWeapon & Inventory Selector\c-.";
-
-PB_WEAPON_SELECTOR_MENU = "Weapon & Inventory Selector";
-PB_WEAPON_SELECTOR_MENU_HINT = "Gearbox: wheel / blocks / text layout, keys, colors, and reset.";
-OPTMNU_PB_PDA_HINT = "UAC battlefield codex (PDA): Customize Controls -> PB 2022 Enhanced - Interactions -> Open PDA.";
-OPTMNU_PB_PDA_HINT2 = "Default key Backslash. Press the same key again to close. Disabled while playing multiplayer (co-op / DM).";
-OPTMNU_PB_PDA_BLOCKY_HINT = "Blocky layout: weapon / monster entries render as a Gearbox-style paged tile grid.";
-OPTMNU_PB_PDA_BLOCKY_HINT2 = "Off = legacy text-list. Up / Down arrows page through tiles when blocky is on.";
-OPTMNU_PB_XP_REWARDS = "PDA XP & reward spin (single-player)";
-OPTMNU_PB_XP_REWARDS_HINT = "On: single-player kills grant XP; rank-ups give reward points.";
-OPTMNU_PB_XP_REWARDS_HINT2 = "Blocky PDA home adds Reward Spin (3 pts) â€” weapons only; refunds if none eligible.";
-OPTMNU_PB_HP_ARCADE = "HP Arcade item behavior";
-OPTMNU_PB_ITEM_MUTATORS = "Item mutators";
-OPTMNU_PB_ITEM_MUTATORS_HINT = "Off: soulsphere / megasphere / blue-armor spawners skip premium rolls (no NewLifeSphere / UltraSphere / EliteArmor / PristineArmor).";
-OPTMNU_PB_REDARMOR = "DarkShadow Custom Red Armor (blue heavy rolls)";
-OPTMNU_PB_REDARMOR_HINT = "On: blue-armor spawner heavy path can roll PB_RedArmor (60% / 250) instead of HeavyArmor (~25%).";
-OPTMNU_GLORYHUD_STAGING_NOTE1 = "Glory HUD Background: use Eternal (NewHUD) for the DOOM Eternal-style center strip (Crucible / Blood Punch / shoulders).";
-OPTMNU_GLORYHUD_STAGING_NOTE2 = "PB Staging addon configs used value 2 for that strip; in PB2022 value 2 is None â€” pick Eternal (NewHUD) (value 3) or reset the cvar.";
-
-OPTMNU_PB2022_HUB_INTRO1 = "Project Brutality 2022 add-ons and options.";
-OPTMNU_PB2022_HUB_INTRO2 = "Use Quick Presets, then open a category.";
-OPTMNU_PB2022_PRESET_FULL = "Full Brutality (Glory Kills + Enhanced Gore)";
-OPTMNU_PB2022_PRESET_VANILLA = "Vanilla-Style Roster (Classic Monsters)";
-OPTMNU_PB2022_PRESET_PERF = "Performance-Friendly (Lighter FX)";
-OPTMNU_PB2022_SEC_GAMEPLAY = "Gameplay & Movement";
-OPTMNU_PB2022_SEC_COMBAT = "Combat & Finishers";
-OPTMNU_PB2022_SEC_GORE = "Gore & Performance";
-OPTMNU_PB2022_SEC_HUD = "HUD & Interface";
-OPTMNU_PB2022_SEC_WEAPONS = "Weapons & Spawns";
-OPTMNU_PB2022_SEC_MONSTERS = "Monsters & Spawns";
-OPTMNU_PB2022_SEC_VISUAL = "Visual & Screen FX";
-OPTMNU_PB2022_SEC_EXTRAS = "Extras & Content";
-OPTMNU_PB2022_GORE_TIP1 = "pb_enhanced_brutality_2022 = master gore mix.";
-OPTMNU_PB2022_GORE_TIP2 = "Nash blood/gibs: Visual & Screen FX -> Gore/Debris.";
-OPTMNU_PB2022_COMBAT_TIP1 = "Glory Kills use be_ExecutionsON and Glory Kill submenu.";
-OPTMNU_PB2022_COMBAT_TIP2 = "Auto-fatality needs Glory Kills on for finisher attempts.";
-OPTMNU_PB2022_MOVE_TIP1 = "pb_rocketjump / pb_plasma_wallclimb = explosive movement.";
-OPTMNU_PB2022_MOVE_TIP2 = "More movement: Gameplay & Movement -> Gameplay Settings.";
-OPTMNU_PB2022_HUD_TIP1 = "Helmet visor, fullscreen HUD, PDA, and wheels live here.";
-OPTMNU_PB2022_HUD_TIP2 = "Gearbox weapon wheel: one submenu in this section.";
-OPTMNU_PB2022_MON_TIP1 = "Simpler Monster Settings = bundles + quick toggles.";
-OPTMNU_PB2022_MON_TIP2 = "Global Settings = spawn presets and advanced spawns.";
-OPTMNU_PB2022_CROSS_WHEEL = "Weapon wheel moved here from Gameplay Settings.";
-OPTMNU_PB2022_CROSS_TAC = "Tactical motion moved to HUD & Interface menu.";
-PB_WEAPON_WHEEL_EMPTY = "\cgNothing to select\c- (no weapons on bar).";
-PB_WHEELTIP_WPICKSLOT = "Outer ring: weapon slots you are carrying.\nAim toward the \cccenter\c- when a slot lists multiple weapons\nto open the inner ring for that slot.";
-
-OPTVAL_OFF = "Off";
-SCALEMNU_HUDASPECT = "Preserve HUD aspect ratio";
-
-GB_OPTIONS = "\châš™\c- Gearbox Options";
-
-GB_UI_OPTIONS       = "UI options";
-GB_UI_OPTIONS_TITLE = "Gearbox UI Options";
-
-GB_COLOR          = "Color";
-GB_PLAYER_COLOR   = "Copy custom player color";
-GB_DIM_COLOR      = "Background dimming color";
-
-GB_SHOW_TAGS      = "Tags";
-GB_SOUND          = "Sound effects";
-
-GB_KEYSECTION            = "Gearbox Keys";
-GB_TOGGLE_WEAPON_MENU    = "Toggle weapon menu";
-GB_TOGGLE_INVENTORY_MENU = "Toggle inventory menu";
-GB_PREV_WEAPON           = "Select previous weapon";
-
-GB_VIEW_TYPE   = "Selector type";
-GB_SELECTOR_HINT = "For the circular weapon picker, set Selector type to Wheel. Blocks = top-left grid.";
-GB_BLOCKY_VIEW = "Blocks";
-GB_WHEEL_VIEW  = "Wheel";
-GB_TEXT_VIEW   = "Plain text";
-GB_DIM         = "Background dimming";
-GB_BLUR        = "Background blur";
-GB_WHEEL_X     = "Horizontal position";
-GB_WHEEL_SCALE = "Scale";
-GB_WHEEL_TINT  = "Colored tint on weapons";
-
-GB_BEHAVIOR_OPTIONS        = "Behavior options";
-GB_BEHAVIOR_OPTIONS_TITLE  = "Gearbox Behavior Options";
-
-GB_OPEN_ON_PREV_NEXT = "Intercept next/previous weapon keys";
-GB_OPEN_ON_SLOT      = "Intercept slot keys";
-GB_SELECT_ON_KEY_UP  = "Select on Toggle Menu key release";
-GB_NO_MENU_IF_ONE    = "Slot keys select if weapon is only one in slot";
-GB_ENABLE_ON_AUTOMAP = "Gearbox on automap";
-GB_LOCK_POSITION     = "Locked positions";
-GB_FROZEN_CAN_OPEN   = "Frozen player can open Gearbox";
-
-GB_REVERSE_SLOT_CYCLE_ORDER = "Reverse cycling order for the slot key";
-GB_SELECT_FIRST_SLOT_WEAPON = "Always start at first weapon for the slot key";
-
-GB_FREEZE_TIME       = "Freeze";
-GB_LEVEL_AND_PLAYER  = "Enemies and player (single-player only)";
-GB_PLAYER            = "Player";
-
-GB_MOUSE_IN_WHEEL    = "Enable mouse input";
-GB_MULTIWHEEL_LIMIT  = "Multiwheel threshold";
-
-GB_MOUSE_SENSITIVITY = "Mouse sensitivity";
-GB_X = "Horizontal";
-GB_Y = "Vertical";
-GB_Y_BOUNDARY = "Vertical lower boundary";
-
-GB_WHEEL_OPTIONS        = "Wheel options";
-GB_WHEEL_OPTIONS_TITLE  = "Gearbox Wheel Options";
-GB_BLOCKS_OPTIONS       = "Blocks options";
-GB_BLOCKS_OPTIONS_TITLE = "Gearbox Blocks Options";
-
-GB_TEXT_OPTIONS         = "Plain text options";
-GB_TEXT_OPTIONS_TITLE   = "Gearbox Plain Text Options";
-GB_TEXT_USUAL_COLOR     = "Usual color";
-GB_TEXT_SELECTED_COLOR  = "Selected color";
-
-GB_FONT        = "Font";
-GB_FONT_CUSTOM = "Font (custom)";
-GB_BAD_FONT    = "Font \"%s\" not found.";
-
-GB_SCALE    = "Scale";
-GB_POSITION = "Position";
-
-GB_RESET        = "Reset Gearbox options to defaults";
-GB_RESET_PROMPT = "Do you really want to reset Gearbox options to defaults?";
-
-GB_RESET_CUSTOM_ORDER        = "Reset current custom weapon order";
-GB_RESET_CUSTOM_ORDER_PROMPT = "Do you really want to reset custom weapon order?";
-GB_RESET_CUSTOM_ORDER_NOTE   = "Works only while in game.";
-
-GB_GZDOOM_OPTIONS       = "Relevant GZDoom options";
-GB_GZDOOM_OPTIONS_TITLE = "GZDoom Options that affect Gearbox";
-GB_ASPECT_SCALE_NOTE    = "Doesn't affect weapons in wheel for now.";
-
-GB_ADVANCED_OPTIONS = "Advanced options";
-GB_ADVANCED_OPTIONS_TITLE = "Gearbox Advanced Options";
-GB_VM_ABORT_INFO_ENABLED  = "VM abort info";
-
-GB_ROTATE_WEAPON_PRIORITY = "Cycle weapon priority";
-GB_ROTATE_WEAPON_SLOT     = "Cycle weapon slot";
-
-GB_NEW_SMALL_FONT = "New small font";
-GB_OLD_SMALL_FONT = "Old small font";
-GB_CONSOLE_FONT   = "Console font";
-GB_BIG_FONT       = "Big font";
-
-PB_PICKUP_ShieldSaw_token = "Picked up the Shield Saw.";
-
-PB_WPNBASEPICKUP_ShieldSaw_token = "Shield Saw charge ready â€” Quick Melee throws the ricocheting blade at range.";
-PB_WPNHINT_ShieldSaw_token = "Quick Melee (out of hug range) throws the saw.\nRecall with the Shield Saw key (uses FastCall) or when it returns.";
-
-PB_PICKUP_VorpalBlade = "You picked up Tiberium's Soulblade! (Slot 1)";
-PB_PICKUP_DragonSlayer = "You picked up the Dragon Slayer! (Slot 1)";
-PB_PICKUP_PB_ObsidianDragonSlayer = "You claimed the Obsidian Dragon Slayer from the Ravager's remains! (Slot 1)";
-PB_PICKUP_Stormcast = "You got the Arcane Power of Stormcasting! (Slot 9)";
-PB_WPNHINT_DragonSlayer = "Dragon Slayer: build Slayer energy with slashes; spend for empowered strikes.\nAlt-Fire: nail launcher Volley.\nObsidian Ravager drop only (limited durability on boss pickup).";
-PB_WPNHINT_Stormcast = "Stormcast (slot 9): PowerChargeStorm fuels the lightning beam (Fire) and alt-fire charge releases.\nHold Fire while charging alt for orb spells; hold Activate Equipment (User1) for stunwall variants; hold Weapon Special for Arc of Death charge tiers; tap Reload during charge for Lightning Warper; hold Alt-Fire while airborne after Fire for air lightning.\nSpawns from BFG pickups when enabled in Weapon Spawns.";
-PB_WPNHINT_PB_CryoElectroRifle = "Cryo Electro Rifle (slot 8): Weapon Special toggles Cryo vs Electric.\nPrimary: cryo orb or lightning missile (shared PB_CryoCells).\nReload trades PB_Cell packs into cryo ammo.";
-PB_WPNHINT_PB_DARKMATTERRIFLE = "Dark Matter Rifle (slot 8): Weapon Special wheel picks Alt-Fire payload â€” charged Super Plasma Ball or Gravity Singularity.\nPrimary: fast plasma orb (PB_DarkMatterMag).\nReload feeds the magazine from Cell reserve; unload supported.";
-PB_WPNHINT_PB_CryoCannon = "Cryo Cannon (slot 9): cone of cryo wind; uses PB_CryoCannonCells.\nReload trades PB_Cell into cannon fuel.";
-PB_WPNHINT_PB_CryoASG = "Cryo Auto Shotgun (slot 3): cryo pellet burst; uses PB_Shell (2 per shot).\nEach pellet applies brief cryo slow.";
-PB_WPNHINT_VorpalBlade = "Lifesteal Sword: Lunges Lock Targets.\nBerserk Alt-Fire: BladeStorm.";
-
-PB_PICKUP_HASG = "UAC XHAS-SP -;{The Lady Golide};- (Slot 3)";
-PB_PICKUP_HASGDrum = "UAC XHAS-SP Magazine Drum. -;{The Lady Golide};- (Slot 3, Upgrade)";
-PB_WPNHINT_HASG = "Heavy Auto-Shotgun: Weapon Special Wheel Picks Shell Type\n(Buck / Slug / Flechette / Dragon's Breath / Explosive / Danmaku / WP).\nDrum Upgrade Unlocks 25-Round Magazine.";
+// Pickup / wheel hint system (Gameplay Settings)
+PB_PICKUP_HINTS = "Weapon pickup hints";
+PB_PICKUP_HINTS_DESC = "Brief Inventory Tip for Project Brutality Guns.\n(Weapon Special Wheel & Alt-Fire Hints.)";
 
 PB_WPNHINT_GENERIC = "Added to Inventory.\nWeapon Special & Alt-Fire Per Gun;\nCheck Customize Controls.";
 
 PB_WHEELTIP_GrenadeTypeImpact = "Super Grenade Launcher: Impact Frags.\nPrimary Throw; Alt-Fire Throw / Detonate Modes.";
 PB_WHEELTIP_GrenadeTypeSticky = "Super Grenade Launcher: Sticks to Surfaces or Targets,\nThen Detonates.";
-PB_WHEELTIP_GrenadeTypeIncendiary = "Super Grenade Launcher: Incendiary â€” Area Burn\non Detonation.";
-PB_WHEELTIP_GrenadeTypeCryo = "Super Grenade Launcher: Cryo â€” Slow / Freeze Groups.";
+PB_WHEELTIP_GrenadeTypeIncendiary = "Super Grenade Launcher: Incendiary — Area Burn\non Detonation.";
+PB_WHEELTIP_GrenadeTypeCryo = "Super Grenade Launcher: Cryo — Slow / Freeze Groups.";
 PB_WHEELTIP_GrenadeTypeAcid = "Super Grenade Launcher: Acid Pools\nAfter Splash.";
 
 PB_WHEELTIP_SelectDualWieldRifles = "DMR / HDMR: Single or Akimbo.\nAmmo / Reload Rules Apply to Both.";
@@ -660,12 +450,6 @@ PB_WHEELTIP_SelectShotgun_Dragonsbreath = "Pump Shotgun (Upgrade): Dragon's Brea
 PB_WHEELTIP_SelectShotgun_No = "Dragon's Breath Not Installed.\nFind Upgrade for This Shell.";
 PB_WHEELTIP_SelectShotgun_Buckshot = "Pump Shotgun: Buckshot.";
 PB_WHEELTIP_SelectShotgun_Slugshot = "Pump Shotgun: Slugs.";
-PB_WHEELTIP_SelectM41A_12Gauge = "M41A: 12ga Underbarrel Alt-Fire.";
-PB_WHEELTIP_SelectM41A_30mmGrenade = "M41A: 30mm Grenade Launcher Alt-Fire.";
-PB_WHEELTIP_SelectM41A_DualWield = "M41A: Dual Wield two pulse rifles\n(Primary / Alt-Fire per gun; separate chamber tracks).";
-PB_WHEELTIP_SelectXM21_Ballistic = "XM-21 Upgrade: Explosive Ballistics.\n2 NewClip per Shot.";
-PB_WHEELTIP_SelectXM21_HighCaliber = "XM-21 Upgrade: AP Precision Fire.";
-
 PB_WHEELTIP_RocketLauncher_Standard = "Rocket Launcher: Dumb Rockets.";
 PB_WHEELTIP_RocketLauncher_Homing = "Rocket Launcher: Lock-On Seekers.";
 PB_WHEELTIP_RocketLauncher_Laser = "Rocket Launcher: Beam-Guided Rocket.";
@@ -673,103 +457,27 @@ PB_WHEELTIP_RocketLauncher_Laser = "Rocket Launcher: Beam-Guided Rocket.";
 PB_WHEELTIP_WW_FragGrenadeSelected = "Equipment Wheel: Frag Grenades.";
 PB_WHEELTIP_WW_ProximityMineSelected = "Equipment Wheel: Proximity Mines.";
 PB_WHEELTIP_WW_StunGrenadeSelected = "Equipment Wheel: Stun Grenades.";
-PB_WHEELTIP_WW_ShieldGrenadeSelected = "Equipment Wheel: Shield Grenades.\nDeploys portable cover on impact.";
 PB_WHEELTIP_WW_LeechSelected = "Leech Beam Equipment.\nHold to Drain; Costs Demon Tech.";
 PB_PICKUP_LeechGrenade = "\cdDemon Tech: \coLeech device acquired \c-(+20 DTech).";
-PB_PICKUP_ShieldGrenade = "Picked up a shield grenade.";
-PB_PICKUP_ShieldGrenadeAmmo = "Picked up shield grenade ammo.";
 PB_WHEELTIP_WW_RevGunSelected = "Equipment Wheel: Compact Launcher.";
-PB_WHEELTIP_WW_HookSelected = "Equipment Wheel: Meat Hook.\nUser1 Grapples; User1 Again to Release.";
 PB_WHEELTIP_GK_FlamebelchSelected = "Glory Kill Equipment: Flame Belch.";
 PB_WHEELTIP_GK_IcebombSelected = "Glory Kill Equipment: Ice Bomb.";
 
-PB_WHEELTIP_EX_Select_DropMode = "Excavator: Drop shot â€” burrowing charge on impact.";
-PB_WHEELTIP_EX_Select_DrillMode = "Excavator: Drill shot â€” tunneling primary blast.";
-
-PB_WHEELTIP_Select_MS_Standard = "Metal Sniper: Standard magazines.";
-PB_WHEELTIP_Select_MS_Resonance = "Metal Sniper: Resonance / anti-armor load.";
-PB_WHEELTIP_MS_Select_AimMode = "Metal Sniper: Scope / high-zoom aim.";
-PB_WHEELTIP_MS_Select_GrenMode = "Metal Sniper: Underslung grenade launcher.";
-
-PB_WHEELTIP_Select_HP_Hellfire = "Hell Pistoler: Hellfire rounds active.";
-PB_WHEELTIP_Select_HP_Shrink = "Hell Pistoler: Shrink beam (uses alt shell).";
-PB_WHEELTIP_Select_HP_ToggleROF = "Hell Pistoler: Semi-auto vs full-auto.";
-
-PB_WHEELTIP_HMG_Select_Heated = "Neo HMG: Heated ballistic rounds when hot.";
-PB_WHEELTIP_HMG_Select_Charged = "Neo HMG: Charged plasma bolts when hot.";
-
-PB_WHEELTIP_SelectCSG_Buckshot = "Brutal Shotgun: Buckshot.";
-PB_WHEELTIP_SelectCSG_Slugshot = "Brutal Shotgun: Flechette slugs.";
-PB_WHEELTIP_SelectCSG_Flechette = "Brutal Shotgun: Flechette cloud.";
-PB_WHEELTIP_SelectCSG_Flak = "Brutal Shotgun: Flak spread.";
-PB_WHEELTIP_SelectCSG_Dragonsbreath = "Brutal Shotgun: Dragon's breath.";
-PB_WHEELTIP_SelectCSG_Explosive = "Brutal Shotgun: Explosive shells.";
-PB_WHEELTIP_SelectCSG_WPhosphorus = "Brutal Shotgun: White phosphorus.";
-PB_WHEELTIP_SelectCSG_Doom = "Brutal Shotgun: DOOM-shaped payload.";
-PB_WHEELTIP_SelectCSG_Danmaku = "Brutal Shotgun: Danmaku pattern shot.";
-
-PB_WHEELTIP_HASG_SelectBuck = "XHAS Auto-Shotgun: Buck.";
-PB_WHEELTIP_HASG_SelectSlug = "XHAS Auto-Shotgun: Slug.";
-PB_WHEELTIP_HASG_SelectFlech = "XHAS Auto-Shotgun: Flechette.";
-PB_WHEELTIP_HASG_SelectDRBT = "XHAS Auto-Shotgun: Dragon's breath.";
-PB_WHEELTIP_HASG_SelectExplosive = "XHAS Auto-Shotgun: Explosive.";
-PB_WHEELTIP_HASG_SelectDanmaku = "XHAS Auto-Shotgun: Danmaku.";
-PB_WHEELTIP_HASG_SelectWPhos = "XHAS Auto-Shotgun: White phosphorus.";
-
-PB_WHEELTIP_Select_LeverAction_357 = "Lever Action: .357 tube.";
-PB_WHEELTIP_Select_LeverAction_Marlin = "Lever Action: Marlin heavy caliber.";
-PB_WHEELTIP_Select_LeverAction_HellMode = "Lever Action: Toggle Demon-Tech hell rounds (needs T3 upgrade; T4 uses caustic slugs). Uses tube ammo per shot.";
-
-PB_LEVER_HELL_NEED_UPGRADE = "\cgHell rounds\c-: Pick up a \ciLever Hell Mod (T3)\c- upgrade first.";
-PB_LEVER_HELL_MODE_ON = "\ccLever Action\c-: \cgHell rounds\c- \cgenabled\c- (Demon-Tech projectiles; T4 = caustic).";
-PB_LEVER_HELL_MODE_OFF = "\ccLever Action\c-: Hell rounds \cjdisabled\c- (normal slugs/tracers).";
-PB_LEVER_HELL_PICKUP_T3 = "Lever Hell Mod (T3)";
-PB_LEVER_HELL_PICKUP_T4 = "Lever Hell Mod (T4)";
-PB_LEVER_HELL_ALREADY_T3 = "You already have the T3 hell mod (or higher).";
-PB_LEVER_HELL_NEED_T3_FIRST = "You need the T3 Lever Hell Mod before installing T4.";
-PB_LEVER_HELL_ALREADY_T4 = "Your tube is already fully hell-tuned (T4).";
-
-PB_WHEELTIP_Select_M1Plasma_Single = "M1 Plasma Rifle: Single gun.";
-PB_WHEELTIP_Select_M1Plasma_Dual = "M1 Plasma Rifle: Dual wield (upgrade).";
-
-PB_PICKUP_PB_Deagle = "You found the UAC .50 Caliber Hand Cannon! (Slot 2, Upgrade)";
-PB_PICKUP_PB_REVOLVER = "You got the UAC .500 Magnum! (Slot 2)";
-PB_REVOLVER_TAG = "Revolver";
-PB_SG_PICKUP = "You got the Pump Shotgun! (Slot 3)";
-PB_SG_TAG = "Shotgun";
-PB_SG_UPGRADE_PICKUP = "You got the Pump shotgun Magazine Upgrade!!!";
-PB_SGL_PICKUP = "You got the UAC-MGL automatic grenade launcher! (Slot 6)";
-PB_SGL_TAG = "Super Grenade Launcher";
-PB_SGL_IMPACT = "Grenade: Impact";
-PB_SGL_STICKY = "Grenade: Sticky";
-PB_SGL_INCENDIARY = "Grenade: Incendiary";
-PB_SGL_CRYO = "Grenade: Cryo";
-PB_SGL_ACID = "Grenade: Acid";
-PB_M1_PICKUP = "You got the UAC-M1 Plasma Rifle! (Slot 8)";
-PB_M1_Tag = "UAC-M1 Plasma Rifle";
-
-PB_ALREADYSELECTED = "Already Selected";
-PB_MINIGUN_CHAINGUN = "Firemode: \cd525 RPM";
-PB_MINIGUN_GATLING = "Firemode: \ci1050-2100 RPM";
-PB_MINIGUN_TRIPLE = "Firemode: \cg6300 RPM";
-PB_NOTAVAILABLE = "Not Available";
 PB_WPNHINT_ASGguyShield = "Meat Shield: Block With Primary Fire;\nBash / Throw With Alt-Fire & Weapon Special.";
 PB_WPNHINT_ProSurv_Ballista = "Pro-Surv Ballista: Bolts + Rockets Alt-Fire.\nWeapon Special: Demonic Mode When Upgraded.";
 PB_WPNHINT_BarrelThrower = "Barrel Toss Primary Fire;\nAlt-Fire / Melee Chain Blasts.";
 PB_WPNHINT_BDPBattleRifle = "Mid-Range Battle Rifle.\nAlt-Fire: Grenade or Sights.";
 PB_WPNHINT_BHGen = "Black Hole Generator.\nAlt-Fire Adjusts Yield / Safety.";
 PB_WPNHINT_CarbineZombieShield = "Carbine Zombie Shield:\nBlock Primary Fire; Alt-Fire Bash.";
-PB_WPNHINT_ChexRifle = "Chex Rifle.\nAlt-Fire Secondary; Weapon Special Fire Mode.";
 PB_WPNHINT_CommandoShield = "Commando Shield:\nBlock Primary Fire; Alt-Fire / Weapon Special Strikes.";
 PB_WPNHINT_DarkImpShield = "Dark Imp Shield:\nGuard Primary Fire; Alt-Fire Slash.";
 PB_WPNHINT_Hell_rifle = "Hell Rifle: Alt-Fire Ammo;\nWeapon Special Upgrade Wheel.";
 PB_WPNHINT_ImpShield = "Imp Shield: Block / Alt-Fire Punch;\nSlower While Raised.";
-PB_WPNHINT_LeverAction = "Lever-Action Rifle: Tube feed.\nAlt-Fire: iron sights / alt shot (upgrade).\nWeapon Special: caliber wheel, dual wield (two rifles), hell rounds toggle after T3/T4 pickups.";
-PB_WPNHINT_X12Shotgun = "X12: Tube + Magazine Reload.\nPB_Shells, 12-Round Magazine.";
+PB_WPNHINT_LeverAction = "Lever-Action Rifle: Tube Feed.\nAlt-Fire Bash or Alt Shot (Upgrade).";
+PB_WPNHINT_X12Shotgun = "X12: Tube + Magazine Reload.\nAlt-Fire Semi vs Full-Auto;\nPB_Shells, 12-Round Magazine.";
 PB_WPNHINT_MarauderSSG = "Marauder Super Shotgun: Alt-Fire Dash / Cryo Mine;\nWeapon Special Eternal vs Classic (Menu).";
 PB_WPNHINT_MastermindChaingun = "Heavy Flame Cannon:\nSustained Alt-Fire Sweep.";
 PB_WPNHINT_Melee_Attacks = "Melee: Combos / Kicks /\nEquipment Keys; Glory Kill Prompts.";
-PB_WPNHINT_OldHMG = "Classic HMG: Bipod Alt-Fire.";
 PB_WPNHINT_Paingiver = "Pain Elemental Arm Cannon:\nLob Souls; Alt-Fire Detonate.";
 PB_WPNHINT_PB_Autoshotgun = "Auto-Shotgun: Drum Semi / Full.\nAlt-Fire Alt-Ammo / Slam Fire.";
 PB_WPNHINT_PB_Axe = "Axe: Chops / Alt-Fire Throw;\nWeapon Special Executes.";
@@ -778,26 +486,14 @@ PB_WPNHINT_PB_BFGBeam = "BFG Beam Rifle: Sustained Alt-Fire;\nWeapon Special Ove
 PB_WPNHINT_PB_Carbine = "Carbine: Weapon Special Wheel\n(Modes, Akimbo, Sights).\nAlt-Fire Grenade Launcher / Secondary.";
 PB_WPNHINT_PB_Chainsaw = "Chainsaw: Grind Primary Fire;\nAlt-Fire Vertical; Berserk Heals.";
 PB_WPNHINT_PB_Deagle = "Desert Eagle: Alt-Fire Aim / Fan Hammer.";
-PB_WPNHINT_PB_DemonExterminator = "Demon Exterminator: Laser / Incineration / Lightning\n(Weapon Special wheel). All modes use Demon Tech ammo.";
+PB_WPNHINT_PB_DemonExterminator = "Flame Cannon: Alt-Fire Wide Blast;\nWeapon Special Fuel.";
 PB_WPNHINT_PB_DualWeapon = "Dual Wield: Primary Left / Alt-Fire Right.\nSingle-Button Dual Mode in Menu Overrides.";
 PB_WPNHINT_PB_Flamethrower = "Flamethrower: Cone Primary Fire;\nAlt-Fire Napalm / Burst; Heat Meter.";
 PB_WPNHINT_PB_Freezer = "Freeze Rifle:\nCryo Primary Fire; Alt-Fire Bomb / Beam.";
 PB_WPNHINT_PB_LMG = "LMG: Belt Fed; Alt-Fire Micro-Missiles\nWhen Upgraded.";
 PB_WPNHINT_PB_M1Plasma = "M1 Plasma Rifle: Bolts;\nAlt-Fire Overcharge; Weapon Special Mode.";
 PB_WPNHINT_PB_M2Plasma = "M2 Lightning Gun:\nAlt-Fire Arc; Upgrade Chain Modes.";
-PB_WPNHINT_PB_M41A = "M41A: Quick 7.62 Primary.\nWeapon Special Wheel â€” underbarrel 12ga or 30mm grenade, or Dual Wield.\nCarry two M41As: tap Special (no wheel token pending) to enter or exit dual wield.";
-PB_WPNHINT_PB_MetalSniper = "Anti-Materiel Sniper:\nWeapon Special â€” wheel: ammo type, scope vs grenade.\nAlt-Fire zooms (sniper mode) or primes grenade.";
-PB_CARBINE_TAG = "UAC-41 Carbine";
-PB_CARBINE_PICKUP = "You got the UAC-41 Carbine! (Slot 4)";
-PB_MSNI_PICKUP = "Metal Sniper (slot 4)";
-PB_MSNI_TAG = "Metal Sniper";
-PB_MSNI_STANDARD = "\ctAmmo:\c- \cd7.62 AP magazine\c-";
-PB_MSNI_RESONANCE = "\ctAmmo:\c- \ciResonance rounds\c-";
-PB_MSNI_AIMMODE = "\ctSecondary:\c- \cdScope / zoom\c-";
-PB_MSNI_GRENMODE = "\ctSecondary:\c- \ciUnderslung grenade\c-";
-PB_MSNI_ALREADY = "\caThat mode is already active.\c-";
-PB_WPNHINT_PB_Fusil = "Fusil: 24-round rifle magazine with a conservative NewClip reserve.\nAlt-Fire toggles sights; Weapon Special swaps to the sidearm stance.";
-PB_WPNHINT_PB_XM21 = "XM-21 DMR: Alt-Fire Zoom;\nWeapon Special Caliber / Explosive (Upgrade).\nAmmo: NewClip Reserve.";
+PB_WPNHINT_PB_MetalSniper = "Anti-Materiel Sniper:\nAlt-Fire Scope Stages.";
 PB_WPNHINT_PB_MG42 = "MG42: Alt-Fire Barrel Swap / Bipod.";
 PB_WPNHINT_PB_Minigun = "Minigun: Weapon Special Barrel Wheel;\nAlt-Fire Spins Barrels.";
 PB_WPNHINT_PB_MP40 = "MP40: Alt-Fire Bayonet / Low-Ready.";
@@ -806,7 +502,7 @@ PB_WPNHINT_PB_NailgunGuyShield = "Nailgun Zombie Shield:\nBlock; Spike Alt-Fire.
 PB_WPNHINT_PB_NeoHMG = "Neo Heavy MG: Hold Alt-Fire Shield;\nWeapon Special Fire Groups.";
 PB_WPNHINT_PB_Pistol = "Pistol: Weapon Special Suppressor /\nAkimbo / Burst Wheel.\nAlt-Fire Flashlight / Secondary.";
 PB_WPNHINT_PB_QuadSG = "Quad Shotgun: Weapon Special Akimbo / Blast /\nShell vs Breath;\nAlt-Fire Patterns.";
-PB_WPNHINT_PB_Railgun = "Railgun: Primary fire (rail or laser by mode). Alt-Fire zoom scope. Hold Reload and press Alt-Fire to deploy a holographic decoy (same as Cat's Frozen equipment).";
+PB_WPNHINT_PB_Railgun = "Railgun: Alt-Fire Tripwire / Overload;\nSecondary Zoom.";
 PB_WPNHINT_PB_Revolver = "Revolver: Alt-Fire Fan Hammer / Single-Action;\nSee PDA Upgrades.";
 PB_WPNHINT_PB_RocketLauncher = "Rocket Launcher: Weapon Special Rocket Mode;\nAlt-Fire Scope / Detonate.";
 PB_WPNHINT_PB_Excavator = "Excavator: Drill Shot Burrows;\nDrop Shot Floats. Weapon Special Mode;\nAlt-Fire Mid-Air Detonate.";
@@ -820,249 +516,15 @@ PB_TAG_PB_CyberdemonRL = "Cyberdemon Missile Launcher";
 PB_WPNHINT_PB_CyberdemonRL = "Cyberdemon Rocket Launcher: Tap Single Missile;\nAlt-Fire Burst Barrage.\n2 Rockets per Shot.";
 PB_WPNHINT_PB_Shotgun = "Pump Shotgun: Weapon Special Shells;\nAlt-Fire Bash / Pump.";
 PB_WPNHINT_PB_SMG = "SMG: Weapon Special Akimbo / Laser;\nAlt-Fire Grenade Launcher When Equipped.";
-PB_SSG_PICKUP = "Double-Barrel Shotgun (Slot 3)";
-PB_SSG_TAG = "Sawn-Off Double-Barrel Shotgun";
-PB_SSG_NOAKIMBO = "Need another double-barrel shotgun for akimbo.";
 PB_WPNHINT_PB_SSG = "Super Shotgun: Dual Reload Alt-Fire;\nBoth Barrels; Weapon Respect Alt-Fire.";
 PB_WPNHINT_PB_SuperGL = "Super Grenade Launcher: Weapon Special Element;\nAlt-Fire Cook / Detonate / Sticky.";
 PB_WPNHINT_PB_Unmaker = "Unmaker: Demon Beam;\nAlt-Fire Spends Energy.";
 PB_WPNHINT_PB_Weapon = "Project Brutality Weapon:\nWeapon Special + Alt-Fire Per Bind.";
 PB_WPNHINT_PlasmaZombieShield = "Plasma Zombie Shield:\nBlock Beams; Alt-Fire Shove.";
 PB_WPNHINT_Rifle = "DMR / HDMR: Weapon Special Wheel\nWhen Upgraded.\nAlt-Fire Grenade Launcher / Aim.";
-PB_WPNHINT_PB_RiotShieldModule = "Ballistic Shield Module:\nWeapon Special on .45 Pistol or Fire Axe\n toggles shield loadouts.\nPistol: Alt-Fire block, primary bash/fire.\nAxe: shield + axe swings.";
+PB_WPNHINT_RiotShield = "Riot Shield + Sidearm:\nAlt-Fire = Block; Primary Fire = Bash;\nSwap Weapons via Inventory.";
 PB_WPNHINT_SavageImpShield = "Savage Imp Shield; Aggressive Alt-Fire Spikes.";
 PB_WPNHINT_SguyShield = "Shotgun Guy Shield; Buckshot Bash Alt-Fire.";
 PB_WPNHINT_TriclopsImpShield = "Triclops Shield; Triple-Eye Alt-Fire Blast.";
 PB_WPNHINT_ZMANShield = "Zombieman Shield; Pistol Fire Through Alt-Fire Windows.";
 PB_WPNHINT_ZombieScientistShield = "Scientist Shield; Chemical Alt-Fire Splash.";
-
-MNU_NEWGAME = "NEW GAME";
-MNU_OPTIONS = "OPTIONS";
-MNU_GAMEFILES = "GAME FILES";
-MNU_INFO = "INFO";
-MNU_QUITGAME = "QUIT GAME";
-
-C_DEFAULT = "Default";
-C_BLACK = "Black";
-C_BLUE = "Blue";
-C_BRICK = "Brick";
-C_BROWN = "Brown";
-C_CREAM = "Cream";
-C_CYAN = "Cyan";
-C_DARKBROWN = "Dark Brown";
-C_DARKGRAY = "Dark Gray";
-C_DARKGREEN = "Dark Green";
-C_DARKRED = "Dark Red";
-C_GOLD = "Gold";
-C_GRAY = "Gray";
-C_GREEN = "Green";
-C_LIGHTBLUE = "Light Blue";
-C_OLIVE = "Olive";
-C_ORANGE = "Orange";
-C_PURPLE = "Purple";
-C_RED = "Red";
-C_TAN = "Tan";
-C_WHITE = "White";
-C_YELLOW = "Yellow";
-
-GOTARMBONUS = "Picked up an armor bonus.";
-GOTBACKPACK = "Picked up a backpack full of ammo!";
-GOTBERSERK = "Berserk!";
-GOTBLUESKUL = "Picked up a blue skull key.";
-GOTHTHBONUS = "Picked up a health bonus.";
-GOTINVUL = "Invulnerability!";
-GOTMEDIKIT = "Picked up a medikit.";
-GOTMEDINEED = "Picked up a medikit that you REALLY need!";
-GOTREDSKUL = "Picked up a red skull key.";
-GOTSTIM = "Picked up a stimpack.";
-GOTVISOR = "Light Amplification Visor!";
-GOTYELWSKUL = "Picked up a yellow skull key.";
-
-OB_MPCHAINSAW = "%o was shredded by %k's chainsaw.";
-OB_MPPLASMARIFLE = "%o was melted by %k's plasma gun.";
-OB_MPROCKET = "%o rode %k's rocket.";
-OB_MPSHOTGUN = "%o was perforated by %k's shotgun.";
-OB_SPIDER = "%o stood in awe of %k's BFG.";
-OB_IMPHIT = "%o was burned by an imp.";
-OB_IMP = "%o was incinerated by %k.";
-OB_UNDEAD = "%o was splattered by %k's shotgun.";
-OB_UNDEADHIT = "%o almost had his head blown off by %k's shotgun.";
-OB_CACO = "%o was smitten by %k.";
-OB_CACOHIT = "%o was immolated by %k.";
-OB_CYBORG = "%o was splattered by %k's BFG.";
-OB_BARREL = "%o was splattered by %k's rocket.";
-OB_BABY = "%o was too young to die.";
-OB_SKULL = "%o tried to use %k as a wall decoration.";
-
-TAG_CLIPOFBULLETS = "Pistol clip";
-TAG_HEGRENADES = "High explosive grenades";
-TAG_PHGRENADES = "Phosphorus grenades";
-
-[enu default]
-DAMNUM_TYPECOLOR_STEEL        = "DamWhite";
-DAMNUM_TYPECOLOR_BLOOD        = "DamRed";
-DAMNUM_TYPECOLOR_ICE          = "DamLightBlue";
-DAMNUM_TYPECOLOR_FIRE         = "DamOrange";
-DAMNUM_TYPECOLOR_EARTH        = "DamBrown";
-DAMNUM_TYPECOLOR_QUAKE        = "DamBrown";
-DAMNUM_TYPECOLOR_ELECTRIC     = "DamYellow";
-DAMNUM_TYPECOLOR_LIGHTNING    = "DamYellow";
-DAMNUM_TYPECOLOR_GRAVITY      = "DamPurple";
-DAMNUM_TYPECOLOR_POISON       = "DamPurple";
-DAMNUM_TYPECOLOR_POISONCLOUD  = "DamPurple";
-DAMNUM_TYPECOLOR_DARK         = "DamBlack";
-DAMNUM_TYPECOLOR_ROCKET       = "DamGold";
-DAMNUM_TYPECOLOR_EXPLODE      = "DamGold";
-DAMNUM_TYPECOLOR_EXPLOSIVE    = "DamGold";
-DAMNUM_TYPECOLOR_EXPLOSION    = "DamGold";
-DAMNUM_TYPECOLOR_PLASMA       = "DamCyan";
-DAMNUM_TYPECOLOR_DISINTEGRATE = "DamGreen";
-DAMNUM_TYPECOLOR_BFG          = "DamGreen";
-DAMNUM_TYPECOLOR_BFGSPLASH    = "DamGreen";
-DAMNUM_TYPECOLOR_PBXP         = "DamGreen";
-DAMNUM_TYPECOLOR_PBRANKUP     = "DamGold";
-DAMNUM_TYPECOLOR_PBAMMO       = "DamBlue";
-DAMNUM_TYPECOLOR_SLIME        = "DamGreen";
-DAMNUM_TYPECOLOR_LAVA         = "DamOrange";
-DAMNUM_TYPECOLOR_CRUSH        = "DamGray";
-DAMNUM_TYPECOLOR_NORMAL       = "DamOrange";
-DAMNUM_TYPECOLOR_ACID         = "DamGreen";
-DAMNUM_TYPECOLOR_RADIATION    = "DamYellow";
-DAMNUM_TYPECOLOR_HELLSLIME    = "DamGreen";
-DAMNUM_TYPECOLOR_HURTFLOOR    = "DamRed";
-DAMNUM_TYPECOLOR_NUKAGE       = "DamGreen";
-DAMNUM_TYPECOLOR_FLOORBURN    = "DamOrange";
-DAMNUM_TYPECOLOR_SLOWBURN     = "DamOrange";
-DAMNUM_TYPECOLOR_FLAME        = "DamOrange";
-DAMNUM_TYPECOLOR_FROST        = "DamLightBlue";
-DAMNUM_TYPECOLOR_TOXIC        = "DamPurple";
-DAMNUM_TYPECOLOR_STEAM        = "DamLightBlue";
-DAMNUM_TYPECOLOR_SECTOR       = "DamOrange";
-
-//Hitmarkers
-
-HM_MENU_DAMAGEOVERTIME = "Damage Over Time Options";
-HM_MENU_HITDAMAGE = "Hit Damage Options";
-HM_MENU_HITMARKER = "Hit Marker Options";
-HM_MENU_HITSOUND = "Hit Sound Options";
-HM_MENU_TEXT_DAMAGEOVERTIME1 = "You can change the way that hit markers and";
-HM_MENU_TEXT_DAMAGEOVERTIME2 = "sounds react to damage you inflict over time.";
-HM_MENU_TEXT_DAMAGEOVERTIME3 = "This should only be used with applicable";
-HM_MENU_TEXT_DAMAGEOVERTIME4 = "mods. Otherwise, false positives can occur.";
-HM_MENU_TEXT_HITDAMAGE1 = "You can modify the type of hit sounds";
-HM_MENU_TEXT_HITDAMAGE2 = "that play based on the amount of damage";
-HM_MENU_TEXT_HITDAMAGE3 = "done to enemies.";
-HM_MENU_TEXT_HITSOUND1 = "Hit sounds function independently from";
-HM_MENU_TEXT_HITSOUND2 = "hit markers. You can customize the sounds";
-HM_MENU_TEXT_HITSOUND3 = "for both standard impacts and enemy kills.";
-HM_MENU_TITLE = "HitMarkers Options";
-
-HM_OPTION_ENABLED = "Enable HitMarkers";
-HM_OPTION_DOT = "Use DOT Detection";
-HM_OPTION_DOTHIT = "DOT Hit Markers";
-HM_OPTION_DOTSOUND = "DOT Hit Sound Type";
-HM_OPTION_DOTSOUNDS = "DOT Hit Sounds";
-HM_OPTION_DOTSPEED = "DOT Hit Animation Speed";
-HM_OPTION_DOTSTYLE = "DOT Hit Marker Style";
-HM_OPTION_FADE = "Non-Animated Fade Time";
-HM_OPTION_FADEANIMATED = "Animated Fade Time";
-HM_OPTION_HITCOLOR = "Hit Marker Color";
-HM_OPTION_HITDAMAGE = "Use Damage Hit Sounds";
-HM_OPTION_HITDAMAGEHIGH = "High Damage Hit";
-HM_OPTION_HITDAMAGEMEDIUM = "Medium Damage Hit";
-HM_OPTION_HITSOUND = "Hit Sound Type";
-HM_OPTION_HITSOUNDS = "Use Hit Sounds";
-HM_OPTION_HITSPEED = "Hit Animation Speed";
-HM_OPTION_HITSTYLE = "Hit Marker Style";
-HM_OPTION_KILLCOLOR = "Kill Marker Color";
-HM_OPTION_KILLPRIORITY = "Kill Marker Priority";
-HM_OPTION_KILLSOUND = "Kill Sound Type";
-HM_OPTION_KILLSOUNDS = "Use Kill Sounds";
-HM_OPTION_KILLSPEED = "Kill Animation Speed";
-HM_OPTION_KILLSTYLE = "Kill Marker Style";
-HM_OPTION_OPACITY = "Opacity Percentage";
-HM_OPTION_SHOWKILLMARKERS = "Show Kill Markers";
-HM_OPTION_SHOWHITMARKERS = "Show Hit Markers";
-HM_OPTION_SIZE = "Size Adjustment";
-HM_OPTION_SOUNDLIMIT = "Limit Rapid Sounds";
-HM_OPTION_VOLUME = "Volume Percentage";
-
-HM_VALUE_BLUE = "Blue";
-HM_VALUE_BROWN = "Brown";
-HM_VALUE_CALLOFDUTY4 = "Call of Duty 4";
-HM_VALUE_CALLOFDUTYBLACKOPS4 = "Call of Duty: Black Ops 4";
-HM_VALUE_CALLOFDUTYBLACKOPSCOLDWAR = "Call of Duty: Black Ops Cold War";
-HM_VALUE_CALLOFDUTYMODERNWARFARE = "Call of Duty: Modern Warfare";
-HM_VALUE_CALLOFDUTYMODERNWARFARE3 = "Call of Duty: Modern Warfare III";
-HM_VALUE_CIRCULAR = "Circular";
-HM_VALUE_CIRCULARSMALL = "Circular (Small)";
-HM_VALUE_COLORIZE = "Colorize";
-HM_VALUE_CREAM = "Cream";
-HM_VALUE_CYAN = "Cyan";
-HM_VALUE_DARKGRAY = "Dark Gray";
-HM_VALUE_DARKGREEN = "Dark Green";
-HM_VALUE_DARKRED = "Dark Red";
-HM_VALUE_DEFAULT = "Default";
-HM_VALUE_DEFAULTANIMATED = "Default (Animated)";
-HM_VALUE_DEFAULTANIMATEDREVERSE = "Default (Animated, Reverse)";
-HM_VALUE_DOOM2016 = "Doom (2016)";
-HM_VALUE_DOUBLE = "Double";
-HM_VALUE_FIFTYPERCENTVOLUME = "50% of Current Volume";
-HM_VALUE_GRAY = "Gray";
-HM_VALUE_GREEN = "Green";
-HM_VALUE_IMPACTANIMATED = "Impact (Animated)";
-HM_VALUE_IMPACTANIMATEDSMALL = "Impact (Animated, Small)";
-HM_VALUE_NO = "No";
-HM_VALUE_NONE = "None";
-HM_VALUE_OLIVE = "Olive";
-HM_VALUE_ONEHUNDREDPERCENTVOLUME = "100% of Current Volume";
-HM_VALUE_ORANGE = "Orange";
-HM_VALUE_OVERWATCH = "Overwatch";
-HM_VALUE_PINK = "Pink";
-HM_VALUE_PURPLE = "Purple";
-HM_VALUE_QUAKE = "Quake";
-HM_VALUE_QUAKECHAMPIONS = "Quake Champions";
-HM_VALUE_QUAKELIVE = "Quake Live";
-HM_VALUE_RED = "Red";
-HM_VALUE_SAPPHIRE = "Sapphire";
-HM_VALUE_SHOW = "Show";
-HM_VALUE_SMALL = "Small";
-HM_VALUE_SMALLANIMATED = "Small (Animated)";
-HM_VALUE_SMALLANIMATEDREVERSE = "Small (Animated, Reverse)";
-HM_VALUE_TEAL = "Teal";
-HM_VALUE_TEAMFORTRESS2 = "Team Fortress 2";
-HM_VALUE_TENPERCENTVOLUME = "10% of Current Volume";
-HM_VALUE_TITANFALL2 = "Titanfall 2";
-HM_VALUE_TRIPLE = "Triple";
-HM_VALUE_TWENTYFIVEPERCENTVOLUME = "25% of Current Volume";
-HM_VALUE_VERTICAL = "Vertical";
-HM_VALUE_VERTICALSMALL = "Vertical (Small)";
-HM_VALUE_WHITE = "White";
-HM_VALUE_YELLOW = "Yellow";
-HM_VALUE_YES = "Yes";
-
-// titlemap.wad SubtitleMessage (StrParam TITLEMAP1..23 + TITLEMAP0) â€” blank = logo only, no subtitle HUD
-TITLEMAP0 = "";
-TITLEMAP1 = "";
-TITLEMAP2 = "";
-TITLEMAP3 = "";
-TITLEMAP4 = "";
-TITLEMAP5 = "";
-TITLEMAP6 = "";
-TITLEMAP7 = "";
-TITLEMAP8 = "";
-TITLEMAP9 = "";
-TITLEMAP10 = "";
-TITLEMAP11 = "";
-TITLEMAP12 = "";
-TITLEMAP13 = "";
-TITLEMAP14 = "";
-TITLEMAP15 = "";
-TITLEMAP16 = "";
-TITLEMAP17 = "";
-TITLEMAP18 = "";
-TITLEMAP19 = "";
-TITLEMAP20 = "";
-TITLEMAP21 = "";
-TITLEMAP22 = "";
-TITLEMAP23 = "";

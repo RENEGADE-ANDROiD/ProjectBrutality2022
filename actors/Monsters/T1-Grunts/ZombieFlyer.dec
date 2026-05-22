@@ -46,8 +46,8 @@ ACTOR FodderLaser {
 		TNT1 B 0 A_Explode(10,70,1)
 		TNT1 AAAA 0 A_SpawnItem("BlueFlare")
 		TNT1 AAA 0 A_CustomMissile ("HeavyPlasmaProjectileHit", 0, 0, random (0, 360), 2, random (0, 360))
-		TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180))
-		TNT1 AAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 180), 2, random (0, 180))
+		TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 40))
 		TNT1 AAA 0 A_CustomMissile ("PlasmaSmoke", 2, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 1
 		Stop
@@ -224,7 +224,7 @@ actor PB_ZombieFlyer : PB_Monster
     States
     {
     Spawn:
-        FLYC A 0 A_PlaySound("arachnophyte/engine", 1)
+        FLYC A 0 A_PlaySound("arachnophyte/engine",8)
         FLYC A 0 A_SpawnItemEx("GunFireSmoke", -20, 0, 10, 6, 0, 0, 180, 128)
         FLYC A 0 A_SpawnItemEx("GunFireSmoke", 20, 0, 10, 6, 0, 0, 180, 128)
         FLYC A 3 A_Look
@@ -266,7 +266,7 @@ actor PB_ZombieFlyer : PB_Monster
 		Goto See
 		
     See:
-        FLYC A 0 A_PlaySound("arachnophyte/engine", 1)
+        FLYC A 0 A_PlaySound("arachnophyte/engine",8)
         FLYC A 2 A_Chase
         FLYC A 0 A_SpawnItemEx("GunFireSmoke", -20, 0, 10, 6, 0, 0, 180, 128)
         FLYC A 0 A_SpawnItemEx("GunFireSmoke", 20, 0, 10, 6, 0, 0, 180, 128)
@@ -278,7 +278,7 @@ actor PB_ZombieFlyer : PB_Monster
         FLYC A 0 A_SpawnItemEx("GunFireSmoke", 20, 0, 10, 6, 0, 0, 180, 128)
         Loop
     Missile:
-        FLYC A 0 A_PlaySound("arachnophyte/engine", 1)
+        FLYC A 0 A_PlaySound("arachnophyte/engine",8)
         FLYC A 3 A_Chase("", "", 1)
         FLYC B 3 A_FaceTarget
 		FLYC C 0 A_CustomMissile("FodderLaser",2,20,0)
@@ -303,7 +303,7 @@ actor PB_ZombieFlyer : PB_Monster
         FLYC A 2 A_Pain
         Goto See
     Death:
-        TRAN A 0 A_StopSound(2)		
+        TRAN A 0 A_StopSound(9)		
 		TNT1 A 0 A_Playsound("excavator/explode")
 		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
         TNT1 A 0 A_SpawnItem("WhiteShockwaveBig")
