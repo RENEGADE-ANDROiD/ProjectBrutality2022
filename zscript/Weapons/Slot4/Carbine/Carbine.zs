@@ -1,4 +1,4 @@
-// PB_Carbine — ZScript port from actors/Weapons/Slot4/Carbine.dec (PB_Weapon retired).
+// PB_Carbine â€” ZScript port from actors/Weapons/Slot4/Carbine.dec (PB_Weapon retired).
 
 class PB_Carbine : PB_WeaponBase
 {

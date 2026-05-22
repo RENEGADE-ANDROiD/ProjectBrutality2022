@@ -1507,10 +1507,10 @@ class PB_Minigun : PB_WeaponBase
 			TNT1 AAAAAAA 0;
 			Stop;
 		Glow1:
-			"G10W" A 2 BRIGHT ;//BRIGHT
+			"G10W" A 2 BRIGHT ;//BRIGHT;
 			Stop;
 		Glow2:
-			"G10W" B 2 BRIGHT ;//BRIGHT
+			"G10W" B 2 BRIGHT ;//BRIGHT;
 			Stop;
 		Glow3:
 			"G10W" C 2 BRIGHT;
@@ -1671,26 +1671,26 @@ class PB_Minigun : PB_WeaponBase
 
 
 		PreGlow1:
-			"G10W" B 5 ;//BRIGHT
+			"G10W" B 5 ;//BRIGHT;
 			Stop;
 		PreGlow2:
-			"G10W" B 5 ;//BRIGHT
+			"G10W" B 5 ;//BRIGHT;
 			Stop;
 			
 		PreGlow3:
-			"G10W" C 5 ;//BRIGHT
+			"G10W" C 5 ;//BRIGHT;
 			Stop;
 			
 		PreGlow4:
-			"G10W" D 5 ;//BRIGHT
+			"G10W" D 5 ;//BRIGHT;
 			Stop;
 			
 		PreGlow5:
-			"G10W" E 5 ;//BRIGHT
+			"G10W" E 5 ;//BRIGHT;
 			Stop;
 			
 		PreGlow6:
-			"G10W" F 5 ;//BRIGHT
+			"G10W" F 5 ;//BRIGHT;
 			Stop;
 			
 		FireGlow1:

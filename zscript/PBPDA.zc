@@ -841,21 +841,12 @@ class PB_EventHandler : EventHandler
 				iconID = classIcon;
 		}
 
-		bool needsSpawnFallback = !PB2022_TexValid(iconID)
-			|| (weaponClass == 'HASG' && PB2022_WeaponHudIconExtremeAspect(iconID));
-		if (needsSpawnFallback)
+		if (PB2022_TexValid(iconID))
+			return iconID;
 		{
 			TextureID spawn = PB2022_FirstHudIconFromSpawn(weaponClass);
 			if (PB2022_TexValid(spawn))
 				return spawn;
-		}
-		if (PB2022_TexValid(iconID))
-			return iconID;
-		if (weaponClass == 'HASG')
-		{
-			TextureID lump = PB2022_ModeHudLump("0ESGA0");
-			if (PB2022_TexValid(lump))
-				return lump;
 		}
 		return PB2022_NoTex();
 	}
@@ -893,7 +884,9 @@ class PB_EventHandler : EventHandler
 		double cx = double(Screen.GetWidth() + offX) - boxW * 0.5;
 		double cy = double(Screen.GetHeight() + offY) - boxH * 0.5;
 
-		DrawClipFittedTexture(iconID, cx, cy, boxW, boxH, alpha, false, false);
+		// Wide/padded pickup icons (0ESGA0) letterbox tiny with contain-fit; cover-fit fills the HUD box.
+		bool coverPortrait = weaponClass == 'HASG' || PB2022_WeaponHudIconExtremeAspect(iconID);
+		DrawClipFittedTexture(iconID, cx, cy, boxW, boxH, alpha, coverPortrait, coverPortrait);
 	}
 
 	ui TextureID PB2022GetModeIcon(PlayerInfo p, Name weaponClass, out double localScale, out double localOffX, out double localOffY)
@@ -1074,6 +1067,19 @@ class PB_EventHandler : EventHandler
 					if (!PB2022_TexValid(modeIcon))
 						modeIcon = PB2022_ModeHudWheel("graphics/pywheel/grenade_cryo.png");
 				}
+				break;
+
+			case 'PB_DemonExterminator':
+				localScale = 0.85;
+				localOffY = -40.0;
+				if (mo.CountInv("DEx_Cur2") >= 1)
+					modeIcon = PB2022_ModeHudLump("CELLA0");
+				else if (mo.CountInv("DEx_Cur1") >= 1)
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_DB.png");
+				else
+					modeIcon = PB2022_ModeHudLump("AMMOIC7");
+				if (!PB2022_TexValid(modeIcon))
+					modeIcon = PB2022_ModeHudLump("UNMXA0");
 				break;
 
 			case 'PB_SMG':
@@ -2625,17 +2631,17 @@ class PB_EventHandler : EventHandler
 	{
 		if (nm != 'PB_DemonExterminator')
 			return;
-		PDA_WeaponStrip_AppendFireLike(nm, "FireModeLaserOK", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
+		PDA_WeaponStrip_AppendFireLike(nm, "Fire.LaserOK", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "FireModeIncinOK", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
+		PDA_WeaponStrip_AppendFireLike(nm, "Fire.IncinerationOK", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "FireModeSoulOK", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
+		PDA_WeaponStrip_AppendFireLike(nm, "Fire.LightningOK", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "AltModeLaserOK", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
+		PDA_WeaponStrip_AppendFireLike(nm, "AltFire.LaserOK", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "AltModeIncinOK", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
+		PDA_WeaponStrip_AppendFireLike(nm, "AltFire.IncinerationOK", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "AltModeSoulOK", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
+		PDA_WeaponStrip_AppendFireLike(nm, "AltFire.LightningOK", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 	}
 

@@ -687,27 +687,27 @@ Actor Shambler {
 				TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,32,0,0,0,0,SXF_NOCHECKPOSITION,0)
 				TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("Ashes1", 28, 0, random (0, 360), 2, random (0, 180))
 				TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("Ashes2", 40, 0, random (0, 360), 2, random (0, 180))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 32, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB AAAAA 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 36, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),28,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 28, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB BBBBB 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 32, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),24,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 24, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB CCCCC 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 28, 0, random (0, 360), 2, random (0, 160))
 				TNT1 A 0 A_Playsound("SZZLL", 3)
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),20,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB DDDDD 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 20, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 16, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB EEEEE 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 12, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),12,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 12, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB FFFFF 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 10, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn")
 				T6SB GGGG 2 BRIGHT Light("IncinerationGlow")
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB HHIIHHIIHHIIHHII 2 BRIGHT Light("IncinerationGlow") A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB HHIIHHIIHHIIHHII 2 Light("IncinerationGlow") A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB HHIIHHIIHHIIHHII 2
 				T6SB JJJJJJJ 12 A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
 				T6SB J -1
@@ -1390,27 +1390,27 @@ ACTOR DeadShamblerGuts {
 				TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,32,0,0,0,0,SXF_NOCHECKPOSITION,0)
 				TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("Ashes1", 28, 0, random (0, 360), 2, random (0, 180))
 				TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("Ashes2", 40, 0, random (0, 360), 2, random (0, 180))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),32,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 32, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB AAAAA 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 36, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),28,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 28, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB BBBBB 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 32, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),24,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 24, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB CCCCC 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 28, 0, random (0, 360), 2, random (0, 160))
 				TNT1 A 0 A_Playsound("SZZLL", 3)
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),20,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB DDDDD 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 20, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),16,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 16, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB EEEEE 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 12, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),12,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 12, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB FFFFF 1 BRIGHT Light("IncinerationGlow") A_CustomMissile ("BurningEmberParticlesFloating_Bigger", 10, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn")
 				T6SB GGGG 2 BRIGHT Light("IncinerationGlow")
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB HHIIHHIIHHIIHHII 2 BRIGHT Light("IncinerationGlow") A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB HHIIHHIIHHIIHHII 2 Light("IncinerationGlow") A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
-				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1",random(-2,2),random(-2,2),8,0,0,0,0,SXF_NOCHECKPOSITION  ,0)
+				TNT1 A 0 A_SpawnItemEx ("RealisticFireSparks1", random (-2, 2), random (-2, 2), 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
 				T6SB HHIIHHIIHHIIHHII 2
 				T6SB JJJJJJJ 12 A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 360), 2, random (0, 160))
 				T6SB J -1
@@ -1780,7 +1780,7 @@ ACTOR BurnedFodderArm {
 				HPDA A 10 A_CustomMissile("PlasmaSmoke",0,0,180,2)
 				Loop
 			Death:
-				HPDA AAAAAAAAAAAAAAAAAAAAAAAAAAAA 14 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
+				HPDA AAAAAAAAAAAAAAAAAAAAAAAAAAAA 14 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 360))
 				HPDA A -1
 				Stop }} 
 				
@@ -1802,7 +1802,7 @@ ACTOR BurnedFodderLeg {
 				HPDL A 10 A_CustomMissile("PlasmaSmoke",0,0,180,2)
 				Loop
 			Death:
-				HPDL AAAAAAAAAAAAAAAAAAAAAAAAAAAA 14 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
+				HPDL AAAAAAAAAAAAAAAAAAAAAAAAAAAA 14 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 360))
 				HPDL A -1
 				Stop }} 
 				
@@ -1824,7 +1824,7 @@ ACTOR BurnedFodderChunk1 {
 				HPDB B 10 A_CustomMissile("PlasmaSmoke",0,0,180,2)
 				Loop
 			Death:
-				HPDB BBBBBBBBBBBBBBBBBBBBBBBBBBBB 14 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
+				HPDB BBBBBBBBBBBBBBBBBBBBBBBBBBBB 14 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 360))
 				HPDB B -1
 				Stop }} 
 				
@@ -1846,7 +1846,7 @@ ACTOR BurnedFodderChunk2 {
 				HPDT B 10 A_CustomMissile("PlasmaSmoke",0,0,180,2)
 				Loop
 			Death:
-				HPDT BBBBBBBBBBBBBBBBBBBBBBBBBBBB 14 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
+				HPDT BBBBBBBBBBBBBBBBBBBBBBBBBBBB 14 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 360))
 				HPDT B -1
 				Stop }}
 				

@@ -1,4 +1,4 @@
-// UAC-M2 Excavator Launcher — ZScript (folded from PBX-Weapons; logic adapted for Project Brutality 2022).
+// UAC-M2 Excavator Launcher â€” ZScript (folded from PBX-Weapons; logic adapted for Project Brutality 2022).
 // State flow uses PB2022 conventions: Select -> SelectContinue -> SelectAnimation per
 // BaseWeapon.dec, A_DoPBWeaponAction() on Ready, PB_WeapTokenSwitch / PB_RespectIfNeeded
 // on bring-up, and FlashPunching / FlashKicking end with `goto Ready3` (PSP_FLASH-based
@@ -45,7 +45,7 @@ class PB_Excavator : PB_WeaponBase
 	}
 
 	// PB_GetMagUnloaded is now provided by PB_WeaponBase (staging-parity shim)
-	// with (bool dual) signature — local override removed to avoid the signature
+	// with (bool dual) signature â€” local override removed to avoid the signature
 	// collision. The Unload state inlines the zero-rounds check directly.
 
 	action void pb_takeAmmoMag(int n = 1)

@@ -471,6 +471,7 @@ Class PB_SuperGL : PB_WeaponBase
 	
 		FlashPunching:
 			S030 ABCDEFGHHIJKLM 1 SGL_ChangeModeSprite("S030","S031","S032","S033","S034",layer:OverlayID());
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		
 		LoadSprites:

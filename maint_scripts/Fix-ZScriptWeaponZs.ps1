@@ -138,15 +138,34 @@ function PostProcess-WeaponZsLines([string[]]$lines) {
             $t = $line.Trim()
         }
 
-        # Do not rewrite DECORATE "if ();" deferrals — invalid in ZScript but needs manual porting.
+        # DECORATE "if (cond);" / "else;" before block
+        if ($t -match '^if\s*\(') {
+            $line = $line -replace '(\))\s*;\s*$', '$1'
+            $t = $line.Trim()
+        }
+        if ($t -match '^else;\s*$') {
+            [void]$result.Add(($line -replace 'else;', 'else'))
+            $i++
+            continue
+        }
+        if ($line -cmatch 'return State\("([^"]*)"\);?') {
+            $label = $Matches[1]
+            if ($label.Length -eq 0) {
+                [void]$result.Add(($line -creplace 'return State\(""\);?', 'return ResolveState(null);'))
+            } else {
+                [void]$result.Add(($line -creplace 'return State\("' + [regex]::Escape($label) + '"\);?', "return ResolveState(`"$label`");"))
+            }
+            $i++
+            continue
+        }
 
         if ($t -eq 'A_DoPBWeaponAction;') {
             [void]$result.Add(($line -replace 'A_DoPBWeaponAction;', 'return A_DoPBWeaponAction();'))
             $i++
             continue
         }
-        if ($line -match 'return state\(') {
-            [void]$result.Add(($line -replace 'return state\(', 'return State('))
+        if ($line -cmatch 'return state\(') {
+            [void]$result.Add(($line -creplace 'return state\(', 'return ResolveState('))
             $i++
             continue
         }
@@ -160,8 +179,18 @@ function PostProcess-WeaponZsLines([string[]]$lines) {
             $i++
             continue
         }
-        if ($line -match 'return State\(""\)') {
-            [void]$result.Add(($line -replace 'return State\(""\)', 'return ResolveState(null)'))
+        if ($line -cmatch 'return State\(""\);?') {
+            [void]$result.Add(($line -creplace 'return State\(""\);?', 'return ResolveState(null);'))
+            $i++
+            continue
+        }
+        if ($t -eq 'A_GunFlash;') {
+            [void]$result.Add(($line -replace 'A_GunFlash;', 'A_GunFlash();'))
+            $i++
+            continue
+        }
+        if ($t -eq '+POWERED_UP;') {
+            [void]$result.Add(($line -replace '\+POWERED_UP;', '+WEAPON.POWERED_UP;'))
             $i++
             continue
         }

@@ -616,6 +616,6 @@ class PB_ArgentSith : PB_WeaponBase
 		TNT1 A 0 A_ClearOverlays(10, 11);
 		TNT1 A 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Stop;
+		Goto Ready3;
 	}
 }
