@@ -1069,19 +1069,6 @@ class PB_EventHandler : EventHandler
 				}
 				break;
 
-			case 'PB_DemonExterminator':
-				localScale = 0.85;
-				localOffY = -40.0;
-				if (mo.CountInv("DEx_Cur2") >= 1)
-					modeIcon = PB2022_ModeHudLump("CELLA0");
-				else if (mo.CountInv("DEx_Cur1") >= 1)
-					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_DB.png");
-				else
-					modeIcon = PB2022_ModeHudLump("AMMOIC7");
-				if (!PB2022_TexValid(modeIcon))
-					modeIcon = PB2022_ModeHudLump("UNMXA0");
-				break;
-
 			case 'PB_SMG':
 				localScale = 0.85;
 				localOffY = -40.0;
@@ -2624,27 +2611,6 @@ class PB_EventHandler : EventHandler
 			outFr, outTi, outSeg, useSeg, hardCap, fireAuthoredTicCap, flashTics, flashSeek, segFlash);
 	}
 
-	void PDA_WeaponStrip_AppendPB_DemonExterminatorPreview(Name nm,
-		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
-		bool useSeg, int hardCap,
-		int fireTicCap, int flashTics, int flashSeek)
-	{
-		if (nm != 'PB_DemonExterminator')
-			return;
-		PDA_WeaponStrip_AppendFireLike(nm, "Fire.LaserOK", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "Fire.IncinerationOK", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "Fire.LightningOK", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "AltFire.LaserOK", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "AltFire.IncinerationOK", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "AltFire.LightningOK", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-	}
-
 	void PDA_WeaponStrip_AppendPB_UnmakerPreview(Name nm,
 		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
 		bool useSeg, int hardCap,
@@ -3971,12 +3937,6 @@ class PB_EventHandler : EventHandler
 		if (nm == 'PB_Unmaker')
 		{
 			PDA_WeaponStrip_AppendPB_UnmakerPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
-				fireTicCap, flashTics, flashSeek);
-			pdaHeavyBossCodexTail = true;
-		}
-		else if (nm == 'PB_DemonExterminator')
-		{
-			PDA_WeaponStrip_AppendPB_DemonExterminatorPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
 				fireTicCap, flashTics, flashSeek);
 			pdaHeavyBossCodexTail = true;
 		}
