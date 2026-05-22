@@ -25,6 +25,7 @@ class PB_KillstreakHandler : EventHandler
 				int st = pendingRewardStreak[i];
 				GiveKSReward(plr, st);
 				PB_Achievements.OnKillstreakReward(st);
+				PB_KillstreakThrottleHandler.OnRewardGranted(i);
 			}
 			pendingRewardStreak[i] = 0;
 		}
@@ -80,18 +81,23 @@ class PB_KillstreakHandler : EventHandler
 		if (!killer.FindInventory("PB_KillstreakMode")) return;
 		int pnum = killer.PlayerNumber();
 		if (pnum < 0 || pnum >= MAXPLAYERS) return;
+		PB_KillstreakThrottleHandler.RegisterKillForPlayer(pnum);
 		currentStreak[pnum]++;
 		int st = currentStreak[pnum];
-		String snd = PBStreakLine(killer, st);
-		if (snd != "")
+		if (PB_KillstreakThrottleHandler.ShouldPlayAnnouncer(pnum))
 		{
-			double avol = PB_AnnouncerVolumeMul(killer);
-			if (!killer.IsActorPlayingSound(CHAN_7))
-				killer.A_StartSound(snd, CHAN_7, 0, avol);
-			else
-				PB_ShowAnnouncerTextFallback(killer, st);
+			String snd = PBStreakLine(killer, st);
+			if (snd != "")
+			{
+				double avol = PB_AnnouncerVolumeMul(killer);
+				if (!killer.IsActorPlayingSound(CHAN_7))
+					killer.A_StartSound(snd, CHAN_7, 0, avol);
+				else
+					PB_ShowAnnouncerTextFallback(killer, st);
+			}
 		}
-		if (st % 5 == 0) pendingRewardStreak[pnum] = st;
+		if (PB_KillstreakThrottleHandler.ShouldQueueReward(pnum, st))
+			pendingRewardStreak[pnum] = st;
 	}
 
 	void ClearKSTokens(Actor who)
@@ -149,16 +155,12 @@ class PB_KillstreakHandler : EventHandler
 		if (cap == "") return;
 		if (!KSHUDMessageHandler.BigmsgOn())
 		{
-			plr.A_Print("Kill streak active!", 2.0);
 			plr.A_Print(cap, 2.0);
 			return;
 		}
 		int pn = plr.PlayerNumber();
 		KSHUDMessageHandler.PlainMsg(
-			pn, "BIGFONT2", "Kill streak active!", (240, 110), (480, 360), -1, (0, 0), Font.CR_UNTRANSLATED,
-			(0.2, 2.5, 0.4), 0, 13, BaseStatusBar.HUDMSGLayer_OverHUD);
-		KSHUDMessageHandler.PlainMsg(
-			pn, "BIGFONT2", cap, (240, 140), (480, 360), -1, (0, 0), Font.CR_WHITE,
+			pn, "BIGFONT2", cap, (240, 120), (480, 360), -1, (0, 0), Font.CR_WHITE,
 			(0.2, 2.5, 0.4), 0, 14, BaseStatusBar.HUDMSGLayer_OverHUD);
 	}
 
@@ -205,7 +207,7 @@ class PB_KillstreakHandler : EventHandler
 		case 25: return "WICKED SICK";
 		case 30: return "GODLIKE";
 		}
-		return "Kill Streak !";
+		return "Reward!";
 	}
 }
 
@@ -230,6 +232,7 @@ class PB_KillstreakRareFlare : EventHandler
 		int chance = cChance ? cChance.GetInt() : 15;
 		chance = clamp(chance, 0, 100);
 		if (random(1, 100) > chance) return;
+		if (!PB_KillstreakThrottleHandler.ShouldRollRareFlare()) return;
 		Class<Actor> flareCls = "PB_KillstreakFlare";
 		if (!flareCls) return;
 		if (Actor.Spawn(flareCls, t.Vec3Offset(0, 0, 8), NO_REPLACE) != null)

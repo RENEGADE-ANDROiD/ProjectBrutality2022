@@ -43,7 +43,6 @@ class PB_WeaponTilterInventory : Inventory
 		'PB_BFGBeam',
 		'PB_BLACKHOLE',
 		'PB_Unmaker',
-		'PB_DemonExterminator',
 		'MastermindChaingun'
 	};
 

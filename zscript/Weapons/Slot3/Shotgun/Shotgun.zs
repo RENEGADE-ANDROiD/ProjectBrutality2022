@@ -914,6 +914,7 @@ Class PB_Shotgun : PB_WeaponBase
 			SH0G CDFGHI 1;
 			SH0G J 2;
 			SH0G IHGEDB 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		MagFlashPunch:
 			SH0G CD 1;
@@ -922,6 +923,7 @@ Class PB_Shotgun : PB_WeaponBase
 			SHMG J 2;
 			SHMG IHG 1;
 			SH0G EDB 1;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		
 		//alternative ammo swap thing

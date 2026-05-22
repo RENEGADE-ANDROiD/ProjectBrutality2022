@@ -204,7 +204,7 @@ class PB_SSG : PB_WeaponBase
 				}
 			}
 			
-			if(!PB_CanDualWield());
+			if(!PB_CanDualWield())
 			{
 				A_ClearOverlays(10,11);
 				A_SetAkimbo(false);

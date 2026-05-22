@@ -143,7 +143,6 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **Unmaker** — demonic super-weapon for high-end energy damage.
 - **BFG9000 MK IV** — BFG-class room clearer.
 - **BFG 11K Prototype / BFG Beam** — beam-style BFG super-weapon entry.
-- **Demon Exterminator** — endgame demon-killing super-weapon.
 - **Cryo Cannon** — Cat's Frozen cryo cannon; cone-shaped cryo wind burst using cryo cannon cells with standard cell packs as reload. Heavy burst pattern; slows and chips at clusters. Always rolls from BFG spawners.
 - **Stormcast** — lightning staff (*Schism* lineage; *see CREDITS.txt*). Slot **9**, one shared charge pool; chords replace the old weapon-special wheel.
   - **Primary** — staff lightning / melee (needs charge; **Berserk** upgrades the strikes).
@@ -159,7 +158,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **UAC-M3 Flamethrower** — flame weapon for burn damage and crowd control.
 - **Demon-Tech Rifle** — demon-energy rifle with charged energy behavior.
 
-The disabled **Demon-Tech Minigun** source remains on disk for possible future repair, but it is not part of the active player roster.
+The disabled **Demon-Tech Minigun** and **Demon Exterminator** sources remain on disk for possible future repair, but they are not part of the active player roster.
 
 ### Equipment
 

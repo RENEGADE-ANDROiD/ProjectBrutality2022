@@ -11,6 +11,12 @@ Actor ShieldSawThrowAnim : Inventory
     Inventory.MaxAmount 1
 }
 
+// One-shot: PB_RespectIfNeeded must not Goto SelectAnimation after shield-saw throw/catch (still-held weapon).
+Actor PB_SkipWeaponSelectAnim : Inventory
+{
+    Inventory.MaxAmount 1
+}
+
 Actor ShieldSawDeflectedMark : Inventory
 {
     Inventory.MaxAmount 1

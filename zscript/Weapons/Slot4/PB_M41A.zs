@@ -41,9 +41,9 @@ class PB_M41A : PB_WeaponBase
 {
 	Default
 	{
-		//$Category Weapons
-		//$Title M41A Pulse Rifle
-		//$Sprite PMAWA0
+		//Category Weapons
+		//Title M41A Pulse Rifle
+		//Sprite PMAWA0
 		Weapon.SlotNumber 4;
 		Weapon.SlotPriority 0.08;
 		Weapon.AmmoType1 "NewClip";
@@ -181,7 +181,7 @@ class PB_M41A : PB_WeaponBase
 	states
 	{
 		Spawn:
-			PMAW A -1;
+			"PMAW" A -1;
 			Stop;
 		Steady:
 			TNT1 A 1;
@@ -191,8 +191,7 @@ class PB_M41A : PB_WeaponBase
 			Goto Ready3;
 
 		Select:
-			TNT1 A 0
-			{
+			TNT1 A 0 {
 				A_WeaponOffset(0, 32);
 				A_SetRoll(0);
 				PB_HandleCrosshair(42);
@@ -210,8 +209,7 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 PB_WeaponRaise("M41A/PickUp");
 			TNT1 A 0 PB_WeapTokenSwitch("RifleSelected");
-			TNT1 A 0
-			{
+			TNT1 A 0 {
 				if (CountInv("M41AChamberAmmo") < 1 && CountInv("M41ARespect") < 1)
 					A_GiveInventory("M41AChamberAmmo", m41a_ammoFull);
 				if (CountInv("M41AChamberAmmoLeft") < 1 && CountInv("M41ARespect") < 1)
@@ -222,12 +220,12 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "SelectAnimationDualWield");
 			TNT1 A 0 PB_HandleCrosshair(42);
-			PMAU ABCD 1;
+			"PMAU" ABCD 1;
 			Goto Ready3;
 
 		WeaponRespect:
 			TNT1 A 0 A_GiveInventory("M41ARespect", 1);
-			PMAU ABCD 1 A_DoPBWeaponAction();
+			"PMAU" ABCD 1 A_DoPBWeaponAction();
 			Goto Ready3;
 
 		Deselect:
@@ -238,7 +236,7 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_TakeInventory("Zoomed", 1);
 			TNT1 A 0 A_TakeInventory("ADSmode", 1);
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "DeselectAnimationDualWield");
-			PMAD ABCD 1;
+			"PMAD" ABCD 1;
 			TNT1 A 0 A_Lower(120);
 			Wait;
 
@@ -246,17 +244,16 @@ class PB_M41A : PB_WeaponBase
 		Ready3:
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyDualWield");
-			PMAF A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			"PMAF" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 			TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
 			Loop;
 
 		NoAmmo:
-			PMAF A 1;
+			"PMAF" A 1;
 			Goto Ready3;
 
 		Fire:
-			TNT1 A 0
-			{
+			TNT1 A 0 {
 				if (CountInv("GoFatality") >= 1)
 					SetPlayerProperty(0, 1, 0);
 				else
@@ -271,8 +268,7 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyDualWield");
 			TNT1 A 0 A_JumpIfInventory("M41AChamberAmmo", 1, "M41Shot1");
-			TNT1 A 0
-			{
+			TNT1 A 0 {
 				A_WeaponOffset(0, 32);
 				A_ZoomFactor(1.0);
 			}
@@ -283,10 +279,10 @@ class PB_M41A : PB_WeaponBase
 			Goto Ready3;
 
 		M41S1Body:
-			PMAF B 1 Bright M41A_FirePrimary();
-			PMAF C 1 Bright;
+			"PMAF" B 1 Bright M41A_FirePrimary();
+			"PMAF" C 1 Bright;
 			TNT1 A 0 A_ZoomFactor(1.0);
-			PMAF D 1 A_Refire("M41Shot2");
+			"PMAF" D 1 A_Refire("M41Shot2");
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			Goto Ready3;
 
@@ -295,9 +291,9 @@ class PB_M41A : PB_WeaponBase
 			Goto Ready3;
 
 		M41S2Body:
-			PMAF C 1 Bright M41A_FirePrimary();
-			PMAF D 1 Bright;
-			PMAF A 1 A_Refire("Fire");
+			"PMAF" C 1 Bright M41A_FirePrimary();
+			"PMAF" D 1 Bright;
+			"PMAF" A 1 A_Refire("Fire");
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			Goto Ready3;
 
@@ -306,15 +302,13 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyToFireDualWield");
-			TNT1 A 0
-			{
+			TNT1 A 0 {
 				A_WeaponOffset(0, 32);
 				A_SetRoll(0);
 				A_TakeInventory("PB_LockScreenTilt", 1);
 			}
 			TNT1 A 0 A_JumpIfInventory("M41ChangeCart", 1, "AltShell");
-			TNT1 A 0
-			{
+			TNT1 A 0 {
 				if (M41A_HasTubeReserve())
 					return ResolveState("AltGrenadeFire");
 				return ResolveState(null);
@@ -322,9 +316,8 @@ class PB_M41A : PB_WeaponBase
 			Goto M41NoAmmoJ;
 
 		AltGrenadeFire:
-			PMAF A 0 A_PlaySound("RFGLLCH", CHAN_WEAPON);
-			PMAF AB 1 Bright
-			{
+			"PMAF" A 0 A_PlaySound("RFGLLCH", CHAN_WEAPON);
+			"PMAF" AB 1 Bright {
 				A_AlertMonsters();
 				A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 				A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
@@ -334,10 +327,10 @@ class PB_M41A : PB_WeaponBase
 			}
 			TNT1 A 0 A_Recoil(2);
 			TNT1 A 0 A_ZoomFactor(0.98);
-			PMAF C 1 Bright PB_WeaponRecoil(-1.5, 1.5);
+			"PMAF" C 1 Bright PB_WeaponRecoil(-1.5, 1.5);
 			TNT1 A 0 A_ZoomFactor(1.0);
-			PMAF DEF 1;
-			PMAF A 1;
+			"PMAF" DEF 1;
+			"PMAF" A 1;
 			Goto M41AltPumpGrenade;
 
 		AltShell:
@@ -345,9 +338,8 @@ class PB_M41A : PB_WeaponBase
 			Goto M41NoAmmoJ;
 
 		AltShellFire:
-			PMAF A 0 A_PlaySound("weapons/sg", CHAN_WEAPON);
-			PMAF AB 1 Bright
-			{
+			"PMAF" A 0 A_PlaySound("weapons/sg", CHAN_WEAPON);
+			"PMAF" AB 1 Bright {
 				A_AlertMonsters();
 				A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
 				A_FireCustomMissile("YellowFlareSpawn", 0, 0, 0, 0);
@@ -357,56 +349,56 @@ class PB_M41A : PB_WeaponBase
 			}
 			TNT1 A 0 A_Recoil(2);
 			TNT1 A 0 A_ZoomFactor(0.98);
-			PMAF C 1 Bright PB_WeaponRecoil(-0.90, 0.90);
+			"PMAF" C 1 Bright PB_WeaponRecoil(-0.90, 0.90);
 			TNT1 A 0 A_ZoomFactor(1.0);
-			PMAF DEF 1;
-			PMAF A 1;
+			"PMAF" DEF 1;
+			"PMAF" A 1;
 			Goto M41AltPumpShell;
 
 		M41AltPumpGrenade:
-			PMAT ABCDEF 1;
-			PMAT G 1 Offset(0, 32);
-			PMAT G 1 Offset(2, 32);
-			PMAT G 1 Offset(4, 34);
-			PMAT G 1 Offset(6, 36);
-			PMAT G 1 Offset(8, 38);
-			PMAT G 1 Offset(10, 40);
-			PMAT G 1 Offset(12, 42);
-			PMAT G 1 Offset(14, 44);
+			"PMAT" ABCDEF 1;
+			"PMAT" G 1 Offset(0, 32);
+			"PMAT" G 1 Offset(2, 32);
+			"PMAT" G 1 Offset(4, 34);
+			"PMAT" G 1 Offset(6, 36);
+			"PMAT" G 1 Offset(8, 38);
+			"PMAT" G 1 Offset(10, 40);
+			"PMAT" G 1 Offset(12, 42);
+			"PMAT" G 1 Offset(14, 44);
 			TNT1 A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
-			PMAT H 1 A_PlaySound("weapons/sgpump", CHAN_WEAPON);
+			"PMAT" H 1 A_PlaySound("weapons/sgpump", CHAN_WEAPON);
 			TNT1 A 0 A_FireCustomMissile("EmptyGrenadeBrass", 5, 0, 8, -4);
 			TNT1 A 0 M41A_TakeTubeReserve();
-			PMAT IJ 1;
-			PMAT IH 1;
+			"PMAT" IJ 1;
+			"PMAT" IH 1;
 			TNT1 A 0 A_StartSound("weapons/sgpump", CHAN_AUTO, CHANF_OVERLAP);
-			PMAT G 1 Offset(5, 36);
-			PMAT G 1 Offset(3, 34);
-			PMAT G 1 Offset(0, 32);
-			PMAT GFEDCBA 1;
+			"PMAT" G 1 Offset(5, 36);
+			"PMAT" G 1 Offset(3, 34);
+			"PMAT" G 1 Offset(0, 32);
+			"PMAT" GFEDCBA 1;
 			Goto Ready3;
 
 		M41AltPumpShell:
-			PMAT ABCDEF 1;
-			PMAT G 1 Offset(0, 32);
-			PMAT G 1 Offset(2, 32);
-			PMAT G 1 Offset(4, 34);
-			PMAT G 1 Offset(6, 36);
-			PMAT G 1 Offset(8, 38);
-			PMAT G 1 Offset(10, 40);
-			PMAT G 1 Offset(12, 42);
-			PMAT G 1 Offset(14, 44);
+			"PMAT" ABCDEF 1;
+			"PMAT" G 1 Offset(0, 32);
+			"PMAT" G 1 Offset(2, 32);
+			"PMAT" G 1 Offset(4, 34);
+			"PMAT" G 1 Offset(6, 36);
+			"PMAT" G 1 Offset(8, 38);
+			"PMAT" G 1 Offset(10, 40);
+			"PMAT" G 1 Offset(12, 42);
+			"PMAT" G 1 Offset(14, 44);
 			TNT1 A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
-			PMAT H 1 A_PlaySound("weapons/sgpump", CHAN_WEAPON);
+			"PMAT" H 1 A_PlaySound("weapons/sgpump", CHAN_WEAPON);
 			TNT1 A 0 A_FireCustomMissile("ShotCaseSpawn", 5, 0, 8, -4);
 			TNT1 A 0 A_TakeInventory("NewShell", 1, TIF_NOTAKEINFINITE);
-			PMAT IJ 1;
-			PMAT IH 1;
+			"PMAT" IJ 1;
+			"PMAT" IH 1;
 			TNT1 A 0 A_StartSound("weapons/sgpump", CHAN_AUTO, CHANF_OVERLAP);
-			PMAT G 1 Offset(5, 36);
-			PMAT G 1 Offset(3, 34);
-			PMAT G 1 Offset(0, 32);
-			PMAT GFEDCBA 1;
+			"PMAT" G 1 Offset(5, 36);
+			"PMAT" G 1 Offset(3, 34);
+			"PMAT" G 1 Offset(0, 32);
+			"PMAT" GFEDCBA 1;
 			Goto Ready3;
 
 		WeaponSpecial:
@@ -437,9 +429,9 @@ class PB_M41A : PB_WeaponBase
 				A_SetInventory("DualWieldingM41A", 1);
 				M41A_ClearDualOverlays();
 			}
-			PMDT ABCD 1;
-			PMDT E 1;
-			PMDT FGHI 1;
+			"PMDT" ABCD 1;
+			"PMDT" E 1;
+			"PMDT" FGHI 1;
 			Goto ReadyDualWield;
 
 		StopDualWieldM41A:
@@ -449,7 +441,7 @@ class PB_M41A : PB_WeaponBase
 				A_SetInventory("DualWieldingM41A", 0);
 				M41A_ClearDualOverlays();
 			}
-			PMDT IHGFEDCBA 1;
+			"PMDT" IHGFEDCBA 1;
 			Goto Ready3;
 
 		M41Wheel12Gauge:
@@ -469,8 +461,7 @@ class PB_M41A : PB_WeaponBase
 			Goto Ready3;
 
 		Reload:
-			TNT1 A 0
-			{
+			TNT1 A 0 {
 				A_ZoomFactor(1.0);
 				A_WeaponOffset(0, 32);
 			}
@@ -485,69 +476,69 @@ class PB_M41A : PB_WeaponBase
 			Goto M41NoAmmoJ;
 
 		M41NoAmmoJ:
-			PMAF A 5 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+			"PMAF" A 5 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 			TNT1 A 0 A_JumpIfInventory("Reloading", 1, "Reload");
 			TNT1 A 0 A_JumpIfInventory("NewClip", 1, "Reload");
 			TNT1 A 0 A_JumpIfInventory("FiredPrimary", 1, "M41NoAmmoJ");
 			Goto Ready3;
 
 		M41DoReload:
-			PMAR ABCD 1;
-			PMAR EFGH 1;
-			PMAR IJKL 1;
-			PMAR MNOP 1;
-			PMAR QQRST 1;
+			"PMAR" ABCD 1;
+			"PMAR" EFGH 1;
+			"PMAR" IJKL 1;
+			"PMAR" MNOP 1;
+			"PMAR" QQRST 1;
 			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
-			PMAR UVWX 1;
+			"PMAR" UVWX 1;
 			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
 			TNT1 A 0 A_StartSound("M41A/MagIn", 6);
-			PMAT ABCD 1;
+			"PMAT" ABCD 1;
 			TNT1 A 0 PB_AmmoIntoMag("M41AChamberAmmo", "NewClip", m41a_ammoFull, 1);
 			TNT1 A 0 A_TakeInventory("M41AUnloaded", 1);
-			PMAT EFGH 1;
-			PMAT IJKL 1;
-			PMAT MNOP 1;
+			"PMAT" EFGH 1;
+			"PMAT" IJKL 1;
+			"PMAT" MNOP 1;
 			TNT1 A 0 A_StartSound("M41A/Bolt", 0);
-			PMAT QRRRST 1;
-			PMAT UVWX 1;
-			PMAT YYYY 1;
-			PMAR KJIH 1;
-			PMAR GFEDCBA 1;
+			"PMAT" QRRRST 1;
+			"PMAT" UVWX 1;
+			"PMAT" YYYY 1;
+			"PMAR" KJIH 1;
+			"PMAR" GFEDCBA 1;
 			Goto Ready3;
 
 		Unload:
 			TNT1 A 0 A_TakeInventory("Unloading", 1);
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "UnloadDualWield");
-			PMAR ABCD 1;
-			PMAR EFGH 1;
-			PMAR IJKL 1;
-			PMAR MNOP 1;
-			PMAR QQRST 1;
+			"PMAR" ABCD 1;
+			"PMAR" EFGH 1;
+			"PMAR" IJKL 1;
+			"PMAR" MNOP 1;
+			"PMAR" QQRST 1;
 			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
-			PMAR UVWX 1;
+			"PMAR" UVWX 1;
 			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
 			TNT1 A 0 A_StartSound("M41A/MagIn", 6);
-			PMAT ABCD 1;
+			"PMAT" ABCD 1;
 			TNT1 A 0 PB_DumpMagToPool("M41AChamberAmmo", "NewClip", 1);
 			TNT1 A 0 A_GiveInventory("M41AUnloaded", 1);
-			PMAT EFGH 1;
-			PMAT IJKL 1;
-			PMAT MNOP 1;
+			"PMAT" EFGH 1;
+			"PMAT" IJKL 1;
+			"PMAT" MNOP 1;
 			TNT1 A 0 A_StartSound("M41A/Bolt", 0);
-			PMAT QRRRST 1;
-			PMAT UVWX 1;
-			PMAT YYYY 1;
-			PMAR KJIH 1;
-			PMAR GFEDCBA 1;
+			"PMAT" QRRRST 1;
+			"PMAT" UVWX 1;
+			"PMAT" YYYY 1;
+			"PMAR" KJIH 1;
+			"PMAR" GFEDCBA 1;
 			Goto Ready3;
 
 		SelectAnimationDualWield:
-			PMDU ABCD 1;
+			"PMDU" ABCD 1;
 			Goto ReadyDualWield;
 
 		DeselectAnimationDualWield:
 			TNT1 A 0 M41A_ClearDualOverlays();
-			PMDU DCBA 1;
+			"PMDU" DCBA 1;
 			TNT1 A 0 A_Lower(120);
 			Wait;
 
@@ -562,12 +553,10 @@ class PB_M41A : PB_WeaponBase
 			}
 		ReadyToFireDualWield:
 			TNT1 A 1 {
-				if (invoker.Ammo1 && invoker.Ammo1.Amount > 0)
-				{
+				if (invoker.Ammo1 && invoker.Ammo1.Amount > 0) {
 					if (invoker.AmmoLeft && invoker.Ammo2)
 					{
-						if (invoker.AmmoLeft.Amount <= 0 || invoker.Ammo2.Amount <= 0)
-						{
+						if (invoker.AmmoLeft.Amount <= 0 || invoker.Ammo2.Amount <= 0) {
 							if (invoker.AmmoLeft.Amount <= 0 && invoker.Ammo2.Amount <= 0)
 								A_SetInventory("DualFireReload", 2);
 							else
@@ -585,8 +574,7 @@ class PB_M41A : PB_WeaponBase
 				if (CountInv("M41AChamberAmmoLeft") <= 0 && CountInv("M41AChamberAmmo") > 0)
 					A_GiveInventory("DualFiring", 1);
 				int firemodecvar = CVar.GetCVar("SingleDualFire", Player).GetInt();
-				if ((PressingAltFire() || JustPressed(BT_ALTATTACK)) && !A_IsFiringLeftWeapon() && firemodecvar == 2)
-				{
+				if ((PressingAltFire() || JustPressed(BT_ALTATTACK)) && !A_IsFiringLeftWeapon() && firemodecvar == 2) {
 					if (CountInv("M41AChamberAmmoLeft") > 0)
 						return ResolveState("FireLeft_Overlay");
 					else
@@ -595,10 +583,8 @@ class PB_M41A : PB_WeaponBase
 						return ResolveState(null);
 					}
 				}
-				if (CountInv("DualFiring") == 0 || firemodecvar == 1)
-				{
-					if ((PressingFire() || JustPressed(BT_ATTACK)) && !A_IsFiringLeftWeapon() && firemodecvar < 2)
-					{
+				if (CountInv("DualFiring") == 0 || firemodecvar == 1) {
+					if ((PressingFire() || JustPressed(BT_ATTACK)) && !A_IsFiringLeftWeapon() && firemodecvar < 2) {
 						if (CountInv("M41AChamberAmmoLeft") > 0)
 							return ResolveState("FireLeft_Overlay");
 						else
@@ -618,10 +604,8 @@ class PB_M41A : PB_WeaponBase
 				if (CountInv("M41AChamberAmmoLeft") > 0 && CountInv("M41AChamberAmmo") <= 0)
 					A_TakeInventory("DualFiring", 1);
 				int firemodecvar = CVar.GetCVar("SingleDualFire", Player).GetInt();
-				if (CountInv("DualFiring") == 1 || (CountInv("DualFiring") == 1 && CountInv("M41AChamberAmmoLeft") <= 0))
-				{
-					if ((PressingFire() || JustPressed(BT_ATTACK)) && !A_IsFiringLeftWeapon() && firemodecvar == 0)
-					{
+				if (CountInv("DualFiring") == 1 || (CountInv("DualFiring") == 1 && CountInv("M41AChamberAmmoLeft") <= 0)) {
+					if ((PressingFire() || JustPressed(BT_ATTACK)) && !A_IsFiringLeftWeapon() && firemodecvar == 0) {
 						if (CountInv("M41AChamberAmmo") > 0)
 							return ResolveState("FireRight_Overlay");
 						else
@@ -631,8 +615,7 @@ class PB_M41A : PB_WeaponBase
 						}
 					}
 				}
-				if ((PressingAltFire() || JustPressed(BT_ALTATTACK)) && !A_IsFiringRightWeapon() && firemodecvar == 1)
-				{
+				if ((PressingAltFire() || JustPressed(BT_ALTATTACK)) && !A_IsFiringRightWeapon() && firemodecvar == 1) {
 					if (CountInv("M41AChamberAmmo") > 0)
 						return ResolveState("FireRight_Overlay");
 					else
@@ -641,8 +624,7 @@ class PB_M41A : PB_WeaponBase
 						return ResolveState(null);
 					}
 				}
-				if ((PressingFire() || JustPressed(BT_ATTACK)) && !A_IsFiringRightWeapon() && firemodecvar == 2)
-				{
+				if ((PressingFire() || JustPressed(BT_ATTACK)) && !A_IsFiringRightWeapon() && firemodecvar == 2) {
 					if (CountInv("M41AChamberAmmo") > 0)
 						return ResolveState("FireRight_Overlay");
 					else
@@ -667,8 +649,7 @@ class PB_M41A : PB_WeaponBase
 			}
 			PMLF D 1 {
 				int firemodecvar = CVar.GetCVar("SingleDualFire", Player).GetInt();
-				if (JustPressed(BT_ALTATTACK) && !A_IsFiringRightWeapon() && firemodecvar == 2)
-				{
+				if (JustPressed(BT_ALTATTACK) && !A_IsFiringRightWeapon() && firemodecvar == 2) {
 					if (CountInv("M41AChamberAmmoLeft") > 0)
 						return ResolveState("FireLeft_Overlay");
 					else
@@ -707,8 +688,7 @@ class PB_M41A : PB_WeaponBase
 			}
 			PMRF D 1 {
 				int firemodecvar = CVar.GetCVar("SingleDualFire", Player).GetInt();
-				if (JustPressed(BT_ATTACK) && !A_IsFiringRightWeapon() && firemodecvar == 2)
-				{
+				if (JustPressed(BT_ATTACK) && !A_IsFiringRightWeapon() && firemodecvar == 2) {
 					if (CountInv("M41AChamberAmmo") > 0)
 						return ResolveState("FireRight_Overlay");
 					else
@@ -717,8 +697,7 @@ class PB_M41A : PB_WeaponBase
 						return ResolveState(null);
 					}
 				}
-				if (JustPressed(BT_ALTATTACK) && !A_IsFiringRightWeapon() && firemodecvar == 1)
-				{
+				if (JustPressed(BT_ALTATTACK) && !A_IsFiringRightWeapon() && firemodecvar == 1) {
 					if (CountInv("M41AChamberAmmo") > 0)
 						return ResolveState("FireRight_Overlay");
 					else
@@ -755,69 +734,69 @@ class PB_M41A : PB_WeaponBase
 		ReloadRight:
 			TNT1 A 0 A_JumpIf(invoker.Ammo2 && invoker.Ammo2.Amount >= m41a_ammoFull, "StartReloadFromLeft");
 			TNT1 A 0 A_StartSound("IronSights", 1, CHANF_OVERLAP);
-			PMDE ABCD 1;
-			PMDE EFGH 1;
-			PMAR P 1;
-			PMAR QQRST 1;
+			"PMDE" ABCD 1;
+			"PMDE" EFGH 1;
+			"PMAR" P 1;
+			"PMAR" QQRST 1;
 			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
-			PMAR UVWX 1;
+			"PMAR" UVWX 1;
 			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, 6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
 			TNT1 A 0 A_StartSound("M41A/MagIn", 6);
-			PMAT ABCD 1;
+			"PMAT" ABCD 1;
 			TNT1 A 0 PB_AmmoIntoMag("M41AChamberAmmo", "NewClip", m41a_ammoFull, 1);
 			TNT1 A 0 A_TakeInventory("M41AUnloaded", 1);
-			PMAT EFGH 1;
-			PMAT IJKL 1;
-			PMAT MNOP 1;
+			"PMAT" EFGH 1;
+			"PMAT" IJKL 1;
+			"PMAT" MNOP 1;
 			TNT1 A 0 A_StartSound("M41A/Bolt", 0);
-			PMAT QRRRST 1;
-			PMAT UVWX 1;
-			PMAT YYYY 1;
+			"PMAT" QRRRST 1;
+			"PMAT" UVWX 1;
+			"PMAT" YYYY 1;
 			TNT1 A 0 A_JumpIf(!invoker.Ammo1 || invoker.Ammo1.Amount < 1 || !invoker.AmmoLeft || invoker.AmmoLeft.Amount >= m41a_ammoFull, "BackToReadyDualFromRight");
-			PMDX EEDCBA 1;
+			"PMDX" EEDCBA 1;
 			TNT1 A 5;
 		ReloadLeft:
 			TNT1 A 0 A_JumpIf(invoker.AmmoLeft && invoker.AmmoLeft.Amount >= m41a_ammoFull, "BackToReadyDual");
 			TNT1 A 0 A_StartSound("IronSights", 1, CHANF_OVERLAP);
-			PMDX ABCDEE 1;
-			PMAR P 1;
-			PMAR QQRST 1;
+			"PMDX" ABCDEE 1;
+			"PMAR" P 1;
+			"PMAR" QQRST 1;
 			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
-			PMAR UVWX 1;
+			"PMAR" UVWX 1;
 			TNT1 A 0 PB_SpawnCasing("M41AEjectedMag", 24, -6, 28, frandom(2.0, 3.5), frandom(-1.5, 1.5), frandom(2.5, 3.8));
 			TNT1 A 0 A_StartSound("M41A/MagIn", 6);
-			PMAT ABCD 1;
+			"PMAT" ABCD 1;
 			TNT1 A 0 PB_AmmoIntoMag("M41AChamberAmmoLeft", "NewClip", m41a_ammoFull, 1);
 			TNT1 A 0 A_TakeInventory("M41AUnloaded", 1);
-			PMAT EFGH 1;
-			PMAT IJKL 1;
-			PMAT MNOP 1;
+			"PMAT" EFGH 1;
+			"PMAT" IJKL 1;
+			"PMAT" MNOP 1;
 			TNT1 A 0 A_StartSound("M41A/Bolt", 0);
-			PMAT QRRRST 1;
-			PMAT UVWX 1;
-			PMAT YYYY 1;
+			"PMAT" QRRRST 1;
+			"PMAT" UVWX 1;
+			"PMAT" YYYY 1;
 		BackToReadyDualFromLeft:
-			PMDL ABCDEF 1;
+			"PMDL" ABCDEF 1;
 			TNT1 A 0 A_StartSound("IronSights", 1, CHANF_OVERLAP);
-			PMDL GHI 1;
+			"PMDL" GHI 1;
 			Goto ReadyDualWield;
 		BackToReadyDual:
-			PMDU ABCD 1;
+			"PMDU" ABCD 1;
 			Goto ReadyDualWield;
 		BackToReadyDualFromRight:
-			PMDE HGFE 1;
+			"PMDE" HGFE 1;
 			TNT1 A 0 A_StartSound("IronSights", 1, CHANF_OVERLAP);
-			PMDE DCBA 1;
+			"PMDE" DCBA 1;
 			Goto ReadyDualWield;
 		StartReloadFromLeft:
 			TNT1 A 0 A_JumpIf(invoker.AmmoLeft && invoker.AmmoLeft.Amount >= m41a_ammoFull, "BackToReadyDual");
-			PMDU DCBA 1;
+			"PMDU" DCBA 1;
 			TNT1 A 3;
 			Goto ReloadLeft;
 
 		UnloadDualWield:
 			TNT1 A 0 M41A_ClearDualOverlays();
-			PMDU DCBA 1;
+			"PMDU" DCBA 1;
 			TNT1 A 15;
 			TNT1 A 0 A_StartSound("M41A/MagTake", 5);
 			TNT1 A 0 PB_UnloadMag("M41AChamberAmmo", "NewClip", 1);
@@ -830,42 +809,42 @@ class PB_M41A : PB_WeaponBase
 
 		MuzzleFlash:
 			TNT1 A 0 A_OverlayFlags(overlayID(), PSPF_MIRROR | PSPF_FLIP, random(0, 1));
-			PMAF EF 1 Bright;
+			"PMAF" EF 1 Bright;
 			Stop;
 
 		PDA_Preview_M41Fire:
-			PMAF B 2 Bright;
-			PMAF C 2 Bright;
-			PMAF D 2;
+			"PMAF" B 2 Bright;
+			"PMAF" C 2 Bright;
+			"PMAF" D 2;
 			Stop;
 		PDA_Preview_M41AltGrenade:
-			PMAF AB 2 Bright;
-			PMAF C 2 Bright;
-			PMAF DEF 2;
-			PMAF A 2;
+			"PMAF" AB 2 Bright;
+			"PMAF" C 2 Bright;
+			"PMAF" DEF 2;
+			"PMAF" A 2;
 			Stop;
 		PDA_Preview_M41AltShell:
-			PMAF AB 2 Bright;
-			PMAF C 2 Bright;
-			PMAF DEF 2;
-			PMAF A 2;
+			"PMAF" AB 2 Bright;
+			"PMAF" C 2 Bright;
+			"PMAF" DEF 2;
+			"PMAF" A 2;
 			Stop;
 		PDA_Preview_M41Reload:
-			PMAR ABCD 2;
-			PMAR UVWX 2;
-			PMAT ABCD 2;
-			PMAT QRRRST 2;
+			"PMAR" ABCD 2;
+			"PMAR" UVWX 2;
+			"PMAT" ABCD 2;
+			"PMAT" QRRRST 2;
 			Stop;
 		PDA_Preview_M41Dual:
-			PMDT ABCD 2;
-			PMDT FGHI 2;
+			"PMDT" ABCD 2;
+			"PMDT" FGHI 2;
 			Stop;
 
 		MuzzleDualL:
-			PMLF EF 1 Bright;
+			"PMLF" EF 1 Bright;
 			Stop;
 		MuzzleDualR:
-			PMRF EF 1 Bright;
+			"PMRF" EF 1 Bright;
 			Stop;
 
 		FlashPunching:
@@ -874,7 +853,7 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashPunchingDualM41A");
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			PMAK ABCDEFGHFEDCBA 1;
+			"PMAK" ABCDEFGHFEDCBA 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 		FlashPunchingDualM41A:
@@ -883,7 +862,7 @@ class PB_M41A : PB_WeaponBase
 				M41A_SetSpriteIfDual("TNT1");
 			}
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto ReadyDualWield;
+			Goto Ready3;
 
 		FlashKicking:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelKicking");
@@ -891,7 +870,7 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelKicking");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashKickingDualM41A");
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			PMAK ABCDEFGHHFEDCBA 1;
+			"PMAK" ABCDEFGHHFEDCBA 1;
 			Goto Ready3;
 		FlashKickingDualM41A:
 			TNT1 A 0 M41A_ClearDualOverlays();
@@ -906,7 +885,7 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelAirKicking");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashAirKickingDualM41A");
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			PMAK ABCDEFGHHHFEDCBA 1;
+			"PMAK" ABCDEFGHHHFEDCBA 1;
 			Goto Ready3;
 		FlashAirKickingDualM41A:
 			TNT1 A 0 M41A_ClearDualOverlays();
@@ -921,7 +900,7 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingDualM41A");
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			PMAK ABCDEFGHHHHHHHHHHHHHGFEDCBA 1;
+			"PMAK" ABCDEFGHHHHHHHHHHHHHGFEDCBA 1;
 			Goto Ready3;
 		FlashSlideKickingDualM41A:
 			TNT1 A 0 M41A_ClearDualOverlays();
@@ -936,7 +915,7 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop");
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingStopDualM41A");
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			PMAK GFEDCBA 1;
+			"PMAK" GFEDCBA 1;
 			Goto Ready3;
 		FlashSlideKickingStopDualM41A:
 			TNT1 A 0 M41A_ClearDualOverlays();
