@@ -1,0 +1,85 @@
+// Cryo Shotgun ice projectiles (ported from PB Weapons Pack ICE.dec; sprites under SPRITES/Effects/CatsFrozenIce/).
+
+ACTOR Icebuckshot
+{
+	Projectile
+	+RANDOMIZE
+	+FORCEXYBILLBOARD
+	-NOGRAVITY
+	damage (random(40, 80))
+	gravity 0.3
+	radius 4
+	height 5
+	speed 35
+	alpha 0.8
+	scale 0.2
+	Decal "IceSmall"
+	DeathSound "iceimpa"
+	RenderStyle Add
+	DamageType "Ice"
+	States
+	{
+	Spawn:
+		ICBK ABAB 2 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(5,-5), random(5,-5), random(5,-5), 0, 0, 0, 0, 128, 0)
+		Loop
+	Death:
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorIce",0,0,1,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("DetectCeilIce",0,0,1,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 Bright A_ChangeFlag("ICEDAMAGE", 1)
+		TNT1 A 0 Bright A_Explode(60, 120, 0)
+		TNT1 AAAAA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64)
+		TNT1 AAAAAAA 0 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(5,-5), random(5,-5), random(5,-5), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64)
+		TNT1 A 0 Bright A_SpawnItemEx("IceExplosionImpact", 0, 0, 0, 0, 0, 0, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		BXPL ABCDEFGH 1 Bright
+		BXPL IJKLLM 1 Bright A_FadeOut(0.1)
+		Stop
+	}
+}
+
+ACTOR IceFlak1 : Icebuckshot {}
+
+ACTOR IceSpike : FastProjectile
+{
+	Radius 6
+	Height 8
+	Speed 45
+	Damage (random(25,50))
+	Projectile
+	DamageType "Ice"
+	RenderStyle Add
+	Alpha 0.95
+	DeathSound "iceimpa"
+	Decal "IceSmall"
+	Species "Marines"
+	+THRUSPECIES
+	+MTHRUSPECIES
+	States
+	{
+	Spawn:
+		ICPK A 3 Bright
+		TNT1 A 0 A_PlaySound("weapons/CryoRifle/spearfire", CHAN_7)
+		Loop
+	Death:
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorIce",0,0,1,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("DetectCeilIce",0,0,1,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 Bright A_ChangeFlag("ICEDAMAGE", 1)
+		TNT1 A 0 Bright A_Explode(40, 90, 0)
+		TNT1 AAAAAAA 0 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(5,-5), random(5,-5), random(5,-5), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64)
+		TNT1 AAAAAAA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64)
+		BXPL IJKLLM 1 Bright A_FadeOut(0.1)
+		Stop
+	}
+}
+
+ACTOR IceSpear : IceSpike
+{
+	+RIPPER
+	Scale 0.7
+	States
+	{
+	Spawn:
+		ICPK A 3 Bright
+		TNT1 A 0 A_PlaySound("weapons/CryoRifle/spearfire", CHAN_7)
+		Loop
+	}
+}

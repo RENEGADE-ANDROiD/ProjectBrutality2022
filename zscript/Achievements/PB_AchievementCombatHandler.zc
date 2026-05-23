@@ -214,7 +214,7 @@ class PB_AchievementCombatHandler : EventHandler
 			return PB_MK_SNIPER;
 
 		if (wpn == 'PB_PlasmaGun' || wpn == 'PB_M2Plasma' || wpn == 'PB_DarkMatterRifle'
-			|| wpn == 'ChexRifle' || wpn == 'PB_CryoElectroRifle')
+			|| wpn == 'ChexRifle' || wpn == 'PB_CryoShotgun')
 			return PB_MK_PLASMA;
 
 		if (wpn == 'WW_FreezenadeSelected')

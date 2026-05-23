@@ -22,12 +22,10 @@ PB_PICKUP_PB_CF_FREEZMINE = "Picked up freeze mine charges.";
 PB_PICKUP_PB_CRYOCELLS = "Picked up cryo cells.";
 PB_PICKUP_PB_CRYOCELLSPACK = "Picked up a cryo cell bundle.";
 PB_PICKUP_PB_CRYOCANNONCELLS = "Picked up cryo cannon fuel.";
-PB_PICKUP_PB_CRYOELECTRORIFLE = "Picked up the Cryo Electro Rifle (slot 8).";
+PB_PICKUP_PB_CRYOSHOTGUN = "Picked up the Cryo Shotgun (slot 3).";
 PB_PICKUP_PB_DARKMATTERRIFLE = "Picked up the UAC Prototype Dark Matter Rifle (slot 8).";
 PB_PICKUP_BIOACIDLAUNCHER = "Picked up the UAC Biological Acid Launcher (slot 7).";
 PB_TAG_BIOACIDLAUNCHER = "UAC-UM-32P Biological Acid Launcher";
-PB_PICKUP_PB_CRYOCANNON = "Picked up the Cryo Cannon (slot 9).";
-PB_PICKUP_PB_CRYOASG = "Picked up the Cryo Auto Shotgun (slot 3).";
 
 PB_PICKUP_GhostHealthBonus  = "Picked up a ghostly health bonus.";
 
@@ -403,6 +401,9 @@ PB_HUD_UNMAKER_INFERNO = "INFERNO";
 PB_HUD_UNMAKER_INCIN = "INCINERATION";
 PB_HUD_FLAMER_FLAME = "FLAME";
 PB_HUD_FLAMER_ACID = "ACID";
+PB_HUD_CRYO_BUCK = "BUCK";
+PB_HUD_CRYO_PELLET = "PELLET";
+PB_HUD_CRYO_WIND = "WIND";
 PB_HUD_CRYO_CRYO = "CRYO";
 PB_HUD_CRYO_ELECTRIC = "ELECTRIC";
 PB_HUD_DEMONEX_LASER = "LASER";
@@ -613,10 +614,8 @@ PB_PICKUP_PB_ObsidianDragonSlayer = "You claimed the Obsidian Dragon Slayer from
 PB_PICKUP_Stormcast = "You got the Arcane Power of Stormcasting! (Slot 9)";
 PB_WPNHINT_DragonSlayer = "Dragon Slayer: build Slayer energy with slashes; spend for empowered strikes.\nAlt-Fire: nail launcher Volley.\nObsidian Ravager drop only (limited durability on boss pickup).";
 PB_WPNHINT_Stormcast = "Stormcast (slot 9): PowerChargeStorm fuels the lightning beam (Fire) and alt-fire charge releases.\nHold Fire while charging alt for orb spells; hold Activate Equipment (User1) for stunwall variants; hold Weapon Special for Arc of Death charge tiers; tap Reload during charge for Lightning Warper; hold Alt-Fire while airborne after Fire for air lightning.\nSpawns from BFG pickups when enabled in Weapon Spawns.";
-PB_WPNHINT_PB_CryoElectroRifle = "Cryo Electro Rifle (slot 8): Weapon Special toggles Cryo vs Electric.\nPrimary: cryo orb or lightning missile (shared PB_CryoCells).\nReload trades PB_Cell packs into cryo ammo.";
+PB_WPNHINT_PB_CryoShotgun = "Cryo Shotgun (slot 3): pump-action cryo buckshot with ADS ice spears.\nWeapon Special cycles Cryo Pellets / Cryo Orb / Electric Bolt / Cryo Wind.\nUses PB_Cell reserve + internal magazine; alt modes use PB_Shell, PB_CryoCells, or PB_CryoCannonCells.";
 PB_WPNHINT_PB_DARKMATTERRIFLE = "Dark Matter Rifle (slot 8): Weapon Special wheel picks Alt-Fire payload â€” charged Super Plasma Ball or Gravity Singularity.\nPrimary: fast plasma orb (PB_DarkMatterMag).\nReload feeds the magazine from Cell reserve; unload supported.";
-PB_WPNHINT_PB_CryoCannon = "Cryo Cannon (slot 9): cone of cryo wind; uses PB_CryoCannonCells.\nReload trades PB_Cell into cannon fuel.";
-PB_WPNHINT_PB_CryoASG = "Cryo Auto Shotgun (slot 3): cryo pellet burst; uses PB_Shell (2 per shot).\nEach pellet applies brief cryo slow.";
 PB_WPNHINT_VorpalBlade = "Lifesteal Sword: Lunges Lock Targets.\nBerserk Alt-Fire: BladeStorm.";
 
 PB_PICKUP_HASG = "UAC XHAS-SP -;{The Lady Golide};- (Slot 3)";

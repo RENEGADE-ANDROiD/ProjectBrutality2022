@@ -246,17 +246,15 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot4/Ballista/ProSurv_Ballista.zs"
 #include "zscript/Weapons/Slot3/MarauderSSG/MarauderSSG.zs"
 #include "zscript/Weapons/Slot3/X12Shotgun/X12Shotgun.zs"
-#include "zscript/Weapons/Slot3/CryoASG/PB_CryoASG.zs"
+#include "zscript/Weapons/Slot3/CryoShotgun/PB_CryoShotgun.zs"
 #include "zscript/Weapons/Slot6/M2Plasma/PB_M2Plasma.zs"
 #include "zscript/Weapons/Slot7/Freezer/PB_Freezer.zs"
-#include "zscript/Weapons/Slot8/CryoElectroRifle/PB_CryoElectroRifle.zs"
 #include "zscript/Weapons/Slot8/BFG9000/PB_BFG9000.zs"
 #include "zscript/Weapons/Slot9/Flamethrower/PB_Flamethrower.zs"
 #include "zscript/Weapons/Slot9/HellRifle/Hell_rifle.zs"
 #include "zscript/Weapons/Slot9/Unmaker/PB_Unmaker.zs"
 //#include "zscript/Weapons/Slot9/DemonExterminator/PB_DemonExterminator.zs" // disabled
 //#include "zscript/Weapons/Slot9/DemonExterminator/PB_DemonExterminator_Functions.zsc"
-#include "zscript/Weapons/Slot9/CryoCannon/PB_CryoCannon.zs"
 #include "zscript/Weapons/Slot3/CSSG/CSSGEvent.zs"
 
 #include "zscript/Spawner/PB_SpawnerBase.zc"

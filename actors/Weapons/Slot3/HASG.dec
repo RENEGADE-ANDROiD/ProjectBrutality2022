@@ -39,7 +39,7 @@ Actor ASGChamber : Ammo
 {
     +IGNORESKILL
     Inventory.MaxAmount 16
-    Inventory.Icon "0ESGA0"
+    Inventory.Icon "HASGA0"
 }
 
 // --- Projectile / casing aliases (PBWP -> PB2022) --------------------------

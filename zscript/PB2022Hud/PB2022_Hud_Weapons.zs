@@ -111,18 +111,53 @@ extend class PB2022_Hud_ZS
 					PB2022_DrawHeatMeterRow("BARBACY2", "ABAR1", IntAmmo2, Secondary.MaxAmount, false, true);
 				return true;
 
+			case 'PB_CryoShotgun':
+				if (CheckInventory("PB_CryoShotgun_Pellet"))
+				{
+					let shellInv = Ammo(plr.FindInventory('PB_Shell'));
+					if (shellInv)
+					{
+						Primary = shellInv;
+						Secondary = null;
+					}
+					weaponBarAccent = Font.CR_ORANGE;
+					DrawAmmoBar("BARBACO1", "BARBACO2", "BARBACO3", "BAMBAR3", "ABAR3", "ABAR3", "AMMOIC3", Font.CR_ORANGE, drawSecondary: false);
+				}
+				else if (CheckInventory("PB_CryoShotgun_Orb") || CheckInventory("PB_CryoShotgun_Electric"))
+				{
+					let cryoInv = Ammo(plr.FindInventory('PB_CryoCells'));
+					if (cryoInv)
+					{
+						Primary = Ammo(plr.FindInventory('PB_Cell'));
+						Secondary = cryoInv;
+					}
+					weaponBarAccent = CheckInventory("PB_CryoShotgun_Electric") ? Font.CR_WHITE : Font.CR_CYAN;
+					DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", weaponBarAccent);
+				}
+				else if (CheckInventory("PB_CryoShotgun_Wind"))
+				{
+					let windInv = Ammo(plr.FindInventory('PB_CryoCannonCells'));
+					if (windInv)
+					{
+						Primary = Ammo(plr.FindInventory('PB_Cell'));
+						Secondary = windInv;
+					}
+					weaponBarAccent = Font.CR_CYAN;
+					DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_CYAN);
+				}
+				else
+				{
+					weaponBarAccent = Font.CR_CYAN;
+					DrawAmmoBar("BARBACO1", "BARBACO2", "BARBACO3", "BAMBAR3", "ABAR3", "ABAR3", "AMMOIC3", Font.CR_CYAN);
+				}
+				return true;
+
 			case 'PB_Minigun':
 			case 'PB_BFG9000':
-			case 'PB_CryoCannon':
 			case 'Stormcast':
 			case 'BHGen':
 				weaponBarAccent = Font.CR_PURPLE;
 				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawSecondary: false);
-				return true;
-
-			case 'PB_CryoElectroRifle':
-				weaponBarAccent = CheckInventory("PB_CryoElectroRifle_ElectricMode") ? Font.CR_WHITE : Font.CR_CYAN;
-				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", weaponBarAccent);
 				return true;
 
 			case 'MarauderSSG':
@@ -242,15 +277,30 @@ extend class PB2022_Hud_ZS
 					col = Font.CR_ORANGE;
 				}
 				break;
-			case 'PB_CryoElectroRifle':
-				if (CheckInventory("PB_CryoElectroRifle_ElectricMode"))
+			case 'PB_CryoShotgun':
+				if (CheckInventory("PB_CryoShotgun_Pellet"))
+				{
+					label = StringTable.Localize("$PB_HUD_CRYO_PELLET", false);
+					col = Font.CR_ORANGE;
+				}
+				else if (CheckInventory("PB_CryoShotgun_Orb"))
+				{
+					label = StringTable.Localize("$PB_HUD_CRYO_CRYO", false);
+					col = Font.CR_CYAN;
+				}
+				else if (CheckInventory("PB_CryoShotgun_Electric"))
 				{
 					label = StringTable.Localize("$PB_HUD_CRYO_ELECTRIC", false);
 					col = Font.CR_WHITE;
 				}
+				else if (CheckInventory("PB_CryoShotgun_Wind"))
+				{
+					label = StringTable.Localize("$PB_HUD_CRYO_WIND", false);
+					col = Font.CR_CYAN;
+				}
 				else
 				{
-					label = StringTable.Localize("$PB_HUD_CRYO_CRYO", false);
+					label = StringTable.Localize("$PB_HUD_CRYO_BUCK", false);
 					col = Font.CR_CYAN;
 				}
 				break;
