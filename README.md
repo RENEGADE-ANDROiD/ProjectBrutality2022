@@ -90,7 +90,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **X12 Shotgun** — special shotgun with Project Brutality shell handling.
 - **Quad-Barrel Shotgun** — four-barrel burst weapon with special-wheel behavior.
 - **Marauder Shotgun** — Marauder-style super shotgun variant; uses a hidden **wear** pool (not reserve shells) that drops by one per meaningful shot, **breaks** the weapon when empty, and **refills wear to max** if you pick up another copy while still holding a depleted one. **Marauders** sometimes leave one on death; scripted fatality floor spawns are only ~50% likely.
-- **Cryo Auto Shotgun** — Cat's Frozen cryo shotgun; shell-fed cryo pellet burst that applies brief cryo slow per pellet (always rolls from shotgun spawners).
+- **Cryo Shotgun** — TeiTenga C-2-1 pump shotgun (Project Brutality Weapons Pack art) with five **Weapon Special** fire modes: cryo buckshot and ADS ice spears (default), cryo pellet burst, cryo orb, electric bolt, and cryo wind cone. Uses cell reserve plus internal magazine for buckshot; alt modes draw from shells, cryo cells, or cryo cannon fuel pickups. Rolls from shotgun, plasma-rifle, and BFG weapon spawners; legacy map placements for the former three Cat's Frozen cryo guns still resolve to this weapon.
 
 **Slot 4 — Rifles, precision & support**
 
@@ -134,7 +134,6 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 
 - **UAC-M1 Plasma Rifle** — plasma rifle with single/dual weapon-special support and plasma wall-climb behavior.
 - **UAC-M2 Plasma Rifle** — alternate plasma rifle using the same movement-friendly plasma impact family.
-- **Cryo Electro Rifle** — Cat's Frozen cryo + electric rifle; **Weapon Special** switches **Cryo** mode (cryo orb, slowdown) and **Electric** mode (lightning shot reused from Stormcast). Uses cryo cell ammo with standard cell packs as reload feed. HUD ammo color shifts with the active mode. Always rolls from plasma spawners.
 - **UAC Prototype Dark Matter Rifle** — magazine-fed plasma orbs; chargeable Alt-Fire (super plasma ball vs gravity singularity via Weapon Special), standard cell reserve plus internal magazine, plasma wall-climb on primary impacts; rolls from plasma spawners with an optional **Weapon Settings** toggle.
 
 **Slot 9 — Super-weapons**
@@ -143,7 +142,6 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **Unmaker** — demonic super-weapon for high-end energy damage.
 - **BFG9000 MK IV** — BFG-class room clearer.
 - **BFG 11K Prototype / BFG Beam** — beam-style BFG super-weapon entry.
-- **Cryo Cannon** — Cat's Frozen cryo cannon; cone-shaped cryo wind burst using cryo cannon cells with standard cell packs as reload. Heavy burst pattern; slows and chips at clusters. Always rolls from BFG spawners.
 - **Stormcast** — lightning staff (*Schism* lineage; *see CREDITS.txt*). Slot **9**, one shared charge pool; chords replace the old weapon-special wheel.
   - **Primary** — staff lightning / melee (needs charge; **Berserk** upgrades the strikes).
   - **Alt-Fire (hold)** — build charge; **release** to cast a bolt scaled to charge.
@@ -321,7 +319,7 @@ This build layers several community sources into Project Brutality’s own syste
 | **Brutal Pack (e.g. V10 class packs)** | Used in development as selective art and finisher reference; **this repo does not ship the Brutal Pack in full**—only what was adapted into Project Brutality 2022’s roster and Glory Kill flows. |
 | **Brutal Doom 22 (BDv22)** | Optional-style gore assets and handlers packaged under their own names; enabled through **2022 Enhanced Brootality**. Credit **Brutal Doom 22** as a project and respect its license if you redistribute those assets. |
 | **Brutal Pack V10 (BPv10) gore** | Humanoid and imp-family death extras (burned bodies, carbonized remains, torsos, organs, splats); enabled through **2022 Enhanced Brootality**. Sprites credited to **AWEZ**; respect Brutal Pack licensing if you redistribute. |
-| **Cat's Frozen Addon** (SchrödingCat) | Cryo slowdown, frozen-solid corpses, four frost monsters, six extra equipment-wheel tools plus Freeze Nade, and three cryo weapons—**always-on standard content.** Asset attribution: SchrödingCat plus addon-listed contributors (Sergeant_Mark_IV, IDDQD_1337, TypicalSF, Eriance/Amuscaria, Electro7777, Captain Toenail, Rifleman, Gothic, Thanuris, Ganbare-Lucifer, DeVloek, Bloax, ZZrionTheInsect, Xaser, Ethril). See **`CREDITS.txt`** for the per-piece breakdown. |
+| **Cat's Frozen Addon** (SchrödingCat) | Cryo slowdown, frozen-solid corpses, four frost monsters, six extra equipment-wheel tools plus Freeze Nade, and the **Cryo Shotgun** (slot 3) with five weapon-special fire modes—**always-on standard content.** Cryo cell and cryo cannon fuel pickups still appear for the shotgun's alt modes. Asset attribution: SchrödingCat plus addon-listed contributors (Sergeant_Mark_IV, IDDQD_1337, TypicalSF, Eriance/Amuscaria, Electro7777, Captain Toenail, Rifleman, Gothic, Thanuris, Ganbare-Lucifer, DeVloek, Bloax, ZZrionTheInsect, Xaser, Ethril). See **`CREDITS.txt`** for the per-piece breakdown. |
 
 ## Credits
 
@@ -334,7 +332,7 @@ Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki11
 - Expanded first-person executions with art lineage from **Brutal Doom *El Diablo* Edition** and related packs.
 - Glory Kill shoulder launcher art and Eternal-style fuel HUD glyphs aligned with the newer Glory Kills presentation.
 - **Explosive Movement** extended to Mastermind chaingun tracers and Cat's Frozen freezenade / freeze mines.
-- Cat's Frozen cryo enemies, statues, equipment, and weapons as always-on content.
+- Cat's Frozen cryo enemies, statues, equipment, and the unified **Cryo Shotgun** as always-on content.
 - Kill-streak reward variety (including a revamped drone summon and optional flashlight glow).
 
 Credit to **BeefRice** and **Jaih1r0** for fullscreen weapon HUD elements and many weapon improvements and systems. Thanks to **HUNG** for the **Shield Saw** behavior included in this build (quick melee + recall).

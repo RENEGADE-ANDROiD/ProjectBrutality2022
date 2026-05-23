@@ -884,7 +884,7 @@ class PB_EventHandler : EventHandler
 		double cx = double(Screen.GetWidth() + offX) - boxW * 0.5;
 		double cy = double(Screen.GetHeight() + offY) - boxH * 0.5;
 
-		// Wide/padded pickup icons (0ESGA0) letterbox tiny with contain-fit; cover-fit fills the HUD box.
+		// Wide icons (e.g. HASGA0) use cover-fit so the portrait box fills instead of letterboxing.
 		bool coverPortrait = weaponClass == 'HASG' || PB2022_WeaponHudIconExtremeAspect(iconID);
 		DrawClipFittedTexture(iconID, cx, cy, boxW, boxH, alpha, coverPortrait, coverPortrait);
 	}
@@ -1052,21 +1052,27 @@ class PB_EventHandler : EventHandler
 					modeIcon = PB2022_ModeHudLump("AMMOIC5");
 				break;
 
-			case 'PB_CryoElectroRifle':
+			case 'PB_CryoShotgun':
 				localScale = 0.9;
 				localOffY = -40.0;
-				if (mo.CountInv("PB_CryoElectroRifle_ElectricMode") >= 1)
+				if (mo.CountInv("PB_CryoShotgun_Pellet") >= 1)
+					modeIcon = PB2022_ModeHudLump("AMMOIC3");
+				else if (mo.CountInv("PB_CryoShotgun_Electric") >= 1)
 				{
 					modeIcon = PB2022_ModeHudLump("ZAP6A1");
 					if (!PB2022_TexValid(modeIcon))
 						modeIcon = PB2022_ModeHudLump("CELLA0");
 				}
-				else
+				else if (mo.CountInv("PB_CryoShotgun_Orb") >= 1)
 				{
 					modeIcon = PB2022_ModeHudLump("BXPLA0");
 					if (!PB2022_TexValid(modeIcon))
 						modeIcon = PB2022_ModeHudWheel("graphics/pywheel/grenade_cryo.png");
 				}
+				else if (mo.CountInv("PB_CryoShotgun_Wind") >= 1)
+					modeIcon = PB2022_ModeHudLump("CELLA0");
+				else
+					modeIcon = PB2022_ModeHudLump("FZSGA0");
 				break;
 
 			case 'PB_SMG':
@@ -2809,13 +2815,13 @@ class PB_EventHandler : EventHandler
 		}
 	}
 
-	void PDA_WeaponStrip_AppendCryoASGPreview(Name nm,
+	void PDA_WeaponStrip_AppendPB_CryoShotgunPreview(Name nm,
 		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
 		bool useSeg, int hardCap,
 		int fireTicCap, int flashTics, int flashSeek,
 		bool includeOverlays, int overlayTicCap, int overlayMaxSteps)
 	{
-		if (nm != 'PB_CryoASG')
+		if (nm != 'PB_CryoShotgun')
 			return;
 		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Fire", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
@@ -2823,15 +2829,6 @@ class PB_EventHandler : EventHandler
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Reload", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		if (includeOverlays)
-		{
-			PDA_WeaponStrip_AppendOverlayIfPresent(nm, "Smoke", outFr, outTi, outSeg, useSeg, hardCap,
-				PB_PDA_WEAPON_PREVIEW_SEG_OVERLAY, overlayMaxSteps, overlayTicCap);
-			PDA_WeaponStrip_AppendOverlayIfPresent(nm, "Shells", outFr, outTi, outSeg, useSeg, hardCap,
-				PB_PDA_WEAPON_PREVIEW_SEG_OVERLAY, overlayMaxSteps, overlayTicCap);
-			PDA_WeaponStrip_AppendOverlayIfPresent(nm, "Pump", outFr, outTi, outSeg, useSeg, hardCap,
-				PB_PDA_WEAPON_PREVIEW_SEG_OVERLAY, overlayMaxSteps, overlayTicCap);
-		}
 	}
 
 	void PDA_WeaponStrip_AppendPB_ShotgunPreview(Name nm,
@@ -3109,38 +3106,6 @@ class PB_EventHandler : EventHandler
 		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_FreezerBeamLoop", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_FreezerBeamEnd", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-	}
-
-	void PDA_WeaponStrip_AppendPB_CryoElectroRiflePreview(Name nm,
-		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
-		bool useSeg, int hardCap,
-		int fireTicCap, int flashTics, int flashSeek)
-	{
-		if (nm != 'PB_CryoElectroRifle')
-			return;
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_CEReady", PB_PDA_WEAPON_PREVIEW_SEG_READY, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_CECryo", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_CEElectric", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_CEReload", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-	}
-
-	void PDA_WeaponStrip_AppendPB_CryoCannonPreview(Name nm,
-		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
-		bool useSeg, int hardCap,
-		int fireTicCap, int flashTics, int flashSeek)
-	{
-		if (nm != 'PB_CryoCannon')
-			return;
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_CCReady", PB_PDA_WEAPON_PREVIEW_SEG_READY, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_CCFire", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_CCReload", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 	}
 
@@ -3702,8 +3667,8 @@ class PB_EventHandler : EventHandler
 		int effReadyMax = readyMax;
 		int effReadyFixedTic = readyFixedTic;
 		if (nm == 'BioAcidLauncher' || nm == 'PB_CyberdemonRL' || nm == 'PB_NeoHMG'
-			|| nm == 'PB_Excavator' || nm == 'PB_M41A' || nm == 'PB_CryoElectroRifle'
-			|| nm == 'PB_CryoCannon' || nm == 'PB_CryoASG' || nm == 'PB_Fusil' || nm == 'Paingiver'
+			|| nm == 'PB_Excavator' || nm == 'PB_M41A' || nm == 'PB_CryoShotgun'
+			|| nm == 'PB_Fusil' || nm == 'Paingiver'
 			|| nm == 'PB_RiotShieldModule')
 		{
 			effReadyMax = max(1, readyMax / 4);
@@ -3741,9 +3706,9 @@ class PB_EventHandler : EventHandler
 				fireTicCap, flashTics, flashSeek, includeOverlays, overlayTicCap, overlayMaxSteps);
 			return;
 		}
-		if (nm == 'PB_CryoASG')
+		if (nm == 'PB_CryoShotgun')
 		{
-			PDA_WeaponStrip_AppendCryoASGPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
+			PDA_WeaponStrip_AppendPB_CryoShotgunPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
 				fireTicCap, flashTics, flashSeek, includeOverlays, overlayTicCap, overlayMaxSteps);
 			return;
 		}
@@ -3882,18 +3847,6 @@ class PB_EventHandler : EventHandler
 		if (nm == 'PB_Freezer')
 		{
 			PDA_WeaponStrip_AppendPB_FreezerPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
-				fireTicCap, flashTics, flashSeek);
-			return;
-		}
-		if (nm == 'PB_CryoElectroRifle')
-		{
-			PDA_WeaponStrip_AppendPB_CryoElectroRiflePreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
-				fireTicCap, flashTics, flashSeek);
-			return;
-		}
-		if (nm == 'PB_CryoCannon')
-		{
-			PDA_WeaponStrip_AppendPB_CryoCannonPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
 				fireTicCap, flashTics, flashSeek);
 			return;
 		}

@@ -1,4 +1,4 @@
-// Cat's Frozen Slice 5 — PBCF_CryoPellet (cryo ASG pellets).
+// Cat's Frozen — PBCF_CryoPellet (used by PB_CryoShotgun pellet mode).
 
 class PBCF_CryoPellet : FastProjectile
 {
@@ -19,7 +19,7 @@ class PBCF_CryoPellet : FastProjectile
 	{
 	Spawn:
 	Fly:
-		CRY0 A 1 Bright;
+		CRY0 A 2 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(5, -5), random(5, -5), random(5, -5), 0, 0, 0, 0, 128, 0);
 		Loop;
 	Death:
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorIce",0,0,1,0,0,0,0,SXF_NOCHECKPOSITION,0);

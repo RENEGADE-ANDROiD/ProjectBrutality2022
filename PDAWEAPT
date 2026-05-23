@@ -191,34 +191,14 @@ Recoil: N/A
 Alt-Fire: Beam-assisted strikes / specials per stance
 Firemodes: Melee beam katana
 Akimbo: X#
-Cryo Electro Rifle$Dual-element rifle spun up from Cat's Frozen labs: primary lens fires slowing cryo orbs; Weapon Special flips the emitter to Stormcast-derived seeking lightning that punches armor with high-voltage contacts.$PB_CryoElectroRifle$Manufacturer: Cat's Frozen / UAC joint trials
-Magazine Capacity: 40-round cryo cell per reload tap (expandable reserve cap)
-Ammunition: PB_CryoCells + PB_Cell reload conversion
-Effective Range: Medium
-Primary cryo: Orb (slowing frost payload)
-Primary electric: LightningMissile2-class bolt (~120 ripping seeker damage profile)
-RPM: Semi-auto per lens
-Recoil: Low–moderate
-Alt-Fire: Mode selection via Weapon Special (cryo vs electric)
-Firemodes: Dual emitter semi-auto
-Akimbo: X#
-Cryo Cannon$Heavy area denial cannon dumping concentrated cryo wind cones—think flamer mentality with blue frost instead of orange flame.$PB_CryoCannon$Manufacturer: Cat's Frozen heavy weapons
-Magazine Capacity: 40 charges default pool (12 cells per blast)
-Ammunition: PB_CryoCannonCells
-Effective Range: Short–medium cone
-RPM: Burst-limited by cell drain
-Recoil: Moderate platform shake
-Alt-Fire: Handling / respect chains
-Firemodes: Cryo wind bursts
-Akimbo: X#
-Cryo Auto Shotgun$Automatic shotgun tuned for sheet ice—each pull spatters multiple cryo pellets in a wide curtain good for hallway clears.$PB_CryoASG$Manufacturer: Cat's Frozen riot line
-Magazine Capacity: Shell-fed automatic (2 shells per burst)
-Ammunition: PB_Shell + PBCF_CryoPellet swarm
-Effective Range: Short (spread-dependent)
-RPM: Automatic shotgun cadence
-Recoil: High
-Alt-Fire: Respect / equipment chains
-Firemodes: Automatic cryo buckshot
+Cryo Shotgun$TeiTenga C-2-1 pump shotgun from the PB Weapons Pack, now the unified cryo platform: native ice-flak buckshot and ADS ice spears, plus Weapon Special modes folded from the former Cryo ASG (pellet burst), Cryo/Electro rifle (orb + lightning), and Cryo Cannon (wind cone).$PB_CryoShotgun$Manufacturer: TeiTenga / Cat's Frozen labs
+Magazine Capacity: 120-round internal CryoShotgunAmmo tube (12 cells per buckshot blast) + mode-specific reserves
+Ammunition: PB_Cell + CryoShotgunAmmo (buckshot); PB_Shell (pellets); PB_CryoCells (orb/electric); PB_CryoCannonCells (wind)
+Effective Range: Short (spread); medium with ADS spears / orb / electric
+RPM: Pump-action buckshot; semi-auto alt modes
+Recoil: Moderate pump kick; heavier on wind bursts
+Alt-Fire: ADS zoom (buckshot + ice spears on default mode)
+Firemodes: Cryo Buckshot / Cryo Pellets / Cryo Orb / Electric Bolt / Cryo Wind (Weapon Special wheel)
 Akimbo: X#
 UAC-41 Carbine$Staging-standard UAC41 carbine: lightweight assault filler between rifles and SMGs. Weapon Special cycles semi, burst, full-auto, iron sights, and akimbo doctrine—modes stack with ADS hold preference.$PB_Carbine$Manufacturer: UAC
 Magazine Capacity: Dual-stack XRifleAmmo chamber + NewClip reserve
