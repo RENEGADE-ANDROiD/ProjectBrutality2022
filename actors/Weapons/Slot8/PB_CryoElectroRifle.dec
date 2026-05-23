@@ -1,8 +1,0 @@
-// PB_CryoElectroRifle weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript\Weapons\Slot8\CryoElectroRifle\PB_CryoElectroRifle.zs
-// Cat's Frozen Slice 5 — merged Cryo + Electric rifle (slot 8, energy/plasma line). Wheel: Select_PB_CryoElectro_* tokens.
-
-
-ACTOR PB_CryoElectroRifle_ElectricMode : Inventory { Inventory.MaxAmount 1 }
-
-ACTOR Select_PB_CryoElectro_Cryo : Inventory { Inventory.MaxAmount 1 }
-ACTOR Select_PB_CryoElectro_Electric : Inventory { Inventory.MaxAmount 1 }

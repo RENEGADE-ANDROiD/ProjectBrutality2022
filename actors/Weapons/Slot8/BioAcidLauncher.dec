@@ -19,6 +19,7 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 	+WEAPON.NOAUTOFIRE
 	+WEAPON.AMMO_OPTIONAL
 	+WEAPON.NO_AUTO_SWITCH
+	+WEAPON.CHEATNOTWEAPON
 	Inventory.PickupSound "BFGPICKUP"
 	Inventory.Pickupmessage "$PB_PICKUP_BIOACIDLAUNCHER"
 	Inventory.Icon "BPBLM0"

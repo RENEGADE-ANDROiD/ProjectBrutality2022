@@ -22,8 +22,8 @@ class HASG : PB_WeaponBase
     +WEAPON.NO_AUTO_SWITCH;
     Inventory.PickupSound "ASG_GOLI";
     Inventory.PickupMessage "$PB_PICKUP_HASG";
-    Inventory.Icon "0ESGA0";
-    Inventory.AltHUDIcon "0ESGA0";
+    Inventory.Icon "HASGA0";
+    Inventory.AltHUDIcon "HASGA0";
     Obituary "$OB_MPSHOTGUN";
     PB_WeaponBase.RespectItem "HASGRespecter";
     Tag "UAC XHAS-SP - Lady Golide";
@@ -31,7 +31,7 @@ class HASG : PB_WeaponBase
 	states
 	{
 		Spawn:
-		"0ESG" A -1;
+		"HASG" A -1;
 		Stop;
 
 		Steady:

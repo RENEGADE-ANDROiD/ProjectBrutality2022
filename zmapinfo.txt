@@ -399,9 +399,9 @@ DoomEdNums
 	23210 = PB_CF_FlameTurretPickup
 	23211 = PB_CF_FreezeMinePickup
 
-	23212 = PB_CryoASG
-	23214 = PB_CryoElectroRifle
-	23215 = PB_CryoCannon
+	23212 = PB_CryoShotgun
+	23214 = PB_CryoShotgun
+	23215 = PB_CryoShotgun
 	23216 = PB_CryoCellsPickup
 	23217 = PB_CryoCellsPack
 	23218 = PB_CryoCannonCellsPickup

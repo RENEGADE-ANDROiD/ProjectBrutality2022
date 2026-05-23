@@ -608,15 +608,15 @@ statusbar fullscreen, fullscreenoffsets
 				DrawNumber 3, AANUM3, Orange, ammo2, Alignment(right), -205, -69;
 				DrawBar "RESBAR3", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
 			}
-			IsSelected PB_CryoASG {
+			IsSelected PB_CryoShotgun {
 				drawimage "BARBACO1", -73, -17, centerbottom, 180, 22;
 				drawimage "BARBACO2", -72, -49, centerbottom, 180, 22;
 				DrawImage "BAMBAR3", -100, -30;
 				DrawImage "BAMBAR3", -100, -52;
 				DrawBar "CURBAR3", "BGBARL", ammo2, horizontal, interpolate (64), -111, -52;
 				Drawimage "AMMOIC3", -66, -17, centerbottom, 17, 17;
-				DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -216, -49;
-				DrawNumber 3, AANUM3, Orange, ammo2, Alignment(right), -205, -69;
+				DrawNumber 3, AANUM3, Cyan, ammo1, Alignment(right), -216, -49;
+				DrawNumber 3, AANUM3, Cyan, ammo2, Alignment(right), -205, -69;
 				DrawBar "RESBAR3", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
 			}
 			IsSelected PB_Autoshotgun {
@@ -862,30 +862,6 @@ statusbar fullscreen, fullscreenoffsets
 				DrawNumber 3, AANUM3, Purple, ammo2, Alignment(right), -205, -69;
 				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
 			}
-			IsSelected PB_CryoElectroRifle {
-				InInventory PB_CryoElectroRifle_ElectricMode {
-					drawimage "BARBACP1", -73, -17, centerbottom, 180, 22;
-					drawimage "BARBACP2", -72, -49, centerbottom, 180, 22;
-					DrawImage "BAMBAR5", -100, -30;
-					DrawImage "BAMBAR5", -100, -52;
-					DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -111, -52;
-					Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
-					DrawNumber 3, AANUM3, White, ammo1, Alignment(right), -216, -49;
-					DrawNumber 3, AANUM3, White, ammo2, Alignment(right), -205, -69;
-					DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
-				}
-				else {
-					drawimage "BARBACP1", -73, -17, centerbottom, 180, 22;
-					drawimage "BARBACP2", -72, -49, centerbottom, 180, 22;
-					DrawImage "BAMBAR5", -100, -30;
-					DrawImage "BAMBAR5", -100, -52;
-					DrawBar "CURBAR5", "BGBARL", ammo2, horizontal, interpolate (64), -111, -52;
-					Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
-					DrawNumber 3, AANUM3, Cyan, ammo1, Alignment(right), -216, -49;
-					DrawNumber 3, AANUM3, Cyan, ammo2, Alignment(right), -205, -69;
-					DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
-				}
-			}
 			IsSelected PB_DarkMatterRifle {
 				drawimage "BARBACP1", -73, -17, centerbottom, 180, 22;
 				drawimage "BARBACP2", -72, -49, centerbottom, 180, 22;
@@ -902,13 +878,6 @@ statusbar fullscreen, fullscreenoffsets
 				DrawImage "BAMBAR5", -100, -30;
 				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
 				DrawNumber 3, AANUM3, Purple, ammo1, Alignment(right), -216, -49;
-				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
-			}
-			IsSelected PB_CryoCannon {
-				drawimage "BARBACP1", -73, -17, centerbottom, 180, 22;
-				DrawImage "BAMBAR5", -100, -30;
-				Drawimage "AMMOIC5", -66, -17, centerbottom, 17, 17;
-				DrawNumber 3, AANUM3, Cyan, ammo1, Alignment(right), -216, -49;
 				DrawBar "RESBAR5", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
 			}
 			IsSelected Stormcast {
