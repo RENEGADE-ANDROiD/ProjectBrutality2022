@@ -143,8 +143,6 @@ const MAXITERATIONS = 32676;
 #include "zscript/Effects/PBCF_CryoSlowProjectiles.zc"
 #include "zscript/Weapons/CatsFrozen/PB_CatsFrozenWeapons.zc"
 #include "zscript/Effects/JunkedBarrel.txt"
-#include "zscript/Effects/SimpleTeleporter/fountain.zsc"
-#include "zscript/Effects/SimpleTeleporter/teleporter_effects.zsc"
 
 #include "zscript/Achievements/VUAS/AchievementData.zs"
 #include "zscript/Achievements/VUAS/AchievementHandler.zs"

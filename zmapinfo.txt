@@ -151,7 +151,6 @@ GameInfo
 	AddEventHandlers = "PB_MarauderSupportHandler"
 	AddEventHandlers = "PB_RLACSHandler"
 	AddEventHandlers = "PB_DMRReticleHandler"
-	AddEventHandlers = "TeleporterEffects"
 	AddEventHandlers = "VUAS_AchievementHandler"
 	AddEventHandlers = "VUAS_PersistentTracker"
 	AddEventHandlers = "VUAS_AchievementRenderer"
