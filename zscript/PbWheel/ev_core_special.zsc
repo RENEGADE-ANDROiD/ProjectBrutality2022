@@ -1443,38 +1443,6 @@ Class PB_SpecialWheelHandler : EventHandler
 				specialWheel_handleMouse();
 	}
 
-	void specialWheel_PB_CryoElectroRifle()
-	{
-		wheelSpecials.Clear();
-		iconScale = (0.75, 0.75);
-
-		PB_SpecialWheel_Mode m_cryo = new ("PB_SpecialWheel_Mode");
-		TextureID icCryo = TexMan.CheckForTexture("BXPLA0", TexMan.Type_Any);
-		if (!icCryo.isValid())
-			icCryo = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
-		m_cryo.specialIcon = icCryo;
-		m_cryo.specialName = "Select_PB_CryoElectro_Cryo";
-		m_cryo.specialAlias = "Cryo Mode";
-		m_cryo.specialPriority = 1;
-		m_cryo.iconScale = iconScale;
-		wheelSpecials.Push(m_cryo);
-
-		PB_SpecialWheel_Mode m_elec = new ("PB_SpecialWheel_Mode");
-		TextureID icElec = TexMan.CheckForTexture("ZAP6A1", TexMan.Type_Any);
-		if (!icElec.isValid())
-			icElec = TexMan.CheckForTexture("CELLA0", TexMan.Type_Any);
-		if (!icElec.isValid())
-			icElec = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
-		m_elec.specialIcon = icElec;
-		m_elec.specialName = "Select_PB_CryoElectro_Electric";
-		m_elec.specialAlias = "Electric Mode";
-		m_elec.specialPriority = 2;
-		m_elec.iconScale = iconScale;
-		wheelSpecials.Push(m_elec);
-
-		specialWheel_handleMouse();
-	}
-
 	void specialWheel_PB_DemonExterminator()
 	{
 		wheelSpecials.Clear();
@@ -1740,6 +1708,66 @@ Class PB_SpecialWheelHandler : EventHandler
 			csg_dan.iconScale = iconScale;
 			wheelSpecials.Push(csg_dan);
 		}
+		specialWheel_handleMouse();
+	}
+
+	void specialWheel_PB_CryoShotgun()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.72, 0.72);
+
+		PB_SpecialWheel_Mode m_buck = new ("PB_SpecialWheel_Mode");
+		m_buck.specialIcon = TexMan.CheckForTexture("FZSGA0", TexMan.Type_Any);
+		m_buck.specialName = "Select_PB_CryoShotgun_Buck";
+		m_buck.specialAlias = "Cryo Buckshot";
+		m_buck.specialPriority = 1;
+		m_buck.iconScale = iconScale;
+		wheelSpecials.Push(m_buck);
+
+		PB_SpecialWheel_Mode m_pel = new ("PB_SpecialWheel_Mode");
+		TextureID icPel = TexMan.CheckForTexture("AMMOIC3", TexMan.Type_Any);
+		if (!icPel.isValid())
+			icPel = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+		m_pel.specialIcon = icPel;
+		m_pel.specialName = "Select_PB_CryoShotgun_Pellet";
+		m_pel.specialAlias = "Cryo Pellets";
+		m_pel.specialPriority = 2;
+		m_pel.iconScale = iconScale;
+		wheelSpecials.Push(m_pel);
+
+		PB_SpecialWheel_Mode m_orb = new ("PB_SpecialWheel_Mode");
+		TextureID icOrb = TexMan.CheckForTexture("BXPLA0", TexMan.Type_Any);
+		if (!icOrb.isValid())
+			icOrb = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+		m_orb.specialIcon = icOrb;
+		m_orb.specialName = "Select_PB_CryoShotgun_Orb";
+		m_orb.specialAlias = "Cryo Orb";
+		m_orb.specialPriority = 3;
+		m_orb.iconScale = iconScale;
+		wheelSpecials.Push(m_orb);
+
+		PB_SpecialWheel_Mode m_elec = new ("PB_SpecialWheel_Mode");
+		TextureID icElec = TexMan.CheckForTexture("ZAP6A1", TexMan.Type_Any);
+		if (!icElec.isValid())
+			icElec = TexMan.CheckForTexture("CELLA0", TexMan.Type_Any);
+		m_elec.specialIcon = icElec;
+		m_elec.specialName = "Select_PB_CryoShotgun_Electric";
+		m_elec.specialAlias = "Electric Bolt";
+		m_elec.specialPriority = 4;
+		m_elec.iconScale = iconScale;
+		wheelSpecials.Push(m_elec);
+
+		PB_SpecialWheel_Mode m_wind = new ("PB_SpecialWheel_Mode");
+		TextureID icWind = TexMan.CheckForTexture("CELLA0", TexMan.Type_Any);
+		if (!icWind.isValid())
+			icWind = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+		m_wind.specialIcon = icWind;
+		m_wind.specialName = "Select_PB_CryoShotgun_Wind";
+		m_wind.specialAlias = "Cryo Wind";
+		m_wind.specialPriority = 5;
+		m_wind.iconScale = iconScale;
+		wheelSpecials.Push(m_wind);
+
 		specialWheel_handleMouse();
 	}
 
@@ -2303,8 +2331,8 @@ Class PB_SpecialWheelHandler : EventHandler
 					specialWheel_ProSurv_Ballista();
 					return;
 
-				case 'PB_CryoElectroRifle':
-					specialWheel_PB_CryoElectroRifle();
+				case 'PB_CryoShotgun':
+					specialWheel_PB_CryoShotgun();
 					return;
 
 				case 'PB_DarkMatterRifle':

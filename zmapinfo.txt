@@ -151,7 +151,6 @@ GameInfo
 	AddEventHandlers = "PB_MarauderSupportHandler"
 	AddEventHandlers = "PB_RLACSHandler"
 	AddEventHandlers = "PB_DMRReticleHandler"
-	AddEventHandlers = "TeleporterEffects"
 	AddEventHandlers = "VUAS_AchievementHandler"
 	AddEventHandlers = "VUAS_PersistentTracker"
 	AddEventHandlers = "VUAS_AchievementRenderer"
@@ -333,7 +332,7 @@ DoomEdNums
 	23148 = PB_NeoHMG
 	23149 = PB_M41A
 	23150 = BDPBattleRifle
-	23151 = PB_DemonExterminator
+	// 23151 reserved/unused while PB_DemonExterminator is disabled; do not reassign without re-enabling the weapon (DECORATE / ZSCRIPT.zc includes commented out).
 	23152 = MastermindChaingun
 	23153 = ShieldSaw_token
 	23154 = PB_MolotovAmmoPickup
@@ -399,9 +398,9 @@ DoomEdNums
 	23210 = PB_CF_FlameTurretPickup
 	23211 = PB_CF_FreezeMinePickup
 
-	23212 = PB_CryoASG
-	23214 = PB_CryoElectroRifle
-	23215 = PB_CryoCannon
+	23212 = PB_CryoShotgun
+	23214 = PB_CryoShotgun
+	23215 = PB_CryoShotgun
 	23216 = PB_CryoCellsPickup
 	23217 = PB_CryoCellsPack
 	23218 = PB_CryoCannonCellsPickup

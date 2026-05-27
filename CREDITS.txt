@@ -21,7 +21,6 @@ Maintainers (this distribution)
 
 Gameplay and content in this release
 - **AccuDeath V3.2.2** (Airehnr66) — optional corpse translation / death particle FX; folded under **`zscript/Gore/AccuDeath/`**, gated by **`pb_accudeath`**.
-- **Simple Teleporter Effects v1.4** ([tunbridgep](https://github.com/tunbridgep/doom-simpleteleportereffects)) — colored particle fountains on teleporter gate flats; always-on ZScript under **`zscript/Effects/SimpleTeleporter/`** (`TeleporterEffects` handler). Works alongside PB **`TeleportationFog`** / **`BrutalTeleportDest`**.
 - **Vortex Universal Achievement System v0.1.0** (Vortex, MIT) — achievement toasts, browse menu, persistence; folded under **`zscript/Achievements/VUAS/`** with PB definitions in **`PB_AchievementSetup.zs`**. Do not also load external **`Vortex_Universal_Achievement_System_v010.wad`**.
 - Revolver sprites by IDKFA
 - DarkShadow’s Monster Sounds Overhaul: monster SFX (based on Ravik’s Soundpack, with
