@@ -1,0 +1,22 @@
+// Map pickups grant NewShell; legacy PB_Shell reserve (pre-unification) is merged on join.
+class PB_ShellReserveCompatHandler : EventHandler
+{
+	override void PlayerEntered(PlayerEvent e)
+	{
+		if (!e || e.IsReturn)
+			return;
+		let mo = players[e.PlayerNumber].mo;
+		if (!mo)
+			return;
+		// Cryo pellet mode uses PB_Shell as loaded rounds, not reserve pool.
+		if (mo.CountInv("PB_CryoShotgun_Pellet") > 0)
+			return;
+
+		int legacy = mo.CountInv("PB_Shell");
+		if (legacy <= 0)
+			return;
+
+		mo.GiveInventory("NewShell", legacy);
+		mo.TakeInventory("PB_Shell", legacy);
+	}
+}

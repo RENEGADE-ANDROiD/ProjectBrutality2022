@@ -475,8 +475,6 @@ OPTMNU_PB_ITEM_MUTATORS = "Item mutators";
 OPTMNU_PB_ITEM_MUTATORS_HINT = "Off: soulsphere / megasphere / blue-armor spawners skip premium rolls (no NewLifeSphere / UltraSphere / EliteArmor / PristineArmor).";
 OPTMNU_PB_REDARMOR = "DarkShadow Custom Red Armor (blue heavy rolls)";
 OPTMNU_PB_REDARMOR_HINT = "On: blue-armor spawner heavy path can roll PB_RedArmor (60% / 250) instead of HeavyArmor (~25%).";
-OPTMNU_GLORYHUD_STAGING_NOTE1 = "Glory HUD Background: use Eternal (NewHUD) for the DOOM Eternal-style center strip (Crucible / Blood Punch / shoulders).";
-OPTMNU_GLORYHUD_STAGING_NOTE2 = "PB Staging addon configs used value 2 for that strip; in PB2022 value 2 is None â€” pick Eternal (NewHUD) (value 3) or reset the cvar.";
 
 OPTMNU_PB2022_HUB_INTRO1 = "Project Brutality 2022 add-ons and options.";
 OPTMNU_PB2022_HUB_INTRO2 = "Use Quick Presets, then open a category.";
