@@ -1185,7 +1185,8 @@ class PB2022_Hud_ZS : BaseStatusBar
 	//			KEY HUD			 //
 	////////////////////////////////////
 	
-	static const String KeyExceptions[] =
+	// Whitelist of key item classes that are allowed to draw on the HUD.
+	static const String KeyAllowList[] =
 	{
 		"BlueCard",
 		"RedCard",
@@ -1225,18 +1226,23 @@ class PB2022_Hud_ZS : BaseStatusBar
 					continue;
 			}
 
-			for (int ex = 0; ex < KeyExceptions.Size(); ex++)
+			// Only draw keys that are on the allow-list; skip others
+			bool allowedKey = false;
+			for (int ai = 0; ai < KeyAllowList.Size(); ai++)
 			{
-				if (keyactorname == KeyExceptions[ex])
-					icon = TexMan.CheckForTexture("TNT1A0", TexMan.Type_Any);
+				if (keyactorname == KeyAllowList[ai])
+				{
+					allowedKey = true;
+					break;
+				}
 			}
-
-			if (TexMan.GetName(icon) == "TNT1A0")
+			if (!allowedKey)
 				continue;
 
 			size = TexMan.GetScaledSize(icon);
 			scaleup = (size.x <= 11 && size.y <= 11);
-			PBHud_DrawTexture(icon, pos, DI_SCREEN_RIGHT_TOP | DI_ITEM_CENTER, box: (20, 20), scaleup ? (2, 2) : (1, 1));
+			// Draw keys anchored to bottom-left (we'll place them above the mugshot)
+			PBHud_DrawTexture(icon, pos, DI_SCREEN_LEFT_BOTTOM | DI_ITEM_CENTER, box: (10, 10), scaleup ? (2, 2) : (1, 1));
 			pos.x -= space;
 			keyamount++;
 		}
@@ -1527,11 +1533,12 @@ class PB2022_Hud_ZS : BaseStatusBar
 			//Powerups
 			PB_DrawPowerups((16, -76));
 			
-			//Keys
-			if(keyamount > 0)
-				PBHud_DrawImage("KEYCRBOX", (-15, 17), DI_SCREEN_RIGHT_TOP | DI_ITEM_RIGHT_TOP, playerBoxAlpha);
-				
-			DrawKeys((-36, 38), 12, 15);
+			// Keys: draw below the green armor bar, centered in the lower HUD gap
+			if (keyamount > 0)
+				PBHud_DrawImage("KEYCRBOX", (248, -11), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_CENTER, playerBoxAlpha);
+			
+			// Draw small 10x10 key icons centered under the end of the armor bar
+			DrawKeys((248, -11), 12, 12);
 			
 			if(showLevelStats) 
 			{

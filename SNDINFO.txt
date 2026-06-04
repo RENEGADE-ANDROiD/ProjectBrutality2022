@@ -4238,9 +4238,9 @@ $volume weapons/minigunfire 0.8
 $volume weapons/minigunfire2 0.8
 $volume weapons/minigunfirefast 0.8
 $volume HRFire 1.0
-PDAMOUSEOVER		"sounds/PDA_gui_mouseover_1.wav"
-PDABACK				"sounds/PDA_gui_notification_5_new_entry.wav"
-PDAOPEN				"sounds/PDA_gui_notification_5_Tone_Up_1.wav"
+PDAMOUSEOVER		"sounds/PDA/PDA_gui_mouseover_1.ogg"
+PDABACK				"sounds/PDA/PDA_gui_notification_5_new_entry.ogg"
+PDAOPEN				"sounds/PDA/PDA_gui_notification_5_tone_up_1.ogg"
 
 
 //TORRTURED MARINES

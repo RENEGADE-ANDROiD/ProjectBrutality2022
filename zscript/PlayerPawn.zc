@@ -1426,8 +1426,9 @@ class PlayerPawnBase : PlayerPawn
 		if(Player.OnGround)
 		{
 			Int BT=cmd.buttons;
+			bool bdSlide = CVar.GetCVar("pb_bd_slide", Player).GetBool();
 			
-			if(Player.CrouchFactor != 1 && !CSlideStartTime && (BT & BT_USER4))
+			if(Player.CrouchFactor != 1 && !CSlideStartTime && (!bdSlide && BT & BT_RUN || bdSlide && BT & BT_USER4))
 			{
 				sector sss=floorsector;
 				if(A_CheckFloor("null") && sss.damagetype == "Slime" && !pb_hazardmovement) {
