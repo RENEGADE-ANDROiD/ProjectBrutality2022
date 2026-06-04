@@ -971,6 +971,8 @@ OptionMenu "GameplaySettings"
 	StaticText " "
 	Option "Aiming Mode","pb_toggle_aim_hold", "AimingStyle"
 	StaticText " "
+	Option "Use BD Slide Controls", "pb_bd_slide", "YesNo"
+	StaticText "No: Crouch + Run. Yes: Crouch + Kick.", teal
 	StaticText " "
 	
 	Option "Player Frag Greandes explode on impact", "pb_grenadeimpact", "YesNo"
