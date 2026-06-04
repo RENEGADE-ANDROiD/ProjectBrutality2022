@@ -15,7 +15,7 @@ class X12Shotgun : PB_WeaponBase
 	Weapon.AmmoUse2 0;
 	Weapon.AmmoGive1 8;
 	Weapon.AmmoGive2 0;
-	Weapon.AmmoType1 "PB_Shell";
+	Weapon.AmmoType1 "NewShell";
 	Weapon.AmmoType2 "X12Ammo";
 	Weapon.SlotNumber 3;
 	Weapon.SlotPriority 1;
@@ -225,7 +225,7 @@ class X12Shotgun : PB_WeaponBase
 			A_WeaponReady(WRF_ALLOWRELOAD | WRF_NOPRIMARY);
 		}
 		TNT1 A 0 A_JumpIfInventory("Reloading",1,"Reload");
-		TNT1 A 0 A_JumpIfInventory("PB_Shell",1,"Reload");
+		TNT1 A 0 A_JumpIfInventory("NewShell",1,"Reload");
 		TNT1 A 0 A_JumpIfInventory("FiredPrimary",1,"NoAmmo2");
 		TNT1 A 0 {
 			A_SelectWeapon("PB_Pistol");
@@ -243,7 +243,7 @@ class X12Shotgun : PB_WeaponBase
 		}
 		"X12G" A 0;
 		"X12G" A 0 A_TakeInventory("Reloading", 1);
-		"X12G" A 0 A_JumpIfInventory("PB_Shell", 1, 2);
+		"X12G" A 0 A_JumpIfInventory("NewShell", 1, 2);
 		Goto NoAmmo;
 		"X12G" A 0;
 		"X12G" A 0 A_ZoomFactor(1.0);
@@ -253,7 +253,7 @@ class X12Shotgun : PB_WeaponBase
 		"X12G" A 0 A_GiveInventory("ShotgunWasEmpty", 1);
 
 		ReloadNormally:
-		"X12G" A 0 A_JumpIfInventory("PB_Shell",1,1);
+		"X12G" A 0 A_JumpIfInventory("NewShell",1,1);
 		Goto X12ReadyToFire;
 		"X12G" A 0 A_JumpIfInventory("TurboReload", 1, "TurboReload");
 		"X12G" A 0 A_GiveInventory("Pumping", 1);
@@ -262,14 +262,14 @@ class X12Shotgun : PB_WeaponBase
 
 		InsertingShells:
 		"X12G" A 0;
-		"X12G" A 0 A_JumpIfInventory("PB_Shell",1,2);
+		"X12G" A 0 A_JumpIfInventory("NewShell",1,2);
 		Goto FinishedInsertingShells;
 		"X12G" A 0;
 		"X12G" A 0 A_GiveInventory("Pumping", 1);
 		"SSHR" A 0 A_TakeInventory("Reloading", 1);
 		"X12G" A 0 A_JumpIfInventory("X12Ammo",11,"CheckIfFinishReload");
 		"X12G" A 0 A_GiveInventory("X12Ammo",1);
-		"X12G" A 0 A_TakeInventory("PB_Shell",1);
+		"X12G" A 0 A_TakeInventory("NewShell",1);
 
 		InsertShellAnimation:
 		"X12G" A 0;
@@ -282,10 +282,10 @@ class X12Shotgun : PB_WeaponBase
 		CheckIfFinishReload:
 		"X22R" G 1;
 		"X12G" A 0 A_JumpIfInventory("ShotgunWasEmpty",1,"FinishedInsertingShells");
-		"X12G" A 0 A_JumpIfInventory("PB_Shell",1,1);
+		"X12G" A 0 A_JumpIfInventory("NewShell",1,1);
 		Goto FinishedInsertingShells;
 		"X12G" A 0 A_GiveInventory("X12Ammo",1);
-		"X12G" A 0 A_TakeInventory("PB_Shell",1);
+		"X12G" A 0 A_TakeInventory("NewShell",1);
 		Goto InsertShellAnimation;
 
 		FinishedInsertingShells:
@@ -314,11 +314,11 @@ class X12Shotgun : PB_WeaponBase
 		TurboBullets:
 		"X12G" A 0;
 		"X12G" A 0 A_JumpIfInventory("X12Ammo",12,"FinishTurboReload");
-		"X12G" A 0 A_JumpIfInventory("PB_Shell",1,3);
+		"X12G" A 0 A_JumpIfInventory("NewShell",1,3);
 		Goto FinishTurboReload;
 		TNT1 AAAA 0;
 		"X12G" A 0 A_GiveInventory("X12Ammo",1);
-		"X12G" A 0 A_TakeInventory("PB_Shell",1);
+		"X12G" A 0 A_TakeInventory("NewShell",1);
 		Goto TurboBullets;
 		FinishTurboReload:
 		"X12G" A 1;
@@ -347,7 +347,7 @@ class X12Shotgun : PB_WeaponBase
 		"X12G" A 4;
 		"X12C" "CDEFGH" 1;
 		"X12G" A 0 A_TakeInventory("X12Ammo",1);
-		"X12G" A 0 A_GiveInventory("PB_Shell",1);
+		"X12G" A 0 A_GiveInventory("NewShell",1);
 		"X12G" A 0 A_GiveInventory("ShotgunWasEmpty",1);
 		Goto RemoveBullets;
 

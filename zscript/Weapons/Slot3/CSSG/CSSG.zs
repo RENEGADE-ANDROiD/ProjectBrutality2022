@@ -12,7 +12,7 @@ Class PB_CSSG : PB_WeaponBase
 		weapon.slotnumber 3;
 		weapon.slotpriority 0.4;
 		weapon.ammotype2 "CSSGShellsIn";
-		weapon.ammotype1 "PB_Shell";
+		weapon.ammotype1 "NewShell";
 		weapon.ammogive1 4;
 		PB_WeaponBase.unloadertoken "CSSGHasUnloaded";
 		PB_WeaponBase.respectItem "RespectCSSG";
@@ -83,7 +83,7 @@ Class PB_CSSG : PB_WeaponBase
 				return A_DoPBWeaponAction();
 			}
 			TNT1 A 0 A_startsound("weapons/cssg/in",26);
-			TNT1 A 0 PB_AmmoIntoMag("CSSGShellsIn","PB_Shell",2,1);
+			TNT1 A 0 PB_AmmoIntoMag("CSSGShellsIn","NewShell",2,1);
 			C0RB IJ 1 A_DoPBWeaponAction();
 			
 			TNT1 A 4 A_DoPBWeaponAction();
@@ -258,7 +258,7 @@ Class PB_CSSG : PB_WeaponBase
 			C0RB A 1;
 			C0RB BCDFGH 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM');
 			TNT1 A 0 A_startsound("weapons/cssg/in",26);
-			TNT1 A 0 PB_AmmoIntoMag("CSSGShellsIn","PB_Shell",2,1);
+			TNT1 A 0 PB_AmmoIntoMag("CSSGShellsIn","NewShell",2,1);
 			C0RB IJ 1;
 			TNT1 A 2;
 			
@@ -285,7 +285,7 @@ Class PB_CSSG : PB_WeaponBase
 			C0HB ABC 1 ChangeCSSGShellsLook('C0HB','C0HS','C0HN','C0HK','C0HD','C0HX','C0HW','C0HT','C0HM');
 			C0HB DEF 1 ChangeCSSGShellsLook('C0HB','C0HS','C0HN','C0HK','C0HD','C0HX','C0HW','C0HT','C0HM');
 			TNT1 A 0 A_startsound("weapons/cssg/in",24);
-			TNT1 A 0 PB_AmmoIntoMag("CSSGShellsIn","PB_Shell",2,1);
+			TNT1 A 0 PB_AmmoIntoMag("CSSGShellsIn","NewShell",2,1);
 			C0HB GHI 1;
 			TNT1 A 3;
 			goto CloseSSG;
@@ -301,7 +301,7 @@ Class PB_CSSG : PB_WeaponBase
 			TNT1 A 4;
 			C0RB JI 1;
 			C0RB HGFEDCB 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM');
-			TNT1 A 0 { PB_UnloadMag("CSSGShellsIn","PB_Shell",1, 0, 6, 14, "PB_ShellUnloadProp"); }
+			TNT1 A 0 { PB_UnloadMag("CSSGShellsIn","NewShell",1, 0, 6, 14, "PB_ShellUnloadProp"); }
 			TNT1 A 0 A_Startsound("weapons/ssg/inspect2",26);
 			C0RB A 1;
 			C0RO PON 1;
@@ -342,7 +342,7 @@ Class PB_CSSG : PB_WeaponBase
 			TNT1 A 0 A_startsound("weapons/cssg/in",24);
 			TNT1 A 0 {
 				if(countinv(invoker.ammotype2)<2 && countinv(invoker.ammotype1)>0)
-					PB_AmmoIntoMag("CSSGShellsIn","PB_Shell",2,1);
+					PB_AmmoIntoMag("CSSGShellsIn","NewShell",2,1);
 			}
 			C0RB IJ 1;
 			TNT1 A 3;

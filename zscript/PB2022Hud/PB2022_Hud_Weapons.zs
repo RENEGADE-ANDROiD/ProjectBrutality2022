@@ -8,19 +8,37 @@ extend class PB2022_Hud_ZS
 			return true;
 		if (!weap)
 			return false;
-		return CheckInventory("DualWieldingDMRs")
-			|| CheckInventory("DualWieldingCarbines")
-			|| CheckInventory("DualWieldingM41A")
-			|| CheckInventory("DualWieldingSSG")
-			|| CheckInventory("DualWieldingAutoshotguns")
-			|| CheckInventory("QuadAkimboMode")
-			|| CheckInventory("DualWieldingPistols")
-			|| CheckInventory("DualWieldingRevolver")
-			|| CheckInventory("DualWieldingSMGs")
-			|| CheckInventory("DualWieldingDeagles")
-			|| CheckInventory("DualWieldingMP40")
-			|| CheckInventory("DualWieldingPlasma")
-			|| CheckInventory("DualWieldingM2Plasma");
+
+		Name wn = weap.GetClassName();
+
+		if (CheckInventory("DualWieldingDMRs") && (wn == 'Rifle' || wn == 'PB_DMR'))
+			return true;
+		if (CheckInventory("DualWieldingCarbines") && wn == 'PB_Carbine')
+			return true;
+		if (CheckInventory("DualWieldingM41A") && wn == 'PB_M41A')
+			return true;
+		if (CheckInventory("DualWieldingSSG") && (wn == 'PB_SSG' || wn == 'PB_CSSG'))
+			return true;
+		if (CheckInventory("DualWieldingAutoshotguns") && wn == 'PB_Autoshotgun')
+			return true;
+		if (CheckInventory("QuadAkimboMode") && wn == 'PB_QuadSG')
+			return true;
+		if (CheckInventory("DualWieldingPistols") && wn == 'PB_Pistol')
+			return true;
+		if (CheckInventory("DualWieldingRevolver") && wn == 'PB_Revolver')
+			return true;
+		if (CheckInventory("DualWieldingSMGs") && wn == 'PB_SMG')
+			return true;
+		if (CheckInventory("DualWieldingDeagles") && wn == 'PB_Deagle')
+			return true;
+		if (CheckInventory("DualWieldingMP40") && wn == 'PB_MP40')
+			return true;
+		if (CheckInventory("DualWieldingPlasma") && wn == 'PB_M1Plasma')
+			return true;
+		if (CheckInventory("DualWieldingM2Plasma") && wn == 'PB_M2Plasma')
+			return true;
+
+		return false;
 	}
 
 	void PB2022_ResolveDualLeftAmmo()

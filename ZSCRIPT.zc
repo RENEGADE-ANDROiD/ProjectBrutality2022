@@ -30,6 +30,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/PB_RLACSHandler.zc"
 #include "zscript/Monsters/PB_MarauderSupport.zc"
 #include "zscript/Items/PB_XP/PB_XPRewards.zc"
+#include "zscript/Items/PB_ShellReserveCompat.zc"
 #include "zscript/PB_VisorOverlay.zc"
 #include "zscript/PB2022Hud/PB2022_Hud_Math.zc"
 #include "zscript/PB2022Hud/PB2022_Hud.zs"
