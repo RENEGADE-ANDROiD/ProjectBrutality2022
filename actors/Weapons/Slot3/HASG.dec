@@ -70,7 +70,7 @@ Actor HASGDrum : PB_UpgradeItem
         TNT1 A 1
         {
             A_GiveInventory("HASG", 1);
-            A_GiveInventory("PB_Shell", 20);
+            A_GiveInventory("NewShell", 20);
             A_GiveInventory("ASGDrum", 1);
         }
         Stop

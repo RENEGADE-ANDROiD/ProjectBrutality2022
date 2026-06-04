@@ -1811,21 +1811,6 @@ OptionValue "MaxStat"
 	1, "150"
 }
 
-OptionValue "FHudsize"
-{
-	0, "Small"
-	1, "Normal"
-	2, "Big"
-}
-
-OptionValue "BackStyle"
-{
-	0, "Panel"
-	1, "Panel + Font"
-	2, "None"
-	3, "Eternal (NewHUD)"
-}
-
 OptionValue "SGLGrenadeImpact"
 {
 	0, "Default (bounce as normal)"
@@ -1873,12 +1858,9 @@ OptionMenu "Glorykills"
 	StaticText " "
 	StaticText "Glory HUD"
 	Option "Glory HUD Enable.", "be_fuelhud", YesNo
-	Option "Glory HUD Background.", "sv_fuelhud_background", "BackStyle"
-	Option "Glory HUD Size.", "sv_fuelhud_size", "FHudsize"
+	Slider  "Glory HUD Scale.", "sv_fuelhud_scale", 0.5, 2.0, 0.05, 2
 	Slider  "Glory HUD X.", "sv_fuelhud_x", -1024, 1024, 1
 	Slider  "Glory HUD Y.", "sv_fuelhud_y", -768, 768, 1
-	StaticText "$OPTMNU_GLORYHUD_STAGING_NOTE1", teal
-	StaticText "$OPTMNU_GLORYHUD_STAGING_NOTE2", "darkgray"
 	StaticText " "
 	StaticText "Sound Notification"
 	Option "Low Health Notification (ACS).", "be_LowHealthAlert", YesNo

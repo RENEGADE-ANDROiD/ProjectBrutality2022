@@ -11,7 +11,7 @@ class HASG : PB_WeaponBase
     Weapon.AmmoGive1 10;
     Weapon.AmmoGive2 0;
     Weapon.AmmoType2 "ASGChamber";
-    Weapon.AmmoType1 "PB_Shell";
+    Weapon.AmmoType1 "NewShell";
     Weapon.SlotPriority 3;
     Scale 0.8;
     +WEAPON.WIMPY_WEAPON;
@@ -178,11 +178,11 @@ class HASG : PB_WeaponBase
         Goto Ready3;
 
 		FireNoreload:
-        TNT1 A 0 A_JumpIfInventory("PB_Shell", 1, "FireNow");
+        TNT1 A 0 A_JumpIfInventory("NewShell", 1, "FireNow");
         Goto NoAmmo;
 
 		FireNow:
-        TNT1 A 0 A_TakeInventory("PB_Shell", 1);
+        TNT1 A 0 A_TakeInventory("NewShell", 1);
         Goto NormalFire;
 
 		Fire:
@@ -559,7 +559,7 @@ class HASG : PB_WeaponBase
         TNT1 A 0 A_TakeInventory("Reloading", 1);
         TNT1 A 0 A_JumpIfInventory("ASGDrum", 1, "DrumReload");
         TNT1 A 0 A_JumpIfInventory("ASGChamber", 16, "NoReload");
-        TNT1 A 0 A_JumpIfInventory("PB_Shell", 1, "ReloadStart");
+        TNT1 A 0 A_JumpIfInventory("NewShell", 1, "ReloadStart");
         Goto NoAmmo;
 		ReloadStart:
         "GL1R" A 1;
@@ -575,7 +575,7 @@ class HASG : PB_WeaponBase
         TNT1 A 0 PB_ReFire("ReloadEnd");
         TNT1 A 0 PB_ReFire("ReloadEnd");
         "G11R" ABC 1 PB_ReFire("ReloadEnd");
-        TNT1 A 0 A_TakeInventory("PB_Shell", 1);
+        TNT1 A 0 A_TakeInventory("NewShell", 1);
         TNT1 A 0 A_JumpIfInventory("ASGChamber", 1, 2);
         TNT1 A 0 A_Jump(256, "ReloadPump");
         "G11R" D 1;
@@ -587,7 +587,7 @@ class HASG : PB_WeaponBase
         TNT1 A 0 PB_ReFire("ReloadEnd");
         "G11R" H 1;
         TNT1 A 0 A_JumpIfInventory("ASGChamber", 16, "ReloadEnd");
-        TNT1 A 0 A_JumpIfInventory("PB_Shell", 1, "ReloadLoop");
+        TNT1 A 0 A_JumpIfInventory("NewShell", 1, "ReloadLoop");
         Goto ReloadEnd;
 
 		ReloadPump:
@@ -601,7 +601,7 @@ class HASG : PB_WeaponBase
         "GL1P" HJ 1;
         "GL1P" K 2;
         "GL1P" KJIHGFE 1 Fast;
-        TNT1 A 0 A_JumpIfInventory("PB_Shell", 1, "ReloadLoop");
+        TNT1 A 0 A_JumpIfInventory("NewShell", 1, "ReloadLoop");
         Goto ReloadEnd;
 
 		ReloadEnd:
@@ -614,7 +614,7 @@ class HASG : PB_WeaponBase
         TNT1 A 0 A_TakeInventory("Zoomed", 1);
         TNT1 A 0 A_TakeInventory("Reloading", 1);
         TNT1 A 0 A_JumpIfInventory("ASGChamber", 25, "NoReload");
-        TNT1 A 0 A_JumpIfInventory("PB_Shell", 1, 2);
+        TNT1 A 0 A_JumpIfInventory("NewShell", 1, 2);
         Goto NoAmmo;
         TNT1 AAA 0;
         TNT1 A 0 A_GiveInventory("Pumping", 1);
@@ -638,10 +638,10 @@ class HASG : PB_WeaponBase
         TNT1 AAAAA 0;
         TNT1 A 0 A_TakeInventory("Unloaded_Golide", 1);
 		ReloadDrumLoop:
-        TNT1 A 0 A_TakeInventory("PB_Shell", 1, TIF_NOTAKEINFINITE);
+        TNT1 A 0 A_TakeInventory("NewShell", 1, TIF_NOTAKEINFINITE);
         TNT1 A 0 A_GiveInventory("ASGChamber", 1);
         TNT1 A 0 A_JumpIfInventory("ASGChamber", 0, "ReloadDrumFinish");
-        TNT1 A 0 A_JumpIfInventory("PB_Shell", 1, "ReloadDrumLoop");
+        TNT1 A 0 A_JumpIfInventory("NewShell", 1, "ReloadDrumLoop");
 		ReloadDrumFinish:
         "DRMR" H 1;
         TNT1 A 0 A_PlaySound("APPKUP", 6);
@@ -867,7 +867,7 @@ class HASG : PB_WeaponBase
         Goto FinishUnloadNotDrum;
         TNT1 A 0 {
             A_TakeInventory("ASGChamber", 1);
-            A_GiveInventory("PB_Shell", 1);
+            A_GiveInventory("NewShell", 1);
             A_PlaysoundEx("H4SGCOCK", "Weapon");
         }
         "GL1P" FG 1;
@@ -888,7 +888,7 @@ class HASG : PB_WeaponBase
         Goto FinishUnload;
         TNT1 AAAAAA 0;
         TNT1 A 0 A_TakeInventory("ASGChamber", 1);
-        TNT1 A 0 A_GiveInventory("PB_Shell", 1);
+        TNT1 A 0 A_GiveInventory("NewShell", 1);
         Goto RemoveBullets;
 
 		FinishUnload:

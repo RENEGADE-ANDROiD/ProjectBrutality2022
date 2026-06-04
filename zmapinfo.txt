@@ -157,6 +157,7 @@ GameInfo
 	AddEventHandlers = "VUAS_AchievementCommands"
 	AddEventHandlers = "PB_AchievementSetup"
 	AddEventHandlers = "PB_AchievementCombatHandler"
+	AddEventHandlers = "PB_ShellReserveCompatHandler"
 	// Combat SFX warm-cache (~45 logical names): decoded at each map load (incl. TITLEMAP) to cut first-play hitches from PK3/OGG decode. Expand via maint_scripts or SNDINFO + gameplay profiling — do not list all ~4k PB sounds here.
 	PrecacheSounds =
 		"weapons/pistol", "weapons/pistolup",
