@@ -23,7 +23,7 @@ extend class PB_EventHandler
 	{
 		if (!tex.IsValid())
 			return 0;
-		Vector2 sz = TexMan.GetSize(tex);
+		Vector2 sz = TexMan.GetScaledSize(tex);
 		return double(sz.X) * hudScale * 0.5;
 	}
 
