@@ -78,6 +78,22 @@ Class PB_SpecialWheelHandler : EventHandler
 		return atan2(y2-y1, x2-x1);
 	}
 	Vector2 iconScale;
+
+	clearscope int ClampedWheelIndex(int sel, int size)
+	{
+		if (size <= 0)
+			return 0;
+		if (sel < 0)
+			return 0;
+		if (sel >= size)
+			return size - 1;
+		return sel;
+	}
+
+	void ClampWheelSelection()
+	{
+		currentSelection = ClampedWheelIndex(currentSelection, wheelShow.Size());
+	}
 	
 	
 	void initializeSpecialWheel()
@@ -513,6 +529,7 @@ Class PB_SpecialWheelHandler : EventHandler
 			wheelShow.Clear();
 			wheelIsOpen = false;
 			weaponPickWheel = false;
+			wheelSort = false;
 			noWheel = true;
 			return;
 		}
@@ -588,6 +605,7 @@ Class PB_SpecialWheelHandler : EventHandler
 					}
 				}
 				wheelSort = true;
+				ClampWheelSelection();
 			}
 			
 			if (!weaponPickWheel)
@@ -722,6 +740,7 @@ Class PB_SpecialWheelHandler : EventHandler
 						break;
 					}
 				}
+				ClampWheelSelection();
 			}
 			{
 				pmo.pitch = oldPitch;
@@ -839,6 +858,9 @@ Class PB_SpecialWheelHandler : EventHandler
 			}
 
 			wheelShow.Clear();
+			wheelSort = false;
+			currentSelection = 0;
+			oldSelection = 0;
 
 			pmo.A_GiveInventory("PlayerWheelOpen");
 			if (players[consoleplayer].ReadyWeapon)
@@ -2222,6 +2244,7 @@ Class PB_SpecialWheelHandler : EventHandler
 			{
 				if(wheelShow.Size()>0)
 				{
+					ClampWheelSelection();
 					int curSelMod = wheelShow[currentSelection];
 					pmo.A_GiveInventory(wheelSpecials[curSelMod].specialName);
 					pmo.A_GiveInventory("ToggleEquipment");
@@ -2394,6 +2417,7 @@ Class PB_SpecialWheelHandler : EventHandler
 			{
 				if(wheelShow.Size()>0)
 				{
+					ClampWheelSelection();
 					int curSelMod = wheelShow[currentSelection];
 					pmo.A_GiveInventory(wheelSpecials[curSelMod].specialName);
 					pmo.A_GiveInventory("GoWeaponSpecialAbility");

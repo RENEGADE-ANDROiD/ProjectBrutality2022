@@ -804,6 +804,7 @@ PB_WPNHINT_PB_NeoHMG = "Neo Heavy MG: Hold Alt-Fire Shield;\nWeapon Special Fire
 PB_WPNHINT_PB_Pistol = "Pistol: Weapon Special Suppressor /\nAkimbo / Burst Wheel.\nAlt-Fire Flashlight / Secondary.";
 PB_WPNHINT_PB_QuadSG = "Quad Shotgun: Weapon Special Akimbo / Blast /\nShell vs Breath;\nAlt-Fire Patterns.";
 PB_WPNHINT_PB_Railgun = "Railgun: Primary fire (rail or laser by mode). Alt-Fire zoom scope. Hold Reload and press Alt-Fire to deploy a holographic decoy (same as Cat's Frozen equipment).";
+PB_WPNHINT_PB_BDPRailgun = "Platinum Railgun: Pump-action rail shots from Cell reserves (5-round mag). Alt-Fire: scope (Weapon Special toggles 3x/9x zoom while scoped). Weapon Special: holographic decoy.";
 PB_WPNHINT_PB_Revolver = "Revolver: Alt-Fire Fan Hammer / Single-Action;\nSee PDA Upgrades.";
 PB_WPNHINT_PB_RocketLauncher = "Rocket Launcher: Weapon Special Rocket Mode;\nAlt-Fire Scope / Detonate.";
 PB_WPNHINT_PB_Excavator = "Excavator: Drill Shot Burrows;\nDrop Shot Floats. Weapon Special Mode;\nAlt-Fire Mid-Air Detonate.";
