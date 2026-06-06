@@ -216,7 +216,8 @@ Extend Class PB_SpecialWheelHandler
 			return;
 		}
 
-		int curSelMod = wheelShow[currentSelection];
+		int drawSel = ClampedWheelIndex(currentSelection, wheelShow.Size());
+		int curSelMod = wheelShow[drawSel];
 		int PB_EQ_WHEEL_ICON_BOX = 40;
 		double PB_EQ_WHEEL_ICON_SELMUL = 1.25;
 		screen.DrawTexture (circleTex, true, circleX/2, circleY/2, DTA_VirtualWidth, 320, DTA_VirtualHeight, 240,
@@ -243,7 +244,7 @@ Extend Class PB_SpecialWheelHandler
 				}
 				else
 				{
-					double targetBox = (i == currentSelection) ? (PB_EQ_WHEEL_ICON_BOX * PB_EQ_WHEEL_ICON_SELMUL) : PB_EQ_WHEEL_ICON_BOX;
+					double targetBox = (i == drawSel) ? (PB_EQ_WHEEL_ICON_BOX * PB_EQ_WHEEL_ICON_SELMUL) : PB_EQ_WHEEL_ICON_BOX;
 					double dim = max(texSize.x, texSize.y);
 					double boxScale = targetBox / dim;
 					imageScale.x = texSize.x * boxScale * sc;
@@ -276,7 +277,7 @@ Extend Class PB_SpecialWheelHandler
 				{
 					screen.DrawText (ConFont, Font.CR_UNTRANSLATED, screenPosX-ConFont.StringWidth(specName)/2, screenPosY, specName, DTA_VirtualWidth, 640, DTA_VirtualHeight, 480, DTA_Alpha, actuallyHas ? 1.0*alphaFade : 0.0);
 				}
-				if(i==currentSelection)
+				if(i==drawSel)
 				{
 					screen.DrawTexture(specIcon, true, screenPosX, screenPosY,
 					DTA_VirtualWidth, 640, DTA_VirtualHeight, 480,

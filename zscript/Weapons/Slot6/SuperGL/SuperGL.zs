@@ -41,6 +41,34 @@ Class PB_SuperGL : PB_WeaponBase
 		SGL_Fire = 3,
 		SGL_Cryo = 4
 	}
+
+	// Alt-fire detonator pulse — must not persist on the player while firing.
+	// In-flight / stuck grenades check GrenadeDetonator on AAPTR_TARGET (shooter).
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		if (!owner || !owner.player)
+			return;
+		if (owner.player.ReadyWeapon != self)
+			return;
+
+		if (owner.player.cmd.buttons & BT_ALTATTACK)
+		{
+			if (!owner.CountInv("GrenadeDetonator"))
+			{
+				owner.A_GiveInventory("GrenadeDetonator", 1);
+				if (!owner.CountInv("SGLDetonateSoundCooldown"))
+				{
+					owner.A_StartSound("weapons/pbarm", CHAN_AUTO);
+					owner.A_GiveInventory("SGLDetonateSoundCooldown", 22);
+				}
+			}
+		}
+		else if (owner.CountInv("GrenadeDetonator"))
+		{
+			owner.A_TakeInventory("GrenadeDetonator", 1);
+		}
+	}
 	
 	states
 	{
@@ -111,6 +139,7 @@ Class PB_SuperGL : PB_WeaponBase
 			TNT1 A 0 A_overlay(Det_layer,"DetonatorLayer");
 			Goto SelectFirstPersonLegs;
 		SelectContinue:
+			TNT1 A 0 A_TakeInventory("GrenadeDetonator", 1);
 			TNT1 A 0 PB_RespectIfNeeded();
 			TNT1 A 0;
 		SelectAnimation:
@@ -121,6 +150,7 @@ Class PB_SuperGL : PB_WeaponBase
 			TNT1 A 0 {
 				A_SetInventory("CycleAnimation", 0);
 				A_SetInventory("HasExplosiveWeapon", 0);
+				A_TakeInventory("GrenadeDetonator", 1);
 				A_ClearOverlays(Det_layer,Det_layer);
 			}
 			SL02 FGHI 1 SGL_ChangeModeSprite("SL02","SL12","SL22","SL32","SL42","S001");
@@ -150,6 +180,7 @@ Class PB_SuperGL : PB_WeaponBase
 				A_SetRoll(0);
 				PB_HandleCrosshair(89);
 				A_SetInventory("PB_LockScreenTilt",0);
+				A_TakeInventory("GrenadeDetonator", 1);
 			}
 			TNT1 A 0 PB_jumpIfNoAmmo("Reload");
 			S002 A 0;
@@ -434,13 +465,7 @@ Class PB_SuperGL : PB_WeaponBase
 		//
 		
 		DetonatorLayer:
-			TNT1 A 1 {
-				if(JustPressed(BT_ALTATTACK))
-				{
-					PB_LookAndDetonateGrenades();
-					A_Startsound("weapons/pbarm",36,CHANF_NOSTOP);
-				}
-			}
+			TNT1 A 1;
 			loop;
 		
 		
@@ -625,7 +650,8 @@ Class PB_SuperGL : PB_WeaponBase
 			case SGL_Fire: 		msl = "PB_IncendiaryGrenade";	break;
 			case SGL_Cryo: 		msl = "PB_CryoGrenade";			break;
 		}
-		A_fireprojectile(msl,0,0);		
+		A_TakeInventory("GrenadeDetonator", 1);
+		A_FireCustomMissile(msl, 0, 0, 0, 0);
 	}
 	
 	action void PB_UnloadSGL(int goal = 0)
@@ -697,13 +723,6 @@ Class PB_SuperGL : PB_WeaponBase
 		if(findinventory("GrenadeTypeIncendiary")) A_Print("$PB_SGL_INCENDIARY", 2);
 		if(findinventory("GrenadeTypeCryo")) A_Print("$PB_SGL_CRYO", 2);
 		if(findinventory("GrenadeTypeAcid")) A_Print("$PB_SGL_ACID", 2);	
-	}
-	
-	action void PB_LookAndDetonateGrenades()
-	{
-		let ow = invoker.owner;
-		if (ow)
-			ow.A_GiveInventory("GrenadeDetonator", 1);
 	}
 	
 }

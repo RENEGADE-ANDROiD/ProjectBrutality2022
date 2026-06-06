@@ -49,6 +49,7 @@ class PB_WeaponTilterInventory : Inventory
 	static const Name SCOPED_TACTICAL_WEAPONS[] =
 	{
 		'PB_Railgun',
+		'PB_BDPRailgun',
 		'PB_MetalSniper',
 		'PB_XM21',
 		'BDPBattleRifle',
