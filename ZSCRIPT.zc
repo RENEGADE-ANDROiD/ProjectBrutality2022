@@ -184,6 +184,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/BaseWeapon_Equipment.zsc"
 #include "zscript/Weapons/RailGunFire.zc"
 #include "zscript/Weapons/Slot7/Railgun/Railgun.zs"
+#include "zscript/Weapons/Slot7/BDPRailgun/PB_BDPRailgun.zs"
 #include "zscript/Weapons/PB_SuperBFGBall.zc"
 #include "zscript/Weapons/Slot1/KatanaUpgradeChoiceHelpers.zc"
 #include "zscript/Weapons/BaseWeapon_StagingShim.zsc"
