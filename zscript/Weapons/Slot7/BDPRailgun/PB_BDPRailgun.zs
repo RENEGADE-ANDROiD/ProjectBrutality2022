@@ -140,6 +140,7 @@ class PB_BDPRailgun : PB_WeaponBase
 
         Fire:
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+			TNT1 A 0 PB_TryAutoFatalityOnFire();
             TNT1 A 0 {
 				A_SetRoll(0);
 				PB_HandleCrosshair(97);
@@ -342,20 +343,44 @@ class PB_BDPRailgun : PB_WeaponBase
 			Goto FinishPump;
 
         WeaponSpecial:
+            TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
+            TNT1 A 0 A_JumpIfInventory("Select_BDPRailgun_Scope", 1, "WSpecScope");
+            TNT1 A 0 A_JumpIfInventory("Select_BDPRailgun_Hologram", 1, "WSpecHologram");
             TNT1 A 0 {
-				A_Takeinventory("GoWeaponSpecialAbility",1);
-                if(PB_GetZoom())
-                {
+                if (PB_GetZoom()) {
                     A_HandleScope();
                     return ResolveState("Ready2");
                 }
                 return ResolveState(null);
             }
             TNT1 A 0 {
-                A_startsound("bepbep",4);
+                A_startsound("bepbep", 4);
                 A_SpawnHologram();
-		    }
-		    Goto Ready3;
+            }
+            Goto Ready3;
+
+        WSpecScope:
+            TNT1 A 0 {
+                A_TakeInventory("Select_BDPRailgun_Scope", 1);
+                A_TakeInventory("Select_BDPRailgun_Hologram", 1);
+                if (PB_GetZoom()) {
+                    A_HandleScope();
+                    A_PlaySound("menu/choose", CHAN_AUTO);
+                    return ResolveState("Ready2");
+                }
+                A_Print("$PB_BDPRAIL_SCOPE_ADS");
+                return ResolveState("Ready3");
+            }
+
+        WSpecHologram:
+            TNT1 A 0 {
+                A_TakeInventory("Select_BDPRailgun_Scope", 1);
+                A_TakeInventory("Select_BDPRailgun_Hologram", 1);
+                A_startsound("bepbep", 4);
+                A_SpawnHologram();
+                A_PlaySound("menu/choose", CHAN_AUTO);
+            }
+            Goto Ready3;
             
         // SlowHologram:
         //     TNT1 A 0 A_startsound("PISTFOL5",10);
@@ -461,6 +486,31 @@ class PB_BDPRailgun : PB_WeaponBase
             TNT1 A 0 A_startsound("weapons/bdprailgun/shellinsert", 3, CHANF_OVERLAP);
             RAIH RQPONN 1;
             RAIH STUV 1;
+            Stop;
+
+        PDA_Preview_BDPReady:
+            RAIL A 1 A_WeaponReady(WRF_NOFIRE);
+            RAIS A 1 A_WeaponReady(WRF_NOFIRE);
+            Stop;
+        PDA_Preview_BDPShot:
+            RAIF A 1 Bright A_WeaponReady(WRF_NOFIRE);
+            RAIF B 1 Bright A_WeaponReady(WRF_NOFIRE);
+            RAIF C 1 A_WeaponReady(WRF_NOFIRE);
+            RAIF D 1 A_WeaponReady(WRF_NOFIRE);
+            Stop;
+        PDA_Preview_BDPScope:
+            SNIP C 1 Bright A_WeaponReady(WRF_NOFIRE);
+            SNIP C 1 Bright A_WeaponReady(WRF_NOFIRE);
+            Stop;
+        PDA_Preview_BDPHologram:
+            RAIZ A 1 A_WeaponReady(WRF_NOFIRE);
+            RAIZ B 1 A_WeaponReady(WRF_NOFIRE);
+            RAIZ C 1 A_WeaponReady(WRF_NOFIRE);
+            Stop;
+        PDA_Preview_BDPPump:
+            RAIL P 1 A_WeaponReady(WRF_NOFIRE);
+            RAIL R 1 A_WeaponReady(WRF_NOFIRE);
+            RAIL T 1 A_WeaponReady(WRF_NOFIRE);
             Stop;
 
     }

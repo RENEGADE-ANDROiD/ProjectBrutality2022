@@ -194,11 +194,9 @@ class HASG : PB_WeaponBase
             A_WeaponOffset(0, 32);
             A_SetRoll(0);
             A_SetCrosshair(39);
-            if (CountInv("NoFatality") == 0 && GetCVAR("ttwcfbex") == 1) {
-                return PB_Execute();
-            }
-            return ResolveState(null);
         }
+        TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+        TNT1 A 0 PB_TryAutoFatalityOnFire();
         TNT1 A 0 A_JumpIfInventory("ASGChamber", 1, 2);
         Goto Reload;
         TNT1 AAAA 0;

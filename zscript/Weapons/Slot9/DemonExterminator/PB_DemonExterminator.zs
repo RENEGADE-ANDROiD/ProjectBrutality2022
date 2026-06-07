@@ -16,10 +16,10 @@ class PB_DemonExterminator : PB_WeaponBase
 		Weapon.AmmoGive1 200;
 		+WEAPON.NOAUTOFIRE;
 		Scale 0.8;
-		Tag "Demon Exterminator";
+		Tag "$PB_TAG_PB_DemonExterminator";
 		Inventory.Icon "UNMXA0";
 		Inventory.AltHUDIcon "UNMXA0";
-		Inventory.PickupMessage "You found the Demon Exterminator! Weapon Special = Laser / Incineration / Lightning. (Slot 9)";
+		Inventory.PickupMessage "$PB_PICKUP_PB_DemonExterminator";
 		Inventory.PickupSound "UNMPCK";
 		Obituary "%o was exterminated by %k";
 		PB_WeaponBase.RespectItem "DExRespect";
@@ -265,6 +265,7 @@ class PB_DemonExterminator : PB_WeaponBase
 			invoker.DEUM_SyncModeFromInventory();
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+		TNT1 A 0 PB_TryAutoFatalityOnFire();
 		TNT1 A 0 PB_DemonEx_BarrelThrowGate();
 		TNT1 A 0 A_JumpIf(invoker.ExterminatorMode == DEX_MODE_INCIN, "Fire.Incineration");
 		TNT1 A 0 A_JumpIf(invoker.ExterminatorMode == DEX_MODE_LIGHTNING, "Fire.Lightning");
@@ -629,5 +630,38 @@ class PB_DemonExterminator : PB_WeaponBase
 	OverchargeCharge:
 		UMTB ABCDEFGHIJKLMNOPQRSTUVW 1 BRIGHT;
 		Stop;
+
+		PDA_Preview_DEx_Ready:
+			UNMI H 1 A_WeaponReady(WRF_NOFIRE);
+			UNMI H 1 A_WeaponReady(WRF_NOFIRE);
+			Stop;
+		PDA_Preview_DEx_Laser:
+			UNMF A 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMF D 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMF E 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMI A 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMI A 1 Bright A_WeaponReady(WRF_NOFIRE);
+			Stop;
+		PDA_Preview_DEx_Incineration:
+			UNMF A 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMF B 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMF C 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMF M 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMF N 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMF O 1 Bright A_WeaponReady(WRF_NOFIRE);
+			Stop;
+		PDA_Preview_DEx_Lightning:
+			UNMI K 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMI K 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMI J 1 Bright A_WeaponReady(WRF_NOFIRE);
+			UNMI I 1 Bright A_WeaponReady(WRF_NOFIRE);
+			Stop;
+		PDA_Preview_DEx_ModeSwitch:
+			UNMD E 1 A_WeaponReady(WRF_NOFIRE);
+			UNMD D 1 A_WeaponReady(WRF_NOFIRE);
+			UNMD C 1 A_WeaponReady(WRF_NOFIRE);
+			UNMD B 1 A_WeaponReady(WRF_NOFIRE);
+			UNMD A 1 A_WeaponReady(WRF_NOFIRE);
+			Stop;
 	}
 }

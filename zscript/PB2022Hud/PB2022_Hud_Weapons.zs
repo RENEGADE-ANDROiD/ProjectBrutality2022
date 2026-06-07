@@ -255,6 +255,11 @@ extend class PB2022_Hud_ZS
 				weaponBarAccent = cachedFontColors[DTECHAMMO];
 				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
 				return true;
+
+			case 'PB_DemonExterminator':
+				weaponBarAccent = cachedFontColors[DTECHAMMO];
+				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
+				return true;
 		}
 
 		return false;
@@ -346,6 +351,23 @@ extend class PB2022_Hud_ZS
 			case 'BHGen':
 				label = StringTable.Localize("$PB_HUD_BHGEN_CHARGE", false);
 				col = Font.CR_PURPLE;
+				break;
+			case 'PB_DemonExterminator':
+				if (CheckInventory("DEx_Cur2"))
+				{
+					label = StringTable.Localize("$PB_HUD_DEMONEX_LIGHTNING", false);
+					col = Font.CR_CYAN;
+				}
+				else if (CheckInventory("DEx_Cur1"))
+				{
+					label = StringTable.Localize("$PB_HUD_DEMONEX_INCIN", false);
+					col = Font.CR_ORANGE;
+				}
+				else
+				{
+					label = StringTable.Localize("$PB_HUD_DEMONEX_LASER", false);
+					col = Font.CR_RED;
+				}
 				break;
 			default:
 				return false;

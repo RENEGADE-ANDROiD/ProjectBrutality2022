@@ -21,6 +21,9 @@ Class TripleDoomUpgrade:CSSGUpgradetokens
 Class DanmakuUpgrade:CSSGUpgradetokens
 {}
 
+Class SubZeroUpgrade : CSSGUpgradetokens
+{}
+
 
 //the item that gives you the upgrades
 Class ExplosiveShellsUpgrade : inventory
@@ -116,6 +119,29 @@ Class DanmakuShellsUpgrade : inventory
 	}
 }
 
+Class SubZeroShellsUpgrade : inventory
+{
+	default
+	{
+		+inventory.alwayspickup;
+		Inventory.Pickupsound "misc/shellbox_PickUp";
+		inventory.pickupmessage "$CM_SUBZRLD";
+	}
+	states
+	{
+		Spawn:
+			FZSG A -1 bright light("WeaponUpgradeSpawner");
+			stop;
+	}
+	
+	override bool trypickup(in out actor toucher)
+	{
+		if(toucher && toucher.player)
+			toucher.A_giveinventory("SubZeroUpgrade",1);
+		return super.trypickup(toucher);
+	}
+}
+
 //
 //	wheel tokens
 //
@@ -185,6 +211,14 @@ Class SelectCSG_WPhosphorus : Inventory
 }
 
 Class SelectCSG_Doom : Inventory
+{
+	default
+	{
+		inventory.maxamount 1;
+	}
+}
+
+Class SelectCSG_SubZero : Inventory
 {
 	default
 	{

@@ -909,6 +909,8 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Cyberdemon Missile Launcher", "pb_NoPB_CyberdemonRLWeapon", "SpawnOnOff"
 	StaticText " "
+	Option "Spawn Demon Exterminator", "pb_NoDemonExterminatorWeapon", "SpawnOnOff"
+	StaticText " "
 	Option "Spawn Hell Pistoler", "pb_NoHellPistolerWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Argent Sith", "pb_NoArgentSithWeapon", "SpawnOnOff"
@@ -1576,15 +1578,11 @@ OptionValue "HealthPackColor"
 
 ListMenu "MainMenu"
 {
-	IfGame(Doom, Chex)
-	{
-		StaticPatch 80, -10, "M_DOOMPB"
-		Position 85, 66
-	}
+	Class "PB_ListMenu"
+	Font "PBBIG", "red", "white"
 	IfGame(Doom, Strife, Chex)
 	{
 		TextItem "New Game", "n", "PlayerclassMenu"
-		Selector "M_SKULL1", -30, -8
 		ifOption(SwapMenu)
 		{
 			TextItem "Load Game", "l", "LoadGameMenu"
@@ -1615,20 +1613,25 @@ ListMenu "MainMenu"
 		TextItem "$MNU_INFO", "i", "ReadThisMenu"
 		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
 	}
+	Size Clean
 }
 
 ListMenu "PlayerclassMenu"
 {
+	Class "PB_ListMenu"
+	Font "PBBIG", "red", "white"
 	StaticTextCentered 160, 15, "Select Game Mode"
-	Position 71, 50
-	Selector "M_SKULL1", -30, -8
+	Position 21, 50
+	Size Clean
 }
 
 ListMenu "SkillMenu"
 {
+	Class "PB_ListMenu"
+	Font "PBBIG", "red", "white"
 	StaticTextCentered 160, 15, "Select Difficulty"
 	Position 21, 50
-	Selector "M_SKULL1", -30, -8
+	Size Clean
 }
 
 OptionValue "DisabledOption"

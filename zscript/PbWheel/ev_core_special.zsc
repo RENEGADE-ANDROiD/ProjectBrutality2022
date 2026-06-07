@@ -1530,6 +1530,36 @@ Class PB_SpecialWheelHandler : EventHandler
 		specialWheel_handleMouse();
 	}
 
+	void specialWheel_PB_BDPRailgun()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.72, 0.72);
+
+		PB_SpecialWheel_Mode bdp_holo = new ("PB_SpecialWheel_Mode");
+		TextureID icHolo = TexMan.CheckForTexture("RAIZA0", TexMan.Type_Any);
+		if (!icHolo.isValid())
+			icHolo = TexMan.CheckForTexture("XBDRA0", TexMan.Type_Any);
+		bdp_holo.specialIcon = icHolo;
+		bdp_holo.specialName = "Select_BDPRailgun_Hologram";
+		bdp_holo.specialAlias = "Hologram decoy";
+		bdp_holo.specialPriority = 1;
+		bdp_holo.iconScale = iconScale;
+		wheelSpecials.Push(bdp_holo);
+
+		PB_SpecialWheel_Mode bdp_scope = new ("PB_SpecialWheel_Mode");
+		TextureID icScope = TexMan.CheckForTexture("SNIPA0", TexMan.Type_Any);
+		if (!icScope.isValid())
+			icScope = TexMan.CheckForTexture("graphics/pywheel/SG_Slug.png", TexMan.Type_Any);
+		bdp_scope.specialIcon = icScope;
+		bdp_scope.specialName = "Select_BDPRailgun_Scope";
+		bdp_scope.specialAlias = "Variable scope (ADS)";
+		bdp_scope.specialPriority = 2;
+		bdp_scope.iconScale = iconScale;
+		wheelSpecials.Push(bdp_scope);
+
+		specialWheel_handleMouse();
+	}
+
 	void specialWheel_NeoHMG()
 	{
 				wheelSpecials.Clear();
@@ -1729,6 +1759,18 @@ Class PB_SpecialWheelHandler : EventHandler
 			csg_dan.specialPriority = 9;
 			csg_dan.iconScale = iconScale;
 			wheelSpecials.Push(csg_dan);
+		}
+		if (pl.FindInventory("SubZeroUpgrade")) {
+			PB_SpecialWheel_Mode csg_subz = new ("PB_SpecialWheel_Mode");
+			TextureID icSubZ = TexMan.CheckForTexture("FZSGA0", TexMan.Type_Any);
+			if (!icSubZ.isValid())
+				icSubZ = TexMan.CheckForTexture("graphics/pywheel/grenade_cryo.png", TexMan.Type_Any);
+			csg_subz.specialIcon = icSubZ;
+			csg_subz.specialName = "SelectCSG_SubZero";
+			csg_subz.specialAlias = "Sub-Zero";
+			csg_subz.specialPriority = 10;
+			csg_subz.iconScale = iconScale;
+			wheelSpecials.Push(csg_subz);
 		}
 		specialWheel_handleMouse();
 	}
@@ -2362,8 +2404,24 @@ Class PB_SpecialWheelHandler : EventHandler
 					specialWheel_PB_DarkMatterRifle();
 					return;
 
+				case 'PB_BDPRailgun':
+					if (pmo.FindInventory("Zoomed")) {
+						pmo.A_GiveInventory("GoWeaponSpecialAbility");
+						selectedWeapon = players[consoleplayer].ReadyWeapon.GetClassName();
+						wheelShow.Clear();
+						wheelIsOpen = false;
+						noWheel = true;
+						return;
+					}
+					specialWheel_PB_BDPRailgun();
+					return;
+
 				case 'PB_NeoHMG':
 					specialWheel_NeoHMG();
+					return;
+
+				case 'PB_DemonExterminator':
+					specialWheel_PB_DemonExterminator();
 					return;
 					
 				case 'PB_RocketLauncher':
