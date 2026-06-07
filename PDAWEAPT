@@ -380,6 +380,15 @@ Recoil: Moderate warp kick
 Alt-Fire: Alternate sin-beam profiles per tokens
 Firemodes: Artifact beam modes
 Akimbo: X#
+Demon Exterminator$Shoulder-mounted demon-tech projector cycling laser beams, incineration streams, and lightning salvos—all fed from PB_DTech cells. Weapon Special wheel selects the active mode (not tap-cycling).$PB_DemonExterminator$Manufacturer: UAC infernal salvage (Weapons Pack DemonicExt lineage)
+Magazine Capacity: Demon Tech cell reserve
+Ammunition: PB_DTech
+Effective Range: Medium–long per mode
+RPM: Mode-dependent (laser semi, incineration sustained, lightning charged)
+Recoil: Moderate infernal kick
+Alt-Fire: Mode-specific alt profiles (held beams / lightning charge)
+Firemodes: Laser / Incineration / Lightning via Weapon Special wheel
+Akimbo: X#
 Mancubus Flame Cannon$Salvaged mancubus arm cannon adapted for marine use—lobs persistent flame slime arcs overlapping Daedabus slime cannon behaviors.$MancubusFlameCannon$Manufacturer: UAC xenotech salvage
 Magazine Capacity: Flame cannon fuel tanks
 Ammunition: Heavy flame/slime ammo pools

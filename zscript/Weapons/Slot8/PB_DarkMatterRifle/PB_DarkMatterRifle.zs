@@ -129,6 +129,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 			else { SetPlayerProperty(0, 0, 0); }
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+		TNT1 A 0 PB_TryAutoFatalityOnFire();
 		TNT1 A 0 A_WeaponOffset(0, 32);
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, 2);
 		Goto Reload;
@@ -163,6 +164,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 			else { SetPlayerProperty(0, 0, 0); }
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+		TNT1 A 0 PB_TryAutoFatalityOnFire();
 		TNT1 A 0 A_JumpIfInventory("PB_DMR_GravityAltMode", 1, "GravityAltFire");
 		TNT1 A 0 A_WeaponOffset(0, 32);
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 30, 13);

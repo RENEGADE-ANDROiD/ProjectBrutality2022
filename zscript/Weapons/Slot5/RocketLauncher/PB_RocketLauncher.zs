@@ -299,6 +299,8 @@ class PB_RocketLauncher : PB_WeaponBase
 				else { PB_HandleCrosshair(78); }
 				A_TakeInventory("PB_LockScreenTilt",1);
 			}
+			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+			TNT1 A 0 PB_TryAutoFatalityOnFire();
 			TNT1 A 0 A_JumpIfInventory("RocketRounds",1,1);
 			Goto Reload;
 		LockOn_Check:

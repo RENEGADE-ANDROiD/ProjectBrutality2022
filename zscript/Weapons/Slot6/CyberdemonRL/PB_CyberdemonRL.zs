@@ -152,6 +152,7 @@ class PB_CyberdemonRL : PB_WeaponBase
 				A_TakeInventory("PB_LockScreenTilt", 1);
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+			TNT1 A 0 PB_TryAutoFatalityOnFire();
 			TNT1 A 0 {
 				if (CountInv("CyberRLDurability") < 1)
 					return ResolveState("WeaponBreak");
@@ -177,6 +178,7 @@ class PB_CyberdemonRL : PB_WeaponBase
 				A_TakeInventory("PB_LockScreenTilt", 1);
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+			TNT1 A 0 PB_TryAutoFatalityOnFire();
 			TNT1 A 0 {
 				if (CountInv("CyberRLDurability") < 1)
 					return ResolveState("WeaponBreak");
@@ -258,6 +260,10 @@ class PB_CyberdemonRL : PB_WeaponBase
 			"CYBF" D 1 BRIGHT;
 			"CYBF" EFG 1 BRIGHT;
 			"CYBF" HJ 1 BRIGHT;
+			Stop;
+		PDA_Preview_CYRL_Ready:
+			"CYBF" A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
+			"CYBF" A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);
 			Stop;
 		PDA_Preview_CYRL_AltVolley:
 			"CYBF" A 1 BRIGHT;

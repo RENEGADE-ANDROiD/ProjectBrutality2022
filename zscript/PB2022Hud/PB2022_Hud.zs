@@ -146,7 +146,7 @@ class PB2022_Hud_ZS : BaseStatusBar
 	override void Init()
 	{
 		Super.Init();
-		SetSize(0, 270, 480);
+		SetSize(0, 320, 200);
 		
 		if (Font.FindFont("PBFONT"))
 			mDefaultFont = HUDFont.Create("PBFONT");
@@ -640,7 +640,7 @@ class PB2022_Hud_ZS : BaseStatusBar
 			}
 		}
 
-        if(HudDynamics)
+        if(hudDynamics)
 		{
 			IntMSway = mSwayInterpolator.GetValue();
 			IntMPitch = mPitchInterpolator.GetValue();
@@ -827,21 +827,21 @@ class PB2022_Hud_ZS : BaseStatusBar
 		if(applyDeadZone) {
 			switch(flags & DI_SCREEN_HMASK) {
 				case DI_SCREEN_LEFT:
-					posX += HUDXMargin; break;
+					posX += hudXMargin; break;
 				case DI_SCREEN_RIGHT:
-					posX -= HUDXMargin; break;
+					posX -= hudXMargin; break;
 				default: break;
 			}
 			switch(flags & DI_SCREEN_VMASK) {
 				case DI_SCREEN_TOP:
-					posY += HUDYMargin; break;
+					posY += hudYMargin; break;
 				case DI_SCREEN_BOTTOM:
-					posY -= HUDYMargin; break;
+					posY -= hudYMargin; break;
 				default: break;
 			}
 		}
 		
-		if(HudDynamics) {
+		if(hudDynamics) {
 			posX += interpolatedSway.x * Parallax;
 			posY -= interpolatedSway.y * Parallax;
 

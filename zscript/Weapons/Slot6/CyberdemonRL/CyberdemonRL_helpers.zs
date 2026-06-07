@@ -54,7 +54,7 @@ class CyberBallsPlayer : PB_Projectile
 			TNT1 A 0 A_SpawnItemEx("DetectFloorCrater", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
 			TNT1 A 0 A_SpawnItemEx("DetectCeilCrater",  0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
 			TNT1 A 0 A_SpawnItemEx("ExplosionFlareSpawner", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
-			TNT1 A 0 A_SpawnItemEx("RocketExplosion", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+			TNT1 A 0 A_SpawnItemEx("PB_PlayerRocketExplosion", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
 			TNT1 AAA 0 A_CustomMissile("ExplosionParticleHeavy", 0, 0, random(0, 360), 2, random(0, 180));
 			TNT1 AAAAAAAAAAAAAAAAAA 0 A_CustomMissile("ExplosionParticleHeavy",     0, 0, random(0, 360), 2, random(0, 360));
 			TNT1 AAAAAAAAA          0 A_CustomMissile("ExplosionParticleVeryFast", 0, 0, random(0, 360), 2, random(0, 360));

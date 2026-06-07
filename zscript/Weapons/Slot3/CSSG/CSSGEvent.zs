@@ -17,6 +17,7 @@ class CSSGEvent : EventHandler
 			pm.GiveInventory("DoomShellsUpgrade", 1);
 			pm.GiveInventory("DragonBreathUpgrade", 1);
 			pm.GiveInventory("DanmakuUpgrade", 1);
+			pm.GiveInventory("SubZeroShellsUpgrade", 1);
 		}
 		
 	}

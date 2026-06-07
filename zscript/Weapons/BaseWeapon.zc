@@ -506,6 +506,21 @@ class PB_WeaponBase : DoomWeapon
 		}
 		return null;
 	}
+
+	// pb_auto_fatality_fire: try experimental execution before shooting (CSSG / NeoHMG pattern).
+	action State PB_TryAutoFatalityOnFire()
+	{
+		let po = invoker.Owner;
+		if (po == null || !(po is "PlayerPawn"))
+			return resolveState(null);
+		let pp = PlayerPawn(po);
+		if (!pp || !pp.player || invoker.CountInv("NoFatality") != 0)
+			return resolveState(null);
+		if (!CVar.GetCVar("pb_auto_fatality_fire", pp.player).GetBool())
+			return resolveState(null);
+		State st = PB_Execute();
+		return st ? st : resolveState(null);
+	}
 	
 	// Shoutout to Matt on ZDoom forums for the helpful weapon functions.
 	// Read input via invoker.owner.player — bare `player` is null from DECORATE + Inventory.Tick (UZDoom 4.14.x).
@@ -1081,6 +1096,14 @@ class PB_WeaponBase : DoomWeapon
 			}
 		}
 		
+		if (((PressingFire() || JustPressed(BT_ATTACK)) && !A_IsFiringLeftWeapon())
+			|| ((PressingAltfire() || JustPressed(BT_ALTATTACK)) && !A_IsFiringRightWeapon()))
+		{
+			State fatalitySt = PB_TryAutoFatalityOnFire();
+			if (fatalitySt)
+				return fatalitySt;
+		}
+
 		if (noReload) {
 			A_WeaponReady();
 		}

@@ -19,7 +19,7 @@ class PB_MetalSniper : PB_WeaponBase
         PB_WeaponBase.UnloaderToken "SniperUnloaded";
         PB_WeaponBase.respectItem "MetalSniperRespect";
         Obituary "%o was sniped by %k's Metal Sniper";
-        scale 0.72;
+        scale 0.62;
         +FORCEXYBILLBOARD;
         +FLOORCLIP;
         +weapon.noalert;
@@ -144,6 +144,7 @@ class PB_MetalSniper : PB_WeaponBase
                 }
             }
             TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+            TNT1 A 0 PB_TryAutoFatalityOnFire();
             TNT1 A 0
             {
                 A_WeaponOffset(0, 32);
