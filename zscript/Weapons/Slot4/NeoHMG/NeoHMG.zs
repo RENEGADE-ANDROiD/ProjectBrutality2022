@@ -1,9 +1,5 @@
 const neohmgFullAmmo = 80;
 const neohmgShieldAmmo = 100;
-// World shield uses sector floor + lift; PSprite HMGShield is unrelated (not weapon/HUD offsets).
-const neohmgShieldFloorLift = 36;
-// PSHL WALLSPRITE anchoring vs actor origin â€” applied to deployed spawn XY so hitbox matches the graphic.
-const neohmgShieldRenderSideNudge = 24.;
 
 class HMGShield : Inventory
 {
@@ -13,173 +9,34 @@ class HMGShield : Inventory
 	}
 }
 
-class NeoHMGDeployedShield : Actor
+// PBX NeoHMG shield break particles (Risdar/PBX-Weapons NeoHMG_helpers.zs).
+class NeoHMGShieldParticle : VisualThinker
 {
-	// Armed after DeployHeldShield sets lifetime; <0 avoids a first-tic Death if Tick runs before setup.
-	int lifeTics;
-	bool expiring;
-	double lockYaw;
-	Actor damageCredit;
-
 	override void PostBeginPlay()
 	{
 		Super.PostBeginPlay();
-		lifeTics = -1;
-		Pitch = 0;
-		Roll = 0;
-		bFlatSprite = false;
-	}
-
-	void SpawnFrontEnergy(int count, double speed)
-	{
-		Vector3 forward = (cos(angle), sin(angle), 0);
-		Vector3 right = (cos(angle + 90), sin(angle + 90), 0);
-		for (int i = 0; i < count; i++)
-		{
-			Vector3 sparkPos = pos + forward * frandom(14, 24) + right * frandom(-15, 15) + (0, 0, frandom(8, 48));
-			Actor spark = Actor.Spawn("GreenTrailSparks", sparkPos, NO_REPLACE);
-			if (spark)
-			{
-				spark.vel = forward * frandom(speed * 0.55, speed) + right * frandom(-1.8, 1.8) + (0, 0, frandom(-0.2, 2.6));
-			}
-		}
-		if (random(0, 2) == 0)
-		{
-			Actor flare = Actor.Spawn("GreenFlareSmall", pos + forward * 20 + right * frandom(-10, 10) + (0, 0, frandom(15, 42)), NO_REPLACE);
-			if (flare)
-			{
-				flare.vel = forward * frandom(speed * 0.25, speed * 0.55) + right * frandom(-0.7, 0.7) + (0, 0, frandom(0.2, 1.4));
-			}
-		}
-	}
-
-	Default
-	{
-		Radius 40;
-		Height 88;
-		Health neohmgShieldAmmo;
-		Mass 999999;
-		XScale 0.38;
-		YScale 0.48;
-		RenderStyle "Add";
-		Alpha 0.62;
-		// 90Â° with +WALLSPRITE lays the wall in the floor plane (rug); 0 keeps a vertical barrier.
-		SpriteRotation 0;
-		+SOLID;
-		+SHOOTABLE;
-		+WALLSPRITE;
-		+NOTARGET;
-		+NOBLOOD;
-		+DONTGIB;
-		+NOTELEPORT;
-		+NOGRAVITY;
-		+NODAMAGETHRUST;
-	}
-
-	void SpawnDetachBurst()
-	{
-		for (int i = 0; i < 42; i++)
-		{
-			double burstAngle = angle + frandom(-70, 70);
-			Vector3 dir = (cos(burstAngle), sin(burstAngle), 0);
-			Actor spark = Actor.Spawn("GreenTrailSparks", pos + dir * frandom(8, 21) + (0, 0, frandom(7, 52)), NO_REPLACE);
-			if (spark)
-			{
-				spark.vel = dir * frandom(2.5, 8.0) + (0, 0, frandom(0.4, 5.8));
-			}
-		}
-
-		for (int j = 0; j < 10; j++)
-		{
-			double flareAngle = angle + frandom(-85, 85);
-			Vector3 flareDir = (cos(flareAngle), sin(flareAngle), 0);
-			Actor flare = Actor.Spawn("GreenFlareSmall", pos + flareDir * frandom(7, 18) + (0, 0, frandom(15, 48)), NO_REPLACE);
-			if (flare)
-			{
-				flare.vel = flareDir * frandom(1.6, 4.5) + (0, 0, frandom(0.5, 3.0));
-			}
-		}
-	}
-
-	void DamageEnergyBurst()
-	{
-		double radius = 144;
-		Actor dmgSource = self;
-		if (damageCredit)
-			dmgSource = damageCredit;
-		array<Actor> damaged;
-		let it = BlockThingsIterator.Create(self, radius);
-		while (it.Next())
-		{
-			Actor mon = it.thing;
-			if (!mon || !mon.bIsMonster || mon.bKilled || !mon.bShootable || damaged.Find(mon) >= 0) continue;
-			if (Distance3D(mon) > radius || !CheckSight(mon)) continue;
-			damaged.Push(mon);
-			int dmg = int(max(20, 70 - (Distance3D(mon) * 0.28)));
-			mon.DamageMobj(self, dmgSource, dmg, 'Plasma', 0, AngleTo(mon));
-			mon.vel += (cos(AngleTo(mon)), sin(AngleTo(mon)), 0.25) * 6;
-			for (int i = 0; i < 5; i++)
-			{
-				Actor spark = Actor.Spawn("GreenTrailSparks", mon.pos + (frandom(-6, 6), frandom(-6, 6), frandom(8, max(12, mon.height * 0.7))), NO_REPLACE);
-				if (spark) spark.vel = (frandom(-2.5, 2.5), frandom(-2.5, 2.5), frandom(0.5, 4.0));
-			}
-		}
+		texture = TexMan.CheckForTexture('YAE6A0');
+		scale = (0.01, 0.01);
+		alpha = 1;
+		flags = SPF_FULLBRIGHT;
+		SetRenderStyle(STYLE_Add);
 	}
 
 	override void Tick()
 	{
+		if (alpha <= 0)
+		{
+			Destroy();
+			return;
+		}
+		vel.z -= 0.2;
+		alpha -= 0.04;
 		Super.Tick();
-		if (expiring) return;
-		if (lifeTics < 0) return;
-
-		Angle = lockYaw;
-		Pitch = 0;
-		Roll = 0;
-
-		vel = (0, 0, 0);
-		FindFloorCeiling();
-		double standZ = floorz + neohmgShieldFloorLift;
-		if (pos.Z < standZ - 1 || pos.Z > standZ + 24)
-			SetOrigin((pos.X, pos.Y, standZ), false);
-		// Every other game tic + smaller bursts â€” constant per-tic spawns can choke FPS.
-		if ((level.maptime & 1) == 0)
-		{
-			SpawnFrontEnergy(3, 4.5);
-			if (lifeTics > 0 && (lifeTics % 12) == 0)
-				SpawnFrontEnergy(5, 5.8);
-		}
-
-		if (lifeTics > 0)
-			lifeTics--;
-		else
-		{
-			expiring = true;
-			SetStateLabel("Death");
-		}
-	}
-
-	States
-	{
-	Spawn:
-		PSHL H 2 Bright;
-		Loop;
-	Death:
-		TNT1 A 0
-		{
-			expiring = true;
-			bSHOOTABLE = false;
-			bSOLID = false;
-			DamageEnergyBurst();
-			SpawnDetachBurst();
-			A_StartSound("HMGSHLD4", CHAN_BODY, CHANF_OVERLAP, 0.55);
-		}
-		PSHL HHHHHH 2 Bright A_FadeOut(0.12);
-		Stop;
 	}
 }
 
-// PB 2022 fold: PBX NeoHMG behavior (overheat, PB_792x57mm family, shield drain, cooling overlay,
-// two-tic fire, muzzle overlay) on NewClip + standard PB select / fatality / barrel hooks.
+// PB 2022 fold: PBX NeoHMG (Risdar/PBX-Weapons Slot-5/NeoHMG).
+// Alt-fire shield is personal-only (PSHL overlay + HMGShield drain); release spawns NeoHMGShieldParticle burst — no world deploy.
 class PB_NeoHMG : PB_WeaponBase
 {
 	const SHIELD_LAYER = -567;
@@ -207,7 +64,6 @@ class PB_NeoHMG : PB_WeaponBase
 	int shieldTimer;
 	int rechargeTimer;
 	int shieldFrame;
-	Actor deployedShield;
 
 	Default
 	{
@@ -365,6 +221,42 @@ class PB_NeoHMG : PB_WeaponBase
 		return ResolveState(null);
 	}
 
+	// PBX belt-box visuals: map 80-round chamber to four linked ammo boxes (XH01–XH04 / XHR* / XH*R).
+	int GetBeltBoxCount()
+	{
+		if (!Owner) return 0;
+		int chamber = Owner.CountInv("HMGChamberAmmo");
+		if (chamber <= 0) return 0;
+		return min(4, (chamber + 19) / 20);
+	}
+
+	action void NeoHMG_SetFireBeltSprite()
+	{
+		int box = PB_NeoHMG(invoker).GetBeltBoxCount();
+		if (box >= 4) A_SetWeaponSprite("XH04");
+		else if (box == 3) A_SetWeaponSprite("XH03");
+		else if (box == 2) A_SetWeaponSprite("XH02");
+		else A_SetWeaponSprite("XH01");
+	}
+
+	action void NeoHMG_SetReloadBeltSprite()
+	{
+		int box = PB_NeoHMG(invoker).GetBeltBoxCount();
+		if (box >= 4) A_SetWeaponSprite("XHR4");
+		else if (box == 3) A_SetWeaponSprite("XHR3");
+		else if (box == 2) A_SetWeaponSprite("XHR2");
+		else A_SetWeaponSprite("XHR1");
+	}
+
+	action void NeoHMG_SetInsertBeltSprite()
+	{
+		int box = PB_NeoHMG(invoker).GetBeltBoxCount();
+		if (box >= 4) A_SetWeaponSprite("XH4R");
+		else if (box == 3) A_SetWeaponSprite("XH3R");
+		else if (box == 2) A_SetWeaponSprite("XH2R");
+		else A_SetWeaponSprite("XH1R");
+	}
+
 	override void PostBeginPlay()
 	{
 		Super.PostBeginPlay();
@@ -395,50 +287,40 @@ class PB_NeoHMG : PB_WeaponBase
 		}
 	}
 
-	void DeployHeldShield()
+	action void A_FireVisualThinker(class<VisualThinker> thinker, int speed = 0, double offsetangle = 0, double offsetpitch = 0, double offsetx = 0, double offsety = 0, double offsetz = 0, bool rvel = true)
 	{
-		if (!Owner || !Owner.player) return;
+		if (!player || !player.mo)
+			return;
+		let thonk = Level.SpawnVisualThinker(thinker);
+		if (!thonk)
+			return;
 
-		int shieldCharge = Owner.CountInv("HMGShield");
-		if (shieldCharge < 1) return;
+		double a = angle + offsetangle;
+		double p = pitch + offsetpitch;
+		Vector3 dir;
+		dir.x = cos(a) * cos(p);
+		dir.y = sin(a) * cos(p);
+		dir.z = -sin(p);
 
-		if (deployedShield)
+		Quat ofsbase = Quat.FromAngles(angle, pitch, roll);
+		Vector3 offset = (offsety, -offsetx, offsetz);
+		Vector3 ppos = ofsbase * offset;
+		Vector3 ofs = level.Vec3Offset(pos, ppos);
+		thonk.pos = ofs;
+		thonk.pos.z += player.mo.height * 0.5 - player.mo.floorclip + player.mo.AttackZOffset * player.crouchFactor - 4 + offsetz;
+
+		thonk.vel = dir * speed;
+		thonk.pos += dir * clamp(speed * 0.5, 0, player.mo.radius);
+		if (rvel)
+			thonk.vel += player.mo.vel;
+	}
+
+	action void A_FireShieldParticles()
+	{
+		for (int i = 40; i > 0; i--)
 		{
-			deployedShield.Destroy();
-			deployedShield = null;
+			A_FireVisualThinker("NeoHMGShieldParticle", i > 20 ? 2 : 4, random(-4, 4), random(-20, 20), frandom(-20, 20), 10, frandom(0, 6));
 		}
-
-		double dist = Owner.Radius + 48;
-		double deployAng = Owner.Angle;
-		double ca = cos(deployAng);
-		double sa = sin(deployAng);
-		Vector2 xy = (Owner.Pos.X + ca * dist, Owner.Pos.Y + sa * dist);
-		double cr = cos(deployAng - 90);
-		double sr = sin(deployAng - 90);
-		xy.X += cr * neohmgShieldRenderSideNudge;
-		xy.Y += sr * neohmgShieldRenderSideNudge;
-		let sec = Owner.Level.PointInSector(xy);
-		double fz = Owner.FloorZ;
-		if (sec)
-			fz = sec.FloorPlane.ZatPoint(xy);
-		Vector3 shieldPos = (xy.X, xy.Y, fz + neohmgShieldFloorLift);
-		Actor spawned = Actor.Spawn("NeoHMGDeployedShield", shieldPos, NO_REPLACE);
-		let shield = NeoHMGDeployedShield(spawned);
-		if (!shield) return;
-		shield.FindFloorCeiling();
-		shield.SetZ(shield.floorz + neohmgShieldFloorLift);
-
-		shield.lockYaw = deployAng;
-		shield.Angle = deployAng;
-		shield.damageCredit = Owner;
-		shield.target = null;
-		shield.Health = max(25, shieldCharge);
-		shield.lifeTics = 35 * 8 + shieldCharge;
-		shield.SpawnDetachBurst();
-		deployedShield = shield;
-
-		Owner.TakeInventory("HMGShield", shieldCharge);
-		Owner.A_StartSound("HMGSHLD2", HMG_SHIELDSOUNDLAYER2, CHANF_OVERLAP, 0.8);
 	}
 
 	override void ModifyDamage(int damage, Name damageType, out int newDamage, bool passive, Actor inflictor, Actor source, int flags)
@@ -493,7 +375,6 @@ class PB_NeoHMG : PB_WeaponBase
 			if (shieldWasActive)
 			{
 				pi.SetPSprite(SHIELD_LAYER, FindState("HMGShieldBreak"));
-				DeployHeldShield();
 				Owner.A_StartSound("HMGSHLD4", HMG_SHIELDSOUNDLAYER);
 				Owner.A_StartSound("StickyGrenade/hit", CHAN_BODY, 0, 0.35);
 				shieldTimer = shieldCooldown;
@@ -591,9 +472,14 @@ class PB_NeoHMG : PB_WeaponBase
 					A_Overlay(3, "Cooling", true);
 				PB_HandleCrosshair(69);
 			}
+			XH01 A 0;
+			XH02 A 0;
+			XH03 A 0;
+			XH04 A 0;
 			HG0F A 1
 			{
 				PB_CoolDownBarrel(0, 0, 3);
+				NeoHMG_SetFireBeltSprite();
 				return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 			}
 			Loop;
@@ -640,12 +526,28 @@ class PB_NeoHMG : PB_WeaponBase
 			}
 			Goto Reload;
 		DoFireHMG:
-			HG0F B 1 BRIGHT { return fireHMG(0, 1); }
-			HG0F C 1 BRIGHT { return fireHMG(0, 2); }
-			HG0F D 1;
-			HG0F E 1;
+			XH01 BCDEF 0;
+			XH02 BCDEF 0;
+			XH03 BCDEF 0;
+			XH04 EF 0;
+			HG0F B 1 BRIGHT
+			{
+				NeoHMG_SetFireBeltSprite();
+				return fireHMG(0, 1);
+			}
+			HG0F C 1 BRIGHT
+			{
+				NeoHMG_SetFireBeltSprite();
+				return fireHMG(0, 2);
+			}
+			HG0F D 1 { NeoHMG_SetFireBeltSprite(); }
+			HG0F E 1 { NeoHMG_SetFireBeltSprite(); }
 			TNT1 A 0 A_Weaponoffset(0, 32);
-			HG0F F 1 A_Refire;
+			HG0F F 1
+			{
+				NeoHMG_SetFireBeltSprite();
+				return A_Refire();
+			}
 			TNT1 A 0 A_StartSound("weapon/HMG/Stop", CHAN_WEAPON);
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			Goto Ready3;
@@ -698,15 +600,7 @@ class PB_NeoHMG : PB_WeaponBase
 			PSHL H 1 BRIGHT { invoker.shieldFrame = 0; }
 			Stop;
 		HMGShieldBreak:
-			TNT1 A 0 A_Quake(2, 6, 0, 96);
-			TNT1 A 0
-			{
-				for (int i = 0; i < 10; i++)
-					A_SpawnItemEx("RedFlareSmall",
-						frandom(-10.0, 10.0), frandom(-8.0, 8.0), frandom(8.0, 20.0),
-						frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(1.0, 3.0),
-						random(0, 360), SXF_ABSOLUTEANGLE);
-			}
+			PSHL A 0 A_FireShieldParticles();
 			Stop;
 		WeaponSpecial:
 			TNT1 A 0
@@ -725,10 +619,14 @@ class PB_NeoHMG : PB_WeaponBase
 			Wait;
 		Unload:
 			TNT1 A 0 A_TakeInventory("Unloading", 1);
-			HG0R ABCD 1;
-			HG0R EFGH 1;
+			XHR1 ABCDEFGHI 0;
+			XHR2 ABCDEFGHI 0;
+			XHR3 ABCDEFGHI 0;
+			XHR4 ABCDE 0;
+			HG0R ABCD 1 { NeoHMG_SetReloadBeltSprite(); }
+			HG0R EFGH 1 { NeoHMG_SetReloadBeltSprite(); }
 			TNT1 A 0 A_StartSound("weapons/sgl/detach", 5);
-			HG0R IJKL 1;
+			HG0R IJKL 1 { NeoHMG_SetReloadBeltSprite(); }
 			HG0R MNOOPP 1;
 			HG0R QQQ 1;
 			HG0R QRST 1;
@@ -753,8 +651,20 @@ class PB_NeoHMG : PB_WeaponBase
 			TNT1 A 0 A_PlaySound("weapons/empty", CHAN_WEAPON);
 			Goto NoAmmo;
 		StartReloadHMG:
-			HG0R ABCD 1;
-			HG0R EFGH 1;
+			XH1R ABC 0;
+			XH2R ABC 0;
+			XH3R ABC 0;
+			XH4R ABC 0;
+			XHR1 ABCDEFGHI 0;
+			XHR1 VWXYZ 0;
+			XHR2 ABCDEFGHI 0;
+			XHR2 VWXYZ 0;
+			XHR3 ABCDEFGHI 0;
+			XHR3 VWXYZ 0;
+			XHR4 ABCDE 0;
+			XHR4 VWXYZ 0;
+			HG0R ABCD 1 { NeoHMG_SetReloadBeltSprite(); }
+			HG0R EFGH 1 { NeoHMG_SetReloadBeltSprite(); }
 			TNT1 A 0 A_StartSound("weapons/sgl/detach", 5);
 			TNT1 A 0
 			{
@@ -762,15 +672,15 @@ class PB_NeoHMG : PB_WeaponBase
 					PB_SpawnCasing("EmptyLMGMag", 12, -2.5, 6.25, frandom(2, 5), frandom(1, 3), frandom(2, 4));
 			}
 			TNT1 A 0 A_TakeInventory("HMGIsUnloaded", 1);
-			HG0R IJKL 1;
+			HG0R IJKL 1 { NeoHMG_SetReloadBeltSprite(); }
 			HG0R MNOOPP 1;
 			HG0R QQQ 1;
 			HG0R QRST 1;
 			TNT1 A 0 A_StartSound("weapon/HMG/Reload1", 6);
 			TNT1 A 0 PB_AmmoIntoMag("HMGChamberAmmo", "NewClip", neohmgFullAmmo, 1);
-			HG0R UVWXX 1;
-			HG0R YYZ 1;
-			HG1R ABC 1;
+			HG0R UVWXX 1 { NeoHMG_SetReloadBeltSprite(); }
+			HG0R YYZ 1 { NeoHMG_SetReloadBeltSprite(); }
+			HG1R ABC 1 { NeoHMG_SetInsertBeltSprite(); }
 			Goto Ready3;
 		PDA_Preview_NeoFire:
 			HG0F B 2 Bright;

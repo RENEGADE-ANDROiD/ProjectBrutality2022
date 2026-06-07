@@ -266,6 +266,7 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+			TNT1 A 0 PB_TryAutoFatalityOnFire();
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyDualWield");
 			TNT1 A 0 A_JumpIfInventory("M41AChamberAmmo", 1, "M41Shot1");
 			TNT1 A 0 {

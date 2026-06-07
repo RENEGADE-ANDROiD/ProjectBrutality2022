@@ -92,4 +92,9 @@ class PB_Math
 		Quat dir = Quat.FromAngles(ang, pit, rol);
 		return Level.Vec3Offset(other.pos, dir * offs, noPortal);
 	}
+
+	static double Lerp(double a, double b, double lerpFactor)
+	{
+		return a + (b - a) * lerpFactor;
+	}
 }

@@ -37,6 +37,35 @@ class PB_Projectile : FastProjectile abstract
 		return cv ? cv.GetBool() : defaultVal;
 	}
 
+	// Player rocket-jump / plasma wall-climb (pb_rocketjump / pb_plasma_wallclimb).
+	void PB_DoPlayerRocketJumpExplode(int damage, int radius, int flags = 0)
+	{
+		if (PB_UserCvarBool('pb_rocketjump'))
+		{
+			A_Explode(damage, radius, flags & ~XF_HURTSOURCE);
+			A_RadiusThrust(1800, 180, RTF_AFFECTSOURCE | RTF_THRUSTZ | RTF_NOIMPACTDAMAGE);
+			A_RadiusGive("PBBlastMomentum", 320, RGF_PLAYERS | RGF_CUBE, 35);
+		}
+		else
+		{
+			A_Explode(damage, radius, flags | XF_HURTSOURCE);
+		}
+	}
+
+	void PB_DoPlasmaWallClimbExplode(int damage, int radius, int flags = XF_NOSPLASH)
+	{
+		if (PB_UserCvarBool('pb_plasma_wallclimb'))
+		{
+			A_Explode(damage, radius, flags & ~XF_HURTSOURCE);
+			A_RadiusThrust(800, 50, RTF_AFFECTSOURCE | RTF_THRUSTZ | RTF_NOIMPACTDAMAGE);
+			A_RadiusGive("PBBlastMomentum", 160, RGF_PLAYERS | RGF_CUBE, 28);
+		}
+		else
+		{
+			A_Explode(damage, radius, flags | XF_HURTSOURCE);
+		}
+	}
+
 	virtual int Handle_MissileHit(Actor victim)
 	{
 		double scaled_damage = truedamage;

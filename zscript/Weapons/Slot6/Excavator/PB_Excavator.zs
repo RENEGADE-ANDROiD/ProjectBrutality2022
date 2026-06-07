@@ -18,6 +18,9 @@ class PB_Excavator : PB_WeaponBase
 		Weapon.AmmoType2 "ExcavatorRounds";
 		Weapon.AmmoGive2 5;
 		Weapon.AmmoGive1 5;
+		PB_WeaponBase.ReserveToMagAmmoFactor 2;
+		PB_WeaponBase.respectItem "RespectExcavatorLauncher";
+		PB_WeaponBase.unloadertoken "ExcavatorUnloaded";
 		Weapon.BobRangeX 0.3;
 		Weapon.BobRangeY 0.5;
 		Weapon.BobStyle "InverseSmooth";
@@ -169,6 +172,16 @@ class PB_Excavator : PB_WeaponBase
 		Super.PostBeginPlay();
 	}
 
+	override void AttachToOwner(Actor other)
+	{
+		if (other && other.player)
+		{
+			if (other.CountInv(ammotype2) < 1 && CountInv(respectInventoryItem) < 1)
+				other.A_GiveInventory(ammotype2, GetAmmoCapacity(ammotype2));
+		}
+		Super.AttachToOwner(other);
+	}
+
 	states
 	{
 		Spawn:
@@ -252,16 +265,7 @@ class PB_Excavator : PB_WeaponBase
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 PB_CheckBarrelThrow1();
-			TNT1 A 0 {
-				let po = invoker.Owner;
-				if (po == null || !(po is "PlayerPawn"))
-					return resolveState(null);
-				let pp = PlayerPawn(po);
-				if (pp && pp.player && invoker.CountInv("NoFatality") == 0
-					&& CVar.GetCVar("pb_auto_fatality_fire", pp.player).GetBool())
-					return PB_Execute();
-				return resolveState(null);
-			}
+			TNT1 A 0 PB_TryAutoFatalityOnFire();
 			TNT1 A 0 PB_Exc_JumpIfNoRounds("Reload");
 			6DKF A 1 BRIGHT FireWeapon(0,1);
 			6DKF A 1 BRIGHT FireWeapon(0,2);
@@ -276,6 +280,7 @@ class PB_Excavator : PB_WeaponBase
 			goto ReadyDrillChargaMode;
 
 		Reload:
+			TNT1 A 0 A_JumpIfInventory("ExcavatorUnloaded", 1, "RaiseFromEmpty");
 			TNT1 A 0 PB_Exc_CheckReload();
 			6DKF A 1 A_PlaySound("Ironsights", 1);
 			TNT1 A 0 A_SetRoll(roll-0.6,SPF_INTERPOLATE);
@@ -300,7 +305,10 @@ class PB_Excavator : PB_WeaponBase
 			6DKF XYZ 1;
 			TNT1 A 0 A_PlaySound("weapons/sgl/inspect1", 1);
 			7DKF A 1;
-			TNT1 A 0 PB_AmmoIntoMag("ExcavatorRounds", "RocketAmmo", excMagMax, 2);
+			TNT1 A 0 {
+				PB_AmmoIntoMag("ExcavatorRounds", "RocketAmmo", excMagMax, 2);
+				A_TakeInventory("ExcavatorUnloaded", 1);
+			}
 			TNT1 A 0 A_SetRoll(roll-1.0,SPF_INTERPOLATE);
 			7DKF BCD 1;
 			TNT1 A 0 A_SetRoll(0,SPF_INTERPOLATE);
@@ -321,7 +329,10 @@ class PB_Excavator : PB_WeaponBase
 			TNT1 A 0 A_SetRoll(roll+0.6,SPF_INTERPOLATE);
 			6DKF GHI 1;
 			6DKF J 1;
-			TNT1 A 0 { PB_UnloadMag("ExcavatorRounds", "RocketAmmo", 2, 0, 4, 12, "PB_RocketRoundUnloadProp"); }
+			TNT1 A 0 {
+				PB_UnloadMag("ExcavatorRounds", "RocketAmmo", 2, 0, 4, 12, "PB_RocketRoundUnloadProp");
+				A_GiveInventory("ExcavatorUnloaded", 1);
+			}
 			6DKF K 1;
 			8DKF ABCD 1;
 			goto NoAmmo;

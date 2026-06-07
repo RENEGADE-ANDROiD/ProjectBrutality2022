@@ -215,6 +215,8 @@ class PB_Freezer : PB_WeaponBase
 				PB_HandleCrosshair(79);
 				A_TakeInventory("PB_LockScreenTilt",1);
 			}
+			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+			TNT1 A 0 PB_TryAutoFatalityOnFire();
 			TNT1 A 0 A_JumpIfInventory("FreezerPistolToken",1,"FirePistol");
 			TNT1 A 0 A_JumpIfInventory("FireModeFreezerBeam",1,"FireBeam");
 			TNT1 A 0 A_JumpIfInventory("FreezerAmmo",1,1);

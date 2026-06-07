@@ -465,3 +465,7 @@ extend class FlechetShellCasing
 			Stop;
 	}
 }
+
+class SubZeroCasing : DanmakuCasing
+{
+}

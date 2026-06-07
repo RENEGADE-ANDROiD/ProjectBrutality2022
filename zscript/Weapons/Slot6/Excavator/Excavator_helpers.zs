@@ -13,6 +13,16 @@ class ExcavatorRounds : Ammo
 	}
 }
 
+class RespectExcavatorLauncher : Inventory
+{
+	default { Inventory.MaxAmount 1; }
+}
+
+class ExcavatorUnloaded : Inventory
+{
+	default { Inventory.MaxAmount 1; }
+}
+
 class DiggerTrail : Actor
 {
 	default

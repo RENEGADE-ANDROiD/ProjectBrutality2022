@@ -4297,6 +4297,7 @@ NOTHING "SOUNDS/Misc/Nothing.wav"
 hud/shieldbreak "sounds/shieldbreak.ogg"
 
 menu/activate		"sounds/Menu/Select.ogg"	// Activate a new menu
+menu/whoosh			"sounds/Menu/MouseHover.ogg"	// PB_ListMenu open
 menu/backup			"sounds/Menu/Back.ogg"	// Backup to previous menu
 menu/prompt			dsswtchn	// Activate a prompt "menu"
 menu/cursor			"sounds/Menu/MouseHover.ogg"		// Move cursor up/down

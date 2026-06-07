@@ -1,0 +1,364 @@
+// PDA-integrated experience shop (PBWPE combat shop, PB 2022 catalog).
+
+const PDA_SHOP_ROW_HEADER = 0;
+const PDA_SHOP_ROW_CATEGORY = 1;
+const PDA_SHOP_ROW_ITEM = 2;
+
+const PDA_SHOP_SPECIAL_NONE = 0;
+const PDA_SHOP_SPECIAL_UPGRADE = 1;
+
+class PB_PDAShopPurchaseHandler : StaticEventHandler
+{
+	bool built;
+	Array<String> rowCategory;
+	Array<String> rowLabel;
+	Array<int> rowCost;
+	Array<int> rowSpecial;
+	Array<Name> rowItem;
+	Array<int> rowCount;
+
+	clearscope static PB_PDAShopPurchaseHandler GetHandler()
+	{
+		return PB_PDAShopPurchaseHandler(StaticEventHandler.Find('PB_PDAShopPurchaseHandler'));
+	}
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		EnsureBuilt();
+	}
+
+	void EnsureBuilt()
+	{
+		if (built)
+			return;
+		built = true;
+
+		ParseUpgradeRow("Special Items", "Random Weapon Upgrade", 1500);
+		ParseItemRow("Special Items", "Berserker", 800, 'Berserk', 1);
+		ParseItemRow("Special Items", "Heavy Armor", 750, 'BlueArmor', 1);
+		ParseItemRow("Special Items", "MegaSphere", 1000, 'Megasphere', 1);
+		ParseItemRow("Special Items", "Quad-Damage", 1000, 'DoubleSphere', 1);
+		ParseItemRow("Special Items", "SoulSphere", 750, 'Soulsphere', 1);
+		ParseItemRow("Special Items", "Speed Powerup", 800, 'HasteSphere', 1);
+
+		ParseItemRow("Ammunition Shop", "20 Shells", 100, 'PB_Shell', 20);
+		ParseItemRow("Ammunition Shop", "100 Rifle Ammo", 100, 'PB_HighCalMag', 100);
+		ParseItemRow("Ammunition Shop", "100 Plasma Ammo", 150, 'PB_Cell', 100);
+		ParseItemRow("Ammunition Shop", "12 Rockets", 150, 'RocketAmmo', 12);
+		ParseItemRow("Ammunition Shop", "100 Pistol Bullets", 100, 'PistolBullets', 100);
+
+		ParseItemRow("Special Weapons", "Bio-Acid Launcher", 650, 'BioAcidLauncher', 1);
+		ParseItemRow("Special Weapons", "Mancubus Flame Cannon", 1500, 'MancubusFlameCannon', 1);
+		ParseItemRow("Special Weapons", "Stormcast", 2000, 'Stormcast', 1);
+
+		ParseItemRow("Melee Weapons", "Energy Beam Katana", 500, 'PB_BeamKatana', 1);
+		ParseItemRow("Melee Weapons", "Razorjack", 650, 'Razorjack', 1);
+
+		ParseItemRow("Pistols & SMGs", "Hell Pistoler", 800, 'HellPistoler', 1);
+
+		ParseItemRow("Shotguns", "Cryo Shotgun", 650, 'PB_CryoShotgun', 1);
+		ParseItemRow("Shotguns", "HASG", 800, 'HASG', 1);
+		ParseItemRow("Shotguns", "Marauder SSG", 800, 'MarauderSSG', 1);
+
+		ParseItemRow("Rifles", "Lever Action", 500, 'LeverAction', 1);
+		ParseItemRow("Rifles", "Carbine", 400, 'PB_Carbine', 1);
+		ParseItemRow("Rifles", "DMR / Rifle", 350, 'Rifle', 1);
+		ParseItemRow("Rifles", "M41A", 650, 'PB_M41A', 1);
+		ParseItemRow("Rifles", "Fusil", 500, 'PB_Fusil', 1);
+		ParseItemRow("Rifles", "Metal Sniper", 350, 'PB_MetalSniper', 1);
+		ParseItemRow("Rifles", "Battle Rifle", 600, 'BDPBattleRifle', 1);
+		ParseItemRow("Rifles", "XM21", 650, 'PB_XM21', 1);
+		ParseItemRow("Rifles", "Old HMG", 500, 'OldHMG', 1);
+		ParseItemRow("Rifles", "PB LMG", 600, 'PB_LMG', 1);
+
+		ParseItemRow("Heavy Weapons", "Paingiver", 700, 'Paingiver', 1);
+		ParseItemRow("Heavy Weapons", "Super Grenade Launcher", 500, 'PB_SuperGL', 1);
+		ParseItemRow("Heavy Weapons", "Minigun", 800, 'PB_Minigun', 1);
+		ParseItemRow("Heavy Weapons", "Cyberdemon Rocket Launcher", 900, 'PB_CyberdemonRL', 1);
+
+		ParseItemRow("Energy Weapons", "Pro-Surv Ballista", 800, 'ProSurv_Ballista', 1);
+		ParseItemRow("Energy Weapons", "M2 Plasma Rifle", 700, 'PB_M2Plasma', 1);
+		ParseItemRow("Energy Weapons", "Rocket Launcher", 500, 'PB_RocketLauncher', 1);
+		ParseItemRow("Energy Weapons", "BFG9000", 800, 'PB_BFG9000', 1);
+	}
+
+	void ParseItemRow(String cat, String label, int cost, Name item, int count = 1)
+	{
+		rowCategory.Push(cat);
+		rowLabel.Push(label);
+		rowCost.Push(cost);
+		rowSpecial.Push(PDA_SHOP_SPECIAL_NONE);
+		rowItem.Push(item);
+		rowCount.Push(count);
+	}
+
+	void ParseUpgradeRow(String cat, String label, int cost)
+	{
+		rowCategory.Push(cat);
+		rowLabel.Push(label);
+		rowCost.Push(cost);
+		rowSpecial.Push(PDA_SHOP_SPECIAL_UPGRADE);
+		rowItem.Push('None');
+		rowCount.Push(0);
+	}
+
+	bool TryPurchase(PlayerPawn plr, int entryIdx)
+	{
+		EnsureBuilt();
+		if (!plr || entryIdx < 0 || entryIdx >= rowLabel.Size())
+			return false;
+		int cost = rowCost[entryIdx];
+		if (plr.CountInv("PB_XPBank") < cost)
+		{
+			plr.A_Print("\cdSorry, Not Enough Experience!");
+			return false;
+		}
+		plr.A_TakeInventory("PB_XPBank", cost);
+		if (rowSpecial[entryIdx] == PDA_SHOP_SPECIAL_UPGRADE)
+			plr.A_SpawnItemEx("UpgradeSpawner", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION);
+		else
+			plr.GiveInventory(rowItem[entryIdx], rowCount[entryIdx]);
+		plr.A_Print("\ciYou Got What You Wanted, Rip And Tear!");
+		return true;
+	}
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		if (!e || netgame)
+			return;
+		if (!(e.Name ~== "pb_pda_shop_buy"))
+			return;
+		if (e.Player < 0 || e.Player >= MAXPLAYERS || !playeringame[e.Player])
+			return;
+		let plr = PlayerPawn(players[e.Player].mo);
+		if (!plr)
+			return;
+		TryPurchase(plr, e.Args[0]);
+	}
+}
+
+extend class PB_EventHandler
+{
+	bool ShopMenuOpened;
+	transient int pdaShopBrowseScrollResetGen;
+	transient int pdaShopBrowseInvalidateGen;
+	transient ui int pdaShopBrowseScrollResetAppliedGen;
+	transient ui int pdaShopBrowseInvalidateAppliedGen;
+	transient ui int pdaShopBrowseScroll;
+	transient ui bool pdaShopBrowseCacheValid;
+	transient ui Array<int> pdaShopBrowseRowKind;
+	transient ui Array<int> pdaShopBrowseRowEntry;
+	transient ui Array<String> pdaShopBrowseRowLabel;
+
+	void RequestPDAShopBrowseReset()
+	{
+		pdaShopBrowseScrollResetGen++;
+		pdaShopBrowseInvalidateGen++;
+	}
+
+	ui void PDA_SyncShopBrowseState()
+	{
+		if (pdaShopBrowseScrollResetAppliedGen != pdaShopBrowseScrollResetGen)
+		{
+			pdaShopBrowseScrollResetAppliedGen = pdaShopBrowseScrollResetGen;
+			pdaShopBrowseScroll = 0;
+		}
+		if (pdaShopBrowseInvalidateAppliedGen != pdaShopBrowseInvalidateGen)
+		{
+			pdaShopBrowseInvalidateAppliedGen = pdaShopBrowseInvalidateGen;
+			pdaShopBrowseCacheValid = false;
+		}
+	}
+
+	ui void RebuildPDAShopBrowseCache()
+	{
+		PDA_SyncShopBrowseState();
+		pdaShopBrowseRowKind.Clear();
+		pdaShopBrowseRowEntry.Clear();
+		pdaShopBrowseRowLabel.Clear();
+		let shop = PB_PDAShopPurchaseHandler.GetHandler();
+		if (!shop)
+		{
+			pdaShopBrowseCacheValid = true;
+			return;
+		}
+		int n = shop.rowLabel.Size();
+		if (n < 1)
+		{
+			pdaShopBrowseCacheValid = true;
+			return;
+		}
+		int xp = 0;
+		if (playeringame[consoleplayer] && players[consoleplayer].mo)
+			xp = players[consoleplayer].mo.CountInv("PB_XPBank");
+		pdaShopBrowseRowKind.Push(PDA_SHOP_ROW_HEADER);
+		pdaShopBrowseRowEntry.Push(-1);
+		pdaShopBrowseRowLabel.Push(String.Format("Experience Shop — balance: %d XP (click item to buy)", xp));
+
+		String lastCat = "";
+		for (int i = 0; i < n; i++)
+		{
+			String cat = shop.rowCategory[i];
+			if (cat != lastCat)
+			{
+				lastCat = cat;
+				pdaShopBrowseRowKind.Push(PDA_SHOP_ROW_CATEGORY);
+				pdaShopBrowseRowEntry.Push(-1);
+				pdaShopBrowseRowLabel.Push(String.Format("--- %s ---", cat));
+			}
+			pdaShopBrowseRowKind.Push(PDA_SHOP_ROW_ITEM);
+			pdaShopBrowseRowEntry.Push(i);
+			pdaShopBrowseRowLabel.Push(String.Format("%s  (%d XP)", shop.rowLabel[i], shop.rowCost[i]));
+		}
+		pdaShopBrowseCacheValid = true;
+	}
+
+	ui double PDA_ShopBrowseTextScale()
+	{
+		return clamp(Screen.GetHeight() / 240.0, 2.0, 6.0) * 0.66;
+	}
+
+	ui void PDA_ShopBrowseListMetrics(out int listLeft, out int listTop, out int listRight, out int listBottom)
+	{
+		PDA_AchievementBrowseListMetrics(listLeft, listTop, listRight, listBottom);
+	}
+
+	ui int PDA_ShopRowPixelHeight(int rowKind, double textScale)
+	{
+		int lineH = max(1, int(SmallFont.GetHeight() * textScale));
+		if (rowKind == PDA_SHOP_ROW_HEADER)
+			return lineH * 2;
+		if (rowKind == PDA_SHOP_ROW_CATEGORY)
+			return int(lineH * 1.35);
+		return int(lineH * 1.55);
+	}
+
+	ui int PDA_ShopBrowseContentHeight(double textScale)
+	{
+		int h = 0;
+		for (int i = 0; i < pdaShopBrowseRowKind.Size(); i++)
+			h += PDA_ShopRowPixelHeight(pdaShopBrowseRowKind[i], textScale);
+		return h;
+	}
+
+	ui void PDA_ShopBrowseDrawCenteredLine(int color, int y, String text,
+		double textScale, int listLeft, int listRight, double alpha)
+	{
+		int drawX = PDA_AchievementBrowseCenteredX(text, textScale, listLeft, listRight);
+		Screen.DrawText(SmallFont, color, drawX, y, text,
+			DTA_ScaleX, textScale, DTA_ScaleY, textScale,
+			DTA_ClipLeft, listLeft, DTA_ClipRight, listRight,
+			DTA_Alpha, alpha);
+	}
+
+	ui void ScrollPDAShopBrowse(int direction)
+	{
+		double textScale = PDA_ShopBrowseTextScale();
+		int listLeft, listTop, listRight, listBottom;
+		PDA_ShopBrowseListMetrics(listLeft, listTop, listRight, listBottom);
+		int viewH = listBottom - listTop;
+		int contentH = PDA_ShopBrowseContentHeight(textScale);
+		int maxScroll = max(0, contentH - viewH);
+		int lineH = max(1, int(SmallFont.GetHeight() * textScale));
+		int step = lineH * 4;
+		if (direction > 0)
+			pdaShopBrowseScroll = min(maxScroll, pdaShopBrowseScroll + step);
+		else
+			pdaShopBrowseScroll = max(0, pdaShopBrowseScroll - step);
+	}
+
+	ui void DrawPDAShopBrowse(double alpha)
+	{
+		if (alpha <= 0)
+			return;
+		PDA_SyncShopBrowseState();
+		if (!pdaShopBrowseCacheValid)
+			RebuildPDAShopBrowseCache();
+
+		int listLeft, listTop, listRight, listBottom;
+		PDA_ShopBrowseListMetrics(listLeft, listTop, listRight, listBottom);
+		double textScale = PDA_ShopBrowseTextScale();
+		int totalRows = pdaShopBrowseRowKind.Size();
+		if (totalRows < 1)
+		{
+			PDA_ShopBrowseDrawCenteredLine(Font.CR_GREEN, listTop,
+				"Shop catalog empty.", textScale, listLeft, listRight, alpha);
+			return;
+		}
+
+		int viewH = listBottom - listTop;
+		int contentH = PDA_ShopBrowseContentHeight(textScale);
+		int maxScroll = max(0, contentH - viewH);
+		pdaShopBrowseScroll = clamp(pdaShopBrowseScroll, 0, maxScroll);
+		int scrollY = pdaShopBrowseScroll;
+		int y = listTop - scrollY;
+		int xp = 0;
+		if (playeringame[consoleplayer] && players[consoleplayer].mo)
+			xp = players[consoleplayer].mo.CountInv("PB_XPBank");
+
+		let shop = PB_PDAShopPurchaseHandler.GetHandler();
+		Screen.SetClipRect(listLeft, listTop, listRight - listLeft, viewH);
+		for (int rowIdx = 0; rowIdx < totalRows; rowIdx++)
+		{
+			int kind = pdaShopBrowseRowKind[rowIdx];
+			int rowH = PDA_ShopRowPixelHeight(kind, textScale);
+			if (y + rowH > listTop && y < listBottom)
+			{
+				String line = (rowIdx < pdaShopBrowseRowLabel.Size()) ? pdaShopBrowseRowLabel[rowIdx] : "";
+				int col = Font.CR_GREEN;
+				if (kind == PDA_SHOP_ROW_HEADER)
+					col = Font.CR_YELLOW;
+				else if (kind == PDA_SHOP_ROW_CATEGORY)
+					col = Font.CR_GOLD;
+				else if (kind == PDA_SHOP_ROW_ITEM && shop)
+				{
+					int entry = pdaShopBrowseRowEntry[rowIdx];
+					if (entry >= 0 && entry < shop.rowCost.Size())
+						col = xp >= shop.rowCost[entry] ? Font.CR_LIGHTBLUE : Font.CR_GRAY;
+				}
+				PDA_ShopBrowseDrawCenteredLine(col, y, line, textScale, listLeft, listRight, alpha);
+			}
+			y += rowH;
+		}
+		Screen.ClearClipRect();
+
+		int hintY = listBottom + int(SmallFont.GetHeight() * textScale * 0.35);
+		PDA_ShopBrowseDrawCenteredLine(Font.CR_GRAY, hintY,
+			"Click an item to purchase. Scroll with arrows.", textScale, listLeft, listRight, alpha * 0.9);
+	}
+
+	ui bool PDA_TryShopBrowseClick(int mx, int my)
+	{
+		if (!ShopMenuOpened)
+			return false;
+		PDA_SyncShopBrowseState();
+		if (!pdaShopBrowseCacheValid)
+			RebuildPDAShopBrowseCache();
+
+		double textScale = PDA_ShopBrowseTextScale();
+		int listLeft, listTop, listRight, listBottom;
+		PDA_ShopBrowseListMetrics(listLeft, listTop, listRight, listBottom);
+		if (mx < listLeft || mx > listRight || my < listTop || my > listBottom)
+			return false;
+
+		int y = listTop - pdaShopBrowseScroll;
+		for (int rowIdx = 0; rowIdx < pdaShopBrowseRowKind.Size(); rowIdx++)
+		{
+			int rowH = PDA_ShopRowPixelHeight(pdaShopBrowseRowKind[rowIdx], textScale);
+			if (my >= y && my < y + rowH)
+			{
+				if (pdaShopBrowseRowKind[rowIdx] != PDA_SHOP_ROW_ITEM)
+					return true;
+				int entry = pdaShopBrowseRowEntry[rowIdx];
+				if (entry >= 0)
+				{
+					SendNetworkEvent("pb_pda_shop_buy", entry);
+					pdaShopBrowseCacheValid = false;
+				}
+				return true;
+			}
+			y += rowH;
+		}
+		return false;
+	}
+}

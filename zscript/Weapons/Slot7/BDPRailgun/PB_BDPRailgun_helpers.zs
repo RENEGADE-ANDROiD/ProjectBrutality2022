@@ -117,7 +117,7 @@ class RailCasing : Actor
 	}
 }
 
-class RailgunTrail : VisualThinker
+class BDPRailgunTrail : VisualThinker
 {
 	override void PostBeginPlay()
 	{
@@ -256,4 +256,14 @@ class RailgunProjectile : Actor
 		TNT1 ABE 0 BRIGHT A_SpawnItem("BlueFlare", 0);
 		Stop;
 	}
+}
+
+class Select_BDPRailgun_Hologram : Inventory
+{
+	Default { Inventory.MaxAmount 1; }
+}
+
+class Select_BDPRailgun_Scope : Inventory
+{
+	Default { Inventory.MaxAmount 1; }
 }

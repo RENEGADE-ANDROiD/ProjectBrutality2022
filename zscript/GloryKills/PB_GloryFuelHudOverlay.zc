@@ -19,12 +19,12 @@ extend class PB_EventHandler
 		DrawGloryKillEternalFuelHud(plr);
 	}
 
-	ui double GkEternalIconHalfWidth(TextureID tex, double hudScale)
+	ui double GkEternalIconWidth(TextureID tex, double hudScale)
 	{
 		if (!tex.IsValid())
 			return 0;
 		Vector2 sz = TexMan.GetScaledSize(tex);
-		return double(sz.X) * hudScale * 0.5;
+		return sz.X * hudScale;
 	}
 
 	ui void DrawGkEternalIcon(TextureID tex, double x, double y, double scale)
@@ -37,17 +37,16 @@ extend class PB_EventHandler
 			DTA_ScaleX, scale, DTA_ScaleY, scale);
 	}
 
-	// Edge-to-edge placement: scale changes icon size only; spacing tracks drawn width.
-	ui void PlaceGkEternalIcon(TextureID tex, in out double x, double cy, double hudScale, in out double prevHw)
+	// Edge-to-edge row; spacing tracks drawn width × hudScale (not a fixed step).
+	ui void DrawGkEternalIconInStrip(TextureID tex, in out double x, double cy, double hudScale, double gap)
 	{
-		if (!tex.IsValid())
+		double w = GkEternalIconWidth(tex, hudScale);
+		if (w <= 0)
 			return;
 
-		double hw = GkEternalIconHalfWidth(tex, hudScale);
-		if (prevHw > 0)
-			x += prevHw + hw;
+		x += w * 0.5;
 		DrawGkEternalIcon(tex, x, cy, hudScale);
-		prevHw = hw;
+		x += w * 0.5 + gap;
 	}
 
 	ui void DrawGloryKillEternalFuelHud(PlayerInfo plr)
@@ -64,8 +63,7 @@ extend class PB_EventHandler
 		double vsc = Screen.GetHeight() / 480.0;
 		double cx = Screen.GetWidth() * 0.5 + double(ox) * vsc;
 		double cy = Screen.GetHeight() * 0.5 + double(oy) * vsc;
-		double x = cx;
-		double prevHw = 0;
+		double gap = 2.0 * vsc;
 
 		int cruc = plr.mo.CountInv("CrucibleEnergy");
 		TextureID tCore = TexMan.CheckForTexture(
@@ -74,18 +72,15 @@ extend class PB_EventHandler
 		if (!tCore.IsValid())
 			return;
 
-		PlaceGkEternalIcon(tCore, x, cy, hudScale, prevHw);
-
+		TextureID tCam;
 		if (cruc > 0)
 		{
-			TextureID tCam;
 			if (cruc == 1)
 				tCam = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM01.png", TexMan.Type_Any);
 			else if (cruc == 2)
 				tCam = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM02.png", TexMan.Type_Any);
 			else
 				tCam = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM03.png", TexMan.Type_Any);
-			PlaceGkEternalIcon(tCam, x, cy, hudScale, prevHw);
 		}
 
 		int bpt = plr.mo.CountInv("BPtoken");
@@ -100,24 +95,47 @@ extend class PB_EventHandler
 			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO13.png", TexMan.Type_Any);
 		else
 			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO14.png", TexMan.Type_Any);
-		PlaceGkEternalIcon(tBP, x, cy, hudScale, prevHw);
 
 		int fb = plr.mo.CountInv("FlameBelchReady");
 		TextureID tFB = TexMan.CheckForTexture(
 			fb == 1 ? "graphics/hud/glorykills/newhud/SCFLM01.png" : "graphics/hud/glorykills/newhud/SCFLM00.png",
 			TexMan.Type_Any);
-		PlaceGkEternalIcon(tFB, x, cy, hudScale, prevHw);
 
 		int ic = plr.mo.CountInv("IceBombReady");
 		TextureID tIC = TexMan.CheckForTexture(
 			ic == 1 ? "graphics/hud/glorykills/newhud/SCICB01.png" : "graphics/hud/glorykills/newhud/SCICB00.png",
 			TexMan.Type_Any);
-		PlaceGkEternalIcon(tIC, x, cy, hudScale, prevHw);
 
 		int ssReady = plr.mo.CountInv("ShieldSawReady");
 		TextureID tSS = TexMan.CheckForTexture(
 			ssReady == 1 ? "graphics/hud/glorykills/newhud/GKSHA01.png" : "graphics/hud/glorykills/newhud/GKSHA00.png",
 			TexMan.Type_Any);
-		PlaceGkEternalIcon(tSS, x, cy, hudScale, prevHw);
+
+		double totalW = GkEternalIconWidth(tCore, hudScale);
+		if (tCam.IsValid())
+			totalW += gap + GkEternalIconWidth(tCam, hudScale);
+		if (tBP.IsValid())
+			totalW += gap + GkEternalIconWidth(tBP, hudScale);
+		if (tFB.IsValid())
+			totalW += gap + GkEternalIconWidth(tFB, hudScale);
+		if (tIC.IsValid())
+			totalW += gap + GkEternalIconWidth(tIC, hudScale);
+		if (tSS.IsValid())
+			totalW += gap + GkEternalIconWidth(tSS, hudScale);
+
+		double x = cx - totalW * 0.5;
+
+		DrawGkEternalIconInStrip(tCore, x, cy, hudScale, gap);
+
+		if (tCam.IsValid())
+			DrawGkEternalIconInStrip(tCam, x, cy, hudScale, gap);
+		if (tBP.IsValid())
+			DrawGkEternalIconInStrip(tBP, x, cy, hudScale, gap);
+		if (tFB.IsValid())
+			DrawGkEternalIconInStrip(tFB, x, cy, hudScale, gap);
+		if (tIC.IsValid())
+			DrawGkEternalIconInStrip(tIC, x, cy, hudScale, gap);
+		if (tSS.IsValid())
+			DrawGkEternalIconInStrip(tSS, x, cy, hudScale, gap);
 	}
 }

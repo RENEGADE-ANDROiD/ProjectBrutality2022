@@ -87,7 +87,7 @@ extend class PB_BDPRailgun
 		vector3 trailpos = (pos.x - railspawn.HitLocation.x, pos.y - railspawn.HitLocation.y, pos.z + player.viewz - player.mo.pos.z - 5 - railspawn.HitLocation.z);
 		for (int i = int(railspawn.distance); i > 0; i -= 2)
 		{
-			let trail = Level.SpawnVisualThinker("RailgunTrail");
+			let trail = Level.SpawnVisualThinker("BDPRailgunTrail");
 			if (!trail)
 				continue;
 			trail.pos = railspawn.HitLocation + trailpos * (i / railspawn.distance);

@@ -424,6 +424,7 @@ CM_EXPLLD = "\cd\cuExplosive \c-shells \cdloaded";
 CM_WPLOAD = "\cd\c[WPBronze]White phosphorous \c-shells \cdloaded";
 CM_DOOMLD = "\cd\ctTriple Doom \c-shells \cdloaded";
 CM_DNMKULD = "\cd\c[DanmakuYellow]Danmaku \c-shells \cdloaded";
+CM_SUBZRLD = "\cd\cnSub-Zero \c-shells \cdloaded";
 
 PB_DISABLE_PRONE = "Disable Prone Attacks";
 PB_DISABLE_PRONE_DESC = "Sergeants Cannot Enter Prone\nShooting Attacks.";
@@ -469,7 +470,7 @@ OPTMNU_PB_PDA_BLOCKY_HINT = "Blocky layout: weapon / monster entries render as a
 OPTMNU_PB_PDA_BLOCKY_HINT2 = "Off = legacy text-list. Up / Down arrows page through tiles when blocky is on.";
 OPTMNU_PB_XP_REWARDS = "PDA XP & reward spin (single-player)";
 OPTMNU_PB_XP_REWARDS_HINT = "On: single-player kills grant XP; rank-ups give reward points.";
-OPTMNU_PB_XP_REWARDS_HINT2 = "Blocky PDA home adds Reward Spin (3 pts) â€” weapons only; refunds if none eligible.";
+OPTMNU_PB_XP_REWARDS_HINT2 = "Blocky PDA: Combat Shop always available; Reward Spin (3 pts) when On; spin grants weapons only (refunds if none eligible).";
 OPTMNU_PB_HP_ARCADE = "HP Arcade item behavior";
 OPTMNU_PB_ITEM_MUTATORS = "Item mutators";
 OPTMNU_PB_ITEM_MUTATORS_HINT = "Off: soulsphere / megasphere / blue-armor spawners skip premium rolls (no NewLifeSphere / UltraSphere / EliteArmor / PristineArmor).";
@@ -728,6 +729,9 @@ PB_LEVER_HELL_ALREADY_T4 = "Your tube is already fully hell-tuned (T4).";
 
 PB_WHEELTIP_Select_M1Plasma_Single = "M1 Plasma Rifle: Single gun.";
 PB_WHEELTIP_Select_M1Plasma_Dual = "M1 Plasma Rifle: Dual wield (upgrade).";
+PB_WHEELTIP_Select_BDPRailgun_Hologram = "Platinum Railgun: Deploy holographic decoy.";
+PB_WHEELTIP_Select_BDPRailgun_Scope = "Platinum Railgun: Toggle 3x / 9x scope while ADS.";
+PB_BDPRAIL_SCOPE_ADS = "\cjVariable scope\c-: Aim down sights first.";
 
 PB_PICKUP_PB_Deagle = "You found the UAC .50 Caliber Hand Cannon! (Slot 2, Upgrade)";
 PB_PICKUP_PB_REVOLVER = "You got the UAC .500 Magnum! (Slot 2)";
@@ -776,6 +780,8 @@ PB_WPNHINT_PB_Carbine = "Carbine: Weapon Special Wheel\n(Modes, Akimbo, Sights).
 PB_WPNHINT_PB_Chainsaw = "Chainsaw: Grind Primary Fire;\nAlt-Fire Vertical; Berserk Heals.";
 PB_WPNHINT_PB_Deagle = "Desert Eagle: Alt-Fire Aim / Fan Hammer.";
 PB_WPNHINT_PB_DemonExterminator = "Demon Exterminator: Laser / Incineration / Lightning\n(Weapon Special wheel). All modes use Demon Tech ammo.";
+PB_PICKUP_PB_DemonExterminator = "You found the Demon Exterminator! Weapon Special = Laser / Incineration / Lightning. (Slot 9)";
+PB_TAG_PB_DemonExterminator = "Demon Exterminator";
 PB_WPNHINT_PB_DualWeapon = "Dual Wield: Primary Left / Alt-Fire Right.\nSingle-Button Dual Mode in Menu Overrides.";
 PB_WPNHINT_PB_Flamethrower = "Flamethrower: Cone Primary Fire;\nAlt-Fire Napalm / Burst; Heat Meter.";
 PB_WPNHINT_PB_Freezer = "Freeze Rifle:\nCryo Primary Fire; Alt-Fire Bomb / Beam.";
@@ -804,7 +810,7 @@ PB_WPNHINT_PB_NeoHMG = "Neo Heavy MG: Hold Alt-Fire Shield;\nWeapon Special Fire
 PB_WPNHINT_PB_Pistol = "Pistol: Weapon Special Suppressor /\nAkimbo / Burst Wheel.\nAlt-Fire Flashlight / Secondary.";
 PB_WPNHINT_PB_QuadSG = "Quad Shotgun: Weapon Special Akimbo / Blast /\nShell vs Breath;\nAlt-Fire Patterns.";
 PB_WPNHINT_PB_Railgun = "Railgun: Primary fire (rail or laser by mode). Alt-Fire zoom scope. Hold Reload and press Alt-Fire to deploy a holographic decoy (same as Cat's Frozen equipment).";
-PB_WPNHINT_PB_BDPRailgun = "Platinum Railgun: Pump-action rail shots from Cell reserves (5-round mag). Alt-Fire: scope (Weapon Special toggles 3x/9x zoom while scoped). Weapon Special: holographic decoy.";
+PB_WPNHINT_PB_BDPRailgun = "Platinum Railgun: Pump-action rail shots from Cell reserves (5-round mag). Alt-Fire: scope. Weapon Special wheel: hologram decoy or variable scope (3x/9x while ADS).";
 PB_WPNHINT_PB_Revolver = "Revolver: Alt-Fire Fan Hammer / Single-Action;\nSee PDA Upgrades.";
 PB_WPNHINT_PB_RocketLauncher = "Rocket Launcher: Weapon Special Rocket Mode;\nAlt-Fire Scope / Detonate.";
 PB_WPNHINT_PB_Excavator = "Excavator: Drill Shot Burrows;\nDrop Shot Floats. Weapon Special Mode;\nAlt-Fire Mid-Air Detonate.";

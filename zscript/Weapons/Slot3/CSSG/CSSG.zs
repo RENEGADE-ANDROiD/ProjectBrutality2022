@@ -30,7 +30,8 @@ Class PB_CSSG : PB_WeaponBase
 		Shell_EXPL = 6,
 		Shell_WPSP = 7,
 		Shell_Doom = 8,
-		Shell_Damn = 9
+		Shell_Damn = 9,
+		Shell_SubZ = 10
 	};
 	
 	states
@@ -79,7 +80,7 @@ Class PB_CSSG : PB_WeaponBase
 			C0RO P 1 A_DoPBWeaponAction();
 			C0RB A 1;
 			C0RB BCDFGH 1 {
-				ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM');
+				ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM','C0HX');
 				return A_DoPBWeaponAction();
 			}
 			TNT1 A 0 A_startsound("weapons/cssg/in",26);
@@ -256,7 +257,7 @@ Class PB_CSSG : PB_WeaponBase
 			TNT1 AA 0 A_PB_ThrottledMuzzleFX(0, 0, -2, "", 'CSSGFXPhase');
 			C0RO P 1;
 			C0RB A 1;
-			C0RB BCDFGH 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM');
+			C0RB BCDFGH 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM','C0HX');
 			TNT1 A 0 A_startsound("weapons/cssg/in",26);
 			TNT1 A 0 PB_AmmoIntoMag("CSSGShellsIn","NewShell",2,1);
 			C0RB IJ 1;
@@ -282,8 +283,8 @@ Class PB_CSSG : PB_WeaponBase
 			C0HO EFGH 1;
 			TNT1 A 0 A_PB_ThrottledMuzzleFX(0, 0, -2, "", 'CSSGFXPhase');
 			C0HO II 1;
-			C0HB ABC 1 ChangeCSSGShellsLook('C0HB','C0HS','C0HN','C0HK','C0HD','C0HX','C0HW','C0HT','C0HM');
-			C0HB DEF 1 ChangeCSSGShellsLook('C0HB','C0HS','C0HN','C0HK','C0HD','C0HX','C0HW','C0HT','C0HM');
+			C0HB ABC 1 ChangeCSSGShellsLook('C0HB','C0HS','C0HN','C0HK','C0HD','C0HX','C0HW','C0HT','C0HM','C0HX');
+			C0HB DEF 1 ChangeCSSGShellsLook('C0HB','C0HS','C0HN','C0HK','C0HD','C0HX','C0HW','C0HT','C0HM','C0HX');
 			TNT1 A 0 A_startsound("weapons/cssg/in",24);
 			TNT1 A 0 PB_AmmoIntoMag("CSSGShellsIn","NewShell",2,1);
 			C0HB GHI 1;
@@ -300,7 +301,7 @@ Class PB_CSSG : PB_WeaponBase
 			C0HO D 1;
 			TNT1 A 4;
 			C0RB JI 1;
-			C0RB HGFEDCB 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM');
+			C0RB HGFEDCB 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM','C0HX');
 			TNT1 A 0 { PB_UnloadMag("CSSGShellsIn","NewShell",1, 0, 6, 14, "PB_ShellUnloadProp"); }
 			TNT1 A 0 A_Startsound("weapons/ssg/inspect2",26);
 			C0RB A 1;
@@ -338,7 +339,7 @@ Class PB_CSSG : PB_WeaponBase
 			TNT1 AA 0 A_spawnCSSGCasing(true);
 			C0RO NOP 1;
 			C0RB A 1;
-			C0RB BCDEFGH 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM');
+			C0RB BCDEFGH 1 ChangeCSSGShellsLook('C0RB','C0RS','C0RN','C0RK','C0RD','C0RX','C0RW','C0RT','C0RM','C0HX');
 			TNT1 A 0 A_startsound("weapons/cssg/in",24);
 			TNT1 A 0 {
 				if(countinv(invoker.ammotype2)<2 && countinv(invoker.ammotype1)>0)
@@ -464,18 +465,19 @@ Class PB_CSSG : PB_WeaponBase
 	static const string CSSG_ShellsType[] = {
 		"\cgBuckshot\c- ","\cdSlug\c- ","\cjFlechette\c- ",
 		"\chFlak\c- ","\ciDragon Breath's\c- ","\cuExplosive\c- ",
-		"\c[WPBronze]White Phosphorous\c- ","\ctTriple Doom\c- ","\c[DanmakuYellow]Danmaku\c- "
+		"\c[WPBronze]White Phosphorous\c- ","\ctTriple Doom\c- ","\c[DanmakuYellow]Danmaku\c- ",
+		"\cnSub-Zero\c- "
 	};
 	
 	static const string CSSG_ShellsToken1[] = {
 		"SelectCSG_Buckshot","SelectCSG_Slugshot","SelectCSG_Flechette","SelectCSG_Flak",
 		"SelectCSG_Dragonsbreath","SelectCSG_Explosive","SelectCSG_WPhosphorus",
-		"SelectCSG_Doom","SelectCSG_Danmaku"
+		"SelectCSG_Doom","SelectCSG_Danmaku","SelectCSG_SubZero"
 	};
 	
 	static const string CSSG_ConfirmShell[] = {
 		"$CM_BUCKLD","$CM_SLUGLD","$CM_FLCHLD","$CM_FLAKLD","$CM_DGBTLD","$CM_EXPLLD",
-		"$CM_WPLOAD","$CM_DOOMLD","$CM_DNMKULD"
+		"$CM_WPLOAD","$CM_DOOMLD","$CM_DNMKULD","$CM_SUBZRLD"
 	};
 	
 	Action State PB_CheckReload(int min = 1,statelabel noammo = null,statelabel empty = null,statelabel fully = null, int alreadyfull = 1)
@@ -505,7 +507,7 @@ Class PB_CSSG : PB_WeaponBase
 			PS.sprite = GetSpriteIndex(spt);
 	}
 	
-	Action Void ChangeCSSGShellsLook(name buck = '',name slug = '',name flech = '',name flak = '',name dragons = '',name explo = '',name wp = '',name tds = '',name dnm = '',bool old = false)
+	Action Void ChangeCSSGShellsLook(name buck = '',name slug = '',name flech = '',name flak = '',name dragons = '',name explo = '',name wp = '',name tds = '',name dnm = '',name subz = '',bool old = false)
 	{
 		int wich = old ? invoker.oldshells : invoker.shellsmode;
 		wich++;
@@ -520,6 +522,7 @@ Class PB_CSSG : PB_WeaponBase
 			case Shell_WPSP: PB_ChangePsPrite(wp); break; 
 			case Shell_Doom: PB_ChangePsPrite(tds); break;
 			case Shell_Damn: PB_ChangePsPrite(dnm); break;
+			case Shell_SubZ: PB_ChangePsPrite(subz); break;
 		}
 		
 	}
@@ -547,11 +550,13 @@ Class PB_CSSG : PB_WeaponBase
 			actmod++;
 		if(countinv("DanmakuUpgrade")<1 && actmod == 8)
 			actmod++;
+		if(countinv("SubZeroUpgrade")<1 && actmod == 9)
+			actmod++;
 			
-		if(actmod > 8)
+		if(actmod > 9)
 			actmod = 0;
 		
-		actmod = clamp(actmod,0,8);
+		actmod = clamp(actmod,0,9);
 		invoker.shellsmode = actmod;
 		return;
 	}
@@ -565,7 +570,7 @@ Class PB_CSSG : PB_WeaponBase
 		actmod--;
 		
 		if(actmod < 0)
-			actmod = 8;
+			actmod = 9;
 			
 		if(actmod < 4)
 		{
@@ -573,6 +578,8 @@ Class PB_CSSG : PB_WeaponBase
 			return;
 		}
 		
+		if(countinv("SubZeroUpgrade")<1 && actmod == 9)
+			actmod--;
 		if(countinv("DanmakuUpgrade")<1 && actmod == 8)
 			actmod--;
 		if(countinv("TripleDoomUpgrade")<1 && actmod == 7)
@@ -584,7 +591,7 @@ Class PB_CSSG : PB_WeaponBase
 		if(countinv("DragonBreathUpgrade")<1 && actmod == 4)
 			actmod--;
 		
-		actmod = clamp(actmod,0,8);
+		actmod = clamp(actmod,0,9);
 		invoker.shellsmode = actmod;
 	}
 
@@ -603,6 +610,7 @@ Class PB_CSSG : PB_WeaponBase
 			case Shell_WPSP: A_Print("$CM_WPLOAD"); break;
 			case Shell_Doom: A_Print("$CM_DOOMLD"); break;
 			case Shell_Damn: A_Print("$CM_DNMKULD"); break;
+			case Shell_SubZ: A_Print("$CM_SUBZRLD"); break;
 		}
 	}
 	
@@ -620,6 +628,7 @@ Class PB_CSSG : PB_WeaponBase
 			case Shell_WPSP: console.printf("\c[WPBronze]White Phosphorus"); break;
 			case Shell_Doom: console.printf("\ctDoom Shells"); break;
 			case Shell_Damn: console.printf("\c[DanmakuYellow]Danmaku Shells"); break;
+			case Shell_SubZ: console.printf("\cnSub-Zero Shells"); break;
 		}
 	}
 	
@@ -668,6 +677,7 @@ Class PB_CSSG : PB_WeaponBase
 			case Shell_WPSP: shelltype = "WhitePShellCasing"; break;
 			case Shell_Doom: shelltype = "TDoomCasing"; break;
 			case Shell_Damn: shelltype = "DanmakuCasing"; break;
+			case Shell_SubZ: shelltype = "SubZeroCasing"; break;
 		}
 		
 		
@@ -739,6 +749,12 @@ Class PB_CSSG : PB_WeaponBase
 			case Shell_Damn:
 				CSSG_FireBullets("DanmakuProjectile",16,4.0,0,0,2.5);
 				break;
+			case Shell_SubZ:
+				A_SpawnItemEx("BlueFlareSpawn", 0, 0, -3);
+				A_SpawnItemEx("BlueFlareSpawn", 0, 0, 3);
+				PB_FireBullets("SubZeroProjectile", 10, 6, 0, 0, 6);
+				A_FireBullets(8, 6, 10, 18, "SubZ_Puff", FBF_NORANDOM, 8192, "CSSG_FrozenTracer", -12);
+				break;
 		}
 		
 	}
@@ -780,6 +796,11 @@ Class PB_CSSG : PB_WeaponBase
 			case Shell_Damn:
 				CSSG_FireBullets("DanmakuProjectile",8,1.5,2,0,1.2);
 				break;
+			case Shell_SubZ:
+				A_SpawnItemEx("BlueFlareSpawn", 0, 0, -3);
+				PB_FireBullets("SubZeroProjectile", 5, 6, 0, 0, 6);
+				A_FireBullets(8, 6, 10, 18, "SubZ_Puff", FBF_NORANDOM, 8192, "CSSG_FrozenTracer", -12);
+				break;
 		}
 		
 	}
@@ -819,6 +840,11 @@ Class PB_CSSG : PB_WeaponBase
 				break;
 			case Shell_Damn:
 				CSSG_FireBullets("DanmakuProjectile",8,1.6,-2,0,1.2);
+				break;
+			case Shell_SubZ:
+				A_SpawnItemEx("BlueFlareSpawn", 0, 0, 3);
+				PB_FireBullets("SubZeroProjectile", 5, 6, 0, 0, 6);
+				A_FireBullets(8, 6, 10, 18, "SubZ_Puff", FBF_NORANDOM, 8192, "CSSG_FrozenTracer", -12);
 				break;
 		}
 		
@@ -863,6 +889,9 @@ Class PB_CSSG : PB_WeaponBase
 			case Shell_Damn:	
 				A_Startsound("CSSGDANF",22);
 				break;
+			case Shell_SubZ:
+				A_Startsound("weapons/CryoRifle/missile", 21);
+				break;
 		}
 		
 	}
@@ -904,6 +933,9 @@ Class PB_CSSG : PB_WeaponBase
 				break; 
 			case Shell_Damn:	
 				A_Startsound("CSSGDANS",22);
+				break;
+			case Shell_SubZ:
+				A_Startsound("weapons/CryoRifle/missile", 21);
 				break;
 		}
 
@@ -1015,7 +1047,7 @@ class ExplosiveProjectile : PB_Projectile
 			TNT1 A 0;
 			TNT1 A 0
 			{
-				A_Explode(60,128,XF_HURTSOURCE|RTF_THRUSTZ, 0, 64);
+				PB_DoPlayerRocketJumpExplode(60, 128);
 				A_StopSound(0);
 				A_StartSound("FAREXPL", CHAN_AUTO,CHANF_OVERLAP,0.5,0,1.1);
 				A_QuakeEx (2,2,2,4,0,100,"");
