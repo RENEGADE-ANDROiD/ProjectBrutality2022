@@ -247,6 +247,42 @@ extend class PB_WeaponBase
 		A_PB_ThrottledMuzzleFX(smokeX, 0, 0, "", 'CarbineFXPhase');
 	}
 
+	// PB2022 minigun fire cosmetics — throttled smoke / brass / belt (see MINIGUN.dec fire loops).
+	// flags: 1 = smoke, 2 = brass, 4 = belt, 8 = triple brass, 16 = triple-barrel side smoke
+	action void A_PB_MinigunFireFX(int flags = 7, double shellY = -13)
+	{
+		if (invoker.PB_MinigunSkipCosmeticFX())
+			return;
+		let pp = PlayerPawn(invoker.owner);
+		if (!pp)
+			return;
+
+		if ((flags & 1) != 0)
+		{
+			if ((flags & 16) != 0)
+			{
+				if (!invoker.PB_AutoFXToggle(pp, 'MinigunSmokePhase'))
+				{
+					PB_GunSmoke_Basic(0, 0, 2);
+					PB_GunSmoke_Basic(5, 0, -1);
+					PB_GunSmoke_Basic(-5, 0, -1);
+				}
+			}
+			else if (!invoker.PB_AutoFXToggle(pp, 'MinigunSmokePhase'))
+				PB_GunSmoke_Basic(0, 0, 2);
+		}
+
+		if ((flags & 2) != 0 && !invoker.PB_AutoFXThrottle(pp, 'MinigunBrassThrottle', (flags & 8) != 0 ? 1 : 2))
+		{
+			int bursts = ((flags & 8) != 0) ? 3 : 1;
+			for (int i = 0; i < bursts; i++)
+				PB_SpawnCasing("EmptyBrassMinigun", 19, shellY, 24, 0, -frandom(3, 6), frandom(-1, 1));
+		}
+
+		if ((flags & 4) != 0 && invoker.PB_AutoFXToggle(pp, 'MinigunBeltPhase'))
+			PB_SpawnCasing("LMGBeltLink", 19, shellY, 24, 0, -frandom(1, 2), frandom(-3, 3));
+	}
+
 	void PB_M41A_ApplyFireCosmetics(double smokeX = 0)
 	{
 		if (PB_MinigunSkipCosmeticFX())
