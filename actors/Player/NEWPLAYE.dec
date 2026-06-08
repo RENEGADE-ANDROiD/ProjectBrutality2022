@@ -8542,7 +8542,6 @@ FSF5 D 10
 				}
 			}
 		}
-		TNT1 A 0 A_SpawnItemEx("DeadCacoDemon", 0, 1, 1, 1, 1)
 		MARN A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)
 		TNT1 A 0 SetPlayerProperty(0,0,0)
 		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
