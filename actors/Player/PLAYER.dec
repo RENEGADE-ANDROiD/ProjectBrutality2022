@@ -3061,12 +3061,12 @@ NULL A 0 A_PlaySound("misc/xdeath")
 				}
 			}
 		}
-        NULL A 0 A_SpawnItemEx("DeadCacoDemon", 0, 1, 1, 1, 1)
+        NULL A 0 A_SpawnItemEx("UsableCacodemon", 0, 1, 1, 1, 1)
 		MARN A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)//Stop Camera
         NULL A 0 SetPlayerProperty(0,0,0)
         NULL A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
 		NULL A 0 A_GiveInventory("CacoPlayer", 1)
-		NULL A 0 A_SelectWeapon("CacoPlayer")
+		NULL A 0 A_GiveInventory("CacoRideSelect", 1)
         Goto StandStill
 		
 		
@@ -3111,12 +3111,12 @@ NULL A 0 A_PlaySound("misc/xdeath")
 				}
 			}
 		}
-        NULL A 0 A_SpawnItem ("DeadHalfCacoDemon", 1)
+        NULL A 0 A_SpawnItemEx("UsableCacodemon", 0, 1, 1, 1, 1)
 		MARN A 0 ACS_ExecuteAlways(171, 0, 0, 0, 0)//Stop Camera
         NULL A 0 SetPlayerProperty(0,0,0)
         NULL A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
 		NULL A 0 A_GiveInventory("CacoPlayer", 1)
-		NULL A 0 A_SelectWeapon("CacoPlayer")
+		NULL A 0 A_GiveInventory("CacoRideSelect", 1)
         Goto StandStill
 
 

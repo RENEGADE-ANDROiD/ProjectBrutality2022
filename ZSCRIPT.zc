@@ -206,7 +206,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot4/MetalSniper/MetalSniper.zs"
 #include "zscript/Weapons/Slot4/Carbine/Carbine.zs"
 #include "zscript/Weapons/Slot4/LeverAction/LeverAction.zs"
-#include "zscript/Weapons/Slot4/Minigun/PB_Minigun.zs"
+// PB_Minigun: DECORATE fold (actors/Weapons/Slot4/MINIGUN.dec) — PBWPE MINIGUN.dec
 #include "zscript/Weapons/Slot4/MG42/PB_MG42.zs"
 #include "zscript/Weapons/Slot1/ArgentSith_Weapon.zs"
 #include "zscript/Weapons/Slot1/BeamKatana_Weapon.zs"
