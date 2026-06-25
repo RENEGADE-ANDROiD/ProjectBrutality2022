@@ -782,14 +782,14 @@ ACTOR Doomer : PlayerPawnBase Replaces DoomPlayer
 	
 	//WEAPON SLOTS FOR THIS PLAYER CLASS
 	
-	Player.WeaponSlot 1, PB_Axe, PB_Chainsaw, Melee_Attacks, PB_BeamKatana, PB_ArgentSith, VorpalBlade, PB_ObsidianDragonSlayer
+	Player.WeaponSlot 1, PB_Axe, PB_Chainsaw, Melee_Attacks, PB_BeamKatana, PB_ArgentSith, VorpalBlade, PB_ObsidianDragonSlayer, BattleAxe
 	Player.WeaponSlot 2, PB_Pistol, PB_Revolver, PB_MP40, PB_SMG, HellPistoler, PB_Deagle
-	Player.WeaponSlot 3, PB_Shotgun, PB_AutoShotgun, PB_SSG, PB_CSSG, HASG, PB_CryoShotgun, X12Shotgun, PB_QuadSG, MarauderSSG
-	Player.WeaponSlot 4, Rifle, PB_Carbine, ChexRifle, PB_XM21, PB_Fusil, PB_LMG, PB_MetalSniper, OldHMG, LeverAction, ProSurv_Ballista, PB_M41A, BDPBattleRifle
-	Player.WeaponSlot 5, PB_Minigun, PB_Nailgun, PB_MG42, PB_NeoHMG
-	Player.WeaponSlot 6, PB_SuperGL, PB_RocketLauncher, Paingiver, PB_Excavator, MastermindChaingun, PB_CyberdemonRL
-	Player.WeaponSlot 7, PB_Freezer, PB_Railgun, PB_BDPRailgun, BioAcidLauncher, MancubusFlameCannon
-	Player.WeaponSlot 8, PB_M1Plasma, PB_M2Plasma, PB_DarkMatterRifle
+	Player.WeaponSlot 3, PB_Shotgun, PB_AutoShotgun, PB_SSG, PB_CSSG, HASG, PB_CryoShotgun, X12Shotgun, PB_QuadSG, MarauderSSG, HexaLionShotgun, DTShotgun, Rainmaker
+	Player.WeaponSlot 4, Rifle, PB_Carbine, ChexRifle, PB_XM21, PB_Fusil, PB_LMG, PB_MetalSniper, OldHMG, LeverAction, ProSurv_Ballista, PB_M41A, BDPBattleRifle, PBWP_Warbringer
+	Player.WeaponSlot 5, PB_Minigun, PB_Nailgun, PB_MG42, PB_NeoHMG, PBWP_Nightfall, Tactical_Nail_Gun
+	Player.WeaponSlot 6, PB_SuperGL, PB_RocketLauncher, Paingiver, PB_Excavator, MastermindChaingun, PB_CyberdemonRL, PBWP_Caduceus, PBWP_Dispatcher
+	Player.WeaponSlot 7, PB_Freezer, PB_Railgun, PB_BDPRailgun, BioAcidLauncher, MancubusFlameCannon, PBWP_SiriusCrisis
+	Player.WeaponSlot 8, PB_M1Plasma, PB_M2Plasma, PB_DarkMatterRifle, ThunderCrossbow
 	Player.WeaponSlot 9, BHGen, PB_Unmaker, PB_DemonExterminator, PB_BFG9000, PB_BFGBeam, PB_Flamethrower, Hell_rifle
 	
 	Player.StartItem "PB_PDAWeaponContainer",1

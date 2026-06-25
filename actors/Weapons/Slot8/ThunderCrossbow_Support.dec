@@ -1,0 +1,222 @@
+// Thunder Crossbow projectiles — PBWP fold (renamed blast avoids Stormcast ElectroBlast).
+
+ACTOR ThunderArrow : FastProjectile
+{
+	Radius 10
+	Height 10
+	Speed 94
+	Damage (random(55,85))
+	DamageType "Thunder"
+	Decal "Scorch"
+	Projectile
+	+NOEXTREMEDEATH
+	+BLOODSPLATTER
+	+MTHRUSPECIES
+	renderstyle ADD
+	alpha 0.90
+	Scale 1.0
+	DeathSound "weapons/plasmax"
+	SeeSound "None"
+	Obituary "$OB_MPPLASMARIFLE"
+	States
+	{
+	Spawn:
+		FX98 A 1 BRIGHT A_SpawnItem("PlasmaFlare",0,0)
+		TNT1 A 0 A_SpawnItem("LightningWarperTrail", random (-4,4))
+		FX98 A 1 BRIGHT A_SpawnItem("DLightningFX")
+		TNT1 A 0 A_CustomMissile ("PB_ThunderCrossbow_ElectroBlast", 3, 0, random (0, 360), 2, random (0, 360))
+		Loop
+	Death:
+		TNT1 A 0 A_CustomMissile("BallLightningZapperVL", random (-4,4))
+		TNT1 A 0 A_Explode(3,32,0,0,16)
+		TNT1 A 0 A_CustomMissile("BigElectroBlastTrailX", random (-4,4))
+		TNT1 AAAA 0 A_CustomMissile ("BlueShockwave", 3, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAA 0 A_CustomMissile ("PlasmaSmoke", 3, random(-12,12), random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BarrelParticle", 3, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAA 1 A_SpawnItem("PlasmaFlare")
+		TNT1 AAAAAAAAA 4 A_CustomMissile ("PlasmaSmoke", 1, random(-12,12), random (0, 360), 2, random (0, 160))
+		Stop
+	}
+}
+
+actor PB_ThunderCrossbow_ElectroBlast
+{
+  Radius 13
+  Height 8
+  Speed 25
+  Damage 10
+  Projectile
+  DamageType Plasma
+  Scale 0.4
+  +RANDOMIZE
+  +BLOODLESSIMPACT
+  +NOEXTREMEDEATH
+  +SEEKERMISSILE
+  +BOUNCEONWALLS
+  +BOUNCEONCEILINGS
+  +BOUNCEONFLOORS
+  -ALLOWBOUNCEONACTORS
+  RenderStyle Add
+  Alpha 0.75
+  SeeSound "electrogun/shoot"
+  DeathSound "electrogun/hit"
+  Obituary "%o was shocked by %k's Thunder Crossbow."
+  BounceCount 3
+  States
+  {
+  Spawn:
+    EBLT GH 0 bright A_SpawnItem("ElectroBlastTrail")
+	TNT1 A 0 A_SeekerMissile(1,8,SMF_LOOK)
+    EBLT G 2 bright A_BishopMissileWeave
+	TNT1 A 0 A_SeekerMissile(1,8,SMF_LOOK)
+	EBLT H 2 bright A_BishopMissileWeave
+    loop
+  Death:
+    EBLT IJK 3 bright
+    stop
+  }
+}
+
+Actor PB_ThunderCrossbow_ElectroBomb
+{
+   Radius 6
+   Height 12
+   Speed 32
+   Damage 2
+   PROJECTILE
+   RENDERSTYLE ADD
+   Alpha 0.80
+   Damagetype plasma
+   Deathsound "electrogun/explode"
+   Scale 0.2
+   +THRUGHOST
+   +FORCEXYBILLBOARD
+   States
+   {
+   Spawn:
+      TNT1 A 0 A_PlaySoundEx("electrogun/fly", 7, 1)
+      STFL ABCDEFGHIJKLMNOP 1 Bright
+	  Loop
+   Death:
+	  TNT1 A 0 A_StopSound(7)
+	  TNT1 A 0 A_JumpIf(ScaleX >= 2.5, "DeathFinish")
+	  TNT1 A 0 A_FadeOut(0.01)
+      TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL A 1 Bright
+	  TNT1 A 0 A_FadeOut(0.01)
+      STFL B 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL C 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL D 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL E 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL F 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL G 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL H 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL I 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL J 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL K 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL L 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL M 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL N 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL O 1 Bright
+	  TNT1 A 0 A_SetScale(ScaleX+0.05,ScaleY+0.05)
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 24, 1, 90, 4096, 90)
+      STFL P 1 Bright
+	  Loop
+   DeathFinish:
+	  TNT1 A 0 A_BFGSpray("ZeusSaysHi", 40, 1, 90, 4096, 90)
+	  XELC ABCDEF 4 Bright
+	  Stop
+	  }
+}
+
+Actor PB_ThunderCrossbow_ElectroBombCluster
+{
+   Radius 10
+   Height 15
+   Speed 32
+   Damage 0
+   PROJECTILE
+   RENDERSTYLE ADD
+   Alpha 0.80
+   Damagetype plasma
+   Scale 0.2
+   +THRUGHOST
+   +FORCEXYBILLBOARD
+   States
+   {
+   Spawn:
+      TNT1 A 0 A_PlaySoundEx("electrogun/fly", 7, 1)
+      STFL ABCD 1 Bright A_CustomMissile("PB_ThunderCrossbow_ElectroBlast",6,0,random(0,359),CMF_AIMDIRECTION|CMF_TRACKOWNER,random(-40,40))
+	  STFL EFGH 1 Bright
+	  STFL IJKL 1 Bright A_CustomMissile("PB_ThunderCrossbow_ElectroBlast",6,0,random(0,359),CMF_AIMDIRECTION|CMF_TRACKOWNER,random(-40,40))
+	  STFL MNOP 1 Bright
+	  Loop
+   Death:
+	  TNT1 A 0 A_StopSound(7)
+      TNT1 A 0 A_SetScale(ScaleX+0.1,ScaleY+0.1)
+      STFL A 1 Bright
+      TNT1 A 0 A_SetScale(ScaleX+0.1,ScaleY+0.1)
+      STFL B 1 Bright
+      TNT1 A 0 A_SetScale(ScaleX+0.1,ScaleY+0.1)
+      STFL C 1 Bright
+      TNT1 A 0 A_SetScale(ScaleX+0.1,ScaleY+0.1)
+      STFL D 1 Bright
+      TNT1 A 0 A_SetScale(ScaleX+0.1,ScaleY+0.1)
+	  STFL EFGHIJKLMNOPABCDEFGHIJKLMNOP 1 Bright
+	  TNT1 A 0 A_SetScale(1.5, 1.5)
+	  TNT1 A 0 A_PlaySound("electrogun/explode")
+	  TNT1 AAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile("PB_ThunderCrossbow_ElectroBlast",6,0,random(0,359),CMF_AIMDIRECTION|CMF_TRACKOWNER,random(-40,40))
+	  TNT1 AAAAAAAAAA 0 A_CustomMissile("BlueStormLite",6,0,random(0,359),CMF_AIMDIRECTION|CMF_TRACKOWNER,random(-40,40))
+	  XELC ABCDEF 5 Bright
+	  Stop
+	  }
+}
+
+ACTOR PB_ThunderCrossbowDrop : CustomInventory
+{
+	+INVENTORY.ALWAYSPICKUP
+	Inventory.PickupSound "7LSPICK"
+	States
+	{
+	Spawn:
+		WBOW A -1
+		Stop
+	Pickup:
+		TNT1 A 0 A_JumpIf(GetCVar("pb_NoThunderCrossbowWeapon") == 1, "Done")
+		TNT1 A 0 A_JumpIfInventory("ThunderCrossbow", 1, "Refill")
+		TNT1 A 0 A_GiveInventory("ThunderCrossbow", 1)
+		Stop
+	Refill:
+		TNT1 A 0 A_GiveInventory("PB_Cell", 30)
+		Stop
+	Done:
+		Stop
+	}
+}

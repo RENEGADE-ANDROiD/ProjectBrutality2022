@@ -157,6 +157,11 @@ Actor DSAttack: FastProjectile
 	States
 	{
 	Spawn:
+		FRPR BCDEFGH 1 Bright A_SpawnItemEx("SmallFire3", random(-4, 4), random(-4, 4), random(-2, 2), 0, 0, 0, 0, 128, 64)
+		TNT1 A 0 A_Jump(224, "SpawnLoop")
+		TNT1 A 0 A_SpawnItem("RedFlareSmall", 0)
+	SpawnLoop:
+		Goto Spawn
 
 	Death:
 	TNT1 A 0

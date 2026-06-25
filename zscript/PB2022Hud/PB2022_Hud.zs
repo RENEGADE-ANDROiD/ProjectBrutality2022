@@ -146,7 +146,10 @@ class PB2022_Hud_ZS : BaseStatusBar
 	override void Init()
 	{
 		Super.Init();
-		SetSize(0, 320, 200);
+		// PB Staging fullscreen HUD virtual canvas (not vanilla 320x200) — layout
+		// coordinates in this file were ported from that tree; 200 vertical units
+		// scale the whole bar ~2.7x too large on screen.
+		SetSize(0, 320, 540);
 		
 		if (Font.FindFont("PBFONT"))
 			mDefaultFont = HUDFont.Create("PBFONT");

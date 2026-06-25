@@ -159,6 +159,9 @@ GameInfo
 	AddEventHandlers = "PB_AchievementSetup"
 	AddEventHandlers = "PB_AchievementCombatHandler"
 	AddEventHandlers = "PB_ShellReserveCompatHandler"
+	AddEventHandlers = "cl_Handler"
+	AddEventHandlers = "cl_FXThrottleHandler"
+	AddEventHandlers = "PBWP_CombatDamageHandler"
 	// Combat SFX warm-cache (~45 logical names): decoded at each map load (incl. TITLEMAP) to cut first-play hitches from PK3/OGG decode. Expand via maint_scripts or SNDINFO + gameplay profiling — do not list all ~4k PB sounds here.
 	PrecacheSounds =
 		"weapons/pistol", "weapons/pistolup",
@@ -411,6 +414,17 @@ DoomEdNums
 	23221 = LeverActionHellUpgradeT3
 	23222 = LeverActionHellUpgradeT4
 	23223 = PB_BDPRailgun
+	23224 = BattleAxe
+	23225 = HexaLionShotgun
+	23226 = DemonTechShotgunGiver
+	23227 = Rainmaker
+	23228 = PBWP_Warbringer
+	23229 = PBWP_Nightfall
+	23230 = PBWP_Caduceus
+	23231 = PBWP_Dispatcher
+	23232 = PBWP_SiriusCrisis
+	23233 = Tactical_Nail_Gun
+	23234 = ThunderCrossbow
 
 	17003 = CyberdemonLegsFatality
 
@@ -429,6 +443,12 @@ DoomEdNums
 	30135 = Hierophant
 	2546  = CyberdemonBoss
 }
+
+DamageType cl_Poison
+{
+	Obituary = "%o was poisoned"
+}
+
 gameinfo
 {
 	addeventhandlers = "hitmarkershandler"

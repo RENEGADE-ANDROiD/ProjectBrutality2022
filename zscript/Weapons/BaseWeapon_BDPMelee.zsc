@@ -1,0 +1,64 @@
+// Shared BDP-style melee lunge helpers (Vorpal Blade, Dragon Slayer, Battle Axe, …).
+extend class PB_WeaponBase
+{
+	static vector3 BDPMeleeVecFromAngles(double ang, double pit, double mag = 1.)
+	{
+		double cosp = cos(pit);
+		return (cos(ang) * cosp, sin(ang) * cosp, -sin(pit)) * mag;
+	}
+
+	Action void A_BDPMeleeStart(double range = 200)
+	{
+		if (!player)
+			return;
+		FLineTraceData lt;
+		LineTrace(angle, range, pitch, 0, player.viewheight, data: lt);
+		if (lt.hitActor && lt.hitActor.bSOLID)
+		{
+			A_Face(lt.hitActor);
+			A_Recoil3D(-20);
+		}
+	}
+
+	Action double A_CheckMeleeRange(double maxrange = 512, bool skipWalls = false)
+	{
+		if (!player)
+			return maxrange;
+		FLineTraceData lt;
+		LineTrace(angle, maxrange, pitch, 0, player.viewheight, data: lt);
+		return (skipWalls && !lt.hitActor) ? maxrange : lt.distance;
+	}
+
+	Action void A_Recoil3D(double amt)
+	{
+		vel += BDPMeleeVecFromAngles(angle, pitch, -amt);
+	}
+
+	Action Actor A_BDPMelee(double range = 200, name projectile = "MeleeAttack", double spawnheight = -7, bool doHitThrust = true)
+	{
+		Actor victim;
+		FLineTraceData lt;
+		double aimz = player ? player.viewheight : (height * 0.5);
+		LineTrace(angle, range, pitch, 0, aimz, data: lt);
+		victim = lt.hitActor;
+		int aimCheck = -6;
+		while (aimCheck++ < 6 && !victim)
+		{
+			LineTrace(angle + (aimCheck * 8), range, pitch, 0, aimz, data: lt);
+			victim = lt.hitActor;
+		}
+		if (victim && victim.bSHOOTABLE)
+		{
+			A_Face(victim);
+			if (doHitThrust && victim.bSOLID)
+			{
+				vel = (0, 0, 0);
+				vel += BDPMeleeVecFromAngles(angle, pitch, -12);
+			}
+		}
+		Actor proj = A_FireProjectile(projectile, 0, 0, 0, spawnheight);
+		if (proj && victim && victim.bSHOOTABLE)
+			proj.SetOrigin(victim.pos, false);
+		return victim;
+	}
+}
