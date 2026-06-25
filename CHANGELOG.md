@@ -49,6 +49,12 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Fixed
 
+- **PBWP folded weapons — Quick Melee / muzzle flash (`PBWP_CA_Common.zs`, Cyberaugumented `.zs`, `HexaLionShotgun.dec`, `DTShotgun.dec`, `TacticalNailgun.dec`, `Rainmaker.dec`, `BattleAxeAndShield.dec`):** Upstream PBWP stubs used empty **`TNT1` + `A_DoPBWeaponAction`** loops on **`PSP_FLASH`** (weapon lock, no punch animation) and **`Flash` → `Goto LightDone`** (missing label). Shared PB2022-compliant **`Flash` / `FlashPunching` / kick states** now live on **`PBWP_CA_WeaponBase`**; per-gun overrides removed from all twelve Cyberaugumented ZScript ports. DECORATE PBWP weapons get **`A_ClearOverlays(PSP_FLASH, …, false)`** + **`Goto Ready3`** (or weapon-ready label) instead of **`Stop`**, and **`Rainmaker`** / **`BattleAxeAndShield`** drop broken **`A_Lower`** / missing-state punch paths.
+
+- **`PBWP_Warbringer` reload sprite pop (`PBWP_Warbringer.zs`, `lumps/includes/textures/PBWP_Fold.inc`):** Mag-in had briefly used raw **`R1F_ B`** (patch **`R1F_B0`**) to dodge a gunfire flash frame; that bypasses PBWP's **`RFL_B0`** composite offsets and read as a one-tic misalignment against the rest of the **`RFL_`** strip. Restored upstream **`RFL_ B`** mag-in tics and merged missing **`RFL_A0`–`RFL_H0`** composite defs ( **`R1F_*`** patches positioned/scaled per PBWP **`TEXTURES.PBWP`** ) — reload uses the same **`R1F_B0`** art without **`RFL_C`** muzzle-flash frames or raw-patch offset drift.
+
+- **Fullscreen HUD / visor / notify text oversized (`PB2022_Hud.zs`, `PB_VisorOverlay.zc`):** **`SetSize`** used vanilla **320×200** while PB Staging’s fullscreen bar (and every layout coordinate in this port) targets **320×540**, scaling the status bar, pickup/PDA notify strings, and visor frame ~**2.7×** too large regardless of GZDoom **HUD scale factor**. Restored **`SetSize(0, 320, 540)`** and matched **`PB_VisorHandler`** screen-pixel fallback to **540** (still prefers **`statusbar.GetHUDScale()`** when live).
+
 - **`PBPDA.zc` compile error:** Restored missing **`PDA_WeaponStrip_AppendHell_riflePreview`** function header (accidentally stripped during CryoShotgun PDA cleanup); fixes cascading ZScript parse failures at lines 3112 / 4445 / 5275.
 - **`PB_CryoShotgun_Projectiles.dec`:** Reordered **`Icebuckshot`** before **`IceFlak1`** alias so DECORATE parent type resolves at parse time.
 - **`PB_CryoShotgun.dec`:** Removed duplicate **`HasFreezerWeapon`** token (already defined in **`WarningStubs.dec`**).

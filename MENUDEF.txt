@@ -584,6 +584,9 @@ OptionMenu "PB2022_MonstersHubMenu"
 	Submenu "Advanced Monster Spawns", "MonsterSpawns"
 	StaticText " "
 	Submenu "Configure Monster Abilities", "MonsterSettings"
+	StaticText " "
+	Submenu "Champions Lite", "mk_CLMenu"
+	StaticText "Trait champions, mutations, caps, and aura settings.", teal
 }
 
 OptionMenu "PB2022_ExtrasMenu"
@@ -849,6 +852,8 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn M2 Plasma Rifle", "pb_NoM2PlasmaWeapon", "SpawnOnOff"
 	Option "Spawn UAC Dark Matter Rifle", "pb_NoPB_DarkMatterRifleWeapon", "SpawnOnOff"
+	Option "Spawn Thunder Crossbow", "pb_NoThunderCrossbowWeapon", "SpawnOnOff"
+	Option "Revenant Drop Thunder Crossbow", "pb_ThunderCrossbowRevenantDrop", "OffOn"
 	StaticText " "
 	Option "Spawn Freezer Rifle", "pb_NoFreezerWeapon", "SpawnOnOff"
 	StaticText " "
@@ -912,6 +917,16 @@ OptionMenu "WeaponSpawns"
 	Option "Spawn Demon Exterminator", "pb_NoDemonExterminatorWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Hell Pistoler", "pb_NoHellPistolerWeapon", "SpawnOnOff"
+	Option "Spawn Battle Axe and Shield", "pb_NoBattleAxeWeapon", "SpawnOnOff"
+	Option "Spawn Hexa-Lion Shotgun", "pb_NoHexaLionShotgunWeapon", "SpawnOnOff"
+	Option "Spawn Demon-Tech Shotgun", "pb_NoDTShotgunWeapon", "SpawnOnOff"
+	Option "Spawn Rainmaker", "pb_NoRainmakerWeapon", "SpawnOnOff"
+	Option "Spawn Warbringer", "pb_NoPBWP_WarbringerWeapon", "SpawnOnOff"
+	Option "Spawn Nightfall Augmented", "pb_NoPBWP_NightfallWeapon", "SpawnOnOff"
+	Option "Spawn Caduceus", "pb_NoPBWP_CaduceusWeapon", "SpawnOnOff"
+	Option "Spawn Dispatcher of Delusions", "pb_NoPBWP_DispatcherWeapon", "SpawnOnOff"
+	Option "Spawn Sirius Crisis Roscoe", "pb_NoPBWP_SiriusCrisisWeapon", "SpawnOnOff"
+	Option "Spawn Tactical Nailgun (SGP-331)", "pb_NoTacticalNailgunWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Argent Sith", "pb_NoArgentSithWeapon", "SpawnOnOff"
 	StaticText " "
@@ -2642,4 +2657,100 @@ OptionMenu "PBAchievementsMenu"
 	Option "Encode Save Data", "vuas_encode_data", "OnOff"
 	Option "Cheat Detection", "vuas_cheat_detection", "OnOff"
 	Option "Debug Console Output", "vuas_debug", "OnOff"
+}
+
+OptionMenu "mk_CLMenu"
+{
+	Title "Champions Lite"
+	StaticText "Reload the map after changing settings", gold
+	StaticText " "
+
+	Submenu "Quick Presets", "mk_CLPresetMenu"
+	Submenu "Trait Weights", "mk_CLTraitMenu"
+	Submenu "Mutation Weights", "mk_CLMutationMenu"
+	Submenu "Map Caps", "mk_CLCapMenu"
+	Submenu "Captain Aura", "mk_CLCaptainMenu"
+	StaticText " "
+
+	ScaleSlider "Spawn Chance", "cl_OverrideChance", -1, 256, 1, "Off", "By Difficulty"
+	ScaleSlider "Mutation Chance", "cl_Mutations", 0, 256, 1, "Off"
+	Option "Visual FX", "cl_VisualFX", "YesNo"
+	Option "Combat FX Throttle", "cl_fx_throttle", "OnOff"
+	Option "Performance Lite Mode", "cl_performance_lite", "OnOff"
+	Option "Visibility FX Cull", "cl_fx_visibility", "OnOff"
+	Option "Trait Particles", "cl_Particles", "YesNo"
+	Option "Size Markers", "cl_Markers", "YesNo"
+	ScaleSlider "Bulwark Armor Mul", "cl_bulwark_armor_mul", 1, 8, 1, "1x", "8x"
+}
+
+OptionMenu "mk_CLPresetMenu"
+{
+	Title "Quick Presets"
+	StaticText "Applies spawn, weights, caps, and FX settings", gold
+	StaticText "Reload map after applying", gold
+	StaticText " "
+
+	SafeCommand "Lite (performance)", "event cl_preset_lite", "Apply Lite preset?"
+	SafeCommand "Standard (defaults)", "event cl_preset_standard", "Reset to Standard preset?"
+	SafeCommand "Mayhem (maximum)", "event cl_preset_mayhem", "Apply Mayhem preset?"
+}
+
+OptionMenu "mk_CLCapMenu"
+{
+	Title "Map Champion Caps"
+	Option "Enable Map Caps", "cl_cap_enabled", "OnOff"
+	ScaleSlider "Small Map Cap", "cl_cap_small", 0, 128, 1, "Off"
+	ScaleSlider "Medium Map Cap", "cl_cap_medium", 0, 256, 1, "Off"
+	ScaleSlider "Large Map Cap", "cl_cap_large", 0, 512, 1, "Off"
+	Slider "Medium Threshold", "cl_cap_medium_count", 25, 500, 5
+	Slider "Large Threshold", "cl_cap_large_count", 100, 1000, 25
+}
+
+OptionMenu "mk_CLCaptainMenu"
+{
+	Title "Captain Aura"
+	Slider "Aura Radius", "cl_captain_radius", 128, 1024, 32
+	Slider "Minion Damage Taken", "cl_captain_buff_dr", 10, 100, 5
+	Slider "Minion Speed Boost", "cl_captain_buff_speed", 100, 200, 5
+}
+
+OptionMenu "mk_CLTraitMenu"
+{
+	Title "Trait Weights"
+	SafeCommand "Reset Defaults", "event cl_reset_traitweight", "Reset all trait weights?"
+	StaticText " "
+
+	ScaleSlider "Bulwark", "cl_weight_Bulwark", 0, 10, 1, "Off"
+	ScaleSlider "Brute", "cl_weight_Brute", 0, 10, 1, "Off"
+	ScaleSlider "Swift", "cl_weight_Swift", 0, 10, 1, "Off"
+	ScaleSlider "Volatile", "cl_weight_Volatile", 0, 10, 1, "Off"
+	ScaleSlider "Toxic", "cl_weight_Toxic", 0, 10, 1, "Off"
+	ScaleSlider "Blink", "cl_weight_Blink", 0, 10, 1, "Off"
+	ScaleSlider "Stalker", "cl_weight_Stalker", 0, 10, 1, "Off"
+	ScaleSlider "Splitter", "cl_weight_Splitter", 0, 10, 1, "Off"
+	ScaleSlider "Veteran", "cl_weight_Veteran", 0, 10, 1, "Off"
+	ScaleSlider "Captain", "cl_weight_Captain", 0, 10, 1, "Off"
+}
+
+OptionMenu "mk_CLMutationMenu"
+{
+	Title "Mutation Weights"
+	ScaleSlider "Giant", "cl_weight_Giant", 0, 10, 1, "Off"
+	ScaleSlider "Spectral", "cl_weight_Spectral", 0, 10, 1, "Off"
+	ScaleSlider "Rampage", "cl_weight_Rampage", 0, 10, 1, "Off"
+}
+
+OptionValue "cl_traits"
+{
+	-1, "off"
+	0, "Bulwark"
+	1, "Brute"
+	2, "Swift"
+	3, "Volatile"
+	4, "Toxic"
+	5, "Blink"
+	6, "Stalker"
+	7, "Splitter"
+	8, "Veteran"
+	9, "Captain"
 }

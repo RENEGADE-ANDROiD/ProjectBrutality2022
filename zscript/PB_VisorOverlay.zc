@@ -3,6 +3,9 @@
 
 class PB_VisorHandler : EventHandler
 {
+	// Must match PB2022_Hud_ZS SetSize vertical resolution (PB Staging uses 540).
+	const PB_HUD_VIRTUAL_H = 540.0;
+
 	// DrawVisorPiece anchor: horizontal low bits, vertical mid bits.
 	const VA_LEFT    = 0;
 	const VA_RIGHT   = 1;
@@ -297,7 +300,7 @@ class PB_VisorHandler : EventHandler
 
 		double scrW = Screen.GetWidth();
 		double scrH = Screen.GetHeight();
-		double hudScale = scrH / 200.0;
+		double hudScale = scrH / PB_HUD_VIRTUAL_H;
 		let sb = statusbar;
 		if (sb)
 		{
@@ -501,7 +504,7 @@ class PB_VisorHandler : EventHandler
 
 		double scrW = Screen.GetWidth();
 		double scrH = Screen.GetHeight();
-		double hudScale = scrH / 200.0;
+		double hudScale = scrH / PB_HUD_VIRTUAL_H;
 		let sb = statusbar;
 		if (sb)
 		{

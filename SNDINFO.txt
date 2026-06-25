@@ -5288,6 +5288,13 @@ coldchr						PZAPHIT
 electrogun/shoot			PZAPSEE
 electrogun/hit				PZAPHIT
 electrogun/explode			PZAPBEXP
+electrogun/fire				PZAPFIRE
+electrogun/loop				PZAPLOOP
+electrogun/charge			PZAPCHRG
+electrogun/charge2			PZAPCHR2
+electrogun/bomb				PZAPBOMB
+electrogun/fly				PZAPFLY
+$rolloff electrogun/explode 1400 3200
 
 $random D3Maledict/Step { MLDFT01 MLDFT02 }
 MLDFT01 "sounds/monsters/D3Maledict/MLDFT01.wav"
@@ -5558,3 +5565,81 @@ quakelivekill		"SOUNDS/Hitmarkers/HMQLK"
 teamfortress2hit	"SOUNDS/Hitmarkers/HMTF2H"
 teamfortress2kill	"SOUNDS/Hitmarkers/HMTF2K"
 titanfall2kill      "SOUNDS/Hitmarkers/HMT2K"
+
+
+// --- PBWP folded weapons (Schism/F&I, Hexa-Lion, DT SG, Karnage, Cyberaugumented, Tactical Nailgun) ---
+M40Rifle/Fire 	M40RIF1
+$volume 		M40Rifle/Fire 0.6
+RIFCL_CL RIFCL_CL
+MS_GRB MS_GRB
+MS_IN MS_IN
+CELLOUT2 CELLOUT2
+CELLIN2 CELLIN2
+	CLIPINSS CLIPINSS
+$random DTechShotty/Fire { DTSFI1 DTSFI2 DTSFI3 }
+$random DTechShotty/PrimaryAmb { DTSPAMB1 DTSPAMB2 DTSPAMB3 }
+$random DTechShotty/AltFire { DTSAFI1 DTSAFI2 DTSAFI3 }
+$random DTechShotty/AlternateAmb { DTSAAMB1 DTSAAMB2 DTSAAMB1 }
+DTShotgun/Pickup			DTSGPKUP
+RIFCL_CL RIFCL_CLIK
+$random FAREXPL { FAREXPL0 FAREXPL1 FAREXPL2 }
+FAREXPL0 FAREXPL0
+FAREXPL1 FAREXPL1
+FAREXPL2 FAREXPL2
+$rolloff FAREXPL 3200 7400
+$limit FAREXPL 4
+$random SSGFIRE { SSHFIRE0 SSHFIRE2 SSHFIRE3 }
+SSHFIRE0 SSHFIRE0
+SSHFIRE2 SSHFIRE2
+SSHFIRE3 SSHFIRE3
+$Random Rainmaker_shot	{ RAINSHT RAINSHT1 }
+Rainmaker_open	sounds/combat/Weapons/Karnage/RAINOPEN
+Rainmaker_Load	sounds/combat/Weapons/Karnage/RAINLOAD
+Rainmaker_close	sounds/combat/Weapons/Karnage/RAINCLOS
+ARDN		WEPSWC1
+SPECIALSP	WEPSWC1
+Rainmaker_Close	RAINCLOS
+Rainmaker_load	RAINLOAD
+NAILCLPN NAILCLPN
+$alias Rifle/Reload1 MS_GRB
+$alias Rifle/Reload2 MS_IN
+$alias mp40/Reload1 MS_GRB
+$alias MP40/Reload1 MS_GRB
+$alias mp40/Reload2 MS_IN
+$alias smg/Reload1 MS_GRB
+$alias smg/Reload2 MS_IN
+$alias asg/Reload1 MS_GRB
+$alias asg/Reload2 MS_IN
+$alias Pistol/Reload1 MS_GRB
+$alias Pistol/Reload2 MS_IN
+$alias Shotgun/Reload MS_IN
+weapons/kar98 M40Rifle/Fire
+LightningPulse/FarExplode "sounds/combat/Weapons/Cyberaugumented/Slot 6/Dissipator/Electricity/dcy_electric_plasma_ball_boom2.ogg"
+$rolloff LightningPulse/FarExplode 400 2200
+$random Rifle/Fire { RIFLEFI1 RIFLEFI2 RIFLEFI3 }
+Minigun/Loop "sounds/combat/Weapons/Cyberaugumented/Slot 4/Nightfall/dcy_nightfall_firing.ogg"
+Minigun/WindDown "sounds/combat/Weapons/Cyberaugumented/Slot 4/Nightfall/dcy_nightfall_winding_down.ogg"
+Minigun/EmphasisLoop "sounds/combat/Weapons/Cyberaugumented/Slot 4/Nightfall/dcy_nightfall_plasmawave.ogg"
+dcy/plasmariflepickup "sounds/combat/Weapons/Cyberaugumented/Dispatcher/dcy_pickup_plasma.wav"
+WEPRED2 "sounds/combat/Weapons/Cyberaugumented/Slot 4/Nightfall/dcy_nightfall_mod.ogg"
+Android/Laser "sounds/combat/Weapons/Cyberaugumented/Projectiles/dcy_superdarius2_laser.ogg"
+Android/LaserX "sounds/combat/Weapons/Cyberaugumented/Projectiles/dcy_superdarius2_laserx.ogg"
+NeonicWand/Switch "sounds/combat/Weapons/Cyberaugumented/Slot 6/Caduceus/dcy_caduceus_switch.ogg"
+Lazer/Fire "sounds/combat/Weapons/Cyberaugumented/Slot 6/Caduceus/dcy_caduceus_ray.ogg"
+Lazer/Fire2 "sounds/combat/Weapons/Cyberaugumented/Slot 6/Caduceus/dcy_caduceus_ripper.ogg"
+NeonicBall/Fire "sounds/combat/Weapons/Cyberaugumented/Slot 6/Caduceus/dcy_caduceus_orb.ogg"
+SiriusBFG/Pickup "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_sirius_pickup.ogg"
+SiriusBFG/Up "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_sirius_up.ogg"
+SiriusBFG/Idle "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_sirius_idle.ogg"
+SiriusBFG/Charge "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_sirius_charge.ogg"
+SiriusBFG/Fire "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_sirius_nuke_fire.ogg"
+SiriusBFG/Loop "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_siriusball_loop.ogg"
+$rolloff SiriusBFG/Loop 500 3000
+SiriusBFG/DeathWait "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_siriusball_implode.ogg"
+$rolloff SiriusBFG/DeathWait 1000 4000
+SiriusBFG/DeathStart "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_siriusball_nuke.ogg"
+$pitchshift SiriusBFG/DeathStart 0
+$rolloff SiriusBFG/DeathStart 2000 4000
+MECHGRAB "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_sirius_ready.ogg"
+DIVLOOP "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_sirius_target_loop.ogg"
+Eradicator/Laser "sounds/combat/Weapons/Cyberaugumented/Misc/dcy_eradicator_laser.ogg"

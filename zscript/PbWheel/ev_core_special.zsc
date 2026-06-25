@@ -1835,6 +1835,46 @@ Class PB_SpecialWheelHandler : EventHandler
 		specialWheel_handleMouse();
 	}
 
+	void specialWheel_ThunderCrossbow()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.72, 0.72);
+
+		PB_SpecialWheel_Mode m_beam = new ("PB_SpecialWheel_Mode");
+		m_beam.specialIcon = TexMan.CheckForTexture("W02FA0", TexMan.Type_Any);
+		m_beam.specialName = "Select_PB_ThunderCrossbow_Beam";
+		m_beam.specialAlias = "Storm Beam";
+		m_beam.specialPriority = 1;
+		m_beam.iconScale = iconScale;
+		wheelSpecials.Push(m_beam);
+
+		PB_SpecialWheel_Mode m_bolt = new ("PB_SpecialWheel_Mode");
+		m_bolt.specialIcon = TexMan.CheckForTexture("W03FA0", TexMan.Type_Any);
+		m_bolt.specialName = "Select_PB_ThunderCrossbow_Bolt";
+		m_bolt.specialAlias = "Thunder Bolt";
+		m_bolt.specialPriority = 2;
+		m_bolt.iconScale = iconScale;
+		wheelSpecials.Push(m_bolt);
+
+		PB_SpecialWheel_Mode m_shock = new ("PB_SpecialWheel_Mode");
+		m_shock.specialIcon = TexMan.CheckForTexture("W04FA0", TexMan.Type_Any);
+		m_shock.specialName = "Select_PB_ThunderCrossbow_Shockwave";
+		m_shock.specialAlias = "Shockwave";
+		m_shock.specialPriority = 3;
+		m_shock.iconScale = iconScale;
+		wheelSpecials.Push(m_shock);
+
+		PB_SpecialWheel_Mode m_cluster = new ("PB_SpecialWheel_Mode");
+		m_cluster.specialIcon = TexMan.CheckForTexture("WBOWA0", TexMan.Type_Any);
+		m_cluster.specialName = "Select_PB_ThunderCrossbow_Cluster";
+		m_cluster.specialAlias = "Cluster";
+		m_cluster.specialPriority = 4;
+		m_cluster.iconScale = iconScale;
+		wheelSpecials.Push(m_cluster);
+
+		specialWheel_handleMouse();
+	}
+
 	void specialWheel_HASG()
 	{
 		wheelSpecials.Clear();
@@ -2402,6 +2442,10 @@ Class PB_SpecialWheelHandler : EventHandler
 
 				case 'PB_DarkMatterRifle':
 					specialWheel_PB_DarkMatterRifle();
+					return;
+
+				case 'ThunderCrossbow':
+					specialWheel_ThunderCrossbow();
 					return;
 
 				case 'PB_BDPRailgun':

@@ -39,7 +39,6 @@ const MAXITERATIONS = 32676;
 #include "zscript/PB2022Hud/PB2022_Hud.zs"
 #include "zscript/PB2022Hud/PB2022_Hud_FX.zs"
 #include "zscript/PB2022Hud/PB2022_HudMessages.zs"
-#include "zscript/PB2022Hud/PB2022_Hud_Weapons.zs"
 #include "zscript/PB2022Hud/PB2022_Hud_HelpStub.zc"
 #include "zscript/Items/PBKillstreak/PB_Killstreak_Messages.zc"
 #include "zscript/Items/PBKillstreak/PB_Killstreak_Items.zc"
@@ -184,6 +183,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/ThrownGrenades.zs"
 
 #include "zscript/Weapons/BaseWeapon.zc"
+#include "zscript/Weapons/BaseWeapon_BDPMelee.zsc"
 #include "zscript/Weapons/BaseWeapon_Equipment.zsc"
 #include "zscript/Weapons/RailGunFire.zc"
 #include "zscript/Weapons/Slot7/Railgun/Railgun.zs"
@@ -213,6 +213,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot1/VorpalBlade.zc"
 #include "zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc"
 #include "zscript/Weapons/MeleeWeaponPack/Stormcast.zc"
+#include "zscript/Weapons/Slot8/PB_ThunderCrossbow_Shield.zs"
 #include "zscript/Weapons/ShieldSawNotify.zc"
 #include "zscript/Weapons/ShieldSawPinataHandler.zc"
 #include "zscript/Weapons/Slot2/Deagle/Deagle.zs"
@@ -261,6 +262,18 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot9/DemonExterminator/PB_DemonExterminator_Functions.zsc"
 #include "zscript/Weapons/Slot3/CSSG/CSSGEvent.zs"
 
+// PBWP folded weapons (Schism/F&I, Hexa-Lion, Demon-Tech SG, Karnage, Cyberaugumented, Tactical Nailgun)
+#include "zscript/PBWP/PBWP_CombatDamageHandler.zs"
+#include "zscript/PBWP/PBWP_GenericOffsetReload.zs"
+#include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_CA_Common.zs"
+#include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_CA_Projectiles.zs"
+#include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_Warbringer.zs"
+#include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_Nightfall.zs"
+#include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_Caduceus.zs"
+#include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_Dispatcher.zs"
+#include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_SiriusCrisis.zs"
+#include "zscript/PB2022Hud/PB2022_Hud_Weapons.zs"
+
 #include "zscript/Spawner/PB_SpawnerBase.zc"
 #include "zscript/Spawner/PB_HorrorPassiveController.zc"
 #include "zscript/Spawner/PB_ProjectSurvivalFodderPassive.zc" // PS fodder roster + FodderExtraPassiveSpawn seeker
@@ -274,6 +287,24 @@ const MAXITERATIONS = 32676;
 #include "zscript/PBVP/PBVP.zc"
 
 #include "zscript/Weapons/PB_DMRReticleOverlay.zc"
+
+// Champions Lite
+#include "zscript/champions_lite/fxthrottle.zs"
+#include "zscript/champions_lite/handler.zs"
+#include "zscript/champions_lite/baseclass.zs"
+#include "zscript/champions_lite/tokens.zs"
+#include "zscript/champions_lite/fx.zs"
+#include "zscript/champions_lite/traits/trait_bulwark.zs"
+#include "zscript/champions_lite/traits/trait_brute.zs"
+#include "zscript/champions_lite/traits/trait_swift.zs"
+#include "zscript/champions_lite/traits/trait_volatile.zs"
+#include "zscript/champions_lite/traits/trait_toxic.zs"
+#include "zscript/champions_lite/traits/trait_blink.zs"
+#include "zscript/champions_lite/traits/trait_stalker.zs"
+#include "zscript/champions_lite/traits/trait_splitter.zs"
+#include "zscript/champions_lite/traits/trait_veteran.zs"
+#include "zscript/champions_lite/traits/trait_captain.zs"
+#include "zscript/champions_lite/static.zs"
 
 Class PB_SpecialWheel_Mode
 {
