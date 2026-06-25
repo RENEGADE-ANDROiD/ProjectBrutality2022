@@ -687,12 +687,22 @@ Death:
 		SKEL O 7
 		SKEL P 7
 		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_JumpIf(GetCVar("pb_ThunderCrossbowRevenantDrop") == 0, "SkipThunderCrossbowDropNormal")
+		TNT1 A 0 A_JumpIf(GetCVar("pb_NoThunderCrossbowWeapon") == 1, "SkipThunderCrossbowDropNormal")
+		TNT1 A 0 A_Jump(192, "SkipThunderCrossbowDropNormal")
+		TNT1 A 0 A_SpawnItemEx("PB_ThunderCrossbowDrop", 0, 0, 16, 0, 0, 0, random(0, 359), SXF_NOCHECKPOSITION)
+	SkipThunderCrossbowDropNormal:
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
         TNT1 A 0 A_SpawnItem ("DeadSkeleton", 1)
         Stop
 	
 	Death.Arm:
 		TNT1 A 0 A_JumpIfInventory("RevenantJetpack", 1, "DeathJetpack")
+		TNT1 A 0 A_JumpIf(GetCVar("pb_ThunderCrossbowRevenantDrop") == 0, "SkipThunderCrossbowDrop")
+		TNT1 A 0 A_JumpIf(GetCVar("pb_NoThunderCrossbowWeapon") == 1, "SkipThunderCrossbowDrop")
+		TNT1 A 0 A_Jump(192, "SkipThunderCrossbowDrop")
+		TNT1 A 0 A_SpawnItemEx("PB_ThunderCrossbowDrop", 0, 0, 16, 0, 0, 0, random(0, 359), SXF_NOCHECKPOSITION)
+	SkipThunderCrossbowDrop:
 		TNT1 A 0 A_XScream
 		TNT1 A 0 A_NoBlocking
 		TNT1 AAAA 0 A_CustomMissile ("Xdeath4", 30, 0, random (0, 360), 2, random (0, 360))

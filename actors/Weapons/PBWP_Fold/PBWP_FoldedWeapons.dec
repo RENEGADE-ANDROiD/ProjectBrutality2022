@@ -1,0 +1,7 @@
+// PBWP folded weapons — Schism/F&I, Hexa-Lion, Demon-Tech SG, Karnage, Cyberaugumented, Tactical Nailgun
+#include "actors/Weapons/Cyberaugumented/CyberaugumentedAmmo.dec"
+#include "actors/Weapons/Slot-1/BattleAxeAndShield.dec"
+#include "actors/Weapons/Slot-3/HexaLionShotgun.dec"
+#include "actors/Weapons/Slot-3/DTShotgun.dec"
+#include "actors/Weapons/Karnage/Rainmaker.dec"
+#include "actors/Weapons/Slot-5/TacticalNailgun.dec"

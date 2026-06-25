@@ -1112,6 +1112,19 @@ class PB_EventHandler : EventHandler
 					modeIcon = PB2022_ModeHudLump("FZSGA0");
 				break;
 
+			case 'ThunderCrossbow':
+				localScale = 0.9;
+				localOffY = -40.0;
+				if (mo.CountInv("PB_ThunderCrossbow_Bolt") >= 1)
+					modeIcon = PB2022_ModeHudLump("W03FA0");
+				else if (mo.CountInv("PB_ThunderCrossbow_Shockwave") >= 1)
+					modeIcon = PB2022_ModeHudLump("W04FA0");
+				else if (mo.CountInv("PB_ThunderCrossbow_Cluster") >= 1)
+					modeIcon = PB2022_ModeHudLump("WBOWA0");
+				else
+					modeIcon = PB2022_ModeHudLump("W02FA0");
+				break;
+
 			case 'PB_SMG':
 				localScale = 0.85;
 				localOffY = -40.0;

@@ -523,4 +523,85 @@ RPM: Burst rotary cadence
 Recoil: Extreme sustained climb
 Alt-Fire: Burst pacing per Mastermind programming
 Firemodes: Burst-fire chaingun
+Akimbo: X#Battle Axe and Shield$Schism Fire & Ice melee kit pairing a runic battle axe with a riot shield—Alt-Fire raises the shield for blocks, Weapon Special chains knuckle combos, and charged axe throws spend Zeal while Rage fuels heavy swings.$BattleAxe$Manufacturer: Schism / Fire & Ice (PBWP)
+Magazine Capacity: Zeal + Rage resource pools (200 each)
+Ammunition: Zeal (special) / Rage (heavy)
+Effective Range: Melee
+RPM: Combo-driven
+Recoil: N/A (melee)
+Alt-Fire: Shield block / bash
+Firemodes: Axe combos + shield guard
+Akimbo: X#Hexa-Lion Shotgun$Six-barrel pump shotgun from the Hexa-Lion line—feeds from PB_Shell reserve with a six-round internal drum and respect-pose ironsights; Alt-Fire delivers a heavy zoomed blast.$HexaLionShotgun$Manufacturer: Hexa-Lion (PBWP)
+Magazine Capacity: 6-round HexaLionAmmo drum + PB_Shell reserve
+Ammunition: PB_Shell
+Effective Range: Short
+RPM: Pump cadence
+Recoil: High per volley
+Alt-Fire: Zoomed heavy blast
+Firemodes: Pump primary
+Akimbo: X#Demon-Tech Shotgun$Infernal quad-tech shotgun grafted from demon-forge parts—fires PB_DTech-fueled shell bursts or demonic breath spread when Weapon Special toggles modes (requires owning a Quad Shotgun).$DTShotgun$Manufacturer: Demon-Tech (PBWP)
+Magazine Capacity: PB_DTech pool (no shell reserve)
+Ammunition: PB_DTech
+Effective Range: Short–medium
+RPM: Semi / alt spread
+Recoil: Moderate–high
+Alt-Fire: Heavy alt blast patterns
+Firemodes: Shell vs demonic breath (Weapon Special)
+Akimbo: X#UAC-12P Rainmaker$Karnage Legacy triple-barrel shotgun with sequential tube fire—loads up to three shells into Rainmakerclip and walks barrels one through three before reload; Alt-Fire melee kick.$Rainmaker$Manufacturer: Karnage Legacy (PBWP)
+Magazine Capacity: 3-shell Rainmakerclip + PB_Shell reserve
+Ammunition: PB_Shell / 12ga pellets
+Effective Range: Short
+RPM: Sequential triple tap
+Recoil: High stacked
+Alt-Fire: Melee kick
+Firemodes: Triple-barrel sequence
+Akimbo: X#Warbringer$Cyberaugumented battle rifle delivering precise 7.62 semi-auto fire from an internal magazine fed by PB_HighCalMag reserve.$PBWP_Warbringer$Manufacturer: Cyberaugumented (PBWP)
+Magazine Capacity: 20-round PBWP_WarbringerMag + PB_HighCalMag reserve
+Ammunition: PB_HighCalMag / 7.62
+Effective Range: Medium–long
+RPM: Semi-auto
+Recoil: Moderate
+Alt-Fire: Per authored states
+Firemodes: Semi DMR
+Akimbo: X#Nightfall Augmented$Cyberaugumented minigun with a dual emitter core—Weapon Special swaps bullet hose versus sustained laser lane; Alt-Fire emphasis beam when lasering.$PBWP_Nightfall$Manufacturer: Cyberaugumented (PBWP)
+Magazine Capacity: 200-round PBWP_NightfallMag + PB_HighCalMag reserve
+Ammunition: PB_HighCalMag
+Effective Range: Medium
+RPM: Very high rotary
+Recoil: High climb
+Alt-Fire: Laser emphasis beam (laser mode)
+Firemodes: Bullet vs laser (Weapon Special)
+Akimbo: X#Caduceus$Cyberaugumented neonic wand firing rail-laser bursts or neonic orbs—Weapon Special toggles between rail and orb emitters; cells feed reserve with a dedicated mag stack.$PBWP_Caduceus$Manufacturer: Cyberaugumented (PBWP)
+Magazine Capacity: 60-round PBWP_CaduceusMag + PB_Cell reserve
+Ammunition: PB_Cell
+Effective Range: Medium–long
+RPM: Semi / sustained rail
+Recoil: Low–moderate
+Alt-Fire: Per mode
+Firemodes: Rail laser vs neonic orb (Weapon Special)
+Akimbo: X#Dispatcher of Delusions$Cyberaugumented plasma hose rebuilt as a full-auto cell burner—draws directly from PB_Cell with no separate magazine actor.$PBWP_Dispatcher$Manufacturer: Cyberaugumented (PBWP)
+Magazine Capacity: PB_Cell pool
+Ammunition: PB_Cell
+Effective Range: Medium
+RPM: Full-auto
+Recoil: Moderate sustained
+Alt-Fire: Per authored states
+Firemodes: Full-auto plasma stream
+Akimbo: X#Sirius Crisis Roscoe$Cyberaugumented Renegade Cannon—hold Fire for a charged laser sweep, Alt-Fire launches a 45-cell BFG-class sphere; heavy quake and screen shake on release.$PBWP_SiriusCrisis$Manufacturer: Cyberaugumented (PBWP)
+Magazine Capacity: PB_Cell pool (45 per alt blast)
+Ammunition: PB_Cell
+Effective Range: Long
+RPM: Charge / single-shot alt
+Recoil: Extreme
+Alt-Fire: BFG sphere (45 cells)
+Firemodes: Charged laser primary
+Akimbo: X#SGP-331 Tactical Nailgun$Stroggos Arctic Annihilation nailgun—Weapon Special cycles nail, 5.56, and explosive cartridges when you also carry the Perforator Nailgun; reserve PB_HighCalMag feeds a 60-round nail mag.$Tactical_Nail_Gun$Manufacturer: Stroggos (PBWP)
+Thunder Crossbow$Slot-8 storm bow from Brutal Hexen RPG lineage—Weapon Special selects beam, bolt, shockwave, or cluster; Alt-Fire holds an orbiting electric shield.$ThunderCrossbow$Manufacturer: PBWP (Seidolon art)
+Magazine Capacity: 60-round TacticalNailgunAmmo + PB_HighCalMag reserve
+Ammunition: PB_HighCalMag / nails / 5.56 / explosive payloads
+Effective Range: Medium
+RPM: Semi / burst per mode
+Recoil: Moderate
+Alt-Fire: Per mode
+Firemodes: Nail / 5.56 / explosive (Weapon Special)
 Akimbo: X#

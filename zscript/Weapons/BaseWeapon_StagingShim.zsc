@@ -143,6 +143,23 @@ Extend class PB_WeaponBase
 		return dual ? invoker.leftMagUnloaded : invoker.magUnloaded;
 	}
 
+	action State PB_JumpIfMagUnloaded(StateLabel label)
+	{
+		if (PB_GetMagUnloaded())
+			return ResolveState(label);
+		return null;
+	}
+
+	action State PB_FireExecuteCheck()
+	{
+		if (CountInv("NoFatality") != 0)
+			return ResolveState(null);
+		let c = CVar.GetCVar("pb_experimental", player);
+		if (!c || !c.GetBool())
+			return ResolveState(null);
+		return PB_Execute();
+	}
+
 	// ------------------------------------------------------------------
 	// Reload flag. Staging tracks this on PlayerPawnBase.reloading;
 	// PB 2022 uses an inventory token "IsReloading" (defined in PBRIFLE.dec).
