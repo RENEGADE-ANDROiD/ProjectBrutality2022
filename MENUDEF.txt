@@ -180,7 +180,7 @@ OptionMenu "PBTacticalMotionOptions"
 	Option "Apply only while in ready states.", "pb_tac_ready_only", "YesNo"
 	Option "Apply only while moving.", "pb_tac_move_only", "YesNo"
 	Slider "Rotational tilt velocity.", "pb_tac_roll_velocity", 0.2, 4.0, 0.05, 2
-	Slider "Rotational tilt resistance.", "pb_tac_roll_resistance", 0.05, 0.60, 0.01, 2
+	Slider "Rotational tilt resistance.", "pb_tac_roll_resistance", 0.08, 0.62, 0.01, 2
 	Option "Cap rotational tilt.", "pb_tac_roll_cap", "TacticalRollCap"
 	Slider "Rotational tilt cap amount.", "pb_tac_roll_cap_value", 0.5, 6.0, 0.1, 1
 	Slider "Weapon lowering scale.", "pb_tac_lowering_scale", 0.0, 2.0, 0.05, 2

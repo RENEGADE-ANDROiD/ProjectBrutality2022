@@ -13,6 +13,8 @@ All notable changes for this working tree are documented here. Earlier history l
 
 ### Changed
 
+- **Tactical weapon motion — resistance default + universal tilter stability (`CVARINFO`, `MENUDEF.txt`, `PB_WeaponTacticalFeel.zc`):** **`pb_tac_roll_resistance`** default is **0.35** with slider range **0.08–0.62** (center = default). Ported universal-addon stability: expanded ready idle allowlist, roll-only Y suppression for **`Stormcast`**, **`ThunderCrossbow`**, and **`PBWP_CA_WeaponBase`** weapons, billboard **`+FORCEXYBILLBOARD`** roll→X translation, expanded scoped-weapon list + zoom fire states, and resistance clamp matching the slider range.
+
 - **Cat's Frozen cryo weapons consolidated into `PB_CryoShotgun`:** Removed **`PB_CryoASG`**, **`PB_CryoElectroRifle`**, and **`PB_CryoCannon`** weapon classes; **`PDAWEAP`**, HUD, PDA preview, and weapon-special wheel updated for the five-mode **`PB_CryoShotgun`** layout. Retired stale **`language.enu`** pickup strings; deleted unused CatsFrozen weapon sprite/brightmap trees; **`README.md`** and **`AGENTS.md`** weapon roster updated.
 - **`PBCF_CryoPellet` in-flight trail:** Pellet mode now spawns **`FreezerTrailSparksSmall`** during flight (same call as **`Icebuckshot`** / Cryo Buckshot flak) so cryo pellets leave a visible frost trail.
 
@@ -48,6 +50,14 @@ All notable changes for this working tree are documented here. Earlier history l
 - **Simple Teleporter Effects v1.4** — removed the previous Simple Teleporter Effects fold; `TeleporterEffects` is no longer loaded from `zmapinfo.txt` and the `zscript/Effects/SimpleTeleporter/` sources are no longer included.
 
 ### Fixed
+
+- **Glory Kill Eternal HUD icon strip (`PB_GloryFuelHudOverlay.zc`):** Restored the authored **~21 virtual px** center-to-center step (scaled by HUD size) instead of edge-to-edge full-texture placement, which left black gaps between the overlapping parallelogram tiles.
+
+- **Tactical weapon motion — pistol fire / weapon-switch soft-lock (`PB_WeaponTacticalFeel.zc`):** Fixed a regression from the universal port where tactical Y offsets were still written during **`Fire`** / reload / select-deselect, fighting authored **`A_WeaponOffset`** and leaving **`PendingWeapon`** stuck (weapon raise/lower loop, unable to change guns). Removed **`GetUpState`/`GetDownState`** switch detection (false positives on PB raise chains), dropped the **`PendingWeapon`** early-return path, and **`ClearTacticalPose`** during combat or safety blocks instead of overwriting psprite Y.
+
+- **Tactical weapon motion — universal pendulum + late apply (`PB_WeaponTacticalFeel.zc`):** Replaced the capped speed-based Y offset (**`min(..., 7.0)`** + constant **`extraLowerPixels`**) with the universal addon's **roll-linked pendulum dip** (baseline + absolute **`psp.Y`**, drift resync, up to **18 px** scaled by **`pb_tac_lowering_scale`**). Pose is now **computed in `DoEffect`**, **applied in `PB_TacticalFeelHandler.WorldTick`** via delta **`Rotation +=` / undo** so weapon ready loops (e.g. **`PB_Shotgun`** **`ReadyToFire`**) no longer stomp tilt each tic. Added **`wf_weaponbobbing`** motion gate, shotgun **`Pump1`** combat label, and PB idle labels **`GoingToReady`** / **`GoingToReady2`**.
+
+- **Tactical weapon motion — weapon-switch soft-lock (`PB_WeaponTacticalFeel.zc`, follow-up):** **`RestorePendulumDip`** no longer snaps **`psp.Y`** to a stale ready baseline (that fought **`A_Lower`** / **`A_Raise`** and could leave **`PendingWeapon`** stuck with a raise/lower loop on **`Rifle`**, **`PB_Pistol`**, etc.). Restore now **subtracts only our dip delta**; pending-weapon switches undo pose and skip re-apply until the change completes.
 
 - **PBWP folded weapons — Quick Melee / muzzle flash (`PBWP_CA_Common.zs`, Cyberaugumented `.zs`, `HexaLionShotgun.dec`, `DTShotgun.dec`, `TacticalNailgun.dec`, `Rainmaker.dec`, `BattleAxeAndShield.dec`):** Upstream PBWP stubs used empty **`TNT1` + `A_DoPBWeaponAction`** loops on **`PSP_FLASH`** (weapon lock, no punch animation) and **`Flash` → `Goto LightDone`** (missing label). Shared PB2022-compliant **`Flash` / `FlashPunching` / kick states** now live on **`PBWP_CA_WeaponBase`**; per-gun overrides removed from all twelve Cyberaugumented ZScript ports. DECORATE PBWP weapons get **`A_ClearOverlays(PSP_FLASH, …, false)`** + **`Goto Ready3`** (or weapon-ready label) instead of **`Stop`**, and **`Rainmaker`** / **`BattleAxeAndShield`** drop broken **`A_Lower`** / missing-state punch paths.
 
