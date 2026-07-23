@@ -1,0 +1,67 @@
+// PBWP IN fold — shared compat (must load before PBWP_IN_Weapons.dec shards)
+
+#include "actors/Weapons/PBWP_Fold/PBWP_IN_Compat_FX.dec"
+
+ACTOR PB_LowCalMag : PistolBullets
+{
+}
+
+// ZScript casing class used by PBWP IN + Karnage weapons via PB_SpawnCasing.
+ACTOR PB_EmptyBrass : EmptyBrass
+{
+}
+
+// PS equipment-wheel carry token (Excavator / Ballista branches — inert unless granted).
+ACTOR EquippedObject : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+// MP12 / AssaultRifle / BlackDMR inventory tokens.
+ACTOR ChangeFire_Type : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR JustStartGameWithRifle : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR GoSilencerAbility : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR TossGrenade : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR ThrowPipeBomb : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR DetonatePipeBomb : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR MP5SilencerIsOn : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+// Thunder Carrier rail trail (A_RailAttack third arg — avoid RailGunTrail name clash).
+ACTOR PBWP_RailGunTrail : Actor
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Stop
+	}
+}

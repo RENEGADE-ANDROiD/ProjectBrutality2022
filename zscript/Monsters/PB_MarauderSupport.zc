@@ -2,25 +2,58 @@
 
 class PB_MarauderSupportHandler : EventHandler
 {
-	override void WorldTick()
+	int livingMarauders;
+
+	private void ClearMarauderTokens(Actor mo)
 	{
+		if (!mo) return;
+		mo.TakeInventory("ShieldUp", 1);
+		mo.TakeInventory("CanBeStunned", 1);
+		mo.TakeInventory("CantUseShotgun", 1);
+		mo.TakeInventory("CantUseAxe", 1);
+	}
+
+	private bool IsMarauderActor(Actor mo)
+	{
+		return mo && (mo is "PB_Marauder" || mo is "MarauderDamaged");
+	}
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		livingMarauders = 0;
 		ThinkerIterator it = ThinkerIterator.Create("PB_Marauder");
 		Actor mo;
 		while (mo = Actor(it.Next()))
-		{
-			mo.TakeInventory("ShieldUp", 1);
-			mo.TakeInventory("CanBeStunned", 1);
-			mo.TakeInventory("CantUseShotgun", 1);
-			mo.TakeInventory("CantUseAxe", 1);
-		}
+			livingMarauders++;
+		it = ThinkerIterator.Create("MarauderDamaged");
+		while (mo = Actor(it.Next()))
+			livingMarauders++;
+	}
+
+	override void WorldThingSpawned(WorldEvent e)
+	{
+		if (e.Thing && IsMarauderActor(e.Thing))
+			livingMarauders++;
+	}
+
+	override void WorldThingDestroyed(WorldEvent e)
+	{
+		if (e.Thing && IsMarauderActor(e.Thing))
+			livingMarauders = max(0, livingMarauders - 1);
+	}
+
+	override void WorldTick()
+	{
+		if (livingMarauders < 1)
+			return;
+
+		ThinkerIterator it = ThinkerIterator.Create("PB_Marauder");
+		Actor mo;
+		while (mo = Actor(it.Next()))
+			ClearMarauderTokens(mo);
 
 		it = ThinkerIterator.Create("MarauderDamaged");
 		while (mo = Actor(it.Next()))
-		{
-			mo.TakeInventory("ShieldUp", 1);
-			mo.TakeInventory("CanBeStunned", 1);
-			mo.TakeInventory("CantUseShotgun", 1);
-			mo.TakeInventory("CantUseAxe", 1);
-		}
+			ClearMarauderTokens(mo);
 	}
 }

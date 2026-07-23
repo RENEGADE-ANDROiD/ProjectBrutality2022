@@ -163,6 +163,11 @@ ACTOR UACSMGSelected: Inventory
 Inventory.MaxAmount 1
 }
 
+ACTOR AddonSelected: Inventory
+{
+Inventory.MaxAmount 1
+}
+
 ACTOR LandMineSelected: Inventory
 {
 Inventory.MaxAmount 1

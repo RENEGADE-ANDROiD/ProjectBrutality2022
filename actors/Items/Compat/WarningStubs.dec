@@ -191,6 +191,34 @@ ACTOR BlueFlareRed
 	}
 }
 
+//-------------------------------------------------------------------------
+// PBWP folded weapons — support actors referenced before full fold includes
+//-------------------------------------------------------------------------
+ACTOR BlueShockwave : HorizontalShockwave2 {}
+
+ACTOR UnmakerOverchargeCounter : Inventory
+{
+	Inventory.MaxAmount 999
+}
+
+ACTOR DTechBurningPiece : DTechBurningPiece2 {}
+
+ACTOR SmokeFX4 : BDExplosionparticlesSmall {}
+
+ACTOR OverchargeGroundLump : BDExplosionparticlesSmall {}
+
+ACTOR OverchargeGroundSpike : BDExplosionparticlesSmall {}
+
+ACTOR RifleSpread : Inventory
+{
+	Inventory.MaxAmount 99
+}
+
+ACTOR HMGPower : Inventory
+{
+	Inventory.MaxAmount 99
+}
+
 // DragonSlayer.dec (folded trail / ice helpers; originals lived in another add-on tree)
 ACTOR RandomSmallIcecrystal : BDExplosionparticlesSmall {}
 ACTOR GaussParticlesMany : BDExplosionparticlesSmall {}

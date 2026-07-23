@@ -77,7 +77,7 @@ class PBWP_Caduceus : PBWP_CA_WeaponBase
 
 	Ready3:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 { PBWP_CA_ReadyPose(); }
+		TNT1 A 0 { PBWP_CA_ReadyTick(); }
 		C_AD A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 		Loop;
 

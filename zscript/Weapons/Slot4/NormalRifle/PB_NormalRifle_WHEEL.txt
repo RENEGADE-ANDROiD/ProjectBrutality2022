@@ -1,0 +1,99 @@
+PB_NormalRifle — Weapon Special wheel integration (manual patch for ev_core_special.zsc)
+=======================================================================================
+
+DECORATE wheel tokens (already in actors/Weapons/Slot4/NormalRifle.dec):
+  - NR_Select_FireMode
+  - NR_Select_DualWield
+  - NR_Select_Laser
+
+Weapon consumes tokens in PB_NormalRifle_Functions.zs :: NR_ApplyWheelSelection()
+  (called from WeaponSpecial after GoWeaponSpecialAbility).
+
+No PBX_CloseWheel token — PB2022 closes the wheel via PBWeaponSpecialOff and only
+grants GoWeaponSpecialAbility + the chosen Select_* token (same as PB_M41A).
+
+
+1) Add specialWheel_PB_NormalRifle() near specialWheel_M41A() in zscript/PbWheel/ev_core_special.zsc
+----------------------------------------------------------------------------------------------------
+
+	void specialWheel_PB_NormalRifle()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.65, 0.65);
+
+		PB_SpecialWheel_Mode fire = new ("PB_SpecialWheel_Mode");
+		fire.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Burst.png", TexMan.Type_Any);
+		if (!fire.specialIcon.isValid())
+			fire.specialIcon = TexMan.CheckForTexture("RIFXA0", TexMan.Type_Any);
+		fire.specialName = "NR_Select_FireMode";
+		fire.specialAlias = "Burst / Full-Auto";
+		fire.specialPriority = 1;
+		fire.iconScale = iconScale;
+		wheelSpecials.Push(fire);
+
+		PB_SpecialWheel_Mode dual = new ("PB_SpecialWheel_Mode");
+		dual.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Dual.png", TexMan.Type_Any);
+		if (!dual.specialIcon.isValid())
+			dual.specialIcon = TexMan.CheckForTexture("graphics/pywheel/M41DW0.png", TexMan.Type_Any);
+		dual.specialName = "NR_Select_DualWield";
+		dual.specialAlias = "Dual Wield";
+		dual.specialPriority = 2;
+		dual.iconScale = iconScale;
+		wheelSpecials.Push(dual);
+
+		PB_SpecialWheel_Mode laser = new ("PB_SpecialWheel_Mode");
+		laser.specialIcon = TexMan.CheckForTexture("graphics/WeaponWheel/MetalSniper/LaserOn.png", TexMan.Type_Any);
+		if (!laser.specialIcon.isValid())
+			laser.specialIcon = TexMan.CheckForTexture("graphics/WeaponWheel/MetalSniper/LaserOff.png", TexMan.Type_Any);
+		laser.specialName = "NR_Select_Laser";
+		laser.specialAlias = "Laser Sight";
+		laser.specialPriority = 3;
+		laser.iconScale = iconScale;
+		wheelSpecials.Push(laser);
+
+		specialWheel_handleMouse();
+	}
+
+
+2) Add NetworkProcess branch in PBWeaponSpecialOn handler (same switch as PB_M41A)
+-----------------------------------------------------------------------------------
+
+				case 'PB_NormalRifle':
+					specialWheel_PB_NormalRifle();
+					return;
+
+
+3) Optional language.enu wheel tips (mirror M41A rows)
+-------------------------------------------------------
+
+PB_WHEELTIP_NR_Select_FireMode = "Normal Rifle: Toggle burst vs full-auto primary.";
+PB_WHEELTIP_NR_Select_DualWield = "Normal Rifle: Dual wield (requires two rifles).";
+PB_WHEELTIP_NR_Select_Laser = "Normal Rifle: Hipfire laser dot.";
+
+Pickup / mode HUD strings used by the weapon:
+  PB_NORMALRIFLE_PICKUP, PB_NORMALRIFLE_TAG
+  PB_NORMALRIFLE_BURST, PB_NORMALRIFLE_FULLAUTO
+  PB_NORMALRIFLE_LASER_ON, PB_NORMALRIFLE_LASER_OFF
+  PB_NORMALRIFLE_NO_AKIMBO
+
+
+4) Follow-up wiring (not in this port slice — do before shipping)
+---------------------------------------------------------------
+
+- ZSCRIPT.zc includes (after MetalSniper band):
+    #include "zscript/Weapons/Slot4/MetalSniper/PB2022_MetalSniperScope.zs"
+    #include "zscript/Weapons/Slot4/NormalRifle/PB_NormalRifle_Functions.zs"
+    #include "zscript/Weapons/Slot4/NormalRifle/PB_NormalRifle.zs"
+
+- DECORATE (Slot 4 band):
+    #include "actors/Weapons/Slot4/NormalRifle.dec"
+
+- actors/Player/PLAYER.dec — add PB_NormalRifle to WeaponSlot 4 list
+- ChaingunWeaponSpawners.dec — SpawnPB_NormalRifle branch + pb_NoPB_NormalRifleWeapon cvar
+- CVARINFO + MENUDEF SpawnOnOff toggle
+- SBARINFO IsSelected PB_NormalRifle dual mag bars (copy Carbine / M41A pattern)
+- language.enu pickup + wheel strings above
+- PDAWEAP / PDAWEAPT catalogue row (optional)
+
+Test: summon PB_NormalRifle, load PB_HighCalMag, tap Weapon Special — wheel should offer
+three slices; release on a slice grants the NR_Select_* token + GoWeaponSpecialAbility.

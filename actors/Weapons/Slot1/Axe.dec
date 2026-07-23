@@ -1,4 +1,4 @@
-﻿Actor AxeSequence1 : Inventory
+Actor AxeSequence1 : Inventory
 {
 inventory.maxamount 1
 }
@@ -26,7 +26,6 @@ ACTOR PB_Axe : PB_Weapon
 	Tag "Axe"
     +WEAPON.NOAUTOAIM
     +WEAPON.NOAUTOFIRE
-    +FORCEXYBILLBOARD
 	damagetype Saw
 	+WEAPON.NOALERT
 	+WEAPON.AXEBLOOD

@@ -31,6 +31,10 @@ Extend class PB_WeaponBase
 	Ammo AmmoLeft;
 	Property AmmoTypeLeft : AmmoTypeLeft;
 
+	// Dual-wield inventory token (PBWP fold: W_SMG, BlackDMR).
+	Name DualWieldToken;
+	property DualWieldToken : DualWieldToken;
+
 	// PB_DynamicTail pitch/volume (Deagle/Revolver/Carbine). Staging exposes these on PB_WeaponBase.
 	float tailPitch;
 	Property TailPitch : tailPitch;
@@ -342,6 +346,12 @@ Extend class PB_WeaponBase
 		return ResolveState(null);
 	}
 
+	// PBWP fold reload entry — mag-only branch of PB_CheckReload.
+	action state PB_CheckReloadMag(statelabel fullAlready, statelabel noAmmo, int full, int equal = 1, bool dual = false)
+	{
+		return PB_CheckReload(null, null, null, fullAlready, noAmmo, full, equal, dual);
+	}
+
 	// ------------------------------------------------------------------
 	// PB_jumpIfNoAmmo â€” early-exit from the Fire state into a reload.
 	// ------------------------------------------------------------------
@@ -410,9 +420,15 @@ Extend class PB_WeaponBase
 
 		if(currentammocount <= lowammocount)
 		{
-			double clickvolume = clamp(
-				PB_HitFeedback_Math.LinearMap(currentammocount, 1.0, lowammocount, 1.0, 0.70),
-				0.7, 1.0);
+			// Small mags (e.g. Rainmakerclip MaxAmount 3 → low threshold 1) make
+			// LinearMap(…, 1, 1, …) a zero denominator; use full click volume then.
+			double clickvolume = 1.0;
+			if (lowammocount > 1)
+			{
+				clickvolume = clamp(
+					PB_HitFeedback_Math.LinearMap(currentammocount, 1.0, lowammocount, 1.0, 0.70),
+					0.7, 1.0);
+			}
 			invoker.lowAmmoVol = clickvolume;
 			A_StartSound(sndName, CHAN_AUTO, CHANF_OVERLAP, clickvolume, ATTN_STATIC,
 						 frandompick(0.98, 1.0));
@@ -444,7 +460,11 @@ Extend class PB_WeaponBase
 		let pbw = PB_WeaponBase(FindInventory(oldweap));
 		if(pbw)
 		{
-			pbw.akimboMode = false;
+			if(pbw.DualWieldToken)
+			{
+				A_TakeInventory(pbw.DualWieldToken, 1);
+				pbw.akimboMode = false;
+			}
 			A_SetInventory(oldweap, 0);
 		}
 	}
@@ -455,6 +475,8 @@ Extend class PB_WeaponBase
 		if(!CountInv(upgrade)) return;
 
 		A_SetAkimbo(false);
+		if(invoker.DualWieldToken)
+			A_TakeInventory(invoker.DualWieldToken, 1);
 		A_SelectWeapon(upgrade);
 	}
 
@@ -827,5 +849,69 @@ Extend class PB_WeaponBase
 				A_StartSound(medSnd, 22 + (i * 4), CHANF_OVERLAP, vol, ATTN_NORM, sndPitch);
 			}
 		}
+	}
+
+	// PBWP visual rail helpers (Extinction Ray, Plasma Assault Rifle).
+	action Actor PB_LightVisualRail(string pufftype = "BulletPuff", int maxdis = 8000, int distparticles = 30, String PTexture = "TNT1A0", int dmg = 1, name damagetype = "Normal", int Xofs = 0, int Yofs = 0, int Zofs = 0, int linetflags = TRF_NOSKY, int pxlifetime = 1, int pxsize = 10, int pxrenderstyle = STYLE_ADD, int pxflags = SPF_ROLL|SPF_FULLBRIGHT|SPF_NOTIMEFREEZE, double salpha = 1.0, double fadestps = -0.1, int sizesteps = -1, vector3 vels = (0, 0, 0), int startrol = 0, int rollspd = 0)
+	{
+		FLineTraceData t;
+		double vz = (height * 0.5 - floorclip + player.mo.AttackZOffset * player.crouchFactor) + Zofs;
+		bool hit = linetrace(angle, maxdis, pitch, linetflags, vz, Yofs, Xofs, data: t);
+		vector3 spos = (pos.x + Xofs, pos.y + Yofs, pos.z + vz);
+		vector3 fpos = t.HitLocation;
+		fpos -= t.hitdir;
+
+		vector3 dif = Level.Vec3Diff(spos, fpos);
+		vector3 dr = dif.Unit();
+		double dis = dif.Length();
+		int q = int(dis / distparticles) + 1;
+
+		FSpawnParticleParams GenRail;
+		GenRail.Texture = TexMan.CheckForTexture(PTexture);
+		GenRail.Color1 = "FFFFFF";
+		GenRail.Style = pxrenderstyle;
+		GenRail.Flags = pxflags;
+		GenRail.Vel = vels;
+		GenRail.Startroll = startrol;
+		GenRail.RollVel = rollspd;
+		GenRail.StartAlpha = salpha;
+		GenRail.FadeStep = fadestps;
+		GenRail.Size = pxsize;
+		GenRail.SizeStep = sizesteps;
+		GenRail.Lifetime = pxlifetime;
+
+		for (int i = 0; i < q; i++)
+		{
+			spos += (dr * distparticles);
+			if (i > 0)
+			{
+				GenRail.Pos = spos;
+				Level.SpawnParticle(GenRail);
+			}
+		}
+
+		if (hit)
+		{
+			Actor p = Spawn(pufftype, fpos);
+			if (p)
+			{
+				p.target = self;
+				p.tracer = t.hitactor ? t.hitactor : null;
+			}
+			if (t.hitactor != null && !t.hitactor.IsFriend(self) && t.hitactor.health > 0)
+				t.hitactor.DamageMobj(p ? p : self, self, dmg, damagetype);
+			return p;
+		}
+		return null;
+	}
+
+	action Actor PB_VisualRailBlue(int dummy = 0)
+	{
+		return PB_LightVisualRail("BulletPuff", 8000, 30, "TNT1A0", 0, "Normal", 0, 0, 0, TRF_NOSKY, 1, 10, STYLE_ADD, SPF_ROLL|SPF_FULLBRIGHT|SPF_NOTIMEFREEZE, 0.8, -0.1, -1, (0, 0, 0), 0, 0);
+	}
+
+	action Actor PB_VisualRailRed(int dummy = 0)
+	{
+		return PB_LightVisualRail("BulletPuff", 8000, 30, "TNT1A0", 0, "Normal", 0, 0, 0, TRF_NOSKY, 1, 10, STYLE_ADD, SPF_ROLL|SPF_FULLBRIGHT|SPF_NOTIMEFREEZE, 0.8, -0.1, -1, (0, 0, 0), 0, 0);
 	}
 }

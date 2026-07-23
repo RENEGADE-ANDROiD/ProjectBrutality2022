@@ -18,7 +18,6 @@ class PB_SideFusil : PB_WeaponBase
     +WEAPON.NOAUTOFIRE;
     +WEAPON.NO_AUTO_SWITCH;
     +WEAPON.CHEATNOTWEAPON;
-    +FORCEXYBILLBOARD;
     Weapon.SelectionOrder 2449;
     Scale 1.0;
     Tag "Fusil Sidearm";

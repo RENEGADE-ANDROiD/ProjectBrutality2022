@@ -19,7 +19,6 @@ class PB_Fusil : PB_WeaponBase
     +WEAPON.NOAUTOAIM;
     +WEAPON.NOALERT;
     +WEAPON.NOAUTOFIRE;
-    +FORCEXYBILLBOARD;
     +WEAPON.NO_AUTO_SWITCH;
     +FLOORCLIP;
     +DONTGIB;
@@ -51,14 +50,7 @@ class PB_Fusil : PB_WeaponBase
 
 		RealReady:
 		Ready3:
-        TNT1 A 0 {
-            A_WeaponOffset(0,32);
-            A_SetRoll(0);
-            PB_HandleCrosshair(44);
-            A_TakeInventory("PB_LockScreenTilt",1);
-            A_ClearOverlays(10,11);
-            A_OverlayScale(PSP_WEAPON,1.0,1.0);
-        }
+        TNT1 A 0 PB_HandleCrosshair(44);
         TNT1 A 0 A_SetCrosshair(0);
         TNT1 A 0 PB_WeapTokenSwitch("RifleSelected");
         TNT1 A 0 A_JumpIfInventory("Zoomed",1,"Ready2");

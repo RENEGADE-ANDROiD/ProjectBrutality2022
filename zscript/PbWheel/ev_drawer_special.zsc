@@ -32,7 +32,7 @@ Extend Class PB_SpecialWheelHandler
 			|| specialName == "WW_FreezenadeSelected"
 			|| specialName == "WW_PB_CF_SnowCasterSelected" || specialName == "WW_PB_CF_FreezeBotSelected"
 			|| specialName == "WW_PB_CF_IceWallSelected" || specialName == "WW_PB_CF_HoloDecoySelected"
-			|| specialName == "WW_PB_CF_TeslaTurretSelected" || specialName == "WW_PB_CF_FlameTurretSelected"
+			|| specialName == "WW_PB_CF_TeslaTurretSelected"
 			|| specialName == "WW_PB_CF_FreezeMineSelected")
 			return 1.5;
 		return 1.0;

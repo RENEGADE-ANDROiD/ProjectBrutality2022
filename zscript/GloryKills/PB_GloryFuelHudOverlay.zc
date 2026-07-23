@@ -2,6 +2,29 @@
 
 extend class PB_EventHandler
 {
+	ui void EnsureGloryKillFuelTextures()
+	{
+		if (gkFuelTexCached)
+			return;
+		gkFuelTexCached = true;
+		gkTexCrucry00 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCRY00.png", TexMan.Type_Any);
+		gkTexCrucry01 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCRY01.png", TexMan.Type_Any);
+		gkTexCrucam01 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM01.png", TexMan.Type_Any);
+		gkTexCrucam02 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM02.png", TexMan.Type_Any);
+		gkTexCrucam03 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM03.png", TexMan.Type_Any);
+		gkTexBpammo10 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO10.png", TexMan.Type_Any);
+		gkTexBpammo11 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO11.png", TexMan.Type_Any);
+		gkTexBpammo12 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO12.png", TexMan.Type_Any);
+		gkTexBpammo13 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO13.png", TexMan.Type_Any);
+		gkTexBpammo14 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO14.png", TexMan.Type_Any);
+		gkTexScflm00 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/SCFLM00.png", TexMan.Type_Any);
+		gkTexScflm01 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/SCFLM01.png", TexMan.Type_Any);
+		gkTexScicb00 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/SCICB00.png", TexMan.Type_Any);
+		gkTexScicb01 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/SCICB01.png", TexMan.Type_Any);
+		gkTexGksha00 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/GKSHA00.png", TexMan.Type_Any);
+		gkTexGksha01 = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/GKSHA01.png", TexMan.Type_Any);
+	}
+
 	ui void DrawGloryKillFuelHud()
 	{
 		if (!playeringame[consoleplayer])
@@ -31,6 +54,8 @@ extend class PB_EventHandler
 
 	ui void DrawGloryKillEternalFuelHud(PlayerInfo plr)
 	{
+		EnsureGloryKillFuelTextures();
+
 		let cvSX = CVar.GetCVar("sv_fuelhud_x", plr);
 		let cvSY = CVar.GetCVar("sv_fuelhud_y", plr);
 		let cvScale = CVar.GetCVar("sv_fuelhud_scale", plr);
@@ -48,9 +73,7 @@ extend class PB_EventHandler
 		double x = cx;
 
 		int cruc = plr.mo.CountInv("CrucibleEnergy");
-		TextureID tCore = TexMan.CheckForTexture(
-			cruc > 0 ? "graphics/hud/glorykills/newhud/CRUCRY01.png" : "graphics/hud/glorykills/newhud/CRUCRY00.png",
-			TexMan.Type_Any);
+		TextureID tCore = cruc > 0 ? gkTexCrucry01 : gkTexCrucry00;
 		if (!tCore.IsValid())
 			return;
 
@@ -61,11 +84,11 @@ extend class PB_EventHandler
 		{
 			TextureID tCam;
 			if (cruc == 1)
-				tCam = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM01.png", TexMan.Type_Any);
+				tCam = gkTexCrucam01;
 			else if (cruc == 2)
-				tCam = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM02.png", TexMan.Type_Any);
+				tCam = gkTexCrucam02;
 			else
-				tCam = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/CRUCAM03.png", TexMan.Type_Any);
+				tCam = gkTexCrucam03;
 			if (tCam.IsValid())
 			{
 				DrawGkEternalIcon(tCam, x, cy, hudScale);
@@ -76,15 +99,15 @@ extend class PB_EventHandler
 		int bpt = plr.mo.CountInv("BPtoken");
 		TextureID tBP;
 		if (bpt <= 0)
-			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO10.png", TexMan.Type_Any);
+			tBP = gkTexBpammo10;
 		else if (bpt == 1)
-			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO11.png", TexMan.Type_Any);
+			tBP = gkTexBpammo11;
 		else if (bpt == 2)
-			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO12.png", TexMan.Type_Any);
+			tBP = gkTexBpammo12;
 		else if (bpt == 3)
-			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO13.png", TexMan.Type_Any);
+			tBP = gkTexBpammo13;
 		else
-			tBP = TexMan.CheckForTexture("graphics/hud/glorykills/newhud/BPAMMO14.png", TexMan.Type_Any);
+			tBP = gkTexBpammo14;
 		if (tBP.IsValid())
 		{
 			DrawGkEternalIcon(tBP, x, cy, hudScale);
@@ -92,9 +115,7 @@ extend class PB_EventHandler
 		}
 
 		int fb = plr.mo.CountInv("FlameBelchReady");
-		TextureID tFB = TexMan.CheckForTexture(
-			fb == 1 ? "graphics/hud/glorykills/newhud/SCFLM01.png" : "graphics/hud/glorykills/newhud/SCFLM00.png",
-			TexMan.Type_Any);
+		TextureID tFB = fb == 1 ? gkTexScflm01 : gkTexScflm00;
 		if (tFB.IsValid())
 		{
 			DrawGkEternalIcon(tFB, x, cy, hudScale);
@@ -102,9 +123,7 @@ extend class PB_EventHandler
 		}
 
 		int ic = plr.mo.CountInv("IceBombReady");
-		TextureID tIC = TexMan.CheckForTexture(
-			ic == 1 ? "graphics/hud/glorykills/newhud/SCICB01.png" : "graphics/hud/glorykills/newhud/SCICB00.png",
-			TexMan.Type_Any);
+		TextureID tIC = ic == 1 ? gkTexScicb01 : gkTexScicb00;
 		if (tIC.IsValid())
 		{
 			DrawGkEternalIcon(tIC, x, cy, hudScale);
@@ -112,9 +131,7 @@ extend class PB_EventHandler
 		}
 
 		int ssReady = plr.mo.CountInv("ShieldSawReady");
-		TextureID tSS = TexMan.CheckForTexture(
-			ssReady == 1 ? "graphics/hud/glorykills/newhud/GKSHA01.png" : "graphics/hud/glorykills/newhud/GKSHA00.png",
-			TexMan.Type_Any);
+		TextureID tSS = ssReady == 1 ? gkTexGksha01 : gkTexGksha00;
 		if (tSS.IsValid())
 			DrawGkEternalIcon(tSS, x, cy, hudScale);
 	}

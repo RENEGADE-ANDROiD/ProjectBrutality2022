@@ -23,7 +23,6 @@ class PB_XM21 : PB_WeaponBase
     +WEAPON.NOALERT;
 	+WEAPON.NOAUTOAIM;
 	+WEAPON.NOAUTOFIRE;
-	+FORCEXYBILLBOARD;
 	+INVENTORY.ALWAYSPICKUP;
     +FLOORCLIP;
     +DONTGIB;
@@ -65,12 +64,8 @@ class PB_XM21 : PB_WeaponBase
 		"X21G" A 0 A_PlaySound("DMRIN", 1);
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 		Ready3:
-	    TNT1 A 0 {
-	        A_WeaponOffset(0,32);
-			A_SetRoll(0);
-			A_TakeInventory("PB_LockScreenTilt",1);
-			}
-		TNT1 A 0 PB_HandleCrosshair(42);
+	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+	    TNT1 A 0 PB_HandleCrosshair(42);
 	    TNT1 A 0;
 		XM21ReadyToFire:
 		X21G A 1 {

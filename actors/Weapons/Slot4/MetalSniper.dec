@@ -7,13 +7,19 @@ Actor SniperAmmo : Ammo
 {
     Inventory.Amount 0
     Inventory.MaxAmount 12
-    Inventory.Icon "MSNWA0"
+    Inventory.Icon "MSNUA0"
     Ammo.BackpackAmount 0
     Ammo.BackpackMaxAmount 12
     +Inventory.IgnoreSkill
 }
 Actor MS_Select_AimMode : Inventory { Inventory.MaxAmount 1 }
 Actor MS_Select_GrenMode : Inventory { Inventory.MaxAmount 1 }
+Actor MS_Select_Laser : Inventory { Inventory.MaxAmount 1 }
+Actor MS_Select_ToggleZoom : Inventory { Inventory.MaxAmount 1 }
+Actor MS_Select_ToggleScope : Inventory { Inventory.MaxAmount 1 }
+Actor MS_Select_ToggleNVG : Inventory { Inventory.MaxAmount 1 }
+Actor MS_Select_Resonance : Inventory { Inventory.MaxAmount 1 }
+Actor MS_Select_NO : Inventory { Inventory.MaxAmount 1 }
 Actor MetalSniperGrenadeLoaded : Inventory { Inventory.MaxAmount 1 }
 Actor MetalSniperEmptyReload : Inventory { Inventory.MaxAmount 1 }
 Actor Select_MS_Standard : Inventory { Inventory.MaxAmount 1 }

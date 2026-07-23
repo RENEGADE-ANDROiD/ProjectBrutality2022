@@ -1413,7 +1413,7 @@ class PlayerPawnBase : PlayerPawn
 			A_StopSound(CHAN_BODY);
 			return;
 		}
-		else if(Player.CrouchFactor == 1 && CSlideStartTime)
+		else if(Player.CrouchFactor == 1 && CSlideStartTime && !CanCSlide)
 		{
 			CSlideStartTime = 0;
 			return;
@@ -1427,14 +1427,26 @@ class PlayerPawnBase : PlayerPawn
 		{
 			Int BT=cmd.buttons;
 			bool bdSlide = CVar.GetCVar("pb_bd_slide", Player).GetBool();
+			bool isWalking = (CVar.GetCVar("cl_run", Player).GetBool() && (BT & BT_SPEED))
+				|| (!CVar.GetCVar("cl_run", Player).GetBool() && !(BT & BT_SPEED));
+			bool isMoving = cmd.forwardmove || cmd.sidemove;
+			bool isSprinting = isMoving && !isWalking;
+			bool crouchCombo = Player.CrouchFactor != 1
+				&& ((!bdSlide && (BT & BT_RUN)) || (bdSlide && (BT & BT_USER4)));
+			bool sprintKick = isSprinting && (BT & BT_USER4);
 			
-			if(Player.CrouchFactor != 1 && !CSlideStartTime && (!bdSlide && BT & BT_RUN || bdSlide && BT & BT_USER4))
+			if(!CSlideStartTime && (crouchCombo || sprintKick))
 			{
+				if(Player.CrouchFactor == 1)
+				{
+					Player.crouching = -1;
+					CrouchMove(-1);
+				}
 				sector sss=floorsector;
 				if(A_CheckFloor("null") && sss.damagetype == "Slime" && !pb_hazardmovement) {
 					return;
 				}
-				if(cmd.forwardmove || cmd.sidemove)
+				if(isMoving)
 				{
 					FLineTraceData DirTrace;
 					Double SlideAngle = Angle - VectorAngle(cmd.forwardmove, cmd.sidemove);
@@ -1994,6 +2006,17 @@ class PlayerPawnBase : PlayerPawn
 		{
 			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("LedgeClimb"));
 		}
+	}
+	void PB_ClearExecutionPlayerProperties()
+	{
+		if (!player)
+			return;
+		SetPlayerProperty(0, 0, PROP_INVULNERABILITY);
+		SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+		SetPlayerProperty(0, 0, PROP_FLY);
+		TakeInventory("ExecutionToken", 1);
+		TakeInventory("KnifeHasHit", 1);
+		TakeInventory("HasCutingWeapon", 1);
 	}
 	void LedgeReach()
 	{

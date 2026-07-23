@@ -53,7 +53,6 @@ class PB_M41A : PB_WeaponBase
 		Weapon.AmmoUse2 0;
 		Inventory.MaxAmount 2;
 		Scale 0.7;
-		+FORCEXYBILLBOARD;
 		+FLOORCLIP;
 		+WEAPON.NOAUTOAIM;
 		+WEAPON.NOALERT;

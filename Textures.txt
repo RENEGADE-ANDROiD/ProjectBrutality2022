@@ -72,11 +72,6 @@ Graphic dash_5, 640, 360 {}
 Graphic dash_6, 640, 360 {}
 Graphic dash_7, 640, 360 {}
 
-Graphic CTROLL1, 32, 32 {}
-Graphic CTROLL2, 32, 32 {}
-Graphic CTROLL3, 32, 32 {}
-Graphic CTROLL4, 32, 32 {}
-
 Graphic uac_00p, 32, 32 {}
 Graphic uac_01p, 32, 32 {}
 Graphic uac_02p, 32, 32 {}

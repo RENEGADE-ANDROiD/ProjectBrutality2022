@@ -18,7 +18,6 @@ class HASG : PB_WeaponBase
     +WEAPON.NOAUTOAIM;
     +WEAPON.NOALERT;
     +WEAPON.NOAUTOFIRE;
-    +FORCEXYBILLBOARD;
     +WEAPON.NO_AUTO_SWITCH;
     Inventory.PickupSound "ASG_GOLI";
     Inventory.PickupMessage "$PB_PICKUP_HASG";

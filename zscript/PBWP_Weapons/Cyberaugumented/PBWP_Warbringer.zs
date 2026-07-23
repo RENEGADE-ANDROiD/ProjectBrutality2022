@@ -24,7 +24,7 @@ class PBWP_Warbringer : PBWP_CA_WeaponBase
 
 	action void PBWP_WarbringerFire()
 	{
-		A_StartSound("Rifle/Fire", CHAN_WEAPON, CHANF_DEFAULT, 0.75);
+		A_StartSound("Warbringer/Fire", CHAN_WEAPON, CHANF_DEFAULT, 0.75);
 		A_GunFlash();
 		PB_FireBullets("PB_762x51mm", 1, 0.35, 0, 0, 0.35);
 		PB_WeaponRecoil(-1.2, 0.4);
@@ -72,7 +72,7 @@ class PBWP_Warbringer : PBWP_CA_WeaponBase
 
 	Ready3:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 { PBWP_CA_ReadyPose(); }
+		TNT1 A 0 { PBWP_CA_ReadyTick(); }
 		RFL_ A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 		Loop;
 

@@ -3,6 +3,8 @@ const BDP_BR_MAG = 15;
 class BDPBattleRifle : PB_WeaponBase
 {
 	bool isADS;
+	bool isSemiAuto;
+	bool laserActive;
 	int burstCount;
 
 	default
@@ -33,18 +35,39 @@ class BDPBattleRifle : PB_WeaponBase
 	override void PostBeginPlay()
 	{
 		isADS = false;
+		isSemiAuto = false;
+		laserActive = false;
 		burstCount = 0;
 		Super.PostBeginPlay();
+	}
+
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		if (level.isFrozen()) return;
+		if (!owner || !owner.player) return;
+		if (!(owner.player.readyweapon is "BDPBattleRifle")) return;
+		if (!laserActive) return;
+
+		let psp = owner.player.FindPSprite(PSP_WEAPON);
+		if (!psp) return;
+
+		double pz = owner.height * 0.5 - owner.floorclip + owner.player.mo.AttackZOffset * owner.player.crouchFactor;
+		FLineTraceData lasersight;
+		owner.LineTrace(owner.angle, 4096, owner.pitch, TRF_SOLIDACTORS | TRF_THRUHITSCAN, offsetz: pz, data: lasersight);
+		Spawn("PB2022_GreenDot", lasersight.HitLocation);
 	}
 
 	action int getBRMag() { return CountInv(invoker.ammotype2); }
 	action void setADS(bool s) { invoker.isADS = s; }
 	action bool getADS() { return invoker.isADS; }
+	action bool getSemiAuto() { return invoker.isSemiAuto; }
 
 	action void BDP_ShotHip()
 	{
 		if (getBRMag() < 1) return;
-		PB_FireBullets("PB_762x51mm", 1, frandom(-0.1, 0.1), 0, 0, frandom(-0.1, 0.1));
+		Name bullet = CountInv("BattleRifleUpgraded") > 0 ? 'PB_762x51mmRicochet' : 'PB_762x51mm';
+		PB_FireBullets(bullet, 1, frandom(-0.1, 0.1), 0, 0, frandom(-0.1, 0.1));
 		PB_SpawnCasing("PB_EmptyBrass", 22, 2, 28, frandom(-2, -1), frandom(5, 8), frandom(3, 4));
 		A_TakeInventory(invoker.ammotype2, 1);
 		PB_IncrementHeat(4);
@@ -57,7 +80,8 @@ class BDPBattleRifle : PB_WeaponBase
 	action void BDP_ShotADS()
 	{
 		if (getBRMag() < 1) return;
-		PB_FireBullets("PB_762x51mm", 1, frandom(-0.04, 0.04), 0, 0, frandom(-0.04, 0.04));
+		Name bullet = CountInv("BattleRifleUpgraded") > 0 ? 'PB_762x51mmRicochet' : 'PB_762x51mm';
+		PB_FireBullets(bullet, 1, frandom(-0.04, 0.04), 0, 0, frandom(-0.04, 0.04));
 		PB_SpawnCasing("PB_EmptyBrass", 22, 2, 28, frandom(-2, -1), frandom(5, 8), frandom(3, 4));
 		A_TakeInventory(invoker.ammotype2, 1);
 		PB_IncrementHeat(4);
@@ -218,14 +242,7 @@ class BDPBattleRifle : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 			TNT1 A 0
 			{
-				let po = invoker.Owner;
-				if (po == null || !(po is "PlayerPawn"))
-					return resolveState(null);
-				let pp = PlayerPawn(po);
-				if (pp && pp.player && invoker.CountInv("NoFatality") == 0
-					&& CVar.GetCVar("pb_auto_fatality_fire", pp.player).GetBool())
-					return PB_Execute();
-				return resolveState(null);
+				return PB_TryAutoFatalityOnFire();
 			}
 			TNT1 A 0 A_JumpIfInventory("Zoomed", 1, "FireADS");
 			TNT1 A 0 A_JumpIfInventory("BR_Ammo", 1, "FireHip");
@@ -236,6 +253,7 @@ class BDPBattleRifle : PB_WeaponBase
 			TNT1 A 0 { invoker.burstCount = 0; }
 			BR4F C 1 BRIGHT { BDP_ShotHip(); }
 			BR45 D 1;
+			TNT1 A 0 A_JumpIf(getSemiAuto(), "FireHipDone");
 			BR4F C 1;
 			BR4F C 1 BRIGHT { BDP_ShotHip(); }
 			BR45 D 1;
@@ -246,10 +264,10 @@ class BDPBattleRifle : PB_WeaponBase
 				if (getBRMag() < 1)
 					PB_SpawnCasing("EmptyCarbineMag", 5, 0, -14, 0, frandom(2, 4), frandom(2, 4));
 			}
-			BR45 E 1;
-			BR45 F 1;
-			BR45 G 1;
-			BR45 H 1;
+		// PBX BurstDone: slower EF recovery so hold-fire spam cannot re-burst as fast.
+		FireHipDone:
+			BR45 EF 2;
+			BR45 GH 1;
 			TNT1 A 0 { invoker.burstCount = 0; }
 			TNT1 A 0 A_Refire("Fire");
 			goto Ready3;
@@ -372,7 +390,23 @@ class BDPBattleRifle : PB_WeaponBase
 
 		WeaponSpecial:
 			TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
-			TNT1 A 0 A_Print("\ctWeapon Special:\c- \cdutility \c-");
+			TNT1 A 0
+			{
+				if (player.cmd.buttons & BT_ALTATTACK)
+				{
+					invoker.laserActive = !invoker.laserActive;
+					A_StartSound("MS/Button", CHAN_AUTO, CHANF_OVERLAP);
+					A_Print(invoker.laserActive ? "$PB2022_LASER_ON" : "$PB2022_LASER_OFF");
+					return;
+				}
+				invoker.isSemiAuto = !invoker.isSemiAuto;
+				A_StartSound("MS/Button", CHAN_AUTO, CHANF_OVERLAP);
+				String mode = invoker.isSemiAuto ? "\cdsemi-auto" : "\cgburst";
+				if (CountInv("BattleRifleUpgraded") > 0)
+					A_Print("\ctBattle Rifle:\c- " .. mode .. "\c- | \ciRicochet\c- on");
+				else
+					A_Print("\ctBattle Rifle:\c- " .. mode);
+			}
 			goto Ready3;
 
 		PDA_Preview_BR_HipReady:

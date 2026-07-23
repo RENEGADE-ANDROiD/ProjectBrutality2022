@@ -5,7 +5,7 @@ class PB_ListMenu : ListMenu
     int btnSelection;
     int mouseX, mouseY;
 
-    TextureID pblogo, dtlogo, menuCursor;
+    TextureID pblogo, dtlogo;
 
     override void Init(Menu parent, ListMenuDescriptor desc)
 	{
@@ -30,10 +30,6 @@ class PB_ListMenu : ListMenu
         pblogo = TexMan.CheckForTexture("M_DOOMPB", TexMan.Type_Any);
         if(!pblogo.isValid())
             pblogo = TexMan.CheckForTexture("HIRES/M_DOOMPB.png", TexMan.Type_Any);
-
-        menuCursor = TexMan.CheckForTexture("doomcurs", TexMan.Type_Any);
-        if (!menuCursor.isValid())
-            menuCursor = TexMan.CheckForTexture("M_SKULL1", TexMan.Type_Any);
 
         mouseX = Screen.GetWidth() / 2;
         mouseY = Screen.GetHeight() / 2;
@@ -141,7 +137,7 @@ class PB_ListMenu : ListMenu
         S_StartSound("RAIL_ZM", 0, CHANF_UI, pitch: 0.8);
         return true;
     }
-    
+
     override void Ticker()
     {
         if (!controller)
@@ -206,10 +202,21 @@ class PB_ListMenu : ListMenu
             buttons[i].Draw(selected, mDesc, buttonPosition);
         }
 
+        // Last pass: CTROLL on top of menu chrome; re-resolve so ANIMDEFS stays live.
+        TextureID menuCursor = TexMan.CheckForTexture("doomcurs", TexMan.Type_Any);
+        if (!menuCursor.isValid())
+            menuCursor = TexMan.CheckForTexture("M_SKULL1", TexMan.Type_Any);
         if (menuCursor.isValid())
         {
+            double cursorScale = clamp(Screen.GetHeight() / 540.0, 1.5, 3.5);
+            double cursorH = 32.0 * cursorScale;
+            Vector2 cursorNative = TexMan.GetScaledSize(menuCursor);
+            double cursorW = cursorH;
+            if (cursorNative.Y > 0.0)
+                cursorW = cursorH * (cursorNative.X / cursorNative.Y);
             Screen.DrawTexture(menuCursor, true, mouseX, mouseY,
-                DTA_CleanNoMove, true,
+                DTA_DestWidthF, cursorW,
+                DTA_DestHeightF, cursorH,
                 DTA_LeftOffset, 0,
                 DTA_TopOffset, 0);
         }
@@ -218,6 +225,48 @@ class PB_ListMenu : ListMenu
     TextureID cft(string tex)
     {
         return TexMan.CheckForTexture(tex);
+    }
+
+    // Engine Menu.OnUIEvent releases capture on LButtonUp, which freezes our
+    // cached mouseX/Y while the soft cursor keeps moving. Handle mouse here
+    // and keep capture for the life of this menu.
+    override bool OnUIEvent(UIEvent ev)
+    {
+        if (ev.Type == UIEvent.Type_LButtonDown
+            || ev.Type == UIEvent.Type_LButtonUp
+            || ev.Type == UIEvent.Type_MouseMove)
+        {
+            int y = ev.MouseY;
+            mouseX = ev.MouseX;
+            mouseY = y;
+
+            if (ev.Type == UIEvent.Type_LButtonDown)
+            {
+                bool res = MouseEventBack(MOUSE_Click, ev.MouseX, y);
+                if (res) y = -1;
+                MouseEvent(MOUSE_Click, ev.MouseX, y);
+                SetCapture(true);
+                return false;
+            }
+            if (ev.Type == UIEvent.Type_MouseMove)
+            {
+                bool res = MouseEventBack(MOUSE_Move, ev.MouseX, y);
+                if (res) y = -1;
+                MouseEvent(MOUSE_Move, ev.MouseX, y);
+                if (!mMouseCapture)
+                    SetCapture(true);
+                return false;
+            }
+            // LButtonUp: activate selection but do NOT drop capture.
+            {
+                bool res = MouseEventBack(MOUSE_Release, ev.MouseX, y);
+                if (res) y = -1;
+                MouseEvent(MOUSE_Release, ev.MouseX, y);
+                SetCapture(true);
+                return false;
+            }
+        }
+        return Super.OnUIEvent(ev);
     }
 
     override bool MouseEvent(int type, int x, int y)

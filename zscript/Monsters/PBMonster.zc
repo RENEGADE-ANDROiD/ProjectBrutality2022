@@ -225,6 +225,7 @@ extend class PB_Monster
 {
 	action void A_PB_BurnFX_TinyBurningPieces()
 	{
+		PB_BurnFXThrottleHandler.NotifyIncinerating(self);
 		if (!PB_BurnFXThrottleHandler.ShouldSpawnTinyPiece())
 			return;
 		A_SpawnItemEx("TinyBurningPiece", random(-15, 15), random(-15, 15));
@@ -234,6 +235,7 @@ extend class PB_Monster
 
 	action void A_PB_BurnFX_RealisticFireSparks1(int zofs)
 	{
+		PB_BurnFXThrottleHandler.NotifyIncinerating(self);
 		if (!PB_BurnFXThrottleHandler.ShouldSpawnBurnParticles())
 			return;
 		A_SpawnItemEx("RealisticFireSparks1", random(-2, 2), random(-2, 2), zofs, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
@@ -241,6 +243,7 @@ extend class PB_Monster
 
 	action void A_PB_BurnFX_ExplosionHeavy(int height)
 	{
+		PB_BurnFXThrottleHandler.NotifyIncinerating(self);
 		if (!PB_BurnFXThrottleHandler.ShouldSpawnExplosionVerySlow())
 			return;
 		A_CustomMissile("ExplosionParticleHeavy", height, 0, random(0, 360), 2, random(0, 360));
@@ -248,6 +251,7 @@ extend class PB_Monster
 
 	action void A_PB_BurnFX_ExplosionHeavyBurst(int height, int count = 4)
 	{
+		PB_BurnFXThrottleHandler.NotifyIncinerating(self);
 		if (!PB_BurnFXThrottleHandler.ShouldSpawnExplosionVerySlow())
 			return;
 		int n = max(1, count);
@@ -257,6 +261,7 @@ extend class PB_Monster
 
 	action void A_PB_BurnFX_ExplosionVeryFast(int height)
 	{
+		PB_BurnFXThrottleHandler.NotifyIncinerating(self);
 		if (!PB_BurnFXThrottleHandler.ShouldSpawnExplosionVerySlow())
 			return;
 		A_CustomMissile("ExplosionParticleVeryFast", height, 0, random(0, 360), 2, random(0, 360));
@@ -264,6 +269,7 @@ extend class PB_Monster
 
 	action void A_PB_BurnFX_ExplosionVeryFastBurst(int height, int count = 4)
 	{
+		PB_BurnFXThrottleHandler.NotifyIncinerating(self);
 		if (!PB_BurnFXThrottleHandler.ShouldSpawnExplosionVerySlow())
 			return;
 		int n = max(1, count);
@@ -273,6 +279,7 @@ extend class PB_Monster
 
 	action void A_PB_BurnFX_BurningEmberBigger(int height)
 	{
+		PB_BurnFXThrottleHandler.NotifyIncinerating(self);
 		if (!PB_BurnFXThrottleHandler.ShouldSpawnBurnParticles())
 			return;
 		A_CustomMissile("BurningEmberParticlesFloating_Bigger", height, 0, random(0, 360), 2, random(0, 160));
@@ -280,6 +287,7 @@ extend class PB_Monster
 
 	action void A_PB_BurnFX_PlasmaSmoke(int height)
 	{
+		PB_BurnFXThrottleHandler.NotifyIncinerating(self);
 		if (!PB_BurnFXThrottleHandler.ShouldSpawnBurnParticles())
 			return;
 		A_CustomMissile("PlasmaSmoke", height, 0, random(0, 360), 2, random(0, 160));

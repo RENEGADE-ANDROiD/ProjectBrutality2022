@@ -177,17 +177,17 @@ OptionMenu "PBTacticalMotionOptions"
 	StaticText "Rotational tilt, movement lowering, lean (PB2022)."
 	StaticText " "
 	Option "Enable tactical weapon motion.", "pb_tac_enable", "YesNo"
-	Option "Apply only while in ready states.", "pb_tac_ready_only", "YesNo"
+	Option "Apply only while weaponready (strict).", "pb_tac_ready_only", "YesNo"
 	Option "Apply only while moving.", "pb_tac_move_only", "YesNo"
-	Slider "Rotational tilt velocity.", "pb_tac_roll_velocity", 0.2, 4.0, 0.05, 2
-	Slider "Rotational tilt resistance.", "pb_tac_roll_resistance", 0.08, 0.62, 0.01, 2
+	Slider "Rotational tilt velocity.", "pb_tac_roll_velocity", 0.2, 8.0, 0.05, 2
+	Slider "Rotational tilt resistance.", "pb_tac_roll_resistance", 0.08, 0.70, 0.01, 2
 	Option "Cap rotational tilt.", "pb_tac_roll_cap", "TacticalRollCap"
-	Slider "Rotational tilt cap amount.", "pb_tac_roll_cap_value", 0.5, 6.0, 0.1, 1
-	Slider "Weapon lowering scale.", "pb_tac_lowering_scale", 0.0, 2.0, 0.05, 2
+	Slider "Rotational tilt cap amount.", "pb_tac_roll_cap_value", 0.5, 18.0, 0.1, 1
+	Slider "Weapon lowering scale.", "pb_tac_lowering_scale", 0.0, 2.5, 0.05, 2
 	Option "Enable lean.", "pb_tac_lean_enable", "YesNo"
 	Slider "Lean angle.", "pb_tac_lean_angle", 0.0, 25.0, 0.5, 1
 	Slider "Lean smoothing.", "pb_tac_lean_smoothing", 0.05, 0.50, 0.01, 2
-	Slider "Tilt display smoothing.", "pb_tac_tilt_smoothing", 0.50, 0.95, 0.01, 2
+	Slider "Tilt display smoothing.", "pb_tac_tilt_smoothing", 0.20, 0.95, 0.01, 2
 	StaticText "Safety: Off During Zoom/ADS,"
 	StaticText "Executions, Equipment Actions."
 	StaticText "Some Overlay-Heavy Guns Skipped (ZScript)."
@@ -388,9 +388,9 @@ OptionMenu "PB2022_CombatMenu"
 	StaticText " "
 	StaticText "======== Quick Bundles ========", gold
 	StaticText " "
-	Command "Enable Glory Kill Suite", "set be_ExecutionsON 1; set pb_auto_fatality_fire 1"
+	Command "Enable Glory Kill Suite", "set be_ExecutionsON 1; set pb_auto_fatality_fire 1; set pb_experimental 1"
 	Command "Disable Glory Kill Suite", "set be_ExecutionsON 0; set pb_auto_fatality_fire 0; set pb_experimental 0"
-	StaticText "Sets be_ExecutionsON, pb_auto_fatality_fire.", teal
+	StaticText "Sets be_ExecutionsON, pb_auto_fatality_fire, pb_experimental.", teal
 	StaticText "Disable Also Clears pb_experimental.", teal
 	StaticText " "
 	StaticText "======== Glory Kills ========", gold
@@ -412,6 +412,30 @@ OptionMenu "PB2022_CombatMenu"
 	Option "$PB_EXPERIMENTAL_EXECUTIONS", "pb_experimental", "OnOff"
 	StaticText "$PB_EXPERIMENTAL_EXECUTIONS_DESC", cyan
 	StaticText "pb_experimental — First-Person Executions.", teal
+	StaticText " "
+	StaticText "======== PBX Add-Ons ========", gold
+	StaticText " "
+	Submenu "PBX Staging Add-Ons", "PB2022_PBXAddonsMenu"
+	StaticText "Smart Scavenger, Damage Indicators, Backpack Reload, Upgrades.", teal
+}
+
+OptionMenu "PB2022_PBXAddonsMenu"
+{
+	Title "PBX Staging Add-Ons"
+	StaticText "$OPTMNU_PB2022_PBX_INTRO", cyan
+	StaticText " "
+	Option "Smart Scavenger", "pb_pbx_smartscav", "YesNo"
+	Option "Directional Damage Indicators", "pb_pbx_dmgind", "YesNo"
+	Option "Backpack Reload (Holstered Mags)", "pb_pbx_backpackreload", "YesNo"
+	Option "Weapon Upgrade Pickups", "pb_pbx_weapon_upgrades", "YesNo"
+	StaticText " "
+	Slider "Backpack Reload Interval (tics)", "pb_pbx_backpackreload_time", 14, 140, 7
+	Slider "Backpack Reload Per Tick", "pb_pbx_backpackreload_refill", 1, 15, 1
+	Option "Backpack Reload Notifications", "pb_pbx_backpackreload_notify", "YesNo"
+	StaticText " "
+	Slider "Damage Indicator Duration", "pb_pbx_dmgind_timer", 10, 70, 5
+	Slider "Damage Indicator Alpha", "pb_pbx_dmgind_alpha", 0.2, 1.0, 0.05
+	Slider "Damage Indicator Scale", "pb_pbx_dmgind_scale", 0.5, 2.0, 0.1
 }
 
 OptionMenu "PB2022_GoreMenu"
@@ -631,7 +655,7 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText " "
 	StaticText "======== Quick Presets ========", gold
 	StaticText " "
-	Command "$OPTMNU_PB2022_PRESET_FULL", "set pb_classicmonsters 0; set pb_disablenewenemies 0; set be_ExecutionsON 1; set pb_enhanced_brutality_2022 1; set pb_ks_enable 1; set pb_rocketjump 1; set pb_plasma_wallclimb 1"
+	Command "$OPTMNU_PB2022_PRESET_FULL", "set pb_classicmonsters 0; set pb_disablenewenemies 0; set be_ExecutionsON 1; set pb_experimental 1; set pb_auto_fatality_fire 1; set pb_enhanced_brutality_2022 1; set pb_ks_enable 1; set pb_rocketjump 1; set pb_plasma_wallclimb 1; set pb_hazardmovement 1; set pb_weaponhud_enable 1; set pb_weaponmodehud_enable 1"
 	Command "$OPTMNU_PB2022_PRESET_VANILLA", "set pb_classicmonsters 1; set pb_disablenewenemies 1; set be_ExecutionsON 0; set pb_enhanced_brutality_2022 0; set pb_experimental 0"
 	Command "$OPTMNU_PB2022_PRESET_PERF", "set pb_enhanced_brutality_2022 0; set pb_ks_enable 0; set pb_wheelbackgroundblur 0; set py_weaponwheel_freeze 0; set pb_burnfx_throttle 1; set PB_HatExtravaganza 0; set pb_accudeath 0; set pb_dasheffect 0"
 	StaticText "Re-Open Menus After Presets To See Toggles.", orange
@@ -852,10 +876,9 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn M2 Plasma Rifle", "pb_NoM2PlasmaWeapon", "SpawnOnOff"
 	Option "Spawn UAC Dark Matter Rifle", "pb_NoPB_DarkMatterRifleWeapon", "SpawnOnOff"
-	Option "Spawn Thunder Crossbow", "pb_NoThunderCrossbowWeapon", "SpawnOnOff"
-	Option "Revenant Drop Thunder Crossbow", "pb_ThunderCrossbowRevenantDrop", "OffOn"
 	StaticText " "
 	Option "Spawn Freezer Rifle", "pb_NoFreezerWeapon", "SpawnOnOff"
+	Option "Spawn Frostburn Device", "pb_NoFrostburnDeviceWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Rail Gun", "pb_NoRailgunWeapon", "SpawnOnOff"
 	StaticText " "
@@ -890,6 +913,8 @@ OptionMenu "WeaponSpawns"
 	Option "Spawn Minigun Upgrade", "pb_NoMinigunUpgradeWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Metal Sniper", "pb_NoMetalSniperWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Normal Rifle (Pro-Surv)", "pb_NoPB_NormalRifleWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn XM-21 Sniper", "pb_NoPB_XM21Weapon", "SpawnOnOff"
 	StaticText " "
@@ -927,14 +952,24 @@ OptionMenu "WeaponSpawns"
 	Option "Spawn Dispatcher of Delusions", "pb_NoPBWP_DispatcherWeapon", "SpawnOnOff"
 	Option "Spawn Sirius Crisis Roscoe", "pb_NoPBWP_SiriusCrisisWeapon", "SpawnOnOff"
 	Option "Spawn Tactical Nailgun (SGP-331)", "pb_NoTacticalNailgunWeapon", "SpawnOnOff"
+	Option "Spawn UAC-12a Automat (MP12)", "pb_NoMP12Weapon", "SpawnOnOff"
+	Option "Spawn Holy Bastard W-SMG", "pb_NoW_SMGWeapon", "SpawnOnOff"
+	Option "Spawn M45 Halo 3 Shotgun", "pb_NoM45ShotgunWeapon", "SpawnOnOff"
+	Option "Spawn Assault R1 (HAR)", "pb_NoAssaultR1Weapon", "SpawnOnOff"
+	Option "Spawn Black DMR (Shadow Song)", "pb_NoBlackDMRWeapon", "SpawnOnOff"
+	Option "Spawn Magnum Sniper Rifle", "pb_NoMagnumSniperRifleWeapon", "SpawnOnOff"
+	Option "Spawn Gallery Nailgun", "pb_NoINNailGunWeapon", "SpawnOnOff"
+	Option "Spawn MACH-3 HYDRA", "pb_NoPB_HYDRAWeapon", "SpawnOnOff"
+	Option "Spawn Extinction Ray", "pb_NoExtinctionRayWeapon", "SpawnOnOff"
+	Option "Spawn Plasma Assault Rifle", "pb_NoPlasmaRifleAssaultWeapon", "SpawnOnOff"
+	Option "Spawn LoR Calamity Blade", "pb_NoLoRCalamityBladeWeapon", "SpawnOnOff"
+	Option "Spawn Satan Scream Unmaker", "pb_NoSatanScreamWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Argent Sith", "pb_NoArgentSithWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Beam Katana", "pb_NoBeamKatanaWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Vorpal Blade (Tiberium's Soulblade)", "pb_NoVorpalBladeWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Drop Dragon Slayer (Obsidian Ravager)", "pb_NoDragonSlayerWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Drop Stormcast (D3 Maledict)", "pb_NoStormcastWeapon", "SpawnOnOff"
 	StaticText " "
@@ -989,7 +1024,7 @@ OptionMenu "GameplaySettings"
 	Option "Aiming Mode","pb_toggle_aim_hold", "AimingStyle"
 	StaticText " "
 	Option "Use BD Slide Controls", "pb_bd_slide", "YesNo"
-	StaticText "No: Crouch + Run. Yes: Crouch + Kick.", teal
+	StaticText "No: Crouch + Run. Yes: Crouch + Kick. Sprint + Kick always slides.", teal
 	StaticText " "
 	
 	Option "Player Frag Greandes explode on impact", "pb_grenadeimpact", "YesNo"

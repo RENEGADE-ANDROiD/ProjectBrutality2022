@@ -75,12 +75,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
 		TNT1 A 0 A_JumpIfInventory("Reloading", 1, "Reload");
 		TNT1 A 0 A_JumpIfInventory("Zoomed", 1, "ReadyZoom");
-		TNT1 A 0 {
-			A_WeaponOffset(0, 32);
-			A_SetRoll(0);
-			PB_HandleCrosshair(39);
-			A_TakeInventory("PB_LockScreenTilt", 1);
-		}
+		TNT1 A 0 PB_HandleCrosshair(39);
 		"FZGA" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 		Loop;
 
@@ -126,7 +121,7 @@ class PB_CryoShotgun : PB_WeaponBase
 			PB_HandleCrosshair(39);
 			A_TakeInventory("PB_LockScreenTilt", 1);
 			if (CountInv("NoFatality") == 0 && GetCVAR("pb_auto_fatality_fire") == 1) {
-				return PB_Execute();
+				return PB_TryAutoFatalityOnFire();
 			}
 			return ResolveState(null);
 		}
@@ -266,7 +261,7 @@ class PB_CryoShotgun : PB_WeaponBase
 			A_TakeInventory("PB_LockScreenTilt", 1);
 			A_ClearOverlays(10, 11);
 			if (CountInv("NoFatality") == 0 && GetCVAR("pb_auto_fatality_fire") == 1) {
-				return PB_Execute();
+				return PB_TryAutoFatalityOnFire();
 			}
 			return ResolveState(null);
 		}

@@ -2,29 +2,35 @@ class PB_LeanLeft : Inventory {}
 class PB_LeanRight : Inventory {}
 class PB_LeanToggle : Inventory {}
 
+// Tactical weapon roll + pendulum lowering — STALKER / Universal golden path:
+// WorldTick ComputePose + ApplyPose, absolute PSP Rotation, input-first strafe,
+// exclusive combat blocklist (no ready allowlist). Lean still feeds Tilt++ via leanRoll.
 class PB_WeaponTilterInventory : Inventory
 {
+	const WT_FULL = 0;
+	const WT_ROLL_ONLY = 1;
+	const WT_DISABLED = 2;
+
 	double currentRoll;
 	double motionEnableBlend;
-	// Smoothed tactical lean angle (degrees). Tilt++ reads this and adds its offset; do not A_SetRoll here.
 	double leanRoll;
+	double prevStrafeInput;
 	int tickCounter;
-
-	double outputRoll;
+	int lastComputeGametic;
+	Name lastWeaponClass;
 	double smoothedWeaponRoll;
-	double prevStrafeDot;
-	double lastAppliedRoll;
-	double lastAppliedBillboardX;
-
-	double baselineWeaponY;
-	double lastAppliedDip;
 	double smoothedPendulumDip;
+	double lastAppliedDip;
+	double baselineWeaponY;
 	bool hasBaselineWeaponY;
 
+	double outputRoll;
+	double lastAppliedRoll;
 	bool poseActive;
 	bool restoreDipThisTick;
 	bool rollOnlyWeapon;
-	Name lastWeaponClass;
+	double profileRollMul;
+	double profileDipMul;
 
 	double cvRollResistance;
 	double cvRollVelocity;
@@ -38,18 +44,17 @@ class PB_WeaponTilterInventory : Inventory
 	bool cvEnableReadyOnly;
 	bool cvEnableMoveOnly;
 	bool cvCapRoll;
+	bool cvLowering;
+	int lastCvarRefreshTic;
 
-	static const Name NO_TACTICAL_WEAPONS[] =
-	{
-		'PB_Minigun',
-		'PB_MG42',
-		'PB_BFG9000',
-		'PB_BFGMKIV',
-		'PB_BFGBeam',
-		'PB_BLACKHOLE',
-		'PB_Unmaker',
-		'MastermindChaingun'
-	};
+	// Idle-head cache for exclusive combat walks (per weapon class).
+	Name idleCacheWeapon;
+	Array<State> idleCacheStates;
+
+	// Combat-sequence block cache: (weapon, psp.CurState) → blocked.
+	Name combatCacheWeapon;
+	State combatCacheState;
+	bool combatCacheBlocked;
 
 	static const Name SCOPED_TACTICAL_WEAPONS[] =
 	{
@@ -59,173 +64,242 @@ class PB_WeaponTilterInventory : Inventory
 		'PB_XM21',
 		'BDPBattleRifle',
 		'PB_LeverAction',
-		'PB_CSSG'
+		'PB_CSSG',
+		'Rifle',
+		'PB_Carbine',
+		'PB_M41A',
+		'PB_Deagle'
 	};
-
-	static const Name ROLL_ONLY_TACTICAL_WEAPONS[] =
-	{
-		'Stormcast',
-		'ThunderCrossbow'
-	};
-
-	private void ApplyWeaponTiltToAttachedOverlays(PlayerInfo pi, double roll)
-	{
-		if (!pi) { return; }
-		let o10 = pi.FindPSprite(10); if (o10) { o10.Rotation = roll; }
-		let o11 = pi.FindPSprite(11); if (o11) { o11.Rotation = roll; }
-		let o60 = pi.FindPSprite(60); if (o60) { o60.Rotation = roll; }
-		let o61 = pi.FindPSprite(61); if (o61) { o61.Rotation = roll; }
-		let o63 = pi.FindPSprite(63); if (o63) { o63.Rotation = roll; }
-		let o64 = pi.FindPSprite(64); if (o64) { o64.Rotation = roll; }
-	}
 
 	Default
 	{
 		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
 	}
 
 	override void BeginPlay()
 	{
 		Super.BeginPlay();
-		motionEnableBlend = 1.;
 		smoothedWeaponRoll = 0.;
-		prevStrafeDot = 0.;
+		prevStrafeInput = 0.;
+		motionEnableBlend = 1.;
+		outputRoll = 0.;
+		lastAppliedRoll = 0.;
+		profileRollMul = 1.;
+		profileDipMul = 1.;
+		leanRoll = 0.;
 	}
 
-	private bool IsExcludedWeapon(Weapon weap)
-	{
-		if (!weap) { return true; }
-		Name cls = weap.GetClassName();
-		for (int i = 0; i < NO_TACTICAL_WEAPONS.Size(); i++)
-		{
-			if (cls == NO_TACTICAL_WEAPONS[i]) { return true; }
-		}
-		return false;
-	}
-
-	private bool InWeaponStateSequence(Weapon weap, PSprite psp, statelabel label)
-	{
-		if (!weap || !psp || !psp.CurState)
-			return false;
-		State st = weap.FindState(label);
-		return st && weap.InStateSequence(psp.CurState, st);
-	}
-
-	private bool IsPbWpCaWeaponBase(Weapon weap)
-	{
-		class<Object> pbBase = Object.FindClass('PBWP_CA_WeaponBase');
-		return weap && pbBase && weap is pbBase;
-	}
-
-	private bool UsesRollOnlyMotion(Weapon weap)
+	private int GetWeaponTiltMode(Weapon weap)
 	{
 		if (!weap)
-			return false;
-		if (IsPbWpCaWeaponBase(weap))
-			return true;
+			return WT_DISABLED;
+
 		Name cls = weap.GetClassName();
-		for (int i = 0; i < ROLL_ONLY_TACTICAL_WEAPONS.Size(); i++)
-		{
-			if (cls == ROLL_ONLY_TACTICAL_WEAPONS[i])
-				return true;
-		}
-		return false;
+
+		if (cls == 'PB_Minigun'
+			|| cls == 'MastermindChaingun'
+			|| cls == 'PB_BFG9000'
+			|| cls == 'FrostburnDevice'
+			|| cls == 'DragonSlayer')
+			return WT_DISABLED;
+
+		if (cls == 'ThunderCrossbow')
+			return WT_ROLL_ONLY;
+
+		return WT_FULL;
 	}
 
-	private bool WeaponUsesBillboardSprite(Weapon weap)
+	private double GetWeaponRollMul(Weapon weap)
 	{
-		return weap && weap.bFORCEXYBILLBOARD;
+		if (!weap)
+			return 1.0;
+
+		Name cls = weap.GetClassName();
+
+		// Sidearms — stronger roll read (STALKER pistol profile).
+		if (cls == 'PB_Pistol'
+			|| cls == 'PB_Deagle'
+			|| cls == 'HellPistoler'
+			|| cls == 'Revolver'
+			|| cls == 'PB_SideFusil'
+			|| cls == 'PB_Revolver')
+			return 1.35;
+
+		// Melee — readable roll without over-rotating large sprites.
+		if (cls == 'BattleAxe' || cls == 'Stormcast')
+			return 1.20;
+
+		// Long guns / launchers — slightly softer roll.
+		if (cls == 'PB_MetalSniper'
+			|| cls == 'PB_XM21'
+			|| cls == 'PB_Railgun'
+			|| cls == 'PB_BDPRailgun'
+			|| cls == 'BDPBattleRifle'
+			|| cls == 'PB_LeverAction'
+			|| cls == 'PB_Excavator'
+			|| cls == 'PB_RocketLauncher'
+			|| cls == 'Paingiver'
+			|| cls == 'ProSurv_Ballista'
+			|| cls == 'PB_DemonExterminator'
+			|| cls == 'PB_Unmaker'
+			|| cls == 'PB_BFGMKIV'
+			|| cls == 'PB_BFGBeam'
+			|| cls == 'PB_BLACKHOLE'
+			|| cls == 'BHGen'
+			|| cls == 'PB_CSSG')
+			return 0.90;
+
+		if (cls == 'Rifle'
+			|| cls == 'PB_Carbine'
+			|| cls == 'PB_M41A'
+			|| cls == 'PB_MP40'
+			|| cls == 'PB_NormalRifle'
+			|| cls == 'PB_Fusil'
+			|| cls == 'PB_M1Plasma'
+			|| cls == 'PB_M2Plasma'
+			|| cls == 'PB_SMG'
+			|| cls == 'PB_Nailgun'
+			|| cls == 'Tactical_Nail_Gun'
+			|| cls == 'INNailGun')
+			return 1.0;
+
+		return 1.0;
 	}
 
-	private bool IsCoreIdleState(Weapon weap, PSprite psp)
+	private double GetWeaponDipMul(Weapon weap)
 	{
-		static const statelabel coreIdle[] =
+		if (!weap)
+			return 1.0;
+
+		Name cls = weap.GetClassName();
+
+		if (cls == 'BattleAxe')
+			return 1.55;
+
+		if (cls == 'Stormcast')
+			return 1.40;
+
+		if (cls == 'Tactical_Nail_Gun'
+			|| cls == 'INNailGun'
+			|| cls == 'PB_Nailgun')
+			return 1.40;
+
+		if (cls == 'PB_MetalSniper'
+			|| cls == 'PB_XM21'
+			|| cls == 'PB_Railgun'
+			|| cls == 'PB_BDPRailgun'
+			|| cls == 'BDPBattleRifle'
+			|| cls == 'PB_Excavator'
+			|| cls == 'PB_RocketLauncher'
+			|| cls == 'Paingiver'
+			|| cls == 'ProSurv_Ballista'
+			|| cls == 'PB_Unmaker'
+			|| cls == 'PB_BFGMKIV'
+			|| cls == 'PB_BFGBeam'
+			|| cls == 'PB_BLACKHOLE'
+			|| cls == 'BHGen'
+			|| cls == 'PB_LeverAction'
+			|| cls == 'PB_CSSG')
+			return 1.25;
+
+		if (cls == 'PB_Pistol'
+			|| cls == 'PB_Deagle'
+			|| cls == 'HellPistoler'
+			|| cls == 'Revolver'
+			|| cls == 'PB_SideFusil'
+			|| cls == 'PB_Revolver')
+			return 1.0;
+
+		return 1.0;
+	}
+
+	private bool HasInvToken(Actor plr, Name token)
+	{
+		return plr && plr.CountInv(token) > 0;
+	}
+
+	// Idle heads that combat strips Goto into — stop exclusive walk here.
+	// Resolve FindState once per weapon class (inner walk used to re-Find every step).
+	private void EnsureIdleStateCache(Weapon weap)
+	{
+		if (!weap) return;
+		Name cls = weap.GetClassName();
+		if (cls == idleCacheWeapon && idleCacheStates.Size() > 0)
+			return;
+
+		idleCacheWeapon = cls;
+		idleCacheStates.Clear();
+		static const statelabel idles[] =
 		{
-			'Ready', 'Hold', 'ReadyLoop', 'Readyloop', 'Idle', 'GunReady', 'WaitReady'
+			'RealReady', 'RealReady_Reload', 'RealReady_Upgraded',
+			'Ready', 'Ready2', 'Ready3', 'Ready4', 'Ready5',
+			'ReadyLoop', 'Readyloop', 'ReadyAim', 'Ready_ADS',
+			'BDReady3', 'BDReadyADS', 'ReadyRaised',
+			'ReallyReady', 'ReallyReady2', 'ReallyReady2Loop', 'ReallyReady3', 'ActuallyReady3',
+			'ReadySettle', 'ReadyNormal', 'ReadyLoaded', 'ReadyFull', 'ReadyNoAmmo',
+			'ReadyToFire', 'ReadyToFire2', 'ReadyToFireAgain', 'ReadyToFire_Red', 'ReadyToFireDrum',
+			'ReadyToFireDualWield', 'ReadyMissile', 'JavelinReady3',
+			'ReadyDualWield', 'IdleNoAmmo', 'NoBuzzing', 'GoingToReady', 'GoingToReady2', 'OnLoop',
+			'GunReady', 'WaitReady', 'Idle', 'PreReady',
+			'X12ReadyToFire', 'CryoShotgunReadyToFire', 'MarauderShotgunReadyToFire',
+			'XM21ReadyToFire', 'ScopeReadyToFire', 'JavelinReadyToFire',
+			'JavelinReadyEmpty', 'JavelinReadyUnloaded',
+			'UnloadedReady', 'UnloadedReadyDualWield',
+			'ContinueReady', 'NormalReady', 'Drum_Ready', 'HipReadyLoop',
+			'ReadyNoDtech', 'ReadyHasDtech', 'Ready.Lightning',
+			'ReadyToFireDemonic', 'ReadyEmpty', 'ReadyZoom',
+			'KatanaReadyToCut', 'HexaLionBoyReadyToFire', 'MastermindChaingunReadyToFire',
+			'NailGunReady', 'NailgunActuallyReady', 'EmptyReady', 'RS_AxeReady',
+			'RS_PistolReady3', 'RS_PistolReadyShield',
+			'BackToReadyDual', 'BackToReadyDualFromLeft', 'BackToReadyDualFromRight',
+			'ScopedReady', 'SelectContinue', 'SelectAnimation', 'SelectAnimationDualWield', 'SelectReady',
+			'ChargeReady', 'AxeThrowReady', 'ChargingAxeReady'
 		};
-		for (int i = 0; i < coreIdle.Size(); ++i)
+		for (int i = 0; i < idles.Size(); ++i)
 		{
-			if (InWeaponStateSequence(weap, psp, coreIdle[i]))
+			State st = weap.FindState(idles[i]);
+			if (st)
+				idleCacheStates.Push(st);
+		}
+	}
+
+	private bool IsIdleGotoTarget(Weapon weap, State s)
+	{
+		if (!weap || !s) return false;
+		EnsureIdleStateCache(weap);
+		for (int i = 0; i < idleCacheStates.Size(); ++i)
+		{
+			if (s == idleCacheStates[i])
 				return true;
 		}
 		return false;
 	}
 
-	private bool IsExtendedIdleState(Weapon weap, PSprite psp)
+	// Like InStateSequence, but STOP before following Goto into Ready/idle heads.
+	private bool InExclusiveCombatSequence(Weapon weap, PSprite psp, statelabel label)
 	{
-		static const statelabel extendedIdle[] =
+		if (!weap || !psp || !psp.CurState) return false;
+		State base = weap.FindState(label);
+		if (!base) return false;
+
+		State cur = psp.CurState;
+		State s = base;
+		int guard = 0;
+		while (s && guard++ < 400)
 		{
-			'Ready2', 'Ready3', 'Ready4', 'Ready5', 'RealReady', 'ReallyReady', 'ReallyReady2',
-			'ReadyToFire', 'ReadyToFire2', 'ReadyToFireAgain', 'ReadyToFireDualWield',
-			'ReadyNormal', 'ReadyLoaded', 'ReadyFull', 'ReadyNoAmmo', 'IdleNoAmmo', 'NoBuzzing',
-			'SelectReady', 'GoingToReady', 'GoingToReady2', 'OnLoop',
-			'ReadyAim', 'Ready_ADS', 'BDReady3', 'BDReadyADS', 'ReadyRaised',
-			'ReallyReady2Loop', 'ReallyReady3', 'ActuallyReady3',
-			'ReadySettle', 'ReadyToFire_Red', 'ReadyToFireDrum',
-			'ReadyMissile', 'JavelinReady3', 'ReadyDualWield', 'RealReady_Reload'
-		};
-		for (int i = 0; i < extendedIdle.Size(); ++i)
-		{
-			if (InWeaponStateSequence(weap, psp, extendedIdle[i]))
+			if (s == cur)
 				return true;
-		}
-		return false;
-	}
 
-	private bool IsGenericReadyFallback(Weapon weap, PSprite psp)
-	{
-		if (!weap || weap.FindState('RealReady'))
-			return false;
-		return InWeaponStateSequence(weap, psp, 'Ready');
-	}
+			State next = s.NextState;
+			if (!next)
+				return false;
+			if (next == base)
+				return false;
+			if (IsIdleGotoTarget(weap, next))
+				return false;
 
-	private bool IsSwitchState(Weapon weap, PSprite psp)
-	{
-		if (!weap || !psp || !psp.CurState)
-			return false;
-
-		return InWeaponStateSequence(weap, psp, 'Select')
-			|| InWeaponStateSequence(weap, psp, 'Deselect');
-	}
-
-	private bool IsCombatWeaponState(Weapon weap, PSprite psp)
-	{
-		if (!weap || !psp || !psp.CurState)
-			return false;
-
-		static const statelabel combatLabels[] =
-		{
-			'Fire', 'Fire2', 'Fire3', 'HoldFire', 'AltFire', 'AltFire1', 'AltFire2',
-			'Melee', 'Melee2', 'Punch', 'Kick', 'Stomp',
-			'Reload', 'Reloading', 'ReloadLoop', 'ReloadLoop2', 'Reload2', 'Reload3',
-			'Pump', 'Pump1', 'Slide', 'Burst', 'Charge', 'ChargeLoop', 'Attack', 'Windup',
-			'BDReload', 'BDReloadADS'
-		};
-
-		for (int i = 0; i < combatLabels.Size(); ++i)
-		{
-			if (InWeaponStateSequence(weap, psp, combatLabels[i]))
-				return true;
-		}
-		return false;
-	}
-
-	private bool IsReadyState(Weapon weap, PSprite psp, PlayerInfo pi)
-	{
-		if (!weap || !psp || !psp.CurState)
-			return false;
-
-		if (IsCoreIdleState(weap, psp))
-			return true;
-		if (IsExtendedIdleState(weap, psp))
-			return true;
-		if (IsGenericReadyFallback(weap, psp))
-			return true;
-
-		if (pi && !IsCombatWeaponState(weap, psp) && !IsSwitchState(weap, psp))
-		{
-			if ((pi.weaponstate & wf_weaponready) != 0)
-				return true;
+			s = next;
 		}
 		return false;
 	}
@@ -241,56 +315,113 @@ class PB_WeaponTilterInventory : Inventory
 		return false;
 	}
 
-	private bool IsScopedNow(Actor plr, Weapon weap, PSprite psp)
+	private bool IsScopedFovOrToken(Actor plr, Weapon weap)
 	{
-		if (!plr || !weap || !psp || !psp.CurState || !IsScopedWeapon(weap)) { return false; }
+		if (!plr || !weap)
+			return false;
 
-		if (plr.CountInv("Zoomed") > 0 || plr.CountInv("ADSMode") > 0) { return true; }
+		bool fovZoomed = weap.FOVScale > 0.01 && weap.FOVScale < 0.99;
+		bool adsToken = HasInvToken(plr, 'Zoomed') || HasInvToken(plr, 'ADSMode');
 
-		static const statelabel scopedNow[] =
-		{
-			'ZoomIn', 'ZoomOut', 'Ready_ADS', 'BDReadyADS', 'ZoomFire',
-			'ScopedFire', 'Fire_ADS', 'ZoomLoop', 'FireZoom', 'FireZoomed'
-		};
-		for (int i = 0; i < scopedNow.Size(); ++i)
-		{
-			if (InWeaponStateSequence(weap, psp, scopedNow[i]))
-				return true;
-		}
+		// Zoomed/ADSMode are player-global and can linger after leaving an ADS gun.
+		if (adsToken && (IsScopedWeapon(weap) || fovZoomed))
+			return true;
 
-		return weap.FOVScale < 0.99;
-	}
+		if (IsScopedWeapon(weap) && fovZoomed)
+			return true;
 
-	private bool ShouldBlockForSafety(Actor plr, Weapon weap, PSprite psp)
-	{
-		if (!plr || !weap || !psp || !plr.player) { return true; }
-		if (IsScopedNow(plr, weap, psp)) { return true; }
-		if (IsSwitchState(weap, psp)) { return true; }
-		let ov10 = plr.player.GetPSprite(10);
-		let ov11 = plr.player.GetPSprite(11);
-		bool hasOverlayActions = (ov10 && ov10.CurState) || (ov11 && ov11.CurState);
-		if (hasOverlayActions && !IsReadyState(weap, psp, plr.player)) { return true; }
-		if (plr.CountInv("Zoomed") > 0 || plr.CountInv("ADSMode") > 0) { return true; }
-		if (plr.CountInv("GoFatality") > 0 || plr.CountInv("ExecutionToken") > 0) { return true; }
-		if (plr.CountInv("Kicking") > 0 || plr.CountInv("UseEquipment") > 0 || plr.CountInv("ToggleEquipment") > 0) { return true; }
-		if (plr.CountInv("PlayerIsThrowingAGrenade") > 0 || plr.CountInv("PlayerIsThrowingAMolotovCocktail") > 0) { return true; }
-		if (plr.CountInv("DoShoulderCannon") > 0 || plr.CountInv("DoGloryMelee") > 0 || plr.CountInv("PB_LockScreenTilt") > 0) { return true; }
 		return false;
 	}
 
-	private bool IsFiringState(Weapon weap, PSprite psp)
+	// Expensive exclusive state walks — cache on (weapon class, psp.CurState).
+	private bool CombatSequenceBlocks(Weapon weap, PSprite psp)
 	{
-		if (!weap || !psp || !psp.CurState) { return false; }
+		if (!weap || !psp || !psp.CurState)
+			return false;
 
-		static const statelabel fireLabels[] =
+		Name cls = weap.GetClassName();
+		if (cls == combatCacheWeapon && psp.CurState == combatCacheState)
+			return combatCacheBlocked;
+
+		combatCacheWeapon = cls;
+		combatCacheState = psp.CurState;
+		combatCacheBlocked = false;
+
+		static const statelabel sequenceLabels[] =
 		{
-			'Fire', 'Fire_ADS', 'FireRight_Overlay', 'FireLeft_Overlay', 'FireGrenade', 'Scope_Fire'
+			'ZoomIn', 'ZoomOut', 'Ready_ADS', 'BDReadyADS', 'ZoomFire',
+			'ScopedFire', 'Fire_ADS', 'ZoomLoop', 'FireZoom', 'FireZoomed',
+			'Select', 'Deselect',
+			'SelectContinue', 'SelectAnimation', 'SelectAnimationDualWield', 'SelectReady',
+			'DeselectAkimbo', 'DeselectDualWield', 'DeselectEmpty', 'DeselectDown',
+			'FinishDeselect',
+			'Fire', 'Fire2', 'Fire3', 'Fire4', 'Fire5', 'Fire6', 'Fire7', 'Fire8', 'Fire9', 'Fire10',
+			'Fire1', 'HoldFire', 'Hold', 'AltHold', 'AltFire', 'AltFire1', 'AltFire2',
+			'FireDualWield',
+			'FireGrenades', 'FireGrenade', 'DryFire', 'ChargedFire', 'ChargeFire', 'EXPFire', 'EXPFire2',
+			'Melee', 'Punch', 'Kick', 'FlashKicking', 'FlashPunching', 'DoKick', 'SlideKick', 'AirKick',
+			'Reload', 'Reloading', 'ReloadLoop', 'Unload', 'Unloading', 'Doreload', 'BeginMagReload',
+			'Pump', 'Burst', 'Charge', 'ChargeLoop',
+			'WeaponRespect', 'Respect', 'WeaponSpecial',
+			'ThrowGrenade', 'UseEquipment', 'ToggleEquipment',
+			'QuickFire', 'JumpSlash', 'FastSlash', 'FastSlash2',
+			'SpecialAttack', 'SpecialPunch', 'NormPunch', 'SpecialBashConnect',
+			'AxeThrow', 'GotoAxeThrow',
+			'HoldLightning', 'HoldLightning2', 'GotoHold', 'Fly', 'QuickLightning',
+			'AltHold2', 'AltHold3', 'FinishElectricArc',
+			'CastPulseBall', 'CastStunBall', 'CastBallLightning',
+			'StartWarp', 'StartWarp2', 'StartWarp3'
 		};
-		for (int i = 0; i < fireLabels.Size(); ++i)
+		for (int i = 0; i < sequenceLabels.Size(); ++i)
 		{
-			if (InWeaponStateSequence(weap, psp, fireLabels[i]))
+			if (InExclusiveCombatSequence(weap, psp, sequenceLabels[i]))
+			{
+				combatCacheBlocked = true;
+				break;
+			}
+		}
+		return combatCacheBlocked;
+	}
+
+	private bool ShouldBlock(Actor plr, Weapon weap, PSprite psp)
+	{
+		if (!plr || !weap || !psp || !plr.player)
+			return true;
+
+		if (GetWeaponTiltMode(weap) == WT_DISABLED)
+			return true;
+
+		if (IsScopedFovOrToken(plr, weap))
+			return true;
+
+		if (CombatSequenceBlocks(weap, psp))
+			return true;
+
+		PlayerInfo pi = plr.player;
+		let ov10 = pi.FindPSprite(10);
+		let ov11 = pi.FindPSprite(11);
+		bool hasOverlayActions = (ov10 && ov10.CurState) || (ov11 && ov11.CurState);
+		if (hasOverlayActions)
+		{
+			// Overlays during non-idle combat already blocked above; still block if kicking overlays.
+			if (HasInvToken(plr, 'Kicking'))
 				return true;
 		}
+
+		if (HasInvToken(plr, 'GoFatality') || HasInvToken(plr, 'ExecutionToken'))
+			return true;
+		if (HasInvToken(plr, 'Kicking') || HasInvToken(plr, 'UseEquipment') || HasInvToken(plr, 'ToggleEquipment'))
+			return true;
+		if (HasInvToken(plr, 'PlayerIsThrowingAGrenade') || HasInvToken(plr, 'PlayerIsThrowingAMolotovCocktail'))
+			return true;
+		if (HasInvToken(plr, 'DoShoulderCannon') || HasInvToken(plr, 'DoGloryMelee'))
+			return true;
+
+		// PB_LockScreenTilt often sticks after Respect / AltFire. Only honor while not ready.
+		if (HasInvToken(plr, 'PB_LockScreenTilt')
+			&& (pi.WeaponState & WF_WEAPONREADY) == 0)
+			return true;
+
 		return false;
 	}
 
@@ -298,20 +429,11 @@ class PB_WeaponTilterInventory : Inventory
 	{
 		if (weaponClass != 'PB_NeoHMG' || !weap || !psp || !psp.CurState)
 			return false;
-		if (IsFiringState(weap, psp))
+		if (InExclusiveCombatSequence(weap, psp, 'Fire')
+			|| InExclusiveCombatSequence(weap, psp, 'Fire_ADS')
+			|| InExclusiveCombatSequence(weap, psp, 'DoFireHMG'))
 			return true;
-		State st = weap.FindState("DoFireHMG");
-		return st && weap.InStateSequence(psp.CurState, st);
-	}
-
-	private void ResetRollState()
-	{
-		currentRoll = 0;
-		smoothedWeaponRoll = 0;
-		prevStrafeDot = 0;
-		outputRoll = 0;
-		lastAppliedRoll = 0;
-		lastAppliedBillboardX = 0;
+		return false;
 	}
 
 	private void DiscardPendulumDipState()
@@ -323,10 +445,13 @@ class PB_WeaponTilterInventory : Inventory
 
 	private void RestorePendulumDip(PSprite psp)
 	{
-		// Only undo our dip delta — never snap to baselineWeaponY while the weapon
-		// state machine is running A_Lower/A_Raise or authored A_WeaponOffset.
-		if (psp && lastAppliedDip > 0.05)
-			psp.Y -= lastAppliedDip;
+		if (psp)
+		{
+			if (hasBaselineWeaponY)
+				psp.Y = baselineWeaponY;
+			else if (lastAppliedDip > 0)
+				psp.Y -= lastAppliedDip;
+		}
 		DiscardPendulumDipState();
 	}
 
@@ -355,165 +480,159 @@ class PB_WeaponTilterInventory : Inventory
 			psp.Y = baselineWeaponY + dip;
 			lastAppliedDip = dip;
 		}
-		else if (lastAppliedDip > 0.05)
+		else
 		{
-			psp.Y -= lastAppliedDip;
+			psp.Y = baselineWeaponY;
 			lastAppliedDip = 0;
 		}
 	}
 
-	private double ComputePendulumDipTarget(double displayRoll, double strafeDot, PlayerInfo pi, bool allowLowering, Name weaponClass)
+	private double ComputePendulumDipTarget(double displayRoll, double strafeInput, bool allowLowering)
 	{
-		if (!allowLowering || cvLoweringScale <= 0.01)
+		if (!allowLowering || !cvLowering || cvLoweringScale <= 0.01)
 			return 0;
 
 		double absRoll = abs(displayRoll);
-		if (absRoll < 0.1)
+		// Wait until roll has committed so dip doesn't lead with a wrong-side slam.
+		if (absRoll < 0.55)
+			return 0;
+		if (abs(strafeInput) < 0.05)
 			return 0;
 
-		bool strafeInput = abs(pi.cmd.sidemove) > 0 || abs(strafeDot) > 0.15;
-		if (!strafeInput)
-			return 0;
-
-		double scale = max(0.5, cvLoweringScale);
-		if (weaponClass == 'PB_RocketLauncher')
-			scale *= 1.14;
-
-		double dip = (4.0 + absRoll * 6.0) * scale;
+		double scale = max(0.5, cvLoweringScale) * profileDipMul;
+		double dip = (5.5 + absRoll * 7.5) * scale;
 		if (displayRoll < 0)
-			dip += absRoll * 6.0 * scale;
+			dip += absRoll * 3.2 * scale;
 		else
-			dip += absRoll * 1.2 * scale;
-
-		double dipCap = weaponClass == 'PB_RocketLauncher' ? 22.0 : 18.0;
-		return min(dip, dipCap);
+			dip += absRoll * 2.4 * scale;
+		return min(dip, 26.0);
 	}
 
-	private void ClearAppliedRollAndBillboard(PSprite psp)
+	private void ResetRollState()
 	{
-		if (!psp)
-			return;
-
-		if (lastAppliedBillboardX != 0)
-		{
-			psp.X -= lastAppliedBillboardX;
-			lastAppliedBillboardX = 0;
-		}
-
-		if (lastAppliedRoll != 0)
-		{
-			psp.Rotation -= lastAppliedRoll;
-			lastAppliedRoll = 0;
-		}
+		currentRoll = 0;
+		smoothedWeaponRoll = 0;
+		prevStrafeInput = 0;
+		outputRoll = 0;
+		lastAppliedRoll = 0;
+		// Keep leanRoll — lean is independent of weapon swap.
 	}
 
-	void ApplyPose(PlayerInfo pi)
+	private void ClearOverlayRoll(PlayerInfo pi)
 	{
-		if (!pi)
-			return;
+		if (!pi) { return; }
+		let o10 = pi.FindPSprite(10); if (o10) { o10.Rotation = 0; }
+		let o11 = pi.FindPSprite(11); if (o11) { o11.Rotation = 0; }
+		let o60 = pi.FindPSprite(60); if (o60) { o60.Rotation = 0; }
+		let o61 = pi.FindPSprite(61); if (o61) { o61.Rotation = 0; }
+		let o63 = pi.FindPSprite(63); if (o63) { o63.Rotation = 0; }
+		let o64 = pi.FindPSprite(64); if (o64) { o64.Rotation = 0; }
+	}
 
-		let psp = pi.FindPSprite(PSP_WEAPON);
-		if (!psp)
-			return;
-
-		let wpn = Weapon(pi.ReadyWeapon);
-		if (wpn && pi.PendingWeapon != WP_NOCHANGE && pi.PendingWeapon != null
-			&& pi.PendingWeapon.GetClassName() != wpn.GetClassName())
-		{
-			ClearAppliedRollAndBillboard(psp);
-			RestorePendulumDip(psp);
-			ApplyWeaponTiltToAttachedOverlays(pi, 0.);
-			return;
-		}
-
-		ClearAppliedRollAndBillboard(psp);
-
-		if (restoreDipThisTick || !poseActive || !cvEnabled)
-		{
-			RestorePendulumDip(psp);
-			ApplyWeaponTiltToAttachedOverlays(pi, 0.);
-			restoreDipThisTick = false;
-			return;
-		}
-
-		if (!wpn)
-		{
-			RestorePendulumDip(psp);
-			ApplyWeaponTiltToAttachedOverlays(pi, 0.);
-			return;
-		}
-		bool authoredFireOffset = UsesAuthoredFireOffset(wpn.GetClassName(), wpn, psp);
-		double applyRoll = outputRoll;
-		double applyX = 0;
-
-		if (WeaponUsesBillboardSprite(wpn))
-		{
-			applyX = outputRoll * 4.8;
-			applyRoll = 0;
-		}
-
-		psp.Rotation += applyRoll;
-		lastAppliedRoll = applyRoll;
-
-		if (applyX != 0)
-		{
-			psp.X += applyX;
-			lastAppliedBillboardX = applyX;
-		}
-
-		if (rollOnlyWeapon || authoredFireOffset)
-			RestorePendulumDip(psp);
-		else
-			ApplyPendulumDip(psp, smoothedPendulumDip);
-
-		double overlayRoll = applyRoll != 0 ? applyRoll : outputRoll;
-		ApplyWeaponTiltToAttachedOverlays(pi, overlayRoll);
+	private void ApplyOverlayRoll(PlayerInfo pi, double roll)
+	{
+		if (!pi) { return; }
+		let o10 = pi.FindPSprite(10); if (o10) { o10.Rotation = roll; }
+		let o11 = pi.FindPSprite(11); if (o11) { o11.Rotation = roll; }
+		let o60 = pi.FindPSprite(60); if (o60) { o60.Rotation = roll; }
+		let o61 = pi.FindPSprite(61); if (o61) { o61.Rotation = roll; }
+		let o63 = pi.FindPSprite(63); if (o63) { o63.Rotation = roll; }
+		let o64 = pi.FindPSprite(64); if (o64) { o64.Rotation = roll; }
 	}
 
 	private void RefreshCvars(PlayerInfo pi)
 	{
-		cvEnabled = CVar.GetCVar("pb_tac_enable", pi).GetBool();
-		cvRollResistance = clamp(CVar.GetCVar("pb_tac_roll_resistance", pi).GetFloat(), 0.08, 0.62);
-		cvRollVelocity = CVar.GetCVar("pb_tac_roll_velocity", pi).GetFloat();
-		cvRollCap = CVar.GetCVar("pb_tac_roll_cap_value", pi).GetFloat();
-		cvLoweringScale = CVar.GetCVar("pb_tac_lowering_scale", pi).GetFloat();
-		cvEnableLean = CVar.GetCVar("pb_tac_lean_enable", pi).GetBool();
-		cvLeanAngle = CVar.GetCVar("pb_tac_lean_angle", pi).GetFloat();
-		cvLeanSmoothing = CVar.GetCVar("pb_tac_lean_smoothing", pi).GetFloat();
-		cvTiltSmoothing = clamp(CVar.GetCVar("pb_tac_tilt_smoothing", pi).GetFloat(), 0.5, 0.95);
-		cvEnableReadyOnly = CVar.GetCVar("pb_tac_ready_only", pi).GetBool();
-		cvEnableMoveOnly = CVar.GetCVar("pb_tac_move_only", pi).GetBool();
-		cvCapRoll = CVar.GetCVar("pb_tac_roll_cap", pi).GetBool();
+		// Null-safe defaults (STALKER playtest baseline) if CVAR lookup fails.
+		cvEnabled = true;
+		cvRollResistance = 0.6;
+		cvRollVelocity = 4.0;
+		cvRollCap = 12.0;
+		cvLoweringScale = 0.5;
+		cvTiltSmoothing = 0.38;
+		cvCapRoll = true;
+		cvLowering = true;
+		cvEnableLean = true;
+		cvLeanAngle = 12.0;
+		cvLeanSmoothing = 0.20;
+		cvEnableReadyOnly = false;
+		cvEnableMoveOnly = false;
+
+		if (!pi) return;
+
+		let cEnable = CVar.GetCVar("pb_tac_enable", pi);
+		let cRes = CVar.GetCVar("pb_tac_roll_resistance", pi);
+		let cVel = CVar.GetCVar("pb_tac_roll_velocity", pi);
+		let cCapAmt = CVar.GetCVar("pb_tac_roll_cap_value", pi);
+		let cLow = CVar.GetCVar("pb_tac_lowering_scale", pi);
+		let cSmooth = CVar.GetCVar("pb_tac_tilt_smoothing", pi);
+		let cCap = CVar.GetCVar("pb_tac_roll_cap", pi);
+		let cLeanEn = CVar.GetCVar("pb_tac_lean_enable", pi);
+		let cLeanAng = CVar.GetCVar("pb_tac_lean_angle", pi);
+		let cLeanSm = CVar.GetCVar("pb_tac_lean_smoothing", pi);
+		let cReady = CVar.GetCVar("pb_tac_ready_only", pi);
+		let cMove = CVar.GetCVar("pb_tac_move_only", pi);
+
+		if (cEnable) cvEnabled = cEnable.GetBool();
+		if (cRes) cvRollResistance = cRes.GetFloat();
+		if (cVel) cvRollVelocity = cVel.GetFloat();
+		if (cCapAmt) cvRollCap = cCapAmt.GetFloat();
+		if (cLow) cvLoweringScale = cLow.GetFloat();
+		if (cSmooth) cvTiltSmoothing = cSmooth.GetFloat();
+		if (cCap) cvCapRoll = cCap.GetBool();
+		if (cLeanEn) cvEnableLean = cLeanEn.GetBool();
+		if (cLeanAng) cvLeanAngle = cLeanAng.GetFloat();
+		if (cLeanSm) cvLeanSmoothing = cLeanSm.GetFloat();
+		if (cReady) cvEnableReadyOnly = cReady.GetBool();
+		if (cMove) cvEnableMoveOnly = cMove.GetBool();
+
+		cvRollResistance = clamp(cvRollResistance, 0.08, 0.70);
+		cvLoweringScale = clamp(cvLoweringScale, 0.0, 2.5);
+		cvTiltSmoothing = clamp(cvTiltSmoothing, 0.20, 0.95);
+		cvLeanSmoothing = clamp(cvLeanSmoothing, 0.05, 0.50);
+		if (cvRollCap < 3.0) cvRollCap = 3.0;
+		cvLowering = cvLoweringScale > 0.01;
 	}
 
 	override void DoEffect()
 	{
 		Super.DoEffect();
 		tickCounter++;
+	}
+
+	// WorldTick entry — after weapon states settle for this tic.
+	void ComputePose(PlayerInfo pi)
+	{
+		if (lastComputeGametic == level.time)
+			return;
+		lastComputeGametic = level.time;
 
 		outputRoll = 0;
 		poseActive = false;
 		restoreDipThisTick = false;
 		rollOnlyWeapon = false;
+		profileRollMul = 1.0;
+		profileDipMul = 1.0;
 
-		if (!owner || !owner.player || owner.player.health <= 0) { return; }
+		if (!owner || !pi || pi.health <= 0)
+			return;
 
-		PlayerInfo pi = owner.player;
 		UserCmd cmd = pi.cmd;
 		Weapon weap = pi.ReadyWeapon;
 		let psp = pi.FindPSprite(PSP_WEAPON);
-		if (!weap || !psp) { return; }
-
-		if (tickCounter <= 8 || tickCounter % 4 == 0)
-			RefreshCvars(pi);
+		if (!weap || !psp)
+			return;
 
 		Name weaponClass = weap.GetClassName();
+
 		if (weaponClass != lastWeaponClass)
 		{
 			ResetRollState();
 			DiscardPendulumDipState();
 			motionEnableBlend = 1.;
 			lastWeaponClass = weaponClass;
+			combatCacheWeapon = 'None';
+			State cleared;
+			combatCacheState = cleared;
 		}
 
 		if (pi.PendingWeapon != WP_NOCHANGE && pi.PendingWeapon != null
@@ -525,94 +644,78 @@ class PB_WeaponTilterInventory : Inventory
 			return;
 		}
 
+		// Menu CVars rarely change mid-fight; refresh every 8 tics.
+		if (lastCvarRefreshTic == 0 || level.time - lastCvarRefreshTic >= 8)
+		{
+			RefreshCvars(pi);
+			lastCvarRefreshTic = level.time;
+		}
+
 		if (!cvEnabled)
 		{
 			ResetRollState();
+			leanRoll *= 0.85;
 			restoreDipThisTick = true;
 			smoothedPendulumDip = 0;
-			leanRoll = 0;
 			return;
 		}
 
-		bool blocked = ShouldBlockForSafety(owner, weap, psp);
-		bool inCombatPose = IsCombatWeaponState(weap, psp);
-		bool idle = IsReadyState(weap, psp, pi);
-		bool engineBob = (pi.weaponstate & wf_weaponbobbing) != 0;
-		bool moving = owner.Vel.XY.Length() > 0.75;
+		int tiltMode = GetWeaponTiltMode(weap);
+		profileRollMul = GetWeaponRollMul(weap);
+		profileDipMul = GetWeaponDipMul(weap);
+		rollOnlyWeapon = (tiltMode == WT_ROLL_ONLY);
 
-		bool excluded = IsExcludedWeapon(weap);
-		rollOnlyWeapon = UsesRollOnlyMotion(weap);
+		bool blocked = ShouldBlock(owner, weap, psp);
 		bool authoredFireOffset = UsesAuthoredFireOffset(weaponClass, weap, psp);
-		bool fireSuppressed = IsFiringState(weap, psp) && weaponClass == 'PB_Nailgun';
 
-		bool allowMotion = !blocked && !excluded && !inCombatPose;
-		if (cvEnableReadyOnly)
-			allowMotion = allowMotion && idle;
-		else
-			allowMotion = allowMotion && (idle || engineBob);
-		if (cvEnableMoveOnly)
-			allowMotion = allowMotion && moving;
-		if (fireSuppressed)
-			allowMotion = false;
+		// Optional stricter modes (off by default — golden path tilts whenever not blocked).
+		if (!blocked && cvEnableReadyOnly && (pi.WeaponState & WF_WEAPONREADY) == 0)
+			blocked = true;
+		if (!blocked && cvEnableMoveOnly && owner.Vel.XY.Length() <= 0.75)
+			blocked = true;
 
-		bool allowLowering = allowMotion && !authoredFireOffset && !rollOnlyWeapon && cvLoweringScale > 0.01;
+		// Positive cmd.sidemove = strafe right (Doom convention).
+		double strafeInput = cmd.sidemove / 10240.0;
+		Vector2 rightDir = (sin(owner.angle), -cos(owner.angle));
+		double strafeDot = owner.Vel.X * rightDir.X + owner.Vel.Y * rightDir.Y;
 
-		Vector2 strafeDir = (sin(-owner.angle), cos(-owner.angle));
-		double strafeDot = (owner.Vel.X * strafeDir.X) + (owner.Vel.Y * strafeDir.Y);
+		// Input wins while strafing; velocity only fills ice / knockback / conveyors.
+		double strafe = strafeInput;
+		if (abs(strafeInput) < 0.08 && abs(strafeDot) > 1.0)
+			strafe = clamp(strafeDot * 0.10, -1.5, 1.5);
 
-		if (blocked || inCombatPose)
+		if (blocked)
 		{
-			currentRoll *= 0.75;
-			smoothedWeaponRoll *= 0.75;
-			motionEnableBlend += (0.0 - motionEnableBlend) * 0.15;
+			currentRoll *= 0.7;
+			smoothedWeaponRoll *= 0.7;
+			motionEnableBlend += (0.0 - motionEnableBlend) * 0.45;
 			restoreDipThisTick = true;
-			smoothedPendulumDip *= 0.82;
+			smoothedPendulumDip *= 0.8;
 			if (smoothedPendulumDip < 0.05)
 				smoothedPendulumDip = 0;
 		}
 		else
 		{
-			if (allowMotion)
-				motionEnableBlend += (1.0 - motionEnableBlend) * 0.15;
-			else
-				motionEnableBlend += (0.0 - motionEnableBlend) * 0.15;
+			motionEnableBlend += (1.0 - motionEnableBlend) * 0.45;
 
-			if (allowMotion)
-			{
-				if (prevStrafeDot * strafeDot < 0. && abs(strafeDot) > 0.02 && abs(prevStrafeDot) > 0.02)
-					currentRoll *= 0.55;
-				currentRoll += strafeDot * cvRollVelocity * motionEnableBlend;
-				currentRoll *= cvRollResistance;
-				if (cvCapRoll)
-					currentRoll = clamp(currentRoll, -cvRollCap, cvRollCap);
-			}
-			else
-			{
-				currentRoll *= 0.75;
-			}
+			if (prevStrafeInput * strafe < 0. && abs(strafe) > 0.02 && abs(prevStrafeInput) > 0.02)
+				currentRoll *= 0.88;
+
+			double rollVel = cvRollVelocity * profileRollMul;
+			double rollCap = cvRollCap * profileRollMul;
+
+			currentRoll += strafe * rollVel * motionEnableBlend;
+			currentRoll *= cvRollResistance;
+			if (cvCapRoll)
+				currentRoll = clamp(currentRoll, -rollCap, rollCap);
 		}
+		prevStrafeInput = strafe;
 
-		prevStrafeDot = strafeDot;
-
-		double tiltS = cvTiltSmoothing;
-		smoothedWeaponRoll = smoothedWeaponRoll * tiltS + currentRoll * (1.0 - tiltS);
-		outputRoll = smoothedWeaponRoll;
-
-		if (!blocked && !inCombatPose)
-		{
-			double dipTarget = ComputePendulumDipTarget(outputRoll, strafeDot, pi, allowLowering, weaponClass);
-			double dipRate = dipTarget > smoothedPendulumDip ? 0.22 : 0.16;
-			smoothedPendulumDip += (dipTarget - smoothedPendulumDip) * dipRate;
-			if (smoothedPendulumDip <= 0.05)
-				smoothedPendulumDip = 0;
-		}
-
-		poseActive = abs(outputRoll) > 0.05 || smoothedPendulumDip > 0.05;
-
+		// Lean (feeds Tilt++ leanRoll; also adds to weapon output).
 		double targetLean = 0;
-		if (cvEnableLean && !blocked && !inCombatPose && idle && !excluded && !authoredFireOffset)
+		if (cvEnableLean && !authoredFireOffset)
 		{
-			bool toggleLean = owner.CountInv("PB_LeanToggle") > 0;
+			bool toggleLean = owner.CountInv('PB_LeanToggle') > 0;
 			bool moveLeft = (cmd.buttons & BT_MOVELEFT) != 0;
 			bool moveRight = (cmd.buttons & BT_MOVERIGHT) != 0;
 			if (toggleLean)
@@ -624,13 +727,89 @@ class PB_WeaponTilterInventory : Inventory
 			}
 			else
 			{
-				bool left = owner.CountInv("PB_LeanLeft") > 0;
-				bool right = owner.CountInv("PB_LeanRight") > 0;
+				bool left = owner.CountInv('PB_LeanLeft') > 0;
+				bool right = owner.CountInv('PB_LeanRight') > 0;
 				if (left && !right) { targetLean = -cvLeanAngle; }
 				else if (right && !left) { targetLean = cvLeanAngle; }
 			}
 		}
 		leanRoll += (targetLean - leanRoll) * cvLeanSmoothing;
+
+		double tiltS = cvTiltSmoothing;
+		smoothedWeaponRoll = smoothedWeaponRoll * tiltS + currentRoll * (1.0 - tiltS);
+		outputRoll = smoothedWeaponRoll + leanRoll;
+
+		bool allowLowering = !blocked
+			&& !authoredFireOffset
+			&& !rollOnlyWeapon
+			&& cvLowering;
+
+		if (!allowLowering)
+		{
+			if (smoothedPendulumDip > 0.05 || lastAppliedDip > 0)
+				restoreDipThisTick = true;
+			smoothedPendulumDip = 0;
+		}
+		else
+		{
+			double dipTarget = ComputePendulumDipTarget(smoothedWeaponRoll, strafe, true);
+			double dipRate = dipTarget > smoothedPendulumDip ? 0.36 : 0.30;
+			smoothedPendulumDip += (dipTarget - smoothedPendulumDip) * dipRate;
+			if (smoothedPendulumDip <= 0.05)
+				smoothedPendulumDip = 0;
+		}
+
+		poseActive = abs(outputRoll) > 0.04 || smoothedPendulumDip > 0.05;
+	}
+
+	void ApplyPose(PlayerInfo pi)
+	{
+		if (!pi)
+			return;
+
+		let psp = pi.FindPSprite(PSP_WEAPON);
+		if (!psp)
+			return;
+
+		if (lastComputeGametic != level.time)
+			ComputePose(pi);
+
+		if (!cvEnabled)
+		{
+			psp.Rotation = 0;
+			lastAppliedRoll = 0;
+			ClearOverlayRoll(pi);
+			RestorePendulumDip(psp);
+			restoreDipThisTick = false;
+			return;
+		}
+
+		if (restoreDipThisTick || !poseActive)
+		{
+			psp.Rotation = 0;
+			lastAppliedRoll = 0;
+			ClearOverlayRoll(pi);
+			RestorePendulumDip(psp);
+			restoreDipThisTick = false;
+			// Still show lean-only roll if leaning while blocked.
+			if (abs(leanRoll) > 0.05)
+			{
+				psp.bPivotPercent = true;
+				psp.Pivot = (0.5, 0.75);
+				psp.Rotation = leanRoll;
+				lastAppliedRoll = leanRoll;
+				ApplyOverlayRoll(pi, leanRoll);
+			}
+			return;
+		}
+
+		// Absolute Rotation — delta apply fought bob/offsets each tic.
+		psp.bPivotPercent = true;
+		psp.Pivot = (0.5, 0.75);
+		psp.Rotation = outputRoll;
+		lastAppliedRoll = outputRoll;
+		ApplyOverlayRoll(pi, outputRoll);
+		ApplyPendulumDip(psp, smoothedPendulumDip);
 	}
 }
 
@@ -640,6 +819,28 @@ class PB_TacticalFeelHandler : EventHandler
 	{
 		if (mo && mo.player && !mo.FindInventory("PB_WeaponTilterInventory"))
 			mo.GiveInventory("PB_WeaponTilterInventory", 1);
+	}
+
+	static void EnsureAndApply(PlayerPawn mo)
+	{
+		if (!mo || !mo.player) return;
+		if (!mo.FindInventory("PB_WeaponTilterInventory"))
+			mo.GiveInventory("PB_WeaponTilterInventory", 1);
+
+		let inv = PB_WeaponTilterInventory(mo.FindInventory("PB_WeaponTilterInventory"));
+		if (!inv) return;
+		inv.ComputePose(mo.player);
+		inv.ApplyPose(mo.player);
+	}
+
+	override void WorldTick()
+	{
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			if (!playeringame[i] || !players[i].mo)
+				continue;
+			EnsureAndApply(players[i].mo);
+		}
 	}
 
 	override void PlayerEntered(PlayerEvent e)
@@ -665,21 +866,6 @@ class PB_TacticalFeelHandler : EventHandler
 			if (!playeringame[i] || !players[i].mo)
 				continue;
 			GiveTilter(players[i].mo);
-		}
-	}
-
-	override void WorldTick()
-	{
-		for (int i = 0; i < MAXPLAYERS; i++)
-		{
-			if (!playeringame[i] || !players[i].mo || !players[i].mo.player)
-				continue;
-
-			GiveTilter(players[i].mo);
-
-			let inv = PB_WeaponTilterInventory(players[i].mo.FindInventory("PB_WeaponTilterInventory"));
-			if (inv)
-				inv.ApplyPose(players[i]);
 		}
 	}
 

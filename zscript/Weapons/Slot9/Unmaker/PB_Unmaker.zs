@@ -69,11 +69,13 @@ class PB_Unmaker : PB_WeaponBase
 		 TNT1 A 0 A_JumpIfInventory("UnmakerFireSelected",1, 2);
 		 TNT1 A 0 A_GiveInventory("HasIncendiaryWeapon", 1);
 	 	 TNT1 A 0 A_PlaySound("UNMIDL", 6,1,1);
+		Goto ReadyLoop;
 		Ready3:
+		ReadyLoop:
 		 TNT1 A 0 PB_HandleCrosshair(39);
 		 TNT1 A 0;
 		 "UNHG" "ABCDE" 4 A_DoPBWeaponAction();
-		 Goto Ready;
+		 Goto ReadyLoop;
 		
 		Deselect:
 		TNT1 A 0 A_StopSOund(1);

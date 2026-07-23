@@ -22,6 +22,8 @@
 
 class PB_CyberdemonRL : PB_WeaponBase
 {
+	bool PiercingRockets;
+
 	default
 	{
 		//Title Cyberdemon Missile Launcher
@@ -44,9 +46,14 @@ class PB_CyberdemonRL : PB_WeaponBase
 		+WEAPON.EXPLOSIVE;
 		+WEAPON.NOAUTOFIRE;
 		+WEAPON.CHEATNOTWEAPON;
-		+FORCEXYBILLBOARD;
 		+FLOORCLIP;
 		+DONTGIB;
+	}
+
+	override void PostBeginPlay()
+	{
+		PiercingRockets = false;
+		Super.PostBeginPlay();
 	}
 
 	void CyberRL_RefillWear(PlayerPawn p)
@@ -54,8 +61,8 @@ class PB_CyberdemonRL : PB_WeaponBase
 		if (!p || !p.player)
 			return;
 		let inv = p.FindInventory("CyberRLDurability");
-		if (!inv || inv.Amount < 25)
-			p.GiveInventory("CyberRLDurability", 25);
+		if (!inv || inv.Amount < 75)
+			p.GiveInventory("CyberRLDurability", 75);
 	}
 
 	override void AttachToOwner(Actor other)
@@ -89,7 +96,7 @@ class PB_CyberdemonRL : PB_WeaponBase
 						A_TakeInventory(invoker.AmmoType1, 2, TIF_NOTAKEINFINITE);
 						A_TakeInventory("CyberRLDurability", 1, TIF_NOTAKEINFINITE);
 						A_FireProjectile(
-							"CyberBallsPlayer",
+							invoker.PiercingRockets ? "CyberBallsPlayerPierce" : "CyberBallsPlayer",
 							PB_HitFeedback_Math.LinearMap(pb_weapon_recoil_mod_horizontal, 0.0, 1.0, 1.0, 0.2),
 							0, 0, 0,
 							FPF_NOAUTOAIM,
@@ -282,7 +289,14 @@ class PB_CyberdemonRL : PB_WeaponBase
 
 		Weaponspecial:
 			TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
-			TNT1 A 0 A_Print("\ctWeapon Special:\c- \cdn/a \c-");
+			TNT1 A 0 {
+				invoker.PiercingRockets = !invoker.PiercingRockets;
+				A_StartSound("MS/Button", CHAN_AUTO, CHANF_OVERLAP);
+				if (invoker.PiercingRockets)
+					A_Print("\ctPiercing rockets\c- armed");
+				else
+					A_Print("\ctStandard rockets\c- armed");
+			}
 			Goto Ready3;
 
 		FlashPunching:
