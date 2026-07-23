@@ -22,7 +22,6 @@ ACTOR Paingiver : PB_Weapon
 	+WEAPON.NOALERT
 	+WEAPON.NOAUTOAIM
 	+INVENTORY.ALWAYSPICKUP
-	+FORCEXYBILLBOARD
 	+FLOORCLIP
 	Inventory.PickupMessage "You got the Paingiver, (Slot 6)!"
 	Inventory.PickupSound "misc/rockboxa"
@@ -50,6 +49,7 @@ ACTOR Paingiver : PB_Weapon
 		ReadyLoop:
 		TNT1 A 0 PB_HandleCrosshair(78)
 		TNT1 A 0 A_SetRoll(0)
+		TNT1 A 0 Paingiver_ReadyIdleSound()
 		W17A A 1 A_DoPBWeaponAction
 		Loop
 	ChooseUpgradePath:
@@ -62,6 +62,7 @@ ACTOR Paingiver : PB_Weapon
 	Deselect:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_StopSound(CHAN_WEAPON)
+		TNT1 A 0 A_StopSound(6)
 		TNT1 A 0 A_ZoomFactor(1.0)
 		W17S C 1 A_SetPitch(Pitch+0.5)
 		W17S B 1 A_SetPitch(Pitch+0.8)
@@ -142,6 +143,7 @@ ACTOR Paingiver : PB_Weapon
 		TNT1 A 0 A_PlaySound("weapons/paingiver/sweet", CHAN_VOICE)
 		W17F A 1 BRIGHT A_DoPBWeaponAction(WRF_NOFIRE)
 		TNT1 A 0 A_FireMissile
+		TNT1 A 0 Paingiver_RefundShotIfEnraged()
 		TNT1 A 0 A_ZoomFactor(0.90)
 		TNT1 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0)
 		W17F B 1 A_DoPBWeaponAction(WRF_NOFIRE)
@@ -172,6 +174,7 @@ ACTOR Paingiver : PB_Weapon
 		TNT1 A 0 A_PlaySound("weapons/paingiver/fire2", 1)
 		W17F A 1 BRIGHT A_DoPBWeaponAction(WRF_NOFIRE)
 		TNT1 A 0 A_FireCustomMissile("SeekerRocket", frandom(20, -20), 1, 0, 0,FPF_NOAUTOAIM, 0)
+		TNT1 A 0 Paingiver_RefundShotIfEnraged()
 		TNT1 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0)
 		TNT1 A 0 A_ZoomFactor(0.90)
 		W17F B 1 A_DoPBWeaponAction(WRF_NOFIRE)
@@ -185,6 +188,7 @@ ACTOR Paingiver : PB_Weapon
 				}
 		W17F A 1 BRIGHT A_DoPBWeaponAction(WRF_NOFIRE)
 		TNT1 A 0 A_FireCustomMissile("SeekerRocket", frandom(20, -20), 1, 0, 0,FPF_NOAUTOAIM, 0)
+		TNT1 A 0 Paingiver_RefundShotIfEnraged()
 		TNT1 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0)
 		W17F B 1 A_DoPBWeaponAction(WRF_NOFIRE)
 		W17F CDE 1 A_DoPBWeaponAction(WRF_NOFIRE)
@@ -197,6 +201,7 @@ ACTOR Paingiver : PB_Weapon
 				}
 		W17F A 1 BRIGHT A_DoPBWeaponAction(WRF_NOFIRE)
 		TNT1 A 0 A_FireCustomMissile("SeekerRocket", frandom(20, -20), 1, 0, 0,FPF_NOAUTOAIM, 0)
+		TNT1 A 0 Paingiver_RefundShotIfEnraged()
 		TNT1 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0)
 		W17F B 1 A_DoPBWeaponAction(WRF_NOFIRE)
 		W17F CDE 1 A_DoPBWeaponAction(WRF_NOFIRE)
@@ -249,7 +254,7 @@ ACTOR Paingiver : PB_Weapon
 	
 	WeaponSpecial:
 		TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1)
-		TNT1 A 0 A_Print("\ctPaingiver:\c- \ciGolgothan \c-steel ΓÇö \cgspite \c-and \cgsuffering \c-in one frame.")
+		TNT1 A 0 { return Paingiver_TryEnrage(); }
 		Goto Ready3
 	
 	FlashKicking:

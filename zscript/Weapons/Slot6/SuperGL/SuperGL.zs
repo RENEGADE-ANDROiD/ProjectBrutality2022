@@ -689,6 +689,19 @@ Class PB_SuperGL : PB_WeaponBase
 	
 	action state PB_PreHandleSGLWheel()
 	{
+		if (FindInventory("SelectSGL_No"))
+		{
+			A_TakeInventory("SelectSGL_No", 1);
+			A_Print("$PB2022_SGLUPGRADE_NEED");
+			A_SetInventory("CantWeaponSpecial", 0);
+			A_SetInventory("GrenadeTypeImpact", 0);
+			A_SetInventory("GrenadeTypeSticky", 0);
+			A_SetInventory("GrenadeTypeIncendiary", 0);
+			A_SetInventory("GrenadeTypeCryo", 0);
+			A_SetInventory("GrenadeTypeAcid", 0);
+			return resolvestate("Ready");
+		}
+
 		if(
 		findinventory("GrenadeTypeImpact") && getSGLMode() == 			SGL_Impact ||
 		findinventory("GrenadeTypeSticky") && getSGLMode() == 			SGL_Sticky ||
@@ -713,9 +726,12 @@ Class PB_SuperGL : PB_WeaponBase
 	{
 		if (CountInv("GrenadeTypeImpact") == 1) {SetSGLMode(SGL_Impact);	A_SetCurrentGrenadeType("Impact");}
 		if (CountInv("GrenadeTypeSticky") == 1) {SetSGLMode(SGL_Sticky);	A_SetCurrentGrenadeType("Sticky");}
-		if (CountInv("GrenadeTypeAcid") == 1) {	SetSGLMode(SGL_Acid);		A_SetCurrentGrenadeType("Acid");}
-		if (CountInv("GrenadeTypeIncendiary") == 1) {SetSGLMode(SGL_Fire);	A_SetCurrentGrenadeType("Incendiary");}
-		if (CountInv("GrenadeTypeCryo") == 1) {SetSGLMode(SGL_Cryo);	A_SetCurrentGrenadeType("Cryo");}
+		if (CountInv("SGLUpgraded") > 0)
+		{
+			if (CountInv("GrenadeTypeAcid") == 1) {SetSGLMode(SGL_Acid);		A_SetCurrentGrenadeType("Acid");}
+			if (CountInv("GrenadeTypeIncendiary") == 1) {SetSGLMode(SGL_Fire);	A_SetCurrentGrenadeType("Incendiary");}
+			if (CountInv("GrenadeTypeCryo") == 1) {SetSGLMode(SGL_Cryo);	A_SetCurrentGrenadeType("Cryo");}
+		}
 	}
 	
 	action void PrintSGLMode()

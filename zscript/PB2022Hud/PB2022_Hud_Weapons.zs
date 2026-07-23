@@ -17,6 +17,8 @@ extend class PB2022_Hud_ZS
 			return true;
 		if (CheckInventory("DualWieldingM41A") && wn == 'PB_M41A')
 			return true;
+		if (wn == 'PB_NormalRifle' && pbWeap && pbWeap.akimboMode)
+			return true;
 		if (CheckInventory("DualWieldingSSG") && (wn == 'PB_SSG' || wn == 'PB_CSSG'))
 			return true;
 		if (CheckInventory("DualWieldingAutoshotguns") && wn == 'PB_Autoshotgun')
@@ -36,6 +38,10 @@ extend class PB2022_Hud_ZS
 		if (CheckInventory("DualWieldingPlasma") && wn == 'PB_M1Plasma')
 			return true;
 		if (CheckInventory("DualWieldingM2Plasma") && wn == 'PB_M2Plasma')
+			return true;
+		if (CheckInventory("WSMGDualWield") && wn == 'W_SMG')
+			return true;
+		if (CheckInventory("DualWieldWithRKX") && wn == 'Black_DMR_RKX')
 			return true;
 
 		return false;
@@ -75,6 +81,10 @@ extend class PB2022_Hud_ZS
 			leftType = 'LeftPlasmaAmmo';
 		else if (wn == 'PB_M2Plasma')
 			leftType = 'LeftM2PlasmaAmmo';
+		else if (wn == 'W_SMG')
+			leftType = 'LW_Clipp';
+		else if (wn == 'Black_DMR_RKX')
+			leftType = 'LeftBlack_Clip';
 		else if (pbWeap && pbWeap.AmmoTypeLeft)
 		{
 			let leftInv = plr.FindInventory(pbWeap.AmmoTypeLeft);
@@ -115,6 +125,15 @@ extend class PB2022_Hud_ZS
 
 			case 'PB_M41A':
 				if (CheckInventory("DualWieldingM41A"))
+				{
+					weaponBarAccent = Font.CR_TAN;
+					DrawAmmoBar("BARBACT1", "BARBACT2", "BARBACT3", "BAMBAR2", "ABAR2", "ABAR2", "AMMOIC2", Font.CR_TAN, drawDual: Left != null);
+					return true;
+				}
+				return false;
+
+			case 'PB_NormalRifle':
+				if (pbWeap && pbWeap.akimboMode)
 				{
 					weaponBarAccent = Font.CR_TAN;
 					DrawAmmoBar("BARBACT1", "BARBACT2", "BARBACT3", "BAMBAR2", "ABAR2", "ABAR2", "AMMOIC2", Font.CR_TAN, drawDual: Left != null);
@@ -256,6 +275,11 @@ extend class PB2022_Hud_ZS
 				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
 				return true;
 
+			case 'FrostburnDevice':
+				weaponBarAccent = cachedFontColors[DTECHAMMO];
+				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
+				return true;
+
 			case 'PB_DemonExterminator':
 				weaponBarAccent = cachedFontColors[DTECHAMMO];
 				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
@@ -286,6 +310,19 @@ extend class PB2022_Hud_ZS
 				{
 					label = StringTable.Localize("$PB_HUD_UNMAKER_INCIN", false);
 					col = cachedFontColors[DTECHAMMO];
+				}
+				break;
+
+			case 'FrostburnDevice':
+				if (CheckInventory("FrostburnModeIncendiary"))
+				{
+					label = StringTable.Localize("$PB_HUD_FROSTBURN_INCEND", false);
+					col = Font.CR_ORANGE;
+				}
+				else
+				{
+					label = StringTable.Localize("$PB_HUD_FROSTBURN_CRYO", false);
+					col = Font.CR_CYAN;
 				}
 				break;
 			case 'PB_Flamethrower':
@@ -443,11 +480,6 @@ extend class PB2022_Hud_ZS
 		{
 			PBHud_DrawImage("ELPDA0", (-46, -45), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_CENTER, scale: (0.8, 0.8));
 			PBHud_DrawString(mBoldFont, Formatnumber(GetAmount("PB_CF_TeslaTurretAmmo")), (-47, -33), DI_TEXT_ALIGN_CENTER, Font.CR_CYAN, scale: (0.8, 0.8));
-		}
-		else if (CheckInventory("PB_CF_FlameTurretSelected"))
-		{
-			PBHud_DrawImage("F1REA0", (-46, -45), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_CENTER, scale: (0.8, 0.8));
-			PBHud_DrawString(mBoldFont, Formatnumber(GetAmount("PB_CF_FlameTurretAmmo")), (-47, -33), DI_TEXT_ALIGN_CENTER, Font.CR_ORANGE, scale: (0.8, 0.8));
 		}
 		else if (CheckInventory("PB_CF_FreezeMineSelected"))
 		{

@@ -31,7 +31,6 @@ class X12Shotgun : PB_WeaponBase
 	+WEAPON.WIMPY_WEAPON;
 	+WEAPON.NO_AUTO_SWITCH;
 	+DONTGIB;
-	+FORCEXYBILLBOARD;
 	Scale 0.9;
 	FloatBobStrength 0.5;
 	}

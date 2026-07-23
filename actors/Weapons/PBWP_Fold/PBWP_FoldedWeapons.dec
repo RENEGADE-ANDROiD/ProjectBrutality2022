@@ -5,3 +5,4 @@
 #include "actors/Weapons/Slot-3/DTShotgun.dec"
 #include "actors/Weapons/Karnage/Rainmaker.dec"
 #include "actors/Weapons/Slot-5/TacticalNailgun.dec"
+#include "actors/Weapons/PBWP_Fold/PBWP_IN_Weapons.dec"

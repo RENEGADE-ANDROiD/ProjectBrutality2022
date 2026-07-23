@@ -1,5 +1,5 @@
 const neohmgFullAmmo = 80;
-const neohmgShieldAmmo = 100;
+const neohmgShieldAmmo = 120;
 
 class HMGShield : Inventory
 {
@@ -44,7 +44,7 @@ class PB_NeoHMG : PB_WeaponBase
 	const HMG_SHIELDSOUNDLAYER2 = 233;
 
 	const shieldProtectionMultiplier = 1;
-	const shieldRechargeSpeed = 1;
+	const shieldRechargeSpeed = 5;
 	const shieldRechargeRate = 5;
 	const shieldCooldown = 15;
 
@@ -89,11 +89,10 @@ class PB_NeoHMG : PB_WeaponBase
 		Scale 0.5;
 		+FLOORCLIP;
 		+DONTGIB;
-		+FORCEXYBILLBOARD;
 		+WEAPON.NOAUTOAIM;
 		PB_WeaponBase.UnloaderToken "HMGIsUnloaded";
 		PB_WeaponBase.respectItem "HMGJustRespect";
-		PB_WeaponBase.MaxOverheat 400;
+		PB_WeaponBase.MaxOverheat 300;
 		PB_WeaponBase.OverheatCoolingRate 4;
 	}
 
@@ -356,7 +355,10 @@ class PB_NeoHMG : PB_WeaponBase
 			&& Owner.CountInv("GrabbedBurningBarrel") < 1
 			&& Owner.CountInv("GrabbedIceBarrel") < 1;
 
-		if ((pi.cmd.buttons & BT_ALTATTACK) && shieldReady && Owner.CountInv("HMGShield") > 0 && noBarrels)
+		// PBX: no personal shield while at/near full overheat.
+		bool notOverheating = overheat < maxOverheat - 5;
+
+		if ((pi.cmd.buttons & BT_ALTATTACK) && shieldReady && Owner.CountInv("HMGShield") > 0 && noBarrels && notOverheating)
 		{
 			pi.SetPSprite(SHIELD_LAYER, FindState("HMGShield"));
 			if (!shieldWasActive)
@@ -507,16 +509,10 @@ class PB_NeoHMG : PB_WeaponBase
 			TNT1 A 0 PB_CheckBarrelThrow1();
 			TNT1 A 0
 			{
-				let po = invoker.Owner;
-				if (po == null || !(po is "PlayerPawn"))
-					return resolveState(null);
-				let pp = PlayerPawn(po);
-				if (pp && pp.player && invoker.CountInv("NoFatality") == 0
-					&& CVar.GetCVar("pb_auto_fatality_fire", pp.player).GetBool())
-					return PB_Execute();
-				return resolveState(null);
+				return PB_TryAutoFatalityOnFire();
 			}
 			TNT1 A 0 PB_HandleCrosshair(69);
+			TNT1 A 0 A_JumpIf(PB_GetOverheat() >= invoker.maxOverheat - 5, "Overheat");
 			TNT1 A 0 PB_jumpIfNoAmmo("Reload", 1, false);
 			TNT1 A 0 A_JumpIfInventory("HMGChamberAmmo", 1, "DoFireHMG");
 			TNT1 A 0
@@ -529,7 +525,8 @@ class PB_NeoHMG : PB_WeaponBase
 			XH01 BCDEF 0;
 			XH02 BCDEF 0;
 			XH03 BCDEF 0;
-			XH04 EF 0;
+			XH04 BCDEF 0;
+			TNT1 A 0 A_JumpIf(PB_GetOverheat() >= invoker.maxOverheat - 5, "Overheat");
 			HG0F B 1 BRIGHT
 			{
 				NeoHMG_SetFireBeltSprite();
@@ -550,6 +547,30 @@ class PB_NeoHMG : PB_WeaponBase
 			}
 			TNT1 A 0 A_StartSound("weapon/HMG/Stop", CHAN_WEAPON);
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+			Goto Ready3;
+		Overheat:
+			TNT1 A 0 A_StartSound("MG42HEAT", CHAN_WEAPON, CHANF_OVERLAP, 1.0);
+			TNT1 A 0 A_StartSound("weapons/chagan/stop", CHAN_WEAPON, CHANF_OVERLAP, 1.0);
+			TNT1 A 0
+			{
+				// PBX Jul 22: full overheat auto-breaks the personal shield.
+				invoker.shieldTimer = invoker.shieldCooldown;
+				invoker.shieldReady = false;
+				invoker.shieldBroken = true;
+				invoker.shieldWasActive = false;
+				invoker.shieldActive = false;
+				A_SetInventory("HMGShield", 0);
+				if (invoker.Owner)
+					invoker.Owner.bNOBLOOD = false;
+				A_StartSound("StickyGrenade/hit", CHAN_BODY, 0, 0.5);
+				A_StartSound("HMGSHLD1", HMG_SHIELDSOUNDLAYER);
+				A_Overlay(SHIELD_LAYER, "HMGShieldBroken", true);
+			}
+			HG0F A 45
+			{
+				NeoHMG_SetFireBeltSprite();
+				return A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOSWITCH);
+			}
 			Goto Ready3;
 		AltFire:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel");
@@ -600,6 +621,9 @@ class PB_NeoHMG : PB_WeaponBase
 			PSHL H 1 BRIGHT { invoker.shieldFrame = 0; }
 			Stop;
 		HMGShieldBreak:
+			PSHL A 0 A_FireShieldParticles();
+			Stop;
+		HMGShieldBroken:
 			PSHL A 0 A_FireShieldParticles();
 			Stop;
 		WeaponSpecial:

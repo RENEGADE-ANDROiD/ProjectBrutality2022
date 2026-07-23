@@ -18,6 +18,9 @@ Actor GrabbedBurningBarrel : Inventory {inventory.maxamount 1}
 Actor HasBarrel : Inventory {inventory.maxamount 1}
 Actor HasIceBarrel : Inventory {inventory.maxamount 1}
 Actor HasBurningBarrel : Inventory {inventory.maxamount 1}
+// PBWP fold uses FlameBarrel names; alias to PB2022 burning-barrel tokens.
+Actor HasFlameBarrel : HasBurningBarrel {}
+Actor GrabbedFlameBarrel : GrabbedBurningBarrel {}
 Actor Grab1 : Inventory{inventory.maxamount 1}
 Actor Grab2 : Inventory{inventory.maxamount 1}
 Actor Grab3 : Inventory{inventory.maxamount 1}

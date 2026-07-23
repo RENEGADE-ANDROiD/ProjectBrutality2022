@@ -1,0 +1,17 @@
+// PBWP IN weapon fold — MP12, Holy Bastard SMGs, M45, rifles, HYDRA, Gallary, cryo/plasma/BFG tier
+#include "actors/Weapons/PBWP_Fold/PBWP_IN_Compat.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-2/MP12.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-2/MP12Upgrade.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-2/W_SMG.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-2/Blood_Stains.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-3/M45Shotgun.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-4/AssaultRifle.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-4/BlackDMR.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-4/Magnum_Sniper_Rifle.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-5/Gallary.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-5/HYDRA.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-8/Extinction_Ray.dec"
+#include "actors/Weapons/PBWP_Fold/IN/Slot-8/PlasmaRifle.dec"
+//#include "actors/Weapons/PBWP_Fold/IN/Slot-8/PB_CryoRifle.dec" // TeiTenga Type B Freezer Thrower — disabled / unwired
+// ThunderCarrierTI (Heavy Lust) — disabled / unwired
+#include "actors/Weapons/PBWP_Fold/IN/Slot-9/Satan_Scream.dec"

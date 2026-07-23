@@ -5,6 +5,8 @@
 class PB_InstantWeaponSwitchHandler : StaticEventHandler
 {
 	Array<bool> m_LastCvarOn;
+	int m_CvarRefreshTic;
+	bool m_AnyOn;
 
 	override void WorldLoaded(WorldEvent e)
 	{
@@ -16,6 +18,8 @@ class PB_InstantWeaponSwitchHandler : StaticEventHandler
 			for (int i = 0; i < MAXPLAYERS; i++)
 				m_LastCvarOn[i] = false;
 		}
+		m_CvarRefreshTic = 0;
+		m_AnyOn = false;
 	}
 
 	override void WorldTick()
@@ -25,6 +29,17 @@ class PB_InstantWeaponSwitchHandler : StaticEventHandler
 		if (level.isFrozen())
 			return;
 
+		bool refresh = (m_CvarRefreshTic == 0 || level.time - m_CvarRefreshTic >= 8);
+		if (!refresh && !m_AnyOn)
+		{
+			// Fast path: nobody has the option on — skip MAXPLAYERS work until next refresh.
+			return;
+		}
+
+		if (refresh)
+			m_CvarRefreshTic = level.time;
+
+		m_AnyOn = false;
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
 			if (!playeringame[i])
@@ -34,12 +49,17 @@ class PB_InstantWeaponSwitchHandler : StaticEventHandler
 			if (p == null)
 				continue;
 
-			let cv = CVar.GetCVar("pb_instantweaponswitch", p);
-			bool on = (cv != null) && cv.GetBool();
+			bool on = m_LastCvarOn[i];
+			if (refresh)
+			{
+				let cv = CVar.GetCVar("pb_instantweaponswitch", p);
+				on = (cv != null) && cv.GetBool();
+			}
 
 			if (on)
 			{
 				p.cheats = p.cheats | CF_INSTANTWEAPSWITCH;
+				m_AnyOn = true;
 			}
 			else if (m_LastCvarOn[i])
 			{

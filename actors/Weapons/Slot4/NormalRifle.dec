@@ -1,0 +1,30 @@
+// PB_NormalRifle support actors. Weapon logic: zscript/Weapons/Slot4/NormalRifle/PB_NormalRifle.zs
+
+ACTOR NormalRifleAmmo : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 31
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR NormalRifleLeftAmmo : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 31
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR NR_Select_FireMode : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR NR_Select_DualWield : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+ACTOR NR_Select_Laser : Inventory
+{
+	Inventory.MaxAmount 1
+}

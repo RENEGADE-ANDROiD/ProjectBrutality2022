@@ -16,9 +16,6 @@ Actor PB_CF_HoloDecoySelected : Inventory { Inventory.MaxAmount 1 }
 Actor WW_PB_CF_TeslaTurretSelected : Inventory { Inventory.MaxAmount 1 }
 Actor PB_CF_TeslaTurretSelected : Inventory { Inventory.MaxAmount 1 }
 
-Actor WW_PB_CF_FlameTurretSelected : Inventory { Inventory.MaxAmount 1 }
-Actor PB_CF_FlameTurretSelected : Inventory { Inventory.MaxAmount 1 }
-
 Actor WW_PB_CF_FreezeMineSelected : Inventory { Inventory.MaxAmount 1 }
 Actor PB_CF_FreezeMineSelected : Inventory { Inventory.MaxAmount 1 }
 
@@ -78,17 +75,6 @@ ACTOR PB_CF_TeslaTurretAmmo : Ammo
 	Ammo.BackpackAmount 1
 	Ammo.BackpackMaxAmount 4
 	Inventory.Icon "ELPDA0"
-	Inventory.PickupMessage ""
-	+INVENTORY.IGNORESKILL
-}
-
-ACTOR PB_CF_FlameTurretAmmo : Ammo
-{
-	Inventory.Amount 1
-	Inventory.MaxAmount 4
-	Ammo.BackpackAmount 1
-	Ammo.BackpackMaxAmount 4
-	Inventory.Icon "F1REA0"
 	Inventory.PickupMessage ""
 	+INVENTORY.IGNORESKILL
 }
@@ -186,23 +172,6 @@ ACTOR PB_CF_TeslaTurretPickup : PB_CF_TeslaTurretAmmo
 		Stop
 	Pickup:
 		TNT1 A 0 A_GiveInventory("PB_CF_TeslaTurretAmmo", 1)
-		Stop
-	}
-}
-
-ACTOR PB_CF_FlameTurretPickup : PB_CF_FlameTurretAmmo
-{
-	//$Category Ammunition
-	Inventory.PickupMessage "$PB_PICKUP_PB_CF_FLAMETURRET"
-	Inventory.PickUpSound "props/redfire"
-	Scale 0.5
-	States
-	{
-	Spawn:
-		F1RE A -1 Bright
-		Stop
-	Pickup:
-		TNT1 A 0 A_GiveInventory("PB_CF_FlameTurretAmmo", 1)
 		Stop
 	}
 }

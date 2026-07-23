@@ -30,7 +30,7 @@ class PBWP_SiriusCrisis : PBWP_CA_WeaponBase
 		A_SetBlend("Cyan", 0.5, 20, "Blue");
 		A_GunFlash();
 		A_StartSound("SiriusBFG/Fire", CHAN_WEAPON, CHANF_DEFAULT, 1.0, 0.5);
-		A_FireCustomMissile("PBWP_CA_SiriusBFGBall", 0, 0);
+		A_FireCustomMissile("PBWP_CA_SiriusBFGBall", 0, 0, -10, 0);
 		A_TakeInventory("PB_Cell", 45);
 		A_QuakeEx(4, 4, 4, 40, 0, 600, "none", QF_RELATIVE | QF_SCALEDOWN);
 		A_QuakeEx(2, 2, 2, 50, 0, 600, "none", QF_RELATIVE | QF_SCALEDOWN);
@@ -44,7 +44,7 @@ class PBWP_SiriusCrisis : PBWP_CA_WeaponBase
 		A_SetBlend("Cyan", 0.5, 10 + int(invoker.chargeMeter / 5), "Blue");
 		A_GunFlash();
 		if (invoker.chargeMeter > 0)
-			A_FireCustomMissile("PBWP_CA_SiriusLaser", 0, 0);
+			A_FireCustomMissile("PBWP_CA_SiriusLaser", 0, 0, -10, 0);
 		A_TakeInventory("PB_Cell", 5);
 		A_StartSound("Eradicator/Laser", CHAN_WEAPON, CHANF_DEFAULT, 1.0, 0.5,
 			1.253 - (invoker.chargeMeter / 23));
@@ -89,7 +89,7 @@ class PBWP_SiriusCrisis : PBWP_CA_WeaponBase
 
 	Ready3:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 { PBWP_CA_ReadyPose(); }
+		TNT1 A 0 { PBWP_CA_ReadyTick(); }
 		SRB0 ABCB 1 Bright A_DoPBWeaponAction();
 		Loop;
 

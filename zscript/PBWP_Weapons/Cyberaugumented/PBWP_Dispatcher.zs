@@ -19,6 +19,7 @@ class PBWP_Dispatcher : PBWP_CA_WeaponBase
 
 	action void PBWP_DispatcherFire()
 	{
+		A_StartSound("Dispatcher/Fire", CHAN_WEAPON, CHANF_OVERLAP, 0.85);
 		A_GunFlash();
 		A_WeaponOffset(frandom(-2.5, 2.5), frandom(31, 36), WOF_INTERPOLATE);
 		A_FireCustomMissile("PBWP_CA_RehauledPlasma", 0, 0);
@@ -64,7 +65,7 @@ class PBWP_Dispatcher : PBWP_CA_WeaponBase
 
 	Ready3:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 { PBWP_CA_ReadyPose(); }
+		TNT1 A 0 { PBWP_CA_ReadyTick(); }
 		PLG_ A 1 A_DoPBWeaponAction();
 		Loop;
 

@@ -983,3 +983,342 @@ Sprite "RFL_H0", 320, 168
 	}
 }
 
+
+// Dispatcher (PLG_*) + Nightfall (CHG_*) composites — from PBWP TEXTURES.PBWP
+Sprite "PLG_W0", 320, 168
+{
+	XScale 0.950
+	YScale 0.950
+	Offset 71, -60
+	Patch "PLS_H0", 95, 62
+}
+
+Sprite "PLG_X0", 320, 168
+{
+	Offset 41, -40
+	Patch "PLS_H0", 95, 62
+}
+
+Sprite "PLG_Y0", 320, 168
+{
+	Offset 15, -21
+	Patch "PLS_A0", 109, 82
+}
+
+Sprite "PLG_A0", 320, 168
+{
+	Offset 0, -17
+	Patch "PLS_A0", 109, 82
+}
+
+Sprite "PLG_B0", 320, 168
+{
+	XScale 0.950
+	YScale 0.950
+	Offset 8, -12
+	Patch "PLS_A0", 109, 82
+}
+
+Sprite "PLG_C0", 320, 168
+{
+	XScale 0.900
+	YScale 0.900
+	Offset 16, -9
+	Patch "PLS_A0", 109, 82
+}
+
+Sprite "PLG_D0", 320, 168
+{
+	XScale 0.875
+	YScale 0.875
+	Offset 20, -8
+	Patch "PLS_G0", 109, 82
+}
+
+Sprite "PLG_E0", 320, 168
+{
+	XScale 0.850
+	YScale 0.850
+	Offset 24, -7
+	Patch "PLS_B0", 109, 63
+}
+
+Sprite "PLG_F0", 320, 168
+{
+	XScale 0.900
+	YScale 0.900
+	Offset 16, -13
+	Patch "PLS_C0", 109, 63
+}
+
+Sprite "PLG_G0", 320, 168
+{
+	XScale 0.925
+	YScale 0.925
+	Offset 12, -17
+	Patch "PLS_D0", 109, 63
+}
+
+Sprite "PLG_H0", 320, 168
+{
+	XScale 0.950
+	YScale 0.950
+	Offset 8, -17
+	Patch "PLS_F0", 109, 82
+}
+
+Sprite "PLG_I0", 320, 168
+{
+	XScale 0.975
+	YScale 0.975
+	Offset 4, -15
+	Patch "PLS_G0", 109, 82
+}
+
+Sprite "PLG_J0", 320, 168
+{
+	XScale 0.875
+	YScale 0.875
+	Offset 20, -8
+	Patch "PRS_F0", 109, 82
+}
+
+Sprite "PLG_K0", 320, 168
+{
+	XScale 0.850
+	YScale 0.850
+	Offset 24, -7
+	Patch "PRS_B0", 109, 63
+}
+
+Sprite "PLG_L0", 320, 168
+{
+	XScale 0.900
+	YScale 0.900
+	Offset 16, -13
+	Patch "PRS_C0", 109, 63
+}
+
+Sprite "PLG_M0", 320, 168
+{
+	XScale 0.925
+	YScale 0.925
+	Offset 12, -17
+	Patch "PRS_D0", 109, 63
+}
+
+Sprite "PLG_N0", 320, 168
+{
+	XScale 0.950
+	YScale 0.950
+	Offset 8, -17
+	Patch "PRS_E0", 109, 82
+}
+
+Sprite "PLG_O0", 320, 168
+{
+	XScale 0.975
+	YScale 0.975
+	Offset 4, -15
+	Patch "PRS_G0", 109, 82
+}
+
+Sprite "PLG_P0", 320, 168
+{
+	XScale 0.875
+	YScale 0.875
+	Offset 20, -8
+	Patch "PR5_F0", 109, 82
+}
+
+Sprite "PLG_Q0", 320, 168
+{
+	XScale 0.850
+	YScale 0.850
+	Offset 24, -7
+	Patch "PR5_B0", 109, 63
+}
+
+Sprite "PLG_R0", 320, 168
+{
+	XScale 0.900
+	YScale 0.900
+	Offset 16, -13
+	Patch "PR5_C0", 109, 63
+}
+
+Sprite "PLG_S0", 320, 168
+{
+	XScale 0.925
+	YScale 0.925
+	Offset 12, -17
+	Patch "PR5_D0", 109, 63
+}
+
+Sprite "PLG_T0", 320, 168
+{
+	XScale 0.950
+	YScale 0.950
+	Offset 8, -17
+	Patch "PR5_E0", 109, 82
+}
+
+Sprite "PLG_U0", 320, 168
+{
+	XScale 0.975
+	YScale 0.975
+	Offset 4, -17
+	Patch "PR5_G0", 109, 82
+}
+
+Sprite "PLG_V0", 320, 168
+{
+	XScale 0.975
+	YScale 0.975
+	Offset 4, -20
+	Patch "PLS_G0", 109, 82
+}
+
+Sprite "CHG_W0", 320, 168
+{
+	XScale 0.850
+	YScale 0.850
+	Offset -15, -46
+	Patch "CHA_A0", 13, 79
+}
+
+Sprite "CHG_X0", 320, 168
+{
+	XScale 0.950
+	YScale 0.950
+	Offset -12, -34
+	Patch "CHA_A0", 13, 79
+}
+
+Sprite "CHG_Y0", 320, 168
+{
+	Offset -9, -31
+	Patch "CHA_A0", 13, 79
+}
+
+Sprite "CHG_A0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_A0", 13, 79
+}
+
+Sprite "CHG_B0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_B0", 13, 79
+}
+
+Sprite "CHG_C0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_C0", 13, 79
+}
+
+Sprite "CHG_D0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_D0", 13, 79
+}
+
+Sprite "CHG_E0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_A0", 13, 79
+	Patch "C1GFA0", 105, 55
+	{
+		Style Translucent
+	}
+}
+
+Sprite "CHG_F0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_B0", 13, 79
+	{
+		Style Overlay
+	}
+	Patch "C1GFB0", 105, 55
+	{
+		Style Translucent
+	}
+}
+
+Sprite "CHG_G0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_C0", 13, 79
+	{
+		Style Overlay
+	}
+	Patch "C1GFC0", 105, 55
+	{
+		Style Translucent
+	}
+}
+
+Sprite "CHG_H0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_D0", 13, 79
+	{
+		Style Overlay
+	}
+	Patch "C1GFD0", 105, 55
+	{
+		Style Translucent
+	}
+}
+
+Sprite "CHG_I0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_A0", 13, 79
+	Patch "CHLFA0", 105, 55
+	{
+		Style Translucent
+	}
+}
+
+Sprite "CHG_K0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_B0", 13, 79
+	{
+		Style Overlay
+	}
+	Patch "CHLFB0", 105, 55
+	{
+		Style Translucent
+	}
+}
+
+Sprite "CHG_J0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_C0", 13, 79
+	{
+		Style Overlay
+	}
+	Patch "CHLFC0", 105, 55
+	{
+		Style Translucent
+	}
+}
+
+Sprite "CHG_L0", 320, 168
+{
+	Offset 0, -25
+	Patch "CHA_D0", 13, 79
+	{
+		Style Overlay
+	}
+	Patch "CHLFD0", 105, 55
+	{
+		Style Translucent
+	}
+}

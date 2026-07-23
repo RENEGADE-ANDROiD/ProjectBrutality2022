@@ -15,5 +15,4 @@ Freezebot Deployable$Drop a hovering freeze drone that harasses targets with sus
 Ice Wall Generator$Throws down a surge of flash-frozen barrier blocks to segment arenas or cut off pursuers. Works best in tighter layouts.$PB_CF_IceWallGenAmmo$Charge type: deployable ammo#
 Holographic Decoy$Projects a flickering marine silhouette that draws heat while you flank. Fragile, but priceless when scouts try to pin you down.$PB_CF_HoloDecoyAmmo$Charge type: deployable ammo#
 Tesla Turret$Automated arc-lightning sentry you can carpet an encounter with. Drops aggro off your shoulders for a few precious seconds.$PB_CF_TeslaTurretAmmo$Charge type: deployable ammo#
-Flame Turret$A compact autonomous flamer nest for area denial. Layer it with cryo gear for cruel crowd control experiments.$PB_CF_FlameTurretAmmo$Charge type: deployable ammo#
 Freeze Mines$Cryo mines that prime like proximity charges but leave enemies brittle instead of outright vaporized. Pair with chip damage weapons.$PB_CF_FreezeMineAmmo$Charge type: deployable ammo#

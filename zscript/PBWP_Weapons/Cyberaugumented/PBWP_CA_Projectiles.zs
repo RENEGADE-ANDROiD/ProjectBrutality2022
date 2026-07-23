@@ -1348,7 +1348,8 @@ class PBWP_CA_NapalmGrenade : PBWP_CA_Grenade
 	}
 }
 
-// Legionnaire — upstream DCY_OverhauledRocket fold
+// Legionnaire — disabled pending rework (see PBWP_Legionnaire.zs)
+/*
 class PBWP_CA_LegionnaireRocket : Rocket
 {
 	Default
@@ -1394,6 +1395,7 @@ class PBWP_CA_LegionnaireRocket : Rocket
 		Stop;
 	}
 }
+*/
 
 // Sirius Crisis — charge-track + laser bolt + BFG sphere (simplified upstream fold)
 class PBWP_CA_SiriusTrack : Actor

@@ -34,7 +34,6 @@
 			TNT1 A 0 A_JumpIfInventory("PB_CF_IceWallSelected", 1, "DeployPB_CFIceWall");
 			TNT1 A 0 A_JumpIfInventory("PB_CF_HoloDecoySelected", 1, "DeployPB_CFHoloDecoy");
 			TNT1 A 0 A_JumpIfInventory("PB_CF_TeslaTurretSelected", 1, "DeployPB_CFTeslaTurret");
-			TNT1 A 0 A_JumpIfInventory("PB_CF_FlameTurretSelected", 1, "DeployPB_CFFlameTurret");
 			TNT1 A 0 A_JumpIfInventory("PB_CF_FreezeMineSelected", 1, "DeployPB_CFFreezeMine");
 			//More stuff to come.....
 			
@@ -70,7 +69,6 @@
 				A_SetInventory("WW_PB_CF_IceWallSelected",0);
 				A_SetInventory("WW_PB_CF_HoloDecoySelected",0);
 				A_SetInventory("WW_PB_CF_TeslaTurretSelected",0);
-				A_SetInventory("WW_PB_CF_FlameTurretSelected",0);
 				A_SetInventory("WW_PB_CF_FreezeMineSelected",0);
 				A_SetInventory("GK_FlamebelchSelected",0);
 				A_SetInventory("GK_IcebombSelected",0);
@@ -111,8 +109,6 @@
 				{A_Print("\coAlready using: \ctHolo Decoy"); return ResolveState("WheelCancelEquipment");}
 			if(CountInv("WW_PB_CF_TeslaTurretSelected") && CountInv("PB_CF_TeslaTurretSelected") >=1)
 				{A_Print("\coAlready using: \ctTesla Turret"); return ResolveState("WheelCancelEquipment");}
-			if(CountInv("WW_PB_CF_FlameTurretSelected") && CountInv("PB_CF_FlameTurretSelected") >=1)
-				{A_Print("\coAlready using: \ctFlame Turret"); return ResolveState("WheelCancelEquipment");}
 			if(CountInv("WW_PB_CF_FreezeMineSelected") && CountInv("PB_CF_FreezeMineSelected") >=1)
 				{A_Print("\coAlready using: \ctFreeze Mine"); return ResolveState("WheelCancelEquipment");}
 			if(CountInv("WW_ProximityMineSelected") >=1)
@@ -190,11 +186,6 @@
 				if(CountInv("PB_CF_TeslaTurretAmmo") <=0)
 					{A_Print("\cgNo \ctTesla Turret \c-kits left"); return ResolveState("WheelCancelEquipment");}
 				}
-			if(CountInv("WW_PB_CF_FlameTurretSelected") >=1)
-				{
-				if(CountInv("PB_CF_FlameTurretAmmo") <=0)
-					{A_Print("\cgNo \ctFlame Turret \c-kits left"); return ResolveState("WheelCancelEquipment");}
-				}
 			if(CountInv("WW_PB_CF_FreezeMineSelected") >=1)
 				{
 				if(CountInv("PB_CF_FreezeMineAmmo") <=0)
@@ -213,7 +204,6 @@
 					A_SetInventory("PB_CF_IceWallSelected",0);
 					A_SetInventory("PB_CF_HoloDecoySelected",0);
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
-					A_SetInventory("PB_CF_FlameTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
 					A_PlaySound("FLMDRAW", CHAN_UI);
 					return ResolveState("WheelCancelEquipment");
@@ -231,7 +221,6 @@
 					A_SetInventory("PB_CF_IceWallSelected",0);
 					A_SetInventory("PB_CF_HoloDecoySelected",0);
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
-					A_SetInventory("PB_CF_FlameTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
 					A_PlaySound("weapons/freezer/reload1", CHAN_UI);
 					return ResolveState("WheelCancelEquipment");
@@ -257,7 +246,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return ResolveState("WheelCancelEquipment");
@@ -280,7 +268,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return ResolveState("WheelCancelEquipment");
@@ -303,7 +290,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return ResolveState("WheelCancelEquipment");
@@ -326,7 +312,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return ResolveState("WheelCancelEquipment");
@@ -349,7 +334,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return ResolveState("WheelCancelEquipment");
@@ -372,7 +356,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("REVUP", 3);
 						return ResolveState("WheelCancelEquipment");
@@ -395,7 +378,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return ResolveState("WheelCancelEquipment");
@@ -417,7 +399,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("MolotovSelected",1);
 						A_SetInventory("GK_FlamebelchSelected",0);
@@ -448,7 +429,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("HookSelected",1);
 						A_PlaySound("GRNPIN", 3);
@@ -475,7 +455,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("FreezenadeSelected",1);
 						A_PlaySound("GRNPIN", 3);
@@ -502,7 +481,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("PB_CF_SnowCasterSelected",1);
 						A_PlaySound("coldcst", CHAN_UI);
@@ -529,7 +507,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("PB_CF_FreezeBotSelected",1);
 						A_PlaySound("Plasma/BeepLow", CHAN_UI);
@@ -556,7 +533,6 @@
 						A_SetInventory("PB_CF_FreezeBotSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("PB_CF_IceWallSelected",1);
 						A_PlaySound("weapons/freezer/reload1", CHAN_UI);
@@ -583,7 +559,6 @@
 						A_SetInventory("PB_CF_FreezeBotSelected",0);
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",1);
 						A_PlaySound("misc/p_pkup", CHAN_UI);
@@ -610,37 +585,9 @@
 						A_SetInventory("PB_CF_FreezeBotSelected",0);
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",1);
 						A_PlaySound("PLSCHARG", CHAN_UI);
-						return ResolveState("WheelCancelEquipment");
-					}
-				if(CountInv("WW_PB_CF_FlameTurretSelected") >=1)
-					{ 
-						A_Print("\cdEquipment: \ctFlame Turret"); 
-						A_SetInventory("ProximityMineSelected",0);
-						A_SetInventory("StunGrenadeSelected",0);
-						A_SetInventory("ShieldGrenadeSelected",0);
-						A_SetInventory("VoidGrenadeSelected",0);
-						A_SetInventory("LeechSelected",0);
-						A_SetInventory("RevGunSelected",0);
-						A_SetInventory("FragGrenadeSelected",0);
-						A_SetInventory("MolotovSelected",0);
-						A_SetInventory("HookSelected",0);
-						A_SetInventory("GK_FlamebelchSelected",0);
-						A_SetInventory("GK_IcebombSelected",0);
-						A_SetInventory("FlameBelchSelected",0);
-						A_SetInventory("IceBombSelected",0);
-						A_SetInventory("FreezenadeSelected",0);
-						A_SetInventory("PB_CF_SnowCasterSelected",0);
-						A_SetInventory("PB_CF_FreezeBotSelected",0);
-						A_SetInventory("PB_CF_IceWallSelected",0);
-						A_SetInventory("PB_CF_HoloDecoySelected",0);
-						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FreezeMineSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",1);
-						A_PlaySound("props/redfire", CHAN_UI);
 						return ResolveState("WheelCancelEquipment");
 					}
 				if(CountInv("WW_PB_CF_FreezeMineSelected") >=1)
@@ -665,7 +612,6 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
-						A_SetInventory("PB_CF_FlameTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",1);
 						A_PlaySound("misc/p_pkup", CHAN_UI);
 						return ResolveState("WheelCancelEquipment");
@@ -683,7 +629,6 @@
 					A_SetInventory("PB_CF_IceWallSelected",0);
 					A_SetInventory("PB_CF_HoloDecoySelected",0);
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
-					A_SetInventory("PB_CF_FlameTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
 					A_PlaySound("FLMDRAW", CHAN_UI);
 					return ResolveState("WheelCancelEquipment");
@@ -701,7 +646,6 @@
 					A_SetInventory("PB_CF_IceWallSelected",0);
 					A_SetInventory("PB_CF_HoloDecoySelected",0);
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
-					A_SetInventory("PB_CF_FlameTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
 					A_PlaySound("weapons/freezer/reload1", CHAN_UI);
 					return ResolveState("WheelCancelEquipment");
@@ -904,20 +848,6 @@
 		TNT1 A 0 A_PlaySound("PLSCHARG", CHAN_WEAPON);
 		TNT1 A 0 A_TakeInventory("PB_CF_TeslaTurretAmmo", 1);
 		TNT1 A 0 A_SpawnItemEx("PBCF_CF_TeslaTurret", 52, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
-		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
-		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
-		Goto GoingToReady2;
-		
-	DeployPB_CFFlameTurret:
-		TNT1 A 0 A_ZoomFactor(1.0);
-		TNT1 A 0 A_TakeInventory("ADSMode", 1);
-		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
-		TNT1 A 0 A_JumpIfInventory("PB_CF_FlameTurretAmmo", 1, 2);
-		TNT1 A 0 A_Print("\cgNo \ctFlame Turret \c-kits left");
-		Goto GoingToReady;
-		TNT1 A 0 A_PlaySound("props/redfire", CHAN_WEAPON);
-		TNT1 A 0 A_TakeInventory("PB_CF_FlameTurretAmmo", 1);
-		TNT1 A 0 A_SpawnItemEx("PBCF_CF_FlameTurret", 52, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
 		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
 		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
 		Goto GoingToReady2;

@@ -69,6 +69,7 @@ class PB_RLACSHandler : EventHandler
 
 	override void WorldTick()
 	{
+		bool anyLock = false;
 		for (int i = 0; i < 3; i++)
 		{
 			int tid = 30001 + i;
@@ -81,6 +82,7 @@ class PB_RLACSHandler : EventHandler
 			{
 				homingPos[i] = ind.pos;
 				homingActive[i] = true;
+				anyLock = true;
 			}
 			else
 				homingActive[i] = false;
@@ -95,13 +97,23 @@ class PB_RLACSHandler : EventHandler
 			laserValid = true;
 		}
 
-		ApplyHomingForClass('PB_GuidedRocket', 0, PB_RLACS_ROCKET_SPEED);
-		ApplyHomingForClass('PB_WeavingGuidedRocket_1', 0, PB_RLACS_ROCKET_SPEED);
-		ApplyHomingForClass('PB_WeavingGuidedRocket_2', 0, PB_RLACS_ROCKET_SPEED);
-		ApplyHomingForClass('PB_WeavingGuidedRocket_3', 0, PB_RLACS_ROCKET_SPEED);
-		ApplyHomingForClass('PB_HomingRocket_1', 1, PB_RLACS_LOCKON_SPEED);
-		ApplyHomingForClass('PB_HomingRocket_2', 2, PB_RLACS_LOCKON_SPEED);
-		ApplyHomingForClass('PB_HomingRocket_3', 3, PB_RLACS_LOCKON_SPEED);
+		// No aim source → no guided rockets need velocity updates this tic.
+		if (!laserValid && !anyLock)
+			return;
+
+		if (laserValid)
+		{
+			ApplyHomingForClass('PB_GuidedRocket', 0, PB_RLACS_ROCKET_SPEED);
+			ApplyHomingForClass('PB_WeavingGuidedRocket_1', 0, PB_RLACS_ROCKET_SPEED);
+			ApplyHomingForClass('PB_WeavingGuidedRocket_2', 0, PB_RLACS_ROCKET_SPEED);
+			ApplyHomingForClass('PB_WeavingGuidedRocket_3', 0, PB_RLACS_ROCKET_SPEED);
+		}
+
+		if (homingActive[0])
+			ApplyHomingForClass('PB_HomingRocket_1', 1, PB_RLACS_LOCKON_SPEED);
+		if (homingActive[1])
+			ApplyHomingForClass('PB_HomingRocket_2', 2, PB_RLACS_LOCKON_SPEED);
+		if (homingActive[2])
+			ApplyHomingForClass('PB_HomingRocket_3', 3, PB_RLACS_LOCKON_SPEED);
 	}
 }
-

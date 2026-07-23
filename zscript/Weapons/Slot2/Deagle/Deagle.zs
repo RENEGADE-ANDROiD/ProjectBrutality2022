@@ -2,8 +2,7 @@
 // PB_Deagle  â€”  Desert Eagle .50, full ZScript port from PB Staging.
 //
 // Source : PB Staging zscript/Weapons/Slot2/Deagle.zs (PBv0.3.X_Final).
-// Replaces: actors/Weapons/Slot2/Deagle.dec (DECORATE version retired alongside
-//           this drop; see PORTING_ADDONS.md Â§9.10.6).
+// Replaces: actors/Weapons/Slot2/Deagle.dec (DECORATE version retired with this ZScript port).
 //
 // Adjustments vs upstream staging:
 //   * Pool ammo is PB 2022's PistolBullets (staging used PB_LowCalMag).

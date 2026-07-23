@@ -94,10 +94,9 @@ ACTOR Tactical_Nail_Gun : PB_Weapon
 	tag "SGP-331 Tactical Stroggos Nailgun - Arctic Annihilation"
 	Inventory.Pickupmessage "Mess with the Nailgun. To Us (Slot 5)"
 	+WEAPON.WIMPY_WEAPON
-    +WEAPON.NOAUTOAIM
+	+WEAPON.NOAUTOAIM
     +WEAPON.NOALERT
     +WEAPON.NOAUTOFIRE
-	+FORCEXYBILLBOARD
 	+WEAPON.NO_AUTO_SWITCH
 	Weapon.SlotNumber 5
 	Weapon.SlotPriority 0.2

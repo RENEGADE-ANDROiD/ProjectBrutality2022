@@ -34,7 +34,7 @@ ACTOR PB_Backpack : CustomInventory
 			TNT1 A 0 A_Jump(51, "PBCF_BackpackBonus")
 			Stop
 		PBCF_BackpackBonus:
-			TNT1 A 0 A_Jump(256, "PBCF_BB1", "PBCF_BB2", "PBCF_BB3", "PBCF_BB4", "PBCF_BB5", "PBCF_BB6", "PBCF_BB7", "PBCF_BB8")
+			TNT1 A 0 A_Jump(256, "PBCF_BB1", "PBCF_BB2", "PBCF_BB3", "PBCF_BB4", "PBCF_BB5", "PBCF_BB6", "PBCF_BB7")
 		PBCF_BB1:
 			TNT1 A 0 A_GiveInventory("FreezenadeAmmo", 1)
 			Stop
@@ -54,9 +54,6 @@ ACTOR PB_Backpack : CustomInventory
 			TNT1 A 0 A_GiveInventory("PB_CF_TeslaTurretAmmo", 1)
 			Stop
 		PBCF_BB7:
-			TNT1 A 0 A_GiveInventory("PB_CF_FlameTurretAmmo", 1)
-			Stop
-		PBCF_BB8:
 			TNT1 A 0 A_GiveInventory("PB_CF_FreezeMineAmmo", 1)
 			Stop
 	}

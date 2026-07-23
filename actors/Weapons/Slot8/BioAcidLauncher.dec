@@ -119,7 +119,7 @@ ACTOR BioAcidLauncher : PB_Weapon // Caustic ammo used.
 			A_SetCrosshair(39);
 			if (CountInv("NoFatality") == 0 && GetCVAR("pb_auto_fatality_fire") == 1)
 			{
-				return PB_Execute();
+				return PB_TryAutoFatalityOnFire();
 			}
 			return state("");
 		}

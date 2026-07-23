@@ -633,6 +633,9 @@ class PB_EventHandler : EventHandler
 	transient ui int pdaBlockyWeapPage;
 	transient ui int pdaBlockyMonsterPage;
 	transient ui int pdaBlockyEquipPage;
+	transient ui int pdaBlockyLayoutW;
+	transient ui int pdaBlockyLayoutH;
+	transient ui bool pdaBlockyLayoutDirty;
 	transient ui Array<String> blockyWeaponIconKeys;
 	transient ui Array<TextureID> blockyWeaponIconVals;
 	transient ui Array<String> blockyMonsterIconKeys;
@@ -710,6 +713,23 @@ class PB_EventHandler : EventHandler
 	transient ui int pdaDescAutosizeCacheSh;
 	ui double dashAlpha;
 	ui double dashScale;
+	transient ui TextureID gkTexCrucry00;
+	transient ui TextureID gkTexCrucry01;
+	transient ui TextureID gkTexCrucam01;
+	transient ui TextureID gkTexCrucam02;
+	transient ui TextureID gkTexCrucam03;
+	transient ui TextureID gkTexBpammo10;
+	transient ui TextureID gkTexBpammo11;
+	transient ui TextureID gkTexBpammo12;
+	transient ui TextureID gkTexBpammo13;
+	transient ui TextureID gkTexBpammo14;
+	transient ui TextureID gkTexScflm00;
+	transient ui TextureID gkTexScflm01;
+	transient ui TextureID gkTexScicb00;
+	transient ui TextureID gkTexScicb01;
+	transient ui TextureID gkTexGksha00;
+	transient ui TextureID gkTexGksha01;
+	transient ui bool gkFuelTexCached;
 
 	clearscope static bool PB2022WeaponHudSkipWeapon(Name weaponClass)
 	{
@@ -1033,6 +1053,14 @@ class PB_EventHandler : EventHandler
 					modeIcon = PB2022_ModeHudLump("AMMOIC7");
 				break;
 
+			case 'FrostburnDevice':
+				localScale = 0.85;
+				if (mo.CountInv("FrostburnModeIncendiary") >= 1)
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/Minigun_2.png", "AMMOIC6");
+				else
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/grenade_cryo.png", "AMMOIC5");
+				break;
+
 			case 'PB_CyberdemonRL':
 				localScale = 0.85;
 				localOffY = -40.0;
@@ -1110,19 +1138,6 @@ class PB_EventHandler : EventHandler
 					modeIcon = PB2022_ModeHudLump("CELLA0");
 				else
 					modeIcon = PB2022_ModeHudLump("FZSGA0");
-				break;
-
-			case 'ThunderCrossbow':
-				localScale = 0.9;
-				localOffY = -40.0;
-				if (mo.CountInv("PB_ThunderCrossbow_Bolt") >= 1)
-					modeIcon = PB2022_ModeHudLump("W03FA0");
-				else if (mo.CountInv("PB_ThunderCrossbow_Shockwave") >= 1)
-					modeIcon = PB2022_ModeHudLump("W04FA0");
-				else if (mo.CountInv("PB_ThunderCrossbow_Cluster") >= 1)
-					modeIcon = PB2022_ModeHudLump("WBOWA0");
-				else
-					modeIcon = PB2022_ModeHudLump("W02FA0");
 				break;
 
 			case 'PB_SMG':
@@ -1208,10 +1223,10 @@ class PB_EventHandler : EventHandler
 
 			case 'PB_Excavator':
 				localScale = 0.85;
-				if (mo.CountInv("EX_Select_DrillMode") >= 1)
+				if (mo.CountInv("EX_Select_SawMode") >= 1)
 					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Excavator/DrillAlt.png");
 				else
-					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Excavator/DropAlt.png");
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/grenade_sticky.png");
 				break;
 
 			case 'PB_RocketLauncher':
@@ -1245,6 +1260,8 @@ class PB_EventHandler : EventHandler
 				localScale = 0.85;
 				if (mo.CountInv("BallistaDemonicMode") >= 1)
 					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/Minigun_2.png", "CRBAB0");
+				else if (mo.CountInv("BallistaExplosiveMode") >= 1)
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/grenade_impact.png", "CBOWS0");
 				else
 					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/Carbine_Semi.png", "CBOWS0");
 				break;
@@ -4196,7 +4213,6 @@ class PB_EventHandler : EventHandler
 		if (s ~== "PB_CF_IceWallGenAmmo")      { primary = 'PBCF_CF_IceWallSegment'; burst = ''; return; }
 		if (s ~== "PB_CF_HoloDecoyAmmo")       { primary = 'PBCF_CF_HoloDecoy';      burst = ''; return; }
 		if (s ~== "PB_CF_TeslaTurretAmmo")     { primary = 'PBCF_CF_TeslaTurret';    burst = 'MineElectricity'; return; }
-		if (s ~== "PB_CF_FlameTurretAmmo")     { primary = 'PBCF_CF_FlameTurret';    burst = 'FlyingBurningFuelSmall'; return; }
 		if (s ~== "PB_CF_FreezeMineAmmo")      { primary = 'PBCF_CF_FreezeMine';     burst = 'PBCF_CryoWind'; return; }
 		if (s ~== "PB_CF_SnowCasterAmmo")      { primary = '';                     burst = 'PBCF_SnowParticle'; return; }
 	}
@@ -4595,7 +4611,6 @@ class PB_EventHandler : EventHandler
 		if (s ~== "PB_CF_IceWallGenAmmo")    { out1 = 'PBCF_CF_IceWallSegment'; out2 = ''; return; }
 		if (s ~== "PB_CF_HoloDecoyAmmo")      { out1 = 'PBCF_CF_HoloDecoy';   out2 = ''; return; }
 		if (s ~== "PB_CF_TeslaTurretAmmo")    { out1 = 'PBCF_CF_TeslaTurret'; out2 = 'MineElectricity'; return; }
-		if (s ~== "PB_CF_FlameTurretAmmo")    { out1 = 'PBCF_CF_FlameTurret'; out2 = ''; return; }
 		if (s ~== "PB_CF_FreezeMineAmmo")     { out1 = 'PBCF_CF_FreezeMine';  out2 = ''; return; }
 		if (s ~== "PB_CF_SnowCasterAmmo")     { out1 = 'PBCF_CF_SnowCasterEmitter'; out2 = ''; return; }
 		if (s ~== "FlameBelchSelected")       { out1 = 'GloryFireMissile';    out2 = ''; return; }
@@ -4844,31 +4859,39 @@ class PB_EventHandler : EventHandler
 			PDA_Play_BuildFromKey(pdaPrevPendingKey);
 			PDA_Play_ResetAnim();
 		}
-		PDA_Play_AdvancePreviewAnim();
-		if (KatanaDualChoiceMode)
-			PB_KatanaDualAdvancePreviewAnims();
-		if (pdaMainAnimDirty && PDAMode && !NonMainMenu)
+		if (PDAMode || KatanaDualChoiceMode)
 		{
-			pdaMainAnimDirty = false;
-			PDA_Main_RebuildChains();
+			PDA_Play_AdvancePreviewAnim();
+			if (KatanaDualChoiceMode)
+				PB_KatanaDualAdvancePreviewAnims();
+			if (pdaMainAnimDirty && PDAMode && !NonMainMenu)
+			{
+				pdaMainAnimDirty = false;
+				PDA_Main_RebuildChains();
+			}
+			PDA_Main_AdvanceAnims();
 		}
-		PDA_Main_AdvanceAnims();
-		ThinkerIterator ti = ThinkerIterator.Create("PlayerPawn");
-		PlayerPawn a;
 		bool eqSweep = level.maptime >= PB_PDA_UI_INIT_MIN_GAMETIC && (level.time % 14) == 0;
-		while (a = PlayerPawn(ti.Next()))
+		for (int pi = 0; pi < MAXPLAYERS; pi++)
 		{
-			if (a.player && a.player.morphTics <= 5)
+			if (!playeringame[pi])
+				continue;
+			PlayerPawn a = players[pi].mo;
+			if (!a || !a.player)
+				continue;
+			if (a.player.morphTics <= 5)
 			{
 				let amo = a.player.mo;
-				if (!amo) { continue; }
-				switch(amo.GetClassName())
+				if (amo)
 				{
-					case 'RevenantPlayer': amo.ACS_NamedExecuteAlways("RevenantMorphModeDisable");break;
-					case 'BaronPlayer': amo.ACS_NamedExecuteAlways("BaronMorphModeDisable");break;
+					switch(amo.GetClassName())
+					{
+						case 'RevenantPlayer': amo.ACS_NamedExecuteAlways("RevenantMorphModeDisable");break;
+						case 'BaronPlayer': amo.ACS_NamedExecuteAlways("BaronMorphModeDisable");break;
+					}
 				}
 			}
-			if (eqSweep && a.player)
+			if (eqSweep)
 			{
 				let pda = PB_PDAWeaponContainer(a.FindInventory("PB_PDAWeaponContainer", true));
 				if (pda)
@@ -5550,8 +5573,15 @@ class PB_EventHandler : EventHandler
 		TextureID tex = PB_ResolveCtrollCursor();
 		if (!tex.IsValid())
 			return;
+		double cursorScale = clamp(Screen.GetHeight() / 540.0, 1.5, 3.5);
+		double cursorH = 32.0 * cursorScale;
+		Vector2 cursorNative = TexMan.GetScaledSize(tex);
+		double cursorW = cursorH;
+		if (cursorNative.Y > 0.0)
+			cursorW = cursorH * (cursorNative.X / cursorNative.Y);
 		Screen.DrawTexture(tex, true, mx, my,
-			DTA_CleanNoMove, true,
+			DTA_DestWidthF, cursorW,
+			DTA_DestHeightF, cursorH,
 			DTA_LeftOffset, 0,
 			DTA_TopOffset, 0);
 	}
@@ -5883,6 +5913,9 @@ class PB_EventHandler : EventHandler
 
 	ui void ApplyBlockyLayout()
 	{
+		pdaBlockyLayoutW = Screen.GetWidth();
+		pdaBlockyLayoutH = Screen.GetHeight();
+		pdaBlockyLayoutDirty = false;
 		if (!BlockyEnabled())
 		{
 			pdaBlockyXOffset = 0;
@@ -6604,8 +6637,6 @@ class PB_EventHandler : EventHandler
 		case 14:
 			return TexMan.CheckForTexture("ELPDA0", TexMan.Type_Any);
 		case 15:
-			return TexMan.CheckForTexture("F1REA0", TexMan.Type_Any);
-		case 16:
 			return TexMan.CheckForTexture("FZBLA0", TexMan.Type_Any);
 		default:
 			break;
@@ -6720,7 +6751,12 @@ class PB_EventHandler : EventHandler
 			globalPDAAlpha = 1.0;
 			double pdaTextScale = clamp(Screen.GetHeight() / 240.0, 2.0, 6.0);
 			bool blockyOn = BlockyEnabled();
-			ApplyBlockyLayout();
+			if (pdaBlockyLayoutDirty
+				|| Screen.GetWidth() != pdaBlockyLayoutW
+				|| Screen.GetHeight() != pdaBlockyLayoutH)
+			{
+				ApplyBlockyLayout();
+			}
 			StampBlockyMainMenuTiles();
 			SyncBlockyPageArrowHitboxes(pdaTextScale);
 			int pdaDescClipRight = PB_PDA_BlockyDescClipRight();
