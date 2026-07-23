@@ -128,16 +128,7 @@ Class PB_CSSG : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 PB_CheckBarrelThrow1();
 			TNT1 A 0 {
-				let po = invoker.Owner;
-				if (po == null || !(po is "PlayerPawn"))
-					return resolveState(null);
-				let pp = PlayerPawn(po);
-				if (pp && pp.player && invoker.CountInv("NoFatality") == 0
-					&& CVar.GetCVar("pb_auto_fatality_fire", pp.player).GetBool())
-				{
-					return PB_Execute();
-				}
-				return resolveState(null);
+				return PB_TryAutoFatalityOnFire();
 			}
 			TNT1 A 0 PB_CheckAmmoFire();
 			TNT1 A 0 A_jumpif(countinv(invoker.ammotype2)<1,"Reload");
@@ -188,14 +179,7 @@ Class PB_CSSG : PB_WeaponBase
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 {
-				let po = invoker.Owner;
-				if (po == null || !(po is "PlayerPawn"))
-					return resolveState(null);
-				let pp = PlayerPawn(po);
-				if (pp && pp.player && invoker.CountInv("NoFatality") == 0
-					&& CVar.GetCVar("pb_auto_fatality_fire", pp.player).GetBool())
-					return PB_Execute();
-				return resolveState(null);
+				return PB_TryAutoFatalityOnFire();
 			}
 			TNT1 A 0 PB_CheckBarrelPlace1();
 			TNT1 A 0 PB_CheckAmmoFire();

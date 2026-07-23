@@ -10,7 +10,7 @@ class PB_MetalSniper : PB_WeaponBase
         Tag "$PB_MSNI_TAG";
         inventory.pickupsound "CLIPIN";
         inventory.pickupmessage "$PB_MSNI_PICKUP";
-        Inventory.AltHudIcon "MSNWA0";
+        Inventory.AltHudIcon "MSNUA0";
         weapon.ammotype1 "NewClip";
         weapon.ammogive1 10;
         weapon.ammouse1 0;
@@ -20,11 +20,10 @@ class PB_MetalSniper : PB_WeaponBase
         PB_WeaponBase.respectItem "MetalSniperRespect";
         Obituary "%o was sniped by %k's Metal Sniper";
         scale 0.62;
-        +FORCEXYBILLBOARD;
         +FLOORCLIP;
         +weapon.noalert;
         +weapon.noautofire;
-        Inventory.Icon "MSNWA0";
+        Inventory.Icon "MSNUA0";
     }
 
     const SniperMode  = 0;
@@ -37,11 +36,12 @@ class PB_MetalSniper : PB_WeaponBase
     bool isZooming;
     int  currentMaxAmmo;
     int  usedAmmo;
+    // Scope package (PB2022_MetalSniperScope.zs): laserActive, ScopeMode, zoomstrength, etc.
 
     states
     {
         Spawn:
-            MSNW A -1;
+            MSNU A -1;
             stop;
 
         Steady:
@@ -94,6 +94,7 @@ class PB_MetalSniper : PB_WeaponBase
             goto Ready3;
 
         Deselect:
+            TNT1 A 0 MS_ResetScopeVars();
             TNT1 A 0 A_ZoomFactor(1.0);
             TNT1 A 0 A_TakeInventory("Zoomed", 10);
             TNT1 A 0 setZoom(false);
@@ -174,23 +175,20 @@ class PB_MetalSniper : PB_WeaponBase
             TNT1 A 0 A_GiveInventory("Zoomed", 1);
             TNT1 A 0 setZoom(true);
             TNT1 A 0 A_StartSound("IronSights", 1);
-            MSNA A 1 A_ZoomFactor(1.5);
-            MSNA B 1 A_ZoomFactor(2.0);
-            MSNA C 1 A_ZoomFactor(2.5);
-            MSNA D 1 A_ZoomFactor(3.0);
-            MSNA E 1 A_ZoomFactor(3.5);
-            MSNA F 1 A_ZoomFactor(4.0);
+            MSNA A 1 { A_ZoomFactor(MS_GetZoomStrength() * 0.25); }
+            MSNA B 1 { A_ZoomFactor(MS_GetZoomStrength() * 0.50); }
+            MSNA C 1 { A_ZoomFactor(MS_GetZoomStrength() * 0.75); }
+            MSNA D 1 { A_ZoomFactor(MS_GetZoomStrength()); }
             goto Ready_ADS;
 
         ZoomOut:
+            TNT1 A 0 MS_ResetScopeVars();
             TNT1 A 0 A_TakeInventory("Zoomed", 1);
             TNT1 A 0 setZoom(false);
             TNT1 A 0 A_StartSound("IronSights", 1);
-            MSNA F 1 A_ZoomFactor(3.5);
-            MSNA E 1 A_ZoomFactor(3.0);
-            MSNA D 1 A_ZoomFactor(2.5);
-            MSNA C 1 A_ZoomFactor(2.0);
-            MSNA B 1 A_ZoomFactor(1.5);
+            MSNA D 1 { A_ZoomFactor(MS_GetZoomStrength() * 0.75); }
+            MSNA C 1 { A_ZoomFactor(MS_GetZoomStrength() * 0.50); }
+            MSNA B 1 { A_ZoomFactor(MS_GetZoomStrength() * 0.25); }
             MSNA A 1 A_ZoomFactor(1.0);
             goto Ready3;
 
@@ -198,15 +196,7 @@ class PB_MetalSniper : PB_WeaponBase
         Ready_ADS:
             TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
             TNT1 A 0;
-            MSNS A 1
-            {
-                A_SetRoll(0);
-                PB_HandleCrosshair(-1);
-                PB_CoolDownBarrel(-5, 0, 7, 0,  1);
-                PB_CoolDownBarrel( 5, 0, 7, 0, -1);
-                A_SetInventory("PB_LockScreenTilt", 0);
-                return PB_ReadyFire("Fire_ADS", "Fire_ADS", "ZoomOut", true, true, 'None', true, "SniperUnloaded");
-            }
+            MSNS A 1 MS_ReadyZoom();
             loop;
 
         Fire_ADS:
@@ -473,18 +463,18 @@ class PB_MetalSniper : PB_WeaponBase
             goto UnloadChamber;
 
         WeaponSpecial:
-            TNT1 A 0
-            {
-                A_TakeInventory("GoWeaponSpecialAbility", 1);
-                A_TakeInventory("Zoomed", 1);
-                A_TakeInventory("ADSmode", 1);
-                A_ZoomFactor(1.0);
-            }
+            TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
+            TNT1 A 0 A_JumpIfInventory("Zoomed", 1, "WeaponSpecial_Scope");
+            TNT1 A 0 A_TakeInventory("ADSmode", 1);
+            TNT1 A 0 A_ZoomFactor(1.0);
             TNT1 A 0 MS_HandleAmmo();
             TNT1 A 0 MS_HandleSpecial();
             TNT1 A 0 A_JumpIfInventory("MS_Select_AimMode", 1, "ChangeAnim");
             TNT1 A 0 A_JumpIfInventory("MS_Select_GrenMode", 1, "ChangeAnim");
             Goto Ready3;
+        WeaponSpecial_Scope:
+            TNT1 A 0 MS_HandleScopeWheel();
+            Goto Ready_ADS;
         ChangeAnim:
             TNT1 A 0 cleanmodetokens();
             TNT1 A 0 A_StartSound("IronSights", 2);
@@ -682,6 +672,12 @@ class PB_MetalSniper : PB_WeaponBase
         if (FindInventory("Select_MS_Resonance"))
         {
             A_TakeInventory("Select_MS_Resonance", 1);
+            if (!CountInv("MetalSniperUpgraded"))
+            {
+                cleanAmmoWheelTokens();
+                A_Print("$PB_MSNI_RESONANCE_LOCKED");
+                return resolvestate("Ready3");
+            }
             if (isResonance())
             {
                 cleanAmmoWheelTokens();
@@ -704,6 +700,11 @@ class PB_MetalSniper : PB_WeaponBase
 
     action state MS_HandleSpecial()
     {
+        if (FindInventory("MS_Select_Laser") || FindInventory("MS_Select_ToggleScope")
+            || FindInventory("MS_Select_ToggleZoom") || FindInventory("MS_Select_ToggleNVG")
+            || FindInventory("MS_Select_Resonance") || FindInventory("MS_Select_NO"))
+            return MS_HandleScopeWheel();
+
         bool alreadyAim = FindInventory("MS_Select_AimMode") && MS_getmode() == SniperMode;
         bool alreadyGren = FindInventory("MS_Select_GrenMode") && MS_getmode() == GrenadeMode;
 
@@ -725,6 +726,7 @@ class PB_MetalSniper : PB_WeaponBase
             A_Print("$PB_MSNI_GRENMODE");
         }
 
+        cleanmodetokens();
         return resolvestate(null);
     }
 
@@ -755,7 +757,8 @@ class PB_MetalSniper : PB_WeaponBase
         PB_IncrementHeat(4, true);
         PB_FireOffset();
         A_PB_ThrottledMuzzleFX(0, 0, -2, "", 'MetalSniperFXPhase');
-        PB_WeaponRecoil(-5, frandom(-1.5, 1.5));
+        // PBX-Weapons Jul 2026: ADS recoil reduced vs hipfire.
+        PB_WeaponRecoil(-1, frandom(-1.0, 1.0));
         PB_SpawnCasing("LMGCasingStandard", 26, 2, 28, 0, frandom(5, 8), frandom(1, 4));
     }
 
@@ -814,18 +817,16 @@ class PB_MetalSniper : PB_WeaponBase
         cleanAmmoWheelTokens();
         A_TakeInventory("MS_Select_AimMode",  1);
         A_TakeInventory("MS_Select_GrenMode", 1);
+        A_TakeInventory("MS_Select_Laser", 1);
+        A_TakeInventory("MS_Select_ToggleZoom", 1);
+        A_TakeInventory("MS_Select_ToggleScope", 1);
+        A_TakeInventory("MS_Select_ToggleNVG", 1);
+        A_TakeInventory("MS_Select_Resonance", 1);
+        A_TakeInventory("MS_Select_NO", 1);
     }
 
     action bool PlayerPressedOnce(int button)
     {
         return (player.cmd.buttons & button) && !(player.oldbuttons & button);
-    }
-
-    override void PostBeginPlay()
-    {
-        grenadeloaded  = true;
-        currentMaxAmmo = MetalSniperFullAmmo;
-        usedAmmo       = 2;
-        Super.PostBeginPlay();
     }
 }

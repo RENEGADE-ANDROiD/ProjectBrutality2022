@@ -78,7 +78,7 @@ class PBWP_CinerealOrdnance : PBWP_CA_WeaponBase
 
 	Ready3:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 { PBWP_CA_ReadyPose(); }
+		TNT1 A 0 { PBWP_CA_ReadyTick(); }
 		CINR A 1 Bright {
 			PBWP_CinerealIdleLoop();
 			A_DoPBWeaponAction(WRF_ALLOWRELOAD);

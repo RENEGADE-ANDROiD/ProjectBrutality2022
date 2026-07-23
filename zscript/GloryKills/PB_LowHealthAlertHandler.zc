@@ -5,6 +5,11 @@ class PB_LowHealthAlertHandler : EventHandler
 	private bool lowHp[MAXPLAYERS];
 	private bool lowArmorLatched[MAXPLAYERS];
 	private bool wasArmorAbove[MAXPLAYERS];
+	private int cvarRefreshTic;
+	private bool cachedHpAlertOn;
+	private bool cachedArmorAlertOn;
+	private int cachedHpThreshold;
+	private int cachedArmorThreshold;
 
 	override void PlayerEntered(PlayerEvent e)
 	{
@@ -18,8 +23,45 @@ class PB_LowHealthAlertHandler : EventHandler
 		wasArmorAbove[pn] = false;
 	}
 
+	private void RefreshAlertCvars()
+	{
+		cachedHpAlertOn = false;
+		cachedArmorAlertOn = false;
+		cachedHpThreshold = 30;
+		cachedArmorThreshold = 30;
+
+		for (int pn = 0; pn < MAXPLAYERS; pn++)
+		{
+			if (!playeringame[pn])
+				continue;
+			let plr = players[pn];
+			let cvHp = CVar.GetCVar("be_LowHealthAlert", plr);
+			if (cvHp && cvHp.GetBool())
+				cachedHpAlertOn = true;
+			let cvAr = CVar.GetCVar("be_LowArmorAlert", plr);
+			if (cvAr && cvAr.GetBool())
+				cachedArmorAlertOn = true;
+			let cvHpVal = CVar.GetCVar("sv_LowHealthValue", plr);
+			if (cvHpVal)
+				cachedHpThreshold = clamp(cvHpVal.GetInt(), 0, 200);
+			let cvArVal = CVar.GetCVar("sv_LowArmorValue", plr);
+			if (cvArVal)
+				cachedArmorThreshold = clamp(cvArVal.GetInt(), 0, 100);
+			break;
+		}
+	}
+
 	override void WorldTick()
 	{
+		if (cvarRefreshTic == 0 || level.time - cvarRefreshTic >= 16)
+		{
+			RefreshAlertCvars();
+			cvarRefreshTic = level.time;
+		}
+
+		if (!cachedHpAlertOn && !cachedArmorAlertOn)
+			return;
+
 		for (int pn = 0; pn < MAXPLAYERS; pn++)
 		{
 			if (!playeringame[pn])
@@ -29,27 +71,21 @@ class PB_LowHealthAlertHandler : EventHandler
 			if (!mo)
 				continue;
 
-			TickLowHealth(pn, plr, mo);
-			TickLowArmor(pn, plr, mo);
+			if (cachedHpAlertOn)
+				TickLowHealth(pn, mo);
+			else
+				lowHp[pn] = false;
+
+			if (cachedArmorAlertOn)
+				TickLowArmor(pn, mo);
+			else
+				lowArmorLatched[pn] = false;
 		}
 	}
 
-	private void TickLowHealth(int pn, PlayerInfo plr, Actor mo)
+	private void TickLowHealth(int pn, Actor mo)
 	{
-		let cvOn = CVar.GetCVar("be_LowHealthAlert", plr);
-		if (!cvOn || !cvOn.GetBool())
-		{
-			lowHp[pn] = false;
-			return;
-		}
-
-		let cvVal = CVar.GetCVar("sv_LowHealthValue", plr);
-		int threshold = cvVal ? cvVal.GetInt() : 30;
-		if (threshold < 0)
-			threshold = 0;
-		if (threshold > 200)
-			threshold = 200;
-
+		int threshold = cachedHpThreshold;
 		if (mo.health <= threshold)
 		{
 			if (!lowHp[pn])
@@ -64,22 +100,9 @@ class PB_LowHealthAlertHandler : EventHandler
 		}
 	}
 
-	private void TickLowArmor(int pn, PlayerInfo plr, Actor mo)
+	private void TickLowArmor(int pn, Actor mo)
 	{
-		let cvOn = CVar.GetCVar("be_LowArmorAlert", plr);
-		if (!cvOn || !cvOn.GetBool())
-		{
-			lowArmorLatched[pn] = false;
-			return;
-		}
-
-		let cvVal = CVar.GetCVar("sv_LowArmorValue", plr);
-		int threshold = cvVal ? cvVal.GetInt() : 30;
-		if (threshold < 0)
-			threshold = 0;
-		if (threshold > 100)
-			threshold = 100;
-
+		int threshold = cachedArmorThreshold;
 		int armor = mo.CountInv("Armor");
 		if (armor > threshold)
 			wasArmorAbove[pn] = true;

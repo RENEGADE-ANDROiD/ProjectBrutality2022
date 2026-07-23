@@ -3273,6 +3273,17 @@ excavator/switch EXCSWCH
 excavator/digging EXCERTH
 excavator/digloop EXCDGLP
 excavator/reload EXCRLOAD
+excavator_bolalaunch "sounds/combat/weapons/Explosive Weapons/Excavator/excavator_bolalaunch.ogg"
+excavator_bolafly_loop "sounds/combat/weapons/Explosive Weapons/Excavator/excavator_bolafly_loop.ogg"
+excavator_fire_razor "sounds/combat/weapons/Explosive Weapons/Excavator/excavator_fire_razor.ogg"
+excavator_grenadelaunch "sounds/combat/weapons/Explosive Weapons/Excavator/excavator_grenadelaunch.ogg"
+excavator_magslap "sounds/combat/weapons/Explosive Weapons/Excavator/excavator_magslap.ogg"
+excavator_sawcharge "sounds/combat/weapons/Explosive Weapons/Excavator/excavator_sawcharge.ogg"
+excavator_sawcharge_loop "sounds/combat/weapons/Explosive Weapons/Excavator/excavator_sawcharge_loop.ogg"
+$random sawblade/ricochet { sawblade/ricochet1 sawblade/ricochet2 sawblade/ricochet3 }
+sawblade/ricochet1 "sounds/combat/Grenades/sawblade_ricochet1.ogg"
+sawblade/ricochet2 "sounds/combat/Grenades/sawblade_ricochet2.ogg"
+sawblade/ricochet3 "sounds/combat/Grenades/sawblade_ricochet3.ogg"
 $random excavator/explode { XEXPL_1 XEXPL_2 XEXPL_3 XEXPL_4 XEXPL_5 XEXPL_6 XEXPL_7 XEXPL_8}
 XEXPL_1 XEXPL1
 XEXPL_2 XEXPL2
@@ -3688,10 +3699,11 @@ UNMALT6 UNMALT6
 $rolloff unmalt 900 1300
 UNMRLS UNMRLS
 UNMPCK UNMPCK
-UNMSTA UNMSTA
-UNMLOP UNMLOP
-UNMSTO UNMSTO
-UNMIDL UNMIDL
+; Stock Unmaker laser (quoted — path has spaces; Satan Scream uses Satan/*)
+UNMSTA "sounds/combat/Weapons/Demon weapons and Nazi weapons/Unmaker/UNMSTA.ogg"
+UNMLOP "sounds/combat/Weapons/Demon weapons and Nazi weapons/Unmaker/UNMLOP.ogg"
+UNMSTO "sounds/combat/Weapons/Demon weapons and Nazi weapons/Unmaker/UNMSTO.ogg"
+UNMIDL "sounds/combat/Weapons/Demon weapons and Nazi weapons/Unmaker/UNMIDL.ogg"
 UNMCHG UNMCHG
 SZZLL SZZLL
 UNOCIDL UNOCIDL
@@ -3699,6 +3711,23 @@ UNOCFIR UNOCFIR
 UNOCFIR2 UNOCFIR2
 UNOCBLL UNOCBLL
 UNOCLOP UNOCLOP
+
+// Demon Exterminator — unmaker logical names (PBWP parity)
+$random unmaker/fire { unmaker/fire1 unmaker/fire2 unmaker/fire3 }
+unmaker/fire1 UNMKFIR1
+unmaker/fire2 UNMKFIR2
+unmaker/fire3 UNMKFIR3
+unmaker/hum UNMKHUM
+unmaker/switch UNFMSW
+unmaker/laser UNMKLASR
+unmaker/thunder UMKRLT
+UNMAKSEL UNMAKSEL
+DSREAFI1 DSREAFI1
+DSREAFI2 DSREAFI2
+DSREAFI3 DSREAFI3
+DSREAFI4 DSREAFI4
+RCHARGE RCHARGE
+RBLAST RBLAST
 
 //REVENANT GUN
 //Hellish Missile
@@ -4140,6 +4169,7 @@ weapons/leveraction/rechamber "sounds/combat/weapons/LeverAction/Lever_Action_Re
 weapons/leveraction/inspect "sounds/combat/weapons/LeverAction/Lever_Action_Inspect.ogg"
 weapons/leveraction/flip "sounds/combat/weapons/LeverAction/Lever_Action_Flip.ogg"
 weapons/leveraction/openchamber "sounds/combat/weapons/LeverAction/Lever_Action_OpenChamber.ogg"
+weapons/leveraction/closechamber "sounds/combat/weapons/LeverAction/Lever_Action_CloseChamber.ogg"
 weapons/leveraction/loadshell "sounds/combat/weapons/LeverAction/Lever_Action_LoadShell.ogg"
 weapons/leveraction/magfire "sounds/combat/weapons/LeverAction/Lever_Action_Magfire.ogg"
 weapons/leveraction/fire "sounds/combat/weapons/LeverAction/Lever_Action_Fire.ogg"
@@ -4428,6 +4458,16 @@ DSBOWREL DSBOWREL
 weapons/freezer/up "sounds/combat/weapons/Freezer/FRZRUP.ogg"
 weapons/freezer/idle "sounds/combat/weapons/Freezer/FRZRHUM.ogg"
 weapons/freezer/fire "sounds/combat/weapons/Freezer/FRZRFR1.ogg"
+weapons/freezer/powerdown "sounds/combat/weapons/Freezer/FZR_POWERDN.ogg"
+$random weapons/freezer/missile { weapons/freezer/missile1 weapons/freezer/missile2 weapons/freezer/missile3 }
+weapons/freezer/missile1 "sounds/combat/weapons/Freezer/FZR_MISSILE1.ogg"
+weapons/freezer/missile2 "sounds/combat/weapons/Freezer/FZR_MISSILE2.ogg"
+weapons/freezer/missile3 "sounds/combat/weapons/Freezer/FZR_MISSILE3.ogg"
+$random weapons/freezer/missiledeath { weapons/freezer/missiledeath1 weapons/freezer/missiledeath2 weapons/freezer/missiledeath3 weapons/freezer/missiledeath4 }
+weapons/freezer/missiledeath1 "sounds/combat/weapons/Freezer/FZR_MISSILEDEATH1.ogg"
+weapons/freezer/missiledeath2 "sounds/combat/weapons/Freezer/FZR_MISSILEDEATH2.ogg"
+weapons/freezer/missiledeath3 "sounds/combat/weapons/Freezer/FZR_MISSILEDEATH3.ogg"
+weapons/freezer/missiledeath4 "sounds/combat/weapons/Freezer/FZR_MISSILEDEATH4.ogg"
 weapons/freezer/respect1 "sounds/combat/weapons/Freezer/FRZRRS1.ogg"
 weapons/freezer/respect2 "sounds/combat/weapons/Freezer/FRZRRS2.ogg"
 weapons/freezer/respect3 "sounds/combat/weapons/Freezer/FRZRRS3.ogg"
@@ -5580,7 +5620,21 @@ $random DTechShotty/Fire { DTSFI1 DTSFI2 DTSFI3 }
 $random DTechShotty/PrimaryAmb { DTSPAMB1 DTSPAMB2 DTSPAMB3 }
 $random DTechShotty/AltFire { DTSAFI1 DTSAFI2 DTSAFI3 }
 $random DTechShotty/AlternateAmb { DTSAAMB1 DTSAAMB2 DTSAAMB1 }
-DTShotgun/Pickup			DTSGPKUP
+DTSFI1 "sounds/combat/Weapons/DTShotgun/DTSFI1.ogg"
+DTSFI2 "sounds/combat/Weapons/DTShotgun/DTSFI2.ogg"
+DTSFI3 "sounds/combat/Weapons/DTShotgun/DTSFI3.ogg"
+DTSPAMB1 "sounds/combat/Weapons/DTShotgun/DTSPAMB1.ogg"
+DTSPAMB2 "sounds/combat/Weapons/DTShotgun/DTSPAMB2.ogg"
+DTSPAMB3 "sounds/combat/Weapons/DTShotgun/DTSPAMB3.ogg"
+DTSAFI1 "sounds/combat/Weapons/DTShotgun/DTSAFI1.ogg"
+DTSAFI2 "sounds/combat/Weapons/DTShotgun/DTSAFI2.ogg"
+DTSAFI3 "sounds/combat/Weapons/DTShotgun/DTSAFI3.ogg"
+DTSAAMB1 "sounds/combat/Weapons/DTShotgun/DTSAAMB1.ogg"
+DTSAAMB2 "sounds/combat/Weapons/DTShotgun/DTSAAMB2.ogg"
+DTSAAMB3 "sounds/combat/Weapons/DTShotgun/DTSAAMB3.ogg"
+DTShotgun/Pickup			"sounds/combat/Weapons/DTShotgun/DTSGPKUP.ogg"
+$alias Weapons/ErasusPump weapons/shotgun/pump
+$alias weapons/dryfire DryFire
 RIFCL_CL RIFCL_CLIK
 $random FAREXPL { FAREXPL0 FAREXPL1 FAREXPL2 }
 FAREXPL0 FAREXPL0
@@ -5617,6 +5671,11 @@ weapons/kar98 M40Rifle/Fire
 LightningPulse/FarExplode "sounds/combat/Weapons/Cyberaugumented/Slot 6/Dissipator/Electricity/dcy_electric_plasma_ball_boom2.ogg"
 $rolloff LightningPulse/FarExplode 400 2200
 $random Rifle/Fire { RIFLEFI1 RIFLEFI2 RIFLEFI3 }
+RIFLEFI1 "sounds/combat/Weapons/Cyberaugumented/Slot 4/Warbringer/dcy_warbringer_fire1.ogg"
+RIFLEFI2 "sounds/combat/Weapons/Cyberaugumented/Slot 4/Warbringer/dcy_warbringer_fire2.ogg"
+RIFLEFI3 "sounds/combat/Weapons/Cyberaugumented/Slot 4/Warbringer/dcy_warbringer_fire3.ogg"
+$random Warbringer/Fire { RIFLEFI1 RIFLEFI2 RIFLEFI3 }
+$volume Warbringer/Fire 0.85
 Minigun/Loop "sounds/combat/Weapons/Cyberaugumented/Slot 4/Nightfall/dcy_nightfall_firing.ogg"
 Minigun/WindDown "sounds/combat/Weapons/Cyberaugumented/Slot 4/Nightfall/dcy_nightfall_winding_down.ogg"
 Minigun/EmphasisLoop "sounds/combat/Weapons/Cyberaugumented/Slot 4/Nightfall/dcy_nightfall_plasmawave.ogg"
@@ -5643,3 +5702,138 @@ $rolloff SiriusBFG/DeathStart 2000 4000
 MECHGRAB "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_sirius_ready.ogg"
 DIVLOOP "sounds/combat/Weapons/Cyberaugumented/Slot 7/Sirius Crisis/dcy_sirius_target_loop.ogg"
 Eradicator/Laser "sounds/combat/Weapons/Cyberaugumented/Misc/dcy_eradicator_laser.ogg"
+
+// --- PBWP IN weapon fold (MP12, Holy Bastard, M45, rifles, HYDRA, Gallary, cryo/plasma/BFG tier) ---
+MP1/fire                        sounds/combat/Weapons/MP12/MP1FIRE
+smg/sil/fire                    sounds/combat/Weapons/MP12/SMGSILF
+$random MP1/cin { MP1/cin1 MP1/cin2 }
+MP1/cin1                        sounds/combat/Weapons/MP12/M1P1CI
+MP1/cin2                        sounds/combat/Weapons/MP12/MP1CI2
+MP1/cout                        sounds/combat/Weapons/MP12/MP1CO
+MP1/select                      sounds/combat/Weapons/MP12/MP1SLCT
+sg/cin                          sounds/combat/Weapons/MP12/SGCIN
+sg/cout                         sounds/combat/Weapons/MP12/SGCOUT
+sg/bolt                         sounds/combat/Weapons/MP12/SGCBOLT
+$random smg/fire { SMGFIRE1 SMGFIRE2 }
+SMGFIRE1                        sounds/combat/Weapons/MP12/SMGFIRE1
+SMGFIRE2                        sounds/combat/Weapons/MP12/SMGFIRE2
+SILPKUP                         sounds/combat/Weapons/MP12/SILPKUP
+HaloAlt                         sounds/combat/Weapons/M45/HALOALT
+HaloFire                        sounds/combat/Weapons/M45/HALOFIRE
+HaloReload                      sounds/combat/Weapons/M45/HALORELD
+HaloReloadAndPump                 sounds/combat/Weapons/M45/RELDPUMP
+HaloPump                        sounds/combat/Weapons/M45/HALOPUMP
+HaloPump2                       sounds/combat/Weapons/M45/HALOPUM2
+HaloSelect                      sounds/combat/Weapons/M45/HALOSEL
+WBUP                            sounds/combat/Weapons/White Bastard/WBUP
+PICKM                           sounds/combat/Weapons/White Bastard/PICKM
+RUNLOAD                         sounds/combat/Weapons/White Bastard/RUNLOAD
+$Random SMG/Fire { SMGFIRE1 SMGFIRE2 }
+$Random SMGP/Fire { SMGFIRE1 SMGFIRE2 }
+BSFF1                           sounds/combat/Weapons/White Bastard/UpGrade/BSFF1
+BSFF2                           sounds/combat/Weapons/White Bastard/UpGrade/BSFF2
+BSFF3                           sounds/combat/Weapons/White Bastard/UpGrade/BSFF3
+NOUPGRD                         sounds/combat/Weapons/White Bastard/UpGrade/BSFF1
+MS_PCKP                         sounds/combat/Weapons/Mask Man Rifle/MS_PCKP
+J2RCLIPO                        "sounds/combat/Weapons/Black DMR/J2RCLIPO"
+J2RCOCK                         "sounds/combat/Weapons/Black DMR/J2RCOCK"
+$random Omen/Fire { Omen/Fire1 Omen/Fire2 Omen/Fire3 }
+Omen/Fire1                      "sounds/combat/Weapons/Black DMR/HYPADDF1"
+Omen/Fire2                      "sounds/combat/Weapons/Black DMR/HYPADDF2"
+Omen/Fire3                      "sounds/combat/Weapons/Black DMR/HYPADDF3"
+AB_CIN                          "sounds/combat/Weapons/Magnum Sniper Rifle -/AB_CIN"
+AB_BOLT1                        "sounds/combat/Weapons/Magnum Sniper Rifle -/AB_BOLT1"
+AB_ZOOM                         "sounds/combat/Weapons/Magnum Sniper Rifle -/AB_ZOOM"
+$Random Nail/Fire { NAILFR1 NAILFR2 NAILFR3 }
+NAILFR1                         sounds/combat/Weapons/NailGun/NAILFR1
+NAILFR2                         sounds/combat/Weapons/NailGun/NAILFR2
+NAILFR3                         sounds/combat/Weapons/NailGun/NAILFR3
+8HAINAM1                        sounds/combat/Weapons/NailGun/8HAINAM1
+8HAINAMO                        sounds/combat/Weapons/NailGun/8HAINAMO
+Hailstorm/Fire/Loop1            sounds/combat/Weapons/HYDRA/HAILFIRL
+Hailstorm/Fire/Loop2            sounds/combat/Weapons/HYDRA/HAILFIRS
+Hailstorm/Start                 sounds/combat/Weapons/HYDRA/HALMGSTA
+Hailstorm/Spin                  sounds/combat/Weapons/HYDRA/HALMGSPI
+Hailstorm/Stop                  sounds/combat/Weapons/HYDRA/HALMGSTO
+Hailstorm/Pickup                sounds/combat/Weapons/HYDRA/HALPKUP
+HAILFDN1                        sounds/combat/Weapons/HYDRA/HAILFDN1
+HAILFDN2                        sounds/combat/Weapons/HYDRA/HAILFDN2
+FRZIDLE                         sounds/combat/Weapons/FreezerPack/FRZIDLE
+FRZFIRE2                        sounds/combat/Weapons/FreezerPack/FRZFIRE2
+$Random D4Plasma/Fire { PSLF1 PSLF2 PSLF3 }
+PSLF1                           "sounds/combat/Weapons/Assault Plasma Rifle/PSLF1"
+PSLF2                           "sounds/combat/Weapons/Assault Plasma Rifle/PSLF2"
+PSLF3                           "sounds/combat/Weapons/Assault Plasma Rifle/PSLF3"
+BEPBEP                          "sounds/combat/Weapons/Assault Plasma Rifle/BEPBEP"
+CELLIN2                         "sounds/combat/Weapons/Assault Plasma Rifle/CELLIN2"
+CELLOUT2                        "sounds/combat/Weapons/Assault Plasma Rifle/CELLOUT2"
+IONPKUP                         "sounds/combat/Weapons/Assault Plasma Rifle/IONPKUP"
+HB2FIRE                         "sounds/combat/Weapons/Incinerator 64/HB2FIRE"
+HB2FIRE1                        "sounds/combat/Weapons/Incinerator 64/HB2FIRE1"
+HB2CIN                          "sounds/combat/Weapons/Incinerator 64/HB2CIN"
+HB2COUT                         "sounds/combat/Weapons/Incinerator 64/HB2COUT"
+LASRPICK                        "sounds/combat/Weapons/Incinerator 64/LASRPICK"
+LASRDRAW                        "sounds/combat/Weapons/Incinerator 64/LASRDRAW"
+VRTOFF                          "sounds/combat/Weapons/Incinerator 64/VRTOFF"
+STCHDRY                         "sounds/combat/Weapons/Incinerator 64/STCHDRY"
+DMTFIREA                        "sounds/combat/Weapons/Incinerator 64/DMTFIREA"
+DMTFIREL                        "sounds/combat/Weapons/Incinerator 64/DMTFIREL"
+FRZCHRG                         "sounds/combat/Weapons/Incinerator 64/FRZCHRG"
+DMTSTEAM                        "sounds/combat/Weapons/Incinerator 64/DMTSTEAM"
+Weapon/HeatwaveUp               "sounds/combat/Weapons/Calamity Blade/DSCALMUP.ogg"
+Weapon/HeatwaveCharge           "sounds/combat/Weapons/Calamity Blade/DSHETCHG.ogg"
+Weapon/HeatwaveFire             "sounds/combat/Weapons/Calamity Blade/DSWP0FR1.ogg"
+Weapon/HeatwaveExplosion        "sounds/combat/Weapons/Calamity Blade/DSCBHIT.ogg"
+SATANPKUP                       "sounds/combat/Weapons/Satan Scream/BFGREADY"
+Satan/Start                     "sounds/combat/Weapons/Satan Scream/UNMSTA"
+Satan/Loop                      "sounds/combat/Weapons/Satan Scream/UNMLOP"
+Satan/Stop                      "sounds/combat/Weapons/Satan Scream/UNMSTO"
+
+// --- Silent-fire fixes (path-quoted lumps + missing logical names) ---
+// Warbringer / Dispatcher (Cyberaugumented)
+Dispatcher/Fire "sounds/combat/Weapons/Cyberaugumented/Slot 6/Dissipator/dcy_plasma_fire.ogg"
+$volume Dispatcher/Fire 0.9
+
+// Tactical Nailgun (SGP-331)
+$random quake4/nailgun { TACTNAILF1 TACTNAILF2 TACTNAILF3 }
+TACTNAILF1 "sounds/combat/Weapons/TacticalNailgun/NAILF1.ogg"
+TACTNAILF2 "sounds/combat/Weapons/TacticalNailgun/NAILF2.ogg"
+TACTNAILF3 "sounds/combat/Weapons/TacticalNailgun/NAILF3.ogg"
+$random ExplosiveRifleFire { EXRFSF EXRFAF }
+EXRFSF "sounds/combat/Weapons/TacticalNailgun/EXRFSF"
+EXRFAF "sounds/combat/Weapons/TacticalNailgun/EXRFAF"
+
+// UAC-240 Perforator Nailgun — path-quote fire loop (bare NLGNSF* fails in some loose/zip loads)
+weapons/nailgun/fireloop "sounds/combat/Weapons/Minigun and Nailgun/Nailgun/NLGNSF1.ogg"
+weapons/nailgun/firestop "sounds/combat/Weapons/Minigun and Nailgun/Nailgun/NLGNSF2.ogg"
+weapons/nailgun/altfire "sounds/combat/Weapons/Minigun and Nailgun/Nailgun/NLGNSF3.ogg"
+
+// Hexa Lion-Boy Shotgun — bare HEXAFIR* lumps under nested folders
+HEXAFIR1 "sounds/combat/Weapons/Slot3/HexaLion/HEXAFIR1"
+HEXAFIR2 "sounds/combat/Weapons/Slot3/HexaLion/HEXAFIR2"
+HEXAFIR3 "sounds/combat/Weapons/Slot3/HexaLion/HEXAFIR3"
+HEXAFIR4 "sounds/combat/Weapons/Slot3/HexaLion/HEXAFIR4"
+HEXAFIR5 "sounds/combat/Weapons/Slot3/HexaLion/HEXAFIR5"
+HEXAFIR6 "sounds/combat/Weapons/Slot3/HexaLion/HEXAFIR6"
+HEXAFIR7 "sounds/combat/Weapons/Slot3/HexaLion/HEXAFIR7"
+HEXAOPEN "sounds/combat/Weapons/Slot3/HexaLion/HEXAOPEN"
+HEXALOAD "sounds/combat/Weapons/Slot3/HexaLion/HEXALOAD"
+HEXACLOS "sounds/combat/Weapons/Slot3/HexaLion/HEXACLOS"
+
+// Holy Bastard / Stains of Blood SMG layers
+$alias SMG/FireAdd SMG/Fire
+$alias Dryfire/SMG DryFire
+$alias DryFire/P.Rifle DryFire
+
+// Neo HMG overheat — path-quote MG42FIR members (bare lumps often miss nested .ogg)
+MG42FIR1 "sounds/combat/Weapons/Rifle caliber weapons/MG42/MG42FIR1.ogg"
+MG42FIR2 "sounds/combat/Weapons/Rifle caliber weapons/MG42/MG42FIR2.ogg"
+MG42FIR3 "sounds/combat/Weapons/Rifle caliber weapons/MG42/MG42FIR3.ogg"
+MG42FIR4 "sounds/combat/Weapons/Rifle caliber weapons/MG42/MG42FIR4.ogg"
+
+// PR-75 plasma — prefer .ogg when present; keep extensionless fallbacks above
+PSLF1 "sounds/combat/Weapons/Assault Plasma Rifle/PSLF1"
+PSLF2 "sounds/combat/Weapons/Assault Plasma Rifle/PSLF2"
+PSLF3 "sounds/combat/Weapons/Assault Plasma Rifle/PSLF3"
+SMGFIRE1 "sounds/combat/Weapons/MP12/SMGFIRE1.ogg"
+SMGFIRE2 "sounds/combat/Weapons/MP12/SMGFIRE2.ogg"

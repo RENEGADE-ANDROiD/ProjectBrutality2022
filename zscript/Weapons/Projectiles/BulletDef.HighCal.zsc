@@ -36,6 +36,29 @@ class PB_762x51mm : PB_Projectile
 	}
 }
 
+// Battle Rifle upgrade rounds — one wall/floor/ceiling bounce (PBX smart-scope ricochet stand-in).
+class PB_762x51mmRicochet : PB_762x51mm
+{
+	Default
+	{
+		+BOUNCEONWALLS;
+		+BOUNCEONFLOORS;
+		+BOUNCEONCEILINGS;
+		+USEBOUNCESTATE;
+		BounceCount 1;
+		BounceFactor 1.0;
+		WallBounceFactor 1.0;
+		Obituary "%o was shredded by %k's ricochet round.";
+	}
+
+	States
+	{
+	Bounce:
+		TNT1 A 0 A_StartSound("ricochet/hit", CHAN_AUTO, CHANF_OVERLAP, 0.6);
+		Goto Spawn;
+	}
+}
+
 class PB_762x51mmAP : PB_Projectile
 {
 	Default

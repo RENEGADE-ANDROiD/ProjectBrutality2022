@@ -101,7 +101,7 @@ Actor GreenPinataParticles
 	var int user_count;
 	var float user_pitch;
 	var float user_dist;
-	const int Increment = 4;
+	const int Increment = 8;
 	const int Distance = 200;
 	Radius 1
 	Height 1
@@ -155,7 +155,7 @@ Actor BluePinataParticles
 	var int user_count;
 	var float user_pitch;
 	var float user_dist;
-	const int Increment = 4;
+	const int Increment = 8;
 	const int Distance = 200;
 	Radius 1
 	Height 1
@@ -209,7 +209,7 @@ Actor RedPinataParticles
 	var int user_count;
 	var float user_pitch;
 	var float user_dist;
-	const int Increment = 4;
+	const int Increment = 8;
 	const int Distance = 200;
 	Radius 1
 	Height 1
@@ -263,7 +263,7 @@ Actor YellowPinataParticles
 	var int user_count;
 	var float user_pitch;
 	var float user_dist;
-	const int Increment = 4;
+	const int Increment = 8;
 	const int Distance = 200;
 	Radius 1
 	Height 1
@@ -317,7 +317,7 @@ Actor PinkPinataParticles
 	var int user_count;
 	var float user_pitch;
 	var float user_dist;
-	const int Increment = 4;
+	const int Increment = 8;
 	const int Distance = 200;
 	Radius 1
 	Height 1
@@ -371,7 +371,7 @@ Actor GoldPinataParticles
 	var int user_count;
 	var float user_pitch;
 	var float user_dist;
-	const int Increment = 4;
+	const int Increment = 8;
 	const int Distance = 200;
 	Radius 1
 	Height 1

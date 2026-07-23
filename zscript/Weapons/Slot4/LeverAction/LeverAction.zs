@@ -40,6 +40,35 @@ class LeverAction : PB_WeaponBase
 	PB_WeaponBase.UnloaderToken "LeverActionHasUnloaded";
 	PB_WeaponBase.RespectItem "RespectLeverAction";
 	}
+
+	// Tube capacity (.357 full / Marlin half). Keep backpackmaxamount in sync so backpack
+	// fill cannot inflate the mag past the Marlin cap (PBX 822336b).
+	const LA_MAGAZINE_SIZE = 11;
+
+	action void LA_ApplyMagForMode(bool marlin)
+	{
+		if (!invoker.ammo2) return;
+		if (marlin)
+		{
+			A_SetInventory(invoker.ammotype2, invoker.ammo2.amount / 2);
+			SetAmmoCapacity(invoker.ammotype2, LA_MAGAZINE_SIZE / 2);
+			invoker.ammo2.backpackmaxamount = LA_MAGAZINE_SIZE / 2;
+		}
+		else
+		{
+			SetAmmoCapacity(invoker.ammotype2, LA_MAGAZINE_SIZE);
+			A_SetInventory(invoker.ammotype2, invoker.ammo2.amount * 2);
+			invoker.ammo2.backpackmaxamount = LA_MAGAZINE_SIZE;
+		}
+	}
+
+	action int LA_MagMax()
+	{
+		if (invoker.ammo2)
+			return invoker.ammo2.MaxAmount;
+		return CountInv("LeverActionMarlin") >= 1 ? (LA_MAGAZINE_SIZE / 2) : LA_MAGAZINE_SIZE;
+	}
+
 	states
 	{
 		Steady:
@@ -117,7 +146,7 @@ class LeverAction : PB_WeaponBase
 			}
 			"LVR3" EFG 1 A_DoPBWeaponAction;
 			"LVR2" V 5 A_DoPBWeaponAction;
-			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/openchamber","Auto");
+			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/closechamber","Auto");
 			LVR2 VUTSRQ 1 {
 				A_SetRoll(roll-1.0,SPF_INTERPOLATE);
 			return A_DoPBWeaponAction();
@@ -153,7 +182,7 @@ class LeverAction : PB_WeaponBase
 			TNT1 A 0 A_PrintBold("\ciPath selected: LEVERACTION");
 			Goto Ready3;
 		SelectAnimation:
-			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/inspect", "Auto");
+			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/raise", "Auto");
 			TNT1 A 0 {
 				A_Takeinventory("Zoomed",1);
 				A_Takeinventory("ADSmode",1);
@@ -231,6 +260,10 @@ class LeverAction : PB_WeaponBase
 			Goto ChangingCartridge;
 
 		ChangingCartridge:
+			TNT1 A 0
+			{
+				LA_ApplyMagForMode(CountInv("LeverActionMarlin") >= 1);
+			}
 			"LVR2" MNOP 1 A_SetRoll(roll+1.0,SPF_INTERPOLATE);
 			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/openchamber","Auto");
 			"LVR2" QQ 1 A_SetRoll(roll-2.0,SPF_INTERPOLATE);
@@ -683,7 +716,7 @@ class LeverAction : PB_WeaponBase
 			PB_HandleCrosshair(5);
 			A_ClearOverlays(10,11);
 			}
-			TNT1 A 0 A_JumpIfInventory("LeverActionAmmo",11, "Ready3");
+			TNT1 A 0 A_JumpIf(CountInv("LeverActionAmmo") >= LA_MagMax(), "Ready3");
 			TNT1 A 0 A_JumpIfInventory("NewClip",1, "ReloadAnimation");
 			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/inspect", "Auto");
 			Goto Ready3;
@@ -694,7 +727,7 @@ class LeverAction : PB_WeaponBase
 			"LVR2" RSTUVV 1 A_SetRoll(roll-0.6,SPF_INTERPOLATE);
 		NormalReload:
 			TNT1 A 0 A_JumpIf(CountInv("NewClip") == 0,"ReloadFinished");
-			TNT1 A 0 A_JumpIfInventory("LeverActionAmmo",11,"ReloadFinished");
+			TNT1 A 0 A_JumpIf(CountInv("LeverActionAmmo") >= LA_MagMax(),"ReloadFinished");
 			"LVR2" V 2 A_DoPBWeaponAction(WRF_NOBOB);
 			"LVR3" AB 1 A_DoPBWeaponAction(WRF_NOBOB);
 			LVR3 C 1 {

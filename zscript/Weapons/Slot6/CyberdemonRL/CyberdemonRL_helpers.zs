@@ -64,3 +64,14 @@ class CyberBallsPlayer : PB_Projectile
 			Stop;
 	}
 }
+
+// PBX-Weapons piercing mode: +RIPPER through monsters (slightly lower damage).
+class CyberBallsPlayerPierce : CyberBallsPlayer
+{
+	default
+	{
+		+RIPPER;
+		Damage 160;
+		Scale 1.0;
+	}
+}

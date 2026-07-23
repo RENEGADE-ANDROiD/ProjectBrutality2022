@@ -33,6 +33,7 @@
 class NashGoreHandler : EventHandler
 {
 	const MONSTER_SCAN_CAP = 2048;
+	const LIVING_RESYNC_INTERVAL = 350; // ~10s drift guard
 
 	int maxgore;
 	int maxgore_old, maxgore_new;
@@ -42,6 +43,11 @@ class NashGoreHandler : EventHandler
 	int livingMonstersTic;
 
 	Array<String> bloodTypes;
+
+	clearscope static bool CountsAsLivingMonster(Actor mo)
+	{
+		return mo && mo.bISMONSTER && mo.health > 0 && !(mo is "PlayerPawn");
+	}
 
 	clearscope static int CountLivingMonsters()
 	{
@@ -53,9 +59,7 @@ class NashGoreHandler : EventHandler
 		{
 			if (++scanned > MONSTER_SCAN_CAP)
 				break;
-			if (!mo.bISMONSTER || mo.health < 1)
-				continue;
-			if (mo is "PlayerPawn")
+			if (!CountsAsLivingMonster(mo))
 				continue;
 			n++;
 		}
@@ -121,17 +125,22 @@ class NashGoreHandler : EventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
+		livingMonsters = CountLivingMonsters();
+		livingMonstersTic = level.maptime;
 	}
 
 	override void WorldTick(void)
 	{
-		if (gamestate == GS_LEVEL && level.maptime - livingMonstersTic >= 35)
+		if (gamestate != GS_LEVEL)
 		{
+			livingMonsters = 0;
+		}
+		else if (level.maptime - livingMonstersTic >= LIVING_RESYNC_INTERVAL)
+		{
+			// Rare full recount only as drift guard (spawn/death keep the counter hot).
 			livingMonstersTic = level.maptime;
 			livingMonsters = CountLivingMonsters();
 		}
-		else if (gamestate != GS_LEVEL)
-			livingMonsters = 0;
 
 		// update gore queue
 		maxgore_new = nashgore_maxgore;
@@ -156,7 +165,12 @@ class NashGoreHandler : EventHandler
 	{
 		if (!e) return;
 		Actor t = e.Thing;
-		if (!t || !t.bIsMonster) return;
+		if (!t) return;
+
+		if (CountsAsLivingMonster(t))
+			livingMonsters++;
+
+		if (!t.bIsMonster) return;
 
 		// plug in generic monster behaviour
 		if ((t is "PB_Monster") && !t.CountInv("NashGoreActor"))
@@ -192,7 +206,19 @@ class NashGoreHandler : EventHandler
 		Actor t = e.Thing;
 		if (!t) return;
 
+		if (t.bISMONSTER && !(t is "PlayerPawn"))
+			livingMonsters = max(0, livingMonsters - 1);
+
 		DoThingDie(t);
+	}
+
+	override void WorldThingDestroyed(WorldEvent e)
+	{
+		if (!e || !e.Thing) return;
+		Actor t = e.Thing;
+		// Died path already decremented; only catch remove/massacre without WorldThingDied.
+		if (CountsAsLivingMonster(t))
+			livingMonsters = max(0, livingMonsters - 1);
 	}
 
 	override void WorldThingRevived(WorldEvent e)
@@ -200,6 +226,8 @@ class NashGoreHandler : EventHandler
 		if (!e) return;
 		Actor t = e.Thing;
 		if (!t) return;
+		if (CountsAsLivingMonster(t))
+			livingMonsters++;
 		DoThingRevive(t);
 	}
 

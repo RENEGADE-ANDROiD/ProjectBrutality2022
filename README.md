@@ -174,7 +174,6 @@ The disabled **Demon-Tech Minigun** and **Demon Exterminator** sources remain on
 - **Ice Wall** — generator that drops a temporary line of cryo barrier segments.
 - **Holographic Decoy** — places a flickering decoy that pulls monster aggro.
 - **Tesla Turret** — friendly chained-lightning turret (won't take damage from your shots).
-- **Flame Turret** — friendly flame-cone turret (same rule).
 - **Freeze Mines** — proximity cryo mines; they won't trip under your feet, but you can rocket-jump off them when shot or when monsters set them off.
 
 ### Shield Saw

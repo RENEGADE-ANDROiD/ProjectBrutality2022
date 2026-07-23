@@ -1,11 +1,13 @@
 // ProSurv_Ballista weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript\Weapons\Slot4\Ballista\ProSurv_Ballista.zs
 ACTOR RespectBallista : Inventory { Inventory.MaxAmount 1 }
 ACTOR BallistaDemonicMode : Inventory { Inventory.MaxAmount 1 }
+ACTOR BallistaExplosiveMode : Inventory { Inventory.MaxAmount 1 }
 ACTOR BallistaUnloaded : Inventory { Inventory.MaxAmount 1 }
 ACTOR BallistaUpgraded : Inventory { Inventory.MaxAmount 1 }
 ACTOR Crossbow_Upgraded : Inventory { Inventory.MaxAmount 1 }
 ACTOR SwapToDemonicMode : Inventory { Inventory.MaxAmount 1 }
 ACTOR Select_Ballista_StandardMode : Inventory { Inventory.MaxAmount 1 }
+ACTOR Select_Ballista_ExplosiveMode : Inventory { Inventory.MaxAmount 1 }
 ACTOR Select_Ballista_DemonicMode : Inventory { Inventory.MaxAmount 1 }
 ACTOR Select_Ballista_NoUpgrade : Inventory { Inventory.MaxAmount 1 }
 

@@ -64,7 +64,7 @@ class PBWP_AmnesiaProtonPhaser : PBWP_CA_WeaponBase
 
 	Ready3:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 { PBWP_CA_ReadyPose(); }
+		TNT1 A 0 { PBWP_CA_ReadyTick(); }
 		BFG_ A 1 Bright A_DoPBWeaponAction();
 		Loop;
 

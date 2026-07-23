@@ -1,5 +1,16 @@
 // Throttles burn particles on melting monsters (Death.Incinerate) and burning corpses.
 
+class PB_BurnFXIncinerateCounted : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		+INVENTORY.KEEPDEPLETED
+	}
+}
+
 class PB_BurnFXThrottleHandler : StaticEventHandler
 {
 	int ActiveBurners;
@@ -7,6 +18,17 @@ class PB_BurnFXThrottleHandler : StaticEventHandler
 	clearscope static PB_BurnFXThrottleHandler Get()
 	{
 		return PB_BurnFXThrottleHandler(StaticEventHandler.Find("PB_BurnFXThrottleHandler"));
+	}
+
+	// One-shot load bump while a monster plays Death.Incinerate FX actions.
+	static void NotifyIncinerating(Actor mo)
+	{
+		if (!mo || mo.CountInv("PB_BurnFXIncinerateCounted") > 0)
+			return;
+		mo.A_GiveInventory("PB_BurnFXIncinerateCounted", 1);
+		let h = Get();
+		if (h)
+			h.ActiveBurners++;
 	}
 
 	void RecountBurners()
@@ -119,6 +141,8 @@ class PB_BurnFXThrottleHandler : StaticEventHandler
 	{
 		if (!mo || !mo.bISMONSTER)
 			return false;
+		if (mo.CountInv("PB_BurnFXIncinerateCounted") > 0)
+			return true;
 		State st = mo.FindState("Death.Incinerate", true);
 		if (!st)
 			return false;
@@ -138,19 +162,17 @@ class PB_BurnFXThrottleHandler : StaticEventHandler
 
 	override void WorldThingDestroyed(WorldEvent e)
 	{
-		if (e.Thing && IsBurningGuy(e.Thing))
+		if (!e.Thing)
+			return;
+		if (IsBurningGuy(e.Thing))
+			ActiveBurners = max(0, ActiveBurners - 1);
+		else if (e.Thing.CountInv("PB_BurnFXIncinerateCounted") > 0)
 			ActiveBurners = max(0, ActiveBurners - 1);
 	}
 
 	override void WorldLoaded(WorldEvent e)
 	{
 		RecountBurners();
-	}
-
-	override void WorldTick()
-	{
-		if ((level.maptime & 31) == 0)
-			RecountBurners();
 	}
 }
 

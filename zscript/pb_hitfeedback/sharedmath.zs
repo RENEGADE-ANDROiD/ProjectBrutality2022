@@ -12,7 +12,10 @@ class PB_HitFeedback_Math abstract {
 	//Useful for example for compressing distances to a range of 0 to 1.0.
 	ClearScope Static Double LinearMap (Double Val, Double O_Min, Double O_Max, Double N_Min, Double N_Max) 
 	{
-		Return (Val - O_Min) * (N_Max - N_Min) / (O_Max - O_Min) + N_Min;
+		double denom = O_Max - O_Min;
+		if (denom == 0)
+			return N_Min;
+		Return (Val - O_Min) * (N_Max - N_Min) / denom + N_Min;
 	}
 
     static double Lerp(double a, double b, double lerpFactor)

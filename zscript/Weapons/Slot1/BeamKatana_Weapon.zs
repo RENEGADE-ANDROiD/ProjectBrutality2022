@@ -13,7 +13,6 @@ class PB_BeamKatana : PB_WeaponBase
 		+WEAPON.NOAUTOAIM;
 		+WEAPON.MELEEWEAPON;
 		+INVENTORY.ALWAYSPICKUP;
-		+FORCEXYBILLBOARD;
 		+DONTGIB;
 		Inventory.PickupSound "CybKatana/Activate";
 		Inventory.Pickupmessage "You got the UAC Nanotech Energy Beam Katana. (Slot 1)";
@@ -167,16 +166,7 @@ class PB_BeamKatana : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 		TNT1 A 0 PB_CheckBarrelThrow1();
 		TNT1 A 0 {
-			let po = invoker.Owner;
-			if (po == null || !(po is "PlayerPawn"))
-				return resolveState(null);
-			let pp = PlayerPawn(po);
-			if (pp && pp.player && invoker.CountInv("NoFatality") == 0
-				&& CVar.GetCVar("pb_auto_fatality_fire", pp.player).GetBool())
-			{
-				return PB_Execute();
-			}
-			return resolveState(null);
+			return PB_TryAutoFatalityOnFire();
 		}
 		BKAT A 0 A_JumpIfInventory("KatanaSwitchHands", 1, "NormalCutAlt");
 		BKAT A 1 Bright;
@@ -248,21 +238,12 @@ class PB_BeamKatana : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("CantFire", 1, "FailOverlay");
 		TNT1 A 0 A_JumpIfHealthLower(0, "FailOverlay");
 		TNT1 A 0 {
-			if (CountInv("FinisherToken", AAPTR_PLAYER_GETTARGET) >= 1
-				&& A_CheckLOF("Null", CLOFF_SETTARGET | CLOFF_NOAIM_VERT | CLOFF_IGNOREGHOST | CLOFF_MUSTBESOLID, 180))
+			if (PB_GloryKillOpportunityReady())
 				return ResolveState("PermormGloryKill");
 			return ResolveState(null);
 		}
 		TNT1 A 0 A_ClearOverlays(3, 65);
 		TNT1 A 0 A_GunFlash("Null");
-		TNT1 A 0 A_JumpIfInventory("ShieldSawThrown", 1, "GoMeleeInstead");
-		TNT1 A 0 A_JumpIfCloser(99, "GoMeleeInstead");
-		TNT1 A 0 {
-			State st = PB_ResolveQuickMeleeShieldThrow();
-			if (st)
-				return st;
-			return ResolveState(null);
-		}
 		TNT1 A 1 {
 			State st = PB_Execute();
 			if (st)
@@ -270,6 +251,24 @@ class PB_BeamKatana : PB_WeaponBase
 			return ResolveState(null);
 		}
 		TNT1 A 0 A_JumpIfInventory("ShieldSawThrown", 1, "GoMeleeInstead");
+		TNT1 A 0 {
+			if (PB_QuickMeleeAimWithinPunchRange())
+				return ResolveState("GoMeleeInstead");
+			return ResolveState(null);
+		}
+		TNT1 A 0 A_JumpIfCloser(99, "GoMeleeInstead");
+		TNT1 A 0 {
+			State st = PB_ResolveQuickMeleeShieldThrow();
+			if (st)
+				return st;
+			return ResolveState(null);
+		}
+		TNT1 A 0 A_JumpIfInventory("ShieldSawThrown", 1, "GoMeleeInstead");
+		TNT1 A 0 {
+			if (PB_QuickMeleeAimWithinPunchRange())
+				return ResolveState("GoMeleeInstead");
+			return ResolveState(null);
+		}
 		TNT1 A 0 A_JumpIfCloser(99, "GoMeleeInstead");
 	GoMeleeInstead:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "QuickMeleeAbort");
@@ -285,12 +284,72 @@ class PB_BeamKatana : PB_WeaponBase
 			A_SetRoll(0);
 			A_Overlay(-10, "FirstPersonLegsStand");
 		}
-		JSML ABCDEF 1 {
+		JSML A 1 {
+			PB_MeleeFeelWind();
 			if (CountInv("GoFatality") >= 1)
 				return ResolveState("QuickMeleeAbort");
-			if (JustPressed(BT_USER2))
+			if (JustPressed(BT_USER2) || JustPressed(BT_USER4))
 			{
-				State st = PB_Execute();
+				State st = PB_TryMidPunchFinisher();
+				if (st)
+					return st;
+			}
+			return ResolveState(null);
+		}
+		JSML B 1 {
+			PB_MeleeFeelStep(0.970);
+			if (CountInv("GoFatality") >= 1)
+				return ResolveState("QuickMeleeAbort");
+			if (JustPressed(BT_USER2) || JustPressed(BT_USER4))
+			{
+				State st = PB_TryMidPunchFinisher();
+				if (st)
+					return st;
+			}
+			return ResolveState(null);
+		}
+		JSML C 1 {
+			PB_MeleeFeelStep(0.965);
+			if (CountInv("GoFatality") >= 1)
+				return ResolveState("QuickMeleeAbort");
+			if (JustPressed(BT_USER2) || JustPressed(BT_USER4))
+			{
+				State st = PB_TryMidPunchFinisher();
+				if (st)
+					return st;
+			}
+			return ResolveState(null);
+		}
+		JSML D 1 {
+			PB_MeleeFeelStep(0.955);
+			if (CountInv("GoFatality") >= 1)
+				return ResolveState("QuickMeleeAbort");
+			if (JustPressed(BT_USER2) || JustPressed(BT_USER4))
+			{
+				State st = PB_TryMidPunchFinisher();
+				if (st)
+					return st;
+			}
+			return ResolveState(null);
+		}
+		JSML E 1 {
+			PB_MeleeFeelCommit();
+			if (CountInv("GoFatality") >= 1)
+				return ResolveState("QuickMeleeAbort");
+			if (JustPressed(BT_USER2) || JustPressed(BT_USER4))
+			{
+				State st = PB_TryMidPunchFinisher();
+				if (st)
+					return st;
+			}
+			return ResolveState(null);
+		}
+		JSML F 1 {
+			if (CountInv("GoFatality") >= 1)
+				return ResolveState("QuickMeleeAbort");
+			if (JustPressed(BT_USER2) || JustPressed(BT_USER4))
+			{
+				State st = PB_TryMidPunchFinisher();
 				if (st)
 					return st;
 			}
@@ -298,6 +357,7 @@ class PB_BeamKatana : PB_WeaponBase
 		}
 		PUFF A 0 A_PlaySound("player/cyborg/fist", 3);
 		TNT1 A 0 {
+			PB_MeleeFeelImpact();
 			A_FireCustomMissile("Plasma_Ball", 20, 0);
 			A_FireCustomMissile("Plasma_Ball", -20, 0);
 			A_FireCustomMissile("Plasma_Ball", 10, 0, 0, 10);
@@ -305,12 +365,36 @@ class PB_BeamKatana : PB_WeaponBase
 			A_FireCustomMissile("Plasma_Ball", -15, 0, 0, -15);
 			A_FireCustomMissile("Plasma_Ball", -8, 0, 0, -8);
 		}
-		JSML FGHIJKLMNOP 1 {
+		JSML F 1 {
+			PB_MeleeFeelReturn(0.975);
 			if (CountInv("GoFatality") >= 1)
 				return ResolveState("QuickMeleeAbort");
-			if (JustPressed(BT_USER2))
+			if (JustPressed(BT_USER2) || JustPressed(BT_USER4))
 			{
-				State st = PB_Execute();
+				State st = PB_TryMidPunchFinisher();
+				if (st)
+					return st;
+			}
+			return ResolveState(null);
+		}
+		JSML G 1 {
+			PB_MeleeFeelReturn(0.990);
+			if (CountInv("GoFatality") >= 1)
+				return ResolveState("QuickMeleeAbort");
+			if (JustPressed(BT_USER2) || JustPressed(BT_USER4))
+			{
+				State st = PB_TryMidPunchFinisher();
+				if (st)
+					return st;
+			}
+			return ResolveState(null);
+		}
+		JSML HIJKLMNOP 1 {
+			if (CountInv("GoFatality") >= 1)
+				return ResolveState("QuickMeleeAbort");
+			if (JustPressed(BT_USER2) || JustPressed(BT_USER4))
+			{
+				State st = PB_TryMidPunchFinisher();
 				if (st)
 					return st;
 			}
@@ -319,15 +403,16 @@ class PB_BeamKatana : PB_WeaponBase
 		TNT1 A 7 {
 			if (CountInv("GoFatality") >= 1)
 				return ResolveState("QuickMeleeAbort");
-			if (JustPressed(BT_USER2))
+			if (JustPressed(BT_USER2) || JustPressed(BT_USER4))
 			{
-				State st = PB_Execute();
+				State st = PB_TryMidPunchFinisher();
 				if (st)
 					return st;
 			}
 			return ResolveState(null);
 		}
 		TNT1 A 0 {
+			PB_MeleeFeelEnd();
 			PB_SetUsingMelee(false);
 			A_TakeInventory("HasCutingWeapon", 1);
 		}
@@ -337,6 +422,7 @@ class PB_BeamKatana : PB_WeaponBase
 
 	QuickMeleeAbort:
 		TNT1 A 0 {
+			PB_MeleeFeelEnd();
 			PB_SetUsingMelee(false);
 			A_TakeInventory("HasCutingWeapon", 1);
 			A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);

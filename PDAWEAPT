@@ -443,15 +443,6 @@ Recoil: High
 Alt-Fire: Alt seeker behaviors per states
 Firemodes: Semi-auto rocket launcher
 Akimbo: X#
-Dragon Slayer$Heavy runic greatblade pairing melee cleaves with DragonSlayerEnergy bolt repeater stance. Found only on Obsidian Ravager death; limited wear on salvage—not rolled from chainsaw map spawns.$PB_ObsidianDragonSlayer$Manufacturer: Classified (Craneo lineage / Ravager salvage)
-Magazine Capacity: DragonSlayerEnergy pool
-Ammunition: Internal energy stacks
-Effective Range: Melee / short bolt lane
-RPM: Combo-dependent
-Recoil: N/A melee
-Alt-Fire: Bolt repeater / stance swaps
-Firemodes: Melee greatblade + energy bolts
-Akimbo: X#
 Tiberium's Soulblade$Cursed soulblade mixing BDP melee lunges with berserker storm chains—feeds on hatred.$VorpalBlade$Manufacturer: Unknown (TiberiumSoul relic)
 Magazine Capacity: Soulblade stamina pools
 Ammunition: Internal curse stacks
@@ -547,7 +538,7 @@ RPM: Semi / alt spread
 Recoil: Moderate–high
 Alt-Fire: Heavy alt blast patterns
 Firemodes: Shell vs demonic breath (Weapon Special)
-Akimbo: X#UAC-12P Rainmaker$Karnage Legacy triple-barrel shotgun with sequential tube fire—loads up to three shells into Rainmakerclip and walks barrels one through three before reload; Alt-Fire melee kick.$Rainmaker$Manufacturer: Karnage Legacy (PBWP)
+Akimbo: X#UAC-12P Rainmaker$Karnage Legacy triple-barrel shotgun with sequential tube fire—loads up to three shells into Rainmakerclip and walks barrels one through three before reload; Alt-Fire dumps two shells as an Auto Shotgun-style flak blast (Chunk scatter + FLAKFIRE).$Rainmaker$Manufacturer: Karnage Legacy (PBWP)
 Magazine Capacity: 3-shell Rainmakerclip + PB_Shell reserve
 Ammunition: PB_Shell / 12ga pellets
 Effective Range: Short
@@ -596,7 +587,6 @@ Recoil: Extreme
 Alt-Fire: BFG sphere (45 cells)
 Firemodes: Charged laser primary
 Akimbo: X#SGP-331 Tactical Nailgun$Stroggos Arctic Annihilation nailgun—Weapon Special cycles nail, 5.56, and explosive cartridges when you also carry the Perforator Nailgun; reserve PB_HighCalMag feeds a 60-round nail mag.$Tactical_Nail_Gun$Manufacturer: Stroggos (PBWP)
-Thunder Crossbow$Slot-8 storm bow from Brutal Hexen RPG lineage—Weapon Special selects beam, bolt, shockwave, or cluster; Alt-Fire holds an orbiting electric shield.$ThunderCrossbow$Manufacturer: PBWP (Seidolon art)
 Magazine Capacity: 60-round TacticalNailgunAmmo + PB_HighCalMag reserve
 Ammunition: PB_HighCalMag / nails / 5.56 / explosive payloads
 Effective Range: Medium
@@ -604,4 +594,119 @@ RPM: Semi / burst per mode
 Recoil: Moderate
 Alt-Fire: Per mode
 Firemodes: Nail / 5.56 / explosive (Weapon Special)
+Akimbo: X#UAC-12a Automat$Hybrid UAC service pistol that shares DNA with the compact SMG line—42-round MP12Ammo2 mag on PB_LowCalMag with optional suppressor and SMG upgrade kit.$MP12$Manufacturer: UAC (PBWP)
+Magazine Capacity: 42-round MP12Ammo2 + PB_LowCalMag reserve
+Ammunition: PB_LowCalMag / 9mm-class pool
+Effective Range: Short–medium
+RPM: Semi-auto; SMG upgrade unlocks full-auto
+Recoil: Low–moderate
+Alt-Fire: Suppressed fire path when silencer equipped
+Firemodes: Pistol / SMG (after upgrade)
+Akimbo: X#Holy Bastard W-SMG$White Bastard dual-wield SMG—paired W_Clipp / LW_Clipp magazines on PB_LowCalMag with zoom and akimbo fire.$W_SMG$Manufacturer: UAC (PBWP)
+Magazine Capacity: Dual W_Clipp magazines + PB_LowCalMag reserve
+Ammunition: PB_LowCalMag
+Effective Range: Short
+RPM: Full-auto
+Recoil: Moderate
+Alt-Fire: Zoom / alt fire modes
+Firemodes: Akimbo SMG
+Akimbo: X#Holy Bastard P-SMG$Pyro upgrade of the Holy Bastard line—incendiary SMG fire after the Blood Stains upgrade path.$P_SMG$Manufacturer: UAC (PBWP)
+Magazine Capacity: PB_LowCalMag fed
+Ammunition: PB_LowCalMag
+Effective Range: Short
+RPM: Full-auto incendiary
+Recoil: Moderate
+Alt-Fire: Pyro stream variants
+Firemodes: Incendiary SMG
+Akimbo: X#M45 Halo 3 Shotgun$Pump shotgun styled after the Halo 3 M45 Tactical Shotgun—tight pump cadence with alt pump-fire.$M45Shotgun$Manufacturer: PBWP (Halo homage)
+Magazine Capacity: Internal tube + PB_Shell reserve
+Ammunition: PB_Shell
+Effective Range: Short
+RPM: Pump-action
+Recoil: High per blast
+Alt-Fire: Alt pump-fire
+Firemodes: Pump shotgun
+Akimbo: X#Model 4 Assault Rifle$Mask Man / Dignidad assault rifle—36-round AR1EMag on PB_HighCalMag with ADS zoom and magazine respect pose.$AssaultR1$Manufacturer: PBWP
+Magazine Capacity: 36-round AR1EMag + PB_HighCalMag reserve
+Ammunition: PB_HighCalMag
+Effective Range: Medium–long
+RPM: Full-auto
+Recoil: Moderate
+Alt-Fire: ADS zoom fire
+Firemodes: Automatic rifle
+Akimbo: X#UAC-35 Black DMR$Shadow Song designated marksman rifle—dual-wield RKX support, grenade launcher, and paired Black_Clip magazines.$Black_DMR_RKX$Manufacturer: UAC (PBWP)
+Magazine Capacity: Black_Clip + LeftBlack_Clip when dual-wielding
+Ammunition: PB_HighCalMag / DMR magazines
+Effective Range: Long
+RPM: Semi-auto DMR
+Recoil: High
+Alt-Fire: Grenade launcher / zoom
+Firemodes: DMR + launcher
+Akimbo: X#Magnum Sniper Rifle$HL-300s bolt magnum sniper—chambered rounds with zoom switcher and high-power hits.$MagnumSniperRifle$Manufacturer: PBWP
+Magazine Capacity: MagnumSniper_Chamber + reserve
+Ammunition: PB_HighCalMag
+Effective Range: Very long
+RPM: Bolt-action
+Recoil: Very high
+Alt-Fire: Scoped fire modes
+Firemodes: Sniper magnum
+Akimbo: X#Gallery Nailgun$NRS ES-92 Dead Gallery nailgun—high-rate nail hose from PB_HighCalMag.$INNailGun$Manufacturer: PBWP
+Magazine Capacity: PB_HighCalMag fed
+Ammunition: PB_HighCalMag / nails
+Effective Range: Medium
+RPM: High automatic
+Recoil: Low
+Alt-Fire: Per states
+Firemodes: Nail stream
+Akimbo: X#MACH-3 HYDRA$UAC Hailstorm machine gun—spin-up minigun loop on PB_HighCalMag with dual spin layers.$PB_HYDRA$Manufacturer: UAC (PBWP)
+Magazine Capacity: PB_HighCalMag belt
+Ammunition: PB_HighCalMag
+Effective Range: Medium
+RPM: Very high sustained
+Recoil: Moderate climb
+Alt-Fire: Spin fire modes
+Firemodes: Minigun stream
+Akimbo: X#Extinction Ray$UAC IDA-557 Argent Fury incinerator—Extinction_Ammo heat weapon with laser-cut alt modes on Cell reserve.$Extinction_Ray$Manufacturer: UAC (PBWP)
+Magazine Capacity: Extinction_Ammo + PB_Cell reserve
+Ammunition: Extinction_Ammo / Cells
+Effective Range: Medium
+RPM: Sustained beam / burst
+Recoil: Low
+Alt-Fire: High-power laser variants
+Firemodes: Incinerator / laser
+Akimbo: X#UAC PR-75 Plasma Assault$Plague Extinguisher assault plasma rifle—Plasma-Mag on Cells with Weapon Special Heat Blast overcharge.$PlasmaRifleAssault$Manufacturer: UAC (PBWP)
+Magazine Capacity: 50-round Plasma-Mag + PB_Cell reserve
+Ammunition: Plasma-Mag / Cells
+Effective Range: Medium
+RPM: Semi-auto plasma
+Recoil: Low–moderate
+Alt-Fire: Heat Blast charge
+Firemodes: Plasma + heat blast
+Magazine Capacity: PB_Cell pool
+Ammunition: PB_Cell
+Effective Range: Medium–long
+RPM: Mode-dependent
+Recoil: Heavy
+Alt-Fire: TC mode swap
+Firemodes: Storm carrier
+Akimbo: X#Calamity Blade$Legacy of Rust heat-wave blade—PB_Fuel and PB_DTECH feed charged heatwave slashes and alt-fire heat bursts.$LoRCalamityBlade$Manufacturer: Legacy of Rust (PBWP)
+Magazine Capacity: PB_Fuel + PB_DTECH reserves
+Ammunition: PB_Fuel / PB_DTECH
+Effective Range: Melee
+RPM: Charge / slash
+Recoil: Melee
+Alt-Fire: Heatwave charge
+Firemodes: Blade / heatwave
+Akimbo: X#Satan Scream Unmaker$Demonic Unmaker variant—soul-fueled scream cannon with BFG-class pickup heft and sustained beam volleys.$Satan_Scream$Manufacturer: Infernal (PBWP)
+Magazine Capacity: Soul / cell pools per states
+Ammunition: Demonpower / Cells
+Effective Range: Medium–long
+RPM: Charge-dependent
+Recoil: Extreme
+Alt-Fire: Beam modes
+Firemodes: Unmaker scream
 Akimbo: X#
+Akimbo: X#Frostburn Device$Pro-Surv dual-mode HellAmmo device � Incendiary or Cryo beam with fireball / ice-orb Alt-Fire.$FrostburnDevice$Manufacturer: UAC / Helltech (Pro-Surv)
+Magazine Capacity: HellAmmo pool (shared with DemonTech / Unmaker family)
+Ammunition: HellAmmo
+Fire Modes: Incendiary beam + fireball Alt; Cryo beam + FreezerBallBig Alt (Weapon Special)

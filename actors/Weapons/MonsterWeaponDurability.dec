@@ -4,18 +4,18 @@
 ACTOR CyberRLDurability : Ammo
 {
 	Inventory.Amount 0
-	Inventory.MaxAmount 25
+	Inventory.MaxAmount 75
 	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 25
+	Ammo.BackpackMaxAmount 75
 	+INVENTORY.UNDROPPABLE
 }
 
 ACTOR MastermindCGDurability : Ammo
 {
 	Inventory.Amount 0
-	Inventory.MaxAmount 100
+	Inventory.MaxAmount 200
 	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 100
+	Ammo.BackpackMaxAmount 200
 	+INVENTORY.UNDROPPABLE
 }
 

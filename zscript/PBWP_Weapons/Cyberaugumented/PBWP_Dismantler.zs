@@ -66,7 +66,7 @@ class PBWP_Dismantler : PBWP_CA_WeaponBase
 
 	Ready3:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 { PBWP_CA_ReadyPose(); }
+		TNT1 A 0 { PBWP_CA_ReadyTick(); }
 		LTBR BCDE 2 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 		Loop;
 

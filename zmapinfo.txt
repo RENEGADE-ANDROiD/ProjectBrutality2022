@@ -162,6 +162,11 @@ GameInfo
 	AddEventHandlers = "cl_Handler"
 	AddEventHandlers = "cl_FXThrottleHandler"
 	AddEventHandlers = "PBWP_CombatDamageHandler"
+	AddEventHandlers = "PB2022_AddonsHandler"
+	AddEventHandlers = "PB2022_SmartScavHandler"
+	AddEventHandlers = "PB2022_ItemArmorSpawnHandler"
+	AddEventHandlers = "PB2022_DamageIndicatorHandler"
+	AddEventHandlers = "PB2022_ScopeHandler"
 	// Combat SFX warm-cache (~45 logical names): decoded at each map load (incl. TITLEMAP) to cut first-play hitches from PK3/OGG decode. Expand via maint_scripts or SNDINFO + gameplay profiling — do not list all ~4k PB sounds here.
 	PrecacheSounds =
 		"weapons/pistol", "weapons/pistolup",
@@ -400,7 +405,7 @@ DoomEdNums
 	23207 = PB_CF_IceWallGenPickup
 	23208 = PB_CF_HoloDecoyPickup
 	23209 = PB_CF_TeslaTurretPickup
-	23210 = PB_CF_FlameTurretPickup
+	// 23210 freed — former PB_CF_FlameTurretPickup
 	23211 = PB_CF_FreezeMinePickup
 
 	23212 = PB_CryoShotgun
@@ -424,7 +429,24 @@ DoomEdNums
 	23231 = PBWP_Dispatcher
 	23232 = PBWP_SiriusCrisis
 	23233 = Tactical_Nail_Gun
-	23234 = ThunderCrossbow
+	// 23234 unused (former ThunderCrossbow)
+	23235 = PB_NormalRifle
+	23236 = MP12
+	23237 = LoRCalamityBlade
+	// 23238 unused (former PB_CryoRifle / TeiTenga Type B Freezer Thrower)
+	23239 = Extinction_Ray
+	23240 = PlasmaRifleAssault
+	23241 = Satan_Scream
+	// 23242 freed — former ThunderCarrierTI (Heavy Lust)
+	23243 = PB_HYDRA
+	23244 = INNailGun
+	23245 = MagnumSniperRifle
+	23246 = Black_DMR_RKX
+	23247 = AssaultR1
+	23248 = M45Shotgun
+	23249 = W_SMG
+	23250 = FrostburnDevice
+	23251 = PB2022_BattleRifle_Upgrade
 
 	17003 = CyberdemonLegsFatality
 

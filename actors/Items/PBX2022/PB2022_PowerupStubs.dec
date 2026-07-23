@@ -1,0 +1,4 @@
+// PBX2022 — aliases for powerup types referenced by PBX ZScript / legacy DECORATE givers.
+ACTOR Regeneration : PowerRegeneration { }
+ACTOR Frightener : PowerFrightener { }
+ACTOR Speed : PowerSpeed { }

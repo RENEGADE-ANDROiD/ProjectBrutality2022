@@ -261,23 +261,18 @@ ACTOR QueenBFG
 		CBTS A 2 BRIGHT A_SeekerMissile(1,4)//(1,90)
 		TNT1 A 0 BRIGHT A_SpawnItemEx("ZWAVE",0,0,0,0,0,0,0,128)
 		CBTS B 2 BRIGHT A_SeekerMissile(1,4)
-		TNT1 A 0 BRIGHT A_SpawnItemEx("ZWAVE",0,0,0,0,0,0,0,128)
 		CBTS C 2 BRIGHT A_SeekerMissile(1,4)
 		TNT1 A 0 BRIGHT A_SpawnItemEx("ZWAVE",0,0,0,0,0,0,0,128)
 		CBTS D 2 BRIGHT A_SeekerMissile(1,4)
-		TNT1 A 0 BRIGHT A_SpawnItemEx("ZWAVE",0,0,0,0,0,0,0,128)
 		CBTS E 2 BRIGHT A_SeekerMissile(1,4)
 		TNT1 A 0 BRIGHT A_SpawnItemEx("ZWAVE",0,0,0,0,0,0,0,128)
 		CBTS F 2 BRIGHT A_SeekerMissile(1,4)
-		TNT1 A 0 BRIGHT A_SpawnItemEx("ZWAVE",0,0,0,0,0,0,0,128)
 		CBTS G 2 BRIGHT A_SeekerMissile(1,4)
 		TNT1 A 0 BRIGHT A_SpawnItemEx("ZWAVE",0,0,0,0,0,0,0,128)
 		CBTS H 2 BRIGHT A_SeekerMissile(1,4)
-		TNT1 A 0 BRIGHT A_SpawnItemEx("ZWAVE",0,0,0,0,0,0,0,128)
 		CBTS I 2 BRIGHT A_SeekerMissile(1,4)
 		TNT1 A 0 BRIGHT A_SpawnItemEx("ZWAVE",0,0,0,0,0,0,0,128)
 		CBTS J 2 BRIGHT A_SeekerMissile(1,4)
-		TNT1 A 0 BRIGHT A_SpawnItemEx("ZWAVE",0,0,0,0,0,0,0,128)
 		Loop
 	Death:
 	    CBTS K 0 Radius_Quake(15,15,0,40,0)
@@ -299,8 +294,18 @@ ACTOR ZWAVE
    states
    {
    Spawn:
+      TNT1 A 0 A_CheckSight("Seen")
+      Stop
+   Seen:
+      TNT1 A 0 A_JumpIfCloser(2048, 1)
+      Goto Far
+   Near:
       TNT1 A 4
       BLST ABCDEFGHIJKLMNOP 3 BRIGHT A_FadeOut(0.0625)
+      Stop
+   Far:
+      TNT1 A 2
+      BLST IJKLMNOP 3 BRIGHT A_FadeOut(0.1)
       Stop
    }
 }

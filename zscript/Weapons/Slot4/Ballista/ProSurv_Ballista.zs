@@ -25,7 +25,6 @@ class ProSurv_Ballista : PB_WeaponBase
 	+WEAPON.NOALERT;
 	+WEAPON.NOAUTOAIM;
 	+WEAPON.NOAUTOFIRE;
-	+FORCEXYBILLBOARD;
 	Scale 0.7;
 	Tag "Pro-Surv Ballista";
 	}
@@ -183,10 +182,7 @@ class ProSurv_Ballista : PB_WeaponBase
 		Ready3:
 				TNT1 A 0 PB_CheckBarrelIdle1();
 				TNT1 A 0 PB_HandleCrosshair(29);
-				TNT1 A 0 {
-					A_SetRoll(0);
-					A_SetInventory("PB_LockScreenTilt",0);
-					}
+				TNT1 A 0 A_SetInventory("PB_LockScreenTilt",0);
 				TNT1 A 0;
 				Goto ReadyToFire;
 		ChooseUpgradePath:
@@ -305,12 +301,13 @@ class ProSurv_Ballista : PB_WeaponBase
 				TNT1 A 0;
 				TNT1 A 0 {
 					if(CountInv("NoFatality") == 0 && GetCVar ("pb_auto_fatality_fire") == 1) {
-						return PB_Execute();
+						return PB_TryAutoFatalityOnFire();
 					}
 					return ResolveState(null);
 					}
 				TNT1 A 0 A_ZoomFactor(0.98);
 				TNT1 A 0 A_JumpIfInventory("BallistaDemonicMode",1,"FireDemonic");
+				TNT1 A 0 A_JumpIfInventory("BallistaExplosiveMode",1,"FireExplosive");
 				TNT1 A 0 A_PlaySoundEx("weapons/ballista/firebolt", "Auto");
 				TNT1 A 0 A_TakeInventory("BallistaAmmo",1);
 				TNT1 A 0 A_FireCustomMissile("BallistaBolt", 0, 0, 0, -1, 0, 0);
@@ -322,6 +319,19 @@ class ProSurv_Ballista : PB_WeaponBase
 				"CRBW" "JJ" 1 A_SetPitch(+1.0 + pitch);
 				"CRBW" J 1 A_SetPitch(+0.5 + pitch);
 				"CRBW" J 2 A_WeaponReady(WRF_NOFIRE| WRF_NOBOB);//Allows quick switch;
+				Goto ReadyEmpty;
+		FireExplosive:
+				TNT1 A 0 A_TakeInventory("BallistaAmmo",1);
+				TNT1 A 0 A_PlaySoundEx("weapons/ballista/firebolt", "Auto");
+				TNT1 A 0 A_FireCustomMissile("ExplosiveBolt", 0, 0, 0, -1, 0, 0);
+				"CRBW" F 1;
+				"CRBW" G 1;
+				"CRBW" H 0 A_SetPitch(-1.5 + pitch);
+				"CRBW" I 0 A_ZoomFactor(1.00);
+				"CRBW" J 1 A_SetPitch(+1.0 + pitch);
+				"CRBW" "JJ" 1 A_SetPitch(+1.0 + pitch);
+				"CRBW" J 1 A_SetPitch(+0.5 + pitch);
+				"CRBW" J 2 A_WeaponReady(WRF_NOFIRE| WRF_NOBOB);
 				Goto ReadyEmpty;
 		FireDemonic:
 				TNT1 A 0 A_TakeInventory("BallistaAmmo",1);
@@ -344,9 +354,32 @@ class ProSurv_Ballista : PB_WeaponBase
 					A_ZoomFactor(1.0);
 					A_ClearOverlays(10,11);
 				}
+				TNT1 A 0 A_JumpIfInventory("Select_Ballista_StandardMode", 1, "WheelBallistaStandard");
+				TNT1 A 0 A_JumpIfInventory("Select_Ballista_ExplosiveMode", 1, "WheelBallistaExplosive");
+				TNT1 A 0 A_JumpIfInventory("Select_Ballista_DemonicMode", 1, "WheelBallistaDemonic");
 				TNT1 A 0 A_JumpIfInventory ("BallistaUpgraded",1,2);
 				TNT1 A 0 A_Print("\coNeed \c-the \ctballista \c-module");
 				Goto Ready3;
+		WheelBallistaStandard:
+				TNT1 A 0 {
+					A_TakeInventory("Select_Ballista_StandardMode", 1);
+					A_TakeInventory("BallistaDemonicMode", 1);
+					A_TakeInventory("BallistaExplosiveMode", 1);
+					A_Print("\ctStandard \c-bolt mode");
+				}
+				Goto Ready3;
+		WheelBallistaExplosive:
+				TNT1 A 0 {
+					A_TakeInventory("Select_Ballista_ExplosiveMode", 1);
+					A_TakeInventory("BallistaDemonicMode", 1);
+					A_GiveInventory("BallistaExplosiveMode", 1);
+					A_Print("\ciExplosive \c-bolt mode");
+				}
+				Goto Ready3;
+		WheelBallistaDemonic:
+				TNT1 A 0 A_JumpIfInventory ("BallistaUpgraded",1,1);
+				Goto Ready3;
+				TNT1 A 0 A_TakeInventory("Select_Ballista_DemonicMode", 1);
 				TNT1 A 0 A_JumpIfInventory ("BallistaDemonicMode",1,"WeaponSpecialDemonic");
 				TNT1 A 0 A_JumpIfInventory ("PB_DTech",3,1);
 				Goto Ready3;
@@ -358,7 +391,10 @@ class ProSurv_Ballista : PB_WeaponBase
 				"CBOR" "GF" 1 A_SetRoll(roll-.3, SPF_INTERPOLATE);
 				TNT1 A 0 A_PlaySoundEx("Ironsights", "Auto");
 				"CBOR" "EDCBA" 1;
-				"CBWR" P 5 A_SetInventory("BallistaDemonicMode",1);
+				"CBWR" P 5 {
+					A_TakeInventory("BallistaExplosiveMode", 1);
+					A_SetInventory("BallistaDemonicMode",1);
+				}
 				TNT1 A 0 A_PlaySoundEx("weapons/ballista/boltinoutdemonic", "Auto");
 				TNT1 A 0 A_TakeInventory("PB_DTech",3);
 				"CBOR" "OPQ" 1 A_SetRoll(roll+.3, SPF_INTERPOLATE);
@@ -377,7 +413,10 @@ class ProSurv_Ballista : PB_WeaponBase
 				TNT1 A 0 A_GiveInventory("PB_DTech",3);
 				"CBOR" T 1 A_SetRoll(roll-.4, SPF_INTERPOLATE);
 				"CBOR" "SRQPO" 1;
-				"CBWR" P 5 A_SetInventory("BallistaDemonicMode",0);
+				"CBWR" P 5 {
+					A_TakeInventory("BallistaExplosiveMode", 1);
+					A_SetInventory("BallistaDemonicMode",0);
+				}
 				"CBOR" "AB" 1;
 				TNT1 A 0 A_PlaySoundEx("weapons/ballista/boltin", "Auto");
 				TNT1 A 0 A_TakeInventory("PB_HighCalMag",1);
@@ -409,7 +448,7 @@ class ProSurv_Ballista : PB_WeaponBase
 				TNT1 A 0;
 				TNT1 A 0 {
 					if(CountInv("NoFatality") == 0 && GetCVar ("pb_auto_fatality_fire") == 1) {
-						return PB_Execute();
+						return PB_TryAutoFatalityOnFire();
 					}
 					return ResolveState(null);
 					}
