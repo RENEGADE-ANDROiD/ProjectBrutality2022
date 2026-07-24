@@ -82,6 +82,31 @@ class PB2022_ColoredArmorBase : BasicArmorPickup
 		return true;
 	}
 
+	virtual Name GetPickupAuraClass()
+	{
+		return 'None';
+	}
+
+	void EnsurePickupAura()
+	{
+		Name ac = GetPickupAuraClass();
+		if (ac == 'None')
+			return;
+		if (CountInv("PB_PickupAuraSpawned") > 0)
+			return;
+		Class<Actor> cls = (class<Actor>)(ac);
+		if (!cls)
+			return;
+		A_SpawnItemEx(cls, 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		GiveInventory("PB_PickupAuraSpawned", 1);
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		EnsurePickupAura();
+	}
+
 	override bool TryPickup(in out Actor toucher)
 	{
 		bool pickup = Super.TryPickup(toucher);
@@ -456,11 +481,13 @@ class PB2022_RedArmor : PB2022_ColoredArmorBase
 		Tag "$PBXArmors_Red";
 	}
 
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraRed'; }
+
 	States
 	{
 	Spawn:
 		ARM3 A 1 Bright;
-		ARM3 A 2 Bright A_SpawnItem("RedFlareMedium", 0, 10);
+		ARM3 A 2 Bright;
 		Loop;
 	}
 
@@ -484,6 +511,8 @@ class PB2022_PurpleArmor : PB2022_ColoredArmorBase
 		Super.PostBeginPlay();
 	}
 
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraPurple'; }
+
 	Default
 	{
 		armor.savepercent PURPLE_PERCENT;
@@ -497,7 +526,7 @@ class PB2022_PurpleArmor : PB2022_ColoredArmorBase
 	{
 	Spawn:
 		ARM6 A 1 Bright;
-		ARM6 A 1 Bright A_SpawnItem("PurpleFlareSmall", 0, 10);
+		ARM6 A 1 Bright;
 		Loop;
 	}
 }
@@ -509,6 +538,8 @@ class PB2022_WhiteArmor : PB2022_ColoredArmorBase
 		armortoken = 'PB2022_RegenerationToken';
 		Super.PostBeginPlay();
 	}
+
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraWhite'; }
 
 	Default
 	{
@@ -523,7 +554,7 @@ class PB2022_WhiteArmor : PB2022_ColoredArmorBase
 	{
 	Spawn:
 		ARM4 A 1 Bright;
-		ARM4 A 1 Bright A_SpawnItem("WhiteFlareSmall", 0, 10);
+		ARM4 A 1 Bright;
 		Loop;
 	}
 }
@@ -538,6 +569,8 @@ class PB2022_OrangeArmor : PB2022_ColoredArmorBase
 		Inventory.AltHudIcon "ARM7A0";
 		Tag "$PBXArmors_Orange_Tag";
 	}
+
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraOrange'; }
 
 	States
 	{
@@ -567,6 +600,8 @@ class PB2022_YellowArmor : PB2022_ColoredArmorBase
 		Super.PostBeginPlay();
 	}
 
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraYellow'; }
+
 	Default
 	{
 		armor.savepercent YELLOW_PERCENT;
@@ -580,7 +615,7 @@ class PB2022_YellowArmor : PB2022_ColoredArmorBase
 	{
 	Spawn:
 		ARM5 A 1 Bright;
-		ARM5 A 2 Bright A_SpawnItem("YellowFlareMedium", 0, 10);
+		ARM5 A 2 Bright;
 		Loop;
 	}
 }
@@ -592,6 +627,8 @@ class PB2022_BlackArmor : PB2022_ColoredArmorBase
 		armortoken = 'PB_Backpack';
 		Super.PostBeginPlay();
 	}
+
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraGray'; }
 
 	Default
 	{
@@ -622,13 +659,15 @@ class PB2022_DemonArmor : PB2022_ColoredArmorBase
 		Tag "$PBXArmors_Demon_Tag";
 	}
 
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraRed'; }
+
 	States
 	{
 	Spawn:
 		ARM9 A 6 Bright;
-		ARM9 B 6 Bright A_SpawnItem("RedFlareSmall", 0, 10);
+		ARM9 B 6 Bright;
 		ARM9 C 6 Bright;
-		ARM9 B 6 Bright A_SpawnItem("RedFlareSmall", 0, 10);
+		ARM9 B 6 Bright;
 		Loop;
 	}
 
@@ -657,6 +696,8 @@ class PB2022_CyanArmor : PB2022_ColoredArmorBase
 		Tag "$PBXArmors_Cyan_Tag";
 	}
 
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraCyan'; }
+
 	States
 	{
 	Spawn:
@@ -684,6 +725,8 @@ class PB2022_DarkPurpleArmor : PB2022_ColoredArmorBase
 		Super.PostBeginPlay();
 	}
 
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraPurple'; }
+
 	Default
 	{
 		armor.savepercent DPURPLE_PERCENT;
@@ -709,6 +752,8 @@ class PB2022_DarkRedArmor : PB2022_ColoredArmorBase
 		armortoken = 'PB2022_ReactiveArmorToken';
 		Super.PostBeginPlay();
 	}
+
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraRed'; }
 
 	Default
 	{
@@ -736,6 +781,8 @@ class PB2022_GoldArmor : PB2022_ColoredArmorBase
 		Super.PostBeginPlay();
 	}
 
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraYellow'; }
+
 	Default
 	{
 		armor.savepercent GOLD_PERCENT;
@@ -761,6 +808,8 @@ class PB2022_GrayArmor : PB2022_ColoredArmorBase
 		Inventory.AltHudIcon "DUMYA0";
 		Tag "$PBXArmors_Gray_Tag";
 	}
+
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraGray'; }
 
 	States
 	{
@@ -802,6 +851,8 @@ class PB2022_LightBlueArmor : PB2022_ColoredArmorBase
 		Super.PostBeginPlay();
 	}
 
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraBlue'; }
+
 	Default
 	{
 		armor.savepercent LBLUE_PERCENT;
@@ -828,6 +879,8 @@ class PB2022_LightGreenArmor : PB2022_ColoredArmorBase
 		Super.PostBeginPlay();
 	}
 
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraGreen'; }
+
 	Default
 	{
 		armor.savepercent LGREEN_PERCENT;
@@ -853,6 +906,8 @@ class PB2022_PinkArmor : PB2022_ColoredArmorBase
 		armortoken = 'PB2022_RepulsorToken';
 		Super.PostBeginPlay();
 	}
+
+	override Name GetPickupAuraClass() { return 'PB_PickupAuraPink'; }
 
 	Default
 	{

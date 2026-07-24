@@ -18,9 +18,12 @@ ACTOR PB_RedArmor : BasicArmorPickup
 	{
 	Spawn:
 		TNT1 A 0 A_CheckSight ("Spawn2")
+		TNT1 A 0 A_JumpIfInventory("PB_PickupAuraSpawned", 1, "SpawnAnim")
+		TNT1 A 0 A_SpawnItemEx("PB_PickupAuraRed", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_GiveInventory("PB_PickupAuraSpawned", 1)
+	SpawnAnim:
 		4RM3 AA 6 bright
 		4RM3 BB 3
-		TNT1 A 0 A_SpawnItem("RedFlareArmor", 0, 10)
 		loop
 	Spawn2:
 		4RM3 AB 10 bright
