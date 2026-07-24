@@ -3063,51 +3063,105 @@ class DEDashJumpHandler : EventHandler
 
 Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMaligno ( https://www.youtube.com/watch?v=mTfGxY_Afhs )
 {
+	const DashMaxCharge = 35;
+
 	Double DashDir, DashSpeed;
 	Int DashTics, DashCharge, AirTics;
 	Bool DJump, Waiting;
-	/*Default
+
+	// Double-tap move-key dash (pb_doubletap) — separate from orphaned PlayerPawnBase.DoubleTapCheck.
+	Int DashFirstTapTime;
+	Int DashFirstTapValue;
+	Int DashOldTapValue;
+
+	bool TryStartDash()
 	{
-		Inventory.MaxAmount 1;
-		+INVENTORY.AUTOACTIVATE
-	}*/
+		if (!Owner || !Owner.Player || Owner.Health < 1) return false;
+		if (Waiting || DashTics || DashCharge < DashMaxCharge / 2) return false;
+		if (Owner.CheckInventory("IsSlideKicking", 1)) return false;
+		if (Owner.CheckInventory("ExecutionToken", 1)) return false;
+
+		PlayerInfo P = Owner.Player;
+		// Analog-friendly dash direction (malingo / 0.3+ staging: atan2 of cmd move vs. pure 8-way keys)
+		if (P.cmd.forwardmove == 0 && P.cmd.sidemove == 0)
+			DashDir = Owner.Angle;
+		else
+			DashDir = DeltaAngle(atan2(P.cmd.sidemove, P.cmd.forwardmove), Owner.Angle);
+
+		if (DashCharge < DashMaxCharge) { Waiting = true; DashCharge = 0; }
+		DashCharge = Max(0, DashCharge - DashMaxCharge / 2);
+		DashSpeed = 50; // PBv0.3 PlayerPawn: dashSpeed = 50
+		DashTics = 10;
+		Owner.A_SetBlend("White", 0.05, 20);
+		Owner.A_StartSound("player/dash", 6, CHANF_OVERLAP);
+		Owner.A_QuakeEx(2, 2, 2, 10, 0, 1, "", QF_SCALEDOWN, rollintensity: 0.2);
+		Owner.A_GiveInventory("PlayerDashed", 1);
+		EventHandler.SendInterfaceEvent(Owner.PlayerNumber(), "PB_DashWhatchamacallit");
+		Actor C = Spawn("DashCollisionChecker", Owner.Pos);
+		C.bSolid = true;
+		C.Master = Self;
+		C.Target = Owner;
+		C.A_SetSize(Owner.Radius, Owner.Height);
+		C.bNoTImeFreeze = true;
+		GiveInventory("EvadeCheck", 1);
+		return true;
+	}
+
+	void CheckDoubleTapDash(PlayerInfo P, int BT)
+	{
+		let cvTap = CVar.GetCVar("pb_doubletap", P);
+		if (!cvTap || !cvTap.GetBool()) return;
+
+		int maxTapTime = 10;
+		let cvMax = CVar.GetCVar("pb_maxtaptime", P);
+		if (cvMax) maxTapTime = cvMax.GetInt();
+		if (maxTapTime < 1) maxTapTime = 1;
+
+		int tapValue = (BT & BT_FORWARD) + (BT & BT_BACK) + (BT & BT_MOVERIGHT) + (BT & BT_MOVELEFT);
+		int secondTapValue = 0;
+
+		if (tapValue & ~DashOldTapValue)
+		{
+			if (!DashFirstTapValue)
+			{
+				DashFirstTapTime = Level.MapTime;
+				DashFirstTapValue = tapValue;
+			}
+			else if (tapValue != DashFirstTapValue)
+			{
+				DashFirstTapTime = 0;
+				DashFirstTapValue = 0;
+			}
+			else
+			{
+				secondTapValue = tapValue;
+			}
+		}
+
+		if ((DashFirstTapValue && secondTapValue) || Level.MapTime > DashFirstTapTime + maxTapTime)
+		{
+			if (secondTapValue && Level.MapTime <= DashFirstTapTime + maxTapTime)
+				TryStartDash();
+			DashFirstTapValue = 0;
+			DashFirstTapTime = 0;
+		}
+
+		DashOldTapValue = tapValue;
+	}
+
 	Override Void Tick()
 	{
 		Super.Tick();
 		If(!Owner || Owner && (!Owner.Player || Owner.Health<1)) Return;
 		PlayerInfo P=Owner.Player;
-		
-		
-		
+
 		Int BT=P.cmd.buttons;
-		
-		Int DashMaxCharge=35;
-		
-		If(!Waiting && (BT & BT_USER3) && DashCharge>=DashMaxCharge/2 && !DashTics && !Owner.CheckInventory("IsSlideKicking", 1))
-		{
-			// Analog-friendly dash direction (malingo / 0.3+ staging: atan2 of cmd move vs. pure 8-way keys)
-			if (P.cmd.forwardmove == 0 && P.cmd.sidemove == 0)
-				DashDir = Owner.Angle;
-			else
-				DashDir = DeltaAngle(atan2(P.cmd.sidemove, P.cmd.forwardmove), Owner.Angle);
-			If(DashCharge<DashMaxCharge) { Waiting=True; DashCharge=0; }
-			DashCharge=Max(0,DashCharge-DashMaxCharge/2);
-			DashSpeed=50; // PBv0.3 PlayerPawn: dashSpeed = 50
-			DashTics=10;
-			Owner.A_SetBlend("White",0.05,20);
-			Owner.A_StartSound("player/dash",6,CHANF_OVERLAP);
-			Owner.A_QuakeEx(2,2,2,10,0,1,"",QF_SCALEDOWN, rollintensity:0.2);
-			Owner.A_GiveInventory("PlayerDashed",1);
-			EventHandler.SendInterfaceEvent(Owner.PlayerNumber(), "PB_DashWhatchamacallit");
-			Actor C=Spawn("DashCollisionChecker",Owner.Pos);
-			C.bSolid=True;
-			C.Master=Self;
-			C.Target=Owner;
-			C.A_SetSize(Owner.Radius,Owner.Height);
-			C.bNoTImeFreeze=True;
-			GiveInventory("EvadeCheck", 1);
-		}
-		
+
+		CheckDoubleTapDash(P, BT);
+
+		If(BT & BT_USER3)
+			TryStartDash();
+
 		if(Owner.CheckInventory("ExecutionToken", 1)) {
 				Owner.vel.x = 0;
 				Owner.vel.y = 0;
@@ -3115,7 +3169,7 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 				TakeInventory("EvadeCheck", 2);
 				TakeInventory("EvadeHold", 2);
 			}
-		
+
 		// While dashing: match PBv0.3 PlayerPawn (VelFromAngle, no per-tic vel*0.5; one speed drop at tics==3)
 		If(DashTics)
 		{
@@ -3137,14 +3191,6 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 			AirTics=0;
 			level.airControl = 0.00390625;
 		}
-		//Else If(!(Owner.GetPlayerInput(MODINPUT_OLDBUTTONS) & BT_JUMP) && (Owner.GetPlayerInput(MODINPUT_BUTTONS) & BT_JUMP) && DJump && AirTics>=5)
-		
-			//Owner.Vel.Z=Max(Owner.Vel.Z+8,8);
-			//Float DoubleJumpVelZ = /*5.5*/7.4 * 1.2;
-			//Owner.Vel.Z = DoubleJumpVelZ;
-			
-			//DJump=False;
-			
 		Else AirTics++;
 		If(DashCharge<DashMaxCharge)
 		{

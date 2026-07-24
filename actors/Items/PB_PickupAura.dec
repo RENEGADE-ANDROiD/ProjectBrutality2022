@@ -1,0 +1,295 @@
+// Steady lens-flare auras for world pickups (pairs with ARMOR*/PICKUP* GLDEFS).
+// Spawn once: A_SpawnItemEx(..., SXF_SETMASTER|SXF_NOCHECKPOSITION) + give PB_PickupAuraSpawned.
+
+ACTOR PB_PickupAuraSpawned : Inventory
+{
+	Inventory.MaxAmount 1
+	+INVENTORY.UNDROPPABLE
+}
+
+ACTOR PB_PickupAuraGreen : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.35
+	Scale 0.32
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENG A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENG B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraBlue : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.35
+	Scale 0.32
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENB A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENB B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraRed : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.35
+	Scale 0.32
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENR A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENR B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraRedSmall : PB_PickupAuraRed
+{
+	Alpha 0.22
+	Scale 0.18
+}
+
+ACTOR PB_PickupAuraPurple : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.35
+	Scale 0.28
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENP A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENP B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraWhite : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.3
+	Scale 0.28
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENW A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraYellow : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.35
+	Scale 0.28
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENY A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENY B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraOrange : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.35
+	Scale 0.28
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LEYS O 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraCyan : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.35
+	Scale 0.28
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENB A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENB B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+	Translation "192:207=%[0,0,0]:[0.15,1.0,1.0]"
+}
+
+ACTOR PB_PickupAuraPink : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.35
+	Scale 0.28
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENR A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENR B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+	Translation "16:47=%[0,0,0]:[1.0,0.55,0.75]"
+}
+
+ACTOR PB_PickupAuraGray : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.28
+	Scale 0.28
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENW A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 12, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+	Translation "0:255=%[0,0,0]:[0.65,0.65,0.65]"
+}
+
+ACTOR PB_PickupAuraLens : Flare_General
+{
+	+FORCEXYBILLBOARD
+	Alpha 0.4
+	Scale 0.4
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENS A 4 Bright A_Warp(AAPTR_MASTER, 0, 0, 16, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraBlueHigh : PB_PickupAuraBlue
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENB A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENB B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraGreenHigh : PB_PickupAuraGreen
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENG A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 35, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENG B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 35, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraRedHigh : PB_PickupAuraRed
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENR A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 35, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENR B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 35, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraYellowHigh : PB_PickupAuraYellow
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENY A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENY B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraPurpleHigh : PB_PickupAuraPurple
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENP A 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENP B 3 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_PickupAuraLensHigh : PB_PickupAuraLens
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		LENS A 4 Bright A_Warp(AAPTR_MASTER, 0, 0, 35, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}

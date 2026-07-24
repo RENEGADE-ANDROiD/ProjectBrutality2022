@@ -580,6 +580,7 @@ object NukageBarrel
     frame BIXPO { light ROCKET_X3 }
     frame BIXPP { light ROCKET_X3 }
     frame BIXPQ { light ROCKET_X3 }
+    // Idle frames bound in MapDecorations.inc (DECO_BARREL_* / FIREBARREL)
 }
 
 pointlight LAMP
@@ -799,6 +800,8 @@ flickerlight IMPBALL_X3
 
 object FireBall_
 {
+    frame BLHDA { light IMPBALL    }
+    frame BLHDB { light IMPBALL    }
     frame BLHDC { light IMPBALL    }
     frame BLHDD { light IMPBALL    }
     frame FRFXA { light IMPBALL    }
@@ -821,6 +824,8 @@ object CyberKnightMissile
 
 object LargeImpBall
 {
+    frame BLHDA { light IMPBALL    }
+    frame BLHDB { light IMPBALL    }
     frame BLHDC { light IMPBALL    }
     frame BLHDD { light IMPBALL    }
     frame FRFXA { light IMPBALL    }
@@ -836,6 +841,8 @@ object LargeImpBall
 
 object SmallImpBall
 {
+    frame BLHDA { light IMPBALL    }
+    frame BLHDB { light IMPBALL    }
     frame BLHDC { light IMPBALL    }
     frame BLHDD { light IMPBALL    }
     frame FRFXA { light IMPBALL    }
@@ -1199,6 +1206,26 @@ object ArmorShard
     frame B0N2 { light GREENITEM  }
 }
 
+object GiveArmor
+{
+    frame B0N2 { light GREENITEM  }
+}
+
+object LightArmor
+{
+    frame 4RM1 { light ARMORGREEN }
+}
+
+object HeavyArmor
+{
+    frame 4RM2 { light ARMORBLUE }
+}
+
+object MediumArmor
+{
+    frame 4RM3 { light ARMORRED }
+}
+
 
 
 
@@ -1334,8 +1361,38 @@ pulselight BLUEITEM
     dontlightself 1
 }
 
+// Body-armor pickups (vest scale) — same soft pulse as GREENITEM/BLUEITEM but large enough to read on the floor.
+pulselight ARMORGREEN
+{
+    color 0.15 1.0 0.15
+    size 44
+    secondarySize 56
+    interval 0.6
+    offset 0 18 0
+}
+
+pulselight ARMORBLUE
+{
+    color 0.15 0.25 1.0
+    size 44
+    secondarySize 56
+    interval 0.6
+    offset 0 18 0
+}
+
+pulselight ARMORRED
+{
+    color 1.0 0.15 0.15
+    size 44
+    secondarySize 56
+    interval 0.6
+    offset 0 18 0
+}
+
 #include "lumps/includes/gldefs/WolvusMutator.inc"
 #include "lumps/includes/gldefs/CustomShardsPotions.inc"
+#include "lumps/includes/gldefs/PickupAuras.inc"
+#include "lumps/includes/gldefs/MapDecorations.inc"
 
 
 

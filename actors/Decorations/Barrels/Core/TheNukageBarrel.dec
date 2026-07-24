@@ -76,12 +76,18 @@ ACTOR NukageBarrel : SwitchableDecoration
 				"####" "#" 0 A_JumpIfInventory("BarrelIsFlaming",1,"Pain.Fire")
 				"####" "#" 0 A_JumpIfInventory("DrainedBarrel",1,"SeeEmpty")
 				"####" "#" 0 A_JumpIfInventory("DrainedBarrelCut",1,"SeeEmpty")
+				"####" "#" 0 A_JumpIfInventory("PB_DecoAuraNukageSpawned", 1, 2)
+				"####" "#" 0 A_SpawnItemEx("PB_DecoAura_BarrelGreen", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+				"####" "#" 0 A_GiveInventory("PB_DecoAuraNukageSpawned", 1)
 				"####" ABCDEF 2 
 				Goto BloodChecker 
 			SeeIce:
 				"####" "#" 0 A_JumpIfInventory("BarrelIsFlaming",1,"SeeFlame")
 				"####" "#" 0 A_JumpIfInventory("DrainedBarrel",1,"SeeEmpty")
 				"####" "#" 0 A_JumpIfInventory("DrainedBarrelCut",1,"SeeEmpty")
+				"####" "#" 0 A_JumpIfInventory("PB_DecoAuraIceSpawned", 1, 2)
+				"####" "#" 0 A_SpawnItemEx("PB_DecoAura_BarrelIce", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+				"####" "#" 0 A_GiveInventory("PB_DecoAuraIceSpawned", 1)
 				"####" "#" 6
 				"####" "#" 0 A_SpawnItemEx("CryoSmoke",0,0,5)
 				Goto BloodChecker
@@ -89,6 +95,9 @@ ACTOR NukageBarrel : SwitchableDecoration
 				"####" "#" 0 A_JumpIfInventory("BarrelIsFrozen",1,"SeeIce")
 				"####" "#" 0 A_JumpIfInventory("DrainedBarrel",1,"SeeEmpty")
 				"####" "#" 0 A_JumpIfInventory("DrainedBarrelCut",1,"SeeEmpty")
+				"####" "#" 0 A_JumpIfInventory("PB_DecoAuraFlameSpawned", 1, 2)
+				"####" "#" 0 A_SpawnItemEx("PB_DecoAura_BarrelFlame", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+				"####" "#" 0 A_GiveInventory("PB_DecoAuraFlameSpawned", 1)
 				"####" "#" 0 A_SpawnItemEx("BarrelTopFire2", random(-2,2), random(-2,2), 30,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION)
 				"####" "#" 7
 				"####" "#" 0 bright A_CustomMissile ("BigBlackSmokePillarShort", 30, 0, random (40, 180), 2, random (60, 120))

@@ -363,6 +363,13 @@ OptionMenu "PB2022_MovementMenu"
 	Command "Disable Advanced Movement Extras", "set pb_doublejump 0; set pb_hazardmovement 0"
 	StaticText "Sets pb_doublejump and pb_hazardmovement.", teal
 	StaticText " "
+	StaticText "======== Dash ========", gold
+	StaticText " "
+	Option "$OPTMNU_PB_DOUBLETAP_DASH", "pb_doubletap", "OnOff"
+	StaticText "$OPTMNU_PB_DOUBLETAP_DASH_HINT", green
+	Slider "$OPTMNU_PB_DOUBLETAP_WINDOW", "pb_maxtaptime", 5, 20, 1, 0
+	StaticText "$OPTMNU_PB_DOUBLETAP_WINDOW_HINT", green
+	StaticText " "
 	StaticText "======== Explosive Movement ========", gold
 	StaticText " "
 	Option "Rocket Jumping", "pb_rocketjump", "OnOff"
@@ -525,6 +532,8 @@ OptionMenu "PB2022_HudMenu"
 	StaticText " "
 	Option "$OPTMNU_PB_ACHIEVEMENTS", "pb_achievements", "OnOff"
 	StaticText "$OPTMNU_PB_ACHIEVEMENTS_HINT", cyan
+	StaticText "$OPTMNU_PB_ACHIEVEMENTS_HINT2", cyan
+	StaticText "$OPTMNU_PB_ACHIEVEMENTS_HINT3", cyan
 	StaticText " "
 	Submenu "$OPTMNU_PB_ACHIEVEMENTS_MENU", "PBAchievementsMenu"
 	StaticText " "
@@ -532,6 +541,8 @@ OptionMenu "PB2022_HudMenu"
 	StaticText " "
 	Option "$PB_WEAPON_WHEEL_ENABLE", "pb_weapon_wheel_enable", "OnOff"
 	StaticText "$PB_WEAPON_WHEEL_ENABLE_DESC", cyan
+	StaticText "$PB_WEAPON_WHEEL_ENABLE_DESC2", cyan
+	StaticText "$PB_WEAPON_WHEEL_ENABLE_DESC3", cyan
 	StaticText " "
 	Option "Weapon Special Wheel Freezes Time", "py_weaponwheel_freeze", "OnOff"
 	StaticText "py_weaponwheel_freeze", teal
@@ -1006,7 +1017,9 @@ OptionMenu "GameplaySettings"
   StaticText " "
 	Option "$PB_DUALSTYLE",	"SingleDualFire", "DualWieldOption"
 	StaticText "$PB_DUALSTYLE_SIN", green
+	StaticText "$PB_DUALSTYLE_SIN2", green
 	StaticText "$PB_DUALSTYLE_DEF"
+	StaticText "$PB_DUALSTYLE_DEF2"
 	StaticText " "
 	StaticText " "
   
@@ -1099,7 +1112,8 @@ OptionMenu "GameplaySettings"
 		
 	Option "$PB_SILENCE_MARINES",				"pb_quietmarines", "OnOff"
 	StaticText "$PB_SILENCE_MARINES_DESC"
-	StaticText "$PB_SILENCE_MARINES_DESC2", "darkgray"
+	StaticText "$PB_SILENCE_MARINES_DESC2"
+	StaticText "$PB_SILENCE_MARINES_DESC3", "darkgray"
 	StaticText " "
 	StaticText " "
 	
@@ -1123,8 +1137,10 @@ OptionMenu "GameplaySettings"
 	Slider "$PB_RECOIL_VERTICAL", "pb_weapon_recoil_mod_vertical", 0.0, 3.0, 0.05, 2
 	Slider "$PB_RECOIL_HORIZONTAL", "pb_weapon_recoil_mod_horizontal", 0.0, 3.0, 0.05, 2
 	StaticText "$PB_RECOIL_DESC"
+	StaticText "$PB_RECOIL_DESC2"
 	Option "$PB_RECOIL_EXTRA", "pb_weapon_recoil_extra_weapons", YesNo
 	StaticText "$PB_RECOIL_EXTRA_DESC"
+	StaticText "$PB_RECOIL_EXTRA_DESC2"
 	StaticText " "
 	StaticText " "	
 }
@@ -1354,10 +1370,12 @@ OptionMenu "WeaponSettings"
 	Option "$PB_NO_M1PLASMACOOLDOWN", "pb_nocooldown", "YesNo"
 	StaticText " ", teal
 	StaticText "$PB_NO_M1PLASMACOOLDOWN_DESC"
+	StaticText "$PB_NO_M1PLASMACOOLDOWN_DESC2"
 	StaticText " ", teal
 	StaticText "$PB_NO_M1PLASMACOOLDOWN_NOTICE", "darkgray"
 	StaticText " ", teal
 	StaticText "$PB_NO_M1PLASMACOOLDOWN_EXTRA", "purple"
+	StaticText "$PB_NO_M1PLASMACOOLDOWN_EXTRA2", "purple"
 	StaticText " ", teal
 	StaticText " "
 }
@@ -1408,6 +1426,7 @@ OptionMenu "MonsterSettings"
 	
 	Option "$PB_DISABLE_PRONE", "pb_disable_sergent_prone", "YesNo"
 	StaticText "$PB_DISABLE_PRONE_DESC"
+	StaticText "$PB_DISABLE_PRONE_DESC2"
 	StaticText " "
 	
 }
