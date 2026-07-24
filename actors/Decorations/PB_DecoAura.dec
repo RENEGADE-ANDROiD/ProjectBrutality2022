@@ -1,0 +1,295 @@
+// Looping NewFlares auras for map light decorations (pairs with MapDecorations.inc).
+// Spawn once: A_SpawnItemEx(..., SXF_SETMASTER|SXF_NOCHECKPOSITION) + give latch inventory.
+
+ACTOR PB_DecoAuraSpawned : Inventory
+{
+	Inventory.MaxAmount 1
+	+INVENTORY.UNDROPPABLE
+}
+
+ACTOR PB_DecoAuraNukageSpawned : Inventory
+{
+	Inventory.MaxAmount 1
+	+INVENTORY.UNDROPPABLE
+}
+
+ACTOR PB_DecoAuraFlameSpawned : Inventory
+{
+	Inventory.MaxAmount 1
+	+INVENTORY.UNDROPPABLE
+}
+
+ACTOR PB_DecoAuraIceSpawned : Inventory
+{
+	Inventory.MaxAmount 1
+	+INVENTORY.UNDROPPABLE
+}
+
+ACTOR PB_DecoAuraBase : Flare_General
+{
+	+FORCEXYBILLBOARD
+	+NOINTERACTION
+	+NOGRAVITY
+	+CLIENTSIDEONLY
+	RenderStyle Translucent
+	Alpha 0.4
+	Scale 0.35
+}
+
+ACTOR PB_DecoAura_Candle : PB_DecoAuraBase
+{
+	Alpha 0.35
+	Scale 0.12
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TYEL X 2 Bright A_Warp(AAPTR_MASTER, 0, 0, 14, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_SetScale(0.10)
+		TYEL X 1 Bright A_Warp(AAPTR_MASTER, 0, 0, 14, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_SetScale(0.12)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_Candlestick : PB_DecoAuraBase
+{
+	Alpha 0.4
+	Scale 0.15
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TYEL X 2 Bright A_Warp(AAPTR_MASTER, 0, 0, 26, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_SetScale(0.12)
+		TYEL X 1 Bright A_Warp(AAPTR_MASTER, 0, 0, 26, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_SetScale(0.15)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_Candelabra : PB_DecoAuraBase
+{
+	Alpha 0.4
+	Scale 0.38
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		CAND X 2 Bright A_Warp(AAPTR_MASTER, 0, 0, 44, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_SetScale(0.32)
+		CAND X 1 Bright A_Warp(AAPTR_MASTER, 0, 0, 44, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_SetScale(0.38)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_TallTorchRed : PB_DecoAuraBase
+{
+	Alpha 0.4
+	Scale 0.40
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TRED X 2 Bright A_Warp(AAPTR_MASTER, 0, 0, 52, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_SetScale(0.34)
+		TRED X 1 Bright A_Warp(AAPTR_MASTER, 0, 0, 52, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_SetScale(0.40)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_TallTorchBlue : PB_DecoAuraBase
+{
+	Alpha 0.4
+	Scale 0.40
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TBLU X 2 Bright A_Warp(AAPTR_MASTER, 0, 0, 52, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_SetScale(0.34)
+		TBLU X 1 Bright A_Warp(AAPTR_MASTER, 0, 0, 52, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_SetScale(0.40)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_TallTorchGreen : PB_DecoAuraBase
+{
+	Alpha 0.4
+	Scale 0.40
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TGRN X 2 Bright A_Warp(AAPTR_MASTER, 0, 0, 52, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_SetScale(0.34)
+		TGRN X 1 Bright A_Warp(AAPTR_MASTER, 0, 0, 52, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_SetScale(0.40)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_ShortTorchRed : PB_DecoAura_TallTorchRed
+{
+	Scale 0.22
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TRED X 2 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_SetScale(0.18)
+		TRED X 1 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_SetScale(0.22)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_ShortTorchBlue : PB_DecoAura_TallTorchBlue
+{
+	Scale 0.22
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TBLU X 2 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_SetScale(0.18)
+		TBLU X 1 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_SetScale(0.22)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_ShortTorchGreen : PB_DecoAura_TallTorchGreen
+{
+	Scale 0.22
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TGRN X 2 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_SetScale(0.18)
+		TGRN X 1 Bright A_Warp(AAPTR_MASTER, 0, 0, 30, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_SetScale(0.22)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_Column : PB_DecoAuraBase
+{
+	Alpha 0.28
+	Scale 0.25
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		COLU X 4 Bright A_Warp(AAPTR_MASTER, 0, 0, 40, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_TechLamp : PB_DecoAuraBase
+{
+	Alpha 0.28
+	Scale 0.25
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TLMP X 4 Bright A_Warp(AAPTR_MASTER, 0, 0, 44, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_BarrelGreen : PB_DecoAuraBase
+{
+	Alpha 0.28
+	XScale 0.25
+	YScale 0.15
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_JumpIfInventory("BarrelIsFlaming", 1, "Null", AAPTR_MASTER)
+		TNT1 A 0 A_JumpIfInventory("BarrelIsFrozen", 1, "Null", AAPTR_MASTER)
+		TNT1 A 0 A_JumpIfInventory("DrainedBarrel", 1, "Null", AAPTR_MASTER)
+		TNT1 A 0 A_JumpIfInventory("DrainedBarrelCut", 1, "Null", AAPTR_MASTER)
+		BAR1 X 4 Bright A_Warp(AAPTR_MASTER, 0, 0, 32, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_BarrelFlame : PB_DecoAuraBase
+{
+	Alpha 0.4
+	Scale 0.40
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_JumpIfInventory("BarrelIsFlaming", 1, 1, AAPTR_MASTER)
+		Goto Null
+		TNT1 A 0 A_JumpIfInventory("DrainedBarrel", 1, "Null", AAPTR_MASTER)
+		BBAR X 2 Bright A_Warp(AAPTR_MASTER, 0, 0, 34, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_SetScale(0.34)
+		BBAR X 1 Bright A_Warp(AAPTR_MASTER, 0, 0, 34, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_SetScale(0.40)
+		Loop
+	}
+}
+
+ACTOR PB_DecoAura_BarrelIce : PB_DecoAuraBase
+{
+	Alpha 0.32
+	Scale 0.28
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_JumpIf(!master, "Null")
+	AuraLoop:
+		TNT1 A 0 A_JumpIf(!master, "Null")
+		TNT1 A 0 A_JumpIfInventory("BarrelIsFrozen", 1, 1, AAPTR_MASTER)
+		Goto Null
+		TNT1 A 0 A_JumpIfInventory("DrainedBarrel", 1, "Null", AAPTR_MASTER)
+		TBLU X 4 Bright A_Warp(AAPTR_MASTER, 0, 0, 32, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Loop
+	}
+}

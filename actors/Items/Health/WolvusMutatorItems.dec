@@ -16,9 +16,12 @@ Actor EliteArmor : BasicArmorPickup
 	{
 	Spawn:
 		TNT1 A 0 A_CheckSight("Spawn2")
+		TNT1 A 0 A_JumpIfInventory("PB_PickupAuraSpawned", 1, "SpawnAnim")
+		TNT1 A 0 A_SpawnItemEx("PB_PickupAuraRed", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_GiveInventory("PB_PickupAuraSpawned", 1)
+	SpawnAnim:
 		4RM4 AA 6 bright
 		4RM4 BBCCBB 3
-		TNT1 A 0 A_SpawnItem("RedFlareArmor", 0, 10)
 		loop
 	Spawn2:
 		4RM4 ABC 10
@@ -50,9 +53,12 @@ Actor PristineArmor : BasicArmorPickup
 	{
 	Spawn:
 		TNT1 A 0 A_CheckSight("Spawn2")
+		TNT1 A 0 A_JumpIfInventory("PB_PickupAuraSpawned", 1, "SpawnAnim")
+		TNT1 A 0 A_SpawnItemEx("PB_PickupAuraYellow", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_GiveInventory("PB_PickupAuraSpawned", 1)
+	SpawnAnim:
 		4RM5 AA 6 bright
 		4RM5 BBCCBB 3
-		TNT1 A 0 A_SpawnItem("YellowFlareMedium", 0, 10)
 		loop
 	Spawn2:
 		4RM5 ABC 10
@@ -73,7 +79,11 @@ ACTOR NewLifeSphere : CustomInventory
 	{
 	Spawn:
 		TNT1 A 0 A_CheckSight("Spawn2")
-		GZUL ABCD 2 Bright A_SpawnItem("RedFlareSmall", 0, 35)
+		TNT1 A 0 A_JumpIfInventory("PB_PickupAuraSpawned", 1, "SpawnLoop")
+		TNT1 A 0 A_SpawnItemEx("PB_PickupAuraRedHigh", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_GiveInventory("PB_PickupAuraSpawned", 1)
+	SpawnLoop:
+		GZUL ABCD 2 Bright
 		Loop
 	Spawn2:
 		GZUL ABCD 2 BRIGHT
@@ -105,7 +115,11 @@ ACTOR UltraSphere : CustomInventory
 	{
 	Spawn:
 		TNT1 A 0 A_CheckSight("Spawn2")
-		ULTR ABCD 2 BRIGHT A_SpawnItem("LensFlare", 0, 35)
+		TNT1 A 0 A_JumpIfInventory("PB_PickupAuraSpawned", 1, "SpawnLoop")
+		TNT1 A 0 A_SpawnItemEx("PB_PickupAuraLensHigh", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_GiveInventory("PB_PickupAuraSpawned", 1)
+	SpawnLoop:
+		ULTR ABCD 2 BRIGHT
 		Loop
 	Spawn2:
 		ULTR ABCD 2 BRIGHT

@@ -153,7 +153,9 @@ OPTMNU_PB_ACCUDEATH_DYNLIGHTS = "Dynamic lights on corpses";
 OPTMNU_PB_ACCUDEATH_LIGHTSIZE = "Corpse light size";
 
 OPTMNU_PB_ACHIEVEMENTS = "Achievements";
-OPTMNU_PB_ACHIEVEMENTS_HINT = "Persistent meta goals (Vortex Universal Achievement System).\nToasts, browse menu, and PB-specific unlocks.\nOpen the list from the Blocky PDA home screen (Achievements tile) or PB 2022 Enhanced settings.";
+OPTMNU_PB_ACHIEVEMENTS_HINT = "Persistent meta goals (Vortex Universal Achievement System).";
+OPTMNU_PB_ACHIEVEMENTS_HINT2 = "Toasts, browse menu, and PB-specific unlocks.";
+OPTMNU_PB_ACHIEVEMENTS_HINT3 = "Open the list from the Blocky PDA home screen (Achievements tile) or PB 2022 Enhanced settings.";
 OPTMNU_PB_ACHIEVEMENTS_MENU = "Achievement Settings";
 OPTMNU_PB_ACHIEVEMENTS_BROWSE = "PB 2022 Achievements";
 
@@ -456,22 +458,28 @@ CM_DNMKULD = "\cd\c[DanmakuYellow]Danmaku \c-shells \cdloaded";
 CM_SUBZRLD = "\cd\cnSub-Zero \c-shells \cdloaded";
 
 PB_DISABLE_PRONE = "Disable Prone Attacks";
-PB_DISABLE_PRONE_DESC = "Sergeants Cannot Enter Prone\nShooting Attacks.";
+PB_DISABLE_PRONE_DESC = "Sergeants Cannot Enter Prone";
+PB_DISABLE_PRONE_DESC2 = "Shooting Attacks.";
 
 PB_RECOIL_HORIZONTAL = "Horizontal Recoil";
 PB_RECOIL_VERTICAL = "Vertical Recoil";
-PB_RECOIL_DESC = "Recoil Strength Multiplier.\n1.0 = Normal; 0 = Off; Higher = Stronger.";
+PB_RECOIL_DESC = "Recoil Strength Multiplier.";
+PB_RECOIL_DESC2 = "1.0 = Normal; 0 = Off; Higher = Stronger.";
 PB_RECOIL_EXTRA = "Add Recoil to more Weapons";
-PB_RECOIL_EXTRA_DESC = "Adds Kick to Rocket Launcher, Railgun Laser,\nBFG-Slot Guns, Mancubus Flame, Unmaker.";
+PB_RECOIL_EXTRA_DESC = "Adds Kick to Rocket Launcher, Railgun Laser,";
+PB_RECOIL_EXTRA_DESC2 = "BFG-Slot Guns, Mancubus Flame, Unmaker.";
 
 PB_NO_M1PLASMACOOLDOWN = "No M1 Plasma Rifle cooldown";
-PB_NO_M1PLASMACOOLDOWN_DESC = "Skips Post-Shot Cooldown\non M1 Plasma Primary Fire.";
+PB_NO_M1PLASMACOOLDOWN_DESC = "Skips Post-Shot Cooldown";
+PB_NO_M1PLASMACOOLDOWN_DESC2 = "on M1 Plasma Primary Fire.";
 PB_NO_M1PLASMACOOLDOWN_NOTICE = "Primary Fire Only.";
-PB_NO_M1PLASMACOOLDOWN_EXTRA = "Also Affects Pulse Cannon\nUpgrade When Equipped.";
+PB_NO_M1PLASMACOOLDOWN_EXTRA = "Also Affects Pulse Cannon";
+PB_NO_M1PLASMACOOLDOWN_EXTRA2 = "Upgrade When Equipped.";
 
 PB_SILENCE_MARINES = "Silence Marine Chatter";
-PB_SILENCE_MARINES_DESC = "Mutes Idle & Attack Voice Lines\nFrom Marine Allies.";
-PB_SILENCE_MARINES_DESC2 = "Pain & Death Sounds Unchanged.";
+PB_SILENCE_MARINES_DESC = "Mutes Idle & Attack Voice Lines";
+PB_SILENCE_MARINES_DESC2 = "From Marine Allies.";
+PB_SILENCE_MARINES_DESC3 = "Pain & Death Sounds Unchanged.";
 
 PB_RESPECT = "Weapon Respect animations";
 
@@ -479,9 +487,12 @@ PB_EXPERIMENTAL_EXECUTIONS = "Experimental weapon executions";
 PB_EXPERIMENTAL_EXECUTIONS_DESC = "Enables a mix of modern first person executions with third person";
 
 PB_DUALSTYLE = "Dual-Wield Fire Mode";
-PB_DUALSTYLE_SIN = "Single Button: Primary Fire Shoots Both Guns.\n(Similar to Brutal Doom v21 Dual Style.)";
-PB_DUALSTYLE_DEF = "Default: Primary Fire = Left Weapon;\nAlt-Fire = Right Weapon.";
-PB_DUALSTYLE_SINEXTRA = "(Extra) Single-button dual details.\nSee PB_DUALSTYLE_SIN.";
+PB_DUALSTYLE_SIN = "Single Button: Primary Fire Shoots Both Guns.";
+PB_DUALSTYLE_SIN2 = "(Similar to Brutal Doom v21 Dual Style.)";
+PB_DUALSTYLE_DEF = "Default: Primary Fire = Left Weapon;";
+PB_DUALSTYLE_DEF2 = "Alt-Fire = Right Weapon.";
+PB_DUALSTYLE_SINEXTRA = "(Extra) Single-button dual details.";
+PB_DUALSTYLE_SINEXTRA2 = "See PB_DUALSTYLE_SIN.";
 PB_DUALOPT_SN = "Single Button";
 PB_DUALOPT_DEF = "Default";
 
@@ -489,7 +500,9 @@ PB_OPT_Molotov = "Molotov cocktails";
 PB_WHEELTIP_WW_MolotovSelected = "Molotov Equipment Slot.\nUser1 Throws; Fire Spreads on Impact.";
 
 PB_WEAPON_WHEEL_ENABLE = "Weapon selection wheel";
-PB_WEAPON_WHEEL_ENABLE_DESC = "Master switch for the integrated Gearbox weapon selector (GPLv3+).\nWhen On, \caWeapon Selection Wheel\c- opens Gearbox. When Off, slot intercept and menu toggle are skipped.\nFull Gearbox options: \caPB 2022 Enhanced\c- â†’ \caGameplay Settings\c- â†’ \caWeapon & Inventory Selector\c-.";
+PB_WEAPON_WHEEL_ENABLE_DESC = "Master switch for the integrated Gearbox weapon selector (GPLv3+).";
+PB_WEAPON_WHEEL_ENABLE_DESC2 = "When On, \caWeapon Selection Wheel\c- opens Gearbox. When Off, slot intercept and menu toggle are skipped.";
+PB_WEAPON_WHEEL_ENABLE_DESC3 = "Full Gearbox options: \caPB 2022 Enhanced\c- -> \caGameplay Settings\c- -> \caWeapon & Inventory Selector\c-.";
 
 PB_WEAPON_SELECTOR_MENU = "Weapon & Inventory Selector";
 PB_WEAPON_SELECTOR_MENU_HINT = "Gearbox: wheel / blocks / text layout, keys, colors, and reset.";
@@ -560,6 +573,10 @@ PB_WHEELTIP_NR_Select_DualWield = "Normal Rifle: Dual wield (requires two rifles
 PB_WHEELTIP_NR_Select_Laser = "Normal Rifle: Hipfire laser dot.";
 OPTMNU_PB2022_MOVE_TIP1 = "pb_rocketjump / pb_plasma_wallclimb = explosive movement.";
 OPTMNU_PB2022_MOVE_TIP2 = "More movement: Gameplay & Movement -> Gameplay Settings.";
+OPTMNU_PB_DOUBLETAP_DASH = "Double-Tap Movement To Dash";
+OPTMNU_PB_DOUBLETAP_DASH_HINT = "Double-tap forward/back/strafe (same as Alt Dash).";
+OPTMNU_PB_DOUBLETAP_WINDOW = "Double-Tap Window (Tics)";
+OPTMNU_PB_DOUBLETAP_WINDOW_HINT = "Max delay between taps (default 10 ≈ 0.3s).";
 OPTMNU_PB2022_HUD_TIP1 = "Helmet visor, fullscreen HUD, PDA, and wheels live here.";
 OPTMNU_PB2022_HUD_TIP2 = "Gearbox weapon wheel: one submenu in this section.";
 OPTMNU_PB2022_MON_TIP1 = "Simpler Monster Settings = bundles + quick toggles.";
