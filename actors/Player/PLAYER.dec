@@ -144,6 +144,10 @@ actor ChaseCam2
   height 0
   radius 0
   +NOGRAVITY
+  +NOCLIP
+  +NOBLOCKMAP
+  +NOINTERACTION
+  +NOTONAUTOMAP
   states
   {
   Spawn:

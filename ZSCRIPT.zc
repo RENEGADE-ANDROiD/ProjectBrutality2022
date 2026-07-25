@@ -477,6 +477,13 @@ class InvisiblePuffAlways : InvisiblePuff
 }
 class CameraRunner : Inventory
 {
+	bool fatalityLitSaved;
+	bool fatalityWasBright;
+	int fatalitySavedLightLevel;
+	bool fatalityStyleSaved;
+	double fatalitySavedAlpha;
+	int fatalitySavedRenderStyle;
+
 	static bool CheckForCamera(class<Actor> classname,int tidnum)
 	{
 		ActorIterator at = Level.CreateActorIterator(tidnum);
@@ -530,11 +537,43 @@ class CameraRunner : Inventory
 		}
 		return false;
 	}
+
+	void ApplyFatalityFullbright()
+	{
+		if (!owner || fatalityLitSaved) return;
+		fatalityWasBright = owner.bBRIGHT;
+		fatalitySavedLightLevel = owner.LightLevel;
+		fatalitySavedAlpha = owner.Alpha;
+		fatalitySavedRenderStyle = owner.GetRenderStyle();
+		fatalityStyleSaved = true;
+		fatalityLitSaved = true;
+		owner.bBRIGHT = true;
+		owner.LightLevel = 255;
+		owner.A_SetRenderStyle(1.0, STYLE_Normal);
+	}
+
+	void RestoreFatalityFullbright()
+	{
+		if (!owner || !fatalityLitSaved) return;
+		owner.bBRIGHT = fatalityWasBright;
+		owner.LightLevel = fatalitySavedLightLevel;
+		if (fatalityStyleSaved)
+			owner.A_SetRenderStyle(fatalitySavedAlpha, fatalitySavedRenderStyle);
+		fatalityLitSaved = false;
+		fatalityStyleSaved = false;
+	}
+
 	void TerminateCamera()
 	{
-		owner.SetCamera(null);
-		Actor a = CheckForCameraActor("ChaseCam2",C_TID + PlayerPawn(owner).PlayerNumber());
-		if (a != NULL) a.Destroy();
+		RestoreFatalityFullbright();
+		if (owner)
+			owner.SetCamera(null);
+		let p = PlayerPawn(owner);
+		if (p)
+		{
+			Actor a = CheckForCameraActor("ChaseCam2", C_TID + p.PlayerNumber());
+			if (a != NULL) a.Destroy();
+		}
 	}
 	static void WarpCamera(int tid, int plrnum = 1)
 	{
@@ -557,19 +596,34 @@ class CameraRunner : Inventory
 	}
 	const PB_CHASECAM_DISTANCE = 160.0;
 	const PB_CHASECAM_MAX_DOWN_PITCH = 25.0;
+	const PB_CHASECAM_WALL_NUDGE = 8.0;
 	Vector3, double, double, actor ReturnCamPos(Actor a)
 	{
+		if (!a || !a.player)
+		{
+			if (a) return a.pos, a.angle, a.pitch, null;
+			return (0, 0, 0), 0.0, 0.0, null;
+		}
+
+		double viewZ = a.player.viewheight;
 		double cinePitch = clamp(a.pitch, -90.0, PB_CHASECAM_MAX_DOWN_PITCH);
-		Actor linepuff = a.LineAttack(a.angle - 180,PB_CHASECAM_DISTANCE + (a.radius*2),-cinePitch,0,'None',"InvisiblePuffAlways",LAF_NOINTERACT|LAF_NORANDOMPUFFZ,null,-(a.height/2) + a.player.viewheight);
+		double maxDist = PB_CHASECAM_DISTANCE + (a.radius * 2);
+		Actor linepuff = a.LineAttack(a.angle - 180, maxDist, -cinePitch, 0, 'None', "InvisiblePuffAlways", LAF_NOINTERACT|LAF_NORANDOMPUFFZ, null, -(a.height / 2) + viewZ);
+		Vector3 eye = a.pos + (0, 0, viewZ);
 		if (linepuff)
 		{
-			let vec3 = linepuff.pos + a.vel;
-			let anglevalue = linepuff.angle;
-			let pitchvalue = linepuff.pitch;
+			Vector3 toCam = linepuff.pos - eye;
+			double hitDist = toCam.Length();
 			linepuff.bINVISIBLE = true;
-			return vec3, anglevalue, pitchvalue,linepuff;
+			if (hitDist > PB_CHASECAM_WALL_NUDGE)
+			{
+				toCam /= hitDist;
+				Vector3 vec3 = eye + toCam * (hitDist - PB_CHASECAM_WALL_NUDGE);
+				return vec3, linepuff.angle, linepuff.pitch, linepuff;
+			}
+			return eye, linepuff.angle, linepuff.pitch, linepuff;
 		}
-		return a.pos, a.angle, a.pitch, null;
+		return eye, a.angle, a.pitch, null;
 	}
 	void RunCameraNew()
 	{
@@ -608,6 +662,7 @@ class CameraRunner : Inventory
 		let p = PlayerPawn(owner);
 		if (p)
 		{
+			ApplyFatalityFullbright();
 			self.RunCameraNew();
 		}
 	}

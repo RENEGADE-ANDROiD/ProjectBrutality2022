@@ -37,6 +37,8 @@ extend class PB2022_Hud_ZS
 			return true;
 		if (CheckInventory("DualWieldingPlasma") && wn == 'PB_M1Plasma')
 			return true;
+		if (CheckInventory("DualWieldingDarkMatter") && wn == 'PB_DarkMatterRifle')
+			return true;
 		if (CheckInventory("DualWieldingM2Plasma") && wn == 'PB_M2Plasma')
 			return true;
 		if (CheckInventory("WSMGDualWield") && wn == 'W_SMG')
@@ -79,6 +81,8 @@ extend class PB2022_Hud_ZS
 			leftType = 'LeftMP40Ammo';
 		else if (wn == 'PB_M1Plasma')
 			leftType = 'LeftPlasmaAmmo';
+		else if (wn == 'PB_DarkMatterRifle')
+			leftType = 'PB_DarkMatterMagLeft';
 		else if (wn == 'PB_M2Plasma')
 			leftType = 'LeftM2PlasmaAmmo';
 		else if (wn == 'W_SMG')
@@ -217,6 +221,11 @@ extend class PB2022_Hud_ZS
 
 			case 'PB_M1Plasma':
 				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawDual: PB2022_WantsDualAmmoRow());
+				weaponBarAccent = Font.CR_PURPLE;
+				return true;
+
+			case 'PB_DarkMatterRifle':
+				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawDual: PB2022_WantsDualAmmoRow() && Left != null);
 				weaponBarAccent = Font.CR_PURPLE;
 				return true;
 
