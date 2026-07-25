@@ -623,7 +623,6 @@ OptionMenu "PB2022_ExtrasMenu"
 	StaticText "======== Other ========", gold
 	StaticText " "
 	Option "Festive Hat Simulator Mode", "PB_HatExtravaganza", "YesOrNo"
-	StaticText "Independent Of Kill Streaks (PB_HatExtravaganza).", teal
 	StaticText " "
 }
 
