@@ -196,7 +196,7 @@ OptionMenu "PBTacticalMotionOptions"
 
 OptionMenu "PBWeaponHudOptions"
 {
-	Title "PBX 2022 Weapon HUD"
+	Title "Corner Weapon HUD"
 	StaticText "Bottom-right: weapon portrait + fire-mode glyph (shotgun, carbine, etc.)."
 	StaticText "Weapon HUD by BeefRice"
 	Option "Enable corner weapon icons.", "pb_weaponhud_enable", "YesNo"
@@ -393,17 +393,9 @@ OptionMenu "PB2022_CombatMenu"
 	StaticText "$OPTMNU_PB2022_COMBAT_TIP1", cyan
 	StaticText "$OPTMNU_PB2022_COMBAT_TIP2", cyan
 	StaticText " "
-	StaticText "======== Quick Bundles ========", gold
-	StaticText " "
-	Command "Enable Glory Kill Suite", "set be_ExecutionsON 1; set pb_auto_fatality_fire 1; set pb_experimental 1"
-	Command "Disable Glory Kill Suite", "set be_ExecutionsON 0; set pb_auto_fatality_fire 0; set pb_experimental 0"
-	StaticText "Sets be_ExecutionsON, pb_auto_fatality_fire, pb_experimental.", teal
-	StaticText "Disable Also Clears pb_experimental.", teal
-	StaticText " "
 	StaticText "======== Glory Kills ========", gold
 	StaticText " "
 	Option "Glory Kills", "be_ExecutionsON", YesNo
-	StaticText "Master Toggle (be_ExecutionsON).", teal
 	StaticText " "
 	Submenu "Glory Kill Options", "Glorykills"
 	StaticText "Pinatas, Stagger, HUD Fuel, Shoulder Cannon.", teal
@@ -416,33 +408,6 @@ OptionMenu "PB2022_CombatMenu"
 	Slider "Auto-Fatality Distance", "pb_auto_fatality_dist", 64, 400, 4
 	StaticText "pb_auto_fatality_dist (map units).", teal
 	StaticText " "
-	Option "$PB_EXPERIMENTAL_EXECUTIONS", "pb_experimental", "OnOff"
-	StaticText "$PB_EXPERIMENTAL_EXECUTIONS_DESC", cyan
-	StaticText "pb_experimental — First-Person Executions.", teal
-	StaticText " "
-	StaticText "======== PBX Add-Ons ========", gold
-	StaticText " "
-	Submenu "PBX Staging Add-Ons", "PB2022_PBXAddonsMenu"
-	StaticText "Smart Scavenger, Damage Indicators, Backpack Reload, Upgrades.", teal
-}
-
-OptionMenu "PB2022_PBXAddonsMenu"
-{
-	Title "PBX Staging Add-Ons"
-	StaticText "$OPTMNU_PB2022_PBX_INTRO", cyan
-	StaticText " "
-	Option "Smart Scavenger", "pb_pbx_smartscav", "YesNo"
-	Option "Directional Damage Indicators", "pb_pbx_dmgind", "YesNo"
-	Option "Backpack Reload (Holstered Mags)", "pb_pbx_backpackreload", "YesNo"
-	Option "Weapon Upgrade Pickups", "pb_pbx_weapon_upgrades", "YesNo"
-	StaticText " "
-	Slider "Backpack Reload Interval (tics)", "pb_pbx_backpackreload_time", 14, 140, 7
-	Slider "Backpack Reload Per Tick", "pb_pbx_backpackreload_refill", 1, 15, 1
-	Option "Backpack Reload Notifications", "pb_pbx_backpackreload_notify", "YesNo"
-	StaticText " "
-	Slider "Damage Indicator Duration", "pb_pbx_dmgind_timer", 10, 70, 5
-	Slider "Damage Indicator Alpha", "pb_pbx_dmgind_alpha", 0.2, 1.0, 0.05
-	Slider "Damage Indicator Scale", "pb_pbx_dmgind_scale", 0.5, 2.0, 0.1
 }
 
 OptionMenu "PB2022_GoreMenu"
@@ -511,11 +476,17 @@ OptionMenu "PB2022_HudMenu"
 	StaticText " "
 	Option "Enable Corner Weapon Icons", "pb_weaponhud_enable", YesNo
 	StaticText " "
-	Submenu "PBX 2022 Weapon HUD Options", "PBWeaponHudOptions"
+	Submenu "Corner Weapon HUD Options", "PBWeaponHudOptions"
 	StaticText " "
 	Option "Enable Damage Numbers", "dam_enabled", "DamEnabled"
 	StaticText " "
 	Submenu "Damage Numbers Options", "DamNumsOptions"
+	StaticText " "
+	Option "Directional Damage Indicators", "pb_pbx_dmgind", "YesNo"
+	StaticText " "
+	Slider "Damage Indicator Duration", "pb_pbx_dmgind_timer", 10, 70, 5
+	Slider "Damage Indicator Alpha", "pb_pbx_dmgind_alpha", 0.2, 1.0, 0.05
+	Slider "Damage Indicator Scale", "pb_pbx_dmgind_scale", 0.5, 2.0, 0.1
 	StaticText " "
 	StaticText "======== PDA & Meta ========", gold
 	StaticText " "
@@ -640,11 +611,8 @@ OptionMenu "PB2022_ExtrasMenu"
 	Option "$OPTMNU_PB_REDARMOR", "pb_redarmor_spawn", "OnOff"
 	StaticText "$OPTMNU_PB_REDARMOR_HINT", cyan
 	StaticText " "
-	StaticText "======== Quick Bundles ========", gold
-	StaticText " "
-	Command "Enable Kill Streaks + Hats", "set pb_ks_enable 1; set PB_HatExtravaganza 1"
-	Command "Disable Kill Streaks + Hats", "set pb_ks_enable 0; set PB_HatExtravaganza 0"
-	StaticText "pb_ks_enable, PB_HatExtravaganza.", teal
+	Option "Smart Scavenger", "pb_pbx_smartscav", "YesNo"
+	StaticText "Partial / Full Ammo Pickups On Map Ammo Boxes.", teal
 	StaticText " "
 	StaticText "======== Kill Streaks ========", gold
 	StaticText " "
@@ -655,6 +623,7 @@ OptionMenu "PB2022_ExtrasMenu"
 	StaticText "======== Other ========", gold
 	StaticText " "
 	Option "Festive Hat Simulator Mode", "PB_HatExtravaganza", "YesOrNo"
+	StaticText "Independent Of Kill Streaks (PB_HatExtravaganza).", teal
 	StaticText " "
 }
 
@@ -667,7 +636,7 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText "======== Quick Presets ========", gold
 	StaticText " "
 	Command "$OPTMNU_PB2022_PRESET_FULL", "set pb_classicmonsters 0; set pb_disablenewenemies 0; set be_ExecutionsON 1; set pb_experimental 1; set pb_auto_fatality_fire 1; set pb_enhanced_brutality_2022 1; set pb_ks_enable 1; set pb_rocketjump 1; set pb_plasma_wallclimb 1; set pb_hazardmovement 1; set pb_weaponhud_enable 1; set pb_weaponmodehud_enable 1"
-	Command "$OPTMNU_PB2022_PRESET_VANILLA", "set pb_classicmonsters 1; set pb_disablenewenemies 1; set be_ExecutionsON 0; set pb_enhanced_brutality_2022 0; set pb_experimental 0"
+	Command "$OPTMNU_PB2022_PRESET_VANILLA", "set pb_classicmonsters 1; set pb_disablenewenemies 1; set be_ExecutionsON 0; set pb_enhanced_brutality_2022 0"
 	Command "$OPTMNU_PB2022_PRESET_PERF", "set pb_enhanced_brutality_2022 0; set pb_ks_enable 0; set pb_wheelbackgroundblur 0; set py_weaponwheel_freeze 0; set pb_burnfx_throttle 1; set PB_HatExtravaganza 0; set pb_accudeath 0; set pb_dasheffect 0"
 	StaticText "Re-Open Menus After Presets To See Toggles.", orange
 	StaticText " "
@@ -1287,8 +1256,21 @@ OptionMenu "WeaponSettings"
 	Option "Require Axe For Axe Mode", "RS_AxeCheck", "OnOff"
 	StaticText " ", teal
 	StaticText " ", teal
+
+	StaticText "-----------------Backpack Reload-----------------", teal
+	StaticText " ", teal
+	Option "Backpack Reload (Holstered Mags)", "pb_pbx_backpackreload", "YesNo"
+	StaticText " ", teal
+	Slider "Backpack Reload Interval (tics)", "pb_pbx_backpackreload_time", 14, 140, 7
+	Slider "Backpack Reload Per Tick", "pb_pbx_backpackreload_refill", 1, 15, 1
+	Option "Backpack Reload Notifications", "pb_pbx_backpackreload_notify", "YesNo"
+	StaticText " ", teal
+	StaticText " ", teal
 	
 	StaticText "-----------------Weapon Upgrades-----------------", teal
+	StaticText " ", teal
+
+	Option "Weapon Upgrade Pickups", "pb_pbx_weapon_upgrades", "YesNo"
 	StaticText " ", teal
 	
 	Option "Completely Disable Weapon Upgrades",				"pb_NoUpgrades", "OnOff"

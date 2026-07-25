@@ -1,34 +1,94 @@
 // PB_DarkMatterRifle - ZScript port (DECORATE PB_Weapon retired).
+// Dual-wield uses dedicated DualWieldingDarkMatter + Left/Right mags (not M1 Plasma tokens).
 
 class PB_DarkMatterRifle : PB_WeaponBase
 {
+	const DMR_MAG_FULL = 60;
+	const DMR_SUPER_COST = 20;
+	const DMR_GRAV_COST = 20;
+
 	default
 	{
-	PB_WeaponBase.UnloaderToken "PB_DMR_HasUnloaded";
-	Weapon.BobRangeX 0.3;
-	Weapon.BobRangeY 0.5;
+		PB_WeaponBase.UnloaderToken "PB_DMR_HasUnloaded";
+		PB_WeaponBase.AmmoTypeLeft "PB_DarkMatterMagLeft";
+		Weapon.BobRangeX 0.3;
+		Weapon.BobRangeY 0.5;
 		Weapon.BobStyle "InverseSmooth";
-	Weapon.BobSpeed 2.4;
-	Weapon.AmmoUse1 0;
-	Weapon.AmmoGive1 60;
-	Weapon.AmmoUse2 0;
-	Weapon.AmmoGive2 0;
-	Weapon.AmmoType1 "Cell";
-	Weapon.AmmoType2 "PB_DarkMatterMag";
-	Inventory.PickupSound "7LSPICK";
-	Weapon.SelectionOrder 7150;
-	+WEAPON.NOAUTOAIM;
-	+WEAPON.NOALERT;
-	+INVENTORY.ALWAYSPICKUP;
-	+FLOORCLIP;
-	+DONTGIB;
-	Inventory.PickupMessage "$PB_PICKUP_PB_DARKMATTERRIFLE";
-	Inventory.Icon "PLCUA0";
-	Obituary "%o was vaporized by %k's Dark Matter Rifle.";
-	Tag "UAC Prototype Dark Matter Rifle";
-	Weapon.SlotNumber 8;
-	Weapon.SlotPriority 0.085;
+		Weapon.BobSpeed 2.4;
+		Weapon.AmmoUse1 0;
+		Weapon.AmmoGive1 60;
+		Weapon.AmmoUse2 0;
+		Weapon.AmmoGive2 0;
+		Weapon.AmmoType1 "Cell";
+		Weapon.AmmoType2 "PB_DarkMatterMag";
+		Inventory.MaxAmount 2;
+		Inventory.PickupSound "7LSPICK";
+		Weapon.SelectionOrder 7150;
+		+WEAPON.NOAUTOAIM;
+		+WEAPON.NOALERT;
+		+INVENTORY.ALWAYSPICKUP;
+		+FLOORCLIP;
+		+DONTGIB;
+		Inventory.PickupMessage "$PB_PICKUP_PB_DARKMATTERRIFLE";
+		Inventory.Icon "PLCUA0";
+		Obituary "%o was vaporized by %k's Dark Matter Rifle.";
+		Tag "UAC Prototype Dark Matter Rifle";
+		Weapon.SlotNumber 8;
+		Weapon.SlotPriority 0.085;
 	}
+
+	void DMR_SyncTwoGunToken()
+	{
+		if (!Owner) return;
+		if (Owner.CountInv("PB_DarkMatterRifle") >= 2)
+			Owner.A_GiveInventory("HasTwoDarkMatter", 1);
+		else
+		{
+			Owner.A_TakeInventory("HasTwoDarkMatter", 1);
+			if (Owner.CountInv("DualWieldingDarkMatter") > 0)
+			{
+				Owner.A_TakeInventory("DualWieldingDarkMatter", 1);
+				Owner.A_TakeInventory("PB_DualDarkMatterFireAnimation", 1);
+				akimboMode = false;
+			}
+		}
+	}
+
+	override void AttachToOwner(Actor other)
+	{
+		Super.AttachToOwner(other);
+		if (other && other.player)
+		{
+			if (other.CountInv("PB_DarkMatterMagLeft") < 1 && other.CountInv("PB_DarkMatterRifle") >= 2)
+				other.A_GiveInventory("PB_DarkMatterMagLeft", DMR_MAG_FULL);
+			DMR_SyncTwoGunToken();
+		}
+	}
+
+	override bool HandlePickup(Inventory item)
+	{
+		bool r = Super.HandlePickup(item);
+		if (Owner && item && item.GetClass() == GetClass())
+		{
+			if (Owner.CountInv("PB_DarkMatterMagLeft") < 1)
+				Owner.A_GiveInventory("PB_DarkMatterMagLeft", DMR_MAG_FULL);
+			DMR_SyncTwoGunToken();
+		}
+		return r;
+	}
+
+	override void DetachFromOwner()
+	{
+		if (Owner)
+		{
+			Owner.A_TakeInventory("DualWieldingDarkMatter", 1);
+			Owner.A_TakeInventory("PB_DualDarkMatterFireAnimation", 1);
+			Owner.A_TakeInventory("HasTwoDarkMatter", 1);
+		}
+		akimboMode = false;
+		Super.DetachFromOwner();
+	}
+
 	states
 	{
 		Steady:
@@ -43,12 +103,19 @@ class PB_DarkMatterRifle : PB_WeaponBase
 
 		SelectAnimation:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "SelectAnimationDualWield");
 		TNT1 A 0 A_PlaySound("PLSDRAW");
 		"PZC9" ABC 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready3;
 
+		SelectAnimationDualWield:
+		TNT1 A 0 A_PlaySound("PLSDRAW", 5);
+		"DPCS" ABCDE 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
+		Goto ReadyDual;
+
 		Ready3:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "ReadyDual");
 		TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
 		TNT1 A 0 {
 			PB_HandleCrosshair(76);
@@ -56,6 +123,19 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		}
 		TNT1 A 0 A_PlaySound("PLSIDLE", 6, 1, 1);
 		"PZC4" ABCDEDCBA 1 A_DoPBWeaponAction;
+		Loop;
+
+		ReadyDual:
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+		TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
+		TNT1 A 0 {
+			PB_HandleCrosshair(76);
+			A_TakeInventory("PB_LockScreenTilt", 1);
+			A_SetAkimbo(true);
+			A_SetInventory("DualWieldingDarkMatter", 1);
+		}
+		TNT1 A 0 A_PlaySound("PLSIDLE", 6, 1, 1);
+		"DPCI" ABCDEDCBA 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 		Loop;
 
 		GunEmpty:
@@ -75,16 +155,63 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel");
 		TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
+		TNT1 A 0 A_JumpIfInventory("Select_PB_DMR_DualWield", 1, "WSpecDual");
 		TNT1 A 0 A_JumpIfInventory("Select_PB_DMR_SuperBall", 1, "WSpecSuperBall");
 		TNT1 A 0 A_JumpIfInventory("Select_PB_DMR_GravityBomb", 1, "WSpecGravity");
 		Goto Ready3;
 
+		WSpecDual:
+		TNT1 A 0 A_TakeInventory("Select_PB_DMR_DualWield", 1);
+		TNT1 A 0 A_JumpIfInventory("IsPlayingAsProjectBrutality", 1, 2);
+		TNT1 A 0 A_Print("No Dual wield in Classic Mode!");
+		Goto Ready3;
+		TNT1 AA 0;
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "StopDualWield");
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterRifle", 2, "SwitchToDualWield");
+		TNT1 A 0 A_Print("\ckPick up a second \ctDark Matter Rifle \c-to dual-wield.");
+		Goto Ready3;
+
+		SwitchToDualWield:
+		TNT1 A 0 A_StopSound(6);
+		TNT1 A 0 A_PlaySound("IronSights", 0);
+		TNT1 A 0 {
+			A_SetAkimbo(true);
+			A_SetInventory("DualWieldingDarkMatter", 1);
+			A_TakeInventory("PB_DualDarkMatterFireAnimation", 1);
+			if (CountInv("PB_DarkMatterMagLeft") < 1)
+				A_GiveInventory("PB_DarkMatterMagLeft", DMR_MAG_FULL);
+		}
+		"PZC9" CBA 1;
+		Goto SelectAnimationDualWield;
+
+		StopDualWield:
+		TNT1 A 0 A_PlaySound("IronSights", 0);
+		TNT1 A 0 {
+			A_SetAkimbo(false);
+			A_SetInventory("DualWieldingDarkMatter", 0);
+			A_TakeInventory("PB_DualDarkMatterFireAnimation", 1);
+		}
+		"DPCS" EDCBA 1;
+		Goto Ready3;
+
 		WSpecSuperBall:
-		TNT1 A 0 { A_TakeInventory("Select_PB_DMR_SuperBall", 1); A_TakeInventory("Select_PB_DMR_GravityBomb", 1); A_SetInventory("PB_DMR_GravityAltMode", 0); A_PlaySound("menu/choose", CHAN_AUTO); }
+		TNT1 A 0 {
+			A_TakeInventory("Select_PB_DMR_SuperBall", 1);
+			A_TakeInventory("Select_PB_DMR_GravityBomb", 1);
+			A_SetInventory("PB_DMR_GravityAltMode", 0);
+			A_PlaySound("menu/choose", CHAN_AUTO);
+			A_Print("\ctAlt-Fire: Super Plasma Ball");
+		}
 		Goto Ready3;
 
 		WSpecGravity:
-		TNT1 A 0 { A_TakeInventory("Select_PB_DMR_SuperBall", 1); A_TakeInventory("Select_PB_DMR_GravityBomb", 1); A_SetInventory("PB_DMR_GravityAltMode", 1); A_PlaySound("menu/choose", CHAN_AUTO); }
+		TNT1 A 0 {
+			A_TakeInventory("Select_PB_DMR_SuperBall", 1);
+			A_TakeInventory("Select_PB_DMR_GravityBomb", 1);
+			A_SetInventory("PB_DMR_GravityAltMode", 1);
+			A_PlaySound("menu/choose", CHAN_AUTO);
+			A_Print("\ctAlt-Fire: Gravity Singularity");
+		}
 		Goto Ready3;
 
 		Deselect:
@@ -99,7 +226,13 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_StopSound(6);
 		TNT1 A 0 A_PlaySound("PLSOFF", 4);
 		TNT1 A 0 A_JumpIfInventory("GotMeatShield", 1, "GrabEnemy");
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "DeselectDual");
 		"PZC9" CBA 1;
+		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower;
+		Wait;
+
+		DeselectDual:
+		"DPCS" EDCBA 1;
 		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower;
 		Wait;
 
@@ -118,6 +251,11 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 PB_RespectIfNeeded;
 		TNT1 A 0 A_TakeInventory("PB_DMR_HasUnloaded", 1);
 		TNT1 A 0 A_GiveInventory("HasPlasmaWeapon", 1);
+		TNT1 A 0 {
+			invoker.DMR_SyncTwoGunToken();
+			if (CountInv("DualWieldingDarkMatter") > 0)
+				A_SetAkimbo(true);
+		}
 		Goto SelectAnimation;
 
 		Fire:
@@ -130,6 +268,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 		TNT1 A 0 PB_TryAutoFatalityOnFire();
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "FireDualWield");
 		TNT1 A 0 A_WeaponOffset(0, 32);
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, 2);
 		Goto Reload;
@@ -155,6 +294,54 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_PlaySound("BEPBEP");
 		Goto Ready3;
 
+		FireDualWield:
+		FireLeft:
+		TNT1 A 0 A_JumpIfInventory("PB_DualDarkMatterFireAnimation", 1, "FireRight");
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMagLeft", 1, 2);
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, "FireRight");
+		Goto Reload;
+		TNT1 AAAA 0;
+		TNT1 A 0 A_GiveInventory("PB_DualDarkMatterFireAnimation", 1);
+		TNT1 A 0 A_PlaySound("PAILGF2");
+		TNT1 A 0 A_AlertMonsters;
+		TNT1 A 0 A_ZoomFactor(0.98);
+		"DPC1" A 1 BRIGHT A_FireCustomMissile("PB_DMR_PulseBall", random(-3, 3), 0, 6, -4, 0, random(-2, 2));
+		TNT1 A 0 A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
+		TNT1 A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 3, 0, 0, 0);
+		TNT1 A 0 A_TakeInventory("PB_DarkMatterMagLeft", 1);
+		TNT1 A 0 PB_WeaponRecoil(-0.6, 0.2);
+		"DPC1" B 1 BRIGHT;
+		TNT1 A 0 A_ZoomFactor(1.0);
+		"DPC1" C 1 A_WeaponReady(WRF_NOPRIMARY);
+		TNT1 A 0 A_Refire();
+		"DPC1" D 1;
+		Goto ReadyDual;
+
+		FireRight:
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, 2);
+		TNT1 A 0 {
+			A_TakeInventory("PB_DualDarkMatterFireAnimation", 1);
+			if (CountInv("PB_DarkMatterMagLeft") >= 1)
+				return ResolveState("FireLeft");
+			return ResolveState("Reload");
+		}
+		TNT1 AAAA 0;
+		TNT1 A 0 A_TakeInventory("PB_DualDarkMatterFireAnimation", 1);
+		TNT1 A 0 A_PlaySound("PAILGF2");
+		TNT1 A 0 A_AlertMonsters;
+		TNT1 A 0 A_ZoomFactor(0.98);
+		"DPC2" A 1 BRIGHT A_FireCustomMissile("PB_DMR_PulseBall", random(-3, 3), 0, -6, -4, 0, random(-2, 2));
+		TNT1 A 0 A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0);
+		TNT1 A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, -3, 0, 0, 0);
+		TNT1 A 0 A_TakeInventory("PB_DarkMatterMag", 1);
+		TNT1 A 0 PB_WeaponRecoil(-0.6, -0.2);
+		"DPC2" B 1 BRIGHT;
+		TNT1 A 0 A_ZoomFactor(1.0);
+		"DPC2" C 1 A_WeaponReady(WRF_NOPRIMARY);
+		TNT1 A 0 A_Refire();
+		"DPC2" D 1;
+		Goto ReadyDual;
+
 		AltFire:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
@@ -165,9 +352,10 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 		TNT1 A 0 PB_TryAutoFatalityOnFire();
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "AltFireDualBlocked");
 		TNT1 A 0 A_JumpIfInventory("PB_DMR_GravityAltMode", 1, "GravityAltFire");
 		TNT1 A 0 A_WeaponOffset(0, 32);
-		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 30, 13);
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", DMR_SUPER_COST, 13);
 		Goto Reload;
 		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAA 0;
 		TNT1 A 0 A_StopSound(6);
@@ -216,7 +404,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_FireCustomMissile("PB_DMR_SuperBall", 0, 0, 0, 0);
 		CoolAfterAltFire:
 		TNT1 A 0 PB_WeaponRecoilBasic(-1.15);
-		TNT1 A 0 A_TakeInventory("PB_DarkMatterMag", 30);
+		TNT1 A 0 A_TakeInventory("PB_DarkMatterMag", DMR_SUPER_COST);
 		"PZCR" A 1 A_ZoomFactor(0.90);
 		"PZCR" A 1 A_ZoomFactor(0.95);
 		"PZCR" A 1 A_ZoomFactor(0.975);
@@ -231,6 +419,10 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 AAAA 0;
 		TNT1 A 0 A_PlaySound("BEPBEP");
 		Goto Ready3;
+
+		AltFireDualBlocked:
+		TNT1 A 0 A_Print("\ckUndual to charge Alt-Fire (Super Ball / Gravity).");
+		Goto ReadyDual;
 
 		Flash:
 		TNT1 A 1;
@@ -256,7 +448,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		Goto Ready3;
 
 		GravityAltFire:
-		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 20, 13);
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", DMR_GRAV_COST, 13);
 		Goto Reload;
 		TNT1 A 0;
 		TNT1 A 0 A_StopSound(6);
@@ -307,7 +499,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 
 		CoolAfterGravAlt:
 		TNT1 A 0 PB_WeaponRecoilBasic(-1.15);
-		TNT1 A 0 A_TakeInventory("PB_DarkMatterMag", 20);
+		TNT1 A 0 A_TakeInventory("PB_DarkMatterMag", DMR_GRAV_COST);
 		"PZCR" A 1 A_ZoomFactor(0.90);
 		"PZCR" A 1 A_ZoomFactor(0.95);
 		"PZCR" A 1 A_ZoomFactor(0.975);
@@ -342,9 +534,10 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "IdleBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel");
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "ReloadDual");
 		TNT1 A 0 A_ClearReFire;
 		TNT1 A 0 A_TakeInventory("Reloading", 1);
-		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 60, "DontNeedToReload");
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", DMR_MAG_FULL, "DontNeedToReload");
 		TNT1 A 0 A_PlaySound("BEEEP");
 		TNT1 A 0 A_JumpIfInventory("Cell", 1, 3);
 		Goto Ready3;
@@ -369,7 +562,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"PZCR" A 2;
 		InsertBullets:
 		TNT1 AAAA 0;
-		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 60, "Ready3");
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", DMR_MAG_FULL, "Ready3");
 		TNT1 A 0 A_JumpIfInventory("Cell", 1, 3);
 		Goto Ready3;
 		TNT1 AAAAAA 0;
@@ -380,6 +573,71 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_Refire();
 		TNT1 A 0 A_TakeInventory("Reloading", 1);
 		Goto Ready3;
+
+		ReloadDual:
+		TNT1 A 0 A_TakeInventory("Reloading", 1);
+		TNT1 A 0 A_ClearReFire;
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", DMR_MAG_FULL, 1);
+		Goto ReloadDualDo;
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMagLeft", DMR_MAG_FULL, "ReadyDual");
+		ReloadDualDo:
+		TNT1 A 0 A_JumpIfInventory("Cell", 1, 1);
+		Goto ReadyDual;
+		TNT1 A 0 A_PlaySound("BEEEP");
+		"DPCS" EDCBA 1 A_WeaponReady(WRF_NOBOB | WRF_NOFIRE);
+		TNT1 A 3;
+		"P2CR" B 2 A_PlaySound("CELLPKUP", 6);
+		"P2CR" C 1;
+		"P2CR" D 2;
+		"P2CR" E 1;
+		"P2CR" F 2;
+		"P2CR" G 1 A_PlaySound("PLSOFF", 1);
+		TNT1 A 0 A_StopSound(6);
+		TNT1 A 0 A_JumpIfInventory("PB_DMR_HasUnloaded", 1, 4);
+		TNT1 A 0 A_FireCustomMissile("PlasmaCaseSpawn", -5, 0, 8, -4);
+		"P2CR" HHHHHHHHIJK 2;
+		"P2CR" L 1 A_PlaySound("PLREADY", 6);
+		"P2CR" L 1 A_PlaySound("PLSRD", 0);
+		"P2CR" LLMNO 2;
+		"P2CR" C 1;
+		"P2CR" B 2;
+		TNT1 A 2;
+		"PZCR" B 2 A_PlaySound("CELLPKUP", 6);
+		"PZCR" C 1;
+		"PZCR" D 2;
+		"PZCR" E 1;
+		"PZCR" F 2;
+		"PZCR" G 1 A_PlaySound("PLSOFF", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_DMR_HasUnloaded", 1, 4);
+		TNT1 A 0 A_FireCustomMissile("PlasmaCaseSpawn", -5, 0, 8, -4);
+		"PZCR" HHHHHHHHIJK 2;
+		TNT1 A 0 A_TakeInventory("PB_DMR_HasUnloaded", 1);
+		"PZCR" L 1 A_PlaySound("PLREADY", 6);
+		"PZCR" L 1 A_PlaySound("PLSRD", 0);
+		"PZCR" LLMNO 2;
+		"PZCR" C 1;
+		"PZCR" B 2;
+		TNT1 A 0 A_TakeInventory("Reloading", 1);
+		InsertBulletsDual:
+		TNT1 AAAA 0;
+		TNT1 A 0 {
+			if (CountInv("PB_DarkMatterMag") >= DMR_MAG_FULL && CountInv("PB_DarkMatterMagLeft") >= DMR_MAG_FULL)
+				return ResolveState("ReadyDual");
+			if (CountInv("Cell") < 1)
+				return ResolveState("ReadyDual");
+			if (CountInv("PB_DarkMatterMag") < DMR_MAG_FULL)
+			{
+				A_GiveInventory("PB_DarkMatterMag", 1);
+				A_TakeInventory("Cell", 1, TIF_NOTAKEINFINITE);
+			}
+			else
+			{
+				A_GiveInventory("PB_DarkMatterMagLeft", 1);
+				A_TakeInventory("Cell", 1, TIF_NOTAKEINFINITE);
+			}
+			return ResolveState(null);
+		}
+		Goto InsertBulletsDual;
 
 		AlreadyUnloaded:
 		TNT1 A 0 A_TakeInventory("Unloading", 1);
@@ -392,6 +650,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_TakeInventory("Unloading", 1);
 		TNT1 A 0 A_TakeInventory("ADSmode", 1);
 		TNT1 A 0 A_TakeInventory("Zoomed", 1);
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "UnloadDual");
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, 3);
 		Goto GunEmpty;
 		TNT1 AAA 0;
@@ -423,10 +682,62 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_TakeInventory("Unloading", 1);
 		Goto GunEmpty+6;
 
+		UnloadDual:
+		TNT1 A 0 A_TakeInventory("Unloading", 1);
+		"DPCI" A 1 A_WeaponReady;
+		TNT1 A 0 {
+			if (CountInv("PB_DarkMatterMag") < 1 && CountInv("PB_DarkMatterMagLeft") < 1)
+				return ResolveState("ReadyDual");
+			return ResolveState(null);
+		}
+		"DPCS" EDCBA 1;
+		TNT1 A 5;
+		"PZCR" B 1 A_PlaySound("CELLPKUP");
+		"PZCR" C 1;
+		"PZCR" MMLKJIH 2;
+		"PZCR" G 1;
+		"PZCR" F 2;
+		"PZCR" E 1;
+		"PZCR" D 2;
+		"PZCR" B 2;
+		"P2CR" B 1 A_PlaySound("CELLPKUP");
+		"P2CR" C 1;
+		"P2CR" MMLKJIH 2;
+		"P2CR" G 1;
+		"P2CR" F 2;
+		"P2CR" E 1;
+		"P2CR" D 2;
+		"P2CR" B 2;
+		TNT1 A 0 A_TakeInventory("Unloading", 1);
+		RemoveBulletsDual:
+		TNT1 AAAA 0;
+		TNT1 A 0 {
+			if (CountInv("PB_DarkMatterMag") < 1 && CountInv("PB_DarkMatterMagLeft") < 1)
+				return ResolveState("FinishUnloadDual");
+			if (CountInv("PB_DarkMatterMag") > 0)
+			{
+				A_TakeInventory("PB_DarkMatterMag", 1);
+				A_GiveInventory("Cell", 1);
+			}
+			else
+			{
+				A_TakeInventory("PB_DarkMatterMagLeft", 1);
+				A_GiveInventory("Cell", 1);
+			}
+			return ResolveState(null);
+		}
+		Goto RemoveBulletsDual;
+
+		FinishUnloadDual:
+		TNT1 A 0 A_GiveInventory("PB_DMR_HasUnloaded", 1);
+		TNT1 A 0 A_TakeInventory("Unloading", 1);
+		Goto ReadyDual;
+
 		FlashKicking:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelKicking");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelKicking");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelKicking");
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "FlashKickingDual");
 		"PZCG" W 1;
 		"PZCG" X 1;
 		"PZCG" Y 1;
@@ -439,10 +750,24 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"PZCG" AAA 1;
 		Goto Ready3;
 
+		FlashKickingDual:
+		"DPCS" E 1;
+		"DPCS" D 1;
+		"DPCS" C 1;
+		"DPCS" B 3;
+		"DPCS" A 3;
+		"DPCS" B 3;
+		"DPCS" C 1;
+		"DPCS" D 1;
+		"DPCS" E 1;
+		"DPCS" EEE 1;
+		Goto ReadyDual;
+
 		FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelAirKicking");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelAirKicking");
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "FlashAirKickingDual");
 		"PZCG" W 1;
 		"PZCG" X 1;
 		"PZCG" Y 1;
@@ -455,21 +780,45 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"PZCG" AAAA 1;
 		Goto Ready3;
 
+		FlashAirKickingDual:
+		"DPCS" E 1;
+		"DPCS" D 1;
+		"DPCS" C 1;
+		"DPCS" B 3;
+		"DPCS" A 3;
+		"DPCS" B 3;
+		"DPCS" C 1;
+		"DPCS" D 1;
+		"DPCS" E 1;
+		"DPCS" EEEE 1;
+		Goto ReadyDual;
+
 		FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKicking");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking");
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "FlashSlideKickingDual");
 		"PZCG" BC 2;
 		"PZCG" DDDDDDEEEFF 2;
 		FlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop");
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "FlashSlideKickingStopDual");
 		"PZCG" FEDCB 1;
 		"PZCG" A 1;
 		Goto Ready3;
 
+		FlashSlideKickingDual:
+		"DPCS" ABCDEEEEEEEEEEEEEEEEDCBA 1;
+		Stop;
+
+		FlashSlideKickingStopDual:
+		"DPCS" EEEDCBA 1;
+		Goto ReadyDual;
+
 		FlashPunching:
+		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "FlashPunchingDual");
 		"PZCG" W 1;
 		"PZCG" X 1;
 		"PZCG" Y 1;
@@ -482,6 +831,11 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"PZCG" AAA 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 		Goto Ready3;
+
+		FlashPunchingDual:
+		TNT1 A 14;
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+		Goto ReadyDual;
 
 		PDA_Preview_DMRReady:
 		"PZC4" A 1 A_WeaponReady(WRF_NOFIRE);

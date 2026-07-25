@@ -536,8 +536,6 @@ OPTMNU_PB2022_GORE_TIP1 = "pb_enhanced_brutality_2022 = master gore mix.";
 OPTMNU_PB2022_GORE_TIP2 = "Nash blood/gibs: Visual & Screen FX -> Gore/Debris.";
 OPTMNU_PB2022_COMBAT_TIP1 = "Glory Kills use be_ExecutionsON and Glory Kill submenu.";
 OPTMNU_PB2022_COMBAT_TIP2 = "Auto-fatality needs Glory Kills on for finisher attempts.";
-OPTMNU_PB2022_PBX_INTRO = "PBX Staging add-ons ported native into PB 2022 (no external PBX-Core).";
-
 PB2022_LASER_ON = "Laser sight enabled.";
 PB2022_LASER_OFF = "Laser sight disabled.";
 PB2022_SCOPE_MODE1 = "Scope: standard zoom.";

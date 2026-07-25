@@ -1298,7 +1298,7 @@ FatalityChecker:
          NULL A 0 A_SpawnItem ("FatalizedDraugr")
          Goto StandStill
 
-		// El Diablo draugr fold-in (SAPO* in SPRITES/MONSTERS/fatalitys/eld_eld_draugr) â€” first-person, no second camera pass
+		// El Diablo draugr fold-in (SAPO* in SPRITES/MONSTERS/fatalitys/eld_eld_draugr) — chase-cam third-person (ACS 477/171)
 		FatalityDraugr2Eld:
 		TNT1 A 0 SetPlayerProperty(0,1,0)
 		TNT1 A 0 ACS_Execute(477, 0, 0, 0, 0)
@@ -5629,7 +5629,7 @@ TNT1 A 0 ACS_Execute(585, 0, 0, 0, 0)
         TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
 	   Goto Standstill
 
-		// El Diablo sergeant extras (ESCR* / SOBO* in SPRITES/MONSTERS/fatalitys/eld_eld_sarge) â€” extended gore between A/B/C
+		// El Diablo sergeant extras (ESCR* / SOBO* in SPRITES/MONSTERS/fatalitys/eld_eld_sarge) — extended gore between A/B/C
 		FatalitySergeant7Eld:
 		TNT1 A 0 SetPlayerProperty(0,1,0)
 		TNT1 A 0 ACS_Execute(477, 0, 0, 0, 0)
@@ -6073,7 +6073,7 @@ TNT1 A 0 ACS_Execute(585, 0, 0, 0, 0)
         TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
         Goto Standstill
 
-		// El Diablo Edition fold-in (sprites: sprites/monsters/fatalitys/eld_eld_extra â€” YUTI*, 49AN*). Same ACS stack as other imp fatalities.
+		// El Diablo Edition fold-in (sprites: sprites/monsters/fatalitys/eld_eld_extra — YUTI*, 49AN*). Same ACS stack as other imp fatalities.
 		FatalityImp6Eld:
 		TNT1 A 0 SetPlayerProperty(0,1,0)
 		TNT1 A 0 ACS_Execute(477, 0, 0, 0, 0)
@@ -8976,4 +8976,3 @@ FSF5 D 10
 		Goto StandStill
 
 }}
-
