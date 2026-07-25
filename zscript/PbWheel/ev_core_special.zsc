@@ -1672,6 +1672,19 @@ Class PB_SpecialWheelHandler : EventHandler
 		dmr_grav.iconScale = iconScale;
 		wheelSpecials.Push(dmr_grav);
 
+		PB_SpecialWheel_Mode dmr_dual = new ("PB_SpecialWheel_Mode");
+		TextureID dualIcon = TexMan.CheckForTexture("DPCSA0", TexMan.Type_Any);
+		if (!dualIcon.isValid())
+			dualIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Dual.png", TexMan.Type_Any);
+		if (!dualIcon.isValid())
+			dualIcon = TexMan.CheckForTexture("PLCUA0", TexMan.Type_Any);
+		dmr_dual.specialIcon = dualIcon;
+		dmr_dual.specialName = "Select_PB_DMR_DualWield";
+		dmr_dual.specialAlias = "Dual Wield";
+		dmr_dual.specialPriority = 3;
+		dmr_dual.iconScale = iconScale;
+		wheelSpecials.Push(dmr_dual);
+
 		specialWheel_handleMouse();
 	}
 

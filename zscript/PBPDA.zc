@@ -1250,7 +1250,9 @@ class PB_EventHandler : EventHandler
 			case 'PB_DarkMatterRifle':
 				localScale = 0.9;
 				localOffY = -40.0;
-				if (mo.CountInv("PB_DMR_GravityAltMode") >= 1)
+				if (mo.CountInv("DualWieldingDarkMatter") >= 1)
+					modeIcon = PB2022_ModeHudWheelOrLump("graphics/pywheel/Carbine_Dual.png", "DPCSA0");
+				else if (mo.CountInv("PB_DMR_GravityAltMode") >= 1)
 					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/rocket_standard.png");
 				else
 					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Minigun_2.png");
