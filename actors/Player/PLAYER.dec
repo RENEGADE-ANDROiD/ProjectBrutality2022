@@ -801,6 +801,9 @@ ACTOR Doomer : PlayerPawnBase Replaces DoomPlayer
 	Player.StartItem "PB_Pistol"
 	Player.StartItem "Melee_Attacks"
 	Player.StartItem "ShieldSaw_token", 1
+	Player.StartItem "HookAmmo", 1
+	Player.StartItem "AlreadyHaveMeatHook", 1
+	Player.StartItem "PB_HookToken", 1
 	Player.StartItem "CarbineFullAuto"
 	Player.StartItem "NewClip", 90
 	Player.StartItem "RifleAmmo", 31

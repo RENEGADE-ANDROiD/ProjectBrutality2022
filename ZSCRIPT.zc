@@ -477,12 +477,7 @@ class InvisiblePuffAlways : InvisiblePuff
 }
 class CameraRunner : Inventory
 {
-	bool fatalityLitSaved;
-	bool fatalityWasBright;
-	int fatalitySavedLightLevel;
-	bool fatalityStyleSaved;
-	double fatalitySavedAlpha;
-	int fatalitySavedRenderStyle;
+	bool fatalityLitApplied;
 
 	static bool CheckForCamera(class<Actor> classname,int tidnum)
 	{
@@ -540,27 +535,20 @@ class CameraRunner : Inventory
 
 	void ApplyFatalityFullbright()
 	{
-		if (!owner || fatalityLitSaved) return;
-		fatalityWasBright = owner.bBRIGHT;
-		fatalitySavedLightLevel = owner.LightLevel;
-		fatalitySavedAlpha = owner.Alpha;
-		fatalitySavedRenderStyle = owner.GetRenderStyle();
-		fatalityStyleSaved = true;
-		fatalityLitSaved = true;
+		if (!owner || fatalityLitApplied) return;
+		fatalityLitApplied = true;
 		owner.bBRIGHT = true;
 		owner.LightLevel = 255;
-		owner.A_SetRenderStyle(1.0, STYLE_Normal);
 	}
 
 	void RestoreFatalityFullbright()
 	{
-		if (!owner || !fatalityLitSaved) return;
-		owner.bBRIGHT = fatalityWasBright;
-		owner.LightLevel = fatalitySavedLightLevel;
-		if (fatalityStyleSaved)
-			owner.A_SetRenderStyle(fatalitySavedAlpha, fatalitySavedRenderStyle);
-		fatalityLitSaved = false;
-		fatalityStyleSaved = false;
+		Actor litOwner = owner;
+		if (!litOwner) return;
+		litOwner.bBRIGHT = false;
+		litOwner.LightLevel = 0;
+		litOwner.A_SetRenderStyle(1.0, STYLE_Normal);
+		fatalityLitApplied = false;
 	}
 
 	void TerminateCamera()
@@ -666,13 +654,14 @@ class CameraRunner : Inventory
 			self.RunCameraNew();
 		}
 	}
+	override void DetachFromOwner()
+	{
+		TerminateCamera();
+		Super.DetachFromOwner();
+	}
 	override void OnDestroy()
 	{
-		let p = PlayerPawn(owner);
-		if (p)
-		{
-			self.TerminateCamera();
-		}
+		TerminateCamera();
 		Super.OnDestroy();
 	}
 }

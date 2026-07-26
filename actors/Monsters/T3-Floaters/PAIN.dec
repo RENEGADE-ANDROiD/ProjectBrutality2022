@@ -8,11 +8,11 @@ ACTOR PB_PainElemental Replaces PainElemental
 	//$Title Pain Elemental
 	//$Category Project Brutality - Monsters/Flyers
 	//$Sprite PAINA1
-	Health 300
+	Health 400
 	Radius 31
-	Height 56
+	Height 70
 	Mass 400
-    Scale 1.2
+    Scale 1.4
 	Speed 9
 	PainChance 128
 	Monster
@@ -103,11 +103,191 @@ SearchPlayer:
 		
 	Missile:
 	    TNT1 A 0 A_TakeInventory("EnemyMemory", 30)
+		TNT1 A 0 A_Jump(90, "GroundSlamStart")
+		TNT1 A 0 A_Jump(80, "MissileTriple")
+		TNT1 A 0 A_Jump(100, "MissileSoulSpawn")
+	MissileSoulProjectiles:
+		PAIN D 5 A_FaceTarget
+		TNT1 A 0 A_Recoil(-8)
+		PAIN E 4 A_FaceTarget
+		PAIN F 4 BRIGHT A_FaceTarget
+		TNT1 A 0 A_CustomMissile("PB_PainSoulAttack", 10, 15, 9, 11)
+		TNT1 A 0 A_CustomMissile("PB_PainSoulAttack", 10, 15, 0, 11)
+		PAIN E 3
+		TNT1 A 0 A_Recoil(8)
+		PAIN D 3
+		Goto See
+	MissileSoulSpawn:
 		PAIN D 7 A_FaceTarget
 		PAIN E 7 A_FaceTarget
 		PAIN F 5 BRIGHT A_FaceTarget
 		PAIN F 2 BRIGHT A_PainAttack("PB_LostSoul")
 		PAIN ED 7
+		Goto See
+	MissileTriple:
+		PAIN D 5 A_FaceTarget
+		TNT1 A 0 A_Recoil(-8)
+		PAIN E 4 A_FaceTarget
+		PAIN F 4 BRIGHT A_FaceTarget
+		TNT1 A 0 A_CustomMissile("PB_PainSoulAttack", 10, 15, 9, 11)
+		TNT1 A 0 A_PainAttack("PB_LostSoul")
+		TNT1 A 0 A_CustomMissile("PB_PainSoulAttack", 10, 15, 0, 11)
+		PAIN E 3
+		TNT1 A 0 A_Recoil(8)
+		PAIN D 3
+		Goto See
+
+	GroundSlamStart:
+		TNT1 A 0 A_FaceTarget
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 1)
+		TNT1 A 0 A_ChangeFlag("FLOAT", 0)
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)
+		TNT1 A 0 A_TakeInventory("PB_GroundSlamFallTics", 99)
+		TNT1 A 0 A_PlaySound("pain/pain", CHAN_VOICE)
+		RPEN A 3 A_ChangeVelocity(0, 0, 4, CVF_RELATIVE)
+		RPEN B 3 A_ChangeVelocity(0, 0, 4, CVF_RELATIVE)
+		RPEN C 3 A_FaceTarget
+		RPEN D 4 A_FaceTarget
+		Goto GroundSlamFalling
+	GroundSlamFalling:
+		TNT1 A 0 A_GiveInventory("PB_GroundSlamFallTics", 1)
+		TNT1 A 0 A_JumpIfInventory("PB_GroundSlamFallTics", 35, "GroundRollStop")
+		RPEN D 2 A_ChangeVelocity(0, 0, -25, CVF_RELATIVE)
+		EXPL A 0 A_CustomMissile("ExplosionSmoke", 0, 0, random(0, 360), 2, random(10, 12))
+		TNT1 A 0 A_CheckFloor("GroundSlamImpact")
+		TNT1 A 0 A_JumpIf(velz == 0, "GroundSlamImpact")
+		Loop
+	GroundSlamImpact:
+		TNT1 A 0 A_TakeInventory("PB_GroundSlamFallTics", 99)
+		TNT1 A 0 A_SpawnItemEx("WhiteShockwave", 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("PB_SlamTrampleDamage", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_Quake(3, 20, 0, 256, "")
+		EXPL AA 0 A_CustomMissile("ExplosionSmoke", 0, 0, random(0, 360), 2, random(0, 30))
+		TNT1 A 0 A_PlaySound("player/cyborg/fist", CHAN_AUTO)
+		TNT1 A 0 A_FaceTarget
+		Goto GroundRoll1
+	GroundRoll1:
+		TNT1 A 0 A_FaceTarget(1, 0)
+		RPEN E 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN F 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN G 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN H 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		TNT1 A 0 A_SpawnItemEx("PB_SlamTrampleDamage", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Goto GroundRoll2
+	GroundRoll2:
+		TNT1 A 0 A_FaceTarget(1, 0)
+		RPEN E 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN F 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN G 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN H 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		TNT1 A 0 A_SpawnItemEx("PB_SlamTrampleDamage", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Goto GroundRoll3
+	GroundRoll3:
+		TNT1 A 0 A_FaceTarget(1, 0)
+		RPEN E 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN F 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN G 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN H 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		TNT1 A 0 A_SpawnItemEx("PB_SlamTrampleDamage", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Goto GroundRoll4
+	GroundRoll4:
+		TNT1 A 0 A_FaceTarget(1, 0)
+		RPEN E 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN F 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN G 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN H 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		TNT1 A 0 A_SpawnItemEx("PB_SlamTrampleDamage", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Goto GroundRoll5
+	GroundRoll5:
+		TNT1 A 0 A_FaceTarget(1, 0)
+		RPEN E 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN F 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN G 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN H 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		TNT1 A 0 A_SpawnItemEx("PB_SlamTrampleDamage", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Goto GroundRoll6
+	GroundRoll6:
+		TNT1 A 0 A_FaceTarget(1, 0)
+		RPEN E 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN F 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN G 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN H 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		TNT1 A 0 A_SpawnItemEx("PB_SlamTrampleDamage", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Goto GroundRoll7
+	GroundRoll7:
+		TNT1 A 0 A_FaceTarget(1, 0)
+		RPEN E 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN F 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN G 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN H 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		TNT1 A 0 A_SpawnItemEx("PB_SlamTrampleDamage", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Goto GroundRoll8
+	GroundRoll8:
+		TNT1 A 0 A_FaceTarget(1, 0)
+		RPEN E 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN F 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN G 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		RPEN H 2 ThrustThing(angle*256/360, 4)
+		TNT1 A 0 A_JumpIf(Momx == 0 && Momy == 0, "GroundSlamHitWall")
+		TNT1 A 0 A_SpawnItemEx("PB_SlamTrampleDamage", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Goto GroundRollStop
+	GroundRollStop:
+		TNT1 A 0 A_TakeInventory("PB_GroundSlamFallTics", 99)
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 1)
+		TNT1 A 0 A_ChangeFlag("FLOAT", 1)
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+		RPEN A 5 A_ChangeVelocity(0, 0, 1, CVF_RELATIVE)
+		RPEN B 5
+		RPEN C 5
+		RPEN D 5
+		TNT1 A 0 A_Jump(85, "MissileTriple")
+		Goto See
+	GroundSlamHitWall:
+		TNT1 A 0 A_TakeInventory("PB_GroundSlamFallTics", 99)
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 1)
+		TNT1 A 0 A_ChangeFlag("FLOAT", 1)
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+		TNT1 A 0 A_PlaySound("pain/pain", CHAN_AUTO)
+		TNT1 A 0 A_PlaySound("player/cyborg/fist", CHAN_AUTO)
+		TNT1 A 0 A_SpawnItemEx("PB_SlamTrampleDamage", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		EXPL AAAA 0 A_CustomMissile("ExplosionSmoke", 0, 0, random(0, 360), 2, random(10, 40))
+		TNT1 A 0 A_SpawnItemEx("WhiteShockwave", 0, 0, 0)
+		RPEN A 5 A_ChangeVelocity(0, 0, 1, CVF_RELATIVE)
+		RPEN B 5
+		RPEN C 5
+		RPEN D 5
+		TNT1 A 0 A_Jump(85, "MissileTriple")
 		Goto See
 
    Death.ExeCution:
@@ -477,7 +657,7 @@ Actor FatalizedPE
 {
     Radius 12
     Height 18
-    Scale 1.2
+    Scale 1.4
     +SHOOTABLE
     -SOLID
     +NOTELEPORT
@@ -499,7 +679,75 @@ States
 		 TNT1 AAA 0 A_CustomMissile ("XDeath4", 5, 0, random (0, 360), 2, random (0, 160))
          Stop
 		}}
-		
+
+// Abyssal Core–style PE Lost Soul projectile (PSOL sprites; death FX reuse PB LS gibs)
+ACTOR PB_PainSoulAttack
+{
+	Radius 6
+	Height 10
+	Speed 20
+	FastSpeed 30
+	Damage (random(18,22))
+	Projectile
+	+THRUGHOST
+	+FORCEXYBILLBOARD
+	+DONTHURTSPECIES
+	RenderStyle Normal
+	Alpha 1
+	Scale 0.8
+	SeeSound "skull/melee"
+	DeathSound "LSOD"
+	Decal "Scorch"
+	Species "FlyingBalls"
+	DamageType "Flames"
+	States
+	{
+	Spawn:
+		PSOL B 1 BRIGHT
+		TNT1 A 0 A_SpawnItem("RedFlareSmall", 0, 12)
+		Loop
+	Death:
+		TNT1 AA 0 A_CustomMissile("SmallLSPart1", 0, 0, random(0, 360), 2, random(0, 360))
+		TNT1 AA 0 A_CustomMissile("SmallLSPart3", 0, 0, random(0, 360), 2, random(0, 360))
+		EXPL AA 0 A_SpawnItem("ExplosionParticleSpawner")
+		TNT1 A 0 A_SpawnItemEx("ExplosionFlareSpawner", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		EXPL AAA 0 A_CustomMissile("FireBallExplosionFlamesMedium", 1, 0, random(0, 360), 2, random(0, 360))
+		TNT1 AA 0 A_CustomMissile("PlasmaSmoke", 1, 0, random(0, 360), 2, random(0, 360))
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random(-5, 5), random(-5, 5))
+		TNT1 AA 0 A_CustomMissile("LSpart1", 12, 0, random(0, 360), 2, random(0, 160))
+		TNT1 A 0 A_CustomMissile("LSpart2", 12, 0, random(0, 360), 2, random(0, 160))
+		TNT1 A 0 A_CustomMissile("LSpart3", 12, 0, random(0, 360), 2, random(0, 160))
+		Stop
+	}
+}
+
+// Fall timeout counter for GroundSlamFalling (closet / no-floor abort)
+ACTOR PB_GroundSlamFallTics : Inventory
+{
+	Inventory.MaxAmount 99
+	Inventory.Amount 0
+	+INVENTORY.UNDROPPABLE
+	+INVENTORY.UNTOSSABLE
+}
+
+// Abyssal Core SlamTrampleDamage — PE ground slam / roll radius hit
+ACTOR PB_SlamTrampleDamage
+{
+	Radius 20
+	Height 20
+	Speed 0
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+DONTHARMCLASS
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_Explode(75, 90, 0)
+		TNT1 A 0 A_RadiusThrust(5000, 200, RTF_NOIMPACTDAMAGE)
+		Stop
+	}
+}
 
 Actor Vanilla_PainElemental1 : PB_PainElemental
 {

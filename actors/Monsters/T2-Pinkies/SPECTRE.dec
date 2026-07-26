@@ -6,7 +6,7 @@ ACTOR PB_Spectre: PB_Demon Replaces Spectre
     GibHealth 35
     Scale 1.1
 	Height 52
-	Radius 22
+	Radius 24
 	Mass 400
 	SpawnID 1510
     damagefactor "Crush", 10.0
