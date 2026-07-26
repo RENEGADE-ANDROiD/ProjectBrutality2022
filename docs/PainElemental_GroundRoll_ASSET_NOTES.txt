@@ -1,0 +1,8 @@
+Pain Elemental ground-slam / roll frames (RPENA0–RPENH0).
+
+Source: The Abyssal Core TC — sprites/Monsters/PainElemental/Rolly Polly/RPEN*.png
+Used by PB_PainElemental GroundSlam* / GroundRoll* states in actors/Monsters/T3-Floaters/PAIN.dec.
+Upstream art remains third-party; not a full Core actor fold.
+
+Sprites live under SPRITES/Monsters/PainElemental/GroundRoll/ (do not keep
+plain-text notes under SPRITES/ — Texman treats them as textures).

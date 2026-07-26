@@ -23,7 +23,7 @@ ACTOR PB_Demon: Demon Replaces Demon
 	Health 200
     Scale 1.1
 	Height 56
-	Radius 22
+	Radius 24
 	Mass 400
     Speed 10
     FastSpeed 13 //yes, his fast speed is slower because it would make him sanic fast if it was default.

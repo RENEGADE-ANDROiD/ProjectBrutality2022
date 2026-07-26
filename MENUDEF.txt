@@ -353,38 +353,35 @@ OptionMenu "PB2022_MovementMenu"
 	StaticText "$OPTMNU_PB2022_MOVE_TIP1", cyan
 	StaticText "$OPTMNU_PB2022_MOVE_TIP2", cyan
 	StaticText " "
-	StaticText "======== Quick Bundles ========", gold
-	StaticText " "
-	Command "Enable Explosive Movement (Rocket + Plasma)", "set pb_rocketjump 1; set pb_plasma_wallclimb 1"
-	Command "Disable Explosive Movement", "set pb_rocketjump 0; set pb_plasma_wallclimb 0"
-	StaticText "Sets pb_rocketjump and pb_plasma_wallclimb.", teal
-	StaticText " "
-	Command "Enable Advanced Movement (Jump + Hazards)", "set pb_doublejump 2; set pb_hazardmovement 1"
-	Command "Disable Advanced Movement Extras", "set pb_doublejump 0; set pb_hazardmovement 0"
-	StaticText "Sets pb_doublejump and pb_hazardmovement.", teal
-	StaticText " "
-	StaticText "======== Dash ========", gold
-	StaticText " "
 	Option "$OPTMNU_PB_DOUBLETAP_DASH", "pb_doubletap", "OnOff"
 	StaticText "$OPTMNU_PB_DOUBLETAP_DASH_HINT", green
 	Slider "$OPTMNU_PB_DOUBLETAP_WINDOW", "pb_maxtaptime", 5, 20, 1, 0
 	StaticText "$OPTMNU_PB_DOUBLETAP_WINDOW_HINT", green
 	StaticText " "
-	StaticText "======== Explosive Movement ========", gold
+	StaticText "======== Quick Bundles ========", gold
 	StaticText " "
-	Option "Rocket Jumping", "pb_rocketjump", "OnOff"
-	StaticText "Rocket Splash Can Launch From Floors,", green
-	StaticText "Walls, Or Ceilings (pb_rocketjump).", green
+	Command "Enable Explosive Movement (Plasma, Rocket + Shotgun)", "set pb_rocketjump 1; set pb_plasma_wallclimb 1"
+	Command "Disable Explosive Movement", "set pb_rocketjump 0; set pb_plasma_wallclimb 0"
 	StaticText " "
-	Option "Plasma Wall Climbing", "pb_plasma_wallclimb", "OnOff"
-	StaticText "Plasma Blast Knockback From Floors,", green
-	StaticText "Walls, Or Ceilings (pb_plasma_wallclimb).", green
+	Command "Enable Advanced Movement (Jump + Hazards)", "set pb_doublejump 2; set pb_hazardmovement 1"
+	Command "Disable Advanced Movement Extras", "set pb_doublejump 0; set pb_hazardmovement 0"
 	StaticText " "
 	StaticText "======== Full Gameplay List ========", gold
 	StaticText " "
 	Submenu "Gameplay Settings (Weapons, Barrels, Recoil)", "GameplaySettings"
 	StaticText "Dual Wield, Crosshairs, Per-Weapon Toggles,", teal
 	StaticText "Marines, Fatalities Speed, And More.", teal
+	StaticText " "
+	StaticText "======== Explosive Movement ========", gold
+	StaticText " "
+	Option "Rocket Jumping", "pb_rocketjump", "OnOff"
+	StaticText "Rocket Splash And Shotgun Floor Blast-Jump", green
+	StaticText "(Aim Shells At Feet; pb_rocketjump).", green
+	StaticText " "
+	Option "Plasma Wall Climbing", "pb_plasma_wallclimb", "OnOff"
+	StaticText "Plasma And Shotgun Wall/Ceiling Bounce", green
+	StaticText "(Point-Blank Geometry; pb_plasma_wallclimb).", green
+	StaticText " "
 }
 
 OptionMenu "PB2022_CombatMenu"

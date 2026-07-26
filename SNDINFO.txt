@@ -5837,3 +5837,9 @@ PSLF2 "sounds/combat/Weapons/Assault Plasma Rifle/PSLF2"
 PSLF3 "sounds/combat/Weapons/Assault Plasma Rifle/PSLF3"
 SMGFIRE1 "sounds/combat/Weapons/MP12/SMGFIRE1.ogg"
 SMGFIRE2 "sounds/combat/Weapons/MP12/SMGFIRE2.ogg"
+
+// Abyssal Crown BloodBonk — fist ground slam (FistSlam) impact pool
+$random weapons/bloodbonk/boom { weapons/bloodbonk/boom1 weapons/bloodbonk/boom2 weapons/bloodbonk/boom3 }
+weapons/bloodbonk/boom1 "sounds/combat/weapons/BloodBonk/BBONK1.ogg"
+weapons/bloodbonk/boom2 "sounds/combat/weapons/BloodBonk/BBONK2.ogg"
+weapons/bloodbonk/boom3 "sounds/combat/weapons/BloodBonk/BBONK3.ogg"
