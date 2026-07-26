@@ -1,0 +1,5 @@
+PSOL* — Pain Elemental soul-projectile frames from The Abyssal Core
+(Brutal Doom lineage PE Lost Soul missile). Used by PB_PainSoulAttack.
+
+Sprites live under SPRITES/Monsters/PainElemental/PEProjectile/ (do not keep
+plain-text notes under SPRITES/ — Texman treats them as textures).

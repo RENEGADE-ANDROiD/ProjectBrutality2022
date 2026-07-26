@@ -66,6 +66,12 @@ class PB_Projectile : FastProjectile abstract
 		}
 	}
 
+	// Shotgun floor / wall blast-jump (Explosive Movement). No self-damage when off.
+	void PB_DoShotgunBlastJump(bool floorHit = false)
+	{
+		PB_ShotgunBlastJumpProxy.Try(self, target, floorHit ? 1 : 2);
+	}
+
 	virtual int Handle_MissileHit(Actor victim)
 	{
 		double scaled_damage = truedamage;
@@ -869,6 +875,110 @@ class INTERNAL_SpecLineTracer : LineTracer
 
         return TRACE_Continue;
     }
+}
+
+// One-blast-per-tic latch for shotgun blast-jump (multi-pellet throttle).
+class PB_SGBlastJumpLatch : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		Inventory.Amount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+	}
+
+	override void DoEffect()
+	{
+		if (GetAge() >= 1)
+			Destroy();
+	}
+}
+
+// Shared shotgun floor/wall blast-jump entry (pellets, puffs, cryo flak).
+// Floor → pb_rocketjump; wall/ceiling → pb_plasma_wallclimb.
+class PB_ShotgunBlastJumpProxy : Actor
+{
+	const PB_SG_BLAST_THRUST = 1100;
+	const PB_SG_BLAST_RADIUS = 72;
+	const PB_SG_BLAST_MOM_AMT = 24;
+	const PB_SG_BLAST_MOM_RAD = 128;
+	const PB_SG_BLAST_MAX_DIST = 96.0;
+
+	Default
+	{
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+NOINTERACTION
+		+DONTSPLASH
+		Radius 1;
+		Height 1;
+	}
+
+	clearscope static bool CvarOn(Name cvarName)
+	{
+		let cv = CVar.FindCVar(cvarName);
+		return cv && cv.GetBool();
+	}
+
+	clearscope static bool IsFloorSurface(Actor a)
+	{
+		if (!a) return false;
+		if (a.BlockingLine) return false;
+		if (a.pos.z + a.height >= a.ceilingz - 4.0) return false;
+		return (a.pos.z <= a.floorz + 12.0);
+	}
+
+	clearscope static PlayerPawn ResolveShooter(Actor impact, Actor shooter)
+	{
+		Actor s = shooter;
+		if (!s && impact) s = impact.target;
+		if (!s) return null;
+		if (s is "PlayerPawn") return PlayerPawn(s);
+		if (s.target && (s.target is "PlayerPawn")) return PlayerPawn(s.target);
+		return null;
+	}
+
+	// surfaceHint: 0 = auto, 1 = floor, 2 = wall/ceiling
+	static void Try(Actor impact, Actor shooter = null, int surfaceHint = 0)
+	{
+		if (!impact) return;
+
+		PlayerPawn plr = ResolveShooter(impact, shooter);
+		if (!plr || !plr.player) return;
+
+		if (impact.Distance3D(plr) > PB_SG_BLAST_MAX_DIST) return;
+
+		bool floorHit;
+		if (surfaceHint == 1) floorHit = true;
+		else if (surfaceHint == 2) floorHit = false;
+		else floorHit = IsFloorSurface(impact);
+
+		if (floorHit)
+		{
+			if (!CvarOn('pb_rocketjump')) return;
+		}
+		else
+		{
+			if (!CvarOn('pb_plasma_wallclimb')) return;
+		}
+
+		if (plr.CountInv("PB_SGBlastJumpLatch") > 0) return;
+		plr.A_GiveInventory("PB_SGBlastJumpLatch", 1);
+
+		impact.A_RadiusThrust(PB_SG_BLAST_THRUST, PB_SG_BLAST_RADIUS, RTF_AFFECTSOURCE | RTF_THRUSTZ | RTF_NOIMPACTDAMAGE);
+		impact.A_RadiusGive("PBBlastMomentum", PB_SG_BLAST_MOM_RAD, RGF_PLAYERS | RGF_CUBE, PB_SG_BLAST_MOM_AMT);
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay
+		{
+			Try(self, target, 0);
+		}
+		Stop;
+	}
 }
 
 #include "zscript/Weapons/Projectiles/AltBulletProjectile.zs"

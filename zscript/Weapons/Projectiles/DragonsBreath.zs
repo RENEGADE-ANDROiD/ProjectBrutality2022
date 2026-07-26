@@ -82,6 +82,8 @@ Class PB_DragonsBreathTracer : PB_Projectile
 		A_Spawnitem("PB_DragonBreath");
 		spawnflameFlare(pos,true);
 		SpawnImpactFx();
+		if (type == EType_Geometry)
+			PB_ShotgunBlastJumpProxy.Try(self, target, 0);
 	}
 	
 	

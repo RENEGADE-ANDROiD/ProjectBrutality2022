@@ -10,6 +10,12 @@ class PB_12GAPellet : PB_Projectile
 		Damagetype "Shotgun";
 		Obituary "%o had %p intestines removed and thrown on the ground by %k.";
 	}
+
+	override void OnExplode(int type)
+	{
+		if (type == EType_Geometry)
+			PB_ShotgunBlastJumpProxy.Try(self, target, 0);
+	}
 }
 
 class PB_12GAPellet_ASG : PB_12GAPellet
@@ -32,6 +38,12 @@ class PB_12GASlug : PB_Projectile
 		Damagetype "Shotgun";
 		Obituary "%o had %p guts blown out by %k.";
 	}
+
+	override void OnExplode(int type)
+	{
+		if (type == EType_Geometry)
+			PB_ShotgunBlastJumpProxy.Try(self, target, 0);
+	}
 }
 
 // [gng] LP projectiles have more damage and use a more gory damage type
@@ -48,6 +60,12 @@ class PB_10GAPellet : PB_Projectile
 		+PB_Projectile.SMALLIMPACT;
 		Damagetype "Shotgun";
 		Obituary "%o was turned inside out by %k.";
+	}
+
+	override void OnExplode(int type)
+	{
+		if (type == EType_Geometry)
+			PB_ShotgunBlastJumpProxy.Try(self, target, 0);
 	}
 }
 
@@ -77,6 +95,12 @@ class PB_8GAPellet : PB_Projectile
 		+PB_Projectile.SMALLIMPACT;
 		Damagetype "Shotgun";
 		Obituary "%o was turned into a fine red mist by %k.";
+	}
+
+	override void OnExplode(int type)
+	{
+		if (type == EType_Geometry)
+			PB_ShotgunBlastJumpProxy.Try(self, target, 0);
 	}
 }
 
