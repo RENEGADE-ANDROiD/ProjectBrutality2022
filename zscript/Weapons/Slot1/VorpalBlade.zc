@@ -76,46 +76,7 @@ class VorpalBlade : PB_WeaponBase
 		return victim;
 	}
 
-	// ----- Sweep attack (lifesteal sword swing, from original) -----
-	Action void hxa_CustomRollAttack(int damage = 0, double healfactor = 1, bool PierceEnemies = false,
-		double roll = 0, int area = 90, int dist = 1024,
-		name PuffActor = "null", sound HitActorSound = "null", sound HitWallSound = "null")
-	{
-		if (!player) return;
-
-		bool PlaySoundEnemy = false;
-		bool PlaySoundWall = false;
-		Array<Actor> Targets;
-		for (int i = 0; i < area; i++)
-		{
-			double horAng = angle - area*cos(roll)/2;
-			double pit = pitch - area*sin(roll)/2;
-			int hdif = 10;
-			LineAttack(horAng+(i*cos(roll)), dist, pit+(i*sin(roll)), 0, 'Melee', PuffActor, true, offsetz: height-hdif);
-			FLineTraceData h;
-			LineTrace(horAng+(i*cos(roll)), dist, pit+(i*sin(roll)), offsetz: height-hdif, data:h);
-			if (h.hitActor != null && h.hitActor.bSHOOTABLE)
-			{
-				PlaySoundEnemy = true;
-				h.hitActor.DamageMobj(self, self, damage, 'damagetype', DMG_THRUSTLESS);
-				A_DamageSelf(-damage * healfactor);
-				if (PierceEnemies)
-				{
-					h.hitActor.bSHOOTABLE = false;
-					Targets.Push(h.hitActor);
-				}
-			}
-			else if ((h.HitType == TRACE_HitWall || h.HitType == TRACE_HitCeiling || h.HitType == TRACE_HitFloor) &&
-				(pitch > 20 || pit+(i*sin(roll)) < 10))
-			{
-				PlaySoundWall = true;
-			}
-		}
-		if (PlaySoundEnemy) A_StartSound(HitActorSound, pitch:frandom(.9,1.1));
-		if (PlaySoundWall)  A_StartSound(HitWallSound, pitch:frandom(.9,1.1));
-		for (int z = 0; z < Targets.Size(); z++)
-			Targets[z].bSHOOTABLE = true;
-	}
+	// hxa_CustomRollAttack lives on PB_WeaponBase (Random Quick Melee + this weapon).
 
 	// ----- Weapon definition -----
 	Default
