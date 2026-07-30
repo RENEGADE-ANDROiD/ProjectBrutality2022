@@ -1,0 +1,9 @@
+# GZDoom definition includes — not NASL / SourcePawn / POV-Ray
+lumps/includes/**/*.inc linguist-detectable=false
+
+# Doom ACS sources — not NASL / SourcePawn
+SRC/**/*.acs linguist-detectable=false
+
+# Keep real GPU shaders labeled correctly
+*.fp linguist-language=GLSL
+*.shader linguist-language=GLSL
