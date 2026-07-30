@@ -1,6 +1,8 @@
-// Random Quick Melee pool — PBWP CustomMelee ports (no melee wheel).
-// Eligible: Backhand + Uppercut always; DemonicSword if ArgentSith/BeamKatana;
-// Saw if PB_Chainsaw. Replaces knife punch only.
+// Random Quick Melee pool — fist CustomMelee ports + gated blade strips
+// from ArgentSith / BeamKatana / VorpalBlade primary attack states.
+// Always: Backhand + Uppercut.
+// ArgentMelee if PB_ArgentSith; BeamMelee if PB_BeamKatana;
+// VorpalMelee if VorpalBlade; Saw if PB_Chainsaw.
 
 extend class PB_WeaponBase
 {
@@ -49,78 +51,169 @@ extend class PB_WeaponBase
 		v.vel.z += zforce;
 	}
 
+	// Sweep attack (lifesteal sword swing) — lifted from VorpalBlade for Quick Melee.
+	action void hxa_CustomRollAttack(int damage = 0, double healfactor = 1, bool PierceEnemies = false,
+		double roll = 0, int area = 90, int dist = 1024,
+		name PuffActor = "null", sound HitActorSound = "null", sound HitWallSound = "null")
+	{
+		if (!player) return;
+
+		bool PlaySoundEnemy = false;
+		bool PlaySoundWall = false;
+		Array<Actor> Targets;
+		for (int i = 0; i < area; i++)
+		{
+			double horAng = angle - area*cos(roll)/2;
+			double pit = pitch - area*sin(roll)/2;
+			int hdif = 10;
+			LineAttack(horAng+(i*cos(roll)), dist, pit+(i*sin(roll)), 0, 'Melee', PuffActor, true, offsetz: height-hdif);
+			FLineTraceData h;
+			LineTrace(horAng+(i*cos(roll)), dist, pit+(i*sin(roll)), offsetz: height-hdif, data:h);
+			if (h.hitActor != null && h.hitActor.bSHOOTABLE)
+			{
+				PlaySoundEnemy = true;
+				h.hitActor.DamageMobj(self, self, damage, 'damagetype', DMG_THRUSTLESS);
+				A_DamageSelf(-damage * healfactor);
+				if (PierceEnemies)
+				{
+					h.hitActor.bSHOOTABLE = false;
+					Targets.Push(h.hitActor);
+				}
+			}
+			else if ((h.HitType == TRACE_HitWall || h.HitType == TRACE_HitCeiling || h.HitType == TRACE_HitFloor) &&
+				(pitch > 20 || pit+(i*sin(roll)) < 10))
+			{
+				PlaySoundWall = true;
+			}
+		}
+		if (PlaySoundEnemy) A_StartSound(HitActorSound, pitch:frandom(.9,1.1));
+		if (PlaySoundWall)  A_StartSound(HitWallSound, pitch:frandom(.9,1.1));
+		for (int z = 0; z < Targets.Size(); z++)
+			Targets[z].bSHOOTABLE = true;
+	}
+
+	// Pool codes: 0 Backhand, 1 Uppercut, 2 ArgentMelee, 3 BeamMelee, 4 VorpalMelee, 5 Saw
 	action state PB_PickRandomQuickMelee()
 	{
-		bool sword = CountInv("PB_ArgentSith") > 0 || CountInv("PB_BeamKatana") > 0;
-		bool saw = CountInv("PB_Chainsaw") > 0;
-		int n = 2;
-		if (sword) n++;
-		if (saw) n++;
-		int i = random(0, n - 1);
-		if (i == 0)
+		Array<int> pool;
+		pool.Push(0);
+		pool.Push(1);
+		if (CountInv("PB_ArgentSith") > 0)
+			pool.Push(2);
+		if (CountInv("PB_BeamKatana") > 0)
+			pool.Push(3);
+		if (CountInv("VorpalBlade") > 0)
+			pool.Push(4);
+		if (CountInv("PB_Chainsaw") > 0)
+			pool.Push(5);
+
+		int pick = pool[random(0, pool.Size() - 1)];
+		if (pick == 0)
 			return ResolveState("RandomMelee_Backhand");
-		if (i == 1)
+		if (pick == 1)
 			return ResolveState("RandomMelee_Uppercut");
-		if (sword && saw)
-		{
-			if (i == 2)
-				return ResolveState("RandomMelee_Sword");
-			return ResolveState("RandomMelee_Saw");
-		}
-		if (sword)
-			return ResolveState("RandomMelee_Sword");
+		if (pick == 2)
+			return ResolveState("RandomMelee_ArgentMelee");
+		if (pick == 3)
+			return ResolveState("RandomMelee_BeamMelee");
+		if (pick == 4)
+			return ResolveState("RandomMelee_VorpalMelee");
 		return ResolveState("RandomMelee_Saw");
 	}
 
 	States
 	{
-	RandomMelee_Sword:
+	// ArgentSith Fire (primary hand) + FinishCuttingAnimation — no hand-switch / barrel / fatality.
+	RandomMelee_ArgentMelee:
+		TNT1 A 0 PB_QM_BeginAttack();
+		BVAT A 1 BRIGHT;
+		BVAT C 1 BRIGHT;
+		BVAT D 1 BRIGHT A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
+		BVAT A 0 A_JumpIfInventory("PowerStrength", 1, "RandomMelee_ArgentMeleeBerserk");
+		BVAT E 0 A_CustomPunch(5, true, CPF_STEALARMOR, "ArgSithSawPuff", 140, 1, 150, "ArmorShard", "ArgKatana/Hit", "ArgKatana/Swing");
+		BVAT E 1 BRIGHT A_CustomPunch(40, true, 0, "ArgSithSawPuff", 180, 0, 0, "none", "ArgKatana/Hit", "ArgKatana/Swing");
+		Goto RandomMelee_ArgentMeleeFinish;
+
+	RandomMelee_ArgentMeleeBerserk:
+		BVAT E 0 A_StartSound("ArgKatana/Swing", CHAN_WEAPON);
+		BVAT E 0 A_CustomPunch(5, true, CPF_STEALARMOR, "ArgSithSawPuff", 140, 1, 250, "ArmorShard", "ArgKatana/Hit", "ArgKatana/Swing");
+		BVAT E 1 BRIGHT A_CustomPunch(110, true, 0, "ArgSithSawPuff", 180, 0, 0, "none", "ArgKatana/Hit", "ArgKatana/Swing");
+		Goto RandomMelee_ArgentMeleeFinish;
+
+	RandomMelee_ArgentMeleeFinish:
+		BVAT G 1 BRIGHT;
+		BVAT H 1 BRIGHT;
+		BVAT I 1 BRIGHT;
+		BVAT J 1 BRIGHT;
+		BVAT Q 1 BRIGHT;
+		BVAT P 1 BRIGHT;
+		BVAT O 1 BRIGHT;
+		BVAT N 1 BRIGHT;
+		BVAT M 1 BRIGHT;
+		BVAT L 1 BRIGHT;
 		TNT1 A 0 {
-			PB_QM_BeginAttack();
-			A_GiveInventory("HasIncendiaryWeapon", 1);
-			A_PlaySound("demonicsword/activate", 5);
+			PB_QM_EndAttack();
+			State barrel = PB_CheckBarrelIdle1();
+			if (barrel)
+				return barrel;
+			return ResolveState(null);
 		}
-		EQPR ABCD 1 A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
-		EQPR EJK 1;
-		TNT1 AAAA 1 A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
-		TNT1 AA 1;
-		2KAT ABC 1 {
-			A_BDPMeleeStart();
-			A_SetRoll(roll - 0.5, SPF_INTERPOLATE);
-		}
-		TNT1 A 0 A_PlaySound("demonicsword/swing", 5);
-		TNT1 A 0 A_AlertMonsters(400);
+		Goto Ready3;
+
+	// BeamKatana Fire (primary hand) + FinishCuttingAnimation.
+	RandomMelee_BeamMelee:
+		TNT1 A 0 PB_QM_BeginAttack();
+		BKAT A 1 Bright;
+		BKAT C 1 Bright;
+		BKAT D 1 Bright A_StartSound("CybKatana/Swing", CHAN_WEAPON);
+		BKAT A 0 A_JumpIfInventory("PowerStrength", 1, "RandomMelee_BeamMeleeBerserk");
+		BKAT E 0 A_CustomPunch(5, true, CPF_STEALARMOR, "BeamKatanaSSawPuff4", 140, 1, 150, "ArmorShard", "CybKatana/Hit", "CybKatana/Swing");
+		BKAT E 1 Bright A_CustomPunch(70, true, 0, "BeamKatanaSSawPuff4", 180, 0, 0, "none", "CybKatana/Hit", "CybKatana/Swing");
+		Goto RandomMelee_BeamMeleeFinish;
+
+	RandomMelee_BeamMeleeBerserk:
+		BKAT E 0 A_StartSound("CybKatana/Swing", CHAN_WEAPON);
+		BKAT E 0 A_CustomPunch(5, true, CPF_STEALARMOR, "BeamKatanaSSawPuff4", 140, 1, 250, "ArmorShard", "CybKatana/Hit", "CybKatana/Swing");
+		BKAT E 1 Bright A_CustomPunch(110, true, 0, "BeamKatanaSSawPuff4", 180, 0, 0, "none", "CybKatana/Hit", "CybKatana/Swing");
+		Goto RandomMelee_BeamMeleeFinish;
+
+	RandomMelee_BeamMeleeFinish:
+		BKAT G 1 Bright;
+		BKAT H 1 Bright;
+		BKAT I 1 Bright;
+		BKAT J 1 Bright;
+		BKAT Q 1 Bright;
+		BKAT P 1 Bright;
+		BKAT O 1 Bright;
+		BKAT N 1 Bright;
+		BKAT M 1 Bright;
+		BKAT L 1 Bright;
 		TNT1 A 0 {
-			if (CountInv("PowerStrength") == 1)
-				A_FireCustomMissile("QM_SuperSwordSwing", 0, 0, 0, 8);
-			else
-				A_FireCustomMissile("QM_SwordSwing", 0, 0, 0, 8);
+			PB_QM_EndAttack();
+			State barrel = PB_CheckBarrelIdle1();
+			if (barrel)
+				return barrel;
+			return ResolveState(null);
 		}
-		2KAT D 1 {
-			A_SetRoll(roll - 0.5, SPF_INTERPOLATE);
-			A_BDPMeleeStart();
-		}
-		TNT1 A 0 {
-			if (CountInv("PowerStrength") == 1)
-				A_BDPMelee(200, "QM_SuperSwordSwing", -7, true);
-			else
-				A_BDPMelee(200, "QM_SwordSwing", -7, true);
-		}
-		2KAT E 1 {
-			A_SetRoll(roll - 0.5, SPF_INTERPOLATE);
-			A_BDPMeleeStart();
-		}
-		TNT1 A 0 {
-			if (CountInv("PowerStrength") == 1)
-				A_FireCustomMissile("QM_SuperSwordSwing", 0, 0, 0, -8);
-			else
-				A_FireCustomMissile("QM_SwordSwing", 0, 0, 0, -8);
-		}
-		2KAT FGH 1 {
-			A_SetRoll(roll - 0.5, SPF_INTERPOLATE);
-			A_BDPMeleeStart();
-		}
-		TNT1 AAAA 1 A_SetRoll(roll + 1.0, SPF_INTERPOLATE);
+		Goto Ready3;
+
+	// VorpalBlade SwingRighty — no A_Refire / PreReady / PB_Execute.
+	RandomMelee_VorpalMelee:
+		TNT1 A 0 PB_QM_BeginAttack();
+		VORR A 0 Offset(15, 32);
+		VORR A 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 0 A_PlaySound("Sword/Swing", CHAN_WEAPON, 1.0, 0, 2);
+		TNT1 A 0 hxa_CustomRollAttack(damage: 2, healfactor: 0.5, PierceEnemies: false,
+			roll: 45, area: 45, dist: 48,
+			PuffActor: "KyreiPuffRight",
+			HitActorSound: "Sword/HitMeat",
+			HitWallSound: "Sword/HitWall");
+		TNT1 A 0 A_FireCustomMissile("RedParticleSpawner");
+		VORR B 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORR C 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORR D 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		VORR E 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		TNT1 A 3 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
 		TNT1 A 0 {
 			PB_QM_EndAttack();
 			State barrel = PB_CheckBarrelIdle1();
