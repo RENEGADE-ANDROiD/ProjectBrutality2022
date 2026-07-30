@@ -699,81 +699,8 @@ States
 		}
 		TNT1 A 0 A_JumpIfCloser(99, "GoMeleePunchSetup")
 	GoMeleePunchSetup:
-		// A_ClearOverlays defaults `safety = true` which SILENTLY SKIPS
-		// PSP_FLASH and PSP_WEAPON even when they're in the explicit layer
-		// range (see UZDoom 4.14.3 src/playsim/p_pspr.cpp `A_ClearOverlays`).
-		// We must pass safety=false (third arg) to actually destroy the
-		// PSP_FLASH psprite - otherwise the `Goto Ready3` at the tail of
-		// `FlashPunching` leaves a stuck Ready3 loop on layer 1000, which
-		// duplicates the weapon sprite AND causes `A_DoPBWeaponAction` to
-		// run on PSP_FLASH, locking the player out of weapon switching.
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
-		TNT1 A 0 {
-			// Staging-style: run the punch flash on PSP_FLASH so that
-			// FlashPunching states can end with `Goto Ready3` just like
-			// FlashKicking, without duplicating the weapon sprite on the
-			// main weapon layer. A belt-and-suspenders clear at the exit
-			// of QuickMelee (below) wipes any lingering flash psprite
-			// regardless of how FlashPunching itself terminates.
-			A_PB_AirMeleeLunge(10);
-			A_Overlay(PSP_FLASH, "FlashPunching");
-			A_GiveInventory("HasCutingWeapon", 1);
-			A_TakeInventory("Zoomed",1);
-			A_ZoomFactor(1.0);
-			A_TakeInventory("ADSmode",1);
-			A_PlaySound("KNIFSWNG", 1);
-		}
-		MC3S A 1 {
-			PB_MeleeFeelWind();
-			return PB_TryMidPunchFinisher();
-		}
-		MC3S B 1 {
-			PB_MeleeFeelStep(0.970);
-			return PB_TryMidPunchFinisher();
-		}
-		MC3S C 1 {
-			PB_MeleeFeelStep(0.965);
-			return PB_TryMidPunchFinisher();
-		}
-		MC3S D 1 {
-			PB_MeleeFeelCommit();
-			return PB_TryMidPunchFinisher();
-		}
-		TNT1 A 0 {
-			PB_MeleeFeelImpact();
-			if(CountInv("PowerStrength") == 1) { 
-				A_FireCustomMissile("SuperKnifeSwing", 0, 0, 0, 0);
-			}
-			else{
-				A_FireCustomMissile("KnifeSwing", 0, 0, 0, 0);
-			}
-		}
-		MC3S E 1 {
-			PB_MeleeFeelReturn(0.975);
-			return PB_TryMidPunchFinisher();
-		}
-		MC3S F 1 {
-			PB_MeleeFeelReturn(0.990);
-			return PB_TryMidPunchFinisher();
-		}
-		MC3S G 1 {
-			PB_MeleeFeelReturn(1.0);
-			return PB_TryMidPunchFinisher();
-		}
-		MC3S HIJ 1 {
-			return PB_TryMidPunchFinisher();
-		}
-		TNT1 AAAA 1 {
-			return PB_TryMidPunchFinisher();
-		}
-		TNT1 A 0 {
-			PB_MeleeFeelEnd();
-			A_TakeInventory("KnifeHasHit",1);
-			A_TakeInventory("HasCutingWeapon", 1);
-			PB_SetUsingMelee(false);
-		}
-		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
-		Goto Ready3
+		TNT1 A 0 { return PB_PickRandomQuickMelee(); }
 	
 	ThrowShieldSaw:
 		TNT1 A 1 { return PB_Execute(); }

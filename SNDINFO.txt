@@ -5843,3 +5843,8 @@ $random weapons/bloodbonk/boom { weapons/bloodbonk/boom1 weapons/bloodbonk/boom2
 weapons/bloodbonk/boom1 "sounds/combat/weapons/BloodBonk/BBONK1.ogg"
 weapons/bloodbonk/boom2 "sounds/combat/weapons/BloodBonk/BBONK2.ogg"
 weapons/bloodbonk/boom3 "sounds/combat/weapons/BloodBonk/BBONK3.ogg"
+
+// Random Quick Melee — DemonicSword (PBWP CustomMelee)
+demonicsword/swing "sounds/combat/weapons/Sword/demonic_sword_swing.ogg"
+demonicsword/hit "sounds/combat/weapons/Sword/demonic_sword_hit.ogg"
+demonicsword/activate "sounds/combat/weapons/Sword/demonic_sword_activate.ogg"
