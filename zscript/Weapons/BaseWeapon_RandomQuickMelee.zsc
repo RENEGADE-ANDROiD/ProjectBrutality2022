@@ -1,0 +1,219 @@
+// Random Quick Melee pool — PBWP CustomMelee ports (no melee wheel).
+// Eligible: Backhand + Uppercut always; DemonicSword if ArgentSith/BeamKatana;
+// Saw if PB_Chainsaw. Replaces knife punch only.
+
+extend class PB_WeaponBase
+{
+	action void PB_QM_BeginAttack()
+	{
+		PB_SetUsingMelee(true);
+		A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+		A_PB_AirMeleeLunge(10);
+		A_TakeInventory("Zoomed", 1);
+		A_ZoomFactor(1.0);
+		A_TakeInventory("ADSmode", 1);
+		A_SetRoll(0);
+		A_WeaponOffset(0, 32);
+		A_Overlay(-10, "FirstPersonLegsStand");
+	}
+
+	action void PB_QM_EndAttack()
+	{
+		A_TakeInventory("HasCutingWeapon", 1);
+		A_TakeInventory("HasIncendiaryWeapon", 1);
+		A_TakeInventory("PB_LockScreenTilt", 1);
+		A_SetRoll(0);
+		A_WeaponOffset(0, 32);
+		PB_SetUsingMelee(false);
+		A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+	}
+
+	// Extra shove so Kick deaths slide into walls (Death.Kick + SLIDESONWALLS).
+	action void PB_QM_ThrustVictim(double force = 32, double zforce = 14)
+	{
+		if (!player)
+			return;
+		FLineTraceData lt;
+		LineTrace(angle, 200, pitch, 0, player.viewheight, data: lt);
+		Actor v = lt.hitActor;
+		int aimCheck = -6;
+		while (aimCheck++ < 6 && (!v || !v.bSHOOTABLE))
+		{
+			LineTrace(angle + (aimCheck * 8), 200, pitch, 0, player.viewheight, data: lt);
+			v = lt.hitActor;
+		}
+		if (!v || !v.bSHOOTABLE)
+			return;
+		Vector3 dir = BDPMeleeVecFromAngles(angle, pitch, 1);
+		v.vel += dir * force;
+		v.vel.z += zforce;
+	}
+
+	action state PB_PickRandomQuickMelee()
+	{
+		bool sword = CountInv("PB_ArgentSith") > 0 || CountInv("PB_BeamKatana") > 0;
+		bool saw = CountInv("PB_Chainsaw") > 0;
+		int n = 2;
+		if (sword) n++;
+		if (saw) n++;
+		int i = random(0, n - 1);
+		if (i == 0)
+			return ResolveState("RandomMelee_Backhand");
+		if (i == 1)
+			return ResolveState("RandomMelee_Uppercut");
+		if (sword && saw)
+		{
+			if (i == 2)
+				return ResolveState("RandomMelee_Sword");
+			return ResolveState("RandomMelee_Saw");
+		}
+		if (sword)
+			return ResolveState("RandomMelee_Sword");
+		return ResolveState("RandomMelee_Saw");
+	}
+
+	States
+	{
+	RandomMelee_Sword:
+		TNT1 A 0 {
+			PB_QM_BeginAttack();
+			A_GiveInventory("HasIncendiaryWeapon", 1);
+			A_PlaySound("demonicsword/activate", 5);
+		}
+		EQPR ABCD 1 A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+		EQPR EJK 1;
+		TNT1 AAAA 1 A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+		TNT1 AA 1;
+		2KAT ABC 1 {
+			A_BDPMeleeStart();
+			A_SetRoll(roll - 0.5, SPF_INTERPOLATE);
+		}
+		TNT1 A 0 A_PlaySound("demonicsword/swing", 5);
+		TNT1 A 0 A_AlertMonsters(400);
+		TNT1 A 0 {
+			if (CountInv("PowerStrength") == 1)
+				A_FireCustomMissile("QM_SuperSwordSwing", 0, 0, 0, 8);
+			else
+				A_FireCustomMissile("QM_SwordSwing", 0, 0, 0, 8);
+		}
+		2KAT D 1 {
+			A_SetRoll(roll - 0.5, SPF_INTERPOLATE);
+			A_BDPMeleeStart();
+		}
+		TNT1 A 0 {
+			if (CountInv("PowerStrength") == 1)
+				A_BDPMelee(200, "QM_SuperSwordSwing", -7, true);
+			else
+				A_BDPMelee(200, "QM_SwordSwing", -7, true);
+		}
+		2KAT E 1 {
+			A_SetRoll(roll - 0.5, SPF_INTERPOLATE);
+			A_BDPMeleeStart();
+		}
+		TNT1 A 0 {
+			if (CountInv("PowerStrength") == 1)
+				A_FireCustomMissile("QM_SuperSwordSwing", 0, 0, 0, -8);
+			else
+				A_FireCustomMissile("QM_SwordSwing", 0, 0, 0, -8);
+		}
+		2KAT FGH 1 {
+			A_SetRoll(roll - 0.5, SPF_INTERPOLATE);
+			A_BDPMeleeStart();
+		}
+		TNT1 AAAA 1 A_SetRoll(roll + 1.0, SPF_INTERPOLATE);
+		TNT1 A 0 {
+			PB_QM_EndAttack();
+			State barrel = PB_CheckBarrelIdle1();
+			if (barrel)
+				return barrel;
+			return ResolveState(null);
+		}
+		Goto Ready3;
+
+	RandomMelee_Backhand:
+		TNT1 A 0 PB_QM_BeginAttack();
+		TNT1 A 2;
+		TNT1 A 0 A_PlaySound("weapons/fistwhoosh", 5);
+		1PUN KLMN 1 A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+		TNT1 A 0 {
+			A_BDPMelee(200, "QM_BackhandStrike", -7, true);
+			PB_QM_ThrustVictim(36, 16);
+		}
+		1PUN OP 1;
+		1PUN QRST 1 A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+		TNT1 A 2;
+		TNT1 A 0 {
+			PB_QM_EndAttack();
+			State barrel = PB_CheckBarrelIdle1();
+			if (barrel)
+				return barrel;
+			return ResolveState(null);
+		}
+		Goto Ready3;
+
+	RandomMelee_Uppercut:
+		TNT1 A 0 {
+			PB_QM_BeginAttack();
+			A_GiveInventory("HasCutingWeapon", 1);
+		}
+		TNT1 A 0 A_PlaySound("weapons/fistwhoosh", 5);
+		0PUN U 1 A_BDPMeleeStart();
+		0PUN V 1 {
+			A_BDPMeleeStart();
+			A_SetPitch(pitch - 1, SPF_INTERPOLATE);
+		}
+		0PUN W 1 {
+			A_BDPMeleeStart();
+			A_SetPitch(pitch - 1, SPF_INTERPOLATE);
+		}
+		TNT1 A 0 A_BDPMelee(200, "QM_UppercutStrike", 5, true);
+		0PUN XX 1 {
+			A_BDPMeleeStart();
+			A_SetPitch(pitch - 1, SPF_INTERPOLATE);
+		}
+		0PUN YZ 1 A_BDPMeleeStart();
+		TNT1 AAAA 1 A_SetPitch(pitch + 1, SPF_INTERPOLATE);
+		TNT1 A 0 {
+			PB_QM_EndAttack();
+			State barrel = PB_CheckBarrelIdle1();
+			if (barrel)
+				return barrel;
+			return ResolveState(null);
+		}
+		Goto Ready3;
+
+	RandomMelee_Saw:
+		TNT1 A 0 {
+			PB_QM_BeginAttack();
+			A_GiveInventory("HasCutingWeapon", 1);
+			A_StartSound("sawswing");
+		}
+		1SAW F 1 {
+			A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			A_BDPMeleeStart();
+		}
+		TNT1 A 0 A_BDPMelee(200, "QM_SawSwing", -7, true);
+		1SAW G 1 {
+			A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			A_BDPMeleeStart();
+		}
+		TNT1 A 0 A_FireCustomMissile("QM_SawSwing", -10, 0, 0, 0);
+		1SAW HI 1 A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+		TNT1 A 0 A_FireCustomMissile("QM_SawSwing", 0, 0, 0, 0);
+		1SAW JK 1 A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+		TNT1 A 0 A_FireCustomMissile("QM_SawSwing", 10, 0, 0, 0);
+		1SAW LM 1 A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+		TNT1 A 0 A_FireCustomMissile("QM_SawSwing", 20, 0, 0, 0);
+		1SAW N 1 A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+		TNT1 A 0 A_StartSound("weapons/chainsaw/stop");
+		TNT1 AAAAAAAAAA 1 A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+		TNT1 A 0 {
+			PB_QM_EndAttack();
+			State barrel = PB_CheckBarrelIdle1();
+			if (barrel)
+				return barrel;
+			return ResolveState(null);
+		}
+		Goto Ready3;
+	}
+}

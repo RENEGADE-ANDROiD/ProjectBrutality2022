@@ -184,6 +184,7 @@ const MAXITERATIONS = 32676;
 
 #include "zscript/Weapons/BaseWeapon.zc"
 #include "zscript/Weapons/BaseWeapon_BDPMelee.zsc"
+#include "zscript/Weapons/BaseWeapon_RandomQuickMelee.zsc"
 #include "zscript/Weapons/BaseWeapon_Equipment.zsc"
 #include "zscript/Weapons/RailGunFire.zc"
 #include "zscript/Weapons/Slot7/Railgun/Railgun.zs"

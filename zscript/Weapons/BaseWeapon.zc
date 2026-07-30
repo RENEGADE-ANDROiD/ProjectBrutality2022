@@ -1279,6 +1279,8 @@ class PB_WeaponBase : DoomWeapon
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready4"))||
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReallyReady"))||
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready3"))||
+			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyFists"))||
+			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyFistsLoop"))||
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("BDReady3"))||
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("BDReadyADS"))||
 			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready_ADS"))||
@@ -2046,20 +2048,10 @@ class PB_WeaponBase : DoomWeapon
 							let pl = invoker.PB_WeaponActionPlayer();
 							if (pl && (pl.cmd.buttons & BT_USER4))
 							{
-								if (PB_FinisherOpportunityReady())
-								{
-									A_OverlayOffset(PSP_WEAPON, 0, 32);
-									PB_SetUsingMelee(true);
-									A_Overlay(PSP_WEAPON, "QuickMelee");
-									A_OverlayOffset(PSP_WEAPON, 0, 32);
-								}
-								else
-								{
-									PB_SetUsingKick(true);
-									A_OverlayOffset(-999, 0, 32);
-									A_Overlay(-999, "DoKick");
-									A_OverlayFlags(-999, PSPF_PLAYERTRANSLATED, true);
-								}
+								PB_SetUsingKick(true);
+								A_OverlayOffset(-999, 0, 32);
+								A_Overlay(-999, "DoKick");
+								A_OverlayFlags(-999, PSPF_PLAYERTRANSLATED, true);
 							}
 						}
 					}
@@ -2069,20 +2061,10 @@ class PB_WeaponBase : DoomWeapon
 					&& !CheckInventory("Zoomed", 1) && PB_MeleeAttackKickCheck()
 					&& !CheckInventory("GoFatality", 1) && !PB_usingMelee())
 				{
-					if (PB_FinisherOpportunityReady())
-					{
-						A_OverlayOffset(PSP_WEAPON, 0, 32);
-						PB_SetUsingMelee(true);
-						A_Overlay(PSP_WEAPON, "QuickMelee");
-						A_OverlayOffset(PSP_WEAPON, 0, 32);
-					}
-					else
-					{
-						PB_SetUsingKick(true);
-						A_OverlayOffset(-999, 0, 32);
-						A_Overlay(-999, "DoKick");
-						A_OverlayFlags(-999, PSPF_PLAYERTRANSLATED, true);
-					}
+					PB_SetUsingKick(true);
+					A_OverlayOffset(-999, 0, 32);
+					A_Overlay(-999, "DoKick");
+					A_OverlayFlags(-999, PSPF_PLAYERTRANSLATED, true);
 				}
 			}
 			Loop;
@@ -2222,81 +2204,11 @@ class PB_WeaponBase : DoomWeapon
 		QuickMeleePunchSetup:
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			TNT1 A 0 {
-				A_PB_AirMeleeLunge(10);
-				A_Overlay(PSP_FLASH, "FlashPunching");
-				A_GiveInventory("HasCutingWeapon", 1);
-				A_TakeInventory("Zoomed", 1);
-				A_ZoomFactor(1.0);
-				A_TakeInventory("ADSmode", 1);
-				A_PlaySound("KNIFSWNG", 1);
+				State st = PB_PickRandomQuickMelee();
+				if (st)
+					return st;
+				return ResolveState("Ready3");
 			}
-			MC3S A 1 {
-				PB_MeleeFeelWind();
-				State st = PB_TryMidPunchFinisher();
-				if (st) return st;
-				return ResolveState(null);
-			}
-			MC3S B 1 {
-				PB_MeleeFeelStep(0.970);
-				State st = PB_TryMidPunchFinisher();
-				if (st) return st;
-				return ResolveState(null);
-			}
-			MC3S C 1 {
-				PB_MeleeFeelStep(0.965);
-				State st = PB_TryMidPunchFinisher();
-				if (st) return st;
-				return ResolveState(null);
-			}
-			MC3S D 1 {
-				PB_MeleeFeelCommit();
-				State st = PB_TryMidPunchFinisher();
-				if (st) return st;
-				return ResolveState(null);
-			}
-			TNT1 A 0 {
-				PB_MeleeFeelImpact();
-				if (CountInv("PowerStrength") == 1)
-					A_FireCustomMissile("SuperKnifeSwing", 0, 0, 0, 0);
-				else
-					A_FireCustomMissile("KnifeSwing", 0, 0, 0, 0);
-			}
-			MC3S E 1 {
-				PB_MeleeFeelReturn(0.975);
-				State st = PB_TryMidPunchFinisher();
-				if (st) return st;
-				return ResolveState(null);
-			}
-			MC3S F 1 {
-				PB_MeleeFeelReturn(0.990);
-				State st = PB_TryMidPunchFinisher();
-				if (st) return st;
-				return ResolveState(null);
-			}
-			MC3S G 1 {
-				PB_MeleeFeelReturn(1.0);
-				State st = PB_TryMidPunchFinisher();
-				if (st) return st;
-				return ResolveState(null);
-			}
-			MC3S HIJ 1 {
-				State st = PB_TryMidPunchFinisher();
-				if (st) return st;
-				return ResolveState(null);
-			}
-			TNT1 AAAA 1 {
-				State st = PB_TryMidPunchFinisher();
-				if (st) return st;
-				return ResolveState(null);
-			}
-			TNT1 A 0 {
-				PB_MeleeFeelEnd();
-				A_TakeInventory("KnifeHasHit", 1);
-				A_TakeInventory("HasCutingWeapon", 1);
-				PB_SetUsingMelee(false);
-			}
-			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
 
 		ThrowShieldSaw:
 			TNT1 A 1 {

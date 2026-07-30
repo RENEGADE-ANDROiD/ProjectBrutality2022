@@ -1,5 +1,35 @@
 ﻿extend class PB_WeaponBase
 {
+	// Project Survival–style equipment wheel select: tip weapon via FlashPunching on 799, hand+item on PSP_WEAPON.
+	// Select strips are shorter below hotspot than HNDF throw hands; Y 42 clips the arm base without burying the item (ready is 32).
+	action void PB_EquipSelectShowKeepOffset()
+	{
+		A_WeaponOffset(0, 42);
+	}
+
+	action void PB_EquipSelectShowStart()
+	{
+		A_GiveInventory("PB_LockScreenTilt", 1);
+		A_ZoomFactor(1.0);
+		PB_EquipSelectShowKeepOffset();
+		if (FindState("FlashPunching"))
+			A_Overlay(799, "FlashPunching");
+	}
+
+	action void PB_EquipSelectShowFinish()
+	{
+		A_ClearOverlays(799, 799);
+		A_SetRoll(0);
+		A_TakeInventory("PB_LockScreenTilt", 1);
+		A_WeaponOffset(0, 32);
+	}
+
+	action state PB_EquipSelectAndCancel(statelabel show)
+	{
+		A_Overlay(PSP_WEAPON, show);
+		return ResolveState("WheelCancelEquipment");
+	}
+
 	States
 	{
 		//NEW EQUIPMENT SYSTEM
@@ -206,7 +236,7 @@
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
 					A_PlaySound("FLMDRAW", CHAN_UI);
-					return ResolveState("WheelCancelEquipment");
+					return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 				}
 			if(CountInv("GK_IcebombSelected") >=1)
 				{ 
@@ -223,7 +253,7 @@
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
 					A_PlaySound("weapons/freezer/reload1", CHAN_UI);
-					return ResolveState("WheelCancelEquipment");
+					return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 				}
 			return ResolveState(null);
 			}
@@ -248,7 +278,7 @@
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowMine");
 					}
 				if(CountInv("WW_StunGrenadeSelected") >=1)
 					{ 
@@ -270,7 +300,7 @@
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowStun");
 					}
 				if(CountInv("WW_ShieldGrenadeSelected") >=1)
 					{ 
@@ -292,7 +322,7 @@
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowShield");
 					}
 				if(CountInv("WW_VoidGrenadeSelected") >=1)
 					{ 
@@ -314,7 +344,7 @@
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowVoid");
 					}
 				if(CountInv("WW_LeechSelected") >=1)
 					{ 
@@ -336,7 +366,7 @@
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("WW_RevGunSelected") >=1)
 					{ 
@@ -358,7 +388,7 @@
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("REVUP", 3);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("WW_FragGrenadeSelected") >=1)
 					{ 
@@ -380,7 +410,7 @@
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_PlaySound("GRNPIN", 3);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowFrag");
 					}
 				if(CountInv("WW_MolotovSelected") >=1)
 					{ 
@@ -406,7 +436,7 @@
 						A_SetInventory("FlameBelchSelected",0);
 						A_SetInventory("IceBombSelected",0);
 						A_PlaySound("MOLPKUP", 3);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("WW_HookSelected") >=1)
 					{ 
@@ -432,7 +462,7 @@
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("HookSelected",1);
 						A_PlaySound("GRNPIN", 3);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("WW_FreezenadeSelected") >=1)
 					{ 
@@ -458,7 +488,7 @@
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("FreezenadeSelected",1);
 						A_PlaySound("GRNPIN", 3);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("WW_PB_CF_SnowCasterSelected") >=1)
 					{ 
@@ -484,7 +514,7 @@
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("PB_CF_SnowCasterSelected",1);
 						A_PlaySound("coldcst", CHAN_UI);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("WW_PB_CF_FreezeBotSelected") >=1)
 					{ 
@@ -510,7 +540,7 @@
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("PB_CF_FreezeBotSelected",1);
 						A_PlaySound("Plasma/BeepLow", CHAN_UI);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("WW_PB_CF_IceWallSelected") >=1)
 					{ 
@@ -536,7 +566,7 @@
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("PB_CF_IceWallSelected",1);
 						A_PlaySound("weapons/freezer/reload1", CHAN_UI);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("WW_PB_CF_HoloDecoySelected") >=1)
 					{ 
@@ -562,7 +592,7 @@
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",1);
 						A_PlaySound("misc/p_pkup", CHAN_UI);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("WW_PB_CF_TeslaTurretSelected") >=1)
 					{ 
@@ -588,7 +618,7 @@
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",1);
 						A_PlaySound("PLSCHARG", CHAN_UI);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("WW_PB_CF_FreezeMineSelected") >=1)
 					{ 
@@ -614,7 +644,7 @@
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",1);
 						A_PlaySound("misc/p_pkup", CHAN_UI);
-						return ResolveState("WheelCancelEquipment");
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("GK_FlamebelchSelected") >=1)
 				{ 
@@ -631,7 +661,7 @@
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
 					A_PlaySound("FLMDRAW", CHAN_UI);
-					return ResolveState("WheelCancelEquipment");
+					return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 				}
 				if(CountInv("GK_IcebombSelected") >=1)
 				{ 
@@ -648,11 +678,96 @@
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
 					A_PlaySound("weapons/freezer/reload1", CHAN_UI);
-					return ResolveState("WheelCancelEquipment");
+					return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 				}	
 			return ResolveState(null);
 			}
 		Goto Equipment_Toggle_Handler_Overlay;
+
+		// Project Survival equipment-select raise (hand+item); weapon aside via FlashPunching on 799.
+		EquipSelectShowFrag:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			EQFR MLKJ 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+			}
+			EQFR AAAAAA 1 PB_EquipSelectShowKeepOffset();
+			EQFR JKLM 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_EquipSelectShowFinish();
+			Goto GoingToReady;
+
+		EquipSelectShowStun:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			CLUS NOPQRS 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+			}
+			CLUS SSSSSS 1 PB_EquipSelectShowKeepOffset();
+			CLUS TUV 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_EquipSelectShowFinish();
+			Goto GoingToReady;
+
+		EquipSelectShowShield:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			SHIG QRSTUV 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+			}
+			SHIG VVVV 1 PB_EquipSelectShowKeepOffset();
+			SHIG UTSRQ 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_EquipSelectShowFinish();
+			Goto GoingToReady;
+
+		EquipSelectShowVoid:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			VGR1 JIHG 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+			}
+			VGR1 GGGGGGGG 1 PB_EquipSelectShowKeepOffset();
+			VGR1 HIJ 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_EquipSelectShowFinish();
+			Goto GoingToReady;
+
+		EquipSelectShowMine:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			REMT QPON 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+			}
+			REMT MMMMMM 1 PB_EquipSelectShowKeepOffset();
+			REMT NOPQ 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_EquipSelectShowFinish();
+			Goto GoingToReady;
+
+		EquipSelectShowGeneric:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			EQPR ABCD 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+			}
+			EQPR DDDDDDDD 1 PB_EquipSelectShowKeepOffset();
+			EQPR CBA 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_EquipSelectShowFinish();
+			Goto GoingToReady;
 
 	LeechBeam:
 		SYNP WXYZWXYZWXYZ 1 BRIGHT;
