@@ -307,7 +307,7 @@ ACTOR PB_Minigun : PB_Weapon //Replaces Chaingun
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,-22,-10);}
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,-16,-9);}
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,-7,-7);}
-		1CHT M 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,-1,-6);}
+		1CHT L 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,-1,-6);}
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,0,-4);}
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,0,-2);}
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,0,-1);}
@@ -404,7 +404,7 @@ ACTOR PB_Minigun : PB_Weapon //Replaces Chaingun
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,0,-1);}
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,0,-2);}
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,0,-4);}
-		1CHT M 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,-1,-6);}
+		1CHT L 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,-1,-6);}
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,-7,-7);}
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,-16,-9);}
 		TNT1 A 1 {A_Overlay(3,"AmmoMeterOverlay"); A_OverlayOffset(3,-22,-10);}

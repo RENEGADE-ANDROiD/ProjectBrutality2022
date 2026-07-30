@@ -20,6 +20,7 @@ Maintainers (this distribution)
 - Wintermute
 
 Gameplay and content in this release
+- **PBWP CustomMelee (random Quick Melee):** DemonicSword select+swing, fist backhand/uppercut, and chainsaw swing sprites/SFX from Project Brutality Weapons Pack CustomMelee — used as a gated random Quick Melee pool (not the full melee wheel). See **`SPRITES/WEAPONS/Slot1/RandomQuickMelee/`**, **`sounds/combat/weapons/Sword/`**, **`BaseWeapon_RandomQuickMelee.zsc`**.
 - **The Abyssal Core** (Brutal Doom lineage TC) — reference for Pain Elemental **PSOL** soul-projectile frames (`SPRITES/Monsters/PainElemental/PEProjectile/`), **RPEN** ground-slam/roll frames (`SPRITES/Monsters/PainElemental/GroundRoll/`), PE slam/roll + Cacodemon multi-ball attack patterns, and selective roster scale polish on existing **`PB_*`** monsters. Shotgun floor/wall blast-jump is **PB-native** (wired to Explosive Movement cvars), inspired by Abyssal explosive-movement feel rather than a direct Core shotgun fold. Upstream art/behavior remains third-party; not a full Core actor fold.
 - **The Abyssal Crown** — **BloodBonk** first-person **`BONK`** strip and boom SFX folded into bare-hands **`FistSlam`** (`SPRITES/WEAPONS/Slot1/MELEE/BloodBonk/`, `sounds/combat/weapons/BloodBonk/`). Not a full Crown weapon / cooldown / falter fold; damage stays PB smash missiles on the Fire+Alt chord.
 - **AccuDeath V3.2.2** (Airehnr66) — optional corpse translation / death particle FX; folded under **`zscript/Gore/AccuDeath/`**, gated by **`pb_accudeath`**.
@@ -121,6 +122,9 @@ Selected weapons and equipment (authors)
 - Paingiver — add-on source noted in actors/Weapons/Slot5/Paingiver.dec.
 - Molotov Cocktail — from Project Brutality 3.0 Molotov Cocktail v15
   (actors/Weapons/MolotovCocktail/MolotovCocktail.dec).
+- Equipment wheel select first-person raise strips (**`EQFR`/`CLUS`/`SHIG`/`REMT`/`EQPR`**,
+  void **`VGR1`** select frames) — Project Survival equipment-select FPS
+  (`SPRITES/WEAPONS/Equipment/Select/`; wired in `BaseWeapon_Equipment.zsc`).
 - LeverAction — original sprites and code: ThePopeOfDope; later staging polish:
   Vampy. **Weapon-special wheel icons** (caliber-swap mode picker —
   `graphics/pywheel/Magnum.png` for `Select_LeverAction_357` and
