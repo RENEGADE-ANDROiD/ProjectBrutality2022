@@ -104,6 +104,12 @@ Code systems and libraries
   see shader / staging path notes.
 
 Selected weapons and equipment (authors)
+- **Harvester of Souls (`PB_HarvesterOfSouls`)** — ZScript in
+  `zscript/Weapons/Slot9/HarvesterOfSouls/PB_HarvesterOfSouls.zs`; support actors in
+  `actors/Weapons/Slot9/PB_HarvesterOfSouls.dec`. Weapon / art: **Yaelvolador** and
+  **Carrot** (iamcarrotmaster). Reload mid-strip sprites use unique **`H4T*`** prefixes
+  so they do not collide with Demon Tech **`D4T*`** frames. Shares **Demonpower** /
+  **HellAmmo** with **`Hell_rifle`**.
 - **M41A Pulse Rifle (`PB_M41A`)** — ZScript in `zscript/Weapons/Slot4/PB_M41A.zs`;
   folded from the **PB_M41A** / Aliens pulse-rifle add-on: sprites **Mike12**;
   animations & code **Jaih1r0** (see upstream `credits.txt` in that package).

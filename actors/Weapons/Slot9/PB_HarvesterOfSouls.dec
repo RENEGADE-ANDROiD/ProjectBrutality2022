@@ -1,0 +1,77 @@
+// Harvester of Souls — support actors (weapon states in ZScript).
+
+ACTOR RespectHarvesterOfSouls : Inventory { Inventory.MaxAmount 1 }
+
+ACTOR Select_Harvester_SoulBolt : Inventory { Inventory.MaxAmount 1 }
+ACTOR Select_Harvester_Storm : Inventory { Inventory.MaxAmount 1 }
+ACTOR Select_Harvester_Possess : Inventory { Inventory.MaxAmount 1 }
+ACTOR Select_Harvester_Seeker : Inventory { Inventory.MaxAmount 1 }
+
+ACTOR HarvesterMode_Storm : Inventory { Inventory.MaxAmount 1 }
+ACTOR HarvesterMode_Possess : Inventory { Inventory.MaxAmount 1 }
+ACTOR HarvesterMode_Seeker : Inventory { Inventory.MaxAmount 1 }
+
+ACTOR PB_HarvesterOfSoulsGiver : PB_UpgradeItem
+{
+	//$Title Harvester of Souls
+	//$Category Weapons
+	//$Sprite PUPUA0
+	Inventory.PickupSound "HellPickup"
+	Inventory.PickupMessage "$PB_PICKUP_PB_HARVESTEROFSOULS"
+	Scale 0.7
+	FloatBobStrength 0.5
+	States
+	{
+	Spawn:
+		PUPU A 10 A_PbvpFramework("PUPU")
+		"####" "#" 0 A_PbvpInterpolate()
+		LOOP
+	Pickup:
+		TNT1 A 0 A_GiveInventory("PB_HarvesterOfSouls")
+		Stop
+	}
+}
+
+// FLXB bolt — lean trail (no TinyBurningPiece / Flames dump).
+Actor PB_HarvesterSoulBolt : FastProjectile
+{
+	+FORCEXYBILLBOARD
+	+BLOODSPLATTER
+	+NOEXTREMEDEATH
+	Damage 25
+	DamageType Fire
+	Radius 2
+	Height 1
+	RenderStyle Add
+	Scale 0.3
+	Speed 130
+	Decal "Scorch"
+	DeathSound "Weapons/Demontech/Crash"
+	States
+	{
+	Spawn:
+		FLXB A 1 Bright A_SpawnItemEx("ObeliskTrailSpark", random(5, -5), random(5, -5), random(5, -5), 0, 0, 0, 0, 128, 0)
+		TNT1 A 0 A_SpawnItem("RedFlareSmall", 0)
+		FLXB B 1 Bright A_SpawnItemEx("ObeliskTrailSpark", random(5, -5), random(5, -5), random(5, -5), 0, 0, 0, 0, 128, 0)
+		TNT1 A 0 A_SpawnItem("RedFlareSmall", 0)
+		FLXB CDEFGHIJKLMNOPQRSTU 1 Bright
+		Loop
+	XDeath:
+		TNT1 A 0 A_SpawnItem("HellRifle_Puff", 0)
+		TNT1 A 0 Bright A_SpawnItem("RedFlare", 0)
+		TNT1 AAA 0 A_SpawnItemEx("ExplosionParticleVerySlow", random(-8, 8), random(-8, 8), random(-2, 2), 0, 0, 0, 0, 128, 0)
+		TNT1 AAA 0 A_SpawnItemEx("ObeliskTrailSpark", random(-8, 8), random(-8, 8), random(-2, 2), 0, 0, 0, 0, 128, 0)
+		TNT1 A 4
+		TNT2 AAA 3 A_CustomMissile("PlasmaSmoke", 1, 0, random(0, 360), 2, random(0, 160))
+		Stop
+	Death:
+		TNT1 A 0 A_SpawnItem("HellRifle_Puff2", 0)
+		TNT1 A 0 Bright A_SpawnItem("RedFlare", 0)
+		TNT1 AAA 0 A_SpawnItemEx("ExplosionParticleVerySlow", random(-8, 8), random(-8, 8), random(-2, 2), 0, 0, 0, 0, 128, 0)
+		TNT1 AA 0 A_SpawnItemEx("BurningEmberParticlesFloating_Bigger", random(19, -19), random(19, -19), random(4, -4), 0, 0, 0, 0, 128, 0)
+		TNT1 AAA 0 A_SpawnItemEx("ObeliskTrailSpark", random(-8, 8), random(-8, 8), random(-2, 2), 0, 0, 0, 0, 128, 0)
+		TNT1 A 4
+		TNT2 AAAAA 4 A_CustomMissile("PlasmaSmoke", 1, 0, random(0, 360), 2, random(0, 160))
+		Stop
+	}
+}

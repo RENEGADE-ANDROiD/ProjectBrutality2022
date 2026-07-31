@@ -153,8 +153,14 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 
 - **UAC-M3 Flamethrower** — flame weapon for burn damage and crowd control.
 - **Demon-Tech Rifle** — demon-energy rifle with charged energy behavior.
-
-The disabled **Demon-Tech Minigun** and **Demon Exterminator** sources remain on disk for possible future repair, but they are not part of the active player roster.
+- **Harvester of Souls** — Slot **9** soul-energy rifle.
+  - **Primary** — depends on Weapon Special mode (below).
+  - **Alt-Fire** — subtle zoom (iron sights).
+  - **Weapon Special** — mode wheel:
+    - **Soul Bolt** — standard soul bolt (default).
+    - **Storm** — bolt plus Overlord storm strike (costs more HellAmmo).
+    - **Soul Possess** — possession ghost (Hell-rifle style).
+    - **Doom Seeker** — homing Unmaker-style seeker.
 
 ### Equipment
 
@@ -333,6 +339,8 @@ Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki11
 - Kill-streak reward variety (including a revamped drone summon and optional flashlight glow).
 
 Credit to **BeefRice** and **Jaih1r0** for fullscreen weapon HUD elements and many weapon improvements and systems. Thanks to **HUNG** for the **Shield Saw** behavior included in this build (quick melee + recall).
+
+**Harvester of Souls** — **Yaelvolador** and **Carrot**. Details: **`CREDITS.txt`**.
 
 **PB_MeleeWeaponPack** (including slot-1 **Dragon Slayer** & **Vorpal Blade**, slot-9 **Stormcast**): original credits per that add-on’s `CREDITS.txt` — **Craneo**, **Dreo** & **Lord Lothar** (*Schism*), **Eriance** & **TiberiumSoul** (RIP); compatibility rework for PB 0.4.2+ by **Renegade Android**. Details: **`CREDITS.txt`**.
 
