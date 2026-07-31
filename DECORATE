@@ -398,6 +398,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot8/BioAcidLauncher.dec"
 #include "actors/Weapons/Slot8/BFGPickups.dec"
 #include "actors/Weapons/Slot9/DemonTech.dec"
+#include "actors/Weapons/Slot9/PB_HarvesterOfSouls.dec"
 #include "actors/Weapons/Slot4/LeverAction.dec"
 #include "actors/Weapons/Slot4/LeverActionHellUpgrades.dec"
 #include "actors/Weapons/Slot2/HellPistoler.dec"

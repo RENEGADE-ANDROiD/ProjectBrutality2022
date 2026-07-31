@@ -3672,6 +3672,8 @@ $volume demonsoulpickup 0.55
 
 HRCharge HRCHRG
 HRReady HRRDY
+Hellclip "sounds/combat/weapons/HarvesterOfSouls/HELLCLIP"
+HellPickup "sounds/combat/weapons/HarvesterOfSouls/HELLPK"
 
 //Spirit Seeker
 $random SpiritSeeker { lscloop1 lscloop2 lscloop3 }
