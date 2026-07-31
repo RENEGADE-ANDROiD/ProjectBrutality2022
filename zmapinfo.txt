@@ -447,6 +447,7 @@ DoomEdNums
 	23249 = W_SMG
 	23250 = FrostburnDevice
 	23251 = PB2022_BattleRifle_Upgrade
+	23252 = PB_HarvesterOfSoulsGiver
 
 	17003 = CyberdemonLegsFatality
 

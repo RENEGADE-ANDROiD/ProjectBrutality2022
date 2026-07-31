@@ -299,6 +299,7 @@ server int pb_NoSuperGLWeapon = 0;
 server int pb_NoHeavyGLWeapon = 0;
 server int pb_NoM2PlasmaWeapon = 0;
 server int pb_NoPB_DarkMatterRifleWeapon = 0;
+server int pb_NoPB_HarvesterOfSoulsWeapon = 0;
 server int pb_NoFreezerWeapon = 0;
 server int pb_NoRailgunWeapon = 0;
 server int pb_NoBFGBeamWeapon = 0;

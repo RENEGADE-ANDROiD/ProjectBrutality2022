@@ -706,7 +706,16 @@ Recoil: Extreme
 Alt-Fire: Beam modes
 Firemodes: Unmaker scream
 Akimbo: X#
-Akimbo: X#Frostburn Device$Pro-Surv dual-mode HellAmmo device � Incendiary or Cryo beam with fireball / ice-orb Alt-Fire.$FrostburnDevice$Manufacturer: UAC / Helltech (Pro-Surv)
+Akimbo: X#Frostburn Device$Pro-Surv dual-mode HellAmmo device — Incendiary or Cryo beam with fireball / ice-orb Alt-Fire.$FrostburnDevice$Manufacturer: UAC / Helltech (Pro-Surv)
 Magazine Capacity: HellAmmo pool (shared with DemonTech / Unmaker family)
 Ammunition: HellAmmo
 Fire Modes: Incendiary beam + fireball Alt; Cryo beam + FreezerBallBig Alt (Weapon Special)
+Akimbo: X#Harvester of Souls$Infernal harvester rifle sharing Demonpower and HellAmmo with the Demon-Tech Rifle. Primary fires heavy soul bolts; Alt-Fire spends ten rounds for a bolt plus Overlord storm strike.$PB_HarvesterOfSouls$Manufacturer: Infernal armsmiths (Yaelvolador / Carrot)
+Magazine Capacity: Demonpower reserve + HellAmmo magazine (60, shared with Demon-Tech Rifle)
+Ammunition: Demonpower + HellAmmo
+Effective Range: Medium
+RPM: Semi-auto soul bolts
+Recoil: Moderate
+Alt-Fire: Soul bolt + StormShot2 (10 HellAmmo)
+Firemodes: Semi-auto / storm dump
+Akimbo: X#

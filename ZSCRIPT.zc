@@ -259,6 +259,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot8/BFG9000/PB_BFG9000.zs"
 #include "zscript/Weapons/Slot9/Flamethrower/PB_Flamethrower.zs"
 #include "zscript/Weapons/Slot9/HellRifle/Hell_rifle.zs"
+#include "zscript/Weapons/Slot9/HarvesterOfSouls/PB_HarvesterOfSouls.zs"
 #include "zscript/Weapons/Slot9/Unmaker/PB_Unmaker.zs"
 #include "zscript/Weapons/Slot9/DemonExterminator/PB_DemonExterminator.zs"
 #include "zscript/Weapons/Slot9/DemonExterminator/PB_DemonExterminator_Functions.zsc"

@@ -284,6 +284,11 @@ extend class PB2022_Hud_ZS
 				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
 				return true;
 
+			case 'PB_HarvesterOfSouls':
+				weaponBarAccent = cachedFontColors[DTECHAMMO];
+				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
+				return true;
+
 			case 'FrostburnDevice':
 				weaponBarAccent = cachedFontColors[DTECHAMMO];
 				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
@@ -332,6 +337,29 @@ extend class PB2022_Hud_ZS
 				{
 					label = StringTable.Localize("$PB_HUD_FROSTBURN_CRYO", false);
 					col = Font.CR_CYAN;
+				}
+				break;
+
+			case 'PB_HarvesterOfSouls':
+				if (CheckInventory("HarvesterMode_Storm"))
+				{
+					label = "Storm";
+					col = Font.CR_YELLOW;
+				}
+				else if (CheckInventory("HarvesterMode_Possess"))
+				{
+					label = "Soul Possess";
+					col = Font.CR_GREEN;
+				}
+				else if (CheckInventory("HarvesterMode_Seeker"))
+				{
+					label = "Doom Seeker";
+					col = Font.CR_RED;
+				}
+				else
+				{
+					label = "Soul Bolt";
+					col = cachedFontColors[DTECHAMMO];
 				}
 				break;
 			case 'PB_Flamethrower':

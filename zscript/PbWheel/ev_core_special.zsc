@@ -1555,6 +1555,58 @@ Class PB_SpecialWheelHandler : EventHandler
 		specialWheel_handleMouse();
 	}
 
+	void specialWheel_PB_HarvesterOfSouls()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.55, 0.55);
+
+		PB_SpecialWheel_Mode m_bolt = new ("PB_SpecialWheel_Mode");
+		TextureID icBolt = TexMan.CheckForTexture("PUPUA0", TexMan.Type_Any);
+		if (!icBolt.isValid())
+			icBolt = TexMan.CheckForTexture("AMMOIC7", TexMan.Type_Any);
+		m_bolt.specialIcon = icBolt;
+		m_bolt.specialName = "Select_Harvester_SoulBolt";
+		m_bolt.specialAlias = "Soul Bolt";
+		m_bolt.specialPriority = 1;
+		m_bolt.iconScale = iconScale;
+		wheelSpecials.Push(m_bolt);
+
+		PB_SpecialWheel_Mode m_storm = new ("PB_SpecialWheel_Mode");
+		TextureID icStorm = TexMan.CheckForTexture("LFX2K0", TexMan.Type_Any);
+		if (!icStorm.isValid())
+			icStorm = TexMan.CheckForTexture("AMMOIC5", TexMan.Type_Any);
+		m_storm.specialIcon = icStorm;
+		m_storm.specialName = "Select_Harvester_Storm";
+		m_storm.specialAlias = "Storm";
+		m_storm.specialPriority = 2;
+		m_storm.iconScale = iconScale;
+		wheelSpecials.Push(m_storm);
+
+		PB_SpecialWheel_Mode m_possess = new ("PB_SpecialWheel_Mode");
+		TextureID icPossess = TexMan.CheckForTexture("BLHSA0", TexMan.Type_Any);
+		if (!icPossess.isValid())
+			icPossess = TexMan.CheckForTexture("graphics/pywheel/Minigun_1.png", TexMan.Type_Any);
+		m_possess.specialIcon = icPossess;
+		m_possess.specialName = "Select_Harvester_Possess";
+		m_possess.specialAlias = "Soul Possess";
+		m_possess.specialPriority = 3;
+		m_possess.iconScale = iconScale;
+		wheelSpecials.Push(m_possess);
+
+		PB_SpecialWheel_Mode m_seeker = new ("PB_SpecialWheel_Mode");
+		TextureID icSeeker = TexMan.CheckForTexture("S4BAA0", TexMan.Type_Any);
+		if (!icSeeker.isValid())
+			icSeeker = TexMan.CheckForTexture("UNMXA0", TexMan.Type_Any);
+		m_seeker.specialIcon = icSeeker;
+		m_seeker.specialName = "Select_Harvester_Seeker";
+		m_seeker.specialAlias = "Doom Seeker";
+		m_seeker.specialPriority = 4;
+		m_seeker.iconScale = iconScale;
+		wheelSpecials.Push(m_seeker);
+
+		specialWheel_handleMouse();
+	}
+
 	void specialWheel_FrostburnDevice()
 	{
 		wheelSpecials.Clear();
@@ -2550,6 +2602,10 @@ Class PB_SpecialWheelHandler : EventHandler
 
 				case 'FrostburnDevice':
 					specialWheel_FrostburnDevice();
+					return;
+
+				case 'PB_HarvesterOfSouls':
+					specialWheel_PB_HarvesterOfSouls();
 					return;
 
 				case 'PB_CryoShotgun':
