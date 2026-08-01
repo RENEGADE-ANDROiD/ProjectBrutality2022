@@ -184,9 +184,10 @@ class PB_AntiTankRifle : PB_WeaponBase
 		Goto FireSingle;
 
 	FireSingle:
-		TNT1 A 0 A_JumpIfInventory("PB_AntiTankMag", 1, 2);
-		Goto Reload;
-		TNT1 AA 0;
+		TNT1 A 0 A_JumpIfInventory("PB_AntiTankMag", 1, "FireSingleDo");
+		TNT1 A 0 A_JumpIfInventory("NewClip", 1, "Reload");
+		Goto NoAmmo;
+	FireSingleDo:
 		TNT1 A 0 A_AlertMonsters;
 		PAPA A 0 A_PlaySound("weapons/antitank/fire", CHAN_WEAPON);
 		PAPA A 1 Bright
@@ -207,10 +208,14 @@ class PB_AntiTankRifle : PB_WeaponBase
 		PAPA GH 1;
 		Goto Pump;
 
+	// Burst needs 3 in mag. If short and reserve exists, reload; if leftover rounds
+	// but no reserve, fall back to single (avoids Fire→Reload→Ready→Fire 0-tic loop).
 	FireBurst:
-		TNT1 A 0 A_JumpIfInventory("PB_AntiTankMag", 3, 2);
-		Goto Reload;
-		TNT1 AA 0;
+		TNT1 A 0 A_JumpIfInventory("PB_AntiTankMag", 3, "FireBurstDo");
+		TNT1 A 0 A_JumpIfInventory("NewClip", 1, "Reload");
+		TNT1 A 0 A_JumpIfInventory("PB_AntiTankMag", 1, "FireSingleDo");
+		Goto NoAmmo;
+	FireBurstDo:
 		TNT1 A 0 A_AlertMonsters;
 		PAPA A 0 A_PlaySound("weapons/antitank/fire", CHAN_WEAPON);
 		PAPA A 1 Bright
@@ -244,9 +249,10 @@ class PB_AntiTankRifle : PB_WeaponBase
 		Goto Pump;
 
 	FireVoid:
-		TNT1 A 0 A_JumpIfInventory("PB_AntiTankMag", 1, 2);
-		Goto Reload;
-		TNT1 AA 0;
+		TNT1 A 0 A_JumpIfInventory("PB_AntiTankMag", 1, "FireVoidDo");
+		TNT1 A 0 A_JumpIfInventory("NewClip", 1, "Reload");
+		Goto NoAmmo;
+	FireVoidDo:
 		TNT1 A 0 A_AlertMonsters;
 		PAPA A 0 A_PlaySound("weapons/antitank/fire", CHAN_WEAPON);
 		PAPA A 1 Bright
@@ -280,10 +286,19 @@ class PB_AntiTankRifle : PB_WeaponBase
 		TNT1 A 0 A_ReFire;
 		Goto Ready3;
 
+	NoAmmo:
+		TNT1 A 0
+		{
+			A_TakeInventory("Reloading", 1);
+			A_PlaySound("weapons/empty", CHAN_AUTO);
+		}
+		PAPA A 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
+		Goto Ready3;
+
 	Reload:
 		TNT1 A 0 A_JumpIfInventory("PB_AntiTankMag", 5, "Ready3");
 		TNT1 A 0 A_JumpIfInventory("NewClip", 1, "ReloadContinue");
-		Goto Ready3;
+		Goto NoAmmo;
 	ReloadContinue:
 		TNT1 A 0 A_TakeInventory("Reloading", 1);
 		HIJO CBA 1;

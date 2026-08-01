@@ -604,7 +604,7 @@ class MarauderSSG : PB_WeaponBase
 			 return ResolveState("ReloadOneShell");
 			 }
 			 Else {
-			 return ResolveState(null);
+			 return ResolveState("NoAmmo");
 		     }
 		  }
 		Goto MarauderShotgunReadyToFire;

@@ -92,6 +92,11 @@ class PB_Freezer : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("FreezerPistolToken", 1, "Ready2");
 			TNT1 A 0 A_JumpIfInventory("HasUnloadedFreezer", 1, "GunEmpty");
 		ReadyToFire1:
+			TNT1 A 0 A_JumpIfInventory("FreezerAmmo", 1, "ReadyToFire1Armed");
+		ReadyToFire1Empty:
+			FR03 EFGHIJKLMMLKJIHGFE 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+			Loop;
+		ReadyToFire1Armed:
 			FR03 EFGHIJKLMMLKJIHGFE 1 {
 				A_TakeInventory("FreezerOverCooling",1);
 				A_FireCustomMissile("TinyGunSmoker", 0, 0, 0, -3, 0, 0);
@@ -101,7 +106,7 @@ class PB_Freezer : PB_WeaponBase
 		GunEmpty:
 			TNT1 A 0 A_StopSound(1);
 			TNT1 A 0 A_StopSound(6);
-			"FR03" "EE" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			"FR03" "EE" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 			Goto GunEmpty+3;
 		
 		//Pistol Drawn
@@ -219,8 +224,7 @@ class PB_Freezer : PB_WeaponBase
 			TNT1 A 0 PB_TryAutoFatalityOnFire();
 			TNT1 A 0 A_JumpIfInventory("FreezerPistolToken",1,"FirePistol");
 			TNT1 A 0 A_JumpIfInventory("FireModeFreezerBeam",1,"FireBeam");
-			TNT1 A 0 A_JumpIfInventory("FreezerAmmo",1,1);
-			Goto Reload;
+			TNT1 A 0 PB_BailIfCannotFire("FreezerAmmo", 6, "Cell");
 			"FR11" "ABCDEFGHI" 0 ;// Initialize sprites into virtual memory;
 			FR10 A 1 Bright {
 				if (CountInv("FreezerOverCooling") >= 100 ) { A_SetWeaponSprite("FR11");}
@@ -282,16 +286,14 @@ class PB_Freezer : PB_WeaponBase
 
 		FireBeam:
 			TNT1 A 0 A_JumpIfInventory("FreezerPistolToken",1,"FirePistol");
-			TNT1 A 0 A_JumpIfInventory("FreezerAmmo",2,1);
-			Goto Reload;
+			TNT1 A 0 PB_BailIfCannotFire("FreezerAmmo", 2, "Cell");
 			"FR11" "ABCDEFGHI" 0 ;// Initialize sprites into virtual memory;
 			"FR14" "ABC" 0;
 		BeamCharge:
 			TNT1 A 0 A_Playsound("weapons/railgun/deselectred",2,1,1);
 			"FR11" "IIHGFEDCBAII" 1;
 		BeamHold:
-			TNT1 A 0 A_JumpIfInventory("FreezerAmmo",2,1);
-			Goto Reload;
+			TNT1 A 0 PB_BailIfCannotFire("FreezerAmmo", 2, "Cell");
 			TNT1 A 0 A_Playsound("weapons/cryobowflyby",2,1,1);
 			FR13 ABCB 1 BRIGHT {
 				if (CountInv("FreezerOverCooling") >= 100 ) { A_SetWeaponSprite("FR14");}
@@ -317,8 +319,7 @@ class PB_Freezer : PB_WeaponBase
 			Goto Ready3;
 	
 		FirePistol:
-			TNT1 A 0 A_JumpIfInventory("PrimaryPistolAmmo", 1, 1);
-			Goto ReloadPistol;
+			TNT1 A 0 PB_BailIfCannotFire("PrimaryPistolAmmo", 1, "PistolBullets", "ReloadPistol", "NoAmmo");
 			TNT1 A 0 A_GunFlash();
 			FR30 Z 4 {
 				A_GunFlash("FlashFirePistol");
@@ -389,7 +390,7 @@ class PB_Freezer : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("FreezerPistolToken",1,"ReloadPistol");
 			TNT1 A 0 A_JumpIfInventory("FreezerAmmo",60,"Ready3");
 			TNT1 A 0 A_JumpIfInventory("Cell",1,1);
-			Goto Ready3;
+			Goto NoAmmo;
 			"FR94" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" 0;
 			"FR95" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" 0;
 			"FR96" "ABCDEFGHIJKLMN" 0;
@@ -435,7 +436,7 @@ class PB_Freezer : PB_WeaponBase
 		InsertBullets:
 			TNT1 A 0 A_JumpIfInventory("FreezerAmmo",60,"Ready3");
 			TNT1 A 0 A_JumpIfInventory("Cell",1,1);
-			Goto Ready3;
+			Goto NoAmmo;
 			TNT1 A 0 {
 				A_Giveinventory("FreezerAmmo",1);
 				A_Takeinventory("Cell",1);
@@ -446,7 +447,7 @@ class PB_Freezer : PB_WeaponBase
 		ReloadPistol:
 			TNT1 A 0 A_JumpIfInventory("PrimaryPistolAmmo", 16, "Ready3");
 			TNT1 A 0 A_JumpIfInventory("PistolBullets", 1, 1);
-			Goto Ready2;
+			Goto NoAmmo;
 			TNT1 A 0 A_SetCrosshair(5);
 			TNT1 A 0 A_PlaySoundEx("PSRLOUT", "Auto");
 			"D5GB" A 1;

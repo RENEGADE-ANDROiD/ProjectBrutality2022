@@ -76,7 +76,33 @@ class PB_CryoShotgun : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("Reloading", 1, "Reload");
 		TNT1 A 0 A_JumpIfInventory("Zoomed", 1, "ReadyZoom");
 		TNT1 A 0 PB_HandleCrosshair(39);
+		TNT1 A 0 A_JumpIfInventory("PB_CryoShotgun_Wind", 1, "CryoReadyWind");
+		TNT1 A 0 A_JumpIfInventory("PB_CryoShotgun_Pellet", 1, "CryoReadyPellet");
+		TNT1 A 0 A_JumpIfInventory("CryoShotgunAmmo", 1, "CryoReadyBuckArmed");
+		Goto CryoReadyBuckEmpty;
+		CryoReadyBuckArmed:
 		"FZGA" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		Loop;
+		CryoReadyBuckEmpty:
+		"FZGA" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+		Loop;
+		CryoReadyPellet:
+		TNT1 A 0 A_JumpIfInventory("PB_Shell", 1, "CryoReadyPelletArmed");
+		Goto CryoReadyPelletEmpty;
+		CryoReadyPelletArmed:
+		"FZGA" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		Loop;
+		CryoReadyPelletEmpty:
+		"FZGA" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+		Loop;
+		CryoReadyWind:
+		TNT1 A 0 A_JumpIfInventory("PB_CryoCannonCells", 12, "CryoReadyWindArmed");
+		Goto CryoReadyWindEmpty;
+		CryoReadyWindArmed:
+		"FZGA" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		Loop;
+		CryoReadyWindEmpty:
+		"FZGA" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 		Loop;
 
 		ReadyZoom:
@@ -134,8 +160,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		}
 		TNT1 A 0 A_JumpIfInventory("ReloadingCryoShotty", 2, "ReloadDone2");
 		TNT1 A 0 A_JumpIfInventory("ReloadingCryoShotty", 1, "ReloadDone1");
-		TNT1 A 0 A_JumpIfInventory("CryoShotgunAmmo", 1, 3);
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("CryoShotgunAmmo", 1, "PB_Cell");
 		TNT1 A 0 A_FireCustomMissile("SmokeSpawner", 0, 0, 0, 0);
 		TNT1 A 0 A_AlertMonsters;
 		TNT1 A 0 A_PlaySound("weapons/sg", CHAN_WEAPON);
@@ -186,8 +211,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		Goto ReadyZoom;
 
 		FirePellet:
-		TNT1 A 0 A_JumpIfInventory("PB_Shell", 1, "FirePelletGo");
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_Shell", 1, "NewShell");
 		FirePelletGo:
 		TNT1 A 0 A_TakeInventory("PB_Shell", 1);
 		TNT1 A 0 A_AlertMonsters;
@@ -214,8 +238,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		Goto CryoShotgunReadyToFire;
 
 		FireOrb:
-		TNT1 A 0 A_JumpIfInventory("PB_CryoCells", 1, "FireOrbGo");
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_CryoCells", 1, "PB_Cell");
 		FireOrbGo:
 		TNT1 A 0 A_TakeInventory("PB_CryoCells", 1);
 		TNT1 A 0 A_AlertMonsters;
@@ -227,8 +250,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		Goto CryoShotgunReadyToFire;
 
 		FireElectric:
-		TNT1 A 0 A_JumpIfInventory("PB_CryoCells", 1, "FireElectricGo");
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_CryoCells", 1, "PB_Cell");
 		FireElectricGo:
 		TNT1 A 0 A_TakeInventory("PB_CryoCells", 1);
 		TNT1 A 0 A_AlertMonsters;
@@ -240,8 +262,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		Goto CryoShotgunReadyToFire;
 
 		FireWind:
-		TNT1 A 0 A_JumpIfInventory("PB_CryoCannonCells", 12, "FireWindGo");
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_CryoCannonCells", 12, "PB_Cell");
 		FireWindGo:
 		TNT1 A 0 A_TakeInventory("PB_CryoCannonCells", 12);
 		TNT1 A 0 A_AlertMonsters;
@@ -317,7 +338,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		TNT1 A 0 A_TakeInventory("Reloading", 1);
 		TNT1 A 0 A_JumpIfInventory("CryoShotgunAmmo", 120, "CryoShotgunReadyToFire");
 		TNT1 A 0 A_JumpIfInventory("PB_Cell", 12, 1);
-		Goto CryoShotgunReadyToFire;
+		Goto NoAmmo;
 		TNT1 A 0 A_JumpIfInventory("TurboReload", 1, "TurboReloadLoop");
 		TNT1 A 0 A_JumpIfInventory("Zoomed", 1, 2);
 		TNT1 A 0 A_Jump(256, 9);
@@ -339,11 +360,11 @@ class PB_CryoShotgun : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GotAPack", 1, "ReloadPelletCapBP");
 		TNT1 A 0 A_JumpIfInventory("PB_Shell", 50, "CryoShotgunReadyToFire");
 		TNT1 A 0 A_JumpIfInventory("NewShell", 1, "ReloadPelletLoop");
-		Goto CryoShotgunReadyToFire;
+		Goto NoAmmo;
 		ReloadPelletCapBP:
 		TNT1 A 0 A_JumpIfInventory("PB_Shell", 100, "CryoShotgunReadyToFire");
 		TNT1 A 0 A_JumpIfInventory("NewShell", 1, "ReloadPelletLoop");
-		Goto CryoShotgunReadyToFire;
+		Goto NoAmmo;
 		ReloadPelletLoop:
 		TNT1 A 0 A_JumpIfInventory("GotAPack_h", 1, "ReloadPelletLoopBP");
 		TNT1 A 0 A_JumpIfInventory("GotAPack", 1, "ReloadPelletLoopBP");
@@ -367,7 +388,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		TNT1 A 0 A_TakeInventory("Reloading", 1);
 		TNT1 A 0 A_JumpIfInventory("PB_CryoCells", 300, "CryoShotgunReadyToFire");
 		TNT1 A 0 A_JumpIfInventory("PB_Cell", 1, "ReloadCryoCellsGo");
-		Goto CryoShotgunReadyToFire;
+		Goto NoAmmo;
 		ReloadCryoCellsGo:
 		TNT1 A 0 A_PlaySound("CELLIN2", CHAN_AUTO);
 		TNT1 A 0 A_GiveInventory("PB_CryoCells", 40);
@@ -378,7 +399,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		TNT1 A 0 A_TakeInventory("Reloading", 1);
 		TNT1 A 0 A_JumpIfInventory("PB_CryoCannonCells", 120, "CryoShotgunReadyToFire");
 		TNT1 A 0 A_JumpIfInventory("PB_Cell", 1, "ReloadCannonCellsGo");
-		Goto CryoShotgunReadyToFire;
+		Goto NoAmmo;
 		ReloadCannonCellsGo:
 		TNT1 A 0 A_PlaySound("CELLIN2", CHAN_AUTO);
 		TNT1 A 0 A_GiveInventory("PB_CryoCannonCells", 30);

@@ -136,6 +136,9 @@ class PB_SSG : PB_WeaponBase
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyToFireDualWield");
 		RealReady:
 		TNT1 A 0 PB_SelectIfUpgrade("PB_QuadSG") ;//A_SelectWeapon("PB_QuadSG");
+		TNT1 A 0 A_JumpIfInventory("SSGAmmoCounter", 1, "RealReadyArmed");
+		Goto RealReadyEmpty;
+	RealReadyArmed:
 		SHT3 A 1 {
 			PB_CoolDownBarrel(2, 0, 3);
 			PB_CoolDownBarrel(-2, 0, 3);
@@ -143,6 +146,11 @@ class PB_SSG : PB_WeaponBase
 					return ResolveState("Fire");
 			}
 			return A_DoPBWeaponAction(WRF_ALLOWRELOAD,CheckUnloaded("PBSSGHasUnloaded"));
+		}
+		Loop;
+	RealReadyEmpty:
+		SHT3 A 1 {
+			return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE, CheckUnloaded("PBSSGHasUnloaded"));
 		}
 		Loop;
 		BarrelSmoke1:
@@ -542,7 +550,7 @@ class PB_SSG : PB_WeaponBase
 			}
 		"SHO8" EFGHIJJKLM 1;
 		TNT1 A 0 A_JumpIfInventory("NewShell", 1, "Reload");
-		Goto Ready3;
+		Goto NoAmmo;
 		
 		AltFire:
 		TNT1 A 0 {
@@ -619,7 +627,7 @@ class PB_SSG : PB_WeaponBase
 		
 		Reload:
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReloadDualWield");
-		TNT1 A 0 PB_CheckReload(null,null,null,"Ready3","Ready3",2);
+		TNT1 A 0 PB_CheckReload(null,null,null,"Ready3","NoAmmo",2);
 		TNT1 A 0 {
 			A_SetInventory("PB_LockScreenTilt",1);
 			A_SetInventory("PB_SSGFireAnimation1",0);
@@ -690,7 +698,7 @@ class PB_SSG : PB_WeaponBase
 		Goto Ready3;
 		
 		ReloadDualWield:
-		TNT1 A 0 PB_CheckReload(null,null,null,"ReloadOnlyLeft","Ready3",2);
+		TNT1 A 0 PB_CheckReload(null,null,null,"ReloadOnlyLeft","NoAmmo",2);
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"P6SS" ED 1 A_SetPitch(pitch-0.4, SPF_INTERPOLATE);
 		TNT1 A 0 A_PlaySoundEx("weapons/ssg/inspect4", "Auto");
@@ -732,7 +740,7 @@ class PB_SSG : PB_WeaponBase
 		TNT1 A 0 A_PlaySoundEx("weapons/ssg/inspect4", "Auto");
 		Goto ReloadLeft;
 		ReloadOnlyLeft:
-		TNT1 A 0 PB_CheckReload(null,null,null,"Ready3","Ready3",2,1,true);
+		TNT1 A 0 PB_CheckReload(null,null,null,"Ready3","NoAmmo",2,1,true);
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"P6SS" ED 1 A_SetPitch(pitch-0.4, SPF_INTERPOLATE);
 		TNT1 A 0 A_PlaySoundEx("weapons/ssg/inspect4", "Auto");

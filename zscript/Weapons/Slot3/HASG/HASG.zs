@@ -112,6 +112,13 @@ class HASG : PB_WeaponBase
         TNT1 A 0 A_JumpIfInventory("ASGDrum", 1, "Drum_Ready");
 		NormalReady:
         TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
+        TNT1 A 0 A_JumpIfInventory("ASGChamber", 1, "NormalReadyArmed");
+        "GLXG" A 1 {
+            return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+        }
+        Loop;
+        NormalReadyArmed:
+        TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
         "GLXG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
         Loop;
 
@@ -119,10 +126,24 @@ class HASG : PB_WeaponBase
         TNT1 AAAA 0 A_JumpIfInventory("GoFatality", 1, "Steady");
         TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
         TNT1 A 0 A_JumpIfInventory("Unloaded_Golide", 1, "NormalReady");
+        TNT1 A 0 A_JumpIfInventory("ASGChamber", 1, "DrumReadyArmed");
+        "DRMG" A 1 {
+            return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+        }
+        Loop;
+        DrumReadyArmed:
+        TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
         "DRMG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
         Loop;
 
 		Ready2:
+        TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
+        TNT1 A 0 A_JumpIfInventory("ASGChamber", 1, "Ready2Armed");
+        "LGZD" A 1 {
+            return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+        }
+        Loop;
+        Ready2Armed:
         TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
         "LGZD" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
         Loop;
@@ -529,21 +550,29 @@ class HASG : PB_WeaponBase
 
 		NoAmmo:
         TNT1 A 0 A_JumpIfInventory("ASGDrum", 1, "DrumNoAmmo");
-        TNT1 A 0 A_PlaySound("DryFire/Shotgun", 2);
+        TNT1 A 0 {
+            A_TakeInventory("Reloading", 1);
+            A_PlaySound("DryFire/Shotgun", 2);
+        }
 		NoReload:
         "GLXG" A 0;
         TNT1 A 0 A_ZoomFactor(1.0);
         TNT1 A 0 A_SetCrosshair(39);
         TNT1 A 0 A_TakeInventory("Zoomed", 1);
         TNT1 A 0 A_JumpIfInventory("ASGDrum", 1, "DrumNoReload");
+        "GLXG" A 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
         Goto ContinueReady;
 		DrumNoAmmo:
-        TNT1 A 0 A_ZoomFactor(1.0);
-        TNT1 A 0 A_SetCrosshair(39);
-        TNT1 A 0 A_TakeInventory("Zoomed", 1);
-        TNT1 A 0 A_PlaySound("DryFire/Shotgun", 2);
+        TNT1 A 0 {
+            A_TakeInventory("Reloading", 1);
+            A_ZoomFactor(1.0);
+            A_SetCrosshair(39);
+            A_TakeInventory("Zoomed", 1);
+            A_PlaySound("DryFire/Shotgun", 2);
+        }
 		DrumNoReload:
         "DRMG" A 0;
+        "DRMG" A 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
         Goto Drum_Ready;
 
 		Reload:

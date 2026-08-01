@@ -152,6 +152,9 @@ class PB_M2Plasma : PB_WeaponBase
 					A_PlaySound("PLSM2LP", 6,0.1,1);
 					A_TakeInventory("PlasmaSoundCounter",2);
 				}
+				if (CountInv("M2PlasmaAmmo") < 1 && !CountInv("M2PlasmaUnloaded")) {
+					return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE, CheckUnloaded("M2PlasmaUnloaded"));
+				}
 				return A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("M2PlasmaUnloaded"));
 			}
 	Goto ReallyReady3;
@@ -438,8 +441,7 @@ class PB_M2Plasma : PB_WeaponBase
 			A_WeaponOffset(0,32);
 			}
         TNT1 A 0 A_JumpIfInventory("Reloading",1,"Reload");
-        TNT1 A 0 A_JumpIfInventory("M2PlasmaAmmo",2,1);
-		Goto Reload;
+        TNT1 A 0 PB_BailIfCannotFire("M2PlasmaAmmo", 2, "Cell");
 		TNT1 A 0 A_JumpIfInventory("LightningGunMode",1,"FireLightningGun1");
 		"PR2F" "ABCDE" 0;
 		M211 A 1 BRIGHT {
@@ -478,8 +480,7 @@ class PB_M2Plasma : PB_WeaponBase
 		TNT1 A 0 A_PlaySound("LGFire", 1, 1);
 		TNT1 A 0 A_PlaySound("LGLoop", 0, 1, 1);
 		TNT1 A 0 A_Zoomfactor(0.98);
-		TNT1 A 0 A_JumpIfInventory("M2PlasmaAmmo",5,1);
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("M2PlasmaAmmo", 5, "Cell");
 		LightningGunLoop:
 		PR1F A 1 BRIGHT {
 			A_SetAngle(frandom(0.3, -0.3) + angle);
@@ -508,8 +509,7 @@ class PB_M2Plasma : PB_WeaponBase
 			A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0);
 			A_GunFlash();
 			}
-        TNT1 A 0 A_JumpIfInventory("M2PlasmaAmmo",1,1);
-		Goto Reload;
+        TNT1 A 0 PB_BailIfCannotFire("M2PlasmaAmmo", 1, "Cell");
 		PR1G HGFEEEEEEE 1 BRIGHT {
 			A_WeaponReady(WRF_ALLOWRELOAD);
 			A_WeaponOffset(frandom(-5,5), 32+frandom(0,3));
@@ -545,8 +545,7 @@ class PB_M2Plasma : PB_WeaponBase
 		goto LeftToRight;
 		FireStunBomb:
 		TNT1 A 0 A_JumpIfInventory("StunBombCooldown",1,"NoFireStun");
-		TNT1 A 0 A_JumpIfInventory("M2PlasmaAmmo",25,1);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("M2PlasmaAmmo", 25, "Cell");
 		TNT1 A 0 A_PlaysoundEx("PZPCHR2", "Auto");
 		"PR1F" "XYZABACABACABAC" 1 BRIGHT A_FireCustomMissile("ElectroBlastTrail2", 0, 0, 0, 0);
 		TNT1 A 0 {
@@ -569,8 +568,7 @@ class PB_M2Plasma : PB_WeaponBase
 		FireDualWield:
 		Goto LeftToRight;
 		LeftToRight:
-		TNT1 A 0 A_JumpIfInventory("M2PlasmaAmmo",10,1);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("M2PlasmaAmmo", 10, "Cell");
 		"PR4L" A 0 A_JumpIfInventory("HasLightningGunUpgrade", 1,2);
 		"PR3L" A 0;
 		"####" A 0 A_Giveinventory("PB_LockScreenTilt",1);
@@ -640,8 +638,7 @@ class PB_M2Plasma : PB_WeaponBase
 
 		RightToLeft:
 		TNT1 A 0 A_JumpIfInventory("Reloading",1,"Reload");
-		TNT1 A 0 A_JumpIfInventory("M2PlasmaAmmo",10,1);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("M2PlasmaAmmo", 10, "Cell");
 		"PR4L" A 0 A_JumpIfInventory("HasLightningGunUpgrade", 1,2);
 		"PR3L" A 0;
 		"####" A 0 A_Giveinventory("PB_LockScreenTilt",1);
@@ -740,9 +737,9 @@ class PB_M2Plasma : PB_WeaponBase
 		Reload:
 		TNT1 A 0 A_StopSound(0);
 		TNT1 A 0 A_JumpIfInventory("DualWieldingM2Plasma", 1, "ReloadDualWield");
-		TNT1 A 0 A_JumpIfInventory("M2PlasmaAmmo",50,"Ready3");
+ 		TNT1 A 0 A_JumpIfInventory("M2PlasmaAmmo",50,"Ready3");
  		TNT1 A 0 A_JumpIfInventory("Cell",1,1);
-		Goto Ready3;
+		Goto NoAmmo;
 		TNT1 A 0 A_JumpIfInventory("HasLightningGunUpgrade", 1,"UpgradedReloading");
 		ResumeNormalReloading:
 		TNT1 A 0 {
@@ -795,7 +792,7 @@ class PB_M2Plasma : PB_WeaponBase
 			return ResolveState(null);
 		}
         TNT1 A 0 A_JumpIfInventory("Cell",1,1);
-        Goto ReadyDualWield;
+        Goto NoAmmo;
 		TNT1 A 0 {
 			A_SetCrosshair(5);
 			A_Giveinventory("PB_LockScreenTilt",1);
@@ -863,7 +860,7 @@ class PB_M2Plasma : PB_WeaponBase
 		InsertBullets5:
 		TNT1 A 0 A_JumpIfInventory("LeftM2PlasmaAmmo",50,"Ready3");
 		TNT1 A 0 A_JumpIfInventory("Cell",1,1);
-		Goto Ready3;
+		Goto NoAmmo;
 		TNT1 A 0 {
 			A_Giveinventory("LeftM2PlasmaAmmo",1);
 			A_Takeinventory("Cell",1);

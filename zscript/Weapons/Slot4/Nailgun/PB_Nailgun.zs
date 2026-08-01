@@ -262,7 +262,7 @@ Weapon.SlotPriority 0.1;
 		"N1N0" D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 		Loop;
 		ReadyToFireEmpty:
-		"N1N1" D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		"N1N1" D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 		Loop;
 		ReadyToFireUnloaded:
 		"N1N2" D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
@@ -376,7 +376,7 @@ Weapon.SlotPriority 0.1;
 		"J0N0" D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 		Loop;
 		JavelinReadyEmpty:
-		"J0N1" D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		"J0N1" D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 		Loop;
 		JavelinReadyUnloaded:
 		"J0N2" D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
@@ -445,8 +445,7 @@ Weapon.SlotPriority 0.1;
 		"N9N2" "ABCDEFGHIJKL" 0 ;// Initialize frames into virtual memory;
 	
 		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, "FireJavelin");
-		TNT1 A 0 A_JumpIfInventory("PB_NailgunAmmo",1,1);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_NailgunAmmo", 1, "NewClip");
 		TNT1 A 0 A_GiveInventory("RespectNailgun",1);
 		TNT1 A 0 A_StartSound("weapons/nailgun/fireloop",CHAN_WEAPON, CHANF_LOOPING);
 		TNT1 A 0 A_JumpIfInventory("NailgunFiringAnimation",1, "LeftSingleFire");
@@ -506,8 +505,7 @@ Weapon.SlotPriority 0.1;
 			PB_HandleCrosshair(76);
 			}
 		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, "FireJavelin");
-		TNT1 A 0 A_JumpIfInventory("PB_NailgunAmmo",1,1);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_NailgunAmmo", 1, "NewClip");
 		TNT1 A 0 A_StartSound("weapons/nailgun/fireloop",CHAN_WEAPON, CHANF_LOOPING);
 		TNT1 A 0 A_JumpIfInventory("NailgunFiringAnimation",1, "LeftHoldFire");
 		RightHoldFire:
@@ -576,8 +574,7 @@ Weapon.SlotPriority 0.1;
 		}
 		"N9N3" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" 0 ;// Initialize frames into virtual memory;
 		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, "AltFireJavelin");
-		TNT1 A 0 A_JumpIfInventory("PB_NailgunAmmo",20,1);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_NailgunAmmo", 20, "NewClip");
 		TNT1 A 0 A_StartSound("weapons/nailgun/altcharge", CHAN_AUTO);
 		N5N0 ABCD 1 {
 			if (CountInv("NailgunOverHeating") >= 120 ) {A_SetWeaponSprite("N9N3");}
@@ -618,8 +615,7 @@ Weapon.SlotPriority 0.1;
 		Goto Ready3;
 	
 		FireJavelin:
-		TNT1 A 0 A_JumpIfInventory("PB_NailgunAmmo",20,1);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_NailgunAmmo", 20, "NewClip");
 		J1N0 A 1 {
 			A_FireCustomMissile("JavelinProjectile", 0, 0, 0, 0, 0, 0);
 			A_PB_NailgunMuzzleSmoke(0);
@@ -652,8 +648,7 @@ Weapon.SlotPriority 0.1;
 		Goto JavelinReady3;
 		
 		AltFireJavelin:
-		TNT1 A 0 A_JumpIfInventory("PB_NailgunAmmo",20,1);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_NailgunAmmo", 20, "NewClip");
 		TNT1 A 0 A_StartSound("weapons/nailgun/javelincharge", CHAN_WEAPON);
 		"J3N0" ABCDEFABCDEFGHIJKLMKLMNOPNOPQRSTU 1;
 		J3N0 V 1 {
@@ -687,17 +682,24 @@ Weapon.SlotPriority 0.1;
 	
 	
 		NoAmmo:
-		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, 2);
-        N1N0 D 10 {
-			A_PlaySound("weapons/empty");
-			if (CountInv("PB_NailgunAmmo") <= 1) { A_SetWeaponSprite ("N1N1"); }
+		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, "NoAmmoJavelin");
+		TNT1 A 0
+		{
+			A_TakeInventory("Reloading", 1);
+			A_PlaySound("weapons/empty", CHAN_AUTO);
+			if (CountInv("PB_NailgunAmmo") <= 1) { A_SetWeaponSprite("N1N1"); }
 		}
-        Goto Ready3;
-        J0N1 D 10 {
-			A_PlaySound("weapons/empty");
-			if (CountInv("PB_NailgunAmmo") >= 20) { A_SetWeaponSprite ("J0N0"); }
+		N1N0 D 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
+		Goto Ready3;
+		NoAmmoJavelin:
+		TNT1 A 0
+		{
+			A_TakeInventory("Reloading", 1);
+			A_PlaySound("weapons/empty", CHAN_AUTO);
+			if (CountInv("PB_NailgunAmmo") >= 20) { A_SetWeaponSprite("J0N0"); }
 		}
-        Goto JavelinReady3;
+		J0N1 D 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
+		Goto JavelinReady3;
 	
 		Reload:
 		TNT1 A 0 A_StopSound(CHAN_WEAPON);

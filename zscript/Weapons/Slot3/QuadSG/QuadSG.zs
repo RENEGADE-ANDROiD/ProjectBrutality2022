@@ -161,7 +161,12 @@ class PB_QuadSG : PB_WeaponBase
 			A_TakeInventory("PB_LockScreenTilt",1);
 			A_SetRoll(0);
 		}
-		"QSSG" A 1 A_DoPBWeaponAction(wrf_allowreload);
+		"QSSG" A 1 {
+			if (CountInv("QSSGAmmoCounter") < 1) {
+				return A_DoPBWeaponAction(wrf_allowreload | WRF_NOFIRE);
+			}
+			return A_DoPBWeaponAction(wrf_allowreload);
+		}
 		Loop;
 		
 	ReadyDualWield:
@@ -737,8 +742,9 @@ class PB_QuadSG : PB_WeaponBase
 		
 	FullBlast:
 		TNT1 A 0 A_TakeInventory("Reloading", 1);
-		TNT1 A 0 A_JumpIfInventory("QSSGAmmoCounter", 4, 1);
+		TNT1 A 0 A_JumpIfInventory("QSSGAmmoCounter", 4, "FullBlastDo");
 		Goto HalfBlast;
+	FullBlastDo:
         TNT1 AAAAA 0;
         TNT1 A 0 A_Recoil(3);
         "QSF4" A 1 BRIGHT A_PlaySound("QSGFIRE1", 1);//NEED A LOUDER FUCKING BANG;
@@ -796,7 +802,7 @@ class PB_QuadSG : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("QSSGAmmoCounter", 4, "FireRightBarrels");
 		TNT1 A 0 A_JumpIfInventory("QSSGAmmoCounter", 2, "FireLeftBarrels");
 		TNT1 A 0 A_JumpIfInventory("QSSGAmmoCounter", 1, "FireLeftSingleBarrel");
-		TNT1 A 0 PB_jumpIfNoAmmo("Reload", 1, true, true, "");
+		TNT1 A 0 PB_BailIfCannotFire("QSSGAmmoCounter", 1, "NewShell");
 		Goto Reload;
 		
 	FireRightBarrels:
@@ -840,7 +846,7 @@ class PB_QuadSG : PB_WeaponBase
         "QSF2" I 1;
         "QSF2" JKLLLMNOP 1;
 		TNT1 A 0 A_JumpIfInventory("QSSGAmmoCounter", 1, "RealReady");
-		TNT1 A 0 PB_jumpIfNoAmmo("Reload", 1, true, true, "");
+		TNT1 A 0 PB_BailIfCannotFire("QSSGAmmoCounter", 1, "NewShell");
 		Goto Reload;
 		
 	FireLeftBarrels:
@@ -883,7 +889,7 @@ class PB_QuadSG : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("FullBlastMode", 1,"HalfBlast");
 		TNT1 A 0 A_JumpIfInventory("QSSGAmmoCounter", 3, "FireRightSingleBarrel");
 		TNT1 A 0 A_JumpIfInventory("QSSGAmmoCounter", 1, "FireLeftSingleBarrel");
-		TNT1 A 0 PB_jumpIfNoAmmo("Reload", 1, true, true, "");
+		TNT1 A 0 PB_BailIfCannotFire("QSSGAmmoCounter", 1, "NewShell");
 		Goto Reload;
 		
 	FireRightSingleBarrel:
@@ -953,7 +959,7 @@ class PB_QuadSG : PB_WeaponBase
 		"QSF1" IJKL 1;
 		TNT1 A 0 A_ZoomFactor(1.0);
 		TNT1 A 0 A_JumpIfInventory("QSSGAmmoCounter", 1, "RealReady");
-		TNT1 A 0 PB_jumpIfNoAmmo("Reload", 1, true, true, "");
+		TNT1 A 0 PB_BailIfCannotFire("QSSGAmmoCounter", 1, "NewShell");
 		Goto Reload;
 		
 	DualFireReload:
@@ -1201,7 +1207,7 @@ class PB_QuadSG : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("QuadAkimboMode", 1, "DualFireReload");
 		TNT1 A 0 A_JumpIfInventory("QSSGAmmoCounter", 4, "RealReady");
 		TNT1 A 0 A_JumpIfInventory("NewShell", 2, 1);
-		Goto Ready3;
+		Goto NoAmmo;
 		TNT1 A 0;
 		"QSSG" DEFGHIJKLM 1 A_DoPBWeaponAction(WRF_NOFIRE);
 		"QSSG" NOPQ 1 A_DoPBWeaponAction(WRF_NOFIRE);

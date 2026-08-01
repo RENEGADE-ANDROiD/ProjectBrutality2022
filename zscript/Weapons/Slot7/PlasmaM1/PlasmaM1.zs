@@ -148,6 +148,7 @@ Class PB_M1Plasma : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyDualWield");
 		ReadyToFire:
 			PLSG A 0 A_Overlay(60, "AmmoCounter");
+			TNT1 A 0 A_JumpIf(PB_GetMagEmpty(), "GunEmpty");
 			4LSG B 0 A_DoPBWeaponAction();
 			4LSG BBCCDDEEFFGGHHII 1 A_DoPBWeaponAction();
 			//TNT1 A 0 A_SelectWeapon("PB_Pulsecannon")
@@ -155,7 +156,7 @@ Class PB_M1Plasma : PB_WeaponBase
 		GunEmpty:
 			4LSG J 1 {
 				A_ClearOverlays(60,61);
-				return A_DoPBWeaponAction(WRF_ALLOWRELOAD, PBWEAP_UNLOADED);
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE, PBWEAP_UNLOADED);
 			}
 			Loop;
 		////////////////////////////////////////////////////////////////////////
@@ -216,7 +217,7 @@ Class PB_M1Plasma : PB_WeaponBase
 				A_Setinventory("PB_LockScreenTilt",0);
 			}
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FireDualWield");
-			TNT1 A 0 PB_jumpIfNoAmmo();
+			TNT1 A 0 PB_BailIfCannotFire("PlasmaAmmo", 1, "Cell", "Reload", "GunEmpty");
 			PLSF A 1 BRIGHT {	
 				A_Overlay(-5,"FireRecoil");
 				PB_FireOffset();
@@ -281,7 +282,7 @@ Class PB_M1Plasma : PB_WeaponBase
 			PLSM ABCD 1 BRIGHT A_GunFlash();
 			stop;
 		AltFire:
-			TNT1 A 0 PB_jumpIfNoAmmo(min:20);
+			TNT1 A 0 PB_BailIfCannotFire("PlasmaAmmo", 20, "Cell", "Reload", "GunEmpty");
 			PLHE A 1 A_ClearOverlays(60, 65);
 			TNT1 A 0 {
 				A_WeaponOffset(0,32);
@@ -493,7 +494,7 @@ Class PB_M1Plasma : PB_WeaponBase
 		Reload:
 			TNT1 A 0 A_ClearReFire();
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReloadDualWield");
-			TNT1 A 0 PB_CheckReload(null,null,null,"Ready","Ready3",60);
+			TNT1 A 0 PB_CheckReload(null,null,null,"Ready","GunEmpty",60);
 			TNT1 A 0 {
 				A_StartSound("PLSM2RL",26,CHANF_OVERLAP);
 				A_ClearOverlays(2,2);
@@ -559,7 +560,7 @@ Class PB_M1Plasma : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"ReloadDualUnloadContinue");
 			Goto FinishingReload;
 		ReloadDualWield:
-			TNT1 A 0 PB_CheckReload(null,null,null,"ReloadLeftOnly","Ready3",60);
+			TNT1 A 0 PB_CheckReload(null,null,null,"ReloadLeftOnly","GunEmpty",60);
 			TNT1 A 0 {
 				A_StartSound("PLSM2RL",26,CHANF_OVERLAP);
 				A_ClearOverlays(10,11);
@@ -619,7 +620,7 @@ Class PB_M1Plasma : PB_WeaponBase
 			TNT1 A 0 PB_SetReloading(false);
 			Goto Ready3;
 		ReloadLeftOnly:
-			TNT1 A 0 PB_CheckReload(null,null,null,"Ready","Ready3",60,1,true);
+			TNT1 A 0 PB_CheckReload(null,null,null,"Ready","GunEmpty",60,1,true);
 			TNT1 A 0 {
 				A_StartSound("PLSM2RL",26,CHANF_OVERLAP);
 				A_ClearOverlays(10,11);

@@ -132,16 +132,38 @@ class PB_SPAS12 : PB_WeaponBase
 			return ResolveState(null);
 		}
 	ReadyToFire:
+		TNT1 A 0 A_JumpIfInventory("PB_SPAS12Mag", 1, "ReadyToFireArmed");
+		Goto ReadyEmpty;
+	ReadyToFireArmed:
 		S12G A 1
 		{
 			return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 		}
 		Loop;
 
+	ReadyEmpty:
+		S12G A 1
+		{
+			// Mag empty: allow reload / equipment, but not Fire (AmmoUse is 0 so
+			// A_WeaponReady would otherwise re-enter Fire→Reload→Ready forever).
+			return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+		}
+		Loop;
+
 	ReadyADS:
+		TNT1 A 0 A_JumpIfInventory("PB_SPAS12Mag", 1, "ReadyADSArmed");
+		Goto ReadyADSEmpty;
+	ReadyADSArmed:
 		S12Z A 1
 		{
 			return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		}
+		Loop;
+
+	ReadyADSEmpty:
+		S12Z A 1
+		{
+			return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 		}
 		Loop;
 
@@ -219,9 +241,10 @@ class PB_SPAS12 : PB_WeaponBase
 			else { SetPlayerProperty(0, 0, 0); SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN); }
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 A_JumpIfInventory("PB_SPAS12Mag", 1, 2);
-		Goto Reload;
-		TNT1 AA 0;
+		TNT1 A 0 A_JumpIfInventory("PB_SPAS12Mag", 1, "FireArmed");
+		TNT1 A 0 A_JumpIfInventory("NewShell", 1, "Reload");
+		Goto NoAmmo;
+	FireArmed:
 		TNT1 A 0 A_JumpIfInventory("Zoomed", 1, "FireADS");
 		TNT1 A 0 A_JumpIfInventory("SPAS12_RiotMode", 1, "FireRiotHip");
 		Goto FirePumpHip;
@@ -354,6 +377,15 @@ class PB_SPAS12 : PB_WeaponBase
 		TNT1 A 0 A_ZoomFactor(1.5);
 		Goto ReadyADS;
 
+	NoAmmo:
+		TNT1 A 0
+		{
+			A_TakeInventory("Reloading", 1);
+			A_PlaySound("weapons/empty", CHAN_AUTO);
+		}
+		S12G A 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
+		Goto Ready3;
+
 	Reload:
 		TNT1 A 0
 		{
@@ -362,9 +394,9 @@ class PB_SPAS12 : PB_WeaponBase
 			A_ZoomFactor(1.0);
 		}
 		TNT1 A 0 A_JumpIfInventory("PB_SPAS12Mag", 9, "Ready3");
-		TNT1 A 0 A_JumpIfInventory("NewShell", 1, 2);
-		Goto Ready3;
-		TNT1 AA 0;
+		TNT1 A 0 A_JumpIfInventory("NewShell", 1, "ReloadStart");
+		Goto NoAmmo;
+	ReloadStart:
 		S12P ABCDEFGH 1;
 		S12R AB 1;
 	ReloadLoop:
