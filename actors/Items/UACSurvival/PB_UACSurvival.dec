@@ -1,0 +1,262 @@
+// PB3 UAC Survival Pack — pipebomb / satchel / flare as equipment (lean fold)
+
+Actor WW_PB_UAC_PipebombSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_UAC_PipebombSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_UAC_SatchelSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_UAC_SatchelSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_UAC_FlareSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_UAC_FlareSelected : Inventory { Inventory.MaxAmount 1 }
+
+Actor PB_UAC_DetonatePipe : Inventory { Inventory.MaxAmount 1 }
+Actor PB_UAC_DetonateSatchel : Inventory { Inventory.MaxAmount 1 }
+Actor PB_UAC_PipeArmed : Inventory { Inventory.MaxAmount 1 }
+Actor PB_UAC_SatchelArmed : Inventory { Inventory.MaxAmount 1 }
+
+ACTOR PB_UAC_PipebombAmmo : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 8
+	Ammo.BackpackAmount 2
+	Ammo.BackpackMaxAmount 12
+	Inventory.Icon "PIPBA0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_UAC_SatchelAmmo : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 4
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 6
+	Inventory.Icon "STCGA0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_UAC_FlareAmmo : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 12
+	Ammo.BackpackAmount 3
+	Ammo.BackpackMaxAmount 18
+	Inventory.Icon "FBOXA0"
+	+INVENTORY.IGNORESKILL
+}
+
+Actor PB_UAC_PipebombPickup : CustomInventory 23270
+{
+	+COUNTITEM
+	Inventory.PickupMessage "$PB_PICKUP_UAC_PIPEBOMB"
+	Inventory.PickupSound "weapons/pbthrow"
+	Inventory.Icon "PIPBA0"
+	States
+	{
+	Spawn:
+		PIPB A -1
+		Stop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("PB_UAC_PipebombAmmo", 2)
+		Stop
+	}
+}
+
+Actor PB_UAC_SatchelPickup : CustomInventory 23271
+{
+	+COUNTITEM
+	Inventory.PickupMessage "$PB_PICKUP_UAC_SATCHEL"
+	Inventory.PickupSound "Weapons/SatchelPick"
+	Inventory.Icon "STCGA0"
+	States
+	{
+	Spawn:
+		STCG A -1
+		Stop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("PB_UAC_SatchelAmmo", 1)
+		Stop
+	}
+}
+
+Actor PB_UAC_FlarePickup : CustomInventory 23272
+{
+	+COUNTITEM
+	Inventory.PickupMessage "$PB_PICKUP_UAC_FLARE"
+	Inventory.PickupSound "FLRSTRT"
+	Inventory.Icon "FBOXA0"
+	Scale 0.7
+	States
+	{
+	Spawn:
+		FBOX B -1
+		Stop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("PB_UAC_FlareAmmo", 4)
+		Stop
+	}
+}
+
+Actor PB_UAC_Pipebomb
+{
+	Gravity 0.7
+	Speed 18
+	Radius 10
+	Height 5
+	Health 50
+	BounceType Doom
+	BounceFactor 0.4
+	PROJECTILE
+	+NOBLOOD
+	+SHOOTABLE
+	-NOBLOCKMAP
+	-NOGRAVITY
+	+MOVEWITHSECTOR
+	-BOUNCEONACTORS
+	+CANBOUNCEWATER
+	+FORCERADIUSDMG
+	+FORCEXYBILLBOARD
+	+THRUGHOST
+	Damage 1
+	SeeSound "weapons/pbthrow"
+	BounceSound "weapons/pbbounce"
+	DeathSound "weapons/pbbounce"
+	Obituary "%o tripped on a pipebomb."
+	States
+	{
+	Spawn:
+		PIPB AB 3 A_JumpIfInTargetInventory("PB_UAC_DetonatePipe", 1, "Explode")
+		Loop
+	Death:
+		TNT1 A 0 A_Jump(256, "Death1", "Death2")
+	Death1:
+		TNT1 A 0 A_JumpIfHealthLower(1, "Explode")
+		TNT1 A 0 A_JumpIfInTargetInventory("PB_UAC_DetonatePipe", 1, "Explode")
+		PIPB A 1 A_Gravity
+		PIPB A 1
+		Loop
+	Death2:
+		TNT1 A 0 A_JumpIfHealthLower(1, "Explode")
+		TNT1 A 0 A_JumpIfInTargetInventory("PB_UAC_DetonatePipe", 1, "Explode")
+		PIPB B 1 A_Gravity
+		PIPB B 1
+		Loop
+	Explode:
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_AlertMonsters
+		TNT1 A 0 A_PlaySound("weapons/pbexplode")
+		TNT1 A 0 A_JumpIf(GetCvar("pb_rocketjump"), "ExplodeRJ")
+		TNT1 A 0 A_Explode(128, 192, XF_HURTSOURCE)
+		TNT1 A 0 A_SpawnItemEx("PB_PlayerHandGrenadeExplosion", 0, 0, 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	ExplodeRJ:
+		TNT1 A 0 A_Explode(128, 192)
+		TNT1 A 0 A_RadiusThrust(48, 192)
+		TNT1 A 0 A_RadiusGive("PBBlastMomentum", 192, RGF_PLAYERS|RGF_CUBE, 8)
+		TNT1 A 0 A_SpawnItemEx("PB_PlayerHandGrenadeExplosion", 0, 0, 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+Actor PB_UAC_Satchel
+{
+	Gravity 1.0
+	Speed 16
+	Radius 10
+	Height 5
+	Health 50
+	BounceType Doom
+	BounceFactor 0.2
+	PROJECTILE
+	+NOBLOOD
+	+SHOOTABLE
+	-NOBLOCKMAP
+	-NOGRAVITY
+	+MOVEWITHSECTOR
+	-BOUNCEONACTORS
+	+CANBOUNCEWATER
+	+FORCERADIUSDMG
+	+FORCEXYBILLBOARD
+	+THRUGHOST
+	Damage 1
+	SeeSound "Weapons/SatchelToss"
+	BounceSound "Weapons/SatchelBounce"
+	DeathSound "Weapons/SatchelBounce"
+	Obituary "%o was satchel-charged."
+	States
+	{
+	Spawn:
+		SCHA A 3 A_JumpIfInTargetInventory("PB_UAC_DetonateSatchel", 1, "Explode")
+		SCHA A 3 A_JumpIfInTargetInventory("PB_UAC_DetonateSatchel", 1, "Explode")
+		Loop
+	Death:
+		TNT1 A 0 A_Jump(256, "Death1", "Death2")
+	Death1:
+		TNT1 A 0 A_JumpIfHealthLower(1, "Explode")
+		TNT1 A 0 A_JumpIfInTargetInventory("PB_UAC_DetonateSatchel", 1, "Explode")
+		SCHA A 1 A_Gravity
+		SCHA A 1
+		Loop
+	Death2:
+		TNT1 A 0 A_JumpIfHealthLower(1, "Explode")
+		TNT1 A 0 A_JumpIfInTargetInventory("PB_UAC_DetonateSatchel", 1, "Explode")
+		SCHA A 1 A_Gravity
+		SCHA A 1
+		Loop
+	Explode:
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_AlertMonsters
+		TNT1 A 0 A_PlaySound("Weapons/SatchelHit")
+		TNT1 A 0 A_JumpIf(GetCvar("pb_rocketjump"), "ExplodeRJ")
+		TNT1 A 0 A_Explode(160, 220, XF_HURTSOURCE)
+		TNT1 A 0 A_SpawnItemEx("PB_PlayerHandGrenadeExplosion", 0, 0, 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	ExplodeRJ:
+		TNT1 A 0 A_Explode(160, 220)
+		TNT1 A 0 A_RadiusThrust(64, 220)
+		TNT1 A 0 A_RadiusGive("PBBlastMomentum", 220, RGF_PLAYERS|RGF_CUBE, 10)
+		TNT1 A 0 A_SpawnItemEx("PB_PlayerHandGrenadeExplosion", 0, 0, 8, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+Actor PB_UAC_ThrownFlare
+{
+	Radius 5
+	PROJECTILE
+	Gravity 0.7
+	Speed 20
+	Mass 500
+	BounceType Doom
+	BounceFactor 0.2
+	+BOUNCEAUTOOFF
+	+CANBOUNCEWATER
+	-NOGRAVITY
+	+NOBLOOD
+	+SHOOTABLE
+	-NOBLOCKMAP
+	+MOVEWITHSECTOR
+	-BOUNCEONACTORS
+	+THRUGHOST
+	+DONTSPLASH
+	DamageType Fire
+	Damage 5
+	Health 5
+	Scale 0.5
+	SeeSound "FLRSTRT"
+	States
+	{
+	Spawn:
+		FLAR ABCDEFGH 2
+		Loop
+	Death:
+		FLAR A 0 A_PlaySound("FLRBURN", CHAN_BODY, 1.0, true)
+		FLAR ABCDEFGH 3 Bright A_ChangeFlag("SHOOTABLE", 1)
+		FLAR ABCDEFGH 3 Bright
+		FLAR ABCDEFGH 3 Bright
+		FLAR ABCDEFGH 3 Bright
+		FLAR ABCDEFGH 3 Bright
+		FLAR A 0 A_StopSound(CHAN_BODY)
+		FLAR A 0 A_PlaySound("FLROUT")
+		Stop
+	}
+}

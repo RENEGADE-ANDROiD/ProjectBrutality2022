@@ -19,6 +19,7 @@
 #include "lumps/includes/gldefs/FriendlyDrone.inc"
 #include "lumps/includes/gldefs/PB_DarkMatterRifle.inc"
 #include "lumps/includes/gldefs/CatsFrozen.inc"
+#include "lumps/includes/gldefs/SentryGuns.inc"
 
 flickerlight2 FT_GroundFire
 {

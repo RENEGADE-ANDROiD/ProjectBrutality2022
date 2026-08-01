@@ -13,6 +13,7 @@ ACTOR ZombieTank
     PainSound "ZTank/pain"
     DeathSound "ZTank/death"
     DropItem PB_Zombieman
+    DropItem "PB_SentryDrop_TankArmor" 16
     Obituary "%o was shot by a zombie in a Armor Platform."
     MONSTER 
     +FLOORCLIP

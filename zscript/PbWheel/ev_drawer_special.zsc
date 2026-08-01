@@ -44,8 +44,8 @@ Extend Class PB_SpecialWheelHandler
 
 		double layoutSc = sc * 0.8375;
 
-		bool isEquipmentWheel = false;
-		if (!weaponPickWheel && wheelShow.Size() > 0)
+		bool isEquipmentWheel = sentryGunsWheel;
+		if (!isEquipmentWheel && !weaponPickWheel && wheelShow.Size() > 0)
 		{
 			for (int i = 0; i < wheelShow.Size(); i++)
 			{
