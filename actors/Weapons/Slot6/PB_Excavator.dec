@@ -381,7 +381,8 @@ ACTOR PB_Excavator : PB_Weapon
 			TNT1 A 0 A_JumpIfInventory("SawBladeMode", 1, "FireSawBlade")
 			
 		FireBola:
-			TNT1 A 0 A_JumpIfInventory ("ExcavatorRounds",1,1)
+			// Offset 2: skip reserve-check + NoAmmo when mag has rounds (offset 1 landed on Goto NoAmmo).
+			TNT1 A 0 A_JumpIfInventory ("ExcavatorRounds",1,2)
 			TNT1 A 0 A_JumpIfInventory("RocketAmmo",1,"Reload")
 			Goto NoAmmo
 			TNT1 AAAAAA 0 A_FireCustomMissile("ShotgunParticles", random(-16,16), 0, -1, random(-9,9))
@@ -432,7 +433,8 @@ ACTOR PB_Excavator : PB_Weapon
 			TNT1 A 0 A_JumpIfInventory("SawBladeMode", 1, "ChargeSawBlade")
 			
 		FireGrenades:
-			TNT1 A 0 A_JumpIfInventory ("ExcavatorRounds",1,1)
+			// Offset 2: skip reserve-check + NoAmmo when mag has rounds (offset 1 landed on Goto NoAmmo).
+			TNT1 A 0 A_JumpIfInventory ("ExcavatorRounds",1,2)
 			TNT1 A 0 A_JumpIfInventory("RocketAmmo",1,"Reload")
 			Goto NoAmmo
 			TNT1 AAAAAA 0 A_FireCustomMissile("ShotgunParticles", random(-16,16), 0, -1, random(-9,9))
@@ -705,23 +707,23 @@ ACTOR PB_Excavator : PB_Weapon
 			EX_A FGHI 1 
 			EX_A I 6
 			EX_A IHGF 1
-			Stop
+			Goto Ready3
 		FlashKickingBolaUnloaded:
 			EX_B FGHI 1 
 			EX_B I 6
 			EX_B IHGF 1
-			Stop
+			Goto Ready3
 		FlashKickingSaw:
 			TNT1 A 0 A_JumpIfInventory("ExcavatorUnloaded",1,"FlashKickingSawUnloaded")
 			EX_C FGHI 1 
 			EX_C I 6
 			EX_C IHGF 1
-			Stop
+			Goto Ready3
 		FlashKickingSawUnloaded:
 			EX_D FGHI 1 
 			EX_D I 6
 			EX_D IHGF 1
-			Stop
+			Goto Ready3
 			
 		FlashAirKicking:
 			TNT1 A 0 A_JumpIfInventory ("EquippedObject", 1, "FlashAirKickingObject")
@@ -731,23 +733,23 @@ ACTOR PB_Excavator : PB_Weapon
 			EX_A FGHI 1 
 			EX_A I 8
 			EX_A IHGF 1
-			Stop
+			Goto Ready3
 		FlashAirKickingBolaUnloaded:
 			EX_B FGHI 1 
 			EX_B I 8
 			EX_B IHGF 1
-			Stop
+			Goto Ready3
 		FlashAirKickingSaw:
 			TNT1 A 0 A_JumpIfInventory("ExcavatorUnloaded",1,"FlashAirKickingSawUnloaded")
 			EX_C FGHI 1 
 			EX_C I 8
 			EX_C IHGF 1
-			Stop
+			Goto Ready3
 		FlashAirKickingSawUnloaded:
 			EX_D FGHI 1 
 			EX_D I 8
 			EX_D IHGF 1
-			Stop
+			Goto Ready3
 			
 		FlashSlideKicking:
 			TNT1 A 0 A_JumpIfInventory ("EquippedObject", 1, "FlashSlideKickingObject")
@@ -756,20 +758,20 @@ ACTOR PB_Excavator : PB_Weapon
 			TNT1 A 0 A_JumpIfInventory("ExcavatorUnloaded",1,"FlashSlideKickingBolaUnloaded")
 			EX_A FGHI 1 
 			EX_A I 21
-			Stop
+			Goto Ready3
 		FlashSlideKickingBolaUnloaded:
 			EX_B FGHI 1 
 			EX_B I 21
-			Stop
+			Goto Ready3
 		FlashSlideKickingSaw:
 			TNT1 A 0 A_JumpIfInventory("ExcavatorUnloaded",1,"FlashSlideKickingSawUnloaded")
 			EX_C FGHI 1 
 			EX_C I 21
-			Stop
+			Goto Ready3
 		FlashSlideKickingSawUnloaded:
 			EX_D FGHI 1 
 			EX_D I 21
-			Stop
+			Goto Ready3
 			
 		FlashSlideKickingStop:
 			TNT1 A 0 A_JumpIfInventory ("EquippedObject", 1, "FlashSlideKickingStopObject")
@@ -777,17 +779,17 @@ ACTOR PB_Excavator : PB_Weapon
 		FlashSlideKickingStopBola:
 			TNT1 A 0 A_JumpIfInventory("ExcavatorUnloaded",1,"FlashSlideKickingStopBolaUnloaded")
 			EX_A IIIIHGF 1 
-			Stop
+			Goto Ready3
 		FlashSlideKickingStopBolaUnloaded:
 			EX_B IIIIHGF 1 
-			Stop
+			Goto Ready3
 		FlashSlideKickingStopSaw:
 			TNT1 A 0 A_JumpIfInventory("ExcavatorUnloaded",1,"FlashSlideKickingStopSawUnloaded")
 			EX_C IIIIHGF 1  
-			Stop
+			Goto Ready3
 		FlashSlideKickingStopSawUnloaded:
 			EX_D IIIIHGF 1 
-			Stop
+			Goto Ready3
 
 		FlashPunching:
 			TNT1 A 0 A_JumpIfInventory ("EquippedObject", 1, "FlashPunchingObject")
