@@ -471,8 +471,7 @@ class PB_MP40 : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("DualWieldingMP40", 1, "ReloadDualWield");
 			TNT1 A 0 A_JumpIfInventory("MP40Ammo",32,"Ready3");
 			TNT1 A 0 A_JumpIfInventory("PistolBullets",1,2);
-			TNT1 A 0 A_PlaySoundEx("weapons/empty", "Weapon");
-			Goto Ready3;
+			Goto NoAmmo;
 			TNT1 A 0 {
 				A_ZoomFactor(1.0);
 				A_SetCrosshair(5);
@@ -544,7 +543,7 @@ class PB_MP40 : PB_WeaponBase
 		InsertBullets:
 			TNT1 A 0 A_JumpIfInventory("MP40Ammo",32,"Ready3");
 			TNT1 A 0 A_JumpIfInventory("PistolBullets",1,1);
-			Goto Ready3;
+			Goto NoAmmo;
 			TNT1 A 0 {
 				A_Giveinventory("MP40Ammo",1);
 				A_Takeinventory("PistolBullets",1);
@@ -589,8 +588,7 @@ class PB_MP40 : PB_WeaponBase
 				return ResolveState(null);
 			}
 			TNT1 A 0 A_JumpIfInventory("PistolBullets",1,2);
-			TNT1 A 0 A_PlaySoundEx("weapons/empty", "Auto");
-			Goto Ready3;
+			Goto NoAmmo;
 			TNT1 A 0 {
 				A_ZoomFactor(1.0);
 				A_SetCrosshair(5);
@@ -758,7 +756,7 @@ class PB_MP40 : PB_WeaponBase
 		InsertBullets_Left:
 			TNT1 A 0 A_JumpIfInventory("LeftMP40Ammo",32,"FinishInsertBullets");
 			TNT1 A 0 A_JumpIfInventory("PistolBullets",1,1);
-			Goto FinishInsertBullets;
+			Goto NoAmmo;
 			TNT1 A 0 {
 				A_Giveinventory("LeftMP40Ammo",1);
 				A_Takeinventory("PistolBullets",1);

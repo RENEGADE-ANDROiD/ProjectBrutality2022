@@ -68,11 +68,22 @@ class PB_XM21 : PB_WeaponBase
 	    TNT1 A 0 PB_HandleCrosshair(42);
 	    TNT1 A 0;
 		XM21ReadyToFire:
+		TNT1 A 0 A_JumpIfInventory("XM21Ammo", 1, "XM21ReadyToFireArmed");
+		Goto XM21ReadyEmpty;
+		XM21ReadyToFireArmed:
 		X21G A 1 {
 		    if (CountInv("DMRBarrelHeat") >= 60) {
 					A_Gunflash("XM21BarrelSmoke");
 				}
 			return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		}
+	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+	    TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility",1,"ChangeRounds");
+	    TNT1 A 0;
+	    Loop;
+		XM21ReadyEmpty:
+		X21G A 1 {
+			return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 		}
 	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 	    TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility",1,"ChangeRounds");
@@ -181,8 +192,7 @@ class PB_XM21 : PB_WeaponBase
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
 		TNT1 A 0 A_JumpIfInventory("XM21HasBallistics",1,"BallisticFire");
-		TNT1 A 0 A_JumpIfInventory("XM21Ammo",1,2);
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("XM21Ammo", 1, "NewClip");
         TNT1 AA 0;
 		X21G A 0 {
 		     A_AlertMonsters();
@@ -230,8 +240,7 @@ class PB_XM21 : PB_WeaponBase
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
 		TNT1 A 0 A_JumpIfInventory("XM21SniperAim",1, "BallisticFire2");
-		TNT1 A 0 A_JumpIfInventory("XM21Ammo",2,2);
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("XM21Ammo", 2, "NewClip");
         TNT1 AA 0;
 		X21G A 0 {
 		     A_AlertMonsters();
@@ -271,8 +280,7 @@ class PB_XM21 : PB_WeaponBase
 			else { SetPlayerProperty(0,0,0); SetPlayerProperty(0,0,PROP_TOTALLYFROZEN); }
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
-		TNT1 A 0 A_JumpIfInventory("XM21Ammo",1,2);
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("XM21Ammo", 1, "NewClip");
 		X21G A 0 {
 		     A_AlertMonsters();
 			 }
@@ -319,8 +327,7 @@ class PB_XM21 : PB_WeaponBase
 			else { SetPlayerProperty(0,0,0); SetPlayerProperty(0,0,PROP_TOTALLYFROZEN); }
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
-		TNT1 A 0 A_JumpIfInventory("XM21Ammo",2,2);
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("XM21Ammo", 2, "NewClip");
 		X21G A 0 {
 		     A_AlertMonsters();
 		     }
@@ -527,8 +534,12 @@ class PB_XM21 : PB_WeaponBase
         Goto FinishReload2;
 
 		FinishReloading:
-		"X21G" A 0;
-		"X21G" A 0 A_Refire;
+		TNT1 A 0
+		{
+			A_TakeInventory("Reloading", 1);
+			A_PlaySound("weapons/empty", CHAN_AUTO);
+		}
+		TNT1 A 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
 		Goto Ready3;
 
 		FinishReload2:
@@ -586,7 +597,7 @@ class PB_XM21 : PB_WeaponBase
 
 		NoAmmo2:
 	    "X21G" A 0;
-		"X21G" A 5 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+		"X21G" A 8 A_WeaponReady(WRF_ALLOWRELOAD | WRF_NOFIRE | WRF_NOSWITCH);
 		"X21G" A 0 A_JumpIfInventory("Reloading",1,"Reload");
 		"X21G" A 0 A_JumpIfInventory("TurboReload",1,"TurboReload");
 		"X21G" A 0 A_JumpIfInventory("NewClip",1,"Reload");

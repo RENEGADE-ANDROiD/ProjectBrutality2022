@@ -121,6 +121,23 @@ class PB_RocketLauncher : PB_WeaponBase
 				A_TakeInventory("RocketLauncher_LockSound");
 			}
 		ReadyToFire:
+			TNT1 A 0 A_JumpIfInventory("RocketRounds", 1, "ReadyToFireArmed");
+		ReadyToFireEmpty:
+			RL03 E 1 {
+				A_Overlay(-16,"LaserOverlay");
+				if (PB_GetCurrentRocketMode() == "Standard") {A_SetWeaponSprite("RL03");}
+				if (PB_GetCurrentRocketMode() == "Homing") {A_SetWeaponSprite("RL09");}
+				if (PB_GetCurrentRocketMode() == "Laser") {
+					A_SetWeaponSprite("RL10");
+					A_SpawnLaserPuff(0,0,"GuidedLaser");
+				}
+				if (PB_GetCurrentRocketMode() == "Standard" && CountInv("RocketLauncherUnloaded") == 1) {A_SetWeaponSprite("RL11");}
+				if (PB_GetCurrentRocketMode() == "Homing" && CountInv("RocketLauncherUnloaded") == 1) {A_SetWeaponSprite("RL12");}
+				if (PB_GetCurrentRocketMode() == "Laser" && CountInv("RocketLauncherUnloaded") == 1) {A_SetWeaponSprite("RL13");}
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+			}
+			Loop;
+		ReadyToFireArmed:
 			RL03 E 1 {
 				A_Overlay(-16,"LaserOverlay");
 				if (PB_GetCurrentRocketMode() == "Standard") {A_SetWeaponSprite("RL03");}
@@ -301,8 +318,7 @@ class PB_RocketLauncher : PB_WeaponBase
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 			TNT1 A 0 PB_TryAutoFatalityOnFire();
-			TNT1 A 0 A_JumpIfInventory("RocketRounds",1,1);
-			Goto Reload;
+			TNT1 A 0 PB_BailIfCannotFire("RocketRounds", 1, "RocketAmmo");
 		LockOn_Check:
 			TNT1 A 0 A_JumpIf(PB_GetCurrentRocketMode() == "Homing", "CantFire");
 		Firing_Single:
@@ -796,8 +812,7 @@ class PB_RocketLauncher : PB_WeaponBase
 				A_SetCrosshair(5);
 				A_TakeInventory("PB_LockScreenTilt",1);
 			}
-			TNT1 A 0 A_JumpIfInventory("RocketRounds",1,1);
-			Goto Reload;
+			TNT1 A 0 PB_BailIfCannotFire("RocketRounds", 1, "RocketAmmo");
 		Scope_LockOn_Check:
 			TNT1 A 0 A_JumpIf(CountInv("RocketLauncher_LockOnTargets") > 0, "Scope_Firing_Single");
 			Goto Ready2;
@@ -1201,7 +1216,7 @@ class PB_RocketLauncher : PB_WeaponBase
 		Reload:
         TNT1 A 0 A_JumpIfInventory("RocketRounds",6,"Ready3");
         TNT1 A 0 A_JumpIfInventory("RocketAmmo",1,1);
-        Goto Ready3;
+        Goto NoAmmo;
 		TNT1 A 0 {
 			A_ZoomFactor(1.0);
 			A_SetCrosshair(5);

@@ -73,7 +73,13 @@ class Hell_rifle : PB_WeaponBase
 		ReadyToFire1:
 			TNT1 A 0 A_PlaySound("DTCHHUM", 1, 1,1);
 			TNT1 A 0 A_JumpIfInventory("FireModeAcidGun",1,"ReadyToFire2");
+			TNT1 A 0 A_JumpIfInventory("HellAmmo", 1, "ReadyToFire1Armed");
+			Goto ReadyToFire1Empty;
+		ReadyToFire1Armed:
 			"D5T0" "ABCDEFGHIJKLMAABMBAAABAA" 3 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			Goto ReadyToFire1+2;
+		ReadyToFire1Empty:
+			"D5T0" "ABCDEFGHIJKLMAABMBAAABAA" 3 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 			Goto ReadyToFire1+2;
 		
 		SelectAnimation2:
@@ -81,7 +87,13 @@ class Hell_rifle : PB_WeaponBase
 			"D2T1" "ABCDE" 1;
 		ReadyToFire2:
 			TNT1 A 0 A_PlaySound("DTCHGUM", 1, 1,1);
+			TNT1 A 0 A_JumpIfInventory("HellAmmo", 1, "ReadyToFire2Armed");
+			Goto ReadyToFire2Empty;
+		ReadyToFire2Armed:
 			"D5T1" "ABCDEFGHIJKLMAABMBAAABAA" 3 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			Goto ReadyToFire2+1;
+		ReadyToFire2Empty:
+			"D5T1" "ABCDEFGHIJKLMAABMBAAABAA" 3 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 			Goto ReadyToFire2+1;
 		
 		WeaponSpecial:
@@ -144,8 +156,7 @@ class Hell_rifle : PB_WeaponBase
 				A_TakeInventory("PB_LockScreenTilt",1);
 			}
 			TNT1 A 0 A_JumpIfInventory("FireModeAcidGun",1,"Fire2");
-			TNT1 A 0 A_JumpIfInventory("HellAmmo",1,1);
-			Goto Reload;
+			TNT1 A 0 PB_BailIfCannotFire("HellAmmo", 1, "Demonpower");
 			D3T0 A 1 BRIGHT {
 				A_Giveinventory("HasIncendiaryWeapon",1);
 				A_FireCustomMissile("Hellbullet", 0, 0, 0, 0, 0, random(-1,1));
@@ -172,8 +183,7 @@ class Hell_rifle : PB_WeaponBase
 			Goto ReadyToFire1;
 			
 		Fire2:
-			TNT1 A 0 A_JumpIfInventory("HellAmmo",1,1);
-			Goto Reload;
+			TNT1 A 0 PB_BailIfCannotFire("HellAmmo", 1, "Demonpower");
 			D3T1 A 1 BRIGHT {
 				A_Takeinventory("HasIncendiaryWeapon",1);
 				A_FireCustomMissile("Hellbullet2", 0, 0, 0, 0, 0, random(-1,1));
@@ -276,10 +286,7 @@ class Hell_rifle : PB_WeaponBase
 				A_TakeInventory("PB_LockScreenTilt",1);
 			}
 			TNT1 A 0 A_JumpIfInventory("FireModeAcidGun",1,"AltFire2");
-			TNT1 A 0 A_JumpIfInventory("HellAmmo",1,1);
-			Goto Reload;
-			TNT1 A 0 A_JumpIfInventory("HellAmmo",20,1);
-			Goto Reload;
+			TNT1 A 0 PB_BailIfCannotFire("HellAmmo", 20, "Demonpower");
 			TNT1 A 0 A_PlaySound("HRCharge");
 			D5T0 ABCDABCDABCDABCD 1 BRIGHT {
 				A_WeaponOffset(random(-1,1),random(32,34));
@@ -303,7 +310,7 @@ class Hell_rifle : PB_WeaponBase
 			"D4T0" A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 			TNT1 A 0 A_JumpIfInventory("HellAmmo",60,"Ready3");
 			TNT1 A 0 A_JumpIfInventory("Demonpower",1,1);
-			Goto Ready3;
+			Goto NoAmmo;
 			TNT1 A 0 A_PlaySoundEx("Ironsights", "Auto");
 			"D4T0" "ABCDEFGHIJK" 1;
 			TNT1 A 0 A_PlaySoundEx("weapons/riflemagslap", "Auto");
@@ -331,7 +338,7 @@ class Hell_rifle : PB_WeaponBase
 		InsertBullets:
 			TNT1 A 0 A_JumpIfInventory("HellAmmo",60,"Ready3");
 			TNT1 A 0 A_JumpIfInventory("Demonpower",1,1);
-			Goto Ready3;
+			Goto NoAmmo;
 			TNT1 A 0 {
 				A_Giveinventory("HellAmmo",1);
 				A_Takeinventory("Demonpower",1);
@@ -342,7 +349,7 @@ class Hell_rifle : PB_WeaponBase
 			"D6T0" A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 			TNT1 A 0 A_JumpIfInventory("HellAmmo",60,"Ready3");
 			TNT1 A 0 A_JumpIfInventory("Demonpower",1,1);
-			Goto Ready3;
+			Goto NoAmmo;
 			TNT1 A 0 A_PlaySoundEx("Ironsights", "Auto");
 			"D6T0" "ABCDEFGHIJK" 1;
 			TNT1 A 0 A_PlaySoundEx("weapons/riflemagslap", "Auto");
@@ -370,8 +377,7 @@ class Hell_rifle : PB_WeaponBase
 			Goto InsertBullets;
 		
 		Altfire2:
-			TNT1 A 0 A_JumpIfInventory("HellAmmo",5,1);
-			Goto Reload;
+			TNT1 A 0 PB_BailIfCannotFire("HellAmmo", 5, "Demonpower");
 		CausticCharging:
 			TNT1 A 0 A_PlaySound("CNTCTBM", 6);
 			TNT1 A 0 A_PlaySound("Weapons/StachanovCharge",5,1.0,1);

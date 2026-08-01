@@ -121,6 +121,15 @@ class PB_Carbine : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyDualWield");
 		ReadyToFire:
 			TNT1 A 0 A_JumpIfInventory("RifleWasEmpty",1,"LoadChamber");
+			TNT1 A 0 A_JumpIfInventory("XRifleAmmo", 1, "ReadyToFireArmed");
+		ReadyToFireEmpty:
+			4AFG A 1 {
+				A_SetInventory("CarbineBurstCounter",0);
+				PB_CoolDownBarrel(0, 0, 5);
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+			}
+			Loop;
+		ReadyToFireArmed:
 			4AFG A 1 {
 				A_SetInventory("CarbineBurstCounter",0);
 				PB_CoolDownBarrel(0, 0, 5);
@@ -610,8 +619,7 @@ class PB_Carbine : PB_WeaponBase
 			A_SetRoll(0);
 			}
     
-        TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,1);
-        Goto Reload;
+        TNT1 A 0 PB_BailIfCannotFire("XRifleAmmo", 1, "NewClip");
 		TNT1 A 0 A_JumpIfInventory("Zoomed",1,"Fire2");
 		
 		"4AFF" A 1 {
@@ -680,8 +688,7 @@ class PB_Carbine : PB_WeaponBase
 			A_WeaponOffset(0,32);
 			A_SetCrosshair(5);
 			}
-        TNT1 A 0 A_JumpIfInventory("XRifleAmmo",1,1);
-        Goto Reload;
+        TNT1 A 0 PB_BailIfCannotFire("XRifleAmmo", 1, "NewClip");
 		"4A2F" A 0 A_Jump(256,"Fire2_Flash1","Fire2_Flash2");
 		Fire2_Flash1:
 		"4A2F" A 1 BRIGHT {
@@ -886,7 +893,8 @@ class PB_Carbine : PB_WeaponBase
 		Goto Ready3;
 		
 	NoAmmo:
-	"4AFG" A 1 {
+	"4AFG" A 0 {
+			A_TakeInventory("Reloading", 1);
 			A_ZoomFactor(1.0);
 			A_PlaySoundEx("weapons/empty", "Auto");
 			A_Takeinventory("Zoomed",1);
@@ -894,6 +902,7 @@ class PB_Carbine : PB_WeaponBase
 			A_ClearOverlays(6,7);
 			A_ClearOverlays(20,21);
 		}
+	"4AFG" A 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
 	Goto Ready3;
 
 	BarrelSmoke3:
@@ -927,7 +936,7 @@ class PB_Carbine : PB_WeaponBase
 			return ResolveState(null);
 		}
         TNT1 A 0 A_JumpIfInventory("NewClip",1,1);
-        Goto ReadyDualWield;
+        Goto NoAmmo;
 		TNT1 A 0 {
 			A_Giveinventory("PB_LockScreenTilt",1);
 			A_SetCrosshair(5);
@@ -1049,7 +1058,7 @@ class PB_Carbine : PB_WeaponBase
 	InsertBullets:
 		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",40,"Ready3");
 		TNT1 A 0 A_JumpIfInventory("NewClip",1,1);
-		Goto Ready3;
+		Goto NoAmmo;
 		TNT1 A 0 {
 			A_Giveinventory("XRifleAmmo",1);
 			A_Takeinventory("NewClip",1);
@@ -1059,7 +1068,7 @@ class PB_Carbine : PB_WeaponBase
 	InsertBullets2:
 		TNT1 A 0 A_JumpIfInventory("XRifleAmmo",41,"Ready3");
 		TNT1 A 0 A_JumpIfInventory("NewClip",1,1);
-		Goto Ready3;
+		Goto NoAmmo;
 		TNT1 A 0 {
 			A_Giveinventory("XRifleAmmo",1);
 			A_Takeinventory("NewClip",1);

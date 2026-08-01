@@ -176,11 +176,10 @@ ACTOR Rainmaker : PB_Weapon //karnageweapon
 		TNT1 A 0 A_Jumpifnoammo("Noammo")
 		goto ready
 	Noammo:
-		TNT1 A 0 A_Jumpifnoammo("noammonoshell")
-		TNT1 A 0 A_Print("---zero ammo for reload---",1)
-		TNT1 A 0 A_Playsound("DRYFIRE")
+		TNT1 A 0 A_TakeInventory("Reloading", 1)
+		TNT1 A 0 A_PlaySound("weapons/empty")
 		TNT1 A 0 A_Zoomfactor(1)
-		RAIN A 15 offset(2,34)
+		RAIN A 8 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
 		Goto ready
 	stopreload:
 		TNT1 A 0 A_Playsound("Rainmaker_Close",7)
@@ -275,8 +274,8 @@ ACTOR Rainmaker : PB_Weapon //karnageweapon
 		TNT1 A 0 { return PB_FireExecuteCheck(); }
 		// AutoShotgun-style flak blast: costs 2 magazine shells (Chunk1–4 + FLAKFIRE).
 		TNT1 A 0 A_JumpIfInventory("Rainmakerclip", 2, 1)
-		Goto Reload
-		TNT1 A 0 A_JumpIfNoAmmo("Reload")
+		TNT1 A 0 A_JumpIfInventory("PB_Shell", 1, "Reload")
+		Goto Noammo
 		RMKF F 1 Offset(7,39) Bright {
 			A_FireCustomMissile("Chunk2",random(-2,2),0,18,13);
 			A_FireCustomMissile("Chunk1",random(-2,2),0,15,-18);

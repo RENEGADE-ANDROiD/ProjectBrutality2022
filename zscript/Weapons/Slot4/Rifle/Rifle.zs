@@ -208,6 +208,9 @@ class Rifle : PB_WeaponBase
 				if (PressingFire() && CountInv("RifleAmmo") > 0){
 						return ResolveState("Fire");
 				}
+				if (CountInv("RifleAmmo") < 1) {
+					return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+				}
 				return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 			}
 			Loop;
@@ -1530,9 +1533,7 @@ class Rifle : PB_WeaponBase
 		"####" "#" 0 A_JumpIfInventory("DualWieldingDMRs", 1, "FireDualWield");
 		"####" "#" 0 A_JumpIfInventory("Zoomed",1,"Fire2");
 		"####" "#" 0 A_JumpIfInventory("HDMRSniperMode",1,"Fire_Sniper");
-        "####" "#" 0 A_JumpIfInventory("RifleAmmo",1,2);
-		"####" "#" 0 A_PlaySoundEx("weapons/empty", "Auto");
-        Goto Reload;
+        "####" "#" 0 PB_BailIfCannotFire("RifleAmmo", 1, "NewClip");
 		"H0F1" "ABCDE" 0;
 		
 		R0F8 A 1 BRIGHT {
@@ -1599,8 +1600,8 @@ class Rifle : PB_WeaponBase
 	
 		Fire_Sniper:
         "####" "#" 0 A_JumpIfInventory("RifleAmmo",2,2);
-		"####" "#" 0 A_PlaySoundEx("weapons/empty", "Auto");
-        Goto Reload;
+		"####" "#" 0 A_JumpIfInventory("NewClip",1,"Reload");
+		Goto NoAmmo;
 		H4F8 A 1 BRIGHT {
 			A_AlertMonsters();
 			A_Overlay(-40, "BiggestMuzzleFlash");
@@ -1625,8 +1626,8 @@ class Rifle : PB_WeaponBase
 		Fire2_Sniper:
 		TNT1 A 0 A_JumpIfInventory("SniperFiringCooldown", 1, "Fire2_Cooldown");
         TNT1 A 0 A_JumpIfInventory("RifleAmmo",2,2);
-		TNT1 A 0 A_PlaySoundEx("weapons/empty", "Auto");
-        Goto Reload;
+		"####" "#" 0 A_JumpIfInventory("NewClip",1,"Reload");
+		Goto NoAmmo;
 		H4F6 G 1 BRIGHT {
 			A_AlertMonsters();
 			A_Overlay(-41, "SniperFireCooldown");
@@ -1858,7 +1859,12 @@ class Rifle : PB_WeaponBase
         Goto Ready3;
 	
 		NoAmmo:
-		"####" "#" 1;
+		TNT1 A 0
+		{
+			A_TakeInventory("Reloading", 1);
+			A_PlaySoundEx("weapons/empty", "Auto");
+		}
+		"####" "#" 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
 		Goto Ready3;
 		
 	
