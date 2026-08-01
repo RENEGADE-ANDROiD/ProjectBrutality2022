@@ -289,7 +289,12 @@ class PlayerPawnBase : PlayerPawn
 		Player.OnGround = Pos.Z <= FloorZ || bONMOBJ || bMBFBOUNCER || (Player.Cheats & CF_NOCLIP2);
 		StrafeRunning = cmd.forwardmove && cmd.sidemove;
 		ZMoveFactor = ZMScale();
-		
+
+		if ((player.cmd.buttons & BT_USE) && !(player.oldbuttons & BT_USE))
+		{
+			if (!PB_LiveMeatGrab.TryArm(self))
+				PB_DoThingFlourish.TryPlay(self);
+		}
 		
 		Super.PlayerThink();
 		
@@ -303,6 +308,8 @@ class PlayerPawnBase : PlayerPawn
 		if (PB_KatanaShieldFilter.SuppressPlayerSplash(self, inflictor, source, damage, mod, flags))
 			return 0;
 		int ret = Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+		if (ret > 0 && ret * 4 >= GetMaxHealth())
+			PB_OuchFlourish.TryPlay(self);
 		if(mod == 'Explosive' || mod == 'Rocket' || (inflictor && inflictor.bMISSILE))
 		{
 			StopWSlide();

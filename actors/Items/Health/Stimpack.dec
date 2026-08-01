@@ -1,4 +1,4 @@
-ACTOR Stimpack2 : Health
+ACTOR Stimpack2 : PB_CelebratoryHealth
 {
 	Game Doom
 	SpawnID 7050
@@ -15,7 +15,7 @@ ACTOR Stimpack2 : Health
 	}
 }
 
-ACTOR StimpackWhite : Health
+ACTOR StimpackWhite : PB_CelebratoryHealth
 {
 	Game Doom
 	SpawnID 7050

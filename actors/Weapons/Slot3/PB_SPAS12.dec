@@ -1,0 +1,17 @@
+// PB_SPAS12 support — weapon states in zscript/Weapons/Slot3/SPAS12/PB_SPAS12.zs
+// Brutal Doom Plus SPAS-12 fold + PB Riot Sweep mode.
+
+ACTOR PB_SPAS12Mag : Ammo
+{
+	+INVENTORY.IGNORESKILL
+	Inventory.Amount 0
+	Inventory.MaxAmount 9
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 9
+	Inventory.Icon "M4SHA0"
+}
+
+Actor Select_SPAS12_Pump : Inventory { Inventory.MaxAmount 1 }
+Actor Select_SPAS12_Riot : Inventory { Inventory.MaxAmount 1 }
+Actor SPAS12_RiotMode : Inventory { Inventory.MaxAmount 1 }
+Actor RespectSPAS12 : Inventory { Inventory.MaxAmount 1 }

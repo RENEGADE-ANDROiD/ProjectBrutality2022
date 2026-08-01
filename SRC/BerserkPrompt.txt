@@ -3,5 +3,5 @@
 
 script "BerserkPrompt" (void)
 {
-	Print(s:"Press Reload (",k:"+reload", s: ") to alternate smash/execution modes");
+	Print(l:"PB_BERSERK_MODE_HINT");
 }

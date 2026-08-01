@@ -1,0 +1,107 @@
+// First-person RKON rock-on on body armor and celebratory sphere pickups.
+// Engine extend-class is unavailable in this TU (UZDoom 4.14.x); call TryPlay from
+// known ZScript TryPickup overrides and PB_ArmorRockOnTrigger for DECORATE spheres.
+
+class PB_ArmorRockOnCooldown : Inventory
+{
+	int life;
+
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		-INVENTORY.INVBAR
+	}
+
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		if (++life >= PB_ArmorRockOn.DEBOUNCE_TICS)
+			Destroy();
+	}
+}
+
+// One-shot giver for DECORATE Pickup states: A_GiveInventory("PB_ArmorRockOnTrigger", 1)
+class PB_ArmorRockOnTrigger : CustomInventory
+{
+	Default
+	{
+		Inventory.MaxAmount 0;
+		+INVENTORY.ALWAYSPICKUP
+		+INVENTORY.AUTOACTIVATE
+		-COUNTITEM
+		-INVENTORY.INVBAR
+	}
+
+	override bool TryPickup(in out Actor toucher)
+	{
+		PB_ArmorRockOn.TryPlay(toucher);
+		GoAwayAndDie();
+		return true;
+	}
+}
+
+class PB_ArmorRockOn
+{
+	const DEBOUNCE_TICS = 15;
+
+	clearscope static bool IsCelebratorySphere(Actor item)
+	{
+		if (!item)
+			return false;
+
+		if (item is "PB2022_SoulspherePickup")
+			return true;
+		if (item is "PB2022_MegaspherePickup")
+			return true;
+
+		Name cn = item.GetClassName();
+		return cn == 'LifeSphere'
+			|| cn == 'EnergySphere'
+			|| cn == 'NewLifeSphere'
+			|| cn == 'UltraSphere'
+			|| cn == 'Soulsphere'
+			|| cn == 'Megasphere'
+			|| cn == 'PB2022_RedSoulSphere'
+			|| cn == 'PB2022_DarkMegaSphere'
+			|| cn == 'InvulnerabilitySphere_';
+	}
+
+	play static void TryPlay(Actor toucher)
+	{
+		let pp = PlayerPawn(toucher);
+		if (!pp || !pp.player)
+			return;
+		if (pp.CountInv("GoFatality") > 0 || pp.CountInv("DoGloryMelee") > 0)
+			return;
+		if (pp.CountInv("CameraRunner") > 0)
+			return;
+		if (pp.CountInv("PB_PDAHandActive") > 0)
+			return;
+		if (pp.CountInv("PB_ArmorRockOnCooldown") > 0)
+			return;
+
+		let weap = PB_WeaponBase(pp.player.ReadyWeapon);
+		if (!weap)
+			return;
+		State stShow = weap.FindState("ArmorRockOnShow");
+		if (!stShow)
+			return;
+
+		pp.GiveInventory("PB_ArmorRockOnCooldown", 1);
+		pp.player.SetPsprite(PSP_WEAPON, stShow);
+	}
+}
+
+// ZScript parent for DECORATE body armors that are not PBHP / colored-armor bases.
+class PB_BodyArmorPickup : BasicArmorPickup
+{
+	override bool TryPickup(in out Actor toucher)
+	{
+		bool ok = Super.TryPickup(toucher);
+		if (ok)
+			PB_ArmorRockOn.TryPlay(toucher);
+		return ok;
+	}
+}

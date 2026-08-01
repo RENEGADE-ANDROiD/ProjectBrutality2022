@@ -133,7 +133,7 @@ ACTOR CrueltyBonus10ArmorSpawner : SwitchableDecoration REPLACES CrueltyBonus10a
 	}
 }
 
-ACTOR CrueltyBonushealth_ : Health Replaces CrueltyBonushealth
+ACTOR CrueltyBonushealth_ : PB_CelebratoryHealth Replaces CrueltyBonushealth
 {
 	Game Doom
 	SpawnID 152

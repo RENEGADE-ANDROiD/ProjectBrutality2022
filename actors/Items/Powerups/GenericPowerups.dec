@@ -31,6 +31,7 @@ ACTOR InvulnerabilitySphere_  : PowerupGiver Replaces InvulnerabilitySphere
 		PINV AAABBBCCCDDD 2 Bright
 		Loop
 	Pickup:
+		TNT1 A 0 A_GiveInventory("PB_ArmorRockOnTrigger", 1)
         TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
 		Stop
 	}
@@ -103,6 +104,8 @@ ACTOR DemonStrengthRune : Custominventory//Berserl1
 	Pickup:
 		TNT1 A 0 A_GiveInventory("PowerStrength")
 		TNT1 A 0 HealThing(10, 0)
+		TNT1 A 0 A_GiveInventory("Hayberserk", 1)
+		TNT1 A 0 A_GiveInventory("SegundaOportunidadToken", 1)
         TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 20
 		TNT1 A 0 A_Print ("You got the Demon Strength Rune. RIP AND TEAR!")

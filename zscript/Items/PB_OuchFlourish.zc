@@ -1,0 +1,51 @@
+// First-person OUON ouch flourish when the player loses ≥25% max health in one hit.
+
+class PB_OuchFlourishCooldown : Inventory
+{
+	int life;
+
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		-INVENTORY.INVBAR
+	}
+
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		if (++life >= PB_OuchFlourish.DEBOUNCE_TICS)
+			Destroy();
+	}
+}
+
+class PB_OuchFlourish
+{
+	const DEBOUNCE_TICS = 35;
+
+	play static void TryPlay(Actor victim)
+	{
+		let pp = PlayerPawn(victim);
+		if (!pp || !pp.player)
+			return;
+		if (pp.CountInv("GoFatality") > 0 || pp.CountInv("DoGloryMelee") > 0)
+			return;
+		if (pp.CountInv("CameraRunner") > 0)
+			return;
+		if (pp.CountInv("PB_PDAHandActive") > 0)
+			return;
+		if (pp.CountInv("PB_OuchFlourishCooldown") > 0)
+			return;
+
+		let weap = PB_WeaponBase(pp.player.ReadyWeapon);
+		if (!weap)
+			return;
+		State stShow = weap.FindState("OuchFlourishShow");
+		if (!stShow)
+			return;
+
+		pp.GiveInventory("PB_OuchFlourishCooldown", 1);
+		pp.player.SetPsprite(PSP_WEAPON, stShow);
+	}
+}

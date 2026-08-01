@@ -1,6 +1,6 @@
 class GibbedZombieMan : GibbedMarine
 {
- 	States
+	States
 	{
 	Spawn:
 		POSS U -1;
@@ -9,7 +9,7 @@ class GibbedZombieMan : GibbedMarine
 }
 class GibbedShotgunGuy : GibbedMarine
 {
- 	States
+	States
 	{
 	Spawn:
 		SPOS U -1;
@@ -18,7 +18,7 @@ class GibbedShotgunGuy : GibbedMarine
 }
 class GibbedDoomImp : GibbedMarine
 {
- 	States
+	States
 	{
 	Spawn:
 		TROO U -1;
@@ -27,14 +27,14 @@ class GibbedDoomImp : GibbedMarine
 }
 class GibbedChaingunGuy : GibbedMarine
 {
- 	States
+	States
 	{
 	Spawn:
 		CPOS T -1;
 		Stop;
 	}
 }
-			
+
 class PGGiblet : Actor
 {
 	int rolldir;
@@ -62,13 +62,13 @@ class PGGiblet : Actor
 		Loop;
 	}
 
-	action void rollgibs()
+	void rollgibs()
 	{
-		invoker.roll += invoker.rolldir;
-		if (invoker.pos.z == invoker.floorz)
+		roll += rolldir;
+		if (pos.z == floorz)
 		{
-			invoker.A_SpawnDebris("PGbloodDebris");
-			invoker.destroy();
+			A_SpawnDebris("PGbloodDebris");
+			destroy();
 		}
 	}
 }
@@ -158,7 +158,6 @@ class PGGibChunk : PGGiblet
 		VGCH AABBCCDD 1 rollgibs();
 		Loop;
 	}
-
 }
 
 class PGblood : Actor
@@ -179,11 +178,11 @@ class PGblood : Actor
 		VBLO ABCD 2 A_JumpIf(pos.z <= floorz, "Death");
 		Loop;
 	Death:
-		VBLS A 0 
+		VBLS A 0
 		{
 			for (int i = 0; i < 360; i += 30)
 			{
-				if (GetZAt(24, 0, i) != floorz)	destroy();
+				if (GetZAt(24, 0, i) != floorz) destroy();
 			}
 			vel = (0,0,0);
 			bNOINTERACTION = true;
@@ -233,22 +232,21 @@ class PGProjectile : Actor
 {
 	static const Name gibsprites[] = { "VGTO", "VGBO", "VGAR", "VGHE" };
 	int rolldir;
-	override void PostBeginPlay() 
-    {
+	override void PostBeginPlay()
+	{
 		Super.PostBeginPlay();
 		rolldir = randompick(-25,-15,15,25);
 		sprite = GetSpriteIndex(gibsprites[random(0, gibsprites.Size() - 1)]);
 		frame = random(0,7);
-		A_StartSound("PossessedGibs/throw", CHAN_WEAPON, CHANF_OVERLAP);
-    }
-	
+	}
+
 	Default
 	{
 		Radius 6;
 		Height 8;
-		Speed 17;
-		FastSpeed 26;
-		Damage 2;
+		Speed 20;
+		FastSpeed 30;
+		Damage 3;
 		Projectile;
 		Species "PossessedGibs";
 		+THRUSPECIES;
@@ -275,51 +273,5 @@ class PGProjectile : Actor
 		VBSH C 4 A_SpawnDebris("PGbloodDebris");
 		VBSH D 4;
 		Stop;
-	}
-}
-
-class PGTendrilLashSeg : Actor
-{
-	Default
-	{
-		+NOGRAVITY
-		+NOBLOCKMAP
-		+DROPOFF
-		+NOTELEPORT
-		+NOTONAUTOMAP
-		+ROLLSPRITE
-		+ROLLCENTER
-		RenderStyle "Add";
-		Alpha 0.6;
-	}
-	override void PostBeginPlay()
-	{
-		Super.PostBeginPlay();
-		sprite = GetSpriteIndex(GibSpritePick(random(0, 3)));
-		frame = random(0, 5);
-		roll = frandom(0, 360);
-		double sx = frandom(0.28, 0.5);
-		scale = (random(0, 1) ? sx : -sx, frandom(1.15, 2.1));
-	}
-
-	static Name GibSpritePick(int i)
-	{
-		switch (i & 3)
-		{
-		case 0: return 'VGTO';
-		case 1: return 'VGBO';
-		case 2: return 'VGAR';
-		default: return 'VGHE';
-		}
-	}
-	States
-	{
-	Spawn:
-		#### # 2
-		{
-			roll += 22;
-			A_FadeOut(0.1);
-		}
-		Loop;
 	}
 }

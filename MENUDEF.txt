@@ -392,15 +392,13 @@ OptionMenu "PB2022_CombatMenu"
 	StaticText " "
 	StaticText "======== Glory Kills ========", gold
 	StaticText " "
-	Option "Glory Kills", "be_ExecutionsON", YesNo
-	StaticText " "
 	Submenu "Glory Kill Options", "Glorykills"
 	StaticText "Pinatas, Stagger, HUD Fuel, Shoulder Cannon.", teal
 	StaticText " "
 	StaticText "======== Finishers ========", gold
 	StaticText " "
 	Option "Auto-Fatality On Primary Fire", "pb_auto_fatality_fire", YesNo
-	StaticText "Requires Glory Kills On For Finisher Attempt.", orange
+	StaticText "Uses Glory Kill stagger / finisher rules when enabled.", orange
 	StaticText " "
 	Slider "Auto-Fatality Distance", "pb_auto_fatality_dist", 64, 400, 4
 	StaticText "pb_auto_fatality_dist (map units).", teal
@@ -631,8 +629,8 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText " "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
 	StaticText " "
-	Command "$OPTMNU_PB2022_PRESET_FULL", "set pb_classicmonsters 0; set pb_disablenewenemies 0; set be_ExecutionsON 1; set pb_experimental 1; set pb_auto_fatality_fire 1; set pb_enhanced_brutality_2022 1; set pb_ks_enable 1; set pb_rocketjump 1; set pb_plasma_wallclimb 1; set pb_hazardmovement 1; set pb_weaponhud_enable 1; set pb_weaponmodehud_enable 1"
-	Command "$OPTMNU_PB2022_PRESET_VANILLA", "set pb_classicmonsters 1; set pb_disablenewenemies 1; set be_ExecutionsON 0; set pb_enhanced_brutality_2022 0"
+	Command "$OPTMNU_PB2022_PRESET_FULL", "set pb_classicmonsters 0; set pb_disablenewenemies 0; set pb_experimental 1; set pb_auto_fatality_fire 1; set pb_enhanced_brutality_2022 1; set pb_ks_enable 1; set pb_rocketjump 1; set pb_plasma_wallclimb 1; set pb_hazardmovement 1; set pb_weaponhud_enable 1; set pb_weaponmodehud_enable 1"
+	Command "$OPTMNU_PB2022_PRESET_VANILLA", "set pb_classicmonsters 1; set pb_disablenewenemies 1; set pb_enhanced_brutality_2022 0"
 	Command "$OPTMNU_PB2022_PRESET_PERF", "set pb_enhanced_brutality_2022 0; set pb_ks_enable 0; set pb_wheelbackgroundblur 0; set py_weaponwheel_freeze 0; set pb_burnfx_throttle 1; set PB_HatExtravaganza 0; set pb_accudeath 0; set pb_dasheffect 0"
 	StaticText "Re-Open Menus After Presets To See Toggles.", orange
 	StaticText " "
@@ -905,6 +903,8 @@ OptionMenu "WeaponSpawns"
 	Option "Spawn Normal Rifle (Pro-Surv)", "pb_NoPB_NormalRifleWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn XM-21 Sniper", "pb_NoPB_XM21Weapon", "SpawnOnOff"
+	Option "Spawn Anti-Tank Rifle", "pb_NoPB_AntiTankRifleWeapon", "SpawnOnOff"
+	Option "Spawn SPAS-12", "pb_NoPB_SPAS12Weapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Fusil", "pb_NoPB_FusilWeapon", "SpawnOnOff"
 	StaticText " "
@@ -1905,7 +1905,6 @@ OptionValue "SGLGrenadeImpact"
 OptionMenu "Glorykills"
 {
 	Title "Glory Kill Options"
-	Option "Glory Kills", "be_ExecutionsON", YesNo
 	Option "Holdable Crucible.", "be_holdablesaw", YesNo
 	Option "Protection During Glory Kill.", "be_Protection", YesNo
 	Option "Fear During Glory Kill.", "be_Fear", YesNo
@@ -1930,8 +1929,7 @@ OptionMenu "Glorykills"
 	Option "Ammo Bonus Drop.", "be_AmmoBonus", YesNo
 	Option "Glory Melee Ammo Bonus.", "be_GSAmmoBonus", YesNo
 	StaticText " "
-	Slider  "Collecting Health & Armor Radius.", "sv_bonusrange", 0, 200, 1
-	Slider  "Collecting Ammo & Grenade Radius.", "sv_ammorange", 0, 200, 1
+	StaticText "Ammo / pinata pull range is fixed (128).", teal
 	StaticText " "
 	Slider "Flame belch cooldown (sec)", "sv_Flamebelch_Cool", 10, 60, 1
 	Slider "Ice bomb cooldown (sec)", "sv_Icebomb_Cool", 10, 60, 1
@@ -2056,8 +2054,8 @@ OptionMenu "SimplerMonsterSettings"
 
 	StaticText "---- Realm667 monsters (Blot, Vulgar, Behemoth, Drone, Venor, ...) ----"
 	StaticText " ", teal
-	Command "Enable all Realm667 monsters",  "set NoBabyCaco 0; set NoBehemoth 0; set NoBlot 0; set NoBloodGhost 0; set NoBloodSkull 0; set NoDrone 0; set NoFusionCyberImp 0; set NoPossessedGibs 0; set NoSlayerKnight 0; set NoVenor 0; set NoVulgar 0; set pb_NoFrostBaron 0; set pb_NoCryocubus 0; set pb_NoFrostBrain 0; set pb_NoCryotron 0"
-	Command "Disable all Realm667 monsters", "set NoBabyCaco 1; set NoBehemoth 1; set NoBlot 1; set NoBloodGhost 1; set NoBloodSkull 1; set NoDrone 1; set NoFusionCyberImp 1; set NoPossessedGibs 1; set NoSlayerKnight 1; set NoVenor 1; set NoVulgar 1; set pb_NoFrostBaron 1; set pb_NoCryocubus 1; set pb_NoFrostBrain 1; set pb_NoCryotron 1"
+	Command "Enable all Realm667 monsters",  "set NoBabyCaco 0; set NoBehemoth 0; set NoBlot 0; set NoBloodGhost 0; set NoBloodSkull 0; set NoDrone 0; set NoFusionCyberImp 0; set pb_NoFlyingImp 0; set NoPossessedGibs 0; set NoSlayerKnight 0; set NoVenor 0; set NoVulgar 0; set pb_NoFrostBaron 0; set pb_NoCryocubus 0; set pb_NoFrostBrain 0; set pb_NoCryotron 0"
+	Command "Disable all Realm667 monsters", "set NoBabyCaco 1; set NoBehemoth 1; set NoBlot 1; set NoBloodGhost 1; set NoBloodSkull 1; set NoDrone 1; set NoFusionCyberImp 1; set pb_NoFlyingImp 1; set NoPossessedGibs 1; set NoSlayerKnight 1; set NoVenor 1; set NoVulgar 1; set pb_NoFrostBaron 1; set pb_NoCryocubus 1; set pb_NoFrostBrain 1; set pb_NoCryotron 1"
 	StaticText " "
 
 	StaticText "---- Monster Pack add-ons (Crackodemon, Hellduke, Director, ...) ----"
@@ -2207,6 +2205,7 @@ OptionMenu "MonsterPackSettings"
 	Option "T1 — Possessed Gibs (Realm667)", "NoPossessedGibs", "OffOn"
 	Option "T2 — Vulgar (Realm667)", "NoVulgar", "OffOn"
 	Option "T3 — Fusion Cyber Imp (Realm667)", "NoFusionCyberImp", "OffOn"
+	Option "T2 — Flying Imp (Brutal Doom Plus)", "pb_NoFlyingImp", "OffOn"
 	StaticText " "
 	StaticText "---------------Lost soul variants---------------", gold
 	Option "T4 — Ethereal soul", "NoESoul", "OffOn"

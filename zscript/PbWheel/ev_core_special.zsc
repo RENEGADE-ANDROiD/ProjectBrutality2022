@@ -1662,6 +1662,70 @@ Class PB_SpecialWheelHandler : EventHandler
 				specialWheel_handleMouse();
 	}
 
+	void specialWheel_PB_AntiTankRifle()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.75, 0.75);
+
+		PB_SpecialWheel_Mode atr_single = new ("PB_SpecialWheel_Mode");
+		atr_single.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Normalrounds.png", TexMan.Type_Any);
+		atr_single.specialName = "Select_ATR_Single";
+		atr_single.specialAlias = "Explosive Bolt";
+		atr_single.specialPriority = 1;
+		atr_single.iconScale = iconScale;
+		wheelSpecials.Push(atr_single);
+
+		PB_SpecialWheel_Mode atr_burst = new ("PB_SpecialWheel_Mode");
+		atr_burst.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Burst.png", TexMan.Type_Any);
+		if (!atr_burst.specialIcon.isValid())
+			atr_burst.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
+		atr_burst.specialName = "Select_ATR_Burst";
+		atr_burst.specialAlias = "3-Round Burst";
+		atr_burst.specialPriority = 2;
+		atr_burst.iconScale = iconScale;
+		wheelSpecials.Push(atr_burst);
+
+		PB_SpecialWheel_Mode atr_void = new ("PB_SpecialWheel_Mode");
+		atr_void.specialIcon = TexMan.CheckForTexture("VGR1A0", TexMan.Type_Any);
+		if (!atr_void.specialIcon.isValid())
+			atr_void.specialIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
+		atr_void.specialName = "Select_ATR_VoidGrenade";
+		atr_void.specialAlias = "Void Grenade";
+		atr_void.specialPriority = 3;
+		atr_void.iconScale = iconScale;
+		wheelSpecials.Push(atr_void);
+
+		specialWheel_handleMouse();
+	}
+
+	void specialWheel_PB_SPAS12()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.75, 0.75);
+
+		PB_SpecialWheel_Mode spas_pump = new ("PB_SpecialWheel_Mode");
+		spas_pump.specialIcon = TexMan.CheckForTexture("S12GA0", TexMan.Type_Any);
+		if (!spas_pump.specialIcon.isValid())
+			spas_pump.specialIcon = TexMan.CheckForTexture("M4SHA0", TexMan.Type_Any);
+		spas_pump.specialName = "Select_SPAS12_Pump";
+		spas_pump.specialAlias = "Combat Pump";
+		spas_pump.specialPriority = 1;
+		spas_pump.iconScale = iconScale;
+		wheelSpecials.Push(spas_pump);
+
+		PB_SpecialWheel_Mode spas_riot = new ("PB_SpecialWheel_Mode");
+		spas_riot.specialIcon = TexMan.CheckForTexture("graphics/pywheel/SG_DB.png", TexMan.Type_Any);
+		if (!spas_riot.specialIcon.isValid())
+			spas_riot.specialIcon = TexMan.CheckForTexture("AMMOIC3", TexMan.Type_Any);
+		spas_riot.specialName = "Select_SPAS12_Riot";
+		spas_riot.specialAlias = "Riot Sweep";
+		spas_riot.specialPriority = 2;
+		spas_riot.iconScale = iconScale;
+		wheelSpecials.Push(spas_riot);
+
+		specialWheel_handleMouse();
+	}
+
 	void specialWheel_PB_DemonExterminator()
 	{
 		wheelSpecials.Clear();
@@ -2606,6 +2670,14 @@ Class PB_SpecialWheelHandler : EventHandler
 
 				case 'PB_HarvesterOfSouls':
 					specialWheel_PB_HarvesterOfSouls();
+					return;
+
+				case 'PB_AntiTankRifle':
+					specialWheel_PB_AntiTankRifle();
+					return;
+
+				case 'PB_SPAS12':
+					specialWheel_PB_SPAS12();
 					return;
 
 				case 'PB_CryoShotgun':

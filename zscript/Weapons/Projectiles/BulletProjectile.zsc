@@ -145,18 +145,23 @@ class PB_Projectile : FastProjectile abstract
 				SpawnPuff("PB_NoBloodPuff", pos, angle, 0, 0, PF_HITTHING);
 			else
             {
-                Actor tmpBlood = victim.SpawnBlood( pos, angle, ceil(scaled_damage * 0.47) );
-                PB_GunshotBlood pbBlood = PB_GunshotBlood(tmpBlood);
-                if(pbBlood) {
-                    pbBlood.sourceIsProjectile = true;
-                    pbBlood.smallCal = bSMALLIMPACT;
-                    pbBlood.isBloodExplosionGenerator = isBloodExplosionGenerator;
-                    pbBlood.projectileDamage = truedamage;
+				// DOOM.CE: Actor.SpawnBlood is void (no return). Spawn PB_GunshotBlood
+				// directly so projectile tags still apply.
+				int bloodDmg = int(ceil(scaled_damage * 0.47));
+				Actor tmpBlood = Spawn("PB_GunshotBlood", pos, ALLOW_REPLACE);
+				PB_GunshotBlood pbBlood = PB_GunshotBlood(tmpBlood);
+				if (pbBlood)
+				{
+					pbBlood.sourceIsProjectile = true;
+					pbBlood.smallCal = bSMALLIMPACT;
+					pbBlood.isBloodExplosionGenerator = isBloodExplosionGenerator;
+					pbBlood.projectileDamage = truedamage;
 					pbBlood.CopyBloodColor(victim);
-                    // console.printf("ste: %p %s %i %i", pbBlood, pbBlood.GetClassName(), pbBlood.sourceIsProjectile, pbBlood.projectileDamage);
-                }
+				}
+				else
+					victim.SpawnBlood(pos, angle, bloodDmg);
 
-				victim.TraceBleed( ceil(scaled_damage * 0.47), self );
+				victim.TraceBleed(bloodDmg, self);
             }	
 		}
 		

@@ -2,7 +2,9 @@ Project Brutality 2022 — maintainers RENEGADE ANDROID and doc — supplements 
 archival list. For third-party work merged after the original file froze, see
 README “Sources and important third-party lineage” and CREDITS.txt, especially:
 Realm667 (community bases), Monster Pack / Glory Kills lines, **Brutal Doom
-*El Diablo* Edition** first-person finisher art (eld_eld_* paths + related),
+Plus** (formerly *El Diablo* Edition) first-person finisher art (eld_eld_* paths
++ related), Harvester of Souls, Anti-Tank Rifle (Tesefy sprites), Flying Imp
+(AEIM combat + flyimp fatalities), and SPAS-12,
 **Project Brutality Legacy** execution / stagger handoff behavior folded into core
 actors, **Brutal Pack**-line fragments (selective only; pack not distributed whole),
 optional **Brutal Doom 22 (BDv22)** gore (`bdv22_*`, `actors/Gore/BDv22Gore/`,

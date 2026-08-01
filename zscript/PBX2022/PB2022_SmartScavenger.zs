@@ -307,7 +307,7 @@ class PB2022_SmartScav_Medikit : CustomInventory
 	}
 }
 
-class PB2022_SmartScav_MediPack : Health
+class PB2022_SmartScav_MediPack : PB_CelebratoryHealth
 {
 	Default
 	{

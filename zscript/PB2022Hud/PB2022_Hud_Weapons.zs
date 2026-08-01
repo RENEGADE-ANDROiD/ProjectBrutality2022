@@ -208,6 +208,15 @@ extend class PB2022_Hud_ZS
 					PBHud_DrawString(mBoldFont, "CRYO", (-145, -64), DI_SCREEN_RIGHT_BOTTOM | DI_TEXT_ALIGN_LEFT, Font.CR_CYAN, scale: (0.5, 0.5));
 				return false;
 
+			case 'PB_SPAS12':
+				weaponBarAccent = Font.CR_ORANGE;
+				DrawAmmoBar("BARBACO1", "BARBACO2", "BARBACO3", "BAMBAR3", "ABAR3", "ABAR3", "AMMOIC3", Font.CR_ORANGE, drawSecondary: true);
+				if (CheckInventory("SPAS12_RiotMode"))
+					PBHud_DrawString(mBoldFont, "RIOT", (-145, -64), DI_SCREEN_RIGHT_BOTTOM | DI_TEXT_ALIGN_LEFT, Font.CR_RED, scale: (0.5, 0.5));
+				else
+					PBHud_DrawString(mBoldFont, "PUMP", (-145, -64), DI_SCREEN_RIGHT_BOTTOM | DI_TEXT_ALIGN_LEFT, Font.CR_ORANGE, scale: (0.5, 0.5));
+				return true;
+
 			case 'PB_Unmaker':
 				DrawAmmoBar("BARBACD1", "BARBACZ2", "BARBACZ2", "BAMBAR7", "ABAR7", "ABAR6", "AMMOIC6", Font.CR_ORANGE, drawNumbers: false, drawIcon: false);
 				PBHud_DrawImage("AMMOIC7", (-66, -37), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, playerBoxAlpha, (17, 17));

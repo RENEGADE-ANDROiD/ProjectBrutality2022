@@ -5110,6 +5110,8 @@ class PB_EventHandler : EventHandler
 		}
 		if (e.Name ~== "exitpda")
 		{
+			if (playeringame[consoleplayer] && players[consoleplayer].mo)
+				PB_PDAHandView.TryLower(players[consoleplayer].mo);
 			SetPlayerProperty(1,0,4);
 			players[consoleplayer].timefreezer &= ~(1 << consoleplayer);
 			Level.SetFrozen(false);
@@ -5170,6 +5172,8 @@ class PB_EventHandler : EventHandler
 			}
 			if (PDAMode)
 			{
+				if (players[e.Player].mo)
+					PB_PDAHandView.TryLower(players[e.Player].mo);
 				SetPlayerProperty(1,0,4);
 				players[e.Player].timefreezer &= ~(1 << e.Player);
 				Level.SetFrozen(false);
@@ -5210,6 +5214,7 @@ class PB_EventHandler : EventHandler
 					let pda = PB_PDAWeaponContainer(players[e.Player].mo.FindInventory("PB_PDAWeaponContainer"));
 					if (pda)
 						pda.SyncWeaponCodexFromOwner(PlayerPawn(players[e.Player].mo));
+					PB_PDAHandView.TryRaise(players[e.Player].mo);
 				}
 			}
 		}

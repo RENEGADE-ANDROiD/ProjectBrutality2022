@@ -643,7 +643,7 @@ TNT1 A 0 A_JumpIfInventory("EatMe", 1, "Eat")
 		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, 1)
 		Goto Death.ExplosiveImpact
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
-        TNT1 A 0 A_Jump(256, "DemonFatality1", "DemonFatality1", "DemonFatality2", "DemonFatality2", "DemonFatality3", "DemonFatality3", "DemonFatality4", "DemonFatality4", "DemonFatality5", "DemonFatality5", "DemonFatality1", "DemonFatality2")
+        TNT1 A 0 A_Jump(256, "DemonFatality1", "DemonFatality1", "DemonFatality2", "DemonFatality2", "DemonFatality3", "DemonFatality3", "DemonFatality4", "DemonFatality4", "DemonFatality5", "DemonFatality5", "DemonFatality6", "DemonFatality1")
 		
 		DemonFatality1:
         TNT1 A 0 A_GiveToTarget("DemonFatality", 1)
@@ -662,6 +662,10 @@ TNT1 A 0 A_JumpIfInventory("EatMe", 1, "Eat")
 		Stop
 		DemonFatality5:
         TNT1 A 0 A_GiveToTarget("DemonFatality5", 1)
+        TNT1 A 0
+		Stop
+		DemonFatality6:
+        TNT1 A 0 A_GiveToTarget("DemonFatality6", 1)
         TNT1 A 0
 		Stop
 		

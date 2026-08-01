@@ -1,4 +1,4 @@
-ACTOR NewMedipack : Health
+ACTOR NewMedipack : PB_CelebratoryHealth
 {
 	Game Doom
 	SpawnID 7030

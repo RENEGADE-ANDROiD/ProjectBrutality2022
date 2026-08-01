@@ -1,4 +1,4 @@
-Actor EliteArmor : BasicArmorPickup
+Actor EliteArmor : PB_BodyArmorPickup
 {
 	Game Doom
 	SpawnID 7090
@@ -35,7 +35,7 @@ Actor EliteArmorForUltraSphere : EliteArmor
 	Armor.Saveamount 300
 }
 
-Actor PristineArmor : BasicArmorPickup
+Actor PristineArmor : PB_BodyArmorPickup
 {
 	Game Doom
 	SpawnID 7091
@@ -89,6 +89,7 @@ ACTOR NewLifeSphere : CustomInventory
 		GZUL ABCD 2 BRIGHT
 		Goto Spawn
 	Pickup:
+		TNT1 A 0 A_GiveInventory("PB_ArmorRockOnTrigger", 1)
 		TNT1 AAAAAAAAAAAAA 0 A_CustomMissile("ShinnySmoke", 0, 0, random(0, 360), 2, random(0, 360))
 		TNT1 A 0 A_GiveInventory("GreaterSoulSphereHealth", 1)
 		Stop
@@ -125,6 +126,7 @@ ACTOR UltraSphere : CustomInventory
 		ULTR ABCD 2 BRIGHT
 		Goto Spawn
 	Pickup:
+		TNT1 A 0 A_GiveInventory("PB_ArmorRockOnTrigger", 1)
 		TNT1 AAAAAAAAAAAAA 0 A_CustomMissile("ShinnySmoke", 0, 0, random(0, 360), 2, random(0, 360))
 		TNT1 A 0 A_GiveInventory("EliteArmorForUltraSphere", 1)
 		TNT1 AA 0 A_GiveInventory("GreaterSoulSphereHealth", 1)

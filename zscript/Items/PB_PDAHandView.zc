@@ -1,0 +1,60 @@
+// First-person ADRO hand/PDA raise while the PDA UI is open.
+
+class PB_PDAHandActive : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		-INVENTORY.INVBAR
+	}
+}
+
+class PB_PDAHandView
+{
+	play static void TryRaise(Actor user)
+	{
+		let pp = PlayerPawn(user);
+		if (!pp || !pp.player)
+			return;
+		if (pp.CountInv("GoFatality") > 0 || pp.CountInv("DoGloryMelee") > 0)
+			return;
+		if (pp.CountInv("CameraRunner") > 0)
+			return;
+
+		let weap = PB_WeaponBase(pp.player.ReadyWeapon);
+		if (!weap)
+			return;
+		State stShow = weap.FindState("PDARaiseShow");
+		if (!stShow)
+			return;
+
+		pp.GiveInventory("PB_PDAHandActive", 1);
+		pp.player.SetPsprite(PSP_WEAPON, stShow);
+	}
+
+	play static void TryLower(Actor user)
+	{
+		let pp = PlayerPawn(user);
+		if (!pp || !pp.player)
+			return;
+
+		let weap = PB_WeaponBase(pp.player.ReadyWeapon);
+		if (!weap)
+		{
+			if (pp.CountInv("PB_PDAHandActive") > 0)
+				pp.A_TakeInventory("PB_PDAHandActive", 1);
+			return;
+		}
+		State stLower = weap.FindState("PDALowerShow");
+		if (!stLower)
+		{
+			if (pp.CountInv("PB_PDAHandActive") > 0)
+				pp.A_TakeInventory("PB_PDAHandActive", 1);
+			return;
+		}
+
+		pp.player.SetPsprite(PSP_WEAPON, stLower);
+	}
+}
