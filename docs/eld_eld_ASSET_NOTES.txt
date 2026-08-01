@@ -1,0 +1,30 @@
+# Brutal Doom Plus fatality sprites (eld_eld_*)
+
+Copied from BRUTALDOOMPLUS `sprites/Fatality/` for Project Brutality 2022.
+
+## Wired this pass (player Fatality*Eld + monster grants)
+
+| Folder | Prefix | Wired to |
+|---|---|---|
+| `eld_eld_overlord/` | POPO | `OverlordFatality2` → `FatalityOverlord2Eld` on `PB_Overlord` |
+| `eld_eld_flyimp/` | YTYY / YTYZ / YZZZ | `ImpFatality8`/`9`/`10` → `FatalityImp8Eld`/`9Eld`/`10Eld` (`YZZZ` / `YTYY` / `YTYZ`). Fatality 8–9 also on `PB_Imp`; Fatality 10 granted from `PB_FlyingImp` / GK |
+| `eld_eld_blooddemon/` | FD3M | `DemonFatality6` → `FatalityDemon6Eld` on `PB_Demon` |
+
+## Combat monster (separate from FPS fatality art)
+
+| Class | Sprites | Notes |
+|---|---|---|
+| `PB_FlyingImp` / `PB_FlyingImpGK` | `SPRITES/MONSTERS/FlyingImp/` (`AEIM`) | Brutal Doom Plus `FlyingImp` fold; ImpPackSpawner guest; `pb_NoFlyingImp` |
+
+## Sprite-only (no PB monster class yet)
+
+| Folder | Prefix | Upstream |
+|---|---|---|
+| `eld_eld_vassago/` | VATO | Vassago |
+| `eld_eld_famine/` | SIGV | Famine |
+| `eld_eld_nemesis/` | NEME | Nemesis / Hell Knight Nemesis |
+| `eld_eld_satyr/` | HETT / PINO | satyr fatality packs |
+
+Do not grant these tokens from monsters until matching actors exist in PB.
+
+Credits: Brutal Doom Plus (formerly El Diablo Edition).

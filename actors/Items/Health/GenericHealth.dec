@@ -1,4 +1,4 @@
-ACTOR HealthPlus : Health Replaces HealthBonus
+ACTOR HealthPlus : PB_CelebratoryHealth Replaces HealthBonus
 {
 	//$Title Health Bonus
 	Game Doom
@@ -59,7 +59,7 @@ Armor.SavePercent 70
 Armor.Saveamount 200
 }
 
-Actor GiveHealth : Health
+Actor GiveHealth : PB_CelebratoryHealth
 {
 	Game Doom
 	SpawnID 152
@@ -100,7 +100,7 @@ Actor GiveArmor : BasicArmorBonus
 }
 
 
-ACTOR CrueltyBonushealth : Health
+ACTOR CrueltyBonushealth : PB_CelebratoryHealth
 {
 	Game Doom
 	SpawnID 152

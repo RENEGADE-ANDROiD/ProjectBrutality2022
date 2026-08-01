@@ -167,6 +167,7 @@ GameInfo
 	AddEventHandlers = "PB2022_ItemArmorSpawnHandler"
 	AddEventHandlers = "PB2022_DamageIndicatorHandler"
 	AddEventHandlers = "PB2022_ScopeHandler"
+	AddEventHandlers = "PB2022_PickupMagnetHandler"
 	// Combat SFX warm-cache (~45 logical names): decoded at each map load (incl. TITLEMAP) to cut first-play hitches from PK3/OGG decode. Expand via maint_scripts or SNDINFO + gameplay profiling — do not list all ~4k PB sounds here.
 	PrecacheSounds =
 		"weapons/pistol", "weapons/pistolup",
@@ -355,7 +356,7 @@ DoomEdNums
 	23161 = VorpalBlade
 	23162 = HASG
 	23163 = HASGDrum
-	23164 = PossessedGibsSlither
+	23164 = PB_FlyingImp
 	23165 = PB_GuardsphereST
 	23166 = ShieldGrenade
 	23167 = Shambler
@@ -448,6 +449,8 @@ DoomEdNums
 	23250 = FrostburnDevice
 	23251 = PB2022_BattleRifle_Upgrade
 	23252 = PB_HarvesterOfSoulsGiver
+	23253 = PB_AntiTankRifle
+	23254 = PB_SPAS12
 
 	17003 = CyberdemonLegsFatality
 

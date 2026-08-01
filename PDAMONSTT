@@ -103,3 +103,4 @@ Venom Demon$Realm667 venom demon—multi-phase poison-themed boss-lite harassmen
 Obsidian Ravager$Obsidian ravager boss—crystal traps, marks, and sustained aerial punishment phases.$ObsidianRavager$Threat: Boss | Damage: Mixed | Notes: ZScript boss actor#
 D3 Maledict$Doom 3–styled maledict—long-duration aerial boss with flame bias and heavy soaking.$D3Maledict$Threat: Boss | Damage: Fire | Notes: ZScript boss actor#
 Flesh Spawn$Classic Realm667 flesh spawn—small floating parasite swarmers with bite trades.$Fleshspawn$Threat: Tier 1 | Damage: Melee | Notes: realm667monsters.dec fold#
+Flying Imp$Brutal Doom Plus flying imp—floating AEIM chase with a double FireBall_ volley and dedicated flyimp Eld finishers.$PB_FlyingImp,PB_FlyingImpGK$Threat: Tier 1–2 | Damage: Fire | Notes: ImpPackSpawner guest; pb_NoFlyingImp#

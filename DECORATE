@@ -20,6 +20,10 @@ actor Decelerate : Inventory
 }
 Actor ExecutionToken : Inventory {inventory.maxamount 1}
 Actor PB_ShieldSawPinataPending : Inventory { Inventory.MaxAmount 1 }
+// Brutal Doom Plus — SegundaOportunidad (near-death save) + Hayberserk/Hayulti FPS theatrics
+Actor SegundaOportunidadToken : Inventory { Inventory.MaxAmount 1 }
+Actor Hayberserk : Inventory { Inventory.MaxAmount 1 }
+Actor Hayulti : Inventory { Inventory.MaxAmount 1 }
 Actor SlideKicking : Inventory {}
 Actor HasUnmorphed : Inventory {}
 Actor LedgeGrabbingRightNow : Inventory {}
@@ -144,6 +148,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Items/Ammo/PB_SingleShell.dec"
 #include "actors/Weapons/Slot3/X12Shotgun.dec"
 #include "actors/Weapons/Slot3/HASG.dec"
+#include "actors/Weapons/Slot3/PB_SPAS12.dec"
 #include "actors/Weapons/Slot3/SSG.dec"
 #include "actors/Weapons/Slot4/MINIGUN.dec"
 #include "actors/Weapons/Slot5/ROCKETLAUNCHER.dec"
@@ -172,6 +177,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Meatshields/SavageImpSHIELD.dec"
 #include "actors/Weapons/Meatshields/TriclopsImpSHIELD.dec"
 #include "actors/Weapons/Meatshields/PB_NailgunGuySHIELD.dec"
+#include "actors/Weapons/Meatshields/LiveMeatGrab.dec"
 #include "actors/Weapons/Meatshields/BarrelThrower.dec"
 
 #include "actors/Items/Ammo/GenericAmmo.dec"
@@ -308,6 +314,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Monsters/T1-Imps/ImpVariant1.dec"
 #include "actors/Monsters/T1-Imps/ImpVariant2.dec"
 #include "actors/Monsters/T1-Imps/SavageImp.dec"
+#include "actors/Monsters/T1-Imps/PB_FlyingImp.dec"
 #include "actors/Monsters/T1-Imps/DarkImpNami.dec"
 #include "actors/Monsters/T1-Imps/DarkImpNether.dec"
 #include "actors/Monsters/T1-Imps/DarkImpST.dec"
@@ -376,6 +383,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot4/LMG.dec"
 #include "actors/Weapons/Slot4/MetalSniper.dec"
 #include "actors/Weapons/Slot4/XM21.dec"
+#include "actors/Weapons/Slot4/PB_AntiTankRifle.dec"
 #include "actors/Weapons/Slot4/PB_Fusil.dec"
 #include "actors/Weapons/Slot4/OldHMG.dec"
 #include "actors/Weapons/Slot4/NeoHMG.dec"
@@ -779,6 +787,7 @@ Actor TurboReload : Inventory
 #include "actors/Monsters/Realm667/Realm667_BloodGhost.dec"
 #include "actors/Monsters/Realm667/Realm667_BloodSkull.dec"
 #include "actors/Monsters/Realm667/Realm667_GloryKills.dec"
+#include "actors/Monsters/Realm667/possessedgibs/PB_PossessedGibs_FloorFX.dec"
 #include "actors/Monsters/CatsFrozen/PB_CatsFrozen_Monsters.dec"
 
 #include "actors/Items/Compat/LateWarningStubs.dec"

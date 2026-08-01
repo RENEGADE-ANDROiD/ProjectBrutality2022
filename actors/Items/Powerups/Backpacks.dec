@@ -19,6 +19,7 @@ ACTOR PB_Backpack : CustomInventory
 			BPAK A -1
 			Stop
 		Pickup: 
+			TNT1 A 0 A_GiveInventory("PB_HealthYeahTrigger", 1)
 			TNT1 A 0 { 
 				A_GiveInventory("BackpackItem");
 				A_GiveInventory("GotAPack", 1);
@@ -77,6 +78,7 @@ Actor PB_HeavyBackpack: Custominventory
 		CMPK ABCDEFG 1 
 		Loop
     Pickup:
+		TNT1 A 0 A_GiveInventory("PB_HealthYeahTrigger", 1)
 		TNT1 A 0
 		TNT1 A 0 ACS_NamedExecuteAlways("CombatBackpack", 0, 0, 0, 0)//Check if Upgrades are disabled
 		TNT1 A 0 A_GiveInventory("GotAPack_h", 1) 

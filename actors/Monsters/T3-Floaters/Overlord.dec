@@ -387,7 +387,15 @@ Possession:
 	
 	Death.Fatality:
 		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		TNT1 A 0 A_Jump(256, "OverlordF1", "OverlordF2")
+		Goto OverlordF1
+	OverlordF1:
         TNT1 A 0 A_GiveToTarget("OverlordFatality", 1)
+        TNT1 A 1 A_BossDeath
+        TNT1 A 0 
+		stop
+	OverlordF2:
+        TNT1 A 0 A_GiveToTarget("OverlordFatality2", 1)
         TNT1 A 1 A_BossDeath
         TNT1 A 0 
 		stop

@@ -73,7 +73,10 @@ class PB2022_HealthPickup : CustomInventory
 	override bool TryPickup(in out Actor toucher)
 	{
 		ownrhp = toucher ? toucher.health : 0;
-		return Super.TryPickup(toucher);
+		bool ok = Super.TryPickup(toucher);
+		if (ok && PB_ArmorRockOn.IsCelebratorySphere(self))
+			PB_ArmorRockOn.TryPlay(toucher);
+		return ok;
 	}
 
 	protected void GiveBody(int amount, int maxCap)
@@ -198,6 +201,13 @@ class PB2022_SuperArmor : BasicArmorPickup
 		Tag "Super Armor";
 		+INVENTORY.ALWAYSPICKUP;
 	}
+
+	override bool TryPickup(in out Actor toucher)
+	{
+		bool ok = Super.TryPickup(toucher);
+		if (ok) PB_ArmorRockOn.TryPlay(toucher);
+		return ok;
+	}
 }
 
 class PB2022_UltraSphere : PB2022_MegaspherePickup
@@ -235,6 +245,13 @@ class PB2022_HyperArmor : BasicArmorPickup
 		Inventory.AltHudIcon "DDMGA0";
 		Tag "Hyper Armor";
 		+INVENTORY.ALWAYSPICKUP;
+	}
+
+	override bool TryPickup(in out Actor toucher)
+	{
+		bool ok = Super.TryPickup(toucher);
+		if (ok) PB_ArmorRockOn.TryPlay(toucher);
+		return ok;
 	}
 }
 

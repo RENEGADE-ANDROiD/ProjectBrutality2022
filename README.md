@@ -317,7 +317,7 @@ This build layers several community sources into Project Brutality’s own syste
 | --- | --- |
 | **Realm667** | Many monster and prop bases and edits from the community resource site; authors are credited per creature and in the detailed lists. |
 | **Monster Pack line** | Extra monsters and spawns (for example Crackodemon, Hellduke, Helemental, Hierophant) included in the main mod alongside standard Project Brutality enemies. |
-| **Brutal Doom — *El Diablo* Edition** | Extra first-person executions and finisher art wired through Glory Kills—not a standalone El Diablo total conversion. |
+| **Brutal Doom Plus** (formerly *El Diablo* Edition) | Extra first-person executions and finisher art wired through Glory Kills—not a standalone Brutal Doom Plus total conversion. Also the lineage for **Harvester of Souls** and the **Anti-Tank Rifle** (sprites by **Tesefy**). |
 | **Project Brutality Legacy (lineage)** | Older-style execution triggers and handoffs **included** in the main monster set so classic prompts still work with current Project Brutality. |
 | **Brutal Pack (e.g. V10 class packs)** | Used in development as selective art and finisher reference; **this repo does not ship the Brutal Pack in full**—only what was adapted into Project Brutality 2022’s roster and Glory Kill flows. |
 | **Brutal Doom 22 (BDv22)** | Optional-style gore assets and handlers packaged under their own names; enabled through **2022 Enhanced Brootality**. Credit **Brutal Doom 22** as a project and respect its license if you redistribute those assets. |
@@ -332,7 +332,7 @@ Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki11
 
 - **Boss-tech weapon wear:** cyber launcher, mastermind chaingun, mancubus / Daedabus flame cannon, Marauder shotgun, and **Dragon Slayer** use limited **durability** (separate from ammo) with weapon **break** at zero wear and **repair to full wear** when picking up the same gun again; monster **drops** use weighted chances instead of guaranteed boss loot where appropriate. The chaingun and flame cannon are **not** placed by rocket / plasma **map** weapon spawners (monster sources only). The **Dragon Slayer** is **not** placed by chainsaw **map** spawners (Obsidian Ravager death only). The **UAC Biological Acid Launcher** is also **monster-only**: weighted drops from **Daedabus** and **Belphegor**, with no plasma spawner placement.
 - Combined **2022 Enhanced Brootality** gore from Brutal Doom 22 and Brutal Pack V10.
-- Expanded first-person executions with art lineage from **Brutal Doom *El Diablo* Edition** and related packs.
+- Expanded first-person executions with art lineage from **Brutal Doom Plus** (formerly El Diablo Edition) and related packs.
 - Glory Kill shoulder launcher art and Eternal-style fuel HUD glyphs aligned with the newer Glory Kills presentation.
 - **Explosive Movement** extended to Mastermind chaingun tracers and Cat's Frozen freezenade / freeze mines.
 - Cat's Frozen cryo enemies, statues, equipment, and the unified **Cryo Shotgun** as always-on content.
@@ -340,7 +340,9 @@ Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki11
 
 Credit to **BeefRice** and **Jaih1r0** for fullscreen weapon HUD elements and many weapon improvements and systems. Thanks to **HUNG** for the **Shield Saw** behavior included in this build (quick melee + recall).
 
-**Harvester of Souls** — **Yaelvolador** and **Carrot**. Details: **`CREDITS.txt`**.
+**Harvester of Souls** — **Yaelvolador** and **Carrot** (Brutal Doom Plus lineage). Details: **`CREDITS.txt`**.
+
+**Anti-Tank Rifle** — Brutal Doom Plus; sprite artwork **Tesefy**. Details: **`CREDITS.txt`**.
 
 **PB_MeleeWeaponPack** (including slot-1 **Dragon Slayer** & **Vorpal Blade**, slot-9 **Stormcast**): original credits per that add-on’s `CREDITS.txt` — **Craneo**, **Dreo** & **Lord Lothar** (*Schism*), **Eriance** & **TiberiumSoul** (RIP); compatibility rework for PB 0.4.2+ by **Renegade Android**. Details: **`CREDITS.txt`**.
 

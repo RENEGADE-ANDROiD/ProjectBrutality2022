@@ -942,6 +942,8 @@ class PB_WeaponBase : DoomWeapon
 			pdaweapContainer.CollectedWeapons.Push(self.GetClassName());
 			EventHandler.SendNetworkEvent("Foundweapon:"..self.GetClassName());
 		}
+		if (pp && level.maptime >= 35 && !bCHEATNOTWEAPON)
+			PB_ArmorRockOn.TryPlay(Other);
 	}
 	
 	action void PB_WeapTokenSwitch(name wepToken) 
@@ -2070,6 +2072,8 @@ class PB_WeaponBase : DoomWeapon
 			Loop;
 
 		SelectFirstPersonLegs:
+			TNT1 A 0 A_JumpIfInventory("Hayulti", 1, "Hayulti");
+			TNT1 A 0 A_JumpIfInventory("Hayberserk", 1, "Hayberserk");
 			TNT1 A 0 A_StopSound(1);
 			TNT1 A 0 A_StopSound(5);
 			TNT1 A 0 A_StopSound(6);
@@ -2085,6 +2089,179 @@ class PB_WeaponBase : DoomWeapon
 			TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand");
 			TNT1 A 0 A_Jump(255, "SelectContinue");
 			Loop;
+
+		// Brutal Doom Plus Hayulti / Hayberserk — shared for ZScript-only PB_WeaponBase weapons
+		Hayulti:
+			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 1);
+			TNT1 A 0 SetPlayerProperty(0, 1, 0);
+			TNT1 A 0 A_PlayerScream;
+			JOJO A 1 A_Print("$PB_HAYULTI_FURY");
+			JOJO BC 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO DE 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO FG 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO HI 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO JK 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO LM 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO NO 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO PQ 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO RS 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO TU 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO PQ 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO RS 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO PQ 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO RS 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO TU 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO PQ 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO RS 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO TU 1;
+			JOJO PQ 1;
+			JOJO PQ 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO RS 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO TU 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO PQ 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO RS 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO PQ 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO RS 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO TU 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			JOJO TU 1;
+			JOJO VW 1;
+			JOJO XY 1;
+			JOJO Z 1;
+			JOJP AB 1;
+			TNT1 A 0 A_GiveInventory("PowerStrength", 1);
+			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 0);
+			TNT1 A 0 SetPlayerProperty(0, 0, 0);
+			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+			TNT1 A 0 A_TakeInventory("Hayulti", 1);
+			TNT1 A 0 A_Jump(256, "GoingToReady");
+			TNT1 A 0 A_Jump(256, "SelectContinue");
+			TNT1 A 0 A_Jump(256, "Ready3");
+			Goto Ready;
+
+		Hayberserk:
+			TNT1 A 0 A_Jump(100, "HayberserkAlt");
+			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 1);
+			TNT1 A 0 SetPlayerProperty(0, 1, 0);
+			TNT1 A 0 A_AlertMonsters;
+			MIPA ABCEGI 1;
+			MIPA JK 1;
+			TNT1 A 0 A_Print("$PB_RIP_AND_TEAR_ANIM");
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA LM 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA NO 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA JK 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA LM 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA NO 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA JK 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA LM 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA NO 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA JK 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA LM 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA NO 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA JK 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA LM 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA NO 1;
+			MIPA JK 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA LM 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA NO 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA JK 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA LM 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA NO 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA JK 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA LM 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA NO 1;
+			TNT1 A 0 A_Quake(2, 8, 0, 256);
+			MIPA IGECBA 1;
+			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 0);
+			TNT1 A 0 SetPlayerProperty(0, 0, 0);
+			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+			TNT1 A 0 A_TakeInventory("Hayberserk", 1);
+			TNT1 A 0 A_Jump(256, "GoingToReady");
+			TNT1 A 0 A_Jump(256, "SelectContinue");
+			TNT1 A 0 A_Jump(256, "Ready3");
+			Goto Ready;
+
+		HayberserkAlt:
+			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 1);
+			TNT1 A 0 SetPlayerProperty(0, 1, 0);
+			TNT1 A 0 A_Print("$PB_RIP_AND_TEAR_ANIM");
+			TNT1 A 0 A_AlertMonsters;
+			PONG RQP 1;
+			PUNS CDEEF 1;
+			TNT1 A 0 A_AlertMonsters;
+			TNT1 A 0 A_PlaySound("KNUCKLED");
+			PUNS G 1;
+			PUNS G 1;
+			PUNS G 1;
+			PUNS G 2;
+			PUNS FE 1;
+			PUNS D 7;
+			PUNS IJKKL 1;
+			TNT1 A 0 A_PlaySound("KNUCKLED");
+			PUNS M 1;
+			TNT1 A 0 A_AlertMonsters;
+			PUNS M 1;
+			PUNS M 1;
+			PUNS M 7;
+			PUNS A 0;
+			PUNS LKJ 1;
+			PUNS I 2;
+			PUNS BA 1;
+			PONG PQR 1;
+			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 0);
+			TNT1 A 0 SetPlayerProperty(0, 0, 0);
+			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+			TNT1 A 0 A_TakeInventory("Hayberserk", 1);
+			TNT1 A 0 A_Jump(256, "GoingToReady");
+			TNT1 A 0 A_Jump(256, "SelectContinue");
+			TNT1 A 0 A_Jump(256, "Ready3");
+			Goto Ready;
 
 		FirstPersonLegsStand:
 			TNT1 A 1;
@@ -2104,6 +2281,8 @@ class PB_WeaponBase : DoomWeapon
 			Goto GoingToReady;
 
 		GoingToReady2:
+			TNT1 A 0 A_JumpIfInventory("Hayulti", 1, "Hayulti");
+			TNT1 A 0 A_JumpIfInventory("Hayberserk", 1, "Hayberserk");
 			TNT1 A 0 {
 				PB_UnsetPlayerExecutionProperties();
 				A_TakeInventory("KeepLaserDeactivated", 1);
@@ -2187,7 +2366,7 @@ class PB_WeaponBase : DoomWeapon
 					return ResolveState("QuickMeleePunchSetup");
 				return ResolveState(null);
 			}
-			TNT1 A 0 A_JumpIfCloser(99, "QuickMeleePunchSetup");
+			TNT1 A 0 A_JumpIfCloser(128, "QuickMeleePunchSetup");
 			TNT1 A 0 {
 				State st = PB_ResolveQuickMeleeShieldThrow();
 				if (st)
@@ -2200,7 +2379,7 @@ class PB_WeaponBase : DoomWeapon
 					return ResolveState("QuickMeleePunchSetup");
 				return ResolveState(null);
 			}
-			TNT1 A 0 A_JumpIfCloser(99, "QuickMeleePunchSetup");
+			TNT1 A 0 A_JumpIfCloser(128, "QuickMeleePunchSetup");
 		QuickMeleePunchSetup:
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			TNT1 A 0 {
@@ -2222,7 +2401,7 @@ class PB_WeaponBase : DoomWeapon
 					return ResolveState("QuickMeleePunchSetup");
 				return ResolveState(null);
 			}
-			TNT1 A 0 A_JumpIfCloser(99, "QuickMeleePunchSetup");
+			TNT1 A 0 A_JumpIfCloser(128, "QuickMeleePunchSetup");
 			TNT1 A 0 {
 				if (CountInv("ShieldSawReady") < 1 || CountInv("ShieldSawThrown") >= 1)
 					return ResolveState("QuickMeleePunchSetup");

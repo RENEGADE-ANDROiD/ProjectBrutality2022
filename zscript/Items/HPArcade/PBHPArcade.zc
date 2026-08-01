@@ -13,11 +13,23 @@ class PBHP_ArmorArcade : BasicArmorPickup
 	override bool TryPickup(in out Actor toucher)
 	{
 		let cv = CVar.FindCVar("pb_hp_arcade");
-		if (cv == null || !cv.GetBool()) return Super.TryPickup(toucher);
+		if (cv == null || !cv.GetBool())
+		{
+			bool ok = Super.TryPickup(toucher);
+			if (ok) PB_ArmorRockOn.TryPlay(toucher);
+			return ok;
+		}
 		let armor = BasicArmor(toucher.FindInventory("BasicArmor", true));
-		if (armor == null) return Super.TryPickup(toucher);
+		if (armor == null)
+		{
+			bool ok = Super.TryPickup(toucher);
+			if (ok) PB_ArmorRockOn.TryPlay(toucher);
+			return ok;
+		}
 		if (armor.Amount >= cap && armor.SavePercent >= Pct01()) return false;
-		return Super.TryPickup(toucher);
+		bool picked = Super.TryPickup(toucher);
+		if (picked) PB_ArmorRockOn.TryPlay(toucher);
+		return picked;
 	}
 
 	override bool Use(bool pickup)

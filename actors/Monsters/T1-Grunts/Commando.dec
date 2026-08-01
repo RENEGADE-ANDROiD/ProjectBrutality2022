@@ -36,6 +36,7 @@ ACTOR PB_Commando: PB_Monster Replaces ChaingunGuy
 	Monster
 	Translation "192:207=176:191"
 	damagefactor "SSG", 5.0
+	damagefactor "MeatGrab", 50.0
 	MaxStepHeight 24
 	MaxDropOffHeight 32
 	+FLOORCLIP
@@ -52,6 +53,7 @@ ACTOR PB_Commando: PB_Monster Replaces ChaingunGuy
     damagefactor "Shrapnel", 0.4
 	damagefactor "explosiveimpact", 2.0
 	DropItem "None" 3
+	DropItem "PB_AntiTankRifle" 8
 	Obituary "%o has been mowed down by a Zombie Commando."
 	DamageFactor "CauseObjectsToSplash", 0.0
 	
@@ -1078,6 +1080,14 @@ ACTOR PB_Commando: PB_Monster Replaces ChaingunGuy
 		Stop
 	ComandoF4:
 		TNT1 A 0 A_GiveToTarget("ComandoFatality4", 1)
+		Stop
+
+	Death.MeatGrab:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_Chase("","")
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_GiveToTarget("GrabbedACommando", 1)
 		Stop
 		
 	    Death.Eat:

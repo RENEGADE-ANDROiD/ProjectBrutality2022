@@ -1,0 +1,3 @@
+//Ground tentacle speed default is 0.8. Change to any value you desire if not satisfied.
+WARP FLAT SFLR6_1 0.8 allowdecals
+WARP FLAT SFLR6_4 0.8 allowdecals

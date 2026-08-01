@@ -117,13 +117,14 @@ Actor ImpPackSpawner : Demonpickup
 	TNT1 A 3
 	// Realm667 imp-tier additions (gated by pb_disablenewenemies + per-monster NoXxx).
 	// Each SpawnRealm667* label re-checks its own cvar and falls through to Realm667Skip.
-	// Weights tuned by power: PossessedGibs/Blot are fodder (HP 20-115), Vulgar/Fusion are imp-class (HP 100-150).
+	// Weights tuned by power: PossessedGibs/Blot are fodder (HP ~20-150), Vulgar/Fusion are imp-class (HP 100-150).
 	// Combined Realm667 share targets ~25% with five guests ~5% each when gates allow (was ~7%).
 	TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "Realm667Skip")
 	TNT1 A 0 A_Jump(26, "SpawnRealm667PossessedGibs")
 	TNT1 A 0 A_Jump(14, "SpawnRealm667Blot")
 	TNT1 A 0 A_Jump(15, "SpawnRealm667Vulgar")
 	TNT1 A 0 A_Jump(16, "SpawnRealm667Fusion")
+	TNT1 A 0 A_Jump(14, "SpawnFlyingImp")
 	Realm667Skip:
 	TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 	TNT1 A 0 A_JumpIfInventory("IsNetherDarkImp", 1, "SpawnNetherDarkImp")
@@ -140,11 +141,7 @@ Actor ImpPackSpawner : Demonpickup
 	Loop
 	SpawnRealm667PossessedGibs:
 		TNT1 A 0 A_JumpIf(GetCvar("NoPossessedGibs")==1, "Realm667Skip")
-		TNT1 A 0 A_Jump(128, "SpawnRealm667PossessedGibsSlither")
 		TNT1 A 0 A_SpawnItemEx("PossessedGibs",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		Stop
-	SpawnRealm667PossessedGibsSlither:
-		TNT1 A 0 A_SpawnItemEx("PossessedGibsSlither",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnRealm667Blot:
 	TNT1 A 0 A_JumpIf(GetCvar("NoBlot")==1, "Realm667Skip")
@@ -159,6 +156,12 @@ Actor ImpPackSpawner : Demonpickup
 	SpawnRealm667Vulgar:
 	TNT1 A 0 A_JumpIf(GetCvar("NoVulgar")==1, "Realm667Skip")
 	TNT1 A 0 A_SpawnItemEx("PB_Realm667_VulgarGK",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	Stop
+	SpawnFlyingImp:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoFlyingImp")==1, "Realm667Skip")
+	TNT1 A 0 A_SpawnItemEx("PB_FlyingImpGK",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	Stop

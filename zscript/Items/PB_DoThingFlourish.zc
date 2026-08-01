@@ -1,0 +1,51 @@
+// First-person DOON flourish when the player presses Use.
+
+class PB_DoThingFlourishCooldown : Inventory
+{
+	int life;
+
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		-INVENTORY.INVBAR
+	}
+
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		if (++life >= PB_DoThingFlourish.DEBOUNCE_TICS)
+			Destroy();
+	}
+}
+
+class PB_DoThingFlourish
+{
+	const DEBOUNCE_TICS = 25;
+
+	play static void TryPlay(Actor user)
+	{
+		let pp = PlayerPawn(user);
+		if (!pp || !pp.player)
+			return;
+		if (pp.CountInv("GoFatality") > 0 || pp.CountInv("DoGloryMelee") > 0)
+			return;
+		if (pp.CountInv("CameraRunner") > 0)
+			return;
+		if (pp.CountInv("PB_PDAHandActive") > 0)
+			return;
+		if (pp.CountInv("PB_DoThingFlourishCooldown") > 0)
+			return;
+
+		let weap = PB_WeaponBase(pp.player.ReadyWeapon);
+		if (!weap)
+			return;
+		State stShow = weap.FindState("DoThingFlourishShow");
+		if (!stShow)
+			return;
+
+		pp.GiveInventory("PB_DoThingFlourishCooldown", 1);
+		pp.player.SetPsprite(PSP_WEAPON, stShow);
+	}
+}

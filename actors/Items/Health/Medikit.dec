@@ -1,4 +1,4 @@
-ACTOR Medikit2 : Health
+ACTOR Medikit2 : PB_CelebratoryHealth
 {
 	Inventory.Amount 25
 	Inventory.PickupMessage "$GOTMEDIKIT" // "Picked up a medikit."
@@ -14,7 +14,7 @@ ACTOR Medikit2 : Health
 	}
 }
 
-ACTOR Stim5Green : Health
+ACTOR Stim5Green : PB_CelebratoryHealth
 {
 	+DONTGIB
 	+FLOORCLIP

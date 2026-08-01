@@ -1,0 +1,80 @@
+// Arms PressedLiveMeatGrab on Use when berserk fists can live-grab (skips Do-thing flourish).
+
+class PB_LiveMeatGrab
+{
+	play static bool HoldingGrabbed(Actor a)
+	{
+		if (!a) return false;
+		return a.CountInv("GrabbedAZombieman") > 0
+			|| a.CountInv("GrabbedAShotgunguy") > 0
+			|| a.CountInv("GrabbedAImp") > 0
+			|| a.CountInv("GrabbedADarkImp") > 0
+			|| a.CountInv("GrabbedAASGguy") > 0
+			|| a.CountInv("GrabbedACarbineZombie") > 0
+			|| a.CountInv("GrabbedACommando") > 0
+			|| a.CountInv("GrabbedAPlasmaZombie") > 0
+			|| a.CountInv("GrabbedAPB_NailgunGuy") > 0
+			|| a.CountInv("GrabbedAZombieScientist") > 0
+			|| a.CountInv("GrabbedASavageImp") > 0
+			|| a.CountInv("GrabbedATriclopsImp") > 0;
+	}
+
+	play static void ClearGrabbed(Actor a)
+	{
+		if (!a) return;
+		a.A_TakeInventory("GrabbedAZombieman", 1);
+		a.A_TakeInventory("GrabbedAShotgunguy", 1);
+		a.A_TakeInventory("GrabbedAImp", 1);
+		a.A_TakeInventory("GrabbedADarkImp", 1);
+		a.A_TakeInventory("GrabbedAASGguy", 1);
+		a.A_TakeInventory("GrabbedACarbineZombie", 1);
+		a.A_TakeInventory("GrabbedACommando", 1);
+		a.A_TakeInventory("GrabbedAPlasmaZombie", 1);
+		a.A_TakeInventory("GrabbedAPB_NailgunGuy", 1);
+		a.A_TakeInventory("GrabbedAZombieScientist", 1);
+		a.A_TakeInventory("GrabbedASavageImp", 1);
+		a.A_TakeInventory("GrabbedATriclopsImp", 1);
+	}
+
+	// Face-trace for ~150 mu; sets target so A_JumpIfCloser / grab missile resolve cleanly.
+	play static bool AimGrabTarget(Actor user)
+	{
+		if (!user) return false;
+		FLineTraceData t;
+		user.LineTrace(user.angle, 150.0, user.pitch, 0, offsetz: user.height * 0.5, data: t);
+		if (t.HitType != TRACE_HitActor || !t.HitActor)
+			return false;
+		Actor hit = t.HitActor;
+		if (!hit.bISMONSTER || hit.bCORPSE || hit.bFRIENDLY || hit.health <= 0)
+			return false;
+		user.target = hit;
+		return true;
+	}
+
+	play static bool TryArm(Actor user)
+	{
+		let pp = PlayerPawn(user);
+		if (!pp || !pp.player || !pp.player.ReadyWeapon)
+			return false;
+		if (!(pp.player.ReadyWeapon is "Melee_Attacks"))
+			return false;
+		if (pp.CountInv("PowerStrength") < 1)
+			return false;
+		if (pp.CountInv("GoFatality") > 0 || pp.CountInv("DoGloryMelee") > 0)
+			return false;
+		if (pp.CountInv("GotMeatShield") > 0 || pp.CountInv("CameraRunner") > 0)
+			return false;
+		if (pp.CountInv("HasBarrel") > 0 || pp.CountInv("HasIceBarrel") > 0 || pp.CountInv("HasBurningBarrel") > 0)
+			return false;
+		if (pp.CountInv("GrabbedBarrel") > 0 || pp.CountInv("GrabbedIceBarrel") > 0 || pp.CountInv("GrabbedBurningBarrel") > 0)
+			return false;
+		if (HoldingGrabbed(pp))
+			return false;
+		// Only arm (and suppress Do-thing) when a grab-eligible monster is in ~150 mu.
+		if (!AimGrabTarget(pp))
+			return false;
+
+		pp.A_GiveInventory("PressedLiveMeatGrab", 1);
+		return true;
+	}
+}

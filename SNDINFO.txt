@@ -4102,6 +4102,23 @@ M14FIRE "sounds/combat/weapons/XM21/M14FIRE.ogg"
 M14FIR2 "sounds/combat/weapons/XM21/M14FIR2.mp3"
 $volume M14FIRE 1.0
 $volume M14FIR2 1.0
+
+// Anti-Tank Rifle (Brutal Doom Plus / Tesefy) — sounds/combat/weapons/AntiTankRifle/
+weapons/antitank/fire "sounds/combat/weapons/AntiTankRifle/M14FIRE.ogg"
+weapons/antitank/deploy "sounds/combat/weapons/AntiTankRifle/KARUP.ogg"
+weapons/antitank/bolt "sounds/combat/weapons/AntiTankRifle/KAR98_01.wav"
+weapons/antitank/clack "sounds/combat/weapons/AntiTankRifle/DSMCLACK.ogg"
+weapons/antitank/explode "sounds/combat/weapons/XM21/dsbarex1.ogg"
+$rolloff weapons/antitank/fire 300 2200
+$volume weapons/antitank/fire 1.0
+
+// SPAS-12 (Brutal Doom Plus) — sounds/combat/weapons/SPAS12/
+weapons/spas12/raise "sounds/combat/weapons/SPAS12/SPAS12.ogg"
+weapons/spas12/fire "sounds/combat/weapons/SPAS12/SPASFIRE.ogg"
+weapons/spas12/insert "sounds/combat/weapons/SPAS12/SPASLR00.ogg"
+weapons/spas12/pump "sounds/combat/weapons/SPAS12/SPASLR03.ogg"
+$rolloff weapons/spas12/fire 200 1800
+$volume weapons/spas12/fire 1.0
 DMRIN "sounds/combat/weapons/XM21/DMRIN.ogg"
 DMROUT "sounds/combat/weapons/XM21/DMROUT.ogg"
 RELO1 "sounds/combat/weapons/XM21/RELO1.ogg"
@@ -5149,8 +5166,7 @@ $limit Blood/Spit       0
 Blood/Impact            monsters/BloodSkull/BLDIMPAC
 $limit Blood/Impact     0
 
-// Realm667  - Possessed Gibs (place VPG*.lmp or OGG at sounds/ per logical names, or add extensionless lumps)
-PossessedGibs/noodles monsters/possessedgibs/noodles
+// Realm667 - Possessed Gibs (VPG* under sounds/MONSTERS/PossessedGibs/)
 PossessedGibs/active VPGACT
 PossessedGibs/splat VPGSPLAT
 PossessedGibs/death VPGDEATH
@@ -5160,19 +5176,6 @@ vpggib2 VPGGIBS2
 $random PossessedGibs/shot { vpgshot1 vpgshot2 }
 vpgshot1 VPGSHOT1
 vpgshot2 VPGSHOT2
-// Launch / throw: varied wet splats + stock VPG + Nash gore (PGProjectile plays on spawn)
-$random PossessedGibs/throw {
-	PossessedGibs/splat
-	PossessedGibs/gibs
-	PossessedGibs/shot
-	nashgore/bloodsplash
-	nashgore/gibsmall
-	nashgore/gibbounce
-}
-$pitchset PossessedGibs/throw 0.82 1.18
-$volume PossessedGibs/throw 0.5
-$limit PossessedGibs/throw 4
-$pitchset PossessedGibs/noodles 0.85 0.95
 $pitchset PossessedGibs/active 0.8 0.8
 $pitchset PossessedGibs/death 0.7 0.9
 $pitchset PossessedGibs/splat 1.0 1.2
@@ -5182,7 +5185,6 @@ $pitchset vpgshot1 0.8 1.2
 $pitchset vpgshot2 0.8 1.2
 $volume PossessedGibs/shot 0.6
 $volume PossessedGibs/gibs 0.4
-$limit PossessedGibs/noodles 0
 $limit PossessedGibs/shot 0
 $limit PossessedGibs/splat 0
 $limit PossessedGibs/gibs 0

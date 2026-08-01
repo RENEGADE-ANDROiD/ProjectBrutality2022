@@ -250,6 +250,8 @@ ACTOR Melee_Attacks : PB_Weapon Replaces Fist
 		Goto ReadyFists
 	
 	Ready:
+		TNT1 A 0 A_JumpIfInventory("Hayulti", 1, "Hayulti")
+		TNT1 A 0 A_JumpIfInventory("Hayberserk", 1, "Hayberserk")
         TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
  		TNT1 A 0 A_JumpIfInventory("ShotgunguyHead",1,"ReadyShotgunguyHead")
         TNT1 A 0 A_JumpIfInventory("LostSoulFatality",1,"ReadySoul")
@@ -259,6 +261,8 @@ ACTOR Melee_Attacks : PB_Weapon Replaces Fist
 		TNT1 A 0 A_PlaySoundEx("weapons/fists_up", "Auto")
 		P9NS EFGHITUVW 1 
 	ReadyFists:
+		TNT1 A 0 A_JumpIfInventory("Hayulti", 1, "Hayulti")
+		TNT1 A 0 A_JumpIfInventory("Hayberserk", 1, "Hayberserk")
 		TNT1 A 0 {
 			if(CountInv("GoFatality") >= 1) {
 				SetPlayerProperty(0,1,0);
@@ -288,12 +292,27 @@ ACTOR Melee_Attacks : PB_Weapon Replaces Fist
 		TNT1 A 0 A_TakeInventory("PSeq3", 2)
 		TNT1 A 0 A_TakeInventory("PSeq4", 2)
 	ReadyFistsLoop:
+		TNT1 A 0 A_JumpIfInventory("Hayulti", 1, "Hayulti")
+		TNT1 A 0 A_JumpIfInventory("Hayberserk", 1, "Hayberserk")
         TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
  		TNT1 A 0 A_JumpIfInventory("ShotgunguyHead",1,"ReadyShotgunguyHead")
         TNT1 A 0 A_JumpIfInventory("LostSoulFatality",1,"ReadySoul")
 		TNT1 A 0 A_JumpIfInventory("PhantasmFatality",1, "ReadyPhantasm")
 		TNT1 A 0 A_JumpIfInventory("DoGloryMelee", 1, "GloryMelee")
 		TNT1 A 0 A_JumpIfInventory("DoShoulderCannon", 1, "FireShoulderCannon")
+		TNT1 A 0 A_JumpIfInventory("PressedLiveMeatGrab", 1, "CheckLiveGrab")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieman",1,"PickZombieman")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAShotgunguy",1,"PickShotgunguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAImp",1,"PickImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedADarkImp",1,"PickDarkImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAASGguy",1,"PickASGguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedACarbineZombie",1,"PickCarbineZombie")
+		TNT1 A 0 A_JumpIfInventory("GrabbedACommando",1,"PickCommando")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAPlasmaZombie",1,"PickPlasmaZombie")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAPB_NailgunGuy",1,"PickNailgunGuy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieScientist",1,"PickZombieScientist")
+		TNT1 A 0 A_JumpIfInventory("GrabbedASavageImp",1,"PickSavageImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedATriclopsImp",1,"PickTriclopsImp")
 		P0NG ABCDEFGHIJKLMNOPQRSRQPONMLKJIHGFEDCBA 1 {
 			if (CountInv("PowerBloodOnVisor") >= 1 ) { A_SetWeaponSprite("P1NG"); }
 			if (CountInv("PowerBlueBloodOnVisor") >= 1 ) { A_SetWeaponSprite("P2NG");}
@@ -407,7 +426,18 @@ ACTOR Melee_Attacks : PB_Weapon Replaces Fist
 		TNT1 A 0 A_GiveInventory("PB_LockScreenTilt",1)
 		TNT1 A 0 A_WeaponOffset(0,32)
 		TNT1 A 0 A_SetRoll(0)
-		
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieman",1,"ThrowZombieman")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAShotgunguy",1,"ThrowShotgunguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAImp",1,"ThrowImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedADarkImp",1,"ThrowDarkImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAASGguy",1,"ThrowASGguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedACarbineZombie",1,"ThrowCarbineZombie")
+		TNT1 A 0 A_JumpIfInventory("GrabbedACommando",1,"ThrowCommando")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAPlasmaZombie",1,"ThrowPlasmaZombie")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAPB_NailgunGuy",1,"ThrowNailgunGuy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieScientist",1,"ThrowZombieScientist")
+		TNT1 A 0 A_JumpIfInventory("GrabbedASavageImp",1,"ThrowSavageImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedATriclopsImp",1,"ThrowTriclopsImp")
 		TNT1 A 0 A_JumpIfInventory("ShotgunguyHead",1,"ShotgunguyHeadFire")
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
 		TNT1 A 0 A_JumpIfInventory("LostSoulFatality",1,"LSFire")
@@ -858,7 +888,18 @@ ACTOR Melee_Attacks : PB_Weapon Replaces Fist
 		TNT1 A 0 A_GiveInventory("PB_LockScreenTilt",1)
 		TNT1 A 0 A_WeaponOffset(0,32)
 		TNT1 A 0 A_SetRoll(0)
-		
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieman",1,"ShieldZombieman")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAShotgunguy",1,"ShieldShotgunguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAImp",1,"ShieldImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedADarkImp",1,"ShieldDarkImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAASGguy",1,"ShieldASGguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedACarbineZombie",1,"ShieldCarbineZombie")
+		TNT1 A 0 A_JumpIfInventory("GrabbedACommando",1,"ShieldCommando")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAPlasmaZombie",1,"ShieldPlasmaZombie")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAPB_NailgunGuy",1,"ShieldNailgunGuy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieScientist",1,"ShieldZombieScientist")
+		TNT1 A 0 A_JumpIfInventory("GrabbedASavageImp",1,"ShieldSavageImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedATriclopsImp",1,"ShieldTriclopsImp")
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
 		TNT1 A 0 A_PB_AirMeleeLunge(10)
 		TNT1 A 1 {
@@ -1618,6 +1659,461 @@ ACTOR Melee_Attacks : PB_Weapon Replaces Fist
 		PUNS F 2
 		PUNS E 2
 		Stop
+
+	// === Berserk live meat-grab (Brutal Doom Plus lineage) ===
+	CheckLiveGrab:
+		TNT1 A 0 A_TakeInventory("PressedLiveMeatGrab", 1)
+		TNT1 A 0 A_TakeInventory("MeatAmmo", 100)
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "ReadyFists")
+		TNT1 A 0 A_JumpIfInventory("GotMeatShield", 1, "ReadyFists")
+		TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, "GrabAttack")
+		Goto ReadyFists
+
+	GrabAttack:
+		PKUP ABC 1
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		PKUP DE 1
+		TNT1 A 0 A_FireCustomMissile("BerserkGrabAttack", 0, 0, 0, -15)
+		PKUP F 1
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieman",1,"PickZombieman")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAShotgunguy",1,"PickShotgunguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAImp",1,"PickImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedADarkImp",1,"PickDarkImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAASGguy",1,"PickASGguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedACarbineZombie",1,"PickCarbineZombie")
+		TNT1 A 0 A_JumpIfInventory("GrabbedACommando",1,"PickCommando")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAPlasmaZombie",1,"PickPlasmaZombie")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAPB_NailgunGuy",1,"PickNailgunGuy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieScientist",1,"PickZombieScientist")
+		TNT1 A 0 A_JumpIfInventory("GrabbedASavageImp",1,"PickSavageImp")
+		TNT1 A 0 A_JumpIfInventory("GrabbedATriclopsImp",1,"PickTriclopsImp")
+		PKUP GHIJK 1
+		Goto ReadyFists
+
+	LiveGrabThrowAnim:
+		THRW ABCDE 1
+		TNT1 A 5
+		Goto ReadyFists
+
+	PickZombieman:
+		GRZ1 C 1 offset(12, 32)
+		GRZ1 C 1 offset(6, 32)
+		GRZ1 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "ZombiemanDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShieldHuman", 15, 0, 15, 0)
+		GRZ1 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickZombieman+5
+		TNT1 AAAA 0
+		GRZ1 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickZombieman+5
+	ThrowZombieman:
+		GRZ1 D 1 offset(-4, 32)
+		GRZ1 D 1 offset(-9, 33)
+		GRZ1 D 1 offset(-16, 34)
+		GRZ1 D 2 offset(-24, 35)
+		GRZ1 D 3 offset(-36, 48)
+		GRZ1 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedZman", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldZombieman:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasZmanShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ1 A 1 offset(0,40)
+		GRZ1 A 1 offset(0,48)
+		Goto ReadyFists
+	ZombiemanDie:
+		TNT1 A 0 A_SpawnItem("ZombieXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickShotgunguy:
+		GRZ2 C 1 offset(12, 32)
+		GRZ2 C 1 offset(6, 32)
+		GRZ2 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "ShotgunguyDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShieldHuman", 15, 0, 15, 0)
+		GRZ2 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickShotgunguy+5
+		TNT1 AAAA 0
+		GRZ2 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickShotgunguy+5
+	ThrowShotgunguy:
+		GRZ2 D 1 offset(-4, 32)
+		GRZ2 D 1 offset(-9, 33)
+		GRZ2 D 1 offset(-16, 34)
+		GRZ2 D 2 offset(-24, 35)
+		GRZ2 D 3 offset(-36, 48)
+		GRZ2 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedSguy", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldShotgunguy:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasSguyShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ2 A 1 offset(0,40)
+		GRZ2 A 1 offset(0,48)
+		Goto ReadyFists
+	ShotgunguyDie:
+		TNT1 A 0 A_SpawnItem("SargeXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickImp:
+		GRZ3 C 1 offset(12, 32)
+		GRZ3 C 1 offset(6, 32)
+		GRZ3 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "ImpDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ3 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickImp+5
+		TNT1 AAAA 0
+		GRZ3 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickImp+5
+	ThrowImp:
+		GRZ3 D 1 offset(-4, 32)
+		GRZ3 D 1 offset(-9, 33)
+		GRZ3 D 1 offset(-16, 34)
+		GRZ3 D 2 offset(-24, 35)
+		GRZ3 D 3 offset(-36, 48)
+		GRZ3 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedImp", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldImp:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasImpShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ3 A 1 offset(0,40)
+		GRZ3 A 1 offset(0,48)
+		Goto ReadyFists
+	ImpDie:
+		TNT1 A 0 A_SpawnItem("ImpXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickDarkImp:
+		GRZ3 C 1 offset(12, 32)
+		GRZ3 C 1 offset(6, 32)
+		GRZ3 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "DarkImpDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ3 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickDarkImp+5
+		TNT1 AAAA 0
+		GRZ3 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickDarkImp+5
+	ThrowDarkImp:
+		GRZ3 D 1 offset(-4, 32)
+		GRZ3 D 1 offset(-9, 33)
+		GRZ3 D 1 offset(-16, 34)
+		GRZ3 D 2 offset(-24, 35)
+		GRZ3 D 3 offset(-36, 48)
+		GRZ3 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedDarkImp", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldDarkImp:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasDarkImpShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ3 A 1 offset(0,40)
+		GRZ3 A 1 offset(0,48)
+		Goto ReadyFists
+	DarkImpDie:
+		TNT1 A 0 A_SpawnItem("ImpXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickASGguy:
+		GRZ2 C 1 offset(12, 32)
+		GRZ2 C 1 offset(6, 32)
+		GRZ2 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "ASGguyDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShieldHuman", 15, 0, 15, 0)
+		GRZ2 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickASGguy+5
+		TNT1 AAAA 0
+		GRZ2 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickASGguy+5
+	ThrowASGguy:
+		GRZ2 D 1 offset(-4, 32)
+		GRZ2 D 1 offset(-9, 33)
+		GRZ2 D 1 offset(-16, 34)
+		GRZ2 D 2 offset(-24, 35)
+		GRZ2 D 3 offset(-36, 48)
+		GRZ2 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedASGGuy", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldASGguy:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasASGguyShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ2 A 1 offset(0,40)
+		GRZ2 A 1 offset(0,48)
+		Goto ReadyFists
+	ASGguyDie:
+		TNT1 A 0 A_SpawnItem("SargeXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickCarbineZombie:
+		GRZ1 C 1 offset(12, 32)
+		GRZ1 C 1 offset(6, 32)
+		GRZ1 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "CarbineZombieDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShieldHuman", 15, 0, 15, 0)
+		GRZ1 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickCarbineZombie+5
+		TNT1 AAAA 0
+		GRZ1 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickCarbineZombie+5
+	ThrowCarbineZombie:
+		GRZ1 D 1 offset(-4, 32)
+		GRZ1 D 1 offset(-9, 33)
+		GRZ1 D 1 offset(-16, 34)
+		GRZ1 D 2 offset(-24, 35)
+		GRZ1 D 3 offset(-36, 48)
+		GRZ1 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedCarbineGuy", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldCarbineZombie:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasCarbineZombieShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ1 A 1 offset(0,40)
+		GRZ1 A 1 offset(0,48)
+		Goto ReadyFists
+	CarbineZombieDie:
+		TNT1 A 0 A_SpawnItem("ZombieXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickCommando:
+		GRZ4 C 1 offset(12, 32)
+		GRZ4 C 1 offset(6, 32)
+		GRZ4 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "CommandoDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShieldHuman", 15, 0, 15, 0)
+		GRZ4 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickCommando+5
+		TNT1 AAAA 0
+		GRZ4 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickCommando+5
+	ThrowCommando:
+		GRZ4 D 1 offset(-4, 32)
+		GRZ4 D 1 offset(-9, 33)
+		GRZ4 D 1 offset(-16, 34)
+		GRZ4 D 2 offset(-24, 35)
+		GRZ4 D 3 offset(-36, 48)
+		GRZ4 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedCommando", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldCommando:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasCommandoShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ4 A 1 offset(0,40)
+		GRZ4 A 1 offset(0,48)
+		Goto ReadyFists
+	CommandoDie:
+		TNT1 A 0 A_SpawnItem("ZombieXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickPlasmaZombie:
+		GRZ1 C 1 offset(12, 32)
+		GRZ1 C 1 offset(6, 32)
+		GRZ1 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "PlasmaZombieDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShieldHuman", 15, 0, 15, 0)
+		GRZ1 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickPlasmaZombie+5
+		TNT1 AAAA 0
+		GRZ1 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickPlasmaZombie+5
+	ThrowPlasmaZombie:
+		GRZ1 D 1 offset(-4, 32)
+		GRZ1 D 1 offset(-9, 33)
+		GRZ1 D 1 offset(-16, 34)
+		GRZ1 D 2 offset(-24, 35)
+		GRZ1 D 3 offset(-36, 48)
+		GRZ1 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedPlasmaZombie", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldPlasmaZombie:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasPlasmaZombieShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ1 A 1 offset(0,40)
+		GRZ1 A 1 offset(0,48)
+		Goto ReadyFists
+	PlasmaZombieDie:
+		TNT1 A 0 A_SpawnItem("PlasmaZombieXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickNailgunGuy:
+		GRZ1 C 1 offset(12, 32)
+		GRZ1 C 1 offset(6, 32)
+		GRZ1 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "NailgunGuyDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShieldHuman", 15, 0, 15, 0)
+		GRZ1 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickNailgunGuy+5
+		TNT1 AAAA 0
+		GRZ1 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickNailgunGuy+5
+	ThrowNailgunGuy:
+		GRZ1 D 1 offset(-4, 32)
+		GRZ1 D 1 offset(-9, 33)
+		GRZ1 D 1 offset(-16, 34)
+		GRZ1 D 2 offset(-24, 35)
+		GRZ1 D 3 offset(-36, 48)
+		GRZ1 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedPB_NailgunGuy", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldNailgunGuy:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasPB_NailgunGuyShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ1 A 1 offset(0,40)
+		GRZ1 A 1 offset(0,48)
+		Goto ReadyFists
+	NailgunGuyDie:
+		TNT1 A 0 A_SpawnItem("ZombieXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickZombieScientist:
+		GRZ7 C 1 offset(12, 32)
+		GRZ7 C 1 offset(6, 32)
+		GRZ7 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "ZombieScientistDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShieldHuman", 15, 0, 15, 0)
+		GRZ7 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickZombieScientist+5
+		TNT1 AAAA 0
+		GRZ7 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickZombieScientist+5
+	ThrowZombieScientist:
+		GRZ7 D 1 offset(-4, 32)
+		GRZ7 D 1 offset(-9, 33)
+		GRZ7 D 1 offset(-16, 34)
+		GRZ7 D 2 offset(-24, 35)
+		GRZ7 D 3 offset(-36, 48)
+		GRZ7 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedZombieScientist", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldZombieScientist:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasZombieScientistShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ7 A 1 offset(0,40)
+		GRZ7 A 1 offset(0,48)
+		Goto ReadyFists
+	ZombieScientistDie:
+		TNT1 A 0 A_SpawnItem("ZombieXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickSavageImp:
+		GRZ3 C 1 offset(12, 32)
+		GRZ3 C 1 offset(6, 32)
+		GRZ3 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "SavageImpDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ3 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickSavageImp+5
+		TNT1 AAAA 0
+		GRZ3 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickSavageImp+5
+	ThrowSavageImp:
+		GRZ3 D 1 offset(-4, 32)
+		GRZ3 D 1 offset(-9, 33)
+		GRZ3 D 1 offset(-16, 34)
+		GRZ3 D 2 offset(-24, 35)
+		GRZ3 D 3 offset(-36, 48)
+		GRZ3 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedSavageImp", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldSavageImp:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasSavageImpShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ3 A 1 offset(0,40)
+		GRZ3 A 1 offset(0,48)
+		Goto ReadyFists
+	SavageImpDie:
+		TNT1 A 0 A_SpawnItem("SavageImpXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
+
+	PickTriclopsImp:
+		GRZ3 C 1 offset(12, 32)
+		GRZ3 C 1 offset(6, 32)
+		GRZ3 C 1 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "TriclopsImpDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ3 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickTriclopsImp+5
+		TNT1 AAAA 0
+		GRZ3 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickTriclopsImp+5
+	ThrowTriclopsImp:
+		GRZ3 D 1 offset(-4, 32)
+		GRZ3 D 1 offset(-9, 33)
+		GRZ3 D 1 offset(-16, 34)
+		GRZ3 D 2 offset(-24, 35)
+		GRZ3 D 3 offset(-36, 48)
+		GRZ3 D 1 offset(-24, 35)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedImp", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto LiveGrabThrowAnim
+	ShieldTriclopsImp:
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		TNT1 A 0 A_GiveInventory("HasTriclopsImpShield", 1)
+		TNT1 A 0 A_GiveInventory("GotMeatShield", 1)
+		GRZ3 A 1 offset(0,40)
+		GRZ3 A 1 offset(0,48)
+		Goto ReadyFists
+	TriclopsImpDie:
+		TNT1 A 0 A_SpawnItem("ImpXDeath", 0, 40)
+		TNT1 A 0 A_GiveInventory("ClearLiveMeatGrabTokens", 1)
+		Goto ReadyFists
 			
 		
 	}
