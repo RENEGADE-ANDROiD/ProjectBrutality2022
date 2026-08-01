@@ -14,6 +14,7 @@ ACTOR ZombiePlasmaTank
     PainSound "ZPTank/pain"
     DeathSound "ZPTank/death"
     DropItem PB_PlasmaZombie
+    DropItem "PB_SentryDrop_TankPlasma" 16
     Obituary "%o was melted by a zombie in a plasma tank."
     MONSTER 
     +FLOORCLIP

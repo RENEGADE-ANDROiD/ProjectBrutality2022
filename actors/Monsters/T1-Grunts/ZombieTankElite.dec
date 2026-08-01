@@ -15,6 +15,7 @@ ACTOR ZombieTankelite
     Obituary "Was melted by a Zombie Tank Elite."
 	Tag "Zombie Tank Elite"
 	DropItem ChaingunGuy
+	DropItem "PB_SentryDrop_TankElite" 16
     MONSTER 
     +FLOORCLIP
 	+NOBLOOD

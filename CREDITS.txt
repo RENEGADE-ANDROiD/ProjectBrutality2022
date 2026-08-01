@@ -66,7 +66,10 @@ Gameplay and content in this release
 - **Shield Saw** (GK_ShieldSaw lineage): **HUNG** — folded as quick-melee **`ShieldSaw_token`** + recall; see **`AGENTS.md`**.
 - Rocket jump, plasma wall climb, and instant weapon switch: included as
   configurable options with PB cvar names.
+- **PB3.0 Sentry Guns** (Jeniffer/Jenny Final Edition + Sentryguns.wad turret roster): equipment-wheel deployable auto-sentries (basic, pulse, and expanded Heavy/Repeater/Plasma/Rocket/Sniper/QSSG/Obelisk/Sonic/Missile/Rail/BFG/HeavyRocket/Napalm/Perforator/PlasmaCaster). Sprites/sounds under **`SPRITES/Items/SentryGuns/`** and **`sounds/combat/sentry/`**.
+- **PB3.0 UAC Survival Pack** (pipebomb / satchel / flare equipment fold; Type-J grenade omitted — PB HandGrenade gear covers that role): **`actors/Items/UACSurvival/`**, art under **`SPRITES/Items/UACSurvival/`**, audio under **`sounds/combat/uacsurvival/`**.
 - **Cat's Frozen Addon** (SchrödingCat): frozen-monster statue sprites under
+
   **`SPRITES/Monsters/CatsFrozenFrozen/`** (**`PB_FrozenSolidHandler`** /
   **`PB_FrozenSolid*`**, always on — see **`AGENTS.md`**). Frost combat monsters
   (always-on; rolled directly by the vanilla baron / mancubus / cacodemon / arachnotron

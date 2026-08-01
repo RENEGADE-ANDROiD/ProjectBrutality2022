@@ -4217,6 +4217,26 @@ class PB_EventHandler : EventHandler
 		if (s ~== "PB_CF_TeslaTurretAmmo")     { primary = 'PBCF_CF_TeslaTurret';    burst = 'MineElectricity'; return; }
 		if (s ~== "PB_CF_FreezeMineAmmo")      { primary = 'PBCF_CF_FreezeMine';     burst = 'PBCF_CryoWind'; return; }
 		if (s ~== "PB_CF_SnowCasterAmmo")      { primary = '';                     burst = 'PBCF_SnowParticle'; return; }
+		if (s ~== "PB_SentryAmmo_Basic")       { primary = 'PB_SentryGun';          burst = 'PB_SentryGunTracer'; return; }
+		if (s ~== "PB_SentryAmmo_Pulse")       { primary = 'PB_PulseSentryGun';     burst = 'ChexBall'; return; }
+		if (s ~== "PB_SentryAmmo_Heavy")       { primary = 'PB_SentryGun_Heavy';    burst = 'MonsterMinigunTracer'; return; }
+		if (s ~== "PB_SentryAmmo_Repeater")    { primary = 'PB_SentryGun_Repeater'; burst = 'MonsterMinigunTracer'; return; }
+		if (s ~== "PB_SentryAmmo_Plasma")      { primary = 'PB_SentryGun_Plasma';   burst = 'Plasma_Ball'; return; }
+		if (s ~== "PB_SentryAmmo_Rocket")      { primary = 'PB_SentryGun_Rocket';   burst = 'PB_Sentry_MissileRocket'; return; }
+		if (s ~== "PB_SentryAmmo_Sniper")      { primary = 'PB_SentryGun_Sniper';   burst = 'MonsterMinigunTracer'; return; }
+		if (s ~== "PB_SentryAmmo_QSSG")        { primary = 'PB_SentryGun_QSSG';     burst = 'MonsterMinigunTracer'; return; }
+		if (s ~== "PB_SentryAmmo_Obelisk")     { primary = 'PB_SentryGun_Obelisk';  burst = 'PB_Sentry_ObeliskProj'; return; }
+		if (s ~== "PB_SentryAmmo_Sonic")       { primary = 'PB_SentryGun_Sonic';    burst = 'PB_Sentry_SonicProj'; return; }
+		if (s ~== "PB_SentryAmmo_Missile")     { primary = 'PB_SentryGun_Missile';  burst = 'PB_Sentry_MissileRocket'; return; }
+		if (s ~== "PB_SentryAmmo_Rail")        { primary = 'PB_SentryGun_Rail';     burst = 'PB_Sentry_RailShot'; return; }
+		if (s ~== "PB_SentryAmmo_BFG")         { primary = 'PB_SentryGun_BFG';      burst = 'SuperBFGBall'; return; }
+		if (s ~== "PB_SentryAmmo_HeavyRocket") { primary = 'PB_SentryGun_HeavyRocket'; burst = 'PB_Sentry_MissileRocket'; return; }
+		if (s ~== "PB_SentryAmmo_Napalm")      { primary = 'PB_SentryGun_Napalm';   burst = 'PB_Sentry_NapalmBall'; return; }
+		if (s ~== "PB_SentryAmmo_Perforator")  { primary = 'PB_SentryGun_Perforator'; burst = 'PB_Sentry_Pulverizer'; return; }
+		if (s ~== "PB_SentryAmmo_PlasmaCaster"){ primary = 'PB_SentryGun_PlasmaCaster'; burst = 'Plasma_Ball'; return; }
+		if (s ~== "PB_UAC_PipebombAmmo")       { primary = 'PB_UAC_Pipebomb';       burst = 'PB_PlayerHandGrenadeExplosion'; return; }
+		if (s ~== "PB_UAC_SatchelAmmo")         { primary = 'PB_UAC_Satchel';        burst = 'PB_PlayerHandGrenadeExplosion'; return; }
+		if (s ~== "PB_UAC_FlareAmmo")           { primary = 'PB_UAC_ThrownFlare';    burst = ''; return; }
 	}
 
 	void PDA_EquipStrip_AppendOutcomeLabelPass(Name nm, string label, bool mainTile,
@@ -4360,11 +4380,16 @@ class PB_EventHandler : EventHandler
 		bool useSeg, int hardCap,
 		int maxFrames, int fixedTic)
 	{
+		if (PDA_EquipStrip_AppendActiveOneLabel(compNm, "PDA_Preview", outFr, outTi, outSeg, useSeg, hardCap, maxFrames, fixedTic))
+			return;
 		if (PDA_EquipStrip_AppendActiveOneLabel(compNm, "Idle", outFr, outTi, outSeg, useSeg, hardCap, maxFrames, fixedTic))
 			return;
 		if (PDA_EquipStrip_AppendActiveOneLabel(compNm, "Active", outFr, outTi, outSeg, useSeg, hardCap, maxFrames, fixedTic))
 			return;
 		if (PDA_EquipStrip_AppendActiveOneLabel(compNm, "Hover", outFr, outTi, outSeg, useSeg, hardCap, maxFrames, fixedTic))
+			return;
+		// Prefer Missile combat art for turrets/sentries before idle See loops.
+		if (PDA_EquipStrip_AppendActiveOneLabel(compNm, "Missile", outFr, outTi, outSeg, useSeg, hardCap, maxFrames, fixedTic))
 			return;
 		if (PDA_EquipStrip_AppendActiveOneLabel(compNm, "See", outFr, outTi, outSeg, useSeg, hardCap, maxFrames, fixedTic))
 			return;
@@ -4615,6 +4640,26 @@ class PB_EventHandler : EventHandler
 		if (s ~== "PB_CF_TeslaTurretAmmo")    { out1 = 'PBCF_CF_TeslaTurret'; out2 = 'MineElectricity'; return; }
 		if (s ~== "PB_CF_FreezeMineAmmo")     { out1 = 'PBCF_CF_FreezeMine';  out2 = ''; return; }
 		if (s ~== "PB_CF_SnowCasterAmmo")     { out1 = 'PBCF_CF_SnowCasterEmitter'; out2 = ''; return; }
+		if (s ~== "PB_SentryAmmo_Basic")      { out1 = 'PB_SentryGun'; out2 = 'PB_SentryBoom'; return; }
+		if (s ~== "PB_SentryAmmo_Pulse")      { out1 = 'PB_PulseSentryGun'; out2 = 'PB_SentryBoom'; return; }
+		if (s ~== "PB_SentryAmmo_Heavy")      { out1 = 'PB_SentryGun_Heavy'; out2 = 'PB_SentryBoom'; return; }
+		if (s ~== "PB_SentryAmmo_Repeater")   { out1 = 'PB_SentryGun_Repeater'; out2 = 'PB_SentryBoom'; return; }
+		if (s ~== "PB_SentryAmmo_Plasma")     { out1 = 'PB_SentryGun_Plasma'; out2 = 'PB_SentryBoom'; return; }
+		if (s ~== "PB_SentryAmmo_Rocket")     { out1 = 'PB_SentryGun_Rocket'; out2 = 'PB_SentryBoom'; return; }
+		if (s ~== "PB_SentryAmmo_Sniper")     { out1 = 'PB_SentryGun_Sniper'; out2 = 'PB_SentryBoom'; return; }
+		if (s ~== "PB_SentryAmmo_QSSG")       { out1 = 'PB_SentryGun_QSSG'; out2 = 'PB_SentryBoom'; return; }
+		if (s ~== "PB_SentryAmmo_Obelisk")    { out1 = 'PB_SentryGun_Obelisk'; out2 = 'PB_Sentry_ObeliskProj'; return; }
+		if (s ~== "PB_SentryAmmo_Sonic")      { out1 = 'PB_SentryGun_Sonic'; out2 = 'PB_Sentry_SonicProj'; return; }
+		if (s ~== "PB_SentryAmmo_Missile")    { out1 = 'PB_SentryGun_Missile'; out2 = 'PB_Sentry_MissileRocket'; return; }
+		if (s ~== "PB_SentryAmmo_Rail")       { out1 = 'PB_SentryGun_Rail'; out2 = 'PB_Sentry_RailShot'; return; }
+		if (s ~== "PB_SentryAmmo_BFG")        { out1 = 'PB_SentryGun_BFG'; out2 = 'SuperBFGBall'; return; }
+		if (s ~== "PB_SentryAmmo_HeavyRocket"){ out1 = 'PB_SentryGun_HeavyRocket'; out2 = 'PB_Sentry_MissileRocket'; return; }
+		if (s ~== "PB_SentryAmmo_Napalm")     { out1 = 'PB_SentryGun_Napalm'; out2 = 'PB_Sentry_NapalmBall'; return; }
+		if (s ~== "PB_SentryAmmo_Perforator") { out1 = 'PB_SentryGun_Perforator'; out2 = 'PB_Sentry_Pulverizer'; return; }
+		if (s ~== "PB_SentryAmmo_PlasmaCaster"){ out1 = 'PB_SentryGun_PlasmaCaster'; out2 = 'Plasma_Ball'; return; }
+		if (s ~== "PB_UAC_PipebombAmmo")      { out1 = 'PB_UAC_Pipebomb'; out2 = ''; return; }
+		if (s ~== "PB_UAC_SatchelAmmo")        { out1 = 'PB_UAC_Satchel'; out2 = ''; return; }
+		if (s ~== "PB_UAC_FlareAmmo")          { out1 = 'PB_UAC_ThrownFlare'; out2 = ''; return; }
 		if (s ~== "FlameBelchSelected")       { out1 = 'GloryFireMissile';    out2 = ''; return; }
 		if (s ~== "IceBombSelected")          { out1 = 'SC_CryoGrenade';      out2 = ''; return; }
 		if (s ~== "GK_FlamebelchSelected")    { out1 = 'GloryFireMissile';    out2 = ''; return; }
@@ -6260,6 +6305,8 @@ class PB_EventHandler : EventHandler
 		double sc = min(targetH / ts.Y, targetW / ts.X);
 		double dw = ts.X * sc;
 		double dh = ts.Y * sc;
+		if (dw > targetW) { sc *= targetW / dw; dw = ts.X * sc; dh = ts.Y * sc; }
+		if (dh > targetH) { sc *= targetH / dh; dw = ts.X * sc; dh = ts.Y * sc; }
 		double cx = double(pdaPreviewPaneX) + double(pdaPreviewPaneW) * 0.5;
 		double cy = double(pdaPreviewPaneY) + double(pdaPreviewPaneH) * 0.44;
 		int clipL = pdaPreviewPaneX + 2;
@@ -6268,7 +6315,7 @@ class PB_EventHandler : EventHandler
 		int clipB = pdaPreviewPaneY + pdaPreviewPaneH - 2;
 		Screen.DrawTexture(drawTex, false, cx, cy,
 			DTA_DestWidthF, dw, DTA_DestHeightF, dh,
-			DTA_Alpha, gAlpha, DTA_CenterOffset, true,
+			DTA_Alpha, gAlpha, DTA_CenterOffset, true, DTA_KeepRatio, true,
 			DTA_ClipLeft, clipL, DTA_ClipTop, clipT, DTA_ClipRight, clipR, DTA_ClipBottom, clipB);
 		if (haveAnim && pdaPrevCurFrame >= 0 && pdaPrevCurFrame < pdaPrevSegIdx.Size())
 		{
@@ -6665,6 +6712,11 @@ class PB_EventHandler : EventHandler
 		double sc = coverFit ? max(maxW / ts.X, maxH / ts.Y) : min(maxW / ts.X, maxH / ts.Y);
 		double dw = ts.X * sc;
 		double dh = ts.Y * sc;
+		if (!coverFit)
+		{
+			if (dw > maxW) { sc *= maxW / dw; dw = ts.X * sc; dh = ts.Y * sc; }
+			if (dh > maxH) { sc *= maxH / dh; dw = ts.X * sc; dh = ts.Y * sc; }
+		}
 		if (clipToMaxBox)
 		{
 			int clipL = int(cx - maxW * 0.5);
@@ -6673,13 +6725,13 @@ class PB_EventHandler : EventHandler
 			int clipB = int(cy + maxH * 0.5);
 			Screen.DrawTexture(tex, false, cx, cy,
 				DTA_DestWidthF, dw, DTA_DestHeightF, dh,
-				DTA_Alpha, alpha, DTA_CenterOffset, true,
+				DTA_Alpha, alpha, DTA_CenterOffset, true, DTA_KeepRatio, true,
 				DTA_ClipLeft, clipL, DTA_ClipTop, clipT, DTA_ClipRight, clipR, DTA_ClipBottom, clipB);
 			return;
 		}
 		Screen.DrawTexture(tex, false, cx, cy,
 			DTA_DestWidthF, dw, DTA_DestHeightF, dh,
-			DTA_Alpha, alpha, DTA_CenterOffset, true);
+			DTA_Alpha, alpha, DTA_CenterOffset, true, DTA_KeepRatio, true);
 	}
 
 	ui void DrawPDAEquipmentWheelRing(int cx, int cy, double radius, double alpha, double pulseMul) const
@@ -6892,7 +6944,7 @@ class PB_EventHandler : EventHandler
 						else if (UiObjects[i].objecttype == 14 && pdaMainEquipFrames.Size() > 0)
 							anim = pdaMainEquipFrames[pdaMainEquipCur];
 						if (anim.IsValid())
-							DrawClipFittedTexture(anim, midX, midCont, slotW, slotH, globalPDAAlpha * 0.92, false, true);
+							DrawClipFittedTexture(anim, midX, midCont, slotW, slotH, globalPDAAlpha * 0.92, false, false);
 						Screen.Dim(color(6, 10, 18), 0.62 * globalPDAAlpha, bx + 4, contentBottom - 4, bw - 8, bandH + 8);
 						string lab = UiObjects[i].toDraw;
 						double lblSc = pdaTextScale * 0.72;

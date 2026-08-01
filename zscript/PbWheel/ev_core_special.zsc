@@ -33,6 +33,7 @@ Class PB_SpecialWheelHandler : EventHandler
 	
 	string selectedWeapon;
 	bool weaponPickWheel;
+	bool sentryGunsWheel;
 	int weaponPickWheel_LastEmptyMsgMapTime;
 
 	// Weapon pick wheel: one outer slice per occupied slot, inner ring for multi-weapon slots.
@@ -459,6 +460,7 @@ Class PB_SpecialWheelHandler : EventHandler
 		wheelSort = false;
 		noWheel = false;
 		weaponPickWheel = false;
+		sentryGunsWheel = false;
 		weaponPickWheel_LastEmptyMsgMapTime = -1000000000;
 		wpick_SlotNums.Clear();
 		wpick_SlotStart.Clear();
@@ -529,6 +531,7 @@ Class PB_SpecialWheelHandler : EventHandler
 			wheelShow.Clear();
 			wheelIsOpen = false;
 			weaponPickWheel = false;
+			sentryGunsWheel = false;
 			wheelSort = false;
 			noWheel = true;
 			return;
@@ -623,8 +626,8 @@ Class PB_SpecialWheelHandler : EventHandler
 			// Equipment wheel slices are prefixed WW_*; give it a wider reach so the
 			// cursor/stick can "flick" to the wider equipment orbit without changing
 			// weapon-special wheel feel.
-			bool isEquipmentWheel = false;
-			if (!weaponPickWheel && wheelShow.Size() > 0)
+			bool isEquipmentWheel = sentryGunsWheel;
+			if (!isEquipmentWheel && !weaponPickWheel && wheelShow.Size() > 0)
 			{
 				for (int i = 0; i < wheelShow.Size(); i++)
 				{
@@ -2194,6 +2197,46 @@ Class PB_SpecialWheelHandler : EventHandler
 		if (specialName == "WW_PB_CF_HoloDecoySelected") return pl.CountInv("PB_CF_HoloDecoyAmmo") > 0;
 		if (specialName == "WW_PB_CF_TeslaTurretSelected") return pl.CountInv("PB_CF_TeslaTurretAmmo") > 0;
 		if (specialName == "WW_PB_CF_FreezeMineSelected") return pl.CountInv("PB_CF_FreezeMineAmmo") > 0;
+		if (specialName == "WW_PB_SentrySelected")
+		{
+			return pl.CountInv("PB_SentryAmmo_Basic") > 0
+				|| pl.CountInv("PB_SentryAmmo_Pulse") > 0
+				|| pl.CountInv("PB_SentryAmmo_Heavy") > 0
+				|| pl.CountInv("PB_SentryAmmo_Repeater") > 0
+				|| pl.CountInv("PB_SentryAmmo_Plasma") > 0
+				|| pl.CountInv("PB_SentryAmmo_Rocket") > 0
+				|| pl.CountInv("PB_SentryAmmo_Sniper") > 0
+				|| pl.CountInv("PB_SentryAmmo_QSSG") > 0
+				|| pl.CountInv("PB_SentryAmmo_Obelisk") > 0
+				|| pl.CountInv("PB_SentryAmmo_Sonic") > 0
+				|| pl.CountInv("PB_SentryAmmo_Missile") > 0
+				|| pl.CountInv("PB_SentryAmmo_Rail") > 0
+				|| pl.CountInv("PB_SentryAmmo_BFG") > 0
+				|| pl.CountInv("PB_SentryAmmo_HeavyRocket") > 0
+				|| pl.CountInv("PB_SentryAmmo_Napalm") > 0
+				|| pl.CountInv("PB_SentryAmmo_Perforator") > 0
+				|| pl.CountInv("PB_SentryAmmo_PlasmaCaster") > 0;
+		}
+		if (specialName == "Select_PB_Sentry_Basic") return pl.CountInv("PB_SentryAmmo_Basic") > 0;
+		if (specialName == "Select_PB_Sentry_Pulse") return pl.CountInv("PB_SentryAmmo_Pulse") > 0;
+		if (specialName == "Select_PB_Sentry_Heavy") return pl.CountInv("PB_SentryAmmo_Heavy") > 0;
+		if (specialName == "Select_PB_Sentry_Repeater") return pl.CountInv("PB_SentryAmmo_Repeater") > 0;
+		if (specialName == "Select_PB_Sentry_Plasma") return pl.CountInv("PB_SentryAmmo_Plasma") > 0;
+		if (specialName == "Select_PB_Sentry_Rocket") return pl.CountInv("PB_SentryAmmo_Rocket") > 0;
+		if (specialName == "Select_PB_Sentry_Sniper") return pl.CountInv("PB_SentryAmmo_Sniper") > 0;
+		if (specialName == "Select_PB_Sentry_QSSG") return pl.CountInv("PB_SentryAmmo_QSSG") > 0;
+		if (specialName == "Select_PB_Sentry_Obelisk") return pl.CountInv("PB_SentryAmmo_Obelisk") > 0;
+		if (specialName == "Select_PB_Sentry_Sonic") return pl.CountInv("PB_SentryAmmo_Sonic") > 0;
+		if (specialName == "Select_PB_Sentry_Missile") return pl.CountInv("PB_SentryAmmo_Missile") > 0;
+		if (specialName == "Select_PB_Sentry_Rail") return pl.CountInv("PB_SentryAmmo_Rail") > 0;
+		if (specialName == "Select_PB_Sentry_BFG") return pl.CountInv("PB_SentryAmmo_BFG") > 0;
+		if (specialName == "Select_PB_Sentry_HeavyRocket") return pl.CountInv("PB_SentryAmmo_HeavyRocket") > 0;
+		if (specialName == "Select_PB_Sentry_Napalm") return pl.CountInv("PB_SentryAmmo_Napalm") > 0;
+		if (specialName == "Select_PB_Sentry_Perforator") return pl.CountInv("PB_SentryAmmo_Perforator") > 0;
+		if (specialName == "Select_PB_Sentry_PlasmaCaster") return pl.CountInv("PB_SentryAmmo_PlasmaCaster") > 0;
+		if (specialName == "WW_PB_UAC_PipebombSelected") return pl.CountInv("PB_UAC_PipebombAmmo") > 0;
+		if (specialName == "WW_PB_UAC_SatchelSelected") return pl.CountInv("PB_UAC_SatchelAmmo") > 0;
+		if (specialName == "WW_PB_UAC_FlareSelected") return pl.CountInv("PB_UAC_FlareAmmo") > 0;
 		if (specialName == "Select_LeverAction_HellMode") return pl.CountInv("LeverActionHellTier") >= 1;
 		return true;
 	}
@@ -2441,6 +2484,38 @@ Class PB_SpecialWheelHandler : EventHandler
 				equip_cf_fm.specialPriority = 16;
 				equip_cf_fm.iconScale = iconScale;
 				if (WheelSliceIsUsable(pl, equip_cf_fm.specialName)) { wheelSpecials.Push(equip_cf_fm); }
+
+				PB_SpecialWheel_Mode equip_sg = new ("PB_SpecialWheel_Mode");
+				equip_sg.specialIcon = TexMan.CheckForTexture("SENBB0", TexMan.Type_Any);
+				equip_sg.specialName = "WW_PB_SentrySelected";
+				equip_sg.specialAlias = "Sentry Guns";
+				equip_sg.specialPriority = 50;
+				equip_sg.iconScale = iconScale;
+				if (WheelSliceIsUsable(pl, equip_sg.specialName)) { wheelSpecials.Push(equip_sg); }
+
+				PB_SpecialWheel_Mode equip_uac_pipe = new ("PB_SpecialWheel_Mode");
+				equip_uac_pipe.specialIcon = TexMan.CheckForTexture("PIPBA0", TexMan.Type_Any);
+				equip_uac_pipe.specialName = "WW_PB_UAC_PipebombSelected";
+				equip_uac_pipe.specialAlias = "Pipe Bomb";
+				equip_uac_pipe.specialPriority = 70;
+				equip_uac_pipe.iconScale = iconScale;
+				if (WheelSliceIsUsable(pl, equip_uac_pipe.specialName)) { wheelSpecials.Push(equip_uac_pipe); }
+
+				PB_SpecialWheel_Mode equip_uac_satchel = new ("PB_SpecialWheel_Mode");
+				equip_uac_satchel.specialIcon = TexMan.CheckForTexture("STCGA0", TexMan.Type_Any);
+				equip_uac_satchel.specialName = "WW_PB_UAC_SatchelSelected";
+				equip_uac_satchel.specialAlias = "Satchel Charge";
+				equip_uac_satchel.specialPriority = 71;
+				equip_uac_satchel.iconScale = iconScale;
+				if (WheelSliceIsUsable(pl, equip_uac_satchel.specialName)) { wheelSpecials.Push(equip_uac_satchel); }
+
+				PB_SpecialWheel_Mode equip_uac_flare = new ("PB_SpecialWheel_Mode");
+				equip_uac_flare.specialIcon = TexMan.CheckForTexture("FBOXA0", TexMan.Type_Any);
+				equip_uac_flare.specialName = "WW_PB_UAC_FlareSelected";
+				equip_uac_flare.specialAlias = "Flare";
+				equip_uac_flare.specialPriority = 72;
+				equip_uac_flare.iconScale = iconScale;
+				if (WheelSliceIsUsable(pl, equip_uac_flare.specialName)) { wheelSpecials.Push(equip_uac_flare); }
 				
 				if (wheelSpecials.Size() < 1)
 				{
@@ -2449,6 +2524,160 @@ Class PB_SpecialWheelHandler : EventHandler
 				}
 
 				specialWheel_handleMouse();
+	}
+
+	void specialWheel_SentryGuns()
+	{
+		wheelSpecials.Clear();
+		iconScale = (0.65, 0.65);
+		let pl = PlayerPawn(players[consoleplayer].mo);
+		sentryGunsWheel = true;
+
+		PB_SpecialWheel_Mode sg;
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENBB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Basic";
+		sg.specialAlias = "Basic Sentry";
+		sg.specialPriority = 1;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("PLSPA0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Pulse";
+		sg.specialAlias = "Pulse Sentry";
+		sg.specialPriority = 2;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENBB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Heavy";
+		sg.specialAlias = "Heavy Sentry";
+		sg.specialPriority = 3;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENBB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Repeater";
+		sg.specialAlias = "Repeater Sentry";
+		sg.specialPriority = 4;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Plasma";
+		sg.specialAlias = "Plasma Sentry";
+		sg.specialPriority = 5;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Rocket";
+		sg.specialAlias = "Rocket Sentry";
+		sg.specialPriority = 6;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Sniper";
+		sg.specialAlias = "Sniper Sentry";
+		sg.specialPriority = 7;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_QSSG";
+		sg.specialAlias = "QSSG Sentry";
+		sg.specialPriority = 8;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("OBLKA0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Obelisk";
+		sg.specialAlias = "Obelisk Sentry";
+		sg.specialPriority = 9;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SNCEA1", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Sonic";
+		sg.specialAlias = "Sonic Sentry";
+		sg.specialPriority = 10;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Missile";
+		sg.specialAlias = "Missile Sentry";
+		sg.specialPriority = 11;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Rail";
+		sg.specialAlias = "Rail Sentry";
+		sg.specialPriority = 12;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_BFG";
+		sg.specialAlias = "BFG Sentry";
+		sg.specialPriority = 13;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_HeavyRocket";
+		sg.specialAlias = "Heavy Rocket Sentry";
+		sg.specialPriority = 14;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Napalm";
+		sg.specialAlias = "Napalm Sentry";
+		sg.specialPriority = 15;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_Perforator";
+		sg.specialAlias = "Perforator Sentry";
+		sg.specialPriority = 16;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		sg = new ("PB_SpecialWheel_Mode");
+		sg.specialIcon = TexMan.CheckForTexture("SENXB0", TexMan.Type_Any);
+		sg.specialName = "Select_PB_Sentry_PlasmaCaster";
+		sg.specialAlias = "Plasma Caster Sentry";
+		sg.specialPriority = 17;
+		sg.iconScale = iconScale;
+		if (WheelSliceIsUsable(pl, sg.specialName)) { wheelSpecials.Push(sg); }
+
+		if (wheelSpecials.Size() < 1)
+		{
+			if (pl) pl.A_Print("\cgNo \ctsentry kits \c-left");
+			sentryGunsWheel = false;
+			return;
+		}
+
+		specialWheel_handleMouse();
 	}
 
 	Override Void NetworkProcess(ConsoleEvent e)
@@ -2532,6 +2761,7 @@ Class PB_SpecialWheelHandler : EventHandler
 		
             if (wheelIsOpen) { return; }
 			weaponPickWheel = false;
+			sentryGunsWheel = false;
 			
 
 			if (pmo.FindInventory("Melee_Attacks")){
@@ -2553,7 +2783,14 @@ Class PB_SpecialWheelHandler : EventHandler
 				{
 					ClampWheelSelection();
 					int curSelMod = wheelShow[currentSelection];
-					pmo.A_GiveInventory(wheelSpecials[curSelMod].specialName);
+					String chosen = wheelSpecials[curSelMod].specialName;
+					if (chosen == "WW_PB_SentrySelected")
+					{
+						S_StartSound("menu/choose",5);
+						specialWheel_SentryGuns();
+						return;
+					}
+					pmo.A_GiveInventory(chosen);
 					pmo.A_GiveInventory("ToggleEquipment");
 					S_StartSound("menu/choose",5);
 				}
@@ -2561,6 +2798,7 @@ Class PB_SpecialWheelHandler : EventHandler
 			pmo.A_TakeInventory("PlayerWheelOpen");
 			wheelSort = false;
 			wheelIsOpen = false;
+			sentryGunsWheel = false;
 		}
 	
 	if(e.name == 'PBWeaponSpecialOn')

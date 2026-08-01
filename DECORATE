@@ -431,6 +431,11 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Equipments/Freezebot.dec"
 #include "actors/Equipments/ElecPod2.dec"
 #include "actors/Items/CatsFrozen/Equipment.dec"
+#include "actors/Items/SentryGuns/PB_SentryTokens.dec"
+#include "actors/Items/SentryGuns/PB_SentryGuns.dec"
+#include "actors/Items/SentryGuns/PB_SentryGuns_WAD.dec"
+#include "actors/Items/SentryGuns/PB_SentryDrops.dec"
+#include "actors/Items/UACSurvival/PB_UACSurvival.dec"
 
 
 

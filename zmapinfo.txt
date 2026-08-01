@@ -452,6 +452,28 @@ DoomEdNums
 	23253 = PB_AntiTankRifle
 	23254 = PB_SPAS12
 
+	// PB3 Sentry Guns map pickups (folder ednums + WAD boxes)
+	12369 = PB_SentryBox
+	31004 = PB_SentryBox_Pulse
+	23255 = PB_SentryBox_Heavy
+	23256 = PB_SentryBox_Repeater
+	23257 = PB_SentryBox_Plasma
+	23258 = PB_SentryBox_Rocket
+	23259 = PB_SentryBox_Sniper
+	23260 = PB_SentryBox_QSSG
+	23261 = PB_SentryBox_Obelisk
+	23262 = PB_SentryBox_Sonic
+	23263 = PB_SentryBox_Missile
+	23264 = PB_SentryBox_Rail
+	23265 = PB_SentryBox_BFG
+	23266 = PB_SentryBox_HeavyRocket
+	23267 = PB_SentryBox_Napalm
+	23268 = PB_SentryBox_Perforator
+	23269 = PB_SentryBox_PlasmaCaster
+	23270 = PB_UAC_PipebombPickup
+	23271 = PB_UAC_SatchelPickup
+	23272 = PB_UAC_FlarePickup
+
 	17003 = CyberdemonLegsFatality
 
 	5123  = CrackoDemon

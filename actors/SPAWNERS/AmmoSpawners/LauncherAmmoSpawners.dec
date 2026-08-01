@@ -37,7 +37,19 @@ Actor RocketBoxClusterToken  : DemonPickup
 		TNT1 A 0 A_SpawnItemEx("SpecialGrenadeBox",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnComboBox:
+		TNT1 A 0 A_Jump(40, "SpawnUACEquip")
 		TNT1 A 0 A_SpawnItemEx("GrenadeBox",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnUACEquip:
+		TNT1 A 0 A_Jump(256, "SpawnUACPipe", "SpawnUACSatchel", "SpawnUACFlare")
+	SpawnUACPipe:
+		TNT1 A 0 A_SpawnItemEx("PB_UAC_PipebombPickup",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnUACSatchel:
+		TNT1 A 0 A_SpawnItemEx("PB_UAC_SatchelPickup",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnUACFlare:
+		TNT1 A 0 A_SpawnItemEx("PB_UAC_FlarePickup",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	}
 }
@@ -75,7 +87,19 @@ Actor SingleRocketClusterToken : DemonPickup
 		loop	
 	SpawnGrenadesandMines:
 	SpawnHandGrenade:
+		TNT1 A 0 A_Jump(40, "SpawnUACEquipSingle")
 		TNT1 A 0 A_SpawnItemEx("SingleHandGrenade",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnUACEquipSingle:
+		TNT1 A 0 A_Jump(256, "SpawnUACPipeS", "SpawnUACSatchelS", "SpawnUACFlareS")
+	SpawnUACPipeS:
+		TNT1 A 0 A_SpawnItemEx("PB_UAC_PipebombPickup",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnUACSatchelS:
+		TNT1 A 0 A_SpawnItemEx("PB_UAC_SatchelPickup",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnUACFlareS:
+		TNT1 A 0 A_SpawnItemEx("PB_UAC_FlarePickup",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnMine:	
 		TNT1 A 0 A_SpawnItemEx("SingleLandMine",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)

@@ -14,6 +14,7 @@ Actor PB_NailgunMajor : PB_Commando Replaces ChaingunGuy
   Obituary "%o was perforated by a nailgun major."
   Decal Bulletchip
   Dropitem "DroppedPB_Nailgun", 256
+  DropItem "PB_SentryDrop_Common" 5
   States
   {
   Death.Shrink:
