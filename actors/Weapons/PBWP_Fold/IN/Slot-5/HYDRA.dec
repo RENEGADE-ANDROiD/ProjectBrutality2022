@@ -304,13 +304,13 @@ J5GG ABCD 1
 		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelKicking")
 		J5GS DCBAAAAAAABCD 1 A_DoPBWeaponAction
-		Stop
+		Goto Ready3
 	FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelAirKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelAirKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelAirKicking")
 		J5GS DCBAAAAAAABCD 1 A_DoPBWeaponAction
-		Stop
+		Goto Ready3
 	FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelSlideKicking")
@@ -324,7 +324,7 @@ J5GG ABCD 1
 		J5GS A 2 A_DoPBWeaponAction
 		J5GS BCD 1 A_DoPBWeaponAction
 		J5GS D 2 A_DoPBWeaponAction
-		Stop
+		Goto Ready3
 
 
 }
