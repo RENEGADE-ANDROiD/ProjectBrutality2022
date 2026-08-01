@@ -550,8 +550,11 @@ Class AccuDeathSpawnHandler : EventHandler //Assigns blood colors and damage typ
 		PB_AD_ClearBloodDummies();
 		int lump = Wads.FindLump("dehacked", 0);
 		pb_ad_dehLoaded = lump != -1;
+		// DOOM.CE / older GZDoom: Wads.GetLumpFullPath is unavailable.
+		// GetLumpFullName is enough for lump identity; wad-prefixed compares
+		// ("id1.wad:DEHACKED") stay best-effort when the engine only returns "DEHACKED".
 		if (pb_ad_dehLoaded)
-			pb_ad_dehName = Wads.GetLumpFullPath(lump);
+			pb_ad_dehName = Wads.GetLumpFullName(lump);
 		else
 			pb_ad_dehName = "";
 	}
@@ -661,17 +664,12 @@ Class AccuDeathSpawnHandler : EventHandler //Assigns blood colors and damage typ
 			return;
 		}
 
-		let if24 = ID24IncineratorFlame(t);
-		if (if24)
+		// ID24 incinerator classes may be absent from ZScript on DOOM.CE even when
+		// id24res.wad is loaded — use runtime class names (no typed cast).
+		Name id24cn = t.GetClassName();
+		if (id24cn == 'ID24IncineratorFlame' || id24cn == 'ID24IncineratorProjectile')
 		{
-			if24.damageType = "Fire";
-			return;
-		}
-
-		let ip24 = ID24IncineratorProjectile(t);
-		if (ip24)
-		{
-			ip24.damageType = "Fire";
+			t.damageType = "Fire";
 			return;
 		}
 

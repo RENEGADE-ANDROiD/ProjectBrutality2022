@@ -1,5 +1,5 @@
 // DarkShadow — Custom Red Armor (from Custom Red Armor.wad; ZScript spawners not used in PB2022).
-ACTOR PB_RedArmor : BasicArmorPickup
+ACTOR PB_RedArmor : PB_BodyArmorPickup
 {
 	Game Doom
 	Radius 20

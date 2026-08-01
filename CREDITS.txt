@@ -106,10 +106,36 @@ Code systems and libraries
 Selected weapons and equipment (authors)
 - **Harvester of Souls (`PB_HarvesterOfSouls`)** — ZScript in
   `zscript/Weapons/Slot9/HarvesterOfSouls/PB_HarvesterOfSouls.zs`; support actors in
-  `actors/Weapons/Slot9/PB_HarvesterOfSouls.dec`. Weapon / art: **Yaelvolador** and
+  `actors/Weapons/Slot9/PB_HarvesterOfSouls.dec`. Lineage: **Brutal Doom Plus**
+  (formerly El Diablo Edition). Weapon / art: **Yaelvolador** and
   **Carrot** (iamcarrotmaster). Reload mid-strip sprites use unique **`H4T*`** prefixes
   so they do not collide with Demon Tech **`D4T*`** frames. Shares **Demonpower** /
   **HellAmmo** with **`Hell_rifle`**.
+- **Anti-Tank Rifle (`PB_AntiTankRifle`)** — ZScript in
+  `zscript/Weapons/Slot4/AntiTankRifle/PB_AntiTankRifle.zs`; support actors in
+  `actors/Weapons/Slot4/PB_AntiTankRifle.dec`. Folded from **Brutal Doom Plus**
+  (`Machinegun` / MACHINEGUN sprites). Sprite artwork: **Tesefy**. Weapon Special
+  modes: Explosive Bolt, 3-Round Burst, Void Grenade launcher.
+- **Flying Imp (`PB_FlyingImp`)** — DECORATE in
+  `actors/Monsters/T1-Imps/PB_FlyingImp.dec` with GK wrapper in
+  `actors/Monsters/T1-Imps/GloryKills.dec`. Folded from **Brutal Doom Plus**
+  (`FlyingImp` / AEIM sprites). Float chase + double `FireBall_` volley; ImpPackSpawner
+  guest gated by `pb_disablenewenemies` / `pb_NoFlyingImp`. Fatality pool uses
+  `eld_eld_flyimp` strips including `ImpFatality10` / `YTYZ`.
+- **SPAS-12 (`PB_SPAS12`)** — ZScript in
+  `zscript/Weapons/Slot3/SPAS12/PB_SPAS12.zs`; support actors in
+  `actors/Weapons/Slot3/PB_SPAS12.dec`. Folded from **Brutal Doom Plus** SPAS-12.
+  Weapon Special: Combat Pump / Riot Sweep (wide-spread buckshot). SSG spawn pool peer
+  with `pb_NoPB_SPAS12Weapon`.
+- **SegundaOportunidad / Hayberserk / Hayulti** — Near-death second chance + berserk
+  FPS theatrics folded from **Brutal Doom Plus** (`sprites/WEAPONS/NEWCONTENT/resurrect`
+  **`JOJO`/`JOJP`**, `RIPANDTEAR` **`MIPA`**, melee **`PUNS`/`PONG`**). Shared states on
+  `PB_Weapon` / `PB_WeaponBase`; player hook in `PLAYER.dec`.
+- **Berserk live meat-grab / fist carry (`GRZ1`–`GRZ7`, `THRW`)** — Brutal Doom Plus
+  melee meatshield grab art under `SPRITES/WEAPONS/Slot1/MELEE/MeatGrab/`; wired in
+  `MELEE.dec` + `actors/Weapons/Meatshields/LiveMeatGrab.dec` (tokens / `BerserkGrabAttack`).
+  Activates on Use while berserk fists (not Weapon Special); AltFire hands off to PB
+  `*Shield` weapons.
 - **M41A Pulse Rifle (`PB_M41A`)** — ZScript in `zscript/Weapons/Slot4/PB_M41A.zs`;
   folded from the **PB_M41A** / Aliens pulse-rifle add-on: sprites **Mike12**;
   animations & code **Jaih1r0** (see upstream `credits.txt` in that package).
@@ -171,9 +197,11 @@ Monsters and packs
   and **`LCL0`/`LCF0`**) updated from the **Project Brutality PB_Staging** Glory Kills
   line (shoulder placement: flame right, ice left).
 - Monster Pack: content line documented with SNDINFO.MonsterPack and tier files.
-- Brutal Doom *El Diablo* Edition: additional first-person and expanded execution /
-  finisher sprite sets (`SPRITES/MONSTERS/fatalitys/eld_eld_*` and related) merged
-  into the Glory Kill / `NEWPLAYE` player state flow (not a full TC load).
+- Brutal Doom Plus (formerly *El Diablo* Edition): additional first-person and
+  expanded execution / finisher sprite sets (`SPRITES/MONSTERS/fatalitys/eld_eld_*`
+  and related) merged into the Glory Kill / `NEWPLAYE` player state flow (not a
+  full TC load). Also the source lineage for **Harvester of Souls**, the
+  **Anti-Tank Rifle**, the **Flying Imp** (`PB_FlyingImp`), and the **SPAS-12**.
 - Project Brutality Legacy: execution / stagger “handoff” behaviour (`GoExecution`,
   `Death.ExeCution`… routing) and related audio folded from Legacy-line trees
   into core `PB_` monster DECORATE in this build.

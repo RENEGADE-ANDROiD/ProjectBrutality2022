@@ -112,6 +112,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/damnums/fonts/gamedefaults.txt"
 
 #include "zscript/Items/HelmetDrops/HelmetDropHandler.zc"
+#include "zscript/Items/PB2022_PickupMagnet.zc"
 
 #include "zscript/Monsters/PBMonster.zc"
 #include "zscript/Monsters/CatsFrozen/PB_Cryotron.zc"
@@ -186,6 +187,12 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/BaseWeapon_BDPMelee.zsc"
 #include "zscript/Weapons/BaseWeapon_RandomQuickMelee.zsc"
 #include "zscript/Weapons/BaseWeapon_Equipment.zsc"
+#include "zscript/Items/PB_ArmorRockOn.zc"
+#include "zscript/Items/PB_OuchFlourish.zc"
+#include "zscript/Items/PB_DoThingFlourish.zc"
+#include "zscript/Items/PB_HealthYeah.zc"
+#include "zscript/Items/PB_LiveMeatGrab.zc"
+#include "zscript/Items/PB_PDAHandView.zc"
 #include "zscript/Weapons/RailGunFire.zc"
 #include "zscript/Weapons/Slot7/Railgun/Railgun.zs"
 #include "zscript/Weapons/Slot7/BDPRailgun/PB_BDPRailgun.zs"
@@ -240,6 +247,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot3/CSSG/CSSG_SubZero.zs"
 #include "zscript/Weapons/Slot3/HASG/HASG_Casings.zs"
 #include "zscript/Weapons/Slot3/HASG/HASG.zs"
+#include "zscript/Weapons/Slot3/SPAS12/PB_SPAS12.zs"
 #include "zscript/Weapons/Slot8/PB_DarkMatterRifle/PB_DarkMatterRifle.zs"
 // === Remaining DECORATE weapon ports (auto) ===
 #include "zscript/Weapons/Slot2/MP40/PB_MP40.zs"
@@ -248,6 +256,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot4/LMG/PB_LMG.zs"
 #include "zscript/Weapons/Slot4/Nailgun/PB_Nailgun.zs"
 #include "zscript/Weapons/Slot4/XM21/PB_XM21.zs"
+#include "zscript/Weapons/Slot4/AntiTankRifle/PB_AntiTankRifle.zs"
 #include "zscript/Weapons/Slot4/Fusil/PB_Fusil.zs"
 #include "zscript/Weapons/Slot4/Fusil/PB_SideFusil.zs"
 #include "zscript/Weapons/Slot4/Ballista/ProSurv_Ballista.zs"

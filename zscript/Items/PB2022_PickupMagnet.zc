@@ -1,0 +1,218 @@
+// Always-on short-range pull for map ammo and Glory Kill pinata rewards.
+
+class PB2022_PickupMagnetDeferred : Object
+{
+	Inventory item;
+	int timeAdded;
+
+	static PB2022_PickupMagnetDeferred Create(Inventory item, int time)
+	{
+		let d = new("PB2022_PickupMagnetDeferred");
+		d.item = item;
+		d.timeAdded = time;
+		return d;
+	}
+}
+
+class PB2022_PickupMagnet : Inventory
+{
+	const PB2022_MAGNET_DEFER_TICS = 700;
+
+	double PickupRange;
+	double PullSpeed;
+	Array<Inventory> FoundItems;
+	Array<PB2022_PickupMagnetDeferred> DeferredItems;
+
+	Default
+	{
+		Inventory.MaxAmount 1;
+		Inventory.Amount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		-INVENTORY.INVBAR
+	}
+
+	override void BeginPlay()
+	{
+		Super.BeginPlay();
+		PickupRange = 128.0;
+		PullSpeed = 12.0;
+	}
+
+	bool IsAllowlisted(Inventory item)
+	{
+		if (!item)
+			return false;
+		if (item is "PB_WeaponAmmo")
+			return false;
+		if (item is "Ammo")
+			return true;
+		if (item is "HealthPinata")
+			return true;
+		if (item is "ArmorPinata")
+			return true;
+
+		Name cn = item.GetClassName();
+		return cn == 'NewRocketBox'
+			|| cn == 'GrenadeBox'
+			|| cn == 'SingleHandGrenade'
+			|| cn == 'SingleLandMine';
+	}
+
+	bool IsDeferred(Inventory item)
+	{
+		for (int i = DeferredItems.Size() - 1; i >= 0; i--)
+		{
+			let data = DeferredItems[i];
+			if (!data || !data.item)
+			{
+				DeferredItems.Delete(i);
+				continue;
+			}
+			if (data.item != item)
+				continue;
+			if (level.time - data.timeAdded >= PB2022_MAGNET_DEFER_TICS)
+			{
+				DeferredItems.Delete(i);
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	bool ShouldPull(Inventory item)
+	{
+		if (!Owner || !item || item.Owner)
+			return false;
+		if (!IsAllowlisted(item))
+			return false;
+		if (Owner.CountInv("GoFatality") > 0 || Owner.CountInv("DoGloryMelee") > 0)
+			return false;
+		if (IsDeferred(item))
+			return false;
+		if (item.Distance3D(Owner) <= item.Radius + Owner.Radius)
+			return false;
+		if (!item.CheckSight(Owner, SF_IGNOREWATERBOUNDARY))
+			return false;
+		return true;
+	}
+
+	void FindPullableItems()
+	{
+		if (!Owner)
+			return;
+
+		BlockThingsIterator it = BlockThingsIterator.Create(Owner, Owner.Radius + PickupRange);
+		while (it.Next())
+		{
+			let item = Inventory(it.thing);
+			if (!item)
+				continue;
+			if (!ShouldPull(item))
+				continue;
+			if (FoundItems.Find(item) != FoundItems.Size())
+				continue;
+			FoundItems.Push(item);
+		}
+	}
+
+	void PullFoundItems()
+	{
+		if (!Owner)
+			return;
+		if (FoundItems.Size() == 0)
+			return;
+
+		for (int i = FoundItems.Size() - 1; i >= 0; i--)
+		{
+			if (i >= FoundItems.Size() || !FoundItems[i])
+			{
+				if (i < FoundItems.Size())
+					FoundItems.Delete(i);
+				continue;
+			}
+
+			let item = FoundItems[i];
+			if (item.Owner || Owner.Distance3D(item) > PickupRange)
+			{
+				item.bNOCLIP = false;
+				item.A_Stop();
+				FoundItems.Delete(i);
+				continue;
+			}
+			if (!item.CheckSight(Owner, SF_IGNOREWATERBOUNDARY))
+			{
+				item.bNOCLIP = false;
+				FoundItems.Delete(i);
+				continue;
+			}
+
+			if (Owner.Distance3D(item) <= item.Radius + Owner.Radius)
+			{
+				if (!item.CallTryPickup(Owner))
+				{
+					item.bNOCLIP = false;
+					item.A_Stop();
+					DeferredItems.Push(PB2022_PickupMagnetDeferred.Create(item, level.time));
+				}
+				FoundItems.Delete(i);
+				continue;
+			}
+
+			Vector3 delta = Level.Vec3Diff(item.Pos, Owner.Pos + (0, 0, Owner.Height * 0.5));
+			double dlen = delta.Length();
+			if (dlen <= 0.001)
+				continue;
+			Vector3 dir = delta / dlen;
+			item.bNOBLOCKMONST = true;
+			item.bNOCLIP = true;
+			item.Vel = dir * PullSpeed;
+		}
+	}
+
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		if (!Owner || Amount <= 0)
+			return;
+		if (isFrozen())
+			return;
+
+		if (level.time % 2 == 0)
+			FindPullableItems();
+		PullFoundItems();
+	}
+}
+
+class PB2022_PickupMagnetHandler : EventHandler
+{
+	void EnsureMagnet(Actor mo)
+	{
+		if (!mo)
+			return;
+		if (mo.CountInv("PB2022_PickupMagnet") < 1)
+			mo.GiveInventory("PB2022_PickupMagnet", 1);
+	}
+
+	override void PlayerSpawned(PlayerEvent e)
+	{
+		PlayerInfo player = players[e.PlayerNumber];
+		if (player)
+			EnsureMagnet(player.mo);
+	}
+
+	override void PlayerRespawned(PlayerEvent e)
+	{
+		PlayerInfo player = players[e.PlayerNumber];
+		if (player)
+			EnsureMagnet(player.mo);
+	}
+
+	override void PlayerEntered(PlayerEvent e)
+	{
+		PlayerInfo player = players[e.PlayerNumber];
+		if (player)
+			EnsureMagnet(player.mo);
+	}
+}

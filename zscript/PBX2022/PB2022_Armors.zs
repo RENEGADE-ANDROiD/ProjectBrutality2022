@@ -112,6 +112,8 @@ class PB2022_ColoredArmorBase : BasicArmorPickup
 		bool pickup = Super.TryPickup(toucher);
 		if (pickup && armortoken != 'None')
 			GiveInvIfExists(toucher, armortoken, 1);
+		if (pickup)
+			PB_ArmorRockOn.TryPlay(toucher);
 		return pickup;
 	}
 }

@@ -1,0 +1,54 @@
+// Floor blood pool FX for Possessed Gibs (from BVCH / Malice Tainted SUAB bloodfiend fold)
+
+ACTOR BVCH_RedGroundOoze
+{
+	Projectile
+	-NOGRAVITY
+	Gravity 0.5
+	+NOCLIP
+	+DONTSPLASH
+	RenderStyle Translucent
+	Damage 0
+	Alpha 0.8
+	Scale 0.15
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		TNT1 A 0 A_CheckSight("Null")
+		FBLD ABCDA 3
+		FBLD A 1 A_FadeOut(0.1)
+		Wait
+	Null:
+		TNT1 A 1
+		Stop
+	}
+}
+
+ACTOR BVCH_RedGroundStain
+{
+	Projectile
+	-NOGRAVITY
+	+THRUACTORS
+	+ROLLSPRITE
+	Gravity 0.4
+	+NOCLIP
+	+DONTSPLASH
+	RenderStyle Translucent
+	Damage 0
+	Alpha 0.8
+	Scale 0.5
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_SetRoll(random(0, 360))
+		TNT1 A 1
+		TNT1 A 0 A_CheckSight("Null")
+		FBLD ABCDA 3
+		FBLD A 1 A_FadeOut(0.2)
+		Wait
+	Null:
+		TNT1 A 1
+		Stop
+	}
+}

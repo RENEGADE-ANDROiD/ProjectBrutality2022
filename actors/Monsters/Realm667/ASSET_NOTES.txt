@@ -10,7 +10,7 @@ Graphics (4-char sprite prefixes used in decorate)
 - Baby caco: CACB, BCAB
 - Slayer Knight: SLKN, SKFB
 - Vulgar: VULG, FVUL, GHFX
-- **Possessed Gibs** (integrated: `ZSCRIPT.zc` + `zscript/Monsters/Realm667/possessedgibs/`, `ImpPackSpawner`, `DoomEdNum` 23159): `VPSG` (main), `VGAR` `VGBO` `VGEY` `VGHE` `VGTO` `VGCH` (gib props), `VBLO` / `VBLS` (floor blood), `VBSH` (projectile chunk), decal pics `BSPLAT1`–`BSPLAT7` `BSMEAR1` (pgBlood* in `DECALDEF`). `Gibbed*` corpses reuse vanilla `POSS` / `SPOS` / `TROO` / `CPOS` U/T frames. Shipped lumps: **`SPRITES/MONSTERS/Realm667/possessedgibs/`**; mirrors / overflow: **`SOUNDS/Realm667Pack/possessedgibs/sprites/`** (not auto-loaded).
+- **Possessed Gibs** (integrated: `ZSCRIPT.zc` + `zscript/Monsters/Realm667/possessedgibs/`, `ImpPackSpawner`, `DoomEdNum` 23159; BVCH pack float+weave restore — no Slither): `VPSG` (main), `VGAR` `VGBO` `VGEY` `VGHE` `VGTO` `VGCH` (gib props), `VBLO` / `VBLS` (floor blood), `VBSH` (projectile chunk), **`FBLD*`** (RedGround ooze/stain pools via **`BVCH_RedGroundOoze`** / **`BVCH_RedGroundStain`** in **`PB_PossessedGibs_FloorFX.dec`**), decal pics `BSPLAT1`–`BSPLAT7` `BSMEAR1` (pgBlood* in `DECALDEF`). `Gibbed*` corpses reuse vanilla `POSS` / `SPOS` / `TROO` / `CPOS` U/T frames. Shipped lumps: **`SPRITES/MONSTERS/Realm667/possessedgibs/`**; mirrors / overflow: **`SOUNDS/Realm667Pack/possessedgibs/sprites/`** (not auto-loaded). Former ednum **23164** (`PossessedGibsSlither`) is freed and unused.
 
 This repository clone may not contain all of the above. If any are missing, `summon PossessedGibs` / the imp spawner branch can show errors or invis frames — add lumps with correct 8.3 names (case-sensitive on Linux).
 

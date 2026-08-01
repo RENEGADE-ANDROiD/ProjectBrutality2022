@@ -769,6 +769,78 @@
 			TNT1 A 0 PB_EquipSelectShowFinish();
 			Goto GoingToReady;
 
+		// Rock-on flourish on body armor / sphere / weapon pickups (SPRITES/Flourish/RockOn/RKON*).
+		ArmorRockOnShow:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			RKON ABCDEFG 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+			}
+			RKON HIJKLM 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_EquipSelectShowFinish();
+			Goto GoingToReady;
+
+		// Ouch flourish on heavy damage (SPRITES/Flourish/Ouch/OUON*).
+		OuchFlourishShow:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			OUON ABCDEF 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+			}
+			OUON GHIJK 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_EquipSelectShowFinish();
+			Goto GoingToReady;
+
+		// Do-thing flourish on successful Use (SPRITES/Flourish/DoThing/DOON*).
+		DoThingFlourishShow:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			DOON ABCDEF 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+			}
+			DOON GHIJK 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_EquipSelectShowFinish();
+			Goto GoingToReady;
+
+		// HealthYeah flourish on backpack / healing health pickups (SPRITES/Flourish/HealthYeah/HYON*).
+		HealthYeahFlourishShow:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			HYON ABCDEF 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll - 0.8, SPF_INTERPOLATE);
+			}
+			HYON GHIJK 1 {
+				PB_EquipSelectShowKeepOffset();
+				A_SetRoll(roll + 0.8, SPF_INTERPOLATE);
+			}
+			TNT1 A 0 PB_EquipSelectShowFinish();
+			Goto GoingToReady;
+
+		// PDA open/close hand (SPRITES/WEAPONS/PDA/ADRO*). Raise A→E, hold E, lower E→A then restore weapon.
+		PDARaiseShow:
+			TNT1 A 0 PB_EquipSelectShowStart();
+			ADRO ABCD 2 PB_EquipSelectShowKeepOffset();
+			Goto PDAOpenLoop;
+		PDAOpenLoop:
+			ADRO E 2 PB_EquipSelectShowKeepOffset();
+			Loop;
+		PDALowerShow:
+			ADRO EDCBA 2 PB_EquipSelectShowKeepOffset();
+			TNT1 A 0 {
+				PB_EquipSelectShowFinish();
+				A_TakeInventory("PB_PDAHandActive", 1);
+			}
+			Goto GoingToReady;
+
 	LeechBeam:
 		SYNP WXYZWXYZWXYZ 1 BRIGHT;
 		SYNP WXYZWXYZWXYZ 1 BRIGHT;

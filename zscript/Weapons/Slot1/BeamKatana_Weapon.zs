@@ -256,7 +256,7 @@ class PB_BeamKatana : PB_WeaponBase
 				return ResolveState("GoMeleeInstead");
 			return ResolveState(null);
 		}
-		TNT1 A 0 A_JumpIfCloser(99, "GoMeleeInstead");
+		TNT1 A 0 A_JumpIfCloser(128, "GoMeleeInstead");
 		TNT1 A 0 {
 			State st = PB_ResolveQuickMeleeShieldThrow();
 			if (st)
@@ -269,7 +269,7 @@ class PB_BeamKatana : PB_WeaponBase
 				return ResolveState("GoMeleeInstead");
 			return ResolveState(null);
 		}
-		TNT1 A 0 A_JumpIfCloser(99, "GoMeleeInstead");
+		TNT1 A 0 A_JumpIfCloser(128, "GoMeleeInstead");
 	GoMeleeInstead:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "QuickMeleeAbort");
 		TNT1 A 0 {

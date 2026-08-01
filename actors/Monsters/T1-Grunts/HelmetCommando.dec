@@ -43,6 +43,7 @@ ACTOR PB_HelmetCommando: PB_Commando Replaces ChaingunGuy
     damagefactor "Shrapnel", 0.4
 	damagefactor "explosiveimpact", 2.0
 	DropItem "None" 3
+	DropItem "PB_AntiTankRifle" 8
 	Obituary "%o has been mowed down by a Zombie Commando."
 	DamageFactor "CauseObjectsToSplash", 0.0
 	

@@ -1,0 +1,86 @@
+// First-person HYON flourish on backpack pickups and health that actually raises HP.
+// Engine `extend class Health` is unavailable in this TU (same as armor rock-on);
+// map healing pickups inherit PB_CelebratoryHealth. HealthPinata stays on engine Health.
+
+class PB_HealthYeahCooldown : Inventory
+{
+	int life;
+
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		-INVENTORY.INVBAR
+	}
+
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		if (++life >= PB_HealthYeah.DEBOUNCE_TICS)
+			Destroy();
+	}
+}
+
+// One-shot giver for DECORATE Pickup states: A_GiveInventory("PB_HealthYeahTrigger", 1)
+class PB_HealthYeahTrigger : CustomInventory
+{
+	Default
+	{
+		Inventory.MaxAmount 0;
+		+INVENTORY.ALWAYSPICKUP
+		+INVENTORY.AUTOACTIVATE
+		-COUNTITEM
+		-INVENTORY.INVBAR
+	}
+
+	override bool TryPickup(in out Actor toucher)
+	{
+		PB_HealthYeah.TryPlay(toucher);
+		GoAwayAndDie();
+		return true;
+	}
+}
+
+class PB_HealthYeah
+{
+	const DEBOUNCE_TICS = 15;
+
+	play static void TryPlay(Actor toucher)
+	{
+		let pp = PlayerPawn(toucher);
+		if (!pp || !pp.player)
+			return;
+		if (pp.CountInv("GoFatality") > 0 || pp.CountInv("DoGloryMelee") > 0)
+			return;
+		if (pp.CountInv("CameraRunner") > 0)
+			return;
+		if (pp.CountInv("PB_PDAHandActive") > 0)
+			return;
+		if (pp.CountInv("PB_HealthYeahCooldown") > 0)
+			return;
+
+		let weap = PB_WeaponBase(pp.player.ReadyWeapon);
+		if (!weap)
+			return;
+		State stShow = weap.FindState("HealthYeahFlourishShow");
+		if (!stShow)
+			return;
+
+		pp.GiveInventory("PB_HealthYeahCooldown", 1);
+		pp.player.SetPsprite(PSP_WEAPON, stShow);
+	}
+}
+
+// ZScript parent for DECORATE / ZScript health pickups that should celebrate a real heal.
+class PB_CelebratoryHealth : Health
+{
+	override bool TryPickup(in out Actor toucher)
+	{
+		int before = toucher ? toucher.health : 0;
+		bool ok = Super.TryPickup(toucher);
+		if (ok && toucher && toucher.health > before)
+			PB_HealthYeah.TryPlay(toucher);
+		return ok;
+	}
+}
