@@ -1,0 +1,176 @@
+// Invisible lottery droppers for sentry kits + Cat's Frozen specialty (monster DropItem).
+
+ACTOR PB_SentryDrop_Common
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOCLIP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Basic", "Pulse", "Heavy")
+	Basic:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Pulse:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Pulse", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Heavy:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Heavy", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+ACTOR PB_SentryDrop_Spec
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOCLIP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Repeater", "Plasma", "Rocket", "Sniper", "QSSG", "Rail", "Napalm")
+	Repeater:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Repeater", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Plasma:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Plasma", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Rocket:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Rocket", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Sniper:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Sniper", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	QSSG:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_QSSG", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Rail:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Rail", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Napalm:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Napalm", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+ACTOR PB_SentryDrop_TankArmor
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOCLIP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Obelisk", "Perforator", "HeavyRocket")
+	Obelisk:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Obelisk", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Perforator:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Perforator", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	HeavyRocket:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_HeavyRocket", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+ACTOR PB_SentryDrop_TankMissile
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOCLIP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Missile", "HeavyRocket", "Rocket")
+	Missile:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Missile", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	HeavyRocket:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_HeavyRocket", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Rocket:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Rocket", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+ACTOR PB_SentryDrop_TankPlasma
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOCLIP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "PlasmaCaster", "Plasma")
+	PlasmaCaster:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_PlasmaCaster", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Plasma:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Plasma", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+ACTOR PB_SentryDrop_TankElite
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOCLIP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "BFG", "Obelisk", "Sonic")
+	BFG:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_BFG", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Obelisk:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Obelisk", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Sonic:
+		TNT1 A 0 A_SpawnItemEx("PB_SentryBox_Sonic", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+ACTOR PB_EquipDrop_CatsFrozen
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOCLIP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Snow", "Bot", "Wall", "Holo", "Tesla", "Mine", "Freezenade")
+	Snow:
+		TNT1 A 0 A_SpawnItemEx("PB_CF_SnowCasterPickup", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Bot:
+		TNT1 A 0 A_SpawnItemEx("PB_CF_FreezeBotDeployPickup", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Wall:
+		TNT1 A 0 A_SpawnItemEx("PB_CF_IceWallGenPickup", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Holo:
+		TNT1 A 0 A_SpawnItemEx("PB_CF_HoloDecoyPickup", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Tesla:
+		TNT1 A 0 A_SpawnItemEx("PB_CF_TeslaTurretPickup", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Mine:
+		TNT1 A 0 A_SpawnItemEx("PB_CF_FreezeMinePickup", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	Freezenade:
+		TNT1 A 0 A_SpawnItemEx("FreezenadeAmmo", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}

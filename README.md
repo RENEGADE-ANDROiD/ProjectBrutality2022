@@ -25,11 +25,21 @@ uzdoom.exe -iwad doom2.wad -file "Project Brutality 2022"
 
 You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [ZDL](https://github.com/lcferrum/qzdl/releases), [DoomRunner](https://github.com/Youda008/DoomRunner/releases), or [SSGL](https://github.com/FreaKzero/ssgl-doom-launcher/releases) — set the engine path to your UZDoom binary.
 
-## What you get
+
+-----------------------
+**Optional:**
+
+<img width="600" height="338" alt="reelism2forpb2022" src="https://github.com/user-attachments/assets/4ae1c6d3-8574-486c-95d0-7106cba1ebcf" />[REELISM 2 for PB2022](https://drive.google.com/file/d/1-TyYW_w2iH4bL5to6K9V24oWV3hWz8ix/view?usp=drive_link) 
+Modified for PB2022; loads after it.
+-----------------------
+
+## What you get with PB2022
 
 **Glory Kills and finishers** are a major part of the fantasy: when enemies are weak enough, you can **stagger** them and rip into **cinematic kills**—in **first and third person**, with different animations across vanilla demons, Brutality variants, and many **extra / Monster Pack** enemies. Supported weapons also get a second path: when a demon is close and badly wounded, **Quick Melee** or **User2** can fire that gun’s own first-person execution—separate from the stagger / Glory Kill chain. Layered on top are the **Crucible**, **Blood Punch**, **shoulder cannon** burn and freeze shots, **pinata**-style rewards, and a **Glory HUD** for fuel, punch charges, and launcher cooldowns. Turn Glory Kills on or off and tune them from **Options → PB 2022 Enhanced**; use **Glorykill Options** for HUD, range, and finer behavior.
 
 - **Player and systems:** Movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump and plasma climb — **PB 2022 Enhanced → Explosive Movement**), tactical weapon feel, layered gore, HUD, weapon-special wheel, and related flows.
+- **First-person flourishes:** Short hand-raise animations for flavor moments — rock-on on new armor / spheres / weapons, ouch on heavy hits, a do-thing raise on Use, and a health-yeah raise when you heal or grab a backpack.
+- **Second Chance & RIP AND TEAR:** New games grant a near-death **Second Chance** token (refilled by Berserk / Mega Berserk / Demon Strength Rune). When you take pain below **20** HP with a token left, you may heal and surge back with a **Hayulti** fist flourish (and Berserk again)—or burn the token and stay down. Berserk pickups can also play a **Hayberserk** “RIP AND TEAR!!” hand strip. With fists and Berserk active, **Weapon Special** toggles **RIP AND TEAR** vs **SMASH** fatality style; **Use** on close living fodder can meat-grab for a throw or meatshield handoff.
 - **In-game codex (PDA):** Press **BACKSLASH** (rebindable) to flip through **Weapons**, **Monsters**, and **Equipment**. Entries unlock as you pick up gear or kill enemies; progress persists across saves. Pick an entry for its dossier and a small looping preview. Time pauses while the codex is open. Optional plain-text layout: **PB 2022 Enhanced → UI and Feel**. The same submenu offers **PDA XP & reward spin (single-player)** (default **Off**): when **On**, kills grant XP, rank-ups award spendable reward points, and—with the usual **blocky** PDA home layout—a **Reward Spin** tile appears on the left; each spin costs **3** points and tries to grant a **weapon** you do not already carry **and** that is not already unlocked in your PDA weapon codex (the roll rerolls within the pool); if nothing qualifies, **points are refunded**. With the toggle **Off**, the codex is unchanged and **no** spin panel appears.
 - **Achievements (single-player):** PB ships a built-in achievement system (based on **Vortex Universal Achievement System**, MIT). Goals track combat, bosses, Glory Kills, PDA codex progress, movement, secrets, multi-kill shots (explosives, railgun, BFG, snipers, plasma, equipment), and **Explosive Movement** feats (**rocket jump** / **plasma wall climb** when those options are on). Unlock toasts appear as you play; browse everything under **PB 2022 Enhanced → Achievement Settings → PB 2022 Achievements**, or bind **Achievement Menu** in **Customize Controls → PB 2022 Achievements**. Turn the feature off with **Achievements** in **PB 2022 Enhanced** (disabled in multiplayer). Do not load a separate Vortex achievement WAD on top of this folder.
 - **Combat depth:** Brutality-style damage and reactions, plus the weapon and monster variety below—all adjustable from **PB 2022 Enhanced** and related submenus.
@@ -59,7 +69,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 
 **Slot 1 — Melee & blades**
 
-- **Bare Hands** — fast close-range melee, kick, and execution starter.
+- **Bare Hands** — fast close-range melee, kick, and execution starter. **Quick Melee** punches roll among **backhand** and **uppercut** by default; owning melee blades unlocks extra blade-style quick-melee strips, and owning the **chainsaw** can roll a saw swing. Glory Kill, Blood Punch, weapon executions, and Shield Saw throw still take priority when they apply. With **Berserk**, **Weapon Special** toggles **RIP AND TEAR** vs **SMASH** fatality style, and **Use** on nearby living fodder can meat-grab for a throw or meatshield.
 - **Axe** — heavy melee pickup for chopping through low-tier enemies.
 - **Chainsaw** — classic fuel-fed saw with Project Brutality gore and chainsaw-spawner variants.
 - **UAC Nanotech Energy Beam Katana** — energy blade with quick melee integration and barrier-style behavior.
@@ -89,6 +99,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **Quad-Barrel Shotgun** — four-barrel burst weapon with special-wheel behavior.
 - **Marauder Shotgun** — Marauder-style super shotgun variant; uses a hidden **wear** pool (not reserve shells) that drops by one per meaningful shot, **breaks** the weapon when empty, and **refills wear to max** if you pick up another copy while still holding a depleted one. **Marauders** sometimes leave one on death; scripted fatality floor spawns are only ~50% likely.
 - **Cryo Shotgun** — TeiTenga C-2-1 pump shotgun (Project Brutality Weapons Pack art) with five **Weapon Special** fire modes: cryo buckshot and ADS ice spears (default), cryo pellet burst, cryo orb, electric bolt, and cryo wind cone. Uses cell reserve plus internal magazine for buckshot; alt modes draw from shells, cryo cells, or cryo cannon fuel pickups. Rolls from shotgun, plasma-rifle, and BFG weapon spawners; legacy map placements for the former three Cat's Frozen cryo guns still resolve to this weapon.
+- **SPAS-12** — tube-fed combat shotgun with **Weapon Special** modes: **Combat Pump** (default hip/ADS pump) and **Riot Sweep** (wide-spread buckshot). Peer-weighted on the SSG spawner; spawn toggle available under weapon add-on settings.
 
 **Slot 4 — Rifles, precision & support**
 
@@ -104,6 +115,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **Pro-Surv Ballista** — precision projectile weapon for heavy single shots.
 - **M41A Pulse Rifle** — pulse rifle with weapon-special wheel: 12-gauge or 30mm underbarrel Alt-Fire, plus optional dual-wield.
 - **Battle Rifle** — modern rifle with magazine handling and tactical ready/fire flow.
+- **Anti-Tank Rifle** — mag-fed heavy rifle (**5** rounds) with **Weapon Special** modes: **Explosive Bolt** (default), **3-Round Burst**, and **Void Grenade**. Chaingun-spawner path from mid tiers up; rare Chaingunner drops; spawn toggle available under weapon add-on settings.
 
 **Slot 5 — Heavy automatics**
 
@@ -172,7 +184,11 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - Freezebot
 - ElecPod
 
-**Cat's Frozen equipment additions** (always-on; no per-piece toggles). The **Project Brutality backpack** pickup also has a ~20% chance to grant a random Cat's Frozen equipment ammo charge.
+**Sentry Guns** — equipment-wheel deployable friendly turrets (basic and pulse kits plus an expanded roster: heavy, plasma, rocket, sniper, BFG, and more). Pick **Sentry Guns**, then choose a type from the sub-wheel; **Use Equipment** plants it and spends the matching kit. Map boxes and rare backpack grants refill ammo. Commandos can drop common kits (basic / pulse / heavy); ZSpec Ops can drop specialty kits; Zombie Tanks can drop rare Obelisk-class kits.
+
+**UAC Survival gear** on the same wheel: **pipe bomb** and **satchel charge** (throw, then detonate remotely) plus **flare** for lighting dark areas. Grunts that drop grenades can occasionally drop UAC kits instead (frags still most common); rocket→grenade map converts can too. Rare backpack bonuses still apply.
+
+**Cat's Frozen equipment additions** (always-on; no per-piece toggles). The **Project Brutality backpack** pickup also has a ~20% chance to grant a random Cat's Frozen equipment ammo charge. ZSpec Ops can rarely drop a Freezebot / Tesla / other CF kit (or Freezenade).
 
 - **Snow Caster** — handheld cone-burst that lays cryo wind + ice particles in front of the player.
 - **Ice Wall** — generator that drops a temporary line of cryo barrier segments.
@@ -336,6 +352,11 @@ Project Brutality 2022 builds on [Project Brutality](https://github.com/pa1nki11
 - Glory Kill shoulder launcher art and Eternal-style fuel HUD glyphs aligned with the newer Glory Kills presentation.
 - **Explosive Movement** extended to Mastermind chaingun tracers and Cat's Frozen freezenade / freeze mines.
 - Cat's Frozen cryo enemies, statues, equipment, and the unified **Cryo Shotgun** as always-on content.
+- **Sentry Guns** and **UAC Survival** pipe / satchel / flare on the equipment wheel.
+- First-person **flourishes** (rock-on, ouch, do-thing on Use, health-yeah on heal / backpack).
+- **Quick Melee** punch variety: backhand / uppercut always, plus blade strips and a chainsaw swing when those weapons are owned.
+- **Second Chance** near-death revive, Berserk **Hayulti** / **Hayberserk** theatrics, fist **RIP AND TEAR** / **SMASH** toggle, and Berserk meat-grab.
+- **SPAS-12** (Combat Pump / Riot Sweep) and **Anti-Tank Rifle** (Explosive Bolt / 3-Round Burst / Void Grenade).
 - Kill-streak reward variety (including a revamped drone summon and optional flashlight glow).
 
 Credit to **BeefRice** and **Jaih1r0** for fullscreen weapon HUD elements and many weapon improvements and systems. Thanks to **HUNG** for the **Shield Saw** behavior included in this build (quick melee + recall).

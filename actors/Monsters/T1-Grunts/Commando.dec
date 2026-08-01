@@ -54,6 +54,7 @@ ACTOR PB_Commando: PB_Monster Replaces ChaingunGuy
 	damagefactor "explosiveimpact", 2.0
 	DropItem "None" 3
 	DropItem "PB_AntiTankRifle" 8
+	DropItem "PB_SentryDrop_Common" 5
 	Obituary "%o has been mowed down by a Zombie Commando."
 	DamageFactor "CauseObjectsToSplash", 0.0
 	

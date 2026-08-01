@@ -5848,3 +5848,72 @@ weapons/bloodbonk/boom1 "sounds/combat/weapons/BloodBonk/BBONK1.ogg"
 weapons/bloodbonk/boom2 "sounds/combat/weapons/BloodBonk/BBONK2.ogg"
 weapons/bloodbonk/boom3 "sounds/combat/weapons/BloodBonk/BBONK3.ogg"
 
+
+// === PB3 Sentry Guns (folder + Sentryguns.wad) ===
+Sentry/Active "sounds/combat/sentry/DSSENTID"
+Sentry/Death "sounds/combat/sentry/DSSENTDI"
+Sentry/Attack "sounds/combat/sentry/DSSENTFI"
+$Limit Sentry/Attack 0
+Sentry/Scan "sounds/combat/sentry/DSSENTID"
+Sentry/Acquire "sounds/combat/sentry/DSSENTFI"
+Sentry/BoxUp "sounds/combat/sentry/TRBXUP"
+SGP1 "sounds/combat/sentry/SGP1"
+SGP2 "sounds/combat/sentry/SGP2"
+SGP3 "sounds/combat/sentry/SGP3"
+SGP4 "sounds/combat/sentry/SGP4"
+SGP5 "sounds/combat/sentry/SGP5"
+SGP6 "sounds/combat/sentry/SGP6"
+SGP7 "sounds/combat/sentry/SGP7"
+$Random Sentry/Pain { SGP1 SGP2 SGP3 SGP4 SGP5 SGP6 SGP7 }
+sentryrail1 "sounds/combat/sentry/SRAILGF1"
+sentryrail2 "sounds/combat/sentry/SRAILGF2"
+sentryrail3 "sounds/combat/sentry/SRAILGF3"
+$random weapons/sentryrailgf { sentryrail1 sentryrail2 sentryrail3 }
+MCGRP1 "sounds/combat/sentry/MCGRP1"
+$Random SentryGF/Repeater { MCGRP1 }
+asg/fire "sounds/combat/sentry/DSASGFR1"
+$limit asg/fire 0
+obelisk/fire "sounds/combat/sentry/OBLKFIR"
+$rolloff obelisk/fire 1200 3000
+weapons/rgcharge "sounds/combat/sentry/DSRGCHAR"
+$rolloff weapons/rgcharge 300 1800
+Song "sounds/combat/sentry/SONG"
+Mont "sounds/combat/sentry/MONT"
+beePB "sounds/combat/sentry/BEEPB"
+RAILIMP "sounds/combat/sentry/RAILIMP"
+TRBXUP "sounds/combat/sentry/TRBXUP"
+sniper/clip "sounds/combat/sentry/SNIPCLIP"
+sniper/fire "sounds/combat/sentry/SNIPFIRE"
+weapons/sshotf "sounds/combat/sentry/DSDSHTGN"
+weapons/sawedopen "sounds/combat/sentry/DSSAWOPN"
+weapons/shellslide "sounds/combat/sentry/DSSLSLID"
+weapons/sawedclose "sounds/combat/sentry/DSSAWCLS"
+weapons/qsgfire "sounds/combat/sentry/DSQSFIR"
+weapons/qsgopen "sounds/combat/sentry/DSQSOPN"
+weapons/qsgshellslide "sounds/combat/sentry/DSQSLL"
+weapons/qsgclose "sounds/combat/sentry/DSQSCLS"
+erasus/fly "sounds/combat/sentry/ERAFLY"
+erasus/explode "sounds/combat/sentry/ERAEXP"
+star/fire "sounds/combat/sentry/STARFIR"
+sonicemitter/explode "sounds/combat/sentry/SNCEEXP"
+mrl/fire "sounds/combat/sentry/MRLFIRE"
+rpg/fly "sounds/combat/sentry/RPGFLY"
+Pulverizer/Fire "sounds/combat/sentry/PLVZFIRE"
+Pulverizer/Loop "sounds/combat/sentry/PLVZLOOP"
+Pulverizer/Rod "sounds/combat/sentry/PLVZROD"
+Pulverizer/End "sounds/combat/sentry/PLVZEND"
+
+
+// === PB3 UAC Survival (pipe / satchel / flare) ===
+weapons/pbthrow "sounds/combat/uacsurvival/DSPIPTHR"
+weapons/pbbounce "sounds/combat/uacsurvival/DSPIPBNC"
+weapons/pbarm "sounds/combat/uacsurvival/DSPIPARM.ogg"
+weapons/pbexplode "sounds/combat/uacsurvival/DSPIPEX1.wav"
+Weapons/SatchelToss "sounds/combat/uacsurvival/STCHTOSS"
+Weapons/SatchelBounce "sounds/combat/uacsurvival/STCHBNC"
+Weapons/SatchelPick "sounds/combat/uacsurvival/STCHPICK"
+Weapons/SatchelHit "sounds/combat/uacsurvival/STCHHIT"
+FLRSTRT "sounds/combat/uacsurvival/FLRSTRT"
+FLRBURN "sounds/combat/uacsurvival/FLRBURN"
+FLROUT "sounds/combat/uacsurvival/FLROUT"
+

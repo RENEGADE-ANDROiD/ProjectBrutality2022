@@ -65,6 +65,26 @@
 			TNT1 A 0 A_JumpIfInventory("PB_CF_HoloDecoySelected", 1, "DeployPB_CFHoloDecoy");
 			TNT1 A 0 A_JumpIfInventory("PB_CF_TeslaTurretSelected", 1, "DeployPB_CFTeslaTurret");
 			TNT1 A 0 A_JumpIfInventory("PB_CF_FreezeMineSelected", 1, "DeployPB_CFFreezeMine");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_BasicSelected", 1, "DeployPB_Sentry_Basic");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_PulseSelected", 1, "DeployPB_Sentry_Pulse");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_HeavySelected", 1, "DeployPB_Sentry_Heavy");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_RepeaterSelected", 1, "DeployPB_Sentry_Repeater");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_PlasmaSelected", 1, "DeployPB_Sentry_Plasma");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_RocketSelected", 1, "DeployPB_Sentry_Rocket");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_SniperSelected", 1, "DeployPB_Sentry_Sniper");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_QSSGSelected", 1, "DeployPB_Sentry_QSSG");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_ObeliskSelected", 1, "DeployPB_Sentry_Obelisk");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_SonicSelected", 1, "DeployPB_Sentry_Sonic");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_MissileSelected", 1, "DeployPB_Sentry_Missile");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_RailSelected", 1, "DeployPB_Sentry_Rail");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_BFGSelected", 1, "DeployPB_Sentry_BFG");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_HeavyRocketSelected", 1, "DeployPB_Sentry_HeavyRocket");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_NapalmSelected", 1, "DeployPB_Sentry_Napalm");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_PerforatorSelected", 1, "DeployPB_Sentry_Perforator");
+			TNT1 A 0 A_JumpIfInventory("PB_Sentry_PlasmaCasterSelected", 1, "DeployPB_Sentry_PlasmaCaster");
+			TNT1 A 0 A_JumpIfInventory("PB_UAC_PipebombSelected", 1, "ThrowPB_UAC_Pipebomb");
+			TNT1 A 0 A_JumpIfInventory("PB_UAC_SatchelSelected", 1, "ThrowPB_UAC_Satchel");
+			TNT1 A 0 A_JumpIfInventory("PB_UAC_FlareSelected", 1, "ThrowPB_UAC_Flare");
 			//More stuff to come.....
 			
 			
@@ -100,6 +120,44 @@
 				A_SetInventory("WW_PB_CF_HoloDecoySelected",0);
 				A_SetInventory("WW_PB_CF_TeslaTurretSelected",0);
 				A_SetInventory("WW_PB_CF_FreezeMineSelected",0);
+				A_SetInventory("WW_PB_SentrySelected",0);
+				A_SetInventory("WW_PB_Sentry_BasicSelected",0);
+				A_SetInventory("WW_PB_Sentry_PulseSelected",0);
+				A_SetInventory("WW_PB_Sentry_HeavySelected",0);
+				A_SetInventory("WW_PB_Sentry_RepeaterSelected",0);
+				A_SetInventory("WW_PB_Sentry_PlasmaSelected",0);
+				A_SetInventory("WW_PB_Sentry_RocketSelected",0);
+				A_SetInventory("WW_PB_Sentry_SniperSelected",0);
+				A_SetInventory("WW_PB_Sentry_QSSGSelected",0);
+				A_SetInventory("WW_PB_Sentry_ObeliskSelected",0);
+				A_SetInventory("WW_PB_Sentry_SonicSelected",0);
+				A_SetInventory("WW_PB_Sentry_MissileSelected",0);
+				A_SetInventory("WW_PB_Sentry_RailSelected",0);
+				A_SetInventory("WW_PB_Sentry_BFGSelected",0);
+				A_SetInventory("WW_PB_Sentry_HeavyRocketSelected",0);
+				A_SetInventory("WW_PB_Sentry_NapalmSelected",0);
+				A_SetInventory("WW_PB_Sentry_PerforatorSelected",0);
+				A_SetInventory("WW_PB_Sentry_PlasmaCasterSelected",0);
+				A_SetInventory("WW_PB_UAC_PipebombSelected",0);
+				A_SetInventory("WW_PB_UAC_SatchelSelected",0);
+				A_SetInventory("WW_PB_UAC_FlareSelected",0);
+				A_SetInventory("Select_PB_Sentry_Basic",0);
+				A_SetInventory("Select_PB_Sentry_Pulse",0);
+				A_SetInventory("Select_PB_Sentry_Heavy",0);
+				A_SetInventory("Select_PB_Sentry_Repeater",0);
+				A_SetInventory("Select_PB_Sentry_Plasma",0);
+				A_SetInventory("Select_PB_Sentry_Rocket",0);
+				A_SetInventory("Select_PB_Sentry_Sniper",0);
+				A_SetInventory("Select_PB_Sentry_QSSG",0);
+				A_SetInventory("Select_PB_Sentry_Obelisk",0);
+				A_SetInventory("Select_PB_Sentry_Sonic",0);
+				A_SetInventory("Select_PB_Sentry_Missile",0);
+				A_SetInventory("Select_PB_Sentry_Rail",0);
+				A_SetInventory("Select_PB_Sentry_BFG",0);
+				A_SetInventory("Select_PB_Sentry_HeavyRocket",0);
+				A_SetInventory("Select_PB_Sentry_Napalm",0);
+				A_SetInventory("Select_PB_Sentry_Perforator",0);
+				A_SetInventory("Select_PB_Sentry_PlasmaCaster",0);
 				A_SetInventory("GK_FlamebelchSelected",0);
 				A_SetInventory("GK_IcebombSelected",0);
 				A_SetInventory("CantWeaponSpecial",0);
@@ -141,6 +199,46 @@
 				{A_Print("\coAlready using: \ctTesla Turret"); return ResolveState("WheelCancelEquipment");}
 			if(CountInv("WW_PB_CF_FreezeMineSelected") && CountInv("PB_CF_FreezeMineSelected") >=1)
 				{A_Print("\coAlready using: \ctFreeze Mine"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Basic") && CountInv("PB_Sentry_BasicSelected") >=1)
+				{A_Print("\coAlready using: \ctBasic Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Pulse") && CountInv("PB_Sentry_PulseSelected") >=1)
+				{A_Print("\coAlready using: \ctPulse Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Heavy") && CountInv("PB_Sentry_HeavySelected") >=1)
+				{A_Print("\coAlready using: \ctHeavy Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Repeater") && CountInv("PB_Sentry_RepeaterSelected") >=1)
+				{A_Print("\coAlready using: \ctRepeater Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Plasma") && CountInv("PB_Sentry_PlasmaSelected") >=1)
+				{A_Print("\coAlready using: \ctPlasma Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Rocket") && CountInv("PB_Sentry_RocketSelected") >=1)
+				{A_Print("\coAlready using: \ctRocket Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Sniper") && CountInv("PB_Sentry_SniperSelected") >=1)
+				{A_Print("\coAlready using: \ctSniper Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_QSSG") && CountInv("PB_Sentry_QSSGSelected") >=1)
+				{A_Print("\coAlready using: \ctQSSG Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Obelisk") && CountInv("PB_Sentry_ObeliskSelected") >=1)
+				{A_Print("\coAlready using: \ctObelisk Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Sonic") && CountInv("PB_Sentry_SonicSelected") >=1)
+				{A_Print("\coAlready using: \ctSonic Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Missile") && CountInv("PB_Sentry_MissileSelected") >=1)
+				{A_Print("\coAlready using: \ctMissile Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Rail") && CountInv("PB_Sentry_RailSelected") >=1)
+				{A_Print("\coAlready using: \ctRail Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_BFG") && CountInv("PB_Sentry_BFGSelected") >=1)
+				{A_Print("\coAlready using: \ctBFG Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_HeavyRocket") && CountInv("PB_Sentry_HeavyRocketSelected") >=1)
+				{A_Print("\coAlready using: \ctHeavy Rocket Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Napalm") && CountInv("PB_Sentry_NapalmSelected") >=1)
+				{A_Print("\coAlready using: \ctNapalm Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_Perforator") && CountInv("PB_Sentry_PerforatorSelected") >=1)
+				{A_Print("\coAlready using: \ctPerforator Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("Select_PB_Sentry_PlasmaCaster") && CountInv("PB_Sentry_PlasmaCasterSelected") >=1)
+				{A_Print("\coAlready using: \ctPlasma Caster Sentry"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("WW_PB_UAC_PipebombSelected") && CountInv("PB_UAC_PipebombSelected") >=1)
+				{A_Print("\coAlready using: \ctPipe Bomb"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("WW_PB_UAC_SatchelSelected") && CountInv("PB_UAC_SatchelSelected") >=1)
+				{A_Print("\coAlready using: \ctSatchel Charge"); return ResolveState("WheelCancelEquipment");}
+			if(CountInv("WW_PB_UAC_FlareSelected") && CountInv("PB_UAC_FlareSelected") >=1)
+				{A_Print("\coAlready using: \ctFlare"); return ResolveState("WheelCancelEquipment");}
 			if(CountInv("WW_ProximityMineSelected") >=1)
 				{
 				if(CountInv("MineAmmo") <=0)
@@ -221,6 +319,111 @@
 				if(CountInv("PB_CF_FreezeMineAmmo") <=0)
 					{A_Print("\cgNo \ctFreeze Mines \c-left"); return ResolveState("WheelCancelEquipment");}
 				}
+			if(CountInv("WW_PB_SentrySelected") >=1)
+				{
+				if(!(CountInv("PB_SentryAmmo_Basic") || CountInv("PB_SentryAmmo_Pulse") || CountInv("PB_SentryAmmo_Heavy") || CountInv("PB_SentryAmmo_Repeater") || CountInv("PB_SentryAmmo_Plasma") || CountInv("PB_SentryAmmo_Rocket") || CountInv("PB_SentryAmmo_Sniper") || CountInv("PB_SentryAmmo_QSSG") || CountInv("PB_SentryAmmo_Obelisk") || CountInv("PB_SentryAmmo_Sonic") || CountInv("PB_SentryAmmo_Missile") || CountInv("PB_SentryAmmo_Rail") || CountInv("PB_SentryAmmo_BFG") || CountInv("PB_SentryAmmo_HeavyRocket") || CountInv("PB_SentryAmmo_Napalm") || CountInv("PB_SentryAmmo_Perforator") || CountInv("PB_SentryAmmo_PlasmaCaster")))
+					{A_Print("\cgNo \ctsentry kits \c-left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Basic") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Basic") <=0)
+					{A_Print("\cgNo \ctBasic Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Pulse") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Pulse") <=0)
+					{A_Print("\cgNo \ctPulse Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Heavy") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Heavy") <=0)
+					{A_Print("\cgNo \ctHeavy Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Repeater") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Repeater") <=0)
+					{A_Print("\cgNo \ctRepeater Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Plasma") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Plasma") <=0)
+					{A_Print("\cgNo \ctPlasma Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Rocket") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Rocket") <=0)
+					{A_Print("\cgNo \ctRocket Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Sniper") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Sniper") <=0)
+					{A_Print("\cgNo \ctSniper Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_QSSG") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_QSSG") <=0)
+					{A_Print("\cgNo \ctQSSG Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Obelisk") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Obelisk") <=0)
+					{A_Print("\cgNo \ctObelisk Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Sonic") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Sonic") <=0)
+					{A_Print("\cgNo \ctSonic Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Missile") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Missile") <=0)
+					{A_Print("\cgNo \ctMissile Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Rail") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Rail") <=0)
+					{A_Print("\cgNo \ctRail Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_BFG") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_BFG") <=0)
+					{A_Print("\cgNo \ctBFG Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_HeavyRocket") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_HeavyRocket") <=0)
+					{A_Print("\cgNo \ctHeavy Rocket Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Napalm") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Napalm") <=0)
+					{A_Print("\cgNo \ctNapalm Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_Perforator") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_Perforator") <=0)
+					{A_Print("\cgNo \ctPerforator Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("Select_PB_Sentry_PlasmaCaster") >=1)
+				{
+				if(CountInv("PB_SentryAmmo_PlasmaCaster") <=0)
+					{A_Print("\cgNo \ctPlasma Caster Sentry \c-kits left"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("WW_PB_UAC_PipebombSelected") >=1)
+				{
+				if(CountInv("PB_UAC_PipebombAmmo") <=0)
+					{A_Print("\cgNo \ctpipe bombs \c-remaining"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("WW_PB_UAC_SatchelSelected") >=1)
+				{
+				if(CountInv("PB_UAC_SatchelAmmo") <=0)
+					{A_Print("\cgNo \ctsatchel charges \c-remaining"); return ResolveState("WheelCancelEquipment");}
+				}
+			if(CountInv("WW_PB_UAC_FlareSelected") >=1)
+				{
+				if(CountInv("PB_UAC_FlareAmmo") <=0)
+					{A_Print("\cgNo \ctflares \c-remaining"); return ResolveState("WheelCancelEquipment");}
+				}
 			if(CountInv("GK_FlamebelchSelected") >=1)
 				{ 
 					A_Print("\cdEquipment: \ctFlame Belch"); 
@@ -235,6 +438,27 @@
 					A_SetInventory("PB_CF_HoloDecoySelected",0);
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 					A_PlaySound("FLMDRAW", CHAN_UI);
 					return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 				}
@@ -252,6 +476,27 @@
 					A_SetInventory("PB_CF_HoloDecoySelected",0);
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 					A_PlaySound("weapons/freezer/reload1", CHAN_UI);
 					return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 				}
@@ -277,6 +522,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return PB_EquipSelectAndCancel("EquipSelectShowMine");
 					}
@@ -299,6 +565,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return PB_EquipSelectAndCancel("EquipSelectShowStun");
 					}
@@ -321,6 +608,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return PB_EquipSelectAndCancel("EquipSelectShowShield");
 					}
@@ -343,6 +651,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return PB_EquipSelectAndCancel("EquipSelectShowVoid");
 					}
@@ -365,6 +694,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
@@ -387,6 +737,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_PlaySound("REVUP", 3);
 						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
@@ -409,6 +780,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_PlaySound("GRNPIN", 3);
 						return PB_EquipSelectAndCancel("EquipSelectShowFrag");
 					}
@@ -430,6 +822,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_SetInventory("MolotovSelected",1);
 						A_SetInventory("GK_FlamebelchSelected",0);
 						A_SetInventory("GK_IcebombSelected",0);
@@ -460,6 +873,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_SetInventory("HookSelected",1);
 						A_PlaySound("GRNPIN", 3);
 						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
@@ -486,6 +920,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_SetInventory("FreezenadeSelected",1);
 						A_PlaySound("GRNPIN", 3);
 						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
@@ -512,6 +967,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_SetInventory("PB_CF_SnowCasterSelected",1);
 						A_PlaySound("coldcst", CHAN_UI);
 						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
@@ -538,6 +1014,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_SetInventory("PB_CF_FreezeBotSelected",1);
 						A_PlaySound("Plasma/BeepLow", CHAN_UI);
 						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
@@ -564,6 +1061,27 @@
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_SetInventory("PB_CF_IceWallSelected",1);
 						A_PlaySound("weapons/freezer/reload1", CHAN_UI);
 						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
@@ -590,6 +1108,27 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",1);
 						A_PlaySound("misc/p_pkup", CHAN_UI);
 						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
@@ -616,6 +1155,27 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",1);
 						A_PlaySound("PLSCHARG", CHAN_UI);
 						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
@@ -642,8 +1202,1034 @@
 						A_SetInventory("PB_CF_IceWallSelected",0);
 						A_SetInventory("PB_CF_HoloDecoySelected",0);
 						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_SentrySelected",0);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 						A_SetInventory("PB_CF_FreezeMineSelected",1);
 						A_PlaySound("misc/p_pkup", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("WW_PB_SentrySelected") >=1)
+					{
+						A_Print("\cdEquipment: \ctSentry Guns");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						bool hasSentryType = CountInv("PB_Sentry_BasicSelected") || CountInv("PB_Sentry_PulseSelected") || CountInv("PB_Sentry_HeavySelected") || CountInv("PB_Sentry_RepeaterSelected") || CountInv("PB_Sentry_PlasmaSelected") || CountInv("PB_Sentry_RocketSelected") || CountInv("PB_Sentry_SniperSelected") || CountInv("PB_Sentry_QSSGSelected") || CountInv("PB_Sentry_ObeliskSelected") || CountInv("PB_Sentry_SonicSelected") || CountInv("PB_Sentry_MissileSelected") || CountInv("PB_Sentry_RailSelected") || CountInv("PB_Sentry_BFGSelected") || CountInv("PB_Sentry_HeavyRocketSelected") || CountInv("PB_Sentry_NapalmSelected") || CountInv("PB_Sentry_PerforatorSelected") || CountInv("PB_Sentry_PlasmaCasterSelected");
+						if (!hasSentryType)
+						{
+							if (CountInv("PB_SentryAmmo_Basic") > 0) A_SetInventory("PB_Sentry_BasicSelected",1);
+							else if (CountInv("PB_SentryAmmo_Pulse") > 0) A_SetInventory("PB_Sentry_PulseSelected",1);
+							else if (CountInv("PB_SentryAmmo_Heavy") > 0) A_SetInventory("PB_Sentry_HeavySelected",1);
+							else if (CountInv("PB_SentryAmmo_Repeater") > 0) A_SetInventory("PB_Sentry_RepeaterSelected",1);
+							else if (CountInv("PB_SentryAmmo_Plasma") > 0) A_SetInventory("PB_Sentry_PlasmaSelected",1);
+							else if (CountInv("PB_SentryAmmo_Rocket") > 0) A_SetInventory("PB_Sentry_RocketSelected",1);
+							else if (CountInv("PB_SentryAmmo_Sniper") > 0) A_SetInventory("PB_Sentry_SniperSelected",1);
+							else if (CountInv("PB_SentryAmmo_QSSG") > 0) A_SetInventory("PB_Sentry_QSSGSelected",1);
+							else if (CountInv("PB_SentryAmmo_Obelisk") > 0) A_SetInventory("PB_Sentry_ObeliskSelected",1);
+							else if (CountInv("PB_SentryAmmo_Sonic") > 0) A_SetInventory("PB_Sentry_SonicSelected",1);
+							else if (CountInv("PB_SentryAmmo_Missile") > 0) A_SetInventory("PB_Sentry_MissileSelected",1);
+							else if (CountInv("PB_SentryAmmo_Rail") > 0) A_SetInventory("PB_Sentry_RailSelected",1);
+							else if (CountInv("PB_SentryAmmo_BFG") > 0) A_SetInventory("PB_Sentry_BFGSelected",1);
+							else if (CountInv("PB_SentryAmmo_HeavyRocket") > 0) A_SetInventory("PB_Sentry_HeavyRocketSelected",1);
+							else if (CountInv("PB_SentryAmmo_Napalm") > 0) A_SetInventory("PB_Sentry_NapalmSelected",1);
+							else if (CountInv("PB_SentryAmmo_Perforator") > 0) A_SetInventory("PB_Sentry_PerforatorSelected",1);
+							else if (CountInv("PB_SentryAmmo_PlasmaCaster") > 0) A_SetInventory("PB_Sentry_PlasmaCasterSelected",1);
+						}
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Basic") >=1)
+					{
+						A_Print("\cdEquipment: \ctBasic Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",1);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Pulse") >=1)
+					{
+						A_Print("\cdEquipment: \ctPulse Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",1);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Heavy") >=1)
+					{
+						A_Print("\cdEquipment: \ctHeavy Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",1);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Repeater") >=1)
+					{
+						A_Print("\cdEquipment: \ctRepeater Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",1);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Plasma") >=1)
+					{
+						A_Print("\cdEquipment: \ctPlasma Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",1);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Rocket") >=1)
+					{
+						A_Print("\cdEquipment: \ctRocket Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",1);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Sniper") >=1)
+					{
+						A_Print("\cdEquipment: \ctSniper Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",1);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_QSSG") >=1)
+					{
+						A_Print("\cdEquipment: \ctQSSG Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",1);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Obelisk") >=1)
+					{
+						A_Print("\cdEquipment: \ctObelisk Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",1);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Sonic") >=1)
+					{
+						A_Print("\cdEquipment: \ctSonic Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",1);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Missile") >=1)
+					{
+						A_Print("\cdEquipment: \ctMissile Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",1);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Rail") >=1)
+					{
+						A_Print("\cdEquipment: \ctRail Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",1);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_BFG") >=1)
+					{
+						A_Print("\cdEquipment: \ctBFG Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",1);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_HeavyRocket") >=1)
+					{
+						A_Print("\cdEquipment: \ctHeavy Rocket Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",1);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Napalm") >=1)
+					{
+						A_Print("\cdEquipment: \ctNapalm Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",1);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_Perforator") >=1)
+					{
+						A_Print("\cdEquipment: \ctPerforator Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",1);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("Select_PB_Sentry_PlasmaCaster") >=1)
+					{
+						A_Print("\cdEquipment: \ctPlasma Caster Sentry");
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+						A_SetInventory("PB_UAC_PipebombSelected",0);
+						A_SetInventory("PB_UAC_SatchelSelected",0);
+						A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_SentrySelected",1);
+						A_SetInventory("PB_Sentry_BasicSelected",0);
+						A_SetInventory("PB_Sentry_PulseSelected",0);
+						A_SetInventory("PB_Sentry_HeavySelected",0);
+						A_SetInventory("PB_Sentry_RepeaterSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaSelected",0);
+						A_SetInventory("PB_Sentry_RocketSelected",0);
+						A_SetInventory("PB_Sentry_SniperSelected",0);
+						A_SetInventory("PB_Sentry_QSSGSelected",0);
+						A_SetInventory("PB_Sentry_ObeliskSelected",0);
+						A_SetInventory("PB_Sentry_SonicSelected",0);
+						A_SetInventory("PB_Sentry_MissileSelected",0);
+						A_SetInventory("PB_Sentry_RailSelected",0);
+						A_SetInventory("PB_Sentry_BFGSelected",0);
+						A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+						A_SetInventory("PB_Sentry_NapalmSelected",0);
+						A_SetInventory("PB_Sentry_PerforatorSelected",0);
+						A_SetInventory("PB_Sentry_PlasmaCasterSelected",1);
+						A_PlaySound("Sentry/BoxUp", CHAN_UI);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("WW_PB_UAC_PipebombSelected") >=1)
+					{ 
+						A_Print("\cdEquipment: \ctPipe Bomb"); 
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_UAC_SatchelArmed",0);
+						A_SetInventory("PB_UAC_DetonateSatchel",0);
+						A_SetInventory("PB_UAC_PipebombSelected",1);
+						A_PlaySound("GRNPIN", 3);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("WW_PB_UAC_SatchelSelected") >=1)
+					{ 
+						A_Print("\cdEquipment: \ctSatchel Charge"); 
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_UAC_PipeArmed",0);
+						A_SetInventory("PB_UAC_DetonatePipe",0);
+						A_SetInventory("PB_UAC_SatchelSelected",1);
+						A_PlaySound("GRNPIN", 3);
+						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
+					}
+				if(CountInv("WW_PB_UAC_FlareSelected") >=1)
+					{ 
+						A_Print("\cdEquipment: \ctFlare"); 
+						A_SetInventory("ProximityMineSelected",0);
+						A_SetInventory("StunGrenadeSelected",0);
+						A_SetInventory("ShieldGrenadeSelected",0);
+						A_SetInventory("VoidGrenadeSelected",0);
+						A_SetInventory("LeechSelected",0);
+						A_SetInventory("RevGunSelected",0);
+						A_SetInventory("FragGrenadeSelected",0);
+						A_SetInventory("MolotovSelected",0);
+						A_SetInventory("HookSelected",0);
+						A_SetInventory("GK_FlamebelchSelected",0);
+						A_SetInventory("GK_IcebombSelected",0);
+						A_SetInventory("FlameBelchSelected",0);
+						A_SetInventory("IceBombSelected",0);
+						A_SetInventory("FreezenadeSelected",0);
+						A_SetInventory("PB_CF_SnowCasterSelected",0);
+						A_SetInventory("PB_CF_FreezeBotSelected",0);
+						A_SetInventory("PB_CF_IceWallSelected",0);
+						A_SetInventory("PB_CF_HoloDecoySelected",0);
+						A_SetInventory("PB_CF_TeslaTurretSelected",0);
+						A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
+						A_SetInventory("PB_UAC_PipeArmed",0);
+						A_SetInventory("PB_UAC_SatchelArmed",0);
+						A_SetInventory("PB_UAC_DetonatePipe",0);
+						A_SetInventory("PB_UAC_DetonateSatchel",0);
+						A_SetInventory("PB_UAC_FlareSelected",1);
+						A_PlaySound("GRNPIN", 3);
 						return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 					}
 				if(CountInv("GK_FlamebelchSelected") >=1)
@@ -660,6 +2246,27 @@
 					A_SetInventory("PB_CF_HoloDecoySelected",0);
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 					A_PlaySound("FLMDRAW", CHAN_UI);
 					return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 				}
@@ -677,6 +2284,27 @@
 					A_SetInventory("PB_CF_HoloDecoySelected",0);
 					A_SetInventory("PB_CF_TeslaTurretSelected",0);
 					A_SetInventory("PB_CF_FreezeMineSelected",0);
+					A_SetInventory("PB_SentrySelected",0);
+					A_SetInventory("PB_Sentry_BasicSelected",0);
+					A_SetInventory("PB_Sentry_PulseSelected",0);
+					A_SetInventory("PB_Sentry_HeavySelected",0);
+					A_SetInventory("PB_Sentry_RepeaterSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaSelected",0);
+					A_SetInventory("PB_Sentry_RocketSelected",0);
+					A_SetInventory("PB_Sentry_SniperSelected",0);
+					A_SetInventory("PB_Sentry_QSSGSelected",0);
+					A_SetInventory("PB_Sentry_ObeliskSelected",0);
+					A_SetInventory("PB_Sentry_SonicSelected",0);
+					A_SetInventory("PB_Sentry_MissileSelected",0);
+					A_SetInventory("PB_Sentry_RailSelected",0);
+					A_SetInventory("PB_Sentry_BFGSelected",0);
+					A_SetInventory("PB_Sentry_HeavyRocketSelected",0);
+					A_SetInventory("PB_Sentry_NapalmSelected",0);
+					A_SetInventory("PB_Sentry_PerforatorSelected",0);
+					A_SetInventory("PB_Sentry_PlasmaCasterSelected",0);
+					A_SetInventory("PB_UAC_PipebombSelected",0);
+					A_SetInventory("PB_UAC_SatchelSelected",0);
+					A_SetInventory("PB_UAC_FlareSelected",0);
 					A_PlaySound("weapons/freezer/reload1", CHAN_UI);
 					return PB_EquipSelectAndCancel("EquipSelectShowGeneric");
 				}	
@@ -949,6 +2577,77 @@
 		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
 		Goto GoingToReady2;
 		
+	ThrowPB_UAC_Pipebomb:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_UAC_PipeArmed", 1, "DetonatePB_UAC_Pipe");
+		TNT1 A 0 A_JumpIfInventory("PB_UAC_PipebombAmmo", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctpipe bombs \c-left");
+		Goto GoingToReady;
+		TNT1 A 0 A_TakeInventory("PB_UAC_DetonatePipe", 1);
+		HND1 I 1 A_PlaySound("weapons/pbthrow", 1);
+		TNT1 A 0 A_TakeInventory("PB_UAC_PipebombAmmo", 1);
+		HND1 J 1 A_FireCustomMissile("PB_UAC_Pipebomb", 0, 1, 0, 0, 0, 0);
+		TNT1 A 0 A_GiveInventory("PB_UAC_PipeArmed", 1);
+		TNT1 A 0 A_GiveInventory("ThrowPipeBomb", 1);
+		TNT1 A 0 A_TakeInventory("ThrowPipeBomb", 1);
+		HND1 KLMNOPQ 1;
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DetonatePB_UAC_Pipe:
+		TNT1 A 0 A_GiveInventory("PB_UAC_DetonatePipe", 1);
+		TNT1 A 0 A_TakeInventory("PB_UAC_PipeArmed", 1);
+		TNT1 A 0 A_PlaySound("weapons/pbarm", CHAN_WEAPON);
+		HND1 I 1;
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	ThrowPB_UAC_Satchel:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_UAC_SatchelArmed", 1, "DetonatePB_UAC_Satchel");
+		TNT1 A 0 A_JumpIfInventory("PB_UAC_SatchelAmmo", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctsatchel charges \c-left");
+		Goto GoingToReady;
+		TNT1 A 0 A_TakeInventory("PB_UAC_DetonateSatchel", 1);
+		HND1 I 1 A_PlaySound("Weapons/SatchelToss", 1);
+		TNT1 A 0 A_TakeInventory("PB_UAC_SatchelAmmo", 1);
+		HND1 J 1 A_FireCustomMissile("PB_UAC_Satchel", 0, 1, 0, 0, 0, 0);
+		TNT1 A 0 A_GiveInventory("PB_UAC_SatchelArmed", 1);
+		HND1 KLMNOPQ 1;
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DetonatePB_UAC_Satchel:
+		TNT1 A 0 A_GiveInventory("PB_UAC_DetonateSatchel", 1);
+		TNT1 A 0 A_TakeInventory("PB_UAC_SatchelArmed", 1);
+		TNT1 A 0 A_PlaySound("weapons/pbarm", CHAN_WEAPON);
+		HND1 I 1;
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	ThrowPB_UAC_Flare:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_UAC_FlareAmmo", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctflares \c-left");
+		Goto GoingToReady;
+		HND1 I 1 A_PlaySound("FLRSTRT", 1);
+		TNT1 A 0 A_TakeInventory("PB_UAC_FlareAmmo", 1);
+		HND1 J 1 A_FireCustomMissile("PB_UAC_ThrownFlare", 0, 1, 0, 0, 0, 0);
+		HND1 KLMNOPQ 1;
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
 	ThrowFreezenade:
 		TNT1 A 0 A_ZoomFactor(1.0);
 		TNT1 A 0 A_TakeInventory("ADSMode", 1);
@@ -1049,6 +2748,244 @@
 		TNT1 A 0 A_PlaySound("misc/p_pkup", CHAN_WEAPON);
 		TNT1 A 0 A_TakeInventory("PB_CF_FreezeMineAmmo", 1);
 		TNT1 A 0 A_SpawnItemEx("PBCF_CF_FreezeMine", -16, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Basic:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Basic", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctBasic Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Basic", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Pulse:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Pulse", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctPulse Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Pulse", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_PulseSentryGun", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Heavy:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Heavy", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctHeavy Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Heavy", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Heavy", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Repeater:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Repeater", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctRepeater Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Repeater", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Repeater", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Plasma:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Plasma", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctPlasma Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Plasma", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Plasma", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Rocket:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Rocket", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctRocket Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Rocket", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Rocket", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Sniper:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Sniper", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctSniper Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Sniper", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Sniper", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_QSSG:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_QSSG", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctQSSG Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_QSSG", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_QSSG", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Obelisk:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Obelisk", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctObelisk Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Obelisk", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Obelisk", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Sonic:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Sonic", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctSonic Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Sonic", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Sonic", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Missile:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Missile", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctMissile Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Missile", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Missile", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Rail:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Rail", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctRail Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Rail", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Rail", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_BFG:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_BFG", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctBFG Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_BFG", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_BFG", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_HeavyRocket:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_HeavyRocket", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctHeavy Rocket Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_HeavyRocket", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_HeavyRocket", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Napalm:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Napalm", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctNapalm Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Napalm", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Napalm", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_Perforator:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_Perforator", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctPerforator Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_Perforator", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_Perforator", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
+		Goto GoingToReady2;
+
+	DeployPB_Sentry_PlasmaCaster:
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_TakeInventory("ADSMode", 1);
+		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
+		TNT1 A 0 A_JumpIfInventory("PB_SentryAmmo_PlasmaCaster", 1, 2);
+		TNT1 A 0 A_Print("\cgNo \ctPlasma Caster Sentry \c-kits left");
+		Goto GoingToReady;
+		TNT1 A 0 A_PlaySound("Sentry/BoxUp", CHAN_WEAPON);
+		TNT1 A 0 A_TakeInventory("PB_SentryAmmo_PlasmaCaster", 1);
+		TNT1 A 0 A_SpawnItemEx("PB_SentryGun_PlasmaCaster", 56, 0, 8, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION);
 		TNT1 A 0 A_TakeInventory("UseEquipment", 1);
 		TNT1 A 0 A_TakeInventory("ToggleEquipment", 1);
 		Goto GoingToReady2;

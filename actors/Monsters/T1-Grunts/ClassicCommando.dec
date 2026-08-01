@@ -42,6 +42,7 @@ ACTOR PB_ClassicCommando: PB_Commando Replaces ChaingunGuy
 	DamageFactor "MinorHead", 1.2
 	DropItem "PB_Minigun", 255
 	DropItem "PB_AntiTankRifle" 8
+	DropItem "PB_SentryDrop_Common" 5
 	SeeSound "commando/sight"
 	PainSound "commando/pain"
 	DeathSound "commando/death"

@@ -1,0 +1,227 @@
+// PB3 Sentry Guns — ammo, wheel select tokens, map pickups
+
+Actor WW_PB_SentrySelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_SentrySelected : Inventory { Inventory.MaxAmount 1 }
+
+Actor Select_PB_Sentry_Basic : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Pulse : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Heavy : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Repeater : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Plasma : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Rocket : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Sniper : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_QSSG : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Obelisk : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Sonic : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Missile : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Rail : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_BFG : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_HeavyRocket : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Napalm : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_Perforator : Inventory { Inventory.MaxAmount 1 }
+Actor Select_PB_Sentry_PlasmaCaster : Inventory { Inventory.MaxAmount 1 }
+
+Actor WW_PB_Sentry_BasicSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_BasicSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_PulseSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_PulseSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_HeavySelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_HeavySelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_RepeaterSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_RepeaterSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_PlasmaSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_PlasmaSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_RocketSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_RocketSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_SniperSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_SniperSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_QSSGSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_QSSGSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_ObeliskSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_ObeliskSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_SonicSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_SonicSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_MissileSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_MissileSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_RailSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_RailSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_BFGSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_BFGSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_HeavyRocketSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_HeavyRocketSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_NapalmSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_NapalmSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_PerforatorSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_PerforatorSelected : Inventory { Inventory.MaxAmount 1 }
+Actor WW_PB_Sentry_PlasmaCasterSelected : Inventory { Inventory.MaxAmount 1 }
+Actor PB_Sentry_PlasmaCasterSelected : Inventory { Inventory.MaxAmount 1 }
+
+ACTOR PB_SentryAmmo_Basic : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 3
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Inventory.Icon "SENBB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Pulse : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 3
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Inventory.Icon "PLSPA0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Heavy : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 4
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 4
+	Inventory.Icon "SENBB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Repeater : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 4
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 4
+	Inventory.Icon "SENBB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Plasma : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 4
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 4
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Rocket : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 3
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Sniper : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 3
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_QSSG : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 3
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Obelisk : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 2
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 2
+	Inventory.Icon "OBLKA0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Sonic : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 3
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Inventory.Icon "SNCEA1"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Missile : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 3
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Rail : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 2
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 2
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_BFG : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 1
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 1
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_HeavyRocket : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 2
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 2
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Napalm : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 2
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 2
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_Perforator : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 2
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 2
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}
+
+ACTOR PB_SentryAmmo_PlasmaCaster : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 2
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 2
+	Inventory.Icon "SENXB0"
+	+INVENTORY.IGNORESKILL
+}

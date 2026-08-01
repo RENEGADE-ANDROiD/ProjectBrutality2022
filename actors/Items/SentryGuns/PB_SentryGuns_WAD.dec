@@ -1,0 +1,2778 @@
+actor PB_SentryGun_Heavy: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+health 600
+radius 20
+height 56
+mass 100000
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 2048
+tag "Sentrygun Heavy"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+TTR1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+TTR1 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+TTR1 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+TTR1 AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+TTR1 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Heavy",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+TTR1 A 4 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+Missile:
+TNT1 A 0 A_GiveInventory("IsFiring", 1)
+TTR1 A 0 A_PlaySound ("beePB")
+TTR1 A 5 A_FaceTarget
+
+MissileContinue:
+TTR1 A 0 A_FaceTarget
+TNT1 A 0 A_AlertMonsters
+
+Missile1:
+TTR1 A 1 A_FaceTarget
+TNT1 A 0 A_AlertMonsters
+TNT1 A 0 A_playsound("Sentry/Attack", 7)
+TNT1 A 0 A_playsound("Sentry/Attack", 6)
+TNT1 A 0 A_SpawnItem ("PB_EmptyBrass", 0, 30,0)
+TNT1 A 0 A_CustomMissile("OrangeLensFlareAlt", 45, 10, 15, 0)
+TNT1 A 0 A_CustomMissile("SmokeSpawner", 45, 10, 15, 0)
+TTR2 B 1 bright A_CustomMissile("MonsterMinigunTracer", 46, 10, random(-3, 3), 1, random(-1, 1))
+TTR1 A 1
+
+Missile2:
+TTR1 A 1 A_FaceTarget
+TNT1 A 0 A_AlertMonsters
+TNT1 A 0 A_playsound("Sentry/Attack", 7)
+TNT1 A 0 A_playsound("Sentry/Attack", 6)
+TNT1 A 0 A_SpawnItem ("PB_EmptyBrass", 0, -30,0)
+TNT1 A 0 A_CustomMissile("OrangeLensFlareAlt", 45, -10, 15, 0)
+TNT1 A 0 A_CustomMissile("SmokeSpawner", 45, -10, 15, 0)
+TTR2 C 1 bright A_CustomMissile("MonsterMinigunTracer", 46, -10, random(-3, 3), 1, random(-1, 1))
+TTR1 A 1
+TNT1 A 0 A_CposRefire
+Goto MissileContinue
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+TTR1 A 1
+TNT1 A 0 A_SpawnItem ("PB_EmptyBrass", 0, 40,0)
+TNT1 A 0 A_playsound("Sentry/Attack", 7)
+TNT1 A 0 A_playsound("Sentry/Attack", 6)
+TNT1 AA 0 A_CustomMissile("OrangeLensFlareAlt", 45, 10, 15, 0)
+TNT1 A 0 A_CustomMissile("SmokeSpawner", 45, 10, 15, 0)
+TTR1 B 0 bright A_CustomMissile("MonsterMinigunTracer", 46, 0, random(-8, 8), 1, random(-4, 4))
+TTR1 E 0 BRIGHT A_NoBlocking
+Goto MissileContinue
+
+
+Death:
+SGDT A 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+SGDT A 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+SGDT A 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+SGDT A 512
+FadeOut:
+SGDT A 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+actor PB_SentryGun_Repeater: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+health 350
+radius 20
+height 56
+mass 100000
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 2048
+MONSTER
+tag "Sentrygun Repeater"
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SENT DDDDDDDD 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+SENT DDDDDDDD 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+SENT DDDDDDDD 1 A_Look
+SENT A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+SENT DDDDDDDD 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Repeater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+SENT E 0 BRIGHT A_ChangeFlag ("Solid",1)
+SENT D 4 A_Chase
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory ("IsFiring",1)
+SET1 A 0 A_PlaySound ("beePB")
+SENT D 10 A_FaceTarget
+TNT1 A 0 A_AlertMonsters
+TNT1 A 0 A_PlaySound("SentryGF/Repeater",25)
+TNT1 A 0 A_SpawnItem ("PB_EmptyBrass", 0, 30,0)
+TNT1 A 0 A_CustomMissile("OrangeLensFlareAlt", 34, 10, 15, 0)
+TNT1 A 0 A_CustomMissile("SmokeSpawner", 34, 10, 15, 0)
+SENT E 1 bright A_CustomMissile("MonsterMinigunTracer", 46, 0, random(-4, 4), 1, random(-2, 2))
+SENT D 1
+
+MissileContinue:
+SENT D 1 A_FaceTarget
+TNT1 A 0 A_AlertMonsters
+TNT1 A 0 A_PlaySound("SentryGF/Repeater",25)
+TNT1 A 0 A_SpawnItem ("PB_EmptyBrass", 0, 30,0)
+TNT1 A 0 A_CustomMissile("OrangeLensFlareAlt", 45, 10, 15, 0)
+TNT1 A 0 A_CustomMissile("SmokeSpawner", 45, 10, 15, 0)
+SENT E 1 bright A_CustomMissile("MonsterMinigunTracer", 46, 0, random(-3, 3), 1, random(-4, 4))
+SENT D 2
+
+SENT D 1 A_FaceTarget
+TNT1 A 0 A_AlertMonsters
+TNT1 A 0 A_PlaySound("SentryGF/Repeater",25)
+TNT1 A 0 A_SpawnItem ("PB_EmptyBrass", 0, 30,0)
+TNT1 A 0 A_CustomMissile("OrangeLensFlareAlt", 45, 10, 15, 0)
+TNT1 A 0 A_CustomMissile("SmokeSpawner", 45, 10, 15, 0)
+SENT E 1 bright A_CustomMissile("MonsterMinigunTracer", 46, 0, random(-3, 3), 1, random(-4, 4))
+SENT D 1
+
+SENT D 1 A_FaceTarget
+TNT1 A 0 A_AlertMonsters
+TNT1 A 0 A_PlaySound("SentryGF/Repeater",25)
+TNT1 A 0 A_SpawnItem ("PB_EmptyBrass", 0, 30,0)
+TNT1 A 0 A_CustomMissile("OrangeLensFlareAlt", 45, 10, 15, 0)
+TNT1 A 0 A_CustomMissile("SmokeSpawner", 45, 10, 15, 0)
+SENT E 1 bright A_CustomMissile("MonsterMinigunTracer", 46, 0, random(-3, 3), 1, random(-4, 4))
+SENT D 1
+TNT1 A 0 A_CposRefire
+Goto MissileContinue
+
+Pain:
+TNT1 A 0 A_Pain
+SENT E 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+SENT D 1
+TNT1 A 0 A_SpawnItem ("PB_EmptyBrass", 0, 40,0)
+TNT1 A 0 A_PlaySound("SentryGF/Repeater",25)
+TNT1 AA 0 A_CustomMissile("OrangeLensFlareAlt", 45, 10, 15, 0)
+TNT1 A 0 A_CustomMissile("SmokeSpawner", 45, 10, 15, 0)
+SENT E 1 bright A_CustomMissile("MonsterMinigunTracer", 46, 0, random(-8, 8), 1, random(-4, 4))
+SENT E 0 BRIGHT A_NoBlocking
+Goto MissileContinue
+
+Death:
+SGDT A 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+SGDT A 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+SGDT A 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+SGDT A 512
+FadeOut:
+SGDT A 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+actor PB_SentryGun_Plasma: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+health 550
+radius 20
+height 56
+mass 100000
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 2048
+tag "Sentrygun Plasma"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+SET6 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET6 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+SET6 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+SET6 AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+SET6 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SET6 A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Plasma",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+SET6 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+SET6 A 4 A_Chase
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory ("IsFiring",1)
+SET6 A 0 A_PlaySound ("beePB")
+SET6 A 1 A_FaceTarget
+TNT1 A 0 A_AlertMonsters
+TNT1 A 0 A_PlaySound("PERKISTAN",3)
+TNT1 A 0 A_CustomMissile("BlueLensFlareAltSmallZZ", 45, -10, 15, 0)
+SET6 B 1 bright A_CustomMissile("Plasma_Ball",40,0,random(-3,3))
+SET6 A 1
+TNT1 A 0 A_CposRefire
+Goto Missile+2
+
+Pain:
+TNT1 A 0 A_Pain
+SET6 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+SET6 A 1
+TNT1 A 0 A_PlaySound("PERKISTAN",3)
+TNT1 AA 0 A_CustomMissile("BlueLensFlareAltSmallZZ", 45, 10, 15, 0)
+SET6 B 0 bright A_CustomMissile("Plasma_Ball",40,0,random(-3,3))
+SET6 E 0 BRIGHT A_NoBlocking
+Goto Missile+2
+
+Death:
+SGDT A 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+SGDT A 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+SGDT A 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+SGDT A 512
+FadeOut:
+SGDT A 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+actor PB_SentryGun_Rocket: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+health 600
+radius 20
+height 56
+mass 100000
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 2048
+tag "Sentrygun Rocket"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+SET7 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET7 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+SET7 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+SET7 AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+SET7 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Rocket",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET7 A 4 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory ("IsFiring",1)
+SET7 A 0 A_PlaySound ("beePB")
+SET7 A 5 A_FaceTarget
+SET7 B 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 C 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 D 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 E 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 F 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 G 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 H 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 I 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 6 A_CPosRefire 
+Goto Missile+1
+
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+SET7 A 5
+SET7 B 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 C 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 D 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 E 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 F 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 G 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 H 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 2 A_FaceTarget
+SET7 I 4 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(24,34),0,random(-6,6))
+SET7 A 6 A_CPosRefire 
+Goto Missile+1
+
+
+Death:
+SGDT A 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+SGDT A 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+SGDT A 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+SGDT A 512
+FadeOut:
+SGDT A 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+actor PB_SentryGun_Sniper: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+health 590
+radius 20
+height 56
+mass 100000
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 2048
+tag "Sentrygun Sniper"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+SET3 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET3 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+SET3 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+SET3 AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+SET3 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Sniper",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET3 A 4 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory ("IsFiring",1)
+SET7 A 0 A_PlaySound ("beePB")
+SET3 AAA 4 A_FaceTarget
+TNT1 A 0 A_PlaySound("sniper/fire")
+SET3 B 6 Bright A_CustomBulletAttack(1,1,1,random(1,5)*120,"HitPuff")
+SET3 CCAA 2 A_FaceTarget
+TNT1 A 0 A_SpawnItemEx("PB_EmptyBrass", 12, 6, 30, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET3 A 10 A_PlaySound("sniper/clip")
+SET3 AAA 3 A_FaceTarget
+SET3 A 1 A_CPosRefire 
+Goto Missile+1
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+SET3 AAA 4
+TNT1 A 0 A_PlaySound("sniper/fire")
+SET3 B 6 Bright A_CustomBulletAttack(1,1,1,random(1,5)*120,"HitPuff")
+SET3 CCAA 2 A_FaceTarget
+TNT1 A 0 A_SpawnItemEx("PB_EmptyBrass", 12, 6, 30, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET3 A 10 A_PlaySound("sniper/clip")
+SET3 AAA 3 A_FaceTarget
+SET3 A 1 A_CPosRefire 
+Goto Missile+1
+
+Death:
+SGDT A 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+SGDT A 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+SGDT A 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+SGDT A 512
+FadeOut:
+SGDT A 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+actor PB_SentryGun_QSSG: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+health 600
+radius 20
+height 56
+mass 100000
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 2048
+tag "Sentrygun QSSG"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+SET4 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET4 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+SET4 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+SET4 AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+SET4 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_QSSG",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET4 A 4 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory("IsFiring", 1)
+TTR1 A 0 A_PlaySound ("beePB")
+SET4 A 1 A_Jump(256,"AssautShotgun","DoubleShotgun","QuadShotgun")
+Goto See
+
+AssautShotgun:
+SET4 A 5 A_FaceTarget
+TNT1 A 0 A_PlaySound("asg/fire")
+TNT1 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 7, 30, 4, 0, (0.1)*Random(30, 40), Random(-80, -90), 128)
+TNT1 AAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 E 13 Bright A_CustomBulletAttack(22.5,0,5,4,"ShotgunPuff")
+TNT1 A 0 A_PlaySound("asg/fire")
+TNT1 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 7, 30, 4, 0, (0.1)*Random(30, 40), Random(-80, -90), 128)
+TNT1 AAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 F 13 Bright A_CustomBulletAttack(22.5,0,5,4,"ShotgunPuff")
+TNT1 A 0 A_PlaySound("asg/fire")
+TNT1 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 7, 30, 4, 0, (0.1)*Random(30, 40), Random(-80, -90), 128)
+TNT1 AAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 G 13 Bright A_CustomBulletAttack(22.5,0,5,4,"ShotgunPuff")
+TNT1 A 0 A_PlaySound("asg/fire")
+TNT1 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 7, 30, 4, 0, (0.1)*Random(30, 40), Random(-80, -90), 128)
+TNT1 AAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 H 13 Bright A_CustomBulletAttack(22.5,0,5,4,"ShotgunPuff")
+SET4 A 6 A_CposRefire
+Goto Missile+1
+
+DoubleShotgun:
+SET4 A 5 A_FaceTarget
+TNT1 A 0 A_PlaySound("weapons/sshotf")
+TNT1 AAAAAAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 B 5 Bright A_CustomBulletAttack(13.8,9.6,10,Random(1,4)*3,"ShotgunPuff")
+SET4 A 15 A_FaceTarget
+SET4 A 6 A_PlaySound("weapons/sawedopen")
+SET4 A 0 A_SpawnItemEx("PB_EmptyBrass", -10, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 1 A_SpawnItemEx("PB_EmptyBrass", -10, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 6 A_PlaySound("weapons/shellslide")
+SET4 A 6 A_PlaySound("weapons/sawedclose")
+SET4 A 6 A_CposRefire
+Goto Missile+1
+
+QuadShotgun:
+SET4 A 5 A_FaceTarget
+TNT1 A 0 A_PlaySound("weapons/qsgfire")
+TNT1 AAAAAAAAAAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 C 5 Bright A_CustomBulletAttack(15.4,10.6,24,Random(1,4)*3,"ShotgunPuff")
+SET4 A 25 A_FaceTarget
+TNT1 A 0 A_PlaySound("weapons/qsgopen")
+SET4 A 15 A_FaceTarget
+SET4 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 1 A_SpawnItemEx("PB_EmptyBrass", -8, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 2 A_SpawnItemEx("PB_EmptyBrass", -8, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 12 A_PlaySound("weapons/qsgshellslide")
+SET4 A 8
+SET4 A 12 A_PlaySound("weapons/qsgshellslide")
+SET4 A 8
+SET4 A 10 A_PlaySound("weapons/qsgclose")
+SET4 A 2 A_CposRefire
+Goto Missile+1
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+
+Pain.IsFiring:
+SET4 A 1 A_Jump(256,"AssautShotgun","DoubleShotgun","QuadShotgun")
+Goto See
+
+AssautShotgun:
+SET4 A 5 A_FaceTarget
+TNT1 A 0 A_PlaySound("asg/fire")
+TNT1 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 7, 30, 4, 0, (0.1)*Random(30, 40), Random(-80, -90), 128)
+TNT1 AAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 E 13 Bright A_CustomBulletAttack(22.5,0,5,4,"ShotgunPuff")
+TNT1 A 0 A_PlaySound("asg/fire")
+TNT1 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 7, 30, 4, 0, (0.1)*Random(30, 40), Random(-80, -90), 128)
+TNT1 AAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 F 13 Bright A_CustomBulletAttack(22.5,0,5,4,"ShotgunPuff")
+TNT1 A 0 A_PlaySound("asg/fire")
+TNT1 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 7, 30, 4, 0, (0.1)*Random(30, 40), Random(-80, -90), 128)
+TNT1 AAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 G 13 Bright A_CustomBulletAttack(22.5,0,5,4,"ShotgunPuff")
+TNT1 A 0 A_PlaySound("asg/fire")
+TNT1 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 7, 30, 4, 0, (0.1)*Random(30, 40), Random(-80, -90), 128)
+TNT1 AAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 H 13 Bright A_CustomBulletAttack(22.5,0,5,4,"ShotgunPuff")
+SET4 A 6 A_CposRefire
+Goto Missile+1
+
+DoubleShotgun:
+SET4 A 5 A_FaceTarget
+TNT1 A 0 A_PlaySound("weapons/sshotf")
+TNT1 AAAAAAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 B 5 Bright A_CustomBulletAttack(13.8,9.6,10,Random(1,4)*3,"ShotgunPuff")
+SET4 A 15 A_FaceTarget
+SET4 A 6 A_PlaySound("weapons/sawedopen")
+SET4 A 0 A_SpawnItemEx("PB_EmptyBrass", -10, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 1 A_SpawnItemEx("PB_EmptyBrass", -10, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 6 A_PlaySound("weapons/shellslide")
+SET4 A 6 A_PlaySound("weapons/sawedclose")
+SET4 A 6 A_CposRefire
+Goto Missile+1
+
+QuadShotgun:
+SET4 A 5 A_FaceTarget
+TNT1 A 0 A_PlaySound("weapons/qsgfire")
+TNT1 AAAAAAAAAAAA 0 Bright A_CustomMissile("MonsterMinigunTracer",Random(28,34),0,Random(6,-6),0)
+SET4 C 5 Bright A_CustomBulletAttack(15.4,10.6,24,Random(1,4)*3,"ShotgunPuff")
+SET4 A 25 A_FaceTarget
+TNT1 A 0 A_PlaySound("weapons/qsgopen")
+SET4 A 15 A_FaceTarget
+SET4 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 1 A_SpawnItemEx("PB_EmptyBrass", -8, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 0 A_SpawnItemEx("PB_EmptyBrass", -8, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 2 A_SpawnItemEx("PB_EmptyBrass", -8, 6, 36, Random(2, 6), 0, Random(1, 3), Random(-80, -90), 128)
+SET4 A 12 A_PlaySound("weapons/qsgshellslide")
+SET4 A 8
+SET4 A 12 A_PlaySound("weapons/qsgshellslide")
+SET4 A 8
+SET4 A 10 A_PlaySound("weapons/qsgclose")
+SET4 A 2 A_CposRefire
+Goto Missile+1
+
+Death:
+SGDT A 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+SGDT A 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+SGDT A 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+SGDT A 512
+FadeOut:
+SGDT A 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+actor PB_SentryGun_Obelisk: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+health 3000
+radius 20
+Scale 0.35
+DamageFactor 0.5
+height 56
+RadiusDamageFactor 0.25
+Mass 99999
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 2048
+tag "Sentrygun ObeliskOfLight"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+OBLK A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+OBLK AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+OBLK AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+OBLK AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+OBLK AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Obelisk",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+OBLK A 0 HealThing(50) 
+OBLK A 4 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory("IsFiring", 1)
+TTR1 A 0 A_PlaySound ("beePB")
+OBLK A 35 Bright A_PlayWeaponSound("obelisk/fire")
+OBLK A 35 Bright HealThing(50) 
+OBLK A 35 Bright A_SpawnItemEx("PB_Sentry_ObeliskFlare",0,0,22)
+OBLK AAAAAA 3 Bright A_CustomMissile("PB_Sentry_ObeliskProj",66,0)
+OBLK A 35 Bright A_CposRefire
+Goto Missile
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+OBLK A 35 Bright A_PlayWeaponSound("obelisk/fire")
+OBLK A 35 Bright HealThing(50) 
+OBLK A 35 Bright A_SpawnItemEx("PB_Sentry_ObeliskFlare",0,0,22)
+OBLK AAAAAA 3 Bright A_CustomMissile("PB_Sentry_ObeliskProj",66,0)
+OBLK A 35 Bright A_CposRefire
+Goto Missile
+
+Death:
+SGDT A 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+SGDT A 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+SGDT A 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+SGDT A 512
+FadeOut:
+SGDT A 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+actor PB_SentryGun_Sonic: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+Health 2000
+radius 20
+Scale 0.35
+DamageFactor 0.5
+height 60
+RadiusDamageFactor 0.25
+Mass 99999
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 6144
+tag "Sentrygun Sonic Emitter"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+SNCE A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SNCE AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+SNCE AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+SNCE AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+SNCE AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Sonic",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SNCE A 0 HealThing(25)
+SNCE A 4 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory("IsFiring", 1)
+TTR1 A 0 A_PlaySound ("beePB")
+SNCE A 0 A_CheckFlag(FLOAT,"BFG3500",AAPTR_TARGET) 
+SNCE AAAAAAAA 5 A_FaceTarget
+SNCE A 0 HealThing(25) 
+SNCE A 0 A_PlayWeaponSound("star/fire")
+SNCE A 0 A_SpawnItemEx("PB_Sentry_SonicFlare",40,0,23)
+SNCE A 35 Bright A_CustomMissile("PB_Sentry_SonicProj",35,0)
+SNCE A 0 A_CposRefire
+SNCE AAAAAAAA 5 A_FaceTarget
+Goto Missile
+BFG3500: 
+SNCE AAAAAAAA 5 A_FaceTarget
+SNCE A 0 HealThing(25) 
+SNCE A 0 A_PlayWeaponSound("bfg3500/fire")
+SNCE AAAAA 5 Bright A_FaceTarget
+SNCE A 0 A_SpawnItemEx("PB_Sentry_SonicFlare",40,0,23)
+SNCE A 35 Bright A_CustomMissile("SuperBFGBall",35,0)
+SNCE AAAAA 5 A_FaceTarget
+Goto See
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+SNCE A 0 A_CheckFlag(FLOAT,"BFG3500",AAPTR_TARGET) 
+SNCE AAAAAAAA 5 A_FaceTarget
+SNCE A 0 HealThing(25) 
+SNCE A 0 A_PlayWeaponSound("star/fire")
+SNCE A 0 A_SpawnItemEx("PB_Sentry_SonicFlare",40,0,23)
+SNCE A 35 Bright A_CustomMissile("PB_Sentry_SonicProj",35,0)
+SNCE A 0 A_CposRefire
+SNCE AAAAAAAA 5 A_FaceTarget
+Goto Missile
+BFG3500: 
+SNCE AAAAAAAA 5 A_FaceTarget
+SNCE A 0 HealThing(25) 
+SNCE A 0 A_PlayWeaponSound("bfg3500/fire")
+SNCE AAAAA 5 Bright A_FaceTarget
+SNCE A 0 A_SpawnItemEx("PB_Sentry_SonicFlare",40,0,23)
+SNCE A 35 Bright A_CustomMissile("SuperBFGBall",35,0)
+SNCE AAAAA 5 A_FaceTarget
+Goto See
+
+Death:
+SGDT A 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+SGDT A 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+SGDT A 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+SGDT A 512
+FadeOut:
+SGDT A 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+actor PB_SentryGun_Missile: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+Health 2200
+radius 20
+Scale 1.10
+DamageFactor 0.75
+height 60
+RadiusDamageFactor 0.25
+Mass 99999
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 6144
+tag "Sentrygun Missile"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+SET9 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET9 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+SET9 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+SET9 AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+SET9 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Missile",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET9 A 4 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory("IsFiring", 1)
+TTR1 A 0 A_PlaySound ("beePB")
+SET9 AA 6 A_FaceTarget
+SET9 A 0 A_PlayWeaponSound("mrl/fire")
+SET9 A 3 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(44,73),random(-16,16))
+SET9 A 2 A_FaceTarget
+SET9 A 1 A_CPosRefire 
+Goto Missile+3
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+SET9 AA 6 A_FaceTarget
+SET9 A 0 A_PlayWeaponSound("mrl/fire")
+SET9 A 3 Bright A_CustomMissile("PB_Sentry_MissileRocket",random(44,73),random(-16,16))
+SET9 A 2 A_FaceTarget
+SET9 A 1 A_CPosRefire 
+Goto Missile+3
+
+Death:
+SGDT A 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+SGDT A 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+SGDT A 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+SGDT A 512
+FadeOut:
+SGDT A 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+actor PB_SentryGun_Rail: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+Health 1000
+radius 20
+height 60
+mass 100000
+Scale 1.2
+speed 0
+DamageFactor 0.75
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 3072
+RadiusDamageFactor 0.8
+tag "Sentrygun Rail"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+SET8 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET8 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+SET8 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+SET8 AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+SET8 AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Rail",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+SET8 A 4 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory("IsFiring", 1)
+TTR1 A 0 A_PlaySound ("beePB")
+SET8 A 4 A_FaceTarget
+SET8 A 0 A_PlayWeaponSound("weapons/rgcharge")
+SET8 AAAAAAAAAA 5 Bright A_FaceTarget
+SET8 B 0 A_PlayWeaponSound("weapons/sentryrailgf")
+SET8 B 10 Bright A_CustomMissile("PB_Sentry_RailShot",60,0,random(-1,1))
+SET8 AA 3 A_FaceTarget
+SET8 A 1 A_CPosRefire 
+Goto Missile+2
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+SET8 A 4
+SET8 A 0 A_PlayWeaponSound("weapons/rgcharge")
+SET8 AAAAAAAAAA 5 Bright A_FaceTarget
+SET8 B 0 A_PlayWeaponSound("weapons/sentryrailgf")
+SET8 B 10 Bright A_CustomMissile("PB_Sentry_RailShot",60,0,random(-1,1))
+SET8 AA 3 A_FaceTarget
+SET8 A 1 A_CPosRefire 
+Goto Missile+2
+
+Death:
+SGDT A 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+SGDT A 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+SGDT A 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+SGDT A 512
+FadeOut:
+SGDT A 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+Actor PB_SentryGun_BFG : SwitchableDecoration
+{
+Health 1000
+MaxTargetRange 10000
+DamageFactor 0.65
+RadiusDamageFactor 0.75
+Tag "BFG9000 SentryGun"
+obituary "%o was ventilated by an auto-sentry."
+radius 20
+height 60
+mass 100000
+Scale 0.60
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+tag "Sentrygun BFG"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+States
+{
+
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+BFGT A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+BFGT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+BFGT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+BFGT AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+BFGT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_BFG",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+BFGT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory("IsFiring", 1)
+TTR1 A 0 A_PlaySound ("beePB")
+BFGT A 10 A_FaceTarget
+TNT1 A 0 A_PlayWeaponSound("BFGCHARGE")
+BFGT BBBBBC 5 Bright A_FaceTarget
+TNT1 A 0 A_PlaySound("BFGFIRE")
+TNT1 A 0 A_CustomMissile("SuperBFGBall",85,-45,0)
+TNT1 A 0 A_CustomMissile("SuperBFGBall",85,45,0)
+BFGT CB 5 Bright A_FaceTarget
+BFGT AAAAAAAAAAAAAA 5 A_FaceTarget
+Goto See
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+BFGT A 10
+TNT1 A 0 A_PlayWeaponSound("BFGCHARGE")
+BFGT BBBBBC 5 Bright A_FaceTarget
+TNT1 A 0 A_PlaySound("BFGFIRE")
+TNT1 A 0 A_CustomMissile("SuperBFGBall",85,-45,0)
+TNT1 A 0 A_CustomMissile("SuperBFGBall",85,45,0)
+BFGT CB 5 Bright A_FaceTarget
+BFGT AAAAAAAAAAAAAA 5 A_FaceTarget
+Goto See
+
+Death:
+BFGT Z 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+BFGT Z 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+BFGT Z 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+BFGT Z 512
+FadeOut:
+BFGT Z 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+Actor PB_SentryGun_HeavyRocket : SwitchableDecoration
+{
+Health 1000
+MaxTargetRange 10000
+DamageFactor 0.65
+RadiusDamageFactor 0.75
+Tag "Heavy Rocket SentryGun"
+obituary "%o was ventilated by an auto-sentry."
+radius 20
+height 60
+mass 100000
+Scale 0.60
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+tag "Sentrygun Heavy Rocket"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+States
+{
+
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+FTRT A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+FTRT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+FTRT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+FTRT AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+FTRT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_HeavyRocket",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+FTRT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory("IsFiring", 1)
+TTR1 A 0 A_PlaySound ("beePB")
+FTRT AA 10 A_FaceTarget
+TNT1 A 0 A_PlaySound ("RPGFIRE", 1)
+TNT1 A 0 A_CustomMissile("PB_Sentry_MissileRocket",85,-45,0)
+TNT1 A 0 A_CustomMissile("PB_Sentry_MissileRocket",85,45,0)
+FTRT BC 3 Bright A_FaceTarget
+FTRT AAAAAA 5 A_FaceTarget
+Goto See
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+FTRT AA 10 A_FaceTarget
+TNT1 A 0 A_PlaySound ("RPGFIRE", 1)
+TNT1 A 0 A_CustomMissile("PB_Sentry_MissileRocket",85,-45,0)
+TNT1 A 0 A_CustomMissile("PB_Sentry_MissileRocket",85,45,0)
+FTRT BC 3 Bright A_FaceTarget
+FTRT AAAAAA 5 A_FaceTarget
+Goto See
+
+Death:
+FTRT Z 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+FTRT Z 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+FTRT Z 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+FTRT Z 512
+FadeOut:
+FTRT Z 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+actor PB_SentryGun_Napalm: SwitchableDecoration
+{
+obituary "%o was ventilated by an auto-sentry."
+Health 750
+radius 20
+height 56
+mass 100000
+speed 0
+Scale 1.1
+PainChance 255
+PainSound "Sentry/Pain"
+MaxTargetRange 3072
+DamageFactor 0.75
+RadiusDamageFactor 0.8
+tag "Napalm Sentry Gun"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+states
+{
+
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+FLTU A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+FLTU AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+FLTU AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+FLTU AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+FLTU AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Napalm",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+FLTU A 4 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory ("IsFiring",1)
+SET6 A 0 A_PlaySound ("beePB")
+FLTU ABCDEF 1 A_FaceTarget
+FLTU G 12 Bright A_CustomMissile("PB_Sentry_NapalmBall",58,0,random(-2,2))
+FLTU ABC 1 A_FaceTarget
+FLTU G 12 Bright A_CustomMissile("PB_Sentry_NapalmBall",58,0,random(-2,2))
+FLTU DEF 1 A_FaceTarget
+FLTU G 12 Bright A_CustomMissile("PB_Sentry_NapalmBall",58,0,random(-2,2))
+FLTU ABC 1 A_FaceTarget
+FLTU G 12 Bright A_CustomMissile("PB_Sentry_NapalmBall",58,0,random(-2,2))
+FLTU DEF 1 A_FaceTarget
+Goto see
+
+Pain:
+TNT1 A 0 A_Pain
+FLTU A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+FLTU ABCDEF 1 A_FaceTarget
+FLTU G 12 Bright A_CustomMissile("PB_Sentry_NapalmBall",58,0,random(-2,2))
+FLTU ABC 1 A_FaceTarget
+FLTU G 12 Bright A_CustomMissile("PB_Sentry_NapalmBall",58,0,random(-2,2))
+FLTU DEF 1 A_FaceTarget
+FLTU G 12 Bright A_CustomMissile("PB_Sentry_NapalmBall",58,0,random(-2,2))
+FLTU ABC 1 A_FaceTarget
+FLTU G 12 Bright A_CustomMissile("PB_Sentry_NapalmBall",58,0,random(-2,2))
+FLTU DEF 1 A_FaceTarget
+Goto see
+
+Death:
+FLTU Z 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+FLTU Z 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+FLTU Z 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+FLTU Z 512
+FadeOut:
+FLTU Z 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+Actor PB_SentryGun_Perforator : SwitchableDecoration
+{
+Health 1000
+MaxTargetRange 10000
+DamageFactor 0.65
+RadiusDamageFactor 0.75
+obituary "%o was ventilated by an auto-sentry."
+radius 20
+height 60
+mass 100000
+Scale 0.60
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+tag "Perforator Sentry Gun"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+States
+{
+
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+STRT A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+STRT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+STRT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+STRT AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+STRT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+STRT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_Perforator",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+STRT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory("IsFiring", 1)
+TTR1 A 0 A_PlaySound ("beePB")
+STRT AA 10 A_FaceTarget
+TNT1 A 0 A_CustomMissile("PB_Sentry_Pulverizer",85,-45,0)
+TNT1 A 0 A_CustomMissile("PB_Sentry_Pulverizer",85,45,0)
+STRT BC 3 Bright A_FaceTarget
+STRT AAAAAAAA 5 A_FaceTarget
+Goto See
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+STRT AA 10 A_FaceTarget
+TNT1 A 0 A_CustomMissile("PB_Sentry_Pulverizer",85,-45,0)
+TNT1 A 0 A_CustomMissile("PB_Sentry_Pulverizer",85,45,0)
+STRT BC 3 Bright A_FaceTarget
+STRT AAAAAAAA 5 A_FaceTarget
+Goto See
+
+Death:
+STRT Z 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+STRT Z 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+STRT Z 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+STRT Z 512
+FadeOut:
+STRT Z 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+Actor PB_SentryGun_PlasmaCaster : SwitchableDecoration
+{
+Health 1000
+MaxTargetRange 10000
+DamageFactor 0.65
+RadiusDamageFactor 0.75
+Tag "Plasma Caster Sentry Gun"
+obituary "%o was ventilated by an auto-sentry."
+radius 20
+height 60
+mass 100000
+Scale 0.60
+speed 0
+PainChance 255
+PainSound "Sentry/Pain"
+MONSTER
++FLOORCLIP
++FRIENDLY
++NOBLOOD
++USESPECIAL
+Activation THINGSPEC_Activate
++QUICKTORETALIATE
++LOOKALLAROUND
++NEVERRESPAWN
++STANDSTILL
++MISSILEMORE
++MISSILEEVENMORE
+States
+{
+
+
+Spawn:
+TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+PTRT A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+PTRT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+SENT A 0 A_PlaySound ("Song")
+PTRT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle - 45)
+PTRT AAAAAAAAAA 1 A_Look
+SET1 A 0 A_SetAngle(angle - 45)
+SENT A 0 A_PlaySound ("Song")
+PTRT AAAAAAAAAA 1 A_Look
+TNT1 A 0 A_SetAngle(angle + 45)
+loop
+
+Active:
+TNT1 A 2
+TNT1 A 0 A_NoBlocking
+SENT A 0 A_PlaySound ("Mont")
+TNT1 A 0 A_ChangeFLag ("SHOOTABLE", 0)
+TNT1 A 0 A_ChangeFLag ("SOLID", 0)
+TNT1 A 0 A_SpawnItemEx ("PB_SentryBox_PlasmaCaster",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0
+Stop
+
+See:
+TNT1 A 0 A_TakeInventory ("IsFiring",1)
+PTRT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Chase
+SET1 E 0 BRIGHT A_ChangeFlag ("Solid",1)
+loop
+
+Missile:
+TNT1 A 0 A_GiveInventory("IsFiring", 1)
+TTR1 A 0 A_PlaySound ("beePB")
+PTRT AA 10 A_FaceTarget
+TNT1 A 0 A_PlaySound("PlasmaCaster/Full")
+TNT1 A 0 A_PlaySound("PlasmaCaster/Charge",5)
+PTRT AAA 4 A_FaceTarget
+MissileGo:
+TNT1 A 0 A_PlayWeaponSound("PlasmaCaster/Shot")
+TNT1 AAAAAA 0 A_CustomMissile("Plasma_Ball",85,45,0,CMF_OFFSETPITCH,random(-120,120)/100.00)
+PTRT B 4 Bright A_FaceTarget
+PTRT AAA 3 A_FaceTarget
+TNT1 A 0 A_PlayWeaponSound("PlasmaCaster/Shot")
+TNT1 AAAAAA 0 A_CustomMissile("Plasma_Ball",85,-45,0,CMF_OFFSETPITCH,random(-120,120)/100.00)
+PTRT C 4 Bright A_FaceTarget
+PTRT AAA 3 A_FaceTarget
+TNT1 A 0 A_CposRefire
+Loop
+
+Pain:
+TNT1 A 0 A_Pain
+SET1 A 0 BRIGHT A_ChangeFlag ("Solid",1)
+TNT1 A 0 A_JumpIfInventory("IsFiring", 1, "Pain.IsFiring")
+TNT1 A 0 A_TakeInventory("IsFiring", 1)
+Goto See
+Pain.IsFiring:
+PTRT AA 10 A_FaceTarget
+TNT1 A 0 A_PlaySound("PlasmaCaster/Full")
+TNT1 A 0 A_PlaySound("PlasmaCaster/Charge",5)
+PTRT AAA 4 A_FaceTarget
+MissileGo:
+TNT1 A 0 A_PlayWeaponSound("PlasmaCaster/Shot")
+TNT1 AAAAAA 0 A_CustomMissile("Plasma_Ball",85,45,0,CMF_OFFSETPITCH,random(-120,120)/100.00)
+PTRT B 4 Bright A_FaceTarget
+PTRT AAA 3 A_FaceTarget
+TNT1 A 0 A_PlayWeaponSound("PlasmaCaster/Shot")
+TNT1 AAAAAA 0 A_CustomMissile("Plasma_Ball",85,-45,0,CMF_OFFSETPITCH,random(-120,120)/100.00)
+PTRT C 4 Bright A_FaceTarget
+PTRT AAA 3 A_FaceTarget
+TNT1 A 0 A_CposRefire
+Loop
+
+Death:
+PTRT Z 1 A_PlaySoundEx ("Sentry/Death", "SoundSlot5")
+PTRT Z 0 A_PlaySoundEx ("Explosion", "SoundSlot6")
+PTRT Z 0 A_SpawnItem ("PB_SentryBoom", 0, 48)
+PTRT Z 512
+FadeOut:
+PTRT Z 2 A_FadeOut (0.1)
+loop
+}
+}
+
+
+ACTOR PB_SentryBox_Heavy : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBB0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Heavy sentry Gun!"
+Tag "Heavy Turret"
+States
+{
+Spawn:
+SENX C -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Heavy", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_Repeater : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBB0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Repeater sentry Gun!"
+Tag "Repeaer Turret"
+States
+{
+Spawn:
+SENX B -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Repeater", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_Plasma : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBC0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Plasma sentry Gun!"
+Tag "Plasma Turret"
+States
+{
+Spawn:
+SENX D -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Plasma", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_Rocket : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBD0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Rocket sentry Gun!"
+Tag "Rocket Turret"
+States
+{
+Spawn:
+SENX E -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Rocket", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_Sniper : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBE0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Sniper sentry Gun!"
+Tag "Sniper Turret"
+States
+{
+Spawn:
+SENX F -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Sniper", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_QSSG : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBF0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a QSSG sentry Gun!"
+Tag "QSSG Turret"
+States
+{
+Spawn:
+SENX G -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_QSSG", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_Obelisk : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBG0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Obelisk Of Light sentry Gun!"
+Tag "Heavy Turret"
+States
+{
+Spawn:
+SENX H -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Obelisk", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_Sonic : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBH0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Sonic Emitter sentry Gun!"
+Tag "Sonic Emitter Turret"
+States
+{
+Spawn:
+SENX I -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Sonic", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_Missile : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBI0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Missile sentry Gun!"
+Tag "Missile Turret"
+States
+{
+Spawn:
+SENX J -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Missile", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_Rail : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBJ0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Rail sentry Gun!"
+Tag "Rail Turret"
+States
+{
+Spawn:
+SENX K -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Rail", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_BFG : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBK0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a BFG sentry Gun!"
+Tag "BFG Turret"
+States
+{
+Spawn:
+SENX L -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_BFG", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_HeavyRocket : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBL0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Heavy Rocket sentry Gun!"
+Tag "BFG Turret"
+States
+{
+Spawn:
+SENX M -1
+Stop
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_HeavyRocket", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_Napalm : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBM0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Napalm Sentry Gun!"
+Tag "Heavy Turret"
+States
+{
+Spawn:
+SENX N -1
+Stop
+
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Napalm", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_Perforator : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBG0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Obelisk Of Light sentry Gun!"
+Tag "Heavy Turret"
+States
+{
+Spawn:
+SENX H -1
+Stop
+
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_Perforator", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_SentryBox_PlasmaCaster : CustomInventory
+{
++COUNTITEM
+Inventory.Amount 4
+Inventory.MaxAmount 4
+Inventory.Icon "SENBC0"
+Inventory.PickUpSound "TRBXUP"
+Inventory.PickupMessage "You picked up a Plasma Caster Sentry Gun!"
+Tag "Plasma Caster Turret"
+States
+{
+Spawn:
+SENX D -1
+Stop
+
+Pickup:
+    TNT1 A 0 A_GiveInventory("PB_SentryAmmo_PlasmaCaster", 1)
+    Stop
+}
+}
+
+
+ACTOR PB_Sentry_ObeliskFlare
+{
+Radius 1
+Height 1
++NOCLIP
++NOBLOCKMAP
++NOGRAVITY
++CLIENTSIDEONLY
++NOINTERACTION
++FORCEXYBILLBOARD
+RENDERSTYLE Add
+Scale 0.75
+Alpha 0.0
+States
+{
+Spawn:
+TNT1 A 0
+SPKR AAAAAAAAAA 2 Bright A_FadeIn(0.1)
+SPKR A 40 Bright
+Done:
+SPKR A 3 Bright A_FadeOut(0.1)
+Loop
+}
+}
+
+
+ACTOR PB_Sentry_ObeliskProj : FastProjectile
+{
+Speed 350
+Radius 17
+Height 10
+Damage 75
+Renderstyle Add
+PROJECTILE
+-CANNOTPUSH
++NODAMAGETHRUST
++EXTREMEDEATH
++MTHRUSPECIES
+DamageType "Marine"
+DeathSound "weapons/StachanovHit"
+MissileType "PB_Sentry_ErasusTrail"
+Decal Scorch
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 1 A_PlaySound("erasus/fly",5,1.0,1)
+Loop
+Death:
+TNT1 A 0 A_PlaySound("erasus/explode",5)
+TNT1 AAAAAAAAAA 0 A_SpawnItemEx("PB_Sentry_ErasusSparks",random(19,-19),random(19,-19),random(19,-19),0,0,0,0,128,0)
+TNT1 A 0 A_SpawnItemEx("PB_Sentry_ErasusExplode",0,0,0,0,0,0,0,128,0)
+TNT1 A 0 A_Explode(512,64,0)
+TNT1 A 0 A_Explode(288,156,0)
+TNT1 BCD 4
+stop
+}
+}
+
+
+ACTOR PB_Sentry_ErasusTrail
+{
+RenderStyle Add
+Scale 0.175
+Alpha 1
++NOINTERACTION
++NOGRAVITY
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 //A_SetScale(ScaleX,ScaleY-0.0875)
+YAE4 A 2 Bright A_SpawnItemEx("PB_Sentry_ErasusSparks",random(4,-4),random(4,-4),random(4,-4),0,0,0,0,128,0)
+YAE4 A 2 Bright
+Fly:
+YAE4 A 0 //A_SetScale(ScaleX-0.01,ScaleY-0.01)
+YAE4 A 1 Bright A_FadeOut(0.295)
+Loop
+}
+}
+
+
+ACTOR PB_Sentry_ErasusSparks : Actor
+{
+RenderStyle Add
+Scale 0.0125
+Alpha 0.95
++NOINTERACTION
++NOGRAVITY
++CLIENTSIDEONLY
+States
+{
+Spawn:
+TNT1 A 0
+YAE4 A 3 Bright A_ChangeVelocity(frandom(-0.8,0.8),frandom(-0.8,0.8),frandom(-0.8,0.8),0)
+YAE4 A 1 Bright A_FadeOut(0.05)
+Loop
+}
+}
+
+
+ACTOR PB_Sentry_ErasusExplode
+{
+Radius 17
+Height 10
+Renderstyle Add
+Scale 0.5
++CLIENTSIDEONLY
++NOINTERACTION
++NOGRAVITY
+States
+{
+Spawn:
+YAE3 ABCDEFGHIJKLMNOPQRS 1 Bright A_FadeOut(0.05)
+Stop
+}
+}
+
+
+ACTOR PB_Sentry_SonicFlare
+{
+Radius 1
+Height 1
++NOCLIP
++NOBLOCKMAP
++NOGRAVITY
++CLIENTSIDEONLY
++NOINTERACTION
++FORCEXYBILLBOARD
+RENDERSTYLE Add
+Scale 0.35
+Alpha 0.8
+States
+{
+Spawn:
+TNT1 A 0
+SPKB A 12 Bright
+Done:
+SPKB A 3 Bright A_FadeOut(0.1)
+Loop
+}
+}
+
+
+ACTOR PB_Sentry_SonicProj
+{
+Speed 38
+Damage 10
+Radius 6
+Height 6
+RenderStyle Add
+PROJECTILE
+-NOGRAVITY
++QUARTERGRAVITY
++NODAMAGETHRUST
++FORCERADIUSDMG
++MTHRUSPECIES
++RIPPER
++BLOODLESSIMPACT
+//+THRUACTORS
+DamageType "Marine"
+DeathSound "sonicemitter/explode"
+XScale 7.0
+States
+{
+Spawn:
+TEFX AB 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrail",0,0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 0 A_ChangeFlag("FLOORHUGGER",TRUE)
+Fly:
+TNT1 A 0 A_Explode(88,256,0)
+TNT1 A 0 A_PlaySound("erasus/fly",5,1.0,1)
+TEFX AB 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrailSpawner",0,0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 0 A_Explode(88,256,0)
+TEFX CD 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrailSpawner",0,0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 0 A_Explode(88,256,0)
+TEFX EF 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrailSpawner",0,0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 0 A_Explode(88,256,0)
+TEFX GH 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrailSpawner",0,0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 0 A_Explode(88,256,0)
+TEFX IJ 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrailSpawner",0,0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 0 A_Explode(88,256,0)
+TEFX KL 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrailSpawner",0,0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 0 A_Explode(88,256,0)
+TEFX MN 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrailSpawner",0,0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 0 A_Explode(88,256,0)
+TEFX OP 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrailSpawner",0,0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 0 A_Explode(88,256,0)
+TEFX QR 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrailSpawner",0,0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 0 A_Explode(88,256,0)
+TEFX ST 1 Bright A_SpawnItemEx("PB_Sentry_SonicTrailSpawner",0,0,0,1,0,random(-1,3),random(1,360))
+Loop
+Death:
+TNT1 A 0
+TNT1 AAAAAAAA 0 A_SpawnItemEx("BarrelKaboom",random(-32,32),random(-40,40),random(8,16),random(-4,4),random(-4,4),random(0,4),0,SXF_TRANSFERPOINTERS)
+TNT1 A 0 A_PlaySound("sonicemitter/explode",5)
+TNT1 A 0 A_Explode(100,100)
+TXP1 A 2 Bright A_SetScale(0.4,0.4)
+TNT1 A 0 A_Explode(110,110)
+TXP1 B 2 Bright A_SetScale(0.48,0.48)
+TNT1 A 0 A_Explode(120,120)
+TXP1 B 2 Bright A_SetScale(0.48,0.48)
+TNT1 A 0 A_Explode(130,130)
+TXP1 C 2 Bright A_SetScale(0.56,0.56)
+TNT1 A 0 A_Explode(140,140)
+TXP1 D 2 Bright A_SetScale(0.64,0.64)
+TNT1 A 0 A_Explode(150,150)
+TXP1 E 2 Bright A_SetScale(0.72,0.72)
+TNT1 A 0 A_Explode(160,160)
+TXP1 F 2 Bright A_SetScale(0.80,0.80)
+TNT1 A 0 A_Explode(170,170)
+TXP1 G 2 Bright A_SetScale(0.88,0.88)
+TNT1 A 0 A_Explode(180,180)
+TXP1 H 2 Bright A_SetScale(0.96,0.96)
+TNT1 A 0 A_Explode(190,190)
+TXP1 I 2 Bright A_SetScale(1.04,1.04)
+TNT1 A 0 A_Explode(200,200)
+TXP1 J 2 Bright A_SetScale(1.12,1.12)
+TNT1 A 0 A_Explode(210,210)
+TXP1 K 2 Bright A_SetScale(1.20,1.20)
+TNT1 A 0 A_Explode(220,220)
+TXP1 L 2 Bright A_SetScale(1.20,1.20)
+TNT1 A 0 A_Explode(230,230)
+TXP1 K 2 Bright A_SetScale(1.28,1.28)
+TNT1 A 0 A_Explode(240,240)
+TXP1 M 2 Bright A_SetScale(1.36,1.36)
+TNT1 A 0 A_Explode(250,250)
+TXP1 N 2 Bright A_SetScale(1.44,1.44)
+TNT1 A 0 A_Explode(260,260)
+TXP1 O 2 Bright A_SetScale(1.60,1.60)
+TNT1 A 0 A_Explode(270,270)
+TXP1 P 2 Bright A_SetScale(1.68,1.68)
+Stop
+}
+}
+
+
+Actor PB_Sentry_SonicTrail
+{
+Height 0
+Radius 0
+Mass 0
++MISSILE
++NOBLOCKMAP
++NOGRAVITY
++DONTSPLASH
++CLIENTSIDEONLY
+RenderStyle Add
+Scale 1.2
+States
+{
+Spawn:
+ZAPR ABCDEF 2 Bright A_FadeOut(0.07)
+Loop
+}
+}
+
+
+ACTOR PB_Sentry_SonicTrailSpawner
+{
+Height 1 
+Radius 1 
++CLIENTSIDEONLY 
++NOINTERACTION 
++NOGRAVITY 
++NOBLOCKMAP 
++NOCLIP
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 AAAAAAA 0 A_SpawnItemEx("PB_Sentry_SonicTrail",random(-30,30),0,0,1,0,random(-1,3),random(1,360))
+TNT1 A 1 A_SpawnItemEx("PB_Sentry_SonicTrail",random(-30,30),0,0,1,0,random(-1,3),random(1,360))
+Stop
+}
+}
+
+
+ACTOR PB_Sentry_MissileRocket
+{
+Radius 11
+Height 8
+Projectile
+Speed 86
+Damage 10
+Obituary "%o ate %k's Rocket."
++RANDOMIZE
++DEHEXPLOSION
++SKYEXPLODE
++MTHRUSPECIES
++NOTIMEFREEZE
+DeathSound "Explosion"
+DamageType Explosive
+States
+{
+Spawn:
+MIS7 A 0 A_CustomMissile("PB_Sentry_RocketSmoke",Random(4,6),Random(-2,2)) 
+MIS7 AAA 0 A_CustomMissile("PB_Sentry_RocketTrail",Random(4,6),Random(-2,2)) 
+MIS7 A 0 A_ChangeVelocity(1,0.5*random(-3,3),0.5*random(-2,2),CVF_RELATIVE)
+MIS7 A 1 Bright A_PlaySoundEx("rpg/fly","SoundSlot7",1)
+Loop
+Death:
+MIS7 A 0 A_StopSoundEx("SoundSlot7")
+TNT1 AAAA 0 A_SpawnItemEx("BarrelKaboom",0,0,0,Random(4,-4),Random(4,-4),Random(4,8),0,128)
+TNT1 AAA 0 A_SpawnItemEx("OrangeLensFlareAlt",0,0,0,0,0,0,0,128)
+TNT1 AAA 0 A_CustomMissile("PB_Sentry_SmokeFX3",0,0,random(0,360),2,random(0,360))
+TNT1 AAAAAA 0 A_CustomMissile("BarrelKaboom",0,0,random(0,360),2,random(0,360))
+MISQ B 4 Bright A_Explode(64,158,0)
+MISQ CD 4 Bright A_SetTranslucent(0.75,1)
+Stop
+}
+}
+
+
+Actor PB_Sentry_RocketSmoke : Actor
+{
+Radius 1
+Height 1
+Speed 0
+Damage 0
+Renderstyle ADD
+Alpha 0.75
+PROJECTILE
++NOBLOCKMAP
++NOTELEPORT
++DONTSPLASH
++NOGRAVITY
++MISSILE
++FORCEXYBILLBOARD
++CLIENTSIDEONLY
++NOINTERACTION
++NOCLIP
+Scale 0.25
+States
+{
+Spawn:
+TNT1 A 0
+SMK3 ABCDEFGHIJKLM 3 A_FadeOut(0.025)
+Stop
+}
+}
+
+
+Actor PB_Sentry_RocketTrail : Actor
+{
+Height 0
+Radius 0
+Mass 0
++Missile
++NoBlockMap
++NoGravity
++DontSplash
++FORCEXYBILLBOARD
++CLIENTSIDEONLY
+RenderStyle Add
+Scale 0.05
+States
+{
+Spawn:
+TNT1 A 0
+SPKO AAAAAAAAAA 1 Bright A_FadeOut(0.1)
+Stop
+}
+}
+
+
+ACTOR PB_Sentry_SmokeFX3 : PlasmaSmoke
+{
+Scale 1.65
+States
+{
+Spawn:
+TNT1 A 0
+SMK3 ABCDEFGHIJKLM 7 A_FadeOut(0.025)
+Stop
+}
+}
+
+
+ACTOR PB_Sentry_RailShot : FastProjectile
+{
+Speed 500
+Radius 5
+Height 3
+Damage 20
+Renderstyle Add
++RIPPER
+-CANNOTPUSH
++NODAMAGETHRUST
++EXTREMEDEATH
++FORCERADIUSDMG
+DamageType SSG
+DeathSound ""
+MissileType "RailGunTrail"
+Decal Scorch
+states
+{
+Spawn:
+TNT1 A 1 
+Loop
+
+Death:
+TNT1 A 0 A_StopSound(5)
+TNT1 AAAA 0 A_SpawnItemEx("BluePlasmaParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+TNT1 AA 0 A_SpawnItem("GreenShockWave")
+
+TNT1 A 0 A_Explode(120,5, 0)
+TNT1 A 0 A_PlaySound("RAILIMP")
+TNT1 A 0 A_PlaySound("FAREXPL", 1)
+EXPL A 0 Radius_Quake (4, 10, 0, 15, 0)
+TNT1 A 0 A_SpawnItemEx("PB_Sentry_RailImpact", 0, 0, 0, 0, 0, 0, 0, 128)
+TNT1 AAA 0 A_CustomMissile ("PB_Sentry_CDExpl", 0, 0, random (0, 360), 2, random (40, 90))
+TNT1 AA 0 A_CustomMissile ("PB_Sentry_CDExpl", 0, 0, random (0, 360), 2, random (40, 90))
+TNT1 AA 0 A_CustomMissile ("PB_Sentry_CDExpl", 10, 0, random (0, 360), 2, random (40, 90))
+EXPL AAAAA 0 A_CustomMissile ("PlasmaSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+TNT1 AAAA 0 A_CustomMissile ("FireworkSFXType2", 2, 0, random (0, 360), 2, random (10, 80))
+TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0 A_SpawnItemEx ("DetectCeilCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+TNT1 A 0 A_CustomMissile ("BluePlasmaFire", 0, 0, random (0, 360), 2, random (0, 360))
+TNT1 AAAAA 0 A_CustomMissile ("BluePlasmaParticle", 0, 0, random (0, 360), 2, random (0, 360))
+TNT1 ABCDE 2 BRIGHT A_SpawnItem("BlueFlare" ,0)
+TNT2 AAAAAAAAA 9 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
+stop
+}
+}
+
+
+Actor PB_Sentry_RailImpact
+{
+Radius 0
+Height 0
+RenderStyle Add
+Alpha 1
+Scale 1.1
++NOGRAVITY
++NOINTERACTION
++NOBLOCKMAP
++NOTELEPORT
++ForceXYBillboard
++CLIENTSIDEONLY
+States
+{
+Spawn:
+TNT1 A 0
+X006 ABCDEFGHI 2 bright
+X006 JKLMNOP 1 bright
+stop
+
+}
+}
+
+
+ACTOR PB_Sentry_CDExpl: ExplosionParticle2
+{
+Radius 1
+Height 1
+Alpha 1.0
+RenderStyle Add
+Scale 0.5
+Speed 6
+Gravity 1.4
++BOUNCEONCEILINGS
++BOUNCEONWALLS
+-SKYEXPLODE
+-NOGRAVITY
+States
+{
+Spawn: 
+SPKO M 1
+SPKO M 8 BRIGHT
+SPKO MMMMMMMMMMMMMM 1 BRIGHT A_FadeOut(0.1)
+Stop
+}
+}
+
+
+ACTOR PB_Sentry_CDExpl2: PB_Sentry_CDExpl
+{
+Scale 0.7
+Speed 6
+}
+
+
+ACTOR PB_Sentry_CDExpl3: PB_Sentry_CDExpl
+{
+Scale 0.7
+Speed 10
+}
+
+
+ACTOR PB_Sentry_NapalmBall
+{
+Projectile
+Height 10
+Radius 8
+Speed 32
+Damage 38
+RenderStyle Add
+Alpha 1
+Scale 1.5
+Damagetype "Flames"
+-MTHRUSPECIES
+SeeSound "comet/launch"
+DeathSound "comet/explosion"
+States
+{
+Spawn:
+WARN AB 1 Bright A_SpawnItemEx("PB_Sentry_NapalmTrail",0,0,0,frandom(-5,0),frandom(-3,3),frandom(0,8))
+Loop
+
+Death:
+TNT1 A 0 A_Explode(50,100)
+TNT1 A 0 A_SpawnItemEx("OrangeLensFlareAlt", 0, 0, 0, 0, 0, 0, 0, 128) 
+TNT1 AAA 0 A_CustomMissile("BarrelKaboom", 0, 0, random(0,360), 2, random(0,360))
+TNT1 AAA 0 A_CustomMissile("PlasmaSmoke", 0, 0, random(0,360), 2, random(0,360))
+TNT1 AAAAAAA 0 A_SpawnItemEx("PB_Sentry_NapalmFlare",0,0,0,random(0,4),0,random(0,2),random(0,360))
+WARN CDE 6 Bright
+Stop
+}
+}
+
+
+Actor PB_Sentry_NapalmTrail
+{
+RenderStyle Add
++CLIENTSIDEONLY
++NOBLOCKMAP
++DONTSPLASH
++NOCLIP
++NOINTERACTION
++THRUACTORS
+Alpha 1
+Scale 0.4
+States
+{
+Spawn:
+TNT1 A 0
+FIR1 ABCDEFGHIJK 1 Bright A_FadeOut
+Stop
+}
+}
+
+
+Actor PB_Sentry_NapalmFlarePart : PB_Sentry_NapalmTrail
+{
+Scale 0.25
+}
+
+
+ACTOR PB_Sentry_NapalmFlare
+{
+Projectile
+Height 4
+Radius 2
+Gravity 0.52
+Scale 1.8
+Renderstyle Add
++DONTFALL
++NODAMAGETHRUST
++FORCERADIUSDMG
++NOEXTREMEDEATH
++HEXENBOUNCE
++USEBOUNCESTATE
+-NOGRAVITY
+Damagetype "Flames"
+ReactionTime 30
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_JumpIf(waterlevel > 1,"Death")
+TNT1 A 0 A_PlaySound("monster/ambientfire",7,1.0,1)
+Bounce:
+TNT1 A 0
+TNT1 A 0 A_Jump(127,2)
+TNT1 AA 0 A_CountDown
+TNT1 A 0 A_JumpIf(waterlevel > 1,"Death")
+WARF AABBCC 1 Bright A_spawnItemEx("PB_Sentry_NapalmFlarePart",random(-6,6),random(-6,6),random(0,3),random(-2,2),random(-2,2),random(2,7),random(0,360))
+TNT1 A 0 A_Explode(4,64)
+TNT1 A 0 A_Jump(127,2)
+TNT1 AA 0 A_CountDown
+TNT1 A 0 A_JumpIf(waterlevel > 1,"Death")
+WARF DDEEFF 1 Bright A_spawnItemEx("PB_Sentry_NapalmFlarePart",random(-6,6),random(-6,6),random(0,3),random(-2,2),random(-2,2),random(2,7),random(0,360))
+TNT1 A 0 A_Explode(4,64)
+TNT1 A 0 A_Jump(127,2)
+TNT1 AA 0 A_CountDown 
+TNT1 A 0 A_JumpIf(waterlevel > 1,"Death")
+WARF GGHHII 1 Bright A_spawnItemEx("PB_Sentry_NapalmFlarePart",random(-6,6),random(-6,6),random(0,3),random(-2,2),random(-2,2),random(2,7),random(0,360))
+TNT1 A 0 A_Explode(4,64)
+TNT1 A 0 A_Jump(127,2)
+TNT1 AA 0 A_CountDown
+TNT1 A 0 A_JumpIf(waterlevel > 1,"Death")
+WARF KKLLMM 1 Bright A_spawnItemEx("PB_Sentry_NapalmFlarePart",random(-6,6),random(-6,6),random(0,3),random(-2,2),random(-2,2),random(2,7),random(0,360))
+TNT1 A 0 A_Explode(4,64)
+Loop
+
+Death:
+TNT1 A 0
+TNT1 A 0 A_StopSound(7)
+WARF MNOP 2 Bright
+Stop
+}
+}
+
+
+Actor PB_Sentry_Pulverizer : FastProjectile
+{
+Radius 10
+Height 7
+MissileHeight 7
+Speed 300
+RenderStyle Add
+DamageType Fire
+MissileType "PB_Sentry_PulvTrailSpawn"
+Damage 55
+Scale 0.9
++RIPPER
++EXTREMEDEATH
++NODAMAGETHRUST
++DONTBLAST
++MTHRUSPECIES
++FORCERADIUSDMG
+SeeSound "Pulverizer/Fire"
+Decal DoomImpScorch
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_PlaySound("Pulverizer/Loop",6,1.0,true)
+Looplet:
+HROD A 0
+HROD A 0 A_Explode(16,16)
+HROD A 1 Bright A_ChangeVelocity(0,0,-0.1)
+Loop
+
+Death:
+TNT1 A 0
+TNT1 A 0 A_SpawnItemEx("PB_Sentry_PulvWall",0,0,0,0,0,0,0,SXF_TRANSFERPOINTERS|SXF_NOCHECKPOSITION,0)
+Crash:
+XDeath:
+TNT1 AAA 0 A_StopSound(6)
+TNT1 AAA 0 A_SpawnItemEx("PB_Sentry_PulvSpark",12.0+frandom(2.0,-2.0),frandom(2.0,-2.0),frandom(2.0,-2.0),frandom(4.0,-4.0),frandom(2.0,-2.0),frandom(7.0,-1.0),frandom(0.0,360.0),SXF_CLIENTSIDE,0)
+TNT1 A 2 A_PlaySound("Pulverizer/Rod",7,1.0,false)
+Stop
+}
+}
+
+
+Actor PB_Sentry_PulvWall
+{
+Scale 0.9
+Radius 20
+Height 20
+DamageType "Marine"
+Alpha 0.99
+RenderStyle Add
+ReactionTime 80
++NOTIMEFREEZE
++DONTBLAST
++NOTELEPORT
++NONSHOOTABLE
++BLOODLESSIMPACT
++NOINTERACTION
++FORCERADIUSDMG
++MTHRUSPECIES
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_PlaySound("Pulverizer/Loop",6,1.0,true)
+HROD A 6 Bright A_Explode(20,135,0,0)
+TNT1 AA 0 A_SpawnItemEx("PB_Sentry_PulvSpark",frandom(-24,24),3+frandom(-1,1),frandom(-1,1),frandom(-1,1),frandom(-1,1),frandom(2,3),0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,128)
+TNT1 A 0 A_Countdown
+Loop
+
+Death:
+TNT1 A 0 A_StopSound(6)
+HROD A 20 Bright A_PlaySound("Pulverizer/End",7,1.0,false)
+HROD AAAABBBBB 1 A_FadeOut(0.1,1)
+Stop
+}
+}
+
+
+Actor PB_Sentry_PulvTrailSpawn
+{
++CLIENTSIDEONLY
++NOGRAVITY
++NOBLOCKMAP
++NOTELEPORT
++DONTSPLASH
+Height 1
+Radius 1
+Speed 0
+RenderStyle None
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_SpawnItemEx("PB_Sentry_PulvTrail",0,0,0,0)
+TNT1 A 1 A_SpawnItemEx("PB_Sentry_PulvSpark",0,0,0,frandom(-2.0,2.0),frandom(-2.0,2.0),frandom(1.0,3.0),frandom(360.0,0.0),SXF_CLIENTSIDE)
+Stop
+}
+}
+
+
+Actor PB_Sentry_PulvTrail
+{
++CLIENTSIDEONLY
++NOGRAVITY
++NOBLOCKMAP
++NOTELEPORT
++DONTSPLASH
+Height 20
+Radius 20
+Scale 0.9
+RenderStyle Add
+States
+{
+Spawn:
+HROD A 1 A_FadeOut(0.2,1)
+Loop
+}
+}
+
+
+Actor PB_Sentry_PulvSpark
+{
++CLIENTSIDEONLY
++NOBLOCKMAP
++NOTELEPORT
++DONTSPLASH
+Height 8
+Radius 4
+Gravity 0.15
+Scale 0.2
+RenderStyle Add
+Alpha 1
+-NOGRAVITY
+-NOINTERACTION
++DROPOFF
++DONTBLAST
+States
+{
+Spawn:
+TNT1 A 0 A_ScaleVelocity(0.98)
+HROD D 1 Bright A_FadeOut(0.05,1)
+Loop
+}
+}

@@ -16,3 +16,23 @@ Ice Wall Generator$Throws down a surge of flash-frozen barrier blocks to segment
 Holographic Decoy$Projects a flickering marine silhouette that draws heat while you flank. Fragile, but priceless when scouts try to pin you down.$PB_CF_HoloDecoyAmmo$Charge type: deployable ammo#
 Tesla Turret$Automated arc-lightning sentry you can carpet an encounter with. Drops aggro off your shoulders for a few precious seconds.$PB_CF_TeslaTurretAmmo$Charge type: deployable ammo#
 Freeze Mines$Cryo mines that prime like proximity charges but leave enemies brittle instead of outright vaporized. Pair with chip damage weapons.$PB_CF_FreezeMineAmmo$Charge type: deployable ammo#
+Sentry Gun$Deployable auto-turret that hoses demons with ballistic fire. Recovered from UAC field crates and backpack caches.$PB_SentryAmmo_Basic$Charge type: deployable ammo#
+Pulse Sentry$Plasma-flavored sentry that spatters Chex-style energy bolts. Use special on the unit to pack it back into a charge.$PB_SentryAmmo_Pulse$Charge type: deployable ammo#
+Heavy Sentry$Twin-barrel heavy auto-sentry with sustained ballistic suppression.$PB_SentryAmmo_Heavy$Charge type: deployable ammo#
+Repeater Sentry$Fast-cycling repeater turret for mid-range crowd control.$PB_SentryAmmo_Repeater$Charge type: deployable ammo#
+Plasma Sentry$Automated plasma turret that stitches enemies with energy bursts.$PB_SentryAmmo_Plasma$Charge type: deployable ammo#
+Rocket Sentry$Emplaced rocket battery — watch your splash.$PB_SentryAmmo_Rocket$Charge type: deployable ammo#
+Sniper Sentry$Long-range precision turret for corridor overwatch.$PB_SentryAmmo_Sniper$Charge type: deployable ammo#
+QSSG Sentry$Quad shotgun sentry that erupts with close-range buckshot.$PB_SentryAmmo_QSSG$Charge type: deployable ammo#
+Obelisk Sentry$Exotic beam obelisk turret with punishing energy lances.$PB_SentryAmmo_Obelisk$Charge type: deployable ammo#
+Sonic Sentry$Sonic emitter turret that pulses disruptive projectiles.$PB_SentryAmmo_Sonic$Charge type: deployable ammo#
+Missile Sentry$Guided missile rack for armored targets.$PB_SentryAmmo_Missile$Charge type: deployable ammo#
+Rail Sentry$Railgun turret with piercing line fire.$PB_SentryAmmo_Rail$Charge type: deployable ammo#
+BFG Sentry$Emplaced BFG turret — rare and apocalyptic.$PB_SentryAmmo_BFG$Charge type: deployable ammo#
+Heavy Rocket Sentry$Heavy rocket launcher turret with thicker warheads.$PB_SentryAmmo_HeavyRocket$Charge type: deployable ammo#
+Napalm Sentry$Incendiary turret that blankets floors in fire.$PB_SentryAmmo_Napalm$Charge type: deployable ammo#
+Perforator Sentry$High-rate perforator turret that shreds with specialty rounds.$PB_SentryAmmo_Perforator$Charge type: deployable ammo#
+Plasma Caster Sentry$Wide-arc plasma caster turret for area denial.$PB_SentryAmmo_PlasmaCaster$Charge type: deployable ammo#
+UAC Pipebomb$Remote-detonated pipebombs. Throw, reposition, then Use Equipment again to detonate.$PB_UAC_PipebombAmmo$Charge type: throwable ammo#
+UAC Satchel Charge$Sticky satchel packs with remote detonation. Second Use Equipment triggers the blast.$PB_UAC_SatchelAmmo$Charge type: throwable ammo#
+UAC Flare$Throwable illumination flares that burn bright after they land.$PB_UAC_FlareAmmo$Charge type: throwable ammo#
