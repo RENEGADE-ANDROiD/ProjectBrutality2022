@@ -32,8 +32,11 @@ class PB_SideFusil : PB_WeaponBase
         Goto Ready3;
 
 		NoAmmo:
-        "SIDE" A 1;
-        TNT1 A 0 A_PlaySound("DRYFIRE");
+        TNT1 A 0 {
+            A_TakeInventory("Reloading", 1);
+            A_PlaySound("DRYFIRE", CHAN_AUTO);
+        }
+        "SIDE" A 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
         Goto Ready3;
 
 		ReadySeen:
@@ -69,7 +72,9 @@ class PB_SideFusil : PB_WeaponBase
             A_ClearOverlays(10,11);
         }
         "SIDE" A 0 PB_WeapTokenSwitch("RifleSelected");
-        "SIDE" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+        "SIDE" A 1 {
+            return PB_ReadyFire("Fire", "Fire", "RealReady", false, false, "PB_FusilMag", true, "HasUnloaded");
+        }
         TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
         Loop;
 
@@ -128,8 +133,7 @@ class PB_SideFusil : PB_WeaponBase
             A_TakeInventory("PB_LockScreenTilt",1);
             A_ClearOverlays(10,11);
         }
-        TNT1 A 0 A_JumpIfInventory("PB_FusilMag",1,2);
-        Goto Reload;
+        TNT1 A 0 PB_BailIfCannotFire("PB_FusilMag", 1, "NewClip");
         TNT1 A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5);
         TNT1 A 0 A_FireCustomMissile("YellowFlareSpawn",-5,0,0,0);
         "SIDE" A 1 {

@@ -557,8 +557,7 @@ class PB_SMG : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSMGs", 1, "ReloadDualWield");
 		TNT1 A 0 A_JumpIfInventory("SMGAmmo",51,"Ready3");
         TNT1 A 0 A_JumpIfInventory("PistolBullets",1,2);
-        TNT1 A 0 A_PlaySoundEx("weapons/empty", "Weapon");
-        Goto Ready3;
+        Goto NoAmmo;
 		TNT1 A 0 {
 			A_ZoomFactor(1.0);
 			A_SetCrosshair(5);
@@ -592,7 +591,7 @@ class PB_SMG : PB_WeaponBase
 		InsertBullets:
 		TNT1 A 0 A_JumpIfInventory("SMGAmmo",50,"Ready3");
 		TNT1 A 0 A_JumpIfInventory("PistolBullets",1,1);
-		Goto Ready3;
+		Goto NoAmmo;
 		TNT1 A 0 {
 			A_Giveinventory("SMGAmmo",1);
 			A_Takeinventory("PistolBullets",1);
@@ -604,7 +603,7 @@ class PB_SMG : PB_WeaponBase
 		InsertBullets2Loop:
 		TNT1 A 0 A_JumpIfInventory("SMGAmmo",51,"Ready3");
 		TNT1 A 0 A_JumpIfInventory("PistolBullets",1,1);
-		Goto Ready3;
+		Goto NoAmmo;
 		TNT1 A 0 {
 			A_Giveinventory("SMGAmmo",1);
 			A_Takeinventory("PistolBullets",1);

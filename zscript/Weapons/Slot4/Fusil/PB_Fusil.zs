@@ -55,7 +55,9 @@ class PB_Fusil : PB_WeaponBase
         TNT1 A 0 PB_WeapTokenSwitch("RifleSelected");
         TNT1 A 0 A_JumpIfInventory("Zoomed",1,"Ready2");
         "RPTG" A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-        "RPTG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+        "RPTG" A 1 {
+            return PB_ReadyFire("Fire", "Fire2", "StopAim", false, false, "PB_FusilMag", true, "HasUnloaded");
+        }
         Loop;
 
 		Deselect:
@@ -117,8 +119,7 @@ class PB_Fusil : PB_WeaponBase
         }
         TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
         TNT1 A 0 A_JumpIfInventory("Zoomed",1,"Fire2");
-        TNT1 A 0 A_JumpIfInventory("PB_FusilMag",1,2);
-        Goto Reload;
+        TNT1 A 0 PB_BailIfCannotFire("PB_FusilMag", 1, "NewClip");
         TNT1 A 0 {
             A_WeaponOffset(0,32);
             A_SetRoll(0);
@@ -156,8 +157,7 @@ class PB_Fusil : PB_WeaponBase
             }
         }
         TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-        TNT1 A 0 A_JumpIfInventory("PB_FusilMag",1,2);
-        Goto Reload;
+        TNT1 A 0 PB_BailIfCannotFire("PB_FusilMag", 1, "NewClip");
         TNT1 A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5);
         TNT1 A 0 A_FireCustomMissile("YellowFlareSpawn",-5,0,0,0);
         "SHGA" K 1 {
@@ -206,9 +206,7 @@ class PB_Fusil : PB_WeaponBase
             A_TakeInventory("PB_LockScreenTilt",1);
         }
         TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-        TNT1 A 0 A_JumpIfInventory("PB_FusilMag",1,2);
-        Goto Reload;
-        SHGA A 6 { return PB_ReadyFire("Fire2", "Fire2", "StopAim", true, false, "PB_FusilMag"); }
+        SHGA A 6 { return PB_ReadyFire("Fire2", "Fire2", "StopAim", true, false, "PB_FusilMag", true, "HasUnloaded", WRF_NOFIRE); }
         SHGA B 6 { return PB_ReadyFire("Fire2", "Fire2", "StopAim", true, false, "PB_FusilMag"); }
         SHGA C 6 { return PB_ReadyFire("Fire2", "Fire2", "StopAim", true, false, "PB_FusilMag"); }
         SHGA D 6 { return PB_ReadyFire("Fire2", "Fire2", "StopAim", true, false, "PB_FusilMag"); }
@@ -385,8 +383,11 @@ class PB_Fusil : PB_WeaponBase
         Goto Ready3;
 
 		NoAmmo:
-        "RPTG" A 1;
-        TNT1 A 0 A_PlaySound("DRYFIRE");
+        TNT1 A 0 {
+            A_TakeInventory("Reloading", 1);
+            A_PlaySound("DRYFIRE", CHAN_AUTO);
+        }
+        "RPTG" A 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
         Goto Ready3;
 
 		FlashPunching:

@@ -276,6 +276,9 @@ Weapon.SlotPriority 0.5;
 		TNT1 A 0 A_JumpIfInventory("PBLMGHasUnloaded", 1, "ReadyUnload");
 		TNT1 A 0 A_JumpIfInventory("LMGMicroMissiles", 1, "ReadyMissile");
 		RealReady:
+		TNT1 A 0 A_JumpIfInventory("LMGAmmo", 1, "RealReadyArmed");
+		Goto RealReadyEmpty;
+		RealReadyArmed:
 		"LSB7" E 0;
 		"LSB6" E 0;
 		"LSB5" E 0;
@@ -294,6 +297,11 @@ Weapon.SlotPriority 0.5;
 						return ResolveState("Fire");
 				}
 					return A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("PBLMGHasUnloaded"));
+			}
+		Loop;
+		RealReadyEmpty:
+		LSB3 E 1 {
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE, CheckUnloaded("PBLMGHasUnloaded"));
 			}
 		Loop;
 		MuzzleFlashBullet:
@@ -507,8 +515,7 @@ Weapon.SlotPriority 0.5;
 		"LAFR" "DC" 1 BRIGHT;
 		Stop;
 		Fire2Missile:
-		TNT1 A 0 A_JumpIfInventory("LMGAmmo",3,2);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("LMGAmmo", 3, "NewClip");
 		TNT1 A 0;
 		TNT1 A 0 A_StartSound("LMISFIR");
 		TNT1 A 0 A_Overlay(-2, "MuzzleFlashRocketZoom");
@@ -553,8 +560,7 @@ Weapon.SlotPriority 0.5;
 		Goto Ready2Micro;
 		Fire2:
 		TNT1 A 0 A_JumpIfInventory("LMGMicroMissiles",1,"Fire2Missile");
-		TNT1 A 0 A_JumpIfInventory("LMGAmmo",1,2);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("LMGAmmo", 1, "NewClip");
 		TNT1 A 0;
 		TNT1 A 0 A_StartSound("LFIRE");
 		TNT1 A 0 A_Overlay(-2, "MuzzleFlashBulletZoom");
@@ -629,8 +635,7 @@ Weapon.SlotPriority 0.5;
 		Fire:
 		TNT1 A 0 A_JumpIfInventory("Zoomed", 1, "Fire2");
 		TNT1 A 0 A_JumpIfInventory("LMGMicroMissiles",1,"FireMissile");
-		TNT1 A 0 A_JumpIfInventory("LMGAmmo",1,2);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("LMGAmmo", 1, "NewClip");
 		TNT1 A 0;
 		TNT1 A 0 A_StartSound("LFIRE");
 		TNT1 A 0 A_Overlay(-2, "MuzzleFlashBullet");
@@ -688,8 +693,7 @@ Weapon.SlotPriority 0.5;
 		"LMMZ" "DC" 1 BRIGHT;
 		Stop;
 		FireMissile:
-		TNT1 A 0 A_JumpIfInventory("LMGAmmo",3,2);
-        Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("LMGAmmo", 3, "NewClip");
 		TNT1 A 0;
 		TNT1 A 0 A_StartSound("LMISFIR");
 		TNT1 A 0 A_Overlay(-2, "MuzzleFlashRocket");
@@ -1040,14 +1044,14 @@ Weapon.SlotPriority 0.5;
 	//BIG FUCKING RELOAD code 
 		ReloadCheckRocket:
 		TNT1 A 0 A_JumpIfInventory("NewClip", 3, "ReloadBegin");
-		Goto Ready3;
+		Goto NoAmmo;
 		Reload:
 		TNT1 A 0 A_ZoomFactor(1);
 		TNT1 A 0 A_TakeInventory("Zoomed");
 		TNT1 A 0 A_JumpIfInventory("LMGAmmo", 75, "Ready3");
 		TNT1 A 0 A_JumpIfInventory("LMGMicroMissiles", 1, "ReloadCheckRocket") ;//I don't really like TNT1 A 0 { if { } } stuff so I will keep it more simple
 		TNT1 A 0 A_JumpIfInventory("NewClip", 1, "ReloadBegin");
-		Goto Ready3;
+		Goto NoAmmo;
 		ReloadBegin:
 		TNT1 A 0 A_JumpIfInventory("PBLMGHasUnloaded", 1, "UnloadCalculations") ;//unload stuff;
 		TNT1 A 0 {

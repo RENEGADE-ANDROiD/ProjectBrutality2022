@@ -719,7 +719,7 @@ class LeverAction : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(CountInv("LeverActionAmmo") >= LA_MagMax(), "Ready3");
 			TNT1 A 0 A_JumpIfInventory("NewClip",1, "ReloadAnimation");
 			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/inspect", "Auto");
-			Goto Ready3;
+			Goto NoAmmo;
 		ReloadAnimation:
 			"LVR2" MNOP 1 A_SetRoll(roll+1.0,SPF_INTERPOLATE);
 			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/openchamber","Auto");

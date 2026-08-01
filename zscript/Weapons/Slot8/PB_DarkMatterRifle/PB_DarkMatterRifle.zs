@@ -121,6 +121,9 @@ class PB_DarkMatterRifle : PB_WeaponBase
 			PB_HandleCrosshair(76);
 			A_TakeInventory("PB_LockScreenTilt", 1);
 		}
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, "Ready3Armed");
+		Goto GunEmpty;
+	Ready3Armed:
 		TNT1 A 0 A_PlaySound("PLSIDLE", 6, 1, 1);
 		"PZC4" ABCDEDCBA 1 A_DoPBWeaponAction;
 		Loop;
@@ -139,7 +142,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		Loop;
 
 		GunEmpty:
-		"PZCR" A 1 A_WeaponReady;
+		"PZCR" A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_NOFIRE);
 		"PZCR" A 1 A_JumpIfInventory("GoFatality", 1, "Steady");
 		TNT1 AA 0;
 		TNT1 A 0 A_JumpIfInventory("UseEquipment", 1, "UseEquipment");
@@ -270,8 +273,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 PB_TryAutoFatalityOnFire();
 		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "FireDualWield");
 		TNT1 A 0 A_WeaponOffset(0, 32);
-		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, 2);
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_DarkMatterMag", 1, "Cell");
 		TNT1 AAAA 0;
 		TNT1 A 0 A_PlaySound("PAILGF2", 3);
 		TNT1 A 0 A_AlertMonsters;
@@ -299,7 +301,8 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("PB_DualDarkMatterFireAnimation", 1, "FireRight");
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMagLeft", 1, 2);
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, "FireRight");
-		Goto Reload;
+		TNT1 A 0 A_JumpIfInventory("Cell", 1, "Reload");
+		Goto NoAmmo;
 		TNT1 AAAA 0;
 		TNT1 A 0 A_GiveInventory("PB_DualDarkMatterFireAnimation", 1);
 		TNT1 A 0 A_PlaySound("PAILGF2");
@@ -323,7 +326,9 @@ class PB_DarkMatterRifle : PB_WeaponBase
 			A_TakeInventory("PB_DualDarkMatterFireAnimation", 1);
 			if (CountInv("PB_DarkMatterMagLeft") >= 1)
 				return ResolveState("FireLeft");
-			return ResolveState("Reload");
+			if (CountInv("Cell") >= 1)
+				return ResolveState("Reload");
+			return ResolveState("NoAmmo");
 		}
 		TNT1 AAAA 0;
 		TNT1 A 0 A_TakeInventory("PB_DualDarkMatterFireAnimation", 1);
@@ -355,8 +360,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "AltFireDualBlocked");
 		TNT1 A 0 A_JumpIfInventory("PB_DMR_GravityAltMode", 1, "GravityAltFire");
 		TNT1 A 0 A_WeaponOffset(0, 32);
-		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", DMR_SUPER_COST, 13);
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_DarkMatterMag", DMR_SUPER_COST, "Cell");
 		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAA 0;
 		TNT1 A 0 A_StopSound(6);
 		TNT1 A 0 A_AlertMonsters;
@@ -415,7 +419,8 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"PZCG" EEEEEEEEEE 2 A_FireCustomMissile("SmokeSpawner", 0, 0, 0, 5);
 		"PZCG" DCB 1;
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, 2);
-		Goto Reload;
+		TNT1 A 0 A_JumpIfInventory("Cell", 1, "Reload");
+		Goto NoAmmo;
 		TNT1 AAAA 0;
 		TNT1 A 0 A_PlaySound("BEPBEP");
 		Goto Ready3;
@@ -448,8 +453,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		Goto Ready3;
 
 		GravityAltFire:
-		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", DMR_GRAV_COST, 13);
-		Goto Reload;
+		TNT1 A 0 PB_BailIfCannotFire("PB_DarkMatterMag", DMR_GRAV_COST, "Cell");
 		TNT1 A 0;
 		TNT1 A 0 A_StopSound(6);
 		TNT1 A 0 A_AlertMonsters;
@@ -510,7 +514,8 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"PZCG" EEEEEEEEEE 2 A_FireCustomMissile("SmokeSpawner", 0, 0, 0, 5);
 		"PZCG" DCB 1;
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, 2);
-		Goto Reload;
+		TNT1 A 0 A_JumpIfInventory("Cell", 1, "Reload");
+		Goto NoAmmo;
 		TNT1 AAAA 0;
 		TNT1 A 0 A_PlaySound("BEPBEP");
 		Goto Ready3;
@@ -540,7 +545,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", DMR_MAG_FULL, "DontNeedToReload");
 		TNT1 A 0 A_PlaySound("BEEEP");
 		TNT1 A 0 A_JumpIfInventory("Cell", 1, 3);
-		Goto Ready3;
+		Goto NoAmmo;
 		TNT1 AAAA 0;
 		"PZCR" A 1;
 		"PZCR" B 2 A_PlaySound("CELLPKUP", 6);
@@ -564,7 +569,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 AAAA 0;
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", DMR_MAG_FULL, "Ready3");
 		TNT1 A 0 A_JumpIfInventory("Cell", 1, 3);
-		Goto Ready3;
+		Goto NoAmmo;
 		TNT1 AAAAAA 0;
 		TNT1 A 0 A_GiveInventory("PB_DarkMatterMag", 1);
 		TNT1 A 0 A_TakeInventory("Cell", 1, TIF_NOTAKEINFINITE);
@@ -582,7 +587,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMagLeft", DMR_MAG_FULL, "ReadyDual");
 		ReloadDualDo:
 		TNT1 A 0 A_JumpIfInventory("Cell", 1, 1);
-		Goto ReadyDual;
+		Goto NoAmmo;
 		TNT1 A 0 A_PlaySound("BEEEP");
 		"DPCS" EDCBA 1 A_WeaponReady(WRF_NOBOB | WRF_NOFIRE);
 		TNT1 A 3;

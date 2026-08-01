@@ -1229,5 +1229,16 @@
 				PB_SetExecutingEnemy(false);
 			}
 			Goto Ready3;
+
+		// Default empty-mag bail for AmmoUse-0 weapons. Override with weapon art
+		// if desired, but keep a timed WRF_NOFIRE frame — bare Goto Ready3 loops.
+		NoAmmo:
+			TNT1 A 0
+			{
+				A_TakeInventory("Reloading", 1);
+				A_PlaySound("weapons/empty", CHAN_AUTO);
+			}
+			TNT1 A 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
+			Goto Ready3;
 	}
 }

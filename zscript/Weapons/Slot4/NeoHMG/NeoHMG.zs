@@ -478,6 +478,16 @@ class PB_NeoHMG : PB_WeaponBase
 			XH02 A 0;
 			XH03 A 0;
 			XH04 A 0;
+			TNT1 A 0 A_JumpIfInventory("HMGChamberAmmo", 1, "ReadyArmed");
+		ReadyEmpty:
+			HG0F A 1
+			{
+				PB_CoolDownBarrel(0, 0, 3);
+				NeoHMG_SetFireBeltSprite();
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+			}
+			Loop;
+		ReadyArmed:
 			HG0F A 1
 			{
 				PB_CoolDownBarrel(0, 0, 3);
@@ -487,10 +497,11 @@ class PB_NeoHMG : PB_WeaponBase
 			Loop;
 		NoAmmo:
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			HG0F A 1
-			{
-				A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			TNT1 A 0 {
+				A_TakeInventory("Reloading", 1);
+				A_PlaySound("weapons/empty", CHAN_AUTO);
 			}
+			HG0F A 8 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
 			Goto Ready3;
 		Fire:
 			TNT1 A 0

@@ -650,14 +650,15 @@ ACTOR Black_DMR_RKX : PB_WeaponBase
 		Goto Ready2
 	
 	NoAmmo:
-	J2FG A 1 A_PlaySound("DryFire/Rifle")
-	TNT1 A 0 A_JumpIfInventory("Black_Clip",1,"Ready3")
+		TNT1 A 0 A_TakeInventory("Reloading", 1)
+		TNT1 A 0 A_PlaySound("weapons/empty")
+		TNT1 A 0 A_JumpIfInventory("Black_Clip", 1, "Ready3")
 	NoReload:
-	TNT1 A 0 A_Takeinventory("Reloading",1)
-	TNT1 A 0 A_Takeinventory("Zoomed",1)
-    TNT1 A 0 A_ZoomFactor(1.0)
-    TNT1 A 0 A_SelectWeapon("IN_Beretta")
-	Goto Ready3
+		TNT1 A 0 A_TakeInventory("Zoomed", 1)
+		TNT1 A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_SelectWeapon("IN_Beretta")
+		J2FG A 8 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
+		Goto Ready3
 	
     Reload:
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "IdleBarrel")

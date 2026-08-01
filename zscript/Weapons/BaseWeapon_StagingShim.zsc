@@ -376,6 +376,17 @@ Extend class PB_WeaponBase
 		return ResolveState(null);
 	}
 
+	// PB_BailIfCannotFire — mag cost gate for AmmoUse-0 weapons (Fire / AltFire entry).
+	action state PB_BailIfCannotFire(Name magInv, int need, Name reserveInv,
+		statelabel reload = "Reload", statelabel noAmmo = "NoAmmo")
+	{
+		if (CountInv(magInv) >= need)
+			return ResolveState(null);
+		if (CountInv(reserveInv) >= 1)
+			return ResolveState(reload);
+		return ResolveState(noAmmo);
+	}
+
 	// ------------------------------------------------------------------
 	// PB_TakeAmmo â€” take N from a pool and flip mag/chamber-empty flags.
 	// ------------------------------------------------------------------

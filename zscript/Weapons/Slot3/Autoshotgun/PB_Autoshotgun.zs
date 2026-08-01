@@ -170,12 +170,20 @@ class PB_Autoshotgun : PB_WeaponBase
 			Goto ReadyToFire;
 
 		ReadyToFire:
-			
+			TNT1 A 0 A_JumpIfInventory("AutoShotgunAmmo", 1, "ReadyToFireArmed");
+			Goto ReadyToFireEmpty;
+		ReadyToFireArmed:
 			AG10 H 1 {
 					if (CountInv("JustFiredAutoshotgun") >= 60) { A_Gunflash("BarrelSmoke1");}
 					if (CountInv("PumpAutoShotgun") == 1 && CountInv("AutoShotgunAmmo") >= 1) {return ResolveState("Pump");}
 					if (CountInv("DrumMagNotInserted") >= 1 ) { return ResolveState("DrumMagInspectCheck"); }
 					return A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("PBAutoShotgunHasUnloaded"));
+			}
+			Loop;
+		ReadyToFireEmpty:
+			AG10 H 1 {
+					if (CountInv("DrumMagNotInserted") >= 1 ) { return ResolveState("DrumMagInspectCheck"); }
+					return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE, CheckUnloaded("PBAutoShotgunHasUnloaded"));
 			}
 			Loop;
 		ReadyToFireDrum:
@@ -195,6 +203,9 @@ class PB_Autoshotgun : PB_WeaponBase
 					if (CountInv("AutoShotgunAmmo") == 0 )  {A_SetWeaponSprite("AU01");}
 					if (CountInv("JustFiredAutoshotgun") >= 60) {A_Gunflash("BarrelSmoke1");}
 					if (CountInv("PumpAutoShotgun") == 1 && CountInv("AutoShotgunAmmo") >= 1) {return ResolveState("Pump");}
+					if (CountInv("AutoShotgunAmmo") < 1) {
+						return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE, CheckUnloaded("PBAutoShotgunHasUnloaded"));
+					}
 					return A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("PBAutoShotgunHasUnloaded"));
 			}
 			Loop;
@@ -517,8 +528,7 @@ class PB_Autoshotgun : PB_WeaponBase
 				A_TakeInventory("PB_LockScreenTilt",1);
 				A_ClearOverlays(10,11);
 			}
-			TNT1 A 0 A_JumpIfInventory("AutoShotgunAmmo",1,1);
-			Goto Reload;
+			TNT1 A 0 PB_BailIfCannotFire("AutoShotgunAmmo", 1, "NewShell");
 			TNT1 A 0 A_JumpIfInventory("DualWieldingAutoshotguns", 1, "FireDualWield");
 			TNT1 A 0 A_JumpIfInventory("AutoshotgunDrumMag", 1, "DrumFire");
 			TNT1 A 0 A_JumpIfInventory("PBAutoShotgunWasEmpty", 1, "Pump");
@@ -647,7 +657,8 @@ class PB_Autoshotgun : PB_WeaponBase
 				A_ClearOverlays(10,11);
 			}
 			TNT1 A 0 A_JumpIfInventory("AutoShotgunAmmo",2,1);
-			Goto Reload;
+			TNT1 A 0 A_JumpIfInventory("NewShell",1,"Reload");
+			Goto NoAmmo;
 			TNT1 A 0 A_JumpIfInventory("DualWieldingAutoshotguns", 1, "FireDualWield");
 			TNT1 A 0 A_JumpIfInventory("AutoshotgunDrumMag", 1, "DrumAltFire");
 			TNT1 A 0 A_JumpIfInventory("PBAutoShotgunWasEmpty", 1, "Pump");
@@ -986,7 +997,7 @@ class PB_Autoshotgun : PB_WeaponBase
 				A_WeaponOffset(0,32);
 			}
 			TNT1 A 0 A_JumpIfInventory("NewShell",1,1);
-			Goto Ready3;
+			Goto NoAmmo;
 			TNT1 A 0 {
 				if(CountInv("AutoshotgunAmmo") == 24 && CountInv("LeftASGAmmo") == 24 && CountInv("AutoshotgunDrumMag") ==1) {
 					return ResolveState("Ready3");
@@ -1003,8 +1014,7 @@ class PB_Autoshotgun : PB_WeaponBase
 			"AG60" A 1 A_Setroll(0, SPF_INTERPOLATE);
 			TNT1 A 0 A_JumpIfInventory("AutoshotgunDrumMag", 1, "RightDrumReload");
 			TNT1 A 0 A_JumpIfInventory("NewShell", 1, "RightReloadStart");
-			TNT1 A 0 A_PlaySoundEx("weapons/empty", "Weapon");
-			Goto ReadyDualWield;
+			Goto NoAmmo;
 		
 		RightReloadStart:
 			TNT1 A 0 {
@@ -1284,8 +1294,7 @@ class PB_Autoshotgun : PB_WeaponBase
 		RightDrumReload:
 			TNT1 A 0 A_JumpIfInventory("AutoShotgunAmmo",24,"LeftDrumReload");
 			TNT1 A 0 A_JumpIfInventory("NewShell",1,2);
-			TNT1 A 0 A_PlaySoundEx("weapons/empty", "Weapon");
-			Goto Ready3;
+			Goto NoAmmo;
 		RightDrumReloadAnimation:
 			TNT1 A 0 A_JumpIfInventory("PBAutoShotgunHasUnloaded",1,"RightBeginNormalDrumReload");
 			TNT1 A 0 A_PlaysoundEx("weapons/autoshotgun/drumreload1", "Auto");
@@ -1349,8 +1358,7 @@ class PB_Autoshotgun : PB_WeaponBase
 		LeftDrumReload:
 			TNT1 A 0 A_JumpIfInventory("LeftASGAmmo",24,"Ready3");
 			TNT1 A 0 A_JumpIfInventory("NewShell",1,2);
-			TNT1 A 0 A_PlaySoundEx("weapons/empty", "Weapon");
-			Goto Ready3;
+			Goto NoAmmo;
 		LeftDrumReloadAnimation:
 			TNT1 A 0 A_JumpIfInventory("LeftPBAutoShotgunHasUnloaded",1,"LeftBeginNormalDrumReload");
 			TNT1 A 0 A_PlaysoundEx("weapons/autoshotgun/drumreload1", "Auto");
@@ -1397,8 +1405,7 @@ class PB_Autoshotgun : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("AutoshotgunDrumMag", 1, "DrumReload");
 			TNT1 A 0 A_JumpIfInventory("AutoShotgunAmmo", 12, "Ready3");
 			TNT1 A 0 A_JumpIfInventory("NewShell", 1, 2);
-			TNT1 A 0 A_PlaySoundEx("weapons/empty", "Weapon");
-			Goto Ready3;
+			Goto NoAmmo;
 		ReloadAnimation:
 			TNT1 A 0 {
 				if (CountInv("AutoShotgunAmmo") < 1) {
@@ -1561,8 +1568,7 @@ class PB_Autoshotgun : PB_WeaponBase
 		DrumReload:
 			TNT1 A 0 A_JumpIfInventory("AutoShotgunAmmo",24,"Ready3");
 			TNT1 A 0 A_JumpIfInventory("NewShell",1,2);
-			TNT1 A 0 A_PlaySoundEx("weapons/empty", "Weapon");
-			Goto Ready3;
+			Goto NoAmmo;
 		DrumReloadAnimation:
 			"AR24" ABCDEFGHIJ 0;
 			"AR23" ABCDEFGHIJ 0;

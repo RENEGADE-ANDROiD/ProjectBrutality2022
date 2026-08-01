@@ -89,6 +89,12 @@ class PB_HarvesterOfSouls : PB_WeaponBase
 					PB_HandleCrosshair(39);
 			}
 		ReadyToFire:
+			TNT1 A 0 A_JumpIfInventory("HellAmmo", 1, "ReadyToFireArmed");
+			BANA ABCDEFG 1 {
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
+			}
+			Goto ReadyToFire;
+		ReadyToFireArmed:
 			BANA ABCDEFG 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 			Goto ReadyToFire;
 
@@ -297,7 +303,7 @@ class PB_HarvesterOfSouls : PB_WeaponBase
 			TNT1 A 0 A_TakeInventory("Reloading", 1);
 			TNT1 A 0 A_JumpIfInventory("HellAmmo", 60, "Ready3");
 			TNT1 A 0 A_JumpIfInventory("Demonpower", 1, 1);
-			Goto Ready3;
+			Goto NoAmmo;
 			TNT1 A 0 A_PlaySound("IronSights");
 			PAPO ABCDEFGHIJ 1;
 			TNT1 A 0 A_PlaySoundEx("Hellclip", "Weapon");
@@ -324,7 +330,7 @@ class PB_HarvesterOfSouls : PB_WeaponBase
 			TNT1 A 0 A_TakeInventory("Reloading", 1);
 			TNT1 A 0 A_JumpIfInventory("HellAmmo", 60, "Ready3");
 			TNT1 A 0 A_JumpIfInventory("Demonpower", 1, 1);
-			Goto Ready3;
+			Goto NoAmmo;
 			TNT1 A 0
 			{
 				A_GiveInventory("HellAmmo", 1);
