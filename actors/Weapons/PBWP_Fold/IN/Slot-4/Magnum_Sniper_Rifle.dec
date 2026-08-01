@@ -399,16 +399,16 @@ ACTOR MagnumSniperRifle : PB_WeaponBase
         SNPK ABCDE 1
 		SNPK E 7
 		SNPK EDCBA 1
-		Stop
+		Goto Ready3
    FlashAirKicking:
         SNPK ABCDE 1
 		SNPK E 9
 		SNPK EDCBA 1
-		Stop
+		Goto Ready3
 	FlashSlideKicking:
 	FlashSlideKickingStop:
 	    SNPK BBCCDDEEEEEEEEEEEEEEEEEEEEDCBA 1
-		Stop
+		Goto Ready3
 
 	Unload:
 		SNPF A 1 A_DoPBWeaponAction

@@ -134,24 +134,25 @@ class PBWP_CA_WeaponBase : PB_WeaponBase
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			Goto Ready3;
 
+		// Kick flashes: blank weapon layer while legs kick (do not play MC3S slash).
 		FlashKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			MC3S ABCDEFGGGFEDCBA 1;
+			TNT1 A 14;
 			Goto Ready3;
 
 		FlashAirKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			MC3S ABCDEFGGGGFEDCBA 1;
+			TNT1 A 15;
 			Goto Ready3;
 
 		FlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			MC3S ABCDEFGGGGGGGGGGGGGGGFEDCBA 1;
+			TNT1 A 25;
 			Goto Ready3;
 
 		FlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			MC3S AB 1;
+			TNT1 A 2;
 			Goto Ready3;
 	}
 }
