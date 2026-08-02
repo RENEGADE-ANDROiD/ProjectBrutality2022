@@ -315,7 +315,8 @@ Actor DeadZombiemanJustLegsAreLeft: ZombiemanTorso
 {
 +NOPAIN
 States{Spawn:
-		POSX E -1 
+		POSX E 35
+		TNT1 A 0 A_SpawnItem ("BrutalizedZombieManStop")
         Stop 
 		
 		Death:
@@ -347,7 +348,8 @@ Actor DeadZombiemanJustLegsAreLeft2: ZombiemanTorso
 {
 +NOPAIN
 States{Spawn:
-		ZZD1 H -1 
+		ZZD1 H 35
+		TNT1 A 0 A_SpawnItem ("BrutalizedZombieManStop2")
         Stop 
 		
 		Death:
