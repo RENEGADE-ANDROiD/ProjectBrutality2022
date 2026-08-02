@@ -251,9 +251,23 @@ class PB_WeaponBase : DoomWeapon
 		return best;
 	}
 
+	// Possession mounts (Caco / Mastermind / Cyber / Manc / Arachno / Rev) — block finishers mid-ride.
+	clearscope static bool PB_PlayerOnPossessionRide(Actor a)
+	{
+		if (!a)
+			return false;
+		return a.CountInv("CacoPlayer") > 0 || a.CountInv("CacoTimer") > 0
+			|| a.CountInv("MastermindPlayer") > 0 || a.CountInv("MastermindTimer") > 0
+			|| a.CountInv("CyberdemonPlayer") > 0 || a.CountInv("CyberdemonTimer") > 0
+			|| a.CountInv("MancubusPlayer") > 0 || a.CountInv("ArachnotronTurret") > 0
+			|| a.CountInv("RevenantRider") > 0;
+	}
+
 	// Staggered Glory Kill: nearby FinisherToken monster (not only GETTARGET inventory).
 	action bool PB_GloryKillOpportunityReady()
 	{
+		if (PB_PlayerOnPossessionRide(self))
+			return false;
 		Actor mon = PB_ResolveFinisherMonster(150.);
 		if (!mon)
 			return false;
@@ -265,6 +279,8 @@ class PB_WeaponBase : DoomWeapon
 	// Experimental execution eligibility without starting an Execution_* state.
 	action bool PB_ExecutionOpportunityReady()
 	{
+		if (PB_PlayerOnPossessionRide(self))
+			return false;
 		CVar experimental_settings = CVar.FindCVar("pb_experimental");
 		if (!experimental_settings || !experimental_settings.GetBool())
 			return false;
@@ -616,7 +632,9 @@ class PB_WeaponBase : DoomWeapon
 	}
 	
 	action state PB_Execute() {
-	
+		if (PB_PlayerOnPossessionRide(self))
+			return null;
+
         CVar experimental_settings = CVar.FindCVar('pb_experimental');
 		
 		if (!experimental_settings || !experimental_settings.GetBool())
@@ -661,6 +679,8 @@ class PB_WeaponBase : DoomWeapon
 			return resolveState(null);
 		let pp = PlayerPawn(po);
 		if (!pp || !pp.player || invoker.CountInv("NoFatality") != 0)
+			return resolveState(null);
+		if (PB_PlayerOnPossessionRide(pp))
 			return resolveState(null);
 		if (pp.CountInv("GoFatality") >= 1 || pp.CountInv("ExecutionToken") >= 1 || invoker.executingEnemy)
 			return resolveState(null);
