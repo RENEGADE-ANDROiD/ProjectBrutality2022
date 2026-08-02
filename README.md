@@ -31,6 +31,9 @@ You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [
 
 <img width="600" height="338" alt="reelism2forpb2022" src="https://github.com/user-attachments/assets/4ae1c6d3-8574-486c-95d0-7106cba1ebcf" />[REELISM 2 for PB2022](https://drive.google.com/file/d/1-TyYW_w2iH4bL5to6K9V24oWV3hWz8ix/view?usp=drive_link) 
 Modified for PB2022; loads after it.
+
+<img width="600" height="338" alt="backrooms_pb2022" src="https://github.com/user-attachments/assets/f8717581-c4cb-4164-8342-6bc0d1e829fa" />[BACKROOMS Redux from moddb |&](https://www.moddb.com/mods/backrooms-redux-an-immersive-backrooms-experience)[| BACKROOMS Redux PB2022 Compat Patch](https://drive.google.com/file/d/1lqsm1RH6DSSn7_3lP0E5tjqOjQjSTnVQ/view?usp=drive_link) Load Order = Redux > PB2022 > Compat
+
 -----------------------
 
 ## What you get with PB2022
