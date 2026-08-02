@@ -204,7 +204,8 @@ ACTOR BeheadedSergeantZombie: DeadShotgunGuy_NoHead
 
 Actor DeadShotgunguyJustLegsAreLeft: DeadShotgunGuy1
 {Health 300 States{Spawn:
-        SZD1 H -1
+        SZD1 H 35
+		TNT1 A 0 A_SpawnItem ("BrutalizedSergeantStop")
         Stop}}
 
 Actor DeadShotgunguy_Slumped: ZombiemanTorso
