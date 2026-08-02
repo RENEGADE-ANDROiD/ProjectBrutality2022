@@ -604,6 +604,16 @@ States
 {
 
 FatalityChecker:
+		TNT1 A 0 A_JumpIfInventory("CacoPlayer", 1, "FatalityCheckerRideAbort")
+		TNT1 A 0 A_JumpIfInventory("CacoTimer", 1, "FatalityCheckerRideAbort")
+		TNT1 A 0 A_JumpIfInventory("MastermindPlayer", 1, "FatalityCheckerRideAbort")
+		TNT1 A 0 A_JumpIfInventory("MastermindTimer", 1, "FatalityCheckerRideAbort")
+		TNT1 A 0 A_JumpIfInventory("CyberdemonPlayer", 1, "FatalityCheckerRideAbort")
+		TNT1 A 0 A_JumpIfInventory("CyberdemonTimer", 1, "FatalityCheckerRideAbort")
+		TNT1 A 0 A_JumpIfInventory("MancubusPlayer", 1, "FatalityCheckerRideAbort")
+		// Player-state mounts resume here (before other fatality tokens / ACS 477).
+		TNT1 A 0 A_JumpIfInventory("ArachnotronTurret", 1, "FatalityCheckerRideResumeArachno")
+		TNT1 A 0 A_JumpIfInventory("RevenantRider", 1, "FatalityCheckerRideResumeRev")
 		TNT1 A 1 {
 				A_Stop;
 				A_SetRoll(0);
@@ -716,8 +726,6 @@ FatalityChecker:
 		TNT1 A 0 A_JumpIfInventory("ArachnotronFatality2", 1, "FatalityArachnotron2")
 		TNT1 A 0 A_JumpIfInventory("ArachnotronXFatality", 1, "FatalityArachnotronX")
 		TNT1 A 0 A_JumpIfInventory("ArachnotronXFatality2", 1, "FatalityArachnotronX2")
-		TNT1 A 0 A_JumpIfInventory("ArachnotronTurret", 1, "ArachnoGunner")
-		TNT1 A 0 A_JumpIfInventory("RevenantRider", 1, "RevenantRider")
 		TNT1 A 0 A_JumpIfInventory("ArachnophyteFatality", 1, "FatalityArachnophyte")
 	    TNT1 A 0 A_JumpIfInventory("FleshWizardFatality", 1, "FatalityFleshWizard")
 		TNT1 A 0 A_JumpIfInventory("ArchVileFatality", 1, "FatalityArchVile")
@@ -801,6 +809,18 @@ FatalityChecker:
 		TNT1 A 0 A_JumpIfInventory("SKHelltrooper", 1, "StealthKillHelltrooper")
 		TNT1 A 0 A_ChangeFlag("PICKUP", true)
 		Goto See
+
+	FatalityCheckerRideAbort:
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
+		Goto See
+
+	FatalityCheckerRideResumeArachno:
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
+		Goto ArachnoGunner
+
+	FatalityCheckerRideResumeRev:
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
+		Goto RevenantRider
 		
 		
 	   FatalityBeamRevenant1:
