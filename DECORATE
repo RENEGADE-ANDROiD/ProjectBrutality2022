@@ -48,6 +48,9 @@ Actor RailNullPuff : BulletPuff
 {
 	+NOBLOCKMAP
 	+NOGRAVITY
+	+PUFFONACTORS
+	+ALWAYSPUFF
+	+BLOODLESSIMPACT
 	States
 	{
 	Spawn:
