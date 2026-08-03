@@ -1,0 +1,122 @@
+﻿// Hierophant ElectroSkullBall (Monster Pack staging) — no NOTIMEFREEZE; curse on hit.
+// Trail uses existing Hierophant / flare assets (pack HLI* lumps not present in this tree).
+
+Class HieroBallPuff : Actor
+{
+	Default
+	{
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+NOEXTREMEDEATH
+		+NOINTERACTION
+		RenderStyle "Add";
+		Scale 0.6;
+		Translation "168:175=224:231", "176:183=160:167", "184:191=160:167";
+	}
+	States
+	{
+	Spawn:
+		HEFX CDEEFGH 1 Bright;
+		Stop;
+	}
+}
+
+Class ElectroSkullBall : Actor
+{
+	int cursed;
+
+	Default
+	{
+		Radius 8;
+		Height 8;
+		Speed 25;
+		Damage 15;
+		DamageType "Plasma";
+		PainType "Explosion";
+		DeathType "Explosion";
+		Decal "burnsmallerScorch";
+		Scale 1.0;
+		ReactionTime 500;
+		Projectile;
+		RenderStyle "Add";
+		Alpha 0.95;
+		+EXPLODEONWATER
+		+BLOODSPLATTER
+		+SEEKERMISSILE
+		SeeSound "monster/curse1";
+		DeathSound "monster/curse2";
+		Translation "168:175=224:231", "176:183=160:167", "184:191=160:167";
+	}
+
+	override int SpecialMissileHit(Actor victim)
+	{
+		if (victim
+			&& (victim.bIsMonster || (victim is "PlayerPawn"))
+			&& !victim.bKilled
+			&& !victim.bCorpse
+			&& !victim.bInvulnerable
+			&& target
+			&& victim.GetSpecies() != target.GetSpecies()
+			&& victim != target)
+		{
+			if (cursed != 1)
+			{
+				switch (random(0, 2))
+				{
+				case 0:
+					victim.A_Print("\c[Cyan]Your weapons weaken.");
+					victim.A_GiveInventory("HieroWeaken", 1);
+					break;
+				case 1:
+					victim.A_Print("\c[Red]Your defenses weaken.");
+					victim.A_GiveInventory("HieroAmpDMG", 1);
+					break;
+				case 2:
+					victim.A_Print("\c[Yellow]Your legs feel heavy.");
+					victim.A_GiveInventory("HieroSlow", 1);
+					break;
+				}
+				cursed = 1;
+			}
+		}
+		return MHIT_DEFAULT;
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "SpawnCheap");
+		TNT1 A 0 A_Countdown;
+		TNT1 A 0 A_SeekerMissile(6, 7);
+		TNT1 A 0 A_SpawnItem("YellowFlare22", 5, 10);
+		TNT1 AAAA 0 A_SpawnItem("Hierophantballtrail", random(-10, 10), random(10, 15));
+		IFX1 A 2 Bright;
+		TNT1 A 0 A_SeekerMissile(6, 7);
+		TNT1 A 0 A_SpawnItem("YellowFlare22", 5, 10);
+		TNT1 AAAA 0 A_SpawnItem("Hierophantballtrail", random(-10, 10), random(10, 15));
+		IFX1 B 2 Bright;
+		TNT1 A 0 A_SeekerMissile(6, 7);
+		TNT1 A 0 A_SpawnItem("YellowFlare22", 5, 10);
+		TNT1 AAAA 0 A_SpawnItem("Hierophantballtrail", random(-10, 10), random(10, 15));
+		IFX1 C 2 Bright;
+		TNT1 A 0 A_SeekerMissile(6, 7);
+		TNT1 A 0 A_SpawnItem("YellowFlare22", 5, 10);
+		TNT1 AAAA 0 A_SpawnItem("Hierophantballtrail", random(-10, 10), random(10, 15));
+		IFX1 D 2 Bright;
+		Loop;
+	SpawnCheap:
+		TNT1 A 0 A_Countdown;
+		TNT1 A 0 A_SeekerMissile(6, 7);
+		IFX1 A 4 Bright;
+		TNT1 A 0 A_SeekerMissile(6, 7);
+		IFX1 B 4 Bright;
+		Loop;
+	Death:
+		TNT1 A 0 A_StopSound(1);
+		TNT1 A 0 A_SpawnItem("HieroBallPuff", 0);
+		TNT1 AAAA 0 A_SpawnItemEx("ExplosionFlareSpawner", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		TNT1 A 0 Bright A_SpawnItem("YellowFlare22");
+		HEFX CDEEFGH 1 Bright;
+		Stop;
+	}
+}

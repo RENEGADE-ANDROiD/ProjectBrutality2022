@@ -211,6 +211,23 @@ HardwareShader PostProcess scene
 	Shader "shaders/mfx_bss_blur.fp" 330
 }
 
+HardwareShader PostProcess beforebloom
+{
+	Name "btshader"
+	Shader "shaders/btshader.fp" 330
+	Uniform int btEffectCounter
+	Uniform int btEffectInvulnerability
+}
+
+HardwareShader PostProcess beforebloom
+{
+	Name "btloop"
+	Shader "shaders/btloop.fp" 330
+	Uniform vec2 steps
+	Uniform int samples
+	Uniform float increment
+}
+
 pulselight SiphonLight
 {
     color 1.0 0.0 0.0
@@ -1362,7 +1379,7 @@ pulselight BLUEITEM
     dontlightself 1
 }
 
-// Body-armor pickups (vest scale) — same soft pulse as GREENITEM/BLUEITEM but large enough to read on the floor.
+// Body-armor pickups (vest scale) - same soft pulse as GREENITEM/BLUEITEM but large enough to read on the floor.
 pulselight ARMORGREEN
 {
     color 0.15 1.0 0.15
@@ -5044,3 +5061,4 @@ hardwareshader sprite HXBDV5 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HXBDV6 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HXBDV7 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
 hardwareshader sprite HXBDV8 	{ Shader "shaders/glorykill.shader" Speed 1.0 }
+

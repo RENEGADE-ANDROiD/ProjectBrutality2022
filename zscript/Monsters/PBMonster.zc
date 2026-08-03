@@ -24,6 +24,31 @@ Class PB_Monster : Actor abstract
 	bool willBeLooking;
 	int heardOpponent;
 
+	// Staging-style suppress / last-seen aim (hardened for 4.5.0)
+	const PB_TARGET_HISTORY_SIZE = 20;
+	const PB_SUPPRESS_HORIZ_EPS = 0.001;
+	const PB_EMPTYTARGET_MAX_AGE = 35 * 8;
+
+	bool suppress;
+	int suppressCount;
+	int suppressLimit;
+	int suppressCount2;
+	int suppressLimit2;
+	int suppressJumpTic;
+	bool inSuppressiveFire;
+	bool historyPrimed;
+	double lastSeenPosX;
+	double lastSeenPosY;
+	double lastSeenPosZ;
+	double lastTargetPosX;
+	double lastTargetPosY;
+	Actor lastSeenCorpse;
+	vector3 targetHistory[20];
+	int historyIndex;
+	class<Actor> suppressiveMissile;
+	double suppressiveOffZ;
+	double suppressiveOffXY;
+
 	void ExecutionHandler() {
 		if(CheckInventory("ExecutionToken",1)) {
 			SetState(FindState("Execution"));
@@ -93,6 +118,311 @@ Class PB_Monster : Actor abstract
 			}
 	}
 
+	void PB_ClearLastSeenDummy()
+	{
+		if (lastSeenCorpse)
+		{
+			lastSeenCorpse.Destroy();
+			lastSeenCorpse = null;
+		}
+	}
+
+	bool PB_MonsterAIBlocked()
+	{
+		if (health <= 0)
+			return true;
+		if (CheckInventory("ExecutionToken", 1))
+			return true;
+		return false;
+	}
+
+	bool PB_CanEnterSuppressLabel(statelabel lab)
+	{
+		if (PB_MonsterAIBlocked())
+			return false;
+		if (inSuppressiveFire)
+			return false;
+		if (!suppressiveMissile)
+			return false;
+		let st = FindState(lab);
+		if (!st)
+			return false;
+		if (InStateSequence(CurState, st))
+			return false;
+		if (suppressJumpTic == Level.MapTime)
+			return false;
+		return true;
+	}
+
+	void PB_EnsureLastSeenDummy(vector3 at)
+	{
+		if (lastSeenCorpse)
+			return;
+		lastSeenCorpse = Spawn("PB_EmptyTarget", (at.x, at.y, at.z + 8), ALLOW_REPLACE);
+	}
+
+	vector3 PB_HistoryAimPos()
+	{
+		if (!historyPrimed)
+			return pos;
+		return targetHistory[(historyIndex + 1) % PB_TARGET_HISTORY_SIZE];
+	}
+
+	void PB_RecordTargetHistory()
+	{
+		if (!target || !CheckSight(target))
+			return;
+		if (target is "PB_EmptyTarget" || target is "PossessionWarperA" || isFriend(target))
+			return;
+		targetHistory[historyIndex] = target.pos;
+		lastSeenPosX = target.pos.x;
+		lastSeenPosY = target.pos.y;
+		lastSeenPosZ = target.pos.z;
+		historyIndex = (historyIndex + 1) % PB_TARGET_HISTORY_SIZE;
+		historyPrimed = true;
+	}
+
+	bool ShouldDoSuppressiveFire()
+	{
+		if (!lastSeenCorpse)
+			return false;
+		if (!suppressiveMissile)
+			return false;
+
+		double offZ = suppressiveOffZ;
+		double offXY = suppressiveOffXY;
+		double spawnX = pos.x;
+		double spawnY = pos.y;
+		double spawnZ = pos.z + offZ;
+		double vecX = lastSeenCorpse.pos.x - spawnX;
+		double vecY = lastSeenCorpse.pos.y - spawnY;
+		double vecZ = lastSeenCorpse.pos.z - spawnZ;
+		double horiz = sqrt(vecX * vecX + vecY * vecY);
+		if (horiz < PB_SUPPRESS_HORIZ_EPS)
+			return false;
+
+		double yawDegrees = VectorAngle(vecX, vecY);
+		double computedPitch = -atan(vecZ / horiz);
+		double dist = sqrt(vecX * vecX + vecY * vecY + vecZ * vecZ);
+		if (dist < 1.0)
+			dist = 1.0;
+
+		FLineTraceData traceData;
+		bool hit = LineTrace(yawDegrees, dist, computedPitch, TRF_THRUACTORS, offZ, offXY, 0, data: traceData);
+		if (!hit)
+			return true;
+
+		vector3 hitPos = traceData.HitLocation;
+		double dx = hitPos.x - lastSeenCorpse.pos.x;
+		double dy = hitPos.y - lastSeenCorpse.pos.y;
+		double dz = hitPos.z - lastSeenCorpse.pos.z;
+		return sqrt(dx * dx + dy * dy + dz * dz) <= 64.0;
+	}
+
+	void A_CustomChase(bool useSmartChase = false)
+	{
+		if (PB_MonsterAIBlocked())
+		{
+			if (useSmartChase) A_SmartChase(); else A_Chase();
+			return;
+		}
+
+		if (target && (target is "PossessionWarperA" || target is "PB_EmptyTarget" || isFriend(target)))
+		{
+			A_ClearTarget();
+			target = null;
+		}
+
+		if (!target)
+		{
+			if (useSmartChase) A_SmartChase(); else A_Chase();
+			return;
+		}
+
+		if (CheckSight(target))
+		{
+			suppress = true;
+			suppressCount = 0;
+			suppressCount2 = 0;
+			PB_ClearLastSeenDummy();
+			if (useSmartChase) A_SmartChase(); else A_Chase();
+			return;
+		}
+
+		vector3 delayedPosition = PB_HistoryAimPos();
+		PB_EnsureLastSeenDummy(delayedPosition);
+
+		double corpseDistance = 999999.0;
+		if (lastSeenCorpse)
+			corpseDistance = Distance3D(lastSeenCorpse);
+
+		if (corpseDistance < 300.0)
+		{
+			suppress = false;
+			if (useSmartChase) A_SmartChase(); else A_Chase();
+			return;
+		}
+
+		if (suppress)
+		{
+			if (suppressCount < suppressLimit)
+			{
+				if (PB_CanEnterSuppressLabel('SuppressiveFire') && ShouldDoSuppressiveFire())
+				{
+					suppressJumpTic = Level.MapTime;
+					SetStateLabel("SuppressiveFire");
+					return;
+				}
+			}
+			else if (suppressCount2 < suppressLimit2)
+			{
+				if (PB_CanEnterSuppressLabel('SuppressiveFire2') && ShouldDoSuppressiveFire())
+				{
+					suppressJumpTic = Level.MapTime;
+					SetStateLabel("SuppressiveFire2");
+					return;
+				}
+			}
+			else
+			{
+				suppress = false;
+			}
+		}
+
+		if (useSmartChase) A_SmartChase(); else A_Chase();
+	}
+
+	void A_PB_SuppressBurstEnd()
+	{
+		inSuppressiveFire = false;
+		suppressCount++;
+	}
+
+	void A_PB_SuppressBurstEnd2()
+	{
+		inSuppressiveFire = false;
+		suppressCount2++;
+	}
+
+	void A_SuppressiveFire(bool shootDownward = false)
+	{
+		if (PB_MonsterAIBlocked())
+			return;
+		if (!suppressiveMissile)
+			return;
+
+		double aimX = lastSeenPosX;
+		double aimY = lastSeenPosY;
+		double aimZ = lastSeenPosZ;
+		if (lastSeenCorpse)
+		{
+			aimX = lastSeenCorpse.pos.x;
+			aimY = lastSeenCorpse.pos.y;
+			aimZ = lastSeenCorpse.pos.z;
+		}
+
+		double offZ = suppressiveOffZ;
+		double offXY = suppressiveOffXY;
+		double spawnX = pos.x;
+		double spawnY = pos.y;
+		double spawnZ = pos.z + offZ;
+		double dx = aimX - spawnX;
+		double dy = aimY - spawnY;
+		double dz = aimZ - spawnZ;
+		double horiz = sqrt(dx * dx + dy * dy);
+		if (horiz < PB_SUPPRESS_HORIZ_EPS)
+			return;
+
+		double yawDegrees = VectorAngle(dx, dy);
+		double computedPitch = -atan(dz / horiz);
+
+		// Aim without swapping target onto the dummy (avoids friend/chase latch).
+		angle = yawDegrees;
+		if (shootDownward)
+		{
+			A_SpawnProjectile(suppressiveMissile, offZ, offXY, 0,
+				flags: CMF_AIMDIRECTION | CMF_OFFSETPITCH, pitch: computedPitch);
+		}
+		else
+		{
+			A_SpawnProjectile(suppressiveMissile, offZ, offXY, 0,
+				flags: CMF_AIMDIRECTION);
+		}
+		pitch = 0;
+	}
+
+	void A_DropAdjust2(class<Actor> missiletype, class<Actor> missiletype2, double offX, double offY, double offZ,
+		double speedmult = 1.0, int minRange = 0, int maxRange = 1000, bool shootDownward = false, bool forceMinAngle = false)
+	{
+		if (PB_MonsterAIBlocked())
+			return;
+		if (!missiletype || !missiletype2)
+			return;
+		if (!target)
+			return;
+
+		double ceilH = CeilingZ - pos.z;
+		double tarDist = max(distance2d(target), 1.0);
+		double PredAngleACS = ACS_NamedExecuteWithResult("PredictAim", 1, GetDefaultByType(missiletype).speed, int(offZ));
+		double rawDiff = deltaangle(angle, PredAngleACS);
+
+		if (lastTargetPosX == 0 && lastTargetPosY == 0)
+		{
+			lastTargetPosX = target.pos.x;
+			lastTargetPosY = target.pos.y;
+		}
+		double displacementX = target.pos.x - lastTargetPosX;
+		double displacementY = target.pos.y - lastTargetPosY;
+		lastTargetPosX = target.pos.x;
+		lastTargetPosY = target.pos.y;
+
+		double dx = target.pos.x - pos.x;
+		double dy = target.pos.y - pos.y;
+		double distc = max(sqrt(dx * dx + dy * dy), 0.01);
+		double dirX = dx / distc;
+		double dirY = dy / distc;
+		double lateralDisplacement = abs(displacementX * dirY - displacementY * dirX);
+		double lateralSpeed = abs(target.vel.x * dirY - target.vel.y * dirX);
+		double scaleFactor = clamp(1.0 - (tarDist / 1500.0), 0.5, 1.0);
+		double minAngle = 2200;
+		double maxAngle = 10500;
+		double maxAngleChange;
+		if (lateralDisplacement < 70.0)
+			maxAngleChange = minAngle;
+		else
+			maxAngleChange = minAngle + clamp((abs(lateralSpeed) - 1.0) * 500, 0, maxAngle - minAngle);
+		if (forceMinAngle)
+			maxAngleChange = minAngle;
+
+		double finalDiff = clamp(rawDiff * scaleFactor, -maxAngleChange, maxAngleChange);
+		double FinalPredAngle = angle + finalDiff;
+
+		if (ceilH < 80 || tarDist > maxRange || tarDist < minRange)
+		{
+			A_SpawnProjectile(missiletype2, offZ, offX, FinalPredAngle * 360.0 / 65536.0);
+			return;
+		}
+
+		if (shootDownward)
+		{
+			double minDist = 250.0;
+			double optimalDist = 450.0;
+			double farDist = 800.0;
+			double maxExtraPitch = 70.0;
+			double extraPitch = 0;
+			if (tarDist <= minDist)
+				extraPitch = 70;
+			else if (tarDist <= optimalDist)
+				extraPitch = (tarDist - minDist) / (optimalDist - minDist) * maxExtraPitch;
+			else if (tarDist <= farDist)
+				extraPitch = (farDist - tarDist) / (farDist - optimalDist) * maxExtraPitch;
+			pitch += extraPitch;
+		}
+
+		A_SpawnProjectile(missiletype, offZ, offX, FinalPredAngle * 360.0 / 65536.0,
+			flags: CMF_OFFSETPITCH, pitch: sin(pitch / 2) * abs(offY));
+		pitch = 0;
+	}
 
 	bool PB_MonsterHandlersDueThisTic()
 	{
@@ -109,6 +439,9 @@ Class PB_Monster : Actor abstract
 	{
 		Super.Tick();
 
+		if (health > 0)
+			PB_RecordTargetHistory();
+
 		if (PB_MonsterHandlersDueThisTic())
 		{
 			HitboxerHandler();
@@ -120,6 +453,16 @@ Class PB_Monster : Actor abstract
 		Super.PostBeginPlay();
 		heardOpponent = 0;
 		HitBoxSpawned = False;
+		historyPrimed = false;
+		historyIndex = 0;
+		suppressJumpTic = -1;
+		inSuppressiveFire = false;
+		if (suppressLimit <= 0)
+			suppressLimit = 4;
+		if (suppressLimit2 <= 0)
+			suppressLimit2 = 2;
+		for (int i = 0; i < PB_TARGET_HISTORY_SIZE; i++)
+			targetHistory[i] = pos;
 
 		if (posTorsoHB == 0)
 		{
@@ -134,6 +477,20 @@ Class PB_Monster : Actor abstract
 			dmgDickMult = 0.95;
 			dmgLegMult = 0.80;
 		}
+	}
+
+	override void Die(Actor source, Actor inflictor, int dmgflags, Name MeansOfDeath)
+	{
+		inSuppressiveFire = false;
+		suppress = false;
+		PB_ClearLastSeenDummy();
+		Super.Die(source, inflictor, dmgflags, MeansOfDeath);
+	}
+
+	override void OnDestroy()
+	{
+		PB_ClearLastSeenDummy();
+		Super.OnDestroy();
 	}
 	
 	double A_PrepairDrop()
@@ -159,6 +516,8 @@ Class PB_Monster : Actor abstract
 	void A_DropAdjust(class<actor> missiletype, class<actor> missiletype2,double offX, double offY, double offZ,double PredAngle=0,
 						double dist=0,double speedmult=1.,double gravity=0,actor target=null,double spawnOffsetY=0,bool flipped=0,int minRange=0,int maxRange=1000)
 	{
+		if (!missiletype || !missiletype2)
+			return;
 		if (getdefaultbytype(missiletype).gravity != 0) { PredAngle = ACS_NamedExecuteWithResult("PredictAim", 1, 20, 32); }
 		else {PredAngle = ACS_NamedExecuteWithResult("PredictAim", 1, getdefaultbytype(missiletype).speed, offZ);}
 			
@@ -291,5 +650,46 @@ extend class PB_Monster
 		if (!PB_BurnFXThrottleHandler.ShouldSpawnBurnParticles())
 			return;
 		A_CustomMissile("PlasmaSmoke", height, 0, random(0, 360), 2, random(0, 160));
+	}
+}
+
+// Dummy last-seen marker for A_CustomChase / A_SuppressiveFire (hardened: never targetable, short life).
+class PB_EmptyTarget : Actor
+{
+	int pbEmptyAge;
+
+	Default
+	{
+		Radius 10;
+		Height 6;
+		Mass 5000;
+		Health 1;
+		+NOINTERACTION
+		+NOTELEPORT
+		+MOVEWITHSECTOR
+		+FLOORCLIP
+		+NOBLOCKMAP
+		+NOBLOCKMONST
+		+FORCEXYBILLBOARD
+		+CORPSE
+		+NEVERTARGET
+		+NONSHOOTABLE
+		-SOLID
+		-SHOOTABLE
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+		pbEmptyAge++;
+		if (pbEmptyAge >= (35 * 8))
+			Destroy();
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A -1;
+		Stop;
 	}
 }

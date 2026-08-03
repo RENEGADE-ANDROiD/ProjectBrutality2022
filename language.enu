@@ -83,7 +83,7 @@ OPTMNU_TILTPLUSPLUS = "Customize Tilt++";
 PB_OPT_PS_PASSIVE_SPAWN = "Project Survival passives (pustule, mimic, pods, etc.)";
 PB_OPT_PS_FODDER_THRESHOLD = "PS Fodder spawn roll (main roster)";
 PB_OPT_PS_FODDER_THRESHOLD_HINT = "Higher = more Shambler/Puker/Blighter/Screamer/Spiker/Burster when a seeker sees the player.";
-PB_OPT_PS_FODDER_THRESHOLD_HINT2 = "Default 160 (~63% roll). 255 = nearly always; 0 = off. Map-placed fodder unaffected.";
+PB_OPT_PS_FODDER_THRESHOLD_HINT2 = "Default 100 (~39% roll). 255 = nearly always; 0 = off. Map-placed fodder unaffected.";
 
 TILTPLUSPLUSMNU_TITLE = "Tilt++ Options";
 
@@ -153,7 +153,7 @@ OPTMNU_PB_BURNFX_TITLE = "Burning corpse FX";
 OPTMNU_PB_BURNFX_THROTTLE = "Throttle live burn particles";
 OPTMNU_PB_BURNFX_THROTTLE_TIP = "When several enemies are on fire at once,\nreduces melt FX (Death.Incinerate) and\nburning-corpse particles, embers, and lights.\nImproves FPS in molotov / flame-heavy fights.";
 OPTMNU_PB_BURNFX_SOFT_LIMIT = "Start throttling at N burners";
-OPTMNU_PB_BURNFX_SOFT_LIMIT_TIP = "Full FX while active burners stay below\nthis count + 1 (default 3 â†’ four corpses\nbefore light throttle). Higher counts\nstep down particles more gradually.";
+OPTMNU_PB_BURNFX_SOFT_LIMIT_TIP = "Full FX while active burners stay below\nthis count + 1 (default 3 -> four corpses\nbefore light throttle). Higher counts\nstep down particles more gradually.";
 OPTMNU_PB_BURNFX_HINT = "Respects Low Graphics Mode / pb_lowgraphicsmode (minimal burn FX).";
 
 OPTMNU_PB_ACCUDEATH = "AccuDeath (corpse tints)";
@@ -602,7 +602,7 @@ PB_WHEELTIP_WPICKSLOT = "Outer ring: weapon slots you are carrying.\nAim toward 
 OPTVAL_OFF = "Off";
 SCALEMNU_HUDASPECT = "Preserve HUD aspect ratio";
 
-GB_OPTIONS = "\châš™\c- Gearbox Options";
+GB_OPTIONS = "Gearbox Options";
 
 GB_UI_OPTIONS       = "UI options";
 GB_UI_OPTIONS_TITLE = "Gearbox UI Options";
@@ -698,7 +698,7 @@ GB_BIG_FONT       = "Big font";
 
 PB_PICKUP_ShieldSaw_token = "Picked up the Shield Saw.";
 
-PB_WPNBASEPICKUP_ShieldSaw_token = "Shield Saw charge ready â€” Quick Melee throws the ricocheting blade at range.";
+PB_WPNBASEPICKUP_ShieldSaw_token = "Shield Saw charge ready - Quick Melee throws the ricocheting blade at range.";
 PB_WPNHINT_ShieldSaw_token = "Quick Melee (out of hug range) throws the saw.\nRecall with the Shield Saw key (uses FastCall) or when it returns.";
 
 PB_PICKUP_VorpalBlade = "You picked up Tiberium's Soulblade! (Slot 1)";
@@ -726,7 +726,7 @@ PB_HUD_TC_SHOCK = "Shockwave";
 PB_HUD_TC_CLUSTER = "Cluster";
 PB_WPNHINT_Stormcast = "Stormcast (slot 9): PowerChargeStorm fuels the lightning beam (Fire) and alt-fire charge releases.\nHold Fire while charging alt for orb spells; hold Activate Equipment (User1) for stunwall variants; hold Weapon Special for Arc of Death charge tiers; tap Reload during charge for Lightning Warper; hold Alt-Fire while airborne after Fire for air lightning.\nSpawns from BFG pickups when enabled in Weapon Spawns.";
 PB_WPNHINT_PB_CryoShotgun = "Cryo Shotgun (slot 3): pump-action cryo buckshot with ADS ice spears.\nWeapon Special cycles Cryo Pellets / Cryo Orb / Electric Bolt / Cryo Wind.\nUses PB_Cell reserve + internal magazine; alt modes use PB_Shell, PB_CryoCells, or PB_CryoCannonCells.";
-PB_WPNHINT_PB_DARKMATTERRIFLE = "Dark Matter Rifle (slot 8): Weapon Special wheel picks Alt-Fire payload â€” charged Super Plasma Ball or Gravity Singularity.\nPrimary: fast plasma orb (PB_DarkMatterMag).\nReload feeds the magazine from Cell reserve; unload supported.";
+PB_WPNHINT_PB_DARKMATTERRIFLE = "Dark Matter Rifle (slot 8): Weapon Special wheel picks Alt-Fire payload - charged Super Plasma Ball or Gravity Singularity.\nPrimary: fast plasma orb (PB_DarkMatterMag).\nReload feeds the magazine from Cell reserve; unload supported.";
 PB_WPNHINT_VorpalBlade = "Lifesteal Sword: Lunges Lock Targets.\nBerserk Alt-Fire: BladeStorm.";
 
 PB_PICKUP_HASG = "UAC XHAS-SP -;{The Lady Golide};- (Slot 3)";
@@ -737,8 +737,8 @@ PB_WPNHINT_GENERIC = "Added to Inventory.\nWeapon Special & Alt-Fire Per Gun;\nC
 
 PB_WHEELTIP_GrenadeTypeImpact = "Super Grenade Launcher: Impact Frags.\nPrimary Throw; Alt-Fire Throw / Detonate Modes.";
 PB_WHEELTIP_GrenadeTypeSticky = "Super Grenade Launcher: Sticks to Surfaces or Targets,\nThen Detonates.";
-PB_WHEELTIP_GrenadeTypeIncendiary = "Super Grenade Launcher: Incendiary â€” Area Burn\non Detonation.";
-PB_WHEELTIP_GrenadeTypeCryo = "Super Grenade Launcher: Cryo â€” Slow / Freeze Groups.";
+PB_WHEELTIP_GrenadeTypeIncendiary = "Super Grenade Launcher: Incendiary - Area Burn\non Detonation.";
+PB_WHEELTIP_GrenadeTypeCryo = "Super Grenade Launcher: Cryo - Slow / Freeze Groups.";
 PB_WHEELTIP_GrenadeTypeAcid = "Super Grenade Launcher: Acid Pools\nAfter Splash.";
 
 PB_WHEELTIP_SelectDualWieldRifles = "DMR / HDMR: Single or Akimbo.\nAmmo / Reload Rules Apply to Both.";
@@ -904,8 +904,8 @@ PB_WPNHINT_PB_Freezer = "Freeze Rifle:\nCryo Primary Fire; Alt-Fire Bomb / Beam.
 PB_WPNHINT_PB_LMG = "LMG: Belt Fed; Alt-Fire Micro-Missiles\nWhen Upgraded.";
 PB_WPNHINT_PB_M1Plasma = "M1 Plasma Rifle: Bolts;\nAlt-Fire Overcharge; Weapon Special Mode.";
 PB_WPNHINT_PB_M2Plasma = "M2 Lightning Gun:\nAlt-Fire Arc; Upgrade Chain Modes.";
-PB_WPNHINT_PB_M41A = "M41A: Quick 7.62 Primary.\nWeapon Special Wheel â€” underbarrel 12ga or 30mm grenade, or Dual Wield.\nCarry two M41As: tap Special (no wheel token pending) to enter or exit dual wield.";
-PB_WPNHINT_PB_MetalSniper = "Anti-Materiel Sniper:\nWeapon Special â€” wheel: ammo type, scope vs grenade.\nAlt-Fire zooms (sniper mode) or primes grenade.";
+PB_WPNHINT_PB_M41A = "M41A: Quick 7.62 Primary.\nWeapon Special Wheel - underbarrel 12ga or 30mm grenade, or Dual Wield.\nCarry two M41As: tap Special (no wheel token pending) to enter or exit dual wield.";
+PB_WPNHINT_PB_MetalSniper = "Anti-Materiel Sniper:\nWeapon Special - wheel: ammo type, scope vs grenade.\nAlt-Fire zooms (sniper mode) or primes grenade.";
 PB_CARBINE_TAG = "UAC-41 Carbine";
 PB_CARBINE_PICKUP = "You got the UAC-41 Carbine! (Slot 4)";
 PB_MSNI_PICKUP = "Metal Sniper (slot 4)";
@@ -1204,7 +1204,7 @@ HM_VALUE_WHITE = "White";
 HM_VALUE_YELLOW = "Yellow";
 HM_VALUE_YES = "Yes";
 
-// titlemap.wad SubtitleMessage (StrParam TITLEMAP1..23 + TITLEMAP0) â€” blank = logo only, no subtitle HUD
+// titlemap.wad SubtitleMessage (StrParam TITLEMAP1..23 + TITLEMAP0) - blank = logo only, no subtitle HUD
 TITLEMAP0 = "";
 TITLEMAP1 = "";
 TITLEMAP2 = "";

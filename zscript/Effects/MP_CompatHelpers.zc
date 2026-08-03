@@ -1,0 +1,6 @@
+// Minimal helpers reserved for Monster Pack ports if needed later.
+enum EMPCompatRank
+{
+	RANK_CIVILIAN = 0,
+	RANK_MILITARY = 1
+}

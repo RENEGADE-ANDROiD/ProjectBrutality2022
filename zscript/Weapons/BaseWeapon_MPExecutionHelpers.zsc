@@ -2,6 +2,79 @@ extend class PB_WeaponBase
 {
 	bool executionBlueBlood;
 	bool executionGreenBlood;
+
+	// Side-effect-free: true only when PB_ExecutionHandlerString has a real kit.
+	clearscope static bool PB_HasExperimentalExecutionKit(Actor monster)
+	{
+		if (monster == null)
+			return false;
+		if (monster is "PB_Imp" || monster is "PB_Imp1" || monster is "PB_ImpGK" || monster is "PB_Imp1GK")
+			return true;
+		if (monster is "PB_ShotgunGuy" || monster is "PB_Sergeant" || monster is "PB_ShotgunGuyGK")
+			return true;
+		if (monster is "PB_Zombieman" || monster is "PB_ZombieMan")
+			return true;
+		if (monster is "PB_Cacodemon" || monster is "PB_CacodemonGK")
+			return true;
+		switch (monster.GetClassName())
+		{
+		case 'Hellduke':
+		case 'Director':
+		case 'DarkLord':
+		case 'ESoul':
+		case 'ObsidianRavager':
+		case 'IceDemon':
+		case 'PB_Marauder':
+		case 'PB_FleshWizard':
+		case 'D3Seeker':
+		case 'CyberSatyr':
+		case 'Satyr':
+		case 'FreshHorrorspawn':
+		case 'PB_FreshHorrorspawn':
+		case 'Horrorspawn1':
+		case 'PB_Horrorspawn1':
+		case 'HorrorspawnDecap':
+		case 'PB_HorrorspawnDecap':
+		case 'Unwilling':
+		case 'WeakWilledOne':
+		case 'HorrorspawnScreamer':
+		case 'PB_HorrorspawnScreamer':
+		case 'SleepingHorrorspawn':
+		case 'Hunger':
+		case 'Hungry':
+		case 'CyberFodder':
+		case 'MeleeZombie':
+		case 'MeleeSergeant':
+		case 'Helemental':
+		case 'DarkDisciple':
+		case 'Pyrodemon':
+		case 'Terminator':
+		case 'FriendlyTerminator':
+		case 'CrackoDemon':
+		case 'Crackodemon':
+		case 'PB_Realm667_Behemoth':
+		case 'PB_Realm667_BehemothGK':
+		case 'Behemoth':
+		case 'PB_Realm667_BloodGhost':
+		case 'PB_Realm667_BloodGhostGK':
+		case 'PB_Realm667_BloodSkull':
+		case 'PB_Realm667_BloodSkullGK':
+		case 'D3HellGuardian':
+		case 'D3Maledict':
+		case 'Rahovart':
+		case 'PB_Overlord':
+		case 'PB_OverlordGK':
+		case 'OverLord':
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	clearscope static bool PB_IsExperimentalExecutionTarget(Actor monster)
+	{
+		return PB_HasExperimentalExecutionKit(monster);
+	}
 	action bool PB_GetExecutionBlueBlood(){
 		return invoker.executionBlueBlood;
 	}
@@ -1042,6 +1115,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 			return PB_ExecutionZombieFodder();
 		case 'PB_HorrorspawnScreamer':
 			return PB_ExecutionZombieFodder();
+		case 'SleepingHorrorspawn':
+			return PB_ExecutionZombieFodder();
 		case 'Hunger':
 		case 'Hungry':
 			return PB_ExecutionHunger();
@@ -1087,7 +1162,7 @@ action StateLabel PB_ExecutionCrackodemon() {
 		default:
 			A_Print("\cgExecution \c-failed");
 			PB_UnsetPlayerExecutionProperties();
-			return "GoingToReady2";
+			return "Execution_Unavailable";
 		}
 	}
 }

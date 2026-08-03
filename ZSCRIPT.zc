@@ -115,6 +115,14 @@ const MAXITERATIONS = 32676;
 #include "zscript/Items/PB2022_PickupMagnet.zc"
 
 #include "zscript/Monsters/PBMonster.zc"
+#include "zscript/Monsters/Arachnotrons/PB_Arachno_StagingAttacks.zc"
+#include "zscript/Monsters/Mancubi/PB_MancubusFireTrail.zc"
+#include "zscript/Monsters/StagingEternal/PB_StagingEternal_Compat.zc"
+#include "zscript/Monsters/StagingEternal/EternalArachno.zc"
+#include "zscript/Monsters/StagingEternal/EternalBaron.zc"
+#include "zscript/Monsters/StagingEternal/EternalFat.zc"
+#include "zscript/Monsters/StagingEternal/EternalSoul.zs"
+#include "zscript/Monsters/StagingEternal/WhiteWidow.zc"
 #include "zscript/Monsters/CatsFrozen/PB_Cryotron.zc"
 #include "zscript/Monsters/CatsFrozen/PB_FrozenSolid.zc"
 #include "zscript/Monsters/CatsFrozen/PB_FrozenSolidHandler.zc"
@@ -133,8 +141,17 @@ const MAXITERATIONS = 32676;
 #include "zscript/Monsters/Imps/Imp.zc"
 #include "zscript/Effects/SummonerFunctions.zc"
 #include "zscript/Effects/RavagerPortals.zc"
+#include "zscript/Effects/PB_CustomLaserAttack.zc"
+#include "zscript/Effects/MP_CompatHelpers.zc"
 #include "zscript/Monsters/ObsidianRavager.zc"
 #include "zscript/Monsters/D3Maledict.zc"
+#include "zscript/Monsters/Hierophant_ElectroSkull.zc"
+#include "zscript/Monsters/QueenIllusion.zc"
+#include "zscript/Monsters/CommandoBeacon.zc"
+#include "zscript/Monsters/HellGhostMonster.zc"
+#include "zscript/Monsters/D16Cyberdemon.zc"
+#include "zscript/Monsters/DarkLord.zc"
+#include "zscript/Monsters/QSGDreadTrooper.zc"
 #include "zscript/Monsters/Realm667/Venor.zc"
 
 #include "zscript/Monsters/Imps/ImpGloryKill.zc"
@@ -164,6 +181,22 @@ const MAXITERATIONS = 32676;
 #include "zscript/LaserAPI/LaserAPI.txt"
 
 #include "zscript/FastMaterialCheck_PB2022.zsc"
+#include "zscript/Footsteps.zc"
+#include "zscript/PB_Flashlight.zc"
+#include "zscript/Weapons/KeepWeapManager.zc"
+#include "zscript/Monsters/PB_MonsterDrops.zc"
+#include "zscript/Monsters/Status/PB_ElectricChargeHandler.zc"
+#include "zscript/Monsters/Status/PB_SlowEventHandler.zc"
+#include "zscript/Monsters/Status/PB_FlameEventHandler.zc"
+#include "zscript/BulletTime/BtHelperFunctions.zs"
+#include "zscript/BulletTime/BtActorInfo.zs"
+#include "zscript/BulletTime/BtItemData.zs"
+#include "zscript/BulletTime/BtMonsterInfo.zs"
+#include "zscript/BulletTime/BtSectorInfo.zs"
+#include "zscript/BulletTime/BtTimeFreeze.zs"
+#include "zscript/BulletTime/PostTickDummyController.zs"
+#include "zscript/BulletTime/BulletTime.zs"
+#include "zscript/BulletTime/BulletTimeStatic.zs"
 #include "zscript/Effects/FxBase.zs"
 #include "zscript/Effects/BulletImpacts.zs"
 #include "zscript/Effects/PB_BulletPuffStub.zs"
@@ -217,7 +250,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot4/NormalRifle/PB_NormalRifle_Functions.zs"
 #include "zscript/Weapons/Slot4/Carbine/Carbine.zs"
 #include "zscript/Weapons/Slot4/LeverAction/LeverAction.zs"
-// PB_Minigun: DECORATE fold (actors/Weapons/Slot4/MINIGUN.dec) — PBWPE MINIGUN.dec
+// PB_Minigun: DECORATE fold (actors/Weapons/Slot4/MINIGUN.dec) - PBWPE MINIGUN.dec
 #include "zscript/Weapons/Slot4/MG42/PB_MG42.zs"
 #include "zscript/Weapons/Slot1/ArgentSith_Weapon.zs"
 #include "zscript/Weapons/Slot1/BeamKatana_Weapon.zs"
@@ -782,3 +815,5 @@ class MBlurHandler : StaticEventHandler
 		}
 	}
 }
+
+

@@ -1,4 +1,4 @@
-// PB_Railgun â€” ZScript port (DECORATE PB_Weapon retired).
+// PB_Railgun - ZScript port (DECORATE PB_Weapon retired).
 
 class PB_Railgun : PB_WeaponBase
 {

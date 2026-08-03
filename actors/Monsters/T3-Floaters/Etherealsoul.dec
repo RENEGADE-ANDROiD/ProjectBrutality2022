@@ -91,6 +91,18 @@ ACTOR ESoul
     ETHS G 3 bright
     ETHS G 3 bright A_Pain
     goto See
+  Death.Execution:
+    TNT1 A 0
+    {
+      A_Stopsound;
+      A_FaceTarget;
+      A_NoBlocking;
+      A_BossDeath;
+      A_Scream;
+      A_RemoveChildren(1, RMVF_EVERYTHING);
+    }
+    TNT1 A 0 A_GiveToTarget("BPtoken", 2)
+    Stop
   Death:
     TNT1 AAAA 0 A_CustomMissile ("PlasmaSmoke", 32, 0, random (0, 360), 2, random (0, 360))
     ETHS F 3 bright

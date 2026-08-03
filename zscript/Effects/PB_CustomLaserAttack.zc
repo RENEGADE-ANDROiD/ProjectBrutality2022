@@ -1,0 +1,444 @@
+﻿// Ported from Monster Pack staging UsefulFunctions.zsc — MP_VolumetricLaserBeam mixin
+
+mixin class MP_VolumetricLaserBeam
+{
+Vector3 laserAimPoint;
+// ==============================================================================================
+// UNIVERSAL VOLUMETRIC LASER BEAM FUNCTION (A_CustomLaserAttack)
+// Developer: Warcarlsson
+//
+// PARAMETER DESCRIPTION:
+//
+// 1. int damage 
+//	The amount of damage dealt by the laser. If set to 0, the beam acts as a purely visual 
+//	effect (perfect for laser sights and aiming phases).
+//
+// 2. double spawnofs_xy 
+//	The horizontal offset for the beam's starting point relative to the monster's center. 
+//	Positive values shift it to the right, negative values shift it to the left (e.g., for left-arm cannons).
+//
+// 3. double spawnofs_z 
+//	The vertical offset for the beam's starting point relative to the monster's half-height (Height * 0.5).
+//
+// 4. double spawnofs_forward
+//	The forward/backward offset for the beam's starting point relative to the monster.
+//
+// 5. class<Actor> beamtype 
+//	The actor class used to render the body of the beam (e.g., "LaserBeamDot"). 
+//	Mandatory parameter. It is highly recommended to use lightweight, animated actors with no collision.
+//
+// 6. class<Actor> pufftype 
+//	The actor class spawned as an impact/spark effect (e.g., "BulletPuff" or "LaserWallExplosion").
+//	Spawns on hit targets and the final wall.
+//
+// 6b. class<Actor> throughpufftype
+//     The actor class spawned on targets that are pierced through by the laser (laserLevel == 2).
+//     Only spawns on pierced targets, NOT on walls, floor, ceiling, or DONTRIP blockers.
+//     If null, no piercing effect is spawned.
+//
+// 7. double maxrange (Default: 2048)
+//	The maximum attack range. Used as a limit for the line trace calculation if the target 
+//	is visible but located very far away.
+//
+// 8. double rayLength (Default: 0)
+//	Hard manual restriction for both collision and visual length. If greater than 0, it forcefully 
+//	trims the max line trace distance. Essential for strict FPS optimization on massive slaughter maps.
+//
+// 9. double step (Default: 12.0)
+//	The rendering step size along the beam in map units. Smaller values create a more solid 
+//	and seamless laser look but spawn more actors. Optimal range: 12.0 - 16.0 for HD sprites.
+//
+// 10. double beamWidth (Default: 0.0)
+//	The visual width of the beam. Controls the random particle spread radius away from the central axis. 
+//	If set to 0.0, the particles will form a perfectly straight, solid line.
+//
+// 11. double collisionWidth (Default: 4.0)
+//	The physical collision radius of the beam. Converts the laser from a 1-pixel line into a honest 3D 
+//	volumetric cylinder, making wide beams much harder for the player to dodge.
+//
+// 12. int laserLevel (Default: 1)
+//	 The laser's power and piercing behavior mode:
+//	 Level 1: Standard laser. Stops at the very first solid obstacle, wall, or enemy.
+//	 Level 2: Piercing rail-gun. Penetrates all standard shootable enemies up to the wall, but gets 
+//				completely blocked (shortened) by heavy targets with the +DONTRIP flag.
+//
+// 13. String decalName (Default: "None")
+//	 The string name of the decal (burn mark on the wall), such as "PlasmaScorch". 
+//	 If set to "None", no decal will be applied upon hitting a wall.
+//
+// 14. Name dmgType (Default: "Normal")
+//	 The damage type name (e.g., 'Fire', 'Electric', 'Plasma'). Allows triggering specific pain 
+//	 and death states (e.g., Death.Fire) on affected targets.
+//
+// 15. bool damageGhost (Default: false)
+//	 Permission flag. If set to true, the laser will damage targets with the +GHOST flag (wraiths/spirits).
+//
+// 16. bool damageThru (Default: false)
+//	 Permission flag. If set to true, the laser can damage targets with the +THRUACTORS flag.
+//
+// 17. Vector3 staticTargetPos (Default: (0,0,0))
+//	 A fixed 3D coordinate point in space. If set, the laser will lock onto this exact position 
+//	 instead of tracking the live player target. Ideal for delayed "telegraphed" heavy attacks.
+// ==============================================================================================
+
+void A_CustomLaserAttack(
+	int damage, 
+	double spawnofs_xy, 
+	double spawnofs_z, 
+	double spawnofs_forward, 
+	class<Actor> beamtype, 
+	class<Actor> pufftype, 
+	class<Actor> throughpufftype = null,
+	double maxrange = 2048, 
+	double rayLength = 0, 
+	double step = 12.0, 
+	double beamWidth = 0.0, 
+	double collisionWidth = 4.0, 
+	int laserLevel = 1, 
+	String decalName = "None", 
+	Name dmgType = "Normal", 
+	bool damageGhost = false, 
+	bool damageThru = false, 
+	Vector3 staticTargetPos = (-999999,-999999,-999999)
+)
+{
+	bool hasStaticAim = (staticTargetPos != (-999999,-999999,-999999));
+	if (!target && !hasStaticAim) return;
+
+	// 0. Only face the target if staticTargetPos is our default "empty" vector
+	if (!hasStaticAim)
+	{
+		A_FaceTarget();
+	}
+
+	// FIX 1: Safely disable shooter's collision BEFORE the trace to prevent self-hitting.
+	bool oldShootable = bShootable;
+	bShootable = false;
+
+	// 1. Calculate the starting spawn position with offsets
+	double cosA = cos(angle);
+	double sinA = sin(angle);
+	double cosA90 = cos(angle - 90);
+	double sinA90 = sin(angle - 90);
+
+	Vector3 spawnPos = pos + (
+		(cosA90 * spawnofs_xy) + (cosA * spawnofs_forward), 
+		(sinA90 * spawnofs_xy) + (sinA * spawnofs_forward), 
+		(Height * 0.5) + spawnofs_z
+	);
+
+	// 2. Calculate the direction vector towards the target
+	Vector3 finalTargetPos = hasStaticAim ? staticTargetPos : (target.pos + (0, 0, target.Height * 0.6));
+	
+	Vector3 aimDir = finalTargetPos - spawnPos;
+	double distToTarget = aimDir.Length();
+	
+	double currentMaxRange = (rayLength > 0) ? rayLength : maxrange;
+
+	if (distToTarget <= 0) 
+	{
+		bShootable = oldShootable;
+		return;
+	}
+	aimDir /= distToTarget; // Normalize vector
+	if (step <= 0) step = 12.0;
+
+	double aimPitch = -asin(aimDir.z);
+	double aimYaw = atan2(aimDir.y, aimDir.x);
+
+	// FIX 2: Force BOTH modes to use TRF_THRUACTORS (8) + TRF_ABSPOSITION (1) = 9
+	// This allows LineTrace to always find the actual wall behind the players,
+	// preventing diagonal offset bugs from cutting off the laser length early!
+
+	int traceFlags = 1 | 8 | 32;
+
+	double finalDist = currentMaxRange; 
+	FLineTraceData trace;
+
+	double oldPitch = pitch;
+	double oldAngle = angle;
+
+
+	LineTrace(aimYaw, currentMaxRange, aimPitch, traceFlags, spawnPos.z, spawnPos.x, spawnPos.y, trace);
+	
+	//Hit validation. If a beam hits from behind or goes past the target, ignore the anomaly.
+	if (trace.HitType != trace.TRACE_HitNone)
+	{
+		Vector3 hitToOrigin = trace.HitLocation - spawnPos;
+		// ZScript doesn't support .Dot(), we calculate it manually
+		double dotProduct = hitToOrigin.X * aimDir.X + hitToOrigin.Y * aimDir.Y + hitToOrigin.Z * aimDir.Z;
+		
+		// If the hit point is "behind" the beam direction (backface snap)
+		if (dotProduct < 0.0)
+		{
+			finalDist = currentMaxRange;
+			trace.HitType = trace.TRACE_HitNone;
+		}
+		else
+		{
+			finalDist = trace.Distance;
+		}
+	}
+
+	// =========================================================================
+	// 3. Volumetric scan (RUNS EVERY FRAME FOR ACCURATE CLIPPING)
+	// =========================================================================
+	double checkRadius = (collisionWidth > 0.0) ? collisionWidth : 4.0;
+	
+	Actor closestTarget = null;
+	double closestDist = currentMaxRange;
+	
+	Actor dontRipBlocker = null;
+	double firstDonRipDist = currentMaxRange;
+
+	ThinkerIterator it = ThinkerIterator.Create("Actor");
+	Actor a;
+	while ((a = Actor(it.Next())) != null)
+	{
+		if (!a.bShootable || a == self) continue; 
+		if (a.bGhost && !damageGhost) continue;
+		if (a.bThruActors && !damageThru) continue;
+
+		Vector3 actorCenter = a.pos + (0, 0, a.Height * 0.5);
+		Vector3 crossVec = (actorCenter - spawnPos) cross aimDir;
+		double distanceToBeam = crossVec.Length();
+
+		// Removed the soft tolerance of +16.0. Now we check strictly within maxrange.
+		if (distanceToBeam <= (a.radius + checkRadius) && (a.pos - spawnPos).Length() < currentMaxRange)
+		{
+			double currentActorDist = (a.pos - spawnPos).Length();
+			
+			if (laserLevel >= 2 && a.bDontRip)
+			{
+				// Looking for the FIRST blocker with DONTRIP (closest to the start of the beam)
+				if (dontRipBlocker == null || currentActorDist < firstDonRipDist)
+				{
+					firstDonRipDist = currentActorDist;
+					dontRipBlocker = a;
+				}
+			}
+			else if (laserLevel <= 1)
+			{
+				if (closestTarget == null || currentActorDist < closestDist)
+				{
+					closestDist = currentActorDist;
+					closestTarget = a;
+				}
+			}
+		}
+	}
+
+	// Set the final beam length BEFORE applying damage
+	if (laserLevel >= 2 && dontRipBlocker != null)
+	{
+		finalDist = firstDonRipDist;
+	}
+	else if (laserLevel <= 1 && closestTarget != null)
+	{
+		finalDist = closestDist;
+	}
+
+	// =========================================================================
+	// 3b. Damage & Effect execution pass
+	// =========================================================================
+		bool hitActor = false;
+		bool stoppedAtDonRip = false; // Variable declaration here!
+
+		Vector3 finalHitPos = trace.HitLocation; // Default: wall impact point or null
+
+		if (damage > 0)
+		{
+			// Mode 2: Piercing rail-gun logic
+			if (laserLevel >= 2)
+			{
+				it = ThinkerIterator.Create("Actor");
+				while ((a = Actor(it.Next())) != null)
+				{
+					if (!a.bShootable || a == self) continue;
+					if (a.bGhost && !damageGhost) continue;
+					if (a.bThruActors && !damageThru) continue;
+
+					Vector3 actorCenter = a.pos + (0, 0, a.Height * 0.5);
+					Vector3 crossVec = (actorCenter - spawnPos) cross aimDir;
+					double distanceToBeam = crossVec.Length();
+
+					// Removed the soft tolerance of +16.0. Now we check strictly within maxrange.
+					if (distanceToBeam <= (a.radius + checkRadius) && (a.pos - spawnPos).Length() < currentMaxRange)
+					{
+						double currentActorDist = (a.pos - spawnPos).Length();
+
+						// 1. Deal damage to all targets in the beam's path
+						if (currentActorDist <= finalDist)
+						{
+							a.DamageMobj(self, self, damage, dmgType);
+							hitActor = true;
+
+							// Penetration effect spawn
+							// Triggers ONLY on pierced targets (laserLevel == 2)
+							// Excludes DONTRIP blockers, walls, floors, and ceilings (they are handled by pufftype)
+							if (laserLevel == 2 && throughpufftype != null && !a.bDontRip)
+							{
+								Vector3 puffPos = a.pos + (0, 0, a.Height * 0.5);
+								Actor fx = Spawn(throughpufftype, puffPos);
+								if (fx) fx.target = self;
+							}
+						}
+
+						// 2. Check the DONTRIP flag (the beam is interrupted here)
+						if (a.bDontRip && currentActorDist <= finalDist)
+						{
+							stoppedAtDonRip = true;
+							finalHitPos = spawnPos + aimDir * currentActorDist;
+							break; // The beam doesn't go any further
+						}
+					}
+				}
+			}
+			// Mode 1: Standard laser
+			else if (laserLevel <= 1 && closestTarget != null)
+			{
+				closestTarget.DamageMobj(self, self, damage, dmgType);
+				hitActor = true;
+				finalHitPos = closestTarget.pos + (0, 0, closestTarget.Height * 0.5);
+			}
+
+			// =========================================================================
+			// Spawn terminal effect (pufftype) ONLY at beam stop point
+			// =========================================================================
+			bool spawnPuff = false;
+
+			if (laserLevel == 1)
+			{
+				// For a standart beam: always spawn at the point of first contact (wall or target)
+				if (trace.HitType != trace.TRACE_HitNone)
+					spawnPuff = true;
+			}
+			else // laserLevel == 2
+			{
+				// For the piercing beam: spawn ONLY if you stopped on a DONTRIP target OR on a wall
+				
+				if (stoppedAtDonRip)
+					spawnPuff = true;
+				
+				// Add a check: If the beam hits geometry (wall/floor), spawn an explosion.
+				// Remove the !hitActor condition, since we don't care whether we dealt damage along the way.
+				if (trace.HitType != trace.TRACE_HitNone && finalDist < currentMaxRange)
+					spawnPuff = true; 
+			}
+
+			if (spawnPuff && pufftype != null)
+			{
+				Vector3 puffPos = finalHitPos - (aimDir * 4.0);
+				
+				// Simple protection against spawning at unreal coordinates if trace.HitLocation was incorrect
+				if (spawnPuff && pufftype != null) 
+				{
+					Actor fx = Spawn(pufftype, puffPos);
+					if (fx) fx.target = self;
+				}
+			}
+
+			// =========================================================================
+			// Decal spawns ONLY on surfaces (floor/walls/ceiling)
+			// =========================================================================
+			bool hitWall = (trace.HitType != trace.TRACE_HitNone && trace.HitType != trace.TRACE_HitActor);
+
+			if (decalName != "None" && hitWall)
+			{
+				// For laserLevel == 2, do not spawn the decal if the beam stops on a DONTRIP target
+				if (laserLevel == 2 && stoppedAtDonRip)
+				{
+					// No need for a decal on the wall, the beam hits the boss
+				}
+				else
+				{
+					Vector3 decalPos = trace.HitLocation - (aimDir * 8.0);
+					Actor proj = Spawn("MP_VolumetricLaserBeamDecalProjectile", decalPos);
+					if (proj)
+					{
+						proj.target = self;
+						proj.angle = aimYaw;
+						proj.pitch = aimPitch;
+						MP_VolumetricLaserBeamDecalProjectile decalProj = MP_VolumetricLaserBeamDecalProjectile(proj);
+						if (decalProj) decalProj.targetDecal = decalName;
+						proj.vel = aimDir * proj.Speed;
+					}
+				}
+			}
+		} // End of if(damage > 0) block
+
+
+
+	// Restore original monster angles and original shootable state
+	angle = oldAngle;
+	pitch = oldPitch;
+	bShootable = oldShootable;
+
+	// 4. Beam particle rendering
+	if (beamtype != null)
+	{
+		Vector3 rightVec = (cosA90, sinA90, 0);
+		Vector3 upVec = (0, 0, 1.0); 
+
+		for (double d = 0; d < finalDist; d += step)
+		{
+			Vector3 particlePos = spawnPos + aimDir * d;
+
+			if (beamWidth > 0.0)
+			{
+				double randomSpreadX = FRandom[LaserSpread](-beamWidth, beamWidth);
+				double randomSpreadY = FRandom[LaserSpread](-beamWidth, beamWidth);
+				particlePos += rightVec * randomSpreadX + upVec * randomSpreadY;
+			}
+			
+			Actor laserDot = Spawn(beamtype, particlePos);
+			if (laserDot)
+			{
+				laserDot.bNoGravity = true;
+				laserDot.bSolid = false;
+			}
+		}
+	}
+}
+}
+
+//Very important! Decal spawner.
+class MP_VolumetricLaserBeamDecalProjectile : Actor
+{
+	// Custom internal variable to hold the passed decal name dynamically
+	string targetDecal;
+
+	Default
+	{
+  PROJECTILE;
+  Radius 4;
+  Height 4;
+  Speed 100;
+  Damage 0;
+  +NOBLOCKMAP;
+  +NOGRAVITY;
+  +THRUACTORS;
+  +DONTSPLASH;
+  +NOTELEPORT;
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+		Loop;
+	Death:
+	XDeath:
+	Crash:
+		// Projectile successfully collided with the map geometry
+		TNT1 A 0 
+		{
+			// If a valid decal name was passed, spray it directly from the collision point
+			if (targetDecal != "" && targetDecal != "None")
+			{
+				A_SprayDecal(targetDecal, 16.0);
+			}
+		}
+		Stop;
+	}
+}

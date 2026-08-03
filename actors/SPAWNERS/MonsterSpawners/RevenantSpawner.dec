@@ -37,11 +37,12 @@ Actor RevenantSpawner replaces Revenant
 		DiceTier2:
 			TNT1 A 0 A_Jump(256,"RevenantPack")
 		DiceTier3:
-			TNT1 A 0 A_Jump(64,"BeamRevenantsPack")
+			TNT1 A 0 A_Jump(26,"DraugrPack")
+			TNT1 A 0 A_Jump(63,"BeamRevenantsPack")
 			TNT1 A 0 A_Jump(256,"RevenantPack")
 		DiceTier4:
-			TNT1 A 0 A_Jump(72,"DraugrPack")
-			TNT1 A 0 A_Jump(96,"BeamRevenantsPack")
+			TNT1 A 0 A_Jump(56,"DraugrPack")
+			TNT1 A 0 A_Jump(85,"BeamRevenantsPack")
 			TNT1 A 0 A_Jump(256,"RevenantPack")
 		DiceDeathWish:
 			TNT1 A 0 A_Jump(76,"DraugrPack")

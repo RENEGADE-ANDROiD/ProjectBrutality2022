@@ -1,0 +1,12 @@
+Clear Sky Carcass (fodder)
+==========================
+
+Source: Brutal Voxel Cyber Horror Monster Mix — actors/clearsky/carcass.txt
+Sprites: SPRITES/Monsters/ClearSky/Carcass/ (CARC* / CRCR* / CRCG* / VOMI* / BVSP*)
+Sounds: sounds/monsters/clearsky/ (Carcass/* logical names in SNDINFO.txt)
+
+Folded without BurrowedCarcass rock debris (ROC1–ROC6 collide with Realm667
+Devilworms sprite lumps already in this tree). CRCG* burrow frames are kept on
+disk for reference but unused by the live Carcass actor.
+
+Do not place this notes file under SPRITES/ (GZDoom tries to load it as a texture).

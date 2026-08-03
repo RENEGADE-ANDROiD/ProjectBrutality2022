@@ -177,7 +177,7 @@ $limit Eternal/Crucible/Return 0
 
 // GZDoom auto-loads every `SNDINFO*` lump; no include line needed.
 // Weapon fire tails (PB_Staging): SNDINFO.Atmosphere_Exterior + SNDINFO.Atmosphere_Interior
-// (weapons/atmo/*) with audio under sounds/combat/Atmosphere/ — used by PB_DynamicTail.
+// (weapons/atmo/*) with audio under sounds/combat/Atmosphere/ - used by PB_DynamicTail.
 // The following four logical names collided with identical definitions in
 // NOTE: the original MP add-on file redefines ZPTank/{see,pain,death,Run,explode}
 // twice within itself (once for Zombieplasmatank, once for Zombietankelite).
@@ -895,7 +895,7 @@ $limit ONELIN 1
 $random PIKUPTALK { PIKUPTALK1 PIKUPTALK2 }
 PIKUPTALK1 PIKUPTALK1
 PIKUPTALK2 PIKUPTALK2
-// DSSALUTE: was self-alias (IWAD lump); loose loads often have no lump — use PB grunt sight (marine voice).
+// DSSALUTE: was self-alias (IWAD lump); loose loads often have no lump - use PB grunt sight (marine voice).
 DSSALUTE grunt/sight5
 $limit FUCK 1
 TAUNT TAUNT
@@ -3701,7 +3701,7 @@ UNMALT6 UNMALT6
 $rolloff unmalt 900 1300
 UNMRLS UNMRLS
 UNMPCK UNMPCK
-; Stock Unmaker laser (quoted — path has spaces; Satan Scream uses Satan/*)
+; Stock Unmaker laser (quoted - path has spaces; Satan Scream uses Satan/*)
 UNMSTA "sounds/combat/Weapons/Demon weapons and Nazi weapons/Unmaker/UNMSTA.ogg"
 UNMLOP "sounds/combat/Weapons/Demon weapons and Nazi weapons/Unmaker/UNMLOP.ogg"
 UNMSTO "sounds/combat/Weapons/Demon weapons and Nazi weapons/Unmaker/UNMSTO.ogg"
@@ -3714,7 +3714,7 @@ UNOCFIR2 UNOCFIR2
 UNOCBLL UNOCBLL
 UNOCLOP UNOCLOP
 
-// Demon Exterminator — unmaker logical names (PBWP parity)
+// Demon Exterminator - unmaker logical names (PBWP parity)
 $random unmaker/fire { unmaker/fire1 unmaker/fire2 unmaker/fire3 }
 unmaker/fire1 UNMKFIR1
 unmaker/fire2 UNMKFIR2
@@ -3800,7 +3800,7 @@ StunGrenadeBounce STNGRD2
 StunGrenadeDetonate STNGRD3
 StunGrenadeLoop STNGRD4
 StunGrenadePickup STNPKUP
-// Project Survival fold — shield grenade deploy (cover uses BFG MKIV ShieldSpawnerPlacedCover chain)
+// Project Survival fold - shield grenade deploy (cover uses BFG MKIV ShieldSpawnerPlacedCover chain)
 grenade/activate/shield sounds/combat/weapons/Grenades/grenade_activate_shield
 grenade/spawn/shield sounds/combat/weapons/Grenades/grenade_spawn_shield
 
@@ -4058,7 +4058,7 @@ weapons/enemycarbine/fire "SOUNDS/COMBAT/WEAPONS/enemycarbine.ogg"
 misc/givecurrentammo "SOUNDS/gunpickup2.wav"
 
 // 2022-only weapon SFX (not in PB 0.3 staging PBWeapons shard)
-// Demon-Tech weapon line — minigun uses DTP/Magin, DTP/Snap (Demon-Tech Pistol removed)
+// Demon-Tech weapon line - minigun uses DTP/Magin, DTP/Snap (Demon-Tech Pistol removed)
 DTP/Magin "sounds/combat/weapons/DemonTech/Pistol/DTPMIN.ogg"
 DTP/Snap "sounds/combat/weapons/DemonTech/Pistol/DTPSNAP.ogg"
 TechBlaster/LoadIn "sounds/combat/weapons/DemonTech/Blaster/TBINJECT.ogg"
@@ -4089,7 +4089,7 @@ PLGRNHT1 "sounds/combat/weapons/NeoHMG/PLGRNHT1.ogg"
 PLGRNHT2 "sounds/combat/weapons/NeoHMG/PLGRNHT2.ogg"
 PLGRNHT3 "sounds/combat/weapons/NeoHMG/PLGRNHT3.ogg"
 
-// M41A - SFX: sounds/combat/weapons/M41A/ (explicit extensions — some builds skip extensionless lumps for mixed WAV/OGG)
+// M41A - SFX: sounds/combat/weapons/M41A/ (explicit extensions - some builds skip extensionless lumps for mixed WAV/OGG)
 M41A/Fire		"sounds/combat/weapons/M41A/M41AFIRE.wav"
 $volume M41A/Fire 1.0
 M41A/MagTake	"sounds/combat/weapons/M41A/CBMGOUT.ogg"
@@ -4103,7 +4103,7 @@ M14FIR2 "sounds/combat/weapons/XM21/M14FIR2.mp3"
 $volume M14FIRE 1.0
 $volume M14FIR2 1.0
 
-// Anti-Tank Rifle (Brutal Doom Plus / Tesefy) — sounds/combat/weapons/AntiTankRifle/
+// Anti-Tank Rifle (Brutal Doom Plus / Tesefy) - sounds/combat/weapons/AntiTankRifle/
 weapons/antitank/fire "sounds/combat/weapons/AntiTankRifle/M14FIRE.ogg"
 weapons/antitank/deploy "sounds/combat/weapons/AntiTankRifle/KARUP.ogg"
 weapons/antitank/bolt "sounds/combat/weapons/AntiTankRifle/KAR98_01.wav"
@@ -4112,7 +4112,7 @@ weapons/antitank/explode "sounds/combat/weapons/XM21/dsbarex1.ogg"
 $rolloff weapons/antitank/fire 300 2200
 $volume weapons/antitank/fire 1.0
 
-// SPAS-12 (Brutal Doom Plus) — sounds/combat/weapons/SPAS12/
+// SPAS-12 (Brutal Doom Plus) - sounds/combat/weapons/SPAS12/
 weapons/spas12/raise "sounds/combat/weapons/SPAS12/SPAS12.ogg"
 weapons/spas12/fire "sounds/combat/weapons/SPAS12/SPASFIRE.ogg"
 weapons/spas12/insert "sounds/combat/weapons/SPAS12/SPASLR00.ogg"
@@ -4161,21 +4161,21 @@ CSSGPHOS "sounds/combat/weapons/CSSG/CSSGPHOS.ogg"
 CSSGPHOF "sounds/combat/weapons/CSSG/CSSGPHOF.ogg"
 weapons/cssg/in "sounds/combat/weapons/CSSG/CSSGIN.ogg"
 
-// PB X12 Shotgun — PB_X12_Shotgun add-on samples (typed extensions; loose-folder loaders on Linux need explicit suffix).
+// PB X12 Shotgun - PB_X12_Shotgun add-on samples (typed extensions; loose-folder loaders on Linux need explicit suffix).
 X12FIRE "sounds/combat/weapons/X12/X12FIRE.ogg"
 $volume X12FIRE 1.0
 X12PMP "sounds/combat/weapons/X12/X12PMP.ogg"
 X12PMP1 "sounds/combat/weapons/X12/X12PMP1.wav"
 X12PMP2 "sounds/combat/weapons/X12/X12PMP2.wav"
 
-// Battle Rifle (BDPBattleRifle.zs) — SOUNDS/combat/WEAPONS/BattleRifle
+// Battle Rifle (BDPBattleRifle.zs) - SOUNDS/combat/WEAPONS/BattleRifle
 weapons/battlerifle/up "sounds/combat/weapons/BattleRifle/BR45PICK.ogg"
 weapons/battlerifle/fire "sounds/combat/weapons/BattleRifle/BR45FIRE.ogg"
 weapons/battlerifle/magout "sounds/combat/weapons/BattleRifle/BR45OPEN.ogg"
 weapons/battlerifle/magin "sounds/combat/weapons/BattleRifle/BR45LOAD.ogg"
 weapons/battlerifle/dry "sounds/combat/weapons/BattleRifle/BR45PING.ogg"
 weapons/battlerifle/switch "sounds/combat/weapons/BattleRifle/BR45SWCH.wav"
-// Platinum Railgun (PB_BDPRailgun.zs) — SOUNDS/combat/WEAPONS/BDPRailgun
+// Platinum Railgun (PB_BDPRailgun.zs) - SOUNDS/combat/WEAPONS/BDPRailgun
 weapons/bdprailgun/fire "sounds/combat/weapons/BDPRailgun/RAILF01.ogg"
 weapons/bdprailgun/dry "sounds/combat/weapons/BDPRailgun/RAILDRY.ogg"
 weapons/bdprailgun/mag1 "sounds/combat/weapons/BDPRailgun/RAILMAG1.ogg"
@@ -4183,7 +4183,7 @@ weapons/bdprailgun/mag2 "sounds/combat/weapons/BDPRailgun/RAILMAG2.ogg"
 weapons/bdprailgun/insert "sounds/combat/weapons/BDPRailgun/RAILINSR.ogg"
 weapons/bdprailgun/eject "sounds/combat/weapons/BDPRailgun/RAILEJCT.ogg"
 weapons/bdprailgun/shellinsert "sounds/combat/weapons/BDPRailgun/RAILRLOD.ogg"
-// Lever Action (LeverAction.dec) — SOUNDS/combat/WEAPONS/LeverAction
+// Lever Action (LeverAction.dec) - SOUNDS/combat/WEAPONS/LeverAction
 weapons/leveraction/rechamber "sounds/combat/weapons/LeverAction/Lever_Action_Rechamber.ogg"
 weapons/leveraction/inspect "sounds/combat/weapons/LeverAction/Lever_Action_Inspect.ogg"
 weapons/leveraction/flip "sounds/combat/weapons/LeverAction/Lever_Action_Flip.ogg"
@@ -4207,7 +4207,7 @@ MS/GrenOpen "sounds/combat/weapons/MetalSniper/msGrenOpen.ogg"
 MS/GrenClose "sounds/combat/weapons/MetalSniper/msGrenClose.ogg"
 MS/Button "sounds/combat/weapons/MetalSniper/msButton.ogg"
 MS/TakeMag "sounds/combat/weapons/MetalSniper/msMagOut.ogg"
-// Marauder SSG (MarauderSSG.dec) — Peacekeeper folder (MSS* rips)
+// Marauder SSG (MarauderSSG.dec) - Peacekeeper folder (MSS* rips)
 MSSFR1 "sounds/combat/weapons/Peacekeeper/MSSFR1.ogg"
 MSSFR2 "sounds/combat/weapons/Peacekeeper/MSSFR2.ogg"
 MSSFR3 "sounds/combat/weapons/Peacekeeper/MSSFR3.ogg"
@@ -4222,7 +4222,7 @@ $random MSSCL { MSSCL1 MSSCL2 MSSCL3 }
 MSSOP "sounds/combat/weapons/Peacekeeper/MSSOP.ogg"
 MSSLD "sounds/combat/weapons/Peacekeeper/MSSLD.ogg"
 BFGREADY "sounds/combat/weapons/CyberdemonRL/BFGREADY.ogg"
-// UAC-320 OldHMG (OldHMG.dec) — folded HMG bank (blue HMG + drum); Neo spin/stop stay on NeoHMG lumps
+// UAC-320 OldHMG (OldHMG.dec) - folded HMG bank (blue HMG + drum); Neo spin/stop stay on NeoHMG lumps
 9HAINAMO "sounds/combat/weapons/HMG/9HAINAMO.ogg"
 9HAINAM1 "sounds/combat/weapons/HMG/9HAINAM1.ogg"
 OldHMGUP "sounds/combat/weapons/HMG/HMGUP.ogg"
@@ -4245,7 +4245,7 @@ DVZABH1 "sounds/combat/weapons/ArgentSith/DVZAPHT1.ogg"
 DVZABH2 "sounds/combat/weapons/ArgentSith/DVZAPHT2.ogg"
 DVZABH3 "sounds/combat/weapons/ArgentSith/DVZAPHT3.ogg"
 $random ArgentBarrier/Hit { DVZABH1 DVZABH2 DVZABH3 }
-// Shield Saw — GK_ShieldSaw (`11 GK_ShieldSaw`); lumps under sounds/combat/ShieldSaw/
+// Shield Saw - GK_ShieldSaw (`11 GK_ShieldSaw`); lumps under sounds/combat/ShieldSaw/
 shieldsaw/ripper "sounds/combat/ShieldSaw/SHLDRIPR.wav"
 $random ShieldSawBounce { ShieldSawBounce1 ShieldSawBounce2 ShieldSawBounce3 ShieldSawBounce4 ShieldSawBounce5 }
 ShieldSawBounce1 "sounds/combat/ShieldSaw/Bounce1.ogg"
@@ -4473,7 +4473,7 @@ Weapons/PistolHolster PSTHOLS
 Weapons/DeadMansClick DMANC
 weapons/cryobowflyby    FRZSTRM
 DSBOWREL DSBOWREL
-// Path-style freezer cues (FREEZER.dec, BaseWeapon.dec) — SOUNDS/combat/WEAPONS/Freezer
+// Path-style freezer cues (FREEZER.dec, BaseWeapon.dec) - SOUNDS/combat/WEAPONS/Freezer
 weapons/freezer/up "sounds/combat/weapons/Freezer/FRZRUP.ogg"
 weapons/freezer/idle "sounds/combat/weapons/Freezer/FRZRHUM.ogg"
 weapons/freezer/fire "sounds/combat/weapons/Freezer/FRZRFR1.ogg"
@@ -4494,7 +4494,7 @@ weapons/freezer/reload1 "sounds/combat/weapons/Freezer/FRZRRL1.ogg"
 weapons/freezer/reload2 "sounds/combat/weapons/Freezer/FRZRRL2.ogg"
 weapons/freezer/reload3 "sounds/combat/weapons/Freezer/FRZRRL3.ogg"
 
-// Cat's Frozen Addon fold — cryo slow projectiles (logical names used by PBCF_CryoSlowProjectiles.zc)
+// Cat's Frozen Addon fold - cryo slow projectiles (logical names used by PBCF_CryoSlowProjectiles.zc)
 iceimpa "sounds/combat/weapons/CatsFrozen/iceimpact3.wav"
 coldcst "sounds/combat/weapons/CatsFrozen/coldcast.wav"
 
@@ -5128,7 +5128,7 @@ meltingice1	ICEMLT1
 meltingice2	ICEMLT2
 meltingice3	ICEMLT3
 
-// Realm667 — Venor (Kan3); place VNR* lumps under sounds/monsters/Venor/ (extensionless or .ogg per lump name)
+// Realm667 - Venor (Kan3); place VNR* lumps under sounds/monsters/Venor/ (extensionless or .ogg per lump name)
 venor/sight					monsters/venor/VNRSIGHT
 venor/active					monsters/venor/VNRACT
 venor/attack					monsters/venor/VNRATK
@@ -5577,7 +5577,7 @@ pentacle/project     sounds/Realm667Powerups/PROJECT.ogg
 ENTEIN SOUNDS/COMBAT/WEAPONS/Fusil/ENTEIN.mp3
 MOVIN SOUNDS/COMBAT/WEAPONS/Fusil/MOVIN.mp3
 
-//Hitmarkers (Tekish — logical names used by SRC/hitmarkers.acs)
+//Hitmarkers (Tekish - logical names used by SRC/hitmarkers.acs)
 defaulthit			"SOUNDS/Hitmarkers/HMDEFH"
 defaulthithigh		"SOUNDS/Hitmarkers/HMDEFHH"
 defaulthitmedium	"SOUNDS/Hitmarkers/HMDEFHM"
@@ -5807,12 +5807,12 @@ $random ExplosiveRifleFire { EXRFSF EXRFAF }
 EXRFSF "sounds/combat/Weapons/TacticalNailgun/EXRFSF"
 EXRFAF "sounds/combat/Weapons/TacticalNailgun/EXRFAF"
 
-// UAC-240 Perforator Nailgun — path-quote fire loop (bare NLGNSF* fails in some loose/zip loads)
+// UAC-240 Perforator Nailgun - path-quote fire loop (bare NLGNSF* fails in some loose/zip loads)
 weapons/nailgun/fireloop "sounds/combat/Weapons/Minigun and Nailgun/Nailgun/NLGNSF1.ogg"
 weapons/nailgun/firestop "sounds/combat/Weapons/Minigun and Nailgun/Nailgun/NLGNSF2.ogg"
 weapons/nailgun/altfire "sounds/combat/Weapons/Minigun and Nailgun/Nailgun/NLGNSF3.ogg"
 
-// Hexa Lion-Boy Shotgun — bare HEXAFIR* lumps under nested folders
+// Hexa Lion-Boy Shotgun - bare HEXAFIR* lumps under nested folders
 HEXAFIR1 "sounds/combat/Weapons/Slot3/HexaLion/HEXAFIR1"
 HEXAFIR2 "sounds/combat/Weapons/Slot3/HexaLion/HEXAFIR2"
 HEXAFIR3 "sounds/combat/Weapons/Slot3/HexaLion/HEXAFIR3"
@@ -5829,20 +5829,20 @@ $alias SMG/FireAdd SMG/Fire
 $alias Dryfire/SMG DryFire
 $alias DryFire/P.Rifle DryFire
 
-// Neo HMG overheat — path-quote MG42FIR members (bare lumps often miss nested .ogg)
+// Neo HMG overheat - path-quote MG42FIR members (bare lumps often miss nested .ogg)
 MG42FIR1 "sounds/combat/Weapons/Rifle caliber weapons/MG42/MG42FIR1.ogg"
 MG42FIR2 "sounds/combat/Weapons/Rifle caliber weapons/MG42/MG42FIR2.ogg"
 MG42FIR3 "sounds/combat/Weapons/Rifle caliber weapons/MG42/MG42FIR3.ogg"
 MG42FIR4 "sounds/combat/Weapons/Rifle caliber weapons/MG42/MG42FIR4.ogg"
 
-// PR-75 plasma — prefer .ogg when present; keep extensionless fallbacks above
+// PR-75 plasma - prefer .ogg when present; keep extensionless fallbacks above
 PSLF1 "sounds/combat/Weapons/Assault Plasma Rifle/PSLF1"
 PSLF2 "sounds/combat/Weapons/Assault Plasma Rifle/PSLF2"
 PSLF3 "sounds/combat/Weapons/Assault Plasma Rifle/PSLF3"
 SMGFIRE1 "sounds/combat/Weapons/MP12/SMGFIRE1.ogg"
 SMGFIRE2 "sounds/combat/Weapons/MP12/SMGFIRE2.ogg"
 
-// Abyssal Crown BloodBonk � fist ground slam (FistSlam) impact pool
+// Abyssal Crown BloodBonk ï¿½ fist ground slam (FistSlam) impact pool
 $random weapons/bloodbonk/boom { weapons/bloodbonk/boom1 weapons/bloodbonk/boom2 weapons/bloodbonk/boom3 }
 weapons/bloodbonk/boom1 "sounds/combat/weapons/BloodBonk/BBONK1.ogg"
 weapons/bloodbonk/boom2 "sounds/combat/weapons/BloodBonk/BBONK2.ogg"
@@ -5916,4 +5916,538 @@ Weapons/SatchelHit "sounds/combat/uacsurvival/STCHHIT"
 FLRSTRT "sounds/combat/uacsurvival/FLRSTRT"
 FLRBURN "sounds/combat/uacsurvival/FLRBURN"
 FLROUT "sounds/combat/uacsurvival/FLROUT"
+
+// === Clear Sky Carcass (BVCH fodder fold) ===
+$random Carcass/See    { CARCSEE1 CARCSEE2 CARCSEE3 CARCSEE4 }
+CARCSEE1	"sounds/monsters/clearsky/CARCSEE1.ogg"
+CARCSEE2	"sounds/monsters/clearsky/CARCSEE2.ogg"
+CARCSEE3	"sounds/monsters/clearsky/CARCSEE3.ogg"
+CARCSEE4	"sounds/monsters/clearsky/CARCSEE4.ogg"
+
+$random Carcass/Pain   { CARCPAI1 CARCPAI2 }
+CARCPAI1	"sounds/monsters/clearsky/CARCPAI1.ogg"
+CARCPAI2	"sounds/monsters/clearsky/CARCPAI2.ogg"
+
+$random Carcass/Active { CARCACT1 CARCACT2 CARCACT3 CARCACT4 }
+CARCACT1	"sounds/monsters/clearsky/CARCACT1.ogg"
+CARCACT2	"sounds/monsters/clearsky/CARCACT2.ogg"
+CARCACT3	"sounds/monsters/clearsky/CARCACT3.ogg"
+CARCACT4	"sounds/monsters/clearsky/CARCACT4.ogg"
+
+$random Carcass/Death  { CARCDIE1 CARCDIE2 CARCDIE3 }
+CARCDIE1	"sounds/monsters/clearsky/CARCDIE1.ogg"
+CARCDIE2	"sounds/monsters/clearsky/CARCDIE2.ogg"
+CARCDIE3	"sounds/monsters/clearsky/CARCDIE3.ogg"
+
+Carcass/Attack	"sounds/monsters/clearsky/CARCATK.wav"
+Carcass/Vomit	"sounds/monsters/clearsky/CARCVOM.ogg"
+
+$random Carcass/VomitHit { CSVOMIT1 CSVOMIT2 }
+CSVOMIT1	"sounds/monsters/clearsky/CSVOMIT1.ogg"
+CSVOMIT2	"sounds/monsters/clearsky/CSVOMIT2.ogg"
+$volume Carcass/VomitHit 0.8
+
+
+// === Monster Pack fold: D16 Tyrant / Dark Lord / QSG Dread ===
+TYRSEE TYRSEE
+$random TYRACT { TYRACT1 TYRACT2 }
+TYRACT1 TYRACT1
+TYRACT2 TYRACT2
+TYRDIE TYRDIE
+TYRDODGE TYRDODGE
+TYRRFI2 TYRRFI2
+$rolloff TYRRFI2 850 3500
+TYEXEC TYEXEC
+$rolloff TYEXEC 300 2200
+
+$random PKKROK { PKKROK1 PKKROK2 PKKROK3 PKKROK4 }
+PKKROK1 PKKROK1
+PKKROK2 PKKROK2
+PKKROK3 PKKROK3
+PKKROK4 PKKROK4
+$rolloff PKKROK 300 1100
+
+D16Cyberdemon/charge	cybchg
+D16Cyberdemon/melee		cybswg
+D16Cyberdemon/impact	cybimp
+$rolloff D16Cyberdemon/rocklx 600 3800
+$random D16Cyberdemon/rocklx { tyexp1 tyexp2 tyexp3 tyexp4 tyexp5 tyexp6 tyexp7 }
+tyexp1					TYLAGEX1
+tyexp2					TYLAGEX2
+tyexp3					TYLAGEX3
+tyexp4					TYLAGEX4
+tyexp5					TYLAGEX5
+tyexp6					TYLAGEX6
+tyexp7					TYLAGEX7
+
+$rolloff DarkCyber/Laugh	 	 800 3500
+DarkCyber/Laugh					 DSDCYL
+$rolloff DarkCyber/Sight 800 3500
+DarkCyber/Sight			DCYBATK
+$rolloff DarkCyber/Active 800 3500
+$random DarkCyber/Active { DCYBACT1 DCYBACT2 }
+DCYBACT1 DCYBACT1
+DCYBACT2 DCYBACT2
+$rolloff DarkCyber/Attack 800 3500
+DarkCyber/Attack		DSRAIN
+$random DarkCyber/Pain	{ CARDPAI1 CARDPAI2 }
+CARDPAI1 CARDPAI1
+CARDPAI2 CARDPAI2
+DarkCyber/Death			DCYBDTH
+DarkCyber/Summon		DCYBSMN
+DarkCyber/Cometcharge   DSMCHRG
+$rolloff DarkCyber/Cometcharge 400 3000
+DarkCyber/Cometfire     DSCOFIR
+$rolloff DarkCyber/Cometfire 800 3500
+DarkCyber/Cometimpact   DSCOIMP
+$rolloff DarkCyber/Cometimpact 800 3500
+DarkCyber/Cometfly      DSCOFLY
+$rolloff DarkCyber/Cometfly 300 3000
+DarkCyber/Infernalfly   GURUFLY
+DarkCyber/Infernalfire  GURUFIRE
+$rolloff DarkCyber/Infernalfire 800 3500
+DarkCyber/Infernalchrg  DSBFG15K
+$rolloff DarkCyber/Infernalchrg 400 3000
+DarkCyber/Infernaldth   GURUBLS2
+$rolloff DarkCyber/Infernaldth 800 3500
+DarkCyber/Infernalcooldown dsbfg15c
+$rolloff DarkCyber/Infernalcooldown 300 3000
+
+$rolloff Cardinal/ElectroImpact 600 3800
+Cardinal/ElectroImpact  DSSHDTH
+
+QSGDTM                        QSGDTM
+QSGDTTI                       QSGDTTI
+QSGDTTO                       QSGDTTO
+
+
+play/nothing DSEMPTY
+// --- PB Staging Eternal / WhiteWidow sound fold ---
+//EternalArachno
+EternalArachno/active1 "sounds/monsters/StagingEternal/EternalArachno/Active1.ogg"
+EternalArachno/active2 "sounds/monsters/StagingEternal/EternalArachno/Active2.ogg"
+EternalArachno/active3 "sounds/monsters/StagingEternal/EternalArachno/Active3.ogg"
+EternalArachno/active4 "sounds/monsters/StagingEternal/EternalArachno/Active4.ogg"
+EternalArachno/active5 "sounds/monsters/StagingEternal/EternalArachno/Active5.ogg"
+EternalArachno/active6 "sounds/monsters/StagingEternal/EternalArachno/Active6.ogg"
+EternalArachno/active7 "sounds/monsters/StagingEternal/EternalArachno/Active7.ogg"
+EternalArachno/active8 "sounds/monsters/StagingEternal/EternalArachno/Active8.ogg"
+EternalArachno/active9 "sounds/monsters/StagingEternal/EternalArachno/Active9.ogg"
+EternalArachno/active10 "sounds/monsters/StagingEternal/EternalArachno/Active10.ogg"
+EternalArachno/active11 "sounds/monsters/StagingEternal/EternalArachno/Active11.ogg"
+
+$random EternalArachno/active {
+  EternalArachno/active1
+  EternalArachno/active2
+  EternalArachno/active3
+  EternalArachno/active4
+  EternalArachno/active5
+  EternalArachno/active6
+  EternalArachno/active7
+  EternalArachno/active8
+  EternalArachno/active9
+  EternalArachno/active10
+  EternalArachno/active11
+}
+$volume EternalArachno/active 1.0
+
+EternalArachno/sight1 "sounds/monsters/StagingEternal/EternalArachno/Sight1.ogg"
+EternalArachno/sight2 "sounds/monsters/StagingEternal/EternalArachno/Sight2.ogg"
+EternalArachno/sight3 "sounds/monsters/StagingEternal/EternalArachno/Sight3.ogg"
+EternalArachno/sight4 "sounds/monsters/StagingEternal/EternalArachno/Sight4.ogg"
+EternalArachno/sight5 "sounds/monsters/StagingEternal/EternalArachno/Sight5.ogg"
+EternalArachno/sight6 "sounds/monsters/StagingEternal/EternalArachno/Sight6.ogg"
+EternalArachno/sight7 "sounds/monsters/StagingEternal/EternalArachno/Sight7.ogg"
+EternalArachno/sight8 "sounds/monsters/StagingEternal/EternalArachno/Sight8.ogg"
+EternalArachno/sight9 "sounds/monsters/StagingEternal/EternalArachno/Sight9.ogg"
+EternalArachno/sight10 "sounds/monsters/StagingEternal/EternalArachno/Sight10.ogg"
+EternalArachno/sight11 "sounds/monsters/StagingEternal/EternalArachno/Sight11.ogg"
+EternalArachno/sight12 "sounds/monsters/StagingEternal/EternalArachno/Sight12.ogg"
+EternalArachno/sight13 "sounds/monsters/StagingEternal/EternalArachno/Sight13.ogg"
+EternalArachno/sight14 "sounds/monsters/StagingEternal/EternalArachno/Sight14.ogg"
+
+$random EternalArachno/sight {
+  EternalArachno/sight1
+  EternalArachno/sight2
+  EternalArachno/sight3
+  EternalArachno/sight4
+  EternalArachno/sight5
+  EternalArachno/sight6
+  EternalArachno/sight7
+  EternalArachno/sight8
+  EternalArachno/sight9
+  EternalArachno/sight10
+  EternalArachno/sight11
+  EternalArachno/sight12
+  EternalArachno/sight13
+  EternalArachno/sight14
+}
+$volume EternalArachno/sight 1.0 
+
+EternalArachno/pain1 "sounds/monsters/StagingEternal/EternalArachno/Hurt1.ogg"
+EternalArachno/pain2 "sounds/monsters/StagingEternal/EternalArachno/Hurt2.ogg"
+EternalArachno/pain3 "sounds/monsters/StagingEternal/EternalArachno/Hurt3.ogg"
+EternalArachno/pain4 "sounds/monsters/StagingEternal/EternalArachno/Hurt4.ogg"
+EternalArachno/pain5 "sounds/monsters/StagingEternal/EternalArachno/Hurt5.ogg"
+EternalArachno/pain6 "sounds/monsters/StagingEternal/EternalArachno/Hurt6.ogg"
+EternalArachno/pain7 "sounds/monsters/StagingEternal/EternalArachno/Hurt7.ogg"
+EternalArachno/pain8 "sounds/monsters/StagingEternal/EternalArachno/Hurt8.ogg"
+EternalArachno/pain9 "sounds/monsters/StagingEternal/EternalArachno/Hurt9.ogg"
+EternalArachno/pain10 "sounds/monsters/StagingEternal/EternalArachno/Hurt10.ogg"
+EternalArachno/pain11 "sounds/monsters/StagingEternal/EternalArachno/Hurt11.ogg"
+EternalArachno/pain12 "sounds/monsters/StagingEternal/EternalArachno/Hurt12.ogg"
+EternalArachno/pain13 "sounds/monsters/StagingEternal/EternalArachno/Hurt13.ogg"
+EternalArachno/pain14 "sounds/monsters/StagingEternal/EternalArachno/Hurt14.ogg"
+EternalArachno/pain15 "sounds/monsters/StagingEternal/EternalArachno/Hurt15.ogg"
+EternalArachno/pain16 "sounds/monsters/StagingEternal/EternalArachno/Hurt16.ogg"
+EternalArachno/pain17 "sounds/monsters/StagingEternal/EternalArachno/Hurt17.ogg"
+EternalArachno/pain18 "sounds/monsters/StagingEternal/EternalArachno/Hurt18.ogg"
+EternalArachno/pain19 "sounds/monsters/StagingEternal/EternalArachno/Hurt19.ogg"
+EternalArachno/pain20 "sounds/monsters/StagingEternal/EternalArachno/Hurt20.ogg"
+EternalArachno/pain21 "sounds/monsters/StagingEternal/EternalArachno/Hurt21.ogg"
+EternalArachno/pain22 "sounds/monsters/StagingEternal/EternalArachno/Hurt22.ogg"
+
+$random EternalArachno/pain {
+  EternalArachno/pain1
+  EternalArachno/pain2
+  EternalArachno/pain3
+  EternalArachno/pain4
+  EternalArachno/pain5
+  EternalArachno/pain6
+  EternalArachno/pain7
+  EternalArachno/pain8
+  EternalArachno/pain9
+  EternalArachno/pain10
+  EternalArachno/pain11
+  EternalArachno/pain12
+  EternalArachno/pain13
+  EternalArachno/pain14
+  EternalArachno/pain15
+  EternalArachno/pain16
+  EternalArachno/pain17
+  EternalArachno/pain18
+  EternalArachno/pain19
+  EternalArachno/pain20
+  EternalArachno/pain21
+  EternalArachno/pain22
+}
+$volume EternalArachno/pain 1.0
+
+EternalArachno/death1 "sounds/monsters/StagingEternal/EternalArachno/Death1.ogg"
+EternalArachno/death2 "sounds/monsters/StagingEternal/EternalArachno/Death2.ogg"
+EternalArachno/death3 "sounds/monsters/StagingEternal/EternalArachno/Death3.ogg"
+EternalArachno/death4 "sounds/monsters/StagingEternal/EternalArachno/Death4.ogg"
+EternalArachno/death5 "sounds/monsters/StagingEternal/EternalArachno/Death5.ogg"
+EternalArachno/death6 "sounds/monsters/StagingEternal/EternalArachno/Death6.ogg"
+EternalArachno/death7 "sounds/monsters/StagingEternal/EternalArachno/Death7.ogg"
+EternalArachno/death8 "sounds/monsters/StagingEternal/EternalArachno/Death8.ogg"
+EternalArachno/death9 "sounds/monsters/StagingEternal/EternalArachno/Death9.ogg"
+
+$random EternalArachno/death {
+  EternalArachno/death1
+  EternalArachno/death2
+  EternalArachno/death3
+  EternalArachno/death4
+  EternalArachno/death5
+  EternalArachno/death6
+  EternalArachno/death7
+  EternalArachno/death8
+  EternalArachno/death9
+}
+$volume EternalArachno/death 1.0
+
+EternalArachno/walk1 "sounds/monsters/StagingEternal/EternalArachno/Walk1.ogg"
+EternalArachno/walk2 "sounds/monsters/StagingEternal/EternalArachno/Walk2.ogg"
+EternalArachno/walk3 "sounds/monsters/StagingEternal/EternalArachno/Walk3.ogg"
+EternalArachno/walk4 "sounds/monsters/StagingEternal/EternalArachno/Walk4.ogg"
+EternalArachno/walk5 "sounds/monsters/StagingEternal/EternalArachno/Walk5.ogg"
+EternalArachno/walk6 "sounds/monsters/StagingEternal/EternalArachno/Walk6.ogg"
+
+$random EternalArachno/walk {
+  EternalArachno/walk1
+  EternalArachno/walk2
+  EternalArachno/walk3
+  EternalArachno/walk4
+  EternalArachno/walk5
+  EternalArachno/walk6
+}
+$volume EternalArachno/walk 1.0
+
+EternalArachno/plascrack1 "sounds/monsters/StagingEternal/EternalArachno/PLSFIRE1.ogg"
+EternalArachno/plascrack2 "sounds/monsters/StagingEternal/EternalArachno/PLSFIRE2.ogg"
+
+$random weapons/plascrack {
+  EternalArachno/plascrack1
+  EternalArachno/plascrack2
+}
+$volume misc/zap 1.0
+
+weapons/plasidle "sounds/monsters/StagingEternal/EternalArachno/PLASIDLE.ogg" $volume weapons/plasidle 1.0
+weapons/plasmaf "sounds/monsters/StagingEternal/EternalArachno/PLSFIRE2.ogg" $volume weapons/plasmaf 1.0
+
+
+//EternalSoul
+EternalSoul/melee1 "sounds/monsters/StagingEternal/EternalSoul/Melee1.ogg"
+EternalSoul/melee2 "sounds/monsters/StagingEternal/EternalSoul/Melee2.ogg"
+EternalSoul/melee3 "sounds/monsters/StagingEternal/EternalSoul/Melee3.ogg"
+EternalSoul/melee4 "sounds/monsters/StagingEternal/EternalSoul/Melee4.ogg"
+
+$random EternalSoul/melee {
+  EternalSoul/melee1
+  EternalSoul/melee2
+  EternalSoul/melee3
+  EternalSoul/melee4
+}
+$volume EternalSoul/melee 1.0
+
+// Is an active idle sound:
+$random EternalSoul/idlescream {
+  play/nothing
+  play/nothing
+  play/nothing
+  EternalSoul/melee
+}
+$volume EternalSoul/idlescream 1.0
+$alias EternalSoul/active EternalSoul/idlescream
+
+EternalSoul/death1 "sounds/monsters/StagingEternal/EternalSoul/Death1.ogg"
+EternalSoul/death2 "sounds/monsters/StagingEternal/EternalSoul/Death2.ogg"
+EternalSoul/death3 "sounds/monsters/StagingEternal/EternalSoul/Death3.ogg"
+EternalSoul/death4 "sounds/monsters/StagingEternal/EternalSoul/Death4.ogg"
+EternalSoul/death5 "sounds/monsters/StagingEternal/EternalSoul/Death5.ogg"
+
+$random EternalSoul/death {
+  EternalSoul/death1
+  EternalSoul/death2
+  EternalSoul/death3
+  EternalSoul/death4
+  EternalSoul/death5
+}
+$volume EternalSoul/death 1.0
+$alias EternalSoul/pain EternalSoul/death
+
+//EternalBaron
+EternalBaron/active1 "sounds/monsters/StagingEternal/EternalBaron/Active1.ogg"
+EternalBaron/active2 "sounds/monsters/StagingEternal/EternalBaron/Active2.ogg"
+EternalBaron/active3 "sounds/monsters/StagingEternal/EternalBaron/Active3.ogg"
+EternalBaron/active4 "sounds/monsters/StagingEternal/EternalBaron/Active4.ogg"
+EternalBaron/active5 "sounds/monsters/StagingEternal/EternalBaron/Active5.ogg"
+EternalBaron/active6 "sounds/monsters/StagingEternal/EternalBaron/Active6.ogg"
+EternalBaron/active7 "sounds/monsters/StagingEternal/EternalBaron/Active7.ogg"
+EternalBaron/active8 "sounds/monsters/StagingEternal/EternalBaron/Active8.ogg"
+EternalBaron/active9 "sounds/monsters/StagingEternal/EternalBaron/Active9.ogg"
+EternalBaron/active10 "sounds/monsters/StagingEternal/EternalBaron/Active10.ogg"
+EternalBaron/active11 "sounds/monsters/StagingEternal/EternalBaron/Active11.ogg"
+
+$random EternalBaron/active {
+  EternalBaron/active1
+  EternalBaron/active2
+  EternalBaron/active3
+  EternalBaron/active4
+  EternalBaron/active5
+  EternalBaron/active6
+  EternalBaron/active7
+  EternalBaron/active8
+  EternalBaron/active9
+  EternalBaron/active10
+  EternalBaron/active11
+}
+$volume EternalBaron/active 1.0
+
+EternalBaron/sight1 "sounds/monsters/StagingEternal/EternalBaron/Sight1.ogg"
+EternalBaron/sight2 "sounds/monsters/StagingEternal/EternalBaron/Sight2.ogg"
+EternalBaron/sight3 "sounds/monsters/StagingEternal/EternalBaron/Sight3.ogg"
+EternalBaron/sight4 "sounds/monsters/StagingEternal/EternalBaron/Sight4.ogg"
+EternalBaron/sight5 "sounds/monsters/StagingEternal/EternalBaron/Sight5.ogg"
+
+$random EternalBaron/sight {
+  EternalBaron/sight1
+  EternalBaron/sight2
+  EternalBaron/sight3
+  EternalBaron/sight4
+  EternalBaron/sight5
+}
+$volume EternalBaron/sight 1.0
+
+EternalBaron/pain1 "sounds/monsters/StagingEternal/EternalBaron/Hurt1.ogg"
+EternalBaron/pain2 "sounds/monsters/StagingEternal/EternalBaron/Hurt2.ogg"
+EternalBaron/pain3 "sounds/monsters/StagingEternal/EternalBaron/Hurt3.ogg"
+EternalBaron/pain4 "sounds/monsters/StagingEternal/EternalBaron/Hurt4.ogg"
+EternalBaron/pain5 "sounds/monsters/StagingEternal/EternalBaron/Hurt5.ogg"
+EternalBaron/pain6 "sounds/monsters/StagingEternal/EternalBaron/Hurt6.ogg"
+EternalBaron/pain7 "sounds/monsters/StagingEternal/EternalBaron/Hurt7.ogg"
+EternalBaron/pain8 "sounds/monsters/StagingEternal/EternalBaron/Hurt8.ogg"
+EternalBaron/pain9 "sounds/monsters/StagingEternal/EternalBaron/Hurt9.ogg"
+EternalBaron/pain10 "sounds/monsters/StagingEternal/EternalBaron/Hurt10.ogg"
+EternalBaron/pain11 "sounds/monsters/StagingEternal/EternalBaron/Hurt11.ogg"
+EternalBaron/pain12 "sounds/monsters/StagingEternal/EternalBaron/Hurt12.ogg"
+EternalBaron/pain13 "sounds/monsters/StagingEternal/EternalBaron/Hurt13.ogg"
+EternalBaron/pain14 "sounds/monsters/StagingEternal/EternalBaron/Hurt14.ogg"
+
+$random EternalBaron/pain {
+  EternalBaron/pain1
+  EternalBaron/pain2
+  EternalBaron/pain3
+  EternalBaron/pain4
+  EternalBaron/pain5
+  EternalBaron/pain6
+  EternalBaron/pain7
+  EternalBaron/pain8
+  EternalBaron/pain9
+  EternalBaron/pain10
+  EternalBaron/pain11
+  EternalBaron/pain12
+  EternalBaron/pain13
+  EternalBaron/pain14
+}
+$volume EternalBaron/pain 1.0
+
+EternalBaron/death1 "sounds/monsters/StagingEternal/EternalBaron/Death1.ogg"
+EternalBaron/death2 "sounds/monsters/StagingEternal/EternalBaron/Death2.ogg"
+EternalBaron/death3 "sounds/monsters/StagingEternal/EternalBaron/Death3.ogg"
+EternalBaron/death4 "sounds/monsters/StagingEternal/EternalBaron/Death4.ogg"
+EternalBaron/death5 "sounds/monsters/StagingEternal/EternalBaron/Death5.ogg"
+EternalBaron/death6 "sounds/monsters/StagingEternal/EternalBaron/Death6.ogg"
+EternalBaron/death7 "sounds/monsters/StagingEternal/EternalBaron/Death7.ogg"
+EternalBaron/death8 "sounds/monsters/StagingEternal/EternalBaron/Death8.ogg"
+EternalBaron/death9 "sounds/monsters/StagingEternal/EternalBaron/Death9.ogg"
+EternalBaron/death10 "sounds/monsters/StagingEternal/EternalBaron/Death10.ogg"
+EternalBaron/death11 "sounds/monsters/StagingEternal/EternalBaron/Death11.ogg"
+EternalBaron/death12 "sounds/monsters/StagingEternal/EternalBaron/Death12.ogg"
+
+$random EternalBaron/death {
+  EternalBaron/death1
+  EternalBaron/death2
+  EternalBaron/death3
+  EternalBaron/death4
+  EternalBaron/death5
+  EternalBaron/death6
+  EternalBaron/death7
+  EternalBaron/death8
+  EternalBaron/death9
+  EternalBaron/death10
+  EternalBaron/death11
+  EternalBaron/death12
+}
+$volume EternalBaron/death 1.0
+
+$alias EternalBaron/melee imp/melee
+
+EternalBaron/step1 "sounds/monsters/StagingEternal/EternalBaron/Step1.ogg" $attenuation EternalBaron/step1 1.0
+EternalBaron/step2 "sounds/monsters/StagingEternal/EternalBaron/Step2.ogg" $attenuation EternalBaron/step2 1.0
+EternalBaron/step3 "sounds/monsters/StagingEternal/EternalBaron/Step3.ogg" $attenuation EternalBaron/step3 1.0
+EternalBaron/step4 "sounds/monsters/StagingEternal/EternalBaron/Step4.ogg" $attenuation EternalBaron/step4 1.0
+EternalBaron/step5 "sounds/monsters/StagingEternal/EternalBaron/Step5.ogg" $attenuation EternalBaron/step5 1.0
+EternalBaron/step6 "sounds/monsters/StagingEternal/EternalBaron/Step6.ogg" $attenuation EternalBaron/step6 1.0
+
+$random EternalBaron/step
+{
+  EternalBaron/step1
+  EternalBaron/step2
+  EternalBaron/step3
+  EternalBaron/step4
+  EternalBaron/step5
+  EternalBaron/step6
+}
+$volume EternalBaron/step 0.1
+
+$random EternalFat/melee { EternalFatMelee1 EternalFatMelee2 EternalFatMelee3 EternalFatMelee4 }
+$volume EternalFat/melee 1.0
+EternalFatMelee1 "sounds/monsters/StagingEternal/EternalFat/Melee1.ogg"
+EternalFatMelee2 "sounds/monsters/StagingEternal/EternalFat/Melee2.ogg"
+EternalFatMelee3 "sounds/monsters/StagingEternal/EternalFat/Melee3.ogg"
+EternalFatMelee4 "sounds/monsters/StagingEternal/EternalFat/Melee4.ogg"
+$random EternalFat/Pain { EternalFatPain1 EternalFatPain2 EternalFatPain3 EternalFatPain4 EternalFatPain5 EternalFatPain6 EternalFatPain10 EternalFatPain15 EternalFatPain20 EternalFatPain25 EternalFatPain30 EternalFatPain32} 
+$volume EternalFat/Pain 1.0
+EternalFatPain1 "sounds/monsters/StagingEternal/EternalFat/Hurt1.ogg"
+EternalFatPain2 "sounds/monsters/StagingEternal/EternalFat/Hurt2.ogg"
+EternalFatPain3 "sounds/monsters/StagingEternal/EternalFat/Hurt3.ogg"
+EternalFatPain4 "sounds/monsters/StagingEternal/EternalFat/Hurt4.ogg"
+EternalFatPain5 "sounds/monsters/StagingEternal/EternalFat/Hurt5.ogg"
+EternalFatPain6 "sounds/monsters/StagingEternal/EternalFat/Hurt6.ogg"
+EternalFatPain7 "sounds/monsters/StagingEternal/EternalFat/Hurt7.ogg"
+EternalFatPain8 "sounds/monsters/StagingEternal/EternalFat/Hurt8.ogg"
+EternalFatPain9 "sounds/monsters/StagingEternal/EternalFat/Hurt9.ogg"
+EternalFatPain10 "sounds/monsters/StagingEternal/EternalFat/Hurt10.ogg"
+EternalFatPain11 "sounds/monsters/StagingEternal/EternalFat/Hurt11.ogg"
+EternalFatPain12 "sounds/monsters/StagingEternal/EternalFat/Hurt12.ogg"
+EternalFatPain13 "sounds/monsters/StagingEternal/EternalFat/Hurt13.ogg"
+EternalFatPain14 "sounds/monsters/StagingEternal/EternalFat/Hurt14.ogg"
+EternalFatPain15 "sounds/monsters/StagingEternal/EternalFat/Hurt15.ogg"
+EternalFatPain16 "sounds/monsters/StagingEternal/EternalFat/Hurt16.ogg"
+EternalFatPain17 "sounds/monsters/StagingEternal/EternalFat/Hurt17.ogg"
+EternalFatPain18 "sounds/monsters/StagingEternal/EternalFat/Hurt18.ogg"
+EternalFatPain19 "sounds/monsters/StagingEternal/EternalFat/Hurt19.ogg"
+EternalFatPain20 "sounds/monsters/StagingEternal/EternalFat/Hurt20.ogg"
+EternalFatPain21 "sounds/monsters/StagingEternal/EternalFat/Hurt21.ogg"
+EternalFatPain22 "sounds/monsters/StagingEternal/EternalFat/Hurt22.ogg"
+EternalFatPain23 "sounds/monsters/StagingEternal/EternalFat/Hurt23.ogg"
+EternalFatPain24 "sounds/monsters/StagingEternal/EternalFat/Hurt24.ogg"
+EternalFatPain25 "sounds/monsters/StagingEternal/EternalFat/Hurt25.ogg"
+EternalFatPain26 "sounds/monsters/StagingEternal/EternalFat/Hurt26.ogg"
+EternalFatPain27 "sounds/monsters/StagingEternal/EternalFat/Hurt27.ogg"
+EternalFatPain28 "sounds/monsters/StagingEternal/EternalFat/Hurt28.ogg"
+EternalFatPain29 "sounds/monsters/StagingEternal/EternalFat/Hurt29.ogg"
+EternalFatPain30 "sounds/monsters/StagingEternal/EternalFat/Hurt30.ogg"
+EternalFatPain31 "sounds/monsters/StagingEternal/EternalFat/Hurt31.ogg"
+EternalFatPain32 "sounds/monsters/StagingEternal/EternalFat/Hurt32.ogg"
+$random EternalFat/Death { EternalFatDeath1 EternalFatDeath2 EternalFatDeath3 EternalFatDeath4 EternalFatDeath5 EternalFatDeath6 EternalFatDeath7 EternalFatDeath8 EternalFatDeath9 EternalFatDeath10 EternalFatDeath11 EternalFatDeath12 EternalFatDeath13 EternalFatDeath14 }
+$volume EternalFat/Death 1.0
+EternalFatDeath1 "sounds/monsters/StagingEternal/EternalFat/Death1.ogg"
+EternalFatDeath2 "sounds/monsters/StagingEternal/EternalFat/Death2.ogg"
+EternalFatDeath3 "sounds/monsters/StagingEternal/EternalFat/Death3.ogg"
+EternalFatDeath4 "sounds/monsters/StagingEternal/EternalFat/Death4.ogg"
+EternalFatDeath5 "sounds/monsters/StagingEternal/EternalFat/Death5.ogg"
+EternalFatDeath6 "sounds/monsters/StagingEternal/EternalFat/Death6.ogg"
+EternalFatDeath7 "sounds/monsters/StagingEternal/EternalFat/Death7.ogg"
+EternalFatDeath8 "sounds/monsters/StagingEternal/EternalFat/Death8.ogg"
+EternalFatDeath9 "sounds/monsters/StagingEternal/EternalFat/Death9.ogg"
+EternalFatDeath10 "sounds/monsters/StagingEternal/EternalFat/Death10.ogg"
+EternalFatDeath11 "sounds/monsters/StagingEternal/EternalFat/Death11.ogg"
+EternalFatDeath12 "sounds/monsters/StagingEternal/EternalFat/Death12.ogg"
+EternalFatDeath13 "sounds/monsters/StagingEternal/EternalFat/Death13.ogg"
+EternalFatDeath14 "sounds/monsters/StagingEternal/EternalFat/Death14.ogg"
+$random EternalFat/Active { EternalFatActive1 EternalFatActive2 EternalFatActive3 EternalFatActive4 EternalFatActive5 EternalFatActive6 EternalFatActive7 EternalFatActive8 }
+$volume EternalFat/Active 1.0
+EternalFatActive1 "sounds/monsters/StagingEternal/EternalFat/Active1.ogg"
+EternalFatActive2 "sounds/monsters/StagingEternal/EternalFat/Active2.ogg"
+EternalFatActive3 "sounds/monsters/StagingEternal/EternalFat/Active3.ogg"
+EternalFatActive4 "sounds/monsters/StagingEternal/EternalFat/Active4.ogg"
+EternalFatActive5 "sounds/monsters/StagingEternal/EternalFat/Active5.ogg"
+EternalFatActive6 "sounds/monsters/StagingEternal/EternalFat/Active6.ogg"
+EternalFatActive7 "sounds/monsters/StagingEternal/EternalFat/Active7.ogg"
+EternalFatActive8 "sounds/monsters/StagingEternal/EternalFat/Active8.ogg"
+$random EternalFat/Sight { EternalFatSight1 EternalFatSight2 EternalFatSight3 EternalFatSight4 EternalFatSight5 EternalFatSight6 EternalFatSight7 EternalFatSight8 EternalFatSight9 EternalFatSight10 EternalFatSight11 EternalFatSight12 EternalFatSight13 EternalFatSight14 }
+$volume EternalFat/Sight 1.0 
+EternalFatSight1 "sounds/monsters/StagingEternal/EternalFat/Sight1.ogg"
+EternalFatSight2 "sounds/monsters/StagingEternal/EternalFat/Sight2.ogg"
+EternalFatSight3 "sounds/monsters/StagingEternal/EternalFat/Sight3.ogg"
+EternalFatSight4 "sounds/monsters/StagingEternal/EternalFat/Sight4.ogg"
+EternalFatSight5 "sounds/monsters/StagingEternal/EternalFat/Sight5.ogg"
+EternalFatSight6 "sounds/monsters/StagingEternal/EternalFat/Sight6.ogg"
+EternalFatSight7 "sounds/monsters/StagingEternal/EternalFat/Sight7.ogg"
+EternalFatSight8 "sounds/monsters/StagingEternal/EternalFat/Sight8.ogg"
+EternalFatSight9 "sounds/monsters/StagingEternal/EternalFat/Sight9.ogg"
+EternalFatSight10 "sounds/monsters/StagingEternal/EternalFat/Sight10.ogg"
+EternalFatSight11 "sounds/monsters/StagingEternal/EternalFat/Sight11.ogg"
+EternalFatSight12 "sounds/monsters/StagingEternal/EternalFat/Sight12.ogg"
+EternalFatSight13 "sounds/monsters/StagingEternal/EternalFat/Sight13.ogg"
+EternalFatSight14 "sounds/monsters/StagingEternal/EternalFat/Sight14.ogg"
+$random EternalFat/Step { EternalFatStep1 EternalFatStep2 EternalFatStep3 EternalFatStep4 EternalFatStep5 EternalFatStep6 EternalFatStep7 }
+$volume EternalFat/Step 1.0 
+EternalFatStep1 "sounds/monsters/StagingEternal/EternalFat/Step1.ogg"
+EternalFatStep2 "sounds/monsters/StagingEternal/EternalFat/Step2.ogg"
+EternalFatStep3 "sounds/monsters/StagingEternal/EternalFat/Step2.ogg"
+EternalFatStep4 "sounds/monsters/StagingEternal/EternalFat/Step4.ogg"
+EternalFatStep5 "sounds/monsters/StagingEternal/EternalFat/Step5.ogg"
+EternalFatStep6 "sounds/monsters/StagingEternal/EternalFat/Step6.ogg"
+EternalFatStep7 "sounds/monsters/StagingEternal/EternalFat/Step7.ogg"
+$random EternalFat/RaiseGuns { EternalFatRaiseGuns1 EternalFatRaiseGuns2  EternalFatRaiseGuns3}
+$volume EternalFat/RaiseGuns 1.0 
+EternalFatRaiseGuns1 "sounds/monsters/StagingEternal/EternalFat/RaiseGuns1.ogg"
+EternalFatRaiseGuns2 "sounds/monsters/StagingEternal/EternalFat/RaiseGuns2.ogg"
+EternalFatRaiseGuns3 "sounds/monsters/StagingEternal/EternalFat/RaiseGuns3.ogg"
+
+
+GloryPunch/Kill "misc/gibbed"
 

@@ -1,10 +1,10 @@
-// Project Survival fodder (Shambler / Puker / Blighter / Screamer / Spiker / Burster) — main roster reinforcement.
+// Project Survival fodder (Shambler / Puker / Blighter / Screamer / Spiker / Burster / CyberFodder / Carcass) — main roster reinforcement.
 
 class PB_ProjectSurvivalFodderUtil
 {
 	static int FodderSkipThreshold()
 	{
-		int skipAt = 160;
+		int skipAt = 100;
 		let cv = CVar.FindCVar("pb_fodder_passive_threshold");
 		if (cv)
 			skipAt = cv.GetInt();
@@ -20,24 +20,142 @@ class PB_ProjectSurvivalFodderUtil
 		return random(0, 255) < FodderSkipThreshold();
 	}
 
-	static String PickFodderClass()
+	// Mirror SRC/spawnscript.acs SpawnBalance + MAPINFO cluster routing (1–4).
+	static int ResolveFodderProgTier()
 	{
-		if (random(0, 9) < 2)
-			return "Shambler";
+		int bal = 671;
+		let cv = CVar.FindCVar("spawnbalance");
+		if (cv)
+			bal = cv.GetInt();
 
-		if (random(0, 9) < 1)
-			return "Burster";
+		int cluster = 2;
+		if (level)
+			cluster = level.Cluster;
 
-		switch (random(0, 3))
+		switch (bal)
 		{
+		case 667: return 1;
+		case 668: return 2;
+		case 669: return 3;
+		case 670: return 4;
+		case 672: return 4;
+		case 663: return 2;
+		case 666:
+		case 671:
 		default:
-		case 0: return "Puker";
-		case 1: return "Blighter";
-		case 2: return "Screamer";
-		case 3: return "Spiker";
+			switch (cluster)
+			{
+			case 1:
+			case 5:
+				return 1;
+			case 2:
+			case 6:
+				return 2;
+			case 3:
+			case 7:
+				return 3;
+			case 4:
+			case 8:
+				return 4;
+			default:
+				if (cluster > 8)
+					return 4;
+				return 2;
+			}
 		}
 	}
 
+	static bool CyberFodderAllowed()
+	{
+		let cv = CVar.FindCVar("NoCyberFodder");
+		if (cv && cv.GetInt() != 0)
+			return false;
+		return true;
+	}
+
+	static bool CarcassAllowed()
+	{
+		let cv = CVar.FindCVar("NoCarcass");
+		if (cv && cv.GetInt() != 0)
+			return false;
+		return true;
+	}
+
+	static String PickFodderClass()
+	{
+		int tier = ResolveFodderProgTier();
+
+		// Clear Sky Carcass — all prog tiers (~10%).
+		if (CarcassAllowed() && random(0, 99) < 10)
+			return "Carcass";
+
+		if (tier <= 1)
+		{
+			// Shambler-heavy; Puker/Blighter common; Spiker/Screamer rare; no Burster/Cyber.
+			int r = random(0, 99);
+			if (r < 40)
+				return "Shambler";
+			if (r < 62)
+				return "Puker";
+			if (r < 84)
+				return "Blighter";
+			if (r < 92)
+				return "Spiker";
+			return "Screamer";
+		}
+
+		if (tier == 2)
+		{
+			// Full six-class mix; Burster uncommon; no CyberFodder.
+			int r = random(0, 99);
+			if (r < 22)
+				return "Shambler";
+			if (r < 40)
+				return "Puker";
+			if (r < 58)
+				return "Blighter";
+			if (r < 74)
+				return "Screamer";
+			if (r < 90)
+				return "Spiker";
+			return "Burster";
+		}
+
+		if (tier == 3)
+		{
+			// Even mix among six; CyberFodder rare (~8%).
+			if (CyberFodderAllowed() && random(0, 99) < 8)
+				return "CyberFodder";
+			int r = random(0, 99);
+			if (r < 18)
+				return "Shambler";
+			if (r < 34)
+				return "Puker";
+			if (r < 50)
+				return "Blighter";
+			if (r < 66)
+				return "Screamer";
+			if (r < 82)
+				return "Spiker";
+			return "Burster";
+		}
+
+		// Tier 4 / DeathWish: less Shambler; more Burster/Spiker/Screamer; Cyber ~14%.
+		if (CyberFodderAllowed() && random(0, 99) < 14)
+			return "CyberFodder";
+		int r4 = random(0, 99);
+		if (r4 < 10)
+			return "Shambler";
+		if (r4 < 24)
+			return "Puker";
+		if (r4 < 38)
+			return "Blighter";
+		if (r4 < 56)
+			return "Screamer";
+		if (r4 < 74)
+			return "Spiker";
+		return "Burster";
+	}
 }
 
 class PB_FodderPassiveSpawnPoint : Actor

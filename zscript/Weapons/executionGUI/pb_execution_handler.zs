@@ -76,7 +76,7 @@ class pb_ExecutionHandler : EventHandler
 			int targetHealth = target.health;
 
 			
-			if((targetHealth <= targetMaxHealth*0.2 || targetHealth < 65) && (target is "PB_Monster" || target is "D3Maledict" || target is "ObsidianRavager") && getTargetDistance() < 250)
+			if((targetHealth <= targetMaxHealth*0.2 || targetHealth < 65) && PB_WeaponBase.PB_IsExperimentalExecutionTarget(target) && getTargetDistance() < 250)
 			{
 				draw(target, event);
 			}
@@ -205,6 +205,7 @@ class pb_ExecutionHandler : EventHandler
   void initialize()
   {
     _projection  = new("pb_ProjScreen");
+    _translator  = new("pb_uiHack");
     _isInitialized = true;
   }
 

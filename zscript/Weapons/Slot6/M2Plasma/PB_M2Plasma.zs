@@ -377,7 +377,7 @@ class PB_M2Plasma : PB_WeaponBase
 		TNT1 A 0 {
 			A_Takeinventory("LightningGunMode",1);
 			A_PlaySoundEx("PLSMLG1", "Auto");
-			A_Print("\ctM2 mode:\c- \cdStandard \c-plasma \c-Ã¢â‚¬â€ \cflightning \c-off", 2);
+			A_Print("\ctM2 mode:\c- \cdStandard \c-plasma \c-- \cflightning \c-off", 2);
 			}
 		"PR1G" "GHIJ" 1;
 		"PR1G" "FEDCBA" 1;

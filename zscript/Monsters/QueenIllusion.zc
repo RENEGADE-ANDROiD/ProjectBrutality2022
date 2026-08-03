@@ -1,0 +1,210 @@
+Class AracnorbQueenIllusion: Actor
+{
+double distance;
+int i;
+Default
+ {
+  health 1;
+  Radius 34;
+  Height 76;
+  Speed 12;
+  -SOLID;
+  -SHOOTABLE;
+  +INVULNERABLE;
+  +NOPAIN;
+  MONSTER;
+  +THRUGHOST;
+  +THRUACTORS;
+  +NOBLOCKMAP;
+  +NOBLOOD;
+  -BOSS;
+  -BOSSDEATH;
+  -COUNTKILL;
+  +FLOAT;
+  +NOGRAVITY;
+  +FLOATBOB;
+  +DONTHARMSPECIES;
+  Species "AracnorbQueen";
+}
+	override void Tick()
+	{
+		Super.Tick();
+		if (!master || master.health < 1)
+		{
+			self.DamageMobj(self, self, TELEFRAG_DAMAGE, 'SilentDeath');
+			return;
+		}
+
+		distance = Distance3D(master);
+		if (distance > 800)
+			SetState(FindState("MoveToMaster"));
+	}
+
+  States
+	{
+	Spawn: 
+		TNT1 A 0 A_StartSound("monster/heltel");
+		ARNQ F 1 A_SetTranslucent(0.0);
+		ARNQ F 1 A_SetTranslucent(0.10);
+		ARNQ F 1 A_SetTranslucent(0.20);
+		ARNQ F 1 A_SetTranslucent(0.30);
+		ARNQ F 1 A_SetTranslucent(0.40);
+		ARNQ F 1 A_SetTranslucent(0.50);
+		ARNQ F 1 A_SetTranslucent(0.60);
+		ARNQ F 1 A_SetTranslucent(0.70);
+		ARNQ F 1 A_SetTranslucent(0.80);
+		ARNQ F 1 A_SetTranslucent(0.90);
+		ARNQ F 1 A_SetTranslucent(1.0);
+	Goto see;
+
+	Idle:
+		ARNQ A 2;
+		loop;
+	See:
+		ARNQ A 2 A_Chase;
+		Loop;
+
+	Missile:
+		TNT1 A 0 A_JumpIfCloser(500, "ChooseShortRange");
+		Goto ChooseLongRange;
+
+	ChooseShortRange:
+		TNT1 A 0 A_Jump(160, "SpreadFire", "FloorGas", "QSBall");
+		Goto ChooseLongRange;
+
+	ChooseLongRange:
+		TNT1 A 0 A_Jump(256, "RapidFire", "QSBall", "TelekineticObject");
+	Goto RapidFire;
+
+
+	RapidFire:	
+		ARNQ BCD 8 A_FaceTarget;
+		ARNQ E 5 BRIGHT A_CustomMissile ("QueenBFGSmall", 40, 0, random(-4,4));
+		ARNQ D 0 BRIGHT A_FaceTarget;
+		ARNQ E 5 BRIGHT A_CustomMissile ("QueenBFGSmall", 40, 0, random(-4,4));
+		ARNQ D 0 BRIGHT A_FaceTarget;
+		ARNQ E 5 BRIGHT A_CustomMissile ("QueenBFGSmall", 40, 0, random(-4,4));
+		ARNQ D 0 BRIGHT A_FaceTarget;
+		ARNQ E 5 BRIGHT A_CustomMissile ("QueenBFGSmall", 40, 0, random(-4,4));
+		ARNQ P 0 BRIGHT A_FaceTarget;
+		ARNQ E 5 BRIGHT A_CustomMissile ("QueenBFGSmall", 40, 0, random(-4,4));
+		ARNQ D 5 A_FaceTarget;
+		ARNQ D 5;
+		Goto See;
+
+	SpreadFire:
+		ARNQ BCD 8 A_FaceTarget;
+		TNT1 A 0 A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-7,7), CMF_AIMOFFSET|CMF_OFFSETPITCH, random(-3,3));
+		TNT1 A 0 A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-7,7), CMF_AIMOFFSET|CMF_OFFSETPITCH, random(-3,3));
+		TNT1 A 0 A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-7,7), CMF_AIMOFFSET|CMF_OFFSETPITCH, random(-3,3));
+		TNT1 A 0 A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-7,7), CMF_AIMOFFSET|CMF_OFFSETPITCH, random(-3,3));
+		TNT1 A 0 A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-7,7), CMF_AIMOFFSET|CMF_OFFSETPITCH, random(-3,3));
+		ARNQ E 5 Bright A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-4,4));
+		ARNQ BCD 8 A_FaceTarget;
+		TNT1 A 0 A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-7,7), CMF_AIMOFFSET|CMF_OFFSETPITCH, random(-3,3));
+		TNT1 A 0 A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-7,7), CMF_AIMOFFSET|CMF_OFFSETPITCH, random(-3,3));
+		TNT1 A 0 A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-7,7), CMF_AIMOFFSET|CMF_OFFSETPITCH, random(-3,3));
+		TNT1 A 0 A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-7,7), CMF_AIMOFFSET|CMF_OFFSETPITCH, random(-3,3));
+		TNT1 A 0 A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-7,7), CMF_AIMOFFSET|CMF_OFFSETPITCH, random(-3,3));
+		ARNQ E 5 Bright A_CustomMissile("QueenPlasmaBlast", 40, 0, random(-4,4));
+		ARNQ D 5 A_FaceTarget;
+		Goto See;
+
+	QSBall:
+		ARNQ BCD 5 Bright A_FaceTarget;
+    QSBallLoopPrep:
+		ARNQ A 0 {i = 0;}
+    QSBallLoop:
+		ARNQ E 1 Bright A_CustomMissile("QueenSBall2", 40, 0);
+		ARNQ E 1 Bright A_FaceTarget;
+		ARNQ A 0 {i++;}
+		ARNQ A 0 A_JumpIf(i < 15, "QSBallLoop");
+		ARNQ D 5;
+	Goto See;
+	
+	TelekineticObject:
+		TNT1 A 0 A_ScaleVelocity(0); //Stop moving
+		TNT1 A 0 A_ChangeFlag("NOPAIN",1);
+		TNT1 A 0 A_Jump(96, "TelekineticRock");
+		ARNQ E 0 A_ThrowGrenade("ObjectDummy");
+		ARNQ E 0 A_StartSound("Queen/telekinetic",2,1.0,0,0.6);
+		ARNQ EEEEEEEEEEEE 5 A_FaceTarget;
+		ARNQ E 0 A_CustomMissile("ObjectTrown",95,0);
+		ARNQ E 30;
+		TNT1 A 0 A_ChangeFlag("NOPAIN",0);
+	Goto See;
+
+	TelekineticRock:
+		ARNQ E 0 A_ThrowGrenade("RockDummy");
+		ARNQ E 0 A_StartSound("Queen/telekinetic",2,1.0,0,0.6);
+		ARNQ EEEEEEEEEEEE 5 A_FaceTarget;
+		ARNQ E 0 A_CustomMissile("RockTrown",95,0);
+		ARNQ E 30;
+		TNT1 A 0 A_ChangeFlag("NOPAIN",0);
+	Goto See;
+
+	FloorGas:
+		ARNQ E 10;
+		ARNQ E 15 A_StartSound("electricplasma/hit", 4);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0,   0);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0,  30);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0,  60);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0,  90);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0, 120);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0, 150);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0, 180);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0,- 30);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0,- 60);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0,- 90);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0,-120);
+		ARNQ E 0 A_CustomMissile("QueenGasSpawner",0,0,-150);
+		ARNQ E 10;
+	Goto See;
+
+    MoveToMaster:
+		TNT1 A 0 A_StartSound("monster/heltel");
+		ARNQ F 1 A_SetTranslucent(0.0);
+		ARNQ F 1 A_SetTranslucent(0.10);
+		ARNQ F 1 A_SetTranslucent(0.20);
+		ARNQ F 1 A_SetTranslucent(0.30);
+		ARNQ F 1 A_SetTranslucent(0.40);
+		ARNQ F 1 A_SetTranslucent(0.50);
+		ARNQ F 1 A_SetTranslucent(0.60);
+		ARNQ F 1 A_SetTranslucent(0.70);
+		ARNQ F 1 A_SetTranslucent(0.80);
+		ARNQ F 1 A_SetTranslucent(0.90);
+		ARNQ F 1 A_SetTranslucent(1.0);
+		TNT1 A 0 {if (Master){Warp(master, frandom(-20, 20), frandom(-20, 20), random(5, 10), WARPF_STOP|WARPF_NOCHECKPOSITION|WARPF_TOFLOOR );}} //if yes, stop doing anything, immediately teleport to Master
+		TNT1 A 0 A_StartSound("monster/heltel");
+		ARNQ F 1 A_SetTranslucent(0.0);
+		ARNQ F 1 A_SetTranslucent(0.10);
+		ARNQ F 1 A_SetTranslucent(0.20);
+		ARNQ F 1 A_SetTranslucent(0.30);
+		ARNQ F 1 A_SetTranslucent(0.40);
+		ARNQ F 1 A_SetTranslucent(0.50);
+		ARNQ F 1 A_SetTranslucent(0.60);
+		ARNQ F 1 A_SetTranslucent(0.70);
+		ARNQ F 1 A_SetTranslucent(0.80);
+		ARNQ F 1 A_SetTranslucent(0.90);
+		ARNQ F 1 A_SetTranslucent(1.0);
+	Goto see;
+
+	Death:
+	Xdeath:
+		TNT1 A 0 A_StopSound();
+		TNT1 A 0 A_StartSound("monster/heltel");
+		ARNQ F 1 A_SetTranslucent(0.90);
+		ARNQ F 1 A_SetTranslucent(0.80);
+		ARNQ F 1 A_SetTranslucent(0.70);
+		ARNQ F 1 A_SetTranslucent(0.60);
+		ARNQ F 1 A_SetTranslucent(0.50);
+		ARNQ F 1 A_SetTranslucent(0.40);
+		ARNQ F 1 A_SetTranslucent(0.30);
+		ARNQ F 1 A_SetTranslucent(0.20);
+		ARNQ F 1 A_SetTranslucent(0.10);
+		TNT1 A 0 { A_TakeInventory("IllusionsCount",1,0,AAPTR_MASTER);}
+	Stop;
+		}
+ }
+
+

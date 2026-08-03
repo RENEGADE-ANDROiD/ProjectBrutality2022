@@ -1,0 +1,50 @@
+// Vanilla → PB weapon remap for map scripts that GiveInventory vanilla weapons.
+
+class KeepWeapManager : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE;
+		+INVENTORY.UNTOSSABLE;
+	}
+
+	override bool HandlePickup(Inventory item)
+	{
+		if (!owner || !item)
+			return Super.HandlePickup(item);
+
+		Name cn = item.GetClassName();
+		string pbName = "";
+		switch (cn)
+		{
+			case 'Fist': pbName = "Melee_Attacks"; break;
+			case 'Chainsaw': pbName = "PB_Chainsaw"; break;
+			case 'Pistol': pbName = "PB_Pistol"; break;
+			case 'Shotgun': pbName = "PB_Shotgun"; break;
+			case 'SuperShotgun': pbName = "PB_SSG"; break;
+			case 'Chaingun':
+			case 'ChainGun': pbName = "PB_Minigun"; break;
+			case 'RocketLauncher': pbName = "PB_RocketLauncher"; break;
+			case 'PlasmaRifle': pbName = "PB_M1Plasma"; break;
+			case 'BFG9000': pbName = "PB_BFG9000"; break;
+			default:
+				return Super.HandlePickup(item);
+		}
+
+		Name pbNm = pbName;
+		class<Inventory> pbCls = (class<Inventory>)(pbNm);
+		if (!pbCls)
+			return Super.HandlePickup(item);
+
+		if (!owner.FindInventory(pbCls))
+			owner.A_GiveInventory(pbName, 1);
+
+		let itemToSelect = Weapon(owner.FindInventory(pbCls));
+		if (itemToSelect && owner.player && owner.player.ReadyWeapon != itemToSelect)
+			owner.player.PendingWeapon = itemToSelect;
+
+		item.Destroy();
+		return true;
+	}
+}

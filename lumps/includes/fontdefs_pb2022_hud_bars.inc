@@ -1,4 +1,4 @@
-// PB2022 HUD BAR LUMP NAMES (reference only â€” not loaded by engine)
+// PB2022 HUD BAR LUMP NAMES (reference only - not loaded by engine)
 ABAR11
 ABAR12
 ABAR13

@@ -288,7 +288,7 @@ class PB_WeaponBase : DoomWeapon
 		Actor monster = GetPointer(AAPTR_PLAYER_GETTARGET);
 		if (!monster || monster.health <= 0)
 			return false;
-		if (!(monster is "PB_Monster" || monster is "D3Maledict" || monster is "ObsidianRavager"))
+		if (!PB_IsExperimentalExecutionTarget(monster))
 			return false;
 
 		LookExParams look;
@@ -301,8 +301,8 @@ class PB_WeaponBase : DoomWeapon
 		if (!(targetCurrentHealth <= targetMaxHealth * 0.2 || targetCurrentHealth < 65))
 			return false;
 
-		StateLabel st = PB_ExecutionHandlerString(monster);
-		return ResolveState(st) != null;
+		// Kit probe only — never call PB_ExecutionHandlerString here (side effects).
+		return true;
 	}
 
 	// Kick / Quick Melee shared gate: Glory Kill, charged Blood Punch, or experimental execute.
@@ -644,7 +644,7 @@ class PB_WeaponBase : DoomWeapon
 		if (!monster || monster.health <= 0)
 			return null;
 
-		if (monster is "PB_Monster" || monster is "D3Maledict" || monster is "ObsidianRavager")
+		if (PB_IsExperimentalExecutionTarget(monster))
 		{
 			LookExParams look;
 			look.FOV = 110;

@@ -1,0 +1,378 @@
+﻿// Hellduke Gauss FX from Monster Pack staging HelldukeStuff.dec
+ACTOR HDukeGaussAimDot
+{
+  RenderStyle "Add"
+  //Scale 0.0125
+  //Scale 0.75
+  Scale 0.5
+  Alpha 0.8
+  +NOINTERACTION
+  +NOGRAVITY
+  //+CLIENTSIDEONLY
+  States
+	{
+	Spawn:
+		TTRR A 3 Bright
+	Stop
+	}
+}
+
+ACTOR HDukeGaussCannonTrail
+{
+  +NOINTERACTION
+  +NOGRAVITY
+  -SOLID
+  +THRUACTORS
+  +DONTSPLASH
+  RenderStyle Add
+  Alpha 0.9
+  Scale 0.08
+	//+CLIENTSIDEONLY
+  States
+  {
+  Spawn:
+	TNT1 A 0
+	PUF2 A 1 bright A_SpawnItemEx("HDukeGaussCannonSpark", random(4,-4), random(4,-4), random(4,-4), 0, 0, 0, 0, 128, 0)
+  Trolololo:
+	PUF2 A 0 A_JumpIf(ScaleY <= 0, "NULL")
+	PUF2 A 0 A_SetScale(ScaleX -0.01, ScaleY -0.01)
+	PUF2 A 1 bright A_FadeOut(0.025)
+	Loop
+  }
+}
+
+ACTOR HDukeGaussCannonSpark
+{ 
+	RenderStyle Add
+	Scale 0.010
+	Alpha 0.95
+	//Translation "0:255=%[0,0,0]:[0,0,1]"
+	+NOINTERACTION
+	+NOGRAVITY
+	//+CLIENTSIDEONLY
+	States
+	{
+	Spawn:
+	PUF2 A 0 NoDelay A_JumpIf(ScaleX <= 0, "NULL")
+	PUF2 A 0 A_SetScale(ScaleX-0.0008)
+	PUF2 A 1 bright A_ChangeVelocity (frandom(-0.2, 0.2), frandom(-0.2, 0.2), frandom(-0.2, 0.2), 0)
+	PUF2 A 2 bright A_FadeOut(0.05)
+	Loop
+	}
+}
+
+Actor HDukeGaussCannonPuffNormal //main puff, shockwave fast
+{
+  Radius 0
+  Height 0
+  +NOGRAVITY
+  +NOINTERACTION
+  +NOBLOCKMAP
+  -SOLID
+  +NOTELEPORT
+  +FORCEXYBILLBOARD
+  Translation "0:255=%[0,0,0]:[2.0,0.2,0.2]"
+  Scale 0.44
+  RenderStyle Add
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		//TNT1 A 0 NODELAY A_Warp(AAPTR_DEFAULT,5,0,0,WARPF_NOCHECKPOSITION) //moves it 5MU towards the player, to get it unstuck from walls
+		TNT1 AA 0 A_SpawnItemEx("HDukeGaussCannonParticle",3,0,0,frandom(0.3,3.5),frandom(-3.5,3.5),frandom(0.6,5),0,SXF_NOCHECKPOSITION)
+		TNT1 AA 0 A_SpawnItemEx("HDukeGaussCannonPuffGas",0,0,0,frandom(0,1),frandom(1,-1),frandom(1,-1),0,SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_SetScale(scalex*1.2)
+		TNT1 AA 0 A_SpawnItemEx("HDukeGaussParticlesFew",0,0,0,0,0,0,0,32)
+		X060 A 1 Bright 
+		X060 A 0 A_SpawnItemEx("HdukeGaussCannonShockwave2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+		X060 A 1 Bright A_SetScale(scalex*1.2)	//grows a bit before fading out
+	Looper:
+		X060 AAAAAAAAAA 1 Bright  {A_SetScale(scalex*1.2); A_FadeOut(0.1);}
+	Stop
+	}
+}
+
+
+Actor HDukeGaussCannonParticle
+{
+	Projectile
+	Speed 10
+	-NOGRAVITY
+	+THRUACTORS
+	+PAINLESS
+	+DOOMBOUNCE
+	+FORCEXYBILLBOARD
+	//+CLIENTSIDEONLY
+	Alpha 0.5
+	Radius 2
+	Height 5
+	Gravity 0.2
+	BounceFactor 0.2
+	WallBounceFactor 1.0
+	RenderStyle Add
+	Translation "0:255=%[0,0,0]:[2.0,0.2,0.2]"
+	Scale 0.05
+	states
+	{
+	Spawn:
+		FX01 A 20 Bright
+		FX01 A 1 Bright A_FadeOut(0.14)
+		Wait
+	}
+}
+
+Actor HDukeGaussCannonPuffGas
+{
+	+NOINTERACTION
+	+FORCEXYBILLBOARD
+	//+CLIENTSIDEONLY
+	Translation "0:255=%[0,0,0]:[2.0,0.2,0.2]"
+	Scale 0.15
+	Alpha 0.99
+	RenderStyle Add
+	States
+	{
+	Spawn:
+		TNT1 A 0 NODELAY A_Jump(240,4,8,12,16,20,24,28,32,26,40,44,48,52,56,60,64,68,72,76,80)
+	Looper:
+		X102 A 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 A 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 B 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 B 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 C 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 C 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 D 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 D 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 E 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 E 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 F 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 F 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 G 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 G 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 H 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 H 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 I 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 I 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 J 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 J 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 K 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 K 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 L 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 L 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 M 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 M 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 N 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 N 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 O 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 O 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 P 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 P 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 Q 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 Q 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 R 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 R 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 S 1 Bright A_SetScale(scalex+0.03)		TNT1 A 0 A_FadeOut(0.021)
+		X102 S 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 T 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 T 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 U 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 U 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 V 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		X102 V 1 Bright A_SetScale(scalex+0.07)		TNT1 A 0 A_FadeOut(0.035)
+		Loop
+	}
+}
+
+
+Actor HdukeGaussCannonShockwave2 //secondary shockwave, slow
+{
+	+NOINTERACTION
+	Translation "0:255=%[0,0,0]:[2.0,0.2,0.2]"
+	Scale 0.3
+	RenderStyle Add
+	+FORCEXYBILLBOARD
+	//+CLIENTSIDEONLY
+	States
+	{
+	Spawn:
+		X060 B 1 Bright NODELAY A_SetScale(scalex*1.2)	//grows a bit before fading out
+	Looper:
+		X060 B 1 Bright  A_SetScale(scalex*1.2)
+		X060 B 0 A_FadeOut(0.1)
+		Loop
+	}
+}
+
+Actor HDukeGaussCannonPuffSiege : HDukeGaussCannonPuffNormal //main puff, shockwave fast
+{
+	Obituary "%o fell to %k's siege."
+	Translation "0:255=%[0,0,0]:[2.0,0.2,0.2]"
+	Scale 0.55
+	States
+	{
+	Spawn:
+		//TNT1 A 0 NODELAY A_Warp(AAPTR_DEFAULT,5,0,0,WARPF_NOCHECKPOSITION) //moves it 5MU towards the player, to get it unstuck from walls
+		TNT1 AA 0 A_SpawnItemEx("HDukeGaussCannonParticle",3,0,0,frandom(0.3,3.5),frandom(-3.5,3.5),frandom(0.6,5),0,SXF_NOCHECKPOSITION)
+		TNT1 AA 0 A_SpawnItemEx("HDukeGaussCannonPuffGas",0,0,0,frandom(0,1),frandom(1,-1),frandom(1,-1),0,SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_SetScale(scalex*1.2)
+		TNT1 A 0 A_SpawnItemEx("HDukeGaussParticlesManyBig",0,0,0,0,0,0,0,32)
+		TNT1 A 0 A_SpawnItemEx("HDukeGaussParticlesFewBig",0,0,0,0,0,0,0,32)
+		X060 A 1 Bright 
+		X060 A 0 A_SpawnItemEx("HdukeGaussCannonShockwave2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+		X060 A 1 Bright A_SetScale(scalex*1.2)	//grows a bit before fading out
+	Looper:
+		X060 AAAAAAAAAA 1 Bright  {A_SetScale(scalex*1.2); A_FadeOut(0.1);}
+	Stop
+	}
+}
+
+Actor HDukeGaussParticlesMany
+{
+	+NOINTERACTION
+	+NOCLIP
+	+FORCEXYBILLBOARD
+	Height 0
+	Radius 0
+	//+CLIENTSIDEONLY
+	RenderStyle Add
+	Translation "0:255=%[0,0,0]:[2.0,0.2,0.2]"
+	Scale 1.2
+	Alpha 0.99
+	States
+	{
+	Spawn:
+		TNT1 A 0 NODELAY A_Jump(256,"Type1","Type2","Type3","Type4","Type5","Type6","Type7","Type8")
+	Type1:
+		DB37 A 0
+		Goto EndAnimation
+	Type2:
+		DB38 A 0
+		Goto EndAnimation
+	Type3:
+		DB39 A 0
+		Goto EndAnimation
+	Type4:
+		DB40 A 0
+		Goto EndAnimation
+	Type5:
+		DB41 A 0
+		Goto EndAnimation
+	Type6:
+		DB42 A 0
+		Goto EndAnimation
+	Type7:
+		DB43 A 0
+		Goto EndAnimation
+	Type8:
+		DB44 A 0
+		Goto EndAnimation
+		
+	EndAnimation:
+		"####" ABCDE 2 Bright
+		"####" FGHIJK 2 Bright
+		"####" LMNOPQRSTUVWXYZ 2 Bright A_FadeOut(0.066)
+		Stop
+	}
+}
+
+
+Actor HDukeGaussParticlesFew : HDukeGaussParticlesMany
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0 NODELAY A_Jump(256,"Type1","Type2","Type3","Type4","Type5","Type6","Type7","Type8")
+	Type1:
+		DB29 A 0
+		Goto EndAnimation
+	Type2:
+		DB30 A 0
+		Goto EndAnimation
+	Type3:
+		DB31 A 0
+		Goto EndAnimation
+	Type4:
+		DB32 A 0
+		Goto EndAnimation
+	Type5:
+		DB33 A 0
+		Goto EndAnimation
+	Type6:
+		DB34 A 0
+		Goto EndAnimation
+	Type7:
+		DB35 A 0
+		Goto EndAnimation
+	Type8:
+		DB36 A 0
+		Goto EndAnimation
+		
+	EndAnimation:
+		"####" ABCDE 2 Bright
+		"####" FGHIJK 2 Bright
+		"####" LMNOPQRSTUVWXYZ 2 Bright A_FadeOut(0.066)
+		Stop
+	}
+}
+
+Actor HDukeGaussParticlesManyBig : HDukeGaussParticlesMany
+{	Scale 2.2	}
+Actor HDukeGaussParticlesFewBig : HDukeGaussParticlesFew
+{	Scale 2.2	}
+
+Actor HDukeGaussImpactExplosionSFX
+{
+  Radius 0
+  Height 0
+  RenderStyle Add
+  Alpha 1
+  Scale 1.1
+  +NOGRAVITY
+  +NOINTERACTION
+  +NOBLOCKMAP
+  +NOTELEPORT
+  +ForceXYBillboard
+  //+CLIENTSIDEONLY
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		X006 ABCDEFGHI 2 bright
+		X006 JKLMNOP 1 bright
+	stop
+	
+	}
+}
+
+
+Actor HDukeGaussSiegeDamageAndPuff
+{
+  Radius 5
+  Height 5
+  +NOGRAVITY
+  +NOINTERACTION
+  +NOBLOCKMAP
+  -SOLID
+  +NOTELEPORT
+  +GHOST
+  +ForceXYBillboard
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("HDukeGaussCannonPuffSiege",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_StopSound(6)
+		TNT1 A 0 A_Explode(120,15)
+		TNT1 A 0 A_SpawnItem("WhiteShockwave")
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx("HDukeGaussImpactExplosionSFX", 0, 0, 0, 0, 0, 0, 0, 128)
+		TNT1 A 0 A_CustomMissile ("FireworkSFXType2", 0, 0, random (0, 360), 2, random (30, 60))
+		TNT1 AA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
+		X005 ABCDEFGHIJKLMNOPQRSTUVWX 1 BRIGHT
+		TNT1 AAA 10 A_CustomMissile ("BigBlackSmoke", 0, 0, random (0, 360), 2, random (40, 160))
+		Stop
+	}
+}
+

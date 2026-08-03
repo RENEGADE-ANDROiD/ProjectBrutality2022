@@ -723,17 +723,17 @@ ACTOR FrostburnDevice : PB_Weapon
 			UNOL MNO 1 
 			UNOS E 8
 			UNOL ONM 1 
-			Stop
+			Goto Ready3
 		FlashKickingCryo:
 			FBHS NOP 1 
 			FBHS R 8
 			FBHS PON 1 
-			Stop
+			Goto Ready3
 		FlashKickingEmpty:
 			UNHZ ABC 1 
 			UNHZ E 8
 			UNHZ CBA 1 
-			Stop
+			Goto Ready3
 		
 		FlashAirKicking:
 			TNT1 A 0 A_ClearOverlays(5,7)
@@ -742,17 +742,17 @@ ACTOR FrostburnDevice : PB_Weapon
 			UNOL MNO 1 
 			UNOS E 10
 			UNOL ONM 1 
-			Stop
+			Goto Ready3
 		FlashAirKickingCryo:
 			FBHS NOP 1 
 			FBHS R 10
 			FBHS PON 1 
-			Stop
+			Goto Ready3
 		FlashAirKickingEmpty:
 			UNHZ ABC 1 
 			UNHZ E 10
 			UNHZ CBA 1 
-			Stop
+			Goto Ready3
 		
 		FlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(5,7)
@@ -760,30 +760,30 @@ ACTOR FrostburnDevice : PB_Weapon
 			TNT1 A 0 A_JumpIfInventory("FrostburnModeCryo", 1, "FlashSlideKickingCryo")
 			UNOL MNO 1 
 			UNOS E 19 
-			Stop
+			Goto Ready3
 		FlashSlideKickingCryo:
 			FBHS NOP 1 
 			FBHS R 19
-			Stop
+			Goto Ready3
 		FlashSlideKickingEmpty:
 			UNHZ ABC 1 
 			UNHZ E 19 
-			Stop
+			Goto Ready3
 		FlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(5,7)
 			TNT1 A 0 A_JumpIf(CountInv("HellAmmo") < 1, "FlashSlideKickingStopEmpty")
 			TNT1 A 0 A_JumpIfInventory("FrostburnModeCryo", 1, "FlashSlideKickingStopCryo")
 			UNOS E 4
 			UNOL ONM 1 
-			Stop
+			Goto Ready3
 		FlashSlideKickingStopCryo:
 			FBHS R 4
 			FBHS PON 1 
-			Stop
+			Goto Ready3
 		FlashSlideKickingStopEmpty:
 			UNHZ E 4
 			UNHZ CBA 1 
-			Stop
+			Goto Ready3
 			
 		CoreIdle:
 			UNHH ABCDEFGHIJ 2 BRIGHT

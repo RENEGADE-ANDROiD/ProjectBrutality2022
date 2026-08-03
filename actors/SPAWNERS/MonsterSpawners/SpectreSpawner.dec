@@ -21,9 +21,11 @@ Actor SpectreDice replaces Spectre
 			TNT1 A 0 A_Jump(24,"VoidSpectrePack")
 			TNT1 A 0 A_Jump(256,"SpectrePack")
 		MidLevelMob:
+			TNT1 A 0 A_RadiusGive("IsProgGuestLate", 386, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 			TNT1 A 0 A_Jump(48,"VoidSpectrePack")
 			TNT1 A 0 A_Jump(256,"SpectrePack")
 		HighLevelMob:
+			TNT1 A 0 A_RadiusGive("IsProgGuestLate", 386, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 			TNT1 A 0 A_Jump(64,"VoidSpectrePack")
 			TNT1 A 0 A_Jump(256,"SpectrePack")
 	DiceProg:	// Progressive spawn preset enforces strict spawning rules by excluding monsters until they are presented in later levels.
@@ -33,12 +35,15 @@ Actor SpectreDice replaces Spectre
 			TNT1 A 0 A_Jump(4,"VoidSpectrePack")
 			TNT1 A 0 A_Jump(256,"SpectrePack")
 		DiceTier3:
+			TNT1 A 0 A_RadiusGive("IsProgGuestLate", 386, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 			TNT1 A 0 A_Jump(32,"VoidSpectrePack")
 			TNT1 A 0 A_Jump(256,"SpectrePack")
 		DiceTier4:
+			TNT1 A 0 A_RadiusGive("IsProgGuestLate", 386, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 			TNT1 A 0 A_Jump(90,"VoidSpectrePack")
 			TNT1 A 0 A_Jump(256,"SpectrePack")
 		DiceDeathWish:
+			TNT1 A 0 A_RadiusGive("IsProgGuestLate", 386, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 			TNT1 A 0 A_Jump(96,"VoidSpectrePack")
 			TNT1 A 0 A_Jump(256,"SpectrePack")
 	SpectrePack:
@@ -74,12 +79,14 @@ Actor SpectrePackSpawner : Demonpickup
 	SpawnSpectre1:	
 	TNT1 A 0 A_SpawnItemEx("PB_Spectre",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
 	Stop
 	SpawnSpectre2:
 	TNT1 A 0 A_SpawnItemEx("PB_Spectre",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
+	TNT1 A 0 A_JumpIfInventory("IsProgGuestLate", 1, 1)
+	Goto SpSpec2Done
 	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "SpSpec2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	SpSpec2Done:
@@ -91,13 +98,15 @@ Actor SpectrePackSpawner : Demonpickup
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleVoidSpectre",0)
 	TNT1 A 0 A_SpawnItemEx("PB_VoidSpectre",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
 	Stop
 	SpawnVoidSpectre2:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleVoidSpectre",0)
 	TNT1 A 0 A_SpawnItemEx("PB_VoidSpectre",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
+	TNT1 A 0 A_JumpIfInventory("IsProgGuestLate", 1, 1)
+	Goto VSp2Done
 	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "VSp2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	VSp2Done:

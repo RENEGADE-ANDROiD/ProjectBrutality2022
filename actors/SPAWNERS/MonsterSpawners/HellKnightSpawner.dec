@@ -39,12 +39,12 @@ Actor HellKnightSpawner replaces HellKnight
 		DiceTier2:
 			TNT1 A 0 A_Jump(256,"HellKnightPack")
 		DiceTier3:
-			TNT1 A 0 A_Jump(24,"PaladinPack")
-			TNT1 A 0 A_Jump(32,"CyberKnightPack")
+			TNT1 A 0 A_Jump(26,"PaladinPack")
+			TNT1 A 0 A_Jump(51,"CyberKnightPack")
 			TNT1 A 0 A_Jump(256,"HellKnightPack")
 		DiceTier4:
-			TNT1 A 0 A_Jump(32,"PaladinPack")
-			TNT1 A 0 A_Jump(96,"CyberKnightPack")
+			TNT1 A 0 A_Jump(33,"PaladinPack")
+			TNT1 A 0 A_Jump(76,"CyberKnightPack")
 			TNT1 A 0 A_Jump(256,"HellKnightPack")
 		DiceDeathWish:
 			TNT1 A 0 A_Jump(38,"PaladinPack")

@@ -49,6 +49,7 @@ mixin class SummonerFunctions
 			enemy.bSolid = true;
 			enemy.bThruactors = false;
 			enemy.bNoTeleport = false;
+			caller.bSolid = true;
 			return;
 		}
 
@@ -59,12 +60,12 @@ mixin class SummonerFunctions
 			enemy.bSolid = true;
 			enemy.bThruactors = false;
 			enemy.bNoTeleport = false;
+			caller.bSolid = true;
 			return;
 		}
 
 		if (enemy.target != null)
 		{
-			caller.bSolid = false;
 			enemy.bSolid = true;
 			enemy.bThruactors = false;
 			enemy.bNoTeleport = false;
@@ -73,39 +74,35 @@ mixin class SummonerFunctions
 				if (Rang == 0 && Rpitch == 0)
 				{
 					enemy.A_SkullAttack();
-					caller.bSolid = true;
 				}
 				else
 				{
 					enemy.angle = enemy.angle + random(-1 * Rang, Rang);
 					enemy.pitch = enemy.pitch + random(-1 * Rpitch, Rpitch);
 					enemy.A_Recoil(-1 * enemy.Speed);
-					caller.bSolid = true;
 				}
 			}
 			else
 			{
 				enemy.A_FaceTarget();
-				caller.bSolid = true;
-				return;
 			}
 		}
-		else
-			return;
+
+		caller.bSolid = true;
 	}
 
 	void CheckMonstersArray()
 	{
 		if (Summoned > 0 && MonstersArray.Size() != 0)
 		{
-			for (int i = 0; i < MonstersArray.Size(); i++)
+			for (int i = MonstersArray.Size() - 1; i >= 0; i--)
 			{
 				let mon = MonstersArray[i];
+				State execDeath = mon ? mon.ResolveState("Death.Execution") : null;
 
-				if (!mon || mon.health <= 0 || mon.InStateSequence(self.curstate, self.ResolveState("Death.Execution")))
+				if (!mon || mon.health <= 0 || (execDeath && mon.InStateSequence(mon.curstate, execDeath)))
 				{
-					MonstersArray.delete(i);
-					MonstersArray.ShrinkToFit();
+					MonstersArray.Delete(i);
 					Summoned--;
 				}
 			}
@@ -130,7 +127,10 @@ mixin class SummonerFunctions
 			{
 				count++;
 				if (count > limit)
+				{
 					SetState(FindState(StateName));
+					return;
+				}
 			}
 		}
 	}
