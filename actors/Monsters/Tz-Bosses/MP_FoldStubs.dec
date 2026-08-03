@@ -1,20 +1,5 @@
 // Minimal stubs for Monster Pack fold parents / FX missing from TC.
 
-ACTOR RailNullPuff
-{
-	+NOINTERACTION
-	+NOGRAVITY
-	+PUFFONACTORS
-	+ALWAYSPUFF
-	+BLOODLESSIMPACT
-	States
-	{
-	Spawn:
-		TNT1 A 1
-		Stop
-	}
-}
-
 ACTOR TerminatorGreenCloudSmall
 {
 	+NOINTERACTION

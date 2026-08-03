@@ -252,7 +252,7 @@ Actor Counter : Inventory
 
 // Support Actors//
 
-Actor VisualSpecialEffect
+Actor PB_VisualSpecialEffect
 {
 	+CLIENTSIDEONLY
 	+NOINTERACTION
@@ -263,7 +263,7 @@ Actor VisualSpecialEffect
 	+DONTSPLASH
 }
 
-Actor TPortMist : VisualSpecialEffect
+Actor TPortMist : PB_VisualSpecialEffect
 {
 	RenderStyle Add
 	Alpha 0.25
@@ -279,7 +279,7 @@ Actor TPortMist : VisualSpecialEffect
 	}
 }
 
-Actor TPortMistSpawner : VisualSpecialEffect
+Actor TPortMistSpawner : PB_VisualSpecialEffect
 {
 	States
 	{
@@ -290,7 +290,7 @@ Actor TPortMistSpawner : VisualSpecialEffect
 	}
 }
 
-Actor TPortLightning : VisualSpecialEffect
+Actor TPortLightning : PB_VisualSpecialEffect
 {
 	RenderStyle Add
 	Alpha 0.7
@@ -331,7 +331,7 @@ Actor TPortLightningHuge : TPortLightning
 }
 
 // A wave of lightning
-Actor TPortLightningWave : VisualSpecialEffect
+Actor TPortLightningWave : PB_VisualSpecialEffect
 {
 	States
 	{
@@ -346,7 +346,7 @@ Actor TPortLightningWave : VisualSpecialEffect
 }
 
 // Spawns lightning waves
-Actor TPortLightningWaveSpawner : VisualSpecialEffect
+Actor TPortLightningWaveSpawner : PB_VisualSpecialEffect
 {
 	States
 	{
