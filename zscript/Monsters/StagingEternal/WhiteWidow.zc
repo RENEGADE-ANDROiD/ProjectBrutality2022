@@ -1,0 +1,143 @@
+﻿Class WhiteWidow : SpiderMastermind
+{
+	bool bossMusicStarted;
+
+	Default
+		{
+		  Health 4000;
+		  Radius 60;
+		  Height 100;
+		  Mass 1000;
+		  Speed 12;
+		  PainChance 40;
+		  Monster;
+		  MinMissileChance 160;
+		  +BOSS;
+		  +MISSILEMORE;
+		  +FLOORCLIP;
+		  +NORADIUSDMG;
+		  +DONTMORPH;
+		  +BOSSDEATH;
+		  +MISSILEEVENMORE;
+		  SeeSound "spider/sight";
+		  AttackSound "spider/attack";
+		  PainSound "spider/pain";
+		  DeathSound "spider/death";
+		  ActiveSound "spider/active";
+		  Obituary "$OB_SPIDER";
+		  Scale .40;
+		  }
+  States
+  {
+  Spawn:
+    SPI6 A 10 A_Look;
+    Loop;
+  See:
+	 /* TNT1 A 0
+		{
+			if (!bossMusicStarted)
+			{	
+				Spawn("BossMusicAutoScanner", pos);
+				bossMusicStarted = true;
+			}
+		}*/
+	SPI6 A 2 A_StartSound("master/walk", CHAN_AUTO, attenuation:0.6);
+    SPI6 ABCDEFGHIJKLMNOP 1 A_Chase();
+	SPI6 G 2 A_StartSound("master/walk", CHAN_AUTO, attenuation:0.6);
+	SPI6 QRSTUVWXYZ 1 A_Chase();
+	SPIE ABCD 1 A_Chase();
+    Loop;
+	
+  Missile:
+    TNT1 A 0
+		{
+		if(target && Distance3D(target) > 1000)
+			SetStateLabel("Missile2");
+		else if (random(1,4) >2)
+			SetStateLabel("Missile3");
+		A_TakeInventory("BrutalCounter2", 9999);
+		}
+	//TNT1 A 0 A_TakeInventory ("BrutalCounter2", 500);
+	SPAT ABCDEF 2 A_FaceTarget();
+	TNT1 A 0 A_StartSound("Mastermind/Chaingun", CHAN_5, CHANF_OVERLAP);
+	SPAT G 2 Bright A_CustomMissile("MastermindTracer", 28, 0, random(-3, 3), 1, random(-2, 2));
+	TNT1 A 0 A_SpawnItem ("MasterMindCaseSpawn", 0, 60,0);
+	 TNT1 A 0 A_GiveInventory("BrutalCounter2", 1);
+    TNT1 A 0 A_JumpIfInventory("BrutalCounter2", 10, "StopFiring");
+	SPID F 0 A_MonsterRefire(128,"See");
+    Goto Missile+7;
+
+  StopFiring:
+    TNT1 A 0 A_TakeInventory("BrutalCounter2", 9999); // Reset for next attack
+    Goto See;
+  
+  Missile2:
+    SPAT G 0 BRIGHT{
+		A_CustomMissile("SP_GaussTrailSiegeAOE",28,0,0,0);
+		A_CustomMissile("EternalBlast",28, 0, 0, 0);
+		}
+	Goto See;
+	
+ Missile3:
+	SPAT G 20 Bright 
+		{
+		A_FaceTarget();
+		A_SpawnProjectile("DarkMastermindLaserCannon",28);
+		}
+	Goto See;
+  Pain:
+    SPI6 A 3;
+    SPI6 A 3 A_Pain;
+    Goto See;
+		
+  Death:
+    SPDA ABCDEFGHIJKLMNOPQRSTUVWXYZ 2;
+    SPDB ABCDEFGHIJKLMNO 2 A_Scream;
+	/*TNT1 A 0
+		{
+			Spawn("BossMusicReset", pos);
+		}*/
+    TNT1 A 0 A_FaceTarget();
+    TNT1 A 0 A_CustomMissile ("RidiculousExplosionSpawner", 30, 0, random (0, 360), 2, 90);
+    EXPL A 0 Radius_Quake (8, 100, 0, 22, 0);
+    TNT1 A 0 A_Explode(150, 300);
+    TNT1 AAAAAAAAAA 0 A_CustomMissile ("PEPart2SuperFast", 32, 0, random (0, 360), 2, random (0, 160));
+	TNT1 AAAA 0 A_CustomMissile ("SuperGoreSPawner", 110, 0, random (0, 360), 2, random (0, 180));
+	TNT1 AAAAA 0 A_CustomMissile ("BloodMistXXBig", 90, 0, random (0, 360), 2, random (70, 90));
+	TNT1 AA 0 A_CustomMissile ("MuchMeatDeath", 0, 0, random (0, 360), 2, random (0, 160));
+	TNT1 AAA 0 A_CustomMissile ("PEPart2SuperFast", 32, 0, random (0, 360), 2, random (0, 160));
+    TNT1 AA 0 A_CustomMissile ("UltraGoreSpawner", 30, 0, random (0, 360), 2, random (0, 180));
+	TNT1 AAA 0 A_CustomMissile ("UltraGoreSpawner", 30, 0, random (0, 360), 2, random (0, 180));
+	TNT1 AAAAAAAAA 0 A_CustomMissile ("BloodMistXXBig", 30, 0, random (0, 360), 2, random (70, 90));
+    TNT1 AAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BloodMistXXBig", 100, 0, random (0, 360), 2, random (20, 90));
+	TNT1 A 0 A_CustomMissile ("SpiderPart1", 32, 0, random (0, 360), 2, random (0, 160));
+	TNT1 AA 0 A_CustomMissile ("SpiderPart2", 32, 0, random (0, 360), 2, random (0, 160));
+	TNT1 A 0 A_CustomMissile ("XDeathSpiderPart2", 32, 0, random (0, 360), 2, random (0, 160));
+	TNT1 A 0 A_CustomMissile ("XDeathSpiderPart3", 32, 0, random (0, 360), 2, random (0, 160));
+	TNT1 AA 0 A_CustomMissile ("XDeathSpiderPart5", 32, 0, random (0, 360), 2, random (0, 160));
+	TNT1 A 0 A_CustomMissile ("XDeathSpiderPart6", 32, 0, random (0, 360), 2, random (0, 160));
+	TNT1 A 0 A_CustomMissile ("XDeathSpiderPart4", 32, 0, random (0, 360), 2, random (0, 160));
+	TNT1 AA 0 A_CustomMissile ("MuchMeatDeath", 0, 0, random (0, 360), 2, random (0, 160));		
+	TNT1 AAA 0 A_CustomMissile ("ExplosionSpawner", 30, 0, random (0, 360), 2, 90);
+	TNT1 AAA 0 A_CustomMissile ("PEPart2SuperFast", 32, 0, random (0, 360), 2, random (0, 160));	
+	TNT1 AA 0 A_CustomMissile ("UltraGoreSpawner", 30, 0, random (0, 360), 2, random (0, 180));
+	TNT1 AAA 0 A_CustomMissile ("UltraGoreSpawner", 30, 0, random (0, 360), 2, random (0, 180));
+    TNT1 AAAAAAA 0 A_CustomMissile ("BloodMistXXBig", 40, 0, random (0, 360), 2, random (40, 90));
+    TNT1 AAAAAAAAAA 0 A_CustomMissile ("BloodMistXXBig", 100, 0, random (0, 360), 2, random (40, 90));
+    TNT1 A 0 A_SpawnItem ("GiantBloodSpot");
+	TNT1 A 0 A_NoBlocking;
+    TNT1 A 300;
+    TNT1 A 1 A_BossDeath;
+    TNT1 A -1;
+    Stop;
+  }
+}		
+
+Class MicroEternal : EternalArachno
+{
+	Default
+	{
+		Scale .2;
+		Health 50;
+		}
+		}

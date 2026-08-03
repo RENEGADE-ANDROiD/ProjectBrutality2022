@@ -6,7 +6,7 @@
 Extend class PB_WeaponBase
 {
 	// ------------------------------------------------------------------
-	// State â€” mirrors the equivalent fields on staging's PB_WeaponBase.
+	// State - mirrors the equivalent fields on staging's PB_WeaponBase.
 	// ------------------------------------------------------------------
 
 	bool chamberEmpty, leftChamberEmpty;
@@ -41,7 +41,7 @@ Extend class PB_WeaponBase
 	float tailVolume;
 	Property TailVolume : tailVolume;
 
-	// Reserveâ†’mag refill ratio used by staging's reload helpers. PB 2022's
+	// Reserve->mag refill ratio used by staging's reload helpers. PB 2022's
 	// PB_AmmoIntoMag already takes an explicit `per` argument so this is
 	// surfaced as advisory state (so staging weapon defaults parse cleanly)
 	// and is not consulted by the existing helper.
@@ -57,7 +57,7 @@ Extend class PB_WeaponBase
 	}
 
 	// ------------------------------------------------------------------
-	// Input query â€” per-frame button-held check (BT_* bitmask).
+	// Input query - per-frame button-held check (BT_* bitmask).
 	// Staging's BaseWeapon exposes this; PB 2022's already has the common
 	// PressingFire/Altfire/Reload/User1 wrappers but not the generic form.
 	// ------------------------------------------------------------------
@@ -272,7 +272,7 @@ Extend class PB_WeaponBase
 	}
 
 	// ------------------------------------------------------------------
-	// Barrel-heat cooldown smoke â€” emitted periodically while the weapon
+	// Barrel-heat cooldown smoke - emitted periodically while the weapon
 	// is over 0 heat. Uses PB 2022's GunFireSmoke actor instead of staging's
 	// PB_BarrelHeatSmoke (which isn't shipped here).
 	// ------------------------------------------------------------------
@@ -302,7 +302,7 @@ Extend class PB_WeaponBase
 	}
 
 	// ------------------------------------------------------------------
-	// PB_CheckReload â€” unified reload-entry router.
+	// PB_CheckReload - unified reload-entry router.
 	// Picks between "unloaded reload", "empty reload", "chamber load", or
 	// "already full" based on chamber/mag flags + reserve counts.
 	// ------------------------------------------------------------------
@@ -353,7 +353,7 @@ Extend class PB_WeaponBase
 	}
 
 	// ------------------------------------------------------------------
-	// PB_jumpIfNoAmmo â€” early-exit from the Fire state into a reload.
+	// PB_jumpIfNoAmmo - early-exit from the Fire state into a reload.
 	// ------------------------------------------------------------------
 	action state PB_jumpIfNoAmmo(statelabel reloadstate = "Reload",
 								 int min = 1,
@@ -388,7 +388,7 @@ Extend class PB_WeaponBase
 	}
 
 	// ------------------------------------------------------------------
-	// PB_TakeAmmo â€” take N from a pool and flip mag/chamber-empty flags.
+	// PB_TakeAmmo - take N from a pool and flip mag/chamber-empty flags.
 	// ------------------------------------------------------------------
 	action void PB_TakeAmmo(class<Inventory> ammoType, int takeNum,
 							int emptyMag = 1, int emptyChamber = 0, bool dual = false)
@@ -462,11 +462,28 @@ Extend class PB_WeaponBase
 
 	// ------------------------------------------------------------------
 	// Upgrade-path handoff helpers. Used when a weapon upgrades into or
-	// downgrades out of a higher-tier variant (e.g. Revolver â†’ Deagle).
+	// downgrades out of a higher-tier variant (e.g. Revolver -> Deagle).
 	// ------------------------------------------------------------------
+	action bool PB_KeepWeaponsBlocksHandoff(string weapName)
+	{
+		let cv = CVar.FindCVar("pb_keepweapons");
+		if (!cv || !cv.GetBool())
+			return false;
+		string keepCvar = "";
+		if (weapName == "PB_Pistol") keepCvar = "pb_keep_pistol";
+		else if (weapName == "PB_Carbine") keepCvar = "pb_keep_carbine";
+		else if (weapName == "PB_SSG") keepCvar = "pb_keep_ssg";
+		else if (weapName == "PB_Revolver") keepCvar = "pb_keep_revolver";
+		if (keepCvar == "")
+			return false;
+		let kcv = CVar.FindCVar(keepCvar);
+		return kcv && kcv.GetBool();
+	}
+
 	action void PB_TakeIfUpgrade(string oldweap = "")
 	{
 		if(oldweap.Length() == 0) return;
+		if (PB_KeepWeaponsBlocksHandoff(oldweap)) return;
 
 		let pbw = PB_WeaponBase(FindInventory(oldweap));
 		if(pbw)
@@ -484,6 +501,7 @@ Extend class PB_WeaponBase
 	{
 		if(upgrade.Length() == 0) return;
 		if(!CountInv(upgrade)) return;
+		if (PB_KeepWeaponsBlocksHandoff(invoker.GetClassName())) return;
 
 		A_SetAkimbo(false);
 		if(invoker.DualWieldToken)
@@ -529,7 +547,7 @@ Extend class PB_WeaponBase
 	// These just route through A_DoPBWeaponAction (already in PB 2022) plus
 	// the weapon-specific FireLeft_Overlay / FireRight_Overlay / StopDualWield
 	// states the ported weapon must provide. Safe to call even if those
-	// states are absent â€” ResolveState returns null and the caller falls
+	// states are absent - ResolveState returns null and the caller falls
 	// through to idle.
 	// ------------------------------------------------------------------
 	action state A_DoPBDualAction(int reservenum = 1)

@@ -1,0 +1,622 @@
+// Brutal Voxel Cyber Horror Mix guests (lean PB_Monster ports).
+// Sprites: SPRITES/Monsters/BVCH/{Glaucoma,Witherdemon,Mauler,Overdemoniac,Dastard,Machina,Bloodfiend}/
+// Sounds: sounds/monsters/BVCH/ (see SNDINFO bvch/*)
+
+// ---------------------------------------------------------------------------
+// Projectiles
+// ---------------------------------------------------------------------------
+
+ACTOR PB_BVCH_GlaucomaBall
+{
+	Radius 6
+	Height 6
+	Speed 28
+	FastSpeed 36
+	Damage 20
+	Projectile
+	+RANDOMIZE
+	+THRUGHOST
+	RenderStyle Add
+	Alpha 0.95
+	Scale 0.85
+	DamageType "Poison"
+	SeeSound "bvch/glaucoma/fire"
+	DeathSound "bvch/glaucoma/hit"
+	Decal "Scorch"
+	States
+	{
+	Spawn:
+		FGO2 ABCDEF 2 Bright
+		Loop
+	Death:
+		TNT1 A 0 A_Explode(18, 48, 0)
+		FGO2 GHIJKL 3 Bright
+		Stop
+	}
+}
+
+ACTOR PB_BVCH_WitherBall
+{
+	Radius 6
+	Height 6
+	Speed 24
+	FastSpeed 32
+	Damage 18
+	Projectile
+	+RANDOMIZE
+	+THRUGHOST
+	RenderStyle Add
+	Alpha 0.9
+	Scale 1.2
+	DamageType "Poison"
+	SeeSound "caco/active"
+	DeathSound "CacoBallImpact"
+	Decal "Scorch"
+	States
+	{
+	Spawn:
+		GHFX ABC 2 Bright
+		Loop
+	Death:
+		GHFX DEF 4 Bright
+		Stop
+	}
+}
+
+ACTOR PB_BVCH_OverOrb
+{
+	Radius 8
+	Height 8
+	Speed 20
+	FastSpeed 28
+	Damage 12
+	Projectile
+	+RANDOMIZE
+	RenderStyle Add
+	Alpha 0.9
+	Scale 0.5
+	DamageType "Fire"
+	SeeSound "bvch/overdemoniac/orb"
+	DeathSound "bvch/overdemoniac/orbhit"
+	Decal "Scorch"
+	States
+	{
+	Spawn:
+		BAL1 AB 2 Bright
+		Loop
+	Death:
+		BAL1 CDE 4 Bright
+		Stop
+	}
+}
+
+ACTOR PB_BVCH_BloodSpit : FireBall_
+{
+	Damage 8
+	Speed 14
+	SeeSound "bvch/bloodfiend/proj"
+	DeathSound "bvch/bloodfiend/proj"
+}
+
+// ---------------------------------------------------------------------------
+// Combat guests
+// ---------------------------------------------------------------------------
+
+ACTOR PB_BVCH_Glaucoma : PB_Monster
+{
+	Health 1000
+	Radius 31
+	Height 56
+	Mass 400
+	Speed 12
+	PainChance 40
+	Monster
+	+FLOAT
+	+NOGRAVITY
+	+COUNTKILL
+	+DONTHARMSPECIES
+	Scale 1.2
+	BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
+	Obituary "%o was infested by a Glaucoma."
+	HitObituary "%o was mauled by a Glaucoma."
+	SeeSound "bvch/glaucoma/sight"
+	ActiveSound "bvch/glaucoma/active"
+	PainSound "bvch/glaucoma/pain"
+	DeathSound "bvch/glaucoma/death"
+	Tag "Glaucoma"
+	States
+	{
+	Spawn:
+		GLCA A 10 A_Look
+		Loop
+	See:
+		GLCA A 2 A_Chase
+		Loop
+	Melee:
+		GLCA C 4 A_FaceTarget
+		GLCA D 4 A_CustomMeleeAttack(28, "bvch/glaucoma/hit", "weapons/gswing")
+		GLCA B 6
+		Goto See
+	Missile:
+		TNT1 A 0 A_JumpIfCloser(180, "Melee")
+		TNT1 A 0 A_Jump(96, "Barf")
+		GLCA BC 6 A_FaceTarget
+		GLCA D 2 Bright A_FaceTarget
+		GLCA D 2 Bright A_CustomMissile("PB_BVCH_GlaucomaBall", 22, 0, random(-4, 4))
+		GLCA D 2 Bright A_CustomMissile("PB_BVCH_GlaucomaBall", 22, 0, random(-4, 4))
+		GLCA D 2 Bright A_CustomMissile("PB_BVCH_GlaucomaBall", 22, 0, random(-4, 4))
+		GLCA CB 6
+		Goto See
+	Barf:
+		TNT1 A 0 A_PlaySound("bvch/glaucoma/barf", 4)
+		GLCA BC 6 A_FaceTarget
+		GLCA CDCD 2 A_FaceTarget
+		GLCA C 0 A_CustomMissile("PB_BVCH_GlaucomaBall", 20, 0, random(-6, 6))
+		GLCA D 0 A_CustomMissile("PB_BVCH_GlaucomaBall", 20, 0, random(-6, 6))
+		GLCA CD 2 A_FaceTarget
+		GLCA C 0 A_CustomMissile("PB_BVCH_GlaucomaBall", 20, 0, random(-6, 6))
+		GLCA D 0 A_CustomMissile("PB_BVCH_GlaucomaBall", 20, 0, random(-6, 6))
+		GLCA CB 6
+		Goto See
+	Pain:
+		GLCA E 3
+		GLCA E 9 A_Pain
+		Goto See
+	Death:
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAAA 0 A_CustomMissile("XDeath1", 32, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("XDeath2", 28, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("MuchBlood", 36, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("PB_BloodMistBig", 30, 0, random(0, 360), 2, random(30, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		GLCA G 6
+		GLCA H 6
+		GLCA IJ 6
+		GLCA K 6
+		GLCA L -1
+		Stop
+	XDeath:
+		TNT1 A 0 A_XScream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAAA 0 A_CustomMissile("XDeath1", 32, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAAA 0 A_CustomMissile("XDeath2", 28, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("MuchBlood", 36, 0, random(0, 360), 2, random(40, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		GLCX ABCDEF 5
+		GLCX F -1
+		Stop
+	}
+}
+
+ACTOR PB_BVCH_Witherdemon : PB_Monster
+{
+	Health 800
+	Radius 31
+	Height 56
+	Mass 400
+	Speed 10
+	PainChance 80
+	Monster
+	+FLOAT
+	+NOGRAVITY
+	+COUNTKILL
+	BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
+	BloodColor "DarkGreen"
+	Obituary "%o was contaminated by a Witherdemon."
+	HitObituary "%o was bitten by a Witherdemon."
+	SeeSound "caco/sight"
+	ActiveSound "caco/active"
+	PainSound "caco/pain"
+	DeathSound "caco/death"
+	Tag "Witherdemon"
+	States
+	{
+	Spawn:
+		CALI A 10 A_Look
+		Loop
+	See:
+		CALI A 3 A_Chase
+		Loop
+	Melee:
+		CALI F 4 A_FaceTarget
+		CALI FG 5 A_FaceTarget
+		CALI E 6 A_CustomMeleeAttack(28, "caco/active", "")
+		Goto See
+	Missile:
+		TNT1 A 0 A_Jump(96, "Triple")
+		CALI EF 5 A_FaceTarget
+		CALI G 6 Bright A_CustomMissile("PB_BVCH_WitherBall", 22, 0, 0)
+		Goto See
+	Triple:
+		CALI EF 5 A_FaceTarget
+		CALI G 4 Bright A_CustomMissile("PB_BVCH_WitherBall", 22, 0, 0)
+		CALI G 4 Bright A_CustomMissile("PB_BVCH_WitherBall", 22, 0, -8)
+		CALI G 4 Bright A_CustomMissile("PB_BVCH_WitherBall", 22, 0, 8)
+		Goto See
+	Pain:
+		CALI H 3
+		CALI H 3 A_Pain
+		CALI I 6
+		Goto See
+	Death:
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAAA 0 A_CustomMissile("XDeath1", 32, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("XDeath2", 28, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("MuchBlood", 36, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("PB_BloodMistBig", 30, 0, random(0, 360), 2, random(30, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		CALI J 6
+		CALI K 6
+		CALI LMNOPQ 5
+		CALI R 5
+		CALI S -1
+		Stop
+	XDeath:
+		Goto Death
+	}
+}
+
+ACTOR PB_BVCH_Mauler : PB_Monster
+{
+	Health 300
+	Radius 30
+	Height 56
+	Mass 400
+	Speed 16
+	PainChance 50
+	MeleeRange 64
+	MaxTargetRange 400
+	Monster
+	+FLOORCLIP
+	+COUNTKILL
+	BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
+	Obituary "%o was rammed by a Mauler."
+	HitObituary "%o was ruined by a Mauler."
+	SeeSound "bvch/mauler/sight"
+	ActiveSound "bvch/mauler/active"
+	PainSound "bvch/mauler/pain"
+	DeathSound "bvch/mauler/death"
+	AttackSound "bvch/mauler/attack"
+	Tag "Mauler"
+	States
+	{
+	Spawn:
+		MAUL A 10 A_Look
+		Loop
+	See:
+		MAUL AABB 2 A_Chase
+		MAUL CCDD 2 A_Chase
+		Loop
+	Melee:
+		TNT1 A 0 A_PlaySound("bvch/mauler/attack", 2)
+		MAUL EF 4 A_FaceTarget
+		MAUL G 6 A_CustomMeleeAttack(34, "bvch/mauler/attack", "")
+		Goto See
+	Missile:
+		MAUL E 8 A_FaceTarget
+		TNT1 A 0 A_PlaySound("bvch/mauler/sight", 2)
+		MAUL A 1 A_SkullAttack
+		MAUL ABCDABCD 2
+		Goto Ram
+	Ram:
+		MAUL E 2 A_FaceTarget
+		MAUL F 8 A_CustomMeleeAttack(40, "bvch/mauler/attack", "")
+		Goto See
+	Pain:
+		MAUL H 2
+		MAUL H 2 A_Pain
+		Goto See
+	Death:
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAAA 0 A_CustomMissile("XDeath1", 28, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("XDeath2", 24, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("MuchBlood", 32, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("PB_BloodMistBig", 28, 0, random(0, 360), 2, random(30, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		MAUL I 8
+		MAUL J 8
+		MAUL K 4
+		MAUL L 4
+		MAUL M 4
+		MAUL N -1
+		Stop
+	XDeath:
+		TNT1 A 0 A_XScream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAAA 0 A_CustomMissile("XDeath1", 28, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAAA 0 A_CustomMissile("XDeath2", 24, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("MuchBlood", 32, 0, random(0, 360), 2, random(40, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		MAUX ABCDEFGHI 4
+		MAUX J -1
+		Stop
+	}
+}
+
+ACTOR PB_BVCH_Overdemoniac : PB_Monster
+{
+	Health 1400
+	Radius 20
+	Height 56
+	Mass 500
+	Speed 8
+	FastSpeed 14
+	PainChance 50
+	Scale 1.15
+	Monster
+	+FLOORCLIP
+	+COUNTKILL
+	+MISSILEMORE
+	+QUICKTORETALIATE
+	BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
+	Obituary "%o was undone by the Overdemoniac."
+	SeeSound "bvch/overdemoniac/sight"
+	ActiveSound "bvch/overdemoniac/active"
+	PainSound "bvch/overdemoniac/pain"
+	DeathSound "bvch/overdemoniac/death"
+	Tag "Overdemoniac"
+	States
+	{
+	Spawn:
+		DSJ1 A 10 A_Look
+		Loop
+	See:
+		DSJ1 AABBCCDDEEFF 2 A_Chase
+		Loop
+	Missile:
+		TNT1 A 0 A_Jump(85, "Rail")
+		TNT1 A 0 A_Jump(85, "Vile")
+		Goto Orbs
+	Orbs:
+		DSJ1 GHI 3 A_FaceTarget
+		DSJ1 J 2 A_FaceTarget
+		DSJ1 J 0 A_PlaySound("bvch/overdemoniac/orb", 5)
+		DSJ1 J 2 A_CustomMissile("PB_BVCH_OverOrb", 40, 0, 0)
+		DSJ1 K 2 A_CustomMissile("PB_BVCH_OverOrb", 40, 0, 12)
+		DSJ1 L 2 A_CustomMissile("PB_BVCH_OverOrb", 40, 0, -12)
+		DSJ1 M 2 A_CustomMissile("PB_BVCH_OverOrb", 40, 0, 24)
+		DSJ1 O 8 A_FaceTarget
+		Goto See
+	Rail:
+		DSJ1 G 8 A_FaceTarget
+		DSJ1 HIJKLMO 3 A_FaceTarget
+		DSJ1 O 8 Bright A_CustomBulletAttack(0, 0, 1, 40, "BulletPuff", 0, CBAF_NORANDOM)
+		DSJ1 P 8
+		Goto See
+	Vile:
+		DSJ1 A 12 A_FaceTarget
+		DSJ1 GHIJKLMO 3 A_FaceTarget
+		DSJ1 O 8 A_VileTarget
+		DSJ1 POPOPO 4 A_FaceTarget
+		DSJ1 P 6 Bright A_VileAttack("bvch/overdemoniac/ripper", 20, 55, 60, 1.0, "Fire")
+		Goto See
+	Pain:
+		DSJ1 Q 4
+		DSJ1 Q 4 A_Pain
+		Goto See
+	Death:
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAAA 0 A_CustomMissile("XDeath1", 36, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAAA 0 A_CustomMissile("XDeath2", 32, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAAA 0 A_CustomMissile("MuchBlood", 40, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("PB_BloodMistBig", 34, 0, random(0, 360), 2, random(30, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		DSJ1 Q 4
+		DSJ1 R 12
+		DSJ1 S 6
+		DSJ1 TUVWXYZ 4
+		DSJ1 Z -1
+		Stop
+	XDeath:
+		Goto Death
+	}
+}
+
+ACTOR PB_BVCH_Dastard : PB_Monster
+{
+	Health 70
+	Radius 20
+	Height 56
+	Mass 100
+	Speed 10
+	PainChance 180
+	Monster
+	+FLOORCLIP
+	+COUNTKILL
+	BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
+	Obituary "%o was burned by a Dastard."
+	HitObituary "%o was clawed by a Dastard."
+	SeeSound "bvch/dastard/sight"
+	ActiveSound "bvch/dastard/active"
+	PainSound "bvch/dastard/pain"
+	DeathSound "bvch/dastard/death"
+	Tag "Dastard"
+	States
+	{
+	Spawn:
+		DAS_ A 10 A_Look
+		Loop
+	See:
+		DAS_ AABBCCDD 3 A_Chase
+		Loop
+	Melee:
+		DAS_ EF 5 A_FaceTarget
+		DAS_ G 5 A_CustomMeleeAttack(3 * random(1, 8), "imp/melee", "")
+		DAS_ F 4
+		Goto See
+	Missile:
+		DAS_ EF 6 A_FaceTarget
+		DAS_ G 5 A_CustomMissile("FireBall_", 32, 0, 0)
+		DAS_ F 4
+		Goto See
+	Pain:
+		DAS_ H 4
+		DAS_ H 4 A_Pain
+		Goto See
+	Death:
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAA 0 A_CustomMissile("XDeath1", 24, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("MuchBlood", 28, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("PB_BloodMistBig", 24, 0, random(0, 360), 2, random(30, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		DAS_ I 6
+		DAS_ JKL 4
+		DAS_ M -1
+		Stop
+	XDeath:
+		TNT1 A 0 A_XScream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAAA 0 A_CustomMissile("XDeath1", 24, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAAA 0 A_CustomMissile("XDeath2", 20, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("MuchBlood", 28, 0, random(0, 360), 2, random(40, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		DAS_ N 5
+		DAS_ OPQRST 4
+		DAS_ U -1
+		Stop
+	}
+}
+
+ACTOR PB_BVCH_Machina : PB_Monster
+{
+	Health 850
+	Radius 20
+	Height 56
+	Mass 500
+	Speed 14
+	PainChance 40
+	Monster
+	+FLOORCLIP
+	+COUNTKILL
+	+MISSILEMORE
+	BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
+	Obituary "%o was disabled by a Machina."
+	SeeSound "bvch/machina/sight"
+	ActiveSound "bvch/machina/active"
+	PainSound "bvch/machina/pain"
+	DeathSound "bvch/machina/death"
+	Tag "Machina"
+	States
+	{
+	Spawn:
+		MIAL A 10 A_Look
+		Loop
+	See:
+		MIAL AABBCCDDEEFF 2 A_Chase
+		Loop
+	Missile:
+		TNT1 A 0 A_Jump(100, "Plasma")
+		TNT1 A 0 A_PlaySound("bvch/machina/attack", 2)
+		MIAL G 8 Bright A_FaceTarget
+		MIAL H 6 Bright A_VileTarget
+		MIAL IJKLMN 5 Bright A_FaceTarget
+		MIAL O 8 Bright A_VileAttack("bvch/machina/vile", 12, 60, 65, 1.0, "Plasma")
+		MIAL P 12 Bright
+		Goto See
+	Plasma:
+		TNT1 A 0 A_PlaySound("bvch/machina/attack", 2)
+		MIAL GHIJKLM 3 Bright A_FaceTarget
+		MIAL O 6 Bright A_CustomMissile("Plasma_Ball", 40, 0, 0)
+		MIAL P 8 Bright A_CustomMissile("Plasma_Ball", 40, 0, random(-4, 4))
+		Goto See
+	Pain:
+		MIAL Q 5
+		MIAL Q 5 A_Pain
+		Goto See
+	Death:
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAAA 0 A_CustomMissile("XDeath1", 32, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("XDeath2", 28, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("MuchBlood", 36, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("PB_BloodMistBig", 30, 0, random(0, 360), 2, random(30, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		MIAL Q 6
+		MIAL R 6
+		MIAL S 6
+		MIAL TUVWX 5
+		MIAL Y 5
+		MIAL Z -1
+		Stop
+	XDeath:
+		Goto Death
+	}
+}
+
+ACTOR PB_BVCH_Bloodfiend : PB_Monster
+{
+	Health 65
+	Radius 20
+	Height 56
+	Mass 100
+	Speed 8
+	PainChance 200
+	Monster
+	+FLOORCLIP
+	+COUNTKILL
+	BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
+	BloodColor "Yellow"
+	Obituary "%o was overwhelmed by a Bloodfiend."
+	HitObituary "%o was clawed by a Bloodfiend."
+	SeeSound "bvch/bloodfiend/sight"
+	PainSound "bvch/bloodfiend/pain"
+	DeathSound "bvch/bloodfiend/death"
+	ActiveSound "imp/active"
+	Tag "Bloodfiend"
+	States
+	{
+	Spawn:
+		BZRD N 8 A_Look
+		Loop
+	See:
+		BZRD AABB 3 A_Chase
+		BZRD CCDD 3 A_Chase
+		Loop
+	Melee:
+	Missile:
+		BZRD EF 6 A_FaceTarget
+		BZRD G 6 A_CustomComboAttack("PB_BVCH_BloodSpit", 32, 3 * random(3, 6), "imp/melee")
+		Goto See
+	Pain:
+		BZRD H 3
+		BZRD H 3 A_Pain
+		Goto See
+	Death:
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAA 0 A_CustomMissile("XDeath1", 24, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("MuchBlood", 28, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("PB_BloodMistBig", 24, 0, random(0, 360), 2, random(30, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		BZRD I 8
+		BZRD J 8
+		BZRD K 6
+		BZRD L 6
+		BZRD M -1
+		Stop
+	XDeath:
+		TNT1 A 0 A_XScream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_Fall
+		TNT1 AAAA 0 A_CustomMissile("XDeath1", 24, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAAA 0 A_CustomMissile("XDeath2", 20, 0, random(0, 360), 2, random(40, 90))
+		TNT1 AAA 0 A_CustomMissile("MuchBlood", 28, 0, random(0, 360), 2, random(40, 90))
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		Stop
+	}
+}

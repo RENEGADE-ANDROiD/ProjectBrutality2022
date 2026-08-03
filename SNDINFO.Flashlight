@@ -1,0 +1,12 @@
+﻿// Flashlight++
+$random PB/FlashlightOn { PB/FlashlightOn1 PB/FlashlightOn2 }
+$random PB/FlashlightOff { PB/FlashlightOff1 PB/FlashlightOff2 }
+PB/FlashlightOn1 "sounds/Flashlight/FlashlightOn1.wav"
+PB/FlashlightOn2 "sounds/Flashlight/FlashlightOn2.wav"
+PB/FlashlightOff1 "sounds/Flashlight/FlashlightOff1.wav"
+PB/FlashlightOff2 "sounds/Flashlight/FlashlightOff2.wav"
+
+// Bullet Time (SLW set)
+SLWSTART "sounds/BulletTime/SLWSTART.wav"
+SLWSTOP "sounds/BulletTime/SLWSTOP.wav"
+SLWLOOP "sounds/BulletTime/SLWLOOP.wav"

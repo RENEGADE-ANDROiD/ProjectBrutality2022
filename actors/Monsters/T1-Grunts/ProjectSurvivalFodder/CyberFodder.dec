@@ -167,6 +167,15 @@ Actor CyberFodder : Shotgunguy
 			Pain.Stun:
 				TNT1 A 0
 				Goto XDeath
+			Death.Execution:
+				TNT1 A 0
+				{
+					A_Stopsound;
+					A_FaceTarget;
+					A_NoBlocking;
+				}
+				TNT1 A 0 A_GiveToTarget("BPtoken", 1)
+				Stop
 			Death.Shotgun:
 				Death.Shotgun:
 				TNT1 A 0 A_JumpIfCloser(150, "Death.Splatter")

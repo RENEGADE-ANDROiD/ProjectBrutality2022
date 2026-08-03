@@ -1,0 +1,31 @@
+The Hotel: Lost Contact — guest monsters + gore props
+
+Source mod: **The Hotel: Lost Contact** (v4.8) by **Hevn_Cross-90eks** (ModDB).
+
+Integrated combat classes
+- `PB_HotelMory` — Imp-spawner guest (~2%). Sprites `MORY*`.
+- `PB_HotelBloodCrawler` / `PB_HotelVoidCrawler` — Pinky-spawner guests (~2% each).
+  Sprites `A4I*`/`HMDY` and `B4I*`/`BMDY`.
+- `PB_HotelBloodCrawlerBig` — Baron-spawner guest (~2%). Sprites renamed `BOS2*` → `HTB2*`
+  (avoids Hell Knight `BOS2` collision).
+- `PB_HotelOgre` — ShotgunGuy-spawner guest (~3%). Sprites `OGR*`.
+- `PB_HotelBruiser` — ChaingunGuy-spawner guest (~3%). Sprites renamed `BRUS*`/`BRUD*` →
+  `HTBS*`/`HTBD*` (avoids BruiserDemon / Hell Knight death collisions).
+
+Gore decorations (map-placeable only)
+- `PB_HotelGorePile1`–`4` (`HLGR` A–D), `PB_HotelGoreHang1`–`4` (`HLGU` A–D).
+
+Sprite / sound drops
+- `SPRITES/Monsters/Hotel/` — combat PNGs (A4I* converted from Doom Picture via IWAD PLAYPAL).
+- `SPRITES/Decoration/HotelGore/` — HLGR/HLGU.
+- `sounds/monsters/Hotel/` — see `SNDINFO.txt` `hotel/*` / `mory/*` block.
+- Re-extract helper: `maint_scripts/_extract_hotel_assets.py`.
+
+Not folded
+- Swat Zombies / raise corpses, SL1–3 bosses, DarkSerpent, poolwitch, roomstalker.
+- Glory Kill `*GK` wrappers / PDA codex rows.
+
+Cvars / ednums
+- `pb_NoHotelMory`, `pb_NoHotelBloodCrawlerBig`, `pb_NoHotelOgre`, `pb_NoHotelBruiser`,
+  `pb_NoHotelBloodCrawler`, `pb_NoHotelVoidCrawler` (+ `pb_disablenewenemies`).
+- DoomEdNums `23285`–`23298` (combat + gore props).

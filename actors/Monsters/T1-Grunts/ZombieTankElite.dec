@@ -7,7 +7,6 @@ ACTOR ZombieTankelite
     Radius 27
     Height 72
     Mass 1000
-    PainChance 50
     Speed 6	
     SeeSound "ZPTank/see"
     PainSound "ZPTank/pain"
@@ -18,10 +17,32 @@ ACTOR ZombieTankelite
 	DropItem "PB_SentryDrop_TankElite" 16
     MONSTER 
     +FLOORCLIP
-	+NOBLOOD
+	+NOBLOODDECALS
+	BloodType "NullBlood"
 	+DONTHARMSPECIES
-	+NOPAIN
 	+NOINFIGHTING
+	PainChance 30
+	PainChance "ExtremePunches", 255
+	PainChance "Taunt", 255
+	PainChance "Explosive", 48
+	PainChance "SSG", 45
+	PainChance "Stun", 255
+	PainChance "Siphon", 255
+	PainChance "BloodPunch", 255
+	damagefactor "Crush", 5.0
+	damagefactor "Avoid", 0.0
+	damagefactor "killme", 0.0
+	damagefactor "GibRemoving", 0.0
+	damagefactor "TeleportRemover", 0.0
+	damagefactor "Plasma", 1.2
+	damagefactor "Plasma2", 1.2
+	damagefactor "Fire", 1.2
+	damagefactor "SSG", 0.70
+	damagefactor "ExplosiveImpact", 1.0
+	DamageFactor "Explosive", 0.8
+	DamageFactor "CauseObjectsToSplash", 0.0
+	damagefactor "Shrapnel", 0.4
+	damagefactor "Execution", 1000.0
     States
     {
     Spawn:

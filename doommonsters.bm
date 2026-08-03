@@ -1140,6 +1140,8 @@ brightmap sprite CFPFD0{map "brightmaps/doom/Monsters/Caco/CFPFD0.png"}
 brightmap sprite HEADA1{map "brightmaps/doom/Monsters/Caco/HEADA1.png"}
 brightmap sprite HEADA2A8{map "brightmaps/doom/Monsters/Caco/HEADA2A8.png"}
 brightmap sprite HEADA3A7{map "brightmaps/doom/Monsters/Caco/HEADA3A7.png"}
+brightmap sprite HEADA4A6{map "brightmaps/doom/Monsters/Caco/HEADA4A6.png"}
+brightmap sprite HEADA5{map "brightmaps/doom/Monsters/Caco/HEADA5.png"}
 brightmap sprite HEADB1{map "brightmaps/doom/Monsters/Caco/HEADB1.png"}
 brightmap sprite HEADB2B8{map "brightmaps/doom/Monsters/Caco/HEADB2B8.png"}
 brightmap sprite HEADB3B7{map "brightmaps/doom/Monsters/Caco/HEADB3B7.png"}
@@ -1158,6 +1160,8 @@ brightmap sprite HEADD5{map "brightmaps/doom/Monsters/Caco/HEADD5.png"}
 brightmap sprite HEADE1{map "brightmaps/doom/Monsters/Caco/HEADE1.png"}
 brightmap sprite HEADE2E8{map "brightmaps/doom/Monsters/Caco/HEADE2E8.png"}
 brightmap sprite HEADE3E7{map "brightmaps/doom/Monsters/Caco/HEADE3E7.png"}
+brightmap sprite HEADE4E6{map "brightmaps/doom/Monsters/Caco/HEADE4E6.png"}
+brightmap sprite HEADE5{map "brightmaps/doom/Monsters/Caco/HEADE5.png"}
 brightmap sprite HEADF1{map "brightmaps/doom/Monsters/Caco/HEADF1.png"}
 brightmap sprite HEADF2F8{map "brightmaps/doom/Monsters/Caco/HEADF2F8.png"}
 brightmap sprite HEADF3F7{map "brightmaps/doom/Monsters/Caco/HEADF3F7.png"}

@@ -1,4 +1,4 @@
-Actor MancubusSpawner replaces Fatso
+﻿Actor MancubusSpawner replaces Fatso
 {
 	//$Title Mancubus Spawner
 	//$Sprite UDBGF0
@@ -39,11 +39,12 @@ Actor MancubusSpawner replaces Fatso
 		DiceTier2:
 			TNT1 A 0 A_Jump(256,"MancubusPack")
 		DiceTier3:
-			TNT1 A 0 A_Jump(83,"DaedabusPack")
+			TNT1 A 0 A_Jump(26,"VolcabusPack")
+			TNT1 A 0 A_Jump(80,"DaedabusPack")
 			TNT1 A 0 A_Jump(256,"MancubusPack")
 		DiceTier4:
-			TNT1 A 0 A_Jump(72,"VolcabusPack")
-			TNT1 A 0 A_Jump(90,"DaedabusPack")
+			TNT1 A 0 A_Jump(56,"VolcabusPack")
+			TNT1 A 0 A_Jump(79,"DaedabusPack")
 			TNT1 A 0 A_Jump(256,"MancubusPack")
 		DiceDeathWish:
 			TNT1 A 0 A_Jump(86,"VolcabusPack")
@@ -76,6 +77,7 @@ Actor MancubusPackSpawner : Demonpickup
 		// Kept rare (~1.6% of mancubus spawns, was ~0.8%) so the boss-tier brute does not flood maps.
 		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "Realm667Skip")
 		TNT1 A 0 A_Jump(10, "SpawnPB_Cryocubus")
+		TNT1 A 0 A_Jump(8, "SpawnEternalFat")
 		TNT1 A 0 A_Jump(4, "SpawnRealm667Behemoth")
 		Realm667Skip:
 		TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
@@ -104,6 +106,10 @@ Actor MancubusPackSpawner : Demonpickup
 	SpawnPB_Cryocubus:
 		TNT1 A 0 A_JumpIf(GetCvar("pb_NoCryocubus")==1, "Realm667Skip")
 		TNT1 A 0 A_SpawnItemEx("PB_Cryocubus",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnEternalFat:
+		TNT1 A 0 A_JumpIf(GetCvar("pb_NoEternalFat")==1, "Realm667Skip")
+		TNT1 A 0 A_SpawnItemEx("EternalFat",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	}
 }

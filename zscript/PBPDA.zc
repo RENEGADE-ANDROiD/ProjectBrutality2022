@@ -4886,6 +4886,29 @@ class PB_EventHandler : EventHandler
 		let ppb = PlayerPawnBase(pmo);
 		if (ppb) { ppb.baseweaponpda = false; }
 		pmo.A_SetBlend("black",1.0,35);
+
+		if (!pmo.FindInventory("KeepWeapManager"))
+			pmo.GiveInventory("KeepWeapManager", 1);
+		PB_FlashlightUtil.SetupHolder(PlayerPawn(pmo));
+
+		bool hasSteps = false;
+		ThinkerIterator sit = ThinkerIterator.Create("PB_Footsteps");
+		Actor sa;
+		while (sa = Actor(sit.Next()))
+		{
+			let fs = PB_Footsteps(sa);
+			if (fs && fs.toFollow == pmo)
+			{
+				hasSteps = true;
+				break;
+			}
+		}
+		if (!hasSteps)
+		{
+			let steps = PB_Footsteps(Actor.Spawn("PB_Footsteps", pmo.pos));
+			if (steps)
+				steps.Init(PlayerPawn(pmo));
+		}
 	}
 	override void WorldTick()
 	{
@@ -5004,6 +5027,18 @@ class PB_EventHandler : EventHandler
 		if (!e) return;
 		if (gamestate == GS_TITLELEVEL) return;
 		if (HeldDownTics <= 0) mouseclicked = false;
+		if (e.Name ~== "pb_flashlight_toggle")
+		{
+			if (e.Player < 0 || e.Player >= MAXPLAYERS || !playeringame[e.Player]) return;
+			PlayerPawn plr = players[e.Player].mo;
+			if (!plr) return;
+			if (plr.FindInventory("sae_extcam")) return;
+			let cvHelm = CVar.FindCVar("pb_NoHelmetAnimation");
+			if (cvHelm && cvHelm.GetInt() == 0 && plr.FindInventory("sae_extcam")) return;
+			PB_FPP_Holder holder = PB_FlashlightUtil.SetupHolder(plr);
+			if (holder) holder.ToggleFlashlight();
+			return;
+		}
 		if (e.Name ~== "RequestTaunt")
 		{
 			PB_TryRequestTaunt(e.Player);
@@ -5401,6 +5436,51 @@ class PB_EventHandler : EventHandler
 	override void WorldLoaded(WorldEvent e)
 	{
 		PB_KatanaDualChoiceClose();
+		PB_FlashlightUtil.DestroyAllLights();
+		PB_FlashlightUtil.FixAllHolders();
+	}
+
+	override void CheckReplacee(ReplacedEvent e)
+	{
+		if (!e || !e.Replacement)
+			return;
+		Name cn = e.Replacement.GetClassName();
+		switch (cn)
+		{
+			case 'CyberdemonBoss':
+			case 'PB_Cyberdemon':
+			case 'PB_CyberdemonGK':
+			case 'PB_Cyberdemon_MapGK':
+			case 'PB_Annihilator':
+				e.Replacee = 'Cyberdemon';
+				break;
+			case 'PB_Mastermind':
+			case 'PB_MastermindGK':
+			case 'PB_Demolisher':
+			case 'PB_Juggernaut':
+				e.Replacee = 'SpiderMastermind';
+				break;
+			case 'PB_Baron':
+			case 'PB_BaronGK':
+			case 'PB_Belphegor':
+			case 'PB_Infernus':
+			case 'PB_CyberBaron':
+				e.Replacee = 'BaronOfHell';
+				break;
+			case 'PB_Arachnotron':
+			case 'PB_ArachnotronGK':
+			case 'PB_EliteArachnotron':
+			case 'PB_InfernalArachnotron':
+			case 'PB_Arachnophyte':
+			case 'Aracnorb':
+				e.Replacee = 'Arachnotron';
+				break;
+			case 'PB_Mancubus':
+			case 'PB_Daedabus':
+			case 'PB_Volcabus':
+				e.Replacee = 'Fatso';
+				break;
+		}
 	}
 	override void OnRegister()
 	{

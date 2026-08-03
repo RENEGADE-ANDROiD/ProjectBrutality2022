@@ -1,0 +1,107 @@
+ACTOR PB_D16Cyberdemon_Execution
+{ 
+  +FORCEXYBILLBOARD 
+  +Clientsideonly 
+  +NOGRAVITY
+  -SOLID
+  +THRUACTORS
+  Scale 1.0
+  States 
+{ 
+	Spawn: 
+		TNT1 A 0 
+		TNT1 A 0 A_FaceMaster
+		HIBY B 5 Bright
+		TNT1 A 0 A_StartSound("TYRPAI")
+		TNT1 A 0 A_SpawnItemEx ("Spark_UpOnce",15,5,55)
+		TNT1 A 0 A_SpawnProjectile("MetalShard1", 55, 5, random (-30, 30), 0, random (20, 25))
+		TNT1 A 0 A_SpawnProjectile("MetalShard2", 55, 5, random (-30, 30), 0, random (20, 25))
+		HIBY H 33 Bright
+		TNT1 A 0 A_StartSound("TYRPAI")
+		HIBY EFG 3 Bright
+		TNT1 A 0 A_CustomMissile ("D16CyberDemonWarpCell", 55, 5, random (20, 30), 0, random (-25, -20))
+		HIBY H 18 Bright
+		HIBY H 35 Bright
+		HIBY I 15 Bright
+
+	LaserAttack2:
+		TNT1 A 0
+		TNT1 A 0 A_StartSound("TYRRCH",CHAN_6, CHANF_OVERLAP)
+	LaserAttackTracking2:
+		TNT1 A 0 A_FaceMaster
+		HIBY JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ 2 Bright
+			{
+			A_SpawnItemEx("D16CyberdemonLaserChargeEffect", 54, -19, 46);
+			A_SpawnItemEx("D16CyberdemonLaserChargeSpark", 54, -19, 46);
+			A_FaceMaster;
+			}
+		TNT1 A 0 A_StartSound("TYEXEC")
+		HIBY J 16
+		HIBY KLMN 8
+		TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 Radius_Quake (3, 25, 0, 22, 0)
+		TNT1 A 0 A_StartSound("baron/step", 6, CHANF_OVERLAP)
+		HIBY O 4
+		TNT1 A 0 A_SpawnItem("FatalizedD16Cyberdemon")
+	Stop
+}}
+
+actor D16CyberDemonWarpCell
+{
+  Radius 16
+  Height 16
+  speed 12
+  Damage 0
+  +MISSILE
+  -BLOODSPLATTER
+  +EXTREMEDEATH
+  +FORCEXYBILLBOARD
+  -CANBOUNCEWATER
+  -DONTBOUNCEONSHOOTABLES
+  +ROLLSPRITE
+  +THRUACTORS
+  Bouncetype "Doom"
+  BounceFactor 0.5
+  Scale 0.2
+  Gravity 1.0
+  //SeeSound "weapon/grenade"
+  BounceSound "weapon/grenade"
+  States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
+		TNT1 A 0 A_JumpIf(momz == 0, "Death")
+		HIBX Q 4 Bright light("WarpCellLight") A_SetRoll(roll-25)
+		loop
+	Death:
+		TNT1 A 0 A_SpawnItemEx("D16CyberDemonWarpCellGib",0,0,20,0,0,0,0,SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+actor D16CyberDemonWarpCellGib: CustomInventory
+{
+  Game Doom
+  Scale 0.2
+  Radius 16
+  Height 26
+  +FLOAT
+  +FLOATBOB
+  +NOGRAVITY
+  -COUNTITEM
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.PickupMessage "You have picked up a warp cell"
+  Inventory.PickupSound "demonsoulpickup"
+	States
+	{
+	Spawn:
+		HIBX MNOP 4 Bright light("WarpCellLight")
+	Loop
+
+	Pickup:
+		TNT1 A 0
+        TNT1 AAAAA 0 A_GiveInventory("PB_DTech",10)
+        TNT1 AAAAA 0 A_GiveInventory("PB_ArmorBonus", 1)
+	Stop
+	}
+}

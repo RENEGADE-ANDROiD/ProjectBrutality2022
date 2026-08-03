@@ -1,0 +1,80 @@
+class PB_FlameEventHandler : EventHandler
+{
+	Array<Actor> burnTargets;
+	Array<int> burnAmounts;
+	Array<int> burnDurations;
+
+	bool StatusOn()
+	{
+		let cv = CVar.FindCVar("pb_status_effects");
+		return !cv || cv.GetBool();
+	}
+
+	override void WorldThingDamaged(WorldEvent e)
+	{
+		if (!StatusOn() || !e || !e.Thing || !e.Inflictor)
+			return;
+
+		Name icn = e.Inflictor.GetClassName();
+		if (icn != 'FT_GroundFire' && icn != 'FT_GroundFireSpawner')
+			return;
+
+		Actor target = e.Thing;
+		if (!target || !target.bShootable || target.health <= 0)
+			return;
+
+		int burnPerHit = 2;
+		int maxBurn = 35;
+		int baseDuration = 20;
+		int maxDuration = 90;
+
+		for (int i = 0; i < burnTargets.Size(); i++)
+		{
+			if (burnTargets[i] == target)
+			{
+				if (burnAmounts[i] < maxBurn)
+					burnAmounts[i] = min(burnAmounts[i] + burnPerHit, maxBurn);
+				burnDurations[i] = min(burnDurations[i] + baseDuration, maxDuration);
+				return;
+			}
+		}
+
+		burnTargets.Push(target);
+		burnAmounts.Push(min(burnPerHit, maxBurn));
+		burnDurations.Push(baseDuration);
+	}
+
+	override void WorldTick()
+	{
+		if (!StatusOn())
+			return;
+
+		for (int i = burnTargets.Size() - 1; i >= 0; i--)
+		{
+			if (!burnTargets[i] || burnTargets[i].health <= 0)
+			{
+				RemoveBurn(i);
+				continue;
+			}
+
+			if (burnDurations[i] > 0 && (level.time % 9 == 0))
+			{
+				int tickDamage = max(1, burnAmounts[i] / 10);
+				burnTargets[i].DamageMobj(null, null, tickDamage, "Fire", DMG_NO_PAIN);
+				if (burnTargets[i] && tickDamage > 1 && burnTargets[i].player)
+					burnTargets[i].A_SetBlend("245 245 0", 0.3, 24);
+			}
+
+			burnDurations[i]--;
+			if (burnDurations[i] <= 0)
+				RemoveBurn(i);
+		}
+	}
+
+	void RemoveBurn(int index)
+	{
+		burnTargets.Delete(index);
+		burnAmounts.Delete(index);
+		burnDurations.Delete(index);
+	}
+}

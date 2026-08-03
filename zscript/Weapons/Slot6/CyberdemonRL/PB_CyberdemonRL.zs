@@ -1,5 +1,5 @@
-// Cyberdemon Missile Launcher â€” ZScript (folded from PBX-Weapons Slot-6/CyberdemonRL).
-// Pickup source: dead Cyberdemons â€” the DECORATE XDeathCyberdemonGun hand-gib is
+// Cyberdemon Missile Launcher - ZScript (folded from PBX-Weapons Slot-6/CyberdemonRL).
+// Pickup source: dead Cyberdemons - the DECORATE XDeathCyberdemonGun hand-gib is
 // replaced with a PB_CyberdemonRL weapon drop (with cvar gate) rather than via a
 // separate PBX-style EventHandler. See actors/Gore/GORE!!!.dec for the replacement.
 //
@@ -8,11 +8,11 @@
 //     so the weapon consumes the existing rocket pool.
 //   * PB_Math.LinearMap -> PB_HitFeedback_Math.LinearMap (equivalent utility in PB2022).
 //   * PBX's PB_CoolDownBarrel / DisablePBX_Smoke cooldown hook doesn't exist in PB2022,
-//     so it isn't called â€” PB2022 has no barrel-heat cooldown effect on this gun.
+//     so it isn't called - PB2022 has no barrel-heat cooldown effect on this gun.
 //   * PBX's PB_LowAmmoSoundWarning helper is dropped (PB2022 doesn't ship it and the
 //     warning isn't essential for the fold).
 //   * Duplicate pickup: PBX only refilled wear in AttachToOwner; the engine merges a
-//     second copy via Weapon.HandlePickup (PickupForAmmo) without AttachToOwner â€” PB2022
+//     second copy via Weapon.HandlePickup (PickupForAmmo) without AttachToOwner - PB2022
 //     overrides HandlePickup to refill CyberRLDurability (same idea as PB_WeaponBase
 //     PB_RefillMonsterSourcedWeaponWear for DECORATE boss-tech guns).
 //     is inlined here (ZScript weapons don't auto-inherit the DECORATE chain) so legs /

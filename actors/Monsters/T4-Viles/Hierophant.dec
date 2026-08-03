@@ -88,7 +88,7 @@ Actor Hierophant
 
     Missile2:
       HIER EF 7 Bright A_FaceTarget
-      HIER G 7 Bright A_CustomMissile("Shadowskullball", 26.0)
+      HIER G 7 Bright A_CustomMissile("ElectroSkullBall", 26.0)
       HIER A 3 A_SpidRefire
       HIER A 0 A_Jump(128, "Missile1", "Missile3")
       Goto See
@@ -126,6 +126,22 @@ Actor Hierophant
       HIER P 2
       HIER P 2 A_Pain
       Goto See
+
+    Death.Execution:
+      TNT1 A 0
+      {
+        A_Stopsound;
+        A_FaceTarget;
+        A_NoBlocking;
+      }
+      HIER D 15
+      HIER P 5
+      TNT1 A 0 A_Pain
+      HIER P 10
+      TNT1 A 0 A_Recoil(4)
+      TNT1 A 0 A_GiveToTarget("BPtoken", 4)
+      TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+      Goto Death
 
     Death:
 	  TNT1 AAAAAA 0 A_CustomMissile ("PB_SmallGib", 32, 0, random (150, 210), 2, random (0, 40))
@@ -562,12 +578,10 @@ ACTOR Shadowskullball
    PROJECTILE
    RENDERSTYLE ADD
    ALPHA 0.95
-   +NOTIMEFREEZE
    +THRUGHOST
    +EXPLODEONWATER
    +BLOODSPLATTER
    +SEEKERMISSILE
-   +NOTIMEFREEZE
    +MTHRUSPECIES
    SeeSound "monster/curse1"
    DeathSound "monster/curse2"

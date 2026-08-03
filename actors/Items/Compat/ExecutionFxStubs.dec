@@ -7,10 +7,6 @@ ACTOR XDeathDirectorPart3 : XDeathArm1 {}
 ACTOR XDeathDirectorPart4 : XDeathArm1 {}
 ACTOR Directorcorpses : XDeathArm1 {}
 
-ACTOR DarkCardinalFireSpawner : BDExplosionparticlesSmall {}
-ACTOR XDeathDarkLordHead : XDeathArm1 {}
-ACTOR BeheadedDarkCardinal : XDeathArm1 {}
-
 ACTOR IceDemonIceBloodBig : BDExplosionparticlesSmall {}
 ACTOR XDeathIceDemonHead : XDeathArm1 {}
 ACTOR XDeathIceDemonArm : XDeathArm1 {}

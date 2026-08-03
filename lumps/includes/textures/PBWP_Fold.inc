@@ -169,7 +169,7 @@ Sprite KR7IA0, 64, 64
 	Patch "Graphics/MISC/Karnage/Pickups/RPG7IC.png", 0, 0
 }
 
-// Rainmaker shell HUD bar (Brutal V1.1 art â€” imported via tools/Import-KarnageBrutalExtras.ps1)
+// Rainmaker shell HUD bar (Brutal V1.1 art - imported via tools/Import-KarnageBrutalExtras.ps1)
 Graphic R3SBAR, 100, 20
 {
 	Patch "Graphics/MISC/Karnage/R3SBAR.png", 0, 0

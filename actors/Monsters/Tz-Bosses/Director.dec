@@ -121,6 +121,18 @@ ACTOR Director : SpiderMastermind
     DIRE I 3
     DIRE I 3 A_Pain
     Goto See
+  Death.Execution:
+    TNT1 A 0
+    {
+      A_Stopsound;
+      A_FaceTarget;
+      A_NoBlocking;
+      A_BossDeath;
+      A_Scream;
+      A_RemoveChildren(1, RMVF_EVERYTHING);
+    }
+    TNT1 A 0 A_GiveToTarget("BPtoken", 5)
+    Stop
   Death:
     TNT1 A 0 A_CustomMissile ("RidiculousExplosionSpawner", 30, 0, random (0, 360), 2, 90)
     DIRE J 1 Bright 

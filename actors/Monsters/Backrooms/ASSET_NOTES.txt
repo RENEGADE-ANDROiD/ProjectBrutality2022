@@ -1,0 +1,31 @@
+Backrooms Redux hunters — asset notes
+
+Source mod: **Backrooms Redux: An Immersive Backrooms Experience** by **Kazim_Master**
+(Doomworld / ModDB). Entity concepts also credit Backrooms Fandom Wiki authors.
+
+Integrated classes
+- `PB_BackroomsSanguineFestivus` — rare Baron-spawner guest (~2%). Sprites `SFVI` / `SFVW` / `SFVA`.
+- `PB_BackroomsSmiler` — rare Hell Knight-spawner guest (~2%). Sprite `SMLR` (single Bright frame).
+
+Sprite drops
+- `SPRITES/Monsters/Backrooms/` — PNG lumps extracted from `BackroomsRedux.wad`:
+  `SFVIA0` `SFVIB0` `SFVWA0` `SFVWB0` `SFVWC0` `SFVAA0` `SFVAB0` `SFVAC0` `SMLRA0`.
+
+Sounds
+- Folded from `BackroomsRedux.wad` into **`sounds/monsters/Backrooms/`**:
+  - `RUN.mp3` → logical **`backrooms/run`** — Level ! chase bed (~1 min). Loop-started
+    on `See` (CHAN_6), Melee/Pain return to `SeeChase` so the loop is not restarted,
+    `A_StopSound(6)` on Death.
+  - `EXPL.mp3` → logical **`backrooms/expl`** — death boom (`DeathSound`).
+- Short alert/pain/melee still reuse PB/IWAD names (`knight/*` / `demon/*`, `baron/melee`,
+  `weapons/gswing`). Source actors had no per-entity sight/pain/death lumps.
+- Intentionally **not** folded: `RMUSS` / `RMUSR` (Level ! music beds, multi-MB),
+  `SODA` / `GFBRK` (item / easter-egg cues unrelated to hunters).
+
+Not folded (deferred)
+- `PredatoryPylon` (SCP-173 stare-freeze) — unkillable LOS gimmick left out of this pass.
+- Glory Kill `*GK` wrappers / PDA codex rows — optional follow-ups.
+
+Cvars / ednums
+- `pb_NoSanguineFestivus`, `pb_NoBackroomsSmiler` (also gated by `pb_disablenewenemies`).
+- DoomEdNums `23282` / `23283`.

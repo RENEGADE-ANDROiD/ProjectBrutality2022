@@ -1,0 +1,203 @@
+﻿Class RifleCommandoBeaconCount : Inventory
+{
+Default
+  {
+  inventory.maxamount 1;
+  }
+}
+
+
+Class CommandoSpawnBeacon: Actor
+{
+Default
+{
+  +THRUSPECIES;
+  +SOLID;
+  +SHOOTABLE;
+  +CANPASS;
+  +NOBLOOD;
+  +DOHARMSPECIES;
+  -NOBLOCKMAP;
+  +DONTTHRUST;
+  Monster;
+  -ISMONSTER;
+  -COUNTKILL;
+  Health 100;
+  Radius 10;
+  Height 30;
+  Species "ZombieFlyer";
+}
+  States
+    {
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("GetActorZDist") <= 200, "SpawnFlyers");
+    SpawnTroops:
+		TNT1 A 0;
+		BEAC Z 1;
+		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "SpawnFlyers");
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		TNT1 A 0 A_StartSound("MRNWT",9);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", -2, 1, 8, 0, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("BeaconSpawner2", -10, 40, 10, 0, 0, 0, 0, 1);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 1, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", -2, 1, 8, 0, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("BeaconSpawner2", 40, 10, 10, 0, 0, 0, 1);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 1, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", -2, 1, 8, 0, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("BeaconSpawner2", -10, -40, 10, 0, 0, 0, 0, 1);
+		BEAC Z 105;
+		goto Death1;
+
+    SpawnFlyers:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, 2);
+		Goto SpawnTroops;
+		TNT1 AA 0;
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		TNT1 A 0 A_StartSound("MRNWT",9);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", -10, 10, 200, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("BeaconSpawner", -10, 40, 200, 0, 0, 0, 0, 1);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 1, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", 10, -10, 200, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("BeaconSpawner", 10, -40, 200, 0, 0, 0, 0, 1);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 1, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", 10, 10, 200, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("BeaconSpawner", 80, 10, 200, 0, 0, 0, 0, 1);
+		BEAC Z 105;
+		goto Death1;
+
+    Death:
+  		TNT1 A 0 A_Stop;
+		TNT1 A 0 A_StopSound(6);
+		TNT1 A 0;
+		TNT1 A 0 ;
+		TNT1 A 0 A_Explode(200,200, XF_HURTSOURCE);
+		TNT1 A 0 A_SpawnItemEx ("HandGrenadeExplosion",0,0,30,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItem("WhiteShockwave");
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("BarrelKaboom",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("NewGroundExplosionSmoke",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 AAAAAAA 0 A_SpawnProjectile ("ExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180));
+		TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180));
+		EXPL A 0 Radius_Quake (2, 24, 0, 15, 0);
+		BEXP B 0 BRIGHT A_Scream;
+		TNT1 A 0 A_ALertMonsters;
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_SpawnProjectile ("ShrapnelParticle2", 0, 0, random (0, 360), 2, random (5, 90));
+		TNT1 A 0 A_StartSound("excavator/explode");
+		TNT1 A 0 A_StartSound("FAREXPL", 3);
+		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn");
+		TNT1 A 0 A_SpawnItem("FragGrenadeExplosionSmoke");
+		Stop;
+ 
+    Death1:
+		TNT1 A 1 A_SpawnProjectile ("TeleportFog", 0, 0, 0, 0, 0);
+		stop;
+		}
+ }
+ 
+Class CommandoSpawnBeaconFriendly : CommandoSpawnBeacon
+{
+  States
+    {
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("GetActorZDist") <= 200, "SpawnFlyers");
+    SpawnTroops:
+		TNT1 A 0;
+		BEAC Z 1;
+		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "SpawnFlyers");
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		TNT1 A 0 A_StartSound("MRNWT",9);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", -2, 1, 8, 0, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("Zombie_Man_Friendly", -10, 40, 10, 0, 0, 0, 0, 1);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 1, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", -2, 1, 8, 0, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("Zombie_Man_Friendly", 40, 10, 10, 0, 0, 0, 1);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 1, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", -2, 1, 8, 0, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("Zombie_Man_Friendly", -10, -40, 10, 0, 0, 0, 0, 1);
+		BEAC Z 105;
+		goto Death1;
+
+    SpawnFlyers:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, 2);
+		Goto SpawnTroops;
+		TNT1 AA 0;
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		BEAC Z 3 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 ;
+		TNT1 A 0 A_StartSound("MRNWT",9);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 0, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", -10, 10, 200, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("BeaconSpawner", -10, 40, 200, 0, 0, 0, 0, 1);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 1, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", 10, -10, 200, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("BeaconSpawner", 10, -40, 200, 0, 0, 0, 0, 1);
+		BEAC ZZZZZZZZZZ 5 A_SpawnItem("RedFlare", 1, 4);
+		BEAC Z 1 A_SpawnItemEx ("TeleportFog", 10, 10, 200, 0, 0, 0, 1);
+		BEAC A 0 A_SpawnItemEx ("BeaconSpawner", 80, 10, 200, 0, 0, 0, 0, 1);
+		BEAC Z 105;
+		goto Death1;
+
+    Death1:
+		TNT1 A 1 A_SpawnProjectile ("TeleportFog", 0, 0, 0, 0, 0);
+		stop;
+		}
+ }
+
+
+
+Class BeaconSpawner : RandomSpawner
+{
+Default
+{
+  DropItem "CrackoDemon", 255;
+  DropItem "PB_Cacodemon", 255;
+  DropItem "PB_InfernalCaco", 255;
+  DropItem "PB_Afrit", 255;
+  DropItem "Helemental", 255;
+  DropItem "PB_PainElemental", 255;
+  DropItem "PB_SufferingElemental", 255;
+}
+}
+
+Class BeaconSpawner2 : RandomSpawner
+{
+Default
+{
+  DropItem "PB_PlasmaZombie", 255;
+  DropItem "PB_CarbineZombieman", 255;
+  DropItem "PB_RocketZombie", 255;
+  DropItem "PB_QSGZombie", 255;
+  DropItem "ASGGuy", 255;
+  DropItem "PB_NailgunMajor", 255;
+  DropItem "PB_ZSpecOps", 255;
+  DropItem "PB_DemonTechZombie", 255;
+}
+}

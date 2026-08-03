@@ -1,0 +1,17 @@
+Project Survival Skulker (Twitcher)
+
+Source: Project Survival `actors/Monsters/T4-Viles/Twitcher.dec` (Tag `SKULK?R`),
+sprites `SPRITES/MONSTERS/Viles/Twitcher/` (`VFOD*`), sounds `SOUNDS/MONSTERS/Twitcher/`.
+
+Integrated class
+- `PB_Skulker` — rare Revenant-pack guest (~2%). Helpers: `PB_SkulkerFlee`, trails,
+  melee/jump missiles, `PB_SkulkerSmoke`. Death/XDeath use PB gib burst (`MuchBlood` /
+  `XDeath*` / Nash spurts / `GrowingBloodPool`).
+
+Asset drops
+- `SPRITES/Monsters/Skulker/` — `VFOD*.png`
+- `sounds/monsters/Skulker/` — `Twitcher*.ogg` → logical `skulker/*` in `SNDINFO.txt`
+
+Cvars / ednums
+- `pb_NoSkulker` (+ `pb_disablenewenemies`)
+- DoomEdNum `23284`

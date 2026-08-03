@@ -1,0 +1,150 @@
+// Minimal stubs for Monster Pack fold parents / FX missing from TC.
+
+ACTOR RailNullPuff
+{
+	+NOINTERACTION
+	+NOGRAVITY
+	+PUFFONACTORS
+	+ALWAYSPUFF
+	+BLOODLESSIMPACT
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Stop
+	}
+}
+
+ACTOR TerminatorGreenCloudSmall
+{
+	+NOINTERACTION
+	+NOGRAVITY
+	RenderStyle Add
+	Alpha 0.5
+	Scale 0.5
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Stop
+	}
+}
+
+ACTOR TerminatorGreenCloudMedium : TerminatorGreenCloudSmall { Scale 0.8 }
+ACTOR TerminatorGreenCloudLarge : TerminatorGreenCloudSmall { Scale 1.2 }
+
+ACTOR Hellstartrail
+{
+	+NOINTERACTION
+	+NOGRAVITY
+	RenderStyle Add
+	Alpha 0.6
+	States
+	{
+	Spawn:
+		TNT1 A 3 A_FadeOut(0.1)
+		Loop
+	}
+}
+
+ACTOR GenericXdeathBodies
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	States
+	{
+	Spawn:
+		TNT1 A -1
+		Stop
+	}
+}
+
+ACTOR QueenBFGSmall : QueenPlasmaBlast
+{
+	Scale 0.7
+}
+
+ACTOR QueenGasSpawner
+{
+	Projectile
+	Speed 8
+	Damage 0
+	+NOCLIP
+	+NOGRAVITY
+	States
+	{
+	Spawn:
+		TNT1 A 2 A_Explode(5, 64, 0)
+		TNT1 A 35
+		Stop
+	}
+}
+
+ACTOR DarkLordPortalEffect
+{
+	+NOINTERACTION
+	+NOGRAVITY
+	+CLIENTSIDEONLY
+	RenderStyle Add
+	Alpha 0.7
+	States
+	{
+	Spawn:
+		TNT1 ABCDEF 3 Bright
+		Stop
+	}
+}
+
+ACTOR QueenSBall2 : QueenPlasmaBlast {}
+ACTOR ObjectDummy : Actor
+{
+	+NOINTERACTION
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Stop
+	}
+}
+ACTOR RockDummy : ObjectDummy {}
+ACTOR ObjectTrown : QueenPlasmaBlast { Speed 25 }
+ACTOR RockTrown : QueenPlasmaBlast { Speed 20 }
+
+ACTOR CyberDRocketExplosion : RocketExplosion
+{
+}
+
+ACTOR SoulTowerTrailSpark
+{
+	+NOINTERACTION
+	+NOGRAVITY
+	+CLIENTSIDEONLY
+	RenderStyle Add
+	Alpha 0.8
+	Scale 0.2
+	States
+	{
+	Spawn:
+		PUF2 A 2 Bright A_FadeOut(0.15)
+		Loop
+	}
+}
+
+ACTOR CyanFlyingUpSpark : SoulTowerTrailSpark {}
+ACTOR HieroBalltrailLightnings : SoulTowerTrailSpark {}
+ACTOR HieroUnmakerDoomSeeker
+{
+	Projectile
+	Speed 20
+	Damage 5
+	+SEEKERMISSILE
+	States
+	{
+	Spawn:
+		TNT1 A 1 A_SeekerMissile(10, 20)
+		Loop
+	Death:
+		TNT1 A 1
+		Stop
+	}
+}

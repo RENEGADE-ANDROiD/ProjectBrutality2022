@@ -1,0 +1,184 @@
+﻿class EternalFat : Fatso
+{
+    Default
+    {
+        Health 1500;
+        Radius 48;
+        Height 64;
+        Mass 1000;
+        Speed 8;
+        PainChance 80;
+        Monster;
+		Scale .40;
+        +FLOORCLIP;
+        +BOSSDEATH;
+        MeleeRange 50;
+        SeeSound "EternalFat/Sight";
+        PainSound "EternalFat/Pain";
+        DeathSound "EternalFat/Death";
+        ActiveSound "EternalFat/Active";
+        Obituary "$OB_FATSO";
+		
+    }
+
+    States
+    {
+    Spawn:
+		MANC A 15 A_Look;
+		Loop;
+	See:
+		MANW ABCD 2 A_Chase();
+		TNT1 A 0 A_PlaySound("Eternalfat/Step", CHAN_AUTO);
+		MANW EFGHIJKLMN 2 A_Chase();
+		TNT1 A 0 A_PlaySound("Eternalfat/Step", CHAN_AUTO);
+		MANW OPQR 2 A_Chase();
+		Loop;
+		
+	Melee: 
+		MAML A 2 A_FaceTarget();
+		MAML BCDEFGH 2;
+		TNT1 A 0 A_CustomMeleeAttack(random(1, 10) * 6, "EternalFat/melee");
+		MAML IJKLMNOPQRSTUVWXY 2;
+		Goto See;
+		
+		
+		Missile:
+		TNT1 A 0 A_JumpIfHealthLower(750, "Missile2");
+		TNT1 A 0 A_PlaySound("EternalFat/RaiseGuns", CHAN_AUTO);
+		MANS ABCDEF 2 A_FaceTarget();
+		MANS G 1 A_CustomMissile("BigFireBall",30,30,0,0);
+		MANS HIJKL 2 A_FaceTarget();
+		MANS M 1 A_CustomMissile("BigFireBall",30,-30,0,0);
+		MANS NOPQRSTUVW 2;
+		Goto See;
+		
+	Missile2:
+    MANS A 2 BRIGHT
+    {
+        Radius_Quake(2, 50, 0, 44, 0);
+        A_SpawnItemEx("BaronSigil", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER);
+    }
+
+    MANS BBBBBB 3 BRIGHT
+    {
+        A_FaceTarget();
+        for (int i = 0; i < 360; i += 40)
+        {
+            A_SpawnItemEx(
+                "DarkCyberdemonFloorFire",
+                70, 0, 0,
+                0, 0, 0,
+                i,
+                SXF_TRANSFERPOINTERS | SXF_SETMASTER
+            );
+        }
+    }
+
+    MANS CDEFGH 6 BRIGHT A_FaceTarget();
+
+    TNT1 A 0 A_PlaySound("EternalFat/RaiseGuns", CHAN_AUTO);
+
+    MANS G 1 BRIGHT
+    {
+        A_GiveToChildren("FloorfireToken", 1);
+        A_CustomMissile("BaronHomingBFG", 30, 30, 0, 0);
+    }
+
+    MANS HIJKL 2 BRIGHT A_FaceTarget();
+
+    MANS M 1 BRIGHT
+    {
+        A_CustomMissile("BaronHomingBFG", 30, -30, 0, 0);
+    }
+
+    MANS NOPQRSTU 2 BRIGHT;
+    Goto See;
+		
+		Pain:
+		MANC A 3;
+		MANC A 3 A_Pain;
+		Goto See;
+		
+		Death.ExecutionPinata:
+		 TNT1 A 0{
+		A_GiveToChildren("FloorfireToken",-1);
+		}
+		MANC A 30; 
+		TNT1 A 0
+	{
+		if (Random(0,99) < 40)
+		{
+			A_PlaySound("GloryPunch/Kill", CHAN_AUTO, 2.0);
+		}
+
+		A_SpawnItemEx("GloryHightPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
+	}
+    Goto XDeath;
+
+    Death:
+	Goto XDeath;
+	Death.Execution:
+	 TNT1 A 0{
+		A_GiveToChildren("FloorfireToken",-1);
+		}
+		MANC A 30;   
+    Goto XDeath;
+	XDeath:
+	    FENK ABCEDFG 2 BRIGHT{
+		A_GiveToChildren("FloorfireToken",-1);
+		}
+		FENK A 6 A_Scream;
+		FENK AAAA 0 A_CustomMissile ("RipGuts", 32, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("BloodMistExtraBig", 30, 0, random (0, 360), 2, random (30, 90));
+		TNT1 AA 0 A_CustomMissile ("XDeath2", 30, 0, random (0, 360), 2, random (40, 90));
+		TNT1 A 0 A_SpawnItem("BloodSplasher3");
+	   TNT1 AAAAAAAAAAAAAAA 0 A_SpawnItem("PB_SuperWallRedBlood");
+         TNT1 AAAAAAAAA 0 A_SpawnItem("CeilBloodLauncherLong");
+	TNT1 A 0 {
+	A_SpawnItem ("PB_SuperWallRedBlood");
+	A_SpawnItem ("PB_SuperWallRedBlood");
+	A_SpawnItem ("PB_SuperWallRedBlood");
+	A_SpawnItem ("PB_SuperWallRedBlood");
+	A_SpawnItemEX ("PB_BloodmistLarge", 40, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (30, 90));
+	A_SpawnItemEX ("PB_BloodmistLarge", 40, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (30, 90));
+	A_SpawnItemEX ("PB_BloodmistLarge", 40, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (30, 90));
+	A_SpawnItemEX ("PB_BloodmistLarge", 40, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (30, 90));
+	}
+		TNT1 AA 0 A_CustomMissile ("XDeath3", 30, 0, random (0, 360), 2, random (40, 90));
+		TNT1 AA 0 A_CustomMissile ("XDeath1", 30, 0, random (0, 360), 2, random (40, 90));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece3", random (-5, 5), random (-5, 5));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece", random (-5, 5), random (-5, 5));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece2", random (-5, 5), random (-5, 5));
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItem("BigBloodSpot");
+		FENK ABCDE 2 A_CustomMissile ("Brutal_LiquidBlood2", 50, 0, random (0, 360), 2, random (30, 50));
+		FENK FGHIJ 2 A_CustomMissile ("Brutal_LiquidBlood2", 40, 0, random (0, 360), 2, random (30, 50));
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool"); 
+		FENK KLMNOPQRSTUVWXYZ 2;
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("eternalFly",frandom(-16,16),frandom(-16,16),frandom(-16,16));
+		MAND A -1 A_BossDeath;
+		Stop;
+
+    Raise:
+        FATT R 5;
+        FATT QPONMLK 5;
+        Goto See;
+    }
+}
+
+Class eternalFly : Actor
+{
+	States
+	{
+		Spawn:
+		TNT1 A 1 A_SpawnItemEx ("SwarmFly",frandom(-16,16),frandom(-16,16),frandom(-16,16));
+		TNT1 A 1 A_SpawnItemEx ("SwarmFly",frandom(-32,32),frandom(-32,32),frandom(-32,32));
+		TNT1 A 1 A_SpawnItemEx ("SwarmFly",frandom(-64,64),frandom(-64,64),frandom(-64,64));
+		TNT1 A 1 A_SpawnItemEx ("SwarmFly",frandom(-128,128),frandom(-128,128),frandom(-128,128));
+		TNT1 A -1;
+        Stop;
+	
+	}
+}
+

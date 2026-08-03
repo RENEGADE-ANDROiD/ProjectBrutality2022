@@ -403,6 +403,29 @@ OptionMenu "PB2022_CombatMenu"
 	Slider "Auto-Fatality Distance", "pb_auto_fatality_dist", 64, 400, 4
 	StaticText "pb_auto_fatality_dist (map units).", teal
 	StaticText " "
+	StaticText "======== Status / Drops ========", gold
+	StaticText " "
+	Option "Status Effect Handlers", "pb_status_effects", "OnOff"
+	StaticText "Electric charge / arty slow / ground-fire DoT.", teal
+	StaticText " "
+	Option "Monster Weapon Drops", "pb_weapon_drops", "MonsterDrops"
+	StaticText "0 Off (DECORATE DropItem), 1 Ammo, 2 Weapon.", teal
+	StaticText " "
+	Option "Keep Unupgraded Weapons", "pb_keepweapons", "OnOff"
+	StaticText "When On, optional per-pair keep cvars gate upgrades.", teal
+	StaticText " "
+	Option "Keep Pistol", "pb_keep_pistol", "OnOff"
+	Option "Keep Carbine", "pb_keep_carbine", "OnOff"
+	Option "Keep SSG", "pb_keep_ssg", "OnOff"
+	Option "Keep Revolver", "pb_keep_revolver", "OnOff"
+	StaticText " "
+}
+
+OptionValue "MonsterDrops"
+{
+	0, "Off"
+	1, "Ammo Only"
+	2, "Weapons"
 }
 
 OptionMenu "PB2022_GoreMenu"
@@ -460,7 +483,7 @@ OptionMenu "PB2022_HudMenu"
 	StaticText "======== Helmet & Fullscreen HUD ========", gold
 	StaticText " "
 	Option "Show Helmet Visor", "pb_showhudvisor", YesNo
-	StaticText "pb_showhudvisor — Corner Shell + Glass.", teal
+	StaticText "pb_showhudvisor - Corner Shell + Glass.", teal
 	StaticText " "
 	Submenu "Helmet Visor Options", "PB_HelmetVisorOptions"
 	StaticText " "
@@ -482,6 +505,15 @@ OptionMenu "PB2022_HudMenu"
 	Slider "Damage Indicator Duration", "pb_pbx_dmgind_timer", 10, 70, 5
 	Slider "Damage Indicator Alpha", "pb_pbx_dmgind_alpha", 0.2, 1.0, 0.05
 	Slider "Damage Indicator Scale", "pb_pbx_dmgind_scale", 0.5, 2.0, 0.1
+	StaticText " "
+	StaticText "======== Audio Feel ========", gold
+	StaticText " "
+	Option "Player Footsteps", "cl_footsteps", YesNo
+	StaticText " "
+	Slider "Footstep Volume", "cl_step_volmul", 0.0, 14.0, 0.5
+	Slider "Footstep Delay", "cl_step_delaymul", 0.1, 2.0, 0.05
+	StaticText " "
+	Option "Alternate Bullet Whizby", "pb_altwhiz", YesNo
 	StaticText " "
 	StaticText "======== PDA & Meta ========", gold
 	StaticText " "
@@ -613,10 +645,39 @@ OptionMenu "PB2022_ExtrasMenu"
 	StaticText " "
 	Submenu "Kill Streaks & Power-Up Rewards", "PB_KillstreakOptions"
 	StaticText " "
+	StaticText "======== Bullet Time (SP) ========", gold
+	StaticText " "
+	Option "Enable Bullet Time", "pb_bullettime", "OnOff"
+	StaticText "Single-player only. Off by default. Bind Start/Stop Bullet Time.", teal
+	StaticText " "
+	Option "Allow World Freeze (0x Multiplier)", "pb_bullettime_allow_freeze", "OnOff"
+	StaticText " "
+	Submenu "Bullet Time Options", "PB_BulletTimeMenu"
+	StaticText " "
 	StaticText "======== Other ========", gold
 	StaticText " "
 	Option "Festive Hat Simulator Mode", "PB_HatExtravaganza", "YesOrNo"
 	StaticText " "
+}
+
+OptionMenu "PB_BulletTimeMenu"
+{
+	Title "Bullet Time Options"
+	StaticText "Requires pb_bullettime On. Ignored in netgames.", orange
+	StaticText " "
+	Slider "World Multiplier", "bt_multiplier", 1, 20, 1
+	Slider "Player Movement Multiplier", "bt_player_movement_multiplier", 1, 20, 1
+	Slider "Player Weapons Multiplier", "bt_player_weapon_speed_multiplier", 1, 20, 1
+	Option "Player Model Slowdown", "bt_player_model_slowdown", "OnOff"
+	StaticText " "
+	Slider "Duration (Seconds)", "bt_adrenaline_duration", 5, 120, 5
+	Slider "Adrenaline Regen Speed", "bt_adrenaline_regen_speed", 0, 35, 1
+	Option "Unlimited Bullet Time", "bt_adrenaline_unlimited", "OnOff"
+	StaticText " "
+	Slider "Music Volume During BT", "bt_music_volume", 0.00, 1.00, 0.05, 2
+	Option "White Blink Shader", "bt_shader_white_blink_enable", "OnOff"
+	Option "Blur Shader", "bt_shader_blur_enable", "OnOff"
+	Option "Hide Activation Message", "bt_hide_message", "OnOff"
 }
 
 OptionMenu "PB_2022AdditionsMenu"
@@ -645,19 +706,22 @@ OptionMenu "PB_2022AdditionsMenu"
 	Submenu "$OPTMNU_PB2022_SEC_VISUAL", "RenderingSettings"
 	Submenu "$OPTMNU_PB2022_SEC_EXTRAS", "PB2022_ExtrasMenu"
 	StaticText " "
-	StaticText "======== Menu Shortcuts ========", gold	
+	StaticText "======== Menu Setting Shortcuts ========", gold	
 	StaticText " "
 	NashGoreOption "$BDV22GOREMNU_ENHANCED2022", "$BDV22GOREMNU_ENHANCED2022_TIP", "pb_enhanced_brutality_2022", "OnOff"
 	StaticText " "
 	Option "Damage & Experience Numbers.", "dam_enabled", "DamEnabled"
+	Submenu "Damage Numbers Options", "DamNumsOptions"
 	StaticText " "
 	Option "Hitmarkers", "hm_enabled", "HM_YesNo"
+	StaticText " "
+	Option "Directional Damage Indicators", "pb_pbx_dmgind", "YesNo"
 	StaticText " "
 	Option "Disable Helmet Animation", "pb_NoHelmetAnimation", "OnOff"
 	StaticText " "
 	Option "Disable PB Mugshot", "pb_newmugshot", "NoYes"
 	StaticText " "
-	Slider "Doomguy Fatalities Speed",				"cl_fatalityspeed", 1.0, 3.0, 0.05, 2
+	Slider "Doomguy Fatalities Speed", "cl_fatalityspeed", 1.0, 3.0, 0.05, 2
 	StaticText " "
 	Option "$PB_RESPECT", "pb_respectweapons", "OnOff"
 	StaticText " "
@@ -666,6 +730,22 @@ OptionMenu "PB_2022AdditionsMenu"
 	Option "$PB_DUALSTYLE",	"SingleDualFire", "DualWieldOption"
   	StaticText " "
 	Option "Motion Blur", "mblur", YesNo
+	Submenu "Motion Blur Settings", "MBlurOpts"
+  	StaticText ""
+	Option "Enable Bullet Time", "pb_bullettime", "OnOff"
+	Submenu "Bullet Time Options", "PB_BulletTimeMenu"
+	StaticText " "
+	Option "Status Effect Handlers", "pb_status_effects", "OnOff"
+	StaticText "Electric charge / arty slow / ground-fire DoT.", teal
+	StaticText " "
+	Option "Monster Weapon Drops", "pb_weapon_drops", "MonsterDrops"
+	StaticText "0 Off (DECORATE DropItem), 1 Ammo, 2 Weapon.", teal
+	StaticText " "
+	Option "Keep Unupgraded Weapons", "pb_keepweapons", "OnOff"
+	StaticText " "
+	Option "Enable Kill Streak System", "pb_ks_enable", "OnOff"
+	Submenu "Kill Streaks & Power-Up Rewards Options", "PB_KillstreakOptions"
+	StaticText " "
 }
 
 OptionMenu "GlobalSettings"
@@ -839,12 +919,11 @@ OptionMenu "WeaponSpawns"
 	Title	"--------- Advanced Weapon Spawns ---------"
 	Option "Spawn Revolver", "pb_NoRevolverWeapon", "SpawnOnOff"
 	StaticText "Also Removes Deagle Spawns."
-	StaticText "Weapon Settings → Disable Deagle Upgrade."
+	StaticText "Weapon Settings -> Disable Deagle Upgrade."
 	StaticText " "
 	Option "Spawn Submachine Gun", "pb_NoSMGWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Autoshotgun", "pb_NoASGWeapon", "SpawnOnOff"
-	StaticText " "
 	StaticText " "
 	Option "Spawn Combat Shotgun", "pb_NoCSSGWeapon", "SpawnOnOff"
 	StaticText " "
@@ -856,14 +935,16 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Super Grenade Launcher", "pb_NoSuperGLWeapon", "SpawnOnOff"
 	StaticText " "
-	StaticText " "
 	Option "$PB_OPT_Molotov", "pb_NoMolotov", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn M2 Plasma Rifle", "pb_NoM2PlasmaWeapon", "SpawnOnOff"
+	StaticText " "
 	Option "Spawn UAC Dark Matter Rifle", "pb_NoPB_DarkMatterRifleWeapon", "SpawnOnOff"
+	StaticText " "
 	Option "Spawn Harvester of Souls", "pb_NoPB_HarvesterOfSoulsWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Freezer Rifle", "pb_NoFreezerWeapon", "SpawnOnOff"
+	StaticText " "
 	Option "Spawn Frostburn Device", "pb_NoFrostburnDeviceWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Rail Gun", "pb_NoRailgunWeapon", "SpawnOnOff"
@@ -903,7 +984,9 @@ OptionMenu "WeaponSpawns"
 	Option "Spawn Normal Rifle (Pro-Surv)", "pb_NoPB_NormalRifleWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn XM-21 Sniper", "pb_NoPB_XM21Weapon", "SpawnOnOff"
+	StaticText " "
 	Option "Spawn Anti-Tank Rifle", "pb_NoPB_AntiTankRifleWeapon", "SpawnOnOff"
+	StaticText " "
 	Option "Spawn SPAS-12", "pb_NoPB_SPAS12Weapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Fusil", "pb_NoPB_FusilWeapon", "SpawnOnOff"
@@ -921,7 +1004,6 @@ OptionMenu "WeaponSpawns"
 	Option "Spawn Battle Rifle", "pb_NoBattleRifleWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Pro-Surv Ballista", "pb_NoProSurvBallistaWeapon", "SpawnOnOff"
-	StaticText " "
 	StaticText " "
 	Option "Spawn MG42", "pb_NoMG42Weapon", "SpawnOnOff"
 	StaticText " "
@@ -1100,7 +1182,7 @@ OptionMenu "GameplaySettings"
 	
 	StaticText " "
 	Option "Replace Captured Marines",				"pb_replacemarines", "OnOff"
-	StaticText "Captured Marines → Blursphere Pickups."
+	StaticText "Captured Marines -> Blursphere Pickups."
 	StaticText " "
 	StaticText " "
 	
@@ -1186,7 +1268,7 @@ OptionMenu "RenderingSettings"
 	StaticText " "
 	Option "Alternate Tracers","PB_alttracer", "OnOff"
 	StaticText "Longer Tracers (Rifle / Minigun). Heavy on"
-	StaticText "Minigun fire rate — use Low Graphics if needed."
+	StaticText "Minigun fire rate - use Low Graphics if needed."
 	StaticText " "
 	
 	
@@ -1353,7 +1435,7 @@ OptionMenu "WeaponSettings"
 	Option "Disable Deagle Upgrade",				"pb_nodeagle", "OnOff"
 	StaticText "No Deagle Replacing Revolver Spawn."
 	StaticText "If \"No Revolver\" Is On, Leave This Off."
-	StaticText "See Advanced Weapon Spawns → No Revolver."
+	StaticText "See Advanced Weapon Spawns -> No Revolver."
 	StaticText " "
 	StaticText " ", teal
 	
@@ -1982,14 +2064,15 @@ OptionMenu "PB_HorrorspawnSettings"
 	StaticText "$PB_OPT_PS_FODDER_THRESHOLD_HINT2"
 	StaticText " "
 	StaticText "---------------Horrorspawn variant blocks (On = do not allow)---------------", gold
-	Option "T1 — Fresh horrorspawn", "NoFresh", "OffOn"
-	Option "T1 — Horrorspawn", "NoHorror", "OffOn"
-	Option "T2 — Hunger", "NoHunger", "OffOn"
-	Option "T2 — Melee zombieman", "NoMeleeZombie", "OffOn"
-	Option "T2 — Melee sergeant", "NoMeleeSergeant", "OffOn"
-	Option "T3 — Cyberfodder", "NoCyberFodder", "OffOn"
+	Option "T1 - Fresh horrorspawn", "NoFresh", "OffOn"
+	Option "T1 - Horrorspawn", "NoHorror", "OffOn"
+	Option "T2 - Hunger", "NoHunger", "OffOn"
+	Option "T2 - Melee zombieman", "NoMeleeZombie", "OffOn"
+	Option "T2 - Melee sergeant", "NoMeleeSergeant", "OffOn"
+	Option "T3 - Cyberfodder", "NoCyberFodder", "OffOn"
+	Option "All tiers - Carcass (Clear Sky)", "NoCarcass", "OffOn"
 	Option "$PB_OPT_PS_PASSIVE_SPAWN", "pb_NoProjectSurvivalPassive", "SpawnOnOff"
-	Option "T4 — Unwilling", "NoUnwilling", "OffOn"
+	Option "T4 - Unwilling", "NoUnwilling", "OffOn"
 	StaticText " "
 }
 
@@ -2012,9 +2095,9 @@ OptionMenu "SummonsSettings"
 	Slider "Ethereal soul (Rahovart line)", "ESoulCount", -1, 100, 1
 	StaticText " "
 	StaticText "---------------Default lost soul summons---------------", gold
-	Slider "Rahovart — default lost souls", "RahoLSCount", -1, 100, 1
+	Slider "Rahovart - default lost souls", "RahoLSCount", -1, 100, 1
 	StaticText " "
-	Slider "Maledict — default lost souls (5 per use)", "D3MaledictLSCount", -1, 100, 1
+	Slider "Maledict - default lost souls (5 per use)", "D3MaledictLSCount", -1, 100, 1
 	StaticText " "
 }
 
@@ -2060,8 +2143,9 @@ OptionMenu "SimplerMonsterSettings"
 
 	StaticText "---- Monster Pack add-ons (Crackodemon, Hellduke, Director, ...) ----"
 	StaticText " ", teal
-	Command "Enable all Monster Pack add-ons",  "set NoAfrit 0; set NoAracnorb 0; set NoAracnorbQueen 0; set NoCrackodemon 0; set NoCyberSatyr 0; set NoD3HellGuardian 0; set NoD3Maledict 0; set NoDarkDisciple 0; set NoDarkLord 0; set NoDirector 0; set NoESoul 0; set NoHellduke 0; set NoHellSmith 0; set NoHelemental 0; set NoHierophant 0; set NoIceDemon 0; set NoMarauder 0; set NoObsRavager 0; set NoOverlord 0; set NoPyrodemon 0; set NoQSGDreadTrooper 0; set NoRahovart 0; set NoRifleCommando 0; set NoSatyr 0; set NoTerminator 0"
-	Command "Disable all Monster Pack add-ons", "set NoAfrit 1; set NoAracnorb 1; set NoAracnorbQueen 1; set NoCrackodemon 1; set NoCyberSatyr 1; set NoD3HellGuardian 1; set NoD3Maledict 1; set NoDarkDisciple 1; set NoDarkLord 1; set NoDirector 1; set NoESoul 1; set NoHellduke 1; set NoHellSmith 1; set NoHelemental 1; set NoHierophant 1; set NoIceDemon 1; set NoMarauder 1; set NoObsRavager 1; set NoOverlord 1; set NoPyrodemon 1; set NoQSGDreadTrooper 1; set NoRahovart 1; set NoRifleCommando 1; set NoSatyr 1; set NoTerminator 1"
+	Command "Enable all Monster Pack add-ons",  "set NoAfrit 0; set NoAracnorb 0; set NoAracnorbQueen 0; set NoCrackodemon 0; set NoCyberSatyr 0; set NoD3HellGuardian 0; set NoD3Maledict 0; set NoDarkDisciple 0; set NoDarkLord 0; set NoD16Cyberdemon 0; set NoDirector 0; set NoESoul 0; set NoHellduke 0; set NoHellSmith 0; set NoHelemental 0; set NoHierophant 0; set NoIceDemon 0; set NoMarauder 0; set NoObsRavager 0; set NoOverlord 0; set NoPyrodemon 0; set NoQSGDreadTrooper 0; set NoRahovart 0; set NoRifleCommando 0; set NoSatyr 0; set NoTerminator 0"
+	StaticText " "
+	Command "Disable all Monster Pack add-ons", "set NoAfrit 1; set NoAracnorb 1; set NoAracnorbQueen 1; set NoCrackodemon 1; set NoCyberSatyr 1; set NoD3HellGuardian 1; set NoD3Maledict 1; set NoDarkDisciple 1; set NoDarkLord 1; set NoD16Cyberdemon 1; set NoDirector 1; set NoESoul 1; set NoHellduke 1; set NoHellSmith 1; set NoHelemental 1; set NoHierophant 1; set NoIceDemon 1; set NoMarauder 1; set NoObsRavager 1; set NoOverlord 1; set NoPyrodemon 1; set NoQSGDreadTrooper 1; set NoRahovart 1; set NoRifleCommando 1; set NoSatyr 1; set NoTerminator 1"
 	StaticText " ", teal
 	StaticText " "
 
@@ -2073,16 +2157,16 @@ OptionMenu "SimplerMonsterSettings"
 
 	StaticText "---- Reinforcement (Horrorspawn + optional PS passives) ----"
 	StaticText " ", teal
-	StaticText "PS Shambler/Puker/etc. are main roster — tuned via pb_fodder_passive_threshold.", teal
+	StaticText "PS Shambler/Puker/etc. are main roster - tuned via pb_fodder_passive_threshold.", teal
 	StaticText " ", teal
-	Command "Enable all reinforcement fodder",  "set NoHorror 0; set NoFresh 0; set NoHunger 0; set NoMeleeZombie 0; set NoMeleeSergeant 0; set NoCyberFodder 0; set NoUnwilling 0; set pb_NoProjectSurvivalPassive 0"
-	Command "Disable all reinforcement fodder", "set NoHorror 1; set NoFresh 1; set NoHunger 1; set NoMeleeZombie 1; set NoMeleeSergeant 1; set NoCyberFodder 1; set NoUnwilling 1; set pb_NoProjectSurvivalPassive 1"
+	Command "Enable all reinforcement fodder",  "set NoHorror 0; set NoFresh 0; set NoHunger 0; set NoMeleeZombie 0; set NoMeleeSergeant 0; set NoCyberFodder 0; set NoCarcass 0; set NoUnwilling 0; set pb_NoProjectSurvivalPassive 0"
+	Command "Disable all reinforcement fodder", "set NoHorror 1; set NoFresh 1; set NoHunger 1; set NoMeleeZombie 1; set NoMeleeSergeant 1; set NoCyberFodder 1; set NoCarcass 1; set NoUnwilling 1; set pb_NoProjectSurvivalPassive 1"
 	StaticText " "
 
 	StaticText "---- Boss-tier summons (queen, director, maledict, ...) ----"
 	StaticText " ", teal
-	Command "Enable all boss-tier summons",  "set NoAracnorbQueen 0; set NoD3HellGuardian 0; set NoD3Maledict 0; set NoDirector 0; set NoHellduke 0; set NoHellSmith 0; set NoObsRavager 0; set NoRahovart 0"
-	Command "Disable all boss-tier summons", "set NoAracnorbQueen 1; set NoD3HellGuardian 1; set NoD3Maledict 1; set NoDirector 1; set NoHellduke 1; set NoHellSmith 1; set NoObsRavager 1; set NoRahovart 1"
+	Command "Enable all boss-tier summons",  "set NoAracnorbQueen 0; set NoD3HellGuardian 0; set NoD3Maledict 0; set NoDarkLord 0; set NoD16Cyberdemon 0; set NoDirector 0; set NoHellduke 0; set NoHellSmith 0; set NoObsRavager 0; set NoRahovart 0"
+	Command "Disable all boss-tier summons", "set NoAracnorbQueen 1; set NoD3HellGuardian 1; set NoD3Maledict 1; set NoDarkLord 1; set NoD16Cyberdemon 1; set NoDirector 1; set NoHellduke 1; set NoHellSmith 1; set NoObsRavager 1; set NoRahovart 1"
 	StaticText " "
 	StaticText " "
 
@@ -2165,76 +2249,106 @@ OptionMenu "MonsterPackSettings"
 	StaticText "Same pb_* Toggles as Advanced Monster Spawns."
 	StaticText " "
 	StaticText "---------------Arachnotron + tanks---------------", gold
-	Option "T1 — Zombie tank", "NoZombieTank", "OffOn"
-	Option "T2 — Zombie plasma tank", "NoZombieplasmatank", "OffOn"
-	Option "T3 — Zombie missile tank", "NoZombiemissiletank", "OffOn"
-	Option "T3 — Zombie flyer", "NoZombieFlyer", "OffOn"
-	Option "T4 — Zombie tank elite", "NoZombietankelite", "OffOn"
+	Option "T1 - Zombie tank", "NoZombieTank", "OffOn"
+	Option "T2 - Zombie plasma tank", "NoZombieplasmatank", "OffOn"
+	Option "T3 - Zombie missile tank", "NoZombiemissiletank", "OffOn"
+	Option "T3 - Zombie flyer", "NoZombieFlyer", "OffOn"
+	Option "T4 - Zombie tank elite", "NoZombietankelite", "OffOn"
 	StaticText " "
 	StaticText "---------------Archvile (main PB)---------------", gold
-	Option "T3 — Ice Vile (same as Advanced Monster Spawns)", "pb_NoIceVile", "OffOn"
-	Option "T4 — Fleshwizard (same as Advanced Monster Spawns)", "pb_NoFleshwizard", "OffOn"
+	Option "T3 - Ice Vile (same as Advanced Monster Spawns)", "pb_NoIceVile", "OffOn"
+	Option "T4 - Fleshwizard (same as Advanced Monster Spawns)", "pb_NoFleshwizard", "OffOn"
 	StaticText " "
 	StaticText "---------------Baron of Hell variants---------------", gold
-	Option "T4 — Pyrodemon", "NoPyrodemon", "OffOn"
-	Option "T4 — Dark Disciple", "NoDarkDisciple", "OffOn"
-	Option "T4 — Slayer Knight (Realm667)", "NoSlayerKnight", "OffOn"
-	Option "T4 — Venor (Realm667)", "NoVenor", "OffOn"
+	Option "T4 - Pyrodemon", "NoPyrodemon", "OffOn"
+	Option "T4 - Dark Disciple", "NoDarkDisciple", "OffOn"
+	Option "T4 - Slayer Knight (Realm667)", "NoSlayerKnight", "OffOn"
+	Option "T4 - Venor (Realm667)", "NoVenor", "OffOn"
+	StaticText " "
+	StaticText "---------------Backrooms hunters (rare guests)---------------", gold
+	Option "T4 - Sanguine Festivus Instance (Backrooms)", "pb_NoSanguineFestivus", "OffOn"
+	Option "T4 - Smiler (Backrooms)", "pb_NoBackroomsSmiler", "OffOn"
+	StaticText " "
+	StaticText "---------------Hotel / Skulker (rare guests)---------------", gold
+	Option "T3 - Skulker (Revenant guest)", "pb_NoSkulker", "OffOn"
+	Option "T1 - Mory (Hotel)", "pb_NoHotelMory", "OffOn"
+	Option "T4 - Large Blood Crawler (Hotel)", "pb_NoHotelBloodCrawlerBig", "OffOn"
+	Option "T2 - Ogre (Hotel)", "pb_NoHotelOgre", "OffOn"
+	Option "T2 - Bruiser (Hotel)", "pb_NoHotelBruiser", "OffOn"
+	Option "T2 - Blood Crawler (Hotel)", "pb_NoHotelBloodCrawler", "OffOn"
+	Option "T2 - Void Crawler (Hotel)", "pb_NoHotelVoidCrawler", "OffOn"
+	StaticText " "
+	StaticText "---------------BVCH guests (rare)---------------", gold
+	Option "T3 - Glaucoma (BVCH)", "pb_NoBVCH_Glaucoma", "OffOn"
+	Option "T3 - Witherdemon (BVCH)", "pb_NoBVCH_Witherdemon", "OffOn"
+	Option "T2 - Mauler (BVCH)", "pb_NoBVCH_Mauler", "OffOn"
+	Option "T4 - Overdemoniac (BVCH)", "pb_NoBVCH_Overdemoniac", "OffOn"
+	Option "T1 - Dastard (BVCH)", "pb_NoBVCH_Dastard", "OffOn"
+	Option "T4 - Machina (BVCH)", "pb_NoBVCH_Machina", "OffOn"
+	Option "T1 - Bloodfiend (BVCH)", "pb_NoBVCH_Bloodfiend", "OffOn"
 	StaticText " "
 	StaticText "---------------Cacodemon variants---------------", gold
-	Option "T1 — Aracnorb", "NoAracnorb", "OffOn"
-	Option "T2 — Baby Cacodemon (Realm667)", "NoBabyCaco", "OffOn"
-	Option "T3 — Crackodemon", "NoCrackodemon", "OffOn"
-	Option "T4 — Helemental", "NoHelemental", "OffOn"
-	Option "T4 — Overlord (same as Advanced Monster Spawns)", "pb_NoOverlord", "OffOn"
+	Option "T1 - Aracnorb", "NoAracnorb", "OffOn"
+	Option "T2 - Baby Cacodemon (Realm667)", "NoBabyCaco", "OffOn"
+	Option "T3 - Crackodemon", "NoCrackodemon", "OffOn"
+	Option "T4 - Helemental", "NoHelemental", "OffOn"
+	Option "T4 - Overlord (same as Advanced Monster Spawns)", "pb_NoOverlord", "OffOn"
 	StaticText " "
 	StaticText "---------------Commando---------------", gold
-	Option "T3 — Rifle Commando (PB_ClassicCommando line)", "NoRifleCommando", "OffOn"
+	Option "T3 - Rifle Commando (PB_ClassicCommando line)", "NoRifleCommando", "OffOn"
 	StaticText " "
 	StaticText "---------------Cyberdemon variants---------------", gold
-	Option "T2 — Hellduke", "NoHellduke", "OffOn"
-	Option "T3 — Dark Lord", "NoDarkLord", "OffOn"
-	Option "T4 — Hell Smith", "NoHellSmith", "OffOn"
-	Option "T4 — Obsidian Ravager", "NoObsRavager", "OffOn"
+	Option "T2 - Hellduke", "NoHellduke", "OffOn"
+	Option "T3 - Dark Lord", "NoDarkLord", "OffOn"
+	Option "T3 - Tyrant (D16 Cyberdemon)", "NoD16Cyberdemon", "OffOn"
+	StaticText " "
+	StaticText "PB Staging Eternal showcase:", "White"
+	Option "T4 - Eternal Baron", "pb_NoEternalBaron", "OffOn"
+	Option "T3 - Eternal Mancubus", "pb_NoEternalFat", "OffOn"
+	Option "T3 - Eternal Arachnotron", "pb_NoEternalArachno", "OffOn"
+	Option "T1 - Eternal Soul", "pb_NoEternalSoul", "OffOn"
+	Option "Boss - White Widow", "pb_NoWhiteWidow", "OffOn"
+	Option "T4 - Hell Smith", "NoHellSmith", "OffOn"
+	Option "T4 - Obsidian Ravager", "NoObsRavager", "OffOn"
 	StaticText " "
 	StaticText "---------------Hell Knight variants---------------", gold
-	Option "T2 — Ice Demon", "NoIceDemon", "OffOn"
+	Option "T2 - Ice Demon", "NoIceDemon", "OffOn"
 	StaticText " "
 	StaticText "---------------Imp variants (Realm667)---------------", gold
-	Option "T1 — Blot (Realm667)", "NoBlot", "OffOn"
-	Option "T1 — Possessed Gibs (Realm667)", "NoPossessedGibs", "OffOn"
-	Option "T2 — Vulgar (Realm667)", "NoVulgar", "OffOn"
-	Option "T3 — Fusion Cyber Imp (Realm667)", "NoFusionCyberImp", "OffOn"
-	Option "T2 — Flying Imp (Brutal Doom Plus)", "pb_NoFlyingImp", "OffOn"
+	Option "T1 - Blot (Realm667)", "NoBlot", "OffOn"
+	Option "T1 - Possessed Gibs (Realm667)", "NoPossessedGibs", "OffOn"
+	Option "T2 - Vulgar (Realm667)", "NoVulgar", "OffOn"
+	Option "T3 - Fusion Cyber Imp (Realm667)", "NoFusionCyberImp", "OffOn"
+	Option "T2 - Flying Imp (Brutal Doom Plus)", "pb_NoFlyingImp", "OffOn"
 	StaticText " "
 	StaticText "---------------Lost soul variants---------------", gold
-	Option "T4 — Ethereal soul", "NoESoul", "OffOn"
-	Option "T2 — Drone (Realm667)", "NoDrone", "OffOn"
-	Option "T2 — Blood Ghost (Realm667)", "NoBloodGhost", "OffOn"
-	Option "T2 — Blood Skull (Realm667)", "NoBloodSkull", "OffOn"
+	Option "T4 - Ethereal soul", "NoESoul", "OffOn"
+	Option "T2 - Drone (Realm667)", "NoDrone", "OffOn"
+	Option "T2 - Blood Ghost (Realm667)", "NoBloodGhost", "OffOn"
+	Option "T2 - Blood Skull (Realm667)", "NoBloodSkull", "OffOn"
 	StaticText " "
 	StaticText "---------------Mancubus variants---------------", gold
-	Option "T3 — Terminator", "NoTerminator", "OffOn"
-	Option "T4 — Behemoth (Realm667)", "NoBehemoth", "OffOn"
+	Option "T3 - Terminator", "NoTerminator", "OffOn"
+	Option "T4 - Behemoth (Realm667)", "NoBehemoth", "OffOn"
 	StaticText " "
 	StaticText "---------------Mastermind / spider---------------", gold
-	Option "T2 — D3 Hell Guardian", "NoD3HellGuardian", "OffOn"
-	Option "T3 — Aracnorb Queen", "NoAracnorbQueen", "OffOn"
-	Option "T3 — Maledict", "NoD3Maledict", "OffOn"
-	Option "T4 — Director", "NoDirector", "OffOn"
+	Option "T2 - D3 Hell Guardian", "NoD3HellGuardian", "OffOn"
+	Option "T3 - Aracnorb Queen", "NoAracnorbQueen", "OffOn"
+	Option "T3 - Maledict", "NoD3Maledict", "OffOn"
+	Option "T4 - Director", "NoDirector", "OffOn"
 	StaticText "---------------Pain Elemental---------------", gold
-	Option "T4 — Rahovart", "NoRahovart", "OffOn"
+	Option "T4 - Rahovart", "NoRahovart", "OffOn"
 	StaticText " "
 	StaticText "---------------Pinky variants---------------", gold
-	Option "T2 — Satyr", "NoSatyr", "OffOn"
-	Option "T3 — Cybersatyr", "NoCyberSatyr", "OffOn"
-	Option "T4 — Marauder (pink line)", "NoMarauder", "OffOn"
+	Option "T2 - Satyr", "NoSatyr", "OffOn"
+	Option "T3 - Cybersatyr", "NoCyberSatyr", "OffOn"
+	Option "T4 - Marauder (pink line)", "NoMarauder", "OffOn"
 	StaticText " "
 	StaticText "---------------Revenant---------------", gold
-	Option "T4 — Hierophant", "NoHierophant", "OffOn"
+	Option "T4 - Hierophant", "NoHierophant", "OffOn"
 	StaticText " "
 	StaticText "---------------Zombieman---------------", gold
-	Option "T4 — QSG Dreadtrooper", "NoQSGDreadTrooper", "OffOn"
+	Option "T4 - QSG Dreadtrooper", "NoQSGDreadTrooper", "OffOn"
 	StaticText " "
 }
 
@@ -2407,7 +2521,7 @@ OptionValue "HM_YesNo"
 	1, "$HM_VALUE_YES"
 }
 
-// HitMarkers (Tekish) — folded by TomiikiPro; full options from upstream menudef.txt
+// HitMarkers (Tekish) - folded by TomiikiPro; full options from upstream menudef.txt
 OptionMenu "HM_Options"
 {
 	Title "$HM_MENU_TITLE"

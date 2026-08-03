@@ -1,0 +1,52 @@
+// Minimal HellGhostMonster for Dark Lord summon.
+
+Class HellGhostMonster : Actor
+{
+	Default
+	{
+		Health 100;
+		Radius 16;
+		Height 56;
+		Speed 8;
+		FastSpeed 12;
+		Damage 3;
+		Monster;
+		+NOGRAVITY;
+		+FLOAT;
+		+NOICEDEATH;
+		+DONTFALL;
+		+FLOATBOB;
+		SeeSound "Esoul/sit";
+		DeathSound "Esoul/death";
+		ActiveSound "Esoul/active";
+		PainSound "Esoul/pain";
+		Obituary "%o was haunted by a Hell Ghost.";
+		Species "DarkLord";
+		+THRUSPECIES;
+		+DONTHARMSPECIES;
+	}
+
+	States
+	{
+	Spawn:
+		NREB ABCD 4 Bright A_Look();
+		Loop;
+	See:
+		NREB ABCD 4 Bright A_Chase();
+		Loop;
+	Missile:
+		NREB C 4 Bright A_FaceTarget();
+		NREB C 4 Bright A_SkullAttack();
+		Goto See;
+	Melee:
+		Goto Missile;
+	Pain:
+		NREB C 3 Bright A_Pain();
+		Goto See;
+	Death:
+		NREB E 5 Bright A_NoBlocking();
+		NREB F 5 Bright A_Scream();
+		NREB GHIJ 5 Bright;
+		Stop;
+	}
+}

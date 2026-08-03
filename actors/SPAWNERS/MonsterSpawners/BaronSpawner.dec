@@ -1,4 +1,4 @@
-Actor BaronSpawner replaces BaronOfHell
+﻿Actor BaronSpawner replaces BaronOfHell
 {
 	//$Title Random Baron Spawner
 	//$Sprite UDBGB0
@@ -43,13 +43,14 @@ Actor BaronSpawner replaces BaronOfHell
 		DiceTier2:	
 			TNT1 A 0 A_Jump(256,"BaronPack")
 		DiceTier3:
-			TNT1 A 0 A_Jump(80,"CyberBaronPack")
-			TNT1 A 0 A_Jump(12,"InfernusPack")
+			TNT1 A 0 A_Jump(20,"BelphegorPack")
+			TNT1 A 0 A_Jump(28,"InfernusPack")
+			TNT1 A 0 A_Jump(87,"CyberBaronPack")
 			TNT1 A 0 A_Jump(256,"BaronPack")
 		DiceTier4:
-			TNT1 A 0 A_Jump(50,"BelphegorPack")
-			TNT1 A 0 A_Jump(82,"InfernusPack")
-			TNT1 A 0 A_Jump(88,"CyberBaronPack")
+			TNT1 A 0 A_Jump(46,"BelphegorPack")
+			TNT1 A 0 A_Jump(62,"InfernusPack")
+			TNT1 A 0 A_Jump(82,"CyberBaronPack")
 			TNT1 A 0 A_Jump(256,"BaronPack")
 		DiceDeathWish:
 			TNT1 A 0 A_Jump(54,"BelphegorPack")
@@ -87,8 +88,11 @@ Actor BaronPackSpawner : Demonpickup
 		// Belphegor/Infernus/CyberBaron pack tokens (which run on the ImpSpawner-style dice rolls).
 		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "Realm667Skip")
 		TNT1 A 0 A_Jump(10, "SpawnPB_FrostBaron")
+		TNT1 A 0 A_Jump(8, "SpawnEternalBaron")
 		TNT1 A 0 A_Jump(13, "SpawnRealm667Venor")
 		TNT1 A 0 A_Jump(5, "SpawnRealm667SlayerKnight")
+		TNT1 A 0 A_Jump(5, "SpawnBackroomsSanguineFestivus")
+		TNT1 A 0 A_Jump(5, "SpawnHotelBloodCrawlerBig")
 		Realm667Skip:
 		TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 		TNT1 A 0 A_JumpIfInventory("IsInfernus", 1, "SpawnInfernus")
@@ -125,6 +129,18 @@ Actor BaronPackSpawner : Demonpickup
 	SpawnPB_FrostBaron:
 		TNT1 A 0 A_JumpIf(GetCvar("pb_NoFrostBaron")==1, "Realm667Skip")
 		TNT1 A 0 A_SpawnItemEx("PB_FrostBaron",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnEternalBaron:
+		TNT1 A 0 A_JumpIf(GetCvar("pb_NoEternalBaron")==1, "Realm667Skip")
+		TNT1 A 0 A_SpawnItemEx("EternalBaron",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnBackroomsSanguineFestivus:
+		TNT1 A 0 A_JumpIf(GetCvar("pb_NoSanguineFestivus")==1, "Realm667Skip")
+		TNT1 A 0 A_SpawnItemEx("PB_BackroomsSanguineFestivus",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnHotelBloodCrawlerBig:
+		TNT1 A 0 A_JumpIf(GetCvar("pb_NoHotelBloodCrawlerBig")==1, "Realm667Skip")
+		TNT1 A 0 A_SpawnItemEx("PB_HotelBloodCrawlerBig",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	}
 }

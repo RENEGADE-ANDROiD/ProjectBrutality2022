@@ -1,3 +1,15 @@
+actor IllusionsCount : Inventory
+{
+  Inventory.MaxAmount 4
+  +INVENTORY.UNDROPPABLE
+}
+
+actor CantDuplicate : Inventory
+{
+  Inventory.MaxAmount 1
+  +INVENTORY.UNDROPPABLE
+}
+
 actor AracnorbQueen
 {
   //$Category Monsters
@@ -78,9 +90,51 @@ actor AracnorbQueen
     ARNQ D 6 A_MeleeAttack
     Goto See
   Missile:
+	TNT1 A 0 A_JumpIfInventory("CantDuplicate", 1, "MissileNoIllusions")
+	TNT1 A 0 A_Jump(48, "Illusions")
 	TNT1 A 0 A_Jump(96, "BFG")
 	TNT1 A 0 A_JumpIfCloser(512, "CloseRange")
 	Goto LongRange
+  MissileNoIllusions:
+	TNT1 A 0 A_Jump(96, "BFG")
+	TNT1 A 0 A_JumpIfCloser(512, "CloseRange")
+	Goto LongRange
+  Illusions:
+	TNT1 A 0 A_ScaleVelocity(0)
+	TNT1 A 0 A_GiveInventory("CantDuplicate", 1)
+	TNT1 A 0 A_ChangeFlag("NOPAIN", 1)
+	ARNQ F 0 A_SetInvulnerable
+	ARNQ F 1 A_PlaySound("monster/heltel")
+	ARNQ F 1 A_SetTranslucent(0.90)
+	ARNQ F 1 A_SetTranslucent(0.80)
+	ARNQ F 1 A_SetTranslucent(0.70)
+	ARNQ F 1 A_SetTranslucent(0.60)
+	ARNQ F 1 A_SetTranslucent(0.50)
+	ARNQ F 1 A_SetTranslucent(0.40)
+	ARNQ F 1 A_SetTranslucent(0.30)
+	ARNQ F 1 A_SetTranslucent(0.20)
+	ARNQ F 1 A_SetTranslucent(0.10)
+  HocusPocus:
+	TNT1 A 0 A_SpawnItemEx("AracnorbQueenIllusion", random(-50, 50), random(-50, 50), random(-50, 50), 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_GiveInventory("IllusionsCount", 1)
+	TNT1 A 0 A_JumpIfInventory("IllusionsCount", 3, "IllusionsContinue")
+	TNT1 A 0 A_Jump(256, "HocusPocus")
+  IllusionsContinue:
+	TNT1 A 0 A_ScaleVelocity(0)
+	TNT1 A 0 A_PlaySound("monster/heltel")
+	ARNQ F 1 A_SetTranslucent(0.10)
+	ARNQ F 1 A_SetTranslucent(0.20)
+	ARNQ F 1 A_SetTranslucent(0.30)
+	ARNQ F 1 A_SetTranslucent(0.40)
+	ARNQ F 1 A_SetTranslucent(0.50)
+	ARNQ F 1 A_SetTranslucent(0.60)
+	ARNQ F 1 A_SetTranslucent(0.70)
+	ARNQ F 1 A_SetTranslucent(0.80)
+	ARNQ F 1 A_SetTranslucent(0.90)
+	ARNQ F 1 A_SetTranslucent(1.0)
+	TNT1 A 0 A_UnSetInvulnerable
+	TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+	Goto See
   CloseRange:
     TNT1 A 0 A_Jump(176, "RapidFire")
 	Goto SpreadFire
@@ -159,9 +213,27 @@ actor AracnorbQueen
     ARNQ F 0 A_custommissile("QueenPainPlasmaBlast",75,0,305,32,0)
     ARNQ F 0 A_custommissile("QueenPainPlasmaBlast",75,0,325,32,0)
     ARNQ F 0 A_custommissile("QueenPainPlasmaBlast",75,0,345,32,0)
-	ARNQ F 4 A_Pain
+    ARNQ F 4 A_Pain
     Goto See
+  Death.Execution:
+    TNT1 A 0
+    {
+      A_Stopsound;
+      A_FaceTarget;
+      A_NoBlocking;
+      A_BossDeath;
+      A_KillChildren("NODAMAGE", KILS_FOILINVUL, "AracnorbQueenIllusion");
+    }
+    ARNQ B 7
+    ARNQ C 7
+    TNT1 A 0 A_Pain
+    ARNQ F 14
+    TNT1 A 0 A_Recoil(4)
+    TNT1 A 0 A_GiveToTarget("BPtoken", 5)
+    TNT1 A 0 A_SpawnItemEx("GloryHightPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+    Goto Death
   Death:
+    TNT1 A 0 A_KillChildren("NODAMAGE", KILS_FOILINVUL, "AracnorbQueenIllusion")
     TNT1 AAAAAA 0 A_CustomMissile ("ExplosionSpawner", 50, 0, random (0, 360), 2, random (0, 360))
     TNT1 AAAA 0 A_CustomMissile ("SuperGoreSPawner", 110, 0, random (0, 360), 2, random (0, 180))
     TNT1 AAAAAAA 0 A_CustomMissile ("BloodMistXXBig", 90, 0, random (0, 360), 2, random (70, 90))

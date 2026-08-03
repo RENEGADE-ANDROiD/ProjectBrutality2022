@@ -1,5 +1,5 @@
 // =============================================================================
-// PB_Deagle  â€”  Desert Eagle .50, full ZScript port from PB Staging.
+// PB_Deagle  -  Desert Eagle .50, full ZScript port from PB Staging.
 //
 // Source : PB Staging zscript/Weapons/Slot2/Deagle.zs (PBv0.3.X_Final).
 // Replaces: actors/Weapons/Slot2/Deagle.dec (DECORATE version retired with this ZScript port).
@@ -1096,7 +1096,7 @@ class PB_Deagle : PB_WeaponBase
 }
 
 
-// 8-round magazines (was 12 in PB 2022 DECORATE â€” staging matches real-world).
+// 8-round magazines (was 12 in PB 2022 DECORATE - staging matches real-world).
 class DeagleAmmo : Ammo
 {
 	default

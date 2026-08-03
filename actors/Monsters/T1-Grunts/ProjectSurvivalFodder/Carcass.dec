@@ -1,0 +1,185 @@
+// Clear Sky Carcass — folded from Brutal Voxel Cyber Horror Monster Mix
+// (actors/clearsky/carcass.txt). Fodder-pool guest; burrowed + rock FX omitted
+// (ROC* collide with Realm667 Devilworms sprites).
+
+Actor Carcass
+{
+	Health 33
+	GibHealth 15
+	Radius 16
+	Height 56
+	Speed 6
+	Mass 100
+	PainChance 200
+	PainChance "Kick", 255
+	PainChance "ExtremePunches", 255
+	PainChance "Stun", 255
+	PainChance "Melee", 255
+	Monster
+	+FLOORCLIP
+	+QUICKTORETALIATE
+	+DONTHARMCLASS
+	+DONTHARMSPECIES
+	+DONTHURTSPECIES
+	+THRUSPECIES
+	+NOINFIGHTING
+	+CANNOTPUSH
+	-CANUSEWALLS
+	-CANPUSHWALLS
+	-ACTIVATEMCROSS
+	-ACTIVATEPCROSS
+	Species "Fodder"
+	Tag "Carcass"
+	SeeSound "Carcass/See"
+	PainSound "Carcass/Pain"
+	DeathSound "Carcass/Death"
+	ActiveSound "Carcass/Active"
+	MeleeThreshold 64
+	MaxTargetRange 100
+	MinMissileChance 10
+	Obituary "%o was melted by the Carcass."
+	HitObituary "%o was eaten by the Carcass."
+	States
+	{
+	Spawn:
+		CARC A 10 A_Look
+		Loop
+	See:
+		CARC AABBCCDD 3 A_Chase
+		Loop
+	Melee:
+		CARC E 0 A_PlaySound("Carcass/Attack")
+		CARC EF 6 A_FaceTarget
+		CARC G 8 A_CustomMeleeAttack(Random(3,5)*3, "misc/xdeath4")
+		Goto See
+	Missile:
+		CARC EF 8 A_FaceTarget
+		CARC G 0 A_PlaySound("Carcass/Vomit")
+		CARC G 0 A_CustomMissile("BVCH_VomitBall1", 48, 0, random(-10,10), 2, random(10,20))
+		CARC G 0 A_CustomMissile("BVCH_VomitBall2", 48, 0, random(-10,10), 2, random(10,20))
+		CARC G 0 A_CustomMissile("BVCH_VomitBall3", 48, 0, random(-10,10), 2, random(10,20))
+		CARC FG 8 A_FaceTarget
+		Goto See
+	Pain:
+		CARC H 2
+		CARC H 2 A_Pain
+		Goto See
+	Death:
+		CARC I 7
+		CARC J 7 A_Scream
+		CARC K 7 A_NoBlocking
+		CARC L 5
+		CARC L 0 A_SpawnItemEx("BVCH_DeadCarcass",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+		Stop
+	XDeath:
+		CARC I 5 A_XScream
+		CARC J 5 A_NoBlocking
+		CARC KL 5
+		CARC L -1
+		Stop
+	Raise:
+		CARC LKJI 5
+		Goto See
+	}
+}
+
+Actor BVCH_DeadCarcass
+{
+	Radius 12
+	Height 12
+	Mass 99999
+	Health 33
+	Monster
+	+FLOORCLIP
+	-COUNTKILL
+	+LOOKALLAROUND
+	-SOLID
+	+NOTELEPORT
+	+MOVEWITHSECTOR
+	+CORPSE
+	+NEVERTARGET
+	States
+	{
+	Spawn:
+		CARC M 0
+		Goto Waiting
+	Waiting:
+		CARC M 5
+		CARC M 0 A_GiveInventory("BVCH_CarcassResurrectCounter", 1)
+		CARC M 0 A_JumpIfInventory("BVCH_CarcassResurrectCounter", 25, "BodyTransform")
+		Loop
+	BodyTransform:
+		CARC M 0 A_Jump(85, "Resurrect")
+	StayDead:
+		CARC M -1
+		Stop
+	Resurrect:
+		CRCR A 0 A_XScream
+		CRCR A 4
+		CRCR BCDEF 4
+		CRCR A 0 A_SpawnItemEx("Carcass",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
+		Stop
+	Death:
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 1
+		Stop
+	}
+}
+
+Actor BVCH_CarcassResurrectCounter : Inventory
+{
+	Inventory.MaxAmount 25
+}
+
+Actor BVCH_VomitBall1
+{
+	Radius 4
+	Height 4
+	Speed 14
+	Damage 6
+	Scale 0.3
+	Projectile
+	-NOGRAVITY
+	+BLOODLESSIMPACT
+	DamageType Acid
+	Gravity 2.0
+	SeeSound ""
+	DeathSound "Carcass/VomitHit"
+	States
+	{
+	Spawn:
+		VOMI ABCDEF 2 Bright A_SpawnItemEx("BVCH_VomitTrail",0,0,0,0,0,frandom(0,-1),0,0)
+		Loop
+	Death:
+		VOMI G 0 A_SetScale(0.8)
+		VOMI G 0 A_Explode(8, 48, 0)
+		VOMI GHIJKL 2 Bright
+		Stop
+	}
+}
+
+Actor BVCH_VomitBall2 : BVCH_VomitBall1 { Speed 16 }
+Actor BVCH_VomitBall3 : BVCH_VomitBall1 { Speed 18 }
+
+Actor BVCH_VomitTrail
+{
+	+CLIENTSIDEONLY
+	+FORCEXYBILLBOARD
+	+NOINTERACTION
+	+NOCLIP
+	Scale 0.02
+	RenderStyle Add
+	Alpha 0.9
+	-NOGRAVITY
+	+LOWGRAVITY
+	States
+	{
+	Spawn:
+		BVSP A 3
+		TNT1 A 0 A_Jump(128, "FadeOut")
+		Loop
+	FadeOut:
+		BVSP A 3 A_FadeOut(0.1)
+		Loop
+	}
+}
