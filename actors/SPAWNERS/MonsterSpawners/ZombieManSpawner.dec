@@ -139,6 +139,9 @@ Actor ZombieManPackSpawner : Demonpickup
 	{
 	Spawn:
 	TNT1 A 3
+	TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "GuestSkip")
+	TNT1 A 0 A_Jump(5, "SpawnBVCH_Bloodfiend")
+	GuestSkip:
 	TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")	
 	TNT1 A 0 A_JumpIfInventory("IsRifleCommando", 1, "SpawnRifleCommando")
 	TNT1 A 0 A_JumpIfInventory("IsPlasmaZombie", 1, "SpawnPlasmaZombie")
@@ -151,6 +154,10 @@ Actor ZombieManPackSpawner : Demonpickup
 	TNT1 A 0 A_JumpIfInventory("IsHelmetZombieMan", 1, "SpawnHelmetZombieMan")
 	TNT1 A 0 A_JumpIfInventory("IsNormalZombieMan", 1, "SpawnNormalZombieMan")
 	Loop
+	SpawnBVCH_Bloodfiend:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoBVCH_Bloodfiend")==1, "GuestSkip")
+	TNT1 A 0 A_SpawnItemEx("PB_BVCH_Bloodfiend",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Stop
 	RandomSpawn:
 	TNT1 A 0 A_Jump(256, "SpawnScientistZombie2", "SpawnRifleCommando", "SpawnPlasmaZombie", "SpawnMinigunZombie", "SpawnCarbineZombie", "SpawnScientistZombie", "SpawnHelmetPistolZombieMan", "SpawnPistolZombieMan", "SpawnHelmetZombieMan", "SpawnNormalZombieMan")
 	SpawnMixedZombieman:

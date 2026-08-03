@@ -72,11 +72,19 @@ Actor HellKnightPackSpawner : Demonpickup
 	{
 	Spawn: 	// Checks for the tokens distributed above and spawns the correct monster accordingly
 		TNT1 A 3
+		// Backrooms Smiler guest (~5/256 ~2%; gated by pb_disablenewenemies + pb_NoBackroomsSmiler).
+		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "GuestSkip")
+		TNT1 A 0 A_Jump(5, "SpawnBackroomsSmiler")
+		GuestSkip:
 		TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 		TNT1 A 0 A_JumpIfInventory("IsPaladin", 1, "SpawnPaladin")
 		TNT1 A 0 A_JumpIfInventory("IsCyberKnight", 1, "SpawnCyberKnight")
 		TNT1 A 0 A_JumpIfInventory("IsHellKnight", 1, "SpawnHellKnight")
 		Loop
+	SpawnBackroomsSmiler:
+		TNT1 A 0 A_JumpIf(GetCvar("pb_NoBackroomsSmiler")==1, "GuestSkip")
+		TNT1 A 0 A_SpawnItemEx("PB_BackroomsSmiler",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
 	RandomSpawn:
 		TNT1 A 0 A_Jump(256, "SpawnPaladin", "SpawnCyberKnight", "SpawnHellKnight")
 	SpawnPaladin:

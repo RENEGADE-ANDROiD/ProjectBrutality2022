@@ -489,6 +489,30 @@ DoomEdNums
 	23279 = EternalArachno
 	23280 = EternalSoul
 	23281 = WhiteWidow
+	23282 = PB_BackroomsSanguineFestivus
+	23283 = PB_BackroomsSmiler
+	23284 = PB_Skulker
+	23285 = PB_HotelMory
+	23286 = PB_HotelBloodCrawlerBig
+	23287 = PB_HotelOgre
+	23288 = PB_HotelBruiser
+	23289 = PB_HotelBloodCrawler
+	23290 = PB_HotelVoidCrawler
+	23291 = PB_HotelGorePile1
+	23292 = PB_HotelGorePile2
+	23293 = PB_HotelGorePile3
+	23294 = PB_HotelGorePile4
+	23295 = PB_HotelGoreHang1
+	23296 = PB_HotelGoreHang2
+	23297 = PB_HotelGoreHang3
+	23298 = PB_HotelGoreHang4
+	23299 = PB_BVCH_Glaucoma
+	23300 = PB_BVCH_Witherdemon
+	23301 = PB_BVCH_Mauler
+	23302 = PB_BVCH_Overdemoniac
+	23303 = PB_BVCH_Dastard
+	23304 = PB_BVCH_Machina
+	23305 = PB_BVCH_Bloodfiend
 	// Clear Sky / BVCH map ednum (same class)
 	21550 = Carcass
 

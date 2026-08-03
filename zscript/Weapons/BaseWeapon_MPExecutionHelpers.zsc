@@ -3,7 +3,7 @@ extend class PB_WeaponBase
 	bool executionBlueBlood;
 	bool executionGreenBlood;
 
-	// Side-effect-free: true only when PB_ExecutionHandlerString has a real kit.
+	// Side-effect-free: true when PB_ExecutionHandlerString has a dedicated kit strip.
 	clearscope static bool PB_HasExperimentalExecutionKit(Actor monster)
 	{
 		if (monster == null)
@@ -71,9 +71,33 @@ extend class PB_WeaponBase
 		}
 	}
 
+	// Staging-style roster gate: any living COUNTKILL (kits preferred in the handler).
 	clearscope static bool PB_IsExperimentalExecutionTarget(Actor monster)
 	{
-		return PB_HasExperimentalExecutionKit(monster);
+		if (monster == null || monster.health <= 0 || monster.bDORMANT)
+			return false;
+		return monster.bCountKill;
+	}
+
+	// Staging actorCanBeExecuted health thresholds (PowerStrength = berserk).
+	clearscope static bool PB_ActorCanBeExecuted(Actor monster, Actor viewer = null)
+	{
+		if (monster == null || monster.health < 1 || monster.bDORMANT)
+			return false;
+		if (!monster.bCountKill)
+			return false;
+
+		int targetMaxHealth = monster.spawnHealth();
+		int targetCurrentHealth = monster.health;
+
+		if (viewer && viewer.CountInv("PowerStrength") >= 1
+			&& (targetCurrentHealth <= targetMaxHealth * 0.25 || targetCurrentHealth <= 150))
+			return true;
+
+		if (targetCurrentHealth < targetMaxHealth * 0.20 || targetCurrentHealth <= 54)
+			return true;
+
+		return false;
 	}
 	action bool PB_GetExecutionBlueBlood(){
 		return invoker.executionBlueBlood;
@@ -1160,9 +1184,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 		case 'OverLord':
 			return PB_ExecutionOverLord();
 		default:
-			A_Print("\cgExecution \c-failed");
-			PB_UnsetPlayerExecutionProperties();
-			return "Execution_Unavailable";
+			// Staging fallback: shared P1NK/KIC* tear strip for kit-less COUNTKILL targets.
+			return PB_ExecuteGeneric();
 		}
 	}
 }

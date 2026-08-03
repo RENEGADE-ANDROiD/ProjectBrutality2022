@@ -6449,5 +6449,203 @@ EternalFatRaiseGuns2 "sounds/monsters/StagingEternal/EternalFat/RaiseGuns2.ogg"
 EternalFatRaiseGuns3 "sounds/monsters/StagingEternal/EternalFat/RaiseGuns3.ogg"
 
 
+// Backrooms Redux hunters (Kazim_Master) — Level ! chase bed + death boom.
+// RUN is ~1min ambience; looped on CHAN_6 while chasing, stopped on Death.
+backrooms/run					"sounds/monsters/Backrooms/RUN.mp3"
+$volume		backrooms/run			0.65
+$limit		backrooms/run			2
+$rolloff	backrooms/run			200 1200
+backrooms/expl					"sounds/monsters/Backrooms/EXPL.mp3"
+$volume		backrooms/expl			0.9
+$limit		backrooms/expl			2
+
+// ===== The Hotel: Lost Contact guests (Hevn_Cross-90eks) =====
+moryse1							"sounds/monsters/Hotel/MORYSE1.wav"
+moryse2							"sounds/monsters/Hotel/MORYSE2.wav"
+moryse3							"sounds/monsters/Hotel/MORYSE3.wav"
+moryse4							"sounds/monsters/Hotel/MORYSE4.wav"
+$random mory/Sight { moryse1 moryse2 moryse3 moryse4 }
+morydie							"sounds/monsters/Hotel/MORYDIE.wav"
+moryatk							"sounds/monsters/Hotel/MORYATK.wav"
+hotel/morypain					"sounds/monsters/Hotel/MORYSE3.wav"
+
+hotel/monact1					"sounds/monsters/Hotel/MONACT1.wav"
+hotel/monact2					"sounds/monsters/Hotel/MONACT2.wav"
+hotel/monact3					"sounds/monsters/Hotel/MONACT3.wav"
+$random hotel/act { hotel/monact1 hotel/monact2 hotel/monact3 }
+hotel/mondth1					"sounds/monsters/Hotel/MONDTH.wav"
+hotel/mondth2					"sounds/monsters/Hotel/MONDTH2.wav"
+hotel/mondth3					"sounds/monsters/Hotel/MONDTH3.wav"
+$random hotel/death { hotel/mondth1 hotel/mondth2 hotel/mondth3 }
+hotel/pain						"sounds/monsters/Hotel/MONPN.wav"
+hotel/hit						"sounds/monsters/Hotel/HIT2.wav"
+hotel/crawl						"sounds/monsters/Hotel/MONACT1.wav"
+hotel/crwlwl					"sounds/monsters/Hotel/CRWLWL.ogg"
+hotel/crwlsee					"sounds/monsters/Hotel/CRWLSEE.ogg"
+
+hotel/shotgun					"sounds/monsters/Hotel/SHOTGUN7.ogg"
+hotel/shotguncock				"sounds/monsters/Hotel/SHOTGNCK.wav"
+hotel/smg						"sounds/monsters/Hotel/SMGF.wav"
+
+hotel/ebss1						"sounds/monsters/Hotel/EBSS1.wav"
+hotel/ebss2						"sounds/monsters/Hotel/EBSS2.wav"
+hotel/ebss3						"sounds/monsters/Hotel/EBSS3.wav"
+hotel/ebss4						"sounds/monsters/Hotel/EBSS4.wav"
+hotel/ebss5						"sounds/monsters/Hotel/EBSS5.wav"
+hotel/ebss6						"sounds/monsters/Hotel/EBSS6.wav"
+$random hotel/bruisersee { hotel/ebss1 hotel/ebss2 hotel/ebss3 hotel/ebss4 hotel/ebss5 hotel/ebss6 }
+hotel/ebsp1						"sounds/monsters/Hotel/EBSP1.mp3"
+hotel/ebsp2						"sounds/monsters/Hotel/EBSP2.mp3"
+hotel/ebsp3						"sounds/monsters/Hotel/EBSP3.mp3"
+hotel/ebsp4						"sounds/monsters/Hotel/EBSP4.mp3"
+hotel/ebsp5						"sounds/monsters/Hotel/EBSP5.mp3"
+hotel/ebsp6						"sounds/monsters/Hotel/EBSP6.mp3"
+hotel/ebsp7						"sounds/monsters/Hotel/EBSP7.mp3"
+hotel/ebsp8						"sounds/monsters/Hotel/EBSP8.mp3"
+hotel/ebsp9						"sounds/monsters/Hotel/EBSP9.mp3"
+hotel/ebsp10					"sounds/monsters/Hotel/EBSP10.mp3"
+hotel/ebsp11					"sounds/monsters/Hotel/EBSP11.mp3"
+hotel/ebsp12					"sounds/monsters/Hotel/EBSP12.mp3"
+hotel/ebsp13					"sounds/monsters/Hotel/EBSP13.wav"
+$random hotel/bruiserpain { hotel/ebsp1 hotel/ebsp2 hotel/ebsp3 hotel/ebsp4 hotel/ebsp5 hotel/ebsp6 hotel/ebsp7 hotel/ebsp8 hotel/ebsp9 hotel/ebsp10 hotel/ebsp11 hotel/ebsp12 hotel/ebsp13 }
+hotel/ebsd1						"sounds/monsters/Hotel/EBSD1.mp3"
+hotel/ebsd2						"sounds/monsters/Hotel/EBSD2.mp3"
+hotel/ebsd3						"sounds/monsters/Hotel/EBSD3.mp3"
+hotel/ebsd4						"sounds/monsters/Hotel/EBSD4.mp3"
+hotel/ebsd5						"sounds/monsters/Hotel/EBSD5.mp3"
+hotel/ebsd6						"sounds/monsters/Hotel/EBSD6.mp3"
+hotel/ebsd7						"sounds/monsters/Hotel/EBSD7.mp3"
+hotel/ebsd8						"sounds/monsters/Hotel/EBSD8.wav"
+hotel/ebsd9						"sounds/monsters/Hotel/EBSD9.mp3"
+hotel/ebsd10					"sounds/monsters/Hotel/EBSD10.wav"
+hotel/ebsd11					"sounds/monsters/Hotel/EBSD11.mp3"
+hotel/ebsd12					"sounds/monsters/Hotel/EBSD12.mp3"
+$random hotel/bruiserdeath { hotel/ebsd1 hotel/ebsd2 hotel/ebsd3 hotel/ebsd4 hotel/ebsd5 hotel/ebsd6 hotel/ebsd7 hotel/ebsd8 hotel/ebsd9 hotel/ebsd10 hotel/ebsd11 hotel/ebsd12 }
+
+hotel/cswmsee1					"sounds/monsters/Hotel/CSWMSEE1.wav"
+hotel/cswmsee2					"sounds/monsters/Hotel/CSWMSEE2.wav"
+hotel/cswmsee3					"sounds/monsters/Hotel/CSWMSEE3.wav"
+$random hotel/ogresee { hotel/cswmsee1 hotel/cswmsee2 hotel/cswmsee3 }
+hotel/cswmfal1					"sounds/monsters/Hotel/CSWMFAL1.wav"
+hotel/cswmfal2					"sounds/monsters/Hotel/CSWMFAL2.wav"
+hotel/cswmfal3					"sounds/monsters/Hotel/CSWMFAL3.wav"
+$random hotel/ogrefall { hotel/cswmfal1 hotel/cswmfal2 hotel/cswmfal3 }
+hotel/cswmact1					"sounds/monsters/Hotel/CSWMACT1.wav"
+hotel/cswmact2					"sounds/monsters/Hotel/CSWMACT2.wav"
+hotel/cswmact3					"sounds/monsters/Hotel/CSWMACT3.wav"
+hotel/cswmact4					"sounds/monsters/Hotel/CSWMACT4.wav"
+hotel/cswmact5					"sounds/monsters/Hotel/CSWMACT5.wav"
+hotel/cswmact6					"sounds/monsters/Hotel/CSWMACT6.wav"
+hotel/cswmact7					"sounds/monsters/Hotel/CSWMACT7.wav"
+hotel/cswmact8					"sounds/monsters/Hotel/CSWMACT8.wav"
+$random hotel/ogreact { hotel/cswmact1 hotel/cswmact2 hotel/cswmact3 hotel/cswmact4 hotel/cswmact5 hotel/cswmact6 hotel/cswmact7 hotel/cswmact8 }
+hotel/ogrepain					"sounds/monsters/Hotel/MONPN.wav"
+hotel/csawready					"sounds/monsters/Hotel/CSAWREDY.ogg"
+hotel/chnswf					"sounds/monsters/Hotel/CHNSWF.wav"
+hotel/chnswf1					"sounds/monsters/Hotel/CHNSWF1.wav"
+
+// ===== Project Survival Skulker (Twitcher) =====
+skulker/See						"sounds/monsters/Skulker/TwitcherSee.ogg"
+$volume		skulker/See				1.0
+$attenuation skulker/See			0.1
+skulker/Charge					"sounds/monsters/Skulker/TwitcherCharge.ogg"
+skulker/Flee					"sounds/monsters/Skulker/TwitcherFlee.ogg"
+skulker/Flinch					"sounds/monsters/Skulker/TwitcherFlinch.ogg"
+skulker/Breath					"sounds/monsters/Skulker/TwitcherBreath.ogg"
+skulker/Hunt					"sounds/monsters/Skulker/TwitcherHunt.ogg"
+skulker/Hit						"sounds/monsters/Skulker/TwitcherHit.ogg"
+skulker/Miss					"sounds/monsters/Skulker/TwitcherMiss.ogg"
+skulker/Swing					"sounds/monsters/Skulker/TwitcherSwing.ogg"
+skulker/Port					"sounds/monsters/Skulker/TwitcherPort.ogg"
+$limit		skulker/Port			12
+$attenuation skulker/Port			0.4
+$rolloff	skulker/Port			750 1300
+skulker/Phase					"sounds/monsters/Skulker/TwitcherPhase.ogg"
+$volume		skulker/Phase			0.7
+skulker/Whisper					"sounds/monsters/Skulker/TwitcherWhisper.ogg"
+skulker/Wail					"sounds/monsters/Skulker/TwitcherWail.ogg"
+skulker/Taunt1					"sounds/monsters/Skulker/TwitcherTaunt1.ogg"
+skulker/Taunt2					"sounds/monsters/Skulker/TwitcherTaunt2.ogg"
+skulker/Taunt3					"sounds/monsters/Skulker/TwitcherTaunt3.ogg"
+$random skulker/Taunt { skulker/Taunt1 skulker/Taunt2 skulker/Taunt3 }
+$rolloff	skulker/Taunt			350 1800
+
+// ===== BVCH guests (Brutal Voxel Cyber Horror Mix) =====
+$random bvch/glaucoma/sight { bvch/glaucoma/sit1 bvch/glaucoma/sit2 bvch/glaucoma/sit3 }
+bvch/glaucoma/sit1				"sounds/monsters/BVCH/Glaucoma/GLAUSIT1.ogg"
+bvch/glaucoma/sit2				"sounds/monsters/BVCH/Glaucoma/GLAUSIT2.ogg"
+bvch/glaucoma/sit3				"sounds/monsters/BVCH/Glaucoma/GLAUSIT3.ogg"
+$random bvch/glaucoma/active { bvch/glaucoma/act1 bvch/glaucoma/act2 }
+bvch/glaucoma/act1				"sounds/monsters/BVCH/Glaucoma/GLAUACT1.ogg"
+bvch/glaucoma/act2				"sounds/monsters/BVCH/Glaucoma/GLAUACT2.ogg"
+$random bvch/glaucoma/pain { bvch/glaucoma/pai1 bvch/glaucoma/pai2 }
+bvch/glaucoma/pai1				"sounds/monsters/BVCH/Glaucoma/GLAUPAI1.ogg"
+bvch/glaucoma/pai2				"sounds/monsters/BVCH/Glaucoma/GLAUPAI2.ogg"
+$random bvch/glaucoma/death { bvch/glaucoma/dth1 bvch/glaucoma/dth2 bvch/glaucoma/dth3 }
+bvch/glaucoma/dth1				"sounds/monsters/BVCH/Glaucoma/GLAUDTH1.ogg"
+bvch/glaucoma/dth2				"sounds/monsters/BVCH/Glaucoma/GLAUDTH2.ogg"
+bvch/glaucoma/dth3				"sounds/monsters/BVCH/Glaucoma/GLAUDTH3.ogg"
+bvch/glaucoma/barf				"sounds/monsters/BVCH/Glaucoma/GLAUBARF.ogg"
+bvch/glaucoma/fire				"sounds/monsters/BVCH/Glaucoma/GLAUFIRE.ogg"
+bvch/glaucoma/hit				"sounds/monsters/BVCH/Glaucoma/GLAUHIT.ogg"
+
+bvch/mauler/sight				"sounds/monsters/BVCH/Mauler/MAULSIT.wav"
+bvch/mauler/active				"sounds/monsters/BVCH/Mauler/MAULACT.wav"
+bvch/mauler/pain				"sounds/monsters/BVCH/Mauler/MAULPAI.wav"
+bvch/mauler/death				"sounds/monsters/BVCH/Mauler/MAULDTH.wav"
+bvch/mauler/attack				"sounds/monsters/BVCH/Mauler/MAULATK.wav"
+
+$random bvch/machina/sight { bvch/machina/sit1 bvch/machina/sit2 }
+bvch/machina/sit1				"sounds/monsters/BVCH/Machina/MACHSIT1.ogg"
+bvch/machina/sit2				"sounds/monsters/BVCH/Machina/MACHSIT2.ogg"
+$random bvch/machina/active { bvch/machina/act1 bvch/machina/act2 bvch/machina/act3 bvch/machina/act4 }
+bvch/machina/act1				"sounds/monsters/BVCH/Machina/MACHACT1.ogg"
+bvch/machina/act2				"sounds/monsters/BVCH/Machina/MACHACT2.ogg"
+bvch/machina/act3				"sounds/monsters/BVCH/Machina/MACHACT3.ogg"
+bvch/machina/act4				"sounds/monsters/BVCH/Machina/MACHACT4.ogg"
+$random bvch/machina/attack { bvch/machina/atk1 bvch/machina/atk2 bvch/machina/atk3 bvch/machina/atk4 }
+bvch/machina/atk1				"sounds/monsters/BVCH/Machina/MACHATK1.ogg"
+bvch/machina/atk2				"sounds/monsters/BVCH/Machina/MACHATK2.ogg"
+bvch/machina/atk3				"sounds/monsters/BVCH/Machina/MACHATK3.ogg"
+bvch/machina/atk4				"sounds/monsters/BVCH/Machina/MACHATK4.ogg"
+bvch/machina/pain				"sounds/monsters/BVCH/Machina/MACHPAI.ogg"
+$random bvch/machina/death { bvch/machina/dth1 bvch/machina/dth2 }
+bvch/machina/dth1				"sounds/monsters/BVCH/Machina/MACHDTH1.ogg"
+bvch/machina/dth2				"sounds/monsters/BVCH/Machina/MACHDTH2.ogg"
+bvch/machina/vile				"sounds/monsters/BVCH/Machina/MACHVILA.ogg"
+
+$random bvch/overdemoniac/sight { bvch/overdemoniac/sit1 bvch/overdemoniac/sit2 }
+bvch/overdemoniac/sit1			"sounds/monsters/BVCH/Overdemoniac/dcy_overdemoniac_sight1.ogg"
+bvch/overdemoniac/sit2			"sounds/monsters/BVCH/Overdemoniac/dcy_overdemoniac_sight2.ogg"
+$alias bvch/overdemoniac/active bvch/overdemoniac/sight
+bvch/overdemoniac/pain			"sounds/monsters/BVCH/Overdemoniac/dcy_overdemoniac_pain.ogg"
+bvch/overdemoniac/death			"sounds/monsters/BVCH/Overdemoniac/dcy_overdemoniac_death.ogg"
+bvch/overdemoniac/orb			"sounds/monsters/BVCH/Overdemoniac/dcy_overdemoniac_orb.ogg"
+bvch/overdemoniac/orbhit		"sounds/monsters/BVCH/Overdemoniac/dcy_overdemoniac_orb_impact.ogg"
+bvch/overdemoniac/ripper		"sounds/monsters/BVCH/Overdemoniac/dcy_overdemoniac_ripper.ogg"
+
+$random bvch/dastard/sight { bvch/dastard/sit1 bvch/dastard/sit2 bvch/dastard/sit3 bvch/dastard/sit4 bvch/dastard/sit5 bvch/dastard/sit6 }
+bvch/dastard/sit1				"sounds/monsters/BVCH/Dastard/dcy_dastard_sight1.ogg"
+bvch/dastard/sit2				"sounds/monsters/BVCH/Dastard/dcy_dastard_sight2.ogg"
+bvch/dastard/sit3				"sounds/monsters/BVCH/Dastard/dcy_dastard_sight3.ogg"
+bvch/dastard/sit4				"sounds/monsters/BVCH/Dastard/dcy_dastard_sight4.ogg"
+bvch/dastard/sit5				"sounds/monsters/BVCH/Dastard/dcy_dastard_sight5.ogg"
+bvch/dastard/sit6				"sounds/monsters/BVCH/Dastard/dcy_dastard_sight6.ogg"
+bvch/dastard/active				"sounds/monsters/BVCH/Dastard/dcy_dastard_idle.ogg"
+$random bvch/dastard/pain { bvch/dastard/pai1 bvch/dastard/pai2 bvch/dastard/pai3 }
+bvch/dastard/pai1				"sounds/monsters/BVCH/Dastard/dcy_dastard_pain1.ogg"
+bvch/dastard/pai2				"sounds/monsters/BVCH/Dastard/dcy_dastard_pain2.ogg"
+bvch/dastard/pai3				"sounds/monsters/BVCH/Dastard/dcy_dastard_pain3.ogg"
+$random bvch/dastard/death { bvch/dastard/dth1 bvch/dastard/dth2 bvch/dastard/dth3 bvch/dastard/dth4 }
+bvch/dastard/dth1				"sounds/monsters/BVCH/Dastard/dcy_dastard_death1.ogg"
+bvch/dastard/dth2				"sounds/monsters/BVCH/Dastard/dcy_dastard_death2.ogg"
+bvch/dastard/dth3				"sounds/monsters/BVCH/Dastard/dcy_dastard_death3.ogg"
+bvch/dastard/dth4				"sounds/monsters/BVCH/Dastard/dcy_dastard_death4.ogg"
+
+bvch/bloodfiend/sight			"sounds/monsters/BVCH/Bloodfiend/BZRD_SI1.ogg"
+bvch/bloodfiend/pain			"sounds/monsters/BVCH/Bloodfiend/BZRD_HIT.ogg"
+bvch/bloodfiend/death			"sounds/monsters/BVCH/Bloodfiend/BZRD_DED.ogg"
+bvch/bloodfiend/proj			"sounds/monsters/BVCH/Bloodfiend/BZRD_PRD.ogg"
+
 GloryPunch/Kill "misc/gibbed"
 

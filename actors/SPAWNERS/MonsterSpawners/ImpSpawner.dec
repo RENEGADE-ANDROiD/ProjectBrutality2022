@@ -140,6 +140,8 @@ Actor ImpPackSpawner : Demonpickup
 	TNT1 A 0 A_Jump(14, "SpawnRealm667Blot")
 	TNT1 A 0 A_Jump(15, "SpawnRealm667Vulgar")
 	TNT1 A 0 A_Jump(14, "SpawnFlyingImp")
+	TNT1 A 0 A_Jump(5, "SpawnHotelMory")
+	TNT1 A 0 A_Jump(5, "SpawnBVCH_Dastard")
 	Realm667Skip:
 	TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 	TNT1 A 0 A_JumpIfInventory("IsFusionCyberImp", 1, "SpawnRealm667Fusion")
@@ -183,6 +185,14 @@ Actor ImpPackSpawner : Demonpickup
 	TNT1 A 0 A_SpawnItemEx("PB_FlyingImpGK",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
 	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
+	Stop
+	SpawnHotelMory:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoHotelMory")==1, "Realm667Skip")
+	TNT1 A 0 A_SpawnItemEx("PB_HotelMory",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Stop
+	SpawnBVCH_Dastard:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoBVCH_Dastard")==1, "Realm667Skip")
+	TNT1 A 0 A_SpawnItemEx("PB_BVCH_Dastard",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	Stop
 	RandomSpawn:
 	TNT1 A 0 A_Jump(256, "SpawnImpNormal", "SpawnImpVariant1", "SpawnImpVariant2", "SpawnImpVariant3", "SpawnMixedBrownImp", "SpawnMixedBrownImp", "SpawnSavageImp", "SpawnMixedDarkImp", "SpawnSTDarkImp", "SpawnNamiDarkImp", "SpawnVoidDarkImp", "SpawnNetherDarkImp")

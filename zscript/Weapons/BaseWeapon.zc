@@ -290,18 +290,15 @@ class PB_WeaponBase : DoomWeapon
 			return false;
 		if (!PB_IsExperimentalExecutionTarget(monster))
 			return false;
+		if (!PB_ActorCanBeExecuted(monster, self))
+			return false;
 
 		LookExParams look;
 		look.FOV = 110;
 		if (!monster.IsVisible(self, false, look) || GetDistance(True, AAPTR_PLAYER_GETTARGET) >= 250)
 			return false;
 
-		int targetMaxHealth = monster.spawnHealth();
-		int targetCurrentHealth = monster.health;
-		if (!(targetCurrentHealth <= targetMaxHealth * 0.2 || targetCurrentHealth < 65))
-			return false;
-
-		// Kit probe only — never call PB_ExecutionHandlerString here (side effects).
+		// Never call PB_ExecutionHandlerString here (side effects).
 		return true;
 	}
 
@@ -635,40 +632,48 @@ class PB_WeaponBase : DoomWeapon
 		if (PB_PlayerOnPossessionRide(self))
 			return null;
 
-        CVar experimental_settings = CVar.FindCVar('pb_experimental');
-		
+		CVar experimental_settings = CVar.FindCVar('pb_experimental');
 		if (!experimental_settings || !experimental_settings.GetBool())
 			return null;
 
 		Actor monster = GetPointer(AAPTR_PLAYER_GETTARGET);
 		if (!monster || monster.health <= 0)
 			return null;
+		if (!PB_IsExperimentalExecutionTarget(monster))
+			return null;
+		if (!PB_ActorCanBeExecuted(monster, self))
+			return null;
 
-		if (PB_IsExperimentalExecutionTarget(monster))
+		LookExParams look;
+		look.FOV = 110;
+		if (!monster.IsVisible(self, false, look) || GetDistance(True, AAPTR_PLAYER_GETTARGET) >= 250)
+			return null;
+
+		// Staging close-up: pull target in and face each other before the POV strip.
+		monster.A_Stop();
+		double spd = 27.;
+		vector3 delta = (monster.pos.x - pos.x, monster.pos.y - pos.y, monster.pos.z - pos.z);
+		double angleToMonster = AngleTo(monster);
+		double pitchToMonster = VectorAngle(sqrt(delta.y * delta.y + delta.x * delta.x), delta.z);
+		monster.A_SetPitch(pitchToMonster, SPF_INTERPOLATE);
+		monster.A_SetAngle(angleToMonster + 180, SPF_INTERPOLATE);
+		vector3 neworigin = Vec3Offset(cos(angleToMonster) * spd, sin(angleToMonster) * spd, sin(pitchToMonster) * spd);
+		monster.SetOrigin(neworigin, true);
+		A_SetAngle(AngleTo(monster));
+		delta = (monster.pos.x - pos.x, monster.pos.y - pos.y, monster.pos.z - pos.z);
+		pitchToMonster = VectorAngle(sqrt(delta.y * delta.y + delta.x * delta.x), delta.z);
+		A_SetPitch(-pitchToMonster);
+
+		StateLabel st = PB_ExecutionHandlerString(monster);
+		State resolved = ResolveState(st);
+		if (!resolved)
 		{
-			LookExParams look;
-			look.FOV = 110;
-
-			if (monster.IsVisible(self, false, look) && GetDistance(True, AAPTR_PLAYER_GETTARGET) < 250)
-			{
-				int targetMaxHealth = monster.spawnHealth();
-				int targetCurrentHealth = monster.health;
-
-				if (targetCurrentHealth <= targetMaxHealth * 0.2 || targetCurrentHealth < 65)
-				{
-					StateLabel st = PB_ExecutionHandlerString(monster);
-					State resolved = ResolveState(st);
-					if (!resolved)
-					{
-						PB_UnsetPlayerExecutionProperties();
-						return null;
-					}
-					PB_Achievements.OnExecution();
-					return resolved;
-				}
-			}
+			PB_UnsetPlayerExecutionProperties();
+			return null;
 		}
-		return null;
+		monster.A_Die("Execution");
+		PB_Achievements.OnExecution();
+		return resolved;
 	}
 
 	// pb_auto_fatality_fire: Glory Kill first (same resolve as Quick Melee), then experimental execute.

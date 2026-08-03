@@ -115,6 +115,10 @@ Actor ChaingunGuyPackSpawner : Demonpickup
 	{
 	Spawn:	// Checks for the tokens distributed above and spawns the correct monster accordingly
 		TNT1 A 3
+		// Hotel Bruiser guest (~8/256 ~3%).
+		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "GuestSkip")
+		TNT1 A 0 A_Jump(8, "SpawnHotelBruiser")
+		GuestSkip:
 		TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 		TNT1 A 0 A_JumpIfInventory("IsQSGDreadTrooper", 1, "SpawnQSGDreadTrooper")
 		TNT1 A 0 A_JumpIfInventory("IsClassicChaingunGuy", 1, "SpawnClassicChaingunGuy")
@@ -124,6 +128,10 @@ Actor ChaingunGuyPackSpawner : Demonpickup
 		TNT1 A 0 A_JumpIfInventory("IsHelmetChaingunGuy", 1, "SpawnHelmetChaingunGuy")
 		TNT1 A 0 A_JumpIfInventory("IsNormalChaingunGuy", 1, "SpawnNormalChaingunGuy")
 		Loop
+	SpawnHotelBruiser:
+		TNT1 A 0 A_JumpIf(GetCvar("pb_NoHotelBruiser")==1, "GuestSkip")
+		TNT1 A 0 A_SpawnItemEx("PB_HotelBruiser",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
 	RandomSpawn:
 		TNT1 A 0 A_Jump(256, "SpawnClassicChaingunGuy", "SpawnZspecOpsGuy", "SpawnNailgunMajor", "SpawnHelmetChaingunGuy", "SpawnNormalChaingunGuy", "SpawnHellTrooper")
 	SpawnQSGDreadTrooper:

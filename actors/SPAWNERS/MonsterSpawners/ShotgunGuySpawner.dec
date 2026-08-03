@@ -140,6 +140,10 @@ Actor ShotgunGuyPackSpawner : Demonpickup
 	{
 	Spawn:
 	TNT1 A 3
+	// Hotel Ogre guest (~8/256 ~3%).
+	TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "GuestSkip")
+	TNT1 A 0 A_Jump(8, "SpawnHotelOgre")
+	GuestSkip:
 	TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 	TNT1 A 0 A_JumpIfInventory("IsHellTrooper", 1, "SpawnHellTrooper")
 	TNT1 A 0 A_JumpIfInventory("IsRocketLauncherGuy", 1, "SpawnRocketLauncherGuy")
@@ -150,7 +154,11 @@ Actor ShotgunGuyPackSpawner : Demonpickup
 	TNT1 A 0 A_JumpIfInventory("IsMixedShotgunGuyPack", 1, "SpawnMixedShotgunGuyPack")
 	TNT1 A 0 A_JumpIfInventory("IsHelmetShotgunGuy", 1, "SpawnHelmetShotgunGuy")
 	TNT1 A 0 A_JumpIfInventory("IsNormalShotgunGuy", 1, "SpawnNormalShotgunGuy")
-	Loop	
+	Loop
+	SpawnHotelOgre:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoHotelOgre")==1, "GuestSkip")
+	TNT1 A 0 A_SpawnItemEx("PB_HotelOgre",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Stop
 	RandomSpawn:
 	TNT1 A 0 A_Jump(256, "SpawnHellTrooper", "SpawnPyroSergeant", "SpawnRocketLauncherGuy", "SpawnQuadShotgunGuy", "SpawnRiotShieldGuy", "SpawnZspecOpsGuy", "SpawnAutoShotgunGuy", "SpawnHelmetShotgunGuy", "SpawnNormalShotgunGuy")
 	SpawnMixedShotgunGuyPack:

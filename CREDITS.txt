@@ -90,6 +90,26 @@ Gameplay and content in this release
   Mike12-style edits, Sergeant_Mark_IV, IDDQD_1337 (addon CryoRifle / ElectroRifle README lineage);
   **Cryo Cannon** — Thanuris, Ganbare-Lucifer, DeVloek, SchrödingCat; **Cryo ASG** — Sergeant_Mark_IV /
   SchrödingCat; Cat's Frozen Addon weapon / equipment art (see **`SPRITES/WEAPONS/CatsFrozen/`** and related trees).
+- **Backrooms Redux** (Kazim_Master; Backrooms Fandom Wiki authors for level/entity concepts):
+  rare guest hunters **Sanguine Festivus Instance** (`PB_BackroomsSanguineFestivus`) and **Smiler**
+  (`PB_BackroomsSmiler`) — sprites under **`SPRITES/Monsters/Backrooms/`**, Level ! **`RUN`**/`EXPL`
+  audio under **`sounds/monsters/Backrooms/`**, actors in **`actors/Monsters/Backrooms/BackroomsHunters.dec`**.
+  Ported as killable Baron/Hell Knight-caliber guests (not the source mod's unkillable Level ! chase
+  props). See **`ASSET_NOTES.txt`** in that folder.
+- **The Hotel: Lost Contact** (Hevn_Cross-90eks / ModDB): guest combatants **Mory**, **Blood/Void
+  Crawler**, **Large Blood Crawler**, **Ogre** (ChainsawMan), **Bruiser** (Swatbrute) — sprites under
+  **`SPRITES/Monsters/Hotel/`** (colliding `BOS2`/`BRUS`/`BRUD` renamed `HTB2`/`HTBS`/`HTBD`), gore
+  props **`SPRITES/Decoration/HotelGore/`** (`HLGR`/`HLGU`), audio **`sounds/monsters/Hotel/`**, actors
+  in **`actors/Monsters/Hotel/HotelGuests.dec`**. See **`ASSET_NOTES.txt`** in that folder.
+- **Project Survival Skulker** (Twitcher / Tag `SKULK?R`): rare Revenant-pack guest **`PB_Skulker`** —
+  sprites **`SPRITES/Monsters/Skulker/`** (`VFOD*`), audio **`sounds/monsters/Skulker/`**, actor
+  **`actors/Monsters/Skulker/PB_Skulker.dec`**. See **`ASSET_NOTES.txt`** in that folder.
+- **Brutal Voxel Cyber Horror Mix** (Pandemonia / DCY CyberAnarchy / SUAB mashup): rare guests
+  **Glaucoma**, **Witherdemon**, **Mauler**, **Overdemoniac**, **Dastard**, **Machina**,
+  **Bloodfiend** — lean `PB_Monster` ports (no Pand/DCY frameworks). Sprites
+  **`SPRITES/Monsters/BVCH/`**, audio **`sounds/monsters/BVCH/`**, actors
+  **`actors/Monsters/BVCH/BVCH_Guests.dec`**. Subzero art-only content was not folded. See
+  **`ASSET_NOTES.txt`** in that folder.
 
 Code systems and libraries
 - Nash Muhandes: NashGore (zscript/Gore/NashGore/*); Tilt++ (zscript/TiltPlus

@@ -84,6 +84,8 @@ Actor CacoPackSpawner : Demonpickup
 	// FrostBrain stays ungated guest; BabyCaco is Mid/High + Tier3+ via IsRealm667BabyCaco.
 	TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "Realm667Skip")
 	TNT1 A 0 A_Jump(8, "SpawnPB_FrostBrain")
+	TNT1 A 0 A_Jump(5, "SpawnBVCH_Glaucoma")
+	TNT1 A 0 A_Jump(5, "SpawnBVCH_Witherdemon")
 	Realm667Skip:
 	TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 	TNT1 A 0 A_JumpIfInventory("IsRealm667BabyCaco", 1, "SpawnRealm667BabyCaco")
@@ -150,6 +152,14 @@ Actor CacoPackSpawner : Demonpickup
 	SpawnPB_FrostBrain:
 	TNT1 A 0 A_JumpIf(GetCvar("pb_NoFrostBrain")==1, "Realm667Skip")
 	TNT1 A 0 A_SpawnItemEx("PB_FrostBrain",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Stop
+	SpawnBVCH_Glaucoma:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoBVCH_Glaucoma")==1, "Realm667Skip")
+	TNT1 A 0 A_SpawnItemEx("PB_BVCH_Glaucoma",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Stop
+	SpawnBVCH_Witherdemon:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoBVCH_Witherdemon")==1, "Realm667Skip")
+	TNT1 A 0 A_SpawnItemEx("PB_BVCH_Witherdemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	Stop
 	}
 }
