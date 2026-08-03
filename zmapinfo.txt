@@ -107,6 +107,13 @@ GameInfo
 	StatusBarClass = "PB2022_Hud_ZS"
 	AddEventHandlers = "pb_ExecutionHandler"
 	AddEventHandlers = "PB_EventHandler"
+	AddEventHandlers = "PB_Materialsys"
+	AddEventHandlers = "PB_MonsterDropsHandler"
+	AddEventHandlers = "PB_ElectricChargeHandler"
+	AddEventHandlers = "PB_SlowEventHandler"
+	AddEventHandlers = "PB_FlameEventHandler"
+	AddEventHandlers = "BulletTime"
+	AddEventHandlers = "BulletTimeStatic"
 	AddEventHandlers = "PB_XPRewardsHandler"
 	AddEventHandlers = "PB_PDAShopPurchaseHandler"
 	AddEventHandlers = "PB_VisorHandler"
@@ -168,7 +175,7 @@ GameInfo
 	AddEventHandlers = "PB2022_DamageIndicatorHandler"
 	AddEventHandlers = "PB2022_ScopeHandler"
 	AddEventHandlers = "PB2022_PickupMagnetHandler"
-	// Combat SFX warm-cache (~45 logical names): decoded at each map load (incl. TITLEMAP) to cut first-play hitches from PK3/OGG decode. Expand via maint_scripts or SNDINFO + gameplay profiling — do not list all ~4k PB sounds here.
+	// Combat SFX warm-cache (~45 logical names): decoded at each map load (incl. TITLEMAP) to cut first-play hitches from PK3/OGG decode. Expand via maint_scripts or SNDINFO + gameplay profiling - do not list all ~4k PB sounds here.
 	PrecacheSounds =
 		"weapons/pistol", "weapons/pistolup",
 		"weapons/rifle", "weapons/rifle/up", "Weapons/Rifle/SFire",
@@ -406,7 +413,7 @@ DoomEdNums
 	23207 = PB_CF_IceWallGenPickup
 	23208 = PB_CF_HoloDecoyPickup
 	23209 = PB_CF_TeslaTurretPickup
-	// 23210 freed — former PB_CF_FlameTurretPickup
+	// 23210 freed - former PB_CF_FlameTurretPickup
 	23211 = PB_CF_FreezeMinePickup
 
 	23212 = PB_CryoShotgun
@@ -438,7 +445,7 @@ DoomEdNums
 	23239 = Extinction_Ray
 	23240 = PlasmaRifleAssault
 	23241 = Satan_Scream
-	// 23242 freed — former ThunderCarrierTI (Heavy Lust)
+	// 23242 freed - former ThunderCarrierTI (Heavy Lust)
 	23243 = PB_HYDRA
 	23244 = INNailGun
 	23245 = MagnumSniperRifle
@@ -473,6 +480,41 @@ DoomEdNums
 	23270 = PB_UAC_PipebombPickup
 	23271 = PB_UAC_SatchelPickup
 	23272 = PB_UAC_FlarePickup
+	23273 = Carcass
+	23274 = D16Cyberdemon
+	23275 = DarkLord
+	23276 = PB_QSGDreadTrooper
+	23277 = EternalBaron
+	23278 = EternalFat
+	23279 = EternalArachno
+	23280 = EternalSoul
+	23281 = WhiteWidow
+	23282 = PB_BackroomsSanguineFestivus
+	23283 = PB_BackroomsSmiler
+	23284 = PB_Skulker
+	23285 = PB_HotelMory
+	23286 = PB_HotelBloodCrawlerBig
+	23287 = PB_HotelOgre
+	23288 = PB_HotelBruiser
+	23289 = PB_HotelBloodCrawler
+	23290 = PB_HotelVoidCrawler
+	23291 = PB_HotelGorePile1
+	23292 = PB_HotelGorePile2
+	23293 = PB_HotelGorePile3
+	23294 = PB_HotelGorePile4
+	23295 = PB_HotelGoreHang1
+	23296 = PB_HotelGoreHang2
+	23297 = PB_HotelGoreHang3
+	23298 = PB_HotelGoreHang4
+	23299 = PB_BVCH_Glaucoma
+	23300 = PB_BVCH_Witherdemon
+	23301 = PB_BVCH_Mauler
+	23302 = PB_BVCH_Overdemoniac
+	23303 = PB_BVCH_Dastard
+	23304 = PB_BVCH_Machina
+	23305 = PB_BVCH_Bloodfiend
+	// Clear Sky / BVCH map ednum (same class)
+	21550 = Carcass
 
 	17003 = CyberdemonLegsFatality
 
@@ -501,3 +543,4 @@ gameinfo
 {
 	addeventhandlers = "hitmarkershandler"
 }
+

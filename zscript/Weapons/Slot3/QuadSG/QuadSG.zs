@@ -1,4 +1,4 @@
-// PB_QuadSG Ã¢â‚¬â€ ZScript port (DECORATE PB_Weapon retired).
+// PB_QuadSG - ZScript port (DECORATE PB_Weapon retired).
 
 class PB_QuadSG : PB_WeaponBase
 {
@@ -12,7 +12,7 @@ class PB_QuadSG : PB_WeaponBase
 	Weapon.BobRangeY 0.5;
 	Weapon.BobStyle "InverseSmooth";
 	Weapon.BobSpeed 2.4;
-	// Game Doom Ã¢â‚¬â€ DECORATE-only; not valid in ZScript default
+	// Game Doom - DECORATE-only; not valid in ZScript default
     Weapon.Kickback 50;
 	Weapon.AmmoUse1 0;
 	Weapon.AmmoUse2 0;
@@ -28,7 +28,7 @@ class PB_QuadSG : PB_WeaponBase
 	Tag "Quad-Barrel Shotgun";
 	+WEAPON.NOAUTOFIRE;
     +WEAPON.MELEEWEAPON;
-	// +WEAPON.POWERED_UP Ã¢â‚¬â€ use WEAPON.* prefix in ZScript (not bare +POWERED_UP)
+	// +WEAPON.POWERED_UP - use WEAPON.* prefix in ZScript (not bare +POWERED_UP)
 	+WEAPON.CHEATNOTWEAPON;
 	Weapon.SisterWeapon "PB_SSG";
 	+COUNTITEM;

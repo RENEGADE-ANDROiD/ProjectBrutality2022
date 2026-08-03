@@ -25,7 +25,6 @@ dist/
 .cursor/rules/*.local.mdc
 
 # Local maintainer docs (not shipped with the mod; keep on disk only)
-AGENTS.md
 CHANGELOG.md
 PORTING_ADDONS.md
 *.swp

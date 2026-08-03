@@ -52,9 +52,10 @@ Actor ArchVileSpawner replaces ArchVile
 			TNT1 A 0 A_Jump(208,"ArchvilePack")
 			TNT1 A 0 A_Jump(256,"IceVilePack")
 		DiceTier3:
-			TNT1 A 0 A_Jump(160,"ArchvilePack")
-			TNT1 A 0 A_Jump(144,"HellionPack")
-			TNT1 A 0 A_Jump(22,"MarauderPack")
+			TNT1 A 0 A_Jump(148,"ArchvilePack")
+			TNT1 A 0 A_Jump(121,"HellionPack")
+			TNT1 A 0 A_Jump(17,"MarauderPack")
+			TNT1 A 0 A_Jump(62,"FleshWizardPack")
 			TNT1 A 0 A_Jump(256,"IceVilePack")
 		DiceTier4:
 			TNT1 A 0 A_Jump(128,"ArchvilePack")
@@ -96,6 +97,10 @@ Actor ArchvilePackSpawner : Demonpickup
 	{
 	Spawn:	// Checks for the tokens distributed above and spawns the correct monster accordingly
 		TNT1 A 3
+		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "GuestSkip")
+		TNT1 A 0 A_Jump(5, "SpawnBVCH_Overdemoniac")
+		TNT1 A 0 A_Jump(5, "SpawnBVCH_Machina")
+		GuestSkip:
 		TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 		TNT1 A 0 A_JumpIfInventory("IsFleshWizard", 1, "SpawnFleshWizard")
 		TNT1 A 0 A_JumpIfInventory("IsHellion", 1, "SpawnHellion")
@@ -103,6 +108,14 @@ Actor ArchvilePackSpawner : Demonpickup
 		TNT1 A 0 A_JumpIfInventory("IsMarauder", 1, "SpawnMarauder")
 		TNT1 A 0 A_JumpIfInventory("IsArchvile", 1, "SpawnArchvile")
 		Loop
+	SpawnBVCH_Overdemoniac:
+		TNT1 A 0 A_JumpIf(GetCvar("pb_NoBVCH_Overdemoniac")==1, "GuestSkip")
+		TNT1 A 0 A_SpawnItemEx("PB_BVCH_Overdemoniac",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnBVCH_Machina:
+		TNT1 A 0 A_JumpIf(GetCvar("pb_NoBVCH_Machina")==1, "GuestSkip")
+		TNT1 A 0 A_SpawnItemEx("PB_BVCH_Machina",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
 	RandomSpawn:
 		TNT1 A 0 A_Jump(256, "SpawnArchvile", "SpawnIceVile", "SpawnHellion", "SpawnFleshWizard")
 	SpawnArchvile:

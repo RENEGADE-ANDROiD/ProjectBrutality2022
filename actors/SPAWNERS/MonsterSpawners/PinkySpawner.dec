@@ -23,10 +23,12 @@ Actor PinkySpawner replaces Demon
 	TNT1 A 1 A_Jump(58,"BloodDemonPack")
 	TNT1 A 1 A_Jump(256,"PinkyPack")
 	MidLevelMob:
+	TNT1 A 0 A_RadiusGive("IsProgGuestLate", 386, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 	TNT1 A 1 A_Jump(89,"MechPinkyPack")
 	TNT1 A 1 A_Jump(96,"BloodDemonPack")
 	TNT1 A 1 A_Jump(256,"PinkyPack")
 	HighLevelMob:
+	TNT1 A 0 A_RadiusGive("IsProgGuestLate", 386, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 	TNT1 A 1 A_Jump(86,"MechPinkyPack")
 	TNT1 A 1 A_Jump(86,"BloodDemonPack")
 	TNT1 A 1 A_Jump(256,"PinkyPack")
@@ -37,14 +39,17 @@ Actor PinkySpawner replaces Demon
 	TNT1 A 0 A_Jump(58,"BloodDemonPack")
 	TNT1 A 0 A_Jump(256,"PinkyPack")
 	DiceTier3:
+	TNT1 A 0 A_RadiusGive("IsProgGuestLate", 386, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 	TNT1 A 0 A_Jump(77,"MechPinkyPack")
 	TNT1 A 0 A_Jump(77,"BloodDemonPack")
 	TNT1 A 0 A_Jump(256,"PinkyPack")
 	DiceTier4:
+	TNT1 A 0 A_RadiusGive("IsProgGuestLate", 386, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 	TNT1 A 0 A_Jump(86,"MechPinkyPack")
 	TNT1 A 0 A_Jump(86,"BloodDemonPack")
 	TNT1 A 0 A_Jump(256,"PinkyPack")
 	DiceDeathWish:
+	TNT1 A 0 A_RadiusGive("IsProgGuestLate", 386, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
 	TNT1 A 0 A_Jump(90,"MechPinkyPack")
 	TNT1 A 0 A_Jump(90,"BloodDemonPack")
 	TNT1 A 0 A_Jump(256,"PinkyPack")
@@ -70,11 +75,29 @@ Actor PinkyPackSpawner : Demonpickup
 	{
 	Spawn:	// Checks for the tokens distributed above and spawns the correct monster accordingly
 	TNT1 A 3
+	// Hotel floorhugger guests (~5/256 each).
+	TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "GuestSkip")
+	TNT1 A 0 A_Jump(5, "SpawnHotelBloodCrawler")
+	TNT1 A 0 A_Jump(5, "SpawnHotelVoidCrawler")
+	TNT1 A 0 A_Jump(5, "SpawnBVCH_Mauler")
+	GuestSkip:
 	TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
 	TNT1 A 0 A_JumpIfInventory("IsMechPinky", 1, "SpawnMechPinky")
 	TNT1 A 0 A_JumpIfInventory("IsBloodDemon", 1, "SpawnBloodDemon")
 	TNT1 A 0 A_JumpIfInventory("IsPinky", 1, "SpawnPinky")
 	Loop
+	SpawnHotelBloodCrawler:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoHotelBloodCrawler")==1, "GuestSkip")
+	TNT1 A 0 A_SpawnItemEx("PB_HotelBloodCrawler",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Stop
+	SpawnHotelVoidCrawler:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoHotelVoidCrawler")==1, "GuestSkip")
+	TNT1 A 0 A_SpawnItemEx("PB_HotelVoidCrawler",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Stop
+	SpawnBVCH_Mauler:
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoBVCH_Mauler")==1, "GuestSkip")
+	TNT1 A 0 A_SpawnItemEx("PB_BVCH_Mauler",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	Stop
 	RandomSpawn:
 	TNT1 A 0 A_Jump(256, "SpawnBloodDemon", "SpawnMechPinky", "SpawnPinky")
 	SpawnBloodDemon:
@@ -84,13 +107,15 @@ Actor PinkyPackSpawner : Demonpickup
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleBloodDemons",0)
 	TNT1 A 0 A_SpawnItemEx("PB_MeanDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
 	Stop
 	SpawnBloodDemon2:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleBloodDemons",0)
 	TNT1 A 0 A_SpawnItemEx("PB_MeanDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
+	TNT1 A 0 A_JumpIfInventory("IsProgGuestLate", 1, 1)
+	Goto BD2Done
 	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "BD2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	BD2Done:
@@ -102,13 +127,15 @@ Actor PinkyPackSpawner : Demonpickup
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleMechDemons",0)
 	TNT1 A 0 A_SpawnItemEx("PB_MechDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
 	Stop
 	SpawnMechPinky2:
 	TNT1 A 1 ACS_NamedExecuteAlways("ToggleMechDemons",0)
 	TNT1 A 0 A_SpawnItemEx("PB_MechDemon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
+	TNT1 A 0 A_JumpIfInventory("IsProgGuestLate", 1, 1)
+	Goto MP2Done
 	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "MP2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	MP2Done:
@@ -120,12 +147,14 @@ Actor PinkyPackSpawner : Demonpickup
 	SpawnPinky1:
 	TNT1 A 0 A_SpawnItemEx("PB_Demon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
 	Stop
 	SpawnPinky2:
 	TNT1 A 0 A_SpawnItemEx("PB_Demon",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	TNT1 A 0 A_SpawnItemEx("HorrorPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,200)
-	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
+	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
+	TNT1 A 0 A_JumpIfInventory("IsProgGuestLate", 1, 1)
+	Goto PK2Done
 	TNT1 A 0 A_JumpIf(GetCvar("NoAracnorb") == 1, "PK2Done")
 	TNT1 A 0 A_SpawnItemEx("Aracnorbpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	PK2Done:

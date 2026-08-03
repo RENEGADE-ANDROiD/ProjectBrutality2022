@@ -1,0 +1,218 @@
+// Staging Arachnotron shield / rail / arty helpers (4.5.0-safe, no PB_Monster_Projectile dependency).
+
+class PB_InitArachnoSuppress : Inventory
+{
+	override void AttachToOwner(Actor other)
+	{
+		Super.AttachToOwner(other);
+		let m = PB_Monster(other);
+		if (m)
+		{
+			Name nm = 'EnemyPlasmaBall';
+			m.suppressiveMissile = (class<Actor>)(nm);
+			m.suppressLimit = 4;
+			m.suppressLimit2 = 2;
+			m.suppressiveOffZ = 25.0;
+			m.suppressiveOffXY = 0.0;
+		}
+		Destroy();
+	}
+}
+
+class PB_ArachnoShieldPuff : Actor
+{
+	Default
+	{
+		RenderStyle "Normal";
+		Scale 0.3;
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+NOEXTREMEDEATH
+		+PUFFONACTORS
+		+FORCEXYBILLBOARD
+		+DONTSPLASH
+		VSpeed 0;
+		Speed 0;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay
+		{
+			A_Stop();
+			A_StartSound("weapons/plasmarifle", CHAN_BODY);
+		}
+		SHPA ABCDEFGHIJKLM 1;
+		Stop;
+	}
+}
+
+class PB_ArachnoShield : Actor
+{
+	Actor ownerActor;
+
+	Default
+	{
+		Health 300;
+		Radius 70;
+		Height 75;
+		RenderStyle "Normal";
+		Scale 0.28;
+		BloodType "PB_ArachnoShieldPuff";
+		Species "Arachnotron";
+		+SOLID
+		+SHOOTABLE
+		-NOBLOOD
+		+NOBLOODDECALS
+		DamageFactor "Crush", 10.0;
+		DamageFactor "Avoid", 0.0;
+		DamageFactor "killme", 0.0;
+		DamageFactor "Bullet", 0.4;
+		DamageFactor "Plasma", 1.2;
+		DamageFactor "Normal", 0.5;
+	}
+
+	override bool CanCollideWith(Actor other, bool passive)
+	{
+		if (!other)
+			return Super.CanCollideWith(other, passive);
+		Name otherClass = other.GetClassName();
+		if (otherClass == 'PB_ArachnoShield'
+			|| otherClass == 'PB_ArachnoArtyPlasma'
+			|| otherClass == 'PB_ArachnoRailGun'
+			|| otherClass == 'EnemyPlasmaBall')
+		{
+			return false;
+		}
+		return Super.CanCollideWith(other, passive);
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		if (master)
+		{
+			ownerActor = master;
+			SetOrigin(ownerActor.Pos, false);
+			master.bShootable = false;
+			master.bNoPain = true;
+		}
+	}
+
+	override void OnDestroy()
+	{
+		if (master)
+		{
+			master.bShootable = true;
+			master.bNoPain = false;
+		}
+		Super.OnDestroy();
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+		if (ownerActor && ownerActor.health > 0)
+			SetOrigin(ownerActor.Pos, false);
+		else
+			Destroy();
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		SHIA ADGJMPSVY 1;
+		SHIB ADGJMPSVY 1;
+		SHIC ADGJMPST 1;
+		Loop;
+	Death:
+		TNT1 A 0;
+		Stop;
+	}
+}
+
+class PB_ArachnoRailGun : FastProjectile
+{
+	Actor hitVictim;
+	int projectileDamage;
+
+	Default
+	{
+		Speed 70;
+		Radius 5;
+		Height 3;
+		Damage 0;
+		Projectile;
+		+NOBLOCKMAP
+		RenderStyle "Add";
+		Alpha 0.85;
+		SeeSound "weapons/railgf";
+		DeathSound "weapons/plasmaf";
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		projectileDamage = random(20, 30);
+	}
+
+	override int SpecialMissileHit(Actor victim)
+	{
+		if (victim && target && victim != target)
+		{
+			if (victim != hitVictim)
+			{
+				if (victim.GetClassName() == target.GetClassName())
+					return 1;
+				if (victim.Species == target.Species)
+					return 1;
+				if (victim is "PB_ArachnoShield")
+					return 1;
+				hitVictim = victim;
+				int dmg = victim.player ? random(13, 19) : random(24, 37);
+				victim.DamageMobj(self, target, dmg, 'Plasma');
+			}
+		}
+		return 1;
+	}
+
+	States
+	{
+	Spawn:
+		PLSS AB 1 Bright;
+		Loop;
+	Death:
+		PLSE ABCDE 3 Bright;
+		Stop;
+	}
+}
+
+class PB_ArachnoArtyPlasma : Actor
+{
+	Default
+	{
+		Radius 13;
+		Height 8;
+		Speed 28;
+		Damage 8;
+		Projectile;
+		+RANDOMIZE
+		+NOBLOCKMAP
+		RenderStyle "Add";
+		Alpha 0.8;
+		SeeSound "weapons/plasmaf";
+		DeathSound "weapons/plasmaf";
+		DamageType "Plasma";
+		Scale 0.6;
+	}
+	States
+	{
+	Spawn:
+		PLSS AB 4 Bright;
+		Loop;
+	Death:
+		PLSE ABCDE 4 Bright;
+		Stop;
+	}
+}

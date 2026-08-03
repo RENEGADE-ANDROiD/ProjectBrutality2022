@@ -1,4 +1,4 @@
-Actor LostSoulSpawner replaces LostSoul
+﻿Actor LostSoulSpawner replaces LostSoul
 {
     
 	+LOOKALLAROUND
@@ -19,29 +19,55 @@ Actor LostSoulSpawner replaces LostSoul
 			TNT1 A 0 A_Jump(51,"IsPhantasm")
 			TNT1 A 0 A_Jump(256,"IsNormalSoul")
 		LowLevelMob:
+			TNT1 A 0 A_Jump(20,"BloodGhostPack")
 			TNT1 A 0 A_Jump(108,"IsPhantasm")
 			TNT1 A 0 A_Jump(256,"IsNormalSoul")
 		MidLevelMob:
+			TNT1 A 0 A_Jump(20,"DronePack")
+			TNT1 A 0 A_Jump(20,"BloodGhostPack")
+			TNT1 A 0 A_Jump(20,"BloodSkullPack")
 			TNT1 A 0 A_Jump(158,"IsPhantasm")
 			TNT1 A 0 A_Jump(256,"IsNormalSoul")
 		HighLevelMob:
+			TNT1 A 0 A_Jump(20,"DronePack")
+			TNT1 A 0 A_Jump(20,"BloodGhostPack")
+			TNT1 A 0 A_Jump(20,"BloodSkullPack")
 			TNT1 A 0 A_Jump(170,"IsPhantasm")
 			TNT1 A 0 A_Jump(256,"IsNormalSoul")
 	DiceProg:	// Progressive spawn preset enforces strict spawning rules by excluding monsters until they are presented in later levels.
 		DiceTier1:
 			TNT1 A 0 A_Jump(256,"IsNormalSoul")
 		DiceTier2:
+			TNT1 A 0 A_Jump(20,"BloodGhostPack")
 			TNT1 A 0 A_Jump(51,"IsPhantasm")
 			TNT1 A 0 A_Jump(256,"IsNormalSoul")
 		DiceTier3:
+			TNT1 A 0 A_Jump(20,"DronePack")
+			TNT1 A 0 A_Jump(20,"BloodGhostPack")
+			TNT1 A 0 A_Jump(20,"BloodSkullPack")
 			TNT1 A 0 A_Jump(48,"IsPhantasm")
 			TNT1 A 0 A_Jump(256,"IsNormalSoul")
 		DiceTier4:
+			TNT1 A 0 A_Jump(20,"DronePack")
+			TNT1 A 0 A_Jump(20,"BloodGhostPack")
+			TNT1 A 0 A_Jump(20,"BloodSkullPack")
 			TNT1 A 0 A_Jump(56,"IsPhantasm")
 			TNT1 A 0 A_Jump(256,"IsNormalSoul")
 		DiceDeathWish:
+			TNT1 A 0 A_Jump(20,"DronePack")
+			TNT1 A 0 A_Jump(20,"BloodGhostPack")
+			TNT1 A 0 A_Jump(20,"BloodSkullPack")
 			TNT1 A 0 A_Jump(64,"IsPhantasm")
 			TNT1 A 0 A_Jump(256,"IsNormalSoul")
+	DronePack:
+		TNT1 A 0 A_RadiusGive("IsRealm667Drone", 540, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		Stop
+	BloodGhostPack:
+		TNT1 A 0 A_RadiusGive("IsRealm667BloodGhost", 540, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		Stop
+	BloodSkullPack:
+		TNT1 A 0 A_RadiusGive("IsRealm667BloodSkull", 540, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
+		Stop
     IsPhantasm:
         TNT1 A 0 A_RadiusGive("IsPhantasm", 540, RGF_GIVESELF | RGF_MONSTERS | RGF_ITEMS | RGF_NOSIGHT, 1)
         Stop
@@ -61,30 +87,36 @@ Actor LostSoulPackSpawner : Demonpickup
     {
 	Spawn:	// Checks for the tokens distributed above and spawns the correct monster accordingly
 		TNT1 A 3
-		// Realm667 lost-soul-tier additions (gated by pb_disablenewenemies + per-monster cvars).
-		// Drone / Blood Ghost / Blood Skull sequential jumps at 20/256 each (~8% tier share each pass;
-		// stacked guest visibility raised alongside Mid-tier Phantasm weight).
-		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "Realm667Skip")
-		TNT1 A 0 A_Jump(20, "SpawnRealm667Drone")
-		TNT1 A 0 A_Jump(20, "SpawnRealm667BloodGhost")
-		TNT1 A 0 A_Jump(20, "SpawnRealm667BloodSkull")
-		Realm667Skip:
+		// Realm667 lost-soul guests: Blood Ghost from Tier2/Low; Drone + Blood Skull from Mid/High + Tier3+.
 		TNT1 A 0 A_JumpIfInventory("IsPlayingChaoticRandom", 1, "RandomSpawn")
+		TNT1 A 0 A_JumpIfInventory("IsRealm667Drone", 1, "SpawnRealm667Drone")
+		TNT1 A 0 A_JumpIfInventory("IsRealm667BloodGhost", 1, "SpawnRealm667BloodGhost")
+		TNT1 A 0 A_JumpIfInventory("IsRealm667BloodSkull", 1, "SpawnRealm667BloodSkull")
 		TNT1 A 0 A_JumpIfInventory("IsPhantasm", 1, "Phantasm")
 		TNT1 A 0 A_JumpIfInventory("IsNormalSoul", 1, "LostSoul")
 		Loop
 	SpawnRealm667Drone:
-		TNT1 A 0 A_JumpIf(GetCvar("NoDrone")==1, "Realm667Skip")
+		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "GuestBlocked")
+		TNT1 A 0 A_Jump(10, "SpawnEternalSoul")
+		TNT1 A 0 A_JumpIf(GetCvar("NoDrone")==1, "GuestBlocked")
 		TNT1 A 0 A_SpawnItemEx("PB_Realm667_DroneGK",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnRealm667BloodGhost:
-		TNT1 A 0 A_JumpIf(GetCvar("NoBloodGhost")==1, "Realm667Skip")
+		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "GuestBlocked")
+		TNT1 A 0 A_JumpIf(GetCvar("NoBloodGhost")==1, "GuestBlocked")
 		TNT1 A 0 A_SpawnItemEx("PB_Realm667_BloodGhostGK",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnRealm667BloodSkull:
-		TNT1 A 0 A_JumpIf(GetCvar("NoBloodSkull")==1, "Realm667Skip")
+		TNT1 A 0 A_JumpIf(GetCvar("pb_disablenewenemies")==1, "GuestBlocked")
+		TNT1 A 0 A_JumpIf(GetCvar("NoBloodSkull")==1, "GuestBlocked")
 		TNT1 A 0 A_SpawnItemEx("PB_Realm667_BloodSkullGK",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
+	SpawnEternalSoul:
+		TNT1 A 0 A_JumpIf(GetCvar("pb_NoEternalSoul")==1, "GuestBlocked")
+		TNT1 A 0 A_SpawnItemEx("EternalSoul",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	GuestBlocked:
+		TNT1 A 0 A_Jump(256, "LostSoul")
 	RandomSpawn:
 		TNT1 A 0 A_Jump(256, "LostSoul", "Phantasm")
     Phantasm:

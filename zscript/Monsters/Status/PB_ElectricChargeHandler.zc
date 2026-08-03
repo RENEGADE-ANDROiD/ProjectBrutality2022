@@ -1,0 +1,83 @@
+class PB_ElectricChargeHandler : EventHandler
+{
+	Array<Actor> chargeTargets;
+	Array<int> chargeLevels;
+	Array<int> chargeTimers;
+
+	bool StatusOn()
+	{
+		let cv = CVar.FindCVar("pb_status_effects");
+		return !cv || cv.GetBool();
+	}
+
+	override void WorldThingDamaged(WorldEvent e)
+	{
+		if (!StatusOn() || !e || !e.Thing || !e.Inflictor)
+			return;
+		if (e.Thing.health <= 0 || !e.Thing.bShootable)
+			return;
+
+		Name icn = e.Inflictor.GetClassName();
+		int chargeAmount = 0;
+		if (icn == 'CacodemonBall_' || icn == 'CacodemonBall')
+			chargeAmount = 25;
+		else if (icn == 'PB_SpecialCacoDemonBall2')
+			chargeAmount = 50;
+		else
+			return;
+
+		Actor target = e.Thing;
+		if (e.DamageSource && e.DamageSource == target)
+			return;
+
+		for (int i = 0; i < chargeTargets.Size(); i++)
+		{
+			if (chargeTargets[i] == target)
+			{
+				chargeLevels[i] += chargeAmount;
+				if (chargeLevels[i] >= 100 && chargeTimers[i] <= 0)
+				{
+					chargeTimers[i] = 100;
+					S_StartSound("Thunder", CHAN_AUTO);
+				}
+				return;
+			}
+		}
+
+		chargeTargets.Push(target);
+		chargeLevels.Push(chargeAmount);
+		chargeTimers.Push((chargeAmount >= 100) ? 100 : 0);
+	}
+
+	override void WorldTick()
+	{
+		if (!StatusOn())
+			return;
+		if ((level.time % 2) != 0)
+			return;
+
+		for (int i = chargeTargets.Size() - 1; i >= 0; i--)
+		{
+			if (!chargeTargets[i] || chargeTargets[i].health <= 0)
+			{
+				chargeTargets.Delete(i);
+				chargeLevels.Delete(i);
+				chargeTimers.Delete(i);
+				continue;
+			}
+
+			if (chargeTimers[i] > 0)
+			{
+				chargeTimers[i]--;
+				if (chargeTimers[i] == 0)
+				{
+					S_StartSound("ThunderStrike", CHAN_AUTO);
+					Actor target = chargeTargets[i];
+					chargeLevels[i] = 0;
+					if (target)
+						target.DamageMobj(null, null, 40, "Electric", DMG_NO_PAIN);
+				}
+			}
+		}
+	}
+}

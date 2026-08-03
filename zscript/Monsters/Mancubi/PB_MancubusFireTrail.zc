@@ -1,0 +1,33 @@
+// Staging MancubusFireTrail — FR3A/FR3B strips already on disk.
+
+class PB_MancubusFireTrail : Actor
+{
+	Default
+	{
+		Radius 1;
+		Height 1;
+		Speed 2;
+		Damage 0;
+		+NOBLOCKMAP
+		+NOTELEPORT
+		+DONTSPLASH
+		+MISSILE
+		+FORCEXYBILLBOARD
+		+NOINTERACTION
+		+NOCLIP
+		RenderStyle "Add";
+		DamageType "Flames";
+		Scale 0.7;
+		Alpha 0.7;
+		Gravity 0;
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay;
+		FR3A ABCDEFGHIJKLMNOPQRSTUVWXYZ 1 Bright;
+		FR3B ABCDEFG 1 Bright;
+		Stop;
+	}
+}

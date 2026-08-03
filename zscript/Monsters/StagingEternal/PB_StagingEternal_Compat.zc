@@ -1,0 +1,132 @@
+﻿// Thin stubs for PB Staging Eternal / WhiteWidow only.
+// Do NOT redefine DECORATE classes (KnightSlam, UltraGoreSpawner, EnemyPlasmaBall, etc.) —
+// string A_CustomMissile / A_SpawnItemEx resolve those at runtime after DECORATE loads.
+// Parents here are engine-native only (ZScript compiles before DECORATE names resolve).
+
+class DarkCyberdemonFloorFire : Actor
+{
+	Default
+	{
+		+NOINTERACTION
+		+NOBLOCKMAP
+		Radius 8;
+		Height 8;
+		RenderStyle "None";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 8;
+		Stop;
+	}
+}
+
+class DarkCyberHomingBFG : BFGBall
+{
+	Default
+	{
+		Speed 18;
+		Damage 40;
+		+SEEKERMISSILE
+	}
+}
+
+class BaronHomingBFG : DarkCyberHomingBFG {}
+
+class PB_SpecialCacoDemonBall2 : FastProjectile
+{
+	Default
+	{
+		Radius 13;
+		Height 8;
+		Speed 25;
+		Damage 5;
+		Projectile;
+		+RANDOMIZE
+		RenderStyle "Add";
+		Alpha 0.75;
+		DeathSound "weapons/plasmaf";
+	}
+	States
+	{
+	Spawn:
+		PLSS AB 6 Bright;
+		Loop;
+	Death:
+		PLSE ABCDE 4 Bright;
+		Stop;
+	}
+}
+
+class SP_GaussTrailSiegeAOE : Actor
+{
+	Default
+	{
+		+NOINTERACTION
+		+NOBLOCKMAP
+		RenderStyle "None";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+		Stop;
+	}
+}
+
+class DarkMastermindLaserCannon : FastProjectile
+{
+	Default
+	{
+		Radius 8;
+		Height 8;
+		Speed 80;
+		Damage 8;
+		Projectile;
+		+NOBLOCKMAP
+		RenderStyle "Add";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+		Loop;
+	Death:
+		TNT1 A 1;
+		Stop;
+	}
+}
+
+class FloorfireToken : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+	}
+}
+
+// ZScript A_CustomMissile string args are type-checked at parse time — stub if absent from DECORATE.
+class SentryFlame : Actor
+{
+	Default
+	{
+		Projectile;
+		Speed 20;
+		Damage 3;
+		+NOBLOCKMAP
+		+ACTIVATEIMPACT
+		+ACTIVATEPCROSS
+		RenderStyle "Add";
+		Alpha 0.7;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 2;
+		Loop;
+	Death:
+		TNT1 A 1;
+		Stop;
+	}
+}

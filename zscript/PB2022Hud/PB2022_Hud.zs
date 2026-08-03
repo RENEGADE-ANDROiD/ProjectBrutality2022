@@ -1497,6 +1497,16 @@ class PB2022_Hud_ZS : BaseStatusBar
 			else
 				PBHud_DrawImage(inPain ? "LHLTHHUD" : "HLTHHUD", (93, -60), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_CENTER);
 
+			// Flashlight++ battery (when holder exists / charging / on)
+			let flPointer = PB_FPP_Holder(CPlayer.mo ? CPlayer.mo.FindInventory("PB_FPP_Holder") : null);
+			if (flPointer && !CheckInventory("sae_extcam") && !automapactive)
+			{
+				PBHud_DrawImage(flPointer.flOutOfBatteryPenalty ? "FLSHBATL" : "FLSHBATT", (103, -12), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM, playerBoxAlpha * clamp(flashlightBatteryAlpha, 0.0, 1.0));
+				PBHud_DrawBar(flPointer.flOutOfBatteryPenalty ? "FLSHBBAL" : "FLSHBBAR", "FLSHBBRG", flPointer.flashlightCharge, flPointer.flashlightChargeMax, (122, -15), 0, 0, DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM, clamp(flashlightBatteryAlpha, 0.0, 1.0), slanted: false);
+				if ((flPointer.flashlightCharge < flPointer.flashlightChargeMax && flashlightBatteryAlpha < 1) || flPointer.on)
+					flashlightBatteryAlpha = 10.0;
+			}
+
 			//Mugshot
             if(!multiplayer)
 			    PBHud_DrawImage("EQUPBO", (17, -17), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, playerBoxAlpha);

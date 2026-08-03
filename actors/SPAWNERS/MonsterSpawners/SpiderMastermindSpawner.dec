@@ -1,4 +1,4 @@
-Actor SpiderMastermindDice replaces SpiderMastermind
+﻿Actor SpiderMastermindDice replaces SpiderMastermind
 {
 	+LOOKALLAROUND
 	States
@@ -63,6 +63,9 @@ Actor SpiderMastermindDice replaces SpiderMastermind
 	stop
 	ReplaceToggle1:
 	TNT1 AA 0
+	TNT1 A 0 A_JumpIf(GetCvar("pb_NoWhiteWidow")==1, "WWSkip1")
+	TNT1 A 0 A_Jump(12, "SpawnWhiteWidow")
+	WWSkip1:
 	TNT1 A 0 A_SpawnItemEx("PB_Mastermind",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	Stop
 	ReplaceToggle2:
@@ -78,6 +81,9 @@ Actor SpiderMastermindDice replaces SpiderMastermind
 	TNT1 A 0 A_JumpIf(GetCvar("NoDirector") == 1, "RT3Done")
 	TNT1 A 0 A_SpawnItemEx("Directorpassivespawn",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	RT3Done:
+	Stop
+	SpawnWhiteWidow:
+	TNT1 A 0 A_SpawnItemEx("WhiteWidow",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 	Stop
 	Demolisher:
 	TNT1 AA 0
@@ -135,4 +141,5 @@ Actor SpiderMastermindDice replaces SpiderMastermind
 	Stop
 	}
 }
+
 

@@ -1,7 +1,7 @@
-// DragonSlayer â€” see actors/Weapons/MeleeWeaponPack/DragonSlayer.dec (credits header).
+// DragonSlayer - see actors/Weapons/MeleeWeaponPack/DragonSlayer.dec (credits header).
 // Original: Craneo (PB_MeleeWeaponPack CREDITS). PB 0.4.2+ rework: Renegade Android.
 
-// Implementation base â€” players only receive PB_ObsidianDragonSlayer (Obsidian Ravager drop).
+// Implementation base - players only receive PB_ObsidianDragonSlayer (Obsidian Ravager drop).
 class DragonSlayer : PB_WeaponBase
 {
 	int holdCharge;
@@ -526,7 +526,7 @@ class DragonSlayer : PB_WeaponBase
 	}
 }
 
-// Boss drop from Obsidian Ravager â€” same kit as DragonSlayer, limited wear pool (see MonsterWeaponDurability.dec).
+// Boss drop from Obsidian Ravager - same kit as DragonSlayer, limited wear pool (see MonsterWeaponDurability.dec).
 class PB_ObsidianDragonSlayer : DragonSlayer
 {
 	const WEAR_MAX = 40;

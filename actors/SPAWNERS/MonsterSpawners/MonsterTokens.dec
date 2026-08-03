@@ -37,6 +37,7 @@ Actor IsRifleCommando : MonsterCounter { }
 
 Actor IsNormalChaingunGuy : MonsterCounter { }
 Actor IsNailgunMajor : MonsterCounter { }
+Actor IsQSGDreadTrooper : MonsterCounter { }
 Actor IsClassicChaingunGuy : MonsterCounter { }
 Actor IsHelmetChaingunGuy : MonsterCounter { }
 Actor IsPlasmaZombieC : MonsterCounter { } //To prevent regular zombies from turning commandos into their kind!
@@ -75,6 +76,15 @@ Actor IsSTDarkImp : MonsterCounter { }
 Actor IsNamiDarkImp : MonsterCounter { }
 Actor IsVoidDarkImp : MonsterCounter { }
 Actor IsNetherDarkImp : MonsterCounter { }
+Actor IsFusionCyberImp : MonsterCounter { }
+
+Actor IsRealm667Drone : MonsterCounter { }
+Actor IsRealm667BloodGhost : MonsterCounter { }
+Actor IsRealm667BloodSkull : MonsterCounter { }
+Actor IsRealm667BabyCaco : MonsterCounter { }
+
+// Mid/High + DiceTier3+ — gates Crackodemon / Aracnorb companions
+Actor IsProgGuestLate : MonsterCounter { }
 
 Actor IsRevenant : MonsterCounter { }
 Actor IsBeamRevenant : MonsterCounter { }

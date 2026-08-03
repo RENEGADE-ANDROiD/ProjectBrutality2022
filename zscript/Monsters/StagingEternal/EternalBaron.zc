@@ -1,0 +1,332 @@
+﻿Class EternalBaron : BaronOfHell
+{
+	int attackloop;
+	
+	Default
+		{
+		  Health 2000;
+		  Radius 24;
+		  Height 64;
+		  Mass 1000;
+		  Speed 8;
+		  PainChance 50;
+		  Monster;
+		  BloodType "NashGoreBlood", "NashGoreBlood", "NashGoreBlood";
+		  BloodColor "Green";
+		  +FLOORCLIP;
+		  +BOSSDEATH;
+		  SeeSound "EternalBaron/sight";
+		  PainSound "EternalBaron/pain";
+		  DeathSound "EternalBaron/death";
+		  ActiveSound "EternalBaron/active";
+		  Obituary "$OB_BARON";
+		  HitObituary "$OB_BARONHIT";
+		  Scale .5;
+		  }
+  States
+	  {
+	  Spawn:
+		BAST A 10 BRIGHT A_Look;
+		Loop;
+				
+	  See:
+    See:
+    BAWK A 2 BRIGHT {
+        A_Chase();
+        A_PlaySound("EternalBaron/step", CHAN_BODY);
+    }
+    BAWK CDEFGHIJ 2 BRIGHT A_Chase();
+
+    BAWK K 2 BRIGHT {
+        A_Chase();
+        A_PlaySound("EternalBaron/step", CHAN_BODY);
+    }
+    BAWK LMNOPQRST 2 BRIGHT A_Chase();
+
+    TNT1 A 0
+    {
+        if (!CheckSight(target))
+        {
+            return;
+        }
+
+        if (Health > 1000)
+        {
+            if (random(1,5) > 2)
+            {
+                SetStateLabel("Missile");
+            }
+            else
+            {
+                SetStateLabel("MaybeCharge");
+            }
+        }
+        else
+        {
+            int r = random(1,10);
+            if (r > 6)
+            {
+                SetStateLabel("Missile2");
+            }
+            else if (r < 4)
+            {
+                SetStateLabel("MaybeCharge");
+            }
+            else
+            {
+                SetStateLabel("Missile");
+            }
+        }
+    }
+    Loop;
+		
+	MaybeCharge:
+		TNT1 A 0 A_Jump(216, "CHARGE");
+		Goto CHARGE;
+	CHARGE:
+	    TNT1 A 0 A_PlaySound("BELCHRG", 3);
+		BAAT P 1 BRIGHT A_FaceTarget();
+		BAAT QR 5 BRIGHT;
+	    TNT1 A 0 A_PlaySound("CLAP", 2);
+        TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 Radius_Quake (2, 24, 0, 15, 0);
+		BAAT P 8 BRIGHT;
+		BAAT QRSTSRQRSTSRQ 2 BRIGHT A_FaceTarget();
+		TNT1 A 0 A_Recoil (-17);
+	STAMPEDE:
+		TNT1 A 0 A_Recoil (-15);
+		BARU ABCDEFG 1 BRIGHT A_FaceTarget();
+		TNT1 A 0 A_Recoil (-15);
+		TNT1 A 0; 
+		TNT1 A 0 A_PlaySound("knight/step",4);
+		TNT1 A 0 A_CustomMissile("KnightSlam",10,0,0,0);
+		TNT1 A 0 Radius_Quake (2, 24, 0, 15, 0);
+		TNT1 A 0 A_JumpIfCloser(300, "SMASH");
+		BARU HIJKLMN 1 BRIGHT A_FaceTarget();
+		TNT1 A 0 A_Recoil (-15);
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfCloser(300, "SMASH");
+		BARU OPQRS 1 BRIGHT A_FaceTarget();
+		TNT1 A 0 A_Recoil (-15);
+		TNT1 A 0 A_PlaySound("knight/step",5);
+		TNT1 A 0 Radius_Quake (2, 24, 0, 15, 0);
+		TNT1 A 0 A_CustomMissile("KnightSlam",10,0,0,0);
+		TNT1 A 0; 
+		TNT1 A 0 A_JumpIfCloser(300, "SMASH");
+		BARU TUVW 1 BRIGHT; 
+		TNT1 A 0 A_Recoil (-15);
+		TNT1 A 0; 
+		TNT1 A 0 A_JumpIfCloser(300, "SMASH");
+		loop;
+		
+	SMASH:
+		TNT1 A 0 A_Recoil (-18);
+        TNT1 A 0 ThrustThingZ(0,25,0,1);
+	    TNT1 A 0 A_PlaySound("weapons/fistwhoosh", 1);
+		TNT1 A 0 A_FaceTarget();
+		BAAT ABCDEF 1 BRIGHT A_FaceTarget();
+		BAAT GHIJK 1 BRIGHT; 
+		TNT1 A 0 A_CustomMeleeAttack(20, "", "", "HKFT"); //A_CustomMissile("KnightAttack",9,0,0,0)
+		TNT1 A 0 A_CustomMissile("CyberStep",10,0,0,0);
+        TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 Radius_Quake (2, 24, 0, 15, 0);
+	    TNT1 A 0 A_PlaySound("CLAP", 2);
+		BAAT LMNOQ 1 BRIGHT; 
+		Goto See;
+		
+		
+	  Melee:
+		BAAT ABCDEFGHIJ 2 BRIGHT A_FaceTarget();
+		BAAT K 0 BRIGHT {
+		A_CustomMeleeAttack(40,"imp/melee");
+		A_PlaySound("superbaron/smash");
+		}
+		BAAT LMNOQ 1 BRIGHT;
+		Goto See2;
+		
+	  Missile:
+		BAAT ABCDEFGHIJK 2 BRIGHT A_FaceTarget();	
+		BAAT K 5 BRIGHT A_CustomMissile("BelphegorGreenPlasmaBall");
+		BAAT LMNOPQRSTU 2 BRIGHT;
+		Goto See2;
+	  
+	  Missile2:
+		BAAT A 1 BRIGHT{
+			Radius_Quake (2, 50, 0, 44, 0);
+			A_SpawnItemEx("BaronSigil",0,0,0,0,0,0,0,SXF_SETMASTER);
+			}
+		BAAT BBBBBBBBCDEF 4 BRIGHT {
+		A_FaceTarget();
+		A_SpawnItemEx("DarkCyberdemonFloorFire",70,0,0,0,0,0,attackloop,SXF_TRANSFERPOINTERS|SXF_SETMASTER);
+		attackloop += 40;
+		}
+		BAAT G 15 BRIGHT A_FaceTarget();
+		BAAT HIJK 1 BRIGHT;
+		TNT1 A 0 BRIGHT{
+		A_GiveToChildren("FloorfireToken",1);
+		A_CustomMissile("BaronHomingBFG", 36, 5, 0, 1);
+		}
+		BAAT LMNOPQRSTU 2 BRIGHT;
+		Goto See2;
+	  
+	  Pain:
+		BAST A 2 BRIGHT A_Pain();
+		Goto See2;
+		
+	  See2:
+        TNT1 A 0 BRIGHT A_Setspeed (20, 0);
+        BARU AB 2 BRIGHT A_Chase();
+        TNT1 A 0 A_PlaySound("baron/step", CHAN_AUTO, 8);
+        BARU CDEFGHIJKLMN 2 BRIGHT A_Chase();
+        TNT1 A 0 A_PlaySound("baron/step", CHAN_AUTO, 8);
+        BARU OPQRSTUV 2 BRIGHT A_Chase();
+		TNT1 A 0
+			{
+			if(Health > 1000)
+				{
+					if (random(1,5) >2)
+						{
+							SetStateLabel("Missile");
+						}
+					else
+						{
+							SetStateLabel("MaybeCharge");
+						}
+				}
+			else 
+				{
+					int r = random(1, 10);
+					if (r > 6)
+						{
+							SetStateLabel("Missile2");
+						}
+					else if (r < 4)
+						{
+							SetStateLabel("MaybeCharge");
+						}
+					else
+						{
+							SetStateLabel("Missile");
+						}
+				}
+			}
+      Loop;
+	  
+	  Death:
+	  TNT1 AAAAAA 0 A_CustomMissile ("XDeath1Green", 40, 0, random (0, 360), 2, random (0, 160));
+        TNT1 AAAAA 0 A_CustomMissile ("Green_FlyingBlood", 15, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAAA 0 A_CustomMissile ("Green_Instestin", 32, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 45, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("XDeath1Green", 32, 0, random (150, 210), 2, random (0, 40));
+		TNT1 AAA 0 A_CustomMissile ("XDeath3Green", 26, 0, random (170, 190), 2, random (0, 40));
+		TNT1 AA 0 A_CustomMissile ("XDeath2Green", 31, 0, random (130, 210), 2, random (0, 40));
+		TNT1 AAAAAA 0 A_CustomMissile ("Green_Instestin", 32, 0, random (0, 360), 2, random (0, 160));
+	    TNT1 AAAA 0 A_CustomMissile ("MuchBloodGreen", 55, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("green_blood", 30, 0, random (0, 360), 2, random (0, 160));
+	    TNT1 A 0 A_CustomMissile ("Green_FlyingBlood", 28, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_Scream;
+		BADA ABCEDFG 2 BRIGHT{
+		A_GiveToChildren("FloorfireToken",-1);
+		}
+		BADA HIJK 2 BRIGHT; 
+		BADA LMNOPQRSTUVWX 2 BRIGHT;
+		BADA Y 2 BRIGHT {
+        A_SpawnItemEx ("GreenGrowingBloodPool");
+        }
+        BADA Z 1 BRIGHT A_NoBlocking;
+		BADS A -1 A_BossDeath;
+		Stop;
+		
+		Death.ExecutionPinata:
+		BAST A 28;
+		TNT1 A 0
+	{
+		if (Random(0,99) < 40)
+		{
+			A_PlaySound("GloryPunch/Kill", CHAN_AUTO, 2.0);
+		}
+
+		 A_SpawnItemEx("GloryHightPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360));
+	}
+    Goto XDeath;
+		Death.Execution:
+		BAST A 28;   
+    Goto XDeath;
+	  XDeath:
+	  TNT1 AAAAAA 0 A_CustomMissile ("XDeath1Green", 40, 0, random (0, 360), 2, random (0, 160));
+        TNT1 AAAAA 0 A_CustomMissile ("Green_FlyingBlood", 15, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAAA 0 A_CustomMissile ("Green_Instestin", 32, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 45, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("XDeath1Green", 32, 0, random (150, 210), 2, random (0, 40));
+		TNT1 A 0 A_SpawnItem("BloodSplasher3");
+	   TNT1 AAAAAAAAAAAAAAA 0 A_SpawnItem("PB_SuperWallRedBlood");
+         TNT1 AAAAAAAAA 0 A_SpawnItem("CeilBloodLauncherLong");
+	TNT1 A 0 {
+	A_SpawnItem ("PB_SuperWallRedBlood");
+	A_SpawnItem ("PB_SuperWallRedBlood");
+	A_SpawnItem ("PB_SuperWallRedBlood");
+	A_SpawnItem ("PB_SuperWallRedBlood");
+	A_SpawnItemEX ("PB_BloodmistLarge", 40, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (30, 90));
+	A_SpawnItemEX ("PB_BloodmistLarge", 40, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (30, 90));
+	A_SpawnItemEX ("PB_BloodmistLarge", 40, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (30, 90));
+	A_SpawnItemEX ("PB_BloodmistLarge", 40, 0, random (0, 360), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH|CMF_OFFSETPITCH|CMF_BADPITCH|CMF_SAVEPITCH, random (30, 90));
+	}
+		TNT1 AAA 0 A_CustomMissile ("XDeath3Green", 26, 0, random (170, 190), 2, random (0, 40));
+		TNT1 AA 0 A_CustomMissile ("XDeath2Green", 31, 0, random (130, 210), 2, random (0, 40));
+		TNT1 AAAAAA 0 A_CustomMissile ("Green_Instestin", 32, 0, random (0, 360), 2, random (0, 160));
+	    TNT1 AAAA 0 A_CustomMissile ("MuchBloodGreen", 55, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("green_blood", 30, 0, random (0, 360), 2, random (0, 160));
+	    TNT1 A 0 A_CustomMissile ("Green_FlyingBlood", 28, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_Scream;
+		BADA ABCEDFG 2 BRIGHT{
+		A_GiveToChildren("FloorfireToken",-1);
+		}
+		BADA HIJK 2 BRIGHT; 
+		BADA LMNOPQRSTUVWX 2 BRIGHT;
+		BADA Y 2 BRIGHT {
+        A_SpawnItemEx ("GreenGrowingBloodPool");
+        }
+        BADA Z 1 BRIGHT A_NoBlocking;
+		BADS A -1 A_BossDeath;
+		Stop;
+	  
+	  Raise:
+	  
+		BOSS O 8;
+		BOSS NMLKJI 8;
+		Goto See;
+	  }
+}
+
+Class BaronSigil : Actor
+{
+  Default
+  {
+  +NOINTERACTION;
+  +FLATSPRITE;
+  +FLOORHUGGER;
+  +FORCEXYBILLBOARD;
+  +FLOORCLIP;
+  Renderstyle "Add";
+  Scale 2.9;
+  Alpha 0.0;
+
+  }
+  int effect;
+  States
+  {
+  Spawn:
+	DIST KKKKKKKK 1
+		{
+		A_Warp(AAPTR_MASTER, 0, 0, 0.2, 0, WARPF_ABSOLUTEANGLE | WARPF_NOCHECKPOSITION);
+		A_FadeIn(0.2);
+		}
+	DIST K 5 A_FadeOut();
+	Wait;
+   }
+}
+
+
+

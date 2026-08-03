@@ -81,12 +81,27 @@ DropItem "Demonpickup2" 188
     goto See
   Missile2:
     OVER GH 8 Bright A_FaceTarget
-    OVER H 0 Bright A_JumpIfHealthLower(1500,3)
+    TNT1 A 0 Bright A_JumpIfHealthLower(1200,"Missile2Charged")
     OVER H 1 Bright A_PlaySound("weapons/shock")
     OVER H 7 Bright A_CustomMissile("StormShot1",43,0,0,0,0)
+    OVER HG 2 Bright
     goto See
-    OVER H 1 Bright A_PlaySound("weapons/shock")
+  Missile2Charged:
+    TNT1 A 0 A_SetInvulnerable
+    OF31 D 4 A_FaceTarget
+    OF31 D 3 Bright A_FaceTarget
+    OF31 D 0 Bright A_CustomMissile("StormLite2",92,-40,random(-3,3),0,random(-3,3))
+    OF31 D 0 Bright A_CustomMissile("OverLightningMissile",43,0,-15,0)
+    OF31 D 0 Bright A_CustomMissile("OverLightningMissile1",43,0,30,0)
+    OF31 D 0 Bright A_CustomMissile("OverLightningMissile2",43,0,-45,0)
+    OF31 D 0 Bright A_CustomMissile("OverLightningMissile3",43,0,60,0)
+    OF31 D 0 Bright A_CustomMissile("OverLightningMissile4",43,0,-75,0)
+    OF31 D 3 Bright A_CustomMissile("OverLightningMissile5",43,0,-90,0)
+  Missile2ChargedEnd:
+    TNT1 A 0 A_UnSetInvulnerable
+    OVER GH 2 Bright A_PlaySound("weapons/shock")
     OVER H 7 Bright A_CustomMissile("StormShot2",43,0,0,0,0)
+    OVER HG 2 Bright
     goto See
   Missile3:
     OVER JJJJJJJJ 1 A_FaceTarget

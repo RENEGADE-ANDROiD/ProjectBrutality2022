@@ -72,11 +72,11 @@ class pb_ExecutionHandler : EventHandler
 		Actor target = getTarget();
 		
 		if(target) {
-			int targetMaxHealth = target.spawnHealth();//ts_ActorInfo.getActorMaxHealth(target);
-			int targetHealth = target.health;
-
-			
-			if((targetHealth <= targetMaxHealth*0.2 || targetHealth < 65) && (target is "PB_Monster" || target is "D3Maledict" || target is "ObsidianRavager") && getTargetDistance() < 250)
+			PlayerInfo player = players[consolePlayer];
+			Actor viewer = (player && player.mo) ? player.mo : null;
+			if (PB_WeaponBase.PB_IsExperimentalExecutionTarget(target)
+				&& PB_WeaponBase.PB_ActorCanBeExecuted(target, viewer)
+				&& getTargetDistance() < 250)
 			{
 				draw(target, event);
 			}
@@ -205,6 +205,7 @@ class pb_ExecutionHandler : EventHandler
   void initialize()
   {
     _projection  = new("pb_ProjScreen");
+    _translator  = new("pb_uiHack");
     _isInitialized = true;
   }
 

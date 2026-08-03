@@ -1,4 +1,4 @@
-﻿// Map light decorations â€” strobe for flames, soft pulse for tech/toxic/ice.
+﻿// Map light decorations - strobe for flames, soft pulse for tech/toxic/ice.
 
 flickerlight2 DECO_CANDLE
 {
