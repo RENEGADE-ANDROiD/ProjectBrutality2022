@@ -671,7 +671,8 @@ class PB_WeaponBase : DoomWeapon
 			PB_UnsetPlayerExecutionProperties();
 			return null;
 		}
-		monster.A_Die("Execution");
+		if (PB_HasExperimentalExecutionKit(monster))
+			monster.A_Die("Execution");
 		PB_Achievements.OnExecution();
 		return resolved;
 	}

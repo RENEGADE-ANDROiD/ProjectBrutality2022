@@ -117,6 +117,14 @@ extend class PB_WeaponBase
 		// Shared P1NK/KIC* POV; blended only from humanoid fodder execution pools where it fits visually.
 		return "Execution_Generic";
 	}
+
+	// Kit-less generic fallback: kill after Execution_Generic intro hold (PB_Execute defers A_Die).
+	action void PB_ExecuteKillHeldTarget()
+	{
+		let m = GetPointer(AAPTR_PLAYER_GETTARGET);
+		if (m && m.health > 0)
+			m.A_Die("Execution");
+	}
 action StateLabel PB_ExecutionHellDuke() {
 		StateLabel result;
 		int selector = (random(1,2));
