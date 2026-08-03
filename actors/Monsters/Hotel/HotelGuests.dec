@@ -305,12 +305,12 @@ ACTOR PB_HotelBloodCrawlerBig : PB_Monster
 ACTOR PB_HotelOgre : PB_Monster
 {
 	Health 600
-	Radius 30
-	Height 65
+	Radius 20
+	Height 58
 	Mass 800
 	Speed 5
-	Scale 0.7
-	MeleeRange 80
+	Scale 0.54
+	MeleeRange 68
 	MeleeDamage 12
 	PainChance 120
 	Monster
