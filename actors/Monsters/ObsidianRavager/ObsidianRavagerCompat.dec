@@ -3,5 +3,3 @@
 ACTOR PB_HealthBonus : HealthPlus {}
 
 ACTOR HSTracer : RedFlare22 {}
-
-ACTOR HellStormCloudEffect : PlasmaSmoke {}

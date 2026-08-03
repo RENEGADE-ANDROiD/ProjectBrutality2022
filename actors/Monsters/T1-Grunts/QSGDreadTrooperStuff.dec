@@ -2413,7 +2413,7 @@ Actor FrozenQSGDreadTrooper : FrozenEnemyBase
 	  TNT1 AAAAAA 0 A_CustomMissile ("MuchBlood", 48, 0, random (0, 360), 2, random (0, 160))
 	  TNT1 A 0 A_SpawnItem("PB_QSGZombieDrop")
 	  FZD2 C 1
-	  Goto Super::Death
+	  Stop
 
 	Death.Ice:
 	Death.IceExplosion:
