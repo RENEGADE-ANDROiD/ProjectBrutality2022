@@ -10,7 +10,7 @@ class PB_MetalSniper : PB_WeaponBase
         Tag "$PB_MSNI_TAG";
         inventory.pickupsound "CLIPIN";
         inventory.pickupmessage "$PB_MSNI_PICKUP";
-        Inventory.AltHudIcon "MSNUA0";
+        Inventory.AltHudIcon "MSURA0";
         weapon.ammotype1 "NewClip";
         weapon.ammogive1 10;
         weapon.ammouse1 0;
@@ -23,7 +23,7 @@ class PB_MetalSniper : PB_WeaponBase
         +FLOORCLIP;
         +weapon.noalert;
         +weapon.noautofire;
-        Inventory.Icon "MSNUA0";
+        Inventory.Icon "MSNWA0";
     }
 
     const SniperMode  = 0;

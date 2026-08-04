@@ -908,9 +908,8 @@ class PB_EventHandler : EventHandler
 		double cx = double(Screen.GetWidth() + offX) - boxW * 0.5;
 		double cy = double(Screen.GetHeight() + offY) - boxH * 0.5;
 
-		// Wide icons (e.g. HASGA0) use cover-fit so the portrait box fills instead of letterboxing.
-		bool coverPortrait = weaponClass == 'HASG' || PB2022_WeaponHudIconExtremeAspect(iconID);
-		DrawClipFittedTexture(iconID, cx, cy, boxW, boxH, alpha, coverPortrait, coverPortrait);
+		// Contain-fit only: cover-fit + clip chopped wide side-view icons at the box edges.
+		DrawClipFittedTexture(iconID, cx, cy, boxW, boxH, alpha, false, false);
 	}
 
 	ui TextureID PB2022GetModeIcon(PlayerInfo p, Name weaponClass, out double localScale, out double localOffX, out double localOffY)

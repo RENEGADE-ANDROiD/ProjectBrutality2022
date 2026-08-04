@@ -59,7 +59,7 @@ class PBWP_Warbringer : PBWP_CA_WeaponBase
 		TNT1 A 0 PBWP_CA_SelectPose();
 		Goto Ready3;
 	SelectAnimation:
-		RFL_ ABCDEF 1 A_DoPBWeaponAction(WRF_NOFIRE);
+		RFL_ HGA 1 A_DoPBWeaponAction(WRF_NOFIRE);
 		Goto Ready3;
 
 	Deselect:

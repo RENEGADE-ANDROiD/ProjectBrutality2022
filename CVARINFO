@@ -656,17 +656,17 @@ user bool pb_weapon_crosshairs = true;
 user bool pb_weaponhud_enable = true;
 user int pb_weaponhud_x = -175;
 user int pb_weaponhud_y = -162;
-user float pb_weaponhud_scale = 0.90;
+user float pb_weaponhud_scale = 1.25;
 user float pb_weaponhud_alpha = 1.0;
-user float pb_weaponhud_maxwidth = 232.0;
-user float pb_weaponhud_maxheight = 100.0;
-user bool pb_weaponmodehud_enable = true;
-user int pb_weaponmodehud_x = -195;
-user int pb_weaponmodehud_y = -245;
-user float pb_weaponmodehud_scale = 1.30;
+user float pb_weaponhud_maxwidth = 160.0;
+user float pb_weaponhud_maxheight = 48.0;
+user bool pb_weaponmodehud_enable = false;
+user int pb_weaponmodehud_x = -180;
+user int pb_weaponmodehud_y = -250;
+user float pb_weaponmodehud_scale = 1.00;
 user float pb_weaponmodehud_alpha = 1.0;
 user float pb_weaponmodehud_maxwidth = 100.0;
-user float pb_weaponmodehud_maxheight = 100.0;
+user float pb_weaponmodehud_maxheight = 48.0;
 
 // Glory Kills cvars (ported from D4D / Brutal Doom Black Edition)
 server cheat bool be_ExecutionsON = true;
@@ -686,7 +686,7 @@ server int sv_bonusrange = 20;
 server int sv_ammorange = 20;
 server bool be_holdablesaw = true;
 server bool be_fuelhud = true;
-server float sv_fuelhud_scale = 1.35;
+server float sv_fuelhud_scale = 1.00;
 server int sv_fuelhud_x = 280;
 server int sv_fuelhud_y = -225;
 
