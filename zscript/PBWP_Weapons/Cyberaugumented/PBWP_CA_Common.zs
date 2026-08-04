@@ -135,24 +135,25 @@ class PBWP_CA_WeaponBase : PB_WeaponBase
 			Goto Ready3;
 
 		// Kick flashes: blank weapon layer while legs kick (do not play MC3S slash).
+		// End Stop — DoKick restores Ready3 on PSP_WEAPON when the kick finishes.
 		FlashKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			TNT1 A 14;
-			Goto Ready3;
+			Stop;
 
 		FlashAirKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			TNT1 A 15;
-			Goto Ready3;
+			Stop;
 
 		FlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			TNT1 A 25;
-			Goto Ready3;
+			Stop;
 
 		FlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			TNT1 A 2;
-			Goto Ready3;
+			Stop;
 	}
 }

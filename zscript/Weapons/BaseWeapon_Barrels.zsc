@@ -5,6 +5,41 @@ extend class PB_WeaponBase
 {
 	string pbBarrelPlaceClass;
 
+	// Staging: A_WeaponReady routes Fire / AltFire / weapon-lower through these
+	// while Grabbed* is held (see PB_Staging BaseWeapon_Functions.zsc).
+	override state GetAtkState(bool hold)
+	{
+		if (owner && owner.FindInventory("GrabbedBarrel"))
+			return ResolveState("ThrowBarrel");
+		if (owner && owner.FindInventory("GrabbedBurningBarrel"))
+			return ResolveState("ThrowFlameBarrel");
+		if (owner && owner.FindInventory("GrabbedIceBarrel"))
+			return ResolveState("ThrowIceBarrel");
+		return Super.GetAtkState(hold);
+	}
+
+	override state GetAltAtkState(bool hold)
+	{
+		if (owner && owner.FindInventory("GrabbedBarrel"))
+			return ResolveState("PlaceBarrel");
+		if (owner && owner.FindInventory("GrabbedBurningBarrel"))
+			return ResolveState("PlaceFlameBarrel");
+		if (owner && owner.FindInventory("GrabbedIceBarrel"))
+			return ResolveState("PlaceIceBarrel");
+		return Super.GetAltAtkState(hold);
+	}
+
+	override state GetDownState()
+	{
+		if (owner && owner.FindInventory("GrabbedBarrel"))
+			return ResolveState("PlaceBarrel");
+		if (owner && owner.FindInventory("GrabbedBurningBarrel"))
+			return ResolveState("PlaceFlameBarrel");
+		if (owner && owner.FindInventory("GrabbedIceBarrel"))
+			return ResolveState("PlaceIceBarrel");
+		return Super.GetDownState();
+	}
+
 	action void PB_BarrelReady1()
 	{
 		A_ClearOverlays(-10, 65);
@@ -36,46 +71,49 @@ extend class PB_WeaponBase
 		A_GiveInventory("GrabbedIceBarrel", 1);
 	}
 
+	// Grab indices match TheNukageBarrel.dec Grab* / FGrab* / IGrab* grants
+	// (Grab2 = holes, Grab3 = cut — same as Staging place map).
 	action void PB_BarrelResolvePlaceClass(string grabPrefix)
 	{
+		invoker.pbBarrelPlaceClass = "";
 		if (grabPrefix == "F")
 		{
 			if (CountInv("FGrab1") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrel";
-			else if (CountInv("FGrab2") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelCut";
-			else if (CountInv("FGrab3") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelHoles";
-			else if (CountInv("FGrab4") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelDent1";
-			else if (CountInv("FGrab5") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelDent2";
-			else if (CountInv("FGrab6") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelBloody";
-			else if (CountInv("FGrab7") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelBloodyCut";
-			else if (CountInv("FGrab8") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelBloodyHoles";
-			else if (CountInv("FGrab9") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelBloodyDent1";
-			else if (CountInv("FGrab10") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelBloodyDent2";
+			else if (CountInv("FGrab2") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelHoles";
+			else if (CountInv("FGrab3") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelCut";
+			else if (CountInv("FGrab4") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelDented";
+			else if (CountInv("FGrab5") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrel_RedBlood";
+			else if (CountInv("FGrab6") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelHoles_RedBlood";
+			else if (CountInv("FGrab7") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelCut_RedBlood";
+			else if (CountInv("FGrab8") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelDented_RedBlood";
+			else if (CountInv("FGrab9") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelDented_RedBlood";
+			else if (CountInv("FGrab10") >= 1) invoker.pbBarrelPlaceClass = "FlameBarrelDented_RedBlood";
 		}
 		else if (grabPrefix == "I")
 		{
 			if (CountInv("IGrab1") >= 1) invoker.pbBarrelPlaceClass = "BarrelFrozen";
-			else if (CountInv("IGrab2") >= 1) invoker.pbBarrelPlaceClass = "BarrelCutFrozen";
-			else if (CountInv("IGrab3") >= 1) invoker.pbBarrelPlaceClass = "BarrelHolesFrozen";
-			else if (CountInv("IGrab4") >= 1) invoker.pbBarrelPlaceClass = "BarrelDent1Frozen";
-			else if (CountInv("IGrab5") >= 1) invoker.pbBarrelPlaceClass = "BarrelDent2Frozen";
-			else if (CountInv("IGrab6") >= 1) invoker.pbBarrelPlaceClass = "BarrelBloodyFrozen";
-			else if (CountInv("IGrab7") >= 1) invoker.pbBarrelPlaceClass = "BarrelBloodyCutFrozen";
-			else if (CountInv("IGrab8") >= 1) invoker.pbBarrelPlaceClass = "BarrelBloodyHolesFrozen";
-			else if (CountInv("IGrab9") >= 1) invoker.pbBarrelPlaceClass = "BarrelBloodyDent1Frozen";
-			else if (CountInv("IGrab10") >= 1) invoker.pbBarrelPlaceClass = "BarrelBloodyDent2Frozen";
+			else if (CountInv("IGrab2") >= 1) invoker.pbBarrelPlaceClass = "BarrelFrozenHoles";
+			else if (CountInv("IGrab3") >= 1) invoker.pbBarrelPlaceClass = "BarrelFrozenCut";
+			else if (CountInv("IGrab4") >= 1) invoker.pbBarrelPlaceClass = "BarrelFrozenDented";
+			else if (CountInv("IGrab5") >= 1) invoker.pbBarrelPlaceClass = "BarrelFrozen_RedBlood";
+			else if (CountInv("IGrab6") >= 1) invoker.pbBarrelPlaceClass = "BarrelFrozenHoles_RedBlood";
+			else if (CountInv("IGrab7") >= 1) invoker.pbBarrelPlaceClass = "BarrelFrozenCut_RedBlood";
+			else if (CountInv("IGrab8") >= 1) invoker.pbBarrelPlaceClass = "BarrelFrozenDented_RedBlood";
+			else if (CountInv("IGrab9") >= 1) invoker.pbBarrelPlaceClass = "BarrelFrozenDented_RedBlood";
+			else if (CountInv("IGrab10") >= 1) invoker.pbBarrelPlaceClass = "BarrelFrozenDented_RedBlood";
 		}
 		else
 		{
 			if (CountInv("Grab1") >= 1) invoker.pbBarrelPlaceClass = "NukageBarrel";
-			else if (CountInv("Grab2") >= 1) invoker.pbBarrelPlaceClass = "BarrelCut";
-			else if (CountInv("Grab3") >= 1) invoker.pbBarrelPlaceClass = "BarrelHoles";
-			else if (CountInv("Grab4") >= 1) invoker.pbBarrelPlaceClass = "BarrelDent1";
-			else if (CountInv("Grab5") >= 1) invoker.pbBarrelPlaceClass = "BarrelDent2";
-			else if (CountInv("Grab6") >= 1) invoker.pbBarrelPlaceClass = "BarrelBloody";
-			else if (CountInv("Grab7") >= 1) invoker.pbBarrelPlaceClass = "BarrelBloodyCut";
-			else if (CountInv("Grab8") >= 1) invoker.pbBarrelPlaceClass = "BarrelBloodyHoles";
-			else if (CountInv("Grab9") >= 1) invoker.pbBarrelPlaceClass = "BarrelBloodyDent1";
-			else if (CountInv("Grab10") >= 1) invoker.pbBarrelPlaceClass = "BarrelBloodyDent2";
+			else if (CountInv("Grab2") >= 1) invoker.pbBarrelPlaceClass = "NukageBarrelHoles";
+			else if (CountInv("Grab3") >= 1) invoker.pbBarrelPlaceClass = "NukageBarrelCut";
+			else if (CountInv("Grab4") >= 1) invoker.pbBarrelPlaceClass = "NukageBarrelDented";
+			else if (CountInv("Grab5") >= 1) invoker.pbBarrelPlaceClass = "NukageBarrel_RedBlood";
+			else if (CountInv("Grab6") >= 1) invoker.pbBarrelPlaceClass = "NukageBarrelHoles_RedBlood";
+			else if (CountInv("Grab7") >= 1) invoker.pbBarrelPlaceClass = "NukageBarrelCut_RedBlood";
+			else if (CountInv("Grab8") >= 1) invoker.pbBarrelPlaceClass = "NukageBarrelDented_RedBlood";
+			else if (CountInv("Grab9") >= 1) invoker.pbBarrelPlaceClass = "NukageBarrelDented_RedBlood";
+			else if (CountInv("Grab10") >= 1) invoker.pbBarrelPlaceClass = "NukageBarrelDented_RedBlood";
 		}
 	}
 
@@ -96,8 +134,16 @@ extend class PB_WeaponBase
 	action void PB_BarrelPlaceSpawn(string grabPrefix, string grabbedToken)
 	{
 		PB_BarrelResolvePlaceClass(grabPrefix);
-		if (invoker.pbBarrelPlaceClass != "")
-			A_SpawnItemEx(invoker.pbBarrelPlaceClass, 40, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
+		if (invoker.pbBarrelPlaceClass == "")
+		{
+			if (grabPrefix == "F")
+				invoker.pbBarrelPlaceClass = "FlameBarrel";
+			else if (grabPrefix == "I")
+				invoker.pbBarrelPlaceClass = "BarrelFrozen";
+			else
+				invoker.pbBarrelPlaceClass = "NukageBarrel";
+		}
+		A_SpawnItemEx(invoker.pbBarrelPlaceClass, 17, 0, 0, 12, 0, 0, 0, SXF_NOCHECKPOSITION, 0);
 		A_StartSound("barrel/pain", CHAN_AUTO);
 		PB_BarrelClearGrabTokens(grabPrefix);
 		A_TakeInventory(grabbedToken, 1);

@@ -118,7 +118,22 @@ extend class PB_WeaponBase
 		return "Execution_Generic";
 	}
 
-	// Kit-less generic fallback: kill after Execution_Generic intro hold (PB_Execute defers A_Die).
+	// Keep kit-less / Generic-fallback targets in front of the camera during the POV strip.
+	action void PB_PinExecutionTarget()
+	{
+		let m = GetPointer(AAPTR_PLAYER_GETTARGET);
+		if (!m || m.health <= 0)
+			return;
+		m.A_Stop();
+		m.vel = (0, 0, 0);
+		double spd = max(48.0, radius + m.radius + 8.0);
+		vector3 neworigin = Vec3Offset(cos(angle) * spd, sin(angle) * spd, 0);
+		neworigin.z = m.pos.z;
+		m.SetOrigin(neworigin, true);
+		m.A_SetAngle(angle + 180, SPF_INTERPOLATE);
+	}
+
+	// Kit-less generic: kill on first impact beat (after pin hold), not during intro.
 	action void PB_ExecuteKillHeldTarget()
 	{
 		let m = GetPointer(AAPTR_PLAYER_GETTARGET);

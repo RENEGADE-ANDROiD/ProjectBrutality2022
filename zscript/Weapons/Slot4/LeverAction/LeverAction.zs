@@ -24,7 +24,7 @@ class LeverAction : PB_WeaponBase
 	Weapon.AmmoType2 "LeverActionAmmo";
 	Inventory.PickupMessage "UAC M1893 Mod 0 Lever Action (Slot 4)";
 	Inventory.PickupSound "weapons/leveraction/rechamber";
-	Inventory.Icon "AUSCA0";
+	Inventory.Icon "LVR4E0";
 	Damagetype "Shotgun";
 	Inventory.Amount 1;
 	Inventory.MaxAmount 3;
