@@ -1,16 +1,15 @@
 # Project Brutality 2022 Enhanced
 
-Project Brutality 2022 Enhanced is a full gameplay and content overhaul for *Doom* and *Doom II*, built for [UZDoom](https://github.com/UZDoom/UZDoom). Glory Kills, Project Survival Fodder/Passives, Monster Pack-style enemies and weapons, Cat's Frozen content, and the main roster are all **included** in this package-load **only** this folder with UZDoom; no extra companion files are required.
+Project Brutality 2022 Enhanced is a full gameplay and content overhaul for *Doom* and *Doom II*, built for [UZDoom](https://github.com/UZDoom/UZDoom), GZDoom & LZDoom.
 
-For the latest upstream mainline mod, see [pa1nki113r/Project_Brutality](https://github.com/pa1nki113r/Project_Brutality). This repository is the Project Brutality 2022 snapshot maintained here.
+For the official Project Brutality mod, see [pa1nki113r/Project_Brutality](https://github.com/pa1nki113r/Project_Brutality). This is Project Brutality 2022, an entirely separate yet parallel total conversion with both first and third person finishers.
 
-> **Engine:** This release targets **UZDoom**, the actively maintained fork in the GZDoom family. Please use a current UZDoom build (see Requirements). Older or unrelated source ports are not supported.
 
 ## Requirements
 
-- **[UZDoom](https://github.com/UZDoom/UZDoom) 4.13 or newer.** Development tracks the [UZDoom 4.14.3](https://github.com/UZDoom/UZDoom/tree/4.14.3) line. Install a release from the [Releases](https://github.com/UZDoom/UZDoom/releases) page. The mod needs modern UZDoom features.
+- **UZDoom / GZDoom / LZDoom**
 - **An IWAD** - `doom.wad`, `doom2.wad`, `tnt.wad`, `plutonia.wad`, or [Freedoom Phase 1+2](https://freedoom.github.io/download.html). Retail IWADs are available from the [Steam classics bundle](https://store.steampowered.com/sub/18397/) or GOG ([Doom II + Final Doom](https://www.gog.com/game/doom_ii_final_doom), [The Ultimate Doom](https://www.gog.com/game/the_ultimate_doom)).
-- **Mobile (Android / iOS) is not supported.** There is no supported UZDoom build on those platforms with the feature set this mod needs.
+- **Mobile (Android) use Delta Touch**
 
 ## Installation
 
@@ -38,8 +37,7 @@ Modified for PB2022; loads after it.
 
 ## What you get with PB2022
 
-**Glory Kills and finishers** are a major part of the fantasy: when enemies are weak enough, you can **stagger** them and rip into **cinematic kills**-in **first and third person**, with different animations across vanilla demons, Brutality variants, and many **extra / Monster Pack** enemies. Supported weapons also get a second path: when a demon is close and badly wounded, **Quick Melee** or **User2** can fire that gun's own first-person execution-separate from the stagger / Glory Kill chain. Layered on top are the **Crucible**, **Blood Punch**, **shoulder cannon** burn and freeze shots, **pinata**-style rewards, and a **Glory HUD** for fuel, punch charges, and launcher cooldowns. Turn Glory Kills on or off and tune them from **Options → PB 2022 Enhanced**; use **Glorykill Options** for HUD, range, and finer behavior.
-
+**Glory Kills and finishers** are a major part of the *brutal* fantasy: when enemies are weak enough, you can **stagger** them and rip into **cinematic kills**-in **first and third person**, with different animations across vanilla demons, Brutality variants, and many **extra / Monster Pack** enemies. Layered on top are the **Crucible**, **Blood Punch**, **shoulder cannon** burn and freeze shots, **pinata**-style rewards, and a **Glory HUD** for fuel, punch charges, and launcher cooldowns. Use **Glorykill Options** for HUD, range, and finer behavior.
 - **Player and systems:** Movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump and plasma climb - **PB 2022 Enhanced → Explosive Movement**), tactical weapon feel, layered gore, HUD, weapon-special wheel, and related flows.
 - **First-person flourishes:** Short hand-raise animations for flavor moments - rock-on on new armor / spheres / weapons, ouch on heavy hits, a do-thing raise on Use, and a health-yeah raise when you heal or grab a backpack.
 - **Second Chance & RIP AND TEAR:** New games grant a near-death **Second Chance** token (refilled by Berserk / Mega Berserk / Demon Strength Rune). When you take pain below **20** HP with a token left, you may heal and surge back with a **Hayulti** fist flourish (and Berserk again)-or burn the token and stay down. Berserk pickups can also play a **Hayberserk** "RIP AND TEAR!!" hand strip. With fists and Berserk active, **Weapon Special** toggles **RIP AND TEAR** vs **SMASH** fatality style; **Use** on close living fodder can meat-grab for a throw or meatshield handoff.
