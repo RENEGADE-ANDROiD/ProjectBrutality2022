@@ -3154,6 +3154,7 @@
 
 	SelectingAnimation:
 	GoingToReady:
+			TNT1 A 0 { return PB_PossessionRideGotoReady(); }
 			TNT1 A 0 {
 				A_TakeInventory("KeepLaserDeactivated", 1);
 				A_TakeInventory("DoGrenade", 1);

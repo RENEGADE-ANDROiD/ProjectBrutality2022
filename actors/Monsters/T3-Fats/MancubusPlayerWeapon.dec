@@ -24,6 +24,11 @@ ACTOR MancubusPlayer : PB_Weapon
 	+WEAPON.CHEATNOTWEAPON
 	States
 	{
+	GoingToReady:
+	SelectingAnimation:
+	Ready3:
+	Ready4:
+		Goto Ready
 	Select:
 		TNT1 A 0 A_GiveInventory("MancubusTimer", 220)
 		TNT1 A 0 A_SetInvulnerable

@@ -76,6 +76,12 @@ ACTOR CacoPlayer : PB_Weapon
 	+WEAPON.CHEATNOTWEAPON
 	States
 	{
+	// Inherited GoingToReady→Ready3→SelectAnimation soft-locks mounts; stay on Ready.
+	GoingToReady:
+	SelectingAnimation:
+	Ready3:
+	Ready4:
+		Goto Ready
 	Select:
 		TNT1 A 0 A_GiveInventory("CacoTimer", 200)
 		TNT1 A 0 SetPlayerProperty(0, 1, 3)

@@ -407,6 +407,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/MeleeWeaponPack/Stormcast.dec"
 #include "actors/Weapons/Slot8/PB_DarkMatterRifle.dec"
 #include "actors/Weapons/Slot8/BFGMKIV.dec"
+#include "actors/Weapons/Slot8/BFGBEAM.dec"
 #include "actors/Weapons/Equipment/ShieldGrenade_PS.dec"
 #include "actors/Weapons/Slot8/BLACKHOLE.dec"
 #include "actors/Weapons/Slot8/BioAcidLauncher.dec"

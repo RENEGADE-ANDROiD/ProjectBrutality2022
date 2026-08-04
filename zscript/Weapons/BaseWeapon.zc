@@ -263,6 +263,36 @@ class PB_WeaponBase : DoomWeapon
 			|| a.CountInv("RevenantRider") > 0;
 	}
 
+	// DECORATE cannot pass `self` into static helpers; use these from BaseWeapon.dec.
+	action state PB_PossessionRideGotoReady()
+	{
+		if (PB_PlayerOnPossessionRide(self))
+			return ResolveState("Ready");
+		return ResolveState(null);
+	}
+
+	action state PB_AbortHayultiOnPossessionRide()
+	{
+		if (!PB_PlayerOnPossessionRide(self))
+			return ResolveState(null);
+		A_ChangeFlag("INVULNERABLE", 0);
+		SetPlayerProperty(0, 0, 0);
+		SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+		A_TakeInventory("Hayulti", 1);
+		return ResolveState("Ready");
+	}
+
+	action state PB_AbortHayberserkOnPossessionRide()
+	{
+		if (!PB_PlayerOnPossessionRide(self))
+			return ResolveState(null);
+		A_ChangeFlag("INVULNERABLE", 0);
+		SetPlayerProperty(0, 0, 0);
+		SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+		A_TakeInventory("Hayberserk", 1);
+		return ResolveState("Ready");
+	}
+
 	// Staggered Glory Kill: nearby FinisherToken monster (not only GETTARGET inventory).
 	action bool PB_GloryKillOpportunityReady()
 	{
@@ -2098,6 +2128,7 @@ class PB_WeaponBase : DoomWeapon
 			Loop;
 
 		SelectFirstPersonLegs:
+			TNT1 A 0 { return PB_PossessionRideGotoReady(); }
 			TNT1 A 0 A_JumpIfInventory("Hayulti", 1, "Hayulti");
 			TNT1 A 0 A_JumpIfInventory("Hayberserk", 1, "Hayberserk");
 			TNT1 A 0 A_StopSound(1);
@@ -2118,6 +2149,7 @@ class PB_WeaponBase : DoomWeapon
 
 		// Brutal Doom Plus Hayulti / Hayberserk — shared for ZScript-only PB_WeaponBase weapons
 		Hayulti:
+			TNT1 A 0 { return PB_AbortHayultiOnPossessionRide(); }
 			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 1);
 			TNT1 A 0 SetPlayerProperty(0, 1, 0);
 			TNT1 A 0 A_PlayerScream;
@@ -2190,6 +2222,7 @@ class PB_WeaponBase : DoomWeapon
 			Goto Ready3;
 
 		Hayberserk:
+			TNT1 A 0 { return PB_AbortHayberserkOnPossessionRide(); }
 			TNT1 A 0 A_Jump(100, "HayberserkAlt");
 			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 1);
 			TNT1 A 0 SetPlayerProperty(0, 1, 0);
@@ -2254,6 +2287,7 @@ class PB_WeaponBase : DoomWeapon
 			Goto Ready3;
 
 		HayberserkAlt:
+			TNT1 A 0 { return PB_AbortHayberserkOnPossessionRide(); }
 			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 1);
 			TNT1 A 0 SetPlayerProperty(0, 1, 0);
 			TNT1 A 0 A_Print("$PB_RIP_AND_TEAR_ANIM");
@@ -2307,6 +2341,7 @@ class PB_WeaponBase : DoomWeapon
 			Goto GoingToReady;
 
 		GoingToReady2:
+			TNT1 A 0 { return PB_PossessionRideGotoReady(); }
 			TNT1 A 0 A_JumpIfInventory("Hayulti", 1, "Hayulti");
 			TNT1 A 0 A_JumpIfInventory("Hayberserk", 1, "Hayberserk");
 			TNT1 A 0 {

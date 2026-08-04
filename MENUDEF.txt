@@ -571,6 +571,13 @@ OptionMenu "PB2022_WeaponsHubMenu"
 	Title "Weapons & Spawns"
 	StaticText "Weapon Upgrades, Progression, And Spawn Toggles.", gold
 	StaticText " "
+	StaticText "======== Spawn Roster Presets ========", gold
+	Command "$OPTMNU_PB_DEFAULT_WEAPON_ROSTER", "pb_default_weapon_roster"
+	StaticText "$OPTMNU_PB_DEFAULT_WEAPON_ROSTER_HINT", teal
+	StaticText "$OPTMNU_PB_DEFAULT_WEAPON_ROSTER_HINT2", teal
+	Command "$OPTMNU_PB_FULL_WEAPON_ROSTER", "pb_full_weapon_roster"
+	StaticText "$OPTMNU_PB_FULL_WEAPON_ROSTER_HINT", teal
+	StaticText " "
 	Submenu "Weapon Settings (Upgrades & Progression)", "WeaponSettings"
 	StaticText " "
 	Submenu "Advanced Weapon Spawns", "WeaponSpawns"
@@ -917,6 +924,13 @@ OptionMenu "PistolStartSpawnMenu"
 OptionMenu "WeaponSpawns"
 {
 	Title	"--------- Advanced Weapon Spawns ---------"
+	StaticText "======== Spawn Roster Presets ========", gold
+	Command "$OPTMNU_PB_DEFAULT_WEAPON_ROSTER", "pb_default_weapon_roster"
+	StaticText "$OPTMNU_PB_DEFAULT_WEAPON_ROSTER_HINT", teal
+	Command "$OPTMNU_PB_FULL_WEAPON_ROSTER", "pb_full_weapon_roster"
+	StaticText " "
+	StaticText "Bare Hands always available. Ballistic Shield Module drops from riot-shield sergeants.", teal
+	StaticText " "
 	Option "Spawn Revolver", "pb_NoRevolverWeapon", "SpawnOnOff"
 	StaticText "Also Removes Deagle Spawns."
 	StaticText "Weapon Settings -> Disable Deagle Upgrade."
@@ -943,7 +957,10 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Harvester of Souls", "pb_NoPB_HarvesterOfSoulsWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Freezer Rifle", "pb_NoFreezerWeapon", "SpawnOnOff"
+	Option "Spawn Freezer Rifle (Cryo Rifle)", "pb_NoFreezerWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Cryo Shotgun", "pb_NoPB_CryoShotgunWeapon", "SpawnOnOff"
+	StaticText "Cat's Frozen multi-mode shotgun (not the Cryo Rifle / Freezer).", teal
 	StaticText " "
 	Option "Spawn Frostburn Device", "pb_NoFrostburnDeviceWeapon", "SpawnOnOff"
 	StaticText " "

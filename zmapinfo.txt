@@ -263,6 +263,7 @@ DoomEdNums
 	23059 = PB_DemonTech
 	23060 = PB_Flamethrower
 	23061 = PB_Unmaker
+	23306 = PB_BFGBeam
 
 	23062 = PB_Zombieman
 	23063 = PB_CarbineZombieman
