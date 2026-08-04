@@ -1,5 +1,5 @@
 # Project Brutality 2022 Enhanced
-![Demo](https://github.com/user-attachments/assets/5c475c19-3221-4cd4-881e-d8ac7a4b9eb4)
+![Demo]([https://github.com/user-attachments/assets/5c475c19-3221-4cd4-881e-d8ac7a4b9eb4](https://github.com/user-attachments/assets/54fd583d-a94b-41d2-9cc8-e6e7e96be154))
 
 Project Brutality 2022 Enhanced is a full gameplay and content overhaul for *Doom* and *Doom II*, built for [UZDoom](https://github.com/UZDoom/UZDoom), GZDoom & LZDoom.
 
