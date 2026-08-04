@@ -2,17 +2,18 @@ extend class PB_WeaponBase
 {
 	States
 	{
-	//Generic Execution (For placeholders)
+	//Generic Execution (kit-less / ZScript-weapon fallback): pin living target, kill on impact
 		Execution_Generic:
 			TNT1 A 0  {
 				A_ZoomFactor(1.1);
+				PB_PinExecutionTarget();
 			}
 			TNT1 AAAAA 1 {
 				A_SetRoll(roll+2, SPF_INTERPOLATE);
 				A_SetAngle(angle+1);
 				A_SetPitch(pitch+0.5);
+				PB_PinExecutionTarget();
 			}
-			TNT1 A 0 PB_ExecuteKillHeldTarget();
 			TNT1 A 0 A_Jump(256, "Generic1", "Generic2", "Generic3");
 		
 		Generic1:
@@ -28,21 +29,25 @@ extend class PB_WeaponBase
 				A_SetPitch(pitch-1.5);
 				A_SetRoll(roll-5);
 				A_SetAngle(angle-7.0);
+				PB_PinExecutionTarget();
 			}
 			TNT1 A 0 {
 				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
 				A_ZoomFactor(1.15);
+				PB_PinExecutionTarget();
 			}
 			
 			P1NK FG 2 {
 				A_SetPitch(pitch+7.0);
 				A_SetRoll(roll+9);
 				A_SetAngle(angle+16.0);
+				PB_PinExecutionTarget();
 			}
 			TNT1 A 0 {
 				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
 				A_StartSound("execution/impact", CHAN_AUTO);
 				A_ZoomFactor(1.25);
+				PB_ExecuteKillHeldTarget();
 			}
 			P2NK HIJKLMNO 2 {
 				A_SetRoll(roll+10);
@@ -118,14 +123,17 @@ extend class PB_WeaponBase
 				A_SetRoll(roll+20);
 				A_SetAngle(angle+15);
 				A_SetPitch(pitch+11);
+				PB_PinExecutionTarget();
 			}
 			TNT1 A 0 {
 				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				PB_PinExecutionTarget();
 			}
 			P1NH DEF 2 {
 				A_SetRoll(roll-25);
 				A_SetAngle(angle-17);
 				A_SetPitch(pitch-18);
+				PB_PinExecutionTarget();
 			}
 			P1NH G 2 {
 				A_SetRoll(roll-6);
@@ -134,6 +142,7 @@ extend class PB_WeaponBase
 				A_ZoomFactor(1.1);
 				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
 				A_StartSound("execution/impact", CHAN_AUTO);
+				PB_ExecuteKillHeldTarget();
 			}
 			P1NH HIJKL 2 {
 				A_ZoomFactor(1.0);
@@ -195,9 +204,11 @@ extend class PB_WeaponBase
 				A_SetAngle(angle+6);
 				A_SetPitch(pitch+2);
 				A_ZoomFactor(0.9);
+				PB_PinExecutionTarget();
 			}
 			TNT1 A 0 {
 				A_StartSound("weapons/ultrwhoosh", CHAN_AUTO);
+				PB_PinExecutionTarget();
 			}
 			P1NI DEFG 2 {
 				A_SetRoll(roll-14);
@@ -206,6 +217,7 @@ extend class PB_WeaponBase
 				A_ZoomFactor(0.8);
 				A_FireProjectile("ShakeYourAss",0,0,0,0,0,0);
 				A_StartSound("execution/impact", CHAN_AUTO);
+				PB_ExecuteKillHeldTarget();
 			}
 			P1NI HIJKL 2 {
 				A_ZoomFactor(1.1);

@@ -995,11 +995,8 @@ States
 		KIC1 A 1 {
 			A_PlaySoundEx("KICK", "Auto");
 			SetPlayerProperty(0,1,0);
-			if(PB_WeaponIsInReadyState())
-			{
-				A_Overlay(PSP_WEAPON, "FlashKicking");
-				A_OverlayOffset(PSP_WEAPON, 0, 32);
-			}
+			A_Overlay(PSP_WEAPON, "FlashKicking");
+			A_OverlayOffset(PSP_WEAPON, 0, 32);
 			A_SetAngle(-0.5 + angle, SPF_INTERPOLATE);
 			A_SetPitch(+0.5 + pitch, SPF_INTERPOLATE);
 			A_SetRoll(roll-2);
@@ -1070,6 +1067,8 @@ States
 		TNT1 A 0 {
 			A_OverlayFlags(-999,PSPF_PLAYERTRANSLATED, false);
 			A_Overlay(-10, "FirstPersonLegsStand");
+			A_Overlay(PSP_WEAPON, "Ready3");
+			A_OverlayOffset(PSP_WEAPON, 0, 32);
 		}
 		Stop
 	
@@ -1091,14 +1090,8 @@ States
 		TNT1 A 0 {
 			A_GiveInventory("KeepLaserDeactivated",1);
 			A_GiveInventory("IsSlideKicking", 1);
-			if(PB_WeaponIsInReadyState())
-			{
-				A_Overlay(PSP_WEAPON, "FlashSlideKicking");
-				A_OverlayOffset(PSP_WEAPON, 0, 32);
-			}
-			
-			
-			
+			A_Overlay(PSP_WEAPON, "FlashSlideKicking");
+			A_OverlayOffset(PSP_WEAPON, 0, 32);
 			A_OverlayFlags(-999,PSPF_PLAYERTRANSLATED, true);
 			}
 		SLDK A 1 A_ZoomFactor(0.90)
@@ -1121,11 +1114,8 @@ States
 		}
 	LowerKick:
 		TNT1 A 0 {
-			if(PB_WeaponIsInReadyState())
-			{
-				A_Overlay(PSP_WEAPON, "FlashSlideKickingStop");
-				A_OverlayOffset(PSP_WEAPON, 0, 32);
-			}
+			A_Overlay(PSP_WEAPON, "FlashSlideKickingStop");
+			A_OverlayOffset(PSP_WEAPON, 0, 32);
 			A_ZoomFactor(1.0);
 			A_PlaySoundEx("SlideKick/End", "Auto");
 			A_Takeinventory("Kicking",1);
@@ -1139,6 +1129,8 @@ States
 		TNT1 A 0 {
 			A_OverlayFlags(-999,PSPF_PLAYERTRANSLATED, false);
 			A_Overlay(-10, "FirstPersonLegsStand");
+			A_Overlay(PSP_WEAPON, "Ready3");
+			A_OverlayOffset(PSP_WEAPON, 0, 32);
 		}
 		Stop
 	AirKick:
@@ -1146,11 +1138,7 @@ States
 			A_PlaySound("KICK", 6);
 			A_PB_AirMeleeLunge(20);
 			A_Recoil (-6);
-			if(PB_WeaponIsInReadyState())
-			{
-				A_Overlay(PSP_WEAPON, "FlashAirKicking");
-				A_OverlayOffset(PSP_WEAPON, 0, 32);
-			}
+			A_Overlay(PSP_WEAPON, "FlashAirKicking");
 			A_OverlayOffset(PSP_WEAPON, 0, 32);
 			A_ZoomFactor(0.95);
 			A_OverlayFlags(-999,PSPF_PLAYERTRANSLATED, true);
@@ -1181,6 +1169,8 @@ States
 			A_OverlayFlags(-999,PSPF_PLAYERTRANSLATED, false);
 			PB_SetUsingKick(false);
 			A_Overlay(-10, "FirstPersonLegsStand");
+			A_Overlay(PSP_WEAPON, "Ready3");
+			A_OverlayOffset(PSP_WEAPON, 0, 32);
 		}
 		Stop
 		
@@ -1191,22 +1181,16 @@ States
         PKUP ABCDEF 1
 		TNT1 AAAAAAAAAAAAAAAAAAA 0 A_Lower
 		Wait
+	// Legacy entry; Staging hold path keeps Grabbed* on the current weapon.
+	// Never strip tokens or select BarrelThrower from here.
 	GrabBarrel:
-		TNT1 A 0 A_ClearOverlays(3,65)
-		TNT1 A 0 A_Takeinventory("HasUnloaded",1)
-		TNT1 A 0 A_Takeinventory("Unloading",1)
-		TNT1 A 0 A_Takeinventory("Zoomed",1)
-        TNT1 A 0 A_ZoomFactor(1.0)
-	    TNT1 A 0 A_PlaySound("weapons/fistwhoosh")
-		TNT1 A 0 A_TakeInventory("GrabbedBarrel", 1)
-		TNT1 A 0 A_TakeInventory("GrabbedIceBarrel", 1)
-		TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel", 1)
-		PKPB ABC 1
-		TNT1 A 0 A_PlaySound("weapons/ultrwhoosh", 5)
-		PKPB DEFGH 1
-		TNT1 A 0 A_SelectWeapon("BarrelThrower")
-		TNT1 AAAAAAAAAAAAAAAAAAA 0 A_Lower
-		Wait
+		TNT1 A 0 A_JumpIfInventory("HasBarrel", 1, "ReadyBarrel")
+		TNT1 A 0 A_JumpIfInventory("HasBurningBarrel", 1, "ReadyFlameBarrel")
+		TNT1 A 0 A_JumpIfInventory("HasIceBarrel", 1, "ReadyIceBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "IdleBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel")
+		Goto GoingToReady
 		
 	Steady:
 		TNT1 A 1

@@ -902,11 +902,13 @@ class PB_SGBlastJumpLatch : Inventory
 
 // Shared shotgun floor/wall blast-jump entry (pellets, puffs, cryo flak).
 // Floor → pb_rocketjump; wall/ceiling → pb_plasma_wallclimb.
+// Thrust/mom ≈ half rocket-jump peak height: PB_PlayerRocketExplosion uses
+// 1800 / 35; height scales ~v² so scale by √0.5 → 1270 / 25.
 class PB_ShotgunBlastJumpProxy : Actor
 {
-	const PB_SG_BLAST_THRUST = 1100;
+	const PB_SG_BLAST_THRUST = 1270;
 	const PB_SG_BLAST_RADIUS = 72;
-	const PB_SG_BLAST_MOM_AMT = 24;
+	const PB_SG_BLAST_MOM_AMT = 25;
 	const PB_SG_BLAST_MOM_RAD = 128;
 	const PB_SG_BLAST_MAX_DIST = 96.0;
 
