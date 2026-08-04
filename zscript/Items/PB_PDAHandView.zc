@@ -22,6 +22,8 @@ class PB_PDAHandView
 			return;
 		if (pp.CountInv("CameraRunner") > 0)
 			return;
+		if (PB_WeaponBase.PB_PlayerOnPossessionRide(pp))
+			return;
 
 		let weap = PB_WeaponBase(pp.player.ReadyWeapon);
 		if (!weap)

@@ -77,6 +77,8 @@ class PB_ArmorRockOn
 			return;
 		if (pp.CountInv("CameraRunner") > 0)
 			return;
+		if (PB_WeaponBase.PB_PlayerOnPossessionRide(pp))
+			return;
 		if (pp.CountInv("PB_PDAHandActive") > 0)
 			return;
 		if (pp.CountInv("PB_ArmorRockOnCooldown") > 0)
