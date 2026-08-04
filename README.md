@@ -302,38 +302,9 @@ Some bossΓÇæscale fights still reuse Doom II encounter vocabulary-two cyberde
 - **Classic Doom bosses** - cyberdemons, spider masterminds, Annihilator missile brutes, Demolisher mastermind variants, and JuggernautΓÇæclass spider edits sized for map climax fights. **Baalgar** (replaces the stock cyber) and related cyber gib FX can sometimes yield the **Cyberdemon Missile Launcher**; masterminds can sometimes drop the **Mastermind's Chaingun** (see weapon list above for wear rules).
 - **Monster Pack megabosses** - Hellduke cyberΓÇæduel *(Hellduke)*, Hellsmith forge terror *(Hellsmith)*, Director spider mastermind remix *(Director)*, and Aracnorb Queen swarm mother *(AracnorbQueen)*.
 
-**Cat's Frozen frost roster** - **Frost Baron** rides Hell Knight / Baron spawns, **Cryocubus** rides mancubus tables, **Frostbrain** rides cacodemon tables, and **Cryotron** rides arachnotron tables. They are standard alwaysΓÇæon cryo guests unless **disable new enemies** hides the broader optional roster. (**Schr├╢dingCat / Cat's Frozen Addon** - see **`CREDITS.txt`**.)
-
-Frozen-solid corpse statues are a separate Cat's Frozen presentation layer: most monsters killed by ice or cryo damage can leave an authored frozen prop-not only the four frost monsters listed above.
-
-**Realm667 community guests** - **Blood Ghost** and **Blood Skull** are LostΓÇæSoulΓÇætier flyers folded from the Realm667 resource line *(PB_Realm667_BloodGhost*, *PB_Realm667_BloodSkull)* - see **`CREDITS.txt`** / **`DetailedCredits.txt`** for authors.
-
-The in-game **PDA** codex mirrors many of these families with dossiers that unlock as you kill matching creatures-use it when you forget which cryo cousin interrupted your Baron fight.
+The in-game **PDA** codex mirrors many of these families with dossiers that unlock as you kill matching creatures-use it when you forget which baddie interrupted your Baron fight.
 
 Unlocked codex rows persist across saves, so long campaigns slowly fill out the same roster this guide outlines.
-
-### Monster-sourced weapons, modules, and drop chances
-
-These are **not** rolled from normal map weapon spawners unless noted. **`DropItem "Class" N`** means roughly **`N / 256`** chance per death roll (engine picks one drop from the monster's list). **`A_Jump(128, ...)`** is a **50%** branch. Omitted probability = **always** when that drop is chosen.
-
-| Source monster(s) | Pickup / module | Death-drop chance |
-| --- | --- | --- |
-| **`PB_RiotShieldGuy`** (riot-shield sergeant) | **`RiotShieldPickup`** -> **`PB_RiotShieldModule`** | **100%** (guaranteed module when the sergeant dies) |
-| **`PB_Mastermind`**, **`PB_MastermindGK`** | **`MastermindChaingun`** | **72 / 256** (~**28%**) |
-| **`CyberdemonBoss`** (Baalgar / map cyber boss) | **`PB_CyberdemonRL`** | **64 / 256** (**25%**) |
-| Cyber **arm gib** (`XDeathCyberdemonGun`, fatality / gore) | **`PB_CyberdemonRL`** | **50%** if **`pb_NoPB_CyberdemonRLWeapon`** is off |
-| **`PB_Marauder`**, **`PB_MarauderGK`** | **`MarauderSSG`** | **80 / 256** (~**31%**) |
-| Marauder scripted fatality floor props | **`MarauderSSG`** | **50%** (`A_Jump(128, ...)`) |
-| **`PB_Mancubus`**, **`PB_Daedabus`**, **`PB_Volcabus`**, GK fatso variants | **`MancubusFlameCannon`** | **56 / 256** (~**22%**) |
-| **`PB_Daedabus`** | **`BioAcidLauncher`** (slot 7) | **44 / 256** (~**17%**) |
-| **`PB_Belphegor`** | **`BioAcidLauncher`** | **36 / 256** (~**14%**) |
-| **`PB_ObsidianRavager`** (cyber-tier spawns) | **`PB_ObsidianDragonSlayer`** | **Always** on Ravager death (unless **`pb_NoDragonSlayerWeapon`**) |
-
-**Spawn rate vs. drop rate:** Riot-shield sergeants are an **extra** shotgun-guy variant from **`ShotgunGuySpawner`** (weighted **`A_Jump`** into **`RiotShieldGuyPack`** - e.g. **16 / 256** on one early tier, up to **36 / 256** on another). That controls how often the enemy appears, not whether the module drops (**always** once you kill one).
-
-**`give all` / `idfa`:** Monster-drop guns and the ballistic shield module are excluded from bulk cheat grants; use **`give <ClassName>`** or play the drops above.
-
-The base zombie, imp, pinky, floater, revenant, noble, archΓÇævile, and Doom boss rosters come from **Project Brutality** and the **Monster Pack** line - see **`CREDITS.txt`** and **`DetailedCredits.txt`** for full perΓÇæcreature authorship.
 
 ## Settings and controls
 
