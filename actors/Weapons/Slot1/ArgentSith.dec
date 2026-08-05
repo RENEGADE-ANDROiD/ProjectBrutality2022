@@ -19,9 +19,13 @@ Actor AlreadyHaveArgentSith : Inventory
 
 // PB_ArgentSith: ZScript zscript/Weapons/Slot1/ArgentSith_Weapon.zs
 
-Actor ArgSithSawPuff : Hellbullet
+Actor ArgSithSawPuff : HitPuff
 {
-  +PuffOnActors
+  +PUFFONACTORS
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOINTERACTION
+  Damage 0
   Decal "SawVertical"
   Scale 0.5
   States
