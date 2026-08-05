@@ -175,6 +175,7 @@ Selected weapons and equipment (authors)
   (actors/Weapons/Slot4/MetalSniper.dec).
 - Riot Shield — add-on source noted in actors/Weapons/Slot2/RiotShield.dec.
 - Paingiver — add-on source noted in actors/Weapons/Slot5/Paingiver.dec.
+- UT2004 Triple Rocket Launcher (`PB_UT2004RL`) — Flammable4444 (UT2004RocketLauncher_V1.wad).
 - Molotov Cocktail — from Project Brutality 3.0 Molotov Cocktail v15
   (actors/Weapons/MolotovCocktail/MolotovCocktail.dec).
 - Equipment wheel select first-person raise strips (**`EQFR`/`CLUS`/`SHIG`/`REMT`/`EQPR`**,

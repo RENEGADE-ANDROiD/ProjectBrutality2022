@@ -201,6 +201,17 @@ extend class PB2022_Hud_ZS
 				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawSecondary: false);
 				return true;
 
+			case 'PB_RocketLauncher':
+			case 'Paingiver':
+				weaponBarAccent = Font.CR_RED;
+				DrawAmmoBar("BARBACR1", "BARBACR2", "BARBACR3", "BAMBAR4", "ABAR4", "ABAR4", "AMMOIC4", Font.CR_RED, drawSecondary: false);
+				return true;
+
+			case 'PB_UT2004RL':
+				weaponBarAccent = Font.CR_RED;
+				DrawAmmoBar("BARBACR1", "BARBACR2", "BARBACR3", "BAMBAR4", "ABAR4", "ABAR4", "AMMOIC4", Font.CR_RED, drawSecondary: true);
+				return true;
+
 			case 'MarauderSSG':
 				weaponBarAccent = Font.CR_ORANGE;
 				DrawAmmoBar("BARBACO1", "BARBACO2", "BARBACO3", "BAMBAR3", "ABAR3", "ABAR3", "AMMOIC3", Font.CR_ORANGE, drawDual: PB2022_WantsDualAmmoRow() && Left != null);
