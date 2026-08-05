@@ -501,7 +501,9 @@ enum EPBWeaponFlags
 {
 	PBWEAP_KEEPYOFFSET = 1<<0,
 	PBWEAP_ISPISTOLSILENCERSTATE = 1<<3,
-	PBWEAP_UNLOADED = 1<<4
+	PBWEAP_UNLOADED = 1<<4,
+	// Staging PB_NOUNLOAD: skip Unloading → Unload while holding a barrel.
+	PBWEAP_NOUNLOAD = 1<<5
 }
 class InvisiblePuff : BulletPuff
 {
