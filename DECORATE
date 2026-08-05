@@ -401,6 +401,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot5/SuperGLTokens.dec"
 #include "actors/Weapons/Slot5/SuperGLGrenades.dec"
 #include "actors/Weapons/Slot5/Paingiver.dec"
+#include "actors/Weapons/Slot6/UT2004RL/PB_UT2004RL.dec"
 #include "actors/Weapons/Slot7/FREEZER.dec"
 #include "actors/Weapons/Slot6/M2PLASMA.dec"
 //#include "actors/Weapons/MeleeWeaponPack/DragonSlayer.dec" // disabled pending rework

@@ -514,6 +514,7 @@ DoomEdNums
 	23303 = PB_BVCH_Dastard
 	23304 = PB_BVCH_Machina
 	23305 = PB_BVCH_Bloodfiend
+	23307 = PB_UT2004RL
 	// Clear Sky / BVCH map ednum (same class)
 	21550 = Carcass
 

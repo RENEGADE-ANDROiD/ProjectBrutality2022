@@ -148,12 +148,12 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **Super Grenade Launcher** - automatic grenade launcher with selectable grenade behavior.
 - **Rocket Launcher** - rocket launcher wired into the Explosive Movement rocket-jump path.
 - **Paingiver** - launcher-class heavy weapon for pain/area damage.
+- **UT2004 Triple Rocket Launcher** - three-tube launcher (single / double-triple Alt / Weapon Special spread); uses rocket ammo and a 3-round magazine.
 - **Excavator** - launcher/special weapon with mode-specific ammo behavior.
 - **Mastermind's Chaingun** - boss-derived heavy chaingun; **wear** drops once per dual-rocket salvo, weapon **breaks** at zero wear, duplicate pickup **refills wear**. Obtained from **spider mastermind** kills (chance-based drop), not from rocket-launcher **map** spawns.
 - **Cyberdemon Missile Launcher** - cyberdemon-style missile launcher; **wear** per two-rocket burst, **break** + duplicate-pickup **refill** like the chaingun. **Baalgar / cyber boss** death tables and the **flying cyber-arm gib** can spawn it with a chance (respects **`pb_NoPB_CyberdemonRLWeapon`** on the gib path).
 - **Caduceus** - Cyberaugumented neonic wand / launcher hybrid.
 - **Dispatcher of Delusions** - Cyberaugumented launcher with plasma-style projectiles.
-
 **Slot 7 - Energy rifles (non-plasma line)**
 
 - **Cryo Rifle** - freezing rifle for slowing or locking down enemies.
