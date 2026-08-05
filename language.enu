@@ -32,6 +32,7 @@ PB_PICKUP_PB_CRYOCELLSPACK = "Picked up a cryo cell bundle.";
 PB_PICKUP_PB_CRYOCANNONCELLS = "Picked up cryo cannon fuel.";
 PB_PICKUP_PB_CRYOSHOTGUN = "Picked up the Cryo Shotgun (slot 3).";
 PB_PICKUP_PB_DARKMATTERRIFLE = "Picked up the UAC Prototype Dark Matter Rifle (slot 8).";
+PB_PICKUP_PB_UT2004RL = "You got the UT2004 Triple Rocket Launcher! (slot 6). Primary = single; Alt = double/triple; Weapon Special = spread pair.";
 PB_PICKUP_PB_HARVESTEROFSOULS = "Picked up the Harvester of Souls (slot 9). Shares Demonpower with the Demon-Tech Rifle.";
 PB_PICKUP_BIOACIDLAUNCHER = "Picked up the UAC Biological Acid Launcher (slot 7).";
 PB_TAG_BIOACIDLAUNCHER = "UAC-UM-32P Biological Acid Launcher";

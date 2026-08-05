@@ -299,7 +299,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		FireDualWield:
 		FireLeft:
 		TNT1 A 0 A_JumpIfInventory("PB_DualDarkMatterFireAnimation", 1, "FireRight");
-		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMagLeft", 1, 2);
+		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMagLeft", 1, 3);
 		TNT1 A 0 A_JumpIfInventory("PB_DarkMatterMag", 1, "FireRight");
 		TNT1 A 0 A_JumpIfInventory("Cell", 1, "Reload");
 		Goto NoAmmo;
