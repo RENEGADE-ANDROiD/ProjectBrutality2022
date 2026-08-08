@@ -23,7 +23,6 @@ For the official Project Brutality mod, see [pa1nki113r/Project_Brutality](https
 uzdoom.exe-iwad doom2.wad-file "Project Brutality 2022"
 ```
 
-You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [ZDL](https://github.com/lcferrum/qzdl/releases), [DoomRunner](https://github.com/Youda008/DoomRunner/releases), or [SSGL](https://github.com/FreaKzero/ssgl-doom-launcher/releases) - set the engine path to your UZDoom binary.
 You can also drag the folder onto `uzdoom.exe` or add it in a launcher such as [ZDL](https://github.com/lcferrum/qzdl/releases), [DoomRunner](https://github.com/Youda008/DoomRunner/releases), or [SSGL](https://github.com/FreaKzero/ssgl-doom-launcher/releases)- set the engine path to your UZDoom binary.
 
 
