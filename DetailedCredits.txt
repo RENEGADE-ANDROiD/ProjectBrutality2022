@@ -182,8 +182,11 @@ Loismustdie555 for support, coding, content scouting, etc.
 SkyMarshall
 Brightmaps, bug fixes, various visual enhancements, extra monsters
 
-Pulse Cannon and other works
+PB 3.x Pulse Cannon lineage (now UAC Prototype Dark Matter Rifle) and other works
 AnKeburu
+
+Pulse Cannon (BD+ / PB_PulseCannon, slot 8)
+Yaelvolador and Brutal Doom Plus (formerly El Diablo Edition)
 
 Desert Eagle sprites
 Base by DoomNukem, edits by iamcarrotmaster

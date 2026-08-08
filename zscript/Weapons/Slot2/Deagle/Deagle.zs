@@ -117,7 +117,6 @@ class PB_Deagle : PB_WeaponBase
 		Ready3:
 		Ready:
 			TNT1 A 0 PB_CheckBarrelThrow1();
-			TNT1 A 0 A_WeaponOffset(0,32);
 			TNT1 A 0 PB_HandleCrosshair(32);
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyDualWield");
 			TNT1 A 0 A_JumpIf(PB_GetChamberEmpty(),"ReadyUnloaded");
@@ -141,6 +140,7 @@ class PB_Deagle : PB_WeaponBase
 			D2EM AB 1 Bright A_GunFlash();
 			Stop;
 		Fire:
+			TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 			TNT1 A 0 A_JumpIfInventory("Zoomed",1,"Fire2");
 			TNT1 A 0 {
 				A_WeaponOffset(0,32);

@@ -22,48 +22,6 @@ OptionMenu "OptionsMenu"
 	Command "Go to console",			"menuconsole"
 }
 
-OptionMenu "TiltPlusPlusMenu"
-{
-	Class "TiltPlusPlusMenu"
-	Title "$TILTPLUSPLUSMNU_TITLE"
-	Position -32
-
-	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_STRAFETILT_TITLE", 1
-
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED",					"$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT",				"sv_strafetilt", "YesNo"
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_INVERT",					"$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_INVERT",		"sv_strafetiltinvert", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED",					"$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_SPEED",		"sv_strafetiltspeed", 0.1, 2.0, 0.01, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE",					"$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_ANGLE",		"sv_strafetiltangle", 0.1, 1.0, 0.01, 2
-
-	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_MOVETILT_TITLE", 1
-
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED",					"$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT",				"sv_movetilt", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED",					"$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SPEED",			"sv_movetiltspeed", 0.1, 20.0, 0.1, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE",					"$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_ANGLE",			"sv_movetiltangle", 0.01, 0.10, 0.01, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR",					"$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SCALAR",		"sv_movetiltscalar", 0.0, 1.0, 0.1
-
-	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_TURNTILT_TITLE", 1
-
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED",					"$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT",				"sv_turntilt", "YesNo"
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_INVERT",					"$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_INVERT",		"sv_turntiltinvert", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR",					"$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_SCALAR",		"sv_turntiltscalar", 0.0, 20.0, 0.1
-
-	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_UNDERWATERTILT_TITLE", 1
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED",					"$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT",			"sv_underwatertilt", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED",					"$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SPEED",	"sv_underwatertiltspeed", 0.1, 20.0, 0.1, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE",					"$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_ANGLE",	"sv_underwatertiltangle", 0.01, 0.5, 0.01, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR",					"$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SCALAR",	"sv_underwatertiltscalar", 0.0, 1.0, 0.1
-
-	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_DEATHTILT_TITLE", 1
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED",					"$TILTPLUSPLUSMNU_HELPTEXT_DEATHTILT",				"sv_deathtilt", "YesNo"
-}
-
-
 OptionValue "YesOrNo"
 {
 	0, "No"
@@ -100,12 +58,6 @@ OptionValue "VisorMiddlePart"
 	1, "Bottom center strip"
 	2, "Both"
 	3, "\cgOff"
-}
-
-OptionValue "TacticalRollCap"
-{
-	0, "Off"
-	1, "On"
 }
 
 OptionValue "DamPhysics"
@@ -169,29 +121,6 @@ OptionString "DamTranslations"
 	"DamPurple", "$C_PURPLE"
 	"DamDarkGray", "$C_DARKGRAY"
 	"DamCyan", "$C_CYAN"
-}
-
-OptionMenu "PBTacticalMotionOptions"
-{
-	Title "Tactical Weapon Motion"
-	StaticText "Rotational tilt, movement lowering, lean (PB2022)."
-	StaticText " "
-	Option "Enable tactical weapon motion.", "pb_tac_enable", "YesNo"
-	Option "Apply only while weaponready (strict).", "pb_tac_ready_only", "YesNo"
-	Option "Apply only while moving.", "pb_tac_move_only", "YesNo"
-	Slider "Rotational tilt velocity.", "pb_tac_roll_velocity", 0.2, 8.0, 0.05, 2
-	Slider "Rotational tilt resistance.", "pb_tac_roll_resistance", 0.08, 0.70, 0.01, 2
-	Option "Cap rotational tilt.", "pb_tac_roll_cap", "TacticalRollCap"
-	Slider "Rotational tilt cap amount.", "pb_tac_roll_cap_value", 0.5, 18.0, 0.1, 1
-	Slider "Weapon lowering scale.", "pb_tac_lowering_scale", 0.0, 2.5, 0.05, 2
-	Option "Enable lean.", "pb_tac_lean_enable", "YesNo"
-	Slider "Lean angle.", "pb_tac_lean_angle", 0.0, 25.0, 0.5, 1
-	Slider "Lean smoothing.", "pb_tac_lean_smoothing", 0.05, 0.50, 0.01, 2
-	Slider "Tilt display smoothing.", "pb_tac_tilt_smoothing", 0.20, 0.95, 0.01, 2
-	StaticText "Safety: Off During Zoom/ADS,"
-	StaticText "Executions, Equipment Actions."
-	StaticText "Some Overlay-Heavy Guns Skipped (ZScript)."
-	StaticText " "
 }
 
 OptionMenu "PBWeaponHudOptions"
@@ -376,11 +305,9 @@ OptionMenu "PB2022_MovementMenu"
 	StaticText " "
 	Option "Rocket Jumping", "pb_rocketjump", "OnOff"
 	StaticText "Rocket Splash And Shotgun Floor Blast-Jump", green
-	StaticText "(Aim Shells At Feet; pb_rocketjump).", green
 	StaticText " "
 	Option "Plasma Wall Climbing", "pb_plasma_wallclimb", "OnOff"
 	StaticText "Plasma And Shotgun Wall/Ceiling Bounce", green
-	StaticText "(Point-Blank Geometry; pb_plasma_wallclimb).", green
 	StaticText " "
 }
 
@@ -401,15 +328,8 @@ OptionMenu "PB2022_CombatMenu"
 	StaticText "Uses Glory Kill stagger / finisher rules when enabled.", orange
 	StaticText " "
 	Slider "Auto-Fatality Distance", "pb_auto_fatality_dist", 64, 400, 4
-	StaticText "pb_auto_fatality_dist (map units).", teal
 	StaticText " "
-	StaticText "======== Status / Drops ========", gold
-	StaticText " "
-	Option "Status Effect Handlers", "pb_status_effects", "OnOff"
-	StaticText "Electric charge / arty slow / ground-fire DoT.", teal
-	StaticText " "
-	Option "Monster Weapon Drops", "pb_weapon_drops", "MonsterDrops"
-	StaticText "0 Off (DECORATE DropItem), 1 Ammo, 2 Weapon.", teal
+	StaticText "======== Keep Weapons ========", gold
 	StaticText " "
 	Option "Keep Unupgraded Weapons", "pb_keepweapons", "OnOff"
 	StaticText "When On, optional per-pair keep cvars gate upgrades.", teal
@@ -421,39 +341,16 @@ OptionMenu "PB2022_CombatMenu"
 	StaticText " "
 }
 
-OptionValue "MonsterDrops"
-{
-	0, "Off"
-	1, "Ammo Only"
-	2, "Weapons"
-}
-
 OptionMenu "PB2022_GoreMenu"
 {
 	Title "Gore & Performance"
 	StaticText "$OPTMNU_PB2022_GORE_TIP1", cyan
 	StaticText "$OPTMNU_PB2022_GORE_TIP2", cyan
 	StaticText " "
-	StaticText "======== Quick Bundles ========", gold
-	StaticText " "
-	Command "Enable Heavy Gore Package", "set pb_enhanced_brutality_2022 1; set pb_accudeath 1; set pb_burnfx_throttle 1"
-	Command "Disable Heavy Gore Package", "set pb_enhanced_brutality_2022 0; set pb_accudeath 0"
-	StaticText "Sets pb_enhanced_brutality_2022, pb_accudeath.", teal
-	StaticText "Throttle Keeps pb_burnfx_throttle On.", teal
-	StaticText " "
 	Command "Enable Performance Gore Mode", "set pb_enhanced_brutality_2022 0; set pb_burnfx_throttle 1; set nashgore_maxgore 500; set nashgore_maxcasings 200"
 	Command "Disable Performance Limits (Defaults)", "set nashgore_maxgore 0; set nashgore_maxcasings 0"
 	StaticText "Lighter Mix + Cap nashgore_maxgore / maxcasings.", teal
-	StaticText " "
-	StaticText "======== Master Switches ========", gold
-	StaticText " "
-	NashGoreOption "$BDV22GOREMNU_ENHANCED2022", "$BDV22GOREMNU_ENHANCED2022_TIP", "pb_enhanced_brutality_2022", "OnOff"
-	StaticText "On: BDv22 Mist/Meat + BPv10 Death Extras.", green
-	StaticText "Off: Standard Nash / PB Gore Only.", green
-	StaticText " "
-	NashGoreOption "$OPTMNU_PB_ACCUDEATH", "$OPTMNU_PB_ACCUDEATH_TIP", "pb_accudeath", "OnOff"
-	StaticText " "
-	Submenu "$OPTMNU_PB_ACCUDEATH_SUB", "AccuDeathOptions"
+	StaticText "Performance Mode hub preset also turns Enhanced Brootality Off.", teal
 	StaticText " "
 	StaticText "======== Detailed Gore Tuning ========", gold
 	StaticText " "
@@ -470,25 +367,22 @@ OptionMenu "PB2022_HudMenu"
 	StaticText " "
 	StaticText "======== Quick Bundles ========", gold
 	StaticText " "
-	Command "Enable Full HUD Package", "set pb_showhudvisor 1; set pb_showhudvisorglass 1; set pb_weaponhud_enable 1; set pb_weaponmodehud_enable 1; set dam_enabled 1; set pb_tac_enable 1; set pb_ks_enable 1"
-	Command "Disable Optional HUD Extras", "set pb_showhudvisor 0; set pb_showgasmask 0; set pb_weaponhud_enable 0; set pb_weaponmodehud_enable 0; set dam_enabled 0; set pb_tac_enable 0; set pb_dasheffect 0"
+	Command "Enable Full HUD Package", "set pb_showhudvisor 1; set pb_showhudvisorglass 1; set pb_weaponhud_enable 1; set pb_weaponmodehud_enable 1; set dam_enabled 1; set pb_ks_enable 1"
+	Command "Disable Optional HUD Extras", "set pb_showhudvisor 0; set pb_showgasmask 0; set pb_weaponhud_enable 0; set pb_weaponmodehud_enable 0; set dam_enabled 0; set pb_dasheffect 0"
 	StaticText "Visor, Corner Icons, Damage Numbers,", teal
-	StaticText "Tactical Motion, Kill Streaks (pb_ks_enable).", teal
+	StaticText "Damage Numbers, Kill Streaks.", teal
 	StaticText " "
 	Command "Enable Weapon Wheels Only", "set pb_weapon_wheel_enable 1; set py_weaponwheel_freeze 0; set pb_wheelbackgroundblur 1"
 	Command "Disable Weapon Wheels", "set pb_weapon_wheel_enable 0"
-	StaticText "pb_weapon_wheel_enable, py_weaponwheel_freeze,", teal
-	StaticText "pb_wheelbackgroundblur.", teal
 	StaticText " "
 	StaticText "======== Helmet & Fullscreen HUD ========", gold
 	StaticText " "
 	Option "Show Helmet Visor", "pb_showhudvisor", YesNo
-	StaticText "pb_showhudvisor - Corner Shell + Glass.", teal
+	StaticText "Corner Shell + Glass.", teal
 	StaticText " "
 	Submenu "Helmet Visor Options", "PB_HelmetVisorOptions"
 	StaticText " "
 	Submenu "Fullscreen HUD (ZScript)", "PB2022_FullscreenHudOptions"
-	StaticText "Status Bar Via PB2022_Hud_ZS (Under Visor).", teal
 	StaticText " "
 	StaticText "======== Corner HUD & Numbers ========", gold
 	StaticText " "
@@ -548,14 +442,14 @@ OptionMenu "PB2022_HudMenu"
 	Option "Weapon Wheel Background Blur", "pb_wheelbackgroundblur", "OnOff"
 	StaticText "pb_wheelbackgroundblur (gb_blur Shader).", teal
 	StaticText " "
+	Option "$PB_WHEEL_PREFERRED_CYCLE", "pb_wheel_preferred_cycle", "OnOff"
+	StaticText "$PB_WHEEL_PREFERRED_CYCLE_DESC", cyan
+	StaticText "$PB_WHEEL_PREFERRED_CYCLE_DESC2", cyan
+	StaticText " "
 	Submenu "$PB_WEAPON_SELECTOR_MENU", "gb_Options"
 	StaticText "$PB_WEAPON_SELECTOR_MENU_HINT", cyan
 	StaticText " "
 	StaticText "======== Feel & Motion ========", gold
-	StaticText " "
-	Option "Enable Tactical Weapon Motion", "pb_tac_enable", YesNo
-	StaticText " "
-	Submenu "Tactical Weapon Motion Options", "PBTacticalMotionOptions"
 	StaticText " "
 	Option "Instant Weapon Switch", "pb_instantweaponswitch", "OnOff"
 	StaticText "Doom-Style Instant Raise/Lower.", teal
@@ -581,7 +475,7 @@ OptionMenu "PB2022_WeaponsHubMenu"
 	Submenu "Weapon Settings (Upgrades & Progression)", "WeaponSettings"
 	StaticText " "
 	Submenu "Advanced Weapon Spawns", "WeaponSpawns"
-	StaticText "Per-Weapon pb_No* Spawn Toggles.", teal
+	StaticText "Per-Weapon Spawn Toggles.", teal
 }
 
 OptionMenu "PB2022_MonstersHubMenu"
@@ -697,9 +591,9 @@ OptionMenu "PB_2022AdditionsMenu"
 	StaticText " "
 	Option "Spawn Preset: ", "SpawnBalance","PBSpawnChoices"
 	StaticText " "
-	Command "$OPTMNU_PB2022_PRESET_FULL", "set pb_classicmonsters 0; set pb_disablenewenemies 0; set pb_experimental 1; set pb_auto_fatality_fire 1; set pb_enhanced_brutality_2022 1; set pb_ks_enable 1; set pb_rocketjump 1; set pb_plasma_wallclimb 1; set pb_hazardmovement 1; set pb_weaponhud_enable 1; set pb_weaponmodehud_enable 1"
-	Command "$OPTMNU_PB2022_PRESET_VANILLA", "set pb_classicmonsters 1; set pb_disablenewenemies 1; set pb_enhanced_brutality_2022 0"
-	Command "$OPTMNU_PB2022_PRESET_PERF", "set pb_enhanced_brutality_2022 0; set pb_ks_enable 0; set pb_wheelbackgroundblur 0; set py_weaponwheel_freeze 0; set pb_burnfx_throttle 1; set PB_HatExtravaganza 0; set pb_accudeath 0; set pb_dasheffect 0"
+	Command "$OPTMNU_PB2022_PRESET_FULL", "set pb_classicmonsters 0; set pb_disablenewenemies 0; set pb_experimental 1; set pb_auto_fatality_fire 1; set pb_enhanced_brutality_2022 1; set pb_status_effects 1; set pb_ks_enable 1; set pb_rocketjump 1; set pb_plasma_wallclimb 1; set pb_hazardmovement 1; set pb_weaponhud_enable 1; set pb_weaponmodehud_enable 1"
+	Command "$OPTMNU_PB2022_PRESET_VANILLA", "set pb_classicmonsters 1; set pb_disablenewenemies 1"
+	Command "$OPTMNU_PB2022_PRESET_PERF", "set pb_enhanced_brutality_2022 0; set pb_status_effects 0; set pb_ks_enable 0; set pb_wheelbackgroundblur 0; set py_weaponwheel_freeze 0; set pb_burnfx_throttle 1; set PB_HatExtravaganza 0; set pb_dasheffect 0"
 	StaticText "Re-Open Menus After Presets To See Toggles.", orange
 	StaticText " "
 	StaticText "======== Categories ========", gold
@@ -714,8 +608,6 @@ OptionMenu "PB_2022AdditionsMenu"
 	Submenu "$OPTMNU_PB2022_SEC_EXTRAS", "PB2022_ExtrasMenu"
 	StaticText " "
 	StaticText "======== Menu Setting Shortcuts ========", gold	
-	StaticText " "
-	NashGoreOption "$BDV22GOREMNU_ENHANCED2022", "$BDV22GOREMNU_ENHANCED2022_TIP", "pb_enhanced_brutality_2022", "OnOff"
 	StaticText " "
 	Option "Damage & Experience Numbers.", "dam_enabled", "DamEnabled"
 	Submenu "Damage Numbers Options", "DamNumsOptions"
@@ -741,12 +633,6 @@ OptionMenu "PB_2022AdditionsMenu"
   	StaticText ""
 	Option "Enable Bullet Time", "pb_bullettime", "OnOff"
 	Submenu "Bullet Time Options", "PB_BulletTimeMenu"
-	StaticText " "
-	Option "Status Effect Handlers", "pb_status_effects", "OnOff"
-	StaticText "Electric charge / arty slow / ground-fire DoT.", teal
-	StaticText " "
-	Option "Monster Weapon Drops", "pb_weapon_drops", "MonsterDrops"
-	StaticText "0 Off (DECORATE DropItem), 1 Ammo, 2 Weapon.", teal
 	StaticText " "
 	Option "Keep Unupgraded Weapons", "pb_keepweapons", "OnOff"
 	StaticText " "
@@ -930,109 +816,43 @@ OptionMenu "WeaponSpawns"
 	Command "$OPTMNU_PB_FULL_WEAPON_ROSTER", "pb_full_weapon_roster"
 	StaticText " "
 	StaticText "Bare Hands always available. Ballistic Shield Module drops from riot-shield sergeants.", teal
+	StaticText "Revolver spawn is always on. Deagle upgrade (revolver replace) is always disabled.", teal
 	StaticText " "
-	Option "Spawn Revolver", "pb_NoRevolverWeapon", "SpawnOnOff"
-	StaticText "Also Removes Deagle Spawns."
-	StaticText "Weapon Settings -> Disable Deagle Upgrade."
+	StaticText "======== Slot 1 ========", gold
+	Option "Spawn Chainsaw", "pb_NoChainsawWeapon", "SpawnOnOff"
 	StaticText " "
+	Option "Spawn Battle Axe and Shield", "pb_NoBattleAxeWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Beam Katana", "pb_NoBeamKatanaWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Argent Sith", "pb_NoArgentSithWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Vorpal Blade (Tiberium's Soulblade)", "pb_NoVorpalBladeWeapon", "SpawnOnOff"
+	StaticText " "
+	StaticText "======== Slot 2 ========", gold
 	Option "Spawn Submachine Gun", "pb_NoSMGWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Hell Pistoler", "pb_NoHellPistolerWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn UAC-12a Automat (MP12)", "pb_NoMP12Weapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Holy Bastard W-SMG", "pb_NoW_SMGWeapon", "SpawnOnOff"
+	StaticText " "
+	StaticText "======== Slot 3 ========", gold
+	Option "Spawn Shotgun", "pb_NoShotgunWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Autoshotgun", "pb_NoASGWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Combat Shotgun", "pb_NoCSSGWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Carbine", "pb_NoCarbineWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Nailgun", "pb_NoNailgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Excavator Launcher", "pb_NoHeavyGLWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Super Grenade Launcher", "pb_NoSuperGLWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "$PB_OPT_Molotov", "pb_NoMolotov", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn M2 Plasma Rifle", "pb_NoM2PlasmaWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn UAC Dark Matter Rifle", "pb_NoPB_DarkMatterRifleWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Harvester of Souls", "pb_NoPB_HarvesterOfSoulsWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Freezer Rifle (Cryo Rifle)", "pb_NoFreezerWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Cryo Shotgun", "pb_NoPB_CryoShotgunWeapon", "SpawnOnOff"
-	StaticText "Cat's Frozen multi-mode shotgun (not the Cryo Rifle / Freezer).", teal
-	StaticText " "
-	Option "Spawn Frostburn Device", "pb_NoFrostburnDeviceWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Rail Gun", "pb_NoRailgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn BFG 11K Beam", "pb_NoBFGBeamWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Blackhole Generator", "pb_NoBlackholeWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Lever Action", "pb_NoLeverActionWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Paingiver", "pb_NoPaingiverWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn UT2004 Triple Rocket Launcher", "pb_NoPB_UT2004RLWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Shotgun", "pb_NoShotgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Rocket Launcher", "pb_NoRocketLauncherWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Plasma Rifle", "pb_NoPlasmaRifleWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn BFG 9000", "pb_NoBFGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Chainsaw", "pb_NoChainsawWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Flamethrower", "pb_NoFlamethrowerWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Flamethrower Upgrade", "pb_NoFlamethrowerUpgrade", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Minigun", "pb_NoMinigunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn LMG", "pb_NoLMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn HDMR Upgrade", "pb_NoHDMRWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Minigun Upgrade", "pb_NoMinigunUpgradeWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Metal Sniper", "pb_NoMetalSniperWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Normal Rifle (Pro-Surv)", "pb_NoPB_NormalRifleWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn XM-21 Sniper", "pb_NoPB_XM21Weapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Anti-Tank Rifle", "pb_NoPB_AntiTankRifleWeapon", "SpawnOnOff"
+	Option "Spawn Lady Golide (HASG)", "pb_NoHASGWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn SPAS-12", "pb_NoPB_SPAS12Weapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Fusil", "pb_NoPB_FusilWeapon", "SpawnOnOff"
+	Option "Spawn Cryo Shotgun", "pb_NoPB_CryoShotgunWeapon", "SpawnOnOff"
+	StaticText "Cat's Frozen multi-mode shotgun", teal
 	StaticText " "
 	Option "Spawn X12 Shotgun", "pb_NoX12ShotgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Lady Golide (HASG)", "pb_NoHASGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Old HMG", "pb_NoOldHMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn NeoHMG", "pb_NoNeoHMGWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn M41A", "pb_NoM41AWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Battle Rifle", "pb_NoBattleRifleWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Pro-Surv Ballista", "pb_NoProSurvBallistaWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn MG42", "pb_NoMG42Weapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Cyberdemon Missile Launcher", "pb_NoPB_CyberdemonRLWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Demon Exterminator", "pb_NoDemonExterminatorWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Hell Pistoler", "pb_NoHellPistolerWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Battle Axe and Shield", "pb_NoBattleAxeWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Hexa-Lion Shotgun", "pb_NoHexaLionShotgunWeapon", "SpawnOnOff"
 	StaticText " "
@@ -1040,23 +860,22 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Rainmaker", "pb_NoRainmakerWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Warbringer", "pb_NoPBWP_WarbringerWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Nightfall Augmented", "pb_NoPBWP_NightfallWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Caduceus", "pb_NoPBWP_CaduceusWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Dispatcher of Delusions", "pb_NoPBWP_DispatcherWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Sirius Crisis Roscoe", "pb_NoPBWP_SiriusCrisisWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Tactical Nailgun (SGP-331)", "pb_NoTacticalNailgunWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn UAC-12a Automat (MP12)", "pb_NoMP12Weapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Holy Bastard W-SMG", "pb_NoW_SMGWeapon", "SpawnOnOff"
-	StaticText " "
 	Option "Spawn M45 Halo 3 Shotgun", "pb_NoM45ShotgunWeapon", "SpawnOnOff"
+	StaticText " "
+	StaticText "======== Slot 4 ========", gold
+	Option "Spawn Carbine", "pb_NoCarbineWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn XM-21 Sniper", "pb_NoPB_XM21Weapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Fusil", "pb_NoPB_FusilWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn LMG", "pb_NoLMGWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn HDMR Upgrade", "pb_NoHDMRWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Metal Sniper", "pb_NoMetalSniperWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Normal Rifle (Pro-Surv)", "pb_NoPB_NormalRifleWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Assault R1 (HAR)", "pb_NoAssaultR1Weapon", "SpawnOnOff"
 	StaticText " "
@@ -1064,9 +883,71 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn Magnum Sniper Rifle", "pb_NoMagnumSniperRifleWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Gallery Nailgun", "pb_NoINNailGunWeapon", "SpawnOnOff"
+	Option "Spawn Old HMG", "pb_NoOldHMGWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Lever Action", "pb_NoLeverActionWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Pro-Surv Ballista", "pb_NoProSurvBallistaWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn M41A", "pb_NoM41AWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Battle Rifle", "pb_NoBattleRifleWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Warbringer", "pb_NoPBWP_WarbringerWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Anti-Tank Rifle", "pb_NoPB_AntiTankRifleWeapon", "SpawnOnOff"
+	StaticText " "
+	StaticText "======== Slot 5 ========", gold
+	Option "Spawn Minigun", "pb_NoMinigunWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Minigun Upgrade", "pb_NoMinigunUpgradeWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Nailgun", "pb_NoNailgunWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn MG42", "pb_NoMG42Weapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn NeoHMG", "pb_NoNeoHMGWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Nightfall Augmented", "pb_NoPBWP_NightfallWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Tactical Nailgun (SGP-331)", "pb_NoTacticalNailgunWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn MACH-3 HYDRA", "pb_NoPB_HYDRAWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Gallery Nailgun", "pb_NoINNailGunWeapon", "SpawnOnOff"
+	StaticText " "
+	StaticText "======== Slot 6 ========", gold
+	Option "Spawn Super Grenade Launcher", "pb_NoSuperGLWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Rocket Launcher", "pb_NoRocketLauncherWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Paingiver", "pb_NoPaingiverWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn UT2004 Triple Rocket Launcher", "pb_NoPB_UT2004RLWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Excavator Launcher", "pb_NoHeavyGLWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Caduceus", "pb_NoPBWP_CaduceusWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Dispatcher of Delusions", "pb_NoPBWP_DispatcherWeapon", "SpawnOnOff"
+	StaticText " "
+	StaticText "======== Slot 7 ========", gold
+	Option "Spawn Freezer Rifle (Cryo Rifle)", "pb_NoFreezerWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Frostburn Device", "pb_NoFrostburnDeviceWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Rail Gun", "pb_NoRailgunWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Sirius Crisis Roscoe", "pb_NoPBWP_SiriusCrisisWeapon", "SpawnOnOff"
+	StaticText " "
+	StaticText "======== Slot 8 ========", gold
+	Option "Spawn Plasma Rifle", "pb_NoPlasmaRifleWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn M2 Plasma Rifle", "pb_NoM2PlasmaWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Pulse Cannon", "pb_NoPB_PulseCannonWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn UAC Dark Matter Rifle", "pb_NoPB_DarkMatterRifleWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Spawn Extinction Ray", "pb_NoExtinctionRayWeapon", "SpawnOnOff"
 	StaticText " "
@@ -1074,13 +955,28 @@ OptionMenu "WeaponSpawns"
 	StaticText " "
 	Option "Spawn LoR Calamity Blade", "pb_NoLoRCalamityBladeWeapon", "SpawnOnOff"
 	StaticText " "
+	StaticText "======== Slot 9 ========", gold
+	Option "Spawn Blackhole Generator", "pb_NoBlackholeWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Demon Exterminator", "pb_NoDemonExterminatorWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn BFG 9000", "pb_NoBFGWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn BFG 11K Beam", "pb_NoBFGBeamWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Flamethrower", "pb_NoFlamethrowerWeapon", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Flamethrower Upgrade", "pb_NoFlamethrowerUpgrade", "SpawnOnOff"
+	StaticText " "
+	Option "Spawn Harvester of Souls", "pb_NoPB_HarvesterOfSoulsWeapon", "SpawnOnOff"
+	StaticText " "
 	Option "Spawn Satan Scream Unmaker", "pb_NoSatanScreamWeapon", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Argent Sith", "pb_NoArgentSithWeapon", "SpawnOnOff"
+	StaticText "======== Equipment ========", gold
+	Option "$PB_OPT_Molotov", "pb_NoMolotov", "SpawnOnOff"
 	StaticText " "
-	Option "Spawn Beam Katana", "pb_NoBeamKatanaWeapon", "SpawnOnOff"
-	StaticText " "
-	Option "Spawn Vorpal Blade (Tiberium's Soulblade)", "pb_NoVorpalBladeWeapon", "SpawnOnOff"
+	StaticText "======== Monster Drops ========", gold
+	Option "Spawn Cyberdemon Missile Launcher", "pb_NoPB_CyberdemonRLWeapon", "SpawnOnOff"
 	StaticText " "
 	Option "Drop Stormcast (D3 Maledict)", "pb_NoStormcastWeapon", "SpawnOnOff"
 	StaticText " "
@@ -1256,10 +1152,6 @@ OptionMenu "RenderingSettings"
 	StaticText " "
 	Submenu "Motion Blur Settings", "MBlurOpts"
 	StaticText " "
-	Submenu "Screen Tilt Settings", "TiltPlusPlusMenu"
-	StaticText " "
-	Submenu "Weapon Visual Settings", "WeaponVisuals"
-	StaticText " "
 	Submenu "PBVP Settings", "PBVPOptions"
 	StaticText " "
 	
@@ -1376,28 +1268,6 @@ OptionMenu "WeaponSettings"
 {
 	Title "---------Weapon Settings---------"
 	StaticText " ", teal
-	StaticText "-----------Ballistic Shield Module-----------", 1
-	StaticText " ", teal
-	StaticText "Weapon Special on .45 Pistol / Fire Axe", 1
-	StaticText " ", teal
-	StaticText "Optional: Axe Pickup Required", 1
-	StaticText " ", teal
-	StaticText "Before Shield + Axe loadout.", 1
-	StaticText " ", teal
-	Option "Require Axe For Axe Mode", "RS_AxeCheck", "OnOff"
-	StaticText " ", teal
-	StaticText " ", teal
-
-	StaticText "-----------------Backpack Reload-----------------", teal
-	StaticText " ", teal
-	Option "Backpack Reload (Holstered Mags)", "pb_pbx_backpackreload", "YesNo"
-	StaticText " ", teal
-	Slider "Backpack Reload Interval (tics)", "pb_pbx_backpackreload_time", 14, 140, 7
-	Slider "Backpack Reload Per Tick", "pb_pbx_backpackreload_refill", 1, 15, 1
-	Option "Backpack Reload Notifications", "pb_pbx_backpackreload_notify", "YesNo"
-	StaticText " ", teal
-	StaticText " ", teal
-	
 	StaticText "-----------------Weapon Upgrades-----------------", teal
 	StaticText " ", teal
 
@@ -1405,10 +1275,6 @@ OptionMenu "WeaponSettings"
 	StaticText " ", teal
 	
 	Option "Completely Disable Weapon Upgrades",				"pb_NoUpgrades", "OnOff"
-	StaticText " ", teal
-	
-	Option "Disable UAC349 LMG Upgrade",				"pb_NoLMG", "OnOff"
-	StaticText "Blocks LMG Upgrade for UAC41 Carbine.", teal
 	StaticText " ", teal
 	
 	Option "Disable Quad-Barrel Shotgun Upgrade",				"pb_NoQuadSSG", "OnOff"
@@ -1423,8 +1289,6 @@ OptionMenu "WeaponSettings"
 	Option "Disable Triple Minigun Upgrade",				"pb_NoMinigunUpgrade", "OnOff"
 	StaticText "Blocks Triple-Barrel Minigun Upgrade."
 	StaticText " "
-	StaticText " "
-	StaticText "Tactical Motion: PB 2022 Enhanced -> HUD & Interface.", cyan
 	StaticText " "
 	Option "Disable Pump Shotgun Upgrade",				"pb_NoDBUpgrade", "OnOff"
 	StaticText "Blocks Pump Shotgun Magazine Upgrade."
@@ -1449,13 +1313,6 @@ OptionMenu "WeaponSettings"
 	Option "Disable Lightning Gun Upgrade",				"pb_NoM2Upgrade", "OnOff"
 	StaticText "Blocks M2 Lightning Gun Upgrade."
 	StaticText " "
-	StaticText " "
-	
-	Option "Disable Deagle Upgrade",				"pb_nodeagle", "OnOff"
-	StaticText "No Deagle Replacing Revolver Spawn."
-	StaticText "If \"No Revolver\" Is On, Leave This Off."
-	StaticText "See Advanced Weapon Spawns -> No Revolver."
-	StaticText " "
 	StaticText " ", teal
 	
 	StaticText "-----------------Weapon Progression-----------------"
@@ -1476,20 +1333,6 @@ OptionMenu "WeaponSettings"
 	Option "Nailgun upgrades Minigun",				"pb_UpgradeNailgun", "OnOff"
 	StaticText "Nailgun Replaces Minigun Slot."
 	StaticText " "
-	StaticText " ", teal
-	
-	StaticText "-----------------Weapon Misc-----------------"
-
-	Option "$PB_NO_M1PLASMACOOLDOWN", "pb_nocooldown", "YesNo"
-	StaticText " ", teal
-	StaticText "$PB_NO_M1PLASMACOOLDOWN_DESC"
-	StaticText "$PB_NO_M1PLASMACOOLDOWN_DESC2"
-	StaticText " ", teal
-	StaticText "$PB_NO_M1PLASMACOOLDOWN_NOTICE", "darkgray"
-	StaticText " ", teal
-	StaticText "$PB_NO_M1PLASMACOOLDOWN_EXTRA", "purple"
-	StaticText "$PB_NO_M1PLASMACOOLDOWN_EXTRA2", "purple"
-	StaticText " ", teal
 	StaticText " "
 }
 
@@ -1849,73 +1692,6 @@ OptionValue "maxgibs"
 }
 
 
-OptionMenu "WeaponVisuals"
-{
-	Class "ZMoveMenu"
-	Title "Weapon Visual Options"
-	Position -32
-	
-	StaticText	"Bobbing", 1
-	ZMoveSlider	"Walk/Run View Bobbing",				"Adjust view bobbing's intensity when moving",											"movebob",					0.0,	1.0,	0.1
-	ZMoveSlider	"Still View Bobbing",					"Adjust view bobbing's intensity when not moving",										"stillbob",					0.0,	1.0,	0.1
-	ZMoveSlider	"Walk/Run Weapon Bobbing",				"Adjust weapon bobbing's intensity when moving",										"wbobspeed",				0.0,	2.0,	0.1
-	ZMoveOption	"Still Weapon Bobbing",					"Turn on/off the weapon bobbing when standing still",									"zm_stillbob",				"OnOff"
-	ZMoveSlider	"Sprite speed to full bob",				"How fast weapon sprites transition to their maximum bobbing range",					"zm_fullbobspeed",			1,		15,		1,		0
-	StaticText 	""
-	StaticText	"Weapon Sway", Orange
-	ZMoveOption "Yaw Weapon Sway", 						"Allow weapons to sway according to your mouse yaw",									"zm_yawsway",				"OnOff"
-	ZMoveSlider "Yaw Sway Speed", 						"How fast weapons sway",																"zm_yawswayspeed",			0,		4,		0.5
-	ZMoveSlider "Yaw Sway Range", 						"Maximum Distance weapons can sway",													"zm_yawswayrange",			0,		8,		0.1
-	ZMoveSlider "Yaw Sway Friction", 					"How fast sprites will tend to realign to the center",									"zm_yawswayfriction",		5,		14,		0.5
-	ZMoveOption "Yaw Sway Direction", 					"Set wherever weapons sway in the direction you turn or the opposite",					"zm_yawswaydirection",		"SwayDirection"
-	ZMoveOption "Vertical Sway Type",					"How should vertical sway look",														"zm_pitchswaytype",			"VSwayType"
-	StaticText 	""
-	StaticText	"Vertical Offset", Orange
-	ZMoveSlider "Offset Speed", 						"How fast weapons raise and fall depending on your vertical velocity",					"zm_offsetspeed",			50,		100,	1,		0
-	ZMoveSlider "Offset Range", 						"Maximum Height weapons can fall",														"zm_offsetmaxrange",		10,		50,		1,		0
-	ZMoveOption "Offset Direction", 					"Set Wherever the sprites are offset according to your vertical direction",				"zm_offsetdirection",		"OffsetDirection"
-	StaticText 	""
-	
-	StaticText	"Others", 1
-	ZMoveOption "Speedometer", 							"Enable SpeedOMeter",																	"zm_speedometer",			"Speedometer"
-	Control		"Reset to default values",				"zmove_reset"
-}
-
-
-OptionValue "BobType"
-{
-	0, "Doom"
-	1, "Build Engine"
-	2, "Dusk"
-	3, "Painkiller"
-	4, "Unreal Tournament"
-}
-
-OptionValue "SwayDirection"
-{
-	0, "Opposite Direction"
-	1, "Same Direction"
-}
-
-OptionValue "VSwayType"
-{
-	0, "Both Ways"
-	1, "One Way"
-}
-
-OptionValue "OffsetDirection"
-{
-	0, "Opposite Direction"
-	1, "Same Direction"
-}
-
-OptionValue "Speedometer"
-{
-	0, "Off"
-	1, "Doom Units"
-	2, "Quake Units"
-}
-
 OptionMenu "GoreDebrisMenu"
 {
 	Class "NashGoreMenu"
@@ -1931,14 +1707,8 @@ OptionMenu "GoreDebrisMenu"
 	NashGoreOption "$NASHGOREMNU_BLOOD_SPURTS",		"$NASHGOREMNU_HELPTEXT_BLOOD_SPURTS",		"nashgore_bloodspurt",	"OnOff"
 	StaticText ""
 	StaticText "2022 Enhanced Brootality", 1
-	StaticText "Master Switch: PB 2022 Enhanced ->", cyan
-	StaticText "Gore & Performance (pb_enhanced_brutality_2022).", cyan
-	NashGoreOption "$BDV22GOREMNU_ENHANCED2022",	"$BDV22GOREMNU_ENHANCED2022_TIP",	"pb_enhanced_brutality_2022",	"OnOff"
-	StaticText "Duplicate Toggle For Convenience Here.", teal
-	StaticText ""
-	NashGoreOption "$OPTMNU_PB_ACCUDEATH", "$OPTMNU_PB_ACCUDEATH_TIP", "pb_accudeath", "OnOff"
-	Submenu "$OPTMNU_PB_ACCUDEATH_SUB", "AccuDeathOptions"
-	StaticText "$OPTMNU_PB_ACCUDEATH_HINT", teal
+	StaticText "Default On. Performance Mode / Performance Gore Mode lighten.", cyan
+	StaticText "CVar: pb_enhanced_brutality_2022 (no menu toggle).", cyan
 	StaticText ""
 
 	StaticText "$NASHGOREMNU_GIB_TITLE", 1
@@ -2162,9 +1932,9 @@ OptionMenu "SimplerMonsterSettings"
 
 	StaticText "---- Monster Pack add-ons (Crackodemon, Hellduke, Director, ...) ----"
 	StaticText " ", teal
-	Command "Enable all Monster Pack add-ons",  "set NoAfrit 0; set NoAracnorb 0; set NoAracnorbQueen 0; set NoCrackodemon 0; set NoCyberSatyr 0; set NoD3HellGuardian 0; set NoD3Maledict 0; set NoDarkDisciple 0; set NoDarkLord 0; set NoD16Cyberdemon 0; set NoDirector 0; set NoESoul 0; set NoHellduke 0; set NoHellSmith 0; set NoHelemental 0; set NoHierophant 0; set NoIceDemon 0; set NoMarauder 0; set NoObsRavager 0; set NoOverlord 0; set NoPyrodemon 0; set NoQSGDreadTrooper 0; set NoRahovart 0; set NoRifleCommando 0; set NoSatyr 0; set NoTerminator 0"
+	Command "Enable all Monster Pack add-ons",  "set NoAfrit 0; set NoAracnorb 0; set NoAracnorbQueen 0; set NoCrackodemon 0; set NoCyberSatyr 0; set NoD3HellGuardian 0; set NoD3Maledict 0; set NoDarkDisciple 0; set NoDarkLord 0; set NoD16Cyberdemon 0; set NoDirector 0; set NoESoul 0; set NoHellduke 0; set NoHellSmith 0; set NoHelemental 0; set NoHierophant 0; set NoIceDemon 0; set NoMarauder 0; set NoEternalDarkLord 0; set NoObsRavager 0; set NoOverlord 0; set NoPyrodemon 0; set NoQSGDreadTrooper 0; set NoRahovart 0; set NoRifleCommando 0; set NoSatyr 0; set NoTerminator 0"
 	StaticText " "
-	Command "Disable all Monster Pack add-ons", "set NoAfrit 1; set NoAracnorb 1; set NoAracnorbQueen 1; set NoCrackodemon 1; set NoCyberSatyr 1; set NoD3HellGuardian 1; set NoD3Maledict 1; set NoDarkDisciple 1; set NoDarkLord 1; set NoD16Cyberdemon 1; set NoDirector 1; set NoESoul 1; set NoHellduke 1; set NoHellSmith 1; set NoHelemental 1; set NoHierophant 1; set NoIceDemon 1; set NoMarauder 1; set NoObsRavager 1; set NoOverlord 1; set NoPyrodemon 1; set NoQSGDreadTrooper 1; set NoRahovart 1; set NoRifleCommando 1; set NoSatyr 1; set NoTerminator 1"
+	Command "Disable all Monster Pack add-ons", "set NoAfrit 1; set NoAracnorb 1; set NoAracnorbQueen 1; set NoCrackodemon 1; set NoCyberSatyr 1; set NoD3HellGuardian 1; set NoD3Maledict 1; set NoDarkDisciple 1; set NoDarkLord 1; set NoD16Cyberdemon 1; set NoDirector 1; set NoESoul 1; set NoHellduke 1; set NoHellSmith 1; set NoHelemental 1; set NoHierophant 1; set NoIceDemon 1; set NoMarauder 1; set NoEternalDarkLord 1; set NoObsRavager 1; set NoOverlord 1; set NoPyrodemon 1; set NoQSGDreadTrooper 1; set NoRahovart 1; set NoRifleCommando 1; set NoSatyr 1; set NoTerminator 1"
 	StaticText " ", teal
 	StaticText " "
 
@@ -2362,6 +2132,7 @@ OptionMenu "MonsterPackSettings"
 	Option "T2 - Satyr", "NoSatyr", "OffOn"
 	Option "T3 - Cybersatyr", "NoCyberSatyr", "OffOn"
 	Option "T4 - Marauder (pink line)", "NoMarauder", "OffOn"
+	Option "T4 - Eternal Dark Lord (w/ Marauder)", "NoEternalDarkLord", "OffOn"
 	StaticText " "
 	StaticText "---------------Revenant---------------", gold
 	Option "T4 - Hierophant", "NoHierophant", "OffOn"
@@ -2690,37 +2461,6 @@ OptionValue "HM_Style"
 	5, "$HM_VALUE_SMALLANIMATEDREVERSE"
 	8, "$HM_VALUE_VERTICAL"
 	9, "$HM_VALUE_VERTICALSMALL"
-}
-
-OptionValue "AccuDeathBarrelDamageType"
-{
-	0, "Nukage"
-	1, "Fire"
-	2, "None"
-}
-
-OptionValue "AccuDeathRocketDamageType"
-{
-	0, "None"
-	1, "Fire"
-}
-
-OptionValue "AccuDeathCacoBallDamageType"
-{
-	0, "Electric"
-	1, "Fire"
-	2, "None"
-}
-
-OptionMenu "AccuDeathOptions"
-{
-	Title "$OPTMNU_PB_ACCUDEATH_SUB"
-	Option "$OPTMNU_PB_ACCUDEATH_BARREL", "accudeath_barreltype", "AccuDeathBarrelDamageType"
-	Option "$OPTMNU_PB_ACCUDEATH_ROCKET", "accudeath_rockettype", "AccuDeathRocketDamageType"
-	Option "$OPTMNU_PB_ACCUDEATH_CACOBALL", "accudeath_cacoballtype", "AccuDeathCacoBallDamageType"
-	Option "$OPTMNU_PB_ACCUDEATH_STATEOVERRIDE", "accudeath_stateoverride", "OnOff"
-	Option "$OPTMNU_PB_ACCUDEATH_DYNLIGHTS", "accudeath_dynamiclights", "OnOff"
-	Slider "$OPTMNU_PB_ACCUDEATH_LIGHTSIZE", "accudeath_lightsize", 1.0, 3.0, 0.1, 1, "accudeath_dynamiclights", 0
 }
 
 OptionValue "AchToastPositionValues"

@@ -874,7 +874,7 @@ ACTOR PB_Deagle : PB_Weapon
 		TNT1 A 0 {
 		if (CountInv("GoFatality")>=1 || PB_executingEnemy())
 		{
-			return ResolveState("Steady");
+			return ResolveState("PB_FinisherCleanup");
 		}
 			return ResolveState("");
 		}

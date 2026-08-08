@@ -1,6 +1,9 @@
 // BDv22 optional blood mist (Brutal Doom 22 fold).
 class BDv22GoreHandler : EventHandler
 {
+	PlayerPawn lastMistPlayer;
+	int lastMistTic;
+
 	clearscope static PlayerPawn BDv22_ResolveAttacker(Actor a)
 	{
 		for (int n = 0; a && n < 10; n++)
@@ -17,7 +20,7 @@ class BDv22GoreHandler : EventHandler
 	{
 		if (!e) return;
 		Actor t = e.Thing;
-		if (!t || e.Damage < 1) return;
+		if (!t || e.Damage < 4) return;
 		if (t.bNoBlood) return;
 		if (!t.bIsMonster) return;
 		if (!(t is "PB_Monster")) return;
@@ -25,6 +28,9 @@ class BDv22GoreHandler : EventHandler
 
 		PlayerPawn ppl = BDv22_ResolveAttacker(e.DamageSource);
 		if (!ppl || !ppl.player) return;
+
+		if (ppl == lastMistPlayer && gametic - lastMistTic < 3)
+			return;
 
 		if (!PB_EnhancedBrutality2022.IsOn(ppl.player)) return;
 		let cvLow = CVar.GetCVar("pb_lowgraphicsmode", ppl.player);
@@ -41,6 +47,9 @@ class BDv22GoreHandler : EventHandler
 		if (w > 255) w = 255;
 		w = PB_EnhancedBrutality2022.ScaleMistWeight(w, ppl.player);
 		if (random(0, 255) > w) return;
+
+		lastMistPlayer = ppl;
+		lastMistTic = gametic;
 
 		String mistName = random(1, 100) <= mix ? "BDv22GoreMist" : "PB_Bloodmist";
 		Class<Actor> mistCls = mistName;

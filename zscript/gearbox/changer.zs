@@ -36,6 +36,9 @@ class gb_Changer play
       player.pendingWeapon = targetWeapon;
       if (mOptions.isShowingWeaponTagsOnChange()) mCaption.setActor(targetWeapon);
     }
+    // Remember wheel pick for next/prev preferred-slot cycling even if already ready.
+    if (targetWeapon)
+      PB_WheelSlotPrefs.RememberWheelPick(player, targetWeapon);
   }
 
   void useItem(PlayerInfo player, string item)

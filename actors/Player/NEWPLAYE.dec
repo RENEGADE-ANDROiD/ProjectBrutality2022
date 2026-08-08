@@ -807,6 +807,7 @@ FatalityChecker:
 
 		//
 		TNT1 A 0 A_JumpIfInventory("SKHelltrooper", 1, "StealthKillHelltrooper")
+		TNT1 A 0 A_TakeInventory("GoFatality", 1)
 		TNT1 A 0 A_ChangeFlag("PICKUP", true)
 		Goto See
 

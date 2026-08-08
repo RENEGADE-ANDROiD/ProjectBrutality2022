@@ -1,0 +1,309 @@
+// SpawnBalance-tiered enemy weapon drop lotteries (family pools + pb_No* gates).
+// ~60% of lottery deaths spawn family ammo instead of a weapon.
+
+const PB_LOOT_AMMO_CHANCE = 154;
+
+const PB_LOOT_RIFLES = 1;
+const PB_LOOT_SHOTGUNS = 2;
+const PB_LOOT_ASG = 3;
+const PB_LOOT_SLOT3 = 4;
+const PB_LOOT_NAILGUNS = 5;
+const PB_LOOT_COMMANDO = 6;
+const PB_LOOT_DTECH = 7;
+const PB_LOOT_PULSE = 8;
+const PB_LOOT_DEAGLE = 9;
+
+class PB_EnemyLoot play
+{
+	static int ResolveMaxTier()
+	{
+		let cv = CVar.FindCVar("SpawnBalance");
+		int bal = cv ? cv.GetInt() : 671;
+		if (bal == 667) return 1;
+		if (bal == 668) return 2;
+		if (bal == 669) return 3;
+		if (bal == 670 || bal == 672 || bal == 663) return 4;
+		// 671 Tiered / 666 Randomized: map-progress bands via level number
+		int ln = level.levelnum;
+		if (ln <= 5) return 1;
+		if (ln <= 11) return 2;
+		if (ln <= 20) return 3;
+		return 4;
+	}
+
+	static bool CvarBlocks(string cvarName)
+	{
+		if (cvarName == "")
+			return false;
+		let cv = CVar.FindCVar(cvarName);
+		if (cv && cv.GetInt())
+			return true;
+		return false;
+	}
+
+	static bool NewGunsDisabled()
+	{
+		let cv = CVar.FindCVar("pb_disablenewguns");
+		return cv && cv.GetBool();
+	}
+
+	static void Consider(Array<string> picks, string cls, string cvarName, int minTier, int maxTier, bool onlyCore)
+	{
+		if (minTier > maxTier)
+			return;
+		if (onlyCore && cvarName != "")
+			return;
+		if (CvarBlocks(cvarName))
+			return;
+		Name nm = cls;
+		if (!(class<Actor>)(nm))
+			return;
+		picks.Push(cls);
+	}
+
+	static void FillRifles(Array<string> picks, int maxTier, bool onlyCore)
+	{
+		Consider(picks, "Rifle", "", 1, maxTier, onlyCore);
+		Consider(picks, "PB_Carbine", "pb_NoCarbineWeapon", 1, maxTier, onlyCore);
+		Consider(picks, "LeverAction", "pb_NoLeverActionWeapon", 2, maxTier, onlyCore);
+		Consider(picks, "PB_NormalRifle", "pb_NoPB_NormalRifleWeapon", 2, maxTier, onlyCore);
+		Consider(picks, "PB_MetalSniper", "pb_NoMetalSniperWeapon", 2, maxTier, onlyCore);
+		Consider(picks, "PB_XM21", "pb_NoPB_XM21Weapon", 2, maxTier, onlyCore);
+		Consider(picks, "OldHMG", "pb_NoOldHMGWeapon", 2, maxTier, onlyCore);
+		Consider(picks, "BDPBattleRifle", "pb_NoBattleRifleWeapon", 3, maxTier, onlyCore);
+		Consider(picks, "PB_M41A", "pb_NoM41AWeapon", 3, maxTier, onlyCore);
+		Consider(picks, "PB_Fusil", "pb_NoPB_FusilWeapon", 3, maxTier, onlyCore);
+		Consider(picks, "AssaultR1", "pb_NoAssaultR1Weapon", 3, maxTier, onlyCore);
+		Consider(picks, "ProSurv_Ballista", "pb_NoProSurvBallistaWeapon", 4, maxTier, onlyCore);
+		Consider(picks, "PB_AntiTankRifle", "pb_NoPB_AntiTankRifleWeapon", 4, maxTier, onlyCore);
+		Consider(picks, "Black_DMR_RKX", "pb_NoBlackDMRWeapon", 4, maxTier, onlyCore);
+		Consider(picks, "MagnumSniperRifle", "pb_NoMagnumSniperRifleWeapon", 4, maxTier, onlyCore);
+		Consider(picks, "PBWP_Warbringer", "pb_NoPBWP_WarbringerWeapon", 4, maxTier, onlyCore);
+	}
+
+	static void FillShotguns(Array<string> picks, int maxTier, bool onlyCore)
+	{
+		Consider(picks, "PB_Shotgun", "pb_NoShotgunWeapon", 1, maxTier, onlyCore);
+		Consider(picks, "PB_SSG", "", 1, maxTier, onlyCore);
+		Consider(picks, "PB_SPAS12", "pb_NoPB_SPAS12Weapon", 2, maxTier, onlyCore);
+		Consider(picks, "PB_CSSG", "pb_NoCSSGWeapon", 2, maxTier, onlyCore);
+		Consider(picks, "X12Shotgun", "pb_NoX12ShotgunWeapon", 2, maxTier, onlyCore);
+		Consider(picks, "PB_QuadSG", "pb_NoQuadSSG", 3, maxTier, onlyCore);
+		Consider(picks, "HexaLionShotgun", "pb_NoHexaLionShotgunWeapon", 3, maxTier, onlyCore);
+		Consider(picks, "Rainmaker", "pb_NoRainmakerWeapon", 3, maxTier, onlyCore);
+		Consider(picks, "M45Shotgun", "pb_NoM45ShotgunWeapon", 3, maxTier, onlyCore);
+		Consider(picks, "MarauderSSG", "", 4, maxTier, onlyCore);
+		Consider(picks, "PB_CryoShotgun", "pb_NoPB_CryoShotgunWeapon", 4, maxTier, onlyCore);
+	}
+
+	static void FillASG(Array<string> picks, int maxTier, bool onlyCore)
+	{
+		Consider(picks, "PB_Autoshotgun", "pb_NoASGWeapon", 1, maxTier, onlyCore);
+		Consider(picks, "HASG", "pb_NoHASGWeapon", 2, maxTier, onlyCore);
+	}
+
+	static void FillSlot3(Array<string> picks, int maxTier, bool onlyCore)
+	{
+		FillShotguns(picks, maxTier, onlyCore);
+		FillASG(picks, maxTier, onlyCore);
+		Consider(picks, "DTShotgun", "pb_NoDTShotgunWeapon", 3, maxTier, onlyCore);
+	}
+
+	static void FillNailguns(Array<string> picks, int maxTier, bool onlyCore)
+	{
+		Consider(picks, "PB_Nailgun", "pb_NoNailgunWeapon", 1, maxTier, onlyCore);
+		Consider(picks, "Tactical_Nail_Gun", "pb_NoTacticalNailgunWeapon", 2, maxTier, onlyCore);
+		Consider(picks, "INNailGun", "pb_NoINNailGunWeapon", 3, maxTier, onlyCore);
+	}
+
+	static void FillCommando(Array<string> picks, int maxTier, bool onlyCore)
+	{
+		Consider(picks, "PB_Minigun", "pb_NoMinigunWeapon", 1, maxTier, onlyCore);
+		Consider(picks, "PBWP_Nightfall", "pb_NoPBWP_NightfallWeapon", 2, maxTier, onlyCore);
+		Consider(picks, "PB_NeoHMG", "pb_NoNeoHMGWeapon", 3, maxTier, onlyCore);
+		Consider(picks, "PB_HYDRA", "pb_NoPB_HYDRAWeapon", 3, maxTier, onlyCore);
+	}
+
+	static void FillDTech(Array<string> picks, int maxTier, bool onlyCore)
+	{
+		Consider(picks, "Hell_rifle", "", 1, maxTier, onlyCore);
+		Consider(picks, "DTShotgun", "pb_NoDTShotgunWeapon", 2, maxTier, onlyCore);
+		Consider(picks, "PB_DemonExterminator", "pb_NoDemonExterminatorWeapon", 3, maxTier, onlyCore);
+	}
+
+	static void FillPulse(Array<string> picks, int maxTier, bool onlyCore)
+	{
+		Consider(picks, "PB_PulseCannon", "pb_NoPB_PulseCannonWeapon", 1, maxTier, onlyCore);
+	}
+
+	static void FillDeagle(Array<string> picks, int maxTier, bool onlyCore)
+	{
+		Consider(picks, "PB_Deagle", "", 1, maxTier, onlyCore);
+	}
+
+	static string AmmoForPool(int poolId)
+	{
+		switch (poolId)
+		{
+		case PB_LOOT_RIFLES:
+		case PB_LOOT_NAILGUNS:
+		case PB_LOOT_COMMANDO:
+			return "PB_HighCalMag";
+		case PB_LOOT_SHOTGUNS:
+		case PB_LOOT_ASG:
+		case PB_LOOT_SLOT3:
+			return "PB_Shell";
+		case PB_LOOT_DTECH:
+		case PB_LOOT_PULSE:
+			return "PB_Cell";
+		case PB_LOOT_DEAGLE:
+			return "PistolBullets";
+		}
+		return "";
+	}
+
+	static string Fallback(int poolId)
+	{
+		switch (poolId)
+		{
+		case PB_LOOT_RIFLES: return "Rifle";
+		case PB_LOOT_SHOTGUNS: return "PB_Shotgun";
+		case PB_LOOT_ASG: return "PB_Autoshotgun";
+		case PB_LOOT_SLOT3: return "PB_Shotgun";
+		case PB_LOOT_NAILGUNS: return "PB_Nailgun";
+		case PB_LOOT_COMMANDO: return "PB_Minigun";
+		case PB_LOOT_DTECH: return "Hell_rifle";
+		case PB_LOOT_PULSE: return "PB_PulseCannon";
+		case PB_LOOT_DEAGLE: return "PB_Deagle";
+		}
+		return "";
+	}
+
+	static string Roll(int poolId)
+	{
+		int maxTier = ResolveMaxTier();
+		bool onlyCore = NewGunsDisabled();
+		Array<string> picks;
+		switch (poolId)
+		{
+		case PB_LOOT_RIFLES: FillRifles(picks, maxTier, onlyCore); break;
+		case PB_LOOT_SHOTGUNS: FillShotguns(picks, maxTier, onlyCore); break;
+		case PB_LOOT_ASG: FillASG(picks, maxTier, onlyCore); break;
+		case PB_LOOT_SLOT3: FillSlot3(picks, maxTier, onlyCore); break;
+		case PB_LOOT_NAILGUNS: FillNailguns(picks, maxTier, onlyCore); break;
+		case PB_LOOT_COMMANDO: FillCommando(picks, maxTier, onlyCore); break;
+		case PB_LOOT_DTECH: FillDTech(picks, maxTier, onlyCore); break;
+		case PB_LOOT_PULSE: FillPulse(picks, maxTier, onlyCore); break;
+		case PB_LOOT_DEAGLE: FillDeagle(picks, maxTier, onlyCore); break;
+		}
+		if (picks.Size() < 1)
+			return Fallback(poolId);
+		return picks[random(0, picks.Size() - 1)];
+	}
+}
+
+class PB_EnemyLootDrop : Inventory
+{
+	int poolId;
+	property PoolId: poolId;
+
+	Default
+	{
+		+NOINTERACTION;
+		+NOBLOCKMAP;
+		+NOCLIP;
+		+NOGRAVITY;
+		Inventory.MaxAmount 1;
+		PB_EnemyLootDrop.PoolId 0;
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		string pick;
+		if (random(0, 255) < PB_LOOT_AMMO_CHANCE)
+			pick = PB_EnemyLoot.AmmoForPool(poolId);
+		else
+			pick = PB_EnemyLoot.Roll(poolId);
+		if (pick == "")
+			pick = PB_EnemyLoot.Fallback(poolId);
+		if (pick != "")
+		{
+			Name nm = pick;
+			class<Actor> cls = (class<Actor>)(nm);
+			if (cls)
+			{
+				Actor dp = Spawn(cls, Pos);
+				if (dp)
+				{
+					dp.Vel = Vel;
+					double dropfactor = G_SkillPropertyFloat(SKILLP_DropAmmoFactor);
+					if (dropfactor < 0)
+						dropfactor = 0.5;
+					let wp = Weapon(dp);
+					if (wp && wp.AmmoGive1 > 0)
+						wp.AmmoGive1 = max(1, int(dropfactor * wp.AmmoGive1));
+					else
+					{
+						let am = Ammo(dp);
+						if (am)
+							am.Amount = max(1, int(dropfactor * am.Amount));
+					}
+				}
+			}
+		}
+		Destroy();
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+		Stop;
+	}
+}
+
+class PB_LootDrop_Rifles : PB_EnemyLootDrop
+{
+	Default { PB_EnemyLootDrop.PoolId PB_LOOT_RIFLES; }
+}
+
+class PB_LootDrop_Shotguns : PB_EnemyLootDrop
+{
+	Default { PB_EnemyLootDrop.PoolId PB_LOOT_SHOTGUNS; }
+}
+
+class PB_LootDrop_ASG : PB_EnemyLootDrop
+{
+	Default { PB_EnemyLootDrop.PoolId PB_LOOT_ASG; }
+}
+
+class PB_LootDrop_Slot3 : PB_EnemyLootDrop
+{
+	Default { PB_EnemyLootDrop.PoolId PB_LOOT_SLOT3; }
+}
+
+class PB_LootDrop_Nailguns : PB_EnemyLootDrop
+{
+	Default { PB_EnemyLootDrop.PoolId PB_LOOT_NAILGUNS; }
+}
+
+class PB_LootDrop_Commando : PB_EnemyLootDrop
+{
+	Default { PB_EnemyLootDrop.PoolId PB_LOOT_COMMANDO; }
+}
+
+class PB_LootDrop_DTech : PB_EnemyLootDrop
+{
+	Default { PB_EnemyLootDrop.PoolId PB_LOOT_DTECH; }
+}
+
+class PB_LootDrop_Pulse : PB_EnemyLootDrop
+{
+	Default { PB_EnemyLootDrop.PoolId PB_LOOT_PULSE; }
+}
+
+class PB_LootDrop_Deagle : PB_EnemyLootDrop
+{
+	Default { PB_EnemyLootDrop.PoolId PB_LOOT_DEAGLE; }
+}

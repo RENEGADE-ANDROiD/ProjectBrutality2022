@@ -18,11 +18,15 @@ class PowerDeflect : Powerup
 	override void DoEffect ()
 	{
 		Super.DoEffect();
-		Actor ob;
-		ThinkerIterator iter = ThinkerIterator.Create();
+		if (!Owner)
+			return;
+		if ((gametic & 1) != 0)
+			return;
 
-		while (ob = Actor(iter.Next()))
+		BlockThingsIterator iter = BlockThingsIterator.Create(Owner, 1024.);
+		while (iter.Next())
 		{
+			Actor ob = iter.thing;
 			if (!ob || !ob.bMissile || ob.bSeekermissile || ob.target == Owner) continue;
 			
 			double v = ob.vel.Length();
@@ -49,7 +53,6 @@ class PowerDeflect : Powerup
 			ob.vel.x = flatVel * cos(ang);
 			ob.vel.y = flatVel * sin(ang);
 			ob.angle += newDiff;
-			
 		}
 	}
 }

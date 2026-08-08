@@ -35,6 +35,7 @@ class BPv10GoreHandler : EventHandler
 			|| t is "PB_ZombieScientist"
 			|| t is "PB_HotelBruiser"
 			|| t is "PB_HotelOgre"
+			|| t is "PB_EternalDarkLord"
 			|| t is "PB_BVCH_Bloodfiend"
 			|| t is "PB_BVCH_Dastard";
 	}

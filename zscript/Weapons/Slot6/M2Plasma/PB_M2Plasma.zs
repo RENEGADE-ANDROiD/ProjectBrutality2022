@@ -472,7 +472,7 @@ class PB_M2Plasma : PB_WeaponBase
 			}
 		M211 DE 1 {
 			if (CountInv("HasLightningGunUpgrade") >= 1 ) { A_SetWeaponSprite("PR2F");}
-			A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 			}
 		Goto Ready3;
 		

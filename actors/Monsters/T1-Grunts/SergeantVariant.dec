@@ -1419,7 +1419,7 @@ Actor Vanilla_PyroSergeant : PyroSergeant
 
 Actor Vanilla_Shotgunguy2 : PB_HelmetSergeant
 {
-	DropItem "DropedShotgun"
+	DropItem "PB_LootDrop_Shotguns"
 	DropItem "DropedGrenade" 6
 	States
 	{

@@ -19,7 +19,7 @@ ACTOR ASGGuy : PB_Sergeant Replaces ShotgunGuy
 	damagefactor "killme", 0.0
 	dAMAGEFACTOR "Avoid", 0.0
 	damagefactor "MeatGrab", 50.0
-	DropItem "DropedASG"
+	DropItem "PB_LootDrop_ASG"
 	DropItem "DropedGrenade" 5
     States
     {
@@ -2433,7 +2433,7 @@ States{Spawn:
 
 Actor Vanilla_ASGGuy : ASGGuy
 {
-	DropItem "DropedASG"
+	DropItem "PB_LootDrop_ASG"
     DropItem "NewShell"
 	DropItem "DropedGrenade" 5
 	States

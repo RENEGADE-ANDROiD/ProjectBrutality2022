@@ -81,7 +81,7 @@ class PBWP_CinerealOrdnance : PBWP_CA_WeaponBase
 		TNT1 A 0 { PBWP_CA_ReadyTick(); }
 		CINR A 1 Bright {
 			PBWP_CinerealIdleLoop();
-			A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 		}
 		Loop;
 

@@ -349,7 +349,7 @@ Actor WolfAfterimage
 }
 
 
-Actor PB_Marauder: PB_Monster
+Actor PB_Marauder: PB_MarauderBase
  {
 	Health 800
 	Speed 12
@@ -1018,22 +1018,23 @@ SeeContinuePart36Continue:
 		TNT1 A 0 A_PlaySound("MRDPN", 1)
 		Goto Pain
 
-	Pain.BloodPunch:
+		Pain.BloodPunch:
 		TNT1 A 0 A_GiveToTarget("BloodPunchKilled",1)
 		TNT1 A 0	A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
 		TNT1 A 0	A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
 		TNT1 A 0	A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
 		TNT1 A 0	A_SpawnItemEx("BloodpunchWave", 0, 0, Height / 2, 0, 0, 0, 0, SXF_CLIENTSIDE|SXF_TRANSFERPITCH)
+		Pain.Plasma:
+		Pain.SuperPlasma:
+		Pain.Blackhole:
+			Goto Stun
 		Pain.Bullet:	
 		Pain.Freeze:
 		Pain.Saw:
 		Pain.Cut:
 		Pain.Tear:
 		Pain.Nailgun:
-		Pain.Blackhole:
-		Pain.Plasma:
 		Pain.Explosive:
-		Pain.SuperPlasma:
 		Pain.Fatality:
 		Pain.Crucible:
 		Pain.GloryFire:

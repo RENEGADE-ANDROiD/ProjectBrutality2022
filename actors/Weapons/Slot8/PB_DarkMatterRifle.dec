@@ -36,10 +36,6 @@ ACTOR PB_DMR_GravityAltMode : Inventory
 	Inventory.MaxAmount 1
 }
 
-ACTOR Select_PB_DMR_SuperBall : Inventory { Inventory.MaxAmount 1 }
-ACTOR Select_PB_DMR_GravityBomb : Inventory { Inventory.MaxAmount 1 }
-ACTOR Select_PB_DMR_DualWield : Inventory { Inventory.MaxAmount 1 }
-
 ACTOR PB_DMR_PulseBall : FastProjectile
 {
 	Radius 10

@@ -49,7 +49,7 @@ Class PB_ShotgunGuy : PB_Monster
 		damagefactor "Cut", 0.75;
 		damagefactor "Tear", 0.25;
 		damagefactor "MeatGrab", 50.0;
-		DropItem "PB_Shotgun";
+		DropItem "PB_LootDrop_Shotguns";
 		DropItem "DropedGrenade", 7;
 		Obituary "%o was blasted away by a Zombie Sergeant.";
 		+FLOORCLIP;

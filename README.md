@@ -42,12 +42,12 @@ Modified for PB2022; loads after it.
 - **Player and systems:** Movement (dash, slide, ledge grab), **Explosive Movement** (rocket jump and plasma climb - **PB 2022 Enhanced -> Explosive Movement**), tactical weapon feel, layered gore, HUD, weapon-special wheel, and related flows.
 - **First-person flourishes:** Short hand-raise animations for flavor moments - rock-on on new armor / spheres / weapons, ouch on heavy hits, a do-thing raise on Use, and a health-yeah raise when you heal or grab a backpack.
 - **Second Chance & RIP AND TEAR:** New games grant a near-death **Second Chance** token (refilled by Berserk / Mega Berserk / Demon Strength Rune). When you take pain below **20** HP with a token left, you may heal and surge back with a **Hayulti** fist flourish (and Berserk again)-or burn the token and stay down. Berserk pickups can also play a **Hayberserk** "RIP AND TEAR!!" hand strip. With fists and Berserk active, **Weapon Special** toggles **RIP AND TEAR** vs **SMASH** fatality style; **Use** on close living fodder can meat-grab for a throw or meatshield handoff.
-- **In-game codex (PDA):** Press **BACKSLASH** (rebindable) to flip through **Weapons**, **Monsters**, and **Equipment**. Entries unlock as you pick up gear or kill enemies; progress persists across saves. Pick an entry for its dossier and a small looping preview. Time pauses while the codex is open. Optional plain-text layout: **PB 2022 Enhanced -> UI and Feel**. The same submenu offers **PDA XP & reward spin (single-player)** (default **Off**): when **On**, kills grant XP, rank-ups award spendable reward points, and-with the usual **blocky** PDA home layout-a **Reward Spin** tile appears on the left; each spin costs **3** points and tries to grant a **weapon** you do not already carry **and** that is not already unlocked in your PDA weapon codex (the roll rerolls within the pool); if nothing qualifies, **points are refunded**. With the toggle **Off**, the codex is unchanged and **no** spin panel appears.
+- **In-game codex (PDA):** Press **BACKSLASH** (rebindable) to flip through **Weapons**, **Monsters**, and **Equipment**. Entries unlock as you pick up gear or kill enemies; progress persists across saves. Pick an entry for its dossier and a small looping preview. Time pauses while the codex is open. Optional plain-text layout: **PB 2022 Enhanced -> UI and Feel**. The same submenu offers **PDA XP & Reward Spin (single-player)** (default **Off**): when **On**, kills grant XP, rank-ups award spendable reward points, and-with the usual **blocky** PDA home layout-a **Reward Spin** tile appears on the left; each spin costs **3** points and tries to grant a **weapon** you do not already carry **and** that is not already unlocked in your PDA weapon codex (the roll rerolls within the pool); if nothing qualifies, **points are refunded**. With the toggle **Off**, the codex is unchanged and **no** spin panel appears.
 - **Achievements (single-player):** PB ships a built-in achievement system (based on **Vortex Universal Achievement System**, MIT). Goals track combat, bosses, Glory Kills, PDA codex progress, movement, secrets, multi-kill shots (explosives, railgun, BFG, snipers, plasma, equipment), and **Explosive Movement** feats (**rocket jump** / **plasma wall climb** when those options are on). Unlock toasts appear as you play; browse everything under **PB 2022 Enhanced -> Achievement Settings -> PB 2022 Achievements**, or bind **Achievement Menu** in **Customize Controls -> PB 2022 Achievements**. Turn the feature off with **Achievements** in **PB 2022 Enhanced** (disabled in multiplayer). Do not load a separate Vortex achievement WAD on top of this folder.
 - **Combat depth:** Brutality-style damage and reactions, plus the weapon and monster variety below-all adjustable from **PB 2022 Enhanced** and related submenus.
 - **Content breadth:** Large weapon roster, extra monsters, kill streaks, power-up hooks, and announcer support.
 - **Configuration:** Use **Options -> PB 2022 Enhanced** (same screen from the main menu, bound to **P** when available). That hub groups **Gameplay Settings**, **Weapon Settings**, **Global Settings**, **Visual Settings**, combat / Glory Kill options, **Explosive Movement**, **UI and Feel** (damage numbers, tactical motion, weapon HUD modes, PDA blocky layout, optional **PDA XP & reward spin** for single-player, kill streaks), and **Content Packs**. Deeper monster and spawn options also live under **Global Settings** and **Monster Pack Settings**.
-- **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** (Options -> PB 2022 Enhanced -> *Finishers, Gore, Taunts*) is the single On/Off switch that adds Brutal Doom 22 mist and meat, Brutal Pack V10 death extras, and extra blood pools and trails on top of the base mix - no per-pack sliders to fiddle with. **AccuDeath** (by **Airehnr66**) is also included: kills from fire, plasma, and electric attacks can tint corpses and add light particle death FX on top of the normal gore stack (on by default; turn off under **Options -> Gore/Debris Settings -> AccuDeath (corpse tints)**).
+- **Gore and debris:** Core Project Brutality gore plus **Nash Gore**. **2022 Enhanced Brootality** (Options -> PB 2022 Enhanced -> *Finishers, Gore, Taunts*) is the single On/Off switch that adds Brutal Doom 22 mist and meat, Brutal Pack V10 death extras, and extra blood pools and trails on top of the base mix - no per-pack sliders to fiddle with.
 - **Shield Saw:** Standard equipment-you start every new game with it. Quick Melee throws the ricocheting saw at range (close targets still get normal melee), and **Recall Shield Saw** brings it back.
 
 ### Possession finishers
@@ -83,13 +83,14 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 
 **Slot 2 - Sidearms & personal defense**
 
-- **UAC .45 Pistol** - starter sidearm with weapon-special options for pistol behavior.
+- **UAC Portal Blasters** - always-dual starter utility: Fire/AltFire fire portal bolts that damage enemies and place look-through portals on walls, floors, and ceilings.
+- **Desert Eagle .50** - starter ballistic sidearm for high-damage precision shots (full mag on spawn).
+- **UAC .45 Pistol** - findable sidearm from plain pistol zombies (not a start gun); weapon-special options for pistol behavior. Helmeted pistol zombies drop the **Deagle** (or Deagle **PistolBullets** ammo ~60% of the time).
 - **Revolver** - high-impact sidearm for heavier single shots.
 - **Maschinenpistole 40** - compact automatic ballistic weapon.
 - **UAC-17 SMG** - fast sidearm-class automatic with weapon-special handling.
 - **UAC Ballistic Shield Module** - inventory upgrade (icon **`5L1DI0`**) from **riot-shield sergeants**; not a weapon-slot gun. With the module, open **Weapon Special** on the **.45 Pistol** or **Fire Axe** to toggle **ballistic shield + pistol** (block, bash, shielded reload) or **shield + axe** loadouts. Settings: **Weapon Settings -> Ballistic Shield Module** (optional fire-axe requirement for the axe loadout).
 - **Hell Pistoler** - demon sidearm with a special wheel for Hell Rounds, Shrink Beam, and rate-of-fire toggle behavior.
-- **Desert Eagle .50** - heavy pistol for high-damage precision sidearm shots.
 - **UAC-12a Automat** - compact automatic sidearm with its own spawn toggle.
 - **Holy Bastard W-SMG** - high-rate SMG variant with dedicated handling.
 - **Holy Bastard P-SMG** - pyro SMG upgrade sibling to the W-SMG.
@@ -154,6 +155,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - **Cyberdemon Missile Launcher** - cyberdemon-style missile launcher; **wear** per two-rocket burst, **break** + duplicate-pickup **refill** like the chaingun. **Baalgar / cyber boss** death tables and the **flying cyber-arm gib** can spawn it with a chance (respects **`pb_NoPB_CyberdemonRLWeapon`** on the gib path).
 - **Caduceus** - Cyberaugumented neonic wand / launcher hybrid.
 - **Dispatcher of Delusions** - Cyberaugumented launcher with plasma-style projectiles.
+
 **Slot 7 - Energy rifles (non-plasma line)**
 
 - **Cryo Rifle** - freezing rifle for slowing or locking down enemies.
@@ -168,7 +170,7 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 
 - **UAC-M1 Plasma Rifle** - plasma rifle with single/dual weapon-special support and plasma wall-climb behavior.
 - **UAC-M2 Plasma Rifle** - alternate plasma rifle using the same movement-friendly plasma impact family.
-- **UAC Prototype Dark Matter Rifle** - magazine-fed plasma orbs; chargeable Alt-Fire (super plasma ball vs gravity singularity via Weapon Special), standard cell reserve plus internal magazine, plasma wall-climb on primary impacts; rolls from plasma spawners with an optional **Weapon Settings** toggle.
+- **UAC Prototype Dark Matter Rifle** - magazine-fed plasma orbs; chargeable Alt-Fire that alternates Super Plasma Ball and Gravity Singularity after each successful shot; Weapon Special toggles dual-wield; standard cell reserve plus internal magazine, plasma wall-climb on primary impacts; rolls from plasma spawners with an optional **Weapon Settings** toggle.
 - **Extinction Ray / Argent Fury** - argent-energy beam rifle with dedicated spawn toggle.
 - **UAC PR-75 Plasma Assault** - assault-style plasma rifle variant.
 - **Calamity Blade** - slot-8 energy blade with charged cutting attacks.
@@ -210,7 +212,9 @@ Weapons are grouped by their in-game number slots. Individual spawn toggles live
 - Freezebot
 - ElecPod
 
-**Sentry Guns** - equipment-wheel deployable friendly turrets (basic and pulse kits plus an expanded roster: heavy, plasma, rocket, sniper, BFG, and more). Pick **Sentry Guns**, then choose a type from the sub-wheel; **Use Equipment** plants it and spends the matching kit. Map boxes and rare backpack grants refill ammo. Commandos can drop common kits (basic / pulse / heavy); ZSpec Ops can drop specialty kits; Zombie Tanks can drop rare Obelisk-class kits.
+**Sentry Guns** - equipment-wheel deployable friendly turrets (basic and pulse kits plus an expanded roster: heavy, plasma, rocket, sniper, BFG, and more). Pick **Sentry Guns**, then choose a type from the sub-wheel; **Use Equipment** plants it and spends the matching kit. Map boxes and rare backpack grants refill ammo. Commandos can drop common kits (basic / pulse / heavy); ZSpec Ops can drop specialty kits. **Zombie Tanks** always leave a themed kit plus a second kit from the full sentry roster.
+
+**Enemy weapon drops** - many former humans roll a family loot pool filtered by **Spawn Balance** tier and weapon spawn toggles (helmet pistol → Deagle; plasma → Pulse Cannon; rifles / shotguns / ASG / Spec Ops slot-3 / nailguns / commando heavies / Demon Tech). About **60%** of those deaths drop matching ammo instead (Deagle reserve **PistolBullets** for helmet pistols). Backpacks and ammo boxes can rarely replace with a weapon **upgrade** spawner.
 
 **UAC Survival gear** on the same wheel: **pipe bomb** and **satchel charge** (throw, then detonate remotely) plus **flare** for lighting dark areas. Grunts that drop grenades can occasionally drop UAC kits instead (frags still most common); rocket->grenade map converts can too. Rare backpack bonuses still apply.
 
@@ -330,7 +334,7 @@ This build layers several community sources into Project Brutality's own systems
 | --- | --- |
 | **Realm667** | Many monster and prop bases and edits from the community resource site; authors are credited per creature and in the detailed lists. |
 | **Monster Pack line** | Extra monsters and spawns (for example Crackodemon, Hellduke, Helemental, Hierophant) included in the main mod alongside standard Project Brutality enemies. |
-| **Brutal Doom Plus** (formerly *El Diablo* Edition) | Extra first-person executions and finisher art wired through Glory Kills-not a standalone Brutal Doom Plus total conversion. Also the lineage for **Harvester of Souls** and the **Anti-Tank Rifle** (sprites by **Tesefy**). |
+| **Brutal Doom Plus** (formerly *El Diablo* Edition) | Extra first-person executions and finisher art wired through Glory Kills-not a standalone Brutal Doom Plus total conversion. Also the lineage for **Harvester of Souls**, the **Pulse Cannon** (**Yaelvolador**), and the **Anti-Tank Rifle** (sprites by **Tesefy**). |
 | **Project Brutality Legacy (lineage)** | Older-style execution triggers and handoffs **included** in the main monster set so classic prompts still work with current Project Brutality. |
 | **Brutal Pack (e.g. V10 class packs)** | Used in development as selective art and finisher reference; **this repo does not ship the Brutal Pack in full**-only what was adapted into Project Brutality 2022's roster and Glory Kill flows. |
 | **Brutal Doom 22 (BDv22)** | Optional-style gore assets and handlers packaged under their own names; enabled through **2022 Enhanced Brootality**. Credit **Brutal Doom 22** as a project and respect its license if you redistribute those assets. |
@@ -360,10 +364,12 @@ Credit to **BeefRice** and **Jaih1r0** for fullscreen weapon HUD elements and ma
 
 **Harvester of Souls** - **Yaelvolador** and **Carrot** (Brutal Doom Plus lineage). Details: **`CREDITS.txt`**.
 
+**Pulse Cannon** - **Yaelvolador** and **Brutal Doom Plus** (formerly El Diablo Edition). Details: **`CREDITS.txt`**.
+
 **Anti-Tank Rifle** - Brutal Doom Plus; sprite artwork **Tesefy**. Details: **`CREDITS.txt`**.
 
 **PB_MeleeWeaponPack** (including slot-1 **Dragon Slayer** & **Vorpal Blade**, slot-9 **Stormcast**): original credits per that add-on's `CREDITS.txt` - **Craneo**, **Dreo** & **Lord Lothar** (*Schism*), **Eriance** & **TiberiumSoul** (RIP); compatibility rework for PB 0.4.2+ by **Renegade Android**. Details: **`CREDITS.txt`**.
 
 **Maintainers of this package:** RENEGADE ANDROID and doc.
 
-**Contributors:** JhulkerCraft, TomiikiPro.
+**Contributors:** JhulkerCraft, BeefRice, Yaelvolador, Warcarlsson, TomiikiPro

@@ -62,10 +62,12 @@ ACTOR Rainmaker : PB_Weapon //karnageweapon
 	{
 	Ready3:
 	Ready:
+		TNT1 A 0 A_TakeInventory("PB_LockScreenTilt", 1)
 		TNT1 A 0 { PB_HandleCrosshair(39); }
 		RAIN A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD)
 		Loop
 	Deselect:
+		TNT1 A 0 A_TakeInventory("PB_LockScreenTilt", 1)
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "PlaceIceBarrel")
@@ -176,17 +178,20 @@ ACTOR Rainmaker : PB_Weapon //karnageweapon
 		TNT1 A 0 A_Jumpifnoammo("Noammo")
 		goto ready
 	Noammo:
+		TNT1 A 0 A_TakeInventory("PB_LockScreenTilt", 1)
 		TNT1 A 0 A_TakeInventory("Reloading", 1)
 		TNT1 A 0 A_PlaySound("weapons/empty")
 		TNT1 A 0 A_Zoomfactor(1)
 		RAIN A 8 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
 		Goto ready
 	stopreload:
+		TNT1 A 0 A_TakeInventory("PB_LockScreenTilt", 1)
 		TNT1 A 0 A_Playsound("Rainmaker_Close",7)
 		RAIN E 1 offset(1,60)
 		RAIN DCB 1 offset(1,33)
 		Goto ready
 	Doreload:
+		TNT1 A 0 A_GiveInventory("PB_LockScreenTilt", 1)
 		RAIN BCDE 1
 		RAIN N 1 offset(1,50)
 		TNT1 A 0 A_Playsound("Rainmaker_open",6)
@@ -266,6 +271,7 @@ ACTOR Rainmaker : PB_Weapon //karnageweapon
 		RAIN N 1 offset(1,40)
 		RAIN N 1 offset(1,33)
 		RAIN EDCB 1
+		TNT1 A 0 A_TakeInventory("PB_LockScreenTilt", 1)
 		goto ready
 	AltFire:
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel")

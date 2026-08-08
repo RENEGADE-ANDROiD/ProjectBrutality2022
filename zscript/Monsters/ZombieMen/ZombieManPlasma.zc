@@ -6,7 +6,7 @@ Class PB_PlasmaZombie : PB_Zombieman
 			//$Category Project Brutality - Monsters/Former Humans/Zombiemen
 			//$Sprite ZMAYB1
 			Health 110;
-			DropItem "Cell";
+			DropItem "PB_LootDrop_Pulse";
 			DropItem "StunGrenadeAmmo", 15;
 			Painchance "Head", 256;
 			damagefactor "Head", 0.70;

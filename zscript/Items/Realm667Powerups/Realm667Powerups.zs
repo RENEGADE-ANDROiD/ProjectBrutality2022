@@ -427,16 +427,15 @@ class FrostAuraPower : Powerup
 				}
 			}
 
-			owner.A_SpawnParticle("FFFFFF", lifetime: 280, size: random(1, 3), xoff: random(-arad, arad), yoff: random(-arad, arad), zoff: 128,
-				velx: frandom(-0.3, 0.3), vely: frandom(-0.3, 0.3), velz: frandom(-2.0, -4.0), startalphaf: 0.5);
-			owner.A_SpawnParticle("F0F0EF", lifetime: 280, size: random(1, 3), xoff: random(-arad, arad), yoff: random(-arad, arad), zoff: 128,
-				velx: frandom(-0.3, 0.3), vely: frandom(-0.3, 0.3), velz: frandom(-2.0, -4.0), startalphaf: 0.5);
-			owner.A_SpawnParticle("E0E0DF", lifetime: 280, size: random(1, 3), xoff: random(-arad, arad), yoff: random(-arad, arad), zoff: 128,
-				velx: frandom(-0.3, 0.3), vely: frandom(-0.3, 0.3), velz: frandom(-2.0, -4.0), startalphaf: 0.5);
-			owner.A_SpawnParticle("D0D0CF", lifetime: 280, size: random(1, 3), xoff: random(-arad, arad), yoff: random(-arad, arad), zoff: 128,
-				velx: frandom(-0.3, 0.3), vely: frandom(-0.3, 0.3), velz: frandom(-2.0, -4.0), startalphaf: 0.5);
-			owner.A_SpawnParticle("C0C0BF", lifetime: 280, size: random(1, 3), xoff: random(-arad, arad), yoff: random(-arad, arad), zoff: 128,
-				velx: frandom(-0.3, 0.3), vely: frandom(-0.3, 0.3), velz: frandom(-2.0, -4.0), startalphaf: 0.5);
+			let cvLow = CVar.FindCVar("pb_lowgraphicsmode");
+			bool lowGfx = cvLow && cvLow.GetInt() > 0;
+			if (!lowGfx && (gametic & 1) == 0)
+			{
+				owner.A_SpawnParticle("FFFFFF", lifetime: 280, size: random(1, 3), xoff: random(-arad, arad), yoff: random(-arad, arad), zoff: 128,
+					velx: frandom(-0.3, 0.3), vely: frandom(-0.3, 0.3), velz: frandom(-2.0, -4.0), startalphaf: 0.5);
+				owner.A_SpawnParticle("E0E0DF", lifetime: 280, size: random(1, 3), xoff: random(-arad, arad), yoff: random(-arad, arad), zoff: 128,
+					velx: frandom(-0.3, 0.3), vely: frandom(-0.3, 0.3), velz: frandom(-2.0, -4.0), startalphaf: 0.5);
+			}
 		}
 		super.Tick();
 	}

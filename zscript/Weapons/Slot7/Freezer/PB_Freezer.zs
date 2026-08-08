@@ -327,7 +327,7 @@ class PB_Freezer : PB_WeaponBase
 			}
 			FR30 IIII 1 {
 				if (CountInv("FreezerOverCooling") >= 100 ) { A_SetWeaponSprite("FR39");}
-				A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+				return A_DoPBWeaponAction(WRF_ALLOWRELOAD);
 			}
 			TNT1 A 0 A_Refire;
 			Goto Ready3;

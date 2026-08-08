@@ -23,7 +23,6 @@ Gameplay and content in this release
 - **PBWP CustomMelee (random Quick Melee):** Fist backhand/uppercut and chainsaw swing sprites/SFX from Project Brutality Weapons Pack CustomMelee; ArgentMelee / BeamMelee / VorpalMelee strips reuse each blade’s primary Fire / FinishCuttingAnimation / SwingRighty frames. See **`SPRITES/WEAPONS/Slot1/RandomQuickMelee/`**, **`BaseWeapon_RandomQuickMelee.zsc`**.
 - **The Abyssal Core** (Brutal Doom lineage TC) — reference for Pain Elemental **PSOL** soul-projectile frames (`SPRITES/Monsters/PainElemental/PEProjectile/`), **RPEN** ground-slam/roll frames (`SPRITES/Monsters/PainElemental/GroundRoll/`), PE slam/roll + Cacodemon multi-ball attack patterns, and selective roster scale polish on existing **`PB_*`** monsters. Shotgun floor/wall blast-jump is **PB-native** (wired to Explosive Movement cvars), inspired by Abyssal explosive-movement feel rather than a direct Core shotgun fold. Upstream art/behavior remains third-party; not a full Core actor fold.
 - **The Abyssal Crown** — **BloodBonk** first-person **`BONK`** strip and boom SFX folded into bare-hands **`FistSlam`** (`SPRITES/WEAPONS/Slot1/MELEE/BloodBonk/`, `sounds/combat/weapons/BloodBonk/`). Not a full Crown weapon / cooldown / falter fold; damage stays PB smash missiles on the Fire+Alt chord.
-- **AccuDeath V3.2.2** (Airehnr66) — optional corpse translation / death particle FX; folded under **`zscript/Gore/AccuDeath/`**, gated by **`pb_accudeath`**.
 - **Vortex Universal Achievement System v0.1.0** (Vortex, MIT) — achievement toasts, browse menu, persistence; folded under **`zscript/Achievements/VUAS/`** with PB definitions in **`PB_AchievementSetup.zs`**. Do not also load external **`Vortex_Universal_Achievement_System_v010.wad`**.
 - Revolver sprites by IDKFA
 - DarkShadow’s Monster Sounds Overhaul: monster SFX (based on Ravik’s Soundpack, with
@@ -48,6 +47,11 @@ Gameplay and content in this release
   **`PB_DarkMatterRifle`** — upstream shipped as **`PulseCannon.dec`** without a
   standalone author line in the add-on; credits the original PB 3.x weapon package
   contributors and **id Software** base resources where applicable.
+- **Pulse Cannon** (`PB_PulseCannon`, slot 8): folded from **Brutal Doom Plus**
+  (formerly El Diablo Edition / **BRUTALDOOMPLUS**) — weapon / art lineage
+  **Yaelvolador**; `pulsecannon.txt` / `sprites/WEAPONS/pulsecannon`
+  (`PULS`/`TROL`/`PUSS`/`RAMA` art). Distinct from **`PB_DarkMatterRifle`**.
+  Pickup lump renamed **`PCCUA0`** to avoid clobbering DMR **`PLCUA0`**.
 - Commander Shotgun (Combat Shotgun, CSSG, `PB_CSSG`): ZScript stack — special
   wheel, magazine flow, upgrade tokens, projectiles — on `PB_WeaponBase`, with
   spawners, status bar, spawn toggles, and test utilities. RENEGADE ANDROID, doc,
@@ -110,6 +114,10 @@ Gameplay and content in this release
   **`SPRITES/Monsters/BVCH/`**, audio **`sounds/monsters/BVCH/`**, actors
   **`actors/Monsters/BVCH/BVCH_Guests.dec`**. Subzero art-only content was not folded. See
   **`ASSET_NOTES.txt`** in that folder.
+- **Dark_Lord (Doom Eternal Boss Battle) WAD**: portable elite **`PB_EternalDarkLord`** (Davoth-style
+  sword / shield / dazzle / soft phases) — sprites **`SPRITES/Monsters/EternalDarkLord/`**, audio
+  **`sounds/monsters/EternalDarkLord/`**, actor **`actors/Monsters/T4-Viles/PB_EternalDarkLord.dec`**.
+  Distinct from Monster Pack **`DarkLord`**. See **`EternalDarkLord_ASSET_NOTES.txt`**.
 
 Code systems and libraries
 - Nash Muhandes: NashGore (zscript/Gore/NashGore/*); Tilt++ (zscript/TiltPlus
@@ -465,7 +473,7 @@ Loismustdie555 for support, coding, content scouting, etc.
 SkyMarshall
 Brightmaps, bug fixes, various visual enhancements, extra monsters
 
-Pulse Cannon and other works
+PB 3.x Pulse Cannon lineage (now UAC Prototype Dark Matter Rifle) and other works
 AnKeburu
 
 Desert Eagle sprites
@@ -710,3 +718,5 @@ Additional code - Dox
 PB3.0 build update - Jeniffer/Jenny (2023-05-14): SelectAnimation/Idle rewrites, gun-smoke inventory, kick/slidekick/punch fixes, barrel grab + reload fixes, deselect and weapon-up polish, startup-error cleanup
 Monster-sourced Marauder SSG wear + break + duplicate-pickup refill (PBX-style) — 2025–2026; see CREDITS index “Monster-sourced weapon wear”
 ...
+
+- UAC Portal Blasters (PB_PortalBlaster) — decibel (base), XV117 (dual-wield polish); look-through portals adapted from community portalgun ACS cameratexture technique.
