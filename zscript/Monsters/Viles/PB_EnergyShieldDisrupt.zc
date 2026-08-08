@@ -1,0 +1,75 @@
+// Energy / Stun interrupt for Eternal Dark Lord + Marauder shields.
+// ZScript parent bases (FamiliarBase pattern) — DECORATE cannot be extended
+// via `extend class` on this engine line.
+
+class PB_EnergyShieldDisrupt play
+{
+	clearscope static bool IsEnergy(Name mod)
+	{
+		return mod == 'Plasma'
+			|| mod == 'SuperPlasma'
+			|| mod == 'Stun'
+			|| mod == 'Desintegrate'
+			|| mod == 'Disintegrate'
+			|| mod == 'Electric'
+			|| mod == 'Lightning'
+			|| mod == 'Railgun'
+			|| mod == 'BFG'
+			|| mod == 'GreenFire'
+			|| mod == 'Blackhole';
+	}
+}
+
+class PB_EternalDarkLordBase : PB_Monster
+{
+	int user_shieldup;
+
+	clearscope bool EDL_IsShieldUp() const
+	{
+		return user_shieldup != 0;
+	}
+
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		if (user_shieldup != 0)
+		{
+			if (!PB_EnergyShieldDisrupt.IsEnergy(mod))
+				return 0;
+
+			user_shieldup = 0;
+			A_RemoveLight("EDL_RedGlow");
+			A_RemoveLight("EDL_GreenGlow");
+
+			let dazzled = FindState("Dazzled");
+			if (dazzled && !InStateSequence(CurState, dazzled))
+				SetState(dazzled);
+
+			return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+		}
+
+		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+	}
+}
+
+class PB_MarauderBase : PB_Monster
+{
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		if (bInvulnerable && PB_EnergyShieldDisrupt.IsEnergy(mod))
+		{
+			bInvulnerable = false;
+
+			let stun = FindState("Stun");
+			if (stun && !InStateSequence(CurState, stun))
+			{
+				let painStun = FindState("Pain.Stun");
+				if (!(painStun && InStateSequence(CurState, painStun)))
+					SetState(stun);
+			}
+
+			return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+		}
+
+		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+	}
+}

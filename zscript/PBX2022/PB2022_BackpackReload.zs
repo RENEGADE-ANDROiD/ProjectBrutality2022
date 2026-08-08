@@ -17,9 +17,7 @@ class PB2022_BackpackReloadItem : Inventory
 
 	override void Tick()
 	{
-		if (!PB2022_AddonsUtil.FeatureOn("pb_pbx_backpackreload", PB2022_DisableBackpackReload))
-			return;
-
+		// Always on (Weapon Settings toggle removed); ignore leftover Off / disable-bit configs.
 		let cvTime = CVar.FindCVar("pb_pbx_backpackreload_time");
 		int interval = cvTime ? cvTime.GetInt() : 70;
 		if (interval < 1) interval = 70;

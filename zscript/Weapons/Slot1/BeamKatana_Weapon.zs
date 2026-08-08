@@ -288,7 +288,7 @@ class PB_BeamKatana : PB_WeaponBase
 			A_ClearOverlays(3, 65);
 			A_GunFlash("Null");
 		}
-		Goto Steady;
+		Goto PB_FinisherCleanup;
 
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel");
@@ -448,7 +448,7 @@ class PB_BeamKatana : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1, 3);
 		TNT1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1, 2);
 		TNT1 A 0 A_ClearOverlays(10,11);
-		BKAT A 1 A_DoPBWeaponAction;
+		BKAT A 1;
 		BKAT LMNOPQQQQQQ 1;
 		BKAT PONML 1;
 		BKAT A 1;
@@ -462,7 +462,7 @@ class PB_BeamKatana : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1, 3);
 		TNT1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1, 2);
 		TNT1 A 0 A_ClearOverlays(10,11);
-		BKAT A 1 A_DoPBWeaponAction;
+		BKAT A 1;
 		BKAT LMNOPQQQQQQQ 1;
 		BKAT PONML 1;
 		BKAT A 1;
@@ -476,7 +476,7 @@ class PB_BeamKatana : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1, 3);
 		TNT1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1, 2);
 		TNT1 A 0 A_ClearOverlays(10,11);
-		BKAT A 1 A_DoPBWeaponAction;
+		BKAT A 1;
 		BKAT LMNOPQQQQQQQQQ 1;
 		BKAT PONML 1;
 		BKAT A 1;
@@ -490,7 +490,7 @@ class PB_BeamKatana : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1, 3);
 		TNT1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1, 2);
 		TNT1 A 0 A_ClearOverlays(10,11);
-		BKAT A 1 A_DoPBWeaponAction;
+		BKAT A 1;
 		Goto KatanaReadyToCut;
 
 	FlashPunching:

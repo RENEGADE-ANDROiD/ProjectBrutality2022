@@ -339,7 +339,7 @@ class PB_RocketLauncher : PB_WeaponBase
 				A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
 				if (PB_GetCurrentRocketMode() != "Homing") {A_Takeinventory("RocketRounds",1);}
 				if (PB_GetCurrentRocketMode() == "Standard") {
-					A_FireCustomMissile("Rocket", 0, 0, 0, -3);
+					A_FireCustomMissile("PB_Rocket", 0, 0, 0, -3);
 				}
 				if (PB_GetCurrentRocketMode() == "Laser") {
 					A_SetWeaponSprite("RL58");
@@ -829,7 +829,7 @@ class PB_RocketLauncher : PB_WeaponBase
 				A_Takeinventory("RocketRounds",1);
 				A_Giveinventory("RL_Cooldown",26);
 				if (PB_GetCurrentRocketMode() == "Standard") {
-					A_FireCustomMissile("Rocket", 0, 0, 0, -3);
+					A_FireCustomMissile("PB_Rocket", 0, 0, 0, -3);
 				}
 				if (PB_GetCurrentRocketMode() == "Laser") {
 					A_SetWeaponSprite("R105");
@@ -989,8 +989,8 @@ class PB_RocketLauncher : PB_WeaponBase
 					A_Takeinventory("SpiralRocketToken",1);
 				}
 				else {
-					A_FireCustomMissile("Rocket", 4, 0, 0, -3);
-					A_FireCustomMissile("Rocket", -4, 0, 0, -3);
+					A_FireCustomMissile("PB_Rocket", 4, 0, 0, -3);
+					A_FireCustomMissile("PB_Rocket", -4, 0, 0, -3);
 				}
 			}
 			
@@ -1135,9 +1135,9 @@ class PB_RocketLauncher : PB_WeaponBase
 					A_Takeinventory("SpiralRocketToken",1);
 				}
 				else {
-					A_FireCustomMissile("Rocket", 4, 0, 0, -3);
-					A_FireCustomMissile("Rocket", 0, 0, 0, -3);
-					A_FireCustomMissile("Rocket", -4, 0, 0, -3);
+					A_FireCustomMissile("PB_Rocket", 4, 0, 0, -3);
+					A_FireCustomMissile("PB_Rocket", 0, 0, 0, -3);
+					A_FireCustomMissile("PB_Rocket", -4, 0, 0, -3);
 				}
 			}
 			

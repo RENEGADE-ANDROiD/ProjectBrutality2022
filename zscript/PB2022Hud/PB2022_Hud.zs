@@ -105,6 +105,7 @@ class PB2022_Hud_ZS : BaseStatusBar
 	int16 hudXMargin, hudYMargin, playerMsgPrint, bottomMiddlePart;
 	bool hudDynamicsCvar, showVisor, showVisorGlass, showLevelStats, lowresfont, curmaxammolist, hideunusedtypes, showList, customPBMugshot, showBloodDrops, showGlassCracks, showtutorials, pbHudSlantedBars;
 	float playerAlpha, playerBoxAlpha, messageSize, bloodDropsAlpha, glassCracksAlpha, visorScale, visorOffsets;
+	int lastBloodDropSfxTic;
 
 	bool centerNotify;
   

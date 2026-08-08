@@ -2984,10 +2984,7 @@ weapons/MP40_pickup MP40PKUP // Credits are the same as above.
 MP40CLI MP40CLI
 MP40CLR MP40CLR
 
-$random FLAKFIRE { SSALT1 SSALT2 SSALT3}
-SSALT1	SSALT1
-SSALT2	SSALT2
-SSALT3	SSALT3
+$alias FLAKFIRE Weapons/AutoShotgun
 H4SGCOCK H4SGCOCK
 ASGIN ASGIN
 ASGOUT ASGOUT
@@ -3461,6 +3458,16 @@ BEEEP BEEEP
 PLSDRAW PLSDRAW
 PLSBULB PLSBULB
 PLSBULC PLSBULC
+
+// BRUTALDOOMPLUS Pulse Cannon (PB_PulseCannon) — alias to existing plasma lumps
+weapons/PulseCannon/Draw PLSDRAW
+weapons/PulseCannon/Fire PSLF1
+weapons/PulseCannon/Charge CHRGA
+weapons/PulseCannon/AltFire PLSALTFR
+weapons/PulseCannon/BeepLow BEP
+weapons/PulseCannon/BeepBeep BEPBEP
+weapons/PulseCannon/Reload1 weapons/plasma/cellout
+weapons/PulseCannon/Reload2 weapons/plasma/cellin
 
 misc/cell_pickup BATTERY
 
@@ -4565,10 +4572,7 @@ emgun emgun
 Weapons/Rifle/SFire 4AFLFIR1
 $volume Weapons/Rifle/SFire 1.0
 
-$random FLAKFIRE { SSALT1 SSALT2 SSALT3}
-SSALT1	SSALT1
-SSALT2	SSALT2
-SSALT3	SSALT3
+$alias FLAKFIRE Weapons/AutoShotgun
 $rolloff FLAKFIRE 100 2200
 
 H4SGCOCK H4SGCOCK
@@ -5654,14 +5658,13 @@ $random SSGFIRE { SSHFIRE0 SSHFIRE2 SSHFIRE3 }
 SSHFIRE0 SSHFIRE0
 SSHFIRE2 SSHFIRE2
 SSHFIRE3 SSHFIRE3
-$Random Rainmaker_shot	{ RAINSHT RAINSHT1 }
-Rainmaker_open	sounds/combat/Weapons/Karnage/RAINOPEN
-Rainmaker_Load	sounds/combat/Weapons/Karnage/RAINLOAD
-Rainmaker_close	sounds/combat/Weapons/Karnage/RAINCLOS
-ARDN		WEPSWC1
-SPECIALSP	WEPSWC1
-Rainmaker_Close	RAINCLOS
-Rainmaker_load	RAINLOAD
+$alias Rainmaker_shot weapons/sg
+$alias Rainmaker_open weapons/sgmvpump
+$alias Rainmaker_Load insertshell
+$alias Rainmaker_close weapons/sgpump
+$alias ARDN IronSights
+$alias SPECIALSP SHOTPICK
+$alias PRESS weapons/shotgun/equip
 NAILCLPN NAILCLPN
 $alias Rifle/Reload1 MS_GRB
 $alias Rifle/Reload2 MS_IN
@@ -6653,3 +6656,38 @@ bvch/bloodfiend/proj			"sounds/monsters/BVCH/Bloodfiend/BZRD_PRD.ogg"
 
 GloryPunch/Kill "misc/gibbed"
 
+// === Eternal Dark Lord (Davoth-style WAD fold; distinct from MP DarkLord) ===
+edl/see						"sounds/monsters/EternalDarkLord/DIE.mp3"
+edl/death					"sounds/monsters/EternalDarkLord/DEATHDL.mp3"
+edl/dazzled					"sounds/monsters/EternalDarkLord/DAZZLED.mp3"
+edl/summon					"sounds/monsters/EternalDarkLord/SUMMON.mp3"
+edl/heal					"sounds/monsters/EternalDarkLord/HEAL.mp3"
+edl/bomb					"sounds/monsters/EternalDarkLord/BOMB.mp3"
+edl/bombboom				"sounds/monsters/EternalDarkLord/BOMBBOOM.mp3"
+edl/phasehit				"sounds/monsters/EternalDarkLord/PHASEHIT.mp3"
+edl/bathe					"sounds/monsters/EternalDarkLord/BATHE.mp3"
+edl/soul					"sounds/monsters/EternalDarkLord/SOUL.mp3"
+edl/shieldbo				"sounds/monsters/EternalDarkLord/SHIELDBO.mp3"
+edl/shieldhi				"sounds/monsters/EternalDarkLord/SHIELDHI.mp3"
+edl/shot1					"sounds/monsters/EternalDarkLord/SHOT1.mp3"
+edl/shot2					"sounds/monsters/EternalDarkLord/SHOT2.mp3"
+edl/sword1					"sounds/monsters/EternalDarkLord/SWORD1.mp3"
+edl/sword2					"sounds/monsters/EternalDarkLord/SWORD2.mp3"
+edl/sword3					"sounds/monsters/EternalDarkLord/SWORD3.mp3"
+edl/swordhit1				"sounds/monsters/EternalDarkLord/SWORDH1.mp3"
+edl/swordhit2				"sounds/monsters/EternalDarkLord/SWORDH2.mp3"
+edl/hit1					"sounds/monsters/EternalDarkLord/HIT1.mp3"
+edl/hit2					"sounds/monsters/EternalDarkLord/HIT2.mp3"
+edl/hit3					"sounds/monsters/EternalDarkLord/HIT3.mp3"
+edl/wolf					"sounds/monsters/EternalDarkLord/WOLF.mp3"
+
+
+// === UAC Portal Blasters (decibel / XV117) ===
+$random weapons/PortalBlaster/Fire { PLMF1 PLMF1 PLMF1 }
+PLMF1					PLMF1
+weapons/PortalBlaster/Select			D4BREDY
+weapons/PortalBlaster/Charge			D4BCHR2
+weapons/PortalBlaster/Charge/Loop		D4BCHLP
+weapons/PortalBlaster/Charge/Click		D4BREDY
+$random weapons/PortalBlaster/Charge/Fire { PLMCF1 }
+PLMCF1					PLMCF1

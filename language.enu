@@ -32,7 +32,9 @@ PB_PICKUP_PB_CRYOCELLSPACK = "Picked up a cryo cell bundle.";
 PB_PICKUP_PB_CRYOCANNONCELLS = "Picked up cryo cannon fuel.";
 PB_PICKUP_PB_CRYOSHOTGUN = "Picked up the Cryo Shotgun (slot 3).";
 PB_PICKUP_PB_DARKMATTERRIFLE = "Picked up the UAC Prototype Dark Matter Rifle (slot 8).";
+PB_PICKUP_PB_PULSECANNON = "Picked up the Pulse Cannon (slot 8).";
 PB_PICKUP_PB_UT2004RL = "You got the UT2004 Triple Rocket Launcher! (slot 6). Primary = single; Alt = double/triple; Weapon Special = spread pair.";
+PB_PICKUP_PB_PORTALBLASTER = "You got the UAC Portal Blasters! (slot 2). Fire/AltFire place portals; bolts also damage enemies.";
 PB_PICKUP_PB_HARVESTEROFSOULS = "Picked up the Harvester of Souls (slot 9). Shares Demonpower with the Demon-Tech Rifle.";
 PB_PICKUP_BIOACIDLAUNCHER = "Picked up the UAC Biological Acid Launcher (slot 7).";
 PB_TAG_BIOACIDLAUNCHER = "UAC-UM-32P Biological Acid Launcher";
@@ -148,7 +150,7 @@ BDV22GOREMNU_ORGANS_TIP = "Adds Rare Organs\nAnd Small Brain Chunks\nOn Some Dea
 BDV22GOREMNU_MIX = "Brutal Doom 22 / PB Gore Mix";
 BDV22GOREMNU_MIX_TIP = "Controls Extra Gore Style.\nLower = More PB Gore.\nHigher = More BDv22 Gore.\n50 = Balanced Mix.";
 BDV22GOREMNU_ENHANCED2022 = "2022 Enhanced Brootality";
-BDV22GOREMNU_ENHANCED2022_TIP = "Master Switch For\nThe Full 2022 Gore Mix.\nEnables BDv22 Mist,\nMeat, Organs, BPv10 Death\nExtras, And Shiny PBR Nash\nBlood (Decals + Pools).";
+BDV22GOREMNU_ENHANCED2022_TIP = "Always-On By Default.\nBDv22 Mist, Meat, Organs,\nBPv10 Death Extras, And\nShiny PBR Nash Blood.\nPerf / Performance Gore\nMode Turn It Off.";
 
 OPTMNU_PB_BURNFX_TITLE = "Burning corpse FX";
 OPTMNU_PB_BURNFX_THROTTLE = "Throttle live burn particles";
@@ -156,17 +158,6 @@ OPTMNU_PB_BURNFX_THROTTLE_TIP = "When several enemies are on fire at once,\nredu
 OPTMNU_PB_BURNFX_SOFT_LIMIT = "Start throttling at N burners";
 OPTMNU_PB_BURNFX_SOFT_LIMIT_TIP = "Full FX while active burners stay below\nthis count + 1 (default 3 -> four corpses\nbefore light throttle). Higher counts\nstep down particles more gradually.";
 OPTMNU_PB_BURNFX_HINT = "Respects Low Graphics Mode / pb_lowgraphicsmode (minimal burn FX).";
-
-OPTMNU_PB_ACCUDEATH = "AccuDeath (corpse tints)";
-OPTMNU_PB_ACCUDEATH_TIP = "AccuDeath V3.2.2.\nApplies fire/plasma/electric\ncorpse translations and\nparticle death FX. On by\ndefault; stacks with Nash\nand Enhanced Brootality.";
-OPTMNU_PB_ACCUDEATH_SUB = "AccuDeath Options";
-OPTMNU_PB_ACCUDEATH_HINT = "Credits: Airehnr66 (AccuDeath V3.2.2). PB fork skips Explosive fire tint and respects custom Death.* states unless overridden below.";
-OPTMNU_PB_ACCUDEATH_BARREL = "Doom barrel damage type";
-OPTMNU_PB_ACCUDEATH_ROCKET = "Rocket damage type";
-OPTMNU_PB_ACCUDEATH_CACOBALL = "Cacodemon ball damage type";
-OPTMNU_PB_ACCUDEATH_STATEOVERRIDE = "Apply to custom Death.* states";
-OPTMNU_PB_ACCUDEATH_DYNLIGHTS = "Dynamic lights on corpses";
-OPTMNU_PB_ACCUDEATH_LIGHTSIZE = "Corpse light size";
 
 OPTMNU_PB_ACHIEVEMENTS = "Achievements";
 OPTMNU_PB_ACHIEVEMENTS_HINT = "Persistent meta goals (Vortex Universal Achievement System).";
@@ -520,6 +511,10 @@ PB_WEAPON_WHEEL_ENABLE_DESC = "Master switch for the integrated Gearbox weapon s
 PB_WEAPON_WHEEL_ENABLE_DESC2 = "When On, \caWeapon Selection Wheel\c- opens Gearbox. When Off, slot intercept and menu toggle are skipped.";
 PB_WEAPON_WHEEL_ENABLE_DESC3 = "Full Gearbox options: \caPB 2022 Enhanced\c- -> \caGameplay Settings\c- -> \caWeapon & Inventory Selector\c-.";
 
+PB_WHEEL_PREFERRED_CYCLE = "Next/Prev Prefer Wheel Pick Per Slot";
+PB_WHEEL_PREFERRED_CYCLE_DESC = "When On, Next/Prev Weapon use the gun you last chose on the weapon wheel for each slot.";
+PB_WHEEL_PREFERRED_CYCLE_DESC2 = "Other guns in that slot are skipped. Slots with no wheel pick still cycle normally. Off = cycle every weapon in the slot.";
+
 PB_WEAPON_SELECTOR_MENU = "Weapon & Inventory Selector";
 PB_WEAPON_SELECTOR_MENU_HINT = "Gearbox: wheel / blocks / text layout, keys, colors, and reset.";
 OPTMNU_PB_PDA_HINT = "UAC battlefield codex (PDA): Customize Controls -> PB 2022 Enhanced - Interactions -> Open PDA.";
@@ -553,8 +548,8 @@ OPTMNU_PB2022_SEC_WEAPONS = "Weapons & Spawns";
 OPTMNU_PB2022_SEC_MONSTERS = "Monsters & Spawns";
 OPTMNU_PB2022_SEC_VISUAL = "Visual & Screen FX";
 OPTMNU_PB2022_SEC_EXTRAS = "Extras & Content";
-OPTMNU_PB2022_GORE_TIP1 = "pb_enhanced_brutality_2022 = master gore mix.";
-OPTMNU_PB2022_GORE_TIP2 = "Nash blood/gibs: Visual & Screen FX -> Gore/Debris.";
+OPTMNU_PB2022_GORE_TIP1 = "Enhanced Brootality is On by default (BDv22/BPv10 mix).";
+OPTMNU_PB2022_GORE_TIP2 = "Use Performance Mode or Performance Gore Mode to lighten; Nash: Gore/Debris.";
 OPTMNU_PB2022_COMBAT_TIP1 = "Glory Kills are always on; tune pinatas and HUD in the Glory Kill submenu.";
 OPTMNU_PB2022_COMBAT_TIP2 = "Auto-fatality fire / range rules live in this Combat menu.";
 PB2022_LASER_ON = "Laser sight enabled.";
@@ -732,7 +727,8 @@ PB_HUD_TC_SHOCK = "Shockwave";
 PB_HUD_TC_CLUSTER = "Cluster";
 PB_WPNHINT_Stormcast = "Stormcast (slot 9): PowerChargeStorm fuels the lightning beam (Fire) and alt-fire charge releases.\nHold Fire while charging alt for orb spells; hold Activate Equipment (User1) for stunwall variants; hold Weapon Special for Arc of Death charge tiers; tap Reload during charge for Lightning Warper; hold Alt-Fire while airborne after Fire for air lightning.\nSpawns from BFG pickups when enabled in Weapon Spawns.";
 PB_WPNHINT_PB_CryoShotgun = "Cryo Shotgun (slot 3): pump-action cryo buckshot with ADS ice spears.\nWeapon Special cycles Cryo Pellets / Cryo Orb / Electric Bolt / Cryo Wind.\nUses PB_Cell reserve + internal magazine; alt modes use PB_Shell, PB_CryoCells, or PB_CryoCannonCells.";
-PB_WPNHINT_PB_DARKMATTERRIFLE = "Dark Matter Rifle (slot 8): Weapon Special wheel picks Alt-Fire payload - charged Super Plasma Ball or Gravity Singularity.\nPrimary: fast plasma orb (PB_DarkMatterMag).\nReload feeds the magazine from Cell reserve; unload supported.";
+PB_WPNHINT_PB_DARKMATTERRIFLE = "Dark Matter Rifle (slot 8): Weapon Special toggles dual-wield (needs a second rifle). Alt-Fire charges and alternates Super Plasma Ball and Gravity Singularity after each successful shot.\nPrimary: fast plasma orb (PB_DarkMatterMag).\nReload feeds the magazine from Cell reserve; unload supported.";
+PB_WPNHINT_PB_PULSECANNON = "Pulse Cannon (slot 8): Primary fires rapid purple orbs from a 50-round cell magazine. Alt-Fire charges then unleashes a 10-way plasma spread.\nReload feeds PB_PulseCannonMag from Cell reserve.";
 PB_WPNHINT_VorpalBlade = "Lifesteal Sword: Lunges Lock Targets.\nBerserk Alt-Fire: BladeStorm.";
 
 PB_PICKUP_HASG = "UAC XHAS-SP -;{The Lady Golide};- (Slot 3)";

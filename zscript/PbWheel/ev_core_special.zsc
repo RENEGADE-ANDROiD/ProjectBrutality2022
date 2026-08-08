@@ -1770,43 +1770,6 @@ Class PB_SpecialWheelHandler : EventHandler
 		specialWheel_handleMouse();
 	}
 
-	void specialWheel_PB_DarkMatterRifle()
-	{
-		wheelSpecials.Clear();
-		iconScale = (0.75, 0.75);
-
-		PB_SpecialWheel_Mode dmr_super = new ("PB_SpecialWheel_Mode");
-		dmr_super.specialIcon = TexMan.CheckForTexture("graphics/pywheel/Minigun_2.png", TexMan.Type_Any);
-		dmr_super.specialName = "Select_PB_DMR_SuperBall";
-		dmr_super.specialAlias = "Alt: Super Plasma Ball";
-		dmr_super.specialPriority = 1;
-		dmr_super.iconScale = iconScale;
-		wheelSpecials.Push(dmr_super);
-
-		PB_SpecialWheel_Mode dmr_grav = new ("PB_SpecialWheel_Mode");
-		dmr_grav.specialIcon = TexMan.CheckForTexture("graphics/pywheel/rocket_standard.png", TexMan.Type_Any);
-		dmr_grav.specialName = "Select_PB_DMR_GravityBomb";
-		dmr_grav.specialAlias = "Alt: Gravity Singularity";
-		dmr_grav.specialPriority = 2;
-		dmr_grav.iconScale = iconScale;
-		wheelSpecials.Push(dmr_grav);
-
-		PB_SpecialWheel_Mode dmr_dual = new ("PB_SpecialWheel_Mode");
-		TextureID dualIcon = TexMan.CheckForTexture("DPCSA0", TexMan.Type_Any);
-		if (!dualIcon.isValid())
-			dualIcon = TexMan.CheckForTexture("graphics/pywheel/Carbine_Dual.png", TexMan.Type_Any);
-		if (!dualIcon.isValid())
-			dualIcon = TexMan.CheckForTexture("PLCUA0", TexMan.Type_Any);
-		dmr_dual.specialIcon = dualIcon;
-		dmr_dual.specialName = "Select_PB_DMR_DualWield";
-		dmr_dual.specialAlias = "Dual Wield";
-		dmr_dual.specialPriority = 3;
-		dmr_dual.iconScale = iconScale;
-		wheelSpecials.Push(dmr_dual);
-
-		specialWheel_handleMouse();
-	}
-
 	void specialWheel_PB_BDPRailgun()
 	{
 		wheelSpecials.Clear();
@@ -2519,7 +2482,15 @@ Class PB_SpecialWheelHandler : EventHandler
 				
 				if (wheelSpecials.Size() < 1)
 				{
-					pl.A_Print("\cgNo \ctequipment \c-to select");
+					if (pl)
+					{
+						pl.A_Print("\cgNo usable \ctequipment \c-(out of charges)");
+						S_StartSound("menu/invalid", 5);
+						pl.A_TakeInventory("PlayerWheelOpen");
+					}
+					wheelShow.Clear();
+					wheelIsOpen = false;
+					sentryGunsWheel = false;
 					return;
 				}
 
@@ -2706,7 +2677,10 @@ Class PB_SpecialWheelHandler : EventHandler
 					{
 						let wi = Weapon(pmo.FindInventory(wcls));
 						if (wi)
+						{
 							players[consoleplayer].PendingWeapon = wi;
+							PB_WheelSlotPrefs.RememberWheelPick(players[consoleplayer], wi);
+						}
 					}
 				}
 				S_StartSound("menu/choose", 5);
@@ -2773,11 +2747,20 @@ Class PB_SpecialWheelHandler : EventHandler
 			else { return; }
 		}
 		
-		else if(!noWheel && e.name == 'PBEquipSpecialOff' || players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon)
+		else if ((!noWheel && e.name == 'PBEquipSpecialOff') || (players[consoleplayer].ReadyWeapon && players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon))
 		{
 			if (weaponPickWheel && e.name == 'PBEquipSpecialOff')
 				return;
-			if(!(players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon))
+			let rw = players[consoleplayer].ReadyWeapon;
+			if (!rw)
+			{
+				pmo.A_TakeInventory("PlayerWheelOpen");
+				wheelSort = false;
+				wheelIsOpen = false;
+				sentryGunsWheel = false;
+				return;
+			}
+			if (!(rw.GetClassName() != selectedWeapon))
 			{
 				if(wheelShow.Size()>0)
 				{
@@ -2817,8 +2800,17 @@ Class PB_SpecialWheelHandler : EventHandler
 		
             if (wheelIsOpen) { return; }
 			weaponPickWheel = false;
+
+			let rwOn = players[consoleplayer].ReadyWeapon;
+			if (!rwOn)
+			{
+				wheelShow.Clear();
+				wheelIsOpen = false;
+				noWheel = true;
+				return;
+			}
 			
-			switch(players[consoleplayer].ReadyWeapon.GetClassName()) {
+			switch(rwOn.GetClassName()) {
 					
 				case 'PB_Carbine':
 					specialWheel_Carbine();
@@ -2923,7 +2915,11 @@ Class PB_SpecialWheelHandler : EventHandler
 					return;
 
 				case 'PB_DarkMatterRifle':
-					specialWheel_PB_DarkMatterRifle();
+					pmo.A_GiveInventory("GoWeaponSpecialAbility");
+					selectedWeapon = players[consoleplayer].ReadyWeapon.GetClassName();
+					wheelShow.Clear();
+					wheelIsOpen = false;
+					noWheel = true;
 					return;
 
 				case 'PB_BDPRailgun':
@@ -2992,12 +2988,21 @@ Class PB_SpecialWheelHandler : EventHandler
 
 		}
 		
-		else if(!noWheel && e.name == 'PBWeaponSpecialOff' || players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon)
+		else if ((!noWheel && e.name == 'PBWeaponSpecialOff') || (players[consoleplayer].ReadyWeapon && players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon))
 		{
 			if (weaponPickWheel && e.name == 'PBWeaponSpecialOff')
 				return;
+
+			let rw = players[consoleplayer].ReadyWeapon;
+			if (!rw)
+			{
+				pmo.A_TakeInventory("PlayerWheelOpen");
+				wheelSort = false;
+				wheelIsOpen = false;
+				return;
+			}
 			
-			if(!(players[consoleplayer].ReadyWeapon.GetClassName() != selectedWeapon))
+			if (!(rw.GetClassName() != selectedWeapon))
 			{
 				if(wheelShow.Size()>0)
 				{

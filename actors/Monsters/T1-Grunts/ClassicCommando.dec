@@ -40,7 +40,7 @@ ACTOR PB_ClassicCommando: PB_Commando Replaces ChaingunGuy
     DamageFactor "Shrapnel", 0.4
 	DamageFactor "explosiveimpact", 2.0
 	DamageFactor "MinorHead", 1.2
-	DropItem "PB_Minigun", 255
+	DropItem "PB_LootDrop_Commando", 255
 	DropItem "PB_AntiTankRifle" 8
 	DropItem "PB_SentryDrop_Common" 5
 	SeeSound "commando/sight"
@@ -994,7 +994,7 @@ Actor DeadChaingunGuy2: DeadChaingunGuy1
 
 Actor Vanilla_ClassicCommando : PB_Commando
 {
-	DropItem "DropedMinigun" 256
+	DropItem "PB_LootDrop_Commando" 256
 	DropItem "DropedGrenade" 5
 	States
 	{

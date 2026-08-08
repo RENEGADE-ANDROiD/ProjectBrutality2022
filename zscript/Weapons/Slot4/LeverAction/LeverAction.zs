@@ -337,6 +337,7 @@ class LeverAction : PB_WeaponBase
 			Goto Ready3;
 
 		Fire:
+			TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 			TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel");
 			TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "ThrowIceBarrel");
@@ -759,7 +760,7 @@ class LeverAction : PB_WeaponBase
 				A_PlaySoundEx("weapons/leveraction/openchamber","Auto");
 			}
 			LVR2 VVVV 1 {
-				A_DoPBWeaponAction(WRF_NOBOB);
+				return A_DoPBWeaponAction(WRF_NOBOB);
 			}
 			LVR2 VUTSRQ 1 {
 				A_DoPBWeaponAction(WRF_NOBOB);

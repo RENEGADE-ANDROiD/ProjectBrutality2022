@@ -1,0 +1,16 @@
+Eternal Dark Lord (PB_EternalDarkLord)
+======================================
+
+Source: Dark_Lord(DoomEternalBossBattle).wad — Doom Eternal Davoth-style fan
+boss-battle map (DECORATE + ACS arena). Folded as a portable Marauder-tier elite
+with soft HP phases only (no map ACS teleports / skyboxes / music).
+
+Distinct from Monster Pack DarkLord (cyber→cardinal boss, ednum 23275).
+
+Sprites: SPRITES/Monsters/EternalDarkLord/ (DARK*, SUMM*, DAZZ*, SFXG*, DLGR*,
+RBDL*, EDHL* heal FX renamed from HEAL*, EDTR* unused trail rename).
+Sounds: sounds/monsters/EternalDarkLord/ → SNDINFO edl/* logical names.
+Extract helper: maint_scripts/_extract_eternal_darklord_assets.py
+
+Spawn: Archvile MarauderPack — 40% PB_EternalDarkLord / 60% PB_Marauder.
+Cvar: NoEternalDarkLord. Ednum: 23310.

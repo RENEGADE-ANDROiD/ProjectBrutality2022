@@ -256,7 +256,7 @@ Actor Vanilla_PistolZombieman : PB_PistolZombieman
 
 Actor Vanilla_PistolZombieman2 : PB_HelmetPistolZombieman
 {
-	DropItem "DropedPistol" 256
+	DropItem "PB_LootDrop_Deagle" 256
 	DropItem "DropedGrenade" 5
 	States
 	{
@@ -273,7 +273,7 @@ Actor Vanilla_PistolZombieman2 : PB_HelmetPistolZombieman
 
 Actor Vanilla_HelmetZombieman : HelmetZombieman
 {
-	DropItem "DropedRifle" 256
+	DropItem "PB_LootDrop_Rifles" 256
 	DropItem "DropedGrenade" 5
 	States
 	{

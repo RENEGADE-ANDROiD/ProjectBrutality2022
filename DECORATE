@@ -24,6 +24,10 @@ Actor PB_ShieldSawPinataPending : Inventory { Inventory.MaxAmount 1 }
 Actor SegundaOportunidadToken : Inventory { Inventory.MaxAmount 1 }
 Actor Hayberserk : Inventory { Inventory.MaxAmount 1 }
 Actor Hayulti : Inventory { Inventory.MaxAmount 1 }
+Actor PB_HayberserkInvuln : PowerInvulnerable
+{
+	Powerup.Duration -105
+}
 Actor SlideKicking : Inventory {}
 Actor HasUnmorphed : Inventory {}
 Actor LedgeGrabbingRightNow : Inventory {}
@@ -374,6 +378,8 @@ Actor PBBlastMomentum : Inventory
 
 
 #include "actors/Weapons/Throwables.dec"
+#include "actors/Weapons/Slot2/PB_PortalBlaster_Support.dec"
+#include "actors/Weapons/Slot2/PB_PortalBlaster.dec"
 #include "actors/Weapons/Slot2/PBPISTOL.dec"
 //#include "actors/Weapons/Slot2/REVOLVER.dec" // retired - ZScript PB_Revolver in Revolver.zs
 #include "actors/Weapons/Slot2/RevolverTokens.dec"
@@ -383,6 +389,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Weapons/Slot3/AUTOSHOTGUN.dec"
 #include "actors/Weapons/Slot3/MarauderSSG.dec"
 #include "actors/Monsters/T4-Viles/Marauder.dec"
+#include "actors/Monsters/T4-Viles/PB_EternalDarkLord.dec"
 #include "actors/Monsters/T4-Viles/MarauderGore.dec"
 #include "actors/Weapons/Slot4/Carbine.dec"
 #include "actors/Weapons/Slot4/Nailgun.dec"
@@ -407,6 +414,7 @@ Actor PBBlastMomentum : Inventory
 //#include "actors/Weapons/MeleeWeaponPack/DragonSlayer.dec" // disabled pending rework
 #include "actors/Weapons/MeleeWeaponPack/Stormcast.dec"
 #include "actors/Weapons/Slot8/PB_DarkMatterRifle.dec"
+#include "actors/Weapons/Slot8/PB_PulseCannon.dec"
 #include "actors/Weapons/Slot8/BFGMKIV.dec"
 #include "actors/Weapons/Slot8/BFGBEAM.dec"
 #include "actors/Weapons/Equipment/ShieldGrenade_PS.dec"
@@ -774,6 +782,7 @@ Actor TurboReload : Inventory
 #include "actors/Execution/ExecutionObsidianRavager.dec"
 #include "actors/Execution/ExecutionIceDemon.dec"
 #include "actors/Execution/ExecutionMarauder.dec"
+#include "actors/Execution/ExecutionEternalDarkLord.dec"
 #include "actors/Execution/ExecutionFleshWizard.dec"
 #include "actors/Execution/ExecutionD3Seeker.dec"
 #include "actors/Execution/ExecutionSatyr.dec"

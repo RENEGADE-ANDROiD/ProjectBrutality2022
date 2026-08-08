@@ -1,0 +1,58 @@
+// Preferred weapon class per engine slot, written when the Gearbox (or PB) weapon wheel confirms a pick.
+// Used by PlayerPawnBase PickNext/Prev when pb_wheel_preferred_cycle is on.
+
+class PB_WheelSlotPrefs : Inventory
+{
+	const SLOT_COUNT = 10;
+	String preferredClass[10];
+
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		-INVENTORY.INVBAR
+	}
+
+	void SetPreferred(int slot, String clsName)
+	{
+		if (slot < 0 || slot >= SLOT_COUNT)
+			return;
+		preferredClass[slot] = clsName;
+	}
+
+	String GetPreferred(int slot)
+	{
+		if (slot < 0 || slot >= SLOT_COUNT)
+			return "";
+		return preferredClass[slot];
+	}
+
+	static PB_WheelSlotPrefs Ensure(Actor mo)
+	{
+		if (!mo)
+			return null;
+		let prefs = PB_WheelSlotPrefs(mo.FindInventory("PB_WheelSlotPrefs"));
+		if (!prefs)
+		{
+			mo.GiveInventory("PB_WheelSlotPrefs", 1);
+			prefs = PB_WheelSlotPrefs(mo.FindInventory("PB_WheelSlotPrefs"));
+		}
+		return prefs;
+	}
+
+	static void RememberWheelPick(PlayerInfo player, Weapon weap)
+	{
+		if (!player || !player.mo || !weap)
+			return;
+		bool found;
+		int slot;
+		int index;
+		[found, slot, index] = player.weapons.LocateWeapon(weap.GetClass());
+		if (!found)
+			return;
+		let prefs = Ensure(player.mo);
+		if (prefs)
+			prefs.SetPreferred(slot, weap.GetClassName());
+	}
+}

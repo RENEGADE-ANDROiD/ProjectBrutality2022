@@ -1245,9 +1245,9 @@ Script "ToggleWeaponSMG" (VOID) NET
 if	(GetCvar("pb_NoSMGWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
 }
 
+// Revolver spawn is always on (menu toggle removed). Keep script name for DECORATE callers.
 Script "ToggleWeaponRevolver" (VOID) NET
 {
-if	(GetCvar("pb_NoRevolverWeapon") == 1) { SetActorState(0,"ReplaceToggle"); }
 }
 Script "ToggleWeaponASG" (VOID) NET
 {

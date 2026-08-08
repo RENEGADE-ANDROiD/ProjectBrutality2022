@@ -223,6 +223,24 @@ class PBCF_CryoWind : Actor
 
 class PBCF_SnowParticle : Actor
 {
+	int lifeLeft;
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		lifeLeft = 18;
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+		if (--lifeLeft <= 0)
+		{
+			Destroy();
+			return;
+		}
+	}
+
 	Default
 	{
 		Radius 2;
@@ -283,6 +301,24 @@ class PBCF_SnowParticle : Actor
 
 class PBCF_SlowingCloud : Actor
 {
+	int lifeLeft;
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		lifeLeft = 18;
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+		if (--lifeLeft <= 0)
+		{
+			Destroy();
+			return;
+		}
+	}
+
 	Default
 	{
 		Projectile;

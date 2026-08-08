@@ -156,7 +156,7 @@ extend class PB_WeaponBase
 			State barrel = PB_CheckBarrelIdle1();
 			if (barrel)
 				return barrel;
-			return ResolveState(null);
+			return PB_ReturnFromQuickMelee();
 		}
 		Goto Ready3;
 
@@ -193,7 +193,7 @@ extend class PB_WeaponBase
 			State barrel = PB_CheckBarrelIdle1();
 			if (barrel)
 				return barrel;
-			return ResolveState(null);
+			return PB_ReturnFromQuickMelee();
 		}
 		Goto Ready3;
 
@@ -219,7 +219,7 @@ extend class PB_WeaponBase
 			State barrel = PB_CheckBarrelIdle1();
 			if (barrel)
 				return barrel;
-			return ResolveState(null);
+			return PB_ReturnFromQuickMelee();
 		}
 		Goto Ready3;
 
@@ -240,7 +240,7 @@ extend class PB_WeaponBase
 			State barrel = PB_CheckBarrelIdle1();
 			if (barrel)
 				return barrel;
-			return ResolveState(null);
+			return PB_ReturnFromQuickMelee();
 		}
 		Goto Ready3;
 
@@ -271,7 +271,7 @@ extend class PB_WeaponBase
 			State barrel = PB_CheckBarrelIdle1();
 			if (barrel)
 				return barrel;
-			return ResolveState(null);
+			return PB_ReturnFromQuickMelee();
 		}
 		Goto Ready3;
 
@@ -305,7 +305,7 @@ extend class PB_WeaponBase
 			State barrel = PB_CheckBarrelIdle1();
 			if (barrel)
 				return barrel;
-			return ResolveState(null);
+			return PB_ReturnFromQuickMelee();
 		}
 		Goto Ready3;
 	}

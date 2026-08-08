@@ -20,6 +20,7 @@ class PlayerPawnBase : PlayerPawn
 	Property IsTank : IsTank;
 	int tankdeathcounter;
 	int tankspritecounter;
+	int autoFinisherClaimTic;
 	bool baseweaponpda;
 	
 	Actor TankTurretSprite;
@@ -160,6 +161,23 @@ class PlayerPawnBase : PlayerPawn
 	const PB_NUM_WP_SLOTS = 10;
 	const PB_WEAPON_CYCLE_WRAP_CAP = 128;
 
+	// When pb_wheel_preferred_cycle is on, only the Gearbox/wheel-picked class is
+	// eligible for a slot; empty preferred falls back to any usable weapon in-slot.
+	private bool PB_SlotPrefAllows(int slot, Weapon weap)
+	{
+		if (!weap) return false;
+		let cv = CVar.FindCVar("pb_wheel_preferred_cycle");
+		if (!cv || !cv.GetBool())
+			return true;
+		let prefs = PB_WheelSlotPrefs(FindInventory("PB_WheelSlotPrefs"));
+		if (!prefs)
+			return true;
+		String pref = prefs.GetPreferred(slot);
+		if (pref.Length() < 1)
+			return true;
+		return pref == weap.GetClassName();
+	}
+
 	override Weapon PickNextWeapon()
 	{
 		let player = self.player;
@@ -207,7 +225,7 @@ class PlayerPawnBase : PlayerPawn
 				}
 				let wt = player.weapons.GetWeapon(slot, index);
 				let weap = Weapon(FindInventory(wt));
-				if(weap != null && weap.CheckAmmo(Weapon.EitherFire, false))
+				if(weap != null && PB_SlotPrefAllows(slot, weap) && weap.CheckAmmo(Weapon.EitherFire, false))
 					return weap;
 			} while((slot != startslot || index != startindex) && slotschecked <= PB_WEAPON_CYCLE_WRAP_CAP);
 		}
@@ -262,7 +280,7 @@ class PlayerPawnBase : PlayerPawn
 				}
 				let wt = player.weapons.GetWeapon(slot, index);
 				let weap = Weapon(FindInventory(wt));
-				if(weap != null && weap.CheckAmmo(Weapon.EitherFire, false))
+				if(weap != null && PB_SlotPrefAllows(slot, weap) && weap.CheckAmmo(Weapon.EitherFire, false))
 					return weap;
 			} while((slot != startslot || index != startindex) && slotschecked <= PB_WEAPON_CYCLE_WRAP_CAP);
 		}
@@ -289,6 +307,8 @@ class PlayerPawnBase : PlayerPawn
 		Player.OnGround = Pos.Z <= FloorZ || bONMOBJ || bMBFBOUNCER || (Player.Cheats & CF_NOCLIP2);
 		StrafeRunning = cmd.forwardmove && cmd.sidemove;
 		ZMoveFactor = ZMScale();
+
+		PB_WatchOrphanedExecutionLock();
 
 		if ((player.cmd.buttons & BT_USE) && !(player.oldbuttons & BT_USE))
 		{
@@ -437,7 +457,7 @@ class PlayerPawnBase : PlayerPawn
 			if(player.health > 0)
 			{
 				HeightAngle = Level.maptime / (120 * TICRATE / 35.) * 360.;
-				bob = player.GetStillBob() * sin(HeightAngle);
+				bob = 0;
 			}
 			else
 			{
@@ -2031,12 +2051,52 @@ class PlayerPawnBase : PlayerPawn
 	{
 		if (!player)
 			return;
+		// Clear PROP_FROZEN (0) too — Glory Kill DoingFatality uses it; execute uses TOTALLYFROZEN.
+		SetPlayerProperty(0, 0, 0);
 		SetPlayerProperty(0, 0, PROP_INVULNERABILITY);
 		SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 		SetPlayerProperty(0, 0, PROP_FLY);
 		TakeInventory("ExecutionToken", 1);
 		TakeInventory("KnifeHasHit", 1);
 		TakeInventory("HasCutingWeapon", 1);
+	}
+
+	// Full bailout: player props + ready-weapon execute flags (PDA toggle / orphan watchdog).
+	void PB_BailOutOrphanedExecutionLock()
+	{
+		PB_ClearExecutionPlayerProperties();
+		if (!player || !player.ReadyWeapon)
+			return;
+		let w = PB_WeaponBase(player.ReadyWeapon);
+		if (w)
+		{
+			w.PB_ClearActiveGenericExecution();
+			w.executingEnemy = false;
+			w.usingMelee = false;
+			w.executeLockStartTic = 0;
+		}
+	}
+
+	void PB_WatchOrphanedExecutionLock()
+	{
+		if (!player)
+			return;
+		let w = PB_WeaponBase(player.ReadyWeapon);
+		bool hasToken = CountInv("ExecutionToken") >= 1;
+		bool weapExec = w && w.executingEnemy;
+
+		// Token left on player after weapon forgot the execute (interrupted / Unset skipped).
+		// Grace ~8 tics after arm so GoingToReady / Steady races don't false-orphan mid-strip.
+		if (hasToken && !weapExec)
+		{
+			int armTic = w ? w.executeLockStartTic : 0;
+			if (armTic == 0 || (gametic - armTic) > 8)
+				PB_BailOutOrphanedExecutionLock();
+			return;
+		}
+		// Mid-strip stuck under TOTALLYFROZEN/FLY for too long (~10s).
+		if (weapExec && w.executeLockStartTic > 0 && (gametic - w.executeLockStartTic) > 350)
+			PB_BailOutOrphanedExecutionLock();
 	}
 	void LedgeReach()
 	{
@@ -2337,7 +2397,7 @@ class PlayerPawnBase : PlayerPawn
 						
 					if(MoveRangeMulti)
 					{
-						Double BobAngle = (BobSpeed * player.GetWBobSpeed() * (BobTime - 1 + i)) * (360. / 8192.);
+						Double BobAngle = (BobSpeed * 1.0 * (BobTime - 1 + i)) * (360. / 8192.);
 						Double BobXMulti = (MoveRangeMulti * RangeX);
 						Double BobYMulti = (MoveRangeMulti * RangeY);
 						
@@ -2475,6 +2535,7 @@ class PlayerPawnBase : PlayerPawn
 	override void PostBeginPlay()
 	{
 		Super.PostBeginPlay();
+		autoFinisherClaimTic = -1;
 		if (!level.IsJumpingAllowed() || (player && player.mo && player.mo.JumpZ == 0)) A_GiveInventory("DoNotDoubleJump",1);
 	}
 	clearscope static bool PB_ShouldPlayShieldSawCatch(PlayerInfo pl)
