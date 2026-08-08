@@ -1697,7 +1697,7 @@ ACTOR BrutalizedCommando1 : SwitchableDecoration
 	Spawn:
 	CPOD JJJJJJJJJJ 10 A_SpawnItem ("DripingBlood", 0, 23)
 	CPOD K 6
-	TNT1 A 0 A_SpawnItem ("DropedMinigun", 0, 5,0)
+	TNT1 A 0 A_SpawnItem ("PB_LootDrop_Commando", 0, 5,0)
 	TNT1 A 0 A_SpawnItem ("BrutalizedDeadCommando1")
 	Stop
 	
@@ -1723,7 +1723,7 @@ ACTOR BrutalizedCommando2: BrutalizedCommando1
 	CPOD NNNNN 10 A_SpawnItem ("DripingBlood", 0, 23)
 	CPOD O 5
 	TNT1 A 0 A_SpawnItem ("BrutalizedDeadChaingunGuy")
-	TNT1 A 0 A_SpawnItem ("DropedMinigun", 0, 5,0)
+	TNT1 A 0 A_SpawnItem ("PB_LootDrop_Commando", 0, 5,0)
 	Stop
 	
 	Pain:
@@ -1741,7 +1741,7 @@ ACTOR BrutalizedCommando2: BrutalizedCommando1
 		TNT1 AA 0 A_CustomMissile ("PB_SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40))
 	TNT1 AA 0 A_CustomMissile ("PB_XDeath1", 45, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 A_SpawnItem ("BrutalizedCommando3")
-	TNT1 A 0 A_SpawnItem ("DropedMinigun", 0, 5,0)
+	TNT1 A 0 A_SpawnItem ("PB_LootDrop_Commando", 0, 5,0)
 		Stop
 }}
 
@@ -2953,7 +2953,7 @@ ACTOR BrutalizedHelmetCommando1 : BrutalizedCommando1
 	Spawn:
 	CP1D JJJJJJJJJJJ 8 A_CustomMissile ("Brutal_LiquidBlood2", 24, 0, random (0, 60), 2, random (30, 60))
 	CP1D K 6
-	TNT1 A 0 A_SpawnItem ("DropedMinigun", 0, 5,0)
+	TNT1 A 0 A_SpawnItem ("PB_LootDrop_Commando", 0, 5,0)
 	TNT1 A 0 A_SpawnItem ("BrutalizedDeadHelmetCommando1")
 	Stop
 	
@@ -2979,7 +2979,7 @@ ACTOR BrutalizedHelmetCommando2: BrutalizedHelmetCommando1
 	CP1D NNNNN 10 A_SpawnItem ("DripingBlood", 0, 23)
 	CP1D O 5
 	TNT1 A 0 A_SpawnItem ("BrutalizedDeadHelmetChaingunGuy")
-	TNT1 A 0 A_SpawnItem ("DropedMinigun", 0, 5,0)
+	TNT1 A 0 A_SpawnItem ("PB_LootDrop_Commando", 0, 5,0)
 	Stop
 	
 	Pain:
@@ -2997,7 +2997,7 @@ ACTOR BrutalizedHelmetCommando2: BrutalizedHelmetCommando1
 		TNT1 AA 0 A_CustomMissile ("PB_SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40))
 	TNT1 AA 0 A_CustomMissile ("PB_XDeath1", 45, 0, random (0, 360), 2, random (0, 160))
 	TNT1 A 0 A_SpawnItem ("BrutalizedCommando3")
-	TNT1 A 0 A_SpawnItem ("DropedMinigun", 0, 5,0)
+	TNT1 A 0 A_SpawnItem ("PB_LootDrop_Commando", 0, 5,0)
 		Stop
 }}
 

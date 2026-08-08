@@ -1,0 +1,651 @@
+#library "PBPORTAL"
+#include "zcommon.acs"
+
+#define PB_PORTAL_MAXP 8
+#define PB_PORTAL_SLOTS (PB_PORTAL_MAXP*2)
+#define PB_PORTAL_PLANE_ACCEPT_PCT 10
+#define PB_PORTAL_PLANE_ACCEPT_SIZE 48
+#define PB_PORTAL_WALL_ACCEPT_PCT 80
+#define PB_PORTAL_WALL_EDGE_ACCEPT_PCT 65
+#define PB_PORTAL_WALL_STEP 8
+#define PB_PORTAL_KIND_WALL 0
+#define PB_PORTAL_KIND_FLOOR 1
+#define PB_PORTAL_KIND_CEIL 2
+#define PB_PORTAL_PLANE_SLACK 20.0
+#define PB_PORTAL_CEIL_SLACK 24.0
+#define PB_PORTAL_Z_SLACK 64.0
+#define PB_PORTAL_PLANE_ACCEPT_SLACK 32.0
+
+bool PB_PG_OldActivity[PB_PORTAL_SLOTS];
+bool PB_PG_Activity[PB_PORTAL_SLOTS];
+int PB_PG_Things[PB_PORTAL_SLOTS];
+int PB_PG_PlaneThings[PB_PORTAL_SLOTS];
+int PB_PG_Coordinates[PB_PORTAL_SLOTS][3];
+int PB_PG_Angles[PB_PORTAL_SLOTS];
+int PB_PG_LinkedTid[PB_PORTAL_SLOTS];
+int PB_PG_Kind[PB_PORTAL_SLOTS];
+
+function bool PB_Portal_IsSoftware(void)
+{
+	return (GetCVar("vid_renderer") == 0);
+}
+
+function void PB_Portal_ClearSlot(int slot)
+{
+	if (PB_PG_Things[slot] != 0)
+	{
+		Thing_Remove(PB_PG_Things[slot]);
+		PB_PG_Things[slot] = 0;
+	}
+	if (PB_PG_PlaneThings[slot] != 0)
+	{
+		Thing_Remove(PB_PG_PlaneThings[slot]);
+		PB_PG_PlaneThings[slot] = 0;
+	}
+	PB_PG_Activity[slot] = false;
+	PB_PG_OldActivity[slot] = false;
+	PB_PG_LinkedTid[slot] = 0;
+	PB_PG_Kind[slot] = PB_PORTAL_KIND_WALL;
+}
+
+function int PB_Portal_Abs(int x)
+{
+	if (x < 0)
+		return -x;
+	return x;
+}
+
+script "PB_Portal_InitPortal" (int type)
+{
+	// Activator is the portal bolt. Sample its geometry before handing the
+	// script over to the shooter, since every later hint/sound is player-scoped.
+	int bolttid = ActivatorTID();
+	if (bolttid == 0)
+	{
+		bolttid = UniqueTID();
+		Thing_ChangeTID(0, bolttid);
+	}
+	int fx = GetActorX(0);
+	int fy = GetActorY(0);
+	int fz = GetActorZ(0);
+	int boltang = GetActorAngle(0);
+	int refang = boltang + 1.5;
+	int floorz = GetActorFloorZ(0);
+	int ceilz = GetActorCeilingZ(0);
+	int boltvelx = GetActorVelX(0);
+	int boltvely = GetActorVelY(0);
+	int boltvelz = GetActorVelZ(0);
+	int bolthoriz = VectorLength(boltvelx, boltvely);
+	int absvelz = PB_Portal_Abs(boltvelz);
+	int kind = PB_PORTAL_KIND_WALL;
+	int df = PB_Portal_Abs(fz - floorz);
+	int dc = ceilz - fz;
+	bool nearFloor = (df <= PB_PORTAL_PLANE_SLACK);
+	bool nearCeil = (dc >= 0 && dc <= PB_PORTAL_CEIL_SLACK);
+	bool steepDown = (boltvelz < 0 && absvelz * 2 >= bolthoriz);
+	bool steepUp = (boltvelz > 0 && absvelz * 2 >= bolthoriz);
+
+	// Direction disambiguates true plane hits from shallow lower/upper wall shots.
+	if (nearCeil && steepUp)
+		kind = PB_PORTAL_KIND_CEIL;
+	else if (nearFloor && steepDown)
+		kind = PB_PORTAL_KIND_FLOOR;
+	else if (absvelz == 0)
+	{
+		// Compatibility fallback for engines that clear missile velocity on impact.
+		if (nearCeil && (!nearFloor || dc <= df))
+			kind = PB_PORTAL_KIND_CEIL;
+		else if (nearFloor)
+			kind = PB_PORTAL_KIND_FLOOR;
+	}
+
+	if (kind == PB_PORTAL_KIND_FLOOR)
+		fz = floorz + 1.0;
+	else if (kind == PB_PORTAL_KIND_CEIL)
+		fz = ceilz - 1.0;
+	else
+	{
+		// Original portalgun: raw impact XY, Z clamp so 128-tall aperture fits.
+		if (fz + 64.0 > ceilz)
+			fz = ceilz - 64.0;
+		if (fz - 64.0 < floorz)
+			fz = floorz + 64.0;
+	}
+
+	SetActivator(bolttid, AAPTR_TARGET);
+	int pnum = PlayerNumber();
+	if (pnum < 0 || pnum >= PB_PORTAL_MAXP)
+	{
+		SetActivator(bolttid, AAPTR_MASTER);
+		pnum = PlayerNumber();
+	}
+	if (pnum < 0 || pnum >= PB_PORTAL_MAXP)
+	{
+		SetActivator(bolttid, AAPTR_TRACER);
+		pnum = PlayerNumber();
+	}
+	if (pnum < 0 || pnum >= PB_PORTAL_MAXP)
+	{
+		Spawn("PB_PortalFailSpark", fx, fy, fz, 0, 0);
+		PlaySound(0, "weapons/empty", CHAN_AUTO);
+		terminate;
+	}
+
+	int utid = UniqueTID();
+	int i;
+	int doomang;
+	int goodang1 = -1;
+	int goodang2 = -1;
+	bool goodangcur = false;
+	int angle = GetActorAngle(0);
+	int cx = fx;
+	int cy = fy;
+	int x1, y1, x2, y2, dxylen, dx, dy;
+	int spawnedexpected, spawnedactual;
+	int edgeexpected, edgeactual, centeractual;
+	int ix, iy, istartx, istarty, istartz, refplane, tx, ty;
+	int fwdx, fwdy, rightx, righty;
+
+	if (kind == PB_PORTAL_KIND_WALL)
+		Spawn("PB_PortalTestActor", fx, fy, fz, utid, 0);
+	else
+		Spawn("PB_PortalPlaneTestActor", fx, fy, fz, utid, 0);
+
+	if (kind == PB_PORTAL_KIND_WALL)
+	{
+		if (ceilz - floorz < PB_PORTAL_Z_SLACK * 2)
+		{
+			Thing_Remove(utid);
+			Spawn("PB_PortalFailSpark", fx, fy, fz, 0, 0);
+			Print(s:"\cgPortal failed - wall needs 128 units of vertical clearance.");
+			PlaySound(0, "weapons/empty", CHAN_AUTO);
+			terminate;
+		}
+
+		for (i = 0; i < 180; i++)
+		{
+			doomang = 0.5 * i / 180;
+			goodangcur = SetActorPosition(utid, fx + cos(refang + doomang) * 32, fy + sin(refang + doomang) * 32, fz, false);
+			if (GetActorFloorZ(utid) > fz - PB_PORTAL_Z_SLACK || GetActorCeilingZ(utid) < fz + PB_PORTAL_Z_SLACK)
+				goodangcur = false;
+			if (goodangcur)
+				goodang1 = refang + doomang;
+			else if (!goodangcur && goodang1 >= 0)
+				break;
+		}
+
+		goodangcur = false;
+		for (i = 0; i < 180; i++)
+		{
+			doomang = 0.5 * i / 180;
+			goodangcur = SetActorPosition(utid, fx + cos(refang - doomang) * 32, fy + sin(refang - doomang) * 32, fz, false);
+			if (GetActorFloorZ(utid) > fz - PB_PORTAL_Z_SLACK || GetActorCeilingZ(utid) < fz + PB_PORTAL_Z_SLACK)
+				goodangcur = false;
+			if (goodangcur)
+				goodang2 = refang - doomang;
+			else if (!goodangcur && goodang2 >= 0)
+				break;
+		}
+
+		if (goodang1 < 0 || goodang2 < 0)
+		{
+			Thing_Remove(utid);
+			Spawn("PB_PortalFailSpark", fx, fy, fz, 0, 0);
+			Print(s:"\cgPortal failed - need a flat vertical wall.");
+			PlaySound(0, "weapons/empty", CHAN_AUTO);
+			terminate;
+		}
+
+		x1 = fx + cos(goodang1) * 32;
+		y1 = fy + sin(goodang1) * 32;
+		x2 = fx + cos(goodang2) * 32;
+		y2 = fy + sin(goodang2) * 32;
+
+		dxylen = VectorLength(x2 - x1, y2 - y1);
+		if (dxylen <= 0)
+		{
+			Thing_Remove(utid);
+			Spawn("PB_PortalFailSpark", fx, fy, fz, 0, 0);
+			Print(s:"\cgPortal failed - wall surface has no usable width.");
+			PlaySound(0, "weapons/empty", CHAN_AUTO);
+			terminate;
+		}
+		dx = FixedDiv(x2 - x1, dxylen);
+		dy = FixedDiv(y2 - y1, dxylen);
+		angle = VectorAngle(dx, dy) - 0.25;
+
+		spawnedexpected = (64 / PB_PORTAL_WALL_STEP) * (128 / PB_PORTAL_WALL_STEP);
+		spawnedactual = 0;
+		edgeexpected = 0;
+		edgeactual = 0;
+		centeractual = 0;
+		istartx = x1;
+		istarty = y1;
+		istartz = fz - 64.0;
+		for (ix = 0; ix < 64; ix += PB_PORTAL_WALL_STEP)
+		{
+			for (iy = 0; iy < 128; iy += PB_PORTAL_WALL_STEP)
+			{
+				bool edgecell = (ix == 0 || ix >= 64 - PB_PORTAL_WALL_STEP
+					|| iy == 0 || iy >= 128 - PB_PORTAL_WALL_STEP);
+				if (edgecell)
+					edgeexpected++;
+				if (!SetActorPosition(utid, istartx + dx * ix, istarty + dy * ix, istartz + 1.0 * iy, false))
+					continue;
+				if (!SpawnDecal(utid, "PortalTestDecal", SDF_ABSANGLE, angle, 0, 4))
+					continue;
+				spawnedactual++;
+				if (edgecell)
+					edgeactual++;
+				if (ix >= 24 && ix <= 40 && iy >= 48 && iy <= 80)
+					centeractual++;
+			}
+		}
+
+		if (spawnedactual * 100 < spawnedexpected * PB_PORTAL_WALL_ACCEPT_PCT
+			|| edgeactual * 100 < edgeexpected * PB_PORTAL_WALL_EDGE_ACCEPT_PCT
+			|| centeractual < 6)
+		{
+			Thing_Remove(utid);
+			Spawn("PB_PortalFailSpark", fx, fy, fz, 0, 0);
+			Print(s:"\cgPortal failed - wall too uneven.");
+			if (GetCVar("developer"))
+				Log(s:"PB Portal wall coverage ", d:spawnedactual, s:"/", d:spawnedexpected,
+					s:", edge ", d:edgeactual, s:"/", d:edgeexpected, s:", center ", d:centeractual);
+			PlaySound(0, "weapons/empty", CHAN_AUTO);
+			terminate;
+		}
+
+		cx = (x1 + x2) / 2;
+		cy = (y1 + y2) / 2;
+		angle = (angle + 1.5) % 1.0;
+	}
+	else
+	{
+		// Floor / ceiling: smaller probe + wider slack (particle pad is cosmetic).
+		angle = boltang % 1.0;
+		int psize = PB_PORTAL_PLANE_ACCEPT_SIZE;
+		int phalf = psize / 2;
+		spawnedexpected = (psize * psize) / 16;
+		spawnedactual = 0;
+		refplane = floorz;
+		int probez = fz;
+		if (kind == PB_PORTAL_KIND_CEIL)
+		{
+			refplane = ceilz;
+			// Probe in open air under the slab (stored fz stays ceilz-1 for LookPlane).
+			probez = ceilz - 4.0;
+		}
+
+		fwdx = cos(angle);
+		fwdy = sin(angle);
+		rightx = -sin(angle);
+		righty = cos(angle);
+
+		for (ix = 0; ix < psize; ix += 4)
+		{
+			for (iy = 0; iy < psize; iy += 4)
+			{
+				tx = fx + rightx * (ix - phalf) + fwdx * (iy - phalf);
+				ty = fy + righty * (ix - phalf) + fwdy * (iy - phalf);
+				if (!SetActorPosition(utid, tx, ty, probez, false))
+					continue;
+				if (kind == PB_PORTAL_KIND_FLOOR)
+				{
+					if (PB_Portal_Abs(GetActorFloorZ(utid) - refplane) > PB_PORTAL_PLANE_ACCEPT_SLACK)
+						continue;
+				}
+				else
+				{
+					if (PB_Portal_Abs(GetActorCeilingZ(utid) - refplane) > PB_PORTAL_PLANE_ACCEPT_SLACK)
+						continue;
+				}
+				spawnedactual++;
+			}
+		}
+
+		if (spawnedactual * 100 < spawnedexpected * PB_PORTAL_PLANE_ACCEPT_PCT)
+		{
+			Thing_Remove(utid);
+			Spawn("PB_PortalFailSpark", fx, fy, fz, 0, 0);
+			if (kind == PB_PORTAL_KIND_FLOOR)
+				Print(s:"\cgPortal failed - floor too uneven.");
+			else
+				Print(s:"\cgPortal failed - ceiling too uneven.");
+			if (GetCVar("developer"))
+				Log(s:"PB Portal plane kind ", d:kind, s:" coverage ", d:spawnedactual, s:"/", d:spawnedexpected);
+			PlaySound(0, "weapons/empty", CHAN_AUTO);
+			terminate;
+		}
+
+		cx = fx;
+		cy = fy;
+	}
+
+	Thing_Remove(utid);
+
+	int slot = PB_PORTAL_MAXP * type + pnum;
+	PB_Portal_ClearSlot(slot);
+
+	PB_PG_Activity[slot] = true;
+	PB_PG_OldActivity[slot] = false;
+	PB_PG_Coordinates[slot][0] = cx;
+	PB_PG_Coordinates[slot][1] = cy;
+	PB_PG_Coordinates[slot][2] = fz;
+	PB_PG_Angles[slot] = angle;
+	PB_PG_Kind[slot] = kind;
+
+	if (type == 0)
+		Spawn("PB_PortalPlaceBurstA", cx, cy, fz, 0, 0);
+	else
+		Spawn("PB_PortalPlaceBurstB", cx, cy, fz, 0, 0);
+}
+
+script "PB_Portal_Worker" OPEN
+{
+	int i, j;
+	for (i = 0; i < PB_PORTAL_SLOTS; i++)
+	{
+		PB_PG_OldActivity[i] = 0;
+		PB_PG_Activity[i] = 0;
+		PB_PG_Things[i] = 0;
+		PB_PG_PlaneThings[i] = 0;
+		PB_PG_LinkedTid[i] = 0;
+		PB_PG_Kind[i] = PB_PORTAL_KIND_WALL;
+	}
+
+	while (true)
+	{
+		for (j = 0; j < 2; j++)
+		{
+			for (i = 0; i < PB_PORTAL_MAXP; i++)
+			{
+				int slot = j * PB_PORTAL_MAXP + i;
+				int fx = PB_PG_Coordinates[slot][0];
+				int fy = PB_PG_Coordinates[slot][1];
+				int fz = PB_PG_Coordinates[slot][2];
+				int kind = PB_PG_Kind[slot];
+				int utid = PB_PG_Things[slot];
+
+				if (PB_PG_Activity[slot] && !PB_PG_OldActivity[slot])
+				{
+					utid = UniqueTID();
+					str camcls = "PB_PortalCameraA";
+					if (j == 1)
+						camcls = "PB_PortalCameraB";
+					if (Spawn(camcls, fx, fy, fz, utid, 0))
+					{
+						PB_PG_Things[slot] = utid;
+						SetUserVariable(utid, "user_portalKind", kind);
+					}
+					else
+					{
+						PB_Portal_ClearSlot(slot);
+						Spawn("PB_PortalFailSpark", fx, fy, fz, 0, 0);
+						PrintBold(s:"\cgPortal failed - camera marker could not spawn.");
+						Log(s:"PB Portal camera spawn failed for slot ", d:slot,
+							s:" at ", f:fx, s:", ", f:fy, s:", ", f:fz);
+					}
+					PB_PG_LinkedTid[slot] = 0;
+					PB_PG_PlaneThings[slot] = 0;
+				}
+				else if (!PB_PG_Activity[slot] && PB_PG_OldActivity[slot])
+				{
+					if (PB_PG_Things[slot] != 0)
+					{
+						Thing_Remove(PB_PG_Things[slot]);
+						PB_PG_Things[slot] = 0;
+					}
+					if (PB_PG_PlaneThings[slot] != 0)
+					{
+						Thing_Remove(PB_PG_PlaneThings[slot]);
+						PB_PG_PlaneThings[slot] = 0;
+					}
+					PB_PG_LinkedTid[slot] = 0;
+				}
+
+				PB_PG_OldActivity[slot] = PB_PG_Activity[slot];
+
+				if (PB_PG_Activity[slot] && PB_PG_Things[slot] != 0)
+				{
+					utid = PB_PG_Things[slot];
+					SetActorAngle(utid, PB_PG_Angles[slot]);
+					SetUserVariable(utid, "user_portalKind", kind);
+
+					if (kind == PB_PORTAL_KIND_WALL)
+					{
+						int angf = GetActorAngle(utid) - 0.25;
+						SetActorPitch(utid, 0);
+						SetActorPosition(utid, fx + cos(angf) * 32, fy + sin(angf) * 32, fz, false);
+					}
+					else if (kind == PB_PORTAL_KIND_FLOOR)
+					{
+						// Horizontal look — do not pitch into the slab (PORTX static).
+						SetActorPitch(utid, 0);
+						SetActorPosition(utid, fx, fy, fz + 16.0, false);
+					}
+					else
+					{
+						SetActorPitch(utid, 0);
+						SetActorPosition(utid, fx, fy, fz - 16.0, false);
+					}
+
+					int reversej = 1 - j;
+					int rslot = reversej * PB_PORTAL_MAXP + i;
+					int texnum = 100 * (j + 1) + i;
+					bool linked = (PB_PG_Activity[rslot] && PB_PG_Things[rslot] != 0);
+
+					if (kind == PB_PORTAL_KIND_WALL)
+					{
+						if (linked)
+						{
+							SetCameraToTexture(PB_PG_Things[rslot], StrParam(s:"PORTX", d:texnum), 45);
+							// Refresh every tic without SDF_PERMANENT so relocating
+							// a portal lets FastFader expire the old wall window.
+							if (PB_PG_PlaneThings[slot] != 0)
+							{
+								Thing_Remove(PB_PG_PlaneThings[slot]);
+								PB_PG_PlaneThings[slot] = 0;
+							}
+							SetUserVariable(utid, "user_hasLookPlane", 0);
+							if (PB_Portal_IsSoftware())
+								SpawnDecal(utid, StrParam(s:"SCameraDecal", d:texnum), 0, 0.5, 64, 2);
+							else
+								SpawnDecal(utid, StrParam(s:"CameraDecal", d:texnum), 0, 0.5, -64, 2);
+							PB_PG_LinkedTid[slot] = PB_PG_Things[rslot];
+						}
+						else
+						{
+							PB_PG_LinkedTid[slot] = 0;
+							SetUserVariable(utid, "user_hasLookPlane", 0);
+							if (PB_PG_PlaneThings[slot] != 0)
+							{
+								Thing_Remove(PB_PG_PlaneThings[slot]);
+								PB_PG_PlaneThings[slot] = 0;
+							}
+						}
+					}
+					else
+					{
+						// Floor / ceil: invisible LookPlane drives 64x64 particle pad (no PORTX).
+						if (PB_PG_PlaneThings[slot] == 0)
+						{
+							int ptid = UniqueTID();
+							if (Spawn("PB_PortalLookPlane", fx, fy, fz, ptid, 0))
+							{
+								PB_PG_PlaneThings[slot] = ptid;
+								SetUserVariable(ptid, "user_portalKind", kind);
+								SetUserVariable(ptid, "user_portalHue", j);
+								SetActorAngle(ptid, PB_PG_Angles[slot]);
+							}
+						}
+
+						if (linked)
+							PB_PG_LinkedTid[slot] = PB_PG_Things[rslot];
+						else
+							PB_PG_LinkedTid[slot] = 0;
+
+						if (PB_PG_PlaneThings[slot] != 0)
+						{
+							SetActorPosition(PB_PG_PlaneThings[slot], fx, fy, fz, false);
+							SetActorAngle(PB_PG_PlaneThings[slot], PB_PG_Angles[slot]);
+							SetUserVariable(PB_PG_PlaneThings[slot], "user_camTexNum", 0);
+							SetUserVariable(PB_PG_PlaneThings[slot], "user_portalKind", kind);
+							SetUserVariable(PB_PG_PlaneThings[slot], "user_portalHue", j);
+							SetUserVariable(utid, "user_hasLookPlane", 1);
+						}
+					}
+
+					if (kind == PB_PORTAL_KIND_WALL)
+						SetActorPosition(utid, fx, fy, fz, false);
+				}
+			}
+		}
+		Delay(1);
+	}
+}
+
+script "PB_Portal_TeleWorker" ENTER
+{
+	int i, j;
+	int lastportal = -1;
+	bool anyrange = false;
+	int cool = 0;
+
+	while (true)
+	{
+		anyrange = false;
+		int pnum = PlayerNumber();
+		if (pnum < 0 || pnum >= PB_PORTAL_MAXP)
+		{
+			Delay(1);
+			continue;
+		}
+
+		if (cool > 0)
+		{
+			cool--;
+			Delay(1);
+			continue;
+		}
+
+		for (j = 0; j < 2; j++)
+		{
+			int slot = j * PB_PORTAL_MAXP + pnum;
+			int reversej = 1 - j;
+			int curportal = reversej * PB_PORTAL_MAXP + pnum;
+			if (!PB_PG_Activity[curportal] || !PB_PG_Activity[slot])
+				continue;
+
+			int fx = PB_PG_Coordinates[slot][0];
+			int fy = PB_PG_Coordinates[slot][1];
+			int fz = PB_PG_Coordinates[slot][2];
+			int skind = PB_PG_Kind[slot];
+			int dkind = PB_PG_Kind[curportal];
+			bool inrange = false;
+
+			if (skind == PB_PORTAL_KIND_WALL)
+			{
+				inrange = ((VectorLength(GetActorX(0) - fx, GetActorY(0) - fy) < 32.0)
+					&& (PB_Portal_Abs((GetActorZ(0) + GetActorViewHeight(0)) - fz) < 100.0));
+			}
+			else if (skind == PB_PORTAL_KIND_FLOOR)
+			{
+				inrange = ((VectorLength(GetActorX(0) - fx, GetActorY(0) - fy) < 32.0)
+					&& (PB_Portal_Abs(GetActorZ(0) - fz) < 48.0));
+			}
+			else
+			{
+				inrange = ((VectorLength(GetActorX(0) - fx, GetActorY(0) - fy) < 32.0)
+					&& (PB_Portal_Abs((GetActorZ(0) + GetActorProperty(0, APROP_Height)) - fz) < 48.0));
+			}
+
+			if (inrange)
+			{
+				anyrange = true;
+				if (slot == lastportal)
+					continue;
+
+				int dstangle = PB_PG_Angles[curportal];
+				int dstfx = PB_PG_Coordinates[curportal][0];
+				int dstfy = PB_PG_Coordinates[curportal][1];
+				int dstfz = PB_PG_Coordinates[curportal][2];
+				int outz;
+				int actorheight = GetActorProperty(0, APROP_Height);
+				int destfloorz = GetActorFloorZ(PB_PG_Things[curportal]);
+				int destceilz = GetActorCeilingZ(PB_PG_Things[curportal]);
+				int pang = GetActorAngle(0);
+
+				if (dkind == PB_PORTAL_KIND_WALL)
+				{
+					dstfx = dstfx + cos(dstangle) * 56;
+					dstfy = dstfy + sin(dstangle) * 56;
+					outz = GetActorZ(0) - fz + dstfz;
+				}
+				else if (dkind == PB_PORTAL_KIND_FLOOR)
+				{
+					// Land beside the exit disk so lastportal can clear (two-way floor tele).
+					dstfx = dstfx + cos(pang) * 40;
+					dstfy = dstfy + sin(pang) * 40;
+					outz = dstfz + 16.0;
+				}
+				else
+				{
+					dstfx = dstfx + cos(pang) * 40;
+					dstfy = dstfy + sin(pang) * 40;
+					outz = dstfz - 48.0 - actorheight;
+				}
+
+				if (outz < destfloorz + 1.0)
+					outz = destfloorz + 1.0;
+				if (outz + actorheight > destceilz - 1.0)
+					outz = destceilz - actorheight - 1.0;
+				if (outz < destfloorz + 1.0)
+					continue;
+
+				int cangle = (1.5 + PB_PG_Angles[slot]) % 1.0;
+				int angdiff = dstangle - cangle;
+				if (skind != PB_PORTAL_KIND_WALL || dkind != PB_PORTAL_KIND_WALL)
+					angdiff = 0;
+
+				if (!SetActorPosition(0, dstfx, dstfy, outz, false))
+					continue;
+
+				if (j == 0)
+					FadeTo(255, 48, 32, 0.5, 0);
+				else
+					FadeTo(32, 80, 255, 0.5, 0);
+				FadeTo(0, 0, 0, 0, 0.5);
+
+				SetActorAngle(0, GetActorAngle(0) + angdiff);
+				int vx = GetActorVelX(0);
+				int vy = GetActorVelY(0);
+				int vz = GetActorVelZ(0);
+				int speed = VectorLength(vx, vy);
+				int moveang = VectorAngle(vx, vy);
+				if (skind == PB_PORTAL_KIND_WALL && dkind == PB_PORTAL_KIND_WALL)
+				{
+					SetActorVelocity(0, FixedMul(speed, cos(moveang + angdiff)), FixedMul(speed, sin(moveang + angdiff)), vz, false, false);
+				}
+				else if ((skind == PB_PORTAL_KIND_FLOOR && dkind == PB_PORTAL_KIND_CEIL)
+					|| (skind == PB_PORTAL_KIND_CEIL && dkind == PB_PORTAL_KIND_FLOOR))
+				{
+					SetActorVelocity(0, vx, vy, -vz, false, false);
+				}
+				else if (dkind == PB_PORTAL_KIND_FLOOR && vz < 0)
+				{
+					SetActorVelocity(0, vx, vy, -vz, false, false);
+				}
+				else if (dkind == PB_PORTAL_KIND_CEIL && vz > 0)
+				{
+					SetActorVelocity(0, vx, vy, -vz, false, false);
+				}
+				lastportal = curportal;
+				cool = 18;
+			}
+		}
+		if (!anyrange)
+			lastportal = -1;
+		Delay(1);
+	}
+}

@@ -1003,7 +1003,7 @@ States{Spawn:
 
 Actor Vanilla_Shotgunguy1 : PB_Sergeant
 {
-	DropItem "DropedShotgun" 256
+	DropItem "PB_LootDrop_Shotguns" 256
 	DropItem "DropedGrenade" 6
 	States
 	{

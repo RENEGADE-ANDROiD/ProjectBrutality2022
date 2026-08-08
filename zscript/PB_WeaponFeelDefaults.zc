@@ -1,0 +1,88 @@
+class PB_WeaponFeelDefaults play
+{
+	static void SetPlayerFloat(PlayerInfo pi, String cvarName, double value)
+	{
+		if (!pi)
+			return;
+		Name nm = cvarName;
+		let cv = CVar.GetCVar(nm, pi);
+		if (cv)
+			cv.SetFloat(value);
+	}
+
+	static void SetPlayerInt(PlayerInfo pi, String cvarName, int value)
+	{
+		if (!pi)
+			return;
+		Name nm = cvarName;
+		let cv = CVar.GetCVar(nm, pi);
+		if (cv)
+			cv.SetInt(value);
+	}
+
+	static void SetGlobalFloat(String cvarName, double value)
+	{
+		Name nm = cvarName;
+		let cv = CVar.FindCVar(nm);
+		if (cv)
+			cv.SetFloat(value);
+	}
+
+	static void SetGlobalInt(String cvarName, int value)
+	{
+		Name nm = cvarName;
+		let cv = CVar.FindCVar(nm);
+		if (cv)
+			cv.SetInt(value);
+	}
+
+	static void Apply(PlayerPawn pp)
+	{
+		if (!pp || !pp.player)
+			return;
+
+		PlayerInfo pi = pp.player;
+		SetPlayerInt(pi, "zm_stillbob", 0);
+		SetPlayerInt(pi, "zm_fullbobspeed", 8);
+		SetPlayerInt(pi, "zm_yawsway", 1);
+		SetPlayerFloat(pi, "zm_yawswayspeed", 2.0);
+		SetPlayerFloat(pi, "zm_yawswayrange", 2.0);
+		SetPlayerFloat(pi, "zm_yawswayfriction", 10.0);
+		SetPlayerInt(pi, "zm_yawswaydirection", 0);
+		SetPlayerFloat(pi, "zm_pitchswaytype", 0.0);
+		SetPlayerInt(pi, "zm_offsetspeed", 25);
+		SetPlayerInt(pi, "zm_offsetmaxrange", 30);
+		SetPlayerInt(pi, "zm_offsetdirection", 0);
+
+		SetPlayerInt(pi, "pb_tac_enable", 1);
+		SetPlayerInt(pi, "pb_tac_ready_only", 0);
+		SetPlayerInt(pi, "pb_tac_move_only", 0);
+		SetPlayerFloat(pi, "pb_tac_roll_velocity", 2.0);
+		SetPlayerFloat(pi, "pb_tac_roll_resistance", 0.30);
+		SetPlayerInt(pi, "pb_tac_roll_cap", 1);
+		SetPlayerFloat(pi, "pb_tac_roll_cap_value", 12.0);
+		SetPlayerFloat(pi, "pb_tac_lowering_scale", 0.90);
+		SetPlayerInt(pi, "pb_tac_lean_enable", 1);
+		SetPlayerFloat(pi, "pb_tac_lean_angle", 12.0);
+		SetPlayerFloat(pi, "pb_tac_lean_smoothing", 0.20);
+		SetPlayerFloat(pi, "pb_tac_tilt_smoothing", 0.40);
+
+		SetGlobalInt("sv_strafetilt", 1);
+		SetGlobalInt("sv_strafetiltinvert", 0);
+		SetGlobalFloat("sv_strafetiltspeed", 1.0);
+		SetGlobalFloat("sv_strafetiltangle", 0.5);
+		SetGlobalInt("sv_movetilt", 0);
+		SetGlobalFloat("sv_movetiltspeed", 15.0);
+		SetGlobalFloat("sv_movetiltangle", 0.01);
+		SetGlobalFloat("sv_movetiltscalar", 0.6);
+		SetGlobalInt("sv_turntilt", 1);
+		SetGlobalFloat("sv_turntiltscalar", 3.0);
+		SetGlobalInt("sv_turntiltinvert", 0);
+		SetGlobalInt("sv_underwatertilt", 1);
+		SetGlobalFloat("sv_underwatertiltspeed", 0.8);
+		SetGlobalFloat("sv_underwatertiltangle", 0.2);
+		SetGlobalFloat("sv_underwatertiltscalar", 1.0);
+		SetGlobalInt("sv_deathtilt", 1);
+		SetGlobalInt("zm_speedometer", 0);
+	}
+}

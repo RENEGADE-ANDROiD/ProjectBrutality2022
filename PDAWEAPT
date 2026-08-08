@@ -107,7 +107,8 @@ Recoil: High
 Alt-Fire: Detonation / arming (mode-dependent)
 Firemodes: Drill charge / drop shot
 Akimbo: X#
-UAC Prototype Dark Matter Rifle$Experimental UAC energy weapon using a stabilized dark-matter capacitor magazine fed from standard cell packs. Primary fire launches fast pulse orbs; alt-fire charges either a heavy super-or blast or a compact gravity seed that blooms into a localized singularity. Weapon Special toggles which alt payload arms before you commit to the charge.$PB_DarkMatterRifle$Manufacturer: UAC Ballistic Firearms Research Division (prototype)
+Pulse Cannon$Rapid-fire purple plasma SMG with a 50-round cell magazine. Primary streams fast orbs; Alt-Fire charges then unleashes a wide plasma spread. Reloads from Cell reserve with a dedicated TROL strip.$PB_PulseCannon$Manufacturer: UAC Ballistic Firearms (BRUTALDOOMPLUS Pulse Cannon fold)
+#UAC Prototype Dark Matter Rifle$Experimental UAC energy weapon using a stabilized dark-matter capacitor magazine fed from standard cell packs. Primary fire launches fast pulse orbs; alt-fire charges either a heavy super-or blast or a compact gravity seed that blooms into a localized singularity. Weapon Special toggles which alt payload arms before you commit to the charge.$PB_DarkMatterRifle$Manufacturer: UAC Ballistic Firearms Research Division (prototype)
 Magazine Capacity: 60 internal capacitor (reload pulls from Cell reserve)
 Ammunition: Cells + internal dark-matter magazine
 Effective Range: Medium-long (projectile)

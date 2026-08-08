@@ -24,11 +24,15 @@ extend class PB2022_Hud_ZS
 		if(!showBloodDrops)
 			return;
 
-		if(bloodDrops.Size() > 128)
+		if(bloodDrops.Size() > 48)
 			bloodDrops.Delete(0);
 		
 		PB_BloodFXStorage bdrp = PB_BloodFXStorage.CreateBloodFX(enemybloodcolor, PB2022_Hud_ZS(statusbar));
-		S_StartSound("visor/blooddrop", CHAN_AUTO);
+		if (gametic - lastBloodDropSfxTic >= 4)
+		{
+			lastBloodDropSfxTic = gametic;
+			S_StartSound("visor/blooddrop", CHAN_AUTO);
+		}
 		bloodDrops.Push(bdrp);
 
         if(dirtyScreenTimer != -1) dirtyScreenTimer = 0;
@@ -385,7 +389,7 @@ class PB_HUDFXHandler : EventHandler
 	        return;
 	        
 	    PlayerPawn pmo = PlayerPawn(players[consoleplayer].mo);
-	    if(pmo && e.thing && e.thing.target && e.thing.target.bISMONSTER && e.thing.Distance3D(pmo) <= 80 + pmo.Radius && crandom(0, 100) > 75)
+	    if(pmo && e.thing && e.thing.target && e.thing.target.bISMONSTER && e.thing.Distance3D(pmo) <= 80 + pmo.Radius && crandom(0, 100) > 90)
 	    {
 	        if(e.Thing is 'PB_Bloodmist' || e.Thing is 'NashGoreBloodParticle1')
                 EventHandler.SendInterfaceEvent(pmo.PlayerNumber(), "PB_HUDBloodSplatter", int(e.thing.target.bloodtranslation));

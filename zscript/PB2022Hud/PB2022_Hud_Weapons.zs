@@ -201,6 +201,10 @@ extend class PB2022_Hud_ZS
 				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawSecondary: false);
 				return true;
 
+			case 'PB_PortalBlaster':
+				weaponBarAccent = Font.CR_CYAN;
+				return true;
+
 			case 'PB_RocketLauncher':
 			case 'Paingiver':
 				weaponBarAccent = Font.CR_RED;
@@ -246,6 +250,11 @@ extend class PB2022_Hud_ZS
 
 			case 'PB_DarkMatterRifle':
 				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawDual: PB2022_WantsDualAmmoRow() && Left != null);
+				weaponBarAccent = Font.CR_PURPLE;
+				return true;
+
+			case 'PB_PulseCannon':
+				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE);
 				weaponBarAccent = Font.CR_PURPLE;
 				return true;
 
@@ -381,6 +390,10 @@ extend class PB2022_Hud_ZS
 					label = "Soul Bolt";
 					col = cachedFontColors[DTECHAMMO];
 				}
+				break;
+			case 'PB_PortalBlaster':
+				label = "PORTAL";
+				col = Font.CR_ORANGE;
 				break;
 			case 'PB_Flamethrower':
 				if (CheckInventory("FlamerNukageMode"))

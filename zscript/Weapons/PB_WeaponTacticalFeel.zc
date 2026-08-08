@@ -51,6 +51,10 @@ class PB_WeaponTilterInventory : Inventory
 	Name idleCacheWeapon;
 	Array<State> idleCacheStates;
 
+	// Per-class set of states reachable from combat labels (rebuild on class change).
+	Name combatBlockedWeapon;
+	Array<State> combatBlockedStates;
+
 	// Combat-sequence block cache: (weapon, psp.CurState) → blocked.
 	Name combatCacheWeapon;
 	State combatCacheState;
@@ -243,6 +247,7 @@ class PB_WeaponTilterInventory : Inventory
 			'ReadyDualWield', 'IdleNoAmmo', 'NoBuzzing', 'GoingToReady', 'GoingToReady2', 'OnLoop',
 			'GunReady', 'WaitReady', 'Idle', 'PreReady',
 			'X12ReadyToFire', 'CryoShotgunReadyToFire', 'MarauderShotgunReadyToFire',
+			'M45Halo3ShotgunReadyToFire', 'HeatBlastReadyToFire',
 			'XM21ReadyToFire', 'ScopeReadyToFire', 'JavelinReadyToFire',
 			'JavelinReadyEmpty', 'JavelinReadyUnloaded',
 			'UnloadedReady', 'UnloadedReadyDualWield',
@@ -304,6 +309,81 @@ class PB_WeaponTilterInventory : Inventory
 		return false;
 	}
 
+	private void PushCombatBlockedState(State s)
+	{
+		if (!s) return;
+		for (int i = 0; i < combatBlockedStates.Size(); ++i)
+		{
+			if (combatBlockedStates[i] == s)
+				return;
+		}
+		combatBlockedStates.Push(s);
+	}
+
+	// Walk each combat label once per weapon class; membership replaces per-tic graph walks.
+	private void EnsureCombatBlockedCache(Weapon weap)
+	{
+		if (!weap) return;
+		Name cls = weap.GetClassName();
+		if (cls == combatBlockedWeapon)
+			return;
+
+		combatBlockedWeapon = cls;
+		combatBlockedStates.Clear();
+		EnsureIdleStateCache(weap);
+
+		static const statelabel sequenceLabels[] =
+		{
+			'ZoomIn', 'ZoomOut', 'Ready_ADS', 'BDReadyADS', 'ZoomFire',
+			'ScopedFire', 'Fire_ADS', 'ZoomLoop', 'FireZoom', 'FireZoomed',
+			'Select', 'Deselect',
+			'SelectContinue', 'SelectAnimation', 'SelectAnimationDualWield', 'SelectReady',
+			'DeselectAkimbo', 'DeselectDualWield', 'DeselectEmpty', 'DeselectDown',
+			'FinishDeselect',
+			'Fire', 'Fire2', 'Fire3', 'Fire4', 'Fire5', 'Fire6', 'Fire7', 'Fire8', 'Fire9', 'Fire10',
+			'Fire1', 'HoldFire', 'Hold', 'AltHold', 'AltFire', 'AltFire1', 'AltFire2',
+			'FireDualWield',
+			'FireGrenades', 'FireGrenade', 'DryFire', 'ChargedFire', 'ChargeFire', 'EXPFire', 'EXPFire2',
+			'Melee', 'Punch', 'Kick', 'FlashKicking', 'FlashPunching', 'DoKick', 'SlideKick', 'AirKick',
+			'Reload', 'Reloading', 'ReloadLoop', 'Unload', 'Unloading', 'Doreload', 'BeginMagReload',
+			'Pump', 'Burst', 'Charge', 'ChargeLoop',
+			'WeaponRespect', 'Respect', 'WeaponSpecial',
+			'ThrowGrenade', 'UseEquipment', 'ToggleEquipment', 'SwitchEquipment',
+			'EquipSelectShowFrag', 'EquipSelectShowStun', 'EquipSelectShowShield',
+			'EquipSelectShowVoid', 'EquipSelectShowMine', 'EquipSelectShowGeneric',
+			'QuickFire', 'JumpSlash', 'FastSlash', 'FastSlash2',
+			'SpecialAttack', 'SpecialPunch', 'NormPunch', 'SpecialBashConnect',
+			'AxeThrow', 'GotoAxeThrow',
+			'HoldLightning', 'HoldLightning2', 'GotoHold', 'Fly', 'QuickLightning',
+			'AltHold2', 'AltHold3', 'FinishElectricArc',
+			'CastPulseBall', 'CastStunBall', 'CastBallLightning',
+			'StartWarp', 'StartWarp2', 'StartWarp3'
+		};
+
+		for (int i = 0; i < sequenceLabels.Size(); ++i)
+		{
+			State base = weap.FindState(sequenceLabels[i]);
+			if (!base) continue;
+
+			State s = base;
+			int guard = 0;
+			while (s && guard++ < 400)
+			{
+				PushCombatBlockedState(s);
+
+				State next = s.NextState;
+				if (!next)
+					break;
+				if (next == base)
+					break;
+				if (IsIdleGotoTarget(weap, next))
+					break;
+
+				s = next;
+			}
+		}
+	}
+
 	private bool IsScopedWeapon(Weapon weap)
 	{
 		if (!weap) { return false; }
@@ -333,7 +413,7 @@ class PB_WeaponTilterInventory : Inventory
 		return false;
 	}
 
-	// Expensive exclusive state walks — cache on (weapon class, psp.CurState).
+	// Membership in per-class combat-state set; memoize (weapon class, psp.CurState).
 	private bool CombatSequenceBlocks(Weapon weap, PSprite psp)
 	{
 		if (!weap || !psp || !psp.CurState)
@@ -343,40 +423,15 @@ class PB_WeaponTilterInventory : Inventory
 		if (cls == combatCacheWeapon && psp.CurState == combatCacheState)
 			return combatCacheBlocked;
 
+		EnsureCombatBlockedCache(weap);
+
 		combatCacheWeapon = cls;
 		combatCacheState = psp.CurState;
 		combatCacheBlocked = false;
-
-		static const statelabel sequenceLabels[] =
+		State cur = psp.CurState;
+		for (int i = 0; i < combatBlockedStates.Size(); ++i)
 		{
-			'ZoomIn', 'ZoomOut', 'Ready_ADS', 'BDReadyADS', 'ZoomFire',
-			'ScopedFire', 'Fire_ADS', 'ZoomLoop', 'FireZoom', 'FireZoomed',
-			'Select', 'Deselect',
-			'SelectContinue', 'SelectAnimation', 'SelectAnimationDualWield', 'SelectReady',
-			'DeselectAkimbo', 'DeselectDualWield', 'DeselectEmpty', 'DeselectDown',
-			'FinishDeselect',
-			'Fire', 'Fire2', 'Fire3', 'Fire4', 'Fire5', 'Fire6', 'Fire7', 'Fire8', 'Fire9', 'Fire10',
-			'Fire1', 'HoldFire', 'Hold', 'AltHold', 'AltFire', 'AltFire1', 'AltFire2',
-			'FireDualWield',
-			'FireGrenades', 'FireGrenade', 'DryFire', 'ChargedFire', 'ChargeFire', 'EXPFire', 'EXPFire2',
-			'Melee', 'Punch', 'Kick', 'FlashKicking', 'FlashPunching', 'DoKick', 'SlideKick', 'AirKick',
-			'Reload', 'Reloading', 'ReloadLoop', 'Unload', 'Unloading', 'Doreload', 'BeginMagReload',
-			'Pump', 'Burst', 'Charge', 'ChargeLoop',
-			'WeaponRespect', 'Respect', 'WeaponSpecial',
-			'ThrowGrenade', 'UseEquipment', 'ToggleEquipment', 'SwitchEquipment',
-			'EquipSelectShowFrag', 'EquipSelectShowStun', 'EquipSelectShowShield',
-			'EquipSelectShowVoid', 'EquipSelectShowMine', 'EquipSelectShowGeneric',
-			'QuickFire', 'JumpSlash', 'FastSlash', 'FastSlash2',
-			'SpecialAttack', 'SpecialPunch', 'NormPunch', 'SpecialBashConnect',
-			'AxeThrow', 'GotoAxeThrow',
-			'HoldLightning', 'HoldLightning2', 'GotoHold', 'Fly', 'QuickLightning',
-			'AltHold2', 'AltHold3', 'FinishElectricArc',
-			'CastPulseBall', 'CastStunBall', 'CastBallLightning',
-			'StartWarp', 'StartWarp2', 'StartWarp3'
-		};
-		for (int i = 0; i < sequenceLabels.Size(); ++i)
-		{
-			if (InExclusiveCombatSequence(weap, psp, sequenceLabels[i]))
+			if (combatBlockedStates[i] == cur)
 			{
 				combatCacheBlocked = true;
 				break;
@@ -633,6 +688,8 @@ class PB_WeaponTilterInventory : Inventory
 			motionEnableBlend = 1.;
 			lastWeaponClass = weaponClass;
 			combatCacheWeapon = 'None';
+			combatBlockedWeapon = 'None';
+			combatBlockedStates.Clear();
 			State cleared;
 			combatCacheState = cleared;
 		}

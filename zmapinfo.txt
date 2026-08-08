@@ -108,7 +108,6 @@ GameInfo
 	AddEventHandlers = "pb_ExecutionHandler"
 	AddEventHandlers = "PB_EventHandler"
 	AddEventHandlers = "PB_Materialsys"
-	AddEventHandlers = "PB_MonsterDropsHandler"
 	AddEventHandlers = "PB_ElectricChargeHandler"
 	AddEventHandlers = "PB_SlowEventHandler"
 	AddEventHandlers = "PB_FlameEventHandler"
@@ -130,8 +129,6 @@ GameInfo
 	AddEventHandlers = "BPv10GoreHandler"
 	AddEventHandlers = "PB_BurnFXThrottleHandler"
 	AddEventHandlers = "PB_DeathGoreBoostHandler"
-	AddEventHandlers = "AccuDeathHandler"
-	AddEventHandlers = "AccuDeathSpawnHandler"
 	AddEventHandlers = "TiltPlusPlusHandler"
 	AddEventHandlers = "DeathFadeBootstrap"
 	AddEventHandlers = "DEDashJumpHandler"
@@ -515,6 +512,9 @@ DoomEdNums
 	23304 = PB_BVCH_Machina
 	23305 = PB_BVCH_Bloodfiend
 	23307 = PB_UT2004RL
+	23308 = PB_PortalBlaster
+	23309 = PB_PulseCannon
+	23310 = PB_EternalDarkLord
 	// Clear Sky / BVCH map ednum (same class)
 	21550 = Carcass
 

@@ -1,4 +1,29 @@
+class PB_GenericExecutionProxy : Actor
+{
+	override void Tick()
+	{
+		Super.Tick();
+		if (!master || !target || target.health <= 0 || gametic >= special1)
+			Destroy();
+	}
 
+	Default
+	{
+		Radius 1;
+		Height 1;
+		+NOINTERACTION
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+FORCEXYBILLBOARD
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A -1;
+		Stop;
+	}
+}
 
 class PB_WeaponBase : DoomWeapon 
 {
@@ -42,12 +67,27 @@ class PB_WeaponBase : DoomWeapon
 	
 	bool usingKick;
 	property usingKick: usingKick;
+	transient State meleeReturnState;
+	transient State kickReturnState;
+	transient Name meleeReturnWeapon;
+	transient Name kickReturnWeapon;
 
 	// Meat Hook chord arm: 0 idle, >0 melee wait tics, <0 kick wait tics (|n|).
 	int meatHookChordArm;
 	
 	bool executingEnemy;
 	property executingEnemy: executingEnemy;
+	// gametic when PB_SetPlayerExecutionProperties last armed; watchdog force-clears after ~10s.
+	int executeLockStartTic;
+	Actor pendingExecutionTarget;
+	State pendingExecutionState;
+	bool pendingExecutionGeneric;
+	bool pendingExecutionDedicated;
+	int pendingExecutionTic;
+	Actor activeExecutionTarget;
+	Actor activeExecutionProxy;
+	Vector3 activeExecutionAnchor;
+	int activeExecutionDeadline;
 	
 	
 	bool chainsawMode;
@@ -60,6 +100,56 @@ class PB_WeaponBase : DoomWeapon
 	
 	action void PB_SetChainsawHealthRestore(bool type){
 		invoker.executingEnemy = type;
+	}
+
+	void PB_SaveMeleeReturnState(bool kick)
+	{
+		State st = null;
+		if (owner && owner.player)
+		{
+			PSprite psp = owner.player.GetPSprite(PSP_WEAPON);
+			if (psp)
+				st = psp.CurState;
+		}
+		if (kick)
+		{
+			kickReturnState = st;
+			kickReturnWeapon = GetClassName();
+		}
+		else
+		{
+			meleeReturnState = st;
+			meleeReturnWeapon = GetClassName();
+		}
+	}
+
+	State PB_ConsumeMeleeReturnState(bool kick)
+	{
+		State st;
+		Name savedWeapon;
+		if (kick)
+		{
+			st = kickReturnState;
+			savedWeapon = kickReturnWeapon;
+			kickReturnState = null;
+			kickReturnWeapon = 'None';
+		}
+		else
+		{
+			st = meleeReturnState;
+			savedWeapon = meleeReturnWeapon;
+			meleeReturnState = null;
+			meleeReturnWeapon = 'None';
+		}
+		if (st && savedWeapon == GetClassName() && owner && owner.player
+			&& owner.player.ReadyWeapon == self)
+			return st;
+		return FindState('Ready3');
+	}
+
+	action State PB_ReturnFromQuickMelee()
+	{
+		return invoker.PB_ConsumeMeleeReturnState(false);
 	}
 	
 	action void PB_SawAttack(bool verticalCut = 0, bool stealArmor = 0)
@@ -156,6 +246,8 @@ class PB_WeaponBase : DoomWeapon
 	// Re-arm mini overlays after shield-saw throw/catch (A_ClearOverlays(-999,-999) nuked these).
 	action void PB_RestoreWeaponMiniOverlays()
 	{
+		// Stale rock-on / equip tip (FlashPunching on 799) can survive Select races and lock flash actions.
+		A_ClearOverlays(799, 799);
 		A_Overlay(-777, "Melee_Equipment_Handler_Overlay");
 		A_Overlay(-778, "KickHandler_Overlay");
 		A_Overlay(-779, "Equipment_Toggle_Handler_Overlay");
@@ -290,6 +382,7 @@ class PB_WeaponBase : DoomWeapon
 		SetPlayerProperty(0, 0, 0);
 		SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 		A_TakeInventory("Hayberserk", 1);
+		A_TakeInventory("PB_HayberserkInvuln", 1);
 		return ResolveState("Ready");
 	}
 
@@ -491,11 +584,14 @@ class PB_WeaponBase : DoomWeapon
 		SetPlayerProperty(0, 1, PROP_INVULNERABILITY);
 		SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN );
 		SetPlayerProperty(0, 1, PROP_FLY);
+		invoker.executeLockStartTic = gametic;
 		PB_SetExecutingEnemy(true);
 	}
 	
 	
 	action void PB_UnsetPlayerExecutionProperties() {
+		// Also clear PROP_FROZEN (property 0) — Glory Kill wait uses it; experimental uses TOTALLYFROZEN.
+		SetPlayerProperty(0, 0, 0);
 		SetPlayerProperty(0, 0, PROP_INVULNERABILITY);
 		SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN );
 		SetPlayerProperty(0, 0, PROP_FLY);
@@ -503,9 +599,117 @@ class PB_WeaponBase : DoomWeapon
 		PB_SetUsingMelee(false);
 		PB_SetExecutionBlueBlood(false);
 		PB_SetExecutionGreenBlood(false);
+		invoker.executeLockStartTic = 0;
 		A_TakeInventory("KnifeHasHit",1);
 		A_TakeInventory("HasCutingWeapon", 1);
 		A_TakeInventory("ExecutionToken", 1);
+		invoker.PB_ClearActiveGenericExecution();
+	}
+
+	void PB_ClearPendingExecution()
+	{
+		pendingExecutionTarget = null;
+		pendingExecutionState = null;
+		pendingExecutionGeneric = false;
+		pendingExecutionDedicated = false;
+		pendingExecutionTic = 0;
+	}
+
+	void PB_ClearActiveGenericExecution()
+	{
+		if (activeExecutionProxy)
+			activeExecutionProxy.Destroy();
+		activeExecutionTarget = null;
+		activeExecutionProxy = null;
+		activeExecutionAnchor = (0, 0, 0);
+		activeExecutionDeadline = 0;
+	}
+
+	action State PB_ValidateGenericExecution()
+	{
+		if (!invoker.activeExecutionTarget
+			|| invoker.activeExecutionTarget.health <= 0
+			|| !invoker.activeExecutionProxy
+			|| (invoker.activeExecutionDeadline > 0 && gametic >= invoker.activeExecutionDeadline))
+		{
+			invoker.PB_ClearActiveGenericExecution();
+			return ResolveState("PB_FinisherCleanup");
+		}
+		return null;
+	}
+
+	action State PB_CommitPendingExecution()
+	{
+		Actor monster = invoker.pendingExecutionTarget;
+		State next = invoker.pendingExecutionState;
+		bool forceGeneric = invoker.pendingExecutionGeneric;
+		bool dedicated = invoker.pendingExecutionDedicated;
+		invoker.PB_ClearPendingExecution();
+
+		if (!monster || monster.health <= 0 || !next)
+		{
+			PB_UnsetPlayerExecutionProperties();
+			return null;
+		}
+
+		vector3 delta = (monster.pos.x - pos.x, monster.pos.y - pos.y, monster.pos.z - pos.z);
+		double angleToMonster = AngleTo(monster);
+		double pitchToMonster = VectorAngle(sqrt(delta.y * delta.y + delta.x * delta.x), delta.z);
+		A_SetAngle(angleToMonster);
+		A_SetPitch(-pitchToMonster);
+
+		if (forceGeneric || !dedicated)
+		{
+			invoker.PB_ClearActiveGenericExecution();
+			Actor proxy = Spawn("PB_GenericExecutionProxy", monster.pos, ALLOW_REPLACE);
+			if (!proxy)
+				return null;
+
+			double visualHeight = max(1.0, monster.height * monster.scale.y);
+			double sizeMul = clamp(48.0 / visualHeight, 0.65, 3.0);
+			proxy.sprite = monster.sprite;
+			proxy.frame = monster.frame;
+			proxy.scale = (monster.scale.x * sizeMul, monster.scale.y * sizeMul);
+			proxy.alpha = monster.alpha;
+			proxy.translation = monster.translation;
+			proxy.target = monster;
+			proxy.master = self;
+			proxy.tracer = invoker;
+			proxy.special1 = gametic + 210;
+
+			invoker.activeExecutionTarget = monster;
+			invoker.activeExecutionProxy = proxy;
+			invoker.activeExecutionAnchor = monster.pos;
+			invoker.activeExecutionDeadline = gametic + 210;
+			PB_PinExecutionTarget();
+		}
+		else
+		{
+			monster.A_Stop();
+			double spd = max(48.0, radius + monster.radius + 8.0);
+			monster.A_SetPitch(pitchToMonster, SPF_INTERPOLATE);
+			monster.A_SetAngle(angleToMonster + 180, SPF_INTERPOLATE);
+			vector3 neworigin = Vec3Offset(cos(angleToMonster) * spd, sin(angleToMonster) * spd, sin(pitchToMonster) * spd);
+			monster.SetOrigin(neworigin, true);
+			A_SetAngle(AngleTo(monster));
+			delta = (monster.pos.x - pos.x, monster.pos.y - pos.y, monster.pos.z - pos.z);
+			pitchToMonster = VectorAngle(sqrt(delta.y * delta.y + delta.x * delta.x), delta.z);
+			A_SetPitch(-pitchToMonster);
+		}
+
+		PB_SetPlayerExecutionProperties();
+		A_SetCrosshair(5);
+		if (dedicated)
+		{
+			monster.GiveInventory("ExecutionToken", 1);
+			monster.A_Die("Execution");
+		}
+		else
+		{
+			monster.TakeInventory("ExecutionToken", 0x7FFFFFFF);
+		}
+		PB_Achievements.OnExecution();
+		return next;
 	}
 
 	// Non-action cleanup for weapon swap / interrupt paths (ExecutionToken lives on the player).
@@ -518,13 +722,23 @@ class PB_WeaponBase : DoomWeapon
 		let ppb = PlayerPawnBase(pp);
 		if (ppb)
 			ppb.PB_ClearExecutionPlayerProperties();
+		else
+			pp.TakeInventory("ExecutionToken", 1);
 		executingEnemy = false;
 		usingMelee = false;
+		executeLockStartTic = 0;
+		PB_ClearActiveGenericExecution();
+	}
+
+	action void PB_ClearOrphanedExecutionLockOnDeselect()
+	{
+		let pp = PlayerPawn(invoker.owner);
+		if (pp)
+			invoker.ClearOrphanedExecutionLock(pp);
 	}
 	
 	
 	action StateLabel PB_ExecuteZombieMan() {
-		A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET);
 		StateLabel result;
 		int selector = (random(1, 6));
 		FLineTraceData RemoteRay;
@@ -561,7 +775,6 @@ class PB_WeaponBase : DoomWeapon
 	}
 	
 	action StateLabel PB_ExecuteShotguny() {
-		A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET);
 		StateLabel result;
 		int selector = (random(1, 6));
 		FLineTraceData RemoteRay;
@@ -599,7 +812,6 @@ class PB_WeaponBase : DoomWeapon
 	
 	
 	action StateLabel PB_ExecuteImp() {
-		A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET);
 		StateLabel result;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
@@ -629,7 +841,6 @@ class PB_WeaponBase : DoomWeapon
 	}
 	
 	action StateLabel PB_ExecuteCacodemon() {
-		A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET);
 		StateLabel result;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
@@ -679,45 +890,34 @@ class PB_WeaponBase : DoomWeapon
 		if (!monster.IsVisible(self, false, look) || GetDistance(True, AAPTR_PLAYER_GETTARGET) >= 250)
 			return null;
 
-		// Staging close-up: pull target in and face each other before the POV strip.
-		// 27 was inside the near clip for typical radii; kit puppets sit ~41 mu out.
-		monster.A_Stop();
-		double spd = max(48.0, radius + monster.radius + 8.0);
-		vector3 delta = (monster.pos.x - pos.x, monster.pos.y - pos.y, monster.pos.z - pos.z);
-		double angleToMonster = AngleTo(monster);
-		double pitchToMonster = VectorAngle(sqrt(delta.y * delta.y + delta.x * delta.x), delta.z);
-		monster.A_SetPitch(pitchToMonster, SPF_INTERPOLATE);
-		monster.A_SetAngle(angleToMonster + 180, SPF_INTERPOLATE);
-		vector3 neworigin = Vec3Offset(cos(angleToMonster) * spd, sin(angleToMonster) * spd, sin(pitchToMonster) * spd);
-		monster.SetOrigin(neworigin, true);
-		A_SetAngle(AngleTo(monster));
-		delta = (monster.pos.x - pos.x, monster.pos.y - pos.y, monster.pos.z - pos.z);
-		pitchToMonster = VectorAngle(sqrt(delta.y * delta.y + delta.x * delta.x), delta.z);
-		A_SetPitch(-pitchToMonster);
-
 		StateLabel st = PB_ExecutionHandlerString(monster);
 		State resolved = ResolveState(st);
-		bool forceGeneric = false;
-		// Kit strips live on DECORATE PB_Weapon; ZScript-only guns miss them — fall back to Generic.
+		bool forceGeneric = st == "Execution_Generic";
+		// Missing authored labels degrade to the shared living-target Generic strip.
 		if (!resolved)
 		{
 			resolved = ResolveState("Execution_Generic");
 			forceGeneric = true;
 			if (!resolved)
 			{
-				PB_UnsetPlayerExecutionProperties();
 				return null;
 			}
 		}
-		if (PB_HasExperimentalExecutionKit(monster) && !forceGeneric)
-			monster.A_Die("Execution");
-		PB_Achievements.OnExecution();
-		return resolved;
+		invoker.pendingExecutionTarget = monster;
+		invoker.pendingExecutionState = resolved;
+		invoker.pendingExecutionGeneric = forceGeneric;
+		invoker.pendingExecutionDedicated = PB_HasExperimentalExecutionKit(monster) && !forceGeneric;
+		invoker.pendingExecutionTic = gametic;
+		return ResolveState("PB_ExecutionCommit");
 	}
 
-	// pb_auto_fatality_fire: Glory Kill first (same resolve as Quick Melee), then experimental execute.
-	action State PB_TryAutoFatalityOnFire()
+	// Single owner for every primary-fire finisher hook. Legacy helpers delegate here;
+	// PlayerPawnBase.autoFinisherClaimTic makes repeated calls on one press idempotent.
+	action State PB_DispatchAutoFireFinisher()
 	{
+		if (!JustPressed(BT_ATTACK))
+			return resolveState(null);
+
 		let po = invoker.Owner;
 		if (po == null || !(po is "PlayerPawn"))
 			return resolveState(null);
@@ -726,24 +926,52 @@ class PB_WeaponBase : DoomWeapon
 			return resolveState(null);
 		if (PB_PlayerOnPossessionRide(pp))
 			return resolveState(null);
+		if (PB_usingMelee() || PB_usingEquipment())
+			return resolveState(null);
 		if (pp.CountInv("GoFatality") >= 1 || pp.CountInv("ExecutionToken") >= 1 || invoker.executingEnemy)
 			return resolveState(null);
+		if (pp.CountInv("ShieldSawThrowAnim") >= 1 || pp.CountInv("CantFire") >= 1)
+			return resolveState(null);
+
 		let cvAuto = CVar.FindCVar("pb_auto_fatality_fire");
 		if (!cvAuto || !cvAuto.GetBool())
 			return resolveState(null);
+
+		let ppb = PlayerPawnBase(pp);
+		if (!ppb || ppb.autoFinisherClaimTic == gametic)
+			return resolveState(null);
+		ppb.autoFinisherClaimTic = gametic;
 
 		double autoDist = 120.;
 		let cvDist = CVar.FindCVar("pb_auto_fatality_dist");
 		if (cvDist)
 			autoDist = double(cvDist.GetInt());
-		if (PB_ResolveFinisherMonster(autoDist) != null)
+		// Glory Kill punch range is hardcoded 150 in PermormGloryKill — don't enter GK when punch can't connect.
+		double gkDist = autoDist;
+		if (gkDist > 150.)
+			gkDist = 150.;
+		if (PB_ResolveFinisherMonster(gkDist) != null)
+		{
+			PB_SetUsingMelee(true);
 			return ResolveState("PermormGloryKill");
+		}
 
 		let exp = CVar.FindCVar("pb_experimental");
 		if (!exp || !exp.GetBool())
 			return resolveState(null);
 		State st = PB_Execute();
-		return st ? st : resolveState(null);
+		if (st)
+		{
+			PB_SetUsingMelee(true);
+			return st;
+		}
+		return resolveState(null);
+	}
+
+	// Compatibility entry for existing weapon Fire states.
+	action State PB_TryAutoFatalityOnFire()
+	{
+		return PB_DispatchAutoFireFinisher();
 	}
 	
 	// Shoutout to Matt on ZDoom forums for the helpful weapon functions.
@@ -1337,33 +1565,51 @@ class PB_WeaponBase : DoomWeapon
 	{
 		if(!invoker.owner || !invoker.owner.player)
 			return false;
-		if ( (InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready")) || 
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReallyReady")) ||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyToFire"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready2"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready5"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready4"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReallyReady"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready3"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyFists"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyFistsLoop"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("BDReady3"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("BDReadyADS"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("Ready_ADS"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("JavelinReady3"))||
-			  InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyToFire2"))
-			 ) 
-			 ||
-			(InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyDualUnloaded")))
-			 ||
-			(InStateSequence(invoker.owner.player.GetPSprite(10).Curstate,invoker.ResolveState("IdleLeft_Overlay")) && 
-			 InStateSequence(invoker.owner.player.GetPSprite(11).Curstate,invoker.ResolveState("IdleRight_Overlay")) && 
-			 InStateSequence(invoker.owner.player.GetPSprite(PSP_WEAPON).Curstate,invoker.ResolveState("ReadyToFireDualWield")))
-		   ){
-			
-			return true;
+		PSprite weaponPSP = invoker.owner.player.GetPSprite(PSP_WEAPON);
+		if (!weaponPSP || !weaponPSP.CurState)
+			return false;
+		static const statelabel readyStates[] =
+		{
+			'RealReady', 'RealReady_Reload', 'RealReady_Upgraded',
+			'Ready', 'Ready2', 'Ready3', 'Ready4', 'Ready5',
+			'ReadyLoop', 'Readyloop', 'ReadyAim', 'Ready_ADS',
+			'BDReady3', 'BDReadyADS', 'ReadyRaised',
+			'ReallyReady', 'ReallyReady2', 'ReallyReady2Loop', 'ReallyReady3', 'ActuallyReady3',
+			'ReadySettle', 'ReadyNormal', 'ReadyLoaded', 'ReadyFull', 'ReadyNoAmmo',
+			'ReadyToFire', 'ReadyToFire2', 'ReadyToFireAgain', 'ReadyToFire_Red', 'ReadyToFireDrum',
+			'ReadyToFireDualWield', 'ReadyDualUnloaded', 'ReadyMissile', 'JavelinReady3',
+			'ReadyDualWield', 'IdleNoAmmo', 'NoBuzzing', 'OnLoop',
+			'GunReady', 'WaitReady', 'Idle', 'PreReady',
+			'ReadyFists', 'ReadyFistsLoop',
+			'X12ReadyToFire', 'CryoShotgunReadyToFire', 'MarauderShotgunReadyToFire',
+			'M45Halo3ShotgunReadyToFire', 'HeatBlastReadyToFire',
+			'XM21ReadyToFire', 'ScopeReadyToFire', 'JavelinReadyToFire',
+			'JavelinReadyEmpty', 'JavelinReadyUnloaded',
+			'UnloadedReady', 'UnloadedReadyDualWield',
+			'ContinueReady', 'NormalReady', 'Drum_Ready', 'HipReadyLoop',
+			'ReadyNoDtech', 'ReadyHasDtech', 'Ready.Lightning',
+			'ReadyToFireDemonic', 'ReadyEmpty', 'ReadyZoom',
+			'KatanaReadyToCut', 'HexaLionBoyReadyToFire', 'MastermindChaingunReadyToFire',
+			'NailGunReady', 'NailgunActuallyReady', 'EmptyReady', 'RS_AxeReady',
+			'RS_PistolReady3', 'RS_PistolReadyShield',
+			'BackToReadyDual', 'BackToReadyDualFromLeft', 'BackToReadyDualFromRight',
+			'ScopedReady', 'ChargeReady', 'AxeThrowReady', 'ChargingAxeReady'
+		};
+		for (int i = 0; i < readyStates.Size(); ++i)
+		{
+			State base = invoker.FindState(readyStates[i]);
+			if (base && InStateSequence(weaponPSP.CurState, base))
+				return true;
 		}
-		return false;
+		PSprite left = invoker.owner.player.GetPSprite(10);
+		PSprite right = invoker.owner.player.GetPSprite(11);
+		State leftIdle = invoker.FindState('IdleLeft_Overlay');
+		State rightIdle = invoker.FindState('IdleRight_Overlay');
+		State dualIdle = invoker.FindState('ReadyToFireDualWield');
+		return left && right && leftIdle && rightIdle && dualIdle
+			&& InStateSequence(left.CurState, leftIdle)
+			&& InStateSequence(right.CurState, rightIdle)
+			&& InStateSequence(weaponPSP.CurState, dualIdle);
 	}
 	
 	
@@ -1389,9 +1635,14 @@ class PB_WeaponBase : DoomWeapon
 			"NoDualWield", "WeaponSpecial", "GrabbedBarrel", "GrabbedBurningBarrel", "GloryMelee", "FireShoulderCannon"
 		};
 		if (!(pbFlags & PBWEAP_UNLOADED)) pbFlags |= CheckUnloaded(invoker.UnloaderToken);
-		if (CountInv("GoFatality")>=1 || PB_executingEnemy())
+		// 3rd-person Glory Kill wait: Steady until GoFatality clears.
+		if (CountInv("GoFatality") >= 1)
+			return ResolveState("PB_FinisherCleanup");
+		// Live FPS execute owns PSP — do not Steady-yank (orphans Token/FLY via GoingToReady).
+		if (PB_executingEnemy() || CountInv("ExecutionToken") >= 1)
 		{
-			return ResolveState("Steady");
+			A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH);
+			return null;
 		}
 
 		if (CountInv("DoGloryMelee") >= 1)
@@ -1463,10 +1714,9 @@ class PB_WeaponBase : DoomWeapon
 			}
 		}
 		
-		if ((JustPressed(BT_ATTACK) && !A_IsFiringLeftWeapon())
-			|| (JustPressed(BT_ALTATTACK) && !A_IsFiringRightWeapon()))
+		if (!(weapflags & (WRF_NOFIRE | WRF_NOPRIMARY)) && JustPressed(BT_ATTACK) && !A_IsFiringLeftWeapon())
 		{
-			State fatalitySt = PB_TryAutoFatalityOnFire();
+			State fatalitySt = PB_DispatchAutoFireFinisher();
 			if (fatalitySt)
 				return fatalitySt;
 		}
@@ -1495,7 +1745,25 @@ class PB_WeaponBase : DoomWeapon
 	override void DoEffect()
 	{
 		super.DoEffect();
+		if (pendingExecutionTic > 0 && gametic > pendingExecutionTic)
+			PB_ClearPendingExecution();
+		if (activeExecutionDeadline > 0 && gametic >= activeExecutionDeadline)
+		{
+			PB_ClearActiveGenericExecution();
+			let timedOutPlayer = PlayerPawn(owner);
+			if (timedOutPlayer)
+				ClearOrphanedExecutionLock(timedOutPlayer);
+		}
+		if (!owner || !owner.player)
+			return;
 		let player = owner.player;
+		// Interrupted mid-execute weapon switch: clear orphaned freeze/token when no longer ready.
+		if (player.ReadyWeapon != self && executingEnemy)
+		{
+			let pp = PlayerPawn(owner);
+			if (pp)
+				ClearOrphanedExecutionLock(pp);
+		}
 		if (player && player.readyweapon)
 		{
 			player.WeaponState |= WF_WEAPONBOBBING;
@@ -1808,6 +2076,17 @@ class PB_WeaponBase : DoomWeapon
 	
 	States
 	{	
+		FlashKicking:
+		FlashAirKicking:
+		FlashSlideKicking:
+		FlashSlideKickingStop:
+			TNT1 A 1;
+			Stop;
+
+		FlashPunching:
+			TNT1 A 1;
+			Stop;
+
 		HelmetAnimation:
 			TNT1 A 0
 			{
@@ -2002,26 +2281,6 @@ class PB_WeaponBase : DoomWeapon
 				if (PB_usingMelee() || CountInv("ShieldSawThrowAnim") >= 1)
 					PB_BlockWeaponFireInput();
 
-				if (JustPressed(BT_ATTACK) && !PB_usingMelee() && !PB_executingEnemy() && !PB_usingEquipment()
-					&& !CheckInventory("GoFatality", 1))
-				{
-					let cvAuto = CVar.FindCVar("pb_auto_fatality_fire");
-					if (cvAuto && cvAuto.GetBool())
-					{
-						double autoDist = 120.;
-						let cvDist = CVar.FindCVar("pb_auto_fatality_dist");
-						if (cvDist)
-							autoDist = double(cvDist.GetInt());
-						if (PB_ResolveFinisherMonster(autoDist) != null)
-						{
-							A_OverlayOffset(PSP_WEAPON, 0, 32);
-							PB_SetUsingMelee(true);
-							A_Overlay(PSP_WEAPON, "QuickMelee");
-							A_OverlayOffset(PSP_WEAPON, 0, 32);
-						}
-					}
-				}
-
 				if (JustPressed(BT_USER1) && !PB_usingMelee() && !PB_executingEnemy() && !PB_usingEquipment()
 					&& !CheckInventory("GoFatality", 1))
 				{
@@ -2059,6 +2318,7 @@ class PB_WeaponBase : DoomWeapon
 							if (pl && (pl.cmd.buttons & BT_USER2))
 							{
 								A_OverlayOffset(PSP_WEAPON, 0, 32);
+								invoker.PB_SaveMeleeReturnState(false);
 								PB_SetUsingMelee(true);
 								A_Overlay(PSP_WEAPON, "QuickMelee");
 								A_OverlayOffset(PSP_WEAPON, 0, 32);
@@ -2071,6 +2331,7 @@ class PB_WeaponBase : DoomWeapon
 					&& !CheckInventory("Zoomed", 1) && !CheckInventory("GoFatality", 1))
 				{
 					A_OverlayOffset(PSP_WEAPON, 0, 32);
+					invoker.PB_SaveMeleeReturnState(false);
 					PB_SetUsingMelee(true);
 					A_Overlay(PSP_WEAPON, "QuickMelee");
 					A_OverlayOffset(PSP_WEAPON, 0, 32);
@@ -2109,6 +2370,7 @@ class PB_WeaponBase : DoomWeapon
 							let pl = invoker.PB_WeaponActionPlayer();
 							if (pl && (pl.cmd.buttons & BT_USER4))
 							{
+								invoker.PB_SaveMeleeReturnState(true);
 								PB_SetUsingKick(true);
 								A_OverlayOffset(-999, 0, 32);
 								A_Overlay(-999, "DoKick");
@@ -2122,6 +2384,7 @@ class PB_WeaponBase : DoomWeapon
 					&& !CheckInventory("Zoomed", 1) && PB_MeleeAttackKickCheck()
 					&& !CheckInventory("GoFatality", 1) && !PB_usingMelee())
 				{
+					invoker.PB_SaveMeleeReturnState(true);
 					PB_SetUsingKick(true);
 					A_OverlayOffset(-999, 0, 32);
 					A_Overlay(-999, "DoKick");
@@ -2132,8 +2395,6 @@ class PB_WeaponBase : DoomWeapon
 
 		SelectFirstPersonLegs:
 			TNT1 A 0 { return PB_PossessionRideGotoReady(); }
-			TNT1 A 0 A_JumpIfInventory("Hayulti", 1, "Hayulti");
-			TNT1 A 0 A_JumpIfInventory("Hayberserk", 1, "Hayberserk");
 			TNT1 A 0 A_StopSound(1);
 			TNT1 A 0 A_StopSound(5);
 			TNT1 A 0 A_StopSound(6);
@@ -2147,6 +2408,8 @@ class PB_WeaponBase : DoomWeapon
 			TNT1 A 0 A_Overlay(-778, "KickHandler_Overlay");
 			TNT1 A 0 A_Overlay(-779, "Equipment_Toggle_Handler_Overlay");
 			TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand");
+			TNT1 A 0 A_JumpIfInventory("Hayulti", 1, "Hayulti");
+			TNT1 A 0 A_JumpIfInventory("Hayberserk", 1, "Hayberserk");
 			TNT1 A 0 A_Jump(255, "SelectContinue");
 			Loop;
 
@@ -2219,6 +2482,7 @@ class PB_WeaponBase : DoomWeapon
 			TNT1 A 0 SetPlayerProperty(0, 0, 0);
 			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			TNT1 A 0 A_TakeInventory("Hayulti", 1);
+			TNT1 A 0 PB_RestoreWeaponMiniOverlays();
 			TNT1 A 0 A_Jump(256, "GoingToReady");
 			TNT1 A 0 A_Jump(256, "SelectContinue");
 			TNT1 A 0 A_Jump(256, "Ready3");
@@ -2226,6 +2490,8 @@ class PB_WeaponBase : DoomWeapon
 
 		Hayberserk:
 			TNT1 A 0 { return PB_AbortHayberserkOnPossessionRide(); }
+			TNT1 A 0 A_SelectWeapon("Melee_Attacks");
+			TNT1 A 0 A_GiveInventory("PB_HayberserkInvuln", 1);
 			TNT1 A 0 A_Jump(100, "HayberserkAlt");
 			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 1);
 			TNT1 A 0 SetPlayerProperty(0, 1, 0);
@@ -2284,6 +2550,7 @@ class PB_WeaponBase : DoomWeapon
 			TNT1 A 0 SetPlayerProperty(0, 0, 0);
 			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			TNT1 A 0 A_TakeInventory("Hayberserk", 1);
+			TNT1 A 0 PB_RestoreWeaponMiniOverlays();
 			TNT1 A 0 A_Jump(256, "GoingToReady");
 			TNT1 A 0 A_Jump(256, "SelectContinue");
 			TNT1 A 0 A_Jump(256, "Ready3");
@@ -2291,6 +2558,8 @@ class PB_WeaponBase : DoomWeapon
 
 		HayberserkAlt:
 			TNT1 A 0 { return PB_AbortHayberserkOnPossessionRide(); }
+			TNT1 A 0 A_SelectWeapon("Melee_Attacks");
+			TNT1 A 0 A_GiveInventory("PB_HayberserkInvuln", 1);
 			TNT1 A 0 A_ChangeFlag("INVULNERABLE", 1);
 			TNT1 A 0 SetPlayerProperty(0, 1, 0);
 			TNT1 A 0 A_Print("$PB_RIP_AND_TEAR_ANIM");
@@ -2321,6 +2590,7 @@ class PB_WeaponBase : DoomWeapon
 			TNT1 A 0 SetPlayerProperty(0, 0, 0);
 			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			TNT1 A 0 A_TakeInventory("Hayberserk", 1);
+			TNT1 A 0 PB_RestoreWeaponMiniOverlays();
 			TNT1 A 0 A_Jump(256, "GoingToReady");
 			TNT1 A 0 A_Jump(256, "SelectContinue");
 			TNT1 A 0 A_Jump(256, "Ready3");
@@ -2343,6 +2613,15 @@ class PB_WeaponBase : DoomWeapon
 			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
 			Goto GoingToReady;
 
+		PB_FinisherCleanup:
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "PB_FinisherCleanup");
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady;
+
+		PB_ExecutionCommit:
+			TNT1 A 0 { return PB_CommitPendingExecution(); }
+			Goto GoingToReady2;
+
 		GoingToReady2:
 			TNT1 A 0 { return PB_PossessionRideGotoReady(); }
 			TNT1 A 0 A_JumpIfInventory("Hayulti", 1, "Hayulti");
@@ -2351,12 +2630,16 @@ class PB_WeaponBase : DoomWeapon
 			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel");
 			TNT1 A 0 {
-				PB_UnsetPlayerExecutionProperties();
+				// Do not strip execute locks while 3rd-person GoFatality is active.
+				if (CountInv("GoFatality") < 1)
+				{
+					PB_UnsetPlayerExecutionProperties();
+				}
 				A_TakeInventory("KeepLaserDeactivated", 1);
 				A_TakeInventory("ToggleEquipment", 1);
 				PB_SetUsingMelee(false);
 				PB_SetUsingEquipment(false);
-				A_Overlay(-10, "FirstPersonLegsStand");
+				PB_RestoreWeaponMiniOverlays();
 			}
 			TNT1 A 0 A_JumpIfInventory("SawSelected", 1, "OnLoop");
 			TNT1 AAAA 0 A_Jump(256, "SelectAnimation");
@@ -2364,14 +2647,25 @@ class PB_WeaponBase : DoomWeapon
 			Loop;
 
 		DoFatality:
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
 			TNT1 A 0 A_TakeInventory("Fear", 1);
 			TNT1 A 0 {
 				if (GetCVar("be_Protection") == 1)
 					A_GiveInventory("Superarmor", 1);
 			}
-			TNT1 A 0;
-			Goto Steady;
+			Goto GloryKillPunchWait;
+
+		GloryKillPunchWait:
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			TNT1 A 1 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			Goto PB_FinisherCleanup;
 
 		DoingFatality:
 			TNT1 A 1 SetPlayerProperty(0, 1, 0);
@@ -2382,8 +2676,8 @@ class PB_WeaponBase : DoomWeapon
 			TNT1 A 0 {
 				PB_SetUsingMelee(false);
 			}
-			TNT1 A 0;
-			Goto DoFatality;
+			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "DoingFatality");
+			Goto PB_FinisherCleanup;
 
 		PermormGloryKill:
 			TNT1 A 0 {

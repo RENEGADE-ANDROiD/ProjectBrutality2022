@@ -186,7 +186,7 @@ Class QuakePlayer : PlayerPawn
 			}
 			else
 			{
-				ZMBob = Vel.XY.Length() * player.GetMoveBob(); //this way all GetMoveBob() values are meaningful
+				ZMBob = Vel.XY.Length() * player.GetMoveBob();
 			}
 			
 			if(!ZMBob)
@@ -212,7 +212,7 @@ Class QuakePlayer : PlayerPawn
 			if(player.health > 0)
 			{
 				HeightAngle = Level.maptime / (120 * TICRATE / 35.) * 360.;
-				bob = player.GetStillBob() * sin(HeightAngle);
+				bob = 0;
 			}
 			else
 			{
@@ -1703,7 +1703,7 @@ Class QuakePlayer : PlayerPawn
 						
 					if(MoveRangeMulti)
 					{
-						Double BobAngle = (BobSpeed * player.GetWBobSpeed() * (BobTime - 1 + i)) * (360. / 8192.);
+						Double BobAngle = (BobSpeed * 1.0 * (BobTime - 1 + i)) * (360. / 8192.);
 						Double BobXMulti = (MoveRangeMulti * RangeX);
 						Double BobYMulti = (MoveRangeMulti * RangeY);
 						

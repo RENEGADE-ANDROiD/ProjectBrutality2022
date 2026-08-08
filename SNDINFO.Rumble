@@ -1,0 +1,22 @@
+// BiasedDoom / GZDoom 4.15+ controller haptics stubs.
+// Separate SNDINFO.* lump so UZDoom 4.14 / ZScript 4.5.0 pin does not parse $rumble
+// in the main SNDINFO.txt. Engines that support haptics auto-merge this lump.
+
+$rumble player/dashready SUBTLE
+$rumble LIGHTON NONE
+$rumble IronSights NONE
+$rumble MP4DGT LIGHT
+$rumble MP4DGG LIGHT
+$rumble MP4DG2 LIGHT
+$rumble RIFCL_CK LIGHT
+$rumble Glorykill MEDIUM
+$rumble Health_Med SUBTLE
+$rumble items/armor/Sshard SUBTLE
+$rumble Health_Small SUBTLE
+$rumble CLAP LIGHT
+$rumble blooddrop2 NONE
+$rumble demon/melee LIGHT
+$rumble BLOOOD LIGHT
+$rumble gore/headshot MEDIUM
+$rumble nashgore/gibsmall LIGHT
+$rumble blooddrop NONE

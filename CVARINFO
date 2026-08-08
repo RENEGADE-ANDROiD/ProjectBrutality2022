@@ -5,6 +5,8 @@ user int py_weaponwheel_invert = 0;
 user bool py_weaponwheel_musicfade = false;
 user bool pb_wheelbackgroundblur = true;
 user bool pb_weapon_wheel_enable = true;
+// Next/Prev uses Gearbox (weapon wheel) pick per slot when set; unset slots keep full cycle.
+user bool pb_wheel_preferred_cycle = true;
 user bool pb_toggle_aim_hold = true;
 user bool pb_bd_slide = true;
 
@@ -17,13 +19,6 @@ user bool bdv22_flying_meat = true;
 user bool bdv22_organs = true;
 user int bdv22_gore_mix = 50;
 user bool pb_enhanced_brutality_2022 = true;
-server bool pb_accudeath = true;
-server int accudeath_barreltype = 0;
-server int accudeath_rockettype = 0;
-server int accudeath_cacoballtype = 0;
-server float accudeath_lightsize = 1.0;
-server bool accudeath_stateoverride = false;
-server bool accudeath_dynamiclights = true;
 
 server bool pb_achievements = true;
 
@@ -162,15 +157,15 @@ server bool pb_weapon_recoil_extra_weapons = true;
 user bool pb_tac_enable = true;
 user bool pb_tac_ready_only = false;
 user bool pb_tac_move_only = false;
-user float pb_tac_roll_velocity = 4.0;
-user float pb_tac_roll_resistance = 0.6;
+user float pb_tac_roll_velocity = 2.0;
+user float pb_tac_roll_resistance = 0.30;
 user bool pb_tac_roll_cap = true;
 user float pb_tac_roll_cap_value = 12.0;
-user float pb_tac_lowering_scale = 0.5;
+user float pb_tac_lowering_scale = 0.90;
 user bool pb_tac_lean_enable = true;
 user float pb_tac_lean_angle = 12.0;
 user float pb_tac_lean_smoothing = 0.20;
-user float pb_tac_tilt_smoothing = 0.38;
+user float pb_tac_tilt_smoothing = 0.40;
 
 server int pb_restrictedmode = 0;
 
@@ -256,7 +251,7 @@ server int pb_NoAnnihilator = 0;
 server int pb_NoBaalgarDemon = 0;
 
 server int pb_NoLMG = 1;
-server bool pb_nodeagle = false;
+server bool pb_nodeagle = true;
 server int pb_NoMinigunUpgrade = 1;
 server int pb_NoAutoshotgunUpgrade = 1;
 server int pb_NoDBUpgrade = 1;
@@ -292,6 +287,7 @@ server int pb_LuckyBarrels = 1;
 // Default Weapon Roster: core guns = 0 (spawn On); extras = 1 (spawn Off).
 // See MENUDEF WeaponSpawns + KEYCONF pb_default_weapon_roster / pb_full_weapon_roster.
 server int pb_NoSMGWeapon = 0;
+// Locked always-spawn (no WeaponSpawns row). Legacy cfgs may still set this — ignored by ToggleWeaponRevolver.
 server int pb_NoRevolverWeapon = 0;
 server int pb_NoASGWeapon = 0;
 server int pb_NoCSSGWeapon = 1;
@@ -300,7 +296,8 @@ server int pb_NoCarbineWeapon = 0;
 server int pb_NoSuperGLWeapon = 0;
 server int pb_NoHeavyGLWeapon = 0;
 server int pb_NoM2PlasmaWeapon = 0;
-server int pb_NoPB_DarkMatterRifleWeapon = 0;
+server int pb_NoPB_DarkMatterRifleWeapon = 1; // Default Weapon Roster extra (Off); Full Roster On
+server int pb_NoPB_PulseCannonWeapon = 0; // Core Default Weapon Roster (Pulse Cannon)
 server int pb_NoPB_HarvesterOfSoulsWeapon = 0;
 server int pb_NoFreezerWeapon = 0;
 server int pb_NoRailgunWeapon = 0;
@@ -394,11 +391,11 @@ server float sv_strafetiltangle = 0.5;
 
 server bool sv_movetilt = false;
 server float sv_movetiltspeed = 15.000;
-server float sv_movetiltangle = 0.015;
-server float sv_movetiltscalar = 0.2;
+server float sv_movetiltangle = 0.01;
+server float sv_movetiltscalar = 0.6;
 
 server bool sv_turntilt = true;
-server float sv_turntiltscalar = 1.5;
+server float sv_turntiltscalar = 3.0;
 server bool sv_turntiltinvert = false;
 
 server bool sv_underwatertilt = true;
@@ -473,7 +470,7 @@ user	bool	pb_showlevelstats		= false;
 user	bool	pb_showammolist			= true;
 user	bool	pb_curmaxammolist		= true;
 user	bool	pb_hideunusedtypes		= true;
-nosave user bool pb_newmugshot			= false;
+nosave user bool pb_newmugshot			= true; // Disable PB Mugshot menu (NoYes) default Yes
 user	bool	pb_showblooddrops		= false;
 user	float	pb_blooddropsalpha		= 0.8;
 user	bool	pb_showglasscracks		= true;
@@ -622,7 +619,7 @@ user	bool	zm_yawswaydirection		= false;
 
 user	float	zm_pitchswaytype		= 0;
 
-user 	int		zm_offsetspeed			= 75;
+user 	int		zm_offsetspeed			= 25;
 user 	int		zm_offsetmaxrange		= 30;
 user 	bool	zm_offsetdirection		= false;
 
@@ -773,6 +770,7 @@ server int NoHellSmith = 0;
 server int NoHierophant = 0;
 server int NoIceDemon = 0;
 server int NoMarauder = 0;
+server int NoEternalDarkLord = 0;
 server int NoObsRavager = 0;
 server int NoPyrodemon = 0;
 server int NoQSGDreadTrooper = 0;
@@ -785,8 +783,6 @@ server int NoZombiemissiletank = 0;
 server int NoZombieplasmatank = 0;
 server int NoZombieTank = 0;
 server int NoZombietankelite = 0;
-
-Server Bool RS_AxeCheck = True;
 
 // ---- Gearbox (weapon/inventory wheel; GPLv3+ — zscript/gearbox/COPYING_Gearbox_GPLv3.txt) ----
 user int   gb_scale     = 1;
@@ -917,7 +913,7 @@ server int pb_pbx_items_flags = 0;
 server int pb_pbx_armors_flags = 0;
 server int pb_pbx_backpackreload_time = 70;
 server int pb_pbx_backpackreload_refill = 5;
-server bool pb_pbx_backpackreload_notify = true;
+server bool pb_pbx_backpackreload_notify = false;
 user int pb_pbx_dmgind_type = 0;
 user int pb_pbx_dmgind_timer = 35;
 user bool pb_pbx_dmgind_nocolor = false;
@@ -933,10 +929,9 @@ server int pb_NoEternalSoul = 0;
 server int pb_NoWhiteWidow = 0;
 
 
-// --- Staging Eight Picks (Whizby / Footsteps / Flashlight / Drops / Status / KeepWeap / Bullet Time) ---
+// --- Staging Eight Picks (Whizby / Footsteps / Flashlight / Status / KeepWeap / Bullet Time) ---
 user bool pb_altwhiz = false;
 user bool cl_footsteps = true;
-server int pb_weapon_drops = 1;
 server bool pb_status_effects = true;
 server bool pb_keepweapons = false;
 server bool pb_keep_pistol = false;

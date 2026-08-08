@@ -25,6 +25,7 @@ extend class PB_WeaponBase
 		case 'ObsidianRavager':
 		case 'IceDemon':
 		case 'PB_Marauder':
+		case 'PB_EternalDarkLord':
 		case 'PB_FleshWizard':
 		case 'D3Seeker':
 		case 'CyberSatyr':
@@ -121,24 +122,26 @@ extend class PB_WeaponBase
 	// Keep kit-less / Generic-fallback targets in front of the camera during the POV strip.
 	action void PB_PinExecutionTarget()
 	{
-		let m = GetPointer(AAPTR_PLAYER_GETTARGET);
-		if (!m || m.health <= 0)
+		Actor m = invoker.activeExecutionTarget;
+		Actor proxy = invoker.activeExecutionProxy;
+		if (!m || m.health <= 0 || !proxy)
 			return;
 		m.A_Stop();
 		m.vel = (0, 0, 0);
-		double spd = max(48.0, radius + m.radius + 8.0);
+		double spd = clamp(radius + 36.0, 48.0, 64.0);
 		vector3 neworigin = Vec3Offset(cos(angle) * spd, sin(angle) * spd, 0);
-		neworigin.z = m.pos.z;
-		m.SetOrigin(neworigin, true);
-		m.A_SetAngle(angle + 180, SPF_INTERPOLATE);
+		neworigin.z = invoker.activeExecutionAnchor.z;
+		proxy.SetOrigin(neworigin, false);
+		proxy.A_SetAngle(angle + 180, SPF_INTERPOLATE);
 	}
 
 	// Kit-less generic: kill on first impact beat (after pin hold), not during intro.
 	action void PB_ExecuteKillHeldTarget()
 	{
-		let m = GetPointer(AAPTR_PLAYER_GETTARGET);
+		Actor m = invoker.activeExecutionTarget;
 		if (m && m.health > 0)
-			m.A_Die("Execution");
+			m.A_Die();
+		invoker.PB_ClearActiveGenericExecution();
 	}
 action StateLabel PB_ExecutionHellDuke() {
 		StateLabel result;
@@ -384,6 +387,22 @@ action StateLabel PB_ExecutionMarauder() {
 			case 3:
 				result = "Execution_Marauder3";
 				break;
+		}
+		return result;
+	}
+
+	action StateLabel PB_ExecutionEternalDarkLord() {
+		StateLabel result;
+		int selector = (random(1, 3));
+		if ((Pos.Z - floorz) > 8) {
+			A_Warp(AAPTR_PLAYER_GETTARGET, 0, 0, 54, WARPF_USECALLERANGLE|WARPF_NOCHECKPOSITION);
+			return "Execution_EternalDarkLord1";
+		}
+		switch (selector) {
+		case 1: result = "Execution_EternalDarkLord1"; break;
+		case 2: result = "Execution_EternalDarkLord2"; break;
+		case 3: result = "Execution_EternalDarkLord3"; break;
+		default: result = "Execution_EternalDarkLord1"; break;
 		}
 		return result;
 	}
@@ -1041,11 +1060,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 
 	// Realm 667 - Blood Ghost (KILLA DIO). Humanoid silhouette flying ghost.
-	// Grants ExecutionToken to the target so the cacodemon-pattern SetState(null)
-	// vanish path runs cleanly while the visual PB_Realm667_BloodGhost_Execution
-	// actor plays through the dismemberment animation next to the player.
+	// PB_Execute grants the target token only after this selected state resolves.
 	action StateLabel PB_ExecutionBloodGhost() {
-		A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET);
 		StateLabel result;
 		int selector = random(1, 2);
 		FLineTraceData RemoteRay;
@@ -1071,10 +1087,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 	}
 
 	// Realm 667 - Blood Skull (Gothic). Tiny floating skull.
-	// Single execution variant -- no humanoid body to animate against, so the visual
-	// actor plays the source death frames at an offset that matches the player aim.
+	// Single execution variant; PB_Execute commits the target token after resolution.
 	action StateLabel PB_ExecutionBloodSkull() {
-		A_GiveInventory("ExecutionToken", 1, AAPTR_PLAYER_GETTARGET);
 		StateLabel result;
 		FLineTraceData RemoteRay;
 		bool wallcheck = LineTrace(
@@ -1105,10 +1119,6 @@ action StateLabel PB_ExecutionCrackodemon() {
 		if (monster.BloodColor == colorBlue)
 			PB_SetExecutionBlueBlood(true);
 
-		A_Stop();
-		PB_SetPlayerExecutionProperties();
-		A_SetCrosshair(5);
-
 		if (monster is "PB_Imp" || monster is "PB_Imp1" || monster is "PB_ImpGK" || monster is "PB_Imp1GK")
 			return PB_ExecuteImp();
 		if (monster is "PB_ShotgunGuy" || monster is "PB_Sergeant" || monster is "PB_ShotgunGuyGK")
@@ -1134,6 +1144,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 			return PB_ExecutionIceDemon();
 		case 'PB_Marauder':
 			return PB_ExecutionMarauder();
+		case 'PB_EternalDarkLord':
+			return PB_ExecutionEternalDarkLord();
 		case 'PB_FleshWizard':
 			return PB_ExecutionFleshWizard();
 		case 'D3Seeker':

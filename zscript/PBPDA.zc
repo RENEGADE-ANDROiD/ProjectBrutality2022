@@ -609,6 +609,10 @@ class PB_EventHandler : EventHandler
 	bool weaponFound;
 	bool monsterFound;
 	bool equipmentFound;
+	// UiTick must only SendNetworkEvent Reset* once per unlock burst (4.15 stream abort).
+	transient ui bool weaponFoundResetSent;
+	transient ui bool monsterFoundResetSent;
+	transient ui bool equipmentFoundResetSent;
 	bool DontTick;
 	bool NewGameStarted;
 	int uiTics;
@@ -1944,33 +1948,54 @@ class PB_EventHandler : EventHandler
 		}
 		if (weaponFound == true)
 		{
-			PDA_TryEnsureUiObjects(true);
+			if (uiObjects.Size() < 1)
+				PDA_TryEnsureUiObjects(true);
+			int weapUnlocks = 0;
+			string weapSingleHeader = "";
 			for (int foundWeapIndex = 0; foundWeapIndex < WeaponFoundName.size(); foundWeapIndex++)
-			for (int weapIndex = 0; weapIndex < pdaWeapTextArray.size(); weapIndex++)
 			{
-				for (int i = 0;i < uiObjects.Size();i++)
+				string foundCls = WeaponFoundName[foundWeapIndex];
+				for (int i = 0; i < uiObjects.Size(); i++)
 				{
-					if (uiObjects[i]
-					&& WeaponFoundName[foundWeapIndex] == pdaWeapTextArray[weapIndex].PDAWeapClassName
-					&& uiObjects[i].pdaWeapTextArray
-					&& uiObjects[i].pdaWeapTextArray.PDAWeapClassName == pdaWeapTextArray[weapIndex].PDAWeapClassName
-					&& uiObjects[i].dontdraw == true)
+					if (!uiObjects[i] || !uiObjects[i].pdaWeapTextArray || !uiObjects[i].dontdraw)
+						continue;
+					if (uiObjects[i].pdaWeapTextArray.PDAWeapClassName != foundCls)
+						continue;
+					if (!uiObjects[i].pdaWeapTextArray.found)
 					{
-						if (!uiObjects[i].pdaWeapTextArray.found)
-						{
-							S_StartSound("PDAOPEN",CHAN_AUTO,CHANF_DEFAULT,2);
-							Console.PrintF("New PDA Entry:"..uiObjects[i].pdaWeapTextArray.PDAWeaponHeader);
-							uiObjects[i].pdaWeapTextArray.found = true;
-						}
-						uiObjects[i].dontdraw = false;
+						weapUnlocks++;
+						if (weapUnlocks == 1)
+							weapSingleHeader = uiObjects[i].pdaWeapTextArray.PDAWeaponHeader;
+						uiObjects[i].pdaWeapTextArray.found = true;
 					}
+					uiObjects[i].dontdraw = false;
+					break;
 				}
-			}		
-			SendNetworkEvent("ResetWeaponName");
+			}
+			if (weapUnlocks == 1)
+			{
+				S_StartSound("PDAOPEN", CHAN_AUTO, CHANF_DEFAULT, 2);
+				Console.PrintF("New PDA Entry:" .. weapSingleHeader);
+			}
+			else if (weapUnlocks > 1)
+			{
+				S_StartSound("PDAOPEN", CHAN_AUTO, CHANF_DEFAULT, 2);
+				Console.PrintF("New PDA Entries: " .. weapUnlocks .. " weapons unlocked");
+			}
+			if (!weaponFoundResetSent)
+			{
+				weaponFoundResetSent = true;
+				SendNetworkEvent("ResetWeaponName");
+			}
 		}
+		else
+			weaponFoundResetSent = false;
 		if (monsterFound == true)
 		{
-			PDA_TryEnsureUiObjects(true);
+			if (uiObjects.Size() < 1)
+				PDA_TryEnsureUiObjects(true);
+			int monUnlocks = 0;
+			string monSingleName = "";
 			for (int mfi = 0; mfi < monsterFoundSlots.Size(); mfi++)
 			{
 				int mslot = monsterFoundSlots[mfi];
@@ -1982,17 +2007,38 @@ class PB_EventHandler : EventHandler
 						&& uiObjects[i].entrynumber == mslot
 						&& uiObjects[i].dontdraw == true)
 					{
-						S_StartSound("PDAOPEN",CHAN_AUTO,CHANF_DEFAULT,2);
-						Console.PrintF("New PDA Entry:" .. PDAMonsterStrings[mslot]);
+						monUnlocks++;
+						if (monUnlocks == 1)
+							monSingleName = PDAMonsterStrings[mslot];
 						uiObjects[i].dontdraw = false;
+						break;
 					}
 				}
 			}
-			SendNetworkEvent("ResetMonsterFound");
+			if (monUnlocks == 1)
+			{
+				S_StartSound("PDAOPEN",CHAN_AUTO,CHANF_DEFAULT,2);
+				Console.PrintF("New PDA Entry:" .. monSingleName);
+			}
+			else if (monUnlocks > 1)
+			{
+				S_StartSound("PDAOPEN",CHAN_AUTO,CHANF_DEFAULT,2);
+				Console.PrintF("New PDA Entries: " .. monUnlocks .. " monsters unlocked");
+			}
+			if (!monsterFoundResetSent)
+			{
+				monsterFoundResetSent = true;
+				SendNetworkEvent("ResetMonsterFound");
+			}
 		}
+		else
+			monsterFoundResetSent = false;
 		if (equipmentFound == true)
 		{
-			PDA_TryEnsureUiObjects(true);
+			if (uiObjects.Size() < 1)
+				PDA_TryEnsureUiObjects(true);
+			int eqUnlocks = 0;
+			string eqSingleName = "";
 			for (int efi = 0; efi < equipmentFoundSlots.Size(); efi++)
 			{
 				int eslot = equipmentFoundSlots[efi];
@@ -2004,14 +2050,32 @@ class PB_EventHandler : EventHandler
 						&& uiObjects[i].entrynumber == eslot
 						&& uiObjects[i].dontdraw == true)
 					{
-						S_StartSound("PDAOPEN",CHAN_AUTO,CHANF_DEFAULT,2);
-						Console.PrintF("New PDA Entry:" .. PDAEquipStrings[eslot]);
+						eqUnlocks++;
+						if (eqUnlocks == 1)
+							eqSingleName = PDAEquipStrings[eslot];
 						uiObjects[i].dontdraw = false;
+						break;
 					}
 				}
 			}
-			SendNetworkEvent("ResetEquipmentFound");
+			if (eqUnlocks == 1)
+			{
+				S_StartSound("PDAOPEN",CHAN_AUTO,CHANF_DEFAULT,2);
+				Console.PrintF("New PDA Entry:" .. eqSingleName);
+			}
+			else if (eqUnlocks > 1)
+			{
+				S_StartSound("PDAOPEN",CHAN_AUTO,CHANF_DEFAULT,2);
+				Console.PrintF("New PDA Entries: " .. eqUnlocks .. " equipment unlocked");
+			}
+			if (!equipmentFoundResetSent)
+			{
+				equipmentFoundResetSent = true;
+				SendNetworkEvent("ResetEquipmentFound");
+			}
 		}
+		else
+			equipmentFoundResetSent = false;
 		if (PDAMode && uiObjects.Size() >= 1)
 		{
 			double pdaArrowScale = clamp(Screen.GetHeight() / 240.0, 2.0, 6.0);
@@ -4882,12 +4946,14 @@ class PB_EventHandler : EventHandler
 		if (!playeringame[e.PlayerNumber]) return;
 		let pmo = players[e.PlayerNumber].mo;
 		if (!pmo) return;
+		PB_WeaponFeelDefaults.Apply(PlayerPawn(pmo));
 		let ppb = PlayerPawnBase(pmo);
 		if (ppb) { ppb.baseweaponpda = false; }
 		pmo.A_SetBlend("black",1.0,35);
 
 		if (!pmo.FindInventory("KeepWeapManager"))
 			pmo.GiveInventory("KeepWeapManager", 1);
+		PB_WheelSlotPrefs.Ensure(pmo);
 		PB_FlashlightUtil.SetupHolder(PlayerPawn(pmo));
 
 		bool hasSteps = false;
@@ -5252,7 +5318,12 @@ class PB_EventHandler : EventHandler
 			if (PDAMode)
 			{
 				if (players[e.Player].mo)
+				{
 					PB_PDAHandView.TryLower(players[e.Player].mo);
+					let ppb = PlayerPawnBase(players[e.Player].mo);
+					if (ppb)
+						ppb.PB_BailOutOrphanedExecutionLock();
+				}
 				SetPlayerProperty(1,0,4);
 				players[e.Player].timefreezer &= ~(1 << e.Player);
 				Level.SetFrozen(false);
@@ -5281,6 +5352,12 @@ class PB_EventHandler : EventHandler
 			}
 			else
 			{
+				if (players[e.Player].mo)
+				{
+					let ppbOpen = PlayerPawnBase(players[e.Player].mo);
+					if (ppbOpen)
+						ppbOpen.PB_BailOutOrphanedExecutionLock();
+				}
 				SetPlayerProperty(1,1,4);
 				int freezemask = 1 << e.Player;
 				players[e.Player].timefreezer |= freezemask;
@@ -5409,7 +5486,9 @@ class PB_EventHandler : EventHandler
 		{
 			weaponFound = true;
 			weaponFoundName.push(splittedStrings[1]);
-			PB_Achievements.OnPDAWeaponFound();
+			// StartItem AttachToOwner floods vuas_event netevents; skip until after spawn settle.
+			if (level.maptime >= 35)
+				PB_Achievements.OnPDAWeaponFound();
 		}
 		if (splittedStrings.Size() >= 2 && splittedStrings[0] ~== "foundmonster")
 		{

@@ -13,7 +13,7 @@ Actor PB_NailgunMajor : PB_Commando Replaces ChaingunGuy
   SpawnID 1330
   Obituary "%o was perforated by a nailgun major."
   Decal Bulletchip
-  Dropitem "DroppedPB_Nailgun", 256
+  Dropitem "PB_LootDrop_Nailguns", 256
   DropItem "PB_SentryDrop_Common" 5
   States
   {
@@ -1370,7 +1370,7 @@ actor BrutalizedNailgunMajor5: CurbstompedMarine
 
 Actor Vanilla_NailgunMajor : PB_NailgunMajor
 {
-	DropItem "DropedMinigun" 256
+	DropItem "PB_LootDrop_Nailguns" 256
 	DropItem "DropedGrenade" 5
 	
 	States

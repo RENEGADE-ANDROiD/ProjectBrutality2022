@@ -212,6 +212,7 @@ Class PB_Shotgun : PB_WeaponBase
 			}
 			Loop;
 		Fire:
+			TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 			TNT1 A 0 {
 				A_WeaponOffset(0,32);
 				A_SetRoll(0);
@@ -465,7 +466,7 @@ Class PB_Shotgun : PB_WeaponBase
 			SSHR E 1 A_SetPitch(pitch-0.2,SPF_INTERPOLATE);
 			SSHR FG 1 {
 				A_SetPitch(pitch+0.1,SPF_INTERPOLATE);
-				A_DoPBWeaponAction(WRF_NOSECONDARY);
+				return A_DoPBWeaponAction(WRF_NOSECONDARY);
 			}
 			TNT1 A 0 A_DoPBWeaponAction(WRF_NOBOB);
 			loop;
@@ -1064,7 +1065,7 @@ Class PB_Shotgun : PB_WeaponBase
 			SSHR E 1 A_SetPitch(pitch-0.2,SPF_INTERPOLATE);
 			SSHR FG 1 {
 				A_SetPitch(pitch+0.1,SPF_INTERPOLATE);
-				A_DoPBWeaponAction(WRF_NOBOB);
+				return A_DoPBWeaponAction(WRF_NOBOB);
 			}
 			TNT1 A 0 {
 				A_Giveinventory("ShotgunAmmo",1);

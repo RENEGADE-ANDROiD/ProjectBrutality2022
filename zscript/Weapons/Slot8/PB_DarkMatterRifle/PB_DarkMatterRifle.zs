@@ -158,13 +158,6 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "IdleFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "IdleIceBarrel");
 		TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
-		TNT1 A 0 A_JumpIfInventory("Select_PB_DMR_DualWield", 1, "WSpecDual");
-		TNT1 A 0 A_JumpIfInventory("Select_PB_DMR_SuperBall", 1, "WSpecSuperBall");
-		TNT1 A 0 A_JumpIfInventory("Select_PB_DMR_GravityBomb", 1, "WSpecGravity");
-		Goto Ready3;
-
-		WSpecDual:
-		TNT1 A 0 A_TakeInventory("Select_PB_DMR_DualWield", 1);
 		TNT1 A 0 A_JumpIfInventory("IsPlayingAsProjectBrutality", 1, 2);
 		TNT1 A 0 A_Print("No Dual wield in Classic Mode!");
 		Goto Ready3;
@@ -195,26 +188,6 @@ class PB_DarkMatterRifle : PB_WeaponBase
 			A_TakeInventory("PB_DualDarkMatterFireAnimation", 1);
 		}
 		"DPCS" EDCBA 1;
-		Goto Ready3;
-
-		WSpecSuperBall:
-		TNT1 A 0 {
-			A_TakeInventory("Select_PB_DMR_SuperBall", 1);
-			A_TakeInventory("Select_PB_DMR_GravityBomb", 1);
-			A_SetInventory("PB_DMR_GravityAltMode", 0);
-			A_PlaySound("menu/choose", CHAN_AUTO);
-			A_Print("\ctAlt-Fire: Super Plasma Ball");
-		}
-		Goto Ready3;
-
-		WSpecGravity:
-		TNT1 A 0 {
-			A_TakeInventory("Select_PB_DMR_SuperBall", 1);
-			A_TakeInventory("Select_PB_DMR_GravityBomb", 1);
-			A_SetInventory("PB_DMR_GravityAltMode", 1);
-			A_PlaySound("menu/choose", CHAN_AUTO);
-			A_Print("\ctAlt-Fire: Gravity Singularity");
-		}
 		Goto Ready3;
 
 		Deselect:
@@ -409,6 +382,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		CoolAfterAltFire:
 		TNT1 A 0 PB_WeaponRecoilBasic(-1.15);
 		TNT1 A 0 A_TakeInventory("PB_DarkMatterMag", DMR_SUPER_COST);
+		TNT1 A 0 A_SetInventory("PB_DMR_GravityAltMode", 1);
 		"PZCR" A 1 A_ZoomFactor(0.90);
 		"PZCR" A 1 A_ZoomFactor(0.95);
 		"PZCR" A 1 A_ZoomFactor(0.975);
@@ -504,6 +478,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		CoolAfterGravAlt:
 		TNT1 A 0 PB_WeaponRecoilBasic(-1.15);
 		TNT1 A 0 A_TakeInventory("PB_DarkMatterMag", DMR_GRAV_COST);
+		TNT1 A 0 A_SetInventory("PB_DMR_GravityAltMode", 0);
 		"PZCR" A 1 A_ZoomFactor(0.90);
 		"PZCR" A 1 A_ZoomFactor(0.95);
 		"PZCR" A 1 A_ZoomFactor(0.975);

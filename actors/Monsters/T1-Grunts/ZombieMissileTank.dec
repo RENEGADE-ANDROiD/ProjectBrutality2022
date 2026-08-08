@@ -13,7 +13,8 @@ ACTOR ZombieMissileTank
     PainSound "ZMTank/pain"
     DeathSound "ZMTank/death"
     DropItem PB_RocketZombie
-    DropItem "PB_SentryDrop_TankMissile" 16
+    DropItem "PB_SentryDrop_TankMissile" 256
+    DropItem "PB_SentryDrop_Any" 256
     Obituary "%o was exploded by a zombie in missile a tank."
     MONSTER 
     +FLOORCLIP

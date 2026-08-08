@@ -156,12 +156,7 @@ Extend class PB_WeaponBase
 
 	action State PB_FireExecuteCheck()
 	{
-		if (CountInv("NoFatality") != 0)
-			return ResolveState(null);
-		let c = CVar.GetCVar("pb_experimental", player);
-		if (!c || !c.GetBool())
-			return ResolveState(null);
-		return PB_Execute();
+		return PB_DispatchAutoFireFinisher();
 	}
 
 	// ------------------------------------------------------------------

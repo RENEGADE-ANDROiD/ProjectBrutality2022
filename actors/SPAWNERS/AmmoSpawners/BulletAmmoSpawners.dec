@@ -38,10 +38,15 @@ Actor ClipBoxSpawnDiceMain : DemonPickup
 		TNT1 A 0 A_JumpIfInventory("IsClipBox", 1, "SpawnClipBox")
 		loop
 	SpawnBulletKit:
+		TNT1 A 0 A_Jump(16,"SpawnUpgrade")
 		TNT1 A 0 A_SpawnItemEx("BulletKit",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnClipBox:
+		TNT1 A 0 A_Jump(16,"SpawnUpgrade")
 		TNT1 A 0 A_SpawnItemEx("NewClipBox",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
+	SpawnUpgrade:
+		TNT1 A 0 A_SpawnItemEx("UpgradeSpawner",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	}
 }

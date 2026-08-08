@@ -123,9 +123,16 @@ Actor ArchvilePackSpawner : Demonpickup
 		TNT1 A 0 A_SpawnItemEx("PB_Archvile",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
 		Stop
 	SpawnMarauder:
-		TNT1 A 0 A_JumpIf(GetCvar("NoMarauder") == 1, "ArchPostMarauder")
+		TNT1 A 0 A_JumpIf(GetCvar("NoMarauder") == 1 && GetCvar("NoEternalDarkLord") == 1, "ArchPostMarauder")
+		TNT1 A 0 A_JumpIf(GetCvar("NoEternalDarkLord") == 1, "SpawnMarauderOnly")
+		TNT1 A 0 A_JumpIf(GetCvar("NoMarauder") == 1, "SpawnEternalDarkLord")
+		TNT1 A 0 A_Jump(102, "SpawnEternalDarkLord")
+	SpawnMarauderOnly:
 		TNT1 A 0 A_SpawnItemEx("PB_Marauder",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		ArchPostMarauder:
+		Goto ArchPostMarauder
+	SpawnEternalDarkLord:
+		TNT1 A 0 A_SpawnItemEx("PB_EternalDarkLord",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+	ArchPostMarauder:
 		Stop
 	SpawnIceVile:
 		TNT1 A 0 A_JumpIf(GetCvar("pb_NoIceVile") == 1, "ArchPostIceVile")

@@ -39,7 +39,7 @@ class PBWP_CA_WeaponBase : PB_WeaponBase
 		if (CountInv("GoFatality") >= 1)
 		{
 			SetPlayerProperty(0, 1, 0);
-			return ResolveState("Steady");
+			return ResolveState("PB_FinisherCleanup");
 		}
 		SetPlayerProperty(0, 0, 0);
 		SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);

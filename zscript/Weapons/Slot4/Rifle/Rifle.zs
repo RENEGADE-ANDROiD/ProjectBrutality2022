@@ -42,8 +42,10 @@ class Rifle : PB_WeaponBase
 	states
 	{
 		Steady:
-		TNT1 A 1;
-		Goto Ready;
+			TNT1 A 1;
+			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
+			Goto GoingToReady;
 		
 		InspectUpgrade:
 			TNT1 A 0 {
@@ -1523,6 +1525,7 @@ class Rifle : PB_WeaponBase
 	
 		
 		Fire:
+		TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 		"####" "#" 0 A_JumpIfInventory("FiringUnderBarrelGrenadeLauncher", 1, "FireGrenade");
 		"####" "#" 0 {
 			A_WeaponOffset(0,32);
@@ -1654,6 +1657,7 @@ class Rifle : PB_WeaponBase
 		
 	
 		Fire2:
+		TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 		"####" "#" 0 {
 			A_WeaponOffset(0,32);
 			A_SetCrosshair(5);

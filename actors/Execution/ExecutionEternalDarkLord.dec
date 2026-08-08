@@ -1,0 +1,76 @@
+ACTOR PB_EternalDarkLordExecution1
+{
+	Scale 0.33
+	Radius 5
+	+FORCEXYBILLBOARD
+	+CLIENTSIDEONLY
+	-SOLID
+	+THRUACTORS
+	+BRIGHT
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_FaceMaster
+		DARK K 10
+		TNT1 A 0 A_CustomMissile("MuchBlood3", 50, 0, random(0, 360), 2, random(60, 120))
+		TNT1 A 0 A_NoBlocking
+		DARK Q 8
+		TNT1 A 0 A_CustomMissile("Brutal_LiquidBlood2", 45, 0, random(0, 360), 2, random(40, 90))
+		DARK R 8
+		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2", 0, 0, Height / 2, random(0, 8), 0, random(0, 8), random(0, 360))
+		DARK STUV 6
+		DARK V -1
+		Stop
+	}
+}
+
+ACTOR PB_EternalDarkLordExecution2
+{
+	Scale 0.33
+	Radius 5
+	+FORCEXYBILLBOARD
+	+CLIENTSIDEONLY
+	-SOLID
+	+THRUACTORS
+	+BRIGHT
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_FaceMaster
+		DARK H 12
+		TNT1 A 0 A_CustomMissile("MuchBlood3", 40, 0, random(0, 360), 2, random(50, 110))
+		DARK E 10
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2", 0, 0, Height / 2, random(0, 8), 0, random(0, 8), random(0, 360))
+		DARK QRSTUV 5
+		DARK V -1
+		Stop
+	}
+}
+
+ACTOR PB_EternalDarkLordExecution3
+{
+	Scale 0.33
+	Radius 5
+	+FORCEXYBILLBOARD
+	+CLIENTSIDEONLY
+	-SOLID
+	+THRUACTORS
+	+BRIGHT
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_FaceMaster
+		DARK F 14
+		TNT1 A 0 A_CustomMissile("MuchBlood3", 55, 0, random(0, 360), 2, random(60, 120))
+		TNT1 A 0 A_NoBlocking
+		DARK S 10
+		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2", 0, 0, Height / 2, random(0, 8), 0, random(0, 8), random(0, 360))
+		DARK TUV 6
+		DARK V -1
+		Stop
+	}
+}

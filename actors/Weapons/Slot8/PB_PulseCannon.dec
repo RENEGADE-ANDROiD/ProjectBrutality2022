@@ -1,0 +1,329 @@
+// BRUTALDOOMPLUS Pulse Cannon fold — new slot-8 weapon (not Dark Matter Rifle).
+// Art: SPRITES/WEAPONS/Slot8/PB_PulseCannon (PULS/TROL/PUSS/RAMA/TABA; pickup PCCUA0).
+
+ACTOR PB_PulseCannonMag : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 50
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 50
+	+INVENTORY.IGNORESKILL
+	Inventory.Icon "PCCUA0"
+}
+
+ACTOR PB_PulseCannon : PB_Weapon
+{
+	Weapon.SelectionOrder 2450
+	Weapon.Kickback 50
+	Weapon.AmmoType1 "Cell"
+	Weapon.AmmoGive1 70
+	Weapon.AmmoUse1 0
+	Weapon.AmmoType2 "PB_PulseCannonMag"
+	Weapon.AmmoGive2 50
+	Weapon.AmmoUse2 0
+	Weapon.SlotNumber 8
+	Weapon.SlotPriority 0.09
+	+WEAPON.NOAUTOAIM
+	+WEAPON.AMMO_OPTIONAL
+	+WEAPON.NO_AUTO_SWITCH
+	Inventory.PickupSound "weapons/PulseCannon/Draw"
+	Inventory.PickupMessage "$PB_PICKUP_PB_PULSECANNON"
+	Inventory.Icon "PCCUA0"
+	Obituary "%o was shredded by %k's Pulse Cannon."
+	Tag "Pulse Cannon"
+	Scale 0.9
+	States
+	{
+	Steady:
+		TNT1 A 1
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		TNT1 A 0 SetPlayerProperty(0, 0, 0)
+		TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN)
+		Goto Ready
+
+	Spawn:
+		PCCU A -1 Bright
+		Stop
+
+	Ready:
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		Goto Ready3
+
+	Ready3:
+		TNT1 A 0
+		{
+			A_TakeInventory("PB_LockScreenTilt", 1);
+			PB_HandleCrosshair(76);
+		}
+		PULS A 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS B 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS C 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS D 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS E 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS F 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS G 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS H 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS G 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS F 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS E 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS D 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS C 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		PULS B 2 Bright A_DoPBWeaponAction(WRF_ALLOWRELOAD)
+		Goto Ready3+1
+
+	Deselect:
+		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel")
+		TNT1 A 0
+		{
+			A_WeaponOffset(0, 32);
+			A_SetRoll(0);
+			PB_HandleCrosshair(76);
+			A_TakeInventory("PB_LockScreenTilt", 1);
+			A_StopSound(CHAN_WEAPON);
+			A_StopSound(5);
+		}
+		TABA DCBA 1 Bright
+		TNT1 A 0 A_Lower
+		Wait
+
+	Select:
+		TNT1 A 0
+		{
+			A_WeaponOffset(0, 32);
+			A_SetRoll(0);
+			PB_HandleCrosshair(76);
+			A_TakeInventory("PB_LockScreenTilt", 1);
+		}
+		TNT1 A 0 A_TakeInventory("HasBarrel", 1)
+		TNT1 A 0 A_TakeInventory("HasIceBarrel", 1)
+		TNT1 A 0 A_TakeInventory("HasBurningBarrel", 1)
+		TNT1 A 0 A_TakeInventory("GrabbedBarrel", 1)
+		TNT1 A 0 A_TakeInventory("GrabbedIceBarrel", 1)
+		TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel", 1)
+		Goto SelectFirstPersonLegs
+	SelectContinue:
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		TNT1 A 0 PB_WeapTokenSwitch("PlasmaGunSelected")
+		TNT1 A 0 PB_RespectIfNeeded
+		TNT1 A 0 A_GiveInventory("HasPlasmaWeapon", 1)
+		Goto SelectAnimation
+	SelectAnimation:
+		TABA ABCD 1 Bright
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/Draw", 5)
+		TNT1 A 0 A_JumpIfInventory("PB_PulseCannonMag", 1, "Ready3")
+		Goto Reload
+
+	NoAmmo:
+		TNT1 A 0 A_TakeInventory("Reloading", 1)
+		TNT1 A 0 A_PlaySound("weapons/empty", 4)
+		PULS A 5 Bright A_WeaponReady(WRF_NOFIRE | WRF_ALLOWRELOAD)
+		TNT1 A 0 A_JumpIfInventory("Cell", 1, "Reload")
+		Goto Ready3
+
+	Fire:
+		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel")
+		TNT1 A 0
+		{
+			A_WeaponOffset(0, 32);
+			A_SetRoll(0);
+			if (CountInv("NoFatality") == 0 && GetCVAR("pb_auto_fatality_fire") == 1)
+			{
+				return PB_TryAutoFatalityOnFire();
+			}
+			return state("");
+		}
+		TNT1 A 0 A_TakeInventory("Reloading", 1)
+		TNT1 A 0 A_JumpIfInventory("PB_PulseCannonMag", 1, "FireBurst")
+		TNT1 A 0 A_JumpIfInventory("Cell", 1, "Reload")
+		Goto NoAmmo
+	FireBurst:
+		TNT1 A 0 A_TakeInventory("PB_PulseCannonMag", 1)
+		TNT1 A 0 A_AlertMonsters
+		TNT1 A 0 A_Quake(1, 2, 0, 12, "")
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/Fire", CHAN_WEAPON)
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall2", 0, 0, 0, -5)
+		PULS M 1 Bright
+		PULS Y 1 Bright
+		PULS Z 1 Bright
+		PULS Y 1 Bright
+		TNT1 A 0 A_ReFire("Fire")
+		Goto Ready3
+
+	AltFire:
+		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel")
+		TNT1 A 0 A_TakeInventory("Reloading", 1)
+		TNT1 A 0 A_JumpIfInventory("PB_PulseCannonMag", 10, "AltCharge")
+		TNT1 A 0 A_JumpIfInventory("Cell", 1, "Reload")
+		Goto NoAmmo
+	AltCharge:
+		TNT1 A 0 A_TakeInventory("PB_PulseCannonMag", 10)
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/Charge", 5)
+		PULS A 1 Bright
+	AltHold:
+		PULS I 2 Bright Offset(0, 33)
+		PULS J 2 Bright Offset(0, 32)
+		PULS K 2 Bright Offset(0, 33)
+		PULS L 2 Bright Offset(0, 32)
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/BeepLow", 5)
+		PULS I 2 Bright Offset(0, 33)
+		PULS J 2 Bright Offset(0, 32)
+		PULS K 2 Bright Offset(0, 33)
+		PULS L 2 Bright Offset(0, 32)
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/BeepLow", 5)
+		PULS I 2 Bright Offset(0, 33)
+		PULS J 2 Bright Offset(0, 32)
+		PULS K 2 Bright Offset(0, 33)
+		PULS L 2 Bright Offset(0, 32)
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/BeepLow", 5)
+		PULS I 2 Bright Offset(0, 33)
+		PULS J 2 Bright Offset(0, 32)
+		PULS K 2 Bright Offset(0, 33)
+		PULS L 2 Bright Offset(0, 32)
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/BeepLow", 5)
+		PULS I 2 Bright Offset(0, 33)
+		PULS J 2 Bright Offset(0, 32)
+		PULS K 2 Bright Offset(0, 33)
+		PULS L 2 Bright Offset(0, 32)
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/BeepLow", 5)
+		PULS I 2 Bright Offset(0, 33)
+		PULS J 2 Bright Offset(0, 32)
+		PULS K 2 Bright Offset(0, 33)
+		PULS L 2 Bright Offset(0, 32)
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/BeepLow", 5)
+		TNT1 A 0 A_ReFire("AltHold")
+		TNT1 A 0 A_AlertMonsters
+		TNT1 A 0 A_ZoomFactor(0.9)
+		PULS M 3 Bright A_Recoil(3)
+		PULS M 1 Bright Offset(0, 33)
+		PULS M 1 Bright Offset(0, 32)
+		PULS M 1 Bright
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/AltFire", CHAN_WEAPON)
+		TNT1 A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall", -8, 0, -1, 0, 0, random(-2, 2))
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall", -6, 0, -1, 0, 0, random(-2, 2))
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall", -4, 0, -1, 0, 0, random(-2, 2))
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall", -2, 0, -1, 0, 0, random(-2, 2))
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall", 0, 0, -1, 0, 0, 0)
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall", 1, 0, -1, 0, 0, random(-2, 2))
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall", 2, 0, -1, 0, 0, random(-2, 2))
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall", 4, 0, -1, 0, 0, random(-2, 2))
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall", 6, 0, -1, 0, 0, random(-2, 2))
+		TNT1 A 0 A_FireCustomMissile("PB_PulseCannonBall", 8, 0, -1, 0, 0, random(-2, 2))
+		RAMA ABCDEF 1 Bright
+		TNT1 A 0 A_FireCustomMissile("SmokeSpawner", 0, 0, 0, 5)
+		RAMA F 30 Bright
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/BeepBeep", 5)
+		RAMA FEDCBA 1 Bright
+		Goto Ready3
+
+	Reload:
+		TNT1 A 0 A_TakeInventory("Reloading", 1)
+		TNT1 A 0 A_JumpIfInventory("PB_PulseCannonMag", 50, "Ready3")
+		TNT1 A 0 A_JumpIfInventory("Cell", 1, "ReloadFill")
+		Goto Ready3
+	ReloadFill:
+		TNT1 A 0 A_JumpIfInventory("PB_PulseCannonMag", 50, "ReloadAnim")
+		TNT1 A 0 A_JumpIfInventory("Cell", 1, 1)
+		Goto ReloadAnim
+		TNT1 A 0 A_GiveInventory("PB_PulseCannonMag", 1)
+		TNT1 A 0 A_TakeInventory("Cell", 1)
+		Loop
+	ReloadAnim:
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/Reload1", 5)
+		TROL ABCDEFGGHHIIJJKKLL 1 Bright
+		TROL M 7 Bright
+		TROL NNOOPP 1 Bright
+		TNT1 A 0 A_PlaySound("weapons/PulseCannon/Reload2", 5)
+		TROL QQRRSSTTUUVVWWXXYZ 1 Bright
+		TRXL ABC 1 Bright
+		TNT1 A 0 A_TakeInventory("Reloading", 1)
+		Goto Ready3
+
+	FlashKicking:
+		RAMA ABCDEF 1 Bright
+		RAMA F 6 Bright
+		RAMA FEDCBA 1 Bright
+		Goto Ready3
+
+	FlashAirKicking:
+		RAMA ABCDEF 1 Bright
+		RAMA F 6 Bright
+		RAMA FEDCBA 1 Bright
+		RAMA A 1 Bright
+		Goto Ready3
+
+	FlashSlideKicking:
+		RAMA AB 2 Bright
+		RAMA CDEF 2 Bright
+		RAMA FFFFFF 2 Bright
+		RAMA EDCB 2 Bright
+	FlashSlideKickingStop:
+		RAMA BA 1 Bright
+		RAMA A 1 Bright
+		Goto Ready3
+
+	FlashPunching:
+		RAMA ABCDEF 1 Bright
+		RAMA F 6 Bright
+		RAMA FEDCBA 1 Bright
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
+		Stop
+	}
+}
+
+ACTOR PB_PulseCannonBall : FastProjectile
+{
+	Radius 10
+	Height 2
+	Speed 60
+	Damage 24
+	DamageType Blackhole
+	Decal "SmallerScorch"
+	Projectile
+	+RANDOMIZE
+	-NOBLOCKMAP
+	+NOBLOOD
+	+NORADIUSDMG
+	+THRUSPECIES
+	+MTHRUSPECIES
+	Species "Marines"
+	Scale 1.6
+	SeeSound "PAILGF3"
+	DeathSound "weapons/plasmax"
+	Obituary "%o was shredded by %k's Pulse Cannon."
+	States
+	{
+	Spawn:
+	Spawn1:
+		PUSS A 2 Bright A_SpawnItem("PinkIonFlare", 0, 0)
+		TNT1 A 0 A_SpawnItemEx("PurpleTrailSparksSmall", 0, 0, 0, 0, 0, 0, 0, 128)
+		PUSS B 2 Bright A_SpawnItem("PurplePlasmaFlare", 0, 0)
+		Loop
+	XDeath:
+		TNT1 A 0 A_CustomMissile("PurplePlasmaFire", 0, 0, random(0, 360), 2, random(0, 360))
+		TNT1 AAAAA 0 A_CustomMissile("PurplePlasmaParticle", 0, 0, random(0, 360), 2, random(0, 360))
+		TNT1 B 1 A_Explode(9, 50, 0)
+		TNT1 B 4
+		Stop
+	Death:
+		TNT1 A 0 A_SpawnItemEx("DetectFloorCraterSmall", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 0 A_SpawnItemEx("DetectCeilCraterSmall", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 0 A_CustomMissile("PurplePlasmaFire", 0, 0, random(0, 360), 2, random(0, 360))
+		TNT1 AAAAA 0 A_CustomMissile("PurplePlasmaParticle", 0, 0, random(0, 360), 2, random(0, 360))
+		TNT1 B 1
+		TNT1 B 4
+		TNT2 AAAAAAAAA 9 A_CustomMissile("PlasmaSmoke", 1, 0, random(0, 360), 2, random(0, 160))
+		Stop
+	}
+}
+
+ACTOR PB_PulseCannonBall2 : PB_PulseCannonBall
+{
+	Damage 15
+}

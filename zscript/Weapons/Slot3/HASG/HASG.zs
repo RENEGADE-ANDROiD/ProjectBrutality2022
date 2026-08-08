@@ -292,10 +292,7 @@ class HASG : PB_WeaponBase
             A_WeaponOffset(0, 32);
             A_SetRoll(0);
             A_SetCrosshair(39);
-            if (CountInv("NoFatality") == 0 && GetCVAR("ttwcfbex") == 1) {
-                return PB_Execute();
-            }
-            return ResolveState(null);
+            return PB_DispatchAutoFireFinisher();
         }
         TNT1 A 0 A_JumpIfInventory("ASGDrum", 1, "Fire2Drumed");
         LGZF A 1 BRIGHT {
@@ -470,10 +467,7 @@ class HASG : PB_WeaponBase
             A_WeaponOffset(0, 32);
             A_SetRoll(0);
             A_SetCrosshair(39);
-            if (CountInv("NoFatality") == 0 && GetCVAR("ttwcfbex") == 1) {
-                return PB_Execute();
-            }
-            return ResolveState(null);
+            return PB_DispatchAutoFireFinisher();
         }
         TNT1 A 0 A_JumpIfInventory("ASGChamber", 1, 1);
         Goto Reload;

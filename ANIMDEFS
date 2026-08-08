@@ -253,3 +253,22 @@ texture doomcurs
 	pic CTROLL3 tics 0.5
 	pic CTROLL3 tics 0.5
 
+
+// PB Portal Blasters portals - 8 players x 2 portal cams
+cameratexture "PORTX100" 256 512
+cameratexture "PORTX101" 256 512
+cameratexture "PORTX102" 256 512
+cameratexture "PORTX103" 256 512
+cameratexture "PORTX104" 256 512
+cameratexture "PORTX105" 256 512
+cameratexture "PORTX106" 256 512
+cameratexture "PORTX107" 256 512
+cameratexture "PORTX200" 256 512
+cameratexture "PORTX201" 256 512
+cameratexture "PORTX202" 256 512
+cameratexture "PORTX203" 256 512
+cameratexture "PORTX204" 256 512
+cameratexture "PORTX205" 256 512
+cameratexture "PORTX206" 256 512
+cameratexture "PORTX207" 256 512
+
