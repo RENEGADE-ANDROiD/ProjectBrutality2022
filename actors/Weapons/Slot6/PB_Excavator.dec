@@ -376,6 +376,10 @@ ACTOR PB_Excavator : PB_Weapon
 			Goto Ready3
 
 		Fire:
+			TNT1 A 0
+			{
+				return PB_TryAutoFatalityOnFire();
+			}
 			TNT1 A 0 A_JumpIfInventory ("EquippedObject", 1, "PrimaryFireObject")
 			TNT1 A 0 A_SetCrosshair(78)
 			TNT1 A 0 A_JumpIfInventory("SawBladeMode", 1, "FireSawBlade")

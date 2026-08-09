@@ -189,6 +189,8 @@ class PB_Pistol : PB_WeaponBase
 		Loop;
 		IdleRight_Overlay:
 		D2GR A 1 {
+			if (PB_TryApplyAutoFatalityOnWeapon())
+				return ResolveState(null);
 			if (CountInv("SilencerEquipped") == 1 ) {
 				A_SetOverlaySprite(11, "D33R");
 			}

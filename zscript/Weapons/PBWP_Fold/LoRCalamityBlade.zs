@@ -134,7 +134,7 @@ class LoRCalamityBlade : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "ThrowIceBarrel");
-		TNT1 A 0 PB_TryAutoFatalityOnFire();
+		TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 		TNT1 A 0 {
 				invoker.ChargeLevel = 0;
 				A_WeaponOffset(0,32);
