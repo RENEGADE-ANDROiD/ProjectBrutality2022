@@ -143,7 +143,19 @@ class PB_WeaponBase : DoomWeapon
 		}
 		if (st && savedWeapon == GetClassName() && owner && owner.player
 			&& owner.player.ReadyWeapon == self)
+		{
+			// Dual guns idle on an invisible ReadyToFireDualWield TNT1 loop with art on
+			// overlays 10/11. FlashKicking clears those overlays; restoring the raw loop
+			// body blanks the weapon until ReadyDualWield re-arms them via Ready3.
+			State dualIdle = FindState('ReadyToFireDualWield');
+			if (dualIdle && InStateSequence(st, dualIdle))
+				return FindState('Ready3');
+			PSprite left = owner.player.GetPSprite(10);
+			PSprite right = owner.player.GetPSprite(11);
+			if (dualIdle && (!left || !right || !left.CurState || !right.CurState))
+				return FindState('Ready3');
 			return st;
+		}
 		return FindState('Ready3');
 	}
 
@@ -585,6 +597,7 @@ class PB_WeaponBase : DoomWeapon
 		SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN );
 		SetPlayerProperty(0, 1, PROP_FLY);
 		invoker.executeLockStartTic = gametic;
+		PB_SetUsingMelee(true);
 		PB_SetExecutingEnemy(true);
 	}
 	
@@ -951,20 +964,14 @@ class PB_WeaponBase : DoomWeapon
 		if (gkDist > 150.)
 			gkDist = 150.;
 		if (PB_ResolveFinisherMonster(gkDist) != null)
-		{
-			PB_SetUsingMelee(true);
 			return ResolveState("PermormGloryKill");
-		}
 
 		let exp = CVar.FindCVar("pb_experimental");
 		if (!exp || !exp.GetBool())
 			return resolveState(null);
 		State st = PB_Execute();
 		if (st)
-		{
-			PB_SetUsingMelee(true);
 			return st;
-		}
 		return resolveState(null);
 	}
 
@@ -972,6 +979,21 @@ class PB_WeaponBase : DoomWeapon
 	action State PB_TryAutoFatalityOnFire()
 	{
 		return PB_DispatchAutoFireFinisher();
+	}
+
+	// Dual-wield overlays cannot return a PSP_WEAPON state; apply Auto-Fire onto the
+	// main weapon layer and clear hand overlays when a finisher is selected.
+	action bool PB_TryApplyAutoFatalityOnWeapon()
+	{
+		State st = PB_DispatchAutoFireFinisher();
+		if (!st)
+			return false;
+		let pl = invoker.PB_WeaponActionPlayer();
+		if (!pl)
+			return false;
+		pl.SetPSprite(PSP_WEAPON, st);
+		A_ClearOverlays(10, 11);
+		return true;
 	}
 	
 	// Shoutout to Matt on ZDoom forums for the helpful weapon functions.
@@ -2681,6 +2703,7 @@ class PB_WeaponBase : DoomWeapon
 
 		PermormGloryKill:
 			TNT1 A 0 {
+				PB_SetUsingMelee(true);
 				PB_Achievements.OnGloryKill();
 				A_PlaySound("GloryKill", CHAN_UI);
 				if (GetCVar("be_Protection") == 1)

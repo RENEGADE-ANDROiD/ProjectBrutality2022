@@ -610,6 +610,9 @@ Extend class PB_WeaponBase
 
 	action state A_DoPBRightAction(int minammo = 1)
 	{
+		if (PB_TryApplyAutoFatalityOnWeapon())
+			return ResolveState(null);
+
 		int firemodecvar = CVar.GetCVar("SingleDualFire", player).GetInt();
 		let ammoLeftType = invoker.ammotypeleft ? invoker.ammotypeleft : invoker.ammotype2;
 

@@ -145,7 +145,7 @@ class PB_MetalSniper : PB_WeaponBase
                 }
             }
             TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-            TNT1 A 0 PB_TryAutoFatalityOnFire();
+            TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
             TNT1 A 0
             {
                 A_WeaponOffset(0, 32);

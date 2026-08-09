@@ -435,7 +435,7 @@ class PB_M2Plasma : PB_WeaponBase
 			A_TakeInventory("PB_LockScreenTilt",1);
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 PB_TryAutoFatalityOnFire();
+		TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 		TNT1 A 0 {
 			A_StopSound(6);
 			A_WeaponOffset(0,32);

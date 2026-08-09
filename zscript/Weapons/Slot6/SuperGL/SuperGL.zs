@@ -183,7 +183,7 @@ Class PB_SuperGL : PB_WeaponBase
 				A_TakeInventory("GrenadeDetonator", 1);
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 PB_TryAutoFatalityOnFire();
+			TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 			TNT1 A 0 PB_jumpIfNoAmmo("Reload");
 			S002 A 0;
 			SL60 A 1 BRIGHT {
