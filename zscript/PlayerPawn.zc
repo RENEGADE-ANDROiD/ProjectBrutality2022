@@ -102,6 +102,7 @@ class PlayerPawnBase : PlayerPawn
 	float	PendulumLength;
 	vector3	GrappleVel;
 	vector3 Rope;
+	int		grapplesidespeed;
 	
 	
 	bool	PostLandingBob;
@@ -2195,6 +2196,7 @@ class PlayerPawnBase : PlayerPawn
 	void GrapplingMove()
 	{
 		Let Player = self.player;
+		if (!Player) return;
 		
 		if(!Player.OnGround) { Grappled = True; }
 		
@@ -2244,6 +2246,21 @@ class PlayerPawnBase : PlayerPawn
 			GrappleVel = SafeUnit3(Rope) * GrappleVel.Length();
 			Vel = GrappleVel;
 		}
+
+		// PBX-style strafe orbit: lateral accel after rope pull (both pull + pendulum).
+		int sideCap = int(MaxGroundSpeed);
+		if (sideCap < 1) sideCap = 1;
+		if (Player.cmd.sidemove > 0)
+			grapplesidespeed += 2;
+		else if (Player.cmd.sidemove < 0)
+			grapplesidespeed -= 2;
+		else if (grapplesidespeed > 0)
+			grapplesidespeed -= 2;
+		else if (grapplesidespeed < 0)
+			grapplesidespeed += 2;
+		grapplesidespeed = clamp(grapplesidespeed, -sideCap, sideCap);
+		Vector2 sidePush = RotateVector((0, -grapplesidespeed), Angle);
+		Vel.XY = Vel.XY + sidePush;
 		
 		PlayIdle();
 	}
@@ -2252,6 +2269,7 @@ class PlayerPawnBase : PlayerPawn
 	{
 		Rope = GrappleVel = (0, 0, 0);
 		PendulumLength = 0;
+		grapplesidespeed = 0;
 		GrappledMonster = Null;
 		Grappled = false;
 		if (HookFired)
@@ -3065,7 +3083,7 @@ Class HookTrail : Actor
 		+THRUSPECIES;
 		Radius 2;
 		Height 4;
-		Scale 0.45;
+		Scale 0.3375;
 		Species "HookTrail";
 	}
 
