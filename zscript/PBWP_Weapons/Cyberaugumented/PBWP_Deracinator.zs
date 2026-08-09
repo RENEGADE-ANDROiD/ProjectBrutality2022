@@ -72,7 +72,7 @@ class PBWP_Deracinator : PBWP_CA_WeaponBase
 
 		Fire:
 		TNT1 A 0 PBWP_CA_FatalityGate();
-		TNT1 A 0 PB_TryAutoFatalityOnFire();
+		TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");

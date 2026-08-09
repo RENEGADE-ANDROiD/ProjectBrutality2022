@@ -140,7 +140,7 @@ class PB_BDPRailgun : PB_WeaponBase
 
         Fire:
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 PB_TryAutoFatalityOnFire();
+			TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
             TNT1 A 0 {
 				A_SetRoll(0);
 				PB_HandleCrosshair(97);

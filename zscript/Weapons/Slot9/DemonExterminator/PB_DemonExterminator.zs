@@ -265,7 +265,7 @@ class PB_DemonExterminator : PB_WeaponBase
 			invoker.DEUM_SyncModeFromInventory();
 		}
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 PB_TryAutoFatalityOnFire();
+		TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 		TNT1 A 0 PB_DemonEx_BarrelThrowGate();
 		TNT1 A 0 A_JumpIf(invoker.ExterminatorMode == DEX_MODE_INCIN, "Fire.Incineration");
 		TNT1 A 0 A_JumpIf(invoker.ExterminatorMode == DEX_MODE_LIGHTNING, "Fire.Lightning");

@@ -221,7 +221,7 @@ class PB_Freezer : PB_WeaponBase
 				A_TakeInventory("PB_LockScreenTilt",1);
 			}
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 PB_TryAutoFatalityOnFire();
+			TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 			TNT1 A 0 A_JumpIfInventory("FreezerPistolToken",1,"FirePistol");
 			TNT1 A 0 A_JumpIfInventory("FireModeFreezerBeam",1,"FireBeam");
 			TNT1 A 0 PB_BailIfCannotFire("FreezerAmmo", 6, "Cell");

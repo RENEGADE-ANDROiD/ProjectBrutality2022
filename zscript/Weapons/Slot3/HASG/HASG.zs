@@ -216,7 +216,7 @@ class HASG : PB_WeaponBase
             A_SetCrosshair(39);
         }
         TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-        TNT1 A 0 PB_TryAutoFatalityOnFire();
+        TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
         TNT1 A 0 A_JumpIfInventory("ASGChamber", 1, 2);
         Goto Reload;
         TNT1 AAAA 0;
