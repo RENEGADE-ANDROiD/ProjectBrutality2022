@@ -31,7 +31,7 @@ Extend class PB_WeaponBase
 	Ammo AmmoLeft;
 	Property AmmoTypeLeft : AmmoTypeLeft;
 
-	// Dual-wield inventory token (PBWP fold: W_SMG, BlackDMR).
+	// Dual-wield inventory token (PBWP fold: W_SMG).
 	Name DualWieldToken;
 	property DualWieldToken : DualWieldToken;
 
@@ -456,23 +456,13 @@ Extend class PB_WeaponBase
 	}
 
 	// ------------------------------------------------------------------
-	// Upgrade-path handoff helpers. Used when a weapon upgrades into or
-	// downgrades out of a higher-tier variant (e.g. Revolver -> Deagle).
+	// Upgrade-path handoff helpers. Keep-all is permanent: base and upgraded
+	// variants coexist; wheel favorites control preferred Next/Prev.
+	// Legacy pb_keep* cvars are ignored (defaults true for old configs).
 	// ------------------------------------------------------------------
 	action bool PB_KeepWeaponsBlocksHandoff(string weapName)
 	{
-		let cv = CVar.FindCVar("pb_keepweapons");
-		if (!cv || !cv.GetBool())
-			return false;
-		string keepCvar = "";
-		if (weapName == "PB_Pistol") keepCvar = "pb_keep_pistol";
-		else if (weapName == "PB_Carbine") keepCvar = "pb_keep_carbine";
-		else if (weapName == "PB_SSG") keepCvar = "pb_keep_ssg";
-		else if (weapName == "PB_Revolver") keepCvar = "pb_keep_revolver";
-		if (keepCvar == "")
-			return false;
-		let kcv = CVar.FindCVar(keepCvar);
-		return kcv && kcv.GetBool();
+		return true;
 	}
 
 	action void PB_TakeIfUpgrade(string oldweap = "")
@@ -691,10 +681,8 @@ Extend class PB_WeaponBase
 		A_SetInventory("Zoomed",            0);
 
 		A_ClearOverlays(-999, -999);
-		A_Overlay(-777,  "Melee_Equipment_Handler_Overlay");
-		A_Overlay(-778,  "KickHandler_Overlay");
-		A_Overlay(-779,  "Equipment_Toggle_Handler_Overlay");
-		A_Overlay(-10, "FirstPersonLegsStand");
+		PB_ResetInterruptedFlashActions(true, true);
+		PB_RestoreWeaponMiniOverlays();
 
 		PB_SetUsingKick(false);
 		PB_SetUsingMelee(false);
@@ -934,11 +922,13 @@ Extend class PB_WeaponBase
 
 	action Actor PB_VisualRailBlue(int dummy = 0)
 	{
-		return PB_LightVisualRail("BulletPuff", 8000, 30, "TNT1A0", 0, "Normal", 0, 0, 0, TRF_NOSKY, 1, 10, STYLE_ADD, SPF_ROLL|SPF_FULLBRIGHT|SPF_NOTIMEFREEZE, 0.8, -0.1, -1, (0, 0, 0), 0, 0);
+		// Visible additive tracer beads (was TNT1A0 = invisible).
+		return PB_LightVisualRail("BulletPuff", 8000, 24, "TTTRA0", 0, "Normal", 0, 0, 0, TRF_NOSKY, 3, 14, STYLE_ADD, SPF_ROLL|SPF_FULLBRIGHT|SPF_NOTIMEFREEZE, 0.9, -0.15, -1, (0, 0, 0), 0, 0);
 	}
 
 	action Actor PB_VisualRailRed(int dummy = 0)
 	{
-		return PB_LightVisualRail("BulletPuff", 8000, 30, "TNT1A0", 0, "Normal", 0, 0, 0, TRF_NOSKY, 1, 10, STYLE_ADD, SPF_ROLL|SPF_FULLBRIGHT|SPF_NOTIMEFREEZE, 0.8, -0.1, -1, (0, 0, 0), 0, 0);
+		// Red tracer beads for Argent Fury / Extinction Ray air path.
+		return PB_LightVisualRail("BulletPuff", 8000, 24, "TTRRA0", 0, "Normal", 0, 0, 0, TRF_NOSKY, 3, 14, STYLE_ADD, SPF_ROLL|SPF_FULLBRIGHT|SPF_NOTIMEFREEZE, 0.9, -0.15, -1, (0, 0, 0), 0, 0);
 	}
 }

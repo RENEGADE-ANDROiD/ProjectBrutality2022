@@ -37,8 +37,7 @@ class PB_RocketLauncher : PB_WeaponBase
 	states
 	{
 		Steady:
-		TNT1 A 1;
-		Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Ready:
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
@@ -181,6 +180,8 @@ class PB_RocketLauncher : PB_WeaponBase
 				A_TakeInventory("HasExplosiveWeapon");
 				A_TakeInventory("RL_Cooldown", 26);
 				A_ZoomFactor(1.0);
+				A_ClearOverlays(-16, -16);
+				A_ClearOverlays(60, 71);
 			}
 			TNT1 A 0 A_JumpIfInventory("GotMeatShield", 1, "GrabEnemy");
 			"RL04" ABCD 0;
@@ -1483,7 +1484,7 @@ class PB_RocketLauncher : PB_WeaponBase
 			if (PB_GetCurrentRocketMode() == "Laser") {A_SetFlashWeaponSprite("RL83");}
 		}
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		
 		FlashKicking:
 		TNT1 A 0;
@@ -1494,7 +1495,7 @@ class PB_RocketLauncher : PB_WeaponBase
 			if (PB_GetCurrentRocketMode() == "Homing") {A_SetWeaponSprite("RL84");}
 			if (PB_GetCurrentRocketMode() == "Laser") {A_SetWeaponSprite("RL83");}
 		}
-		Goto Ready3;
+		Stop;
 		
 		FlashAirKicking:
 		"RL83" ABCDEFGHIJKLMN 0;
@@ -1503,7 +1504,7 @@ class PB_RocketLauncher : PB_WeaponBase
 			if (PB_GetCurrentRocketMode() == "Homing") {A_SetWeaponSprite("RL84");}
 			if (PB_GetCurrentRocketMode() == "Laser") {A_SetWeaponSprite("RL83");}
 		}
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKicking:
 		"RL85" ABCDEFGHIJKLMNOPQRSTU 0;
@@ -1514,14 +1515,14 @@ class PB_RocketLauncher : PB_WeaponBase
 			if (PB_GetCurrentRocketMode() == "Homing") {A_SetWeaponSprite("RL85");}
 			if (PB_GetCurrentRocketMode() == "Laser") {A_SetWeaponSprite("RL86");}
 		}
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKickingStop:
 		RL41 OPQRSTU 1 {
 			if (PB_GetCurrentRocketMode() == "Homing") {A_SetWeaponSprite("RL85");}
 			if (PB_GetCurrentRocketMode() == "Laser") {A_SetWeaponSprite("RL86");}
 		}
-		Goto Ready3;
+		Stop;
 		
 	}
 }

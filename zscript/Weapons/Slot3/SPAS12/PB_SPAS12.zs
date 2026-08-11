@@ -54,8 +54,7 @@ class PB_SPAS12 : PB_WeaponBase
 		Stop;
 
 	Steady:
-		TNT1 A 1;
-		Goto Ready;
+		Goto PB_FinisherCleanup;
 
 	Ready:
 		TNT1 A 0 A_JumpIfInventory("RespectSPAS12", 1, "SelectAnimation");
@@ -431,11 +430,12 @@ class PB_SPAS12 : PB_WeaponBase
 	FlashSlideKicking:
 	FlashSlideKickingStop:
 		S12P ABCDEFGHGFEDCBA 1;
-		Goto Ready3;
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+		Stop;
 
 	PDA_Preview_Fire:
 		S12G BCDE 2;
-		Stop;
+		Goto Ready3;
 	PDA_Preview_AltFire:
 		S12X ABCDEF 2;
 		Stop;

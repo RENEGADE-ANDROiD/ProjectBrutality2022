@@ -75,7 +75,7 @@ class PBWP_AmnesiaProtonPhaser : PBWP_CA_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 		TNT1 A 0 A_JumpIfInventory("PB_Cell", 40, 2);
-		Goto Ready3;
+		Goto DryFire;
 		TNT1 A 0 PBWP_CA_LockTilt();
 		BFG_ BCD 1 Bright;
 		BFG_ E 1 Bright A_StartSound("DCYBFGX/CHARGE", CHAN_6, CHANF_DEFAULT, 0.3, ATTN_IDLE, 1.15);

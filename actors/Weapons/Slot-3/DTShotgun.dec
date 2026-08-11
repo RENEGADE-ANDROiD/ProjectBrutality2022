@@ -77,8 +77,8 @@ Actor DTShotgun : PB_WeaponBase
 	ERAG A -1
 	Stop
   Steady:
-	TNT1 A 1
-	Goto Ready
+   Goto PB_FinisherCleanup
+
 	Ready:
   Ready3:
     TNT1 A 0 {
@@ -269,31 +269,31 @@ Actor DTShotgun : PB_WeaponBase
 		TNT1 A 0 A_ClearOverlays(10,11)
 		DTLS FEDCBAAAAAAABCDEF 1
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
-		Goto Ready3
+		Stop
    FlashKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelKicking")
 		DTLS FEDCBAAAAAAABCDEF 1
-		Goto Ready3
+		Stop
 	FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelAirKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelAirKicking")	
 		DTLS FEDCBAAAAAAABCDEF 1
-		Goto Ready3
+		Stop
 	FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking")
 		DTLS FFEEDDCCBBAAAAAAAAAAAAAAA 1
-		Goto Ready3
+		Stop
 	FlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop")
 		DTLS AABCDEF 1
-		Goto Ready3
+		Stop
   }
 }
 Actor DTSGMod : Inventory { Inventory.MaxAmount 1 }

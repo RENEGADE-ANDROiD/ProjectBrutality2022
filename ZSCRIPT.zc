@@ -222,6 +222,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Items/PB_ArmorRockOn.zc"
 #include "zscript/Items/PB_OuchFlourish.zc"
 #include "zscript/Items/PB_DoThingFlourish.zc"
+#include "zscript/Items/PB_HoloDeployCooldown.zc"
 #include "zscript/Items/PB_HealthYeah.zc"
 #include "zscript/Items/PB_LiveMeatGrab.zc"
 #include "zscript/Items/PB_PDAHandView.zc"
@@ -229,7 +230,6 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot7/Railgun/Railgun.zs"
 #include "zscript/Weapons/Slot7/BDPRailgun/PB_BDPRailgun.zs"
 #include "zscript/Weapons/PB_SuperBFGBall.zc"
-#include "zscript/Weapons/Slot1/KatanaUpgradeChoiceHelpers.zc"
 #include "zscript/Weapons/BaseWeapon_StagingShim.zsc"
 #include "zscript/Weapons/BaseWeapon_Barrels.zsc"
 #include "zscript/Weapons/BaseWeapon_ShoulderCannon.zsc"
@@ -246,8 +246,6 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot4/MetalSniper/MetalSniper_helpers.zs"
 #include "zscript/Weapons/Slot4/MetalSniper/MetalSniper.zs"
 #include "zscript/Weapons/Slot4/MetalSniper/PB2022_MetalSniperScope.zs"
-#include "zscript/Weapons/Slot4/NormalRifle/PB_NormalRifle.zs"
-#include "zscript/Weapons/Slot4/NormalRifle/PB_NormalRifle_Functions.zs"
 #include "zscript/Weapons/Slot4/Carbine/Carbine.zs"
 #include "zscript/Weapons/Slot4/LeverAction/LeverAction.zs"
 // PB_Minigun: DECORATE fold (actors/Weapons/Slot4/MINIGUN.dec) - PBWPE MINIGUN.dec
@@ -271,6 +269,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/PB_WeaponTacticalFeel.zc"
 #include "zscript/Weapons/Slot3/CSSG/CSSG_Upgrades.zs"
 #include "zscript/Weapons/Slot5/RocketLauncher/PB_RocketLauncher.zs"
+#include "zscript/Weapons/Slot5/FlakCannon/PB_FlakCannon.zs"
 #include "zscript/Weapons/Slot6/CyberdemonRL/CyberdemonRL_helpers.zs"
 #include "zscript/Weapons/Slot6/CyberdemonRL/PB_CyberdemonRL.zs"
 #include "zscript/Weapons/Slot5/Paingiver_Enrage.zs"
@@ -288,26 +287,24 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot4/Rifle/Rifle.zs"
 #include "zscript/Weapons/Slot4/LMG/PB_LMG.zs"
 #include "zscript/Weapons/Slot4/Nailgun/PB_Nailgun.zs"
-#include "zscript/Weapons/Slot4/XM21/PB_XM21.zs"
 #include "zscript/Weapons/Slot4/AntiTankRifle/PB_AntiTankRifle.zs"
 #include "zscript/Weapons/Slot4/Fusil/PB_Fusil.zs"
 #include "zscript/Weapons/Slot4/Fusil/PB_SideFusil.zs"
 #include "zscript/Weapons/Slot4/Ballista/ProSurv_Ballista.zs"
 #include "zscript/Weapons/Slot3/MarauderSSG/MarauderSSG.zs"
-#include "zscript/Weapons/Slot3/X12Shotgun/X12Shotgun.zs"
 #include "zscript/Weapons/Slot3/CryoShotgun/PB_CryoShotgun.zs"
 #include "zscript/Weapons/Slot6/M2Plasma/PB_M2Plasma.zs"
 #include "zscript/Weapons/Slot7/Freezer/PB_Freezer.zs"
 #include "zscript/Weapons/Slot8/BFG9000/PB_BFG9000.zs"
 #include "zscript/Weapons/Slot9/Flamethrower/PB_Flamethrower.zs"
 #include "zscript/Weapons/Slot9/HellRifle/Hell_rifle.zs"
+#include "zscript/Weapons/Slot9/Hellshot/PB_Hellshot.zs"
+#include "zscript/Weapons/Slot9/PlasmaBeam/PB_PlasmaBeam.zs"
 #include "zscript/Weapons/Slot9/HarvesterOfSouls/PB_HarvesterOfSouls.zs"
 #include "zscript/Weapons/Slot9/Unmaker/PB_Unmaker.zs"
-#include "zscript/Weapons/Slot9/DemonExterminator/PB_DemonExterminator.zs"
-#include "zscript/Weapons/Slot9/DemonExterminator/PB_DemonExterminator_Functions.zsc"
 #include "zscript/Weapons/Slot3/CSSG/CSSGEvent.zs"
 
-// PBWP folded weapons (Schism/F&I, Hexa-Lion, Demon-Tech SG, Karnage, Cyberaugumented, Tactical Nailgun)
+// PBWP folded weapons (Schism/F&I, Hexa-Overkill, Demon-Tech SG, Karnage, Cyberaugumented, Tactical Nailgun)
 #include "zscript/PBWP/PBWP_CombatDamageHandler.zs"
 #include "zscript/PBWP/PBWP_GenericOffsetReload.zs"
 #include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_CA_Common.zs"
@@ -315,11 +312,10 @@ const MAXITERATIONS = 32676;
 #include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_Warbringer.zs"
 #include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_Nightfall.zs"
 //#include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_Legionnaire.zs" // disabled pending rework
-#include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_Caduceus.zs"
 #include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_Dispatcher.zs"
 #include "zscript/PBWP_Weapons/Cyberaugumented/PBWP_SiriusCrisis.zs"
-#include "zscript/Weapons/PBWP_Fold/CalamityBlade_FX.zs"
-#include "zscript/Weapons/PBWP_Fold/LoRCalamityBlade.zs"
+//#include "zscript/Weapons/PBWP_Fold/CalamityBlade_FX.zs" // unwired — source retained
+//#include "zscript/Weapons/PBWP_Fold/LoRCalamityBlade.zs" // unwired — source retained
 #include "zscript/PB2022Hud/PB2022_Hud_Weapons.zs"
 
 #include "zscript/Spawner/PB_SpawnerBase.zc"
@@ -338,8 +334,6 @@ const MAXITERATIONS = 32676;
 #include "zscript/PBX2022/PB2022_DamageIndicators.zs"
 
 #include "zscript/SpecialShit/HatExtravaganza.zc"
-
-#include "zscript/PBVP/PBVP.zc"
 
 #include "zscript/Weapons/PB_DMRReticleOverlay.zc"
 

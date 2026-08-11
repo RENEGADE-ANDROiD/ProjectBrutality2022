@@ -42,11 +42,8 @@ class Rifle : PB_WeaponBase
 	states
 	{
 		Steady:
-			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 PB_UnsetPlayerExecutionProperties();
-			Goto GoingToReady;
-		
+			Goto PB_FinisherCleanup;
+
 		InspectUpgrade:
 			TNT1 A 0 {
 				A_SetCrosshair(5);
@@ -160,26 +157,13 @@ class Rifle : PB_WeaponBase
 			TNT1 A 0 A_PlaySoundEx("IronSights", "Auto");
 			"R0F5" "STUVWXY" 1 A_DoPBWeaponAction();
 			Goto Ready3;
+		// Keep-all: path prompt retained for label compatibility; no sibling strip/select.
 		ChooseUpgradePath:
-			TNT1 A 0 A_PrintBold("\cfChoose your path:\n\caFIRE = PBRIFLE\n\ciALTFIRE = LEVERACTION");
-			TNT1 A 1;
-			TNT1 A 1;
 		ChooseUpgradePathDebounce:
-			TNT1 A 2;
 		ChooseUpgradePathLoop:
-			TNT1 A 0 A_JumpIf(JustPressed(BT_ATTACK), "KeepPBRiflePath");
-			TNT1 A 0 A_JumpIf(JustPressed(BT_ALTATTACK), "KeepLeverActionPath");
-			TNT1 A 1;
-			TNT1 A 1;
 		KeepPBRiflePath:
-			TNT1 A 0 A_TakeInventory("LeverAction", 1);
-			TNT1 A 0 A_PrintBold("\caPath selected: PBRIFLE");
-			Goto Ready3;
 		KeepLeverActionPath:
-			TNT1 A 0 A_TakeInventory("Rifle", 1);
-			TNT1 A 0 A_PrintBold("\ciPath selected: LEVERACTION");
-			TNT1 A 0 A_SelectWeapon("LeverAction");
-			Stop;
+			Goto Ready3;
 		SelectAnimation:
 			TNT1 A 0 A_PlaySoundEx("weapons/rifle/up", "Auto");
 			TNT1 A 0 A_JumpIfInventory("DualWieldingDMRs", 1, "SelectAnimationDualWield");
@@ -2775,9 +2759,7 @@ class Rifle : PB_WeaponBase
 		Goto Ready3;
 
 		Spawn:
-		"VIFL" A 0 NoDelay;
-		"RIFL" A 10 A_PBVPFramework("VIFL");
-		"####" "#" 0 A_PbvpInterpolate();
+		"RIFL" A 10;
 		LOOP;
 
 			
@@ -2798,9 +2780,9 @@ class Rifle : PB_WeaponBase
 				}
 			}
 			
-			return A_DoPBWeaponAction();
+			return ResolveState(null);
 		}
-		Goto Ready3;
+		Stop;
 		FlashKicking2:
 		"H32F" "ABCDEFGGHIJKLM" 0 ;// HDMR - Normal Mode;
 		"H33F" "ABCDEFGGHIJKLM" 0 ;// HDMR - Sniper Mode;
@@ -2814,15 +2796,15 @@ class Rifle : PB_WeaponBase
 					A_SetWeaponSprite("H32F");
 				}
 			}
-			return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
+			return ResolveState(null);
 		}
-		Goto Ready3;
+		Stop;
 		
 		FlashKicking2Unloaded:
 		"R7F2" A 1;
 		"R7F0" "BCDEFGGHIJ" 1;
 		"R7F2" "KLM" 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashAirKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
@@ -2838,9 +2820,9 @@ class Rifle : PB_WeaponBase
 					A_SetWeaponSprite("H1F0");
 				}
 			}
-			return A_DoPBWeaponAction();
+			return ResolveState(null);
 		}
-		Goto Ready3;
+		Stop;
 		FlashAirKicking2:
 		"H32F" "ABCDEFGGHIJKLM" 0 ;// HDMR - Normal Mode;
 		"H33F" "ABCDEFGGHIJKLM" 0 ;// HDMR - Sniper Mode;
@@ -2853,14 +2835,14 @@ class Rifle : PB_WeaponBase
 					A_SetWeaponSprite("H32F");
 				}
 			}
-			return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
+			return ResolveState(null);
 		}
-		Goto Ready3;
+		Stop;
 		FlashAirKicking2Unloaded:
-		"R7F2" A 1 A_DoPBWeaponAction();
-		"R7F0" "BCDEFGGGGHIJ" 1 A_DoPBWeaponAction();
-		"R7F2" "KLM" 1 A_DoPBWeaponAction();
-		Goto Ready3;
+		"R7F2" A 1;
+		"R7F0" "BCDEFGGGGHIJ" 1;
+		"R7F2" "KLM" 1;
+		Stop;
 		
 		FlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
@@ -2877,9 +2859,9 @@ class Rifle : PB_WeaponBase
 					A_SetWeaponSprite("H1F1");
 				}
 			}
-			return A_DoPBWeaponAction();
+			return ResolveState(null);
 		}
-		Goto Ready3;
+		Stop;
 		FlashSlideKicking2:
 		"H34F" "ABCDEFGHIJKLMNOPQRSTUVWX" 0;
 		"H35F" "ABCDEFGHIJKLMNOPQRSTUVWX" 0;
@@ -2894,9 +2876,9 @@ class Rifle : PB_WeaponBase
 					A_SetWeaponSprite("H34F");
 				}
 			}
-			return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
+			return ResolveState(null);
 		}
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11);
@@ -2910,9 +2892,9 @@ class Rifle : PB_WeaponBase
 					A_SetWeaponSprite("H1F1");
 				}
 			}
-			return A_DoPBWeaponAction();
+			return ResolveState(null);
 		}
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingStop2:
 		R7F1 RSTUVWX 1 {
 			if (CountInv("DMRUpgraded") == 1) {
@@ -2923,24 +2905,24 @@ class Rifle : PB_WeaponBase
 					A_SetWeaponSprite("H34F");
 				}
 			}
-			return A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
+			return ResolveState(null);
 		}
-		Goto Ready3;
+		Stop;
 	
 		FlashSlideKicking2Unloaded:
-		"R7F3" "AB" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		"R7F1" "CDEFGHIJKLMNOPQRSTUVWX" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		"R7F3" "WX" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		Goto Ready3;
+		"R7F3" "AB" 1;
+		"R7F1" "CDEFGHIJKLMNOPQRSTUVWX" 1;
+		"R7F3" "WX" 1;
+		Stop;
 	
 		FlashSlideKickingStop2Unloaded:
-		"R7F1" "RSTUV" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		"R7F3" "WX" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		Goto Ready3;
+		"R7F1" "RSTUV" 1;
+		"R7F3" "WX" 1;
+		Stop;
 		
 		PDA_Preview_Rifle_Ready:
 		"R0F6" E 4;
-		Stop;
+		Goto Ready3;
 		PDA_Preview_Rifle_Fire:
 		"R0F8" A 2 Bright;
 		"R0F8" B 2 Bright;
@@ -2987,11 +2969,11 @@ class Rifle : PB_WeaponBase
 			}
 		}
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		
 		FlashPunching2:
 		TNT1 AAAAAAAAAAAAAA 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 	}
 }

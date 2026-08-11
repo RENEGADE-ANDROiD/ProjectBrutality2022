@@ -39,16 +39,10 @@ class PB_SSG : PB_WeaponBase
 	{
 		
 		Steady:
-		TNT1 A 1;
-		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 SetPlayerProperty(0,0,0);
-		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-		Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Spawn:
-		"VGN2" A 0 NoDelay;
-		"SGN3" A 10 A_PbvpFramework("VGN2");
-		"####" "#" 0 A_PbvpInterpolate();
+		"SGN3" A 10;
 		LOOP;
 		
 		Deselect:
@@ -88,14 +82,12 @@ class PB_SSG : PB_WeaponBase
 			A_ClearOverlays(10,11);
 			PB_HandleCrosshair(92);
 		}
-		TNT1 A 0 PB_SelectIfUpgrade("PB_QuadSG") ;//A_SelectWeapon("PB_QuadSG");
 		TNT1 A 0 PB_WeapTokenSwitch("SSGSelected");
 		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Raise;
 		TNT1 AAAAAAAA 1 A_Raise;
 		Wait;
 
 		Ready:
-		TNT1 A 0 PB_SelectIfUpgrade("PB_QuadSG") ;//A_SelectWeapon("PB_QuadSG");
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 		TNT1 A 0 PB_RespectIfNeeded;
 		WeaponRespect:
@@ -135,7 +127,6 @@ class PB_SSG : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSSG", 1, "ReadyToFireDualWield");
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "ReadyToFireDualWield");
 		RealReady:
-		TNT1 A 0 PB_SelectIfUpgrade("PB_QuadSG") ;//A_SelectWeapon("PB_QuadSG");
 		TNT1 A 0 A_JumpIfInventory("SSGAmmoCounter", 1, "RealReadyArmed");
 		Goto RealReadyEmpty;
 	RealReadyArmed:
@@ -177,7 +168,6 @@ class PB_SSG : PB_WeaponBase
 		"P6SS" ABCD 1;
 		TNT1 A 0 A_PlaySoundEx("weapons/ssg/inspect4", "Auto");
 		ReadyDualWield:
-		TNT1 A 0 PB_SelectIfUpgrade("PB_QuadSG") ;//A_SelectWeapon("PB_QuadSG");
 		TNT1 A 0 {
 			A_SetRoll(0);
 			PB_HandleCrosshair(92);
@@ -225,7 +215,6 @@ class PB_SSG : PB_WeaponBase
 				return A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 			}
 		ReadyToFireDualWield:
-		TNT1 A 0 PB_SelectIfUpgrade("PB_QuadSG");
 		TNT1 A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE);
 		Goto DualFireCheck;
 		StopDualWield:
@@ -914,23 +903,23 @@ class PB_SSG : PB_WeaponBase
 		Goto Ready3;
 	
 		DualWieldFlashPunching:
-		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 		TNT1 A 15;
-		Goto Ready3;
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+		Stop;
 		DualWieldFlashKicking:
 		"P6SK" ABCDEFGGGFEDCBA 1;
-		Goto Ready3;
+		Stop;
 		DualWieldFlashAirKicking:
 		"P6SK" ABCDEFGGGFEDCBA 1;
 		"P6SK" AAA 1;
-		Goto Ready3;
+		Stop;
 		DualWieldFlashSlideKicking:
 		"P6SK" ABCDEFGGGGGGGGGGGGGFEDCBA 1;
-		Goto Ready3;
+		Stop;
 		DualWieldFlashSlideKickingStop:
 		"P6SK" FEDCA 1;
 		"P6SK" AAA 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashPunching:
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
@@ -939,33 +928,33 @@ class PB_SSG : PB_WeaponBase
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "DualWieldFlashPunching");
 		"SG21" ABCDEFGGGFEDCBA 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		FlashKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSSG", 1, "DualWieldFlashKicking");
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "DualWieldFlashKicking");
 		"SG20" ABCDEFGGGFEDCBA 1;
-		Goto Ready3;
+		Stop;
 		FlashAirKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSSG", 1, "DualWieldFlashAirKicking");
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "DualWieldFlashAirKicking");
 		"SG20" ABCDEFGGGFEDCBA 1;
 		"SHT3" AAA 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSSG", 1, "DualWieldFlashSlideKicking");
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "DualWieldFlashSlideKicking");
 		"SG20" ABCDEFGGGGGGGGGGGGGFEDCBA 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSSG", 1, "DualWieldFlashSlideKickingStop");
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "DualWieldFlashSlideKickingStop");
 		"SG20" FEDCA 1;
 		"SHT3" AAA 1;
-		Goto Ready3;
+		Stop;
 
 		PDA_Preview_Fire:
 		"SHO9" A 1 Bright;
@@ -978,7 +967,7 @@ class PB_SSG : PB_WeaponBase
 		"SHO8" H 1;
 		"SHO8" I 1;
 		"SHO8" J 1;
-		Stop;
+		Goto Ready3;
 		PDA_Preview_AltFire:
 		"SHTA" A 1 Bright;
 		"SHTA" B 1 Bright;

@@ -41,8 +41,7 @@ class PB_AntiTankRifle : PB_WeaponBase
 		Stop;
 
 	Steady:
-		TNT1 A 1;
-		Goto Ready;
+		Goto PB_FinisherCleanup;
 
 	Ready:
 		TNT1 A 0 A_JumpIfInventory("RespectAntiTankRifle", 1, "SelectAnimation");
@@ -337,10 +336,20 @@ class PB_AntiTankRifle : PB_WeaponBase
 
 	FlashPunching:
 		PAPA A 1;
-		Goto Ready3;
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+		Stop;
 
 	FlashKicking:
-		PAPA A 1;
-		Goto Ready3;
+		PAPA AAAAAAAAAAAAAAA 1;
+		Stop;
+	FlashAirKicking:
+		PAPA AAAAAAAAAAAAAAAA 1;
+		Stop;
+	FlashSlideKicking:
+		PAPA AAAAAAAAAAAAAAAAAAAAAAAA 1;
+		Stop;
+	FlashSlideKickingStop:
+		PAPA AAAAAAA 1;
+		Stop;
 	}
 }

@@ -137,38 +137,6 @@ class PBWP_CA_BfgGreenRailTrail : PBWP_CA_RailTrailBase
 	}
 }
 
-// Caduceus / Nightfall laser — azure neonic (upstream DCY_NeonicWandTrail uses M_TR-style wisps)
-class PBWP_CA_NeonicRailTrail : Actor
-{
-	Default
-	{
-		+NOINTERACTION;
-		+NOCLIP;
-		+BRIGHT;
-		+ROLLSPRITE;
-		RenderStyle "Add";
-		Alpha 0.35;
-		Scale 1.5;
-		Translation "0:255=%[0.00,0.00,0.00]:[0.07,0.36,0.83]";
-	}
-	States
-	{
-	Spawn:
-		M_TR C 0;
-		M_TR C 5
-		{
-			A_FadeIn(frandom(0.25, 0.55));
-			A_SetScale(Scale.X + frandom(-0.1, 0.35));
-		}
-		M_TR CCDDDEEEFFFGGGH 1
-		{
-			A_FadeOut(0.05);
-			A_SetScale(Scale.X, Scale.Y - 0.15);
-		}
-		Stop;
-	}
-}
-
 // Dismantler — holy white
 class PBWP_CA_HolyRailTrail : PBWP_CA_RailTrailBase
 {
@@ -265,26 +233,6 @@ class PBWP_CA_NeonicRingBurst : Actor
 		C28Y A 1;
 		C28Y B 1 { A_Explode(50, 25, 0, 0); }
 		C28Y DFGIJLMNPQ 1;
-		Stop;
-	}
-}
-
-class PBWP_CA_NeonicExplode : Actor
-{
-	Default
-	{
-		+NOINTERACTION;
-		+BRIGHT;
-		+ROLLSPRITE;
-		RenderStyle "Add";
-		Scale 1.275;
-		Translation "0:255=%[0.00,0.00,0.00]:[0.07,0.36,0.83]";
-	}
-	States
-	{
-	Spawn:
-		KABE A 1 NoDelay { A_SetRoll(frandom(0, 360)); }
-		KABE BCDEFGHIJKLMNOPQRSTUVW 1;
 		Stop;
 	}
 }
@@ -492,75 +440,6 @@ class PBWP_CA_BFGExtra : BFGExtra
 					flags: SXF_NOCHECKPOSITION | SXF_TRANSFERTRANSLATION, 30);
 		}
 		BF3X ABCDEFGH 3 Bright { A_FadeOut(0.04); A_SetScale(Scale.X - 0.02); }
-		Stop;
-	}
-}
-
-class PBWP_CA_NeonicBall : FastProjectile
-{
-	Default
-	{
-		Damage 15;
-		Radius 10;
-		Height 10;
-		Speed 60;
-		RenderStyle "Add";
-		Alpha 0.7;
-		Scale 0.38;
-		+NOEXTREMEDEATH;
-		+FORCERADIUSDMG;
-		SeeSound "NeonicBall/Fire";
-		DeathSound "NeonicBall/Death";
-		MissileType "PBWP_CA_NeonicTrail";
-		MissileHeight 6;
-		Translation "168:191=192:207", "16:47=240:247";
-	}
-	States
-	{
-	Spawn:
-		PBAL HI 1 Bright
-		{
-			if ((level.time % 2) == 0)
-				A_SpawnItem("BlueFlareSmall");
-			A_SpawnParticle(0xaaddff, SPF_FULLBRIGHT, random(12, 18), random(3, 5), frandom(0, 360),
-				frandom(-1, 1), frandom(-1, 1), frandom(-1, 1), fadestepf: 0.05, sizestep: -0.2);
-			A_Weave(1, 1, 0.5, 0.5);
-		}
-		Loop;
-	Death:
-		TNT1 A 0
-		{
-			for (int i = 0; i < 2; i++)
-				A_SpawnItemEx("PBWP_CA_NeonicExplode", flags: SXF_NOCHECKPOSITION);
-			A_SpawnItem("PBWP_CA_NeonicPuff");
-		}
-		TNT1 A 2 { A_Explode(256, 128, XF_NOTMISSILE); }
-		Stop;
-	}
-}
-
-class PBWP_CA_NeonicTrail : Actor
-{
-	Default
-	{
-		+NOINTERACTION;
-		+NOCLIP;
-		+ROLLSPRITE;
-		+BRIGHT;
-		RenderStyle "Add";
-		Alpha 0.5;
-		Scale 1.2;
-		Translation "0:255=%[0.00,0.00,0.00]:[0.07,0.36,0.83]";
-	}
-	States
-	{
-	Spawn:
-		M_TR C 1 NoDelay { A_SetRoll(frandom(0, 360)); }
-		M_TR CCDDDEEEFFFGGGH 1
-		{
-			A_SetScale(Scale.X - 0.175);
-			A_FadeOut(0.05);
-		}
 		Stop;
 	}
 }
@@ -1127,6 +1006,7 @@ class PBWP_CA_BlastawaveTrail : Actor
 		+NOINTERACTION;
 		+NOCLIP;
 		+BRIGHT;
+		+ROLLSPRITE;
 		RenderStyle "Add";
 		Scale 0.8;
 		Translation "0:255=%[0.00,0.00,0.00]:[0.43,0.75,1.57]";
@@ -1134,6 +1014,7 @@ class PBWP_CA_BlastawaveTrail : Actor
 	States
 	{
 	Spawn:
+		WV00 A 0 NoDelay { A_SetRoll(90); }
 		WV00 ABCDE 1
 		{
 			A_SetScale(Scale.X - 0.01);
@@ -1174,6 +1055,7 @@ class PBWP_CA_Blastawave : FastProjectile
 	{
 		+BRIGHT;
 		+FORCEXYBILLBOARD;
+		+ROLLSPRITE;
 		-RANDOMIZE;
 		Radius 10;
 		Height 20;
@@ -1188,6 +1070,7 @@ class PBWP_CA_Blastawave : FastProjectile
 	States
 	{
 	Spawn:
+		WV00 A 0 NoDelay { A_SetRoll(90); }
 		WV00 AB 1
 		{
 			A_SpawnItemEx("PBWP_CA_BlastawaveTrail", flags: SXF_NOCHECKPOSITION | SXF_TRANSFERTRANSLATION | SXF_TRANSFERSCALE);

@@ -107,8 +107,7 @@ Recoil: High
 Alt-Fire: Detonation / arming (mode-dependent)
 Firemodes: Drill charge / drop shot
 Akimbo: X#
-Pulse Cannon$Rapid-fire purple plasma SMG with a 50-round cell magazine. Primary streams fast orbs; Alt-Fire charges then unleashes a wide plasma spread. Reloads from Cell reserve with a dedicated TROL strip.$PB_PulseCannon$Manufacturer: UAC Ballistic Firearms (BRUTALDOOMPLUS Pulse Cannon fold)
-#UAC Prototype Dark Matter Rifle$Experimental UAC energy weapon using a stabilized dark-matter capacitor magazine fed from standard cell packs. Primary fire launches fast pulse orbs; alt-fire charges either a heavy super-or blast or a compact gravity seed that blooms into a localized singularity. Weapon Special toggles which alt payload arms before you commit to the charge.$PB_DarkMatterRifle$Manufacturer: UAC Ballistic Firearms Research Division (prototype)
+Pulse Cannon$Rapid-fire purple plasma SMG with a 50-round cell magazine. Primary streams fast orbs; Alt-Fire charges then unleashes a wide plasma spread. Reloads from Cell reserve with a dedicated TROL strip.$PB_PulseCannon$Manufacturer: UAC Ballistic Firearms (BRUTALDOOMPLUS Pulse Cannon fold)#UAC Prototype Dark Matter Rifle$Experimental UAC energy weapon using a stabilized dark-matter capacitor magazine fed from standard cell packs. Primary fire launches fast pulse orbs; alt-fire charges either a heavy super-or blast or a compact gravity seed that blooms into a localized singularity. Weapon Special toggles which alt payload arms before you commit to the charge.$PB_DarkMatterRifle$Manufacturer: UAC Ballistic Firearms Research Division (prototype)
 Magazine Capacity: 60 internal capacitor (reload pulls from Cell reserve)
 Ammunition: Cells + internal dark-matter magazine
 Effective Range: Medium-long (projectile)
@@ -127,16 +126,6 @@ Recoil: Moderate (7.62)
 Alt-Fire: Underbarrel 12ga or 30mm grenade depending on Weapon Special selection
 Firemodes: Semi-auto rifle + secondary launcher modes
 Akimbo: Yes (paired rifles)#
-XM-21 Rifle$Designated marksman / anti-materiel glass: the XM-21 launches extremely high-velocity 7.62 AP rods or, when upgraded for ballistic shots, heavy explosive projectiles for structures and clustered targets. Weapon Special swaps magazine doctrine between precision AP and the ballistic breacher.$PB_XM21$Manufacturer: UAC precision systems
-Magazine Capacity: 8-round precision box + reserve (NewClip)
-Ammunition: XM21 ammunition family / AP rods
-Effective Range: Very long
-Primary: Single-shot precision (~330 hit on AP rod)
-RPM: Manual precision (slow aimed cadence)
-Recoil: Very high
-Alt-Fire: Alt-use chains vary by respect / pickup state (see field manual)
-Firemodes: Bolt-action style discipline / semi marksman
-Akimbo: X#
 Fusil Rifle$Compact automatic rifle package built around a generous 33-round internal magazine and a fast stance swap for close-quarters pressure. The main chassis handles like a light battle rifle, while Weapon Special flips the user into a lighter sidearm stance that keeps the same magazine pool but changes the presentation and close-in handling. The fold in this build feeds from standard NewClip reserves, so it slots cleanly into the existing PB rifle logistics.$PB_Fusil$Manufacturer: Unknown / field conversion
 Magazine Capacity: 33-round internal magazine
 Ammunition: NewClip reserve + PB_FusilMag internal pool
@@ -327,15 +316,6 @@ Recoil: Extreme without burst discipline
 Alt-Fire: Handling chains / respect
 Firemodes: Automatic MG42 pattern
 Akimbo: X#
-X12 Shotgun$Twelve-round brutal auto-shotgun for sustained corridor clearance-distinct heavier frame than Party Crasher.$X12Shotgun$Manufacturer: UAC security contracts
-Magazine Capacity: Box magazine + PB_Shell reserve
-Ammunition: 12-gauge shells
-Effective Range: Short-medium
-RPM: Automatic shotgun
-Recoil: High
-Alt-Fire: Alt-fire shell behaviors per programming
-Firemodes: Automatic shotgun
-Akimbo: X#
 UAC XHAS-SP Lady Golide$Heavy assault shotgun variant bridging Commander CSSG shell logic with HAS frame ergonomics-multi-shell wheel selections mirror riot doctrine.$HASG$Manufacturer: UAC heavy shotgun labs
 Magazine Capacity: Dual-shell chamber + PB_Shell reserve
 Ammunition: PB_Shell + shell inventory trackers
@@ -380,15 +360,6 @@ RPM: Firemode-dependent soul discharge
 Recoil: Moderate warp kick
 Alt-Fire: Alternate sin-beam profiles per tokens
 Firemodes: Artifact beam modes
-Akimbo: X#
-Demon Exterminator$Shoulder-mounted demon-tech projector cycling laser beams, incineration streams, and lightning salvos-all fed from PB_DTech cells. Weapon Special wheel selects the active mode (not tap-cycling).$PB_DemonExterminator$Manufacturer: UAC infernal salvage (Weapons Pack DemonicExt lineage)
-Magazine Capacity: Demon Tech cell reserve
-Ammunition: PB_DTech
-Effective Range: Medium-long per mode
-RPM: Mode-dependent (laser semi, incineration sustained, lightning charged)
-Recoil: Moderate infernal kick
-Alt-Fire: Mode-specific alt profiles (held beams / lightning charge)
-Firemodes: Laser / Incineration / Lightning via Weapon Special wheel
 Akimbo: X#
 Mancubus Flame Cannon$Salvaged mancubus arm cannon adapted for marine use-lobs persistent flame slime arcs overlapping Daedabus slime cannon behaviors.$MancubusFlameCannon$Manufacturer: UAC xenotech salvage
 Magazine Capacity: Flame cannon fuel tanks
@@ -523,8 +494,8 @@ RPM: Combo-driven
 Recoil: N/A (melee)
 Alt-Fire: Shield block / bash
 Firemodes: Axe combos + shield guard
-Akimbo: X#Hexa-Lion Shotgun$Six-barrel pump shotgun from the Hexa-Lion line-feeds from PB_Shell reserve with a six-round internal drum and respect-pose ironsights; Alt-Fire delivers a heavy zoomed blast.$HexaLionShotgun$Manufacturer: Hexa-Lion (PBWP)
-Magazine Capacity: 6-round HexaLionAmmo drum + PB_Shell reserve
+Akimbo: X#Hexa-Overkill$Six-barrel pump shotgun (Hexa-Overkill / Soyboy art)-feeds from PB_Shell reserve with a six-round internal drum and respect-pose ironsights; Alt-Fire delivers a heavy zoomed blast.$PB_HexaOverkill$Manufacturer: Hexa-Overkill (PBWP / Soyboy)
+Magazine Capacity: 6-round PB_HexaOverkillAmmo drum + PB_Shell reserve
 Ammunition: PB_Shell
 Effective Range: Short
 RPM: Pump cadence
@@ -563,14 +534,6 @@ RPM: Very high rotary
 Recoil: High climb
 Alt-Fire: Laser emphasis beam (laser mode)
 Firemodes: Bullet vs laser (Weapon Special)
-Akimbo: X#Caduceus$Cyberaugumented neonic wand firing rail-laser bursts or neonic orbs-Weapon Special toggles between rail and orb emitters; cells feed reserve with a dedicated mag stack.$PBWP_Caduceus$Manufacturer: Cyberaugumented (PBWP)
-Magazine Capacity: 60-round PBWP_CaduceusMag + PB_Cell reserve
-Ammunition: PB_Cell
-Effective Range: Medium-long
-RPM: Semi / sustained rail
-Recoil: Low-moderate
-Alt-Fire: Per mode
-Firemodes: Rail laser vs neonic orb (Weapon Special)
 Akimbo: X#Dispatcher of Delusions$Cyberaugumented plasma hose rebuilt as a full-auto cell burner-draws directly from PB_Cell with no separate magazine actor.$PBWP_Dispatcher$Manufacturer: Cyberaugumented (PBWP)
 Magazine Capacity: PB_Cell pool
 Ammunition: PB_Cell
@@ -595,14 +558,6 @@ RPM: Semi / burst per mode
 Recoil: Moderate
 Alt-Fire: Per mode
 Firemodes: Nail / 5.56 / explosive (Weapon Special)
-Akimbo: X#UAC-12a Automat$Hybrid UAC service pistol that shares DNA with the compact SMG line-42-round MP12Ammo2 mag on PB_LowCalMag with optional suppressor and SMG upgrade kit.$MP12$Manufacturer: UAC (PBWP)
-Magazine Capacity: 42-round MP12Ammo2 + PB_LowCalMag reserve
-Ammunition: PB_LowCalMag / 9mm-class pool
-Effective Range: Short-medium
-RPM: Semi-auto; SMG upgrade unlocks full-auto
-Recoil: Low-moderate
-Alt-Fire: Suppressed fire path when silencer equipped
-Firemodes: Pistol / SMG (after upgrade)
 Akimbo: X#Holy Bastard W-SMG$White Bastard dual-wield SMG-paired W_Clipp / LW_Clipp magazines on PB_LowCalMag with zoom and akimbo fire.$W_SMG$Manufacturer: UAC (PBWP)
 Magazine Capacity: Dual W_Clipp magazines + PB_LowCalMag reserve
 Ammunition: PB_LowCalMag
@@ -611,14 +566,6 @@ RPM: Full-auto
 Recoil: Moderate
 Alt-Fire: Zoom / alt fire modes
 Firemodes: Akimbo SMG
-Akimbo: X#Holy Bastard P-SMG$Pyro upgrade of the Holy Bastard line-incendiary SMG fire after the Blood Stains upgrade path.$P_SMG$Manufacturer: UAC (PBWP)
-Magazine Capacity: PB_LowCalMag fed
-Ammunition: PB_LowCalMag
-Effective Range: Short
-RPM: Full-auto incendiary
-Recoil: Moderate
-Alt-Fire: Pyro stream variants
-Firemodes: Incendiary SMG
 Akimbo: X#M45 Halo 3 Shotgun$Pump shotgun styled after the Halo 3 M45 Tactical Shotgun-tight pump cadence with alt pump-fire.$M45Shotgun$Manufacturer: PBWP (Halo homage)
 Magazine Capacity: Internal tube + PB_Shell reserve
 Ammunition: PB_Shell
@@ -627,22 +574,6 @@ RPM: Pump-action
 Recoil: High per blast
 Alt-Fire: Alt pump-fire
 Firemodes: Pump shotgun
-Akimbo: X#Model 4 Assault Rifle$Mask Man / Dignidad assault rifle-36-round AR1EMag on PB_HighCalMag with ADS zoom and magazine respect pose.$AssaultR1$Manufacturer: PBWP
-Magazine Capacity: 36-round AR1EMag + PB_HighCalMag reserve
-Ammunition: PB_HighCalMag
-Effective Range: Medium-long
-RPM: Full-auto
-Recoil: Moderate
-Alt-Fire: ADS zoom fire
-Firemodes: Automatic rifle
-Akimbo: X#UAC-35 Black DMR$Shadow Song designated marksman rifle-dual-wield RKX support, grenade launcher, and paired Black_Clip magazines.$Black_DMR_RKX$Manufacturer: UAC (PBWP)
-Magazine Capacity: Black_Clip + LeftBlack_Clip when dual-wielding
-Ammunition: PB_HighCalMag / DMR magazines
-Effective Range: Long
-RPM: Semi-auto DMR
-Recoil: High
-Alt-Fire: Grenade launcher / zoom
-Firemodes: DMR + launcher
 Akimbo: X#Magnum Sniper Rifle$HL-300s bolt magnum sniper-chambered rounds with zoom switcher and high-power hits.$MagnumSniperRifle$Manufacturer: PBWP
 Magazine Capacity: MagnumSniper_Chamber + reserve
 Ammunition: PB_HighCalMag
@@ -690,22 +621,6 @@ RPM: Mode-dependent
 Recoil: Heavy
 Alt-Fire: TC mode swap
 Firemodes: Storm carrier
-Akimbo: X#Calamity Blade$Legacy of Rust heat-wave blade-PB_Fuel and PB_DTECH feed charged heatwave slashes and alt-fire heat bursts.$LoRCalamityBlade$Manufacturer: Legacy of Rust (PBWP)
-Magazine Capacity: PB_Fuel + PB_DTECH reserves
-Ammunition: PB_Fuel / PB_DTECH
-Effective Range: Melee
-RPM: Charge / slash
-Recoil: Melee
-Alt-Fire: Heatwave charge
-Firemodes: Blade / heatwave
-Akimbo: X#Satan Scream Unmaker$Demonic Unmaker variant-soul-fueled scream cannon with BFG-class pickup heft and sustained beam volleys.$Satan_Scream$Manufacturer: Infernal (PBWP)
-Magazine Capacity: Soul / cell pools per states
-Ammunition: Demonpower / Cells
-Effective Range: Medium-long
-RPM: Charge-dependent
-Recoil: Extreme
-Alt-Fire: Beam modes
-Firemodes: Unmaker scream
 Akimbo: X#Frostburn Device$Pro-Surv dual-mode HellAmmo device - Incendiary or Cryo beam with fireball / ice-orb Alt-Fire.$FrostburnDevice$Manufacturer: UAC / Helltech (Pro-Surv)
 Magazine Capacity: HellAmmo pool (shared with DemonTech / Unmaker family)
 Ammunition: HellAmmo
@@ -728,8 +643,8 @@ Weapon Special: Explosive Bolt / 3-Round Burst / Void Grenade
 Akimbo: X#Franchi SPAS-12$Brutal Doom Plus combat shotgun fold. Tube magazine pump action with ADS zoom; Weapon Special Riot Sweep fires a unique wide-spread buckshot for crowd control.$PB_SPAS12$Manufacturer: Franchi / Brutal Doom Plus
 Magazine Capacity: 9 (PB_SPAS12Mag)
 Ammunition: NewShell reserve
-Effective Range: Short–medium (Riot Sweep favors close crowds)
+Effective Range: Shortâ€“medium (Riot Sweep favors close crowds)
 RPM: Pump-action
-Recoil: Medium–heavy
+Recoil: Mediumâ€“heavy
 Weapon Special: Combat Pump / Riot Sweep
-Akimbo: X#
+Akimbo: X

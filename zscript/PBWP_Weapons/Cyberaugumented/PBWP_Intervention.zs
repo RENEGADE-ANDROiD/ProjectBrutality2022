@@ -64,7 +64,7 @@ class PBWP_Intervention : PBWP_CA_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 		TNT1 A 0 A_JumpIfInventory("PB_RocketAmmo", 1, 2);
-		Goto Ready3;
+		Goto DryFire;
 		TNT1 A 0 PBWP_CA_LockTilt();
 		GNN_ A 2;
 		GNN_ B 2 Bright;
@@ -89,7 +89,7 @@ class PBWP_Intervention : PBWP_CA_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 		TNT1 A 0 A_JumpIfInventory("PB_RocketAmmo", 1, 2);
-		Goto Ready3;
+		Goto DryFire;
 		TNT1 A 0 PBWP_CA_LockTilt();
 		GNN_ A 2;
 		GNN_ B 2 Bright;

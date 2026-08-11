@@ -4,11 +4,12 @@ class PBWP_Dispatcher : PBWP_CA_WeaponBase
 {
 	default
 	{
-		Weapon.SlotNumber 6;
-		Weapon.SlotPriority 0.13;
+		Weapon.SlotNumber 7;
+		Weapon.SlotPriority -0.01;
 		Weapon.AmmoType1 "PB_Cell";
 		Weapon.AmmoGive1 40;
 		Weapon.AmmoUse1 0;
+		+WEAPON.AMMO_OPTIONAL;
 		Tag "Dispatcher of Delusions - Mk.2 Corps Z10";
 		Inventory.PickupMessage "You picked up the Dispatcher of Delusions! Let's make some barbecue.";
 		Inventory.PickupSound "dcy/plasmariflepickup";
@@ -75,11 +76,16 @@ class PBWP_Dispatcher : PBWP_CA_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
-		TNT1 A 0 { return PB_jumpIfNoAmmo("Ready3", 1, false); }
+		TNT1 A 0 A_JumpIfInventory("PB_Cell", 1, "FireStart");
+		Goto DryFire;
+	FireStart:
 		PLG_ BCD 1;
 		Goto FireLoop;
 
 		FireLoop:
+		"####" "#" 0 A_JumpIfInventory("PB_Cell", 1, "FireLoopShot");
+		Goto DryFire;
+	FireLoopShot:
 		PLG_ E 1 Bright { PBWP_DispatcherFire(); }
 		PLG_ FG 1 Bright A_DoPBWeaponAction(WRF_NOPRIMARY | WRF_NOSECONDARY | WRF_NOBOB);
 		PLG_ E 0 A_Refire("FireLoop");
@@ -91,9 +97,9 @@ class PBWP_Dispatcher : PBWP_CA_WeaponBase
 		Goto Ready3;
 
 		Reload:
-		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
-		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
-		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
-		TNT1 A 0 { return ResolveState("PBWP_OffsetReloadAnim"); }
+		"####" "#" 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
+		"####" "#" 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
+		"####" "#" 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
+		"####" "#" 0 { return ResolveState("PBWP_OffsetReloadAnim"); }
 	}
 }

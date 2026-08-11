@@ -67,7 +67,6 @@ class PB_PDAShopPurchaseHandler : StaticEventHandler
 		ParseItemRow("Rifles", "Fusil", 500, 'PB_Fusil', 1);
 		ParseItemRow("Rifles", "Metal Sniper", 350, 'PB_MetalSniper', 1);
 		ParseItemRow("Rifles", "Battle Rifle", 600, 'BDPBattleRifle', 1);
-		ParseItemRow("Rifles", "XM21", 650, 'PB_XM21', 1);
 		ParseItemRow("Rifles", "Old HMG", 500, 'OldHMG', 1);
 		ParseItemRow("Rifles", "PB LMG", 600, 'PB_LMG', 1);
 

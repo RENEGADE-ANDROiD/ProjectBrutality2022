@@ -348,14 +348,14 @@ DoomEdNums
 	23148 = PB_NeoHMG
 	23149 = PB_M41A
 	23150 = BDPBattleRifle
-	23151 = PB_DemonExterminator
+	// 23151 reserved (former PB_DemonExterminator)
 	23152 = MastermindChaingun
 	23153 = ShieldSaw_token
 	23154 = PB_MolotovAmmoPickup
 	23155 = PB_MolotovOrUpgradeSpawner
-	23156 = PB_XM21
-	23157 = PB_XM21Upgrade
-	23158 = X12Shotgun
+	// 23156 unused (former PB_XM21)
+	// 23157 unused (former PB_XM21Upgrade)
+	// 23158 unused (former X12Shotgun)
 	23159 = PossessedGibs
 	23160 = PB_CyberdemonRL
 	23161 = VorpalBlade
@@ -426,29 +426,29 @@ DoomEdNums
 	23222 = LeverActionHellUpgradeT4
 	23223 = PB_BDPRailgun
 	23224 = BattleAxe
-	23225 = HexaLionShotgun
+	23225 = PB_HexaOverkill
 	23226 = DemonTechShotgunGiver
 	23227 = Rainmaker
 	23228 = PBWP_Warbringer
 	23229 = PBWP_Nightfall
-	23230 = PBWP_Caduceus
+	// 23230 reserved (former PBWP_Caduceus)
 	23231 = PBWP_Dispatcher
 	23232 = PBWP_SiriusCrisis
 	23233 = Tactical_Nail_Gun
 	// 23234 unused (former ThunderCrossbow)
-	23235 = PB_NormalRifle
-	23236 = MP12
-	23237 = LoRCalamityBlade
+	// 23235 unused (former PB_NormalRifle)
+	// 23236 unused (former MP12)
+	// 23237 unused (former LoRCalamityBlade — class unwired, source retained)
 	// 23238 unused (former PB_CryoRifle / TeiTenga Type B Freezer Thrower)
 	23239 = Extinction_Ray
 	23240 = PlasmaRifleAssault
-	23241 = Satan_Scream
+	// 23241 unused (former Satan_Scream)
 	// 23242 freed - former ThunderCarrierTI (Heavy Lust)
 	23243 = PB_HYDRA
 	23244 = INNailGun
 	23245 = MagnumSniperRifle
-	23246 = Black_DMR_RKX
-	23247 = AssaultR1
+	// 23246 unused (former Black_DMR_RKX)
+	// 23247 unused (former AssaultR1)
 	23248 = M45Shotgun
 	23249 = W_SMG
 	23250 = FrostburnDevice
@@ -515,6 +515,9 @@ DoomEdNums
 	23308 = PB_PortalBlaster
 	23309 = PB_PulseCannon
 	23310 = PB_EternalDarkLord
+	23311 = PB_FlakCannon
+	23312 = PB_Hellshot
+	23313 = PB_PlasmaBeam
 	// Clear Sky / BVCH map ednum (same class)
 	21550 = Carcass
 

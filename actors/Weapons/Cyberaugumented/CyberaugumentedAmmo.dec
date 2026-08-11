@@ -16,14 +16,6 @@ Actor PBWP_NightfallMag : Ammo
 	Ammo.BackpackMaxAmount 200
 }
 
-Actor PBWP_CaduceusMag : Ammo
-{
-	Inventory.Amount 0
-	Inventory.MaxAmount 60
-	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 60
-}
-
 Actor PBWP_DismantlerMag : Ammo
 {
 	Inventory.Amount 0

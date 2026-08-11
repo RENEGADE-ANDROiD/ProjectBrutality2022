@@ -748,22 +748,22 @@ class PB_NeoHMG : PB_WeaponBase
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			HG0K ABCDEFGHFEDCBA 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			HG0K ABCDEFGHHFEDCBA 1;
-			Goto Ready3;
+			Stop;
 		FlashAirKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			HG0K ABCDEFGHHHFEDCBA 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			HG0K ABCDEFGHHHHHHHHHHHHHGFEDCBA 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			HG0K GFEDCBA 1;
-			Goto Ready3;
+			Stop;
 	}
 }

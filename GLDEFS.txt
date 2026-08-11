@@ -18,6 +18,8 @@
 #include "lumps/includes/gldefs/Realm667_Monsters_BloodGhostSkull.inc"
 #include "lumps/includes/gldefs/FriendlyDrone.inc"
 #include "lumps/includes/gldefs/PB_DarkMatterRifle.inc"
+#include "lumps/includes/gldefs/PB_PulseCannon.inc"
+#include "lumps/includes/gldefs/PB_FlakCannon.inc"
 #include "lumps/includes/gldefs/PortalBlaster.inc"
 #include "lumps/includes/gldefs/CatsFrozen.inc"
 #include "lumps/includes/gldefs/SentryGuns.inc"

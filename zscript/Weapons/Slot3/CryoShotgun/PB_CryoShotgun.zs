@@ -39,8 +39,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		Stop;
 
 		Steady:
-		TNT1 A 1;
-		Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Ready:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
@@ -598,7 +597,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		"FZGH" ABCDE 1;
 		"FZGH" F 4;
 		"FZGH" EDCBA 1;
-		Goto CryoShotgunReadyToFire;
+		Stop;
 
 		FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelAirKicking");
@@ -608,7 +607,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		"FZGH" F 8;
 		"FZGH" EDCBA 1;
 		"FZGA" A 1;
-		Goto CryoShotgunReadyToFire;
+		Stop;
 
 		FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKicking");
@@ -616,13 +615,14 @@ class PB_CryoShotgun : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking");
 		"FZGH" ABCDE 1;
 		"FZGH" F 6;
+		Goto FlashSlideKickingStop;
 		FlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop");
 		"FZGH" EDCBA 2;
 		"FZGA" A 1;
-		Goto CryoShotgunReadyToFire;
+		Stop;
 
 		PDA_Preview_Fire:
 		"FZGF" A 1 Bright;
@@ -633,7 +633,7 @@ class PB_CryoShotgun : PB_WeaponBase
 		"FZGA" A 2;
 		"FZGP" A 1;
 		"FZGR" ABCDE 1;
-		Stop;
+		Goto Ready3;
 		PDA_Preview_AltFire:
 		"FZGA" ABCD 1;
 		"FZGA" E 2;

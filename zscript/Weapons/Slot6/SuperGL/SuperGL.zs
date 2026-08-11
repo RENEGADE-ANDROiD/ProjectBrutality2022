@@ -482,24 +482,24 @@ Class PB_SuperGL : PB_WeaponBase
 		
 		FlashKicking:
 			S006 ABCDEFGGGHIJKLM 1 SGL_ChangeModeSprite("S006","S007","S019","S008","S009",layer:OverlayID());
-			Goto Ready3;
+			Stop;
 		
 		FlashAirKicking:
 			S006 ABCDEFGGGGHIJKLM 1 SGL_ChangeModeSprite("S006","S007","S019","S008","S009",layer:OverlayID());
-			Goto Ready3;
+			Stop;
 			
 		FlashSlideKicking:
 			S020 ABCDEFGHIJKLMNOPQRSSSTUVWX 1 SGL_ChangeModeSprite("S020","S021","S022","S023","S024",layer:OverlayID());
-			Goto Ready3;
+			Stop;
 			
 		FlashSlideKickingStop:
 			S020 TTTUVWX 1 SGL_ChangeModeSprite("S020","S021","S022","S023","S024",layer:OverlayID());
-			Goto Ready3;
+			Stop;
 	
 		FlashPunching:
 			S030 ABCDEFGHHIJKLM 1 SGL_ChangeModeSprite("S030","S031","S032","S033","S034",layer:OverlayID());
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		
 		LoadSprites:
 			S001 ABCDEFGHI 0;

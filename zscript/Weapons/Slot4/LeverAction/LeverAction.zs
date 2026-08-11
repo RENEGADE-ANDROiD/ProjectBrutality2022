@@ -72,8 +72,7 @@ class LeverAction : PB_WeaponBase
 	states
 	{
 		Steady:
-			TNT1 A 1;
-			Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Ready:
 			TNT1 A 0 {
@@ -161,25 +160,12 @@ class LeverAction : PB_WeaponBase
 			}
 			TNT1 A 0 A_Takeinventory("PB_LockScreenTilt",1);
 			Goto Ready3;
+		// Keep-all: path prompt retained for label compatibility; no sibling strip/select.
 		ChooseUpgradePath:
-			TNT1 A 0 A_PrintBold("\cfChoose your path:\n\caFIRE = PBRIFLE\n\ciALTFIRE = LEVERACTION");
-			TNT1 A 1;
-			TNT1 A 1;
 		ChooseUpgradePathDebounce:
-			TNT1 A 2;
 		ChooseUpgradePathLoop:
-			TNT1 A 0 A_JumpIf(JustPressed(BT_ATTACK), "KeepPBRiflePath");
-			TNT1 A 0 A_JumpIf(JustPressed(BT_ALTATTACK), "KeepLeverActionPath");
-			TNT1 A 1;
-			TNT1 A 1;
 		KeepPBRiflePath:
-			TNT1 A 0 A_TakeInventory("LeverAction", 1);
-			TNT1 A 0 A_PrintBold("\caPath selected: PBRIFLE");
-			TNT1 A 0 A_SelectWeapon("Rifle");
-			Stop;
 		KeepLeverActionPath:
-			TNT1 A 0 A_TakeInventory("Rifle", 1);
-			TNT1 A 0 A_PrintBold("\ciPath selected: LEVERACTION");
 			Goto Ready3;
 		SelectAnimation:
 			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/raise", "Auto");
@@ -721,6 +707,15 @@ class LeverAction : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("NewClip",1, "ReloadAnimation");
 			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/inspect", "Auto");
 			Goto NoAmmo;
+		NoAmmo:
+			TNT1 A 0 {
+				A_TakeInventory("PB_LockScreenTilt", 1);
+				A_TakeInventory("Reloading", 1);
+				A_PlaySound("weapons/empty");
+				A_ZoomFactor(1.0);
+			}
+			"LVRA" A 8 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+			Goto Ready3;
 		ReloadAnimation:
 			"LVR2" MNOP 1 A_SetRoll(roll+1.0,SPF_INTERPOLATE);
 			TNT1 A 0 A_PlaySoundEx("weapons/leveraction/openchamber","Auto");
@@ -778,6 +773,7 @@ class LeverAction : PB_WeaponBase
 				A_ClearOverlays(10,11);
 			}
 			TNT1 A 0 A_JumpIfInventory("LeverActionAmmo",1,1);
+			TNT1 A 0 A_Takeinventory("PB_LockScreenTilt",1);
 			Goto Ready3;
 			"LVR2" MNOPQ 1 A_DoPBWeaponAction;
 			TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
@@ -812,48 +808,48 @@ class LeverAction : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 			TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 			TNT1 A 0 A_ClearOverlays(10,11);
-			"LVRA" VWXYZZZ 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			"LVRA" VWXYZZZ 1;
 			"LVRA" ZZZYXWV 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 
 		FlashPunchingStop:
 			TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 		    TNT1 A 0 A_ClearOverlays(10,11);
-			"LVRA" ZZZYXWV 1 A_DoPBWeaponAction;
+			"LVRA" ZZZYXWV 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 
 		FlashKicking:
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelKicking");
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelKicking");
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelKicking");
 			TNT1 A 0 A_ClearOverlays(10,11);
-			"LVR2" ABCDE 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			"LVR2" ABCDE 1;
 			"LVR2" E 4;
 			"LVR2" EDCBA 1;
 			"LVRA" A 1;
-			Goto ReadyToFire;
+			Stop;
 
 		FlashAirKicking:
 			TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelAirKicking");
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking");
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelAirKicking");
 			TNT1 A 0 A_ClearOverlays(10,11);
-			"LVR2" ABCDE 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+			"LVR2" ABCDE 1;
 			"LVR2" E 5;
 			"LVR2" EDCBA 1;
 			"LVRA" A 1;
-			Goto ReadyToFire;
+			Stop;
 
 		PDA_Preview_LA_HipFire:
 			"LVR2" F 2 Bright;
 			"LVR2" G 2 Bright;
 			"LVR2" H 2;
 			"LVR2" I 2;
-			Stop;
+			Goto Ready3;
 		PDA_Preview_LA_ADSFire:
 			"LVR3" R 2 Bright;
 			"LVR3" S 2 Bright;
@@ -885,16 +881,16 @@ class LeverAction : PB_WeaponBase
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking");
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking");
 			TNT1 A 0 A_ClearOverlays(10,11);
-			"LVRA" VWXYZZZZZZZZZZZZZZZZZZ 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-			Goto ReadyToFire;
+			"LVRA" VWXYZZZZZZZZZZZZZZZZZZ 1;
+			Stop;
 
 		FlashSlideKickingStop:
 			TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop");
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop");
 		    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop");
 			TNT1 A 0 A_ClearOverlays(10,11);
-			"LVRA" ZYXWVAA 1 A_DoPBWeaponAction;
-			Goto ReadyToFire;
+			"LVRA" ZYXWVAA 1;
+			Stop;
 
 	}
 }

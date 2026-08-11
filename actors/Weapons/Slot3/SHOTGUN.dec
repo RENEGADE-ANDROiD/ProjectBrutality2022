@@ -89,9 +89,7 @@ Actor PB_SGMagazine: PB_UpgradeItem
 	{
 
 	Spawn:
-		VSMU A 0 NoDelay
-		9SMU A 10 A_PbvpFramework("VSMU")
-		"####" A 0 A_PbvpInterpolate()
+		9SMU A 10
 		LOOP
 	
     Pickup:
@@ -1537,9 +1535,7 @@ ACTOR PB_Shotgun : PB_Weapon Replaces Shotgun
 		Goto Ready3
 		
 	Spawn:
-		VHTC A 0 NoDelay
-		SHTC A 10 A_PbvpFramework("VHTC")
-		"####" A 0 A_PbvpInterpolate()
+		SHTC A 10
 		LOOP
 	
     FlashKicking:

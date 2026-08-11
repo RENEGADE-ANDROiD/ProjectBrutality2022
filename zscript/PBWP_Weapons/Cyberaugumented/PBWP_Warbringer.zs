@@ -12,6 +12,7 @@ class PBWP_Warbringer : PBWP_CA_WeaponBase
 		Weapon.AmmoGive2 20;
 		Weapon.AmmoUse1 0;
 		Weapon.AmmoUse2 0;
+		+WEAPON.AMMO_OPTIONAL;
 		+WEAPON.WIMPY_WEAPON;
 		+FLOORCLIP;
 		Tag "Warbringer";
@@ -82,7 +83,7 @@ class PBWP_Warbringer : PBWP_CA_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
-		TNT1 A 0 { return PB_jumpIfNoAmmo("Reload", 1); }
+		TNT1 A 0 { return PB_BailIfCannotFire("PBWP_WarbringerMag", 1, "PB_HighCalMag", "Reload", "DryFire"); }
 		TNT1 A 0 { PBWP_CA_ReadyPose(); }
 		RFL_ B 1 Bright;
 		RFL_ C 1 Bright { PBWP_WarbringerFire(); PB_TakeAmmo("PBWP_WarbringerMag", 1, 0, 0); }
@@ -92,13 +93,12 @@ class PBWP_Warbringer : PBWP_CA_WeaponBase
 		Goto Ready3;
 
 		Reload:
-		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
-		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
-		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
-		TNT1 A 0 A_TakeInventory("Unloading", 1);
-		TNT1 A 0 PBWP_CA_ReloadPreamble();
-		TNT1 A 0 A_JumpIfInventory("PBWP_WarbringerMag", 20, "Ready3");
-		TNT1 A 0 A_JumpIfInventory("PB_HighCalMag", 1, "DoReload");
+		"####" "#" 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
+		"####" "#" 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
+		"####" "#" 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
+		"####" "#" 0 A_TakeInventory("Unloading", 1);
+		"####" "#" 0 A_JumpIfInventory("PBWP_WarbringerMag", 20, "Ready3");
+		"####" "#" 0 A_JumpIfInventory("PB_HighCalMag", 1, "PBWP_CA_ReloadLower");
 		Goto Ready3;
 	DoReload:
 		RFL_ G 1 A_DoPBWeaponAction(WRF_NOFIRE);
@@ -121,8 +121,7 @@ class PBWP_Warbringer : PBWP_CA_WeaponBase
 		}
 		RFL_ B 1 A_DoPBWeaponAction(WRF_NOFIRE);
 		RFL_ A 2 A_DoPBWeaponAction(WRF_NOFIRE);
-		TNT1 A 0 A_TakeInventory("Reloading", 1);
-		Goto Ready3;
+		Goto PBWP_CA_ReloadRaise;
 
 		Unload:
 		TNT1 A 0 A_TakeInventory("Unloading", 1);

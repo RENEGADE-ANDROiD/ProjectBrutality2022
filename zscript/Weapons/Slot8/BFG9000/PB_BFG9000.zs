@@ -33,11 +33,7 @@ class PB_BFG9000 : PB_WeaponBase
 		Stop;
 	
 		Steady:
-		TNT1 A 1;
-		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 SetPlayerProperty(0,0,0);
-		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-		Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Ready:
 		ClassicReady:
@@ -875,7 +871,7 @@ class PB_BFG9000 : PB_WeaponBase
 		"4DCX" C 1;
 		"4DCX" D 1;
 		"4DBX" "ZZZZ" 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashAirKicking:
 		"4DCX" D 1;
@@ -888,17 +884,17 @@ class PB_BFG9000 : PB_WeaponBase
 		"4DCX" C 1;
 		"4DCX" D 1;
 		"4DBX" "ZZZZ" 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKicking:
 		"4DCX" "DC" 2;
 		"4DCX" "CBBAAAABBCD" 2;
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKickingStop:
 		"4DCX" "BBCCD" 1;
 		"4DBX" Z 1;
-		Goto Ready3;
+		Stop;
 
 		FlashPunching:
 		"4DCX" D 1;
@@ -912,6 +908,6 @@ class PB_BFG9000 : PB_WeaponBase
 		"4DCX" D 1;
 		"4DBX" "ZZZZ" 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 	}
 }

@@ -86,7 +86,7 @@ Weapon.SlotPriority 0.5;
 			if(CountInv("LMGAmmo") < 4) {A_SetFlashWeaponSprite("LQB3");}
 		}
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		FlashPunchingMissile:
 		"LQM5" "AB" 0;
 		"LQM4" "AB" 0;
@@ -103,7 +103,7 @@ Weapon.SlotPriority 0.5;
 			if(CountInv("LMGAmmo") < 12) {A_SetFlashWeaponSprite("LQM3");}
 		}
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		FlashKicking:
 		TNT1 A 0 A_JumpIfInventory("LMGMicroMissiles", 1, "FlashKickingMissile");
 		"LKB7" A 0 A_JumpIfInventory("LMGAmmo",7,5);
@@ -112,7 +112,7 @@ Weapon.SlotPriority 0.5;
 		"LKB4" A 0 A_JumpIfInventory("LMGAmmo",4,2);
 		"LKB3" A 0;
 		"####" "ABCDEFGHGFEDCBA" 1;
-		Goto Ready3;
+		Stop;
 		FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory("LMGMicroMissiles", 1, "FlashAirKickingMissile");
 		"LKB7" A 0 A_JumpIfInventory("LMGAmmo",7,5);
@@ -121,21 +121,21 @@ Weapon.SlotPriority 0.5;
 		"LKB4" A 0 A_JumpIfInventory("LMGAmmo",4,2);
 		"LKB3" A 0;
 		"####" "ABCDEFGHHGFEDCBA" 1;
-		Goto Ready3;
+		Stop;
 		FlashKickingMissile:
 		"LKM6" A 0 A_JumpIfInventory("LMGAmmo",18,4);
 		"LKM5" A 0 A_JumpIfInventory("LMGAmmo",15,3);
 		"LKM4" A 0 A_JumpIfInventory("LMGAmmo",12,2);
 		"LKM3" A 0;
 		"####" "ABCDEFGHGFEDCBA" 1;
-		Goto Ready3;
+		Stop;
 		FlashAirKickingMissile:
 		"LKM6" A 0 A_JumpIfInventory("LMGAmmo",18,4);
 		"LKM5" A 0 A_JumpIfInventory("LMGAmmo",15,3);
 		"LKM4" A 0 A_JumpIfInventory("LMGAmmo",12,2);
 		"LKM3" A 0;
 		"####" "ABCDEFGHHGFEDCBA" 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory("LMGMicroMissiles", 1, "FlashSlideKickingMissile");
 		"LKB7" A 0 A_JumpIfInventory("LMGAmmo",7,5);
@@ -144,14 +144,14 @@ Weapon.SlotPriority 0.5;
 		"LKB4" A 0 A_JumpIfInventory("LMGAmmo",4,2);
 		"LKB3" A 0;
 		"####" "ABCDEFGHHHHHHHHHHHHGFEDCBA" 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingMissile:
 		"LKM6" A 0 A_JumpIfInventory("LMGAmmo",18,4);
 		"LKM5" A 0 A_JumpIfInventory("LMGAmmo",15,3);
 		"LKM4" A 0 A_JumpIfInventory("LMGAmmo",12,2);
 		"LKM3" A 0;
 		"####" ABCDEFGHHHHHHHHHHHHHGFEDCBA 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory("LMGMicroMissiles", 1, "FlashSlideKickingMissileStop");
 		"LKB7" A 0 A_JumpIfInventory("LMGAmmo",7,5);
@@ -160,20 +160,17 @@ Weapon.SlotPriority 0.5;
 		"LKB4" A 0 A_JumpIfInventory("LMGAmmo",4,2);
 		"LKB3" A 0;
 		"####" "GFEDCBA" 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingMissileStop:
 		"LKM6" A 0 A_JumpIfInventory("LMGAmmo",18,4);
 		"LKM5" A 0 A_JumpIfInventory("LMGAmmo",15,3);
 		"LKM4" A 0 A_JumpIfInventory("LMGAmmo",12,2);
 		"LKM3" A 0;
 		"####" "GFEDCBA" 1;
-		Goto Ready3;
+		Stop;
 		Steady:
-		TNT1 A 1;
-		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 SetPlayerProperty(0,0,0);
-		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-		Goto Ready;
+			Goto PB_FinisherCleanup;
+
 		Ready:
 		TNT1 A 0 {
 			if(GetCvar("pb_weapon_crosshairs")) {

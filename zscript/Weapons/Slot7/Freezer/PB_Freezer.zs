@@ -41,12 +41,8 @@ class PB_Freezer : PB_WeaponBase
 		Loop;
 		
 		Steady:
-		TNT1 A 1;
-		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 SetPlayerProperty(0,0,0);
-		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-		Goto Ready;
-		
+			Goto PB_FinisherCleanup;
+
 		Ready:
 			TNT1 A 0 PB_RespectIfNeeded;
 		WeaponRespect:
@@ -500,39 +496,39 @@ class PB_Freezer : PB_WeaponBase
 			TNT1 A 0 A_JumpIfInventory("FreezerOverCooling", 100, "FlashPunchingFrost");
 			"FR42" "ABCDEFGGHIJKLM" 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashPunchingFrost:
 			"FR72" "ABCDEFGGHIJKLM" 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashKicking:
 			TNT1 A 0 A_JumpIfInventory("FreezerOverCooling", 100, "FlashKickingFrost");
 			"FR40" "ABCDEFGGHIJKLM" 1;
-			Goto Ready3;
+			Stop;
 		FlashKickingFrost:
 			"FR70" "ABCDEFGGHIJKLM" 1;
-			Goto Ready3;
+			Stop;
 		FlashAirKicking:
 			TNT1 A 0 A_JumpIfInventory("FreezerOverCooling", 100, "FlashAirKickingFrost");
 			"FR40" "ABCDEFGGGHIJKLM" 1;
-			Goto Ready3;
+			Stop;
 		FlashAirKickingFrost:
 			"FR70" "ABCDEFGGGHIJKLM" 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKicking:
 			TNT1 A 0 A_JumpIfInventory("FreezerOverCooling", 100, "FlashSlideKickingFrost");
 			"FR41" "ABCDEFGHIJKLMNOPQRSSSTUVWX" 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingFrost:
 			"FR71" "ABCDEFGHIJKLMNOPQRRRRRSTUV" 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingStop:
 			TNT1 A 0 A_JumpIfInventory("FreezerOverCooling", 100, "FlashSlideKickingStopFrost");
 			"FR41" "TTTUVWX" 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingStopFrost:
 			"FR71" "RRRSTUV" 1;
-			Goto Ready3;
+			Stop;
 			
 		
 		//Tube/Muzzle Components Effects

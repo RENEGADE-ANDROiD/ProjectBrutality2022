@@ -77,7 +77,7 @@ class PBWP_Deracinator : PBWP_CA_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 		TNT1 A 0 A_JumpIfInventory("PB_Cell", 5, 2);
-		Goto Ready3;
+		Goto DryFire;
 		TNT1 A 0 PBWP_CA_LockTilt();
 		DC7_ E 1 Bright A_StopSound(CHAN_6);
 		DC7_ F 1 Bright A_StartSound("ObliterationBFG/Fire", CHAN_WEAPON);

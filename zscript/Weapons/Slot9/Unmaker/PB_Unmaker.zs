@@ -34,9 +34,8 @@ class PB_Unmaker : PB_WeaponBase
 	{
 				
 		Steady:
-	TNT1 A 1;
-	Goto Ready;
-		
+			Goto PB_FinisherCleanup;
+
 		WeaponSpecial:
 		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1);
 		TNT1 A 0 A_Playsound("UNMSWTC");
@@ -286,7 +285,7 @@ class PB_Unmaker : PB_WeaponBase
 		"UNHS" C 1;
 		"UNHS" B 1;
 		"UNHG" "AAA" 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashAirKicking:
 		"UNHS" A 1;
@@ -299,17 +298,17 @@ class PB_Unmaker : PB_WeaponBase
 		"UNHS" C 1;
 		"UNHS" B 1;
 		"UNHG" "AAAA" 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKicking:
 		"UNHS" "ABCD" 2;
 		"UNHS" "EFFFFFFEE" 2;
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKickingStop:
 		"UNHS" "EDCBA" 1;
 		"UNHG" A 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashPunching:
 		"UNHS" A 1;
@@ -323,6 +322,6 @@ class PB_Unmaker : PB_WeaponBase
 		"UNHS" B 1;
 		"UNHG" "AAA" 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 	}
 }

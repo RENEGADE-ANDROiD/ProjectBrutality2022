@@ -1,6 +1,6 @@
 // PBWP IN fold — FX / support actors referenced by folded IN weapons (staging parity, PB2022 assets)
 
-// --- Distant rifle audio cue (AssaultRifle) ---
+// --- Distant rifle audio cue ---
 Actor DistantRifleFireSound : OrangeLensFlareAlt
 {
 	States

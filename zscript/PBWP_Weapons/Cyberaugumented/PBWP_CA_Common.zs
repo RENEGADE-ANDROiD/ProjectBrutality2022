@@ -98,20 +98,6 @@ class PBWP_CA_WeaponBase : PB_WeaponBase
 		PBWP_CA_DeferredRailHit(damage, 'BFG');
 	}
 
-	action void PBWP_CA_FireNeonicRail(int damage, int sparsity = 30)
-	{
-		A_RailAttack(0, 0, false, "", "", RGF_SILENT | RGF_FULLBRIGHT,
-			pufftype: "PBWP_CA_NeonicPuff", sparsity: sparsity, spawnclass: "PBWP_CA_NeonicRailTrail");
-		PBWP_CA_DeferredRailHit(damage, 'Plasma');
-	}
-
-	action void PBWP_CA_FireMinigunLaser(int damage, int sparsity = 24)
-	{
-		A_RailAttack(0, 0, 0, "", "", RGF_SILENT | RGF_FULLBRIGHT,
-			pufftype: "PBWP_CA_NeonicPuff", sparsity: sparsity, spawnclass: "PBWP_CA_NeonicRailTrail");
-		PBWP_CA_DeferredRailHit(damage, 'Plasma');
-	}
-
 	// Upstream Nightfall laser mode fires DCY_MechaZombiePlasma2 bolts — visual bolt + deferred hit.
 	action void PBWP_CA_FireMinigunLaserBolt(int damage)
 	{
@@ -132,28 +118,82 @@ class PBWP_CA_WeaponBase : PB_WeaponBase
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			MC3S ABCDEFGGFEDCBA 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 
-		// Kick flashes: blank weapon layer while legs kick (do not play MC3S slash).
-		// End Stop — DoKick restores Ready3 on PSP_WEAPON when the kick finishes.
+		// Visual-only kick holds (no A_DoPBWeaponAction / Ready* on PSP_FLASH).
 		FlashKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			TNT1 A 14;
+			"####" AAAAAAAAAAAAAAA 1;
 			Stop;
 
 		FlashAirKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			TNT1 A 15;
+			"####" AAAAAAAAAAAAAAAA 1;
 			Stop;
 
 		FlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			TNT1 A 25;
+			"####" AAAAAAAAAAAAAAAAAAAAAAAA 1;
 			Stop;
 
 		FlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			TNT1 A 2;
+			"####" AAAAAAA 1;
 			Stop;
+
+		PBWP_CA_ReloadLower:
+			"####" "#" 0 PBWP_OffsetReloadBegin();
+			"####" "#" 2
+			{
+				PBWP_OffsetReloadStep(0);
+				A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
+			}
+			"####" "#" 2
+			{
+				PBWP_OffsetReloadStep(1);
+				A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
+			}
+			"####" "#" 2
+			{
+				PBWP_OffsetReloadStep(2);
+				A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
+			}
+			"####" "#" 2
+			{
+				PBWP_OffsetReloadStep(3);
+				A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
+			}
+			"####" "#" 0 { return ResolveState("DoReload"); }
+			Stop;
+
+		PBWP_CA_ReloadRaise:
+			"####" "#" 2
+			{
+				PBWP_OffsetReloadStep(4);
+				A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
+			}
+			"####" "#" 2
+			{
+				PBWP_OffsetReloadStep(5);
+				A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
+			}
+			"####" "#" 2
+			{
+				PBWP_OffsetReloadStep(6);
+				A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
+			}
+			"####" "#" 0 { return PBWP_OffsetReloadFinish(); }
+			Stop;
+
+		// Empty click — keep current PSP sprite (####), brief dip, allow reload.
+		DryFire:
+			"####" "#" 2
+			{
+				A_StartSound("weapons/empty", CHAN_WEAPON);
+				A_WeaponOffset(0, 34, WOF_INTERPOLATE);
+				A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE | WRF_NOSWITCH);
+			}
+			"####" "#" 6 A_DoPBWeaponAction(WRF_ALLOWRELOAD | WRF_NOFIRE | WRF_NOSWITCH);
+			Goto Ready3;
 	}
 }

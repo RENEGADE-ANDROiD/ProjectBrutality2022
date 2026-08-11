@@ -11,8 +11,7 @@ class PB2022_BackpackReloadItem : Inventory
 
 	static const Name PB_noreloadweapons[] =
 	{
-		'PB_Unmaker',
-		'PB_DemonExterminator'
+		'PB_Unmaker'
 	};
 
 	override void Tick()

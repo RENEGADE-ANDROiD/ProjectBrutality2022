@@ -38,11 +38,7 @@ class MarauderSSG : PB_WeaponBase
 	states
 	{
 		Steady:
-		TNT1 A 1;
-		TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
-		TNT1 A 0 SetPlayerProperty(0,0,0);
-		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-		Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Ready:
 	    TNT1 A 0;
@@ -234,26 +230,13 @@ class MarauderSSG : PB_WeaponBase
 		     }
 	    TNT1 A 0;
 	    Goto MarauderShotgunReadyToFire;
+		// Keep-all: path prompt retained for label compatibility; no sibling strip/select.
 		ChooseUpgradePath:
-		TNT1 A 0 A_PrintBold("\cfChoose your path:\n\caFIRE = MARAUDER\n\ciALTFIRE = SSG");
-		TNT1 A 1;
-		TNT1 A 1;
 		ChooseUpgradePathDebounce:
-		TNT1 A 2;
 		ChooseUpgradePathLoop:
-		TNT1 A 0 A_JumpIf(JustPressed(BT_ATTACK), "KeepMarauderPath");
-		TNT1 A 0 A_JumpIf(JustPressed(BT_ALTATTACK), "KeepSSGPath");
-		TNT1 A 1;
-		TNT1 A 1;
 		KeepMarauderPath:
-		TNT1 A 0 A_TakeInventory("PB_SSG", 1);
-		TNT1 A 0 A_PrintBold("\caPath selected: MARAUDER");
-		Goto Ready3;
 		KeepSSGPath:
-		TNT1 A 0 A_TakeInventory("MarauderSSG", 1);
-		TNT1 A 0 A_PrintBold("\ciPath selected: SSG");
-		TNT1 A 0 A_SelectWeapon("PB_SSG");
-		Stop;
+		Goto Ready3;
 		MarauderShotgunReadyToFire:
 	    MSSG A 1 {
 		     if (CountInv("MarauderShotgunBarrelHeat") >= 60) {
@@ -705,9 +688,7 @@ class MarauderSSG : PB_WeaponBase
 		Goto MarauderShotgunReadyToFire;
 
 		Spawn:
-	    "MSSS" Z 0 NoDelay;
-	    "MSSS" Z 10 A_PbvpFramework("MSSS");
-	   "####" A 0 A_PbvpInterpolate();
+	    "MSSS" Z 10;
 	    Loop;
 
 		WeaponSpecial:
@@ -745,76 +726,36 @@ class MarauderSSG : PB_WeaponBase
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelKicking");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelKicking");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelKicking");
-	    TNT1 A 0 A_ClearOverlays(10,11);
-		"MSSG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"MSS5" P 1;
-		"MSS5" O 1;
-		"MSS5" N 1;
-		"MSS5" M 1;
-		"MSS5" L 1;
-		"MSS5" K 6;
-		"MSS5" L 1;
-		"MSS5" M 1;
-		"MSS5" N 1;
-		"MSS5" O 1;
-		"MSS5" P 1;
-		"MSSG" A 1;
-		Goto MarauderShotgunReadyToFire;
+		"MSSG" AAAAAAAAAAAAAAA 1;
+		Stop;
 
 		FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelAirKicking");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelAirKicking");
-	    TNT1 A 0 A_ClearOverlays(10,11);
-		"MSSG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"MSS5" P 1;
-		"MSS5" O 1;
-		"MSS5" N 1;
-		"MSS5" M 1;
-		"MSS5" L 1;
-		"MSS5" K 7;
-		"MSS5" L 1;
-		"MSS5" M 1;
-		"MSS5" N 1;
-		"MSS5" O 1;
-		"MSS5" P 1;
-		"MSSG" A 1;
-		Goto MarauderShotgunReadyToFire;
+		"MSSG" AAAAAAAAAAAAAAAA 1;
+		Stop;
 
 		FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKicking");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking");
-	    TNT1 A 0 A_ClearOverlays(10,11);
-		"MSSG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"MSS5" P 1;
-		"MSS5" O 1;
-		"MSS5" N 1;
-		"MSS5" M 1;
-		"MSS5" L 1;
-		"MSS5" K 13;
-		"MSS5" L 1;
-		"MSS5" M 1;
-		"MSS5" N 1;
-		"MSS5" O 1;
-		"MSS5" P 1;
-		"MSSG" A 1;
-		Goto MarauderShotgunReadyToFire;
+		"MSSG" AAAAAAAAAAAAAAAAAAAAAAAA 1;
+		Stop;
 
 		FlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop");
-	    TNT1 A 0 A_ClearOverlays(10,11);
-		"MSSG" A 1 A_DoPBWeaponAction();
-		Goto MarauderShotgunReadyToFire;
+		"MSSG" AAAAAAA 1;
+		Stop;
 
 		FlashPunching:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 	    TNT1 A 0 A_ClearOverlays(10,11);
-		"MSSG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
+		"MSSG" A 1;
 		"MSS5" P 1;
 		"MSS5" O 1;
 		"MSS5" N 1;
@@ -828,16 +769,16 @@ class MarauderSSG : PB_WeaponBase
 		"MSS5" P 1;
 		"MSSG" A 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 
 		FlashPunchingStop:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 	    TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 	    TNT1 A 0 A_ClearOverlays(10,11);
-		"MSSG" A 1 A_DoPBWeaponAction();
+		"MSSG" A 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 
 		PDA_Preview_Fire:
 		"MSSG" C 1 Bright;

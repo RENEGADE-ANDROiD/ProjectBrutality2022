@@ -17,8 +17,6 @@ extend class PB2022_Hud_ZS
 			return true;
 		if (CheckInventory("DualWieldingM41A") && wn == 'PB_M41A')
 			return true;
-		if (wn == 'PB_NormalRifle' && pbWeap && pbWeap.akimboMode)
-			return true;
 		if (CheckInventory("DualWieldingSSG") && (wn == 'PB_SSG' || wn == 'PB_CSSG'))
 			return true;
 		if (CheckInventory("DualWieldingAutoshotguns") && wn == 'PB_Autoshotgun')
@@ -42,8 +40,6 @@ extend class PB2022_Hud_ZS
 		if (CheckInventory("DualWieldingM2Plasma") && wn == 'PB_M2Plasma')
 			return true;
 		if (CheckInventory("WSMGDualWield") && wn == 'W_SMG')
-			return true;
-		if (CheckInventory("DualWieldWithRKX") && wn == 'Black_DMR_RKX')
 			return true;
 
 		return false;
@@ -87,8 +83,6 @@ extend class PB2022_Hud_ZS
 			leftType = 'LeftM2PlasmaAmmo';
 		else if (wn == 'W_SMG')
 			leftType = 'LW_Clipp';
-		else if (wn == 'Black_DMR_RKX')
-			leftType = 'LeftBlack_Clip';
 		else if (pbWeap && pbWeap.AmmoTypeLeft)
 		{
 			let leftInv = plr.FindInventory(pbWeap.AmmoTypeLeft);
@@ -136,20 +130,10 @@ extend class PB2022_Hud_ZS
 				}
 				return false;
 
-			case 'PB_NormalRifle':
-				if (pbWeap && pbWeap.akimboMode)
-				{
-					weaponBarAccent = Font.CR_TAN;
-					DrawAmmoBar("BARBACT1", "BARBACT2", "BARBACT3", "BAMBAR2", "ABAR2", "ABAR2", "AMMOIC2", Font.CR_TAN, drawDual: Left != null);
-					return true;
-				}
-				return false;
-
 			case 'PB_MG42':
-				weaponBarAccent = Font.CR_YELLOW;
-				DrawAmmoBar("BARBACY1", "BARBACY2", "BARBACY3", "BAMBAR1", "ABAR1", "ABAR1", "AMMOIC1", Font.CR_YELLOW, drawSecondary: false);
+				PB2022_DrawPurpleGreenAmmoBar(drawSecondary: false);
 				if (Secondary)
-					PB2022_DrawHeatMeterRow("BARBACY2", "ABAR1", IntAmmo2, Secondary.MaxAmount, false, true);
+					PB2022_DrawHeatMeterRow("BARBACP2", "ABAR5", IntAmmo2, Secondary.MaxAmount, false, true);
 				return true;
 
 			case 'PB_CryoShotgun':
@@ -197,8 +181,7 @@ extend class PB2022_Hud_ZS
 			case 'PB_BFG9000':
 			case 'Stormcast':
 			case 'BHGen':
-				weaponBarAccent = Font.CR_PURPLE;
-				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawSecondary: false);
+				PB2022_DrawPurpleGreenAmmoBar(drawSecondary: false);
 				return true;
 
 			case 'PB_PortalBlaster':
@@ -244,23 +227,28 @@ extend class PB2022_Hud_ZS
 				return true;
 
 			case 'PB_M1Plasma':
-				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawDual: PB2022_WantsDualAmmoRow());
-				weaponBarAccent = Font.CR_PURPLE;
+				PB2022_DrawPurpleGreenAmmoBar(drawDual: PB2022_WantsDualAmmoRow());
 				return true;
 
 			case 'PB_DarkMatterRifle':
-				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawDual: PB2022_WantsDualAmmoRow() && Left != null);
-				weaponBarAccent = Font.CR_PURPLE;
+				PB2022_DrawPurpleGreenAmmoBar(drawDual: PB2022_WantsDualAmmoRow() && Left != null);
 				return true;
 
 			case 'PB_PulseCannon':
-				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE);
-				weaponBarAccent = Font.CR_PURPLE;
+				PB2022_DrawPurpleGreenAmmoBar();
+				return true;
+
+			case 'PB_PlasmaBeam':
+				PB2022_DrawPurpleGreenAmmoBar();
+				return true;
+
+			case 'PB_FlakCannon':
+				DrawAmmoBar("BARBACR1", "BARBACR2", "BARBACR3", "BAMBAR4", "ABAR4", "ABAR4", "AMMOIC4", Font.CR_RED);
+				weaponBarAccent = Font.CR_RED;
 				return true;
 
 			case 'PB_M2Plasma':
-				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawDual: CheckInventory("DualWieldingM2Plasma"));
-				weaponBarAccent = Font.CR_PURPLE;
+				PB2022_DrawPurpleGreenAmmoBar(drawDual: CheckInventory("DualWieldingM2Plasma"));
 				return true;
 
 			case 'PB_SMG':
@@ -287,13 +275,11 @@ extend class PB2022_Hud_ZS
 			}
 
 			case 'BioAcidLauncher':
-				weaponBarAccent = Font.CR_PURPLE;
-				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawSecondary: false, drawDual: false);
+				PB2022_DrawPurpleGreenAmmoBar(drawSecondary: false, drawDual: false);
 				return true;
 
 			case 'PB_Freezer':
-				weaponBarAccent = Font.CR_PURPLE;
-				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawDual: false);
+				PB2022_DrawPurpleGreenAmmoBar(drawDual: false);
 				PBHud_DrawImage("BARBACT2", (-73, -65), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, playerBoxAlpha);
 				PBHud_DrawBar("ABAR2", PB2022_AmmoBarOffGfx(), GetAmount("PrimaryPistolAmmo"), GetMaxAmount("PrimaryPistolAmmo"), (-111, -68), 0, 1, DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM);
 				PBHud_DrawAmmoNumber(Formatnumber(GetAmount("PrimaryPistolAmmo")), (-205, -85), Font.CR_TAN);
@@ -301,14 +287,18 @@ extend class PB2022_Hud_ZS
 				return true;
 
 			case 'Stormcast':
-				weaponBarAccent = Font.CR_PURPLE;
-				DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE, drawPrimary: false, drawSecondary: true, drawDual: false);
+				PB2022_DrawPurpleGreenAmmoBar(drawPrimary: false, drawSecondary: true, drawDual: false);
 				if (Secondary)
-					PBHud_DrawAmmoNumber(Formatnumber(Secondary.Amount), (-216, -49), Font.CR_PURPLE);
+					PBHud_DrawAmmoNumber(Formatnumber(Secondary.Amount), (-216, -49), Font.CR_GREEN);
 				PBHud_DrawBar("RESBAR5", "BGBARL", IntAmmo2, Secondary ? Secondary.MaxAmount : 0, (-122, -32), 0, 1, DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, slanted: false);
 				return true;
 
 			case 'Hell_rifle':
+				weaponBarAccent = cachedFontColors[DTECHAMMO];
+				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
+				return true;
+
+			case 'PB_Hellshot':
 				weaponBarAccent = cachedFontColors[DTECHAMMO];
 				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
 				return true;
@@ -323,10 +313,6 @@ extend class PB2022_Hud_ZS
 				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
 				return true;
 
-			case 'PB_DemonExterminator':
-				weaponBarAccent = cachedFontColors[DTECHAMMO];
-				DrawAmmoBar("BARBACZ1", "BARBACZ2", "BARBACZ3", "BAMBAR7", "ABAR7", "ABAR7", "AMMOIC7", cachedFontColors[DTECHAMMO]);
-				return true;
 		}
 
 		return false;
@@ -458,23 +444,6 @@ extend class PB2022_Hud_ZS
 			case 'BHGen':
 				label = StringTable.Localize("$PB_HUD_BHGEN_CHARGE", false);
 				col = Font.CR_PURPLE;
-				break;
-			case 'PB_DemonExterminator':
-				if (CheckInventory("DEx_Cur2"))
-				{
-					label = StringTable.Localize("$PB_HUD_DEMONEX_LIGHTNING", false);
-					col = Font.CR_CYAN;
-				}
-				else if (CheckInventory("DEx_Cur1"))
-				{
-					label = StringTable.Localize("$PB_HUD_DEMONEX_INCIN", false);
-					col = Font.CR_ORANGE;
-				}
-				else
-				{
-					label = StringTable.Localize("$PB_HUD_DEMONEX_LASER", false);
-					col = Font.CR_RED;
-				}
 				break;
 			default:
 				return false;

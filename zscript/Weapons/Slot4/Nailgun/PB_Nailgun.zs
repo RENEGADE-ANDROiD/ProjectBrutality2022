@@ -36,17 +36,11 @@ Weapon.SlotPriority 0.1;
 	states
 	{
 		Spawn:
-		"VNGN" F 0 NoDelay;
-		"NLMG" F 10 A_PbvpFramework("VNGN");
-		"####" "#" 0 A_PbvpInterpolate();
+		"NLMG" F 10;
 		LOOP;
 		Steady:
-	TNT1 A 1;
-	TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-	TNT1 A 0 SetPlayerProperty(0,0,0);
-	TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-	Goto Ready;
-	
+			Goto PB_FinisherCleanup;
+
 		WeaponSpecial:
 		TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
 		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, "SwitchToNailgun");
@@ -962,50 +956,50 @@ Weapon.SlotPriority 0.1;
 		"N4N0" "ABCDEFGHIJKLMN" 1;
 		"N1N0" D 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 
 		FlashKicking:
 		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, "FlashKickingJavelin");
 		"N4N0" "ABCDEFGHIJKLMN" 1;
 		"N1N0" D 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashPunchingJavelin:
 		"J5N0" "ABCDEFGHIJKLMN" 1;
 		"J0N0" D 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 	
 		FlashKickingJavelin:
 		"J5N0" "ABCDEFGHIJKLMN" 1;
 		"J0N0" D 1;
-		Goto Ready3;
+		Stop;
 	
 		FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, "FlashKickingJavelin");
 		"N4N0" "ABCDEFGHIJKLMN" 1;
 		"N1N0" "DDD" 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashAirKickingJavelin:
 		"J5N0" "ABCDEFGHIJKLMN" 1;
 		"J0N0" "DDD" 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, "FlashSlideKickingJavelin");
 		"N4N1" "ABCDEFGHIJKLMMMNOPQRSTUVWX" 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingJavelin:
 		"J5N1" "ABCDEFGHIJKLMMMNOPQRSTUVWX" 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory("JavelinMode", 1, "FlashSlideKickingStopJavelin");
 		"N4N1" "RSTUVWX" 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingStopJavelin:
 		"J5N1" "RSTUVWX" 1;
-		Goto Ready3;
+		Stop;
 	}
 }

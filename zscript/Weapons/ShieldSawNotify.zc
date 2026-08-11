@@ -10,7 +10,9 @@ class ShieldSawNotifyReturned : Inventory
 		if (other)
 		{
 			other.TakeInventory("ShieldSawThrown", 1);
-			other.GiveInventory("ShieldSawCatchPending", 1);
+			// Catch FPS anim disabled — SFX only (ShieldSawCatchPending / SetPSprite path left inert).
+			// other.GiveInventory("ShieldSawCatchPending", 1);
+			other.A_StartSound("ShieldSawBack", 5, CHANF_DEFAULT, 1.0, 1.5);
 		}
 		Destroy();
 	}
