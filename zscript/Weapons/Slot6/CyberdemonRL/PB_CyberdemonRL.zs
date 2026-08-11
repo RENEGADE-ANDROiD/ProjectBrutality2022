@@ -17,8 +17,7 @@
 //     PB_RefillMonsterSourcedWeaponWear for DECORATE boss-tech guns).
 //     is inlined here (ZScript weapons don't auto-inherit the DECORATE chain) so legs /
 //     kick / melee / equipment overlays come up correctly.
-//   * FlashPunching / FlashKicking end with "goto Ready3" per the PSP_FLASH-based
-//     flash system documented in docs/punch_flash_psp_flash.md.
+//   * FlashPunching / FlashKicking* end Stop (PSP_FLASH / visual hold only).
 
 class PB_CyberdemonRL : PB_WeaponBase
 {
@@ -118,8 +117,7 @@ class PB_CyberdemonRL : PB_WeaponBase
 			"HND7" E -1;
 			Stop;
 		Steady:
-			TNT1 A 0;
-			Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Deselect:
 			TNT1 A 0 {
@@ -302,18 +300,18 @@ class PB_CyberdemonRL : PB_WeaponBase
 		FlashPunching:
 			"CYBF" PQRSTTUUUTTSRQP 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashKicking:
-			"CYBF" PQRSTTUUUUTTSRQP 1;
-			Goto Ready3;
+			CYBF AAAAAAAAAAAAAAA 1;
+			Stop;
 		FlashAirKicking:
-			"CYBF" PQRSTTTUUUTTTSRQP 1;
-			Goto Ready3;
+			CYBF AAAAAAAAAAAAAAAA 1;
+			Stop;
 		FlashSlideKicking:
-			"CYBF" PQQRRSSTTTTUUUUUTTTTSSRRQQP 1;
-			Goto Ready3;
+			CYBF AAAAAAAAAAAAAAAAAAAAAAAA 1;
+			Stop;
 		FlashSlideKickingStop:
-			"CYBF" SRRQQPP 1;
-			Goto Ready3;
+			CYBF AAAAAAA 1;
+			Stop;
 	}
 }

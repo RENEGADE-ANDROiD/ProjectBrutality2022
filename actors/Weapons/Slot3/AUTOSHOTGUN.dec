@@ -72,9 +72,7 @@ Actor PB_AutoshotgunUpgrade: PB_UpgradeItem
 	{
 
 	Spawn:
-		V9SC A 0 NoDelay
-		A9SC A 10 A_PbvpFramework("V9SC")
-		"####" A 0 A_PbvpInterpolate()
+		A9SC A 10
 		LOOP
 	
     Pickup:

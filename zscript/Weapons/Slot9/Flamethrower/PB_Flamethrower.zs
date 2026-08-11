@@ -20,20 +20,16 @@ class PB_Flamethrower : PB_WeaponBase
      +WEAPON.NOAUTOAIM;
 	+FLOORCLIP;
 	+DONTGIB;
-	Inventory.PickupMessage "You got the UAC-M3 Flamethrower! (Slot 9)";
-	Weapon.SlotNumber 9;
-	Weapon.SlotPriority 10;
+	Inventory.PickupMessage "You got the UAC-M3 Flamethrower! (Slot 6)";
+	Weapon.SlotNumber 6;
+	Weapon.SlotPriority 0;
 	Tag "UAC-M3 Flamethrower";
 	}
 	states
 	{
 		Steady:
-	TNT1 A 1;
-	TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-	TNT1 A 0 SetPlayerProperty(0,0,0);
-	TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-	Goto Ready;
-	
+			Goto PB_FinisherCleanup;
+
 		ReadyUpgraded:
 		TNT1 A 0 A_JumpIfInventory("RespectFlamerGoonUpgraded", 1, "SelectAnimation");
 		TNT1 A 0 A_GiveInventory("RespectFlamerGoonUpgraded");
@@ -1002,7 +998,7 @@ class PB_Flamethrower : PB_WeaponBase
 		"####" B 1;
 		"####" A 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		
 	
 		FlashKicking:
@@ -1021,7 +1017,7 @@ class PB_Flamethrower : PB_WeaponBase
 		"####" C 1;
 		"####" B 1;
 		"####" A 1;
-		Goto Ready3;
+		Stop;
 
 		FlashAirKicking:
 		TNT1 A 0 A_Overlay(-5, "FlameAirKick");
@@ -1039,7 +1035,7 @@ class PB_Flamethrower : PB_WeaponBase
 		"####" C 1;
 		"####" B 1;
 		"####" A 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKicking:
 		TNT1 A 0 A_Overlay(-5, "FlameSlideKick");
@@ -1057,7 +1053,7 @@ class PB_Flamethrower : PB_WeaponBase
 		"####" C 1;
 		"####" B 1;
 		"####" A 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingStop:
 		TNT1 A 0 A_Overlay(-5, "FlameEndSlideKick");
 		"FLK1" G 1;
@@ -1070,6 +1066,6 @@ class PB_Flamethrower : PB_WeaponBase
 		"####" C 1;
 		"####" B 1;
 		"####" A 1;
-		Goto Ready3;
+		Stop;
 	}
 }

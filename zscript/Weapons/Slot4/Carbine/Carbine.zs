@@ -44,12 +44,8 @@ class PB_Carbine : PB_WeaponBase
 	states
 	{
 		Steady:
-			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
-			TNT1 A 0 SetPlayerProperty(0,0,0);
-			TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-			Goto Ready;
-		
+			Goto PB_FinisherCleanup;
+
 		Ready:
 			TNT1 A 0 PB_RespectIfNeeded;
 		WeaponRespect:
@@ -475,7 +471,7 @@ class PB_Carbine : PB_WeaponBase
 				return ResolveState("ToggleScope");
 			}
 			A_Overlay(-19, "WheelCancel");
-			return ResolveState(null);
+			return ResolveState("Ready3");
 		}
 
 		SwitchToDualWield:
@@ -505,6 +501,12 @@ class PB_Carbine : PB_WeaponBase
 		"CB00" E 1;
 		"CB00" DCBA 1 A_SetRoll(roll+.8, SPF_INTERPOLATE);
 		Goto Ready3;
+	StopDualWield:
+		TNT1 A 0 {
+			A_TakeInventory("DualWieldingCarbines", 1);
+			A_SetAkimbo(false);
+		}
+		Goto SwitchFromDualWield;
 		
 		
  	ToggleFireMode:
@@ -1193,9 +1195,7 @@ class PB_Carbine : PB_WeaponBase
 		Goto SelectAnimationDualWield;
 		
 	Spawn:
-		"VB00" Z 0 NoDelay;
-		"CB00" Z 10 A_PbvpFramework("VB00");
-		"####" "#" 0 A_PbvpInterpolate();
+		"CB00" Z 10;
 		LOOP;
 		
     
@@ -1228,42 +1228,42 @@ class PB_Carbine : PB_WeaponBase
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashKickingDW");
 		"C1KI" ABCDEEEEFFEEDCBA 1;
-		Goto Ready3;
+		Stop;
 	FlashKickingDW:
 		"CB01" ABCDEEEEFFEEDCBA 1;
-		Goto Ready3;
+		Stop;
 	FlashAirKickingDW:
 		"CB01" ABCDEEEEFFEEDCBA 1;
-		Goto Ready3;
+		Stop;
 		
 	FlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingDW");
 		"C1KI" ABCDEEEEEEFFFFFFEEEEEEEDCBA 1;
-		Goto Ready3;
+		Stop;
 	FlashSlideKickingDW:
 		"CB01" ABCDEEEEEEFFFFFFEEEEEEEDCBA 1;
-		Goto Ready3;
+		Stop;
 	FlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingStopDW");
 		"C1KI" FEEDCBA 1;
-		Goto Ready3;
+		Stop;
 	FlashSlideKickingStopDW:
 		"CB01" FEEDCBA 1;
-		Goto Ready3;
+		Stop;
 		
 	FlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashPunchingDW");
 		"C1KI" ABCDEEFFEEDCBA 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 	FlashPunchingDW:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"CB01" ABCDEEFFEEDCBA 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		
 	}
 }

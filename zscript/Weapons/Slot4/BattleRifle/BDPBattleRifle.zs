@@ -116,11 +116,7 @@ class BDPBattleRifle : PB_WeaponBase
 			BR45 A -1;
 			Stop;
 		Steady:
-			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 SetPlayerProperty(0, 0, 0);
-			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-			goto Ready3;
+			Goto PB_FinisherCleanup;
 
 		Select:
 			TNT1 A 0
@@ -440,25 +436,30 @@ class BDPBattleRifle : PB_WeaponBase
 			BR4K D 1;
 			BR4K E 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashKicking:
-			goto FlashAirKicking;
+			TNT1 A 0 A_ClearOverlays(10, 11);
+			BR4K C 1;
+			BR4K DDDDDDDDDDDDD 1;
+			BR4K E 1;
+			Stop;
 		FlashAirKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			BR4K C 1;
-			BR4K D 1;
+			BR4K DDDDDDDDDDDDDD 1;
 			BR4K E 1;
-			goto Ready3;
+			Stop;
 		FlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			BR4K C 1;
-			BR4K D 2;
+			BR4K DDDDDDDDDDDDDDDDDDDDDD 1;
 			BR4K E 1;
-			goto Ready3;
+			Stop;
 		FlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			BR4K D 1;
+			BR4K E 1;
+			BR4K DDDDD 1;
 			BR4K C 1;
-			goto Ready3;
+			Stop;
 	}
 }

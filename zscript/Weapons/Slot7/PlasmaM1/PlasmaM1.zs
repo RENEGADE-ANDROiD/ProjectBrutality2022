@@ -25,9 +25,7 @@ Class PB_M1Plasma : PB_WeaponBase
 	states
 	{
 		Spawn:
-			VLAS A 0 NoDelay;
-			PL4S A 10 A_PbvpFramework("VLAS");
-			"####" "#" 0 A_PbvpInterpolate();
+			PL4S A 10;
 			loop;
 		
 		WeaponRespect:
@@ -968,7 +966,7 @@ Class PB_M1Plasma : PB_WeaponBase
 			P1R2 CDEEDC 1;
 			PLSG ZYXW 1;
 			PLSG AA 1 ;
-			Goto Ready3;
+			Stop;
 		FlashAirKicking:
 			TNT1 A 0 A_ClearOverlays(10,65);
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashAirKickingDualWield");
@@ -976,20 +974,20 @@ Class PB_M1Plasma : PB_WeaponBase
 			P1R2 BCDEEDCB 1;
 			PLSG ZYXW 1;
 			PLSG AA 1 ;
-			Goto Ready3;
+			Stop;
 		FlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10,65);
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingDualWield");
 			PLSG WXYZ 1;
 			P1R2 ABCDEFGHHHIJKLMNEDCB 1;
 			PLSG ZYXW 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(10,65);
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingStopDualWield");
 			P1R2 DCB 1;
 			PLSG ZYXW 1; 
-			Goto Ready3;
+			Stop;
 		FlashPunching:
 			TNT1 A 0 A_ClearOverlays(10,65);
 			TNT1 A 0 A_ClearReFire();
@@ -999,23 +997,23 @@ Class PB_M1Plasma : PB_WeaponBase
 			PLSG ZYXW 1;
 			PLSG AA 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashPunchingDualWield:
 			TNT1 A 15;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 			
 		FlashKickingDualWield:
 			P3R0 ABCDEF 1;
 			P3R0 F 2 A_WeaponOffset(0, 36);
 			P3R0 FEDCBA 1 A_WeaponOffset(0,32);
-			Goto Ready3;
+			Stop;
 			
 		FlashAirKickingDualWield:
 			P3R0 ABCDEF 1;
 			P3R0 F 4 A_WeaponOffset(0, 36);
 			P3R0 FEDCBA 1 A_WeaponOffset(0,32);
-			Goto Ready3;
+			Stop;
 			
 		FlashSlideKickingDualWield:
 			P3R0 ABCDEF 1;
@@ -1024,12 +1022,12 @@ Class PB_M1Plasma : PB_WeaponBase
 			P3R0 KKLLM 1;
 			P3R0 FF 1 A_WeaponOffset(0,32);
 			P3R0 EDCBA 1 A_WeaponOffset(0,32);
-			Goto Ready3;
+			Stop;
 			
 		FlashSlideKickingStopDualWield:
 			P3R0 FF 1 A_WeaponOffset(0,32);
 			P3R0 EDCBA 1 A_WeaponOffset(0,32);
-			Goto Ready3;
+			Stop;
 		
 		
 		//

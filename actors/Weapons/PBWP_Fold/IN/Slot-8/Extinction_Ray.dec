@@ -24,7 +24,12 @@ Actor IN_LaserShotBase : FastProjectile
 	States
 	{
 	Spawn:
-		TRRC A 1 BRIGHT
+		// TRRC art was never folded; reuse Hellbullet red plasma core + trail sparks.
+		PBAL H 1 BRIGHT
+		TNT1 A 0 A_CustomMissile("RedTracerSmall", 0, 0, random(0, 360), 2, random(0, 360))
+		TNT1 A 0 A_SpawnItemEx("ObeliskTrailSpark", random(5, -5), random(5, -5), random(5, -5), 0, 0, 0, 0, 128, 0)
+		PBAL I 1 BRIGHT
+		TNT1 A 0 A_SpawnItem("RedFlare", 0)
 		Loop
 	Death:
 		TNT1 A 0
@@ -70,8 +75,7 @@ ACTOR Extinction_Ray : PB_WeaponBase //Flamethrower?
 	States
 	{
 	Steady:
-		TNT1 A 1
-		Goto Ready
+		Goto PB_FinisherCleanup
 
 	SelectReady:
 	Ready:
@@ -474,7 +478,7 @@ ACTOR Extinction_Ray : PB_WeaponBase //Flamethrower?
 		HPBO C 3 
 		HPBO B 1 
 		HPBO A 1 
-		Goto Ready3
+		Stop
 	FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelAirKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelAirKicking")
@@ -487,7 +491,7 @@ ACTOR Extinction_Ray : PB_WeaponBase //Flamethrower?
 		HPBO C 3 
 		HPBO B 1 
 		HPBO A 1 
-		Goto Ready3
+		Stop
 	FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKicking")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelSlideKicking")
@@ -498,7 +502,7 @@ ACTOR Extinction_Ray : PB_WeaponBase //Flamethrower?
 		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "FlashBarrelSlideKickingStop")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop")
 		TNT1 A 0
-		Goto Ready3
+		Stop
 
 	Spawn:
 		HP2P A -1

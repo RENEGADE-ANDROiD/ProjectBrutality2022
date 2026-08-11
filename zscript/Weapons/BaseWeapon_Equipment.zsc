@@ -3175,6 +3175,7 @@ extend class PB_WeaponBase
 				A_TakeInventory("DoGrenade", 1);
 				A_TakeInventory("IsRunning", 1);
 				A_TakeInventory("Reloading", 1);
+				PB_ResetInterruptedFlashActions(true, true);
 				A_Overlay(-10, "FirstPersonLegsStand");
 				PB_SetUsingKick(false);
 				PB_SetUsingMelee(false);

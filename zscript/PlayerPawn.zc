@@ -162,8 +162,8 @@ class PlayerPawnBase : PlayerPawn
 	const PB_NUM_WP_SLOTS = 10;
 	const PB_WEAPON_CYCLE_WRAP_CAP = 128;
 
-	// When pb_wheel_preferred_cycle is on, only the Gearbox/wheel-picked class is
-	// eligible for a slot; empty preferred falls back to any usable weapon in-slot.
+	// When pb_wheel_preferred_cycle is on, a wheel-confirmed favorite restricts that
+	// slot. Empty, missing, or ammo-unusable favorites fall back to the full slot.
 	private bool PB_SlotPrefAllows(int slot, Weapon weap)
 	{
 		if (!weap) return false;
@@ -176,6 +176,21 @@ class PlayerPawnBase : PlayerPawn
 		String pref = prefs.GetPreferred(slot);
 		if (pref.Length() < 1)
 			return true;
+
+		Name prefName = pref;
+		let fav = Weapon(FindInventory((class<Weapon>)(prefName)));
+		if (!fav || !fav.CheckAmmo(Weapon.EitherFire, false))
+			return true;
+
+		if (player)
+		{
+			bool found;
+			int favSlot, favIndex;
+			[found, favSlot, favIndex] = player.weapons.LocateWeapon(fav.GetClass());
+			if (!found || favSlot != slot)
+				return true;
+		}
+
 		return pref == weap.GetClassName();
 	}
 
@@ -2582,6 +2597,8 @@ class PlayerPawnBase : PlayerPawn
 	{
 		Super.Tick();
 
+		// Shield Saw catch FPS anim disabled (CatchPending no longer granted in ShieldSawNotifyReturned).
+		/*
 		if (CountInv("ShieldSawCatchPending") && player && player.ReadyWeapon)
 		{
 			if (PB_ShouldPlayShieldSawCatch(player))
@@ -2595,6 +2612,7 @@ class PlayerPawnBase : PlayerPawn
 				}
 			}
 		}
+		*/
 		
 		CheckTargetHitRegistration();
 		

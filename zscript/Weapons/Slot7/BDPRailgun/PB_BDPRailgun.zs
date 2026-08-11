@@ -40,11 +40,7 @@ class PB_BDPRailgun : PB_WeaponBase
 		Stop;
 
 	Steady:
-		TNT1 A 1;
-		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 SetPlayerProperty(0, 0, 0);
-		TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-		Goto Ready3;
+		Goto PB_FinisherCleanup;
 
 	Ready:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
@@ -354,8 +350,8 @@ class PB_BDPRailgun : PB_WeaponBase
                 return ResolveState(null);
             }
             TNT1 A 0 {
-                A_startsound("bepbep", 4);
-                A_SpawnHologram();
+                if (A_SpawnHologram())
+                    A_startsound("bepbep", 4);
             }
             Goto Ready3;
 
@@ -376,8 +372,8 @@ class PB_BDPRailgun : PB_WeaponBase
             TNT1 A 0 {
                 A_TakeInventory("Select_BDPRailgun_Scope", 1);
                 A_TakeInventory("Select_BDPRailgun_Hologram", 1);
-                A_startsound("bepbep", 4);
-                A_SpawnHologram();
+                if (A_SpawnHologram())
+                    A_startsound("bepbep", 4);
                 A_PlaySound("menu/choose", CHAN_AUTO);
             }
             Goto Ready3;
@@ -437,29 +433,30 @@ class PB_BDPRailgun : PB_WeaponBase
             RAIK ABCD 1;
             RAIK E 6;
             RAIK DCBA 1;
-            goto Ready3;
+            TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+            Stop;
 
 		FlashKicking:
 			RAIK ABCD 1;
             RAIK E 7;
             RAIK DCBA 1;
-			goto Ready3;
+			Stop;
 			
 		FlashAirKicking:
 			RAIK ABCD 1;
             RAIK E 8;
             RAIK DCBA 1;
-			goto Ready3;
+			Stop;
 			
 		FlashSlideKicking:
 			RAIK ABCD 1;
             RAIK E 19;
             RAIK DCBA 1;
-			goto Ready3;
+			Stop;
 			
 		FlashSlideKickingStop:
 			RAIK ABCDEEE 1; //7 frames 
-			goto Ready3;
+			Stop;
 
         Pumpinghandlol:
             TNT1 A 0 A_StartSound("weapons/nailgun/up", 6);

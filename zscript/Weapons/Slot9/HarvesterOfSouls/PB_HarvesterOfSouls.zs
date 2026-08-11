@@ -60,11 +60,7 @@ class PB_HarvesterOfSouls : PB_WeaponBase
 	states
 	{
 		Steady:
-			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 SetPlayerProperty(0, 0, 0);
-			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-			Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Ready:
 			TNT1 A 0 PB_RespectIfNeeded;
@@ -342,29 +338,28 @@ class PB_HarvesterOfSouls : PB_WeaponBase
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			BANA LKJIHHHHHHHHH 1;
 			BANA HIJKLLLLLLLLL 1;
-			Goto Ready3;
+			Stop;
 		FlashAirKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			BANA LKJIHHHHHHHHH 1;
 			BANA HIJKLLLLLLLLL 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			BANA LKJIHHHHHHHHH 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			BANA HIJKLLLLLLLLL 1;
-			Goto Ready3;
+			Stop;
 		FlashPunching:
-			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 			BANA LKJIHHHHHHHHH 1;
 			BANA HIJKLLLLLLLLL 1;
-			Goto Ready3;
+			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+			Stop;
 
 		Spawn:
-			PUPU A 10 A_PbvpFramework("PUPU");
-			"####" "#" 0 A_PbvpInterpolate();
+			PUPU A 10;
 			LOOP;
 	}
 }

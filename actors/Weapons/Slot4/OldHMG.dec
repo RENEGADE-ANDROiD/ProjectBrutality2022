@@ -57,9 +57,8 @@ Spawn:
       HMGN A -1
       Loop
 Steady:
-	TNT1 A 1
-	Goto Ready
-	
+	Goto PB_FinisherCleanup
+
  WeaponSpecial:
 	TNT1 A 0 A_StopSound(6)
 	 TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1)
@@ -127,25 +126,12 @@ Prompt2:
 	NLGN A 1 A_DoPBWeaponAction(WRF_AllowReload)
     Goto NailgunActuallyReady
 	
+	// Keep-all: path prompt retained for label compatibility; no sibling strip/select.
 	ChooseUpgradePath:
-		TNT1 A 0 A_PrintBold("\cfChoose your path:\n\caFIRE = NEOHMG\n\ciALTFIRE = OLDHMG")
-		TNT1 A 1
-		TNT1 A 1
-		ChooseUpgradePathDebounce:
-		TNT1 A 2
-		ChooseUpgradePathLoop:
-		TNT1 A 0 A_JumpIf(JustPressed(BT_ATTACK), "KeepNeoHMGPath")
-		TNT1 A 0 A_JumpIf(JustPressed(BT_ALTATTACK), "KeepOldHMGPath")
-		TNT1 A 1
-		TNT1 A 1
+	ChooseUpgradePathDebounce:
+	ChooseUpgradePathLoop:
 	KeepNeoHMGPath:
-		TNT1 A 0 A_TakeInventory("OldHMG", 1)
-		TNT1 A 0 A_PrintBold("\caPath selected: NEOHMG")
-		TNT1 A 0 A_SelectWeapon("PB_NeoHMG")
-		Stop
 	KeepOldHMGPath:
-		TNT1 A 0 A_TakeInventory("PB_NeoHMG", 1)
-		TNT1 A 0 A_PrintBold("\ciPath selected: OLDHMG")
 		Goto Ready3
 	
 	
@@ -425,7 +411,7 @@ Prompt2:
 		HMAS C 1 
 		HMAS BA 1 
 		HMAG AAAA 1
-		Goto Ready3
+		Stop
 	
    NailGunFlashKicking:
 		TNT1 A 0 A_ClearOverlays(10,11)
@@ -438,7 +424,7 @@ Prompt2:
 		NLGS C 1 
 		NLGS BA 1 
 		NLGN AAAA 1
-		Goto Ready3
+		Stop
 	
    FlashAirKicking:
 		TNT1 A 0 A_ClearOverlays(10,11)
@@ -452,7 +438,7 @@ Prompt2:
 		HMAS C 1 
 		HMAS BA 1 
 		HMAG AAAA 1
-		Goto Ready3
+		Stop
 		
 	NailGunFlashAirKicking:
 		TNT1 A 0 A_ClearOverlays(10,11)
@@ -465,40 +451,40 @@ Prompt2:
 		NLGS C 1 
 		NLGS BA 1 
 		NLGN AAAA 1
-		Goto Ready3
+		Stop
 		
 	FlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIfInventory("EquippedNailRounds",1,"NailGunFlashSlideKicking")
 		HMAS AB 2 
 		HMAS CDDEEEEEEDD 2 
-		Goto Ready3
+		Stop
 		
 	NailGunFlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		NLGS AB 2 
 		NLGS CDDEEEEEEDD 2
-		Goto Ready3
+		Stop
 		
 	FlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		TNT1 A 0 A_JumpIfInventory("EquippedNailRounds",1,"NailGunFlashSlideKickingStop")
 		HMAS CBAAA 1 
 		HMAG A 3
-		Goto Ready3
+		Stop
 
 	NailGunFlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11)
 		NLGS CBAAA 1 
 		NLGN A 3 
-		Goto Ready3
+		Stop
 
 	PDA_Preview_OldHMG_Belt:
 		HMAF A 2 Bright
 		HMAF B 2
 		HMAF C 2
 		HMAF D 2
-		Stop
+		Goto Ready3
 	PDA_Preview_OldHMG_Nail:
 		NLGF A 2 Bright
 		NLGF B 2 Bright
@@ -525,7 +511,7 @@ Prompt2:
 		HMAS BA 1 
 		HMAG AAAA 1
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
-		Goto Ready3
+		Stop
 		
 	NailGunFlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11)
@@ -539,6 +525,6 @@ Prompt2:
 		NLGS BA 1 
 		NLGN AAAA 1
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
-		Goto Ready3
+		Stop
 	}
 }

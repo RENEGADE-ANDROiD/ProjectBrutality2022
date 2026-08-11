@@ -53,9 +53,7 @@ class PB_Deagle : PB_WeaponBase
 	states
 	{
 		Spawn:
-			V4E0 Z 0 NoDelay;
-			D4E0 Z 10 A_PbvpFramework("V4E0");
-			"####" Z 0 A_PbvpInterpolate();
+			D4E0 Z 10;
 			loop;
 
 		WeaponRespect:
@@ -96,7 +94,6 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 PB_WeaponRaise("weapons/deagle/equip");
 			TNT1 A 0 PB_WeapTokenSwitch("DeagleSelected");
 			TNT1 A 0 A_SetInventory("RandomHeadExploder",1);
-			TNT1 A 0 PB_TakeIfUpgrade("PB_Revolver");
 			TNT1 A 0 PB_RespectIfNeeded();
 		SelectAnimation:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "SelectAnimationDualWield");
@@ -1015,44 +1012,44 @@ class PB_Deagle : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashPunchingDual");
 			D8E0 ABCDEFGGFEDCBA 1 PB_SetSpriteIfUnload("D8E1");
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashPunchingDual:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 ABCDEFGGFEDCBA 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashKicking:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashKickingDual");
 			D5E0 ABCDEFGGGFEDCBA 1 PB_SetSpriteIfUnload("D5E1");
-			goto Ready;
+			Stop;
 		FlashKickingDual:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			D7E0 ABCDEFGGGFEDCBA 1 PB_SetDualSpriteIfUnload("D7E2","D7E3","D7E1");
-			goto Ready;
+			Stop;
 		FlashAirKicking:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashAirKickingDual");
 			D5E0 ABCDEFGGGGFEDCBA 1 PB_SetSpriteIfUnload("D5E1");
-			goto Ready;
+			Stop;
 		FlashAirKickingDual:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			D7E0 ABCDEFGGGGFEDCBA 1 PB_SetDualSpriteIfUnload("D7E2","D7E3","D7E1");
-			goto Ready;
+			Stop;
 		FlashSlideKicking:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashSlideKickingDual");
 			D5E0 ABCDEFGGGGGGGGGGGGGGGFEDCBA 1 PB_SetSpriteIfUnload("D5E1");
-			goto Ready;
+			Stop;
 		FlashSlideKickingDual:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			D7E0 ABCDEFGGGGGGGGGGGGGGGFEDCBA 1 PB_SetDualSpriteIfUnload("D7E2","D7E3","D7E1");
-			goto Ready;
+			Stop;
 		FlashSlideKickingStop:
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(),"FlashSlideKickingStopDual");
 			D5E0 GFEDCBA 1 PB_SetSpriteIfUnload("D5E1");
-			goto Ready;
+			Stop;
 		FlashSlideKickingStopDual:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			D7E0 GFEDCBA 1 PB_SetDualSpriteIfUnload("D7E2","D7E3","D7E1");
-			goto Ready;
+			Stop;
 
 		PDA_Preview_Deagle_Ready:
 			D4E0 E 1;

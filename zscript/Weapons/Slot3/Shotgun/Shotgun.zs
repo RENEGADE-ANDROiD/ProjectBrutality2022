@@ -46,9 +46,7 @@ Class PB_Shotgun : PB_WeaponBase
 			stop;
 			
 		Spawn:
-			VHTC A 0 NoDelay;
-			SHTC A 10 A_PbvpFramework("VHTC");
-			"####" A 0 A_PbvpInterpolate();
+			SHTC A 10;
 			loop;
 		
 		WeaponRespect:
@@ -865,7 +863,7 @@ Class PB_Shotgun : PB_WeaponBase
 			SH0G CDFGHI 1;
 			SH0G J 2;
 			SH0G IHGEDB 1;
-			Goto Ready3;
+			Stop;
 		
 		MagFlashKick:
 			SH0G CD 1;
@@ -874,7 +872,7 @@ Class PB_Shotgun : PB_WeaponBase
 			SHMG J 2;
 			SHMG IHG 1;
 			SH0G EDB 1;
-			Goto Ready3;
+			Stop;
 			
 		FlashAirKicking:
 			TNT1 A 0 A_WeaponOffset(0,32);
@@ -882,7 +880,7 @@ Class PB_Shotgun : PB_WeaponBase
 			SH0G CDFGHI 1;
 			SH0G J 4;
 			SH0G IHGEDBB 1;
-			Goto Ready3;
+			Stop;
 		
 		MagFlashAirKick:
 			SH0G CD 1;
@@ -890,24 +888,24 @@ Class PB_Shotgun : PB_WeaponBase
 			SHMG I 4;
 			SHMG IHG 1;
 			SH0G EDBB 1;
-			Goto Ready3;
+			Stop;
 			
 		FlashSlideKicking:
 			TNT1 A 0 A_WeaponOffset(0,32);
 			SH0G CD 1;
 			SH0G FGHIJJJJJJJJJJJJJIHGE 1 {if(CountInv("PumpshotgunMagazine") == 1) A_SetWeaponSprite("SHMG");}
 			SH0G DB 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingStop:
 			TNT1 A 0 A_WeaponOffset(0,32);
 			TNT1 A 0 A_JumpIfInventory("PumpshotgunMagazine", 1, "MagFlashSlideKickingStop");
 			SH0G JIHGEDB 1;
-			Goto Ready3;
+			Stop;
 		
 		MagFlashSlideKickingStop:
 			SHMG JIHGE 1;
 			SH0G DB 1;
-			Goto Ready3;
+			Stop;
 			
 		FlashPunching:
 			TNT1 A 0 A_WeaponOffset(0,32);
@@ -916,7 +914,7 @@ Class PB_Shotgun : PB_WeaponBase
 			SH0G J 2;
 			SH0G IHGEDB 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		MagFlashPunch:
 			SH0G CD 1;
 			SHMG FGH 1;
@@ -925,7 +923,7 @@ Class PB_Shotgun : PB_WeaponBase
 			SHMG IHG 1;
 			SH0G EDB 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		
 		//alternative ammo swap thing
 		//Start of transplant
@@ -1434,9 +1432,7 @@ Class PB_SGMagazine: PB_UpgradeItem
 	{
 
 		Spawn:
-			VSMU A 0 NoDelay;
-			9SMU A 10 A_PbvpFramework("VSMU");
-			"####" A 0 A_PbvpInterpolate();
+			9SMU A 10;
 			LOOP;
 		
 		Pickup:

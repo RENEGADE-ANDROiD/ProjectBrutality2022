@@ -64,7 +64,7 @@ user bool bpv10_flop_organs = true;
 user bool bpv10_zgear = true;
 user bool bpv10_blood_splat = true;
 server int pb_red_footprints_only = 0;
-user int PB_tracerlight	= 0;
+user int PB_tracerlight	= 1;
 user int PB_alttracer = 0;
 user int pb_lowgraphicsmode = 0;
 user bool pb_burnfx_throttle = true;
@@ -171,7 +171,7 @@ server int pb_restrictedmode = 0;
 
 server int noscreensplash = 0;
 server int nopaineffect = 0;
-server int bloodsplash = 0;
+server int bloodsplash = 1;
 
 user int PB_HatExtravaganza = 0;
 
@@ -267,7 +267,7 @@ server bool pb_nocooldown = true;
 server bool pb_qsgnoselfdamage = false;
 server bool pb_rocketjump = true;
 server bool pb_plasma_wallclimb = true;
-user bool pb_instantweaponswitch = true; // like RandomWeapSwtch rw_instSwitch; use pb_ prefix for add-on compatibility
+user bool pb_instantweaponswitch = true; // legacy; ignored — instant switch is always on (PB_InstantWeaponSwitchHandler)
 user int pb_UpgradeRevolver = 0;
 user int pb_UpgradeCarbine = 0;
 user int pb_UpgradeShotgun = 0;
@@ -298,6 +298,9 @@ server int pb_NoHeavyGLWeapon = 0;
 server int pb_NoM2PlasmaWeapon = 0;
 server int pb_NoPB_DarkMatterRifleWeapon = 1; // Default Weapon Roster extra (Off); Full Roster On
 server int pb_NoPB_PulseCannonWeapon = 0; // Core Default Weapon Roster (Pulse Cannon)
+server int pb_NoPB_FlakCannonWeapon = 0; // Core Default Weapon Roster (Flak Cannon)
+server int pb_NoPB_HellshotWeapon = 1; // Extra / Full roster (Hellshot)
+server int pb_NoPB_PlasmaBeamWeapon = 0; // Core Default Weapon Roster (UAC Plasma Beam Rifle)
 server int pb_NoPB_HarvesterOfSoulsWeapon = 0;
 server int pb_NoFreezerWeapon = 0;
 server int pb_NoRailgunWeapon = 0;
@@ -318,19 +321,15 @@ server int pb_NoLMGWeapon = 1;
 server int pb_NoHDMRWeapon = 1;
 server int pb_NoMinigunUpgradeWeapon = 1;
 server int pb_NoMetalSniperWeapon = 0;
-server int pb_NoPB_NormalRifleWeapon = 1;
-server int pb_NoPB_XM21Weapon = 1;
 server int pb_NoPB_AntiTankRifleWeapon = 0;
 server int pb_NoPB_SPAS12Weapon = 1;
 server int pb_NoPB_FusilWeapon = 1;
-server int pb_NoX12ShotgunWeapon = 1;
 server int pb_NoHASGWeapon = 1;
 server int pb_NoOldHMGWeapon = 1;
 server int pb_NoNeoHMGWeapon = 0;
 server int pb_NoM41AWeapon = 1;
 server int pb_NoBattleRifleWeapon = 1;
 server int pb_NoProSurvBallistaWeapon = 1;
-server int pb_NoDemonExterminatorWeapon = 1;
 server int pb_NoMG42Weapon = 1;
 server int pb_NoPB_CyberdemonRLWeapon = 1;
 server int pb_NoHellPistolerWeapon = 1;
@@ -343,24 +342,20 @@ server int pb_NoVorpalBladeWeapon = 1;
 server int pb_NoStormcastWeapon = 1;
 server int pb_NoMolotov = 1;
 
-// PBWP folded weapons (Schism/F&I, Hexa-Lion, Demon-Tech SG, Karnage, Cyberaugumented, Tactical Nailgun)
+// PBWP folded weapons (Schism/F&I, Hexa-Overkill, Demon-Tech SG, Karnage, Cyberaugumented, Tactical Nailgun)
 server int pb_NoBattleAxeWeapon = 1;
-server int pb_NoHexaLionShotgunWeapon = 1;
+server int pb_NoPB_HexaOverkillWeapon = 1;
 server int pb_NoDTShotgunWeapon = 1;
 server int pb_NoRainmakerWeapon = 1;
 server int pb_NoPBWP_WarbringerWeapon = 1;
 server int pb_NoPBWP_NightfallWeapon = 1;
-server int pb_NoPBWP_CaduceusWeapon = 1;
 server int pb_NoPBWP_DispatcherWeapon = 1;
 server int pb_NoPBWP_SiriusCrisisWeapon = 1;
 server int pb_NoTacticalNailgunWeapon = 1;
 
-// PBWP IN weapon fold (MP12, Holy Bastard, M45, rifles, HYDRA, Gallary, cryo/plasma/BFG tier)
-server int pb_NoMP12Weapon = 1;
+// PBWP IN weapon fold (Holy Bastard, M45, rifles, HYDRA, Gallary, cryo/plasma/BFG tier)
 server int pb_NoW_SMGWeapon = 1;
 server int pb_NoM45ShotgunWeapon = 1;
-server int pb_NoAssaultR1Weapon = 1;
-server int pb_NoBlackDMRWeapon = 1;
 server int pb_NoMagnumSniperRifleWeapon = 1;
 server int pb_NoINNailGunWeapon = 1;
 server int pb_NoPB_HYDRAWeapon = 1;
@@ -369,7 +364,6 @@ server int pb_NoPB_CryoShotgunWeapon = 1; // Default Weapon Roster extra (Off); 
 server int pb_NoExtinctionRayWeapon = 1;
 server int pb_NoPlasmaRifleAssaultWeapon = 1;
 server int pb_NoLoRCalamityBladeWeapon = 1;
-server int pb_NoSatanScreamWeapon = 1;
 server int pb_NoFrostburnDeviceWeapon = 1;
 
 server int pb_NoHelmetAnimation = 1;
@@ -640,15 +634,6 @@ server	bool	pb_spawner_tiered	= false;
 server	int		pb_spawner_autoshotgun			= 0;
 server	int		pb_spawner_shotgunupgrade			= 0;
 server	int		pb_spawner_drum		= 0;
-
-Server	Bool	V5_MODELS			= false;
-Server	Bool	V5_Cull				= false;
-Server	Int		V5_MDist			= 900;
-Server	Bool	V5_Quake3			= false;
-server 	float	V5_Q3Spin			= 5.0;
-server 	float	V5_Q3Zoff			= 16.0;
-server 	float	V5_Q3Bob			= 0.5;
-server	noarchive	bool	V5_Mlock	= False;
 
 user bool pb_weapon_crosshairs = true;
 user bool pb_weaponhud_enable = true;
@@ -933,11 +918,13 @@ server int pb_NoWhiteWidow = 0;
 user bool pb_altwhiz = false;
 user bool cl_footsteps = true;
 server bool pb_status_effects = true;
-server bool pb_keepweapons = false;
-server bool pb_keep_pistol = false;
-server bool pb_keep_carbine = false;
-server bool pb_keep_ssg = false;
-server bool pb_keep_revolver = false;
+// Legacy keep-upgrade cvars (defaults On). Handoff is always blocked in ZScript;
+// menus removed — wheel favorites control preferred Next/Prev.
+server bool pb_keepweapons = true;
+server bool pb_keep_pistol = true;
+server bool pb_keep_carbine = true;
+server bool pb_keep_ssg = true;
+server bool pb_keep_revolver = true;
 server bool pb_bullettime = false;
 server bool pb_bullettime_allow_freeze = false;
 server int bt_multiplier = 4;

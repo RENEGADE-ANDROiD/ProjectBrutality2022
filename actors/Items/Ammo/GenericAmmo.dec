@@ -42,7 +42,7 @@ ACTOR SpecialGrenadeRounds : Ammo
 
 ACTOR PistolBullets : Ammo 
 {
-	Scale .58
+	Scale 0.13
 	Game Doom
 	+FLOORCLIP
 	+DONTGIB
@@ -67,6 +67,7 @@ ACTOR PistolBullets : Ammo
 ACTOR TankAmmo : Ammo
 {
 	Game Doom
+	Scale 0.12
 	SpawnID 11
 	Inventory.PickupMessage "Picked up a Magazine."
 	Inventory.Amount 10
@@ -86,6 +87,7 @@ ACTOR TankAmmo : Ammo
 ACTOR MechAmmo : Ammo
 {
 	Game Doom
+	Scale 0.12
 	SpawnID 11
 	Inventory.PickupMessage "Picked up a Magazine."
 	Inventory.Amount 10
@@ -107,6 +109,7 @@ ACTOR MechAmmo : Ammo
 ACTOR HeavyMachinegunAmmo : Ammo
 {
 	Game Doom
+	Scale 0.12
 	Inventory.PickupMessage "Picked up a Magazine."
 	Inventory.Amount 100
 	Inventory.MaxAmount 2000
@@ -126,6 +129,7 @@ ACTOR HeavyMachinegunAmmo : Ammo
 ACTOR MechRocketAmmo : Ammo
 {
 	Game Doom
+	Scale 0.12
 	Inventory.PickupMessage "Picked up a Magazine."
 	Inventory.Amount 5
 	Inventory.MaxAmount 60
@@ -144,6 +148,7 @@ ACTOR MechRocketAmmo : Ammo
 ACTOR MechLaserAmmo : Ammo
 {
 	Game Doom
+	Scale 0.12
 	Inventory.PickupMessage "Picked up a Magazine."
 	Inventory.Amount 30
 	Inventory.MaxAmount 200
@@ -163,6 +168,7 @@ ACTOR MechLaserAmmo : Ammo
 ACTOR MechMOrtarAmmo : Ammo
 {
 	Game Doom
+	Scale 0.12
 	Inventory.PickupMessage "Picked up a Magazine."
 	Inventory.Amount 1
 	Inventory.MaxAmount 20
@@ -182,6 +188,7 @@ ACTOR MechMOrtarAmmo : Ammo
 ACTOR HelicopterRocketAmmo : Ammo
 {
 	Game Doom
+	Scale 0.12
 	Inventory.PickupMessage "Picked up a Magazine."
 	Inventory.Amount 1
 	Inventory.MaxAmount 40

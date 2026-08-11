@@ -129,9 +129,10 @@ Actor ArchvilePackSpawner : Demonpickup
 		TNT1 A 0 A_Jump(102, "SpawnEternalDarkLord")
 	SpawnMarauderOnly:
 		TNT1 A 0 A_SpawnItemEx("PB_Marauder",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
-		Goto ArchPostMarauder
+		Stop
 	SpawnEternalDarkLord:
 		TNT1 A 0 A_SpawnItemEx("PB_EternalDarkLord",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)
+		Stop
 	ArchPostMarauder:
 		Stop
 	SpawnIceVile:

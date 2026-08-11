@@ -12,6 +12,9 @@ class PBWP_Nightfall : PBWP_CA_WeaponBase
 		Weapon.AmmoType2 "PBWP_NightfallMag";
 		Weapon.AmmoGive1 0;
 		Weapon.AmmoGive2 200;
+		Weapon.AmmoUse1 0;
+		Weapon.AmmoUse2 0;
+		+WEAPON.AMMO_OPTIONAL;
 		+FLOORCLIP;
 		+DONTGIB;
 		Tag "Nightfall Augumented";
@@ -24,23 +27,25 @@ class PBWP_Nightfall : PBWP_CA_WeaponBase
 
 	action void PBWP_NightfallFire(bool emphasis = false)
 	{
-		A_GunFlash();
+		// Emphasis uses CHG_K/L blue barrel composites on PSP_WEAPON; do not
+		// A_GunFlash raw CHLF (misaligned on PSP_FLASH over the red C1GF body).
+		if (!emphasis)
+			A_GunFlash();
+		A_StartSound("Nightfall/EternalShoot", CHAN_AUTO, emphasis ? CHANF_OVERLAP : CHANF_DEFAULT, 1.0);
 		if (invoker.laserMode)
 		{
 			if (emphasis)
 			{
-				A_StartSound("Minigun/EmphasisLoop", CHAN_WEAPON, CHANF_DEFAULT, 1.0);
-				A_FireCustomMissile("PBWP_CA_Blastawave", frandom(-1.2, 1.2), 0);
+				A_FireCustomMissile("PBWP_CA_Blastawave", frandom(-1.2, 1.2), 0, 0, -8);
 			}
 			else
 			{
-				A_StartSound("Android/Laser", CHAN_WEAPON, CHANF_DEFAULT, 1.0);
 				PBWP_CA_FireMinigunLaserBolt(35);
 			}
 		}
 		else
 		{
-			A_StartSound("Minigun/Loop", CHAN_WEAPON, CHANF_LOOPING, 0.65);
+			// Loop is started once from Fire: (CHANF_NOSTOP); do not restart each shot.
 			A_QuakeEx(1, 1, 1, 20, 0, 100, "none", QF_SCALEDOWN, falloff: 200);
 			PB_FireBullets("PB_762x51mm", 1, 0.75, 0, 0, 0.75);
 			PB_WeaponRecoil(-0.5, 0.2);
@@ -100,7 +105,7 @@ class PBWP_Nightfall : PBWP_CA_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
-		TNT1 A 0 { return PB_jumpIfNoAmmo("Reload", 1); }
+		TNT1 A 0 { return PB_BailIfCannotFire("PBWP_NightfallMag", 1, "PB_HighCalMag", "Reload", "DryFire"); }
 		TNT1 A 0 PBWP_CA_LockTilt();
 		CHG_ F 1 Bright { PBWP_NightfallFire(); }
 		CHG_ H 1 Bright A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOSWITCH);
@@ -108,7 +113,7 @@ class PBWP_Nightfall : PBWP_CA_WeaponBase
 		CHG_ A 1
 		{
 			A_StopSound(CHAN_WEAPON);
-			A_StartSound("Minigun/WindDown", CHAN_WEAPON, 0, 0.75);
+			A_StartSound("Nightfall/EternalStop", CHAN_WEAPON, CHANF_DEFAULT, 1.0);
 			PBWP_CA_UnlockTilt();
 		}
 		Goto Ready3;
@@ -119,27 +124,27 @@ class PBWP_Nightfall : PBWP_CA_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 		TNT1 A 0 A_JumpIf(!invoker.laserMode, "Ready3");
-		TNT1 A 0 { return PB_jumpIfNoAmmo("Reload", 1); }
+		TNT1 A 0 { return PB_BailIfCannotFire("PBWP_NightfallMag", 1, "PB_HighCalMag", "Reload", "DryFire"); }
 		TNT1 A 0 PBWP_CA_LockTilt();
-		CHG_ F 1 Bright { PBWP_NightfallFire(true); }
-		CHG_ H 1 Bright A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOSWITCH);
-		CHG_ H 0 Bright A_Refire("AltFire");
+		CHG_ K 1 Bright { PBWP_NightfallFire(true); }
+		CHG_ L 1 Bright A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOSWITCH);
+		CHG_ L 0 Bright A_Refire("AltFire");
 		CHG_ A 1
 		{
 			A_StopSound(CHAN_WEAPON);
+			A_StartSound("Nightfall/EternalStop", CHAN_WEAPON, CHANF_DEFAULT, 1.0);
 			PBWP_CA_UnlockTilt();
 		}
 		Goto Ready3;
 
 		Reload:
-		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
-		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
-		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
-		TNT1 A 0 A_StopSound(CHAN_WEAPON);
-		TNT1 A 0 A_TakeInventory("Unloading", 1);
-		TNT1 A 0 PBWP_CA_ReloadPreamble();
-		TNT1 A 0 A_JumpIfInventory("PBWP_NightfallMag", 200, "Ready3");
-		TNT1 A 0 A_JumpIfInventory("PB_HighCalMag", 1, "DoReload");
+		"####" "#" 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
+		"####" "#" 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
+		"####" "#" 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
+		"####" "#" 0 A_StopSound(CHAN_WEAPON);
+		"####" "#" 0 A_TakeInventory("Unloading", 1);
+		"####" "#" 0 A_JumpIfInventory("PBWP_NightfallMag", 200, "Ready3");
+		"####" "#" 0 A_JumpIfInventory("PB_HighCalMag", 1, "PBWP_CA_ReloadLower");
 		Goto Ready3;
 	DoReload:
 		CHG_ B 1 A_DoPBWeaponAction(WRF_NOFIRE);
@@ -161,8 +166,7 @@ class PBWP_Nightfall : PBWP_CA_WeaponBase
 			PB_SetMagUnloaded(false);
 		}
 		CHG_ A 3 A_DoPBWeaponAction(WRF_NOFIRE);
-		TNT1 A 0 A_TakeInventory("Reloading", 1);
-		Goto Ready3;
+		Goto PBWP_CA_ReloadRaise;
 
 		Unload:
 		TNT1 A 0 A_TakeInventory("Unloading", 1);
@@ -171,7 +175,7 @@ class PBWP_Nightfall : PBWP_CA_WeaponBase
 
 		Weaponspecial:
 		TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);
-		TNT1 A 0 { invoker.laserMode = !invoker.laserMode; A_StartSound("WEPRED2", CHAN_AUTO); }
+		TNT1 A 0 { invoker.laserMode = !invoker.laserMode; A_StartSound("Nightfall/Mod", CHAN_AUTO); }
 		Goto Ready3;
 
 	}

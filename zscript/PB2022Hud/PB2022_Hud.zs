@@ -1092,7 +1092,7 @@ class PB2022_Hud_ZS : BaseStatusBar
 				upperBG = "BARBACT2"; fillBar = "ABAR2"; break;
 			case 'NewClip':
 			case 'PB_HighCalMag':
-				upperBG = "BARBACY2"; fillBar = "ABAR1"; break;
+				upperBG = "BARBACP2"; fillBar = "ABAR5"; break;
 			case 'NewShell':
 			case 'PB_Shell':
 				upperBG = "BARBACO2"; fillBar = "ABAR3"; break;
@@ -1183,6 +1183,13 @@ class PB2022_Hud_ZS : BaseStatusBar
 
 		if (drawIcon)
 			PBHud_DrawImage(ammoIcon, (-66, -17), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, playerBoxAlpha, (17, 17));
+	}
+
+	void PB2022_DrawPurpleGreenAmmoBar(bool drawPrimary = true, bool drawSecondary = true, bool drawDual = true, bool drawIcon = true)
+	{
+		weaponBarAccent = Font.CR_GREEN;
+		DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_GREEN,
+			drawPrimary: drawPrimary, drawSecondary: drawSecondary, drawDual: drawDual, drawIcon: drawIcon);
 	}
 
 	////////////////////////////////////
@@ -1601,8 +1608,7 @@ class PB2022_Hud_ZS : BaseStatusBar
                             break;
                         case 'NewClip':
                         case 'PB_HighCalMag':
-                            weaponBarAccent = Font.CR_YELLOW;
-                            DrawAmmoBar("BARBACY1", "BARBACY2", "BARBACY3", "BAMBAR1", "ABAR1", "ABAR1", "AMMOIC1", Font.CR_YELLOW);
+                            PB2022_DrawPurpleGreenAmmoBar();
                             break;
                         case 'NewShell':
                         case 'PB_Shell':
@@ -1616,8 +1622,7 @@ class PB2022_Hud_ZS : BaseStatusBar
                             break;
                         case 'Cell':
                         case 'PB_Cell':
-                            weaponBarAccent = Font.CR_PURPLE;
-                            DrawAmmoBar("BARBACP1", "BARBACP2", "BARBACP3", "BAMBAR5", "ABAR5", "ABAR5", "AMMOIC5", Font.CR_PURPLE);
+                            PB2022_DrawPurpleGreenAmmoBar();
                             break;
                         case 'Gas':
                         case 'PB_Fuel': 

@@ -48,8 +48,8 @@ class PB_MG42 : PB_WeaponBase
 		TNT1 A 0 A_PlaySoundEx("weapons/empty", "Auto");
 		Goto Ready3;
 		Steady:
-		TNT1 A 1;
-		Goto Ready;
+			Goto PB_FinisherCleanup;
+
 		Cooling:
 		TNT1 A 4 A_TakeInventory("MG42HeatLevel", 1);
 		TNT1 A 0 {
@@ -538,7 +538,7 @@ class PB_MG42 : PB_WeaponBase
 		"MGKI" A 0;
 		"####" A 0;
 		"####" DCB 1;
-		Goto Ready3;
+		Stop;
 		FlashAirKicking:
 		"MGK5" A 0 A_JumpIfInventory("NewClip", 14, 5);
 		"MGK4" A 0 A_JumpIfInventory("NewClip", 12, 4);
@@ -555,7 +555,7 @@ class PB_MG42 : PB_WeaponBase
 		"MGKI" A 0;
 		"####" A 0;
 		"####" DCB 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKicking:
 		"MGK5" A 0 A_JumpIfInventory("NewClip", 14, 5);
 		"MGK4" A 0 A_JumpIfInventory("NewClip", 12, 4);
@@ -572,7 +572,7 @@ class PB_MG42 : PB_WeaponBase
 		"MGKI" A 0;
 		"####" A 0;
 		"####" DCB 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingStop:
 		"MGKI" IIII 1;
 		"MGK5" A 0 A_JumpIfInventory("NewClip", 14, 5);
@@ -582,11 +582,11 @@ class PB_MG42 : PB_WeaponBase
 		"MGKI" A 0;
 		"####" A 0;
 		"####" DCB 1;
-		Goto Ready3;
+		Stop;
 		PDA_Preview_MG42_Fire:
 		"MGFI" AB 2;
 		"MGFI" CD 2;
-		Stop;
+		Goto Ready3;
 		PDA_Preview_MG42_Reload:
 		"MGC2" ABCDEFGHIJKLMNOP 2;
 		"MGC2" QRSTUVWXYZ 2;
@@ -611,7 +611,7 @@ class PB_MG42 : PB_WeaponBase
 		"####" A 0;
 		"####" DCB 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 	
 		DeselectFlash:
 		"MGS5" A 0 A_JumpIfInventory("NewClip", 14, 5);

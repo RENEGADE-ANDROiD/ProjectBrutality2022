@@ -10,11 +10,6 @@ ACTOR M2Plasma : CustomInventory{
 	Spawn:
 		M2PR A 2
 		Loop
-	/*Spawn: //Model not implemented yet
-		VM2P A 0 NoDelay
-		M2PR A 10 A_PbvpFramework("VM2P")
-		"####" "#" 0 A_PbvpInterpolate()
-		LOOP*/
 	Pickup:
         TNT1 A 0 A_GiveInventory ("PB_M2Plasma")
 		Stop
@@ -63,12 +58,6 @@ Actor PB_M2Upgrade: Custominventory
 	Spawn:
 		M2PR B 2
 		Loop
-	/*Spawn: //Model not implemented yet
-		VM2P B 0 NoDelay
-		M2PR B 10 A_PbvpFramework("VM2P")
-		"####" "#" 0 A_PbvpInterpolate()
-		LOOP*/
-	
     Pickup:
       TNT1 A 0 A_GiveInventory ("PB_M2Plasma")
 	  TNT1 A 0 A_GiveInventory("HasLightningGunUpgrade", 1)

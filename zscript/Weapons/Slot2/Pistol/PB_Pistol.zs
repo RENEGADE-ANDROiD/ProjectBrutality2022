@@ -41,17 +41,11 @@ class PB_Pistol : PB_WeaponBase
 	{
 	
 		Spawn:
-		"VEGT" A 0 NoDelay;
-		"DEGT" A 10 A_PbvpFramework("VEGT");
-		"####" A 0 A_PbvpInterpolate();
+		"DEGT" A 10;
 		LOOP;
 
 		Steady:
-		TNT1 A 1;
-		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 SetPlayerProperty(0,0,0);
-		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-		Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Ready:
 		TNT1 A 0;
@@ -1784,40 +1778,40 @@ class PB_Pistol : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("DualWieldingPistols",1,"FlashKickingDualWield");
 		"D5GV" A 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"D5GU" A 0;
-		"####" "ABCDEFGHIJKLMN" 1 A_DoPBWeaponAction();
+		"####" "ABCDEFGHIJKLMN" 1;
 		"D3GG" A 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"DEGG" A 0;
-		"####" "AA" 1 A_DoPBWeaponAction();// Pause?;
-		Goto Ready3;
+		"####" "AA" 1;
+		Stop;
 		
 		FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory("PistolShieldLoadout", 1, "RS_PistolFlashAirKicking");
 		TNT1 A 0 A_JumpIfInventory("DualWieldingPistols",1,"FlashKickingDualWield");
 		"D5GV" A 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"D5GU" A 0;
-		"####" "ABCDEFGHIJKLMN" 1 A_DoPBWeaponAction();
+		"####" "ABCDEFGHIJKLMN" 1;
 		"D3GG" A 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"DEGG" A 0;
-		"####" "AA" 1 A_DoPBWeaponAction();// Pause?;
-		Goto Ready3;
+		"####" "AA" 1;
+		Stop;
 		
 		FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory("PistolShieldLoadout", 1, "RS_PistolFlashSlideKicking");
 		TNT1 A 0 A_JumpIfInventory("DualWieldingPistols",1,"FlashSlideKickingDualWield");
 		"D5GZ" A 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"D5GY" A 0;
-		"####" "ABCDEFGHIJKKKKLMNOPQRSTUV" 1 A_DoPBWeaponAction();
-		Goto Ready3;
+		"####" "ABCDEFGHIJKKKKLMNOPQRSTUV" 1;
+		Stop;
 		
 		FlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory("DualWieldingPistols",1,"FlashSlideKickingDualWieldStop");
 		"D5GZ" W 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"D5GY" W 0;
-		"####" "WXYZ" 1 A_DoPBWeaponAction();
+		"####" "WXYZ" 1;
 		"D3GG" A 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"DEGG" A 0;
-		"####" "AAA" 1 A_DoPBWeaponAction();
-		Goto Ready3;
+		"####" "AAA" 1;
+		Stop;
 
 		PDA_Preview_Pistol_HipFire:
 		"D3GF" "ABCD" 0;
@@ -1826,7 +1820,7 @@ class PB_Pistol : PB_WeaponBase
 		"DEGF" B 1;
 		"DEGF" D 1;
 		"DEGG" A 2;
-		Stop;
+		Goto Ready3;
 		PDA_Preview_Pistol_AdsFire:
 		"D7GG" G 1 BRIGHT;
 		"D7GG" H 1;
@@ -1865,22 +1859,22 @@ class PB_Pistol : PB_WeaponBase
 		"D5GS" A 0;
 		"####" "ABCDEFGHIJKLMN" 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		
 		FlashPunchingDualWield:
 		TNT1 A 15;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		
 		FlashKickingDualWield:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"D6GH" A 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"D6GG" A 0;
-		"####" "ABCDEFGHIJKLMN" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
+		"####" "ABCDEFGHIJKLMN" 1;
 		"D2GT" E 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"D2GS" E 0;
-		"####" "EE" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		Goto Ready3;
+		"####" "EE" 1;
+		Stop;
 		
 		FlashAirKickingDualWield:
 		TNT1 A 0 A_ClearOverlays(10,11);
@@ -1889,25 +1883,25 @@ class PB_Pistol : PB_WeaponBase
 		"####" "ABCDEFGHIJKLMN" 1;
 		"D2GT" E 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"D2GS" E 0;
-		"####" "EE" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);// Pause;
-		Goto Ready3;
+		"####" "EE" 1;
+		Stop;
 
 		FlashSlideKickingDualWield:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"D6GJ" A 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"D6GI" A 0;
-		"####" "ABCDEFGHIJKLMNOPQRSTUV" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		Goto Ready3;
+		"####" "ABCDEFGHIJKLMNOPQRSTUV" 1;
+		Stop;
 		
 		FlashSlideKickingDualWieldStop:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"D6GJ" W 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"D6GI" W 0;
-		"####" "WXYZ" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
+		"####" "WXYZ" 1;
 		"D2GT" E 0 A_JumpIfInventory("SilencerEquipped",1,2);
 		"D2GS" E 0;
-		"####" "EEE" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		Goto Ready3;
+		"####" "EEE" 1;
+		Stop;
 
 		RS_PistolSelectAnim:
 		"RSWR" F 1 Offset(0,102);
@@ -2144,110 +2138,110 @@ class PB_Pistol : PB_WeaponBase
 
 		RS_PistolFlashKicking:
 		TNT1 A 0 A_JumpIfInventory("ShieldModeA", 1, "RS_PistolFlashKickingShield");
-		"RSWG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" C 6 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		Goto Ready3;
+		"RSWG" A 1;
+		"RSWB" A 1;
+		"RSWB" B 1;
+		"RSWB" C 6;
+		"RSWB" B 1;
+		"RSWB" A 1;
+		"RSWG" A 1;
+		Stop;
 		RS_PistolFlashKickingShield:
-		"RSWU" A 1 A_DoPBWeaponAction();
-		"RSWU" B 1 A_DoPBWeaponAction();
-		"RSWU" C 1 A_DoPBWeaponAction();
-		"RSWU" D 3 A_DoPBWeaponAction();
-		"RSWU" E 3 A_DoPBWeaponAction();
-		"RSWU" F 3 A_DoPBWeaponAction();
-		"RSWU" E 1 A_DoPBWeaponAction();
-		"RSWU" D 1 A_DoPBWeaponAction();
-		"RSWU" C 1 A_DoPBWeaponAction();
-		"RSWU" B 1 A_DoPBWeaponAction();
-		"RSWU" A 1 A_DoPBWeaponAction();
-		"RSWT" A 1 A_DoPBWeaponAction();
-		Goto RS_PistolReadyShield;
+		"RSWU" A 1;
+		"RSWU" B 1;
+		"RSWU" C 1;
+		"RSWU" D 3;
+		"RSWU" E 3;
+		"RSWU" F 3;
+		"RSWU" E 1;
+		"RSWU" D 1;
+		"RSWU" C 1;
+		"RSWU" B 1;
+		"RSWU" A 1;
+		"RSWT" A 1;
+		Stop;
 
 		RS_PistolFlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory("ShieldModeA", 1, "RS_PistolFlashAirKickingShield");
-		"RSWG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" C 7 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		Goto Ready3;
+		"RSWG" A 1;
+		"RSWB" A 1;
+		"RSWB" B 1;
+		"RSWB" C 7;
+		"RSWB" B 1;
+		"RSWB" A 1;
+		"RSWG" A 1;
+		Stop;
 		RS_PistolFlashAirKickingShield:
-		"RSWU" A 1 A_DoPBWeaponAction();
-		"RSWU" B 1 A_DoPBWeaponAction();
-		"RSWU" C 1 A_DoPBWeaponAction();
-		"RSWU" D 3 A_DoPBWeaponAction();
-		"RSWU" E 3 A_DoPBWeaponAction();
-		"RSWU" F 3 A_DoPBWeaponAction();
-		"RSWU" E 1 A_DoPBWeaponAction();
-		"RSWU" D 1 A_DoPBWeaponAction();
-		"RSWU" C 1 A_DoPBWeaponAction();
-		"RSWU" B 1 A_DoPBWeaponAction();
-		"RSWU" A 1 A_DoPBWeaponAction();
-		"RSWT" A 1 A_DoPBWeaponAction();
-		Goto RS_PistolReadyShield;
+		"RSWU" A 1;
+		"RSWU" B 1;
+		"RSWU" C 1;
+		"RSWU" D 3;
+		"RSWU" E 3;
+		"RSWU" F 3;
+		"RSWU" E 1;
+		"RSWU" D 1;
+		"RSWU" C 1;
+		"RSWU" B 1;
+		"RSWU" A 1;
+		"RSWT" A 1;
+		Stop;
 
 		RS_PistolFlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory("ShieldModeA", 1, "RS_PistolFlashSlideKickingShield");
-		"RSWG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" C 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" E 14 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" D 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" C 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" B 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWB" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		"RSWG" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD);
-		Goto Ready3;
+		"RSWG" A 1;
+		"RSWB" A 1;
+		"RSWB" B 1;
+		"RSWB" C 1;
+		"RSWB" D 1;
+		"RSWB" E 14;
+		"RSWB" D 1;
+		"RSWB" C 1;
+		"RSWB" B 1;
+		"RSWB" A 1;
+		"RSWG" A 1;
+		Stop;
 		RS_PistolFlashSlideKickingShield:
-		"RSWU" A 1 A_DoPBWeaponAction();
-		"RSWU" B 1 A_DoPBWeaponAction();
-		"RSWU" C 1 A_DoPBWeaponAction();
-		"RSWU" D 3 A_DoPBWeaponAction();
-		"RSWU" E 3 A_DoPBWeaponAction();
-		"RSWU" F 3 A_DoPBWeaponAction();
-		"RSWU" E 1 A_DoPBWeaponAction();
-		"RSWU" D 1 A_DoPBWeaponAction();
-		"RSWU" C 1 A_DoPBWeaponAction();
-		"RSWU" B 1 A_DoPBWeaponAction();
-		"RSWU" A 1 A_DoPBWeaponAction();
-		"RSWT" A 1 A_DoPBWeaponAction();
-		Goto RS_PistolReadyShield;
+		"RSWU" A 1;
+		"RSWU" B 1;
+		"RSWU" C 1;
+		"RSWU" D 3;
+		"RSWU" E 3;
+		"RSWU" F 3;
+		"RSWU" E 1;
+		"RSWU" D 1;
+		"RSWU" C 1;
+		"RSWU" B 1;
+		"RSWU" A 1;
+		"RSWT" A 1;
+		Stop;
 
 		RS_PistolFlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory("ShieldModeA", 1, "RS_PistolFlashSlideKickingStopShield");
-		"RSWG" A 1 A_DoPBWeaponAction();
-		Goto Ready3;
+		"RSWG" A 1;
+		Stop;
 		RS_PistolFlashSlideKickingStopShield:
-		"RSWT" A 1 A_DoPBWeaponAction();
-		Goto RS_PistolReadyShield;
+		"RSWT" A 1;
+		Stop;
 
 		RS_PistolFlashPunching:
 		TNT1 A 0 A_JumpIfInventory("ShieldModeA", 1, "RS_PistolFlashPunchingShield");
 		TNT1 A 15;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		RS_PistolFlashPunchingShield:
-		"RSWU" A 1 A_DoPBWeaponAction();
-		"RSWU" B 1 A_DoPBWeaponAction();
-		"RSWU" C 1 A_DoPBWeaponAction();
-		"RSWU" D 1 A_DoPBWeaponAction();
-		"RSWU" E 1 A_DoPBWeaponAction();
-		"RSWU" F 4 A_DoPBWeaponAction();
-		"RSWU" E 1 A_DoPBWeaponAction();
-		"RSWU" D 1 A_DoPBWeaponAction();
-		"RSWU" C 1 A_DoPBWeaponAction();
-		"RSWU" B 1 A_DoPBWeaponAction();
-		"RSWU" A 1 A_DoPBWeaponAction();
-		"RSWT" A 1 A_DoPBWeaponAction();
+		"RSWU" A 1;
+		"RSWU" B 1;
+		"RSWU" C 1;
+		"RSWU" D 1;
+		"RSWU" E 1;
+		"RSWU" F 4;
+		"RSWU" E 1;
+		"RSWU" D 1;
+		"RSWU" C 1;
+		"RSWU" B 1;
+		"RSWU" A 1;
+		"RSWT" A 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 	}
 }

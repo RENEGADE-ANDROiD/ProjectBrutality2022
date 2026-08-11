@@ -180,17 +180,6 @@ statusbar fullscreen, fullscreenoffsets
 				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -205, -69;
 				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
 			}
-			IsSelected PB_XM21 {
-				drawimage "BARBACY1", -73, -17, centerbottom, 180, 22;
-				drawimage "BARBACY2", -72, -49, centerbottom, 180, 22;
-				DrawImage "BAMBAR1", -100, -30;
-				DrawImage "BAMBAR1", -100, -52;
-				DrawBar "CURBAR1", "BGBARL", ammo2, horizontal, interpolate (64), -111, -52;
-				Drawimage "AMMOIC1", -66, -17, centerbottom, 17, 17;
-				DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -216, -49;
-				DrawNumber 3, AANUM3, Yellow, ammo2, Alignment(right), -205, -69;
-				DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
-			}
 			IsSelected PB_Fusil {
 				drawimage "BARBACY1", -73, -17, centerbottom, 180, 22;
 				drawimage "BARBACY2", -72, -49, centerbottom, 180, 22;
@@ -529,17 +518,6 @@ statusbar fullscreen, fullscreenoffsets
 				DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
 			}
 			IsSelected PB_Shotgun {
-				drawimage "BARBACO1", -73, -17, centerbottom, 180, 22;
-				drawimage "BARBACO2", -72, -49, centerbottom, 180, 22;
-				DrawImage "BAMBAR3", -100, -30;
-				DrawImage "BAMBAR3", -100, -52;
-				DrawBar "CURBAR3", "BGBARL", ammo2, horizontal, interpolate (64), -111, -52;
-				Drawimage "AMMOIC3", -66, -17, centerbottom, 17, 17;
-				DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -216, -49;
-				DrawNumber 3, AANUM3, Orange, ammo2, Alignment(right), -205, -69;
-				DrawBar "RESBAR3", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
-			}
-			IsSelected X12Shotgun {
 				drawimage "BARBACO1", -73, -17, centerbottom, 180, 22;
 				drawimage "BARBACO2", -72, -49, centerbottom, 180, 22;
 				DrawImage "BAMBAR3", -100, -30;
@@ -949,24 +927,9 @@ statusbar fullscreen, fullscreenoffsets
 				DrawNumber 3, AANUM3, DarkRed, ammo2, Alignment(right), -205, -69;
 				DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
 			}
-			// PB_DemonExterminator disabled — block kept here (commented) for reference if the weapon is re-enabled.
-			// IsSelected PB_DemonExterminator {
-			//	drawimage "BARBACD1", -73, -17, centerbottom, 180, 22;
-			//	drawimage "BARBACZ2", -72, -49, centerbottom, 180, 22;
-			//	DrawImage "BAMBAR6", -100, -30;
-			//	DrawImage "BAMBAR7", -100, -52;
-			//	DrawBar "RESBAR7", "BGBARL", ammo2, horizontal, interpolate (64), -111, -52;
-			//	Drawimage "AMMOIC7", -66, -37, centerbottom, 17, 17;
-			//	Drawimage "AMMOIC6", -66, -17, centerbottom, 17, 17;
-			//	DrawNumber 3, AANUM3, Orange, ammo1, Alignment(right), -216, -49;
-			//	DrawNumber 3, AANUM3, DarkRed, ammo2, Alignment(right), -205, -69;
-			//	DrawBar "RESBAR6", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
-			// }
-
 			IsSelected not Rifle, PB_Carbine {
 			IsSelected not PB_Nailgun, PB_MetalSniper {
-			IsSelected not PB_MetalSniper, PB_XM21 {
-			IsSelected not PB_XM21, PB_Fusil {
+			IsSelected not PB_MetalSniper, PB_Fusil {
 			IsSelected not PB_Fusil, ProSurv_Ballista {
 			IsSelected not PB_LMG, OldHMG {
 			IsSelected not PB_NeoHMG, PB_M41A {
@@ -975,7 +938,7 @@ statusbar fullscreen, fullscreenoffsets
 			IsSelected not PB_Revolver, PB_SMG {
 			IsSelected not PB_Deagle, PB_MP40 {
 			IsSelected not PB_Chainsaw {
-			IsSelected not PB_Shotgun, X12Shotgun {
+			IsSelected not PB_Shotgun, MarauderSSG {
 			IsSelected not MarauderSSG, PB_CSSG {
 			IsSelected not PB_SSG, PB_Autoshotgun {
 			IsSelected not PB_QuadSG, PB_RocketLauncher {
@@ -986,7 +949,7 @@ statusbar fullscreen, fullscreenoffsets
 			IsSelected not PB_BFG9000, BHGen {
 			IsSelected not BHGen, PB_Flamethrower {
 			IsSelected not Hell_Rifle, PB_Unmaker {
-			IsSelected not PB_Unmaker, ChexRifle { // was: not PB_DemonExterminator (class disabled); PB_Unmaker is slot-9, never co-selected with slot-4 ChexRifle, preserves chain brace count.
+			IsSelected not PB_Unmaker, ChexRifle {
 			IsSelected not LeverAction, BDPBattleRifle {
 			IsSelected not CarbineZombieShield, SavageImpShield {
 			IsSelected not PB_NailgunGuyShield, SguyShield {
@@ -1014,7 +977,6 @@ statusbar fullscreen, fullscreenoffsets
 					DrawNumber 3, AANUM3, Yellow, ammo1, Alignment(right), -216, -49;
 					DrawBar "RESBAR1", "BGBARL", ammo1, horizontal, interpolate (64), -122, -32;
 				}
-			}
 			}
 			}
 			}

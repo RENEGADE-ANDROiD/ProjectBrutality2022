@@ -121,6 +121,16 @@ extend class PB_WeaponBase
 		return ResolveState("RandomMelee_Saw");
 	}
 
+	// DECORATE-safe: anonymous blocks cannot declare typed locals like State st.
+	action state PB_PickRandomQuickMeleeOrReturn()
+	{
+		State st = PB_PickRandomQuickMelee();
+		if (st)
+			return st;
+		PB_QM_EndAttack();
+		return PB_ReturnFromQuickMelee();
+	}
+
 	States
 	{
 	// ArgentSith Fire (primary hand) + FinishCuttingAnimation — no hand-switch / barrel / fatality.

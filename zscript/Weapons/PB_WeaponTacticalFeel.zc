@@ -65,7 +65,6 @@ class PB_WeaponTilterInventory : Inventory
 		'PB_Railgun',
 		'PB_BDPRailgun',
 		'PB_MetalSniper',
-		'PB_XM21',
 		'BDPBattleRifle',
 		'PB_LeverAction',
 		'PB_CSSG',
@@ -136,7 +135,6 @@ class PB_WeaponTilterInventory : Inventory
 
 		// Long guns / launchers — slightly softer roll.
 		if (cls == 'PB_MetalSniper'
-			|| cls == 'PB_XM21'
 			|| cls == 'PB_Railgun'
 			|| cls == 'PB_BDPRailgun'
 			|| cls == 'BDPBattleRifle'
@@ -145,7 +143,6 @@ class PB_WeaponTilterInventory : Inventory
 			|| cls == 'PB_RocketLauncher'
 			|| cls == 'Paingiver'
 			|| cls == 'ProSurv_Ballista'
-			|| cls == 'PB_DemonExterminator'
 			|| cls == 'PB_Unmaker'
 			|| cls == 'PB_BFGMKIV'
 			|| cls == 'PB_BFGBeam'
@@ -158,7 +155,6 @@ class PB_WeaponTilterInventory : Inventory
 			|| cls == 'PB_Carbine'
 			|| cls == 'PB_M41A'
 			|| cls == 'PB_MP40'
-			|| cls == 'PB_NormalRifle'
 			|| cls == 'PB_Fusil'
 			|| cls == 'PB_M1Plasma'
 			|| cls == 'PB_M2Plasma'
@@ -190,7 +186,6 @@ class PB_WeaponTilterInventory : Inventory
 			return 1.40;
 
 		if (cls == 'PB_MetalSniper'
-			|| cls == 'PB_XM21'
 			|| cls == 'PB_Railgun'
 			|| cls == 'PB_BDPRailgun'
 			|| cls == 'BDPBattleRifle'
@@ -246,15 +241,15 @@ class PB_WeaponTilterInventory : Inventory
 			'ReadyToFireDualWield', 'ReadyMissile', 'JavelinReady3',
 			'ReadyDualWield', 'IdleNoAmmo', 'NoBuzzing', 'GoingToReady', 'GoingToReady2', 'OnLoop',
 			'GunReady', 'WaitReady', 'Idle', 'PreReady',
-			'X12ReadyToFire', 'CryoShotgunReadyToFire', 'MarauderShotgunReadyToFire',
+			'CryoShotgunReadyToFire', 'MarauderShotgunReadyToFire',
 			'M45Halo3ShotgunReadyToFire', 'HeatBlastReadyToFire',
-			'XM21ReadyToFire', 'ScopeReadyToFire', 'JavelinReadyToFire',
+			'ScopeReadyToFire', 'JavelinReadyToFire',
 			'JavelinReadyEmpty', 'JavelinReadyUnloaded',
 			'UnloadedReady', 'UnloadedReadyDualWield',
 			'ContinueReady', 'NormalReady', 'Drum_Ready', 'HipReadyLoop',
 			'ReadyNoDtech', 'ReadyHasDtech', 'Ready.Lightning',
 			'ReadyToFireDemonic', 'ReadyEmpty', 'ReadyZoom',
-			'KatanaReadyToCut', 'HexaLionBoyReadyToFire', 'MastermindChaingunReadyToFire',
+			'KatanaReadyToCut', 'PB_HexaOverkillReadyToFire', 'MastermindChaingunReadyToFire',
 			'NailGunReady', 'NailgunActuallyReady', 'EmptyReady', 'RS_AxeReady',
 			'RS_PistolReady3', 'RS_PistolReadyShield',
 			'BackToReadyDual', 'BackToReadyDualFromLeft', 'BackToReadyDualFromRight',
@@ -351,6 +346,10 @@ class PB_WeaponTilterInventory : Inventory
 			'ThrowGrenade', 'UseEquipment', 'ToggleEquipment', 'SwitchEquipment',
 			'EquipSelectShowFrag', 'EquipSelectShowStun', 'EquipSelectShowShield',
 			'EquipSelectShowVoid', 'EquipSelectShowMine', 'EquipSelectShowGeneric',
+			'QuickMelee', 'QuickMeleePunchSetup', 'GoMeleeInstead',
+			'RandomMelee_ArgentMelee', 'RandomMelee_BeamMelee',
+			'RandomMelee_VorpalMelee', 'RandomMelee_Backhand',
+			'RandomMelee_Uppercut', 'RandomMelee_Saw',
 			'QuickFire', 'JumpSlash', 'FastSlash', 'FastSlash2',
 			'SpecialAttack', 'SpecialPunch', 'NormPunch', 'SpecialBashConnect',
 			'AxeThrow', 'GotoAxeThrow',

@@ -29,9 +29,7 @@ Class PB_Revolver : PB_WeaponBase
 	states
 	{
 		Spawn:
-			VVIC A 0 NoDelay;
-			RVIC A 10 A_PbvpFramework("VVIC");
-			"####" A 0 A_PbvpInterpolate();
+			RVIC A 10;
 			loop;
 		
 		WeaponRespect:
@@ -87,7 +85,6 @@ Class PB_Revolver : PB_WeaponBase
 			Goto Ready3;
 		
 		Select:
-			R1V1 E 0 PB_SelectIfUpgrade("PB_Deagle");
 			TNT1 A 0 PB_WeaponRaise("REVOUP");
 			Goto SelectFirstPersonLegs;
 		SelectContinue:
@@ -118,7 +115,6 @@ Class PB_Revolver : PB_WeaponBase
 				A_SetInventory("PB_LockScreenTilt",0);
 			}
 		ReadyLoop:
-			R1V1 E 0 PB_SelectIfUpgrade("PB_Deagle");
 			R1V1 E 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD, CheckUnloaded("RevolverHasUnloaded"));
 			Loop;
 		MuzzleFlash:
@@ -616,7 +612,6 @@ Class PB_Revolver : PB_WeaponBase
 				A_Overlay(11, "IdleRight_Overlay", false);
 				}
 		ReadyToFireDualWield:
-			TNT1 A 0 PB_SelectIfUpgrade("PB_Deagle");
 			TNT1 A 1 A_DoPBDualAction(2);
 			Loop;
 		
@@ -779,41 +774,41 @@ Class PB_Revolver : PB_WeaponBase
 		FlashAirKicking:
 		FlashKicking:
 			TNT1 A 0 A_Jumpif(A_CheckAkimbo(), "DualFlashKicking");
-			R8V1 ABCDEFGHHIJKLMN 1 A_DoPBWeaponAction();
-			Goto Ready3;
+			R8V1 ABCDEFGHHIJKLMN 1;
+			Stop;
 		
 		FlashPunching:
 			TNT1 A 0 A_JumpIF(A_CheckAkimbo(), "DualFlashPunching");
 			R0V1 ABCDEFGHIJKLMN 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashSlideKicking:
 			TNT1 A 0 A_JumpIF(A_CheckAkimbo(), "DualFlashSlideKicking");
-			R9V1 ABCDEFGHIJKLMNONOPQRSTUVWX 1 A_DoPBWeaponAction();
-			Goto Ready3;
+			R9V1 ABCDEFGHIJKLMNONOPQRSTUVWX 1;
+			Stop;
 		FlashSlideKickingStop:
 			TNT1 A 0 A_JumpIF(A_CheckAkimbo(), "DualFlashSlideKickingStop");
-			R9V1 RSTUVWX 1 A_DoPBWeaponAction();
-			Goto Ready3;
+			R9V1 RSTUVWX 1;
+			Stop;
 			
 		
 		DualFlashKicking:
 			TNT1 A 0 A_ClearOverlays(10,11);
-			44V1 ABCDEFGHHIJKLMN 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-			Goto Ready3;
+			44V1 ABCDEFGHHIJKLMN 1;
+			Stop;
 		DualFlashPunching:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 AAAAAAAAAAAAAAA 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		DualFlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10,11);
-			44V2 ABCDEFGHIJKLMNONOPQRSTUVWX 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-			Goto Ready3;
+			44V2 ABCDEFGHIJKLMNONOPQRSTUVWX 1;
+			Stop;
 		DualFlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(10,11);
-			44V2 RSTUVWX 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-			Goto Ready3;
+			44V2 RSTUVWX 1;
+			Stop;
 
 		PDA_Preview_Revolver_Fire:
 			44FI A 1 BRIGHT;
@@ -821,7 +816,7 @@ Class PB_Revolver : PB_WeaponBase
 			44FI C 1;
 			44FI D 1;
 			44FI E 1;
-			Stop;
+			Goto Ready3;
 		PDA_Preview_Revolver_AltFire:
 			R5V1 A 1 BRIGHT;
 			R5V1 B 1 BRIGHT;

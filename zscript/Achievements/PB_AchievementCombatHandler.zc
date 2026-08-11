@@ -174,8 +174,7 @@ class PB_AchievementCombatHandler : EventHandler
 			|| inf is "SuperBFGExtra" || inf is "PB_SuperBFGBall")
 			return PB_MK_BFG;
 
-		if (inf is "XM21BalisticProjectile" || inf is "XM21_762x51mmAP"
-			|| inf is "PB_762x51mmAP" || inf is "MS_ResonanceAmmo")
+		if (inf is "PB_762x51mmAP" || inf is "MS_ResonanceAmmo")
 			return PB_MK_SNIPER;
 
 		if (inf is "Plasma_Ball" || inf is "UltPlasma_Ball"
@@ -210,7 +209,7 @@ class PB_AchievementCombatHandler : EventHandler
 			|| wpn == 'BHGen' || wpn == 'PB_Unmaker')
 			return PB_MK_BFG;
 
-		if (wpn == 'PB_XM21' || wpn == 'PB_MetalSniper')
+		if (wpn == 'PB_MetalSniper')
 			return PB_MK_SNIPER;
 
 		if (wpn == 'PB_PlasmaGun' || wpn == 'PB_M2Plasma' || wpn == 'PB_DarkMatterRifle'

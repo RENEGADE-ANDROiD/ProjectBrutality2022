@@ -40,8 +40,8 @@ class PB_MP40 : PB_WeaponBase
 	states
 	{
 		Steady:
-			TNT1 A 1;
-			Goto Ready;
+			Goto PB_FinisherCleanup;
+
 		Ready:
 			TNT1 A 0;
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
@@ -918,9 +918,7 @@ class PB_MP40 : PB_WeaponBase
 			Stop;
 		
 		Spawn:
-			"VMP4" A 0 NoDelay;
-			"AMP4" A 10 A_PbvpFramework("VMP4");
-			"####" A 0 A_PbvpInterpolate();
+			"AMP4" A 10;
 		LOOP;
 		
 		FlashVariation:
@@ -1002,51 +1000,67 @@ class PB_MP40 : PB_WeaponBase
 			"MP4Q" G 1 A_WeaponOffset(-1,33);
 			"MP4Q" "GFEDCBA" 1 A_WeaponOffset(0,32);
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 			
 		FlashKicking:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 A 0 A_JumpIfInventory("DualWieldingMP40", 1, "FlashKickingDW");
-			"MPKI" "ACDEFHIHFEDCBA" 1 A_DoPBWeaponAction();
-			Goto Ready3;
+			TNT1 A 0 A_OverlayAlpha(-999, 0.0);
+			"MPKI" "ACDEFHIHFEDCBAA" 1;
+			TNT1 A 0 A_OverlayAlpha(-999, 1.0);
+			Stop;
 		
 		FlashAirKicking:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 A 0 A_JumpIfInventory("DualWieldingMP40", 1, "FlashAirKickingDW");
-			"MPKI" "ABCDEFHIIHFEDCBA" 1 A_DoPBWeaponAction();
-			Goto Ready3;
+			TNT1 A 0 A_OverlayAlpha(-999, 0.0);
+			"MPKI" "ABCDEFHIIHFEDCBA" 1;
+			TNT1 A 0 A_OverlayAlpha(-999, 1.0);
+			Stop;
 		
 		FlashKickingDW:
-			"MPKI" "JKLMNOOOONMLKJ" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-			Goto Ready3;
+			TNT1 A 0 A_OverlayAlpha(-999, 0.0);
+			"MPKI" "JKLMNOOOONMLKJJ" 1;
+			TNT1 A 0 A_OverlayAlpha(-999, 1.0);
+			Stop;
 		
 		FlashAirKickingDW:
-			"MPKI" "JJKLMNNNNNNMLKJJ" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-			Goto Ready3;
+			TNT1 A 0 A_OverlayAlpha(-999, 0.0);
+			"MPKI" "JJKLMNNNNNNMLKJJ" 1;
+			TNT1 A 0 A_OverlayAlpha(-999, 1.0);
+			Stop;
 			
 		FlashPunchingDW:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 A 15;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		
 		FlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 A 0 A_JumpIfInventory("DualWieldingMP40", 1, "FlashSlideKickingDW");
-			"MPKI" "ABCDEGHHHGFGHHHGHHHGFEDCBA" 1 A_DoPBWeaponAction();
-			Goto Ready3;
+			TNT1 A 0 A_OverlayAlpha(-999, 0.0);
+			"MPKI" "ABCDEGHHHGFGHHHGHHHGFEDCBA" 1;
+			TNT1 A 0 A_OverlayAlpha(-999, 1.0);
+			Stop;
 		FlashSlideKickingDW:
-			"MPKI" "JKLMNNNNNNNNNNNNNNNNMLKJ" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-			Goto Ready3;
+			TNT1 A 0 A_OverlayAlpha(-999, 0.0);
+			"MPKI" "JKLMNNNNNNNNNNNNNNNNMLKJ" 1;
+			TNT1 A 0 A_OverlayAlpha(-999, 1.0);
+			Stop;
 		
 		FlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 A 0 A_JumpIfInventory("DualWieldingMP40", 1, "FlashSlideKickingStopDW");
-			"MPKI" "HGFEDCB" 1 A_DoPBWeaponAction();
-			Goto Ready3;
+			TNT1 A 0 A_OverlayAlpha(-999, 0.0);
+			"MPKI" "HGFEDCB" 1;
+			TNT1 A 0 A_OverlayAlpha(-999, 1.0);
+			Stop;
 		
 		FlashSlideKickingStopDW:
-			"MPKI" "OONMLKJ" 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-			Goto Ready3;
+			TNT1 A 0 A_OverlayAlpha(-999, 0.0);
+			"MPKI" "OONMLKJ" 1;
+			TNT1 A 0 A_OverlayAlpha(-999, 1.0);
+			Stop;
 	}
 }

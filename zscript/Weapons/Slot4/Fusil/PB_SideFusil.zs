@@ -25,11 +25,7 @@ class PB_SideFusil : PB_WeaponBase
 	states
 	{
 		Steady:
-        TNT1 A 1;
-        TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-        TNT1 A 0 SetPlayerProperty(0,0,0);
-        TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-        Goto Ready3;
+			Goto PB_FinisherCleanup;
 
 		NoAmmo:
         TNT1 A 0 {
@@ -276,19 +272,27 @@ class PB_SideFusil : PB_WeaponBase
         TNT1 A 0 A_ClearOverlays(10,11);
         "FUSI" "YXEDCCCDEXY" 1;
         TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-        Goto Ready3;
+        Stop;
 
 		FlashKicking:
         TNT1 A 0 A_ClearOverlays(10,11);
-        "FUSI" "YXEDCCCCCCDEXY" 1;
-        TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-        Goto Ready3;
+        "FUSI" "YXEDCCCCCCCDEXY" 1;
+        Stop;
 
 		FlashAirKicking:
         TNT1 A 0 A_ClearOverlays(10,11);
-        "FUSI" "YXEDCBBBBBCDEXY" 1;
-        TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-        Goto Ready3;
+        "FUSI" "YXEDCBBBBBBCDEXY" 1;
+        Stop;
+
+		FlashSlideKicking:
+        TNT1 A 0 A_ClearOverlays(10,11);
+        "FUSI" "YXEDCBBBBBBBBBBBBBBCDEXY" 1;
+        Stop;
+
+		FlashSlideKickingStop:
+        TNT1 A 0 A_ClearOverlays(10,11);
+        "FUSI" "YXEDDEXY" 1;
+        Stop;
 
 		Spawn:
         "UPDT" A -1;

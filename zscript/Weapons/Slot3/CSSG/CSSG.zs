@@ -337,23 +337,23 @@ Class PB_CSSG : PB_WeaponBase
 		FlashPunching:
 			C0MO ABCDEFFFFEDCBA 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		
 		FlashKicking:
 			C0KO ABCDEEFFGGEDCBA 1;
-			goto Ready3;
+			Stop;
 			
 		FlashAirKicking:
 			C0MO ABCDEFFFFFFEDCBA 1;
-			goto Ready3;
+			Stop;
 			
 		FlashSlideKicking:
 			C0KO ABCDEEFFFGGGFFFEEEGGGFEDCBA 1;
-			goto Ready3;
+			Stop;
 			
 		FlashSlideKickingStop:
 			C0KO GFEDCBA 1;
-			goto Ready3;
+			Stop;
 			
 		MuzzleFlashFull:
 			TNT1 A 0 {

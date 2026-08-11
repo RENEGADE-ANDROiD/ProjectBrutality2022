@@ -37,9 +37,8 @@ class PB_M2Plasma : PB_WeaponBase
 	states
 	{
 		Steady:
-		TNT1 A 1;
-		Goto Ready;
-	
+			Goto PB_FinisherCleanup;
+
 		Ready:
 		TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
 		TNT1 A 0 PB_RespectIfNeeded;
@@ -983,11 +982,11 @@ class PB_M2Plasma : PB_WeaponBase
 			if(CountInv("HasLightningGunUpgrade") == 1) {A_SetFlashWeaponSprite("PR2K");}
 			}
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		FlashPunchingDW:
 		TNT1 A 15;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 	
 		FlashKicking:
 		"PR2K" "ABCDEFG" 0;
@@ -996,10 +995,10 @@ class PB_M2Plasma : PB_WeaponBase
 		M225 ABCDEFGGFEDCBA 1 {
 			if(CountInv("HasLightningGunUpgrade") == 1) {A_SetWeaponSprite("PR2K");}
 			}
-		Goto Ready3;
+		Stop;
 		FlashKickingDW:
 		"P7SS" "EDCBAAAAAABCDE" 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashAirKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
@@ -1007,10 +1006,10 @@ class PB_M2Plasma : PB_WeaponBase
 		M225 ABCDEFGGGGFEDCBA 1 {
 			if(CountInv("HasLightningGunUpgrade") == 1) {A_SetWeaponSprite("PR2K");}
 			}
-		Goto Ready3;
+		Stop;
 		FlashAirKickingDW:
 		"P7SS" "EDCBAAAAAAAABCDE" 1;
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
@@ -1018,11 +1017,11 @@ class PB_M2Plasma : PB_WeaponBase
 		M225 ABCDEFGGGGGGGGGGGGGFEDCBAA 1 {
 			if(CountInv("HasLightningGunUpgrade") == 1) {A_SetWeaponSprite("PR2K");}
 			}
-		Goto Ready3;
+		Stop;
 
 		FlashSlideKickingDW:
 		"P7SS" "EDCBAAAAAAAAAAAAAAAAAABCDE" 1;
-		Goto Ready3;
+		Stop;
 		
 		
 		FlashSlideKickingStop:
@@ -1030,11 +1029,11 @@ class PB_M2Plasma : PB_WeaponBase
 		M225 GFEDCBA 1 {
 			if(CountInv("HasLightningGunUpgrade") == 1) {A_SetWeaponSprite("PR2K");}
 			}
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKickingStopDW:
 		"P7SS" "ABCDEEE" 1;
-		Goto Ready3;
+		Stop;
 
 		PDA_Preview_M2Ready:
 		"M210" A 2 A_WeaponReady(WRF_NOFIRE);

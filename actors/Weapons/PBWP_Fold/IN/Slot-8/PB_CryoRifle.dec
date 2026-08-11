@@ -29,8 +29,9 @@ ACTOR PB_CryoRifle : PB_Weapon
 	States
 	{
 	Steady:
-	TNT1 A 1
-	Goto Ready
+		Goto PB_FinisherCleanup
+
+
 	SpawnSmoke:
 	TNT1 A 8
 	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)

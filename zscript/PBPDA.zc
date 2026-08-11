@@ -578,9 +578,6 @@ class PB_EventHandler : EventHandler
 	int MouseX,MouseY,DeltaMouseX,DeltaMouseY;
 	uint HeldDownTics;
 	transient int PDAMode;
-	transient int KatanaDualChoiceMode;
-	transient int KatanaDualVariant;
-	transient int KatanaDualFrozenPlr;
 	transient int LastPDAToggleTic;
 	ui transient int pdaAchUnlockedCache;
 	ui transient int pdaAchTotalCache;
@@ -669,18 +666,6 @@ class PB_EventHandler : EventHandler
 	int pdaPrevCurFrame;
 	int pdaPrevTicsRemain;
 	int pdaPrevLastAdvGametic;
-	Array<TextureID> katDualFrL;
-	Array<int> katDualTiL;
-	Array<int> katDualSegL;
-	Array<TextureID> katDualFrR;
-	Array<int> katDualTiR;
-	Array<int> katDualSegR;
-	int katDualCurL;
-	int katDualCurR;
-	int katDualRemL;
-	int katDualRemR;
-	int katDualLastGtL;
-	int katDualLastGtR;
 	Array<TextureID> pdaMainWeapFrames;
 	Array<int> pdaMainWeapTics;
 	Array<TextureID> pdaMainMonFrames;
@@ -1029,14 +1014,6 @@ class PB_EventHandler : EventHandler
 					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/rocket_standard.png");
 				break;
 
-			case 'PB_XM21':
-				localScale = 0.85;
-				if (mo.CountInv("XM21HasBallistics") >= 1)
-					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_DB.png");
-				else
-					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_Slug.png");
-				break;
-
 			case 'PB_Fusil':
 				localScale = 0.9;
 				modeIcon = PB2022_ModeHudLump("FUSIF0");
@@ -1070,29 +1047,6 @@ class PB_EventHandler : EventHandler
 				modeIcon = PB2022_ModeHudLump("HND7E0");
 				if (!PB2022_TexValid(modeIcon))
 					modeIcon = PB2022_ModeHudLump("CYBFA0");
-				break;
-
-			case 'PB_DemonExterminator':
-				localScale = 0.85;
-				localOffY = -40.0;
-				if (mo.CountInv("DEx_Cur2") >= 1)
-				{
-					modeIcon = PB2022_ModeHudWheel("graphics/weap/DemonExt/LightningAlt.png");
-					if (!PB2022_TexValid(modeIcon))
-						modeIcon = PB2022_ModeHudLump("AMMOIC6");
-				}
-				else if (mo.CountInv("DEx_Cur1") >= 1)
-				{
-					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/SG_DB.png");
-					if (!PB2022_TexValid(modeIcon))
-						modeIcon = PB2022_ModeHudLump("AMMOIC6");
-				}
-				else
-				{
-					modeIcon = PB2022_ModeHudLump("AMMOIC7");
-					if (!PB2022_TexValid(modeIcon))
-						modeIcon = PB2022_ModeHudLump("UNMXA0");
-				}
 				break;
 
 			case 'PB_Flamethrower':
@@ -1245,9 +1199,9 @@ class PB_EventHandler : EventHandler
 			case 'PB_M1Plasma':
 				localScale = 0.85;
 				if (mo.CountInv("PB_M1Plasma") >= 2)
-					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Quad_Dual.png");
+					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Minigun_1.png");
 				else
-					modeIcon = PB2022_ModeHudWheel("graphics/pywheel/Quad_Single.png");
+					modeIcon = PB2022_ModeHudLump("PLASA0");
 				break;
 
 			case 'PB_DarkMatterRifle':
@@ -1458,7 +1412,7 @@ class PB_EventHandler : EventHandler
 		{
 			if (gametic < PB_PDA_UI_INIT_MIN_GAMETIC)
 				return false;
-			if (!PDAMode && !KatanaDualChoiceMode)
+			if (!PDAMode)
 				return false;
 		}
 		return InitializeUiObjects();
@@ -2098,25 +2052,6 @@ class PB_EventHandler : EventHandler
 			}
 			else
 				pdaPrevUILastQueuedKey = "";
-		}
-		if (KatanaDualChoiceMode)
-		{
-			if (MouseClicked && !MouseHeldDown)
-			{
-				int lx, ly, lw, lh, rx, ry, rw, rh;
-				PB_KatanaDualChoiceGetTileLayout(lx, ly, lw, lh, rx, ry, rw, rh);
-				bool hitL = MouseX >= lx && MouseX < lx + lw && MouseY >= ly && MouseY < ly + lh;
-				bool hitR = MouseX >= rx && MouseX < rx + rw && MouseY >= ry && MouseY < ry + rh;
-				if (hitL || hitR)
-				{
-					bool leftPickSith = (KatanaDualVariant == 0) ? hitL : hitR;
-					if (leftPickSith)
-						SendNetworkEvent("katanachoice_pick_sith");
-					else
-						SendNetworkEvent("katanachoice_pick_jedi");
-				}
-				SendNetworkEvent("releasemouse");
-			}
 		}
 		if (ShopMenuOpened && MouseClicked && !MouseHeldDown)
 		{
@@ -2856,25 +2791,6 @@ class PB_EventHandler : EventHandler
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 	}
 
-	void PDA_WeaponStrip_AppendPB_DemonExterminatorPreview(Name nm,
-		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
-		bool useSeg, int hardCap,
-		int fireTicCap, int flashTics, int flashSeek)
-	{
-		if (nm != 'PB_DemonExterminator')
-			return;
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_DEx_Ready", PB_PDA_WEAPON_PREVIEW_SEG_READY, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_DEx_Laser", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_DEx_Incineration", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_DEx_Lightning", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_DEx_ModeSwitch", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-	}
-
 	void PDA_WeaponStrip_AppendPB_ExcavatorPreview(Name nm,
 		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
 		bool useSeg, int hardCap,
@@ -3127,31 +3043,6 @@ class PB_EventHandler : EventHandler
 		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Fire", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_AltFire", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Reload", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		if (includeOverlays)
-		{
-			PDA_WeaponStrip_AppendOverlayIfPresent(nm, "Smoke", outFr, outTi, outSeg, useSeg, hardCap,
-				PB_PDA_WEAPON_PREVIEW_SEG_OVERLAY, overlayMaxSteps, overlayTicCap);
-			PDA_WeaponStrip_AppendOverlayIfPresent(nm, "Shells", outFr, outTi, outSeg, useSeg, hardCap,
-				PB_PDA_WEAPON_PREVIEW_SEG_OVERLAY, overlayMaxSteps, overlayTicCap);
-			PDA_WeaponStrip_AppendOverlayIfPresent(nm, "Pump", outFr, outTi, outSeg, useSeg, hardCap,
-				PB_PDA_WEAPON_PREVIEW_SEG_OVERLAY, overlayMaxSteps, overlayTicCap);
-		}
-	}
-
-	void PDA_WeaponStrip_AppendX12ShotgunPreview(Name nm,
-		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
-		bool useSeg, int hardCap,
-		int fireTicCap, int flashTics, int flashSeek,
-		bool includeOverlays, int overlayTicCap, int overlayMaxSteps)
-	{
-		if (nm != 'X12Shotgun')
-			return;
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Fire", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Pump", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_Reload", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
@@ -3590,27 +3481,6 @@ class PB_EventHandler : EventHandler
 			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
 	}
 
-	void PDA_WeaponStrip_AppendPB_XM21Preview(Name nm,
-		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
-		bool useSeg, int hardCap,
-		int fireTicCap, int flashTics, int flashSeek)
-	{
-		if (nm != 'PB_XM21')
-			return;
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_XM21_AP", PB_PDA_WEAPON_PREVIEW_SEG_FIRE, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_XM21_Ballistic", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_XM21_Scoped", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, true,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_XM21_AltScope", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_XM21_ModeSwap", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-		PDA_WeaponStrip_AppendFireLike(nm, "PDA_Preview_XM21_Reload", PB_PDA_WEAPON_PREVIEW_SEG_HOLD, false,
-			outFr, outTi, outSeg, useSeg, hardCap, fireTicCap, flashTics, flashSeek, PB_PDA_WEAPON_PREVIEW_SEG_FLASH);
-	}
-
 	void PDA_WeaponStrip_AppendPB_FusilPreview(Name nm,
 		Array<TextureID> outFr, Array<int> outTi, Array<int> outSeg,
 		bool useSeg, int hardCap,
@@ -3866,7 +3736,7 @@ class PB_EventHandler : EventHandler
 		}
 		int effReadyMax = readyMax;
 		int effReadyFixedTic = readyFixedTic;
-		if (nm == 'BioAcidLauncher' || nm == 'PB_CyberdemonRL' || nm == 'PB_DemonExterminator' || nm == 'PB_NeoHMG'
+		if (nm == 'BioAcidLauncher' || nm == 'PB_CyberdemonRL' || nm == 'PB_NeoHMG'
 			|| nm == 'PB_Excavator' || nm == 'PB_M41A' || nm == 'PB_CryoShotgun'
 			|| nm == 'PB_Fusil' || nm == 'Paingiver'
 			|| nm == 'PB_RiotShieldModule')
@@ -3942,12 +3812,6 @@ class PB_EventHandler : EventHandler
 				fireTicCap, flashTics, flashSeek, includeOverlays, overlayTicCap, overlayMaxSteps);
 			return;
 		}
-		if (nm == 'X12Shotgun')
-		{
-			PDA_WeaponStrip_AppendX12ShotgunPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
-				fireTicCap, flashTics, flashSeek, includeOverlays, overlayTicCap, overlayMaxSteps);
-			return;
-		}
 		if (nm == 'HASG')
 		{
 			PDA_WeaponStrip_AppendHASGPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
@@ -3963,12 +3827,6 @@ class PB_EventHandler : EventHandler
 		if (nm == 'PB_M41A')
 		{
 			PDA_WeaponStrip_AppendPB_M41APreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
-				fireTicCap, flashTics, flashSeek);
-			return;
-		}
-		if (nm == 'PB_XM21')
-		{
-			PDA_WeaponStrip_AppendPB_XM21Preview(nm, outFr, outTi, outSeg, useSeg, hardCap,
 				fireTicCap, flashTics, flashSeek);
 			return;
 		}
@@ -4096,12 +3954,6 @@ class PB_EventHandler : EventHandler
 		if (nm == 'PB_Unmaker')
 		{
 			PDA_WeaponStrip_AppendPB_UnmakerPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
-				fireTicCap, flashTics, flashSeek);
-			pdaHeavyBossCodexTail = true;
-		}
-		else if (nm == 'PB_DemonExterminator')
-		{
-			PDA_WeaponStrip_AppendPB_DemonExterminatorPreview(nm, outFr, outTi, outSeg, useSeg, hardCap,
 				fireTicCap, flashTics, flashSeek);
 			pdaHeavyBossCodexTail = true;
 		}
@@ -4994,11 +4846,9 @@ class PB_EventHandler : EventHandler
 			PDA_Play_BuildFromKey(pdaPrevPendingKey);
 			PDA_Play_ResetAnim();
 		}
-		if (PDAMode || KatanaDualChoiceMode)
+		if (PDAMode)
 		{
 			PDA_Play_AdvancePreviewAnim();
-			if (KatanaDualChoiceMode)
-				PB_KatanaDualAdvancePreviewAnims();
 			if (pdaMainAnimDirty && PDAMode && !NonMainMenu)
 			{
 				pdaMainAnimDirty = false;
@@ -5230,7 +5080,7 @@ class PB_EventHandler : EventHandler
 		if (MouseHeldDown == false && MouseClicked == true && !(HeldDownTics <= 0) ) HeldDownTics--;
 		if (e.Name ~== "input")
 		{
-			if (PDAMode || KatanaDualChoiceMode)
+			if (PDAMode)
 			{
 				DeltaMouseX = e.Args[0] / 2;
 				DeltaMouseY = e.Args[1];
@@ -5298,8 +5148,6 @@ class PB_EventHandler : EventHandler
 		}
 		if (e.Name ~== "openpda")
 		{
-			if (KatanaDualChoiceMode)
-				return;
 			if (isnetgame) return;
 			if (e.Player < 0 || e.Player >= MAXPLAYERS) return;
 			if (!playeringame[e.Player]) return;
@@ -5380,80 +5228,6 @@ class PB_EventHandler : EventHandler
 			MouseY = e.Args[1];
 			MousePositionSet = true;
 		}
-		if (e.Name ~== "katanachoice_open0")
-		{
-			if (e.Player < 0 || e.Player >= MAXPLAYERS || !playeringame[e.Player])
-				return;
-			if (PDAMode)
-			{
-				PB_KatanaDualChoiceApplyPick(true, e.Player);
-				return;
-			}
-			if (isnetgame)
-			{
-				PB_KatanaDualChoiceApplyPick(true, e.Player);
-				return;
-			}
-			KatanaDualChoiceMode = 1;
-			KatanaDualVariant = 0;
-			KatanaDualFrozenPlr = e.Player;
-			SetPlayerProperty(1, 1, 4);
-			players[e.Player].timefreezer |= (1 << e.Player);
-			Level.SetFrozen(true);
-			MouseX = 1;
-			MouseY = 1;
-			MousePositionSet = false;
-			MouseClicked = false;
-			MouseHeldDown = false;
-			HeldDownTics = 0;
-			PB_KatanaDualChoiceBuildPreviews(0);
-			PB_KatanaDualChoiceResetPreviewAnims();
-			return;
-		}
-		if (e.Name ~== "katanachoice_open1")
-		{
-			if (e.Player < 0 || e.Player >= MAXPLAYERS || !playeringame[e.Player])
-				return;
-			if (PDAMode)
-			{
-				PB_KatanaDualChoiceApplyPick(false, e.Player);
-				return;
-			}
-			if (isnetgame)
-			{
-				PB_KatanaDualChoiceApplyPick(false, e.Player);
-				return;
-			}
-			KatanaDualChoiceMode = 1;
-			KatanaDualVariant = 1;
-			KatanaDualFrozenPlr = e.Player;
-			SetPlayerProperty(1, 1, 4);
-			players[e.Player].timefreezer |= (1 << e.Player);
-			Level.SetFrozen(true);
-			MouseX = 1;
-			MouseY = 1;
-			MousePositionSet = false;
-			MouseClicked = false;
-			MouseHeldDown = false;
-			HeldDownTics = 0;
-			PB_KatanaDualChoiceBuildPreviews(1);
-			PB_KatanaDualChoiceResetPreviewAnims();
-			return;
-		}
-		if (e.Name ~== "katanachoice_pick_sith")
-		{
-			if (!KatanaDualChoiceMode)
-				return;
-			PB_KatanaDualChoiceApplyPick(true, e.Player);
-			return;
-		}
-		if (e.Name ~== "katanachoice_pick_jedi")
-		{
-			if (!KatanaDualChoiceMode)
-				return;
-			PB_KatanaDualChoiceApplyPick(false, e.Player);
-			return;
-		}
 		if (e.Name ~== "pdaprevclear")
 		{
 			PDA_Play_ClearPreview();
@@ -5513,7 +5287,6 @@ class PB_EventHandler : EventHandler
 	}
 	override void WorldLoaded(WorldEvent e)
 	{
-		PB_KatanaDualChoiceClose();
 		PB_FlashlightUtil.DestroyAllLights();
 		PB_FlashlightUtil.FixAllHolders();
 	}
@@ -5570,9 +5343,6 @@ class PB_EventHandler : EventHandler
 		RequestPDAAchievementScrollReset();
 		RequestPDAShopBrowseReset();
 		InvalidatePDAAchievementCache();
-		KatanaDualChoiceMode = 0;
-		KatanaDualVariant = 0;
-		KatanaDualFrozenPlr = -1;
 	}
 	override void InterfaceProcess(ConsoleEvent e)
 	{
@@ -5599,8 +5369,6 @@ class PB_EventHandler : EventHandler
 	const PB_PDA_BLOCKY_CAT_ARROW_VIS_MUL = 1.65;
 	const PB_PDA_BLOCKY_CAT_ARROW_HIT_PAD = 8;
 	const PB_PDA_BLOCKY_CAT_ARROW_BELOW_DESC = 12;
-	const PB_KATANA_DUAL_TILE_FRAC = 0.5;
-	const PB_KATANA_DUAL_LABEL_MAX_FRAC_OF_TILE_H = 0.36;
 	const PB_PDA_PREVIEW_GAP_768 = 16;
 	const PB_PDA_PREVIEW_WIDTH_768 = 300;
 	const PB_PDA_PREVIEW_SEG_FRAMES = 48;
@@ -6953,11 +6721,11 @@ class PB_EventHandler : EventHandler
 				);
 			}
 		}
-		if (!coldStart && !hideHUD && !PDAMode && !KatanaDualChoiceMode)
+		if (!coldStart && !hideHUD && !PDAMode)
 			DrawGloryKillFuelHud();
 		if (gametic >= PB_PDA_UI_INIT_MIN_GAMETIC
 			&& MouseX == 1 && MouseY == 1 && !MousePositionSet
-			&& (PDAMode || KatanaDualChoiceMode))
+			&& PDAMode)
 		{
 			SendNetworkEvent("modifymousepos",Screen.GetWidth() / 2,Screen.GetHeight() / 2);
 		}
@@ -7474,304 +7242,6 @@ class PB_EventHandler : EventHandler
 			}
 			PB_DrawCtrollCursor(MouseX, MouseY);
 		}
-		if (!hideHUD && KatanaDualChoiceMode)
-			DrawKatanaDualChoiceOverlay();
-	}
-
-	void PB_KatanaDualChoiceClearPreview()
-	{
-		katDualFrL.Clear();
-		katDualTiL.Clear();
-		katDualSegL.Clear();
-		katDualFrR.Clear();
-		katDualTiR.Clear();
-		katDualSegR.Clear();
-		katDualCurL = katDualCurR = 0;
-		katDualRemL = katDualRemR = 0;
-		katDualLastGtL = katDualLastGtR = 0;
-	}
-
-	void PB_KatanaDualChoiceBuildPreviews(int variant)
-	{
-		PB_KatanaDualChoiceClearPreview();
-		if (variant == 0)
-		{
-			PDA_WeaponStrip_AppendFullWeapon('PB_ArgentSith', katDualFrL, katDualTiL, katDualSegL, true,
-				PB_PDA_WEAPON_PREVIEW_STRIP_MAX,
-				PB_PDA_WEAPON_PREVIEW_PICKUP_TICS, PB_PDA_WEAPON_PREVIEW_SPAWN_SEEK,
-				PB_PDA_WEAPON_PREVIEW_READY_MAX, PB_PDA_WEAPON_PREVIEW_READY_SEEK,
-				PB_PDA_WEAPON_PREVIEW_READY_TICS, PB_PDA_WEAPON_PREVIEW_BODY_TIC_CAP,
-				PB_PDA_WEAPON_PREVIEW_BODY_TIC_CAP, PB_PDA_WEAPON_PREVIEW_FLASH_TICS, PB_PDA_WEAPON_PREVIEW_FLASH_SEEK,
-				true, PB_PDA_WEAPON_PREVIEW_OVERLAY_TIC_CAP, PB_PDA_WEAPON_PREVIEW_OVERLAY_MAX_STEPS);
-			PDA_WeaponStrip_AppendFullWeapon('PB_BeamKatana', katDualFrR, katDualTiR, katDualSegR, true,
-				PB_PDA_WEAPON_PREVIEW_STRIP_MAX,
-				PB_PDA_WEAPON_PREVIEW_PICKUP_TICS, PB_PDA_WEAPON_PREVIEW_SPAWN_SEEK,
-				PB_PDA_WEAPON_PREVIEW_READY_MAX, PB_PDA_WEAPON_PREVIEW_READY_SEEK,
-				PB_PDA_WEAPON_PREVIEW_READY_TICS, PB_PDA_WEAPON_PREVIEW_BODY_TIC_CAP,
-				PB_PDA_WEAPON_PREVIEW_BODY_TIC_CAP, PB_PDA_WEAPON_PREVIEW_FLASH_TICS, PB_PDA_WEAPON_PREVIEW_FLASH_SEEK,
-				true, PB_PDA_WEAPON_PREVIEW_OVERLAY_TIC_CAP, PB_PDA_WEAPON_PREVIEW_OVERLAY_MAX_STEPS);
-		}
-		else
-		{
-			PDA_WeaponStrip_AppendFullWeapon('PB_BeamKatana', katDualFrL, katDualTiL, katDualSegL, true,
-				PB_PDA_WEAPON_PREVIEW_STRIP_MAX,
-				PB_PDA_WEAPON_PREVIEW_PICKUP_TICS, PB_PDA_WEAPON_PREVIEW_SPAWN_SEEK,
-				PB_PDA_WEAPON_PREVIEW_READY_MAX, PB_PDA_WEAPON_PREVIEW_READY_SEEK,
-				PB_PDA_WEAPON_PREVIEW_READY_TICS, PB_PDA_WEAPON_PREVIEW_BODY_TIC_CAP,
-				PB_PDA_WEAPON_PREVIEW_BODY_TIC_CAP, PB_PDA_WEAPON_PREVIEW_FLASH_TICS, PB_PDA_WEAPON_PREVIEW_FLASH_SEEK,
-				true, PB_PDA_WEAPON_PREVIEW_OVERLAY_TIC_CAP, PB_PDA_WEAPON_PREVIEW_OVERLAY_MAX_STEPS);
-			PDA_WeaponStrip_AppendFullWeapon('PB_ArgentSith', katDualFrR, katDualTiR, katDualSegR, true,
-				PB_PDA_WEAPON_PREVIEW_STRIP_MAX,
-				PB_PDA_WEAPON_PREVIEW_PICKUP_TICS, PB_PDA_WEAPON_PREVIEW_SPAWN_SEEK,
-				PB_PDA_WEAPON_PREVIEW_READY_MAX, PB_PDA_WEAPON_PREVIEW_READY_SEEK,
-				PB_PDA_WEAPON_PREVIEW_READY_TICS, PB_PDA_WEAPON_PREVIEW_BODY_TIC_CAP,
-				PB_PDA_WEAPON_PREVIEW_BODY_TIC_CAP, PB_PDA_WEAPON_PREVIEW_FLASH_TICS, PB_PDA_WEAPON_PREVIEW_FLASH_SEEK,
-				true, PB_PDA_WEAPON_PREVIEW_OVERLAY_TIC_CAP, PB_PDA_WEAPON_PREVIEW_OVERLAY_MAX_STEPS);
-		}
-	}
-
-	void PB_KatanaDualChoiceResetPreviewAnims()
-	{
-		int g = gametic;
-		if (katDualFrL.Size() > 0 && katDualTiL.Size() == katDualFrL.Size())
-		{
-			katDualCurL = 0;
-			katDualRemL = max(1, katDualTiL[0]);
-			katDualLastGtL = g;
-		}
-		else
-		{
-			katDualCurL = 0;
-			katDualRemL = 1;
-			katDualLastGtL = g;
-		}
-		if (katDualFrR.Size() > 0 && katDualTiR.Size() == katDualFrR.Size())
-		{
-			katDualCurR = 0;
-			katDualRemR = max(1, katDualTiR[0]);
-			katDualLastGtR = g;
-		}
-		else
-		{
-			katDualCurR = 0;
-			katDualRemR = 1;
-			katDualLastGtR = g;
-		}
-	}
-
-	void PB_KatanaDualAdvancePreviewAnims()
-	{
-		if (!KatanaDualChoiceMode)
-			return;
-		while (katDualFrL.Size() > 0 && katDualTiL.Size() == katDualFrL.Size()
-			&& gametic >= katDualLastGtL + katDualRemL)
-		{
-			katDualLastGtL += katDualRemL;
-			katDualCurL++;
-			if (katDualCurL >= katDualFrL.Size())
-				katDualCurL = 0;
-			katDualRemL = max(1, katDualTiL[katDualCurL]);
-		}
-		while (katDualFrR.Size() > 0 && katDualTiR.Size() == katDualFrR.Size()
-			&& gametic >= katDualLastGtR + katDualRemR)
-		{
-			katDualLastGtR += katDualRemR;
-			katDualCurR++;
-			if (katDualCurR >= katDualFrR.Size())
-				katDualCurR = 0;
-			katDualRemR = max(1, katDualTiR[katDualCurR]);
-		}
-	}
-
-	ui void PB_KatanaDualChoiceGetTileLayout(out int lx, out int ly, out int lw, out int lh,
-		out int rx, out int ry, out int rw, out int rh) const
-	{
-		int sw = Screen.GetWidth();
-		int sh = Screen.GetHeight();
-		int pad = max(10, sh / 54);
-		int gap = max(10, pad / 2);
-		int top = max(28, sh / 22);
-		int bot = max(pad * 2 + SmallFont.GetHeight(), sh / 14);
-		int fullH = sh - top - bot;
-		if (fullH < 120)
-			fullH = max(120, sh / 2);
-		int fullW = (sw - pad * 2 - gap) / 2;
-		if (fullW < 80)
-			fullW = max(80, sw / 2 - gap);
-		lh = max(96, int(double(fullH) * PB_KATANA_DUAL_TILE_FRAC));
-		lw = max(72, int(double(fullW) * PB_KATANA_DUAL_TILE_FRAC));
-		rw = lw;
-		rh = lh;
-		int pairW = lw + gap + rw;
-		lx = (sw - pairW) / 2;
-		rx = lx + lw + gap;
-		int availH = sh - top - bot;
-		int y0 = top + max(0, (availH - lh) / 2);
-		ly = y0;
-		ry = y0;
-	}
-
-	ui void DrawKatanaDualWeaponInTileArea(int x, int y, int w, int h, TextureID iconTex,
-		bool hovered, double alpha, double iconScaleMul = 1.0) const
-	{
-		int pad = max(2, h / 16);
-		int iconTop = y + pad;
-		int iconBottom = y + h - pad;
-		if (iconBottom <= iconTop + 2)
-			return;
-		double slotH = double(iconBottom - iconTop);
-		slotH = min(slotH, h * 0.92);
-		double cx = double(x) + double(w) * 0.5;
-		double cy = double(iconTop) + slotH * 0.5;
-		if (!iconTex.IsValid())
-		{
-			Screen.DrawText(BigFont, Font.CR_OLIVE, int(cx - BigFont.StringWidth("?") / 2),
-				int(cy - BigFont.GetHeight() / 2), "?",
-				DTA_Alpha, alpha,
-				DTA_ScaleX, iconScaleMul, DTA_ScaleY, iconScaleMul);
-			return;
-		}
-		Vector2 texSize = TexMan.GetScaledSize(iconTex);
-		if (texSize.X < 1 || texSize.Y < 1)
-		{
-			Screen.DrawText(BigFont, Font.CR_OLIVE, int(cx - BigFont.StringWidth("?") / 2),
-				int(cy - BigFont.GetHeight() / 2), "?",
-				DTA_Alpha, alpha,
-				DTA_ScaleX, iconScaleMul, DTA_ScaleY, iconScaleMul);
-			return;
-		}
-		double maxH = slotH * 0.92;
-		double maxW = double(w - pad * 2);
-		double scale = min(maxW / texSize.X, maxH / texSize.Y);
-		double dw = texSize.X * scale * iconScaleMul;
-		double dh = texSize.Y * scale * iconScaleMul;
-		if (hovered)
-		{
-			dw *= 1.04;
-			dh *= 1.04;
-		}
-		Screen.DrawTexture(iconTex, false, cx, cy,
-			DTA_DestWidthF, dw, DTA_DestHeightF, dh,
-			DTA_KeepRatio, true,
-			DTA_Alpha, alpha,
-			DTA_CenterOffset, true);
-	}
-
-	ui void DrawKatanaDualChoiceOverlay()
-	{
-		if (!KatanaDualChoiceMode)
-			return;
-		int sw = Screen.GetWidth();
-		int sh = Screen.GetHeight();
-		Screen.Dim("black", 0.58, 0, 0, sw, sh);
-		int lx, ly, lw, lh, rx, ry, rw, rh;
-		PB_KatanaDualChoiceGetTileLayout(lx, ly, lw, lh, rx, ry, rw, rh);
-		bool hoverL = MouseX >= lx && MouseX < lx + lw && MouseY >= ly && MouseY < ly + lh;
-		bool hoverR = MouseX >= rx && MouseX < rx + rw && MouseY >= ry && MouseY < ry + rh;
-		int refWpx = max(BigFont.StringWidth("Sith Lord"), BigFont.StringWidth("Jedi Master"));
-		int bh0 = max(1, BigFont.GetHeight());
-		double lblScCap = double(lh) * PB_KATANA_DUAL_LABEL_MAX_FRAC_OF_TILE_H / double(bh0);
-		double hiSc = min(3.75, max(1.05, lblScCap));
-		double lblScL = clamp(double(lw - 12) / double(max(1, refWpx)), 1.05, hiSc);
-		double lblScR = clamp(double(rw - 12) / double(max(1, refWpx)), 1.05, hiSc);
-		bool sithLeft = (KatanaDualVariant == 0);
-		int leftCol = sithLeft ? Font.CR_RED : Font.CR_LIGHTBLUE;
-		int rightCol = sithLeft ? Font.CR_LIGHTBLUE : Font.CR_RED;
-		int labelBarH = int(ceil(BigFont.GetHeight() * max(lblScL, lblScR))) + max(6, lh / 20);
-		labelBarH = min(labelBarH, max(10, int(double(lh) * (PB_KATANA_DUAL_LABEL_MAX_FRAC_OF_TILE_H + 0.04))));
-		DrawBlockyTile(lx, ly, lw, lh, hoverL, false, 1.0);
-		DrawBlockyTile(rx, ry, rw, rh, hoverR, false, 1.0);
-		{
-			string lt = sithLeft ? "Sith Lord" : "Jedi Master";
-			string ltFull = lt;
-			int maxW = lw - 10;
-			while (lt.length() > 0 && int(BigFont.StringWidth(lt) * lblScL) > maxW)
-				lt = lt.Mid(0, lt.length() - 1);
-			if (lt.length() < ltFull.length() && lt.length() >= 2)
-			{
-				lt.DeleteLastCharacter();
-				lt = lt .. "..";
-			}
-			double lcx = lx + (lw - BigFont.StringWidth(lt) * lblScL) / 2.0;
-			double lcy = ly + (labelBarH - BigFont.GetHeight() * lblScL) / 2.0;
-			int lc = hoverL ? Font.CR_OLIVE : leftCol;
-			Screen.DrawText(BigFont, lc, int(lcx), int(lcy), lt,
-				DTA_ScaleX, lblScL, DTA_ScaleY, lblScL);
-		}
-		{
-			string rt = sithLeft ? "Jedi Master" : "Sith Lord";
-			string rtFull = rt;
-			int maxWr = rw - 10;
-			while (rt.length() > 0 && int(BigFont.StringWidth(rt) * lblScR) > maxWr)
-				rt = rt.Mid(0, rt.length() - 1);
-			if (rt.length() < rtFull.length() && rt.length() >= 2)
-			{
-				rt.DeleteLastCharacter();
-				rt = rt .. "..";
-			}
-			double rcx = rx + (rw - BigFont.StringWidth(rt) * lblScR) / 2.0;
-			double rcy = ry + (labelBarH - BigFont.GetHeight() * lblScR) / 2.0;
-			int rc = hoverR ? Font.CR_OLIVE : rightCol;
-			Screen.DrawText(BigFont, rc, int(rcx), int(rcy), rt,
-				DTA_ScaleX, lblScR, DTA_ScaleY, lblScR);
-		}
-		TextureID texL;
-		TextureID texR;
-		if (katDualFrL.Size() > 0 && katDualCurL >= 0 && katDualCurL < katDualFrL.Size())
-			texL = katDualFrL[katDualCurL];
-		if (katDualFrR.Size() > 0 && katDualCurR >= 0 && katDualCurR < katDualFrR.Size())
-			texR = katDualFrR[katDualCurR];
-		int bodyY = ly + labelBarH;
-		int bodyH = max(8, lh - labelBarH);
-		DrawKatanaDualWeaponInTileArea(lx, bodyY, lw, bodyH, texL, hoverL, 1.0, 1.0);
-		bodyY = ry + labelBarH;
-		bodyH = max(8, rh - labelBarH);
-		DrawKatanaDualWeaponInTileArea(rx, bodyY, rw, bodyH, texR, hoverR, 1.0, 1.0);
-		string hint = "Click a tile to choose your path.";
-		double hintSc = clamp(sh / 480.0, 1.0, 1.85);
-		int hw = int(SmallFont.StringWidth(hint) * hintSc);
-		int hx = (sw - hw) / 2;
-		int hy = sh - max(28, sh / 18);
-		Screen.DrawText(SmallFont, Font.CR_GOLD, hx, hy, hint,
-			DTA_ScaleX, hintSc, DTA_ScaleY, hintSc);
-		PB_DrawCtrollCursor(MouseX, MouseY);
-	}
-
-	void PB_KatanaDualChoiceClose()
-	{
-		PB_KatanaDualChoiceClearPreview();
-		KatanaDualChoiceMode = 0;
-		KatanaDualVariant = 0;
-		if (KatanaDualFrozenPlr >= 0 && KatanaDualFrozenPlr < MAXPLAYERS && playeringame[KatanaDualFrozenPlr])
-			players[KatanaDualFrozenPlr].timefreezer &= ~(1 << KatanaDualFrozenPlr);
-		KatanaDualFrozenPlr = -1;
-		SetPlayerProperty(1, 0, 4);
-		Level.SetFrozen(false);
-		MouseX = 1;
-		MouseY = 1;
-		MousePositionSet = false;
-		MouseClicked = false;
-		MouseHeldDown = false;
-		HeldDownTics = 0;
-	}
-
-	void PB_KatanaDualChoiceApplyPick(bool sith, int plrnum)
-	{
-		if (plrnum < 0 || plrnum >= MAXPLAYERS || !playeringame[plrnum])
-			return;
-		let mo = players[plrnum].mo;
-		if (!mo)
-		{
-			PB_KatanaDualChoiceClose();
-			return;
-		}
-		mo.TakeInventory("PB_KatanaChoicePickSith", 0x7fffffff);
-		mo.TakeInventory("PB_KatanaChoicePickJedi", 0x7fffffff);
-		if (sith)
-			mo.GiveInventory("PB_KatanaChoicePickSith", 1);
-		else
-			mo.GiveInventory("PB_KatanaChoicePickJedi", 1);
-		PB_KatanaDualChoiceClose();
 	}
 
 	ui bool InitializeUiObjects()
@@ -7984,7 +7454,7 @@ class PB_EventHandler : EventHandler
 	{
 		if (gamestate == GS_TITLELEVEL || gametic < PB_PDA_UI_INIT_MIN_GAMETIC) return false;
 		if (!e) return false;
-		if (!PDAMode && !KatanaDualChoiceMode) return false;
+		if (!PDAMode) return false;
 		int mouseinput = 0;
 		bool relevant = false;
 		if (e.Type == InputEvent.Type_Mouse)

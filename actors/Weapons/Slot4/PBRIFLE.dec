@@ -150,9 +150,7 @@ Actor RifleUpgrade: PB_UpgradeItem
 	States
 	{
 	Spawn:
-		VHFL A 0 NODELAY
-		HIFL A 10 A_PBVPFramework("VHFL")
-		"####" "#" 0 A_PbvpInterpolate()
+		HIFL A 10
 	Loop
 	
     Pickup:

@@ -17,7 +17,7 @@ ACTOR EquippedObject : Inventory
 	Inventory.MaxAmount 1
 }
 
-// MP12 / AssaultRifle / BlackDMR inventory tokens.
+// Shared PBWP IN inventory tokens (remaining fold weapons).
 ACTOR ChangeFire_Type : Inventory
 {
 	Inventory.MaxAmount 1
