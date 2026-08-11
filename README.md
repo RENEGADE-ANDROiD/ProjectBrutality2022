@@ -158,26 +158,12 @@ Modified for PB2022; loads after it.
 **Slot 9- Super-weapons & late energy**
 
 - **Demon-Tech Rifle**- demon-energy rifle with charged energy behavior.
-- **Harvester of Souls**- soul-energy rifle.
- - **Primary**- depends on Weapon Special mode (below).
- - **Alt-Fire**- subtle zoom.
- - **Weapon Special**- mode wheel:
-   - **Soul Bolt**- standard soul bolt (default).
-   - **Storm**- bolt plus Overlord storm strike.
-   - **Soul Possess**- possession ghost.
-   - **Doom Seeker**- homing Unmaker-style seeker.
+- **Harvester of Souls**- soul-energy rifle. **Primary**- depends on Weapon Special mode (below). **Alt-Fire**- subtle zoom. **Weapon Special**- mode wheel: **Soul Bolt**- standard soul bolt (default). **Storm**- bolt plus Overlord storm strike. **Soul Possess**- possession ghost. **Doom Seeker**- homing Unmaker-style seeker.
 - **Unmaker**- demonic super-weapon for high-end energy damage.
 - **BFG9000 MK IV**- BFG-class room clearer.
 - **BFG 11K Prototype / BFG Beam**- beam-style BFG super-weapon entry.
 - **Black Hole Generator**- singularity weapon for heavy crowd control.
-- **Stormcast**- lightning cast with wizard's hands; chords replace the old weapon-special wheel.
- - **Primary**- staff lightning / melee (needs charge; **Berserk** upgrades the strikes).
- - **Alt-Fire (hold)**- build charge; **release** to cast a bolt scaled to charge.
- - **Primary while holding Alt-Fire**- orb attacks (stronger orbs at higher charge).
- - **Use Equipment** while charging- **stunwall** (bigger at higher charge).
- - **Weapon Special** (hold) while charging- **Arc of Death** at higher tiers.
- - **Reload** (tap) while charging- lightning warper.
- - **Alt-Fire in the air**- hover flight!
+- **Stormcast**- lightning cast with wizard's hands; chords replace the old weapon-special wheel. **Primary**- staff lightning / melee (needs charge; **Berserk** upgrades the strikes). **Alt-Fire (hold)**- build charge; **release** to cast a bolt scaled to charge. **Primary while holding Alt-Fire**- orb attacks (stronger orbs at higher charge). **Use Equipment** while charging- **stunwall** (bigger at higher charge). **Weapon Special** (hold) while charging- **Arc of Death** at higher tiers. **Reload** (tap) while charging- lightning warper. **Alt-Fire in the air**- hover flight!
 
 ### Equipment
 
