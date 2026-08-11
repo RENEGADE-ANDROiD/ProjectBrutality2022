@@ -38,8 +38,6 @@ Modified for PB2022; loads after it.
 
 ## What you get with PB2022
 
-What you get with PB2022
-
 - Cinematic kills-in first and third person
 - Explosive Movement (Shotgun/Rocket Jump and Plasma Wall-Climb)
 - First-person flourishes 
