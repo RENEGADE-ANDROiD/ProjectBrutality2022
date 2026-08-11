@@ -41,11 +41,7 @@ class PB_Railgun : PB_WeaponBase
 	{
 		
 		Steady:
-			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 SetPlayerProperty(0,0,0);
-			TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-			Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Deselect:
 			TNT1 A 0 {
@@ -435,8 +431,14 @@ class PB_Railgun : PB_WeaponBase
 
 		Railgun_DeployHologram:
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 A_PlaySound("misc/p_pkup", CHAN_WEAPON);
-			TNT1 A 0 A_SpawnItemEx("PBCF_CF_HoloDecoyPlacer", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION);
+			TNT1 A 0
+			{
+				if (!PB_HoloDeploy.TryBegin(self))
+					return ResolveState("Ready3");
+				A_PlaySound("misc/p_pkup", CHAN_WEAPON);
+				A_SpawnItemEx("PBCF_CF_HoloDecoyPlacer", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION);
+				return ResolveState(null);
+			}
 			Goto Ready3;
 
 		Railgun_Cooldown:
@@ -1331,9 +1333,7 @@ class PB_Railgun : PB_WeaponBase
 //////////////////////////////////////////Unloading
 
 		Spawn:
-			"VRCG" A 0 NoDelay;
-			"SRCG" A 10 A_PbvpFramework("VRCG");
-			"####" "#" 0 A_PbvpInterpolate();
+			"SRCG" A 10;
 			LOOP;
 
 
@@ -1348,7 +1348,7 @@ class PB_Railgun : PB_WeaponBase
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R082");}
 				if (CountInv("RailgunLaserMode") == 1 && CountInv("RailgunAmmo") == 0) { A_SetWeaponSprite("R083");}
 		}
-		Goto Ready3;
+		Stop;
 		
 	FlashAirKicking:
 		TNT1 A 0 A_TakeInventory("RailgunInfrared", 1);
@@ -1360,7 +1360,7 @@ class PB_Railgun : PB_WeaponBase
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R082");}
 				if (CountInv("RailgunLaserMode") == 1 && CountInv("RailgunAmmo") == 0) { A_SetWeaponSprite("R083");}
 		}
-		Goto Ready3;
+		Stop;
 		
 	FlashSlideKicking:
 		TNT1 A 0 A_TakeInventory("RailgunInfrared", 1);
@@ -1382,7 +1382,7 @@ class PB_Railgun : PB_WeaponBase
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R087");}
 				if (CountInv("RailgunLaserMode") == 1 && CountInv("RailgunAmmo") == 0) { A_SetWeaponSprite("R088");}
 		}
-		Goto Ready3;
+		Stop;
 		
 	FlashSlideKickingStop:
 		R084 PQRSTUV 1 {
@@ -1390,7 +1390,7 @@ class PB_Railgun : PB_WeaponBase
 				if (CountInv("RailgunLaserMode") == 1) { A_SetWeaponSprite("R087");}
 				if (CountInv("RailgunLaserMode") == 1 && CountInv("RailgunAmmo") == 0) { A_SetWeaponSprite("R088");}
 		}
-		Goto Ready3;
+		Stop;
 
 	FlashPunching:
 		TNT1 A 0 A_TakeInventory("RailgunInfrared", 1);
@@ -1413,7 +1413,7 @@ class PB_Railgun : PB_WeaponBase
 				if (CountInv("RailgunLaserMode") == 1 && CountInv("RailgunAmmo") == 0) { A_SetFlashWeaponSprite("R094");}
 		}
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 
 		PDA_Preview_RailReady:
 			"R006" A 1 BRIGHT A_WeaponReady(WRF_NOFIRE);

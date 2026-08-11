@@ -25,8 +25,7 @@ ACTOR MagnumSniperRifle : PB_WeaponBase
 	States
 	{
 	Steady:
-		TNT1 A 1
-		Goto Ready
+		Goto PB_FinisherCleanup
 
 	SelectReady:
 	Ready:
@@ -399,16 +398,16 @@ ACTOR MagnumSniperRifle : PB_WeaponBase
         SNPK ABCDE 1
 		SNPK E 7
 		SNPK EDCBA 1
-		Goto Ready3
+		Stop
    FlashAirKicking:
         SNPK ABCDE 1
 		SNPK E 9
 		SNPK EDCBA 1
-		Goto Ready3
+		Stop
 	FlashSlideKicking:
 	FlashSlideKickingStop:
 	    SNPK BBCCDDEEEEEEEEEEEEEEEEEEEEDCBA 1
-		Goto Ready3
+		Stop
 
 	Unload:
 		SNPF A 1 A_DoPBWeaponAction

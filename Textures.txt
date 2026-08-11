@@ -676,13 +676,13 @@ Graphic "EQUPCO", 37, 37
 remap H4F6G0 H4F6G0HD
 
 #include "lumps/includes/textures/FX.inc"
+#include "lumps/includes/textures/FlakCannonIronblast.inc"
 #include "lumps/includes/textures/DamNums.inc"
 #include "lumps/includes/textures/BloodyBarrels.inc"
 #include "lumps/includes/textures/Plasma.inc"
 #include "lumps/includes/textures/Retical.inc"
 #include "lumps/includes/textures/SGLDrums.inc"
 #include "lumps/includes/textures/ExecutionIndicator.inc"
-#include "lumps/includes/textures/PBVP.inc"
 #include "lumps/includes/textures/PBWP_Fold.inc"
 
 // Portal Blasters dual select composites

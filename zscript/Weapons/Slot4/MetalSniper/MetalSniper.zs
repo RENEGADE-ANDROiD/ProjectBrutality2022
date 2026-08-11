@@ -45,11 +45,7 @@ class PB_MetalSniper : PB_WeaponBase
             stop;
 
         Steady:
-            TNT1 A 1;
-            TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-            TNT1 A 0 SetPlayerProperty(0, 0, 0);
-            TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-            goto Ready3;
+            Goto PB_FinisherCleanup;
 
         WeaponRespect:
             TNT1 A 0 A_GiveInventory("MetalSniperRespect", 1);
@@ -547,23 +543,23 @@ class PB_MetalSniper : PB_WeaponBase
         FlashPunching:
             MSNQ ABCDEFGHFEDCBA 1;
             TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-            Goto Ready3;
+            Stop;
 
         FlashKicking:
             MSNK ABCDEFGHGFEDCBA 1;
-            goto Ready3;
+            Stop;
 
         FlashAirKicking:
             MSNQ ABCDEFGHHGFEDCBA 1;
-            goto Ready3;
+            Stop;
 
         FlashSlideKicking:
             MSNK ABCDEFGHHHHHHHHHHHHHGFEDCBA 1;
-            goto Ready3;
+            Stop;
 
         FlashSlideKickingStop:
             MSNK GFEDCBA 1;
-            goto Ready3;
+            Stop;
     }
 
     action void MS_SetSniperMagMax(int capacity)

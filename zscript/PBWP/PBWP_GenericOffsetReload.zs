@@ -64,45 +64,46 @@ extend class PB_WeaponBase
 	States
 	{
 	PBWP_OffsetReloadAnim:
-		TNT1 A 0 PBWP_OffsetReloadBegin();
-		TNT1 A 2
+		// "####" keeps the prior PSP sprite while offsets apply (TNT1 was vanishing the gun).
+		"####" A 0 PBWP_OffsetReloadBegin();
+		"####" A 2
 		{
 			PBWP_OffsetReloadStep(0);
 			A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
 		}
-		TNT1 A 2
+		"####" A 2
 		{
 			PBWP_OffsetReloadStep(1);
 			A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
 		}
-		TNT1 A 2
+		"####" A 2
 		{
 			PBWP_OffsetReloadStep(2);
 			A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
 		}
-		TNT1 A 2
+		"####" A 2
 		{
 			PBWP_OffsetReloadStep(3);
 			A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
 		}
-		TNT1 A 0 A_PlaySound("weapons/rifle/magin", CHAN_WEAPON);
-		TNT1 A 10 A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
-		TNT1 A 2
+		"####" A 0 A_PlaySound("weapons/rifle/magin", CHAN_WEAPON);
+		"####" A 10 A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
+		"####" A 2
 		{
 			PBWP_OffsetReloadStep(4);
 			A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
 		}
-		TNT1 A 2
+		"####" A 2
 		{
 			PBWP_OffsetReloadStep(5);
 			A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
 		}
-		TNT1 A 2
+		"####" A 2
 		{
 			PBWP_OffsetReloadStep(6);
 			A_DoPBWeaponAction(WRF_NOFIRE | WRF_NOBOB | WRF_NOSECONDARY | WRF_NOSWITCH);
 		}
-		TNT1 A 0 { return PBWP_OffsetReloadFinish(); }
+		"####" A 0 { return PBWP_OffsetReloadFinish(); }
 		Stop;
 	}
 }

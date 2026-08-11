@@ -36,66 +36,66 @@ class ProSurv_Ballista : PB_WeaponBase
 				TNT1 A 0 A_JumpIfInventory("BallistaDemonicMode", 1, "FlashPunchingUpgraded");
 				"CBOW" "ABCDEEEEEEDCBA" 1;
 				TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-				Goto Ready3;
+				Stop;
 		FlashPunchingUpgraded:
 				"CBOW" "KLMNOOOOOONMLK" 1;
 				TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-				Goto Ready3;
+				Stop;
 		FlashPunchingUnloaded:
 				"CBOW" "FGHIJJJJJJIHGF" 1;
 				TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-				Goto Ready3;
+				Stop;
 		FlashKicking:
 				TNT1 A 0 A_JumpIfInventory("BallistaAmmo",1,1);
 				Goto FlashKickingUnloaded;
 				TNT1 A 0 A_JumpIfInventory("BallistaDemonicMode", 1, "FlashKickingUpgraded");
 				"CRBW" "LMNOPPPPPPONML" 1;
-				Goto Ready3;
+				Stop;
 		FlashKickingUpgraded:
 				"CRBW" "VWXYZZZZZZYXWV" 1;
-				Goto Ready3;
+				Stop;
 		FlashKickingUnloaded:
 				"CRBW" "QRSTUUUUUUTSRQ" 1;
-				Goto Ready3;
+				Stop;
 		FlashAirKicking:
 				TNT1 A 0 A_JumpIfInventory("BallistaAmmo",1,1);
 				Goto FlashAirKickingUnloaded;
 				TNT1 A 0 A_JumpIfInventory("BallistaDemonicMode", 1, "FlashAirKickingUpgraded");
 				"CRBW" "LMNOPPPPPPONML" 1;
-				Goto Ready3;
+				Stop;
 		FlashAirKickingUpgraded:
 				"CRBW" "VWXYZZZZZZYXWV" 1;
-				Goto Ready3;
+				Stop;
 		FlashAirKickingUnloaded:
 				"CRBW" "QRSTUUUUUUTSRQ" 1;
-				Goto Ready3;
+				Stop;
 		FlashSlideKicking:
 				TNT1 A 0 A_JumpIfInventory("BallistaAmmo",1,1);
 				Goto FlashSlideKickingUnloaded;
 				TNT1 A 0 A_JumpIfInventory("BallistaDemonicMode", 1, "FlashSlideKickingUpgraded");
 				"CRBW" "LMNO" 1;
 				"CRBW" P 21;
-				Goto Ready3;
+				Stop;
 		FlashSlideKickingStop:
 				TNT1 A 0 A_JumpIfInventory("BallistaAmmo",1,1);
 				Goto FlashSlideKickingStopUnloaded;
 				TNT1 A 0 A_JumpIfInventory("BallistaDemonicMode", 1, "FlashSlideKickingStopUpgraded");
 				"CRBW" "PPPONML" 1;
-				Goto Ready3;
+				Stop;
 		FlashSlideKickingUpgraded:
 				"CRBW" "VWXY" 1;
 				"CRBW" Z 21;
-				Goto Ready3;
+				Stop;
 		FlashSlideKickingStopUpgraded:
 				"CRBW" "ZZZYXWV" 1;
-				Goto Ready3;
+				Stop;
 		FlashSlideKickingUnloaded:
 				"CRBW" "QRST" 1;
 				"CRBW" U 21;
-				Goto Ready3;
+				Stop;
 		FlashSlideKickingStopUnloaded:
 				"CRBW" "UUUTSRQ" 1;
-				Goto Ready3;
+				Stop;
 		Spawn:
 				"CBOW" S -1;
 				Stop;
@@ -185,26 +185,13 @@ class ProSurv_Ballista : PB_WeaponBase
 				TNT1 A 0 A_SetInventory("PB_LockScreenTilt",0);
 				TNT1 A 0;
 				Goto ReadyToFire;
+		// Keep-all: path prompt retained for label compatibility; no sibling strip/select.
 		ChooseUpgradePath:
-				TNT1 A 0 A_PrintBold("\cfChoose your path:\n\caFIRE = PROSURV BALLISTA\n\ciALTFIRE = RAILBALLISTA");
-				TNT1 A 1;
-				TNT1 A 1;
 		ChooseUpgradePathDebounce:
-				TNT1 A 2;
 		ChooseUpgradePathLoop:
-				TNT1 A 0 A_JumpIf(JustPressed(BT_ATTACK), "KeepProSurvBallistaPath");
-				TNT1 A 0 A_JumpIf(JustPressed(BT_ALTATTACK), "KeepBallistaPath");
-				TNT1 A 1;
-				TNT1 A 1;
 		KeepProSurvBallistaPath:
-				TNT1 A 0 A_TakeInventory("ProSurv_Ballista", 1);
-				TNT1 A 0 A_PrintBold("\caPath selected: PROSURV BALLISTA");
-				Goto ReadyToFire;
 		KeepBallistaPath:
-				TNT1 A 0 A_TakeInventory("ProSurv_Ballista", 1);
-				TNT1 A 0 A_PrintBold("\ciPath selected: RAILBALLISTA");
-				TNT1 A 0 A_SelectWeapon("ProSurv_Ballista");
-				Stop;
+				Goto ReadyToFire;
 		ReadyToFire:
 				TNT1 A 0 PB_CheckBarrelIdle1();
 				TNT1 A 0 A_JumpIfInventory("SwapToDemonicMode",1,"WeaponSpecial");
@@ -556,11 +543,8 @@ class ProSurv_Ballista : PB_WeaponBase
 				}
 				Goto ReadyEmpty;
 		Steady:
-				TNT1 A 1;
-				TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
-				TNT1 A 0 SetPlayerProperty(0,0,0);
-				TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-				Goto Ready3;
+			Goto PB_FinisherCleanup;
+
 		Unload:
 				TNT1 A 0 A_TakeInventory("Unloading", 1);
 	}

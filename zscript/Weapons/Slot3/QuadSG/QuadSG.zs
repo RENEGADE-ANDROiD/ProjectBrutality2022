@@ -89,12 +89,8 @@ class PB_QuadSG : PB_WeaponBase
 		Wait;
 		
 	Steady:
-		TNT1 A 1;
-		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 SetPlayerProperty(0,0,0);
-		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-		Goto Ready;
-	
+		Goto PB_FinisherCleanup;
+
 	Ready:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
 		TNT1 A 0 PB_RespectIfNeeded;
@@ -1508,48 +1504,48 @@ class PB_QuadSG : PB_WeaponBase
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("QuadAkimboMode", 1, "FlashKickingAkimbo");
 		"QSHK" CDEFGHIIHGFEDC 1;
-		Goto Ready3;
+		Stop;
 		
 	FlashKickingAkimbo:
 		"QAKK" CDEFGHIIHGFEDC 1;
-		Goto Ready3;
+		Stop;
 	
 	FlashAirKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("QuadAkimboMode", 1, "FlashAirKickingAkimbo");
 		"QSHK" ABCDEFGHIGFEDCBA 1;
-		Goto Ready3;
+		Stop;
 	
 	FlashAirKickingAkimbo:
 		"QAKK" CDEFGHIIIIHGFEDC 1;
-		Goto Ready3;
+		Stop;
 		
 	FlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("QuadAkimboMode", 1, "FlashSlideKickingAkimbo");
 		"QSHK" ABCDEFGHIGGGGGGGGIHFEDCBA 1;
 		"QSSG" A 2;
-		Goto Ready3;
+		Stop;
 		
 	FlashSlideKickingAkimbo:
 		"QAKK" CDEFGHIIIIIIIIIIIIIIIIHGFEDC 1;
-		Goto Ready3;
+		Stop;
 
 	FlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("QuadAkimboMode", 1, "FlashSlideKickingAkimboStop");
 		"QSHK" FEDCA 1;
 		"QSSG" A 2;
-		Goto Ready3;
+		Stop;
 
 	FlashSlideKickingAkimboStop:
 		"QAKK" IHGFEDC 1;
-		Goto Ready3;
+		Stop;
 		
 	DualWieldFlashPunching:
-		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
 		TNT1 A 15;
-		Goto Ready3;
+		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+		Stop;
 		
 	FlashPunching:
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
@@ -1557,7 +1553,7 @@ class PB_QuadSG : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("QuadAkimboMode", 1, "DualWieldFlashPunching");
 		"QSKH" ABCDEFGIFEDCBA 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 
 	PDA_Preview_Fire:
 		"QSF2" A 1 Bright;

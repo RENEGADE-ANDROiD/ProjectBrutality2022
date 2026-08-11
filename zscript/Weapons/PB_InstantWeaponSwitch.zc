@@ -1,27 +1,10 @@
-// Instant weapon select (Doom "IDFA-style" / CF_INSTANTWEAPSWITCH): skip raise/lower when changing weapons.
-// This mirrors the useful part of RandomWeapSwtch_v1 (rw_instSwitch) without the random switch timer, weapon lock, or keybinds.
-// PB 2022 uses pb_instantweaponswitch so cvars do not clash with the optional add-on (rw_*) if loaded together.
+// Instant weapon select (Doom CF_INSTANTWEAPSWITCH): always on.
+// Snaps A_Lower; respect / SelectAnimation still play but can be interrupted when
+// PendingWeapon is queued (Next/Prev) via OnDeselect + GetDownState (engine DropWeapon mirror).
+// Legacy cvar pb_instantweaponswitch is ignored (kept in CVARINFO for old configs).
 
 class PB_InstantWeaponSwitchHandler : StaticEventHandler
 {
-	Array<bool> m_LastCvarOn;
-	int m_CvarRefreshTic;
-	bool m_AnyOn;
-
-	override void WorldLoaded(WorldEvent e)
-	{
-		if (!e) return;
-		// New game / map: ensure per-player cvar edge tracking
-		if (m_LastCvarOn.Size() != MAXPLAYERS)
-		{
-			m_LastCvarOn.Resize(MAXPLAYERS);
-			for (int i = 0; i < MAXPLAYERS; i++)
-				m_LastCvarOn[i] = false;
-		}
-		m_CvarRefreshTic = 0;
-		m_AnyOn = false;
-	}
-
 	override void WorldTick()
 	{
 		if (gamestate != GS_LEVEL)
@@ -29,45 +12,20 @@ class PB_InstantWeaponSwitchHandler : StaticEventHandler
 		if (level.isFrozen())
 			return;
 
-		bool refresh = (m_CvarRefreshTic == 0 || level.time - m_CvarRefreshTic >= 8);
-		if (!refresh && !m_AnyOn)
-		{
-			// Fast path: nobody has the option on — skip MAXPLAYERS work until next refresh.
-			return;
-		}
-
-		if (refresh)
-			m_CvarRefreshTic = level.time;
-
-		m_AnyOn = false;
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
 			if (!playeringame[i])
 				continue;
 
 			let p = players[i];
-			if (p == null)
+			if (p == null || p.mo == null)
 				continue;
 
-			bool on = m_LastCvarOn[i];
-			if (refresh)
-			{
-				let cv = CVar.GetCVar("pb_instantweaponswitch", p);
-				on = (cv != null) && cv.GetBool();
-			}
+			p.cheats = p.cheats | CF_INSTANTWEAPSWITCH;
 
-			if (on)
-			{
-				p.cheats = p.cheats | CF_INSTANTWEAPSWITCH;
-				m_AnyOn = true;
-			}
-			else if (m_LastCvarOn[i])
-			{
-				// User turned the option off: clear once. Do not strip every frame while off or Shield Saw
-				// and other subsystems that briefly enable instant switch will break.
-				p.cheats = p.cheats & ~CF_INSTANTWEAPSWITCH;
-			}
-			m_LastCvarOn[i] = on;
+			let pbw = PB_WeaponBase(p.ReadyWeapon);
+			if (pbw)
+				pbw.PB_TryInterruptVisualSelectForPending(p);
 		}
 	}
 }

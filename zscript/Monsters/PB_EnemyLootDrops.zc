@@ -66,17 +66,13 @@ class PB_EnemyLoot play
 		Consider(picks, "Rifle", "", 1, maxTier, onlyCore);
 		Consider(picks, "PB_Carbine", "pb_NoCarbineWeapon", 1, maxTier, onlyCore);
 		Consider(picks, "LeverAction", "pb_NoLeverActionWeapon", 2, maxTier, onlyCore);
-		Consider(picks, "PB_NormalRifle", "pb_NoPB_NormalRifleWeapon", 2, maxTier, onlyCore);
 		Consider(picks, "PB_MetalSniper", "pb_NoMetalSniperWeapon", 2, maxTier, onlyCore);
-		Consider(picks, "PB_XM21", "pb_NoPB_XM21Weapon", 2, maxTier, onlyCore);
 		Consider(picks, "OldHMG", "pb_NoOldHMGWeapon", 2, maxTier, onlyCore);
 		Consider(picks, "BDPBattleRifle", "pb_NoBattleRifleWeapon", 3, maxTier, onlyCore);
 		Consider(picks, "PB_M41A", "pb_NoM41AWeapon", 3, maxTier, onlyCore);
 		Consider(picks, "PB_Fusil", "pb_NoPB_FusilWeapon", 3, maxTier, onlyCore);
-		Consider(picks, "AssaultR1", "pb_NoAssaultR1Weapon", 3, maxTier, onlyCore);
 		Consider(picks, "ProSurv_Ballista", "pb_NoProSurvBallistaWeapon", 4, maxTier, onlyCore);
 		Consider(picks, "PB_AntiTankRifle", "pb_NoPB_AntiTankRifleWeapon", 4, maxTier, onlyCore);
-		Consider(picks, "Black_DMR_RKX", "pb_NoBlackDMRWeapon", 4, maxTier, onlyCore);
 		Consider(picks, "MagnumSniperRifle", "pb_NoMagnumSniperRifleWeapon", 4, maxTier, onlyCore);
 		Consider(picks, "PBWP_Warbringer", "pb_NoPBWP_WarbringerWeapon", 4, maxTier, onlyCore);
 	}
@@ -87,9 +83,8 @@ class PB_EnemyLoot play
 		Consider(picks, "PB_SSG", "", 1, maxTier, onlyCore);
 		Consider(picks, "PB_SPAS12", "pb_NoPB_SPAS12Weapon", 2, maxTier, onlyCore);
 		Consider(picks, "PB_CSSG", "pb_NoCSSGWeapon", 2, maxTier, onlyCore);
-		Consider(picks, "X12Shotgun", "pb_NoX12ShotgunWeapon", 2, maxTier, onlyCore);
 		Consider(picks, "PB_QuadSG", "pb_NoQuadSSG", 3, maxTier, onlyCore);
-		Consider(picks, "HexaLionShotgun", "pb_NoHexaLionShotgunWeapon", 3, maxTier, onlyCore);
+		Consider(picks, "PB_HexaOverkill", "pb_NoPB_HexaOverkillWeapon", 3, maxTier, onlyCore);
 		Consider(picks, "Rainmaker", "pb_NoRainmakerWeapon", 3, maxTier, onlyCore);
 		Consider(picks, "M45Shotgun", "pb_NoM45ShotgunWeapon", 3, maxTier, onlyCore);
 		Consider(picks, "MarauderSSG", "", 4, maxTier, onlyCore);
@@ -127,8 +122,8 @@ class PB_EnemyLoot play
 	static void FillDTech(Array<string> picks, int maxTier, bool onlyCore)
 	{
 		Consider(picks, "Hell_rifle", "", 1, maxTier, onlyCore);
+		Consider(picks, "PB_Hellshot", "pb_NoPB_HellshotWeapon", 2, maxTier, onlyCore);
 		Consider(picks, "DTShotgun", "pb_NoDTShotgunWeapon", 2, maxTier, onlyCore);
-		Consider(picks, "PB_DemonExterminator", "pb_NoDemonExterminatorWeapon", 3, maxTier, onlyCore);
 	}
 
 	static void FillPulse(Array<string> picks, int maxTier, bool onlyCore)

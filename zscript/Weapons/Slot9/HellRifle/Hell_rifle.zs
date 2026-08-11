@@ -32,12 +32,8 @@ class Hell_rifle : PB_WeaponBase
 	states
 	{
 		Steady:
-			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 SetPlayerProperty(0,0,0);
-			TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-			Goto Ready;
-		
+			Goto PB_FinisherCleanup;
+
 		Ready:
 			TNT1 A 0 PB_RespectIfNeeded;
 		WeaponRespect:
@@ -501,63 +497,61 @@ class Hell_rifle : PB_WeaponBase
 		TNT1 A 1;
 		Stop;
 		Spawn:
-		"VRPU" A 0 NoDelay;
-		"HRPU" A 10 A_PbvpFramework("VRPU");
-		"####" "#" 0 A_PbvpInterpolate();
+		"HRPU" A 10;
 		LOOP;
 		FlashKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("FireModeAcidGun",1,"FlashKickingAcid");
 		"D7T0" "ABCDEFFFGHIJKLM" 1;
-		Goto Ready3;
+		Stop;
 		FlashKickingAcid:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"D7T1" "ABCDEFFFGHIJKLM" 1;
-		Goto Ready3;
+		Stop;
 		FlashAirKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("FireModeAcidGun",1,"FlashAirKickingAcid");
 		"D7T0" "ABCDEFFFFFGHIJKLM" 1;
-		Goto Ready3;
+		Stop;
 		FlashAirKickingAcid:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"D7T1" "ABCDEFFFFFGHIJKLM" 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("FireModeAcidGun",1,"FlashSlideKickingAcid");
 		"D7T2" "ABCDEFGHIJKLMNOPPPPPQRST" 1;
 		"D5T0" "AA" 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingAcid:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"D7T3" "ABCDEFGHIJKLMNOPPPPPQRST" 1;
 		"D5T1" "AA" 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("FireModeAcidGun",1,"FlashSlideKickingStopAcid");
 		"D7T2" "QRST" 1;
 		"D5T0" "AAA" 1;
-		Goto Ready3;
+		Stop;
 		FlashSlideKickingStopAcid:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"D7T3" "QRST" 1;
 		"D5T1" "AAA" 1;
-		Goto Ready3;
+		Stop;
 		FlashPunching:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("FireModeAcidGun",1,"FlashPunchingAcid");
 		"D7T4" "ABCDEFFFFFGHI" 1;
 		"D5T0" "AA" 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		FlashPunchingAcid:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		"D7T5" "ABCDEFFFFFGHI" 1;
 		"D5T1" "AA" 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 
 		PDA_Preview_HRReady:
 		"D5T0" A 3 A_WeaponReady(WRF_NOFIRE);

@@ -43,9 +43,8 @@ class PB_Autoshotgun : PB_WeaponBase
 	states
 	{
 		Steady:
-			TNT1 A 1;
-			Goto Ready;
-			
+			Goto PB_FinisherCleanup;
+
 		Ready:
 			"AU10" ABCDEFGH 0;
 			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
@@ -1932,9 +1931,7 @@ class PB_Autoshotgun : PB_WeaponBase
 			Goto LeftDrumRemoveBullets;
 			
 		Spawn:
-		"VUSC" A 0 NoDelay;
-		"AUSC" A 10 A_PbvpFramework("VUSC");
-		"####" A 0 A_PbvpInterpolate();
+		"AUSC" A 10;
 		LOOP;
 			
 		FlashPunching:
@@ -1944,16 +1941,16 @@ class PB_Autoshotgun : PB_WeaponBase
 			"AG51" ABCDEFG 1;
 			"AG51" GFEDCBA 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashPunchingDrumMag:
 			"AU51" ABCDEFG 1;
 			"AU51" GFEDCBA 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		DualFlashPunching:
 			TNT1 A 15;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashKicking:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 A 0 A_JumpIfInventory("DualWieldingAutoshotguns", 1, "DualFlashKicking");
@@ -1962,7 +1959,7 @@ class PB_Autoshotgun : PB_WeaponBase
 			"AG50" G 2;
 			"AG50" FEDCBA 1;
 			"AG10" G 1;
-			Goto Ready3;
+			Stop;
 		FlashKickingDrumMag:
 			"AU50" ABC 1;
 			"AG50" DEF 1;
@@ -1970,13 +1967,13 @@ class PB_Autoshotgun : PB_WeaponBase
 			"AG50" FED 1;
 			"AU50" CBA 1;
 			"AU10" H 1;
-			Goto Ready3;
+			Stop;
 		DualFlashKicking:
 			"AG63" ABCDEF 1;
 			"AG63" G 2;
 			"AG63" FEDCBA 1;
 			"AG60" N 1;
-			Goto Ready3;
+			Stop;
 		FlashAirKicking:
 			TNT1 A 0 A_ClearOverlays(10,11);
 			TNT1 A 0 A_JumpIfInventory("DualWieldingAutoshotguns", 1, "DualAirFlashKicking");
@@ -1985,7 +1982,7 @@ class PB_Autoshotgun : PB_WeaponBase
 			"AG50" G 3;
 			"AG50" FEDCBA 1;
 			"AG10" G 1;
-			Goto Ready3;
+			Stop;
 		FlashAirKickingDrumMag:
 			"AU50" ABC 1;
 			"AG50" DEF 1;
@@ -1993,13 +1990,13 @@ class PB_Autoshotgun : PB_WeaponBase
 			"AG50" FED 1;
 			"AU50" CBA 1;
 			"AU10" H 1;
-			Goto Ready3;
+			Stop;
 		DualAirFlashKicking:
 			"AG63" ABCDEF 1;
 			"AG63" G 3;
 			"AG63" FEDCBA 1;
 			"AG60" N 1;
-			Goto Ready3;
+			Stop;
 			
 		FlashSlideKicking:
 			TNT1 A 0 A_ClearOverlays(10,11);
@@ -2009,7 +2006,7 @@ class PB_Autoshotgun : PB_WeaponBase
 			"AG50" G 14;
 			"AG50" FEDCBA 1;
 			"AG10" G 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingDrumMag:
 			"AU50" ABC 1;
 			"AG50" DEF 1;
@@ -2017,13 +2014,13 @@ class PB_Autoshotgun : PB_WeaponBase
 			"AG50" FED 1;
 			"AU50" CBA 1;
 			"AU10" H 1;
-			Goto Ready3;
+			Stop;
 		DualFlashSlideKicking:
 			"AG63" ABCDEF 1;
 			"AG63" G 14;
 			"AG63" FEDCBA 1;
 			"AG60" N 1;
-			Goto Ready3;
+			Stop;
 			
 		FlashSlideKickingStop:
 			TNT1 A 0 A_ClearOverlays(10,11);
@@ -2031,16 +2028,16 @@ class PB_Autoshotgun : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(CountInv("AutoshotgunDrumMag") >=1 && CountInv("PBAutoShotgunHasUnloaded") != 1, "FlashSlideKickingStopDrumMag");
 			"AG50" FEDCBA 1;
 			"AG10" G 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingStopDrumMag:
 			"AG50" FED 1;
 			"AU50" CBA 1;
 			"AU10" H 1;
-			Goto Ready3;
+			Stop;
 		DualFlashSlideKickingStop:
 			"AG63" FEDCBA 1;
 			"AG60" N 1;
-			Goto Ready3;
+			Stop;
 
 		PDA_Preview_Fire:
 			"AG20" A 1 Bright;
@@ -2051,7 +2048,7 @@ class PB_Autoshotgun : PB_WeaponBase
 			"AG20" F 1;
 			"AG20" G 1;
 			"AG20" H 1;
-			Stop;
+			Goto Ready3;
 		PDA_Preview_AltFire:
 			"AG20" A 1 Bright;
 			"AG20" B 1 Bright;

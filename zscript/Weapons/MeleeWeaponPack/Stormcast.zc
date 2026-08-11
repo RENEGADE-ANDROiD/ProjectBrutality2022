@@ -31,23 +31,7 @@ class Stormcast : PB_WeaponBase
     States
     {
         Steady:
-            TNT1 A 1;
-            TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-            TNT1 A 0 SetPlayerProperty(0, 0, 0);
-            TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-            TNT1 A 0 A_SetRoll(0);
-            TNT1 A 1
-            {
-                A_TakeInventory("GoWeaponSpecialAbility", 1);
-                A_TakeInventory("Grabbing_A_Ledge", 1);
-                A_TakeInventory("UseEquipment", 1);
-                A_TakeInventory("ToggleEquipment", 1);
-                A_TakeInventory("Taunting", 1);
-                A_TakeInventory("Salute1", 1);
-                A_TakeInventory("Salute2", 1);
-                A_TakeInventory("Kicking", 1);
-            }
-            Goto Ready;
+            Goto PB_FinisherCleanup;
 
         WeaponSpecial:
             TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "IdleBarrel");
@@ -119,53 +103,29 @@ class Stormcast : PB_WeaponBase
             TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelKicking");
             TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelKicking");
             TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelKicking");
-            TNT1 A 0 A_ClearOverlays(10,11);
-            MEQI A 1 A_DoPBWeaponAction;
-            MEQI A 1;
-            MEQI A 1;
-            MEQI A 1;
-            MEQI A 7;
-            MEQI A 1;
-            MEQI A 1;
-            MEQI A 1;
-            MEQI A 1;
-            Goto Ready;
+            CONE AAAAAAAAAAAAAAA 1;
+            Stop;
 
         FlashAirKicking:
             TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelAirKicking");
             TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking");
             TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelAirKicking");
-            TNT1 A 0 A_ClearOverlays(10,11);
-            MEQI A 1 A_DoPBWeaponAction;
-            MEQI A 1;
-            MEQI A 1;
-            MEQI A 1;
-            MEQI A 7;
-            MEQI A 1;
-            MEQI A 1;
-            MEQI A 1;
-            MEQI A 1;
-            Goto Ready;
+            CONE AAAAAAAAAAAAAAAA 1;
+            Stop;
 
         FlashSlideKicking:
             TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKicking");
             TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking");
             TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking");
-            TNT1 A 0 A_ClearOverlays(10,11);
-            CONE A 1 A_DoPBWeaponAction;
-            CONE AB 1;
-            CONE B 35;
-            Goto Ready;
+            CONE AAAAAAAAAAAAAAAAAAAAAAAA 1;
+            Stop;
 
         FlashSlideKickingStop:
             TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop");
             TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop");
             TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop");
-            TNT1 A 0 A_ClearOverlays(10,11);
-            CONE A 1 A_DoPBWeaponAction;
-            CONE B 5;
-            CONE A 1;
-            Goto Ready;
+            CONE AAAAAAA 1;
+            Stop;
 
         // The main Fire state (left click) – lightning channel
         Fire:

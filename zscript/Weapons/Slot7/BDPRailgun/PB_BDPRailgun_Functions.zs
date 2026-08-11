@@ -49,9 +49,12 @@ extend class PB_BDPRailgun
 		A_ZoomFactor(invoker.scopeZoom ? highfactor : lowfactor);
 	}
 
-	action void A_SpawnHologram()
+	action bool A_SpawnHologram()
 	{
+		if (!PB_HoloDeploy.TryBegin(self))
+			return false;
 		A_SpawnItemEx("PBCF_CF_HoloDecoyPlacer", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		return true;
 	}
 
 	action void A_FireNuRailgun()

@@ -29,15 +29,7 @@ class PB_ArgentSith : PB_WeaponBase
 	States
    {
    Steady:
-	    TNT1 A 1;
-	    TNT1 A 0 {
-			PB_SetUsingMelee(false);
-			A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		}
-	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-	    TNT1 A 0 SetPlayerProperty(0, 0, 0);
-	    TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-	    goto Ready;
+      Goto PB_FinisherCleanup;
 
    Ready:
         TNT1 A 0;
@@ -55,10 +47,6 @@ class PB_ArgentSith : PB_WeaponBase
 		TNT1 A 0 PB_HandleCrosshair(90);
 		TNT1 A 0;
 	KatanaReadyToCut:
-		TNT1 A 0 {
-			if (CountInv("PB_BeamKatana") >= 1) return resolveState("ChooseUpgradePath");
-			return resolveState(null);
-		}
 		BVAT A 1 BRIGHT {
 			return A_DoPBWeaponAction();
 		}
@@ -67,42 +55,13 @@ class PB_ArgentSith : PB_WeaponBase
 		Loop;
 
 	ChooseUpgradePath:
-		TNT1 A 0 PB_KatanaUpgradeFreeze(true);
-		TNT1 A 0 { EventHandler.SendNetworkEvent("katanachoice_open0"); }
-		Goto WaitKatanaChoice;
 	WaitKatanaChoice:
-		TNT1 A 0 A_JumpIfInventory("PB_KatanaChoicePickSith", 1, "KatanaResolvePickSith");
-		TNT1 A 0 A_JumpIfInventory("PB_KatanaChoicePickJedi", 1, "KatanaResolvePickJedi");
-		TNT1 A 1 A_WeaponReady(WRF_NOFIRE | WRF_NOSECONDARY | WRF_NOSWITCH | WRF_NOBOB);
-		Loop;
 	KatanaResolvePickSith:
-		TNT1 A 0 A_TakeInventory("PB_KatanaChoicePickSith", 1);
-		TNT1 A 0 A_TakeInventory("PB_KatanaChoicePickJedi", 1);
-		Goto KeepArgentPath;
 	KatanaResolvePickJedi:
-		TNT1 A 0 A_TakeInventory("PB_KatanaChoicePickSith", 1);
-		TNT1 A 0 A_TakeInventory("PB_KatanaChoicePickJedi", 1);
-		Goto KeepBeamPath;
-
 	KeepArgentPath:
-		TNT1 A 0 A_TakeInventory("PB_BeamKatana", 1);
-		TNT1 A 0 A_PrintBold("\crSith Lord");
-		Goto ReleaseKatanaButtons;
-
 	KeepBeamPath:
-		TNT1 A 0 PB_KatanaUpgradeFreeze(false);
-		TNT1 A 0 PB_KatanaUpgradeClearAttackButtons();
-		TNT1 A 0 A_PrintBold("\cjJedi Master");
-		TNT1 A 0 A_SelectWeapon("PB_BeamKatana");
-		TNT1 A 0 A_TakeInventory("PB_ArgentSith", 1);
-		Stop;
-
 	ReleaseKatanaButtons:
-		TNT1 A 0 PB_KatanaUpgradeFreeze(false);
-		TNT1 A 0 PB_KatanaUpgradeClearAttackButtons();
-		TNT1 A 0 PB_KatanaUpgradeResolveReadyWhenReleased();
-		TNT1 A 1 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH | WRF_NOBOB);
-		Goto ReleaseKatanaButtons;
+		Goto Ready3;
 
 	Deselect:
         	TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel");
@@ -333,12 +292,7 @@ class PB_ArgentSith : PB_WeaponBase
 		TNT1 A 0 A_JumpIfCloser(128, "GoMeleeInstead");
 	GoMeleeInstead:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "QuickMeleeAbort");
-		TNT1 A 0 {
-			State st = PB_PickRandomQuickMelee();
-			if (st)
-				return st;
-			return ResolveState("Ready3");
-		}
+		TNT1 A 0 { return PB_PickRandomQuickMeleeOrReturn(); }
 
 	QuickMeleeAbort:
 		TNT1 A 0 {
@@ -488,7 +442,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVAT LMNOPQQQQQQ 1;
 		BVAT PONML 1;
 		BVAT A 1;
-		Goto KatanaReadyToCut;
+		Stop;
 
 	FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
@@ -502,7 +456,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVAT LMNOPQQQQQQQ 1;
 		BVAT PONML 1;
 		BVAT A 1;
-		Goto KatanaReadyToCut;
+		Stop;
 
 	FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
@@ -516,7 +470,7 @@ class PB_ArgentSith : PB_WeaponBase
 		BVAT LMNOPQQQQQQQQQ 1;
 		BVAT PONML 1;
 		BVAT A 1;
-		Goto KatanaReadyToCut;
+		Stop;
 
 	FlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelPunching");
@@ -527,11 +481,11 @@ class PB_ArgentSith : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1, 2);
 		TNT1 A 0 A_ClearOverlays(10,11);
 		BVAT A 1;
-		Goto KatanaReadyToCut;
+		Stop;
 
 	PDA_Preview_AS_Ready:
 		BVAT A 2 Bright A_WeaponReady(WRF_NOFIRE);
-		Stop;
+		Goto Ready3;
 	PDA_Preview_AS_Slash:
 		BVAT B 1 Bright A_WeaponReady(WRF_NOFIRE);
 		BVAT C 1 Bright A_WeaponReady(WRF_NOFIRE);
@@ -561,6 +515,6 @@ class PB_ArgentSith : PB_WeaponBase
 		TNT1 A 0 A_ClearOverlays(10, 11);
 		TNT1 A 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 	}
 }

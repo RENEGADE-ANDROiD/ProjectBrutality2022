@@ -92,11 +92,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 	states
 	{
 		Steady:
-		TNT1 A 1;
-		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-		TNT1 A 0 SetPlayerProperty(0, 0, 0);
-		TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-		Goto Ready3;
+			Goto PB_FinisherCleanup;
 
 		Ready:
 		Goto Ready3;
@@ -728,7 +724,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"PZCG" W 1;
 		"PZCG" A 1;
 		"PZCG" AAA 1;
-		Goto Ready3;
+		Stop;
 
 		FlashKickingDual:
 		"DPCS" E 1;
@@ -741,7 +737,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"DPCS" D 1;
 		"DPCS" E 1;
 		"DPCS" EEE 1;
-		Goto ReadyDual;
+		Stop;
 
 		FlashAirKicking:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelAirKicking");
@@ -758,7 +754,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"PZCG" W 1;
 		"PZCG" A 1;
 		"PZCG" AAAA 1;
-		Goto Ready3;
+		Stop;
 
 		FlashAirKickingDual:
 		"DPCS" E 1;
@@ -771,7 +767,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"DPCS" D 1;
 		"DPCS" E 1;
 		"DPCS" EEEE 1;
-		Goto ReadyDual;
+		Stop;
 
 		FlashSlideKicking:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKicking");
@@ -780,6 +776,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "FlashSlideKickingDual");
 		"PZCG" BC 2;
 		"PZCG" DDDDDDEEEFF 2;
+		Goto FlashSlideKickingStop;
 		FlashSlideKickingStop:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop");
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop");
@@ -787,7 +784,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "FlashSlideKickingStopDual");
 		"PZCG" FEDCB 1;
 		"PZCG" A 1;
-		Goto Ready3;
+		Stop;
 
 		FlashSlideKickingDual:
 		"DPCS" ABCDEEEEEEEEEEEEEEEEDCBA 1;
@@ -795,7 +792,7 @@ class PB_DarkMatterRifle : PB_WeaponBase
 
 		FlashSlideKickingStopDual:
 		"DPCS" EEEDCBA 1;
-		Goto ReadyDual;
+		Stop;
 
 		FlashPunching:
 		TNT1 A 0 A_JumpIfInventory("DualWieldingDarkMatter", 1, "FlashPunchingDual");
@@ -810,12 +807,12 @@ class PB_DarkMatterRifle : PB_WeaponBase
 		"PZCG" A 1;
 		"PZCG" AAA 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 
 		FlashPunchingDual:
 		TNT1 A 14;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto ReadyDual;
+		Stop;
 
 		PDA_Preview_DMRReady:
 		"PZC4" A 1 A_WeaponReady(WRF_NOFIRE);

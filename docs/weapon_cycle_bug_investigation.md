@@ -203,7 +203,6 @@ The following slot 9 weapons need their `Weapon.AmmoUse` / `Weapon.AmmoType` val
 - `PB_Unmaker` (`actors/Weapons/Slot9/Unmaker.dec`)
 - `PB_BFG9000` (`actors/Weapons/Slot8/BFGMKIV.dec` — note: folder says Slot8, Player.dec places it in slot 9)
 - `PB_BFGBeam` (same file?)
-- `PB_DemonExterminator` (`actors/Weapons/Slot9/DemonExterminator.dec`)
 - `PB_Flamethrower` (`actors/Weapons/Slot9/Flamethrower.dec`)
 - `Hell_rifle` (`actors/Weapons/Slot9/DemonTech.dec`)
 

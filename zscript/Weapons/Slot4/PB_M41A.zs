@@ -183,11 +183,7 @@ class PB_M41A : PB_WeaponBase
 			"PMAW" A -1;
 			Stop;
 		Steady:
-			TNT1 A 1;
-			TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-			TNT1 A 0 SetPlayerProperty(0, 0, 0);
-			TNT1 A 0 SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
-			Goto Ready3;
+			Goto PB_FinisherCleanup;
 
 		Select:
 			TNT1 A 0 {
@@ -857,14 +853,14 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			"PMAK" ABCDEFGHFEDCBA 1;
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		FlashPunchingDualM41A:
 			TNT1 A 0 M41A_ClearDualOverlays();
 			PMAK ABCDEFGHFEDCBA 1 {
 				M41A_SetSpriteIfDual("TNT1");
 			}
 			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 
 		FlashKicking:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelKicking");
@@ -873,13 +869,13 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashKickingDualM41A");
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			"PMAK" ABCDEFGHHFEDCBA 1;
-			Goto Ready3;
+			Stop;
 		FlashKickingDualM41A:
 			TNT1 A 0 M41A_ClearDualOverlays();
 			PMAK ABCDEFGHHFEDCBA 1 {
 				M41A_SetSpriteIfDual("PMDK");
 			}
-			Goto ReadyDualWield;
+			Stop;
 
 		FlashAirKicking:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelAirKicking");
@@ -888,13 +884,13 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashAirKickingDualM41A");
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			"PMAK" ABCDEFGHHHFEDCBA 1;
-			Goto Ready3;
+			Stop;
 		FlashAirKickingDualM41A:
 			TNT1 A 0 M41A_ClearDualOverlays();
 			PMAK ABCDEFGHHHFEDCBA 1 {
 				M41A_SetSpriteIfDual("PMDK");
 			}
-			Goto ReadyDualWield;
+			Stop;
 
 		FlashSlideKicking:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKicking");
@@ -903,13 +899,13 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingDualM41A");
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			"PMAK" ABCDEFGHHHHHHHHHHHHHGFEDCBA 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingDualM41A:
 			TNT1 A 0 M41A_ClearDualOverlays();
 			PMAK ABCDEFGHHHHHHHHHHHHHGFEDCBA 1 {
 				M41A_SetSpriteIfDual("PMDK");
 			}
-			Goto ReadyDualWield;
+			Stop;
 
 		FlashSlideKickingStop:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop");
@@ -918,12 +914,12 @@ class PB_M41A : PB_WeaponBase
 			TNT1 A 0 A_JumpIf(A_CheckAkimbo(), "FlashSlideKickingStopDualM41A");
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			"PMAK" GFEDCBA 1;
-			Goto Ready3;
+			Stop;
 		FlashSlideKickingStopDualM41A:
 			TNT1 A 0 M41A_ClearDualOverlays();
 			PMAK GFEDCBA 1 {
 				M41A_SetSpriteIfDual("PMDK");
 			}
-			Goto ReadyDualWield;
+			Stop;
 	}
 }

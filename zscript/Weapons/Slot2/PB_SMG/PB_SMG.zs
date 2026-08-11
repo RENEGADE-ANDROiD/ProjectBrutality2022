@@ -41,9 +41,8 @@ class PB_SMG : PB_WeaponBase
 	states
 	{
 		Steady:
-		TNT1 A 1;
-		Goto Ready;
-	
+			Goto PB_FinisherCleanup;
+
 		LaserOverlay:
 		TNT1 A 1 {
 			if (CountInv("LaserSightActivated") == 1 && CountInv("KeepLaserDeactivated") != 1) {
@@ -376,6 +375,7 @@ class PB_SMG : PB_WeaponBase
 			A_SetRoll(0);
 			A_TakeInventory("PB_LockScreenTilt",1);
 			A_ClearOverlays(10,11);
+			A_ClearOverlays(-16,-16);
 		}
 		TNT1 A 0 A_Takeinventory("Unloading",1);
 		TNT1 A 0 A_Takeinventory("Zoomed",1);
@@ -812,65 +812,63 @@ class PB_SMG : PB_WeaponBase
 		Stop;
 		
 		Spawn:
-		"VTFL" A 0 NoDelay;
-		"ATFL" A 10 A_PbvpFramework("VTFL");
-		"####" A 0 A_PbvpInterpolate();
+		"ATFL" A 10;
 		LOOP;
 		
 		FlashKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSMGs", 1, "FlashKickingDW");
-		"A1F7" ABCDEFGHIJKLMNO 1 A_DoPBWeaponAction;
-		Goto Ready3;
+		"A1F7" ABCDEFGHIJKLMNO 1;
+		Stop;
 		
 		FlashAirKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSMGs", 1, "FlashAirKickingDW");
-		"A1F7" ABCDEFGHIJKLMNOOO 1 A_DoPBWeaponAction;
-		Goto Ready3;
+		"A1F7" ABCDEFGHIJKLMNOOO 1;
+		Stop;
 		
 		FlashKickingDW:
-		"A2F3" ABCDEFGGGFEDCBA 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		Goto Ready3;
+		"A2F3" ABCDEFGGGFEDCBA 1;
+		Stop;
 		
 		FlashAirKickingDW:
-		"A2F3" ABCDEFGGGFEDCBAAA 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		Goto Ready3;
+		"A2F3" ABCDEFGGGFEDCBAAA 1;
+		Stop;
 		
 		
 		FlashPunching:
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSMGs", 1, "FlashPunchingDW");
 		"A1F7" ABCDEFGHIJKLMNO 1;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		FlashPunchingDW:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 15;
 		TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-		Goto Ready3;
+		Stop;
 		
 		FlashSlideKicking:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSMGs", 1, "FlashSlideKickingDW");
-		"A1F8" ABCDEFGHIJKLLMLKJIHGFEDCBA 1 A_DoPBWeaponAction;
-		"A1F1" E 1 A_DoPBWeaponAction;
-		Goto Ready3;
+		"A1F8" ABCDEFGHIJKLLMLKJIHGFEDCBA 1;
+		"A1F1" E 1;
+		Stop;
 		
 		FlashSlideKickingDW:
-		"A2F3" ABCDEFGGGGGGGGGGGGGFEDCBA 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		"A2F3" A 1 A_DoPBWeaponAction;
-		Goto Ready3;
+		"A2F3" ABCDEFGGGGGGGGGGGGGFEDCBA 1;
+		"A2F3" A 1;
+		Stop;
 		
 		FlashSlideKickingStop:
 		TNT1 A 0 A_ClearOverlays(10,11);
 		TNT1 A 0 A_JumpIfInventory("DualWieldingSMGs", 1, "FlashSlideKickingStopDW");
-		"A1F8" GFEDCBA 1 A_DoPBWeaponAction;
-		"A1F1" E 1 A_DoPBWeaponAction;
-		Goto Ready3;
+		"A1F8" GFEDCBA 1;
+		"A1F1" E 1;
+		Stop;
 		
 		FlashSlideKickingStopDW:
-		"A2F3" GFEDCBA 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		"A2F3" A 1 A_DoPBWeaponAction(WRF_ALLOWRELOAD|WRF_NOFIRE);
-		Goto Ready3;
+		"A2F3" GFEDCBA 1;
+		"A2F3" A 1;
+		Stop;
 	}
 }

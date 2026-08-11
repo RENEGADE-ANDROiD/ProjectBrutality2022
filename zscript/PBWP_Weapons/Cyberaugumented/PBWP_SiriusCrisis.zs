@@ -11,8 +11,9 @@ class PBWP_SiriusCrisis : PBWP_CA_WeaponBase
 		Weapon.SlotPriority 0.24;
 		Weapon.AmmoType1 "PB_Cell";
 		Weapon.AmmoGive1 45;
-		Weapon.AmmoUse1 5;
+		Weapon.AmmoUse1 0;
 		Weapon.Kickback 150;
+		+WEAPON.AMMO_OPTIONAL;
 		+WEAPON.BFG;
 		+WEAPON.NOAUTOFIRE;
 		+WEAPON.NOAUTOAIM;
@@ -30,7 +31,7 @@ class PBWP_SiriusCrisis : PBWP_CA_WeaponBase
 		A_SetBlend("Cyan", 0.5, 20, "Blue");
 		A_GunFlash();
 		A_StartSound("SiriusBFG/Fire", CHAN_WEAPON, CHANF_DEFAULT, 1.0, 0.5);
-		A_FireCustomMissile("PBWP_CA_SiriusBFGBall", 0, 0, -10, 0);
+		A_FireCustomMissile("PBWP_CA_SiriusBFGBall", 0, 0, 0, 0);
 		A_TakeInventory("PB_Cell", 45);
 		A_QuakeEx(4, 4, 4, 40, 0, 600, "none", QF_RELATIVE | QF_SCALEDOWN);
 		A_QuakeEx(2, 2, 2, 50, 0, 600, "none", QF_RELATIVE | QF_SCALEDOWN);
@@ -44,7 +45,7 @@ class PBWP_SiriusCrisis : PBWP_CA_WeaponBase
 		A_SetBlend("Cyan", 0.5, 10 + int(invoker.chargeMeter / 5), "Blue");
 		A_GunFlash();
 		if (invoker.chargeMeter > 0)
-			A_FireCustomMissile("PBWP_CA_SiriusLaser", 0, 0, -10, 0);
+			A_FireCustomMissile("PBWP_CA_SiriusLaser", 0, 0, 0, 0);
 		A_TakeInventory("PB_Cell", 5);
 		A_StartSound("Eradicator/Laser", CHAN_WEAPON, CHANF_DEFAULT, 1.0, 0.5,
 			1.253 - (invoker.chargeMeter / 23));
@@ -100,7 +101,7 @@ class PBWP_SiriusCrisis : PBWP_CA_WeaponBase
 		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 		TNT1 A 0 A_JumpIfInventory("PB_Cell", 5, 2);
-		Goto Ready3;
+		Goto DryFire;
 		TNT1 A 0 PBWP_CA_LockTilt();
 		SRB0 A 10 Bright
 		{
@@ -144,7 +145,7 @@ class PBWP_SiriusCrisis : PBWP_CA_WeaponBase
 		AltFire:
 		TNT1 A 0 PBWP_CA_FatalityGate();
 		TNT1 A 0 A_JumpIfInventory("PB_Cell", 45, 2);
-		Goto Ready3;
+		Goto DryFire;
 		TNT1 A 0 PBWP_CA_LockTilt();
 		SRB0 A 1 Bright
 		{
@@ -169,6 +170,12 @@ class PBWP_SiriusCrisis : PBWP_CA_WeaponBase
 		SRB0 MNO 3 Bright A_DoPBWeaponAction(WRF_NOPRIMARY | WRF_NOSECONDARY);
 		SRB0 AAAAABBBCCBB 1 Bright A_DoPBWeaponAction(WRF_NOPRIMARY | WRF_NOSECONDARY);
 		Goto Ready3;
+
+		Reload:
+		"####" "#" 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
+		"####" "#" 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
+		"####" "#" 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
+		"####" "#" 0 { return ResolveState("PBWP_OffsetReloadAnim"); }
 
 		Weaponspecial:
 		TNT1 A 0 A_TakeInventory("GoWeaponSpecialAbility", 1);

@@ -1,0 +1,50 @@
+// PB_PlasmaBeam support (magazine ammo + alt sphere).
+// Weapon logic: zscript/Weapons/Slot9/PlasmaBeam/PB_PlasmaBeam.zs
+
+ACTOR PlasmaBeamAmmo : Ammo
+{
+	Inventory.Amount 0
+	Inventory.MaxAmount 100
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 100
+	+INVENTORY.IGNORESKILL
+	Inventory.Icon "PLBMA0"
+}
+
+// Port of Reilsss PlasmaBeam_Sphere (BaronBall-like green orb).
+ACTOR PB_PlasmaBeam_Sphere
+{
+	Radius 8
+	Height 6
+	Speed 30
+	FastSpeed 35
+	Damage 30
+	DamageType GreenFire
+	Projectile
+	+RANDOMIZE
+	+FORCEXYBILLBOARD
+	-THRUGHOST
+	RenderStyle Add
+	Alpha 1.0
+	Scale 0.72
+	DeathSound "weapons/PlasmaBeam/Fire_Stop"
+	SeeSound ""
+	Decal "Scorch"
+	States
+	{
+	Spawn:
+		PLBO J 1 Bright A_SpawnItem("GreenFlareSmall", 0, 0)
+		PLBO K 1 Bright A_SpawnItem("GreenFlareSmall", 0, 0)
+		Loop
+	Death:
+		TNT1 AAA 0 A_SpawnItemEx("PlasmaParticleSpawner", 0, 0, 0, 6, 6, 6, 0, 128)
+		TNT1 A 0 A_Explode(random(5, 8), random(89, 99), 1)
+		PLBO ABCDEFGH 2 Bright A_SpawnItem("GreenFlareSmall", 0, 0)
+		Stop
+	XDeath:
+		TNT1 AAA 0 A_SpawnItemEx("PlasmaParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+		TNT1 A 0 A_Explode(random(5, 8), 85, 1)
+		PLBO ABCDEFGH 2 Bright A_SpawnItem("GreenFlareSmall", 0, 0)
+		Stop
+	}
+}

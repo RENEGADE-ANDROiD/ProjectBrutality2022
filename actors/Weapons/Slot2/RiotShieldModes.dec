@@ -30,9 +30,7 @@ Actor RiotShieldPickup : PB_UpgradeItem Replaces RiotShieldDrop
 	States
 	{
 	Spawn:
-		5L1D I 0 NoDelay
-		5L1D I 10 A_PbvpFramework("5L1D")
-		"####" I 0 A_PbvpInterpolate()
+		5L1D I 10
 		Loop
 	Pickup:
 		TNT1 A 0 A_GiveInventory("PB_RiotShieldModule", 1)

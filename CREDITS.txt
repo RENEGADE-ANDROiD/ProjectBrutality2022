@@ -52,6 +52,16 @@ Gameplay and content in this release
   **Yaelvolador**; `pulsecannon.txt` / `sprites/WEAPONS/pulsecannon`
   (`PULS`/`TROL`/`PUSS`/`RAMA` art). Distinct from **`PB_DarkMatterRifle`**.
   Pickup lump renamed **`PCCUA0`** to avoid clobbering DMR **`PLCUA0`**.
+  Dark Matter Orb Alt mode FX from **Reilsss** `TimeFreezeBall` / `DMGShotPlayer`
+  (purple projectile only — no world time-freeze).
+- **Reilsss** (`PB_Reilsss.wad` / BrutalDoomer weapon pack): **`PB_FlakCannon`**
+  (pack Excavator / `R_FlakCannon`), **`PB_Hellshot`** (pack `R_Hellshot`;
+  sibling to existing **`Hell_rifle`**), **`PB_PlasmaBeam`** (UAC Plasma Beam
+  Rifle). Credit pack authors / BrutalDoomer lineage as shipped in the source
+  WAD. Flak main-fire trail/impact particle FX adapted from **PBGuncaster** /
+  **Ironblast** (`FLAKFLAR` / `SMOKE_01` / `EMBER_01` patches + trailer/impact
+  stack; Flak-local sprite names `FKFR`/`FKTR`/`FKEM`/`FKSM`) — not Ironblast
+  weapon FPS art or ballistics.
 - Commander Shotgun (Combat Shotgun, CSSG, `PB_CSSG`): ZScript stack — special
   wheel, magazine flow, upgrade tokens, projectiles — on `PB_WeaponBase`, with
   spawners, status bar, spawn toggles, and test utilities. RENEGADE ANDROID, doc,
@@ -66,6 +76,10 @@ Gameplay and content in this release
   Freezebot, ElecPod. Naming, spawners, menu toggles, and HUD: RENEGADE ANDROID
   and doc.
 - Credit to BeefRice and **Jaih1r0** for PBX HUD elements and many weapon improvements and systems.
+- **Nightfall Eternal Minigun firing audio:** `ETRCHSHO.wav` / `ETRCHSTO.ogg` from
+  [Risdar/PBX-Weapons](https://github.com/Risdar/PBX-Weapons) Eternal Chaingun;
+  original add-on by **D_Boi**, base sprite by **TypicalSF**, base code by
+  **Sergeant_Mark_IV**.
 - **Monster-sourced weapon wear (PBX-style durability):** parallel undroppable **`Ammo`** wear pools per boss-tech gun, manual **`TakeInventory`** on meaningful shots, **`WeaponBreak`** when wear hits zero, and **`AttachToOwner`** top-up when picking up the same weapon again below max — aligned with **PBX-Weapons** / Project Brutality X patterns (same family as **Excavator** upstream). Shipped on **`PB_CyberdemonRL`** (ZScript), **`MastermindChaingun`**, **`MancubusFlameCannon`**, **`MarauderSSG`** (**`actors/Weapons/MonsterWeaponDurability.dec`**, **`PB_WeaponBase`** in **`zscript/Weapons/BaseWeapon.zc`**, weapon sources). Drop weights and gib rolls tuned in monster / gore DECORATE (**`MastermindChaingun`** / **`MancubusFlameCannon`** are not rolled from rocket / plasma **map** spawners — monster drops only); maintainers **RENEGADE ANDROID**, **doc**, and repo contributors for the 2025–2026 integration pass.
 - **Shield Saw** (GK_ShieldSaw lineage): **HUNG** — folded as quick-melee **`ShieldSaw_token`** + recall; see **`AGENTS.md`**.
 - Rocket jump, plasma wall climb, and instant weapon switch: included as
@@ -720,3 +734,6 @@ Monster-sourced Marauder SSG wear + break + duplicate-pickup refill (PBX-style) 
 ...
 
 - UAC Portal Blasters (PB_PortalBlaster) — decibel (base), XV117 (dual-wield polish); look-through portals adapted from community portalgun ACS cameratexture technique.
+
+Hexa-Overkill (slot 3 six-barrel shotgun / former Hexa-Lion / Soyboy art):
+- Updated sprites/sounds from PB Hexa Shotgun pack (updated by 517qwerty for PB 0.2.0; altfire code notes by decibel).

@@ -4,7 +4,8 @@ class LoRCalamityBlade : PB_WeaponBase
 	Default
 	{
 		//$Category "Weapons/Legacy of Rust"
-		Weapon.SlotNumber 8;
+		Weapon.SlotNumber 9;
+		Weapon.SlotPriority 10.2;
 		Weapon.AmmoUse 1;
 		Weapon.AmmoGive 120;
 		Weapon.AmmoGive2 120;
@@ -27,18 +28,8 @@ class LoRCalamityBlade : PB_WeaponBase
 		BFUG B -1;
 		Stop;	
 	Steady:
-		TNT1 A 0 A_SetRoll(0);
-		TNT1 A 1 {
-				A_TakeInventory("GoWeaponSpecialAbility",1);
-				A_TakeInventory("Grabbing_A_Ledge",1);
-				A_TakeInventory("UseEquipment",1);
-				A_TakeInventory("ToggleEquipment",1);
-				A_TakeInventory("Taunting",1);
-				A_TakeInventory("Salute1",1);
-				A_TakeInventory("Salute2",1);
-				A_TakeInventory("Kicking",1);
-			}
-	    Goto Ready;
+		Goto PB_FinisherCleanup;
+
 		WeaponRespect:
 			TNT1 A 0 A_GiveInventory("RespectPB_CalamityBlade", 1);
 			TNT1 A 0 A_DoPBWeaponAction();
@@ -50,10 +41,10 @@ class LoRCalamityBlade : PB_WeaponBase
 		Select:
 			TNT1 A 0 A_TakeInventory("HasBarrel", 1);
 			TNT1 A 0 A_TakeInventory("HasIceBarrel", 1);
-			TNT1 A 0 A_TakeInventory("HasFlameBarrel", 1);
+			TNT1 A 0 A_TakeInventory("HasBurningBarrel", 1);
 			TNT1 A 0 A_TakeInventory("GrabbedBarrel", 1);
 			TNT1 A 0 A_TakeInventory("GrabbedIceBarrel", 1);
-			TNT1 A 0 A_TakeInventory("GrabbedFlameBarrel", 1);
+			TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel", 1);
 			TNT1 A 0 A_weaponoffset(0, 32);
 			TNT1 A 0 { PB_HandleCrosshair(69); }
 			Goto SelectFirstPersonLegs;
@@ -70,7 +61,7 @@ class LoRCalamityBlade : PB_WeaponBase
 			goto Ready3;
 	Deselect:
 		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "PlaceBarrel");
-		TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "PlaceFlameBarrel");
+		TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "PlaceIceBarrel");
 		TNT1 A 0 { PB_HandleCrosshair(69); }
 		TNT1 A 0 A_ClearReFire();
@@ -132,7 +123,7 @@ class LoRCalamityBlade : PB_WeaponBase
 		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "ThrowBarrel");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "ThrowFlameBarrel");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "ThrowIceBarrel");
 		TNT1 A 0 { return PB_TryAutoFatalityOnFire(); }
 		TNT1 A 0 {
@@ -226,7 +217,7 @@ class LoRCalamityBlade : PB_WeaponBase
 
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel");
-		TNT1 A 0 A_JumpIfInventory ("GrabbedFlameBarrel", 1, "PlaceFlameBarrel");
+		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "PlaceFlameBarrel");
 		TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "PlaceIceBarrel");
 		TNT1 A 0 {
 			A_WeaponOffset(0,32);
@@ -293,16 +284,16 @@ class LoRCalamityBlade : PB_WeaponBase
 			TNT1 A 0 A_Print("No WeaponSpecial!");
 			Goto Ready3;		////////////////////////////////////////////////////////////////////////
 		Reload:
-			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "ThrowFlameBarrel");
-			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
-			TNT1 A 0 { return ResolveState("PBWP_OffsetReloadAnim"); }
+			"####" "#" 0 A_JumpIfInventory("GrabbedBarrel", 1, "ThrowBarrel");
+			"####" "#" 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "ThrowFlameBarrel");
+			"####" "#" 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "ThrowIceBarrel");
+			"####" "#" 0 { return ResolveState("PBWP_OffsetReloadAnim"); }
 		//	kick flashes
 		////////////////////////////////////////////////////////////////////////
 		
 		FlashPunching:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelPunching");
-			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelPunching");
+			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelPunching");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelPunching");
 			TNT1 A 0 A_ClearOverlays(10, 11);
 			HRTG A 1 A_WeaponOffset(0, 33, WOF_INTERPOLATE);
@@ -313,43 +304,39 @@ class LoRCalamityBlade : PB_WeaponBase
 
 		FlashKicking:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelKicking");
-			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelKicking");
+			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelKicking");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelKicking");
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			HRTG A 1;
+			HRTG AAAAAAAAAAAAAAA 1;
 			TNT1 A 0 A_WeaponOffset(0, 32);
-			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 
 		FlashAirKicking:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelAirKicking");
-			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelAirKicking");
+			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelAirKicking");
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			HRTG A 1;
+			HRTG AAAAAAAAAAAAAAAA 1;
 			TNT1 A 0 A_WeaponOffset(0, 32);
-			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 
 		FlashSlideKicking:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKicking");
-			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelSlideKicking");
+			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking");
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			HRTG A 1;
+			HRTG AAAAAAAAAAAAAAAAAAAAAAAA 1;
 			TNT1 A 0 A_WeaponOffset(0, 32);
-			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 
 		FlashSlideKickingStop:
 			TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop");
-			TNT1 A 0 A_JumpIfInventory("GrabbedFlameBarrel", 1, "FlashBarrelSlideKickingStop");
+			TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop");
 			TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop");
 			TNT1 A 0 A_ClearOverlays(10, 11);
-			HRTG A 1;
+			HRTG AAAAAAA 1;
 			TNT1 A 0 A_WeaponOffset(0, 32);
-			TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-			Goto Ready3;
+			Stop;
 		}
 	
 	action void A_CalamityBladeCharge()

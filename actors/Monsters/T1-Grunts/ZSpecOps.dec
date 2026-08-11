@@ -45,6 +45,7 @@ Actor PB_ZSpecOps : PB_QSGZombie Replaces ChaingunGuy
 	DamageFactor "SuperPunch", 0.5
 	  Decal BulletChip
 	  DropItem "PB_LootDrop_Slot3"
+	  DropItem "PB_FlakCannon" 48
 	  DropItem "PB_SentryDrop_Spec" 3
 	  DropItem "PB_EquipDrop_CatsFrozen" 2
   States

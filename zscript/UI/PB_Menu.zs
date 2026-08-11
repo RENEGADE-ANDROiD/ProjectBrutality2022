@@ -208,7 +208,7 @@ class PB_ListMenu : ListMenu
             menuCursor = TexMan.CheckForTexture("M_SKULL1", TexMan.Type_Any);
         if (menuCursor.isValid())
         {
-            double cursorScale = clamp(Screen.GetHeight() / 540.0, 1.5, 3.5);
+            double cursorScale = clamp(Screen.GetHeight() / 540.0, 1.5, 3.5) * 1.5;
             double cursorH = 32.0 * cursorScale;
             Vector2 cursorNative = TexMan.GetScaledSize(menuCursor);
             double cursorW = cursorH;
@@ -343,6 +343,70 @@ class PB_ListMenu : ListMenu
 		}
 		return false;
 	}
+}
+
+class PB_ScaledSelectorListMenu : ListMenu
+{
+    override void Drawer()
+    {
+        if (!mDesc)
+        {
+            Super.Drawer();
+            return;
+        }
+
+        int selected = mDesc.mSelectedItem;
+        mDesc.mSelectedItem = -1;
+        Super.Drawer();
+        mDesc.mSelectedItem = selected;
+
+        if (selected < 0 || selected >= mDesc.mItems.Size())
+            return;
+
+        let item = mDesc.mItems[selected];
+        if (!item || !item.mEnabled)
+            return;
+
+        item.Draw(true, mDesc);
+
+        TextureID menuCursor = TexMan.CheckForTexture("doomcurs", TexMan.Type_Any);
+        if (!menuCursor.isValid())
+            menuCursor = TexMan.CheckForTexture("M_SKULL1", TexMan.Type_Any);
+        if (!menuCursor.isValid())
+            return;
+
+        double cursorScale = clamp(Screen.GetHeight() / 540.0, 1.5, 3.5) * 1.5;
+        double cursorH = 32.0 * cursorScale;
+        Vector2 cursorNative = TexMan.GetScaledSize(menuCursor);
+        double cursorW = cursorH;
+        if (cursorNative.Y > 0.0)
+            cursorW = cursorH * (cursorNative.X / cursorNative.Y);
+
+        double cursorX;
+        double cursorY;
+        double virtualX = item.GetX() + mDesc.mSelectOfsX;
+        double virtualY = item.GetY() + mDesc.mSelectOfsY;
+        int displayW = mDesc.DisplayWidth();
+        if (displayW == ListMenuDescriptor.CleanScale)
+        {
+            cursorX = (virtualX - 160.0) * CleanXfac + Screen.GetWidth() * 0.5;
+            cursorY = (virtualY - 100.0) * CleanYfac + Screen.GetHeight() * 0.5;
+        }
+        else
+        {
+            int displayH = mDesc.DisplayHeight();
+            double fx, fy, fw, fh;
+            [fx, fy, fw, fh] = Screen.GetFullscreenRect(displayW, displayH, FSMode_ScaleToFit43);
+            cursorX = fx + virtualX * fw / displayW;
+            cursorY = fy + virtualY * fh / displayH;
+        }
+
+        Screen.DrawTexture(menuCursor, true, cursorX, cursorY,
+            DTA_DestWidthF, cursorW,
+            DTA_DestHeightF, cursorH,
+            DTA_LeftOffset, 0,
+            DTA_TopOffset, 0);
+    }
 }
 
 class PB_TitleLogoHandler : EventHandler

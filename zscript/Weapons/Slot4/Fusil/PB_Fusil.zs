@@ -34,11 +34,7 @@ class PB_Fusil : PB_WeaponBase
 	states
 	{
 		Steady:
-        TNT1 A 1;
-        TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
-        TNT1 A 0 SetPlayerProperty(0,0,0);
-        TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-        Goto Ready3;
+			Goto PB_FinisherCleanup;
 
 		ReadySeen:
         "RPTG" A 0 A_PlaySound("CLIPIN");
@@ -394,18 +390,26 @@ class PB_Fusil : PB_WeaponBase
         TNT1 A 0 A_ClearOverlays(10,11);
         "FUSI" "EDCCDE" 1;
         TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-        Goto Ready3;
+        Stop;
 
 		FlashKicking:
         TNT1 A 0 A_ClearOverlays(10,11);
-        "FUSI" "EDCCCCDE" 1;
-        TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-        Goto Ready3;
+        "FUSI" "EDCCCCCCCCCCCDE" 1;
+        Stop;
 
 		FlashAirKicking:
         TNT1 A 0 A_ClearOverlays(10,11);
-        "FUSI" "EDCBBBCDE" 1;
-        TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
-        Goto Ready3;
+        "FUSI" "EDCBBBBBBBBBBCDE" 1;
+        Stop;
+
+		FlashSlideKicking:
+        TNT1 A 0 A_ClearOverlays(10,11);
+        "FUSI" "EDCBBBBBBBBBBBBBBBBBBCDE" 1;
+        Stop;
+
+		FlashSlideKickingStop:
+        TNT1 A 0 A_ClearOverlays(10,11);
+        "FUSI" "EDCCCDE" 1;
+        Stop;
 	}
 }

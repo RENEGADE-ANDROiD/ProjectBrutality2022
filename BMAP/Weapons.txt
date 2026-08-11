@@ -63,3 +63,7 @@ brightmap sprite PRDCZ0 { map "brightmaps/WEAPONS/PRDCZ.png" }
 
 //Demon Tech Rifle
 brightmap sprite HRPUA0 { map "brightmaps/WEAPONS/HRPUA.png" }
+// Hexa-Overkill (Soyboy fire frames)
+brightmap sprite XSGFA0 { map "brightmaps/WEAPONS/HexaLion/XSGFAB.png" }
+brightmap sprite XSGFB0 { map "brightmaps/WEAPONS/HexaLion/XSGFBB.png" }
+brightmap sprite XSGFC0 { map "brightmaps/WEAPONS/HexaLion/XSGFCB.png" }

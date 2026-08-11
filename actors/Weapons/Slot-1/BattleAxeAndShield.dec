@@ -56,18 +56,7 @@ ACTOR BattleAxe : PB_WeaponBase
 	States
 	{
 	Steady:
-		TNT1 A 0 A_SetRoll(0)
-		TNT1 A 0 {
-				A_TakeInventory("GoWeaponSpecialAbility", 1);
-				A_TakeInventory("Grabbing_A_Ledge", 1);
-				A_TakeInventory("UseEquipment", 1);
-				A_TakeInventory("ToggleEquipment", 1);
-				A_TakeInventory("Taunting", 1);
-				A_TakeInventory("Salute1", 1);
-				A_TakeInventory("Salute2", 1);
-				A_TakeInventory("Kicking", 1);
-			}
-	    Goto Ready
+		Goto PB_FinisherCleanup
 
 	WeaponSpecial:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "IdleBarrel")
@@ -766,10 +755,12 @@ ACTOR BattleAxe : PB_WeaponBase
 			 return state("");
 		     }
 		TNT1 A 0 {
-			 PB_SetUsingMelee(false);
-		     }
+			A_ClearOverlays(PSP_FLASH, PSP_FLASH, false);
+			PB_QM_EndAttack();
+			PB_RestoreWeaponMiniOverlays();
+		}
 		TNT1 A 0 { PB_CheckBarrelIdle1(); }
-		Goto Ready
+		TNT1 A 0 { return PB_ReturnFromQuickMelee(); }
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "PlaceBarrel")
 		TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "PlaceFlameBarrel")
@@ -833,14 +824,9 @@ ACTOR BattleAxe : PB_WeaponBase
 		/////////////////////////////////////////////////
 		Goto ReadyLoop
 	 
-	 	Steady:
-		TNT1 A 1
-		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-		TNT1 A 0 { PB_UnsetPlayerExecutionProperties(); }
-		Goto ReadyLoop
-////////	
+		Steady:
+			Goto PB_FinisherCleanup
 
-	//Taunt:
 	Reload: 
 		TNT1 A 0 A_TakeInventory("Reloading",1)
 		TNT1 A 0 A_JumpIfInventory("ShieldUp", 1, "PowerReflectOn")
@@ -959,39 +945,39 @@ ACTOR BattleAxe : PB_WeaponBase
 	   TNT1 A 0 A_ClearOverlays(10,11)
 	   MC3S ABCDEFGGFEDCBA 1
 	   TNT1 A 0 A_ClearOverlays(PSP_FLASH, PSP_FLASH, false)
-	   Goto Ready
+	   Stop
 
 	FlashKicking:
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelKicking")
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelKicking")
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelKicking")
 	   TNT1 A 0 A_ClearOverlays(10,11)
-	   W01G A 1 A_DoPBWeaponAction
-	   Goto Ready
+	   W01G AAAAAAAAAAAAAAA 1
+	   Stop
 
 	FlashAirKicking:
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelAirKicking")
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking")
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelAirKicking")	
 	   TNT1 A 0 A_ClearOverlays(10,11)
-	   W01G A 1 A_DoPBWeaponAction
-	   Goto Ready
+	   W01G AAAAAAAAAAAAAAAA 1
+	   Stop
 
 	FlashSlideKicking:
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKicking")
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking")
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking")
 	   TNT1 A 0 A_ClearOverlays(10,11)
-	   W01G A 1 A_DoPBWeaponAction
-	   Goto Ready
+	   W01G AAAAAAAAAAAAAAAAAAAAAAAA 1
+	   Stop
 
 	FlashSlideKickingStop:
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop")
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop")
 	   TNT1 A 0 A_JumpIfInventory ("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop")
 	   TNT1 A 0 A_ClearOverlays(10,11)
-	   W01G A 1 A_DoPBWeaponAction
-	   Goto Ready
+	   W01G AAAAAAA 1
+	   Stop
 	}
 }
 

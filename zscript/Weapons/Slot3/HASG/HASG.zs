@@ -34,11 +34,7 @@ class HASG : PB_WeaponBase
 		Stop;
 
 		Steady:
-        TNT1 A 1;
-        TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
-        TNT1 A 0 SetPlayerProperty(0,0,0);
-        TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-        Goto Ready;
+			Goto PB_FinisherCleanup;
 
 		Ready:
         TNT1 A 0 A_JumpIfInventory("GoFatality",1,"Steady");
@@ -107,6 +103,7 @@ class HASG : PB_WeaponBase
 		ContinueReady:
 		RealReady:
 		Ready3:
+        TNT1 A 0 A_TakeInventory("PB_LockScreenTilt", 1);
         TNT1 AAAA 0 A_JumpIfInventory("GoFatality", 1, "Steady");
         TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial");
         TNT1 A 0 A_JumpIfInventory("ASGDrum", 1, "Drum_Ready");
@@ -274,6 +271,7 @@ class HASG : PB_WeaponBase
         GLXF B 1 BRIGHT {
             PB_LowAmmoSoundWarning("shotgun");
             A_TakeInventory("ASGChamber", 1);
+            A_TakeInventory("PB_LockScreenTilt", 1);
             A_PB_ThrottledMuzzleFX(0, 0, 0, "", 'HASGFXPhase');
             PB_WeaponRecoil(-0.50, -0.45);
         }
@@ -675,26 +673,27 @@ class HASG : PB_WeaponBase
         TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelKicking");
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelKicking");
         "GL1P" ABCDEEEEEEEEEEEE 1;
-        Goto Ready3;
+        Stop;
 
 		FlashAirKicking:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelAirKicking");
         TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelAirKicking");
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelAirKicking");
         "GL1P" ABCDEEEEEEEEEEEEEE 1;
-        Goto Ready3;
+        Stop;
 
 		FlashSlideKicking:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKicking");
         TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKicking");
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKicking");
         "GL1P" ABCDEEEEEEEE 1;
+		Goto FlashSlideKickingStop;
 		FlashSlideKickingStop:
         TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "FlashBarrelSlideKickingStop");
         TNT1 A 0 A_JumpIfInventory("GrabbedBurningBarrel", 1, "FlashBarrelSlideKickingStop");
         TNT1 A 0 A_JumpIfInventory("GrabbedIceBarrel", 1, "FlashBarrelSlideKickingStop");
         "GL1P" EEEEEEEEDCBA 1;
-        Goto Ready3;
+        Stop;
 
 		WheelCancel:
         TNT1 A 0 A_SetInventory("HASG_SelectNO", 0);
@@ -705,7 +704,7 @@ class HASG : PB_WeaponBase
         TNT1 A 0 A_SetInventory("HASG_SelectExplosive", 0);
         TNT1 A 0 A_SetInventory("HASG_SelectDanmaku", 0);
         TNT1 A 0 A_SetInventory("HASG_SelectWPhos", 0);
-        Stop;
+        Goto Ready3;
 
 		AlreadyLoaded:
         TNT1 A 0 A_Log("Ammo type already selected");
@@ -733,6 +732,7 @@ class HASG : PB_WeaponBase
             if (CountInv("HASG_SelectWPhos") == 1)     { A_Overlay(-12, "WheelCancel"); return ResolveState("SwitchToPhosphorus"); }
             return ResolveState(null);
         }
+        TNT1 A 0 A_TakeInventory("PB_LockScreenTilt", 1);
         Goto Ready3;
 
 		LoadWithoutMag:
