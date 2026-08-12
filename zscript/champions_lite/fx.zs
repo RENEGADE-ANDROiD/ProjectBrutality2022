@@ -1,3 +1,44 @@
+class cl_PentagramFX play
+	{
+	static double BaseScale(double radius, double footprintMul)
+		{
+		double s = radius * footprintMul / 87.0;
+		if (s < 0.35)
+			s = 0.35;
+		if (s > 2.0)
+			s = 2.0;
+		return s;
+		}
+
+	static double WallClampedScale(Actor floorFX, double desired)
+		{
+		if (!floorFX || desired <= 0)
+			return desired;
+
+		double half = desired * 43.5;
+		double nearest = half;
+		FLineTraceData tr;
+		for (int i = 0; i < 8; i++)
+			{
+			if (floorFX.LineTrace(i * 45.0, half + 8.0, 0, TRF_THRUACTORS, offsetz: 2, data: tr))
+				{
+				if (tr.Distance < nearest)
+					nearest = tr.Distance;
+				}
+			}
+
+		double clampedHalf = nearest - 4.0;
+		if (clampedHalf < 8.0)
+			clampedHalf = 8.0;
+		double s = clampedHalf / 43.5;
+		if (s > desired)
+			s = desired;
+		if (s < 0.25)
+			s = 0.25;
+		return s;
+		}
+	}
+
 class cl_SpawnBurst : Actor
 	{
 	default
@@ -25,6 +66,9 @@ class cl_GiantAura : Actor
 	{
 	int visDir;
 	int sightTic;
+	int wallTic;
+	bool fxVisible;
+	double cachedScale;
 
 	default
 		{
@@ -36,17 +80,38 @@ class cl_GiantAura : Actor
 		Alpha 0.35;
 		}
 
+	override void PostBeginPlay()
+		{
+		super.PostBeginPlay();
+		fxVisible = true;
+		visDir = 1;
+		cachedScale = 0;
+		}
+
 	override void Tick()
 		{
 		super.Tick();
 
-		if (master && (++sightTic % 15) == 0 && !cl_Static.cl_CosmeticFXVisible(master))
+		if (!master || master.health < 1)
+			{
+			Destroy();
+			return;
+			}
+
+		SetOrigin((master.pos.x, master.pos.y, master.floorz + 1), true);
+
+		bool checkVis = (sightTic == 0);
+		sightTic++;
+		if (checkVis || (sightTic % 15) == 0)
+			fxVisible = cl_FXVis.CosmeticFXVisible(master);
+		if (!fxVisible)
 			{
 			Alpha = 0;
 			return;
 			}
-		if (master)
-			Alpha = max(Alpha, 0.2);
+
+		if (Alpha < 0.2)
+			Alpha = 0.2;
 
 		if (visDir > 0)
 			{
@@ -67,14 +132,12 @@ class cl_GiantAura : Actor
 				}
 			}
 
-		if (master && master.health > 0)
+		if (cachedScale <= 0 || (++wallTic % 15) == 0)
 			{
-			double auraScale = max(0.5, master.radius * 0.22);
-			scale.x = scale.y = auraScale;
-			SetOrigin((master.pos.x, master.pos.y, master.floorz + 1), true);
-			return;
+			double desired = cl_PentagramFX.BaseScale(master.radius, 2.5);
+			cachedScale = cl_PentagramFX.WallClampedScale(self, desired);
 			}
-		Destroy();
+		scale.x = scale.y = cachedScale;
 		}
 
 	states
@@ -118,7 +181,7 @@ class cl_SpectralWisp : Actor
 		{
 		super.Tick();
 
-		if (master && (++sightTic % 15) == 0 && !cl_Static.cl_CosmeticFXVisible(master))
+		if (master && (++sightTic % 15) == 0 && !cl_FXVis.CosmeticFXVisible(master))
 			{
 			Alpha = 0;
 			return;
@@ -486,7 +549,7 @@ class cl_BulwarkArmor : Powerup
 		super.DoEffect();
 		if (Owner && !broken && armorHP > 0 && (level.time % 35) == 0)
 			{
-			if (cl_Static.cl_CosmeticFXVisible(Owner))
+			if (cl_FXVis.CosmeticFXVisible(Owner))
 				Owner.A_SpawnParticle("44ff44",
 					flags: SPF_FULLBRIGHT | SPF_RELPOS,
 					lifetime: 12,
@@ -571,25 +634,8 @@ class cl_CaptainShield : Powerup
 		if (!passive || !Owner || damage <= 0)
 			return;
 
-		int radius = cl_Static.cl_ReturnCVAR("cl_captain_radius");
-		BlockThingsIterator it = BlockThingsIterator.Create(Owner, radius);
-		while (it.Next())
-			{
-			Actor mo = it.thing;
-			if (mo == Owner)
-				continue;
-			if (!cl_Static.cl_ActorIsUsable(mo))
-				continue;
-			if (mo.bBOSS)
-				continue;
-			if (!Owner.CheckSight(mo))
-				continue;
-			if (mo.CountInv("cl_CaptainBuffPower") || mo.CountInv("cl_CaptainBuffGiver"))
-				{
-				newdamage = 0;
-				return;
-				}
-			}
+		if (Owner.CountInv("cl_CaptainHasMinions"))
+			newdamage = 0;
 		}
 	}
 
@@ -608,6 +654,9 @@ class cl_CaptainRing : Actor
 	{
 	int visDir;
 	int sightTic;
+	int wallTic;
+	bool fxVisible;
+	double cachedScale;
 
 	default
 		{
@@ -623,6 +672,8 @@ class cl_CaptainRing : Actor
 		{
 		super.PostBeginPlay();
 		visDir = 1;
+		fxVisible = true;
+		cachedScale = 0;
 		}
 
 	override void Tick()
@@ -635,11 +686,19 @@ class cl_CaptainRing : Actor
 			return;
 			}
 
-		if ((++sightTic % 15) == 0 && !cl_Static.cl_CosmeticFXVisible(master))
+		SetOrigin((master.pos.x, master.pos.y, master.floorz + 2), true);
+		angle += 2.0;
+
+		bool checkVis = (sightTic == 0);
+		sightTic++;
+		if (checkVis || (sightTic % 15) == 0)
+			fxVisible = cl_FXVis.CosmeticFXVisible(master);
+		if (!fxVisible)
 			{
 			Alpha = 0;
 			return;
 			}
+
 		if (Alpha < 0.2)
 			Alpha = 0.2;
 
@@ -654,10 +713,12 @@ class cl_CaptainRing : Actor
 			if (Alpha <= 0.2) { Alpha = 0.2; visDir = 1; }
 			}
 
-		double ringScale = max(0.6, master.radius * 0.35);
-		scale.x = scale.y = ringScale;
-		SetOrigin((master.pos.x, master.pos.y, master.floorz + 2), true);
-		angle += 2.0;
+		if (cachedScale <= 0 || (++wallTic % 15) == 0)
+			{
+			double desired = cl_PentagramFX.BaseScale(master.radius, 3.0);
+			cachedScale = cl_PentagramFX.WallClampedScale(self, desired);
+			}
+		scale.x = scale.y = cachedScale;
 		}
 
 	states

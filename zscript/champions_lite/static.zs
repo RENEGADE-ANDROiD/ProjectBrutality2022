@@ -20,6 +20,38 @@ enum cl_Mutations
 	mutation_Rampage,
 	};
 
+class cl_FXVis play
+	{
+	static bool PlayerCanSeeActor(Actor mo)
+		{
+		if (!mo)
+			return false;
+
+		for (int i = 0; i < MAXPLAYERS; i++)
+			{
+			if (!playeringame[i])
+				continue;
+			let p = players[i].mo;
+			if (!p)
+				continue;
+			if (mo.Distance2D(p) > 384)
+				continue;
+			if (p.CheckSight(mo))
+				return true;
+			}
+		return false;
+		}
+
+	static bool CosmeticFXVisible(Actor mo)
+		{
+		if (!cl_Static.cl_ActorIsUsable(mo))
+			return false;
+		if (!cl_Static.cl_VisibilityFXEnabled())
+			return true;
+		return PlayerCanSeeActor(mo);
+		}
+	}
+
 class cl_Static
 	{
 	static bool cl_ActorIsUsable(Actor mob)
@@ -59,33 +91,6 @@ class cl_Static
 		{
 		let c = CVar.FindCVar("cl_fx_visibility");
 		return c == null || c.GetBool();
-		}
-
-	static bool cl_PlayerCanSeeActor(Actor mo)
-		{
-		if (!mo)
-			return false;
-
-		for (int i = 0; i < MAXPLAYERS; i++)
-			{
-			if (!playeringame[i])
-				continue;
-			let p = players[i].mo;
-			if (!p)
-				continue;
-			if (mo.Distance2D(p) <= 384)
-				return true;
-			}
-		return false;
-		}
-
-	static bool cl_CosmeticFXVisible(Actor mo)
-		{
-		if (!cl_ActorIsUsable(mo))
-			return false;
-		if (!cl_VisibilityFXEnabled())
-			return true;
-		return cl_PlayerCanSeeActor(mo);
 		}
 
 	static bool cl_IsFireDamage(Name damageType)

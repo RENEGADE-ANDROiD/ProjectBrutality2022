@@ -18,6 +18,7 @@ class cl_StalkerToken	: cl_Token {}
 class cl_SplitterToken	: cl_Token {}
 class cl_VeteranToken	: cl_Token {}
 class cl_CaptainToken	: cl_Token {}
+class cl_CaptainHasMinions	: cl_Token {}
 
 class cl_GiantToken		: cl_Token {}
 class cl_SpectralToken	: cl_Token {}
