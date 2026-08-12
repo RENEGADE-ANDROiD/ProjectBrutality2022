@@ -199,7 +199,7 @@ class cl_Handler : EventHandler
 				return;
 			if (cl_FXThrottleHandler.PerformanceFireEnabled())
 				return;
-			if (!cl_Static.cl_CosmeticFXVisible(missileTarget))
+			if (!cl_FXVis.CosmeticFXVisible(missileTarget))
 				return;
 
 			let info = cl_PersistentInfo(missileTarget.FindInventory("cl_PersistentInfo"));

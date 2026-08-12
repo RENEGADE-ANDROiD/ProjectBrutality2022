@@ -40,14 +40,14 @@ class cl_BaseController : Thinker
 			return false;
 		if (!cl_FXThrottleHandler.ShouldSpawnCosmeticFX(champion))
 			return false;
-		return cl_Static.cl_CosmeticFXVisible(champion);
+		return cl_FXVis.CosmeticFXVisible(champion);
 		}
 
 	bool cl_CosmeticFXVisible()
 		{
 		if (!cl_Static.cl_ActorIsUsable(champion))
 			return false;
-		return cl_Static.cl_CosmeticFXVisible(champion);
+		return cl_FXVis.CosmeticFXVisible(champion);
 		}
 
 	void cl_RegisterCombatFX()
