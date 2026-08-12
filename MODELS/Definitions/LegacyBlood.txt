@@ -43,12 +43,58 @@ Model BigBloodSpot      // Name of actor in DECORATE
 {
    Path "models/bloodspot"    // Path to model in PK3
    Model 0 "bloodspot.md3"    // Model index, model file
-   Skin 0 "bigbloodpool32.png"     // Model index, texture (can be in any format supported by GZDoom)
+   Skin 0 "SPLTBLD.png"     // Model index, texture (can be in any format supported by GZDoom)
    Scale 80.0 80.0 80.0            // Scale values
    ZOffset 0.5
    FrameIndex BPDL A 0 0         // The sprite lump, sprite frame, model index, frame number
-   FrameIndex BBSP D 0 0         // The sprite lump, sprite frame, model index, frame number
-   FrameIndex BBSP E 0 0         // The sprite lump, sprite frame, model index, frame number
+
+   Skin 0 "bloodspotbig1.png"
+   FrameIndex BBSP D 0 0
+
+   Skin 0 "bloodspotbig2.png"
+   FrameIndex BBSP E 0 0
+}
+
+Model PB_BigBloodSpot
+{
+   Path "models/bloodspot"
+   Model 0 "bloodspot.md3"
+   Scale 80.0 80.0 80.0
+   ZOffset 0.5
+
+   Skin 0 "bloodspotbig1.png"
+   FrameIndex BBSP D 0 0
+
+   Skin 0 "bloodspotbig2.png"
+   FrameIndex BBSP E 0 0
+}
+
+Model PB_GiantBloodSpot
+{
+   Path "models/bloodspot"
+   Model 0 "bloodspot.md3"
+   Scale 90.0 90.0 90.0
+   ZOffset 0.5
+
+   Skin 0 "bloodspotbig1.png"
+   FrameIndex BBSP D 0 0
+
+   Skin 0 "bloodspotbig2.png"
+   FrameIndex BBSP E 0 0
+}
+
+Model PB_MediumBloodSpot
+{
+   Path "models/bloodspot"
+   Model 0 "bloodspot.md3"
+   Scale 80.0 80.0 80.0
+   ZOffset 0.6
+
+   Skin 0 "bloodspotbig3.png"
+   FrameIndex BBSP F 0 0
+
+   Skin 0 "bloodspot2.png"
+   FrameIndex BBSP G 0 0
 }
 
 Model PB_BloodSpot      // Name of actor in DECORATE
@@ -64,10 +110,10 @@ Model PB_BloodSpot      // Name of actor in DECORATE
    Skin 0 "bloodspothd.png"     
    FrameIndex BPDL B 0 0    
    
-   Skin 0 "bloodspothd.png"     
+   Skin 0 "bloodspothd3.png"     
    FrameIndex BPDL C 0 0     
    
-   Skin 0 "bloodspothd.png" 
+   Skin 0 "bloodspothd2.png" 
    FrameIndex BPDL D 0 0 
 }
 
@@ -84,10 +130,10 @@ Model Brutal_BloodSpot      // Name of actor in DECORATE
    Skin 0 "bloodspothd.png"     
    FrameIndex BPDL B 0 0    
    
-   Skin 0 "bloodspothd.png"     
+   Skin 0 "bloodspothd3.png"     
    FrameIndex BPDL C 0 0     
    
-   Skin 0 "bloodspothd.png" 
+   Skin 0 "bloodspothd2.png" 
    FrameIndex BPDL D 0 0 
 }
 
@@ -131,20 +177,28 @@ Model CeilBloodSpot      // Name of actor in DECORATE
 {
    Path "models/bloodspot"    // Path to model in PK3
    Model 0 "bloodceil.md3"    // Model index, model file
-   Skin 0 "bloodspothd.png"     // Model index, texture (can be in any format supported by GZDoom)
    Scale 40.0 40.0 -60.0            // Scale values
    ZOffset -0.3
-   FrameIndex BPDL A 0 0         // The sprite lump, sprite frame, model index, frame number
+
+   Skin 0 "bloodspothd.png"
+   FrameIndex BPDL A 0 0
+
+   Skin 0 "bloodspothd3.png"
+   FrameIndex BBSP A 0 0
 }
 
 Model CeilBloodSpotLarge      // Name of actor in DECORATE
 {
    Path "models/bloodspot"    // Path to model in PK3
    Model 0 "bloodceil.md3"    // Model index, model file
-   Skin 0 "bloodspothd2.png"     // Model index, texture (can be in any format supported by GZDoom)
    Scale 20.0 20.0 -60.0            // Scale values
    ZOffset -0.7
-   FrameIndex BPDL a 0 0         // The sprite lump, sprite frame, model index, frame number
+
+   Skin 0 "bloodspothd2.png"
+   FrameIndex BPDL a 0 0
+
+   Skin 0 "SPLTBLD.png"
+   FrameIndex BBSP B 0 0
 }
 
 Model Blue_BloodSpot      // Name of actor in DECORATE

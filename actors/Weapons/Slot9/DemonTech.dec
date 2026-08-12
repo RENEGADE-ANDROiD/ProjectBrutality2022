@@ -1,4 +1,3 @@
-// Hell_rifle weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript\Weapons\Slot9\HellRifle\Hell_rifle.zs
 ACTOR FireModeAcidGun : Inventory
 {
 Inventory.MaxAmount 1

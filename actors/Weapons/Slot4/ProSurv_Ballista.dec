@@ -1,4 +1,3 @@
-// ProSurv_Ballista weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript\Weapons\Slot4\Ballista\ProSurv_Ballista.zs
 ACTOR RespectBallista : Inventory { Inventory.MaxAmount 1 }
 ACTOR BallistaDemonicMode : Inventory { Inventory.MaxAmount 1 }
 ACTOR BallistaExplosiveMode : Inventory { Inventory.MaxAmount 1 }

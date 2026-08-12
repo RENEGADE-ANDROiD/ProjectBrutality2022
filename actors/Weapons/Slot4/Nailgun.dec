@@ -1,4 +1,3 @@
-// PB_Nailgun weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript\Weapons\Slot4\Nailgun\PB_Nailgun.zs
 Actor NailgunFiringAnimation: Inventory
 {
 Inventory.maxamount 1

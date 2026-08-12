@@ -1,5 +1,4 @@
 // PB_CryoShotgun — consolidated cryo shotgun (PB Weapons Pack base + former CatsFrozen ASG / rifle / cannon modes).
-// Weapon states: zscript/Weapons/Slot3/CryoShotgun/PB_CryoShotgun.zs
 
 Actor ReloadingCryoShotty : Inventory { Inventory.MaxAmount 1 }
 Actor CryoShottyWasEmpty : Inventory { Inventory.MaxAmount 1 }

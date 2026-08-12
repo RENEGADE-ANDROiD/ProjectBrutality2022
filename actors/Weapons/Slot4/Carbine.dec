@@ -1,3 +1,2 @@
 // PB_Carbine: DECORATE states until ZScript port (Carbine.zs) compiles cleanly.
 #include "actors/Weapons/Slot4/Carbine_Support.dec"
-#include "actors/Weapons/Slot4/Carbine_WeaponStates.dec"

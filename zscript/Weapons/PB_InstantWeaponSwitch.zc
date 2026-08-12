@@ -1,6 +1,6 @@
 // Instant weapon select (Doom CF_INSTANTWEAPSWITCH): always on.
 // Snaps A_Lower; respect / SelectAnimation still play but can be interrupted when
-// PendingWeapon is queued (Next/Prev) via OnDeselect + GetDownState (engine DropWeapon mirror).
+// PendingWeapon is queued (Next/Prev) via GetDownState + SetPsprite (4.14-safe DropWeapon mirror; no OnDeselect).
 // Legacy cvar pb_instantweaponswitch is ignored (kept in CVARINFO for old configs).
 
 class PB_InstantWeaponSwitchHandler : StaticEventHandler

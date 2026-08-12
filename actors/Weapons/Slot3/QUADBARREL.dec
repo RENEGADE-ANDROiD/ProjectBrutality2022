@@ -1,2 +1,1 @@
-// PB_QuadSG weapon states: zscript/Weapons/Slot3/QuadSG/QuadSG.zs
 #include "actors/Weapons/Slot3/QuadSG_Support.dec"

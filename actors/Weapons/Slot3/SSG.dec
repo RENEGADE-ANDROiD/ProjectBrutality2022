@@ -1,4 +1,3 @@
-// PB_SSG weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript/Weapons/Slot3/SSG/PB_SSG.zs
 // Sawed-Off (SSG)
 
 Actor PBSSGHasUnloaded : Inventory { Inventory.MaxAmount 1 }

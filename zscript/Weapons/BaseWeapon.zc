@@ -2050,7 +2050,7 @@ class PB_WeaponBase : DoomWeapon
 		if (!PB_IsInterruptibleVisualSelectState(psp.CurState))
 			return;
 
-		OnDeselect();
+		// GetDownState only — Weapon.OnDeselect is post-4.14 and fatal on GZDoom/LZDoom/UZDoom 4.14.x.
 		State down = GetDownState();
 		if (down)
 			pi.SetPsprite(PSP_WEAPON, down);
