@@ -1,0 +1,283 @@
+// Additive Brutal Bolognese ketchup / TomatoSauce variety (Sgt. Mark IV).
+// Renamed BO* sprites under SPRITES/GORE/Bolognese/ — does not replace Blood / XDeath* / MeatDeath.
+
+ACTOR PB_BoloFlyingMeat
+{
+	Radius 2
+	Height 2
+	Speed 10
+	Mass 1
+	Gravity 0.4
+	DeathSound "misc/xdeath2"
+	Decal BrutalBloodSuper
+	+NOBLOCKMAP
+	+MISSILE
+	+NOTELEPORT
+	+MOVEWITHSECTOR
+	+CLIENTSIDEONLY
+	+DONTSPLASH
+	+THRUGHOST
+	+THRUACTORS
+	+FORCEXYBILLBOARD
+	States
+	{
+	Spawn:
+		BOMT A 0 A_JumpIf(waterlevel > 1, "Splash")
+		BOMT ABCDEFGH 2
+		Loop
+	Death:
+		TNT1 A 0 A_CheckFloor("SpawnFloor")
+		TNT1 A 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 1)
+		Stop
+	SpawnFloor:
+		BOMT M 1
+		TNT1 A 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 1)
+		BOMT M -1
+		Stop
+	Splash:
+		BOMT M 1
+		Stop
+	}
+}
+
+ACTOR PB_BoloFlyingMeat2 : PB_BoloFlyingMeat
+{
+	Speed 8
+	States
+	{
+	Spawn:
+		BOMU A 0 A_JumpIf(waterlevel > 1, "Splash")
+		BOMU ABCDEFGH 2
+		Loop
+	SpawnFloor:
+		BOMU M 1
+		TNT1 A 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 1)
+		BOMU M -1
+		Stop
+	Splash:
+		BOMU M 1
+		Stop
+	}
+}
+
+ACTOR PB_BoloGuts : PB_BoloFlyingMeat
+{
+	Speed 7
+	Gravity 0.5
+	States
+	{
+	Spawn:
+		BOGT A 0 A_JumpIf(waterlevel > 1, "Splash")
+		BOGT ABCDEFGH 2
+		Loop
+	SpawnFloor:
+		BOGT I 1
+		TNT1 A 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 1)
+		BOGT I -1
+		Stop
+	Splash:
+		BOGT I 1
+		Stop
+	}
+}
+
+ACTOR PB_BoloOrgan : PB_BoloFlyingMeat
+{
+	Speed 9
+	Gravity 0.45
+	States
+	{
+	Spawn:
+		BODB A 0 A_JumpIf(waterlevel > 1, "Splash")
+		BODB ABCDEFGH 2
+		Loop
+	SpawnFloor:
+		BODB J 1
+		TNT1 A 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 1)
+		BODB J -1
+		Stop
+	Splash:
+		BODB J 1
+		Stop
+	}
+}
+
+ACTOR PB_BoloChunk : PB_BoloFlyingMeat
+{
+	Speed 8
+	States
+	{
+	Spawn:
+		BOME A 0 A_JumpIf(waterlevel > 1, "Splash")
+		BOME ABCD 2
+		Loop
+	SpawnFloor:
+		BOME D 1
+		TNT1 A 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 1)
+		BOME D -1
+		Stop
+	Splash:
+		BOME D 1
+		Stop
+	}
+}
+
+ACTOR PB_BoloRib : PB_BoloFlyingMeat
+{
+	Speed 11
+	Gravity 0.55
+	States
+	{
+	Spawn:
+		BOIB E 0 A_JumpIf(waterlevel > 1, "Splash")
+		BOIB EFGH 2
+		Loop
+	SpawnFloor:
+		BOIB H 1
+		TNT1 A 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 1)
+		BOIB H -1
+		Stop
+	Splash:
+		BOIB H 1
+		Stop
+	}
+}
+
+ACTOR PB_BoloSpray
+{
+	Radius 1
+	Height 1
+	Speed 0
+	Mass 999999
+	Scale 0.8
+	Alpha 0.7
+	RenderStyle Translucent
+	+NOBLOCKMAP
+	+NOTELEPORT
+	+CLIENTSIDEONLY
+	+THRUACTORS
+	+FORCEXYBILLBOARD
+	+NOGRAVITY
+	+DONTSPLASH
+	States
+	{
+	Spawn:
+		BOSR ABCDEFG 1
+		BOSR HHHH 1 A_FadeOut(0.12)
+		Stop
+	}
+}
+
+ACTOR PB_BoloMist
+{
+	Radius 1
+	Height 1
+	Speed 2
+	Mass 1
+	Scale 0.55
+	Alpha 0.65
+	Gravity 0.15
+	RenderStyle Translucent
+	+NOBLOCKMAP
+	+MISSILE
+	+NOTELEPORT
+	+CLIENTSIDEONLY
+	+THRUACTORS
+	+FORCEXYBILLBOARD
+	+DONTSPLASH
+	States
+	{
+	Spawn:
+		BOHT BCDEFG 1
+		BOHT HHH 2 A_FadeOut(0.08)
+		Stop
+	Death:
+		TNT1 A 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+ACTOR PB_BoloOrbMist : PB_BoloMist
+{
+	Scale 0.4
+	Speed 1
+	States
+	{
+	Spawn:
+		BOOR ABCDEFG 1
+		BOOR HHHH 2 A_FadeOut(0.1)
+		Stop
+	}
+}
+
+ACTOR PB_BoloTrail
+{
+	Radius 1
+	Height 1
+	Speed 4
+	Mass 1
+	Scale 0.35
+	Alpha 0.7
+	Gravity 0.7
+	RenderStyle Translucent
+	Decal BrutalBlood
+	+NOBLOCKMAP
+	+MISSILE
+	+NOTELEPORT
+	+CLIENTSIDEONLY
+	+THRUACTORS
+	+FORCEXYBILLBOARD
+	+DONTSPLASH
+	States
+	{
+	Spawn:
+		BO8A ABCDEF 1
+		Loop
+	Death:
+		TNT1 A 0 A_SpawnItemEx("Brutal_BloodSpot", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	}
+}
+
+// Clientside burst — denser gore variety without replacing MeatDeath.
+ACTOR PB_BoloMeatBurst
+{
+	Radius 1
+	Height 1
+	Speed 0
+	Mass 1
+	+NOBLOCKMAP
+	+NOTELEPORT
+	+NOGRAVITY
+	+NOCLIP
+	+CLIENTSIDEONLY
+	+DONTSPLASH
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_Jump(256, "BurstA", "BurstB", "BurstC")
+	BurstA:
+		TNT1 A 0 A_CustomMissile("PB_BoloFlyingMeat", 36, 0, random(0, 360), 2, random(25, 85))
+		TNT1 A 0 A_CustomMissile("PB_BoloFlyingMeat2", 32, 0, random(0, 360), 2, random(25, 85))
+		TNT1 A 0 A_CustomMissile("PB_BoloGuts", 28, 0, random(0, 360), 2, random(20, 55))
+		TNT1 A 0 A_CustomMissile("PB_BoloMist", 24, 0, random(0, 360), 2, random(10, 70))
+		TNT1 A 0 A_SpawnItemEx("PB_BoloSpray", 0, 0, 28, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	BurstB:
+		TNT1 A 0 A_CustomMissile("PB_BoloOrgan", 34, 0, random(0, 360), 2, random(25, 85))
+		TNT1 A 0 A_CustomMissile("PB_BoloChunk", 30, 0, random(0, 360), 2, random(25, 85))
+		TNT1 A 0 A_CustomMissile("PB_BoloRib", 30, 0, random(0, 360), 2, random(20, 70))
+		TNT1 A 0 A_CustomMissile("PB_BoloTrail", 20, 0, random(0, 360), 2, random(15, 60))
+		TNT1 A 0 A_CustomMissile("PB_BoloOrbMist", 22, 0, random(0, 360), 2, random(10, 70))
+		TNT1 A 0 A_SpawnItemEx("PB_BoloSpray", 0, 0, 26, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Stop
+	BurstC:
+		TNT1 A 0 A_CustomMissile("PB_BoloFlyingMeat", 38, 0, random(0, 360), 2, random(30, 90))
+		TNT1 A 0 A_CustomMissile("PB_BoloOrgan", 32, 0, random(0, 360), 2, random(25, 80))
+		TNT1 A 0 A_CustomMissile("PB_BoloGuts", 30, 0, random(0, 360), 2, random(20, 50))
+		TNT1 AA 0 A_CustomMissile("PB_BoloMist", 26, 0, random(0, 360), 2, random(10, 70))
+		TNT1 A 0 A_CustomMissile("PB_BoloTrail", 18, 0, random(0, 360), 2, random(20, 70))
+		Stop
+	}
+}

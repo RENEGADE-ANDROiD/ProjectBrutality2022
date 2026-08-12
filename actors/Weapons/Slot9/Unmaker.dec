@@ -1,4 +1,3 @@
-// PB_Unmaker weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript\Weapons\Slot9\Unmaker\PB_Unmaker.zs
 ACTOR UnmakerSelected : Inventory
 {
 Inventory.MaxAmount 1

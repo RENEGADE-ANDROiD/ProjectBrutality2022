@@ -1,0 +1,5 @@
+Brutal Bolognese ketchup / TomatoSauce gib sprites (Sgt. Mark IV), renamed to BO*
+prefixes so they do not collide with stock PB gore lumps (BLHT, GUTS, XMT1, BSPR, …).
+
+Sprites: SPRITES/GORE/Bolognese/
+Actors: PB_BologneseGore.dec (PB_Bolo* classes)

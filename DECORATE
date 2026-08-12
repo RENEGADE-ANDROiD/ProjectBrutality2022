@@ -283,7 +283,6 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Spiker.dec"
 #include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Puker.dec"
 #include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/Carcass.dec"
-#include "actors/Monsters/T1-Grunts/ProjectSurvivalFodder/FodderPassiveSpawn.dec"
 #include "actors/Weapons/MolotovCocktail/MolotovCocktailToken.dec"
 #include "actors/Weapons/MolotovCocktail/MolotovCocktail.dec"
 #include "actors/Weapons/MolotovCocktail/MolotovAmmoPickups.dec"
@@ -477,6 +476,7 @@ Actor PBBlastMomentum : Inventory
 #include "actors/Gore/BlueSTICKY.dec"
 #include "actors/Gore/BDv22Gore/BDv22Gore.dec"
 #include "actors/Gore/BPv10Gore/BPv10Gore.dec"
+#include "actors/Gore/Bolognese/PB_BologneseGore.dec"
 
 #include "actors/Friendly Marines/CapturedMarine.dec"
 #include "actors/Friendly Marines/Marine-AutoShotgun.dec"

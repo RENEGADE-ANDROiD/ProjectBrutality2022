@@ -35,6 +35,30 @@ class PB_DeathGoreBoostHandler : EventHandler
 			&& dt != 'Freeze';
 	}
 
+	// Weighted pool pick. Families: 0 Growing, 1 Nash, 2 PB_BloodSpot, 3 Big, 4 Medium/Giant.
+	clearscope static Class<Actor> PB_PickBloodPoolClass(bool xdeath, int forceFamily = -1)
+	{
+		int family = forceFamily;
+		if (family < 0)
+		{
+			int roll = random(0, 99);
+			if (roll < 30) family = 0;
+			else if (roll < 55) family = 1;
+			else if (roll < 75) family = 2;
+			else if (roll < 90) family = 3;
+			else family = 4;
+		}
+
+		if (family == 0) return "GrowingBloodPool";
+		if (family == 1)
+			return (random(0, 255) < 128) ? "NashGoreBloodSpotSmall" : "NashGoreBloodSpot";
+		if (family == 2) return "PB_BloodSpot";
+		if (family == 3)
+			return (random(0, 255) < 128) ? "BigBloodSpot" : "PB_BigBloodSpot";
+		if (xdeath) return "PB_GiantBloodSpot";
+		return "PB_MediumBloodSpot";
+	}
+
 	override void WorldThingDied(WorldEvent e)
 	{
 		if (!e) return;
@@ -58,44 +82,93 @@ class PB_DeathGoreBoostHandler : EventHandler
 		if (!enhanced) return;
 
 		bool xdeath = t.health <= -t.SpawnHealth();
-		int poolCount = 3;
+		int poolCount = 4;
 		int trailCount = 8;
 		if (bloodAmount >= 3)
 		{
-			poolCount += 2;
+			poolCount += 3;
 			trailCount += 6;
 		}
 		if (xdeath)
 		{
-			poolCount += 2;
+			poolCount += 4;
 			trailCount += 5;
+		}
+
+		// Shuffle first three families so gibs always get distinct pool shapes.
+		int famA = 0;
+		int famB = 1;
+		int famC = 2;
+		if (xdeath)
+		{
+			int f0 = random(0, 4);
+			int f1 = random(0, 4);
+			int guard = 0;
+			while (f1 == f0 && guard < 8) { f1 = random(0, 4); guard++; }
+			int f2 = random(0, 4);
+			guard = 0;
+			while ((f2 == f0 || f2 == f1) && guard < 12) { f2 = random(0, 4); guard++; }
+			famA = f0; famB = f1; famC = f2;
 		}
 
 		vector3 base = (t.pos.x, t.pos.y, t.floorz + 1);
 		for (int i = 0; i < poolCount; i++)
 		{
 			Class<Actor> poolCls;
-			int mix = random(0, 255);
-			if (i == 0)
-			{
-				if (mix < 102)
-					poolCls = (random(0, 255) < 128) ? "NashGoreBloodSpotSmall" : "NashGoreBloodSpot";
-				else
-					poolCls = "GrowingBloodPool";
-			}
-			else if (mix < 100)
-				poolCls = (random(0, 255) < 100) ? "NashGoreBloodSpotSmall" : "NashGoreBloodSpot";
-			else if (xdeath)
-				poolCls = "GrowingBloodPool";
-			else
-				poolCls = "BigBloodSpot";
+			if (xdeath && i == 0) poolCls = PB_PickBloodPoolClass(xdeath, famA);
+			else if (xdeath && i == 1) poolCls = PB_PickBloodPoolClass(xdeath, famB);
+			else if (xdeath && i == 2) poolCls = PB_PickBloodPoolClass(xdeath, famC);
+			else poolCls = PB_PickBloodPoolClass(xdeath, -1);
 
 			if (!poolCls) continue;
 			Actor pool = Actor.Spawn(poolCls, (base.x + frandom(-18, 18), base.y + frandom(-18, 18), base.z), NO_REPLACE);
 			if (pool)
 			{
 				pool.angle = random(0, 359);
-				pool.scale *= frandom(0.85, 1.35);
+				pool.scale *= frandom(0.8, 1.4);
+			}
+		}
+
+		// Ceiling blood extras (direct spots — more reliable than CeilBloodLauncher from EventHandler).
+		double roomH = t.ceilingz - t.floorz;
+		if (roomH >= 56.0)
+		{
+			int ceilCount = 1;
+			if (bloodAmount >= 3) ceilCount = 2;
+			if (xdeath)
+			{
+				ceilCount = 3;
+				if (bloodAmount >= 3) ceilCount = 4;
+			}
+			if (roomH > 512.0) ceilCount = 1;
+
+			double cz = t.ceilingz - 2.0;
+			for (int c = 0; c < ceilCount; c++)
+			{
+				int croll = random(0, 99);
+				Class<Actor> ceilCls;
+				if (croll < 50) ceilCls = "CeilBloodSpot";
+				else if (croll < 80) ceilCls = "CeilBloodSpotLarge";
+				else ceilCls = "NashGoreBloodSpotCeiling";
+				if (!ceilCls) continue;
+
+				vector3 cpos = (t.pos.x + frandom(-24, 24), t.pos.y + frandom(-24, 24), cz);
+				Actor cspot = Actor.Spawn(ceilCls, cpos, NO_REPLACE);
+				if (!cspot) continue;
+				cspot.angle = random(0, 359);
+				if (cspot is "NashGoreBloodSpot")
+				{
+					let ng = NashGoreBloodSpot(cspot);
+					if (ng)
+					{
+						ng.bOnCeiling = true;
+						ng.Gravity = 0;
+					}
+				}
+				else
+				{
+					cspot.scale *= frandom(0.85, 1.25);
+				}
 			}
 		}
 
@@ -109,6 +182,51 @@ class PB_DeathGoreBoostHandler : EventHandler
 				b.vel = (frandom(-6, 6), frandom(-6, 6), frandom(1.5, 7.5));
 				b.angle = random(0, 359);
 			}
+		}
+
+		// Additive Bolognese ketchup / TomatoSauce variety (PB_Bolo*).
+		int boloBursts = 0;
+		int boloExtra = 0;
+		if (xdeath)
+		{
+			boloBursts = (bloodAmount >= 3) ? 2 : 1;
+			boloExtra = (bloodAmount >= 3) ? 3 : 2;
+		}
+		else if (bloodAmount >= 2)
+		{
+			boloBursts = (bloodAmount >= 3) ? 1 : 0;
+			boloExtra = 1;
+		}
+
+		vector3 boloPos = (t.pos.x, t.pos.y, t.pos.z + max(12.0, t.height * 0.45));
+		for (int b = 0; b < boloBursts; b++)
+		{
+			Actor burst = Actor.Spawn("PB_BoloMeatBurst", boloPos, NO_REPLACE);
+			if (burst) burst.angle = random(0, 359);
+		}
+		for (int e = 0; e < boloExtra; e++)
+		{
+			int pick = random(0, 6);
+			Class<Actor> boloCls;
+			if (pick == 0) boloCls = "PB_BoloFlyingMeat";
+			else if (pick == 1) boloCls = "PB_BoloFlyingMeat2";
+			else if (pick == 2) boloCls = "PB_BoloGuts";
+			else if (pick == 3) boloCls = "PB_BoloOrgan";
+			else if (pick == 4) boloCls = "PB_BoloChunk";
+			else if (pick == 5) boloCls = "PB_BoloRib";
+			else boloCls = "PB_BoloMist";
+			if (!boloCls) continue;
+			Actor g = Actor.Spawn(boloCls, (boloPos.x + frandom(-6, 6), boloPos.y + frandom(-6, 6), boloPos.z + frandom(0, 10)), NO_REPLACE);
+			if (g)
+			{
+				g.vel = (frandom(-9, 9), frandom(-9, 9), frandom(2, 11));
+				g.angle = random(0, 359);
+			}
+		}
+		if (boloBursts > 0 || boloExtra > 0)
+		{
+			Actor spray = Actor.Spawn("PB_BoloSpray", boloPos, NO_REPLACE);
+			if (spray) spray.angle = random(0, 359);
 		}
 	}
 }

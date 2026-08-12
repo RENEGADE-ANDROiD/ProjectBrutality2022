@@ -1,6 +1,3 @@
-// PB_BFG9000 weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript\Weapons\Slot8\BFG9000\PB_BFG9000.zs
-
-
 ACTOR BFGClassicMode : Inventory
 {
 Inventory.MaxAmount 1
