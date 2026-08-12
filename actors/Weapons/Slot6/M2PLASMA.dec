@@ -1,4 +1,3 @@
-// PB_M2Plasma weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript\Weapons\Slot6\M2Plasma\PB_M2Plasma.zs
 // M2 Plasma Rifle Pickup
 ACTOR M2Plasma : CustomInventory{
 	Inventory.PickupMessage "You got the UAC-M2 Heavy Plasma Rifle! (Slot 8)"

@@ -1,4 +1,3 @@
-// LeverAction weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript/Weapons/Slot4/LeverAction/LeverAction.zs
 Actor RespectLeverAction: Inventory
 {
 Inventory.maxamount 1

@@ -1,4 +1,3 @@
-// PB_Flamethrower weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript\Weapons\Slot9\Flamethrower\PB_Flamethrower.zs
 Actor RespectFlamerGoon: Inventory
 {
 Inventory.MaxAmount 1

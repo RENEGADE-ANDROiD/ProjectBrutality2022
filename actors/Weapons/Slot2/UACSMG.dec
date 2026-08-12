@@ -1,4 +1,3 @@
-// PB_SMG weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript/Weapons/Slot2/PB_SMG/PB_SMG.zs
 Actor LaserSightActivated : Inventory
 {
 inventory.maxamount 1

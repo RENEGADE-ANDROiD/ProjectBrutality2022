@@ -1,5 +1,3 @@
-// PB_RocketLauncher weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript/Weapons/Slot5/RocketLauncher/PB_RocketLauncher.zs
-
 // Rocket Launcher - Overhauled
 
 Actor RespectRocketLauncher: Inventory

@@ -1,4 +1,3 @@
-// PB_Pistol weapon states: C:\Users\shawn\OneDrive\Desktop\temp\ProjectBrutality2022\zscript\Weapons\Slot2\Pistol\PB_Pistol.zs
 Actor SilencerEquipped: Inventory
 {Inventory.maxamount 1}
 

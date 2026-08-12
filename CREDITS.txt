@@ -276,6 +276,14 @@ Gore: optional Brutal Doom 22 (BDv22) add-on
   in **Options → Brutality 2022 Additions** (or the matching entry under
   **Gore/Debris** in visual settings).
 
+Gore: Brutal Bolognese blood textures + additive PB_Bolo extras
+- **Sgt. Mark IV** — Brutal Bolognese blood pool skins, BLOODECAL splatters,
+  ketchup / TomatoSauce-derived gib and spray art (renamed to `BO*` prefixes under
+  `SPRITES/GORE/Bolognese/`; actors `PB_Bolo*` in `actors/Gore/Bolognese/`).
+  Density extras hook through `PB_DeathGoreBoostHandler` under Enhanced Brootality.
+  Bundled NashGore HD `bsplat*` skins from the same Smooth Bolognese Blood pack
+  upgrade `MODELS/nashgore/BloodSpot`. Smooth Doom itself is **not** included.
+
 Graphics, shaders, HUD
 - Main menu cursor: **C⛧rrot** and **JP_valle20/DOOM**.
 - Glory Kill shader: traceable to D4D shader work (shaders/glorykill.shader).

@@ -1,2 +1,1 @@
-// PB_Railgun weapon states: zscript/Weapons/Slot7/Railgun/Railgun.zs
 #include "actors/Weapons/Slot7/Railgun_Support.dec"
