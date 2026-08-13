@@ -6,7 +6,9 @@ sprites `SPRITES/MONSTERS/Viles/Twitcher/` (`VFOD*`), sounds `SOUNDS/MONSTERS/Tw
 Integrated class
 - `PB_Skulker` — rare Revenant-pack guest (~2%). Helpers: `PB_SkulkerFlee`, trails,
   melee/jump missiles, `PB_SkulkerSmoke`. Death/XDeath use PB gib burst (`MuchBlood` /
-  `XDeath*` / Nash spurts / `GrowingBloodPool`).
+  `XDeath*` / Nash spurts / `GrowingBloodPool`) and hold `VFOD W`. Glory Kill wrapper
+  `PB_SkulkerGK` plus PDA row are folded (`actors/Monsters/Skulker/GloryKills.dec`);
+  unique VFOD silhouette uses pinata/stagger credit without revenant FPS tokens.
 
 Asset drops
 - `SPRITES/Monsters/Skulker/` — `VFOD*.png`

@@ -568,6 +568,22 @@ class PlayerPawnBase : PlayerPawn
 		if(player.viewz < FloorZ + 4) { player.viewz = FloorZ + 4; }
 	}
 	
+	bool PB_FinisherLocksMovement()
+	{
+		if (!player)
+			return false;
+		if (CountInv("GoFatality") > 0)
+			return true;
+		if (CountInv("ExecutionToken") > 0)
+			return true;
+		if (CountInv("DoGloryMelee") > 0)
+			return true;
+		let w = PB_WeaponBase(player.ReadyWeapon);
+		if (w && w.executingEnemy)
+			return true;
+		return false;
+	}
+
 	Override void CheckPitch()
 	{
 		let player = self.player;
@@ -576,6 +592,8 @@ class PlayerPawnBase : PlayerPawn
 			Super.CheckPitch();
 			return;
 		}
+		if (player.cheats & CF_TOTALLYFROZEN)
+			return;
 		
 		int clook = player.cmd.pitch;
 		if(clook != 0)
@@ -641,70 +659,82 @@ class PlayerPawnBase : PlayerPawn
 			ViewAngleDelta = cmd.Yaw * (360.0 / 65536.0);
 			ViewPitchDelta = cmd.Pitch * (90.0 / 65536.0);
 			
-			if(Player.TurnTicks)
+			if (!(player.cheats & CF_TOTALLYFROZEN))
 			{
-				Player.TurnTicks--;
-				A_SetAngle(Angle + (180.0 / TURN180_TICKS), SPF_INTERPOLATE);
-			}
-			else
-			{
-				A_SetAngle(Angle + ViewAngleDelta, SPF_INTERPOLATE);
-				if(LedgeGrabbed) { Angle = clamp(Angle, LedgeAngle - 20, LedgeAngle + 20); }
-			}
-			
-			if(CheckForWJump) { DashInitiator(); }
-			if(pb_crouchslide) { CSlideInitiator(); }
-			
-			DGravity();
-			
-			if(GrappleVel.Length())
-			{
-				GrapplingMove();
-			}
-			else if(LedgeCheck)
-			{
-				LedgeReach();
-			}
-			else if(LedgeGrabbed)
-			{
-				LedgeGrab();
-			}
-			else if(WaterLevel >= 2)
-			{
-				if(!pb_movetype)
-					DoomWaterMove();
-				
-				if(pb_ledgegrab) { LedgeGrabInitiator(); }
-			}
-			else if(bNOGRAVITY)
-			{
-				if(!pb_movetype)
-					DoomFlyMove();
-			}
-			else if(CanCSlide)
-			{
-				if(pb_cslidetype)
-					QSlideMove();
+				if(Player.TurnTicks)
+				{
+					Player.TurnTicks--;
+					A_SetAngle(Angle + (180.0 / TURN180_TICKS), SPF_INTERPOLATE);
+				}
 				else
-					CSlideMove();
-				
-				if(pb_movetype == 1) { LandingVelZ = 0.f; }
+				{
+					A_SetAngle(Angle + ViewAngleDelta, SPF_INTERPOLATE);
+					if(LedgeGrabbed) { Angle = clamp(Angle, LedgeAngle - 20, LedgeAngle + 20); }
+				}
+			}
+			
+			if (PB_FinisherLocksMovement())
+			{
+				Vel = (0, 0, 0);
+				DashNumber = 0;
+				CheckForWJump = 0;
+				CanCSlide = false;
 			}
 			else
 			{
-				if(!pb_movetype)
-					DoomHandleMove();
+				if(CheckForWJump) { DashInitiator(); }
+				if(pb_crouchslide) { CSlideInitiator(); }
+				
+				DGravity();
+				
+				if(GrappleVel.Length())
+				{
+					GrapplingMove();
+				}
+				else if(LedgeCheck)
+				{
+					LedgeReach();
+				}
+				else if(LedgeGrabbed)
+				{
+					LedgeGrab();
+				}
+				else if(WaterLevel >= 2)
+				{
+					if(!pb_movetype)
+						DoomWaterMove();
+					
+					if(pb_ledgegrab) { LedgeGrabInitiator(); }
+				}
+				else if(bNOGRAVITY)
+				{
+					if(!pb_movetype)
+						DoomFlyMove();
+				}
+				else if(CanCSlide)
+				{
+					if(pb_cslidetype)
+						QSlideMove();
+					else
+						CSlideMove();
+					
+					if(pb_movetype == 1) { LandingVelZ = 0.f; }
+				}
+				else
+				{
+					if(!pb_movetype)
+						DoomHandleMove();
+				}
+				
+				CheckJump();
+				CheckMoveUpDown();
 			}
-			
-			CheckJump();
 			
 			if(Player.Cheats & CF_REVERTPLEASE != 0)
 			{
 				Player.Cheats &= ~CF_REVERTPLEASE;
 				Player.Camera = Player.Mo;
 			}
-			
-			CheckMoveUpDown();
 		}
 	}
 	
@@ -3197,6 +3227,8 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 		if (Waiting || DashTics || DashCharge < DashMaxCharge / 2) return false;
 		if (Owner.CheckInventory("IsSlideKicking", 1)) return false;
 		if (Owner.CheckInventory("ExecutionToken", 1)) return false;
+		if (Owner.CheckInventory("GoFatality", 1)) return false;
+		if (Owner.CheckInventory("DoGloryMelee", 1)) return false;
 
 		PlayerInfo P = Owner.Player;
 		// Analog-friendly dash direction (malingo / 0.3+ staging: atan2 of cmd move vs. pure 8-way keys)
@@ -3279,9 +3311,12 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 		If(BT & BT_USER3)
 			TryStartDash();
 
-		if(Owner.CheckInventory("ExecutionToken", 1)) {
+		if(Owner.CheckInventory("ExecutionToken", 1)
+			|| Owner.CheckInventory("GoFatality", 1)
+			|| Owner.CheckInventory("DoGloryMelee", 1)) {
 				Owner.vel.x = 0;
 				Owner.vel.y = 0;
+				Owner.vel.z = 0;
 				DashTics = 0;
 				TakeInventory("EvadeCheck", 2);
 				TakeInventory("EvadeHold", 2);
