@@ -59,6 +59,22 @@ class PB_DeathGoreBoostHandler : EventHandler
 		return "PB_MediumBloodSpot";
 	}
 
+	static Vector3, bool PB_TryCeilingHit(Actor t, double fwd, double side)
+	{
+		Vector3 hitPos = (0, 0, 0);
+		if (!t) return hitPos, false;
+		FLineTraceData tr;
+		double dist = t.ceilingz - t.pos.z + 64.0;
+		if (dist < 8.0) return hitPos, false;
+		if (dist > 520.0) dist = 520.0;
+		bool hit = t.LineTrace(0, dist, -90, TRF_THRUACTORS, t.height * 0.5, fwd, side, data: tr);
+		if (!hit || tr.HitType != TRACE_HitCeiling) return hitPos, false;
+		if (tr.HitTexture == skyflatnum) return hitPos, false;
+		hitPos = tr.HitLocation;
+		hitPos.z -= 2.0;
+		return hitPos, true;
+	}
+
 	override void WorldThingDied(WorldEvent e)
 	{
 		if (!e) return;
@@ -129,7 +145,7 @@ class PB_DeathGoreBoostHandler : EventHandler
 			}
 		}
 
-		// Ceiling blood extras (direct spots — more reliable than CeilBloodLauncher from EventHandler).
+		// Ceiling blood extras — only on a traced ceiling hit (never corpse-sector ceilingz + XY jitter).
 		double roomH = t.ceilingz - t.floorz;
 		if (roomH >= 56.0)
 		{
@@ -142,9 +158,15 @@ class PB_DeathGoreBoostHandler : EventHandler
 			}
 			if (roomH > 512.0) ceilCount = 1;
 
-			double cz = t.ceilingz - 2.0;
 			for (int c = 0; c < ceilCount; c++)
 			{
+				double fwd = (c == 0) ? 0.0 : frandom(-16, 16);
+				double side = (c == 0) ? 0.0 : frandom(-16, 16);
+				Vector3 cpos;
+				bool ceilOk;
+				[cpos, ceilOk] = PB_TryCeilingHit(t, fwd, side);
+				if (!ceilOk) continue;
+
 				int croll = random(0, 99);
 				Class<Actor> ceilCls;
 				if (croll < 50) ceilCls = "CeilBloodSpot";
@@ -152,10 +174,13 @@ class PB_DeathGoreBoostHandler : EventHandler
 				else ceilCls = "NashGoreBloodSpotCeiling";
 				if (!ceilCls) continue;
 
-				vector3 cpos = (t.pos.x + frandom(-24, 24), t.pos.y + frandom(-24, 24), cz);
 				Actor cspot = Actor.Spawn(ceilCls, cpos, NO_REPLACE);
 				if (!cspot) continue;
 				cspot.angle = random(0, 359);
+				cspot.vel = (0, 0, 0);
+				cspot.bMissile = false;
+				cspot.bNoGravity = true;
+				cspot.bCeilingHugger = true;
 				if (cspot is "NashGoreBloodSpot")
 				{
 					let ng = NashGoreBloodSpot(cspot);
@@ -184,19 +209,12 @@ class PB_DeathGoreBoostHandler : EventHandler
 			}
 		}
 
-		// Additive Bolognese ketchup / TomatoSauce variety (PB_Bolo*).
+		// Additive Bolognese ketchup / TomatoSauce variety (PB_Bolo* via A_CustomMissile bursts only).
 		int boloBursts = 0;
-		int boloExtra = 0;
 		if (xdeath)
-		{
-			boloBursts = (bloodAmount >= 3) ? 2 : 1;
-			boloExtra = (bloodAmount >= 3) ? 3 : 2;
-		}
+			boloBursts = (bloodAmount >= 3) ? 3 : 2;
 		else if (bloodAmount >= 2)
-		{
-			boloBursts = (bloodAmount >= 3) ? 1 : 0;
-			boloExtra = 1;
-		}
+			boloBursts = 1;
 
 		vector3 boloPos = (t.pos.x, t.pos.y, t.pos.z + max(12.0, t.height * 0.45));
 		for (int b = 0; b < boloBursts; b++)
@@ -204,26 +222,7 @@ class PB_DeathGoreBoostHandler : EventHandler
 			Actor burst = Actor.Spawn("PB_BoloMeatBurst", boloPos, NO_REPLACE);
 			if (burst) burst.angle = random(0, 359);
 		}
-		for (int e = 0; e < boloExtra; e++)
-		{
-			int pick = random(0, 6);
-			Class<Actor> boloCls;
-			if (pick == 0) boloCls = "PB_BoloFlyingMeat";
-			else if (pick == 1) boloCls = "PB_BoloFlyingMeat2";
-			else if (pick == 2) boloCls = "PB_BoloGuts";
-			else if (pick == 3) boloCls = "PB_BoloOrgan";
-			else if (pick == 4) boloCls = "PB_BoloChunk";
-			else if (pick == 5) boloCls = "PB_BoloRib";
-			else boloCls = "PB_BoloMist";
-			if (!boloCls) continue;
-			Actor g = Actor.Spawn(boloCls, (boloPos.x + frandom(-6, 6), boloPos.y + frandom(-6, 6), boloPos.z + frandom(0, 10)), NO_REPLACE);
-			if (g)
-			{
-				g.vel = (frandom(-9, 9), frandom(-9, 9), frandom(2, 11));
-				g.angle = random(0, 359);
-			}
-		}
-		if (boloBursts > 0 || boloExtra > 0)
+		if (boloBursts > 0)
 		{
 			Actor spray = Actor.Spawn("PB_BoloSpray", boloPos, NO_REPLACE);
 			if (spray) spray.angle = random(0, 359);

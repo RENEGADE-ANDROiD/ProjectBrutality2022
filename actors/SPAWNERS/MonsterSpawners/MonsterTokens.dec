@@ -77,6 +77,7 @@ Actor IsNamiDarkImp : MonsterCounter { }
 Actor IsVoidDarkImp : MonsterCounter { }
 Actor IsNetherDarkImp : MonsterCounter { }
 Actor IsFusionCyberImp : MonsterCounter { }
+Actor IsPossessedGibs : MonsterCounter { }
 
 Actor IsRealm667Drone : MonsterCounter { }
 Actor IsRealm667BloodGhost : MonsterCounter { }

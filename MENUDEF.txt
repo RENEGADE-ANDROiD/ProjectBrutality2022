@@ -2022,7 +2022,7 @@ OptionMenu "MonsterPackSettings"
 	StaticText " "
 	StaticText "---------------Imp variants (Realm667)---------------", gold
 	Option "T1 - Blot (Realm667)", "NoBlot", "OffOn"
-	Option "T1 - Possessed Gibs (Realm667)", "NoPossessedGibs", "OffOn"
+	Option "T3/T4 - Possessed Gibs (Realm667)", "NoPossessedGibs", "OffOn"
 	Option "T2 - Vulgar (Realm667)", "NoVulgar", "OffOn"
 	Option "T3 - Fusion Cyber Imp (Realm667)", "NoFusionCyberImp", "OffOn"
 	Option "T2 - Flying Imp (Brutal Doom Plus)", "pb_NoFlyingImp", "OffOn"

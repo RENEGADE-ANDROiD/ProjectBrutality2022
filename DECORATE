@@ -820,8 +820,12 @@ Actor TurboReload : Inventory
 #include "actors/Monsters/Realm667/possessedgibs/PB_PossessedGibs_FloorFX.dec"
 #include "actors/Monsters/CatsFrozen/PB_CatsFrozen_Monsters.dec"
 #include "actors/Monsters/Backrooms/BackroomsHunters.dec"
+#include "actors/Monsters/Backrooms/GloryKills.dec"
 #include "actors/Monsters/Hotel/HotelGuests.dec"
+#include "actors/Monsters/Hotel/GloryKills.dec"
 #include "actors/Monsters/Skulker/PB_Skulker.dec"
+#include "actors/Monsters/Skulker/GloryKills.dec"
 #include "actors/Monsters/BVCH/BVCH_Guests.dec"
+#include "actors/Monsters/BVCH/GloryKills.dec"
 
 #include "actors/Items/Compat/LateWarningStubs.dec"
