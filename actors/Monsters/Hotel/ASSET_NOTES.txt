@@ -23,7 +23,8 @@ Sprite / sound drops
 
 Not folded
 - Swat Zombies / raise corpses, SL1–3 bosses, DarkSerpent, poolwitch, roomstalker.
-- Glory Kill `*GK` wrappers / PDA codex rows.
+
+Glory Kill `*GK` wrappers and PDA codex rows are folded (`actors/Monsters/Hotel/GloryKills.dec`). Unique silhouettes use pinata/stagger credit without family FPS fatality tokens.
 
 Cvars / ednums
 - `pb_NoHotelMory`, `pb_NoHotelBloodCrawlerBig`, `pb_NoHotelOgre`, `pb_NoHotelBruiser`,

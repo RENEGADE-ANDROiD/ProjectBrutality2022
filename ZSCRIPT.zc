@@ -253,6 +253,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Weapons/Slot1/ArgentSith_Weapon.zs"
 #include "zscript/Weapons/Slot1/BeamKatana_Weapon.zs"
 #include "zscript/Weapons/Slot1/VorpalBlade.zc"
+#include "zscript/Weapons/Slot1/PB_ThrownChainsaw.zs"
 //#include "zscript/Weapons/MeleeWeaponPack/DragonSlayer.zc" // disabled pending rework
 #include "zscript/Weapons/MeleeWeaponPack/Stormcast.zc"
 #include "zscript/Weapons/ShieldSawNotify.zc"

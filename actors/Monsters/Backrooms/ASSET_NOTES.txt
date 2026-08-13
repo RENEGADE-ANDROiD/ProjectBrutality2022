@@ -24,7 +24,8 @@ Sounds
 
 Not folded (deferred)
 - `PredatoryPylon` (SCP-173 stare-freeze) — unkillable LOS gimmick left out of this pass.
-- Glory Kill `*GK` wrappers / PDA codex rows — optional follow-ups.
+
+Glory Kill `*GK` wrappers and PDA codex rows are folded (`actors/Monsters/Backrooms/GloryKills.dec`). Unique silhouettes use pinata/stagger credit without family FPS fatality tokens.
 
 Cvars / ednums
 - `pb_NoSanguineFestivus`, `pb_NoBackroomsSmiler` (also gated by `pb_disablenewenemies`).

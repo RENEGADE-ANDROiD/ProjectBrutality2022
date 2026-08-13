@@ -25,6 +25,7 @@ Source: Brutal Voxel Cyber Horror Mix (ZIP/PK3 misnamed `.wad`) — Pandemonia +
 - Cvars: `pb_NoBVCH_Glaucoma`, `_Witherdemon`, `_Mauler`, `_Overdemoniac`, `_Dastard`, `_Machina`, `_Bloodfiend`
 - DoomEdNums: `23299`–`23305`
 - Extract helper: `maint_scripts/_extract_bvch_assets.py` (not loaded by the engine)
+- Glory Kill `*GK` wrappers and PDA codex rows: `actors/Monsters/BVCH/GloryKills.dec`
 
 ## Voice stand-ins
 

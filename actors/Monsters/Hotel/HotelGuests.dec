@@ -61,9 +61,41 @@ ACTOR PB_HotelMory : PB_Monster
 		TNT1 AAA 0 A_CustomMissile("MuchBlood", 28, 0, random(0, 360), 2, random(40, 90))
 		TNT1 AAA 0 A_CustomMissile("PB_BloodMistBig", 24, 0, random(0, 360), 2, random(30, 90))
 		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		MORY P -1
 		Stop
 	XDeath:
 		Goto Death
+	Death.cut:
+	Death.Saw:
+		Goto XDeath
+	Death.Flames:
+	Death.fire:
+	Death.Burn:
+		Goto Death
+	Death.ExtremePunches:
+		Goto XDeath
+	Death.ExeCution:
+		TNT1 A 0 A_JumpIfIntargetInventory("PowerStrength", 1, "SpecialFatality")
+	Death.ExeCution1:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Goto Death
+	SpecialFatality:
+		TNT1 A 0 A_JumpIfIntargetInventory("NoFatality", 1, "Death.ExeCution1")
+		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, "Death.Fatality")
+		Goto Death.ExeCution1
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
+		Stop
 	}
 }
 
@@ -131,12 +163,7 @@ ACTOR PB_HotelBloodCrawler : PB_Monster
 		TNT1 AAA 0 A_CustomMissile("MuchBlood", 20, 0, random(0, 360), 2, random(30, 80))
 		TNT1 AAA 0 A_CustomMissile("PB_BloodMistBig", 18, 0, random(0, 360), 2, random(20, 70))
 		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
-		HMDY A 1
-		HMDY BCDEF 3
-		HMDY G 1
-		HMDY HIJ 2
-		HMDY K -1
-		Stop
+		Goto DeathCorpse
 	XDeath:
 		TNT1 A 0 A_StopSound(5)
 		TNT1 A 0 A_XScream
@@ -146,6 +173,44 @@ ACTOR PB_HotelBloodCrawler : PB_Monster
 		TNT1 AAAA 0 A_CustomMissile("XDeath2", 14, 0, random(0, 360), 2, random(30, 80))
 		TNT1 AAA 0 A_CustomMissile("MuchBlood", 20, 0, random(0, 360), 2, random(30, 80))
 		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		Goto DeathCorpse
+	DeathCorpse:
+		HMDY A 1
+		HMDY BCDEF 3
+		HMDY G 1
+		HMDY HIJ 2
+		HMDY K -1
+		Stop
+	Death.cut:
+	Death.Saw:
+		Goto XDeath
+	Death.Flames:
+	Death.fire:
+	Death.Burn:
+		Goto Death
+	Death.ExtremePunches:
+		Goto XDeath
+	Death.ExeCution:
+		TNT1 A 0 A_JumpIfIntargetInventory("PowerStrength", 1, "SpecialFatality")
+	Death.ExeCution1:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Goto Death
+	SpecialFatality:
+		TNT1 A 0 A_JumpIfIntargetInventory("NoFatality", 1, "Death.ExeCution1")
+		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, "Death.Fatality")
+		Goto Death.ExeCution1
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		Stop
 	}
 }
@@ -214,12 +279,7 @@ ACTOR PB_HotelVoidCrawler : PB_Monster
 		TNT1 AAA 0 A_CustomMissile("MuchBlood", 20, 0, random(0, 360), 2, random(30, 80))
 		TNT1 AAA 0 A_CustomMissile("PB_BloodMistBig", 18, 0, random(0, 360), 2, random(20, 70))
 		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
-		BMDY A 1
-		BMDY BCDEF 3
-		BMDY G 1
-		BMDY HIJ 2
-		BMDY K -1
-		Stop
+		Goto DeathCorpse
 	XDeath:
 		TNT1 A 0 A_StopSound(5)
 		TNT1 A 0 A_XScream
@@ -229,6 +289,44 @@ ACTOR PB_HotelVoidCrawler : PB_Monster
 		TNT1 AAAA 0 A_CustomMissile("XDeath2", 14, 0, random(0, 360), 2, random(30, 80))
 		TNT1 AAA 0 A_CustomMissile("MuchBlood", 20, 0, random(0, 360), 2, random(30, 80))
 		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		Goto DeathCorpse
+	DeathCorpse:
+		BMDY A 1
+		BMDY BCDEF 3
+		BMDY G 1
+		BMDY HIJ 2
+		BMDY K -1
+		Stop
+	Death.cut:
+	Death.Saw:
+		Goto XDeath
+	Death.Flames:
+	Death.fire:
+	Death.Burn:
+		Goto Death
+	Death.ExtremePunches:
+		Goto XDeath
+	Death.ExeCution:
+		TNT1 A 0 A_JumpIfIntargetInventory("PowerStrength", 1, "SpecialFatality")
+	Death.ExeCution1:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Goto Death
+	SpecialFatality:
+		TNT1 A 0 A_JumpIfIntargetInventory("NoFatality", 1, "Death.ExeCution1")
+		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, "Death.Fatality")
+		Goto Death.ExeCution1
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		Stop
 	}
 }
@@ -299,6 +397,37 @@ ACTOR PB_HotelBloodCrawlerBig : PB_Monster
 		Stop
 	XDeath:
 		Goto Death
+	Death.cut:
+	Death.Saw:
+		Goto XDeath
+	Death.Flames:
+	Death.fire:
+	Death.Burn:
+		Goto Death
+	Death.ExtremePunches:
+		Goto XDeath
+	Death.ExeCution:
+		TNT1 A 0 A_JumpIfIntargetInventory("PowerStrength", 1, "SpecialFatality")
+	Death.ExeCution1:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Goto Death
+	SpecialFatality:
+		TNT1 A 0 A_JumpIfIntargetInventory("NoFatality", 1, "Death.ExeCution1")
+		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, "Death.Fatality")
+		Goto Death.ExeCution1
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
+		Stop
 	}
 }
 
@@ -367,9 +496,7 @@ ACTOR PB_HotelOgre : PB_Monster
 		TNT1 AAAA 0 A_CustomMissile("PB_BloodMistBig", 40, 0, random(0, 360), 2, random(30, 90))
 		TNT1 AAAA 0 A_CustomMissile("NashGoreBloodSpurt", 32, 0, random(170, 190), 2, random(0, 40))
 		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
-		OGRE ABCDEFG 4
-		OGRE G -1
-		Stop
+		Goto DeathCorpse
 	XDeath:
 		TNT1 A 0 A_StopSound(6)
 		TNT1 A 0 A_XScream
@@ -380,6 +507,41 @@ ACTOR PB_HotelOgre : PB_Monster
 		TNT1 AAAA 0 A_CustomMissile("XDeath3", 32, 0, random(0, 360), 2, random(30, 80))
 		TNT1 AAAA 0 A_CustomMissile("MuchBlood", 48, 0, random(0, 360), 2, random(40, 90))
 		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		Goto DeathCorpse
+	DeathCorpse:
+		OGRE ABCDEFG 4
+		OGRE G -1
+		Stop
+	Death.cut:
+	Death.Saw:
+		Goto XDeath
+	Death.Flames:
+	Death.fire:
+	Death.Burn:
+		Goto Death
+	Death.ExtremePunches:
+		Goto XDeath
+	Death.ExeCution:
+		TNT1 A 0 A_JumpIfIntargetInventory("PowerStrength", 1, "SpecialFatality")
+	Death.ExeCution1:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Goto Death
+	SpecialFatality:
+		TNT1 A 0 A_JumpIfIntargetInventory("NoFatality", 1, "Death.ExeCution1")
+		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, "Death.Fatality")
+		Goto Death.ExeCution1
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		Stop
 	}
 }
@@ -456,9 +618,7 @@ ACTOR PB_HotelBruiser : PB_Monster
 		TNT1 AAAA 0 A_CustomMissile("PB_BloodMistBig", 40, 0, random(0, 360), 2, random(30, 90))
 		TNT1 AAAA 0 A_CustomMissile("NashGoreBloodSpurt", 32, 0, random(170, 190), 2, random(0, 40))
 		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
-		HTBD ABCDE 6
-		HTBD E -1
-		Stop
+		Goto DeathCorpse
 	XDeath:
 		TNT1 A 0 A_XScream
 		TNT1 A 0 A_NoBlocking
@@ -468,6 +628,41 @@ ACTOR PB_HotelBruiser : PB_Monster
 		TNT1 AAAA 0 A_CustomMissile("XDeath3", 32, 0, random(0, 360), 2, random(30, 80))
 		TNT1 AAAA 0 A_CustomMissile("MuchBlood", 48, 0, random(0, 360), 2, random(40, 90))
 		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		Goto DeathCorpse
+	DeathCorpse:
+		HTBD ABCDE 6
+		HTBD E -1
+		Stop
+	Death.cut:
+	Death.Saw:
+		Goto XDeath
+	Death.Flames:
+	Death.fire:
+	Death.Burn:
+		Goto Death
+	Death.ExtremePunches:
+		Goto XDeath
+	Death.ExeCution:
+		TNT1 A 0 A_JumpIfIntargetInventory("PowerStrength", 1, "SpecialFatality")
+	Death.ExeCution1:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Goto Death
+	SpecialFatality:
+		TNT1 A 0 A_JumpIfIntargetInventory("NoFatality", 1, "Death.ExeCution1")
+		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, "Death.Fatality")
+		Goto Death.ExeCution1
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
 		Stop
 	}
 }

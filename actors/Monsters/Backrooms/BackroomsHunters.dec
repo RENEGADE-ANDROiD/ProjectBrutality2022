@@ -65,6 +65,29 @@ ACTOR PB_BackroomsSanguineFestivus : PB_Monster
 		Goto Death
 	Death.Flames:
 		Goto Death
+	Death.ExeCution:
+		TNT1 A 0 A_JumpIfIntargetInventory("PowerStrength", 1, "SpecialFatality")
+	Death.ExeCution1:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Goto Death
+	SpecialFatality:
+		TNT1 A 0 A_JumpIfIntargetInventory("NoFatality", 1, "Death.ExeCution1")
+		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, "Death.Fatality")
+		Goto Death.ExeCution1
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_StopSound(6)
+		TNT1 A 0 A_SpawnItemEx("GloryMedPinataSpawn2",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
+		Stop
 	Raise:
 		SFVI A 5 A_SetTranslucent(1.0, 0)
 		SFVI B 5
@@ -133,6 +156,29 @@ ACTOR PB_BackroomsSmiler : PB_Monster
 		Goto Death
 	Death.Flames:
 		Goto Death
+	Death.ExeCution:
+		TNT1 A 0 A_JumpIfIntargetInventory("PowerStrength", 1, "SpecialFatality")
+	Death.ExeCution1:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_GiveToTarget("GoExecution", 1)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		TNT1 A 0 A_PlaySound("misc/xdeath3", 3)
+		"####" "#" 10 A_Warp(AAPTR_TARGET,-50,0,0,180,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+		Goto Death
+	SpecialFatality:
+		TNT1 A 0 A_JumpIfIntargetInventory("NoFatality", 1, "Death.ExeCution1")
+		TNT1 A 0 A_JumpIfIntargetInventory("FistsSelected", 1, "Death.Fatality")
+		Goto Death.ExeCution1
+	Death.Fatality:
+		TNT1 A 0 A_Pain
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_StopSound(6)
+		TNT1 A 0 A_SpawnItemEx("GloryLowPinataSpawn",0,0,Height / 2,random(0,8),0,random(0,8),random(0,360))
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1)
+		TNT1 A 0 A_PlaySound("misc/xdeath2", 4)
+		Stop
 	Raise:
 		SMLR A 5 Bright A_SetTranslucent(1.0, 0)
 		Goto See
