@@ -1039,11 +1039,11 @@ class PB_WeaponBase : DoomWeapon
 
 		StateLabel st = PB_ExecutionHandlerString(monster);
 		State resolved = ResolveState(st);
-		bool forceGeneric = st == "Execution_Generic";
-		// Missing authored labels degrade to the shared living-target Generic strip.
+		bool forceGeneric = st == "Execution_Generic" || st == "Execution_Fast";
+		// Missing authored labels degrade to the kit-less Fast strip (still proxy/commit).
 		if (!resolved)
 		{
-			resolved = ResolveState("Execution_Generic");
+			resolved = ResolveState("Execution_Fast");
 			forceGeneric = true;
 			if (!resolved)
 			{

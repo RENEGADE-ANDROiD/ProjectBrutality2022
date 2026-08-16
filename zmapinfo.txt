@@ -224,6 +224,7 @@ DoomEdNums
 
 	23022 = PrePlacedMarineAutoShotgun
 
+	23023 = PB_DecorativeBurningBarrel
 	23024 = BarrelEmpty
 	23025 = BarrelFrozen
 	23026 = FlameBarrel

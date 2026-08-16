@@ -3,7 +3,7 @@ ACTOR NukageBarrel : SwitchableDecoration
 	//$Title Nukage Barrel
 	Health 20
 	Radius 10
-	Height 42
+	Height 32
     Mass 500
 	Speed 0
 	MaxTargetRange 200
@@ -90,6 +90,7 @@ ACTOR NukageBarrel : SwitchableDecoration
 				"####" "#" 0 A_GiveInventory("PB_DecoAuraIceSpawned", 1)
 				"####" "#" 6
 				"####" "#" 0 A_SpawnItemEx("CryoSmoke",0,0,5)
+				"####" "#" 0 A_SpawnItemEx("PB_BarrelCryoSmokePulse", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 				Goto BloodChecker
 			SeeFlame:
 				"####" "#" 0 A_JumpIfInventory("BarrelIsFrozen",1,"SeeIce")
@@ -99,6 +100,7 @@ ACTOR NukageBarrel : SwitchableDecoration
 				"####" "#" 0 A_SpawnItemEx("PB_DecoAura_BarrelFlame", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
 				"####" "#" 0 A_GiveInventory("PB_DecoAuraFlameSpawned", 1)
 				"####" "#" 0 A_SpawnItemEx("BarrelTopFire2", random(-2,2), random(-2,2), 30,0,0,0,0,SXF_SETMASTER|SXF_NOCHECKPOSITION)
+				"####" "#" 0 A_SpawnItemEx("PB_BarrelSmokePulse", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 				"####" "#" 7
 				"####" "#" 0 bright A_CustomMissile ("BigBlackSmokePillarShort", 30, 0, random (40, 180), 2, random (60, 120))
 				"####" "#" 0 A_CustomMissile ("RealisticFireSparks1", 30, 0, random (0, 140), 2, random (0, 160))

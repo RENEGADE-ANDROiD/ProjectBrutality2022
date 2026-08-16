@@ -1815,14 +1815,14 @@ class PlayerPawnBase : PlayerPawn
 		
 		if(Vel.XY.Length() <= MaxGroundSpeed)
 		{
-			Vel.XY = (MaxGroundSpeed + pb_adashboost) * AngleToVector(Angle - VectorAngle(cmd.forwardmove , cmd.sidemove));
+			Vel.XY = pb_dashboost * MaxGroundSpeed * AngleToVector(Angle - VectorAngle(cmd.forwardmove , cmd.sidemove));
 			ADashTargetSpeed = MaxGroundSpeed + ((pb_movetype == 2 || pb_movetype == 3 || pb_movetype == 4) ? (Vel.XY.Length() - MaxGroundSpeed) / 4 : 0);
 			ADashFrictionDelay = 8;
 		}
 		else
 		{
 			Float PreAirDashSpeed = Vel.XY.Length();
-			Vel.XY += pb_adashboost * AngleToVector(Angle - VectorAngle(cmd.forwardmove , cmd.sidemove));
+			Vel.XY += pb_dashboost * AngleToVector(Angle - VectorAngle(cmd.forwardmove , cmd.sidemove));
 			
 			ADashTargetSpeed = min(PreAirDashSpeed + ((pb_movetype == 2 || pb_movetype == 3 || pb_movetype == 4) ? (Vel.XY.Length() - PreAirDashSpeed) / 4 : 0), pb_maxhopspeed);
 			
@@ -3212,7 +3212,7 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 {
 	const DashMaxCharge = 35;
 
-	Double DashDir, DashSpeed;
+	Double DashDir, DashAng, DashPitch, DashSpeed;
 	Int DashTics, DashCharge, AirTics;
 	Bool DJump, Waiting;
 
@@ -3236,6 +3236,8 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 			DashDir = Owner.Angle;
 		else
 			DashDir = DeltaAngle(atan2(P.cmd.sidemove, P.cmd.forwardmove), Owner.Angle);
+		DashAng = Owner.Angle;
+		DashPitch = Owner.Pitch;
 
 		if (DashCharge < DashMaxCharge) { Waiting = true; DashCharge = 0; }
 		DashCharge = Max(0, DashCharge - DashMaxCharge / 2);
@@ -3331,9 +3333,16 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 				DashSpeed *= 0.4;
 				Owner.A_TakeInventory("PlayerDashed",1);
 			}
-			Owner.VelFromAngle(DashSpeed, DashDir);
-			// Keep jump arc in air; ground evade still purely horizontal
-			if (P.onGround) Owner.Vel.Z = 0;
+			if (!(P.cheats & CF_PREDICTING))
+			{
+				if (Owner.waterlevel == 3)
+					Owner.Vel3DFromAngle(DashSpeed, DashDir, DashPitch * cos(DashDir - DashAng));
+				else
+				{
+					Owner.VelFromAngle(DashSpeed, DashDir);
+					if (P.onGround) Owner.Vel.Z = 0;
+				}
+			}
 			level.airControl = 0.25;
 			GiveInventory("EvadeHold", 1);
 		}
@@ -3347,7 +3356,7 @@ Class DEDashJump : Inventory 						///Dash and double jump code by TheCamaleonMa
 		If(DashCharge<DashMaxCharge)
 		{
 			DashCharge++;
-			If(DashCharge==DashMaxCharge && !P.OnGround) DashCharge=DashMaxCharge-1;
+			If(DashCharge==DashMaxCharge && !P.OnGround && Owner.waterlevel < 3) DashCharge=DashMaxCharge-1;
 			If(DashCharge==DashMaxCharge)
 			{
 				Waiting=False;
