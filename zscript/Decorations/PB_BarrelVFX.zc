@@ -1,0 +1,134 @@
+// PR #1500 barrel particle helpers + looping lid flame for the decorative burner.
+// Static helpers stay ZScript-only. DECORATE states spawn the pulse actors below
+// (anonymous blocks cannot call Class.StaticMethod on this pin).
+
+class PB_BarrelVFX play
+{
+	static bool LowGraphics()
+	{
+		CVar lg = CVar.FindCVar("pb_lowgraphicsmode");
+		return lg && lg.GetInt();
+	}
+
+	static void SpawnSmoke(Actor self)
+	{
+		if (!self || LowGraphics())
+			return;
+		FSpawnParticleParams SMKBCK;
+		SMKBCK.Texture = TexMan.CheckForTexture("SMK1K0");
+		SMKBCK.Color1 = "FFFFFF";
+		SMKBCK.Style = STYLE_TRANSLUCENT;
+		SMKBCK.Flags = SPF_ROLL;
+		SMKBCK.Vel = (0, 0, frandom(1.25, 3.0));
+		SMKBCK.Startroll = random(0, 360);
+		SMKBCK.RollVel = random(-10, 10);
+		SMKBCK.StartAlpha = 0.5;
+		SMKBCK.Lifetime = random(32, 42);
+		SMKBCK.FadeStep = SMKBCK.StartAlpha / SMKBCK.Lifetime;
+		SMKBCK.Size = random(45, 58);
+		SMKBCK.SizeStep = 1;
+		SMKBCK.Pos = self.vec3offset(random(-7, 7), random(-7, 7), random(28, 40));
+		Level.SpawnParticle(SMKBCK);
+	}
+
+	static void SpawnCryoSmoke(Actor self, double startAlpha = 0.5, int lifetime = 50, double fadeStep = 0.01, double smokeVelXY = 1.0, double smokeVelZ = 0.5, double smokeAccel = 0)
+	{
+		if (!self || LowGraphics())
+			return;
+		FSpawnParticleParams SMKBCK;
+		SMKBCK.Texture = TexMan.CheckForTexture("SMK2A0");
+		SMKBCK.Color1 = "A0FFFF";
+		SMKBCK.Style = STYLE_Shaded;
+		SMKBCK.Flags = SPF_ROLL;
+		SMKBCK.Vel = (frandom(-smokeVelXY, smokeVelXY), frandom(-smokeVelXY, smokeVelXY), frandom(-smokeVelZ, smokeVelZ));
+		SMKBCK.Accel = SMKBCK.Vel * smokeAccel;
+		SMKBCK.Startroll = random(0, 360);
+		SMKBCK.StartAlpha = startAlpha;
+		SMKBCK.Lifetime = lifetime;
+		SMKBCK.FadeStep = fadeStep;
+		SMKBCK.Size = random(77, 115);
+		SMKBCK.Pos = self.vec3offset(frandom(-2.0, 2.0), frandom(-2.0, 2.0), frandom(3.0, 7.0));
+		Level.SpawnParticle(SMKBCK);
+	}
+}
+
+class PB_BarrelSmokePulse : Actor
+{
+	Default
+	{
+		+NOINTERACTION
+		+NOCLIP
+		+NOGRAVITY
+		+NOTONAUTOMAP
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay
+		{
+			PB_BarrelVFX.SpawnSmoke(self);
+			Destroy();
+		}
+		Stop;
+	}
+}
+
+class PB_BarrelCryoSmokePulse : Actor
+{
+	Default
+	{
+		+NOINTERACTION
+		+NOCLIP
+		+NOGRAVITY
+		+NOTONAUTOMAP
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay
+		{
+			PB_BarrelVFX.SpawnCryoSmoke(self);
+			Destroy();
+		}
+		Stop;
+	}
+}
+
+class PB_DecorativeBarrelFire : Actor
+{
+	const FLAME_Z = 30.0;
+
+	Default
+	{
+		Radius 0;
+		Height 0;
+		XScale -0.5;
+		YScale 0.5;
+		RenderStyle "Add";
+		+NOCLIP
+		+NOINTERACTION
+		+NOTONAUTOMAP
+		+BRIGHT
+		+NOGRAVITY
+	}
+
+	override void Tick()
+	{
+		if (!master)
+		{
+			Destroy();
+			return;
+		}
+		SetOrigin((master.pos.xy, master.pos.z + FLAME_Z), true);
+		Super.Tick();
+	}
+
+	States
+	{
+	Spawn:
+		FLME ABCDEFGHIJKLMN 1;
+		Loop;
+	}
+}
