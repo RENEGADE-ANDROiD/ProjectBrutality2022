@@ -1283,14 +1283,14 @@ Class BuildPlayer : PlayerPawn
 		
 		if(Vel.XY.Length() <= MaxGroundSpeed)
 		{
-			Vel.XY = (MaxGroundSpeed + zm_adashboost) * AngleToVector(Angle - VectorAngle(cmd.forwardmove , cmd.sidemove)); //this way the air dash always grants a satisfying boost
+			Vel.XY = zm_dashboost * MaxGroundSpeed * AngleToVector(Angle - VectorAngle(cmd.forwardmove , cmd.sidemove));
 			ADashTargetSpeed = MaxGroundSpeed;
 			ADashFrictionDelay = 8;
 		}
 		else
 		{
 			Float PreAirDashSpeed = Vel.XY.Length();
-			Vel.XY += zm_adashboost * AngleToVector(Angle - VectorAngle(cmd.forwardmove , cmd.sidemove));
+			Vel.XY += zm_dashboost * AngleToVector(Angle - VectorAngle(cmd.forwardmove , cmd.sidemove));
 			
 			ADashTargetSpeed = min(PreAirDashSpeed, zm_maxhopspeed);
 			

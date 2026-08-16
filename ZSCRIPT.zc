@@ -76,6 +76,7 @@ const MAXITERATIONS = 32676;
 #include "zscript/Gore/PBGore.zc"
 #include "zscript/Gore/PBGoreEffects.zc"
 #include "zscript/Decorations/PBDeadGeneric.zc"
+#include "zscript/Decorations/PB_BarrelVFX.zc"
 #include "zscript/Monsters/Realm667/possessedgibs/giblets.zc"
 #include "zscript/Monsters/Realm667/possessedgibs/possessedgibs.zc"
 #include "zscript/Decorations/PBKeys.zc"

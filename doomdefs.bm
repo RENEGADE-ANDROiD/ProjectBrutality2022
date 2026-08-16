@@ -34,6 +34,7 @@
 #include BMAP/Weapons/QuickLauncher.txt
 #include BMAP/Health.txt
 #include "BMAP/CatsFrozen.txt"
+#include "BMAP/Barrels.txt"
 
 #include doommonsters.bm
 #include BMAP/BruiserDemon.txt

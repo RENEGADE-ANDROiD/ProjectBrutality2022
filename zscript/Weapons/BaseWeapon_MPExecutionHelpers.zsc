@@ -119,6 +119,17 @@ extend class PB_WeaponBase
 		return "Execution_Generic";
 	}
 
+	action StateLabel PB_ExecuteFast() {
+		return "Execution_Fast";
+	}
+
+	action void PB_RotateCamera(double addAngle = 0.0, double addPitch = 0.0, double addRoll = 0.0)
+	{
+		angle += addAngle;
+		pitch += addPitch;
+		roll += addRoll;
+	}
+
 	// Keep kit-less / Generic-fallback targets in front of the camera during the POV strip.
 	action void PB_PinExecutionTarget()
 	{
@@ -1219,8 +1230,8 @@ action StateLabel PB_ExecutionCrackodemon() {
 		case 'OverLord':
 			return PB_ExecutionOverLord();
 		default:
-			// Staging fallback: shared P1NK/KIC* tear strip for kit-less COUNTKILL targets.
-			return PB_ExecuteGeneric();
+			// Kit-less custom monsters: short Fast punches (PR #1500). Dedicated kits stay above.
+			return PB_ExecuteFast();
 		}
 	}
 }

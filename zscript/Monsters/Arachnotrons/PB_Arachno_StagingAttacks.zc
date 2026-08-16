@@ -54,8 +54,8 @@ class PB_ArachnoShield : Actor
 	Default
 	{
 		Health 300;
-		Radius 70;
-		Height 75;
+		Radius 64;
+		Height 72;
 		RenderStyle "Normal";
 		Scale 0.28;
 		BloodType "PB_ArachnoShieldPuff";
@@ -67,7 +67,10 @@ class PB_ArachnoShield : Actor
 		DamageFactor "Crush", 10.0;
 		DamageFactor "Avoid", 0.0;
 		DamageFactor "killme", 0.0;
-		DamageFactor "Bullet", 0.4;
+		DamageFactor "Bullet", 0.9;
+		DamageFactor "Shotgun", 0.7;
+		DamageFactor "SSG", 0.8;
+		DamageFactor "Fire", 0.7;
 		DamageFactor "Plasma", 1.2;
 		DamageFactor "Normal", 0.5;
 	}
