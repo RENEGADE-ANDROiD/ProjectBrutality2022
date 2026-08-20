@@ -130,6 +130,7 @@ Class PB_ShotgunGuy : PB_Monster
 		
 		void A_CombatDialogueHandler()
 		{
+			if (!target) return;
 			if (target.health < 50) {
 				A_StartSound("monsters/zombie/player_low", CHAN_AUTO );
 			}

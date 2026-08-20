@@ -5447,6 +5447,7 @@ $alias HKPAIN			knight/pain
 $alias BLAM2			weapons/sg
 $alias PLSM8			PLSM9
 $alias fleshimpact		bulletfleshimpact
+$alias Melee/Flesh		misc/xdeath1e
 $alias xdeath			misc/xdeath
 $alias xdeath2c			misc/xdeath2c
 $alias vile/pain		archvile/pain

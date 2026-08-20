@@ -363,7 +363,6 @@ server int pb_NoPB_HYDRAWeapon = 1;
 server int pb_NoPB_CryoShotgunWeapon = 1; // Default Weapon Roster extra (Off); not core Cryo Rifle / Freezer
 server int pb_NoExtinctionRayWeapon = 1;
 server int pb_NoPlasmaRifleAssaultWeapon = 1;
-server int pb_NoLoRCalamityBladeWeapon = 1;
 server int pb_NoFrostburnDeviceWeapon = 1;
 
 server int pb_NoHelmetAnimation = 1;

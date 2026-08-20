@@ -2198,29 +2198,6 @@ Class PB_SpecialWheelHandler : EventHandler
 		specialWheel_handleMouse();
 	}
 
-	void specialWheel_PB_PulseCannon()
-	{
-		wheelSpecials.Clear();
-		iconScale = (0.70, 0.70);
-		PB_SpecialWheel_Mode pulse_spread = new ("PB_SpecialWheel_Mode");
-		pulse_spread.specialIcon = TexMan.CheckForTexture("PCCUA0", TexMan.Type_Any);
-		pulse_spread.specialName = "Select_PB_PulseCannon_Spread";
-		pulse_spread.specialAlias = "Spread Charge";
-		pulse_spread.specialPriority = 1;
-		pulse_spread.iconScale = iconScale;
-		wheelSpecials.Push(pulse_spread);
-		PB_SpecialWheel_Mode pulse_dm = new ("PB_SpecialWheel_Mode");
-		pulse_dm.specialIcon = TexMan.CheckForTexture("DB09A0", TexMan.Type_Any);
-		if (!pulse_dm.specialIcon.IsValid())
-			pulse_dm.specialIcon = TexMan.CheckForTexture("PCCUA0", TexMan.Type_Any);
-		pulse_dm.specialName = "Select_PB_PulseCannon_DarkMatter";
-		pulse_dm.specialAlias = "Dark Matter Orb";
-		pulse_dm.specialPriority = 2;
-		pulse_dm.iconScale = iconScale;
-		wheelSpecials.Push(pulse_dm);
-		specialWheel_handleMouse();
-	}
-
 	void specialWheel_RocketLauncher()
 	{
 			
@@ -2882,6 +2859,7 @@ Class PB_SpecialWheelHandler : EventHandler
 					return;
 
 				case 'PB_DarkMatterRifle':
+				case 'PB_PulseCannon':
 					pmo.A_GiveInventory("GoWeaponSpecialAbility");
 					selectedWeapon = players[consoleplayer].ReadyWeapon.GetClassName();
 					wheelShow.Clear();
@@ -2923,10 +2901,6 @@ Class PB_SpecialWheelHandler : EventHandler
 
 				case 'PB_Hellshot':
 					specialWheel_PB_Hellshot();
-					return;
-
-				case 'PB_PulseCannon':
-					specialWheel_PB_PulseCannon();
 					return;
 
 				case 'PB_M41A':

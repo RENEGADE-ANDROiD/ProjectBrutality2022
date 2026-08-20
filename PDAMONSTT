@@ -74,6 +74,7 @@ Flesh Wizard$Flesh wizard—curse arcs and summoned harassment with wizard locom
 Ice Vile$Ice arch-vile—frost-line burns and chill denial zones instead of stock hellfire curves.$PB_Icevile,PB_IcevileGK$Threat: Tier 4 | Damage: Ice | Notes: Frost arch-vile chassis#
 Ice Imp$Ice imp—cold bite bias and imp mobility on chilled theater maps.$PB_IceImp$Threat: Tier 1–2 | Damage: Ice/melee | Notes: Ice imp replaces DoomImp pool picks#
 Marauder$Marauder hunter—dash-forward axe aggression with wolf summons on scripted beats.$PB_Marauder$Threat: Tier 4 | Damage: Melee/missiles | Notes: Boss-tier hunter strain#
+Eternal Dark Lord$Portable Marauder-tier elite—sword, energy shield, dazzle, and wolf summons with soft HP phases. Distinct from Monster Pack Dark Lord.$PB_EternalDarkLord,PB_EternalDarkLordGK$Threat: Tier 4 | Damage: Melee/energy | Notes: Archvile MarauderPack guest; NoEternalDarkLord#
 Cyberdemon$Cyberdemon primarch—rocket salvos and boss-tier soaking; keep spacing or intercept rockets.$PB_Cyberdemon,PB_CyberdemonGK,PB_Cyberdemon_MapGK$Threat: Boss | Damage: Explosive | Notes: Cyberdemon GK fold#
 Spider Mastermind$Spider mastermind—hitscan hose and boss arena presence with wide collision.$PB_Mastermind,PB_MastermindGK$Threat: Boss | Damage: Hitscan | Notes: Final-spider strain#
 Annihilator$Annihilator strain—cyber-style boss locomotion with heavier explosive persistence than stock cyberdemons.$PB_Annihilator,PB_AnnihilatorGK$Threat: Boss | Damage: Explosive | Notes: Cyber boss variant#
