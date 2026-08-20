@@ -227,6 +227,8 @@ Actor ZombieManPackSpawner : Demonpickup
 	TNT1 A 0 A_SpawnItemEx("FodderExtraPassiveSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,210)
 	TNT1 A 0 A_SpawnItemEx("ProjectSurvivalPassiveExtraSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,180)
 	Stop
+	SpawnMinigunZombie:
+	Goto SpawnNormalZombieMan
 	SpawnNormalZombieMan:
 	ReplaceToggle:
 	TNT1 A 0 A_SpawnItemEx("PB_ZombieMan",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid)

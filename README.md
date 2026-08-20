@@ -148,7 +148,7 @@ Modified for PB2022; loads after it.
 
 **Slot 8- Plasma & heavy energy primaries**
 
-- **Pulse Cannon**- plasma orb stream with charged Alt spread and optional Dark Matter Orb Alt mode.
+- **Pulse Cannon**- plasma orb stream with charged Alt-Fire spread. Dark Matter SuperBall / Gravity modes live on the **UAC Prototype Dark Matter Rifle**, not this gun.
 - **UAC-M1 Plasma Rifle**- plasma rifle with single/dual weapon-special support and plasma wall-climb behavior.
 - **UAC-M2 Plasma Rifle**- alternate plasma rifle using the same movement-friendly plasma impact family.
 - **UAC Prototype Dark Matter Rifle**- magazine-fed plasma orbs; chargeable Alt-Fire that alternates Super Plasma Ball and Gravity Singularity after each successful shot; Weapon Special toggles dual-wield.

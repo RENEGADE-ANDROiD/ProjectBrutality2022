@@ -74,7 +74,6 @@ PB_PICKUP_PB_HYDRA = "Picked up the MACH-3 Type-B HYDRA (slot 5).";
 PB_PICKUP_PB_CryoRifle = "Picked up the Cryo Rifle / Freeze Thrower (slot 8).";
 PB_PICKUP_Extinction_Ray = "Picked up the Extinction Ray / Argent Fury (slot 8).";
 PB_PICKUP_PlasmaRifleAssault = "Picked up the UAC PR-75 Plasma Assault Rifle (slot 8).";
-PB_PICKUP_LoRCalamityBlade = "Picked up the Calamity Blade (slot 9).";
 OPTMNU_MarauderSSGClassicReload = "Marauder SSG classic reload";
 OPTMNU_TILTPLUSPLUS = "Customize Tilt++";
 
@@ -711,7 +710,6 @@ PB_WPNHINT_PB_HYDRA = "MACH-3 HYDRA (slot 5): Hailstorm minigun — spin-up loop
 PB_WPNHINT_PB_CryoRifle = "Cryo Rifle / Freeze Thrower (slot 8): freezer thrower using FreezerAmmo mag + Cell reserve (distinct from Cryo Shotgun).";
 PB_WPNHINT_Extinction_Ray = "Extinction Ray / Argent Fury (slot 8): incinerator-laser hybrid on Extinction_Ammo + Cells; overheats on sustained fire.";
 PB_WPNHINT_PlasmaRifleAssault = "UAC PR-75 Plasma Assault (slot 8): Plasma-Mag rifle on Cells; Weapon Special toggles Heat Blast overcharge.";
-PB_WPNHINT_LoRCalamityBlade = "Calamity Blade (slot 9): Legacy of Rust heat-wave blade on PB_Fuel + PB_DTECH; charge Alt-Fire for heavy heatwave.";
 PB_HUD_TC_BEAM = "Storm Beam";
 PB_HUD_TC_BOLT = "Thunder Bolt";
 PB_HUD_TC_SHOCK = "Shockwave";
