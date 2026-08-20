@@ -26,6 +26,7 @@ extend class PB_WeaponBase
 		case 'IceDemon':
 		case 'PB_Marauder':
 		case 'PB_EternalDarkLord':
+		case 'PB_EternalDarkLordGK':
 		case 'PB_FleshWizard':
 		case 'D3Seeker':
 		case 'CyberSatyr':
@@ -1156,6 +1157,7 @@ action StateLabel PB_ExecutionCrackodemon() {
 		case 'PB_Marauder':
 			return PB_ExecutionMarauder();
 		case 'PB_EternalDarkLord':
+		case 'PB_EternalDarkLordGK':
 			return PB_ExecutionEternalDarkLord();
 		case 'PB_FleshWizard':
 			return PB_ExecutionFleshWizard();
