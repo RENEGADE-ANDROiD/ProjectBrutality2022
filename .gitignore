@@ -40,3 +40,4 @@ ehthumbs.db
 *.backup
 *.orig
 *.tmp
+.cursor/rules/plan-folders.mdc
